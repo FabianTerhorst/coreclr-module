@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <RootNamespace>AltV.Net</RootNamespace>
+        <Configurations>Debug;Release;Testing</Configurations>
+        <Platforms>AnyCPU</Platforms>
+        <RootNamespace>AltV.Net</RootNamespace>
+        <Authors>AltV</Authors>
+        <Description>AltV .NET Core SDK</Description>
+        <Copyright>AltV</Copyright>
+        <PackageLicenseUrl>TODO:licenseurl</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/FabianTerhorst/altv-csharp/</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/FabianTerhorst/altv-csharp</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>altv gta bridge</PackageTags>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Testing' ">
+      <DebugSymbols>true</DebugSymbols>
+      <DebugType>full</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DebugType>full</DebugType>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+      <PackageReference Include="NLog" Version="4.5.11" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="NLog.config" />
+      <Content Include="NLog.config">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <Target Name="CopyFiles" AfterTargets="build" Condition=" '$(Configuration)' == 'Testing' ">
+        <Copy SourceFiles="$(OutputPath)\AALTV.Net.dll;$(OutputPath)\ALTV.Net.pdb" DestinationFolder="../../../server/dotnet/modules/" SkipUnchangedFiles="false" />
+    </Target>
+
+</Project>

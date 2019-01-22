@@ -1,0 +1,3 @@
+[submodule "clrhost/thirdparty/altv-c-api"]
+	path = clrhost/thirdparty/altv-c-api
+	url = git@github.com:FabianTerhorst/altv-c-api.git
