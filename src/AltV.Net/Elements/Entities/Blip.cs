@@ -7,18 +7,19 @@ namespace AltV.Net.Elements.Entities
 {
     internal class Blip : Entity, IBlip
     {
+        private uint color;
         public uint Color
         {
-            /*get//TODO: altv-c-api
+            get
             {
                 CheckExistence();
 
-                return Rage.Blip.Blip_GetColor(NativePointer);
-            }*/
+                return this.color;
+            }
             set
             {
                 CheckExistence();
-
+                this.color = value;
                 Alt.Blip.Blip_SetColor(NativePointer, value);
             }
         }
