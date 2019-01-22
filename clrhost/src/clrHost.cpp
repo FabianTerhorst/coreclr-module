@@ -15,7 +15,7 @@
 #define PLUGIN_DIR_PATH "./dotnet/plugins/"
 
 #define PLUGIN_NAME "AltV.Net"
-#define PLUGIN_CLASS_NAME "AltV.Net.Main"
+#define PLUGIN_CLASS_NAME "AltV.Net.Module"
 
 #ifdef _WIN32
 #define LIST_SEPARATOR ";"

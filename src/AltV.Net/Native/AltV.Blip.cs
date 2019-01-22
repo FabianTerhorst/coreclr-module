@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace AltV.Net
+namespace AltV.Net.Native
 {
     internal static partial class AltV
     {

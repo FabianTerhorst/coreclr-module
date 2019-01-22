@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace AltV.Net
 {
-    internal static class Main
+    internal static class Module
     {
         public static void Main()
         {
-            
+
         }
     }
 }
