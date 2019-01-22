@@ -9,9 +9,7 @@
 #include <windows.h>
 #endif
 
-#include <altv-c-api/include/altv.h>
-
-typedef void (*MainMethod)();//TODO:...
+typedef void (*MainMethod)();
 
 class ClrHost
 {
