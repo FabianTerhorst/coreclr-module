@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace AltV.Net.Native
 {
-    internal static partial class AltV
+    internal static partial class Alt
     {
         private const string _dllName = "dotnet-wrapper";
         private const CallingConvention _callingConvention = CallingConvention.Cdecl;
