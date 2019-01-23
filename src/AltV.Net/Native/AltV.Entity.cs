@@ -37,6 +37,7 @@ namespace AltV.Net.Native
             internal static extern void Entity_SetDimension(IntPtr entityPointer, uint dimension);
 
             //TODO: alt::MValue fast c# representation
+            //The C++ standard guarantees that memory layouts of a C struct and a C++ class (or struct -- same thing) will be identical
         }
     }
 }
