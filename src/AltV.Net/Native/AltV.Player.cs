@@ -10,6 +10,9 @@ namespace AltV.Net.Native
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             [return: MarshalAs(UnmanagedType.AnsiBStr)]
             internal static extern String Player_GetName(IntPtr playerPointer);
+
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            internal static extern void Player_SetName(IntPtr playerPointer, [MarshalAs(UnmanagedType.AnsiBStr)] String name);
         }
     }
 }
