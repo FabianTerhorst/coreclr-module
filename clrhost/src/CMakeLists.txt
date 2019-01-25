@@ -15,4 +15,10 @@ target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/..
 
 target_link_libraries(${TARGET_NAME} PUBLIC altv_c_api)
 
-install(FILES ${CMAKE_BINARY_DIR}/src/dotnet-wrapper.dll DESTINATION "${CMAKE_SOURCE_DIR}/../../server/modules")
+target_compile_options(${TARGET_NAME} PRIVATE -stdlib=libc++ -static)
+
+if(MSVC)
+    install(FILES ${CMAKE_BINARY_DIR}/src/dotnet-wrapper.dll DESTINATION "${CMAKE_SOURCE_DIR}/../../server/modules")
+else()
+    install(FILES ${CMAKE_BINARY_DIR}/src/dotnet-wrapper.so DESTINATION "${CMAKE_SOURCE_DIR}/../../server/modules")
+endif(MSVC)
