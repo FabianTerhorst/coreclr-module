@@ -2,6 +2,8 @@ set(TARGET_NAME core_clr_host)
 
 add_library(${TARGET_NAME} SHARED altv.cpp clrHost.cpp)
 
+target_compile_options(${TARGET_NAME} PRIVATE -stdlib=libc++ -static)
+
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "dotnet-wrapper")
 
 if(MSVC)
@@ -14,8 +16,6 @@ target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/..
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty)
 
 target_link_libraries(${TARGET_NAME} PUBLIC altv_c_api)
-
-target_compile_options(${TARGET_NAME} PRIVATE -stdlib=libc++ -static)
 
 if(MSVC)
     install(FILES ${CMAKE_BINARY_DIR}/src/dotnet-wrapper.dll DESTINATION "${CMAKE_SOURCE_DIR}/../../server/modules")
