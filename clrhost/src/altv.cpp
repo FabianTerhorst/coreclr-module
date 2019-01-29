@@ -2,12 +2,29 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wempty-body"
 #endif
-#include <altv-cpp-api/IScriptRuntime.h>
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
 
-#include "clrHost.h"
+//#include "altv.h"
+//#include "clrHost.h"
+
+#include <altv-cpp-api/API.h>
+#include "CSharpScriptRuntime.h"
+
+EXPORT bool altMain(alt::IServer *server) {
+    server->LogInfo("HII from test");
+    auto* cSharpScriptRuntime = new CSharpScriptRuntime(server);
+    server->RegisterScriptRuntime("csharp", cSharpScriptRuntime);
+    return true;
+}
+
+/*bool altMain(alt::IServer* server) {
+    //auto* cSharpScriptRuntime = new CSharpScriptRuntime();
+    //IServer::Instance().RegisterScriptRuntime("csharp", cSharpScriptRuntime);
+    server->LogDebug("bla");
+    return true;
+}*/
 
 /*static ClrHost *clrHost = nullptr;
 

@@ -14,5 +14,3 @@ if(MSVC)
 endif(MSVC)
 
 add_subdirectory(src)
-
-add_subdirectory(thirdparty/altv-c-api)
