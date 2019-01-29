@@ -4,6 +4,32 @@
 
 #include "CoreClr.h"
 
+char *
+itoa (int value, char *result, int base)
+{
+    // check that the base if valid
+    if (base < 2 || base > 36) { *result = '\0'; return result; }
+
+    char* ptr = result, *ptr1 = result, tmp_char;
+    int tmp_value;
+
+    do {
+        tmp_value = value;
+        value /= base;
+        *ptr++ = "zyxwvutsrqponmlkjihgfedcba9876543210123456789abcdefghijklmnopqrstuvwxyz" [35 + (tmp_value - value * base)];
+    } while ( value );
+
+    // Apply negative sign
+    if (tmp_value < 0) *ptr++ = '-';
+    *ptr-- = '\0';
+    while (ptr1 < ptr) {
+        tmp_char = *ptr;
+        *ptr--= *ptr1;
+        *ptr1++ = tmp_char;
+    }
+    return result;
+}
+
 CoreClr::CoreClr(alt::IServer *server) {
     const char *path = "/usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.1/libcoreclr.so";
     _coreClrLib = dlopen(path, RTLD_NOW | RTLD_LOCAL);
@@ -29,6 +55,12 @@ bool CoreClr::GetDelegate(alt::IServer *server, void *runtimeHost, unsigned int 
     }
     int result = _createDelegate(runtimeHost, domainId, moduleName, classPath, methodName, callback);
     if (result < 0) {
+        server->LogInfo(alt::String(strerror(errno)));
+        char * x_str = new char[10];
+        sprintf(x_str, "%d", result);
+        server->LogInfo(
+                alt::String(x_str));
+        delete[] x_str;
         server->LogInfo(
                 alt::String("[.NET] Unable to get ") + moduleName + ":" + classPath + "." + methodName + " domain:" +
                 domainId);

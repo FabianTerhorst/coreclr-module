@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
 
-/* namespace AltV.Net
-{*/
+namespace AltV.Net
+{
     public static class Module
     {
         public static void Main()
@@ -13,4 +13,4 @@ using System.Threading.Tasks;
 
         }
     }
-//}
+}

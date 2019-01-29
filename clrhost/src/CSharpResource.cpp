@@ -31,7 +31,7 @@ CSharpResource::CSharpResource(alt::IServer *server, CoreClr *coreClr, alt::IRes
 
     MainMethod mainMethod = nullptr;
     //TODO: remove extension from main.CStr()
-    coreClr->GetDelegate(server, runtimeHost, domainId, /*main.CStr()*/"server", "Module", "Main", reinterpret_cast<void **>(&mainMethod));
+    coreClr->GetDelegate(server, runtimeHost, domainId, /*main.CStr()*/"AltV.Net", "AltV.Net.Module", "Main", reinterpret_cast<void **>(&mainMethod));
     if (mainMethod == nullptr) {
         server->LogInfo(alt::String("[.NET] Unable to find Main method"));
         return;
