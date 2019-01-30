@@ -8,19 +8,19 @@ namespace AltV.Net.Native
         internal static class Server
         {
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern void Server_LogInfo(IntPtr playerPointer, [MarshalAs(UnmanagedType.AnsiBStr)] String name);
+            internal static extern void Server_LogInfo(IntPtr serverPointer, String message);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern void Server_LogDebug(IntPtr playerPointer, [MarshalAs(UnmanagedType.AnsiBStr)] String name);
+            internal static extern void Server_LogDebug(IntPtr serverPointer, String message);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern void Server_LogWarning(IntPtr playerPointer, [MarshalAs(UnmanagedType.AnsiBStr)] String name);
+            internal static extern void Server_LogWarning(IntPtr serverPointer, String message);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern void Server_LogError(IntPtr playerPointer, [MarshalAs(UnmanagedType.AnsiBStr)] String name);
+            internal static extern void Server_LogError(IntPtr serverPointer, String message);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern void Server_LogColored(IntPtr playerPointer, [MarshalAs(UnmanagedType.AnsiBStr)] String name);
+            internal static extern void Server_LogColored(IntPtr serverPointer, String message);
         }
     }
 }

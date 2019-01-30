@@ -5,7 +5,7 @@ namespace AltV.Net.Native
 {
     internal static partial class Alt
     {
-        private const string _dllName = "dotnet-wrapper";
+        private const string _dllName = "csharp-module";
         private const CallingConvention _callingConvention = CallingConvention.Cdecl;
 
         [DllImport(_dllName, CallingConvention = _callingConvention)]

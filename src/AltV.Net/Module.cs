@@ -10,7 +10,7 @@ namespace AltV.Net
     {
         public static void Main(IntPtr serverPointer)
         {
-
+            AltV.Net.Native.Alt.Server.Server_LogInfo(serverPointer, "Hello from C#");
         }
 
         public static void OnPlayerConnect(IntPtr playerPointer, string reason)
