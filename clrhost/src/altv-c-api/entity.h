@@ -27,8 +27,8 @@ extern "C"
     EXPORT uint16_t Entity_GetDimension(alt::IEntity *entity);
     EXPORT void Entity_SetDimension(alt::IEntity *entity, uint16_t dimension);
 
-    EXPORT alt::MValue Entity_GetMetaData(alt::IEntity *entity, const char *key);
-    EXPORT void Entity_SetMetaData(alt::IEntity *entity, const char *key, alt::MValue val);
+    EXPORT void Entity_GetMetaData(alt::IEntity *entity, const char *key, alt::MValue& val);
+    EXPORT void Entity_SetMetaData(alt::IEntity *entity, const char *key, alt::MValue* val);
 
     EXPORT alt::MValue Entity_GetSyncedMetaData(alt::IEntity *entity, const char *key);
     EXPORT void Entity_SetSyncedMetaData(alt::IEntity *entity, const char *key, alt::MValue val);
