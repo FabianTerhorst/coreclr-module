@@ -23,6 +23,15 @@ namespace AltV.Net
             Alt.Server.Server_LogInfo(serverPointer, position.x.ToString() + " " + position.y.ToString() + " " + position.z.ToString());
             var primaryColor = Alt.Vehicle.Vehicle_GetPrimaryColorRGB(vehiclePointer);
             Alt.Server.Server_LogInfo(serverPointer, primaryColor.a.ToString() + " " + primaryColor.r.ToString() + " " + primaryColor.g.ToString() + " " + primaryColor.b.ToString());
+            var rotation = Alt.Entity.Entity_GetRotation(vehiclePointer);
+            Alt.Server.Server_LogInfo(serverPointer, rotation.roll.ToString() + " " + rotation.pitch.ToString() + " " + rotation.yaw.ToString());
+            Alt.Entity.Entity_SetPosition(vehiclePointer, new Alt.Position {
+                x = 4,
+                y = 5,
+                z = 6
+            });
+            position = Alt.Entity.Entity_GetPosition(vehiclePointer);
+            Alt.Server.Server_LogInfo(serverPointer, position.x.ToString() + " " + position.y.ToString() + " " + position.z.ToString());
         }
 
         public static void OnPlayerConnect(IntPtr playerPointer, string reason)

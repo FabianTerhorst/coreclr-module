@@ -6,11 +6,11 @@ namespace AltV.Net.Native
     internal static partial class Alt
     {
         [StructLayout(LayoutKind.Sequential)]
-        public sealed class Rotation
+        public struct Rotation
         {
-            float roll;
-            float pitch;
-            float yaw;
+            public float roll;
+            public float pitch;
+            public float yaw;
         }
     }
 }

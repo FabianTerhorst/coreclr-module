@@ -14,17 +14,16 @@ namespace AltV.Net.Native
             internal static extern Alt.Position Entity_GetPosition(IntPtr entityPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void Entity_SetPosition(IntPtr entityPointer, [MarshalAs(UnmanagedType.Struct)] Alt.Position position);
+            internal static extern void Entity_SetPosition(IntPtr entityPointer, Alt.Position position);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void Entity_SetPosition(IntPtr entityPointer, float x, float y, float z);
 
-            [DllImport(_dllName, CallingConvention = _callingConvention)]
-            [return: MarshalAs(UnmanagedType.Struct)]
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern Alt.Rotation Entity_GetRotation(IntPtr entityPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void Entity_SetRotation(IntPtr entityPointer, [MarshalAs(UnmanagedType.Struct)] Alt.Rotation rotation);
+            internal static extern void Entity_SetRotation(IntPtr entityPointer, Alt.Rotation rotation);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void Entity_SetRotation(IntPtr entityPointer, float roll, float pitch, float yaw);
