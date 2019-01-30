@@ -6,7 +6,7 @@ namespace AltV.Net.Native
     internal static partial class Alt
     {
         [StructLayout(LayoutKind.Sequential)]
-        public sealed class Position
+        public struct Position
         {
             public float x;
             public float y;

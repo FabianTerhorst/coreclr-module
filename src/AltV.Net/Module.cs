@@ -12,6 +12,13 @@ namespace AltV.Net
         public static void Main(IntPtr serverPointer)
         {
             Alt.Server.Server_LogInfo(serverPointer, "Hello from C#");
+            uint hash = Alt.Server.Server_Hash(serverPointer, "adder");
+            Alt.Server.Server_LogInfo(serverPointer, "hash:" + hash.ToString());
+            Alt.Position position = new Alt.Position();
+            position.x = 1;
+            position.y = 2;
+            position.z = 3;
+            Alt.Server.Server_CreateVehicle(serverPointer, hash, position, 1f);
         }
 
         public static void OnPlayerConnect(IntPtr playerPointer, string reason)
