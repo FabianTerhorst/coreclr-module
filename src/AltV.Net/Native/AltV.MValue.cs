@@ -5,10 +5,24 @@ namespace AltV.Net.Native
 {
     internal static partial class Alt
     {
-        [StructLayout(LayoutKind.Sequential)]
-        public sealed class MValue
+        public enum MValueType : byte
         {
-            uint type;
+            NIL,
+            BOOL,
+            INT,
+            UINT,
+            DOUBLE,
+            STRING,
+            LIST,
+            DICT,
+            ENTITY,
+            FUNCTION
+        };
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct MValue
+        {
+            MValueType type;
             IntPtr storagePointer;
         }
     }
