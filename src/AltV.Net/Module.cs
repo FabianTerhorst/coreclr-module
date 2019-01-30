@@ -9,8 +9,11 @@ namespace AltV.Net
 {
     public static class Module
     {
+        public static IntPtr server;
+
         public static void Main(IntPtr serverPointer)
         {
+            server = serverPointer;
             Alt.Server.Server_LogInfo(serverPointer, "Hello from C#");
             uint hash = Alt.Server.Server_Hash(serverPointer, "adder");
             Alt.Server.Server_LogInfo(serverPointer, "hash:" + hash.ToString());
@@ -32,6 +35,7 @@ namespace AltV.Net
             });
             position = Alt.Entity.Entity_GetPosition(vehiclePointer);
             Alt.Server.Server_LogInfo(serverPointer, position.x.ToString() + " " + position.y.ToString() + " " + position.z.ToString());
+            Alt.Server.Server_RemoveEntity(serverPointer, vehiclePointer);
         }
 
         public static void OnPlayerConnect(IntPtr playerPointer, string reason)
@@ -42,6 +46,11 @@ namespace AltV.Net
         public static void OnPlayerDisconnect(IntPtr playerPointer, string reason)
         {
 
+        }
+
+        public static void OnEntityRemove(IntPtr entityPointer)
+        {
+            Alt.Server.Server_LogInfo(server, "entity remove");
         }
     }
 }

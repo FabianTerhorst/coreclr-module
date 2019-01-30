@@ -27,6 +27,9 @@ namespace AltV.Net.Native
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern IntPtr Server_CreateVehicle(IntPtr serverPointer, uint model, Alt.Position pos, float heading);
+
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            internal static extern void Server_RemoveEntity(IntPtr serverPointer, IntPtr entityPointer);
         }
     }
 }
