@@ -36,12 +36,11 @@ CSharpResource::CSharpResource(alt::IServer *server, CoreClr *coreClr, alt::IRes
     coreClr->CreateAppDomain(server, fullPath, "/usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.1", &runtimeHost,
                              &domainId);
 
-    //TODO: remove extension from main.CStr()
-    coreClr->GetDelegate(server, runtimeHost, domainId, /*main.CStr()*/ "AltV.Net", "AltV.Net.Module", "Main",
+    coreClr->GetDelegate(server, runtimeHost, domainId, main.CStr(), "AltV.Net.Module", "Main",
                          reinterpret_cast<void **>(&MainDelegate));
-    coreClr->GetDelegate(server, runtimeHost, domainId, /*main.CStr()*/ "AltV.Net", "AltV.Net.Module",
+    coreClr->GetDelegate(server, runtimeHost, domainId, main.CStr(), "AltV.Net.Module",
                          "OnPlayerConnect", reinterpret_cast<void **>(&OnPlayerConnectDelegate));
-    coreClr->GetDelegate(server, runtimeHost, domainId, /*main.CStr()*/ "AltV.Net", "AltV.Net.Module", "OnEntityRemove",
+    coreClr->GetDelegate(server, runtimeHost, domainId, main.CStr(), "AltV.Net.Module", "OnEntityRemove",
                          reinterpret_cast<void **>(&OnEntityRemoveDelegate));
 }
 
