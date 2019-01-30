@@ -10,8 +10,7 @@ namespace AltV.Net.Native
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern uint Entity_GetId(IntPtr entityPointer);
 
-            [DllImport(_dllName, CallingConvention = _callingConvention)]
-            [return: MarshalAs(UnmanagedType.Struct)]
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern Alt.Position Entity_GetPosition(IntPtr entityPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]

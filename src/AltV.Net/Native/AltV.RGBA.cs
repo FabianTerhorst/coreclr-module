@@ -6,12 +6,12 @@ namespace AltV.Net.Native
     internal static partial class Alt
     {
         [StructLayout(LayoutKind.Sequential)]
-        public sealed class RGBA
+        public struct RGBA
         {
-            public int r;
-            public int g;
-            public int b;
-            public int a;
+            public byte r;
+            public byte g;
+            public byte b;
+            public byte a;
         }
 
         //TODO: test because rgba return value from dll isn't a pointer
