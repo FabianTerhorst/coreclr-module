@@ -27,20 +27,23 @@
 #pragma clang diagnostic pop
 #endif
 
-typedef void (*MainMethod)();
-
 class CSharpResource : public alt::IResource
 {
     bool OnEvent(const alt::CEvent *ev) override;
     void OnTick() override;
-    alt::String GetFilePath(const char* fileName);
+    bool Start() override;
+    alt::String GetFilePath(const char *fileName);
 
   private:
-    char* fullPath;
-    //ClrHost *clrHost;
+    char *fullPath;
+    alt::IServer *server;
 
   public:
-    CSharpResource(alt::IServer *server, CoreClr* coreClr, alt::IResource::CreationInfo *info);
-    void (*OnPlayerConnect)(alt::IPlayer *player, const char *reason);
-    void (*OnPlayerDisconnect)(alt::IPlayer *player, const char *reason);
+    CSharpResource(alt::IServer *server, CoreClr *coreClr, alt::IResource::CreationInfo *info);
+    ~CSharpResource();
+    void (*OnPlayerConnectDelegate)(alt::IPlayer *player, const char *reason);
+    void (*OnPlayerDisconnectDelegate)(alt::IPlayer *player, const char *reason);
+    void (*MainDelegate)(alt::IServer *server);
+    void *runtimeHost;
+    unsigned int domainId;
 };

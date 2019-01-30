@@ -13,8 +13,9 @@
 #define LIST_SEPARATOR ":"
 #endif
 
-class CoreClr {
-public:
+class CoreClr
+{
+  public:
     CoreClr(alt::IServer *server);
 
     bool GetDelegate(alt::IServer *server, void *runtimeHost, unsigned int domainId, const char *moduleName,
@@ -25,7 +26,10 @@ public:
     void CreateAppDomain(alt::IServer *server, const char *appPath, const char *libraryPath, void **runtimeHost,
                          unsigned int *domainId);
 
-private:
+    void Shutdown(alt::IServer *server, void *runtimeHost,
+                           unsigned int domainId);
+
+  private:
     void *_coreClrLib;
     coreclr_initialize_ptr _initializeCoreCLR;
     coreclr_shutdown_2_ptr _shutdownCoreCLR;

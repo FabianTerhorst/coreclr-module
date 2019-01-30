@@ -8,7 +8,17 @@ namespace AltV.Net
 {
     public static class Module
     {
-        public static void Main()
+        public static void Main(IntPtr serverPointer)
+        {
+
+        }
+
+        public static void OnPlayerConnect(IntPtr playerPointer, string reason)
+        {
+
+        }
+
+        public static void OnPlayerDisconnect(IntPtr playerPointer, string reason)
         {
 
         }
