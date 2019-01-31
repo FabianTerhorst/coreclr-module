@@ -9,7 +9,7 @@ namespace AltV.Net.Elements.Entities
 {
     internal abstract class Entity : IInternalEntity, IEntity
     {
-        private readonly ConcurrentDictionary<string, object> _data = new ConcurrentDictionary<string, object>();
+        private readonly ConcurrentDictionary<string, object> data = new ConcurrentDictionary<string, object>();
 
         private Position position = Position.Zero;
 
@@ -21,6 +21,12 @@ namespace AltV.Net.Elements.Entities
         public ushort Id { get; }
         public EntityType Type { get; }
 
+        public object this[string key]
+        {
+            get => data.TryGetValue(key, out var value) ? value : null;
+            set => data[key] = value;
+        }
+
         protected Entity(IntPtr nativePointer, EntityType type)
         {
             NativePointer = nativePointer;
@@ -28,6 +34,38 @@ namespace AltV.Net.Elements.Entities
             Id = Alt.Entity.Entity_GetId(NativePointer);
             Type = type;
             Exists = true;
+        }
+
+        /*public bool Get<T>(string key, ref T result)
+        {
+            if (!data.TryGetValue(key, out var value)) return false;
+            if (!(value is T cast)) return false;
+            result = cast;
+            return true;
+        }*/
+
+        public bool Get<T>(string key, out T result)
+        {
+            if (!data.TryGetValue(key, out var value))
+            {
+                result = default;
+                return false;
+            }
+
+            if (!(value is T cast))
+            {
+                result = default;
+                return false;
+            }
+
+            result = cast;
+            return true;
+        }
+
+        //Has needs to do the same calculations Get has to do so consider using Get always
+        public bool Has(string key)
+        {
+            return data.ContainsKey(key);
         }
 
         protected void CheckExistence()
