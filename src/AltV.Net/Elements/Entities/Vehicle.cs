@@ -20,5 +20,9 @@ namespace AltV.Net.Elements.Entities
                 Alt.Vehicle.Vehicle_SetPrimaryColor(NativePointer, value);
             }
         }
+
+        internal Vehicle(IntPtr nativePointer) : base(nativePointer, EntityType.Vehicle)
+        {
+        }
     }
 }

@@ -35,7 +35,7 @@ namespace AltV.Net.Native
             internal static extern byte Vehicle_GetPrimaryColor(IntPtr vehiclePointer);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern Alt.RGBA Vehicle_GetPrimaryColorRGB(IntPtr vehiclePointer);
+            internal static extern RGBA Vehicle_GetPrimaryColorRGB(IntPtr vehiclePointer);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Vehicle_SetPrimaryColor(IntPtr vehiclePointer, byte color);

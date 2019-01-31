@@ -17,7 +17,7 @@ namespace AltV.Net
             Alt.Server.Server_LogInfo(serverPointer, "Hello from C#");
             var hash = Alt.Server.Server_Hash(serverPointer, "adder");
             Alt.Server.Server_LogInfo(serverPointer, "hash:" + hash);
-            var position = new Alt.Position {x = 1, y = 2, z = 3};
+            var position = new Position {x = 1, y = 2, z = 3};
             var vehiclePointer = Alt.Server.Server_CreateVehicle(serverPointer, hash, position, 1f);
 
             Alt.Vehicle.Vehicle_SetNumberPlateText(vehiclePointer, "AltV-C#");
@@ -51,10 +51,10 @@ namespace AltV.Net
             var primaryColor = Alt.Vehicle.Vehicle_GetPrimaryColorRGB(vehiclePointer);
             Alt.Server.Server_LogInfo(serverPointer,
                 primaryColor.a + " " + primaryColor.r + " " + primaryColor.g + " " + primaryColor.b);
-            var rotation = Alt.Rotation.Zero;
+            var rotation = Rotation.Zero;
             Alt.Entity.Entity_GetRotation(vehiclePointer, ref rotation);
             Alt.Server.Server_LogInfo(serverPointer, rotation.roll + " " + rotation.pitch + " " + rotation.yaw);
-            var position2 = new Alt.Position
+            var position2 = new Position
             {
                 x = 4,
                 y = 5,

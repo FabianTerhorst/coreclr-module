@@ -23,5 +23,9 @@ namespace AltV.Net.Elements.Entities
                 Alt.Blip.Blip_SetColor(NativePointer, value);
             }
         }
+        
+        internal Blip(IntPtr nativePointer) : base(nativePointer, EntityType.Blip)
+        {
+        }
     }
 }
