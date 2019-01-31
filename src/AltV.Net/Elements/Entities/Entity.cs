@@ -13,7 +13,7 @@ namespace AltV.Net.Elements.Entities
         public IntPtr NativePointer { get; }
         public bool Exists { get; set; }
 
-        public uint Id { get; }
+        public ushort Id { get; }
         public EntityType Type { get; }
 
         protected void CheckExistence()

@@ -72,7 +72,7 @@ namespace AltV.Net.Native
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern byte Vehicle_GetInteriorColor(IntPtr vehiclePointer);
-            
+
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Vehicle_SetInteriorColor(IntPtr vehiclePointer, byte color);
 
@@ -115,8 +115,8 @@ namespace AltV.Net.Native
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Vehicle_SetNumberPlateIndex(IntPtr vehiclePointer, uint index);
 
-            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern string Vehicle_GetNumberPlateText(IntPtr vehiclePointer);
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern void Vehicle_GetNumberPlateText(IntPtr vehiclePointer, ref Alt.StringView text);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Vehicle_SetNumberPlateText(IntPtr vehiclePointer, string text);
@@ -139,6 +139,8 @@ namespace AltV.Net.Native
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Vehicle_ToggleExtra(IntPtr vehiclePointer, byte extraID, bool state);
 
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            internal static extern void Vehicle_GetNeonActive(IntPtr vehiclePointer, ref bool left, ref bool right, ref bool top, ref bool back);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Vehicle_SetNeonActive(IntPtr vehiclePointer, bool left, bool right, bool top, bool back);

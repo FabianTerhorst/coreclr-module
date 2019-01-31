@@ -23,7 +23,10 @@ namespace AltV.Net
             position.z = 3;
             var vehiclePointer = Alt.Server.Server_CreateVehicle(serverPointer, hash, position, 1f);
 
-
+            Alt.Vehicle.Vehicle_SetNumberPlateText(vehiclePointer, "AltV-C#");
+            var numberPlateText = Alt.StringView.Empty;
+            Alt.Vehicle.Vehicle_GetNumberPlateText(vehiclePointer, ref numberPlateText);
+            Alt.Server.Server_LogInfo(serverPointer, numberPlateText.text);
             //var array = Alt.MValueArray.MValueArray_Create();
 
             //Alt.Server.Server_LogInfo(serverPointer, array.capacity.ToString() + " " + array.size.ToString());

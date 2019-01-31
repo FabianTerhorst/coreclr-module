@@ -24,7 +24,7 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Get the entity id.
         /// </summary>
-        uint Id { get; }
+        ushort Id { get; }
 
         /// <summary>
         /// Get the entity type.

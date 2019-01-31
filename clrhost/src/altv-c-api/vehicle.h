@@ -50,7 +50,7 @@ extern "C"
     EXPORT void Vehicle_SetSpecialDarkness(alt::IVehicle *vehicle, uint8_t value);
     EXPORT uint32_t Vehicle_GetNumberPlateIndex(alt::IVehicle *vehicle);
     EXPORT void Vehicle_SetNumberPlateIndex(alt::IVehicle *vehicle, uint32_t index);
-    EXPORT const char *Vehicle_GetNumberPlateText(alt::IVehicle *vehicle);
+    EXPORT void Vehicle_GetNumberPlateText(alt::IVehicle *vehicle, alt::StringView &text);
     EXPORT void Vehicle_SetNumberPlateText(alt::IVehicle *vehicle, const char *text);
     EXPORT uint8_t Vehicle_GetWindowTint(alt::IVehicle *vehicle);
     EXPORT void Vehicle_SetWindowTint(alt::IVehicle *vehicle, uint8_t tint);
