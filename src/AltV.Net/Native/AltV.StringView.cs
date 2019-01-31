@@ -15,7 +15,8 @@ namespace AltV.Net.Native
                 size = 0
             };
 
-            public IntPtr data;
+            // Never free this pointer, its an reference to the internal altv server char pointer
+            private IntPtr data;
             public ulong size;
             private string _text;
             public string text
