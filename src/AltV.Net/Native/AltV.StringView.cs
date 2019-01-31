@@ -6,7 +6,7 @@ namespace AltV.Net.Native
 {
     internal static partial class Alt
     {
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+        [StructLayout(LayoutKind.Sequential)]
         public struct StringView
         {
             public static StringView Empty = new StringView
