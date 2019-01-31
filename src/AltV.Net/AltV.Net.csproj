@@ -16,6 +16,10 @@
         <PackageTags>altv gta bridge</PackageTags>
     </PropertyGroup>
 
+    <PropertyGroup>
+      <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+
     <PropertyGroup Condition=" '$(Configuration)' == 'Testing' ">
       <DebugSymbols>true</DebugSymbols>
       <DebugType>full</DebugType>

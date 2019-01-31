@@ -1,4 +1,3 @@
-using System;
 using System.Runtime.InteropServices;
 
 namespace AltV.Net.Native
@@ -14,6 +13,7 @@ namespace AltV.Net.Native
                 y = 0,
                 z = 0
             };
+
             public float x;
             public float y;
             public float z;

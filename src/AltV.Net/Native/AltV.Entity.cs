@@ -38,16 +38,18 @@ namespace AltV.Net.Native
             internal static extern void Entity_SetDimension(IntPtr entityPointer, ushort dimension);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern Alt.MValue Entity_GetMetaData(IntPtr entityPointer, string key, ref Alt.MValue value);
+            internal static extern MValue Entity_GetMetaData(IntPtr entityPointer, string key, ref Alt.MValue value);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Entity_SetMetaData(IntPtr entityPointer, string key, ref Alt.MValue value);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern void Entity_GetSyncedMetaData(IntPtr entityPointer, string key, ref Alt.MValue value);
+            internal static extern void
+                Entity_GetSyncedMetaData(IntPtr entityPointer, string key, ref Alt.MValue value);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern void Entity_SetSyncedMetaData(IntPtr entityPointer, string key, ref Alt.MValue value);
+            internal static extern void
+                Entity_SetSyncedMetaData(IntPtr entityPointer, string key, ref Alt.MValue value);
         }
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace AltV.Net.Native
 {
@@ -15,21 +14,12 @@ namespace AltV.Net.Native
                 size = 0
             };
 
-            // Never free this pointer, its an reference to the internal altv server char pointer
+            // Never free this pointer, its an reference to the internal alt-v server char pointer
             private IntPtr data;
-            public ulong size;
+            private ulong size;
             private string _text;
-            public string text
-            {
-                get
-                {
-                    if (this._text == null)
-                    {
-                        this._text = Marshal.PtrToStringAnsi(data);
-                    }
-                    return this._text;
-                }
-            }
+
+            public string Text => _text ?? (_text = Marshal.PtrToStringAnsi(data));
         }
     }
 }

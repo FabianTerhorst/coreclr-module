@@ -11,6 +11,7 @@ namespace AltV.Net.Native
         internal static class Events
         {
             public delegate Task PlayerConnectDelegate(IPlayer player, string reason);
+
             public delegate Task PlayerDisconnectDelegate(IPlayer player, string reason);
         }
     }

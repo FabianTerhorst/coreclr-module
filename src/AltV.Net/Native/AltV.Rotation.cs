@@ -1,4 +1,3 @@
-using System;
 using System.Runtime.InteropServices;
 
 namespace AltV.Net.Native
@@ -14,6 +13,7 @@ namespace AltV.Net.Native
                 pitch = 0,
                 yaw = 0
             };
+
             public float roll;
             public float pitch;
             public float yaw;

@@ -41,7 +41,7 @@ namespace AltV.Net.Native
             internal static extern void Vehicle_SetPrimaryColor(IntPtr vehiclePointer, byte color);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern void Vehicle_SetPrimaryColorRGB(IntPtr vehiclePointer, Alt.RGBA color);
+            internal static extern void Vehicle_SetPrimaryColorRGB(IntPtr vehiclePointer, RGBA color);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern bool Vehicle_IsSecondaryColorRGB(IntPtr vehiclePointer);
@@ -50,13 +50,13 @@ namespace AltV.Net.Native
             internal static extern byte Vehicle_GetSecondaryColor(IntPtr vehiclePointer);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern Alt.RGBA Vehicle_GetSecondaryColorRGB(IntPtr vehiclePointer);
+            internal static extern RGBA Vehicle_GetSecondaryColorRGB(IntPtr vehiclePointer);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Vehicle_SetSecondaryColor(IntPtr vehiclePointer, byte color);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern void Vehicle_SetSecondaryColorRGB(IntPtr vehiclePointer, Alt.RGBA color);
+            internal static extern void Vehicle_SetSecondaryColorRGB(IntPtr vehiclePointer, RGBA color);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern byte Vehicle_GetPearlColor(IntPtr vehiclePointer);
@@ -83,10 +83,10 @@ namespace AltV.Net.Native
             internal static extern void Vehicle_SetDashboardColor(IntPtr vehiclePointer, byte color);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern Alt.RGBA Vehicle_GetTireSmokeColor(IntPtr vehiclePointer);
+            internal static extern RGBA Vehicle_GetTireSmokeColor(IntPtr vehiclePointer);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern void Vehicle_SetTireSmokeColor(IntPtr vehiclePointer, Alt.RGBA color);
+            internal static extern void Vehicle_SetTireSmokeColor(IntPtr vehiclePointer, RGBA color);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern byte Vehicle_GetWheelType(IntPtr vehiclePointer);
@@ -116,7 +116,7 @@ namespace AltV.Net.Native
             internal static extern void Vehicle_SetNumberPlateIndex(IntPtr vehiclePointer, uint index);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void Vehicle_GetNumberPlateText(IntPtr vehiclePointer, ref Alt.StringView text);
+            internal static extern void Vehicle_GetNumberPlateText(IntPtr vehiclePointer, ref StringView text);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Vehicle_SetNumberPlateText(IntPtr vehiclePointer, string text);
@@ -140,16 +140,18 @@ namespace AltV.Net.Native
             internal static extern void Vehicle_ToggleExtra(IntPtr vehiclePointer, byte extraID, bool state);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern void Vehicle_GetNeonActive(IntPtr vehiclePointer, ref bool left, ref bool right, ref bool top, ref bool back);
+            internal static extern void Vehicle_GetNeonActive(IntPtr vehiclePointer, ref bool left, ref bool right,
+                ref bool top, ref bool back);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern void Vehicle_SetNeonActive(IntPtr vehiclePointer, bool left, bool right, bool top, bool back);
+            internal static extern void Vehicle_SetNeonActive(IntPtr vehiclePointer, bool left, bool right, bool top,
+                bool back);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern Alt.RGBA Vehicle_GetNeonColor(IntPtr vehiclePointer);
+            internal static extern RGBA Vehicle_GetNeonColor(IntPtr vehiclePointer);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern void Vehicle_SetNeonColor(IntPtr vehiclePointer, Alt.RGBA color);
+            internal static extern void Vehicle_SetNeonColor(IntPtr vehiclePointer, RGBA color);
         }
     }
 }
