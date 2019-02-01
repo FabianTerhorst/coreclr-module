@@ -90,10 +90,10 @@ namespace AltV.Net.Native
             return mValue;
         }
 
-        public byte type;
+        public Type type;
         public IntPtr storagePointer;
 
-        public MValue(byte type, IntPtr storagePointer)
+        public MValue(Type type, IntPtr storagePointer)
         {
             this.type = type;
             this.storagePointer = storagePointer;
