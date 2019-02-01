@@ -43,14 +43,14 @@ namespace AltV.Net
             return Alt.Server.Server_Hash(NativePointer, hash);
         }
 
-        public void TriggerServerEvent(string eventName, MValue[] args)
+        public void TriggerServerEvent(string eventName, params MValue[] args)
         {
             var mValueList = MValue.Nil;
             Alt.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
             Alt.Server.Server_TriggerServerEvent(NativePointer, eventName, ref mValueList);
         }
 
-        public void TriggerClientEvent(IPlayer player, string eventName, MValue[] args)
+        public void TriggerClientEvent(IPlayer player, string eventName, params MValue[] args)
         {
             var mValueList = MValue.Nil;
             Alt.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);

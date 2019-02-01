@@ -27,6 +27,8 @@ namespace AltV.Net
             
             server.TriggerServerEvent("bla", values);
             
+            server.TriggerServerEvent("bla2", MValue.Create(true), MValue.Create(false));
+            
             //var values = new[]
             //{
             //Alt.MValueCreate.MValue_CreateBool(true); //new Alt.MValue((byte) Alt.MValueType.NIL, IntPtr.Zero)

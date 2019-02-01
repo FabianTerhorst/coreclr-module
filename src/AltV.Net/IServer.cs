@@ -36,9 +36,9 @@ namespace AltV.Net
         /// </summary>
         uint Hash(string hash);
 
-        void TriggerServerEvent(string eventName, MValue[] args);
+        void TriggerServerEvent(string eventName, params MValue[] args);
 
-        void TriggerClientEvent(IPlayer player, string eventName, MValue[] args);
+        void TriggerClientEvent(IPlayer player, string eventName, params MValue[] args);
 
         IVehicle CreateVehicle(uint model, Position pos, float heading);
 
