@@ -70,6 +70,7 @@ namespace AltV.Net.Native
         //TODO: untested
         public static MValue Create(MValue[] values, string[] keys)
         {
+            if (values.Length != keys.Length) throw new ArgumentException("values length != keys length");
             var mValue = Nil;
             Alt.MValueCreate.MValue_CreateDict(values, keys, (ulong) values.Length, ref mValue);
             return mValue;
