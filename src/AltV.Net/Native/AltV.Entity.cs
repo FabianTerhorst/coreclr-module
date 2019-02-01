@@ -14,19 +14,31 @@ namespace AltV.Net.Native
             internal static extern ushort Entity_GetId(IntPtr entityPointer);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern void Entity_GetPosition(IntPtr entityPointer, ref Position position);
+            internal static extern void Entity_GetPositionRef(IntPtr entityPointer, ref Position position);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern void Entity_SetPosition(IntPtr entityPointer, ref Position position);
+            internal static extern void Entity_SetPositionRef(IntPtr entityPointer, ref Position position);
+            
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            internal static extern Position Entity_GetPosition(IntPtr entityPointer);
+
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            internal static extern void Entity_SetPosition(IntPtr entityPointer, Position position);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Entity_SetPositionXYZ(IntPtr entityPointer, float x, float y, float z);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern void Entity_GetRotation(IntPtr entityPointer, ref Rotation rotation);
+            internal static extern void Entity_GetRotationRef(IntPtr entityPointer, ref Rotation rotation);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern void Entity_SetRotation(IntPtr entityPointer, ref Rotation rotation);
+            internal static extern void Entity_SetRotationRef(IntPtr entityPointer, ref Rotation rotation);
+            
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            internal static extern Rotation Entity_GetRotation(IntPtr entityPointer);
+
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            internal static extern void Entity_SetRotation(IntPtr entityPointer, Rotation rotation);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Entity_SetRotationRPY(IntPtr entityPointer, float roll, float pitch, float yaw);

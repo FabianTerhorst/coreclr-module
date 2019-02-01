@@ -5,14 +5,24 @@ uint16_t Entity_GetID(alt::IEntity *entity)
     return entity->GetID();
 }
 
-void Entity_GetPosition(alt::IEntity *entity, alt::Position &pos)
+void Entity_GetPositionRef(alt::IEntity *entity, alt::Position &pos)
 {
     pos = entity->GetPosition();
 }
 
-void Entity_SetPosition(alt::IEntity *entity, alt::Position *pos)
+void Entity_SetPositionRef(alt::IEntity *entity, alt::Position *pos)
 {
     entity->SetPosition(*pos);
+}
+
+alt::Position Entity_GetPosition(alt::IEntity *entity)
+{
+    return entity->GetPosition();
+}
+
+void Entity_SetPosition(alt::IEntity *entity, alt::Position pos)
+{
+    entity->SetPosition(pos);
 }
 
 void Entity_SetPosition(alt::IEntity *entity, float x, float y, float z)
@@ -20,14 +30,24 @@ void Entity_SetPosition(alt::IEntity *entity, float x, float y, float z)
     entity->SetPosition(x, y, z);
 }
 
-void Entity_GetRotation(alt::IEntity *entity, alt::Rotation &rot)
+void Entity_GetRotationRef(alt::IEntity *entity, alt::Rotation &rot)
 {
     rot = entity->GetRotation();
 }
 
-void Entity_SetRotation(alt::IEntity *entity, alt::Rotation *rot)
+void Entity_SetRotationRef(alt::IEntity *entity, alt::Rotation *rot)
 {
     entity->SetRotation(*rot);
+}
+
+alt::Rotation Entity_GetRotation(alt::IEntity *entity)
+{
+    return entity->GetRotation();
+}
+
+void Entity_SetRotation(alt::IEntity *entity, alt::Rotation rot)
+{
+    entity->SetRotation(rot);
 }
 
 void Entity_SetRotationRPY(alt::IEntity *entity, float roll, float pitch, float yaw)

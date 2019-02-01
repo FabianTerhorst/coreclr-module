@@ -79,32 +79,44 @@ namespace AltV.Net.Elements.Entities
         }
 
         //TODO: create an position object per thread, or threadsafe position get method that creates a new position
-        public Position Position
+        public Position PositionRef
         {
             get
             {
-                Alt.Entity.Entity_GetPosition(NativePointer, ref position);
+                Alt.Entity.Entity_GetPositionRef(NativePointer, ref position);
                 return position;
             }
             set
             {
                 position = value;
-                Alt.Entity.Entity_SetPosition(NativePointer, ref value);
+                Alt.Entity.Entity_SetPositionRef(NativePointer, ref value);
             }
         }
+        
+        public Position Position
+        {
+            get => Alt.Entity.Entity_GetPosition(NativePointer);
+            set => Alt.Entity.Entity_SetPosition(NativePointer, value);
+        }
 
-        public Rotation Rotation
+        public Rotation RotationRef
         {
             get
             {
-                Alt.Entity.Entity_GetRotation(NativePointer, ref rotation);
+                Alt.Entity.Entity_GetRotationRef(NativePointer, ref rotation);
                 return rotation;
             }
             set
             {
                 rotation = value;
-                Alt.Entity.Entity_SetRotation(NativePointer, ref value);
+                Alt.Entity.Entity_SetRotationRef(NativePointer, ref value);
             }
+        }
+        
+        public Rotation Rotation
+        {
+            get => Alt.Entity.Entity_GetRotation(NativePointer);
+            set => Alt.Entity.Entity_SetRotation(NativePointer, value);
         }
 
         public ushort Dimension
