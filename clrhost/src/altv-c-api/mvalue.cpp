@@ -1,51 +1,50 @@
 #include "mvalue.h"
 
-alt::MValue MValue_CreateNil()
-{
-    return alt::MValue();
+void MValue_CreateNil(alt::MValue &mValue) {
+    mValue = alt::MValue();
 }
 
-alt::MValue MValue_CreateBool(const bool &val)
-{
-    return alt::MValue(val);
+void MValue_CreateBool(bool val, alt::MValue &mValue) {
+    mValue = alt::MValue(val);
 }
 
-alt::MValue MValue_CreateInt(const int32_t &val)
-{
-    return alt::MValue(val);
+void MValue_CreateInt(int64_t val, alt::MValue &mValue) {
+    mValue = alt::MValue(val);
 }
 
-alt::MValue MValue_CreateUInt(const uint32_t &val)
-{
-    return alt::MValue(val);
+void MValue_CreateUInt(uint64_t val, alt::MValue &mValue) {
+    mValue = alt::MValue(val);
 }
 
-alt::MValue MValue_CreateDouble(const double &val)
-{
-    return alt::MValue(val);
+void MValue_CreateDouble(double val, alt::MValue &mValue) {
+    mValue = alt::MValue(val);
 }
 
-alt::MValue MValue_CreateString(const char *val)
-{
-    return alt::MValue(val);
+void MValue_CreateString(const char *val, alt::MValue &mValue) {
+    mValue = alt::MValue(val);
 }
 
-alt::MValue MValue_CreateList(const alt::Array<alt::MValue> &val)
-{
-    return alt::MValue(val);
+void MValue_CreateList(const alt::MValue *val, uint64_t size, alt::MValue &mValue) {
+    auto array = alt::Array<alt::MValue>();
+    for (int i = 0; i < size; i++) {
+        array.Push(&val[i]);
+    }
+    mValue = alt::MValue(array);
 }
 
-alt::MValue MValue_CreateDict(const std::unordered_map<alt::String, alt::MValue> &val)
-{
-    return alt::MValue(val);
+void MValue_CreateDict(const alt::MValue *val, const char **keys, uint64_t size, alt::MValue &mValue) {
+    auto values = std::unordered_map<alt::String, alt::MValue>();
+    for (int i = 0;i < size;i++) {
+        values[keys[i]] = val[i];
+    }
+    mValue = alt::MValue(values);
 }
 
-alt::MValue MValue_CreateEntity(const alt::MValue::Entity &val)
-{
-    return alt::MValue(val);
+void MValue_CreateEntity(const alt::MValue::Entity *val, alt::MValue &mValue) {
+    mValue = alt::MValue(val);
 }
 
-alt::MValue MValue_CreateFunction(const alt::MValue::Function &val)
-{
-    return alt::MValue(val);
+void MValue_CreateFunction(alt::MValue* (*val)(alt::MValueList), alt::MValue &mValue) {
+    CustomInvoker invoker(val);
+    mValue = alt::MValueFunction(&invoker);
 }

@@ -9,6 +9,7 @@
 #include <altv-cpp-api/events/CPlayerConnectEvent.h>
 #include <altv-cpp-api/events/CPlayerDisconnectEvent.h>
 #include <altv-cpp-api/events/CRemoveEntityEvent.h>
+#include <altv-cpp-api/events/CServerScriptEvent.h>
 //#include "clrHost.h"
 
 /*#include <iostream>
@@ -45,6 +46,7 @@ class CSharpResource : public alt::IResource
     void (*OnPlayerConnectDelegate)(alt::IPlayer *player, const char *reason);
     void (*OnPlayerDisconnectDelegate)(alt::IPlayer *player, const char *reason);
     void (*OnEntityRemoveDelegate)(alt::IEntity *entity);
+    void (*OnServerEventDelegate)(const char *name, alt::Array<alt::MValue> *args);
     void (*MainDelegate)(alt::IServer *server);
     void *runtimeHost;
     unsigned int domainId;

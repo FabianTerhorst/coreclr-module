@@ -32,6 +32,7 @@ CSharpResource::CSharpResource(alt::IServer *server, CoreClr *coreClr, alt::IRes
     OnPlayerConnectDelegate = nullptr;
     OnPlayerDisconnectDelegate = nullptr;
     OnEntityRemoveDelegate = nullptr;
+    OnServerEventDelegate = nullptr;
 
     coreClr->CreateAppDomain(server, fullPath, "/usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.1", &runtimeHost,
                              &domainId);
@@ -42,6 +43,8 @@ CSharpResource::CSharpResource(alt::IServer *server, CoreClr *coreClr, alt::IRes
                          "OnPlayerConnect", reinterpret_cast<void **>(&OnPlayerConnectDelegate));
     coreClr->GetDelegate(server, runtimeHost, domainId, main.CStr(), "AltV.Net.Module", "OnEntityRemove",
                          reinterpret_cast<void **>(&OnEntityRemoveDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, main.CStr(), "AltV.Net.Module", "OnServerEvent",
+                         reinterpret_cast<void **>(&OnServerEventDelegate));
 }
 
 bool CSharpResource::Start() {
@@ -66,6 +69,11 @@ bool CSharpResource::OnEvent(const alt::CEvent *ev) {
             break;
         case alt::CEvent::Type::REMOVE_ENTITY_EVENT:
             OnEntityRemoveDelegate(((alt::CRemoveEntityEvent *) (ev))->GetEntity());
+            break;
+        case alt::CEvent::Type::SERVER_SCRIPT_EVENT:
+            alt::MValueList args = (((alt::CServerScriptEvent *) (ev))->GetArgs());
+            auto list = args.Get<alt::Array<alt::MValue>>();
+            OnServerEventDelegate(((alt::CServerScriptEvent *) (ev))->GetName().CStr(), &list);
             break;
     }
     return false;

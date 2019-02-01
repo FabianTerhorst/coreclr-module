@@ -122,5 +122,17 @@ namespace AltV.Net.Elements.Entities
         {
             Alt.Entity.Entity_SetRotationRPY(NativePointer, roll, pitch, yaw);
         }
+
+        public void setMetaData(string key, MValue value)
+        {
+            Alt.Entity.Entity_SetMetaData(NativePointer, key, ref value);
+        }
+
+        public MValue getMetaData(string key)
+        {
+            var value = MValue.Nil;
+            Alt.Entity.Entity_SetMetaData(NativePointer, key, ref value);
+            return value;
+        }
     }
 }

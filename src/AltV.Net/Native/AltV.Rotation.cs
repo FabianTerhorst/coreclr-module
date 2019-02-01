@@ -15,5 +15,12 @@ namespace AltV.Net.Native
         public float roll;
         public float pitch;
         public float yaw;
+
+        public Rotation(float roll, float pitch, float yaw)
+        {
+            this.roll = roll;
+            this.pitch = pitch;
+            this.yaw = yaw;
+        }
     }
 }

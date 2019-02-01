@@ -24,6 +24,9 @@ namespace AltV.Net.Native
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern uint Server_Hash(IntPtr serverPointer, string hash);
+            
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            internal static extern void Server_TriggerClientEvent(IntPtr serverPointer, IntPtr playerPointer, string eventName, ref MValue args);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern IntPtr Server_CreateVehicle(IntPtr serverPointer, uint model, Position pos,
