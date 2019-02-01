@@ -1,9 +1,10 @@
 using System;
+using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
 namespace AltV.Net
 {
-    public class Server
+    public class Server : IServer
     {
         private IntPtr NativePointer { get; }
 
@@ -27,7 +28,7 @@ namespace AltV.Net
             Alt.Server.Server_LogWarning(NativePointer, message);
         }
 
-        public void LogServer(string message)
+        public void LogError(string message)
         {
             Alt.Server.Server_LogError(NativePointer, message);
         }
@@ -42,24 +43,29 @@ namespace AltV.Net
             return Alt.Server.Server_Hash(NativePointer, hash);
         }
 
-        public void TriggerServerEvent(string eventName, ref MValue args)
+        public void TriggerServerEvent(string eventName, MValue[] args)
         {
-            Alt.Server.Server_TriggerServerEvent(NativePointer, eventName, ref args);
+            var mValueList = MValue.Nil;
+            Alt.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
+            Alt.Server.Server_TriggerServerEvent(NativePointer, eventName, ref mValueList);
         }
 
-        public void TriggerClientEvent(IntPtr playerPointer, string eventName, ref MValue args)
+        public void TriggerClientEvent(IPlayer player, string eventName, MValue[] args)
         {
-            Alt.Server.Server_TriggerClientEvent(NativePointer, playerPointer, eventName, ref args);
+            var mValueList = MValue.Nil;
+            Alt.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
+            Alt.Server.Server_TriggerClientEvent(NativePointer, player.NativePointer, eventName, ref mValueList);
         }
 
-        public IntPtr CreateVehicle(uint model, Position pos, float heading)
+        public IVehicle CreateVehicle(uint model, Position pos, float heading)
         {
-            return Alt.Server.Server_CreateVehicle(NativePointer, model, pos, heading);
+            var vehicle = new Vehicle(Alt.Server.Server_CreateVehicle(NativePointer, model, pos, heading));
+            return vehicle;
         }
 
-        public void RemoveEntity(IntPtr entityPointer)
+        public void RemoveEntity(IEntity entity)
         {
-            Alt.Server.Server_RemoveEntity(NativePointer, entityPointer);
+            Alt.Server.Server_RemoveEntity(NativePointer, entity.NativePointer);
         }
     }
 }

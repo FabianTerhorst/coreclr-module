@@ -23,6 +23,8 @@ namespace AltV.Net.Native
             FUNCTION = 9
         }
 
+        internal static readonly int Size = Marshal.SizeOf<MValue>();
+
         public static MValue Nil = new MValue(0, IntPtr.Zero);
 
         public static MValue Create(bool value)

@@ -17,6 +17,19 @@ namespace AltV.Net.Native
         public IntPtr data; // Array of MValue's
         public ulong size;
         public ulong capacity;
+
+        public MValue[] ToArray()
+        {
+            var value = data;
+            var values = new MValue[size];
+            for (var i = 0; i < values.Length; i++)
+            {
+                values[i] = Marshal.PtrToStructure<MValue>(value);
+                value += MValue.Size;
+            }
+
+            return values;
+        }
     }
 
     //TODO: remove these in module

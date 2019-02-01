@@ -22,27 +22,11 @@ namespace AltV.Net
             Alt.MValueCreate.MValue_CreateFunction(Bla, ref valueFunction);
             Alt.Server.Server_LogInfo(serverPointer, "type-fct-ptr:" + (MValue.Type) valueFunction.type);
             //Marshal.PtrToStructure<FunctionStorage>(valueFunction.storagePointer).value(MValue.Nil);
-
-            var value1 = MValue.Nil;
-            Alt.MValueCreate.MValue_CreateBool(true, ref value1);
-            var value2 = MValue.Nil;
-            Alt.MValueCreate.MValue_CreateBool(true, ref value2);
-
-            Alt.Server.Server_LogInfo(serverPointer, "type: " + ((MValue.Type) value1.type));
-
-            Alt.Server.Server_LogInfo(serverPointer, "type2: " + ((MValue.Type) value2.type));
-
-            var values = new[] {value1, value2};
-
-            var valueList = MValue.Nil;
-
-            Alt.MValueCreate.MValue_CreateList(values, (ulong) values.Length, ref valueList);
-
-            var type = (MValue.Type) valueList.type;
-
-            Alt.Server.Server_LogInfo(serverPointer, type + " type:" + valueList.type);
-
-            Alt.Server.Server_TriggerServerEvent(serverPointer, "bla", ref valueList);
+            
+            var values = new[] {MValue.Create(true), MValue.Create(false)};
+            
+            server.TriggerServerEvent("bla", values);
+            
             //var values = new[]
             //{
             //Alt.MValueCreate.MValue_CreateBool(true); //new Alt.MValue((byte) Alt.MValueType.NIL, IntPtr.Zero)
@@ -107,14 +91,7 @@ namespace AltV.Net
 
         public static void OnServerEvent(string name, ref MValueArray args)
         {
-            var value = args.data;
-            var values = new MValue[args.size];
-            var mValueSize = Marshal.SizeOf<MValue>();
-            for (var i = 0; i < values.Length; i++)
-            {
-                values[i] = Marshal.PtrToStructure<MValue>(value);
-                value += mValueSize;
-            }
+            var values = args.ToArray();
 
             server.LogInfo("server event " + name + " " + args.size);
             foreach (var mValue in values)
