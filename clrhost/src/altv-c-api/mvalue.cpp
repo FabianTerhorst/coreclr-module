@@ -35,7 +35,7 @@ void MValue_CreateList(const alt::MValue *val, uint64_t size, alt::MValue &mValu
 void MValue_CreateDict(const alt::MValue *val, const char **keys, uint64_t size, alt::MValue &mValue) {
     auto values = std::unordered_map<alt::String, alt::MValue>();
     for (int i = 0;i < size;i++) {
-        values[keys[i]] = val[i];
+        values[keys[i]] = &val[i];
     }
     mValue = alt::MValue(values);
 }

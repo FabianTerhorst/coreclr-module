@@ -53,5 +53,9 @@ namespace AltV.Net.Elements.Entities
         void setPosition(float x, float y, float z);
 
         void setRotation(float roll, float pitch, float yaw);
+
+        void setMetaData(string key, MValue value);
+
+        MValue getMetaData(string key);
     }
 }
