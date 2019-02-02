@@ -34,6 +34,7 @@ class CSharpResource : public alt::IResource
     bool OnEvent(const alt::CEvent *ev) override;
     void OnTick() override;
     bool Start() override;
+    bool Stop() override;
     alt::String GetFilePath(const char *fileName);
 
   private:

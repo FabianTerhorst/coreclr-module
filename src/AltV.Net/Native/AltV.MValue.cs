@@ -14,6 +14,9 @@ namespace AltV.Net.Native
                 ref StringView stringView);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern IntPtr Invoker_Create(MValue.Function function);
+
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void MValue_CreateNil(ref MValue mValue);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
@@ -43,7 +46,7 @@ namespace AltV.Net.Native
             internal static extern void MValue_CreateEntity(IntPtr baseObjectPointer, ref MValue mValue);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern MValue MValue_CreateFunction(MValue.Function function, ref MValue mValue);
+            internal static extern MValue MValue_CreateFunction(IntPtr invoker, ref MValue mValue);
         }
 
         [SuppressUnmanagedCodeSecurity]

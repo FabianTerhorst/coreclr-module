@@ -121,7 +121,7 @@ namespace AltV.Net
                         mValueArgs.Add(MValue.Create(dictMValues.ToArray(), value.Keys.ToArray()));
                         break;
                     case MValue.Function value:
-                        mValueArgs.Add(MValue.Create(value));
+                        mValueArgs.Add(MValue.CreateFunction(value));
                         break;
                     case MValue value:
                         mValueArgs.Add(value);

@@ -68,7 +68,7 @@ namespace AltV.Net.Native
 
                     return Create(dictMValues.ToArray(), value.Keys.ToArray());
                 case Function value:
-                    return Create(value);
+                    return CreateFunction(value);
                 case object[] value:
                     return Create((from objArrayValue in value
                         select CreateFromObject(objArrayValue)
@@ -137,10 +137,17 @@ namespace AltV.Net.Native
             return mValue;
         }
 
-        public static MValue Create(Function function)
+        public static MValue CreateFunction(Function function)
         {
             var mValue = Nil;
-            Alt.MValueCreate.MValue_CreateFunction(function, ref mValue);
+            Alt.MValueCreate.MValue_CreateFunction(Alt.MValueCreate.Invoker_Create(function), ref mValue);
+            return mValue;
+        }
+        
+        public static MValue CreateFunction(IntPtr invoker)
+        {
+            var mValue = Nil;
+            Alt.MValueCreate.MValue_CreateFunction(invoker, ref mValue);
             return mValue;
         }
 

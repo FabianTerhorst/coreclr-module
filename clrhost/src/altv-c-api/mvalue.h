@@ -28,11 +28,14 @@ public:
     }
 };
 
+extern alt::Array<CustomInvoker*> invokers;
+
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 EXPORT void String_Create(const char *value, alt::String &string);
+EXPORT CustomInvoker* Invoker_Create(MValueFunctionCallback val);
 EXPORT void MValue_CreateNil(alt::MValue &mValue);
 EXPORT void MValue_CreateBool(bool val, alt::MValue &mValue);
 EXPORT void MValue_CreateInt(int64_t val, alt::MValue &mValue);
@@ -42,7 +45,7 @@ EXPORT void MValue_CreateString(const char *val, alt::MValue &value);
 EXPORT void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValueList &valueList);
 EXPORT void MValue_CreateDict(alt::MValue *val, const char **keys, uint64_t size, alt::MValueDict &mValue);
 EXPORT void MValue_CreateEntity(alt::MValue::Entity val, alt::MValue &mValue);
-EXPORT void MValue_CreateFunction(MValueFunctionCallback val, alt::MValue &mValue);
+EXPORT void MValue_CreateFunction(CustomInvoker *val, alt::MValue &mValue);
 EXPORT bool MValue_GetBool(alt::MValue &mValue);
 EXPORT int64_t MValue_GetInt(alt::MValue &mValue);
 EXPORT uint64_t MValue_GetUInt(alt::MValue &mValue);

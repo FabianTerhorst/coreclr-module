@@ -1,7 +1,15 @@
 #include "mvalue.h"
 
+alt::Array<CustomInvoker*> invokers;
+
 void String_Create(const char *value, alt::String &string) {
     string = alt::String(value);
+}
+
+CustomInvoker* Invoker_Create(MValueFunctionCallback val) {
+    auto invoker = new CustomInvoker(val);
+    invokers.Push(invoker);
+    return invoker;
 }
 
 void MValue_CreateNil(alt::MValue &mValue) {
@@ -92,6 +100,6 @@ void MValue_CreateDict(alt::MValue *val, const char **keys, uint64_t size, alt::
     mValue = value;
 }
 
-void MValue_CreateFunction(MValueFunctionCallback val, alt::MValue &mValue) {
-    mValue = alt::MValueFunction(new CustomInvoker(val));
+void MValue_CreateFunction(CustomInvoker* val, alt::MValue &mValue) {
+    mValue = alt::MValueFunction(val);
 }
