@@ -88,14 +88,28 @@ namespace AltV.Net
                     return MValue.Create(value);
                 case string value:
                     return MValue.Create(value);
-                case MValue[] value:
-                    return MValue.Create(value);
-                case Dictionary<string, MValue> value:
-                    return MValue.Create(value.Values.ToArray(), value.Keys.ToArray());
-                case MValue.Function value:
-                    return MValue.Create(value);
                 case MValue value:
                     return value;
+                case MValue[] value:
+                    return MValue.Create(value);
+                case Dictionary<string, object> value:
+                    var dictMValues = new List<MValue>();
+                    foreach (var dictValue in value.Values)
+                    {
+                        var dictMValue = ConvertObjectToMValue(dictValue);
+                        if (!dictMValue.HasValue) continue;
+                        dictMValues.Add(dictMValue.Value);
+                    }
+
+                    return MValue.Create(dictMValues.ToArray(), value.Keys.ToArray());
+                case MValue.Function value:
+                    return MValue.Create(value);
+                case object[] value:
+                    return MValue.Create((from objArrayValue in value
+                        select ConvertObjectToMValue(objArrayValue)
+                        into objArrayMValue
+                        where objArrayMValue.HasValue
+                        select objArrayMValue.Value).ToArray());
             }
 
             return null;
