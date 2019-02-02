@@ -72,55 +72,6 @@ namespace AltV.Net
             TriggerClientEvent(player, eventName, ConvertObjectsToMValues(args));
         }
 
-        private static MValue? ConvertObjectToMValue(object obj)
-        {
-            switch (obj)
-            {
-                case IntPtr entityPointer:
-                    return MValue.Create(entityPointer);
-                case IEntity entity:
-                    return MValue.Create(entity.NativePointer);
-                case bool value:
-                    return MValue.Create(value);
-                case int value:
-                    return MValue.Create(value);
-                case uint value:
-                    return MValue.Create(value);
-                case long value:
-                    return MValue.Create(value);
-                case ulong value:
-                    return MValue.Create(value);
-                case double value:
-                    return MValue.Create(value);
-                case string value:
-                    return MValue.Create(value);
-                case MValue value:
-                    return value;
-                case MValue[] value:
-                    return MValue.Create(value);
-                case Dictionary<string, object> value:
-                    var dictMValues = new List<MValue>();
-                    foreach (var dictValue in value.Values)
-                    {
-                        var dictMValue = ConvertObjectToMValue(dictValue);
-                        if (!dictMValue.HasValue) continue;
-                        dictMValues.Add(dictMValue.Value);
-                    }
-
-                    return MValue.Create(dictMValues.ToArray(), value.Keys.ToArray());
-                case MValue.Function value:
-                    return MValue.Create(value);
-                case object[] value:
-                    return MValue.Create((from objArrayValue in value
-                        select ConvertObjectToMValue(objArrayValue)
-                        into objArrayMValue
-                        where objArrayMValue.HasValue
-                        select objArrayMValue.Value).ToArray());
-            }
-
-            return null;
-        }
-
         private static MValue[] ConvertObjectsToMValues(IEnumerable<object> objects)
         {
             var mValueArgs = new List<MValue>();
@@ -162,7 +113,7 @@ namespace AltV.Net
                         var dictMValues = new List<MValue>();
                         foreach (var dictValue in value.Values)
                         {
-                            var dictMValue = ConvertObjectToMValue(dictValue);
+                            var dictMValue = MValue.CreateFromObject(dictValue);
                             if (!dictMValue.HasValue) continue;
                             dictMValues.Add(dictMValue.Value);
                         }
@@ -176,7 +127,7 @@ namespace AltV.Net
                         mValueArgs.Add(value);
                         break;
                     case object[] value:
-                        var mValue = ConvertObjectToMValue(value);
+                        var mValue = MValue.CreateFromObject(value);
                         if (mValue.HasValue)
                         {
                             mValueArgs.Add(mValue.Value);

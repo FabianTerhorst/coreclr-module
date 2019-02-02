@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
+using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Native
 {
@@ -26,6 +29,55 @@ namespace AltV.Net.Native
         internal static readonly int Size = Marshal.SizeOf<MValue>();
 
         public static MValue Nil = new MValue(0, IntPtr.Zero);
+
+        public static MValue? CreateFromObject(object obj)
+        {
+            switch (obj)
+            {
+                case IntPtr entityPointer:
+                    return Create(entityPointer);
+                case IEntity entity:
+                    return Create(entity.NativePointer);
+                case bool value:
+                    return Create(value);
+                case int value:
+                    return Create(value);
+                case uint value:
+                    return Create(value);
+                case long value:
+                    return Create(value);
+                case ulong value:
+                    return Create(value);
+                case double value:
+                    return Create(value);
+                case string value:
+                    return Create(value);
+                case MValue value:
+                    return value;
+                case MValue[] value:
+                    return Create(value);
+                case Dictionary<string, object> value:
+                    var dictMValues = new List<MValue>();
+                    foreach (var dictValue in value.Values)
+                    {
+                        var dictMValue = CreateFromObject(dictValue);
+                        if (!dictMValue.HasValue) continue;
+                        dictMValues.Add(dictMValue.Value);
+                    }
+
+                    return Create(dictMValues.ToArray(), value.Keys.ToArray());
+                case Function value:
+                    return Create(value);
+                case object[] value:
+                    return Create((from objArrayValue in value
+                        select CreateFromObject(objArrayValue)
+                        into objArrayMValue
+                        where objArrayMValue.HasValue
+                        select objArrayMValue.Value).ToArray());
+            }
+
+            return null;
+        }
 
         public static MValue Create(bool value)
         {
