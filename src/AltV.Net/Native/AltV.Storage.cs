@@ -113,10 +113,10 @@ namespace AltV.Net.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct MValueArrayStorage
     {
-        public IntPtr value;
+        public MValueArray value;
         internal uint refCount;
 
-        public MValueArrayStorage(IntPtr value)
+        public MValueArrayStorage(MValueArray value)
         {
             refCount = 1;
             this.value = value;

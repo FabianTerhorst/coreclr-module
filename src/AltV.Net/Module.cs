@@ -23,7 +23,8 @@ namespace AltV.Net
             server.LogInfo("driver:" + vehicle.Driver);
 
             server.TriggerServerEvent("event_name", "param_string_1", "param_string_2", 1, new[] {"array_1", "array_2"},
-                new object[] {"test", new[] {1337}}, vehicle, new Dictionary<string, object> {["test"] = "test"}, Invoker.Create(Bla));
+                new object[] {"test", new[] {1337}}, vehicle, new Dictionary<string, object> {["test"] = "test"},
+                Invoker.Create(MyFunction));
 
 
             /*var dictMValue = MValue.Nil;
@@ -149,15 +150,21 @@ namespace AltV.Net
                         break;
                     case MValue.Type.FUNCTION:
                         var function = mValue.GetFunction();
-                        server.LogInfo("return: " + function(MValue.Create(new MValue[] {})).ToString());
+                        server.LogInfo("return: " +
+                                       function(MValue.Create(new MValue[] { MValue.Create(true) })));
                         break;
                 }
             }
         }
 
-        public static MValue Bla(MValue args)
+        public static MValue MyFunction(MValue args)
         {
-            server.LogInfo("called function");
+            var values = args.GetList();
+            server.LogInfo("called function with args:" + values.Length);
+            foreach (var mValue in values)
+            {
+                server.LogInfo("arg: " + mValue.ToString());
+            }
             return MValue.Nil;
         }
     }

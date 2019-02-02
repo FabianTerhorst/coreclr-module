@@ -143,7 +143,7 @@ namespace AltV.Net.Native
             Alt.MValueCreate.MValue_CreateFunction(invoker.NativePointer, ref mValue);
             return mValue;
         }
-        
+
         public static MValue CreateFunction(IntPtr invoker)
         {
             var mValue = Nil;
