@@ -45,6 +45,10 @@ EXPORT int64_t MValue_GetInt(alt::MValue &mValue);
 EXPORT uint64_t MValue_GetUInt(alt::MValue &mValue);
 EXPORT double MValue_GetDouble(alt::MValue &mValue);
 EXPORT void MValue_GetString(alt::MValue &mValue, const char *&value);
+EXPORT void MValue_GetList(alt::MValue &mValue,alt::MValue::List &value);
+EXPORT void MValue_GetDict(alt::MValue &mValue,alt::MValue::Dict &value);
+EXPORT void MValue_GetEntity(alt::MValue &mValue,alt::MValue::Entity &value);
+EXPORT void MValue_GetFunction(alt::MValue &mValue, alt::MValue* (*&value)(alt::MValueList));
 #ifdef __cplusplus
 }
 #endif

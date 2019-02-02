@@ -25,7 +25,8 @@ namespace AltV.Net.Native
             internal static extern void MValue_CreateDouble(double value, ref MValue mValue);
 
             [DllImport(_dllName, CharSet = CharSet.Auto, CallingConvention = _callingConvention)]
-            internal static extern void MValue_CreateString([MarshalAs(UnmanagedType.LPStr)] string value, ref MValue mValue);
+            internal static extern void MValue_CreateString([MarshalAs(UnmanagedType.LPStr)] string value,
+                ref MValue mValue);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void MValue_CreateList(MValue[] values, ulong size, ref MValue mValue);
@@ -46,18 +47,27 @@ namespace AltV.Net.Native
         {
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern long MValue_GetBool(ref MValue mValue);
-            
+
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern long MValue_GetInt(ref MValue mValue);
-            
+
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern ulong MValue_GetUInt(ref MValue mValue);
-            
+
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern double MValue_GetDouble(ref MValue mValue);
-            
+
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void MValue_GetString(ref MValue mValue, ref string value);
+
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern void MValue_GetList(ref MValue mValue, ref MValueArray value);
+
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern void MValue_GetEntity(ref MValue mValue, ref IntPtr value);
+
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern void MValue_GetFunction(ref MValue mValue, ref MValue.Function value);
         }
     }
 }

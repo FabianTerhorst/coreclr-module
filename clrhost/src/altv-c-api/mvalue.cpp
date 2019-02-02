@@ -44,6 +44,22 @@ void MValue_GetString(alt::MValue &mValue, const char *&value) {
     value = mValue.Get<alt::String>().CStr();
 }
 
+void MValue_GetList(alt::MValue &mValue,alt::MValue::List &value) {
+    value = mValue.Get<alt::MValue::List>();
+}
+
+void MValue_GetDict(alt::MValue &mValue,alt::MValue::Dict &value) {
+    value = mValue.Get<alt::MValue::Dict>();
+}
+
+void MValue_GetEntity(alt::MValue &mValue,alt::MValue::Entity &value) {
+    value = mValue.Get<alt::MValue::Entity>();
+}
+
+void MValue_GetFunction(alt::MValue &mValue, alt::MValue* (*&value)(alt::MValueList)) {
+    value = ((CustomInvoker*)mValue.Get<alt::MValue::Function>().invoker)->val;
+}
+
 void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValueList &valueList) {
     alt::MValueList value;
     for (int i = 0; i < size; i++) {
@@ -53,11 +69,11 @@ void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValueList &valueL
 }
 
 void MValue_CreateDict(const alt::MValue *val, const char **keys, uint64_t size, alt::MValue &mValue) {
-    auto values = std::unordered_map<alt::String, alt::MValue>();
+    alt::MValueDict value;
     for (int i = 0;i < size;i++) {
-        values[alt::String(keys[i])] = &val[i];
+        value[alt::String(keys[i])] = &val[i];
     }
-    mValue = alt::MValue(values);
+    mValue = value;
 }
 
 void MValue_CreateEntity(const alt::MValue::Entity *val, alt::MValue &mValue) {
