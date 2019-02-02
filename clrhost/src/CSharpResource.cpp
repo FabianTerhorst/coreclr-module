@@ -1,4 +1,5 @@
 #include "CSharpResource.h"
+#include "altv-c-api/mvalue.h"
 
 alt::StringView getWD() {
 #ifdef _WIN32
@@ -50,6 +51,14 @@ CSharpResource::CSharpResource(alt::IServer *server, CoreClr *coreClr, alt::IRes
 bool CSharpResource::Start() {
     alt::IResource::Start();
     MainDelegate(this->server);
+    return true;
+}
+
+bool CSharpResource::Stop() {
+    alt::IResource::Stop();
+    for(int i = 0; i < invokers.GetSize();i++) {
+        delete invokers[i];
+    }
     return true;
 }
 

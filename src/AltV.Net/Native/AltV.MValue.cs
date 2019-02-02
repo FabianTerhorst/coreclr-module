@@ -15,6 +15,9 @@ namespace AltV.Net.Native
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern IntPtr Invoker_Create(MValue.Function function);
+            
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern void Invoker_Destroy(IntPtr invokerPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void MValue_CreateNil(ref MValue mValue);

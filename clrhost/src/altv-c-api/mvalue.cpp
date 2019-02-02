@@ -12,6 +12,10 @@ CustomInvoker* Invoker_Create(MValueFunctionCallback val) {
     return invoker;
 }
 
+void Invoker_Destroy(CustomInvoker* val) {
+    delete val;
+}
+
 void MValue_CreateNil(alt::MValue &mValue) {
     mValue = alt::MValue();
 }

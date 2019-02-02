@@ -67,7 +67,7 @@ namespace AltV.Net.Native
                     }
 
                     return Create(dictMValues.ToArray(), value.Keys.ToArray());
-                case Function value:
+                case Invoker value:
                     return CreateFunction(value);
                 case object[] value:
                     return Create((from objArrayValue in value
@@ -137,10 +137,10 @@ namespace AltV.Net.Native
             return mValue;
         }
 
-        public static MValue CreateFunction(Function function)
+        public static MValue CreateFunction(Invoker invoker)
         {
             var mValue = Nil;
-            Alt.MValueCreate.MValue_CreateFunction(Alt.MValueCreate.Invoker_Create(function), ref mValue);
+            Alt.MValueCreate.MValue_CreateFunction(invoker.NativePointer, ref mValue);
             return mValue;
         }
         

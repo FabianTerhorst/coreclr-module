@@ -36,6 +36,7 @@ extern "C"
 #endif
 EXPORT void String_Create(const char *value, alt::String &string);
 EXPORT CustomInvoker* Invoker_Create(MValueFunctionCallback val);
+EXPORT void Invoker_Destroy(CustomInvoker* val);
 EXPORT void MValue_CreateNil(alt::MValue &mValue);
 EXPORT void MValue_CreateBool(bool val, alt::MValue &mValue);
 EXPORT void MValue_CreateInt(int64_t val, alt::MValue &mValue);
