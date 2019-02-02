@@ -24,7 +24,7 @@ namespace AltV.Net
             var vehicle = server.CreateVehicle(server.Hash("adder"), new Position(1, 2, 3), 1f);
 
             server.TriggerServerEvent("event_name", "param_string_1", "param_string_2", 1, new[] {"array_1", "array_2"},
-                new object[] {"test", new[] {1337}}, vehicle /*, new Dictionary<object, object> {[1337] = "test"}*/);
+                new object[] {"test", new[] {1337}}, vehicle, new Dictionary<string, object> {["test"] = "test"});
 
 
             /*var dictMValue = MValue.Nil;

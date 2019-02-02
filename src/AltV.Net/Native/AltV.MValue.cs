@@ -33,9 +33,9 @@ namespace AltV.Net.Native
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void MValue_CreateList(MValue[] values, ulong size, ref MValue mValue);
-
+            
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern MValue MValue_CreateDict([Out] MValue[] values, [Out] StringView[] keys, ulong size,
+            internal static extern MValue MValue_CreateDict(MValue[] values, string[] keys, ulong size,
                 ref MValue mValue);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]

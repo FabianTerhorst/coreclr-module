@@ -84,10 +84,10 @@ void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValueList &valueL
     valueList = value;
 }
 
-void MValue_CreateDict(const alt::MValue val[], const alt::String keys[], uint64_t size, alt::MValueDict &mValue) {
+void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::MValueDict &mValue) {
     alt::MValueDict value;
     for (int i = 0;i < size;i++) {
-        value[keys[i]] = val[i];
+        value[alt::String(keys[i])] = val[i];
     }
     mValue = value;
 }

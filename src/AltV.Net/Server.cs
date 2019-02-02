@@ -117,17 +117,8 @@ namespace AltV.Net
                             if (!dictMValue.HasValue) continue;
                             dictMValues.Add(dictMValue.Value);
                         }
-                        
-                        var stringViews = new List<StringView>();
-                    
-                        foreach (var str in value.Keys.ToArray())
-                        {
-                            var stringView = StringView.Empty;
-                            Alt.MValueCreate.String_Create(str, ref stringView);
-                            stringViews.Add(stringView);
-                        }
 
-                        mValueArgs.Add(MValue.Create(dictMValues.ToArray(), stringViews.ToArray()));
+                        mValueArgs.Add(MValue.Create(dictMValues.ToArray(), value.Keys.ToArray()));
                         break;
                     case MValue.Function value:
                         mValueArgs.Add(MValue.Create(value));

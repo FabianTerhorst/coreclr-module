@@ -64,17 +64,8 @@ namespace AltV.Net.Native
                         if (!dictMValue.HasValue) continue;
                         dictMValues.Add(dictMValue.Value);
                     }
-
-                    var stringViews = new List<StringView>();
                     
-                    foreach (var str in value.Keys.ToArray())
-                    {
-                        var stringView = StringView.Empty;
-                        Alt.MValueCreate.String_Create(str, ref stringView);
-                        stringViews.Add(stringView);
-                    }
-                    
-                    return Create(dictMValues.ToArray(), stringViews.ToArray());
+                    return Create(dictMValues.ToArray(), value.Keys.ToArray());
                 case Function value:
                     return Create(value);
                 case object[] value:
@@ -131,7 +122,7 @@ namespace AltV.Net.Native
         }
 
         //TODO: untested
-        public static MValue Create(MValue[] values, StringView[] keys)
+        public static MValue Create(MValue[] values, string[] keys)
         {
             if (values.Length != keys.Length) throw new ArgumentException("values length != keys length");
             var mValue = Nil;
