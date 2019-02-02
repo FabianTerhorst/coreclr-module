@@ -21,10 +21,10 @@ namespace AltV.Net
             entityPool = new EntityPool();
             server = new Server(serverPointer, entityPool);
 
-            var vehicle = server.CreateVehicle(Alt.Server.Server_Hash(serverPointer, "adder"), new Position {x = 1, y = 2, z = 3}, 1f);
-            
+            var vehicle = server.CreateVehicle(server.Hash("adder"), new Position(1, 2, 3), 1f);
+
             server.TriggerServerEvent("event_name", "param_string_1", "param_string_2", 1, new[] {"array_1", "array_2"},
-                new object[] {"test", new[] {1337}}, vehicle/*, new Dictionary<object, object> {[1337] = "test"}*/);
+                new object[] {"test", new[] {1337}}, vehicle /*, new Dictionary<object, object> {[1337] = "test"}*/);
 
             /*Alt.Server.Server_LogInfo(serverPointer, "Hello from C#");
             var hash = Alt.Server.Server_Hash(serverPointer, "adder");
@@ -136,6 +136,7 @@ namespace AltV.Net
                         {
                             server.LogInfo("entity type:" + entity.Type.ToString());
                         }
+
                         break;
                 }
             }
