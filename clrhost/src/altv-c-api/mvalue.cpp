@@ -1,5 +1,9 @@
 #include "mvalue.h"
 
+void String_Create(const char* value, alt::String &string) {
+    string = alt::String(value);
+}
+
 void MValue_CreateNil(alt::MValue &mValue) {
     mValue = alt::MValue();
 }
@@ -24,7 +28,7 @@ void MValue_CreateString(const char *val, alt::MValue &value) {
     value = alt::MValue(val);
 }
 
-void MValue_CreateEntity(const alt::MValue::Entity val, alt::MValue &mValue) {
+void MValue_CreateEntity(alt::MValue::Entity val, alt::MValue &mValue) {
     mValue = alt::MValue(val);
 }
 
@@ -52,8 +56,16 @@ void MValue_GetList(alt::MValue &mValue,alt::MValue::List &value) {
     value = mValue.Get<alt::MValue::List>();
 }
 
-void MValue_GetDict(alt::MValue &mValue,alt::MValue::Dict &value) {
-    value = mValue.Get<alt::MValue::Dict>();
+void MValue_GetDict(alt::MValue &mValue, alt::Array<alt::String> &keys, alt::MValue::List &values) {
+    auto dict = mValue.Get<alt::MValue::Dict>();
+    alt::Array<alt::String> mapKeys;
+    alt::MValue::List mapValues;
+    for (auto &it : dict) {
+        mapKeys.Push(it.first);
+        mapValues.Push(it.second);
+    }
+    keys = mapKeys;
+    values = mapValues;
 }
 
 void MValue_GetEntity(alt::MValue &mValue,alt::MValue::Entity &value) {
@@ -72,10 +84,10 @@ void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValueList &valueL
     valueList = value;
 }
 
-void MValue_CreateDict(const alt::MValue *val, const char **keys, uint64_t size, alt::MValue &mValue) {
+void MValue_CreateDict(const alt::MValue val[], const alt::String keys[], uint64_t size, alt::MValueDict &mValue) {
     alt::MValueDict value;
     for (int i = 0;i < size;i++) {
-        value[alt::String(keys[i])] = &val[i];
+        value[keys[i]] = val[i];
     }
     mValue = value;
 }

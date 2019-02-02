@@ -38,6 +38,34 @@ namespace AltV.Net.Native
             return values;
         }
     }
+    
+    [StructLayout(LayoutKind.Sequential)]
+    public struct StringViewArray
+    {
+        public IntPtr data; // Array of StringView's
+        public ulong size;
+        public ulong capacity;
+        
+        public static StringViewArray Nil = new StringViewArray
+        {
+            data = IntPtr.Zero,
+            size = 0,
+            capacity = 0
+        };
+
+        public StringView[] ToArray()
+        {
+            var value = data;
+            var values = new StringView[size];
+            for (var i = 0; i < values.Length; i++)
+            {
+                values[i] = Marshal.PtrToStructure<StringView>(value);
+                value += StringView.Size;
+            }
+
+            return values;
+        }
+    }
 
     //TODO: remove these in module
     /*internal static class MValueArray

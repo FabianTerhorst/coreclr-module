@@ -11,6 +11,8 @@ namespace AltV.Net.Native
             data = IntPtr.Zero,
             size = 0
         };
+        
+        internal static readonly int Size = Marshal.SizeOf<StringView>();
 
         // Never free this pointer, its an reference to the internal alt-v server char pointer
         private IntPtr data;
