@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -13,11 +14,17 @@ namespace AltV.Net
     {
         private static Server server;
 
+        private static IEntityPool entityPool;
+
         public static void Main(IntPtr serverPointer)
         {
-            server = new Server(serverPointer, new EntityPool());
+            entityPool = new EntityPool();
+            server = new Server(serverPointer, entityPool);
 
-            server.TriggerServerEvent("bla", "bla", "1337", 187);
+            var vehicle = server.CreateVehicle(Alt.Server.Server_Hash(serverPointer, "adder"), new Position {x = 1, y = 2, z = 3}, 1f);
+            
+            server.TriggerServerEvent("event_name", "param_string_1", "param_string_2", 1, new[] {"array_1", "array_2"},
+                new object[] {"test", new[] {1337}}, vehicle/*, new Dictionary<object, object> {[1337] = "test"}*/);
 
             /*Alt.Server.Server_LogInfo(serverPointer, "Hello from C#");
             var hash = Alt.Server.Server_Hash(serverPointer, "adder");
@@ -79,6 +86,9 @@ namespace AltV.Net
 
             server.LogInfo("server event " + name + " " + args.size);
             var value = MValue.Nil;
+            var valueList = MValueArray.Nil;
+            var stringValue = string.Empty;
+            var entityPointer = IntPtr.Zero;
             foreach (var mValue in values)
             {
                 value = mValue;
@@ -86,7 +96,6 @@ namespace AltV.Net
                 switch (mValue.type)
                 {
                     case MValue.Type.STRING:
-                        var stringValue = string.Empty;
                         Alt.MValueGet.MValue_GetString(ref value, ref stringValue);
                         server.LogInfo("event-value: " + stringValue);
                         break;
@@ -101,6 +110,32 @@ namespace AltV.Net
                         break;
                     case MValue.Type.DOUBLE:
                         server.LogInfo("event-value: " + Alt.MValueGet.MValue_GetDouble(ref value));
+                        break;
+                    case MValue.Type.LIST:
+                        Alt.MValueGet.MValue_GetList(ref value, ref valueList);
+                        var mValues = valueList.ToArray();
+
+                        foreach (var currListmValue in mValues)
+                        {
+                            value = currListmValue;
+                            switch (currListmValue.type)
+                            {
+                                case MValue.Type.STRING:
+                                    Alt.MValueGet.MValue_GetString(ref value, ref stringValue);
+                                    server.LogInfo("event-value: " + stringValue);
+                                    break;
+                            }
+                        }
+
+                        server.LogInfo("event-value: " + mValues.Length);
+                        break;
+                    case MValue.Type.ENTITY:
+                        server.LogInfo("event-entity-type:" + mValue.type);
+                        Alt.MValueGet.MValue_GetEntity(ref value, ref entityPointer);
+                        if (entityPool.Get(entityPointer, out var entity))
+                        {
+                            server.LogInfo("entity type:" + entity.Type.ToString());
+                        }
                         break;
                 }
             }

@@ -38,7 +38,7 @@ EXPORT void MValue_CreateDouble(double val, alt::MValue &mValue);
 EXPORT void MValue_CreateString(const char *val, alt::MValue &value);
 EXPORT void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValueList &valueList);
 EXPORT void MValue_CreateDict(const alt::MValue *val, const char **keys, uint64_t size, alt::MValue &mValue);
-EXPORT void MValue_CreateEntity(const alt::IBaseObject *val, alt::MValue &mValue);
+EXPORT void MValue_CreateEntity(const alt::MValue::Entity val, alt::MValue &mValue);
 EXPORT void MValue_CreateFunction(alt::MValue* (*val)(alt::MValueList), alt::MValue &mValue);
 EXPORT bool MValue_GetBool(alt::MValue &mValue);
 EXPORT int64_t MValue_GetInt(alt::MValue &mValue);

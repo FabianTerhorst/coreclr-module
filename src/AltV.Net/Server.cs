@@ -76,6 +76,10 @@ namespace AltV.Net
         {
             switch (obj)
             {
+                case IntPtr entityPointer:
+                    return MValue.Create(entityPointer);
+                case IEntity entity:
+                    return MValue.Create(entity.NativePointer);
                 case bool value:
                     return MValue.Create(value);
                 case int value:
@@ -124,6 +128,12 @@ namespace AltV.Net
             {
                 switch (obj)
                 {
+                    case IntPtr entityPointer:
+                        mValueArgs.Add(MValue.Create(entityPointer));
+                        break;
+                    case IEntity entity:
+                        mValueArgs.Add(MValue.Create(entity.NativePointer));
+                        break;
                     case bool value:
                         mValueArgs.Add(MValue.Create(value));
                         break;

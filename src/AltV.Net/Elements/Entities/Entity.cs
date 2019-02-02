@@ -31,7 +31,7 @@ namespace AltV.Net.Elements.Entities
         {
             NativePointer = nativePointer;
 
-            Id = Alt.Entity.Entity_GetId(NativePointer);
+            Id = Alt.Entity.Entity_GetID(NativePointer);
             Type = type;
             Exists = true;
         }

@@ -11,7 +11,7 @@ namespace AltV.Net.Native
             internal static extern ushort BaseObject_GetType(IntPtr baseObjectPointer);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern ushort Entity_GetId(IntPtr entityPointer);
+            internal static extern ushort Entity_GetID(IntPtr entityPointer);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Entity_GetPositionRef(IntPtr entityPointer, ref Position position);

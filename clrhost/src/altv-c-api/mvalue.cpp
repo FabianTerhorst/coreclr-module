@@ -24,6 +24,10 @@ void MValue_CreateString(const char *val, alt::MValue &value) {
     value = alt::MValue(val);
 }
 
+void MValue_CreateEntity(const alt::MValue::Entity val, alt::MValue &mValue) {
+    mValue = alt::MValue(val);
+}
+
 bool MValue_GetBool(alt::MValue &mValue) {
     return mValue.Get<bool>();
 }
@@ -74,10 +78,6 @@ void MValue_CreateDict(const alt::MValue *val, const char **keys, uint64_t size,
         value[alt::String(keys[i])] = &val[i];
     }
     mValue = value;
-}
-
-void MValue_CreateEntity(const alt::MValue::Entity *val, alt::MValue &mValue) {
-    mValue = alt::MValue(val);
 }
 
 void MValue_CreateFunction(alt::MValue* (*val)(alt::MValueList), alt::MValue &mValue) {
