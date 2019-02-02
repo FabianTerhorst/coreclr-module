@@ -43,7 +43,7 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
         Rotation Rotation { get; set; }
-        
+
         /// <summary>
         /// Get or set dimension of the entity.
         /// </summary>

@@ -15,7 +15,7 @@ namespace AltV.Net
 
         public static void Main(IntPtr serverPointer)
         {
-            server = new Server(serverPointer);
+            server = new Server(serverPointer, new EntityPool());
 
             server.TriggerServerEvent("bla", "bla", "1337", 187);
 

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks.Sources;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
@@ -11,9 +10,12 @@ namespace AltV.Net
     {
         private IntPtr NativePointer { get; }
 
-        internal Server(IntPtr nativePointer)
+        private IEntityPool EntityPool { get; }
+
+        internal Server(IntPtr nativePointer, IEntityPool entityPool)
         {
             NativePointer = nativePointer;
+            EntityPool = entityPool;
         }
 
         public void LogInfo(string message)
@@ -164,7 +166,12 @@ namespace AltV.Net
                         mValueArgs.Add(value);
                         break;
                     case object[] value:
-                        mValueArgs.AddRange(ConvertObjectsToMValues(value));
+                        var mValue = ConvertObjectToMValue(value);
+                        if (mValue.HasValue)
+                        {
+                            mValueArgs.Add(mValue.Value);
+                        }
+
                         break;
                 }
             }
@@ -175,11 +182,13 @@ namespace AltV.Net
         public IVehicle CreateVehicle(uint model, Position pos, float heading)
         {
             var vehicle = new Vehicle(Alt.Server.Server_CreateVehicle(NativePointer, model, pos, heading));
+            EntityPool.Register(vehicle);
             return vehicle;
         }
 
         public void RemoveEntity(IEntity entity)
         {
+            EntityPool.Remove(entity);
             Alt.Server.Server_RemoveEntity(NativePointer, entity.NativePointer);
         }
     }
