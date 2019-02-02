@@ -11,7 +11,7 @@ namespace AltV.Net.Native
     public struct MValue
     {
         // The MValue param needs to be an List type
-        public delegate MValue Function(MValue args);
+        public delegate void Function(ref MValue args, ref MValue result);
 
         public enum Type : byte
         {
@@ -236,6 +236,13 @@ namespace AltV.Net.Native
         public Function GetFunction()
         {
             return Alt.MValueGet.MValue_GetFunction(ref this);
+        }
+
+        public MValue CallFunction(MValue[] args)
+        {
+            var result = Nil;
+            Alt.MValueCall.MValue_CallFunction(ref this, args, (ulong) args.Length, ref result);
+            return result;
         }
 
         public override string ToString()

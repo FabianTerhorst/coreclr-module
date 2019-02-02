@@ -107,3 +107,11 @@ void MValue_CreateDict(alt::MValue *val, const char **keys, uint64_t size, alt::
 void MValue_CreateFunction(CustomInvoker* val, alt::MValue &mValue) {
     mValue = alt::MValueFunction(val);
 }
+
+void MValue_CallFunction(alt::MValueFunction &mValue, alt::MValue *args, uint64_t size, alt::MValue &result) {
+    alt::MValueList value;
+    for (int i = 0; i < size; i++) {
+        value.Push(args[i]);
+    }
+    result = mValue.GetInvoker()->Invoke(value);
+}

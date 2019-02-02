@@ -13,7 +13,7 @@
 #pragma clang diagnostic pop
 #endif
 
-typedef alt::MValue (*MValueFunctionCallback)(alt::MValueList);
+typedef void (*MValueFunctionCallback)(alt::MValueList*, alt::MValue*);
 
 class CustomInvoker : public alt::MValueFunction::Invoker {
 public:
@@ -24,7 +24,9 @@ public:
     }
 
     alt::MValue Invoke(alt::MValueList args) override {
-        return mValueFunctionCallback(args);
+        alt::MValue result;
+        mValueFunctionCallback(&args, &result);
+        return result;
     }
 };
 
@@ -35,8 +37,10 @@ extern "C"
 {
 #endif
 EXPORT void String_Create(const char *value, alt::String &string);
+
 EXPORT CustomInvoker* Invoker_Create(MValueFunctionCallback val);
 EXPORT void Invoker_Destroy(CustomInvoker* val);
+
 EXPORT void MValue_CreateNil(alt::MValue &mValue);
 EXPORT void MValue_CreateBool(bool val, alt::MValue &mValue);
 EXPORT void MValue_CreateInt(int64_t val, alt::MValue &mValue);
@@ -47,6 +51,7 @@ EXPORT void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValueList 
 EXPORT void MValue_CreateDict(alt::MValue *val, const char **keys, uint64_t size, alt::MValueDict &mValue);
 EXPORT void MValue_CreateEntity(alt::MValue::Entity val, alt::MValue &mValue);
 EXPORT void MValue_CreateFunction(CustomInvoker *val, alt::MValue &mValue);
+
 EXPORT bool MValue_GetBool(alt::MValue &mValue);
 EXPORT int64_t MValue_GetInt(alt::MValue &mValue);
 EXPORT uint64_t MValue_GetUInt(alt::MValue &mValue);
@@ -56,6 +61,8 @@ EXPORT void MValue_GetList(alt::MValue &mValue, alt::MValue::List &value);
 EXPORT void MValue_GetDict(alt::MValue &mValue, alt::Array<alt::String> &keys, alt::MValue::List &values);
 EXPORT void MValue_GetEntity(alt::MValue &mValue, alt::MValue::Entity &value);
 EXPORT MValueFunctionCallback MValue_GetFunction(alt::MValueFunction &mValue);
+
+EXPORT void MValue_CallFunction(alt::MValueFunction &mValue, alt::MValue *args, uint64_t size, alt::MValue &result);
 #ifdef __cplusplus
 }
 #endif

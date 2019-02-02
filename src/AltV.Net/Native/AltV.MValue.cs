@@ -83,5 +83,12 @@ namespace AltV.Net.Native
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern MValue.Function MValue_GetFunction(ref MValue mValue);
         }
+
+        [SuppressUnmanagedCodeSecurity]
+        internal static class MValueCall
+        {
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern void MValue_CallFunction(ref MValue mValue, MValue[] args, ulong size, ref MValue result);
+        }
     }
 }
