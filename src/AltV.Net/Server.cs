@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks.Sources;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
@@ -50,11 +53,70 @@ namespace AltV.Net
             Alt.Server.Server_TriggerServerEvent(NativePointer, eventName, ref mValueList);
         }
 
+        public void TriggerServerEvent(string eventName, params object[] args)
+        {
+            TriggerServerEvent(eventName, ConvertObjectsToMValues(args));
+        }
+
         public void TriggerClientEvent(IPlayer player, string eventName, params MValue[] args)
         {
             var mValueList = MValue.Nil;
             Alt.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
             Alt.Server.Server_TriggerClientEvent(NativePointer, player.NativePointer, eventName, ref mValueList);
+        }
+
+        public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)
+        {
+            TriggerClientEvent(player, eventName, ConvertObjectsToMValues(args));
+        }
+
+        private static MValue[] ConvertObjectsToMValues(IEnumerable<object> objects)
+        {
+            var mValueArgs = new List<MValue>();
+            foreach (var obj in objects)
+            {
+                switch (obj)
+                {
+                    case bool value:
+                        mValueArgs.Add(MValue.Create(value));
+                        break;
+                    case int value:
+                        mValueArgs.Add(MValue.Create(value));
+                        break;
+                    case uint value:
+                        mValueArgs.Add(MValue.Create(value));
+                        break;
+                    case long value:
+                        mValueArgs.Add(MValue.Create(value));
+                        break;
+                    case ulong value:
+                        mValueArgs.Add(MValue.Create(value));
+                        break;
+                    case double value:
+                        mValueArgs.Add(MValue.Create(value));
+                        break;
+                    case string value:
+                        mValueArgs.Add(MValue.Create(value));
+                        break;
+                    case MValue[] value:
+                        mValueArgs.Add(MValue.Create(value));
+                        break;
+                    case Dictionary<string, MValue> value:
+                        mValueArgs.Add(MValue.Create(value.Values.ToArray(), value.Keys.ToArray()));
+                        break;
+                    case MValue.Function value:
+                        mValueArgs.Add(MValue.Create(value));
+                        break;
+                    case MValue value:
+                        mValueArgs.Add(value);
+                        break;
+                    case object[] value:
+                        mValueArgs.AddRange(ConvertObjectsToMValues(value));
+                        break;
+                }
+            }
+
+            return mValueArgs.ToArray();
         }
 
         public IVehicle CreateVehicle(uint model, Position pos, float heading)

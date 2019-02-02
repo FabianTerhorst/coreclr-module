@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -15,27 +16,8 @@ namespace AltV.Net
         public static void Main(IntPtr serverPointer)
         {
             server = new Server(serverPointer);
-
-            //var mValue = new MValue((byte) MValue.Type.BOOL, BoolStorage.Create(true));
-
-            var valueFunction = MValue.Nil;
-            Alt.MValueCreate.MValue_CreateFunction(Bla, ref valueFunction);
-            Alt.Server.Server_LogInfo(serverPointer, "type-fct-ptr:" + (MValue.Type) valueFunction.type);
-            //Marshal.PtrToStructure<FunctionStorage>(valueFunction.storagePointer).value(MValue.Nil);
             
-            var values = new[] {MValue.Create(true), MValue.Create(false)};
-            
-            server.TriggerServerEvent("bla", values);
-            
-            server.TriggerServerEvent("bla2", MValue.Create(true), MValue.Create(false));
-            
-            //var values = new[]
-            //{
-            //Alt.MValueCreate.MValue_CreateBool(true); //new Alt.MValue((byte) Alt.MValueType.NIL, IntPtr.Zero)
-            //};
-
-            //var mValue = Alt.MValueCreate.MValue_CreateList2(serverPointer, values, (ulong) values.Length);
-
+            server.TriggerServerEvent("bla", "bla", "1337", 187);
 
             /*Alt.Server.Server_LogInfo(serverPointer, "Hello from C#");
             var hash = Alt.Server.Server_Hash(serverPointer, "adder");
@@ -96,9 +78,32 @@ namespace AltV.Net
             var values = args.ToArray();
 
             server.LogInfo("server event " + name + " " + args.size);
+            var value = MValue.Nil;
             foreach (var mValue in values)
             {
+                value = mValue;
                 server.LogInfo("event value type: " + ((MValue.Type) mValue.type).ToString());
+                switch (mValue.type)
+                {
+                    case MValue.Type.STRING:
+                        var stringValue = string.Empty;
+                        Alt.MValueGet.MValue_GetString(ref value, ref stringValue);
+                        server.LogInfo("event-value: " + stringValue);
+                        break;
+                    case MValue.Type.BOOL:
+                        server.LogInfo("event-value: " + Marshal.PtrToStructure<BoolStorage>(mValue.storagePointer).value);
+                        break;
+                    case MValue.Type.INT:
+                        server.LogInfo("event-value: " + Alt.MValueGet.MValue_GetInt(ref value));
+                        break;
+                    case MValue.Type.UINT:
+                        server.LogInfo("event-value: " + Marshal.PtrToStructure<UIntStorage>(mValue.storagePointer).value);
+                        break;
+                    case MValue.Type.DOUBLE:
+                        server.LogInfo("event-value: " + Marshal.PtrToStructure<DoubleStorage>(mValue.storagePointer).value);
+                        break;
+                }
+                
             }
         }
 

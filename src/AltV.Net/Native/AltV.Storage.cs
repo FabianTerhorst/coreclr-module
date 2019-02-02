@@ -22,8 +22,8 @@ namespace AltV.Net.Native
             return StorageUtils.StructToPtr(new BoolStorage(value));
         }
 
-        private uint refCount;
         public bool value;
+        private uint refCount;
 
         public BoolStorage(bool value)
         {
@@ -35,8 +35,8 @@ namespace AltV.Net.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct EntityStorage
     {
-        private uint refCount;
         public IntPtr value;
+        private uint refCount;
 
         public EntityStorage(IntPtr value)
         {
@@ -48,8 +48,8 @@ namespace AltV.Net.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct IntStorage
     {
-        private uint refCount;
         public long value;
+        private uint refCount;
 
         public IntStorage(long value)
         {
@@ -61,8 +61,8 @@ namespace AltV.Net.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct UIntStorage
     {
-        private uint refCount;
         public ulong value;
+        private uint refCount;
 
         public UIntStorage(ulong value)
         {
@@ -74,8 +74,8 @@ namespace AltV.Net.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct DoubleStorage
     {
-        private uint refCount;
         public double value;
+        private uint refCount;
 
         public DoubleStorage(double value)
         {
@@ -87,27 +87,36 @@ namespace AltV.Net.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct StringStorage
     {
-        private uint refCount;
-        public IntPtr value;
+        public StringView value;
+        public uint refCount;
 
-        public StringStorage(IntPtr value)
+        public StringStorage(StringView value)
         {
             refCount = 1;
             this.value = value;
-        }
-
-        public StringStorage(string value) : this(Marshal.StringToHGlobalAnsi(value))
-        {
         }
     }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct FunctionStorage
     {
-        private uint refCount;
         public MValue.Function value;
+        private uint refCount;
 
         public FunctionStorage(MValue.Function value)
+        {
+            refCount = 1;
+            this.value = value;
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MValueArrayStorage
+    {
+        public IntPtr value;
+        internal uint refCount;
+
+        public MValueArrayStorage(IntPtr value)
         {
             refCount = 1;
             this.value = value;

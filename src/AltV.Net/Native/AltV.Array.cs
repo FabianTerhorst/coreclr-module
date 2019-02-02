@@ -17,6 +17,13 @@ namespace AltV.Net.Native
         public IntPtr data; // Array of MValue's
         public ulong size;
         public ulong capacity;
+        
+        public static MValueArray Nil = new MValueArray
+        {
+            data = IntPtr.Zero,
+            size = 0,
+            capacity = 0
+        };
 
         public MValue[] ToArray()
         {

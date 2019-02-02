@@ -45,14 +45,14 @@ void Server_SubscribeCommand(alt::IServer *server, const char *cmd, alt::Command
     return server->SubscribeCommand(alt::StringView(cmd), cb);
 }
 
-void Server_TriggerServerEvent(alt::IServer *server, const char *ev, const alt::MValueList *args)
+void Server_TriggerServerEvent(alt::IServer *server, const char *ev, alt::MValueList &args)
 {
-    server->TriggerServerEvent(alt::StringView(ev), *args);
+    server->TriggerServerEvent(alt::StringView(ev), args);
 }
 
-void Server_TriggerClientEvent(alt::IServer *server, alt::IPlayer *target, const char *ev, const alt::MValueList *args)
+void Server_TriggerClientEvent(alt::IServer *server, alt::IPlayer *target, const char *ev, const alt::MValueList &args)
 {
-    server->TriggerClientEvent(target, alt::StringView(ev), *args);
+    server->TriggerClientEvent(target, alt::StringView(ev), args);
 }
 
 alt::IVehicle *Server_CreateVehicle(alt::IServer *server, uint32_t model, alt::Position pos, float heading)

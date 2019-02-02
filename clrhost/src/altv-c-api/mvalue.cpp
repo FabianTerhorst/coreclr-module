@@ -20,22 +20,42 @@ void MValue_CreateDouble(double val, alt::MValue &mValue) {
     mValue = alt::MValue(val);
 }
 
-void MValue_CreateString(const char *val, alt::MValue &mValue) {
-    mValue = alt::MValue(val);
+void MValue_CreateString(const char *val, alt::MValue &value) {
+    value = alt::MValue(val);
 }
 
-void MValue_CreateList(const alt::MValue *val, uint64_t size, alt::MValue &mValue) {
-    auto array = alt::Array<alt::MValue>();
+bool MValue_GetBool(alt::MValue &mValue) {
+    return mValue.Get<bool>();
+}
+
+int64_t MValue_GetInt(alt::MValue &mValue) {
+    return mValue.Get<int64_t>();
+}
+
+uint64_t MValue_GetUInt(alt::MValue &mValue) {
+    return mValue.Get<uint64_t>();
+}
+
+double MValue_GetDouble(alt::MValue &mValue) {
+    return mValue.Get<double>();
+}
+
+void MValue_GetString(alt::MValue &mValue, const char *&value) {
+    value = mValue.Get<alt::String>().CStr();
+}
+
+void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValueList &valueList) {
+    alt::MValueList value;
     for (int i = 0; i < size; i++) {
-        array.Push(&val[i]);
+        value.Push(val[i]);
     }
-    mValue = alt::MValue(array);
+    valueList = value;
 }
 
 void MValue_CreateDict(const alt::MValue *val, const char **keys, uint64_t size, alt::MValue &mValue) {
     auto values = std::unordered_map<alt::String, alt::MValue>();
     for (int i = 0;i < size;i++) {
-        values[keys[i]] = &val[i];
+        values[alt::String(keys[i])] = &val[i];
     }
     mValue = alt::MValue(values);
 }
