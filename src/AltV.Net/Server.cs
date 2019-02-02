@@ -70,6 +70,37 @@ namespace AltV.Net
             TriggerClientEvent(player, eventName, ConvertObjectsToMValues(args));
         }
 
+        private static MValue? ConvertObjectToMValue(object obj)
+        {
+            switch (obj)
+            {
+                case bool value:
+                    return MValue.Create(value);
+                case int value:
+                    return MValue.Create(value);
+                case uint value:
+                    return MValue.Create(value);
+                case long value:
+                    return MValue.Create(value);
+                case ulong value:
+                    return MValue.Create(value);
+                case double value:
+                    return MValue.Create(value);
+                case string value:
+                    return MValue.Create(value);
+                case MValue[] value:
+                    return MValue.Create(value);
+                case Dictionary<string, MValue> value:
+                    return MValue.Create(value.Values.ToArray(), value.Keys.ToArray());
+                case MValue.Function value:
+                    return MValue.Create(value);
+                case MValue value:
+                    return value;
+            }
+
+            return null;
+        }
+
         private static MValue[] ConvertObjectsToMValues(IEnumerable<object> objects)
         {
             var mValueArgs = new List<MValue>();
@@ -101,8 +132,16 @@ namespace AltV.Net
                     case MValue[] value:
                         mValueArgs.Add(MValue.Create(value));
                         break;
-                    case Dictionary<string, MValue> value:
-                        mValueArgs.Add(MValue.Create(value.Values.ToArray(), value.Keys.ToArray()));
+                    case Dictionary<string, object> value:
+                        var dictMValues = new List<MValue>();
+                        foreach (var dictValue in value.Values)
+                        {
+                            var dictMValue = ConvertObjectToMValue(dictValue);
+                            if (!dictMValue.HasValue) continue;
+                            dictMValues.Add(dictMValue.Value);
+                        }
+
+                        mValueArgs.Add(MValue.Create(dictMValues.ToArray(), value.Keys.ToArray()));
                         break;
                     case MValue.Function value:
                         mValueArgs.Add(MValue.Create(value));

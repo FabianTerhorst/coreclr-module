@@ -16,7 +16,7 @@ namespace AltV.Net
         public static void Main(IntPtr serverPointer)
         {
             server = new Server(serverPointer);
-            
+
             server.TriggerServerEvent("bla", "bla", "1337", 187);
 
             /*Alt.Server.Server_LogInfo(serverPointer, "Hello from C#");
@@ -91,19 +91,18 @@ namespace AltV.Net
                         server.LogInfo("event-value: " + stringValue);
                         break;
                     case MValue.Type.BOOL:
-                        server.LogInfo("event-value: " + Marshal.PtrToStructure<BoolStorage>(mValue.storagePointer).value);
+                        server.LogInfo("event-value: " + Alt.MValueGet.MValue_GetBool(ref value));
                         break;
                     case MValue.Type.INT:
                         server.LogInfo("event-value: " + Alt.MValueGet.MValue_GetInt(ref value));
                         break;
                     case MValue.Type.UINT:
-                        server.LogInfo("event-value: " + Marshal.PtrToStructure<UIntStorage>(mValue.storagePointer).value);
+                        server.LogInfo("event-value: " + Alt.MValueGet.MValue_GetUInt(ref value));
                         break;
                     case MValue.Type.DOUBLE:
-                        server.LogInfo("event-value: " + Marshal.PtrToStructure<DoubleStorage>(mValue.storagePointer).value);
+                        server.LogInfo("event-value: " + Alt.MValueGet.MValue_GetDouble(ref value));
                         break;
                 }
-                
             }
         }
 
