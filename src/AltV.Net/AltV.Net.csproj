@@ -29,10 +29,6 @@
       <DebugType>full</DebugType>
     </PropertyGroup>
 
-    <ItemGroup>
-      <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    </ItemGroup>
-
     <Target Name="CopyFiles" AfterTargets="build" Condition=" '$(Configuration)' == 'Testing' ">
         <Copy SourceFiles="$(OutputPath)\AALTV.Net.dll;$(OutputPath)\ALTV.Net.pdb" DestinationFolder="../../../server/dotnet/modules/" SkipUnchangedFiles="false" />
     </Target>

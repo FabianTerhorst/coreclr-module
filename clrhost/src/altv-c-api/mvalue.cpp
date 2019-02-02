@@ -1,6 +1,6 @@
 #include "mvalue.h"
 
-void String_Create(const char* value, alt::String &string) {
+void String_Create(const char *value, alt::String &string) {
     string = alt::String(value);
 }
 
@@ -52,7 +52,7 @@ void MValue_GetString(alt::MValue &mValue, const char *&value) {
     value = mValue.Get<alt::String>().CStr();
 }
 
-void MValue_GetList(alt::MValue &mValue,alt::MValue::List &value) {
+void MValue_GetList(alt::MValue &mValue, alt::MValue::List &value) {
     value = mValue.Get<alt::MValue::List>();
 }
 
@@ -68,12 +68,12 @@ void MValue_GetDict(alt::MValue &mValue, alt::Array<alt::String> &keys, alt::MVa
     values = mapValues;
 }
 
-void MValue_GetEntity(alt::MValue &mValue,alt::MValue::Entity &value) {
+void MValue_GetEntity(alt::MValue &mValue, alt::MValue::Entity &value) {
     value = mValue.Get<alt::MValue::Entity>();
 }
 
-void MValue_GetFunction(alt::MValue &mValue, alt::MValue* (*&value)(alt::MValueList)) {
-    value = ((CustomInvoker*)mValue.Get<alt::MValue::Function>().invoker)->val;
+MValueFunctionCallback MValue_GetFunction(alt::MValueFunction &mValue) {
+    return ((CustomInvoker *) mValue.GetInvoker())->mValueFunctionCallback;
 }
 
 void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValueList &valueList) {
@@ -84,15 +84,14 @@ void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValueList &valueL
     valueList = value;
 }
 
-void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::MValueDict &mValue) {
+void MValue_CreateDict(alt::MValue *val, const char **keys, uint64_t size, alt::MValueDict &mValue) {
     alt::MValueDict value;
-    for (int i = 0;i < size;i++) {
+    for (int i = 0; i < size; i++) {
         value[alt::String(keys[i])] = val[i];
     }
     mValue = value;
 }
 
-void MValue_CreateFunction(alt::MValue* (*val)(alt::MValueList), alt::MValue &mValue) {
-    CustomInvoker invoker(val);
-    mValue = alt::MValueFunction(&invoker);
+void MValue_CreateFunction(MValueFunctionCallback val, alt::MValue &mValue) {
+    mValue = alt::MValueFunction(new CustomInvoker(val));
 }

@@ -10,8 +10,9 @@ namespace AltV.Net.Native
         internal static class MValueCreate
         {
             [DllImport(_dllName, CharSet = CharSet.Auto, CallingConvention = _callingConvention)]
-            internal static extern void String_Create([MarshalAs(UnmanagedType.LPStr)] string value, ref StringView stringView);
-            
+            internal static extern void String_Create([MarshalAs(UnmanagedType.LPStr)] string value,
+                ref StringView stringView);
+
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void MValue_CreateNil(ref MValue mValue);
 
@@ -33,7 +34,7 @@ namespace AltV.Net.Native
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void MValue_CreateList(MValue[] values, ulong size, ref MValue mValue);
-            
+
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern MValue MValue_CreateDict(MValue[] values, string[] keys, ulong size,
                 ref MValue mValue);
@@ -49,7 +50,7 @@ namespace AltV.Net.Native
         internal static class MValueGet
         {
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern long MValue_GetBool(ref MValue mValue);
+            internal static extern bool MValue_GetBool(ref MValue mValue);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern long MValue_GetInt(ref MValue mValue);
@@ -65,15 +66,16 @@ namespace AltV.Net.Native
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void MValue_GetList(ref MValue mValue, ref MValueArray value);
-            
+
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void MValue_GetDict(ref MValue mValue, ref StringViewArray keys, ref MValueArray values);
+            internal static extern void MValue_GetDict(ref MValue mValue, ref StringViewArray keys,
+                ref MValueArray values);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void MValue_GetEntity(ref MValue mValue, ref IntPtr value);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void MValue_GetFunction(ref MValue mValue, ref MValue.Function value);
+            internal static extern MValue.Function MValue_GetFunction(ref MValue mValue);
         }
     }
 }

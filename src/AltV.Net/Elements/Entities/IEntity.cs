@@ -16,7 +16,7 @@ namespace AltV.Net.Elements.Entities
         IntPtr NativePointer { get; }
 
         /// <summary>
-        /// Get current entity existance
+        /// Get current entity existence
         ///
         /// WARNING: Do NOT use this.
         /// </summary>

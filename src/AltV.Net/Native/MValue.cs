@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using AltV.Net.Elements.Entities;
@@ -10,7 +11,7 @@ namespace AltV.Net.Native
     public struct MValue
     {
         // The MValue param needs to be an List type
-        public delegate ref MValue Function(MValue args);
+        public delegate MValue Function(MValue args);
 
         public enum Type : byte
         {
@@ -64,7 +65,7 @@ namespace AltV.Net.Native
                         if (!dictMValue.HasValue) continue;
                         dictMValues.Add(dictMValue.Value);
                     }
-                    
+
                     return Create(dictMValues.ToArray(), value.Keys.ToArray());
                 case Function value:
                     return Create(value);
@@ -121,7 +122,6 @@ namespace AltV.Net.Native
             return mValue;
         }
 
-        //TODO: untested
         public static MValue Create(MValue[] values, string[] keys)
         {
             if (values.Length != keys.Length) throw new ArgumentException("values length != keys length");
@@ -153,11 +153,111 @@ namespace AltV.Net.Native
             this.storagePointer = storagePointer;
         }
 
-        /*~MValue()
+        public bool GetBool()
         {
-            if (storagePointer == IntPtr.Zero) return;
-            Marshal.FreeHGlobal(storagePointer);
-            storagePointer = IntPtr.Zero;
-        }*/
+            return Alt.MValueGet.MValue_GetBool(ref this);
+        }
+
+        public long GetInt()
+        {
+            return Alt.MValueGet.MValue_GetInt(ref this);
+        }
+
+        public ulong GetUint()
+        {
+            return Alt.MValueGet.MValue_GetUInt(ref this);
+        }
+
+        public double GetDouble()
+        {
+            return Alt.MValueGet.MValue_GetDouble(ref this);
+        }
+
+        public void GetString(ref string value)
+        {
+            Alt.MValueGet.MValue_GetString(ref this, ref value);
+        }
+
+        public string GetString()
+        {
+            var value = string.Empty;
+            Alt.MValueGet.MValue_GetString(ref this, ref value);
+            return value;
+        }
+
+        public void GetEntityPointer(ref IntPtr entityPointer)
+        {
+            Alt.MValueGet.MValue_GetEntity(ref this, ref entityPointer);
+        }
+
+        public IntPtr GetEntityPointer()
+        {
+            var entityPointer = IntPtr.Zero;
+            Alt.MValueGet.MValue_GetEntity(ref this, ref entityPointer);
+            return entityPointer;
+        }
+
+        public void GetList(ref MValueArray mValueArray)
+        {
+            Alt.MValueGet.MValue_GetList(ref this, ref mValueArray);
+        }
+
+        public MValue[] GetList()
+        {
+            var mValueArray = MValueArray.Nil;
+            Alt.MValueGet.MValue_GetList(ref this, ref mValueArray);
+            return mValueArray.ToArray();
+        }
+
+        public Dictionary<string, MValue> GetDictionary()
+        {
+            var stringViewArrayRef = StringViewArray.Nil;
+            var valueArrayRef = MValueArray.Nil;
+            Alt.MValueGet.MValue_GetDict(ref this, ref stringViewArrayRef, ref valueArrayRef);
+            var stringViewArray = stringViewArrayRef.ToArray();
+            var dictionary = new Dictionary<string, MValue>();
+            var valueArray = valueArrayRef.ToArray();
+            var i = 0;
+            foreach (var key in stringViewArray)
+            {
+                dictionary[key.Text] = valueArray[i++];
+            }
+
+            return dictionary;
+        }
+
+        public Function GetFunction()
+        {
+            return Alt.MValueGet.MValue_GetFunction(ref this);
+        }
+
+        public override string ToString()
+        {
+            switch (type)
+            {
+                case Type.NIL:
+                    return "Nil";
+                case Type.BOOL:
+                    return GetBool().ToString();
+                case Type.INT:
+                    return GetInt().ToString();
+                case Type.UINT:
+                    return GetUint().ToString();
+                case Type.DOUBLE:
+                    return GetDouble().ToString(CultureInfo.InvariantCulture);
+                case Type.STRING:
+                    return GetString();
+                case Type.LIST:
+                    return GetList().Length.ToString();
+                case Type.DICT:
+                    return GetDictionary().Count.ToString();
+                case Type.ENTITY:
+                    return "MValue<Entity>";
+                case Type.FUNCTION:
+                    return "MValue<Function>";
+            }
+
+            return "MValue<>";
+        }
     }
 }

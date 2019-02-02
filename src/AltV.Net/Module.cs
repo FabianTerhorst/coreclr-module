@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using AltV.Net.Native;
 
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
@@ -23,8 +20,10 @@ namespace AltV.Net
 
             var vehicle = server.CreateVehicle(server.Hash("adder"), new Position(1, 2, 3), 1f);
 
+            server.LogInfo("driver:" + vehicle.Driver);
+
             server.TriggerServerEvent("event_name", "param_string_1", "param_string_2", 1, new[] {"array_1", "array_2"},
-                new object[] {"test", new[] {1337}}, vehicle, new Dictionary<string, object> {["test"] = "test"});
+                new object[] {"test", new[] {1337}}, vehicle, new Dictionary<string, object> {["test"] = "test"}, MValue.Create(Bla));
 
 
             /*var dictMValue = MValue.Nil;
@@ -98,54 +97,42 @@ namespace AltV.Net
             var values = args.ToArray();
 
             server.LogInfo("server event " + name + " " + args.size);
-            var value = MValue.Nil;
-            var valueList = MValueArray.Nil;
-            var stringViewArray = StringViewArray.Nil;
-            var stringValue = string.Empty;
             var entityPointer = IntPtr.Zero;
             foreach (var mValue in values)
             {
-                value = mValue;
                 server.LogInfo("event value type: " + ((MValue.Type) mValue.type).ToString());
                 switch (mValue.type)
                 {
                     case MValue.Type.STRING:
-                        Alt.MValueGet.MValue_GetString(ref value, ref stringValue);
-                        server.LogInfo("event-value: " + stringValue);
+                        server.LogInfo("event-value: " + mValue.GetString());
                         break;
                     case MValue.Type.BOOL:
-                        server.LogInfo("event-value: " + Alt.MValueGet.MValue_GetBool(ref value));
+                        server.LogInfo("event-value: " + mValue.GetBool());
                         break;
                     case MValue.Type.INT:
-                        server.LogInfo("event-value: " + Alt.MValueGet.MValue_GetInt(ref value));
+                        server.LogInfo("event-value: " + mValue.GetInt());
                         break;
                     case MValue.Type.UINT:
-                        server.LogInfo("event-value: " + Alt.MValueGet.MValue_GetUInt(ref value));
+                        server.LogInfo("event-value: " + mValue.GetUint());
                         break;
                     case MValue.Type.DOUBLE:
-                        server.LogInfo("event-value: " + Alt.MValueGet.MValue_GetDouble(ref value));
+                        server.LogInfo("event-value: " + mValue.GetDouble());
                         break;
                     case MValue.Type.LIST:
-                        Alt.MValueGet.MValue_GetList(ref value, ref valueList);
-                        var mValues = valueList.ToArray();
 
-                        foreach (var currListmValue in mValues)
+                        foreach (var currListmValue in mValue.GetList())
                         {
-                            value = currListmValue;
                             switch (currListmValue.type)
                             {
                                 case MValue.Type.STRING:
-                                    Alt.MValueGet.MValue_GetString(ref value, ref stringValue);
-                                    server.LogInfo("event-value: " + stringValue);
+                                    server.LogInfo("event-value: " + currListmValue.GetString());
                                     break;
                             }
                         }
 
-                        server.LogInfo("event-value: " + mValues.Length);
                         break;
                     case MValue.Type.ENTITY:
-                        server.LogInfo("event-entity-type:" + mValue.type);
-                        Alt.MValueGet.MValue_GetEntity(ref value, ref entityPointer);
+                        mValue.GetEntityPointer(ref entityPointer);
                         if (entityPool.Get(entityPointer, out var entity))
                         {
                             server.LogInfo("entity type:" + entity.Type.ToString());
@@ -153,40 +140,25 @@ namespace AltV.Net
 
                         break;
                     case MValue.Type.DICT:
-                        server.LogInfo("event-type-dict: " + mValue.type);
-                        Alt.MValueGet.MValue_GetDict(ref value, ref stringViewArray, ref valueList);
-                        var mValues2 = valueList.ToArray();
-                        server.LogInfo("value-size:" + mValues2.Length);
-
-                        foreach (var currListmValue in mValues2)
+                        var dictionary = mValue.GetDictionary();
+                        foreach (var (key, value) in dictionary)
                         {
-                            value = currListmValue;
-                            switch (currListmValue.type)
-                            {
-                                case MValue.Type.STRING:
-                                    Alt.MValueGet.MValue_GetString(ref value, ref stringValue);
-                                    server.LogInfo("value: " + stringValue);
-                                    break;
-                            }
-                            server.LogInfo("dict-value-type:" + value.type);
+                            server.LogInfo(key + " " + value.ToString());
                         }
 
-                        var mStringValues = stringViewArray.ToArray();
-                        server.LogInfo("key-size:" + mValues2.Length);
-                        foreach (var currListmValue in mStringValues)
-                        {
-                            server.LogInfo("key: " + currListmValue.Text);
-                        }
-
+                        break;
+                    case MValue.Type.FUNCTION:
+                        var function = mValue.GetFunction();
+                        server.LogInfo("return: " + function(MValue.Create(new MValue[] {})).ToString());
                         break;
                 }
             }
         }
 
-        public static ref MValue Bla(MValue args)
+        public static MValue Bla(MValue args)
         {
             server.LogInfo("called function");
-            return ref MValue.Nil;
+            return MValue.Nil;
         }
     }
 }

@@ -21,18 +21,21 @@ namespace AltV.Net.Elements.Entities
         public ushort Id { get; }
         public EntityType Type { get; }
 
+        private protected IEntityPool EntityPool { get; }
+
         public object this[string key]
         {
             get => data.TryGetValue(key, out var value) ? value : null;
             set => data[key] = value;
         }
 
-        protected Entity(IntPtr nativePointer, EntityType type)
+        protected Entity(IntPtr nativePointer, EntityType type, IEntityPool entityPool)
         {
             NativePointer = nativePointer;
 
             Id = Alt.Entity.Entity_GetID(NativePointer);
             Type = type;
+            EntityPool = entityPool;
             Exists = true;
         }
 
