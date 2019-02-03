@@ -79,11 +79,8 @@ namespace AltV.Net
             {
                 switch (obj)
                 {
-                    case IntPtr entityPointer:
-                        mValueArgs.Add(MValue.Create(entityPointer));
-                        break;
                     case IEntity entity:
-                        mValueArgs.Add(MValue.Create(entity.NativePointer));
+                        mValueArgs.Add(MValue.Create(entity));
                         break;
                     case bool value:
                         mValueArgs.Add(MValue.Create(value));
@@ -121,7 +118,10 @@ namespace AltV.Net
                         mValueArgs.Add(MValue.Create(dictMValues.ToArray(), value.Keys.ToArray()));
                         break;
                     case Invoker value:
-                        mValueArgs.Add(MValue.CreateFunction(value));
+                        mValueArgs.Add(MValue.Create(value));
+                        break;
+                    case MValue.Function value:
+                        mValueArgs.Add(MValue.Create(value));
                         break;
                     case MValue value:
                         mValueArgs.Add(value);

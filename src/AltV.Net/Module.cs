@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
@@ -22,10 +22,27 @@ namespace AltV.Net
 
             server.LogInfo("driver:" + vehicle.Driver);
 
+            var function = new MValue.Function((ref MValue args, ref MValue result) =>
+            {
+                server.LogInfo("args:" + args.GetList().Length);
+                result = MValue.Create("test7");
+            });
+
+            //var func = Function.Create<Func<string>>(MyFunction2);
+
+            var func = Function.Create<Action<string, object[], int[], IVehicle[]>>(MyFunction2);
+            var func2 = Function.Create<Func<string, bool>>(MyFunction3);
+            func.Call(entityPool,
+                MValue.Create(new[]
+                {
+                    MValue.Create("bla7"), MValue.Create(new[] {MValue.Create("bla2")}),
+                    MValue.Create(new[] {MValue.Create(1337)}), MValue.Create(new []{MValue.Create(vehicle)})
+                }));
+
             server.TriggerServerEvent("event_name", "param_string_1", "param_string_2", 1, new[] {"array_1", "array_2"},
                 new object[] {"test", new[] {1337}}, vehicle,
-                new Dictionary<string, object> {["test"] = "test", ["invoker"] = Invoker.Create(MyFunction)},
-                Invoker.Create(MyFunction));
+                /*new Dictionary<string, object> {["test"] = "test", ["invoker"] = MValue.Create(MyFunction)},
+                MValue.Create(MyFunction),*/ (MValue.Function) MyFunction, function);
 
 
             /*var dictMValue = MValue.Nil;
@@ -150,7 +167,8 @@ namespace AltV.Net
 
                         break;
                     case MValue.Type.FUNCTION:
-                        server.LogInfo("result:" + mValue.CallFunction(new [] {MValue.Create(true), MValue.Create("test_Arg")}));
+                        server.LogInfo("result:" + mValue.CallFunction(new[]
+                                           {MValue.Create(true), MValue.Create("test_Arg")}));
                         break;
                 }
             }
@@ -166,6 +184,19 @@ namespace AltV.Net
             }
 
             result = MValue.Create("bla");
+        }
+
+        public static void MyFunction2(string text, object[] bla, int[] bla2, IVehicle[] vehicles)
+        {
+            server.LogInfo("text=" + text);
+            if (vehicles.Length == 0) return;
+            server.LogInfo("pos:" + vehicles[0].Position.x + " " + vehicles[0].Position.y + " " + vehicles[0].Position.z);
+        }
+
+        public static bool MyFunction3(string text)
+        {
+            server.LogInfo("text=" + text);
+            return true;
         }
     }
 }

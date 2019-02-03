@@ -35,10 +35,8 @@ namespace AltV.Net.Native
         {
             switch (obj)
             {
-                case IntPtr entityPointer:
-                    return Create(entityPointer);
                 case IEntity entity:
-                    return Create(entity.NativePointer);
+                    return Create(entity);
                 case bool value:
                     return Create(value);
                 case int value:
@@ -68,7 +66,9 @@ namespace AltV.Net.Native
 
                     return Create(dictMValues.ToArray(), value.Keys.ToArray());
                 case Invoker value:
-                    return CreateFunction(value);
+                    return Create(value);
+                case Function value:
+                    return Create(value);
                 case object[] value:
                     return Create((from objArrayValue in value
                         select CreateFromObject(objArrayValue)
@@ -130,24 +130,24 @@ namespace AltV.Net.Native
             return mValue;
         }
 
-        public static MValue Create(IntPtr entityPointer)
+        public static MValue Create(IEntity entity)
         {
             var mValue = Nil;
-            Alt.MValueCreate.MValue_CreateEntity(entityPointer, ref mValue);
+            Alt.MValueCreate.MValue_CreateEntity(entity.NativePointer, ref mValue);
             return mValue;
         }
 
-        public static MValue CreateFunction(Invoker invoker)
+        public static MValue Create(Function function)
+        {
+            var mValue = Nil;
+            Alt.MValueCreate.MValue_CreateFunction(Alt.MValueCreate.Invoker_Create(function), ref mValue);
+            return mValue;
+        }
+
+        public static MValue Create(Invoker invoker)
         {
             var mValue = Nil;
             Alt.MValueCreate.MValue_CreateFunction(invoker.NativePointer, ref mValue);
-            return mValue;
-        }
-
-        public static MValue CreateFunction(IntPtr invoker)
-        {
-            var mValue = Nil;
-            Alt.MValueCreate.MValue_CreateFunction(invoker, ref mValue);
             return mValue;
         }
 
