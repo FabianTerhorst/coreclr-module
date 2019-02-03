@@ -1,9 +1,15 @@
 using System;
+using AltV.Net.Events;
 
 namespace AltV.Net
 {
     public static partial class Alt
     {
+        public static void On(string eventName, EventDelegate eventDelegate)
+        {
+            _module.On(eventName, eventDelegate);
+        }
+        
         public static void On(string eventName, Action function)
         {
             _module.On(eventName, Function.Create(function));

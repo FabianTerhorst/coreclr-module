@@ -66,12 +66,34 @@ namespace AltV.Net
 
         public static void OnServerEvent(string name, ref MValueArray args)
         {
-            if (!_module.EventHandlers.TryGetValue(name, out var eventHandlers)) return;
-            Server.Instance.LogInfo(eventHandlers.ToString());
-            var argArray = args.ToArray();
-            foreach (var eventHandler in eventHandlers)
+            MValue[] argArray = null;
+            if (_module.EventHandlers.TryGetValue(name, out var eventHandlers))
             {
-                eventHandler.Call(Server.Instance.EntityPool, argArray);
+                argArray = args.ToArray();
+                foreach (var eventHandler in eventHandlers)
+                {
+                    eventHandler.Call(Server.Instance.EntityPool, argArray);
+                }
+            }
+
+            if (_module.EventDelegateHandlers.TryGetValue(name, out var eventDelegates))
+            {
+                if (argArray == null)
+                {
+                    argArray = args.ToArray();
+                }
+
+                var length = argArray.Length;
+                var argObjects = new object[length];
+                for (var i = 0; i < length; i++)
+                {
+                    argObjects[i] = argArray[i].ToObject();
+                }
+
+                foreach (var eventHandler in eventDelegates)
+                {
+                    eventHandler(argObjects);
+                }
             }
         }
     }

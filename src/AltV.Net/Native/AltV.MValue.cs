@@ -66,9 +66,9 @@ namespace AltV.Net.Native
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern double MValue_GetDouble(ref MValue mValue);
-
+            
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void MValue_GetString(ref MValue mValue, ref string value);
+            internal static extern void MValue_GetString(ref MValue mValue, ref StringView value);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void MValue_GetList(ref MValue mValue, ref MValueArray value);

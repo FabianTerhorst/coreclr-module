@@ -56,7 +56,6 @@ EXPORT bool MValue_GetBool(alt::MValue &mValue);
 EXPORT int64_t MValue_GetInt(alt::MValue &mValue);
 EXPORT uint64_t MValue_GetUInt(alt::MValue &mValue);
 EXPORT double MValue_GetDouble(alt::MValue &mValue);
-EXPORT void MValue_GetString(alt::MValue &mValue, const char *&value);
 EXPORT void MValue_GetList(alt::MValue &mValue, alt::MValue::List &value);
 EXPORT void MValue_GetDict(alt::MValue &mValue, alt::Array<alt::String> &keys, alt::MValue::List &values);
 EXPORT void MValue_GetEntity(alt::MValue &mValue, alt::MValue::Entity &value);

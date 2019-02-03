@@ -182,16 +182,11 @@ namespace AltV.Net.Native
             return AltVNative.MValueGet.MValue_GetDouble(ref this);
         }
 
-        public void GetString(ref string value)
-        {
-            AltVNative.MValueGet.MValue_GetString(ref this, ref value);
-        }
-
         public string GetString()
         {
-            var value = string.Empty;
+            var value = StringView.Empty;
             AltVNative.MValueGet.MValue_GetString(ref this, ref value);
-            return value;
+            return value.Text;
         }
 
         public void GetEntityPointer(ref IntPtr entityPointer)

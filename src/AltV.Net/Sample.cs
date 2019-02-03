@@ -4,7 +4,8 @@ namespace AltV.Net
     {
         public void onStart()
         {
-            Alt.On<string>("test", s => { Alt.Server.LogInfo("test=" + s); });
+            Alt.On<string>("test", s => { Alt.Log("test=" + s); });
+            Alt.On("test", args => { Alt.Log("args=" + args[0]); });
             Alt.Emit("test", "bla");
             Alt.On("bla", bla);
             Alt.On<string>("bla2", bla2);

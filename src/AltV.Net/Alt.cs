@@ -16,6 +16,11 @@ namespace AltV.Net
             Server.TriggerServerEvent(eventName, args);
         }
 
+        public static void Log(string message)
+        {
+            Server.LogInfo(message);
+        }
+
         internal static void Setup(Module module)
         {
             _module = module;
