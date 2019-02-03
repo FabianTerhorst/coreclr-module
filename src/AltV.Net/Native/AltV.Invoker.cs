@@ -6,7 +6,7 @@ namespace AltV.Net.Native
     {
         public static Invoker Create(MValue.Function function)
         {
-            return new Invoker(Alt.MValueCreate.Invoker_Create(function));
+            return new Invoker(AltVNative.MValueCreate.Invoker_Create(function));
         }
 
         internal IntPtr NativePointer { get; }
@@ -18,7 +18,7 @@ namespace AltV.Net.Native
 
         public void Destroy()
         {
-            Alt.MValueCreate.Invoker_Destroy(NativePointer);
+            AltVNative.MValueCreate.Invoker_Destroy(NativePointer);
         }
 
         public void Dispose()

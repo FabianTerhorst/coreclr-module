@@ -34,18 +34,21 @@ CSharpResource::CSharpResource(alt::IServer *server, CoreClr *coreClr, alt::IRes
     OnPlayerDisconnectDelegate = nullptr;
     OnEntityRemoveDelegate = nullptr;
     OnServerEventDelegate = nullptr;
+    OnStopDelegate = nullptr;
 
     coreClr->CreateAppDomain(server, fullPath, "/usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.1", &runtimeHost,
                              &domainId);
 
-    coreClr->GetDelegate(server, runtimeHost, domainId, main.CStr(), "AltV.Net.Module", "Main",
+    coreClr->GetDelegate(server, runtimeHost, domainId, main.CStr(), "AltV.Net.ModuleWrapper", "Main",
                          reinterpret_cast<void **>(&MainDelegate));
-    coreClr->GetDelegate(server, runtimeHost, domainId, main.CStr(), "AltV.Net.Module",
+    coreClr->GetDelegate(server, runtimeHost, domainId, main.CStr(), "AltV.Net.ModuleWrapper",
                          "OnPlayerConnect", reinterpret_cast<void **>(&OnPlayerConnectDelegate));
-    coreClr->GetDelegate(server, runtimeHost, domainId, main.CStr(), "AltV.Net.Module", "OnEntityRemove",
+    coreClr->GetDelegate(server, runtimeHost, domainId, main.CStr(), "AltV.Net.ModuleWrapper", "OnEntityRemove",
                          reinterpret_cast<void **>(&OnEntityRemoveDelegate));
-    coreClr->GetDelegate(server, runtimeHost, domainId, main.CStr(), "AltV.Net.Module", "OnServerEvent",
+    coreClr->GetDelegate(server, runtimeHost, domainId, main.CStr(), "AltV.Net.ModuleWrapper", "OnServerEvent",
                          reinterpret_cast<void **>(&OnServerEventDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, main.CStr(), "AltV.Net.ModuleWrapper", "OnStop",
+                         reinterpret_cast<void **>(&OnStopDelegate));
 }
 
 bool CSharpResource::Start() {
@@ -56,6 +59,7 @@ bool CSharpResource::Start() {
 
 bool CSharpResource::Stop() {
     alt::IResource::Stop();
+    OnStopDelegate();
     for(int i = 0; i < invokers.GetSize();i++) {
         delete invokers[i];
     }

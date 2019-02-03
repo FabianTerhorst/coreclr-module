@@ -10,7 +10,7 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 if (!Exists) return null;
-                var entityPointer = Alt.Vehicle.Vehicle_GetDriver(NativePointer);
+                var entityPointer = AltVNative.Vehicle.Vehicle_GetDriver(NativePointer);
                 if (entityPointer == IntPtr.Zero) return null;
                 if (EntityPool.Get(entityPointer, out var entity) && entity is IPlayer player)
                 {
@@ -23,11 +23,11 @@ namespace AltV.Net.Elements.Entities
         
         public byte PrimaryColor
         {
-            get => !Exists ? byte.MinValue : Alt.Vehicle.Vehicle_GetPrimaryColor(NativePointer);
+            get => !Exists ? byte.MinValue : AltVNative.Vehicle.Vehicle_GetPrimaryColor(NativePointer);
             set
             {
                 if (!Exists) return;
-                Alt.Vehicle.Vehicle_SetPrimaryColor(NativePointer, value);
+                AltVNative.Vehicle.Vehicle_SetPrimaryColor(NativePointer, value);
             }
         }
 

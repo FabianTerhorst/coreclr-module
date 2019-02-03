@@ -33,7 +33,7 @@ namespace AltV.Net.Elements.Entities
         {
             NativePointer = nativePointer;
 
-            Id = Alt.Entity.Entity_GetID(NativePointer);
+            Id = AltVNative.Entity.Entity_GetID(NativePointer);
             Type = type;
             EntityPool = entityPool;
             Exists = true;
@@ -86,67 +86,67 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                Alt.Entity.Entity_GetPositionRef(NativePointer, ref position);
+                AltVNative.Entity.Entity_GetPositionRef(NativePointer, ref position);
                 return position;
             }
             set
             {
                 position = value;
-                Alt.Entity.Entity_SetPositionRef(NativePointer, ref value);
+                AltVNative.Entity.Entity_SetPositionRef(NativePointer, ref value);
             }
         }
         
         public Position Position
         {
-            get => Alt.Entity.Entity_GetPosition(NativePointer);
-            set => Alt.Entity.Entity_SetPosition(NativePointer, value);
+            get => AltVNative.Entity.Entity_GetPosition(NativePointer);
+            set => AltVNative.Entity.Entity_SetPosition(NativePointer, value);
         }
 
         public Rotation RotationRef
         {
             get
             {
-                Alt.Entity.Entity_GetRotationRef(NativePointer, ref rotation);
+                AltVNative.Entity.Entity_GetRotationRef(NativePointer, ref rotation);
                 return rotation;
             }
             set
             {
                 rotation = value;
-                Alt.Entity.Entity_SetRotationRef(NativePointer, ref value);
+                AltVNative.Entity.Entity_SetRotationRef(NativePointer, ref value);
             }
         }
         
         public Rotation Rotation
         {
-            get => Alt.Entity.Entity_GetRotation(NativePointer);
-            set => Alt.Entity.Entity_SetRotation(NativePointer, value);
+            get => AltVNative.Entity.Entity_GetRotation(NativePointer);
+            set => AltVNative.Entity.Entity_SetRotation(NativePointer, value);
         }
 
         public ushort Dimension
         {
-            get => Alt.Entity.Entity_GetDimension(NativePointer);
-            set => Alt.Entity.Entity_SetDimension(NativePointer, value);
+            get => AltVNative.Entity.Entity_GetDimension(NativePointer);
+            set => AltVNative.Entity.Entity_SetDimension(NativePointer, value);
         }
 
         public void setPosition(float x, float y, float z)
         {
-            Alt.Entity.Entity_SetPositionXYZ(NativePointer, x, y, z);
+            AltVNative.Entity.Entity_SetPositionXYZ(NativePointer, x, y, z);
         }
 
         public void setRotation(float roll, float pitch, float yaw)
         {
-            Alt.Entity.Entity_SetRotationRPY(NativePointer, roll, pitch, yaw);
+            AltVNative.Entity.Entity_SetRotationRPY(NativePointer, roll, pitch, yaw);
         }
 
         public void setMetaData(string key, MValue value)
         {
-            Alt.Entity.Entity_SetMetaData(NativePointer, key, ref value);
+            AltVNative.Entity.Entity_SetMetaData(NativePointer, key, ref value);
         }
 
         public MValue getMetaData(string key)
         {
             var value = MValue.Nil;
-            Alt.Entity.Entity_SetMetaData(NativePointer, key, ref value);
+            AltVNative.Entity.Entity_SetMetaData(NativePointer, key, ref value);
             return value;
         }
     }

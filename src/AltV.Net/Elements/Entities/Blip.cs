@@ -8,6 +8,7 @@ namespace AltV.Net.Elements.Entities
     internal class Blip : Entity, IBlip
     {
         private uint color;
+
         public uint Color
         {
             get
@@ -20,10 +21,10 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckExistence();
                 this.color = value;
-                Alt.Blip.Blip_SetColor(NativePointer, value);
+                AltVNative.Blip.Blip_SetColor(NativePointer, value);
             }
         }
-        
+
         internal Blip(IntPtr nativePointer, IEntityPool entityPool) : base(nativePointer, EntityType.Blip, entityPool)
         {
         }

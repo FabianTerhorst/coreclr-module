@@ -4,7 +4,7 @@ using System.Security;
 
 namespace AltV.Net.Native
 {
-    internal static partial class Alt
+    internal static partial class AltVNative
     {
         [SuppressUnmanagedCodeSecurity]
         internal static class MValueCreate

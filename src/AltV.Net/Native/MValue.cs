@@ -85,42 +85,42 @@ namespace AltV.Net.Native
         public static MValue Create(bool value)
         {
             var mValue = Nil;
-            Alt.MValueCreate.MValue_CreateBool(value, ref mValue);
+            AltVNative.MValueCreate.MValue_CreateBool(value, ref mValue);
             return mValue;
         }
 
         public static MValue Create(long value)
         {
             var mValue = Nil;
-            Alt.MValueCreate.MValue_CreateInt(value, ref mValue);
+            AltVNative.MValueCreate.MValue_CreateInt(value, ref mValue);
             return mValue;
         }
 
         public static MValue Create(ulong value)
         {
             var mValue = Nil;
-            Alt.MValueCreate.MValue_CreateUInt(value, ref mValue);
+            AltVNative.MValueCreate.MValue_CreateUInt(value, ref mValue);
             return mValue;
         }
 
         public static MValue Create(double value)
         {
             var mValue = Nil;
-            Alt.MValueCreate.MValue_CreateDouble(value, ref mValue);
+            AltVNative.MValueCreate.MValue_CreateDouble(value, ref mValue);
             return mValue;
         }
 
         public static MValue Create(string value)
         {
             var mValue = Nil;
-            Alt.MValueCreate.MValue_CreateString(value, ref mValue);
+            AltVNative.MValueCreate.MValue_CreateString(value, ref mValue);
             return mValue;
         }
 
         public static MValue Create(MValue[] values)
         {
             var mValue = Nil;
-            Alt.MValueCreate.MValue_CreateList(values, (ulong) values.Length, ref mValue);
+            AltVNative.MValueCreate.MValue_CreateList(values, (ulong) values.Length, ref mValue);
             return mValue;
         }
 
@@ -128,28 +128,28 @@ namespace AltV.Net.Native
         {
             if (values.Length != keys.Length) throw new ArgumentException("values length != keys length");
             var mValue = Nil;
-            Alt.MValueCreate.MValue_CreateDict(values, keys, (ulong) values.Length, ref mValue);
+            AltVNative.MValueCreate.MValue_CreateDict(values, keys, (ulong) values.Length, ref mValue);
             return mValue;
         }
 
         public static MValue Create(IEntity entity)
         {
             var mValue = Nil;
-            Alt.MValueCreate.MValue_CreateEntity(entity.NativePointer, ref mValue);
+            AltVNative.MValueCreate.MValue_CreateEntity(entity.NativePointer, ref mValue);
             return mValue;
         }
 
         public static MValue Create(Function function)
         {
             var mValue = Nil;
-            Alt.MValueCreate.MValue_CreateFunction(Alt.MValueCreate.Invoker_Create(function), ref mValue);
+            AltVNative.MValueCreate.MValue_CreateFunction(AltVNative.MValueCreate.Invoker_Create(function), ref mValue);
             return mValue;
         }
 
         public static MValue Create(Invoker invoker)
         {
             var mValue = Nil;
-            Alt.MValueCreate.MValue_CreateFunction(invoker.NativePointer, ref mValue);
+            AltVNative.MValueCreate.MValue_CreateFunction(invoker.NativePointer, ref mValue);
             return mValue;
         }
 
@@ -164,57 +164,57 @@ namespace AltV.Net.Native
 
         public bool GetBool()
         {
-            return Alt.MValueGet.MValue_GetBool(ref this);
+            return AltVNative.MValueGet.MValue_GetBool(ref this);
         }
 
         public long GetInt()
         {
-            return Alt.MValueGet.MValue_GetInt(ref this);
+            return AltVNative.MValueGet.MValue_GetInt(ref this);
         }
 
         public ulong GetUint()
         {
-            return Alt.MValueGet.MValue_GetUInt(ref this);
+            return AltVNative.MValueGet.MValue_GetUInt(ref this);
         }
 
         public double GetDouble()
         {
-            return Alt.MValueGet.MValue_GetDouble(ref this);
+            return AltVNative.MValueGet.MValue_GetDouble(ref this);
         }
 
         public void GetString(ref string value)
         {
-            Alt.MValueGet.MValue_GetString(ref this, ref value);
+            AltVNative.MValueGet.MValue_GetString(ref this, ref value);
         }
 
         public string GetString()
         {
             var value = string.Empty;
-            Alt.MValueGet.MValue_GetString(ref this, ref value);
+            AltVNative.MValueGet.MValue_GetString(ref this, ref value);
             return value;
         }
 
         public void GetEntityPointer(ref IntPtr entityPointer)
         {
-            Alt.MValueGet.MValue_GetEntity(ref this, ref entityPointer);
+            AltVNative.MValueGet.MValue_GetEntity(ref this, ref entityPointer);
         }
 
         public IntPtr GetEntityPointer()
         {
             var entityPointer = IntPtr.Zero;
-            Alt.MValueGet.MValue_GetEntity(ref this, ref entityPointer);
+            AltVNative.MValueGet.MValue_GetEntity(ref this, ref entityPointer);
             return entityPointer;
         }
 
         public void GetList(ref MValueArray mValueArray)
         {
-            Alt.MValueGet.MValue_GetList(ref this, ref mValueArray);
+            AltVNative.MValueGet.MValue_GetList(ref this, ref mValueArray);
         }
 
         public MValue[] GetList()
         {
             var mValueArray = MValueArray.Nil;
-            Alt.MValueGet.MValue_GetList(ref this, ref mValueArray);
+            AltVNative.MValueGet.MValue_GetList(ref this, ref mValueArray);
             return mValueArray.ToArray();
         }
 
@@ -222,7 +222,7 @@ namespace AltV.Net.Native
         {
             var stringViewArrayRef = StringViewArray.Nil;
             var valueArrayRef = MValueArray.Nil;
-            Alt.MValueGet.MValue_GetDict(ref this, ref stringViewArrayRef, ref valueArrayRef);
+            AltVNative.MValueGet.MValue_GetDict(ref this, ref stringViewArrayRef, ref valueArrayRef);
             var stringViewArray = stringViewArrayRef.ToArray();
             var dictionary = new Dictionary<string, MValue>();
             var valueArray = valueArrayRef.ToArray();
@@ -237,13 +237,13 @@ namespace AltV.Net.Native
 
         public Function GetFunction()
         {
-            return Alt.MValueGet.MValue_GetFunction(ref this);
+            return AltVNative.MValueGet.MValue_GetFunction(ref this);
         }
 
         public MValue CallFunction(MValue[] args)
         {
             var result = Nil;
-            Alt.MValueCall.MValue_CallFunction(ref this, args, (ulong) args.Length, ref result);
+            AltVNative.MValueCall.MValue_CallFunction(ref this, args, (ulong) args.Length, ref result);
             return result;
         }
 
@@ -295,7 +295,7 @@ namespace AltV.Net.Native
                     return GetString();
                 case Type.LIST:
                     var mValueArray = MValueArray.Nil;
-                    Alt.MValueGet.MValue_GetList(ref this, ref mValueArray);
+                    AltVNative.MValueGet.MValue_GetList(ref this, ref mValueArray);
                     var arrayValue = mValueArray.data;
                     var arrayValues = new object[mValueArray.size];
                     for (var i = 0; i < arrayValues.Length; i++)
@@ -308,7 +308,7 @@ namespace AltV.Net.Native
                 case Type.DICT:
                     var stringViewArrayRef = StringViewArray.Nil;
                     var valueArrayRef = MValueArray.Nil;
-                    Alt.MValueGet.MValue_GetDict(ref this, ref stringViewArrayRef, ref valueArrayRef);
+                    AltVNative.MValueGet.MValue_GetDict(ref this, ref stringViewArrayRef, ref valueArrayRef);
                     var stringViewArray = stringViewArrayRef.ToArray();
                     var dictionary = new Dictionary<string, object>();
                     var dictValue = valueArrayRef.data;

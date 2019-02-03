@@ -257,7 +257,7 @@ namespace AltV.Net
             var valueType = args[1];
             var stringViewArrayRef = StringViewArray.Nil;
             var valueArrayRef = MValueArray.Nil;
-            Alt.MValueGet.MValue_GetDict(ref mValue, ref stringViewArrayRef, ref valueArrayRef);
+            AltVNative.MValueGet.MValue_GetDict(ref mValue, ref stringViewArrayRef, ref valueArrayRef);
             var stringViewArray = stringViewArrayRef.ToArray();
             var valueArray = valueArrayRef.ToArray();
             var length = stringViewArray.Length;
@@ -498,21 +498,24 @@ namespace AltV.Net
 
         //TODO: add support for nullable args, these are reducing the required length, add support for default values as well
         //TODO: make private, internal just for testing
-        internal MValue Call(IEntityPool entityPool, MValue valueArgs)
+        internal MValue Call(IEntityPool entityPool, MValue[] values)
         {
-            if (valueArgs.type != MValue.Type.LIST) return MValue.Nil;
-            var valueArgsList = valueArgs.GetList();
-            var length = valueArgsList.Length;
+            var length = values.Length;
             if (length != args.Length) return MValue.Nil;
             var invokeValues = new object[length];
             for (var i = 0; i < length; i++)
             {
-                invokeValues[i] = parsers[i](ref valueArgsList[i], args[i], entityPool);
+                invokeValues[i] = parsers[i](ref values[i], args[i], entityPool);
             }
 
             var result = @delegate.DynamicInvoke(invokeValues);
             if (returnType == Void) return MValue.Nil;
             return MValue.CreateFromObject(result) ?? MValue.Nil;
+        }
+        
+        internal MValue Call(IEntityPool entityPool, MValue valueArgs)
+        {
+            return valueArgs.type != MValue.Type.LIST ? MValue.Nil : Call(entityPool, valueArgs.GetList());
         }
 
         internal void call(ref MValue args, ref MValue result)
