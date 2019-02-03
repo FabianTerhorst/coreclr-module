@@ -120,7 +120,7 @@ namespace AltV.Net
                 {
                     var currMValue = mValues[i];
                     if (!ValidateMValueType(currMValue.type, type))
-                        return null; //TODO: maybe return empty array or skip element
+                        return null;
                     array[i] = currMValue.GetDouble();
                 }
 
@@ -134,7 +134,7 @@ namespace AltV.Net
                 {
                     var currMValue = mValues[i];
                     if (!ValidateMValueType(currMValue.type, type))
-                        return null; //TODO: maybe return empty array or skip element
+                        return null;
                     array[i] = currMValue.GetString();
                 }
 
