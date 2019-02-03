@@ -227,7 +227,6 @@ namespace AltV.Net
             }
         }
 
-        //TODO: we need more type informations as an parameter, maybe make an second delegate, or add unused params to all delegates
         private static object ParseArray(ref MValue mValue, Type type, IEntityPool entityPool)
         {
             // Types doesn't match

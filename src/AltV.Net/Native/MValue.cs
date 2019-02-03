@@ -153,8 +153,8 @@ namespace AltV.Net.Native
             return mValue;
         }
 
-        public Type type;
-        public IntPtr storagePointer;
+        public readonly Type type;
+        public readonly IntPtr storagePointer;
 
         public MValue(Type type, IntPtr storagePointer)
         {
@@ -274,6 +274,65 @@ namespace AltV.Net.Native
             }
 
             return "MValue<>";
+        }
+
+        public object ToObject()
+        {
+            switch (type)
+            {
+                case Type.NIL:
+                    return null;
+                case Type.BOOL:
+                    return GetBool();
+                case Type.INT:
+                    return GetInt();
+                case Type.UINT:
+                    return GetUint();
+                case Type.DOUBLE:
+                    return GetDouble();
+                case Type.STRING:
+                    return GetString();
+                case Type.LIST:
+                    var mValueArray = MValueArray.Nil;
+                    Alt.MValueGet.MValue_GetList(ref this, ref mValueArray);
+                    var arrayValue = mValueArray.data;
+                    var arrayValues = new object[mValueArray.size];
+                    for (var i = 0; i < arrayValues.Length; i++)
+                    {
+                        arrayValues[i] = Marshal.PtrToStructure<MValue>(arrayValue).ToObject();
+                        arrayValue += Size;
+                    }
+
+                    return arrayValues;
+                case Type.DICT:
+                    var stringViewArrayRef = StringViewArray.Nil;
+                    var valueArrayRef = MValueArray.Nil;
+                    Alt.MValueGet.MValue_GetDict(ref this, ref stringViewArrayRef, ref valueArrayRef);
+                    var stringViewArray = stringViewArrayRef.ToArray();
+                    var dictionary = new Dictionary<string, object>();
+                    var dictValue = valueArrayRef.data;
+                    var length = (int) valueArrayRef.size;
+                    for (var i = 0; i < length; i++)
+                    {
+                        dictionary[stringViewArray[i].Text] = Marshal.PtrToStructure<MValue>(dictValue).ToObject();
+                        dictValue += Size;
+                    }
+
+                    return dictionary;
+                case Type.ENTITY:
+                    var entityPointer = IntPtr.Zero;
+                    GetEntityPointer(ref entityPointer);
+                    if (Server.Instance.EntityPool.Get(entityPointer, out var entity))
+                    {
+                        return entity;
+                    }
+
+                    return null;
+                case Type.FUNCTION:
+                    return GetFunction();
+                default:
+                    return null;
+            }
         }
     }
 }
