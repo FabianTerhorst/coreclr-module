@@ -56,12 +56,13 @@ namespace AltV.Net
                 {
                     var currMValue = mValues[i];
                     if (!ValidateMValueType(currMValue.type, type))
-                        return null; //TODO: maybe return empty array or skip element
+                        return null;
                     array[i] = ParseObject(ref currMValue, type, entityPool);
                 }
 
                 return array;
             }
+
             if (type == Int)
             {
                 var array = new int[length];
@@ -69,13 +70,13 @@ namespace AltV.Net
                 {
                     var currMValue = mValues[i];
                     if (!ValidateMValueType(currMValue.type, type))
-                        return null; //TODO: maybe return empty array or skip element
+                        return null;
                     array[i] = (int) currMValue.GetInt();
                 }
 
                 return array;
             }
-            
+
             if (type == Long)
             {
                 var array = new long[length];
@@ -83,13 +84,13 @@ namespace AltV.Net
                 {
                     var currMValue = mValues[i];
                     if (!ValidateMValueType(currMValue.type, type))
-                        return null; //TODO: maybe return empty array or skip element
+                        return null;
                     array[i] = currMValue.GetInt();
                 }
 
                 return array;
             }
-            
+
             if (type == UInt)
             {
                 var array = new uint[length];
@@ -97,13 +98,13 @@ namespace AltV.Net
                 {
                     var currMValue = mValues[i];
                     if (!ValidateMValueType(currMValue.type, type))
-                        return null; //TODO: maybe return empty array or skip element
+                        return null;
                     array[i] = (uint) currMValue.GetUint();
                 }
 
                 return array;
             }
-            
+
             if (type == ULong)
             {
                 var array = new ulong[length];
@@ -111,13 +112,13 @@ namespace AltV.Net
                 {
                     var currMValue = mValues[i];
                     if (!ValidateMValueType(currMValue.type, type))
-                        return null; //TODO: maybe return empty array or skip element
+                        return null;
                     array[i] = currMValue.GetUint();
                 }
 
                 return array;
             }
-            
+
             if (type == Double)
             {
                 var array = new double[length];
@@ -131,7 +132,7 @@ namespace AltV.Net
 
                 return array;
             }
-            
+
             /*if (type == Vehicle)
             {
                 var array = System.Array.CreateInstance(type, length);
@@ -175,15 +176,13 @@ namespace AltV.Net
 
                 return array;
             }*/
-            
+
             var typeArray = System.Array.CreateInstance(type, length);
-            //var array = new IVehicle[length];
             for (var i = 0; i < length; i++)
             {
                 var currMValue = mValues[i];
                 if (!ValidateMValueType(currMValue.type, type))
-                    return null; //TODO: maybe return empty array or skip element
-                //array[i] = (IVehicle) ParseEntity(ref currMValue, type, entityPool);
+                    return null;
                 typeArray.SetValue(ParseObject(ref currMValue, type, entityPool), i);
             }
 
@@ -342,17 +341,25 @@ namespace AltV.Net
             }
         }
 
+        // Returns null when function signature isn't supported
         public static Function Create<T>(T func) where T : Delegate
         {
             var type = func.GetType();
-            var genericArguments = type.GetGenericArguments(); 
+            var genericArguments = type.GetGenericArguments();
             Type returnType;
             if (type.Name.StartsWith("Func"))
             {
                 // Return type is last generic argument
                 // Function never has empty generic arguments, so no need for size check, but we do it anyway
-                returnType = genericArguments.Length == 0 ? Void : genericArguments[genericArguments.Length - 1];
-                genericArguments = genericArguments.TakeLast(1).ToArray();
+                if (genericArguments.Length == 0)
+                {
+                    returnType = Void;
+                }
+                else
+                {
+                    returnType = genericArguments[genericArguments.Length - 1];
+                    genericArguments = genericArguments.SkipLast(1).ToArray();
+                }
             }
             else
             {
@@ -423,7 +430,8 @@ namespace AltV.Net
         }
 
         //TODO: add support for nullable args, these are reducing the required length, add support for default values as well
-        public MValue Call(IEntityPool entityPool, MValue valueArgs)
+        //TODO: make private, internal just for testing
+        internal MValue Call(IEntityPool entityPool, MValue valueArgs)
         {
             if (valueArgs.type != MValue.Type.LIST) return MValue.Nil;
             var valueArgsList = valueArgs.GetList();
@@ -434,9 +442,15 @@ namespace AltV.Net
             {
                 invokeValues[i] = parsers[i](ref valueArgsList[i], args[i], entityPool);
             }
+
             var result = @delegate.DynamicInvoke(invokeValues);
             if (returnType == Void) return MValue.Nil;
             return MValue.CreateFromObject(result) ?? MValue.Nil;
+        }
+
+        internal void call(ref MValue args, ref MValue result)
+        {
+            result = Call(Server.Instance.EntityPool, args);
         }
     }
 }
