@@ -287,7 +287,6 @@ namespace AltV.Net
             var keyType = args[0];
             if (keyType != String) return null;
             var valueType = args[1];
-            //TODO: use low level get dictionary to reduce duplicate object creation
             var stringViewArrayRef = StringViewArray.Nil;
             var valueArrayRef = MValueArray.Nil;
             Alt.MValueGet.MValue_GetDict(ref mValue, ref stringViewArrayRef, ref valueArrayRef);
