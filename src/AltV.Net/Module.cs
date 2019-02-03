@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
@@ -30,19 +31,20 @@ namespace AltV.Net
 
             //var func = Function.Create<Func<string>>(MyFunction2);
 
-            var func = Function.Create<Action<string, object[], int[], IVehicle[], IVehicle>>(MyFunction2);
+            var func = Function.Create<Action<string, object[], int[], IVehicle[], IVehicle, Dictionary<string, IVehicle>>>(MyFunction2);
             func.Call(entityPool,
                 MValue.Create(new[]
                 {
                     MValue.Create("bla7"), MValue.Create(new[] {MValue.Create("bla2")}),
                     MValue.Create(new[] {MValue.Create(1337)}), MValue.Create(new[] {MValue.Create(vehicle)}),
-                    MValue.Create(vehicle)
+                    MValue.Create(vehicle), MValue.Create(new[] {MValue.Create(vehicle)}, new[] {"key"})
                 }));
 
             server.TriggerServerEvent("event_name", "param_string_1", "param_string_2", 1, new[] {"array_1", "array_2"},
                 new object[] {"test", new[] {1337}}, vehicle,
                 /*new Dictionary<string, object> {["test"] = "test", ["invoker"] = MValue.Create(MyFunction)},
-                MValue.Create(MyFunction),*/ (MValue.Function) MyFunction, function, Function.Create<Func<bool, string, string>>(MyFunction3));
+                MValue.Create(MyFunction),*/ (MValue.Function) MyFunction, function,
+                Function.Create<Func<bool, string, string>>(MyFunction3));
 
 
             /*var dictMValue = MValue.Nil;
@@ -186,10 +188,11 @@ namespace AltV.Net
             result = MValue.Create("bla");
         }
 
-        public static void MyFunction2(string text, object[] bla, int[] bla2, IVehicle[] vehicles, IVehicle vehicle)
+        public static void MyFunction2(string text, object[] bla, int[] bla2, IVehicle[] vehicles, IVehicle vehicle, Dictionary<string, IVehicle> dictionary)
         {
             server.LogInfo("text=" + text);
             server.LogInfo("pos:" + vehicle.Position.x + " " + vehicle.Position.y + " " + vehicle.Position.z);
+            server.LogInfo("key=" + dictionary["key"].Position.x + " " + dictionary["key"].Position.y + " " + dictionary["key"].Position.z);
             if (vehicles.Length == 0) return;
             server.LogInfo(
                 "pos:" + vehicles[0].Position.x + " " + vehicles[0].Position.y + " " + vehicles[0].Position.z);

@@ -8,14 +8,17 @@ namespace AltV.Net
 {
     public class Server : IServer
     {
+        public static Server Instance { get; private set; }
+
         private IntPtr NativePointer { get; }
 
-        private IEntityPool EntityPool { get; }
+        internal IEntityPool EntityPool { get; }
 
         internal Server(IntPtr nativePointer, IEntityPool entityPool)
         {
             NativePointer = nativePointer;
             EntityPool = entityPool;
+            Instance = this;
         }
 
         public void LogInfo(string message)
@@ -133,6 +136,9 @@ namespace AltV.Net
                             mValueArgs.Add(mValue.Value);
                         }
 
+                        break;
+                    case Function function:
+                        mValueArgs.Add(MValue.Create(function.call));
                         break;
                 }
             }

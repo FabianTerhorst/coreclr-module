@@ -75,6 +75,8 @@ namespace AltV.Net.Native
                         into objArrayMValue
                         where objArrayMValue.HasValue
                         select objArrayMValue.Value).ToArray());
+                case Net.Function function:
+                    return Create(function.call);
             }
 
             return null;

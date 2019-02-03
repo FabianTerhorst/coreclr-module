@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
@@ -25,10 +26,6 @@ namespace AltV.Net
 
         private static readonly Type String = typeof(string);
 
-        private static readonly Type ObjectArray = typeof(object[]);
-
-        private static readonly Type IntArray = typeof(int[]);
-
         private static readonly Type Player = typeof(IPlayer);
 
         private static readonly Type Vehicle = typeof(IVehicle);
@@ -40,9 +37,6 @@ namespace AltV.Net
         private static readonly Type Blip = typeof(IBlip);
 
         private static readonly Type Obj = typeof(object);
-
-        //TODO: add more entities or figure out how to find base type that is IEntity
-        //TODO: add list and dict support, string[] ect.
 
         //TODO: for high optimization add ParseBoolUnsafe ect. that doesn't contains the mValue type check for scenarios where we already had to check the mValue type
 
@@ -141,7 +135,7 @@ namespace AltV.Net
                 {
                     var currMValue = mValues[i];
                     if (!ValidateMValueType(currMValue.type, type))
-                        return null; //TODO: maybe return empty array or skip element
+                        return null;
                     //array[i] = (IVehicle) ParseEntity(ref currMValue, type, entityPool);
                     array.SetValue(ParseEntity(ref currMValue, type, entityPool), i);
                 }
@@ -156,7 +150,7 @@ namespace AltV.Net
                 {
                     var currMValue = mValues[i];
                     if (!ValidateMValueType(currMValue.type, type))
-                        return null; //TODO: maybe return empty array or skip element
+                        return null;
                     array[i] = (IPlayer) ParseEntity(ref currMValue, type, entityPool);
                 }
 
@@ -170,13 +164,14 @@ namespace AltV.Net
                 {
                     var currMValue = mValues[i];
                     if (!ValidateMValueType(currMValue.type, type))
-                        return null; //TODO: maybe return empty array or skip element
+                        return null;
                     array[i] = (IBlip) ParseEntity(ref currMValue, type, entityPool);
                 }
 
                 return array;
             }*/
 
+            //type.MakeArrayType()
             var typeArray = System.Array.CreateInstance(type, length);
             for (var i = 0; i < length; i++)
             {
@@ -256,6 +251,8 @@ namespace AltV.Net
                     return ParseArray(ref mValue, type, entityPool);
                 case MValue.Type.ENTITY:
                     return ParseEntity(ref mValue, type, entityPool);
+                case MValue.Type.DICT:
+                    return ParseDictionary(ref mValue, type, entityPool);
                 default:
                     return false; //TODO:, func, dict, ect.
             }
@@ -278,12 +275,111 @@ namespace AltV.Net
             var entityPointer = IntPtr.Zero;
             mValue.GetEntityPointer(ref entityPointer);
             if (!entityPool.Get(entityPointer, out var entity) || !ValidateEntityType(entity.Type, type)) return null;
-            if (entity is IVehicle vehicle)
+            return entity;
+        }
+
+        private static object ParseDictionary(ref MValue mValue, Type type, IEntityPool entityPool)
+        {
+            // Types doesn't match
+            if (mValue.type != MValue.Type.DICT) return null;
+            var args = type.GetGenericArguments();
+            if (args.Length != 2) return null;
+            var keyType = args[0];
+            if (keyType != String) return null;
+            var valueType = args[1];
+            //TODO: use low level get dictionary to reduce duplicate object creation
+            var stringViewArrayRef = StringViewArray.Nil;
+            var valueArrayRef = MValueArray.Nil;
+            Alt.MValueGet.MValue_GetDict(ref mValue, ref stringViewArrayRef, ref valueArrayRef);
+            var stringViewArray = stringViewArrayRef.ToArray();
+            var valueArray = valueArrayRef.ToArray();
+            var length = stringViewArray.Length;
+
+            if (valueType == Obj)
             {
-                return vehicle;
+                var dict = new Dictionary<string, object>();
+                for (var i = 0; i < length; i++)
+                {
+                    dict[stringViewArray[i].Text] = ParseObject(ref valueArray[i], type, entityPool);
+                }
+
+                return dict;
             }
 
-            return null;
+            if (valueType == Int)
+            {
+                var dict = new Dictionary<string, int>();
+                for (var i = 0; i < length; i++)
+                {
+                    dict[stringViewArray[i].Text] = (int) valueArray[i].GetInt();
+                }
+
+                return dict;
+            }
+
+            if (valueType == Long)
+            {
+                var dict = new Dictionary<string, long>();
+                for (var i = 0; i < length; i++)
+                {
+                    dict[stringViewArray[i].Text] = valueArray[i].GetInt();
+                }
+
+                return dict;
+            }
+
+            if (valueType == UInt)
+            {
+                var dict = new Dictionary<string, uint>();
+                for (var i = 0; i < length; i++)
+                {
+                    dict[stringViewArray[i].Text] = (uint) valueArray[i].GetUint();
+                }
+
+                return dict;
+            }
+
+            if (valueType == ULong)
+            {
+                var dict = new Dictionary<string, ulong>();
+                for (var i = 0; i < length; i++)
+                {
+                    dict[stringViewArray[i].Text] = valueArray[i].GetUint();
+                }
+
+                return dict;
+            }
+
+            if (valueType == Double)
+            {
+                var dict = new Dictionary<string, double>();
+                for (var i = 0; i < length; i++)
+                {
+                    dict[stringViewArray[i].Text] = valueArray[i].GetDouble();
+                }
+
+                return dict;
+            }
+
+            if (valueType == String)
+            {
+                var dict = new Dictionary<string, string>();
+                for (var i = 0; i < length; i++)
+                {
+                    dict[stringViewArray[i].Text] = valueArray[i].GetString();
+                }
+
+                return dict;
+            }
+
+            var dictType = typeof(Dictionary<,>).MakeGenericType(keyType, valueType);
+            var newDict = (System.Collections.IDictionary) Activator.CreateInstance(dictType);
+            for (var i = 0; i < length; i++)
+            {
+                newDict[stringViewArray[i].Text] = ParseObject(ref valueArray[i], valueType, entityPool);
+            }
+
+            return newDict;
         }
 
         private static bool ValidateEntityType(EntityType entityType, Type type)
@@ -335,7 +431,7 @@ namespace AltV.Net
                 case MValue.Type.FUNCTION:
                     return false; //TODO: needs to be Func or Action
                 case MValue.Type.DICT:
-                    return false; //TODO: needs to be Dictionary
+                    return type.Name.StartsWith("Dictionary");
                 default:
                     return false;
             }
@@ -402,6 +498,10 @@ namespace AltV.Net
                 else if (arg.GetInterfaces().Contains(Entity))
                 {
                     parsers[i] = ParseEntity;
+                }
+                else if (arg.Name.StartsWith("Dictionary"))
+                {
+                    parsers[i] = ParseDictionary;
                 }
                 else
                 {
