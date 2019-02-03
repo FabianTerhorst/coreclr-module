@@ -127,6 +127,20 @@ namespace AltV.Net
                 return array;
             }
 
+            if (type == String)
+            {
+                var array = new string[length];
+                for (var i = 0; i < length; i++)
+                {
+                    var currMValue = mValues[i];
+                    if (!ValidateMValueType(currMValue.type, type))
+                        return null; //TODO: maybe return empty array or skip element
+                    array[i] = currMValue.GetString();
+                }
+
+                return array;
+            }
+
             /*if (type == Vehicle)
             {
                 var array = System.Array.CreateInstance(type, length);
