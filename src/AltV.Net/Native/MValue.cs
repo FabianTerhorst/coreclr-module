@@ -77,9 +77,9 @@ namespace AltV.Net.Native
                         select objArrayMValue.Value).ToArray());
                 case Net.Function function:
                     return Create(function.call);
+                default:
+                    return null;
             }
-
-            return null;
         }
 
         public static MValue Create(bool value)
@@ -264,9 +264,10 @@ namespace AltV.Net.Native
                 case Type.STRING:
                     return GetString();
                 case Type.LIST:
-                    return GetList().Length.ToString();
+                    return GetList().Aggregate("List:", (current, value) => current + value.ToString() + ",");
                 case Type.DICT:
-                    return GetDictionary().Count.ToString();
+                    return GetDictionary().Aggregate("Dict:",
+                        (current, value) => current + value.Key.ToString() + "=" + value.Value.ToString() + ",");
                 case Type.ENTITY:
                     return "MValue<Entity>";
                 case Type.FUNCTION:
