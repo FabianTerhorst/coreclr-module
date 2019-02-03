@@ -141,51 +141,6 @@ namespace AltV.Net
                 return array;
             }
 
-            /*if (type == Vehicle)
-            {
-                var array = System.Array.CreateInstance(type, length);
-                //var array = new IVehicle[length];
-                for (var i = 0; i < length; i++)
-                {
-                    var currMValue = mValues[i];
-                    if (!ValidateMValueType(currMValue.type, type))
-                        return null;
-                    //array[i] = (IVehicle) ParseEntity(ref currMValue, type, entityPool);
-                    array.SetValue(ParseEntity(ref currMValue, type, entityPool), i);
-                }
-
-                return array;
-            }
-            
-            if (type == Player)
-            {
-                var array = new IPlayer[length];
-                for (var i = 0; i < length; i++)
-                {
-                    var currMValue = mValues[i];
-                    if (!ValidateMValueType(currMValue.type, type))
-                        return null;
-                    array[i] = (IPlayer) ParseEntity(ref currMValue, type, entityPool);
-                }
-
-                return array;
-            }
-            
-            if (type == Blip)
-            {
-                var array = new IBlip[length];
-                for (var i = 0; i < length; i++)
-                {
-                    var currMValue = mValues[i];
-                    if (!ValidateMValueType(currMValue.type, type))
-                        return null;
-                    array[i] = (IBlip) ParseEntity(ref currMValue, type, entityPool);
-                }
-
-                return array;
-            }*/
-
-            //type.MakeArrayType()
             var typeArray = System.Array.CreateInstance(type, length);
             for (var i = 0; i < length; i++)
             {
@@ -386,13 +341,13 @@ namespace AltV.Net
             }
 
             var dictType = typeof(Dictionary<,>).MakeGenericType(keyType, valueType);
-            var newDict = (System.Collections.IDictionary) Activator.CreateInstance(dictType);
+            var typedDict = (System.Collections.IDictionary) Activator.CreateInstance(dictType);
             for (var i = 0; i < length; i++)
             {
-                newDict[stringViewArray[i].Text] = ParseObject(ref valueArray[i], valueType, entityPool);
+                typedDict[stringViewArray[i].Text] = ParseObject(ref valueArray[i], valueType, entityPool);
             }
 
-            return newDict;
+            return typedDict;
         }
 
         private static bool ValidateEntityType(EntityType entityType, Type type)
