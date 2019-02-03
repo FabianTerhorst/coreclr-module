@@ -77,73 +77,11 @@ namespace AltV.Net
 
         private static MValue[] ConvertObjectsToMValues(IEnumerable<object> objects)
         {
-            var mValueArgs = new List<MValue>();
-            foreach (var obj in objects)
-            {
-                switch (obj)
-                {
-                    case IEntity entity:
-                        mValueArgs.Add(MValue.Create(entity));
-                        break;
-                    case bool value:
-                        mValueArgs.Add(MValue.Create(value));
-                        break;
-                    case int value:
-                        mValueArgs.Add(MValue.Create(value));
-                        break;
-                    case uint value:
-                        mValueArgs.Add(MValue.Create(value));
-                        break;
-                    case long value:
-                        mValueArgs.Add(MValue.Create(value));
-                        break;
-                    case ulong value:
-                        mValueArgs.Add(MValue.Create(value));
-                        break;
-                    case double value:
-                        mValueArgs.Add(MValue.Create(value));
-                        break;
-                    case string value:
-                        mValueArgs.Add(MValue.Create(value));
-                        break;
-                    case MValue[] value:
-                        mValueArgs.Add(MValue.Create(value));
-                        break;
-                    case Dictionary<string, object> value:
-                        var dictMValues = new List<MValue>();
-                        foreach (var dictValue in value.Values)
-                        {
-                            var dictMValue = MValue.CreateFromObject(dictValue);
-                            if (!dictMValue.HasValue) continue;
-                            dictMValues.Add(dictMValue.Value);
-                        }
-
-                        mValueArgs.Add(MValue.Create(dictMValues.ToArray(), value.Keys.ToArray()));
-                        break;
-                    case Invoker value:
-                        mValueArgs.Add(MValue.Create(value));
-                        break;
-                    case MValue.Function value:
-                        mValueArgs.Add(MValue.Create(value));
-                        break;
-                    case MValue value:
-                        mValueArgs.Add(value);
-                        break;
-                    case object[] value:
-                        var mValue = MValue.CreateFromObject(value);
-                        if (mValue.HasValue)
-                        {
-                            mValueArgs.Add(mValue.Value);
-                        }
-
-                        break;
-                    case Function function:
-                        mValueArgs.Add(MValue.Create(function.call));
-                        break;
-                }
-            }
-
-            return mValueArgs.ToArray();
+            return (from obj in objects
+                select MValue.CreateFromObject(obj)
+                into mValue
+                where mValue.HasValue
+                select mValue.Value).ToArray();
         }
 
         public IVehicle CreateVehicle(uint model, Position pos, float heading)
