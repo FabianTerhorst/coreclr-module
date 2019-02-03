@@ -21,7 +21,7 @@ namespace AltV.Net.Elements.Entities
         public ushort Id { get; }
         public EntityType Type { get; }
 
-        private protected IEntityPool EntityPool { get; }
+        private protected Server Server { get; }
 
         public object this[string key]
         {
@@ -29,13 +29,13 @@ namespace AltV.Net.Elements.Entities
             set => data[key] = value;
         }
 
-        protected Entity(IntPtr nativePointer, EntityType type, IEntityPool entityPool)
+        protected Entity(IntPtr nativePointer, EntityType type, Server server)
         {
             NativePointer = nativePointer;
 
             Id = AltVNative.Entity.Entity_GetID(NativePointer);
             Type = type;
-            EntityPool = entityPool;
+            Server = server;
             Exists = true;
         }
 

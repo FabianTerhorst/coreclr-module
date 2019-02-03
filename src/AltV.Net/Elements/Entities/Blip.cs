@@ -25,7 +25,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        internal Blip(IntPtr nativePointer, IEntityPool entityPool) : base(nativePointer, EntityType.Blip, entityPool)
+        internal Blip(IntPtr nativePointer, Server server) : base(nativePointer, EntityType.Blip, server)
         {
         }
     }

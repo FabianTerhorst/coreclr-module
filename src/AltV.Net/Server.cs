@@ -86,7 +86,7 @@ namespace AltV.Net
 
         public IVehicle CreateVehicle(uint model, Position pos, float heading)
         {
-            var vehicle = new Vehicle(AltVNative.Server.Server_CreateVehicle(NativePointer, model, pos, heading), EntityPool);
+            var vehicle = new Vehicle(AltVNative.Server.Server_CreateVehicle(NativePointer, model, pos, heading), this);
             EntityPool.Register(vehicle);
             return vehicle;
         }

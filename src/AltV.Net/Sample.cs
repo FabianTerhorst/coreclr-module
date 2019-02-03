@@ -1,5 +1,3 @@
-using System;
-
 namespace AltV.Net
 {
     public class Sample : IResource
@@ -7,7 +5,7 @@ namespace AltV.Net
         public void onStart()
         {
             Alt.On<string>("test", s => { Alt.Server.LogInfo("test=" + s); });
-            Alt.Server.TriggerServerEvent("test", "bla");
+            Alt.Emit("test", "bla");
             Alt.On("bla", bla);
             Alt.On<string>("bla2", bla2);
             Alt.On<string, bool>("bla3", bla3);

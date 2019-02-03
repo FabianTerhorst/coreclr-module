@@ -12,7 +12,7 @@ namespace AltV.Net.Elements.Entities
                 if (!Exists) return null;
                 var entityPointer = AltVNative.Vehicle.Vehicle_GetDriver(NativePointer);
                 if (entityPointer == IntPtr.Zero) return null;
-                if (EntityPool.Get(entityPointer, out var entity) && entity is IPlayer player)
+                if (Server.EntityPool.Get(entityPointer, out var entity) && entity is IPlayer player)
                 {
                     return player;
                 }
@@ -31,7 +31,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        internal Vehicle(IntPtr nativePointer, IEntityPool entityPool) : base(nativePointer, EntityType.Vehicle, entityPool)
+        internal Vehicle(IntPtr nativePointer, Server server) : base(nativePointer, EntityType.Vehicle, server)
         {
         }
     }

@@ -10,7 +10,12 @@ namespace AltV.Net
         {
             _module.On(eventName, function);
         }
-        
+
+        public static void Emit(string eventName, params object[] args)
+        {
+            Server.TriggerServerEvent(eventName, args);
+        }
+
         internal static void Setup(Module module)
         {
             _module = module;
