@@ -512,7 +512,7 @@ namespace AltV.Net
             if (returnType == Void) return MValue.Nil;
             return MValue.CreateFromObject(result) ?? MValue.Nil;
         }
-        
+
         internal MValue Call(IEntityPool entityPool, MValue valueArgs)
         {
             return valueArgs.type != MValue.Type.LIST ? MValue.Nil : Call(entityPool, valueArgs.GetList());

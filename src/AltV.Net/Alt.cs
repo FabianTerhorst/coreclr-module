@@ -1,6 +1,6 @@
 namespace AltV.Net
 {
-    public static class Alt
+    public static partial class Alt
     {
         private static Module _module;
 
@@ -10,7 +10,7 @@ namespace AltV.Net
         {
             _module.On(eventName, function);
         }
-
+        
         internal static void Setup(Module module)
         {
             _module = module;
