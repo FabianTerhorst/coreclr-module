@@ -57,5 +57,9 @@ namespace AltV.Net.Elements.Entities
         void setMetaData(string key, MValue value);
 
         MValue getMetaData(string key);
+
+        void setData(string key, object value);
+
+        bool GetData<T>(string key, out T result);
     }
 }

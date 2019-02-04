@@ -101,7 +101,7 @@ namespace AltV.Net
         }
 
 
-        internal Assembly LoadAssembly(string path)
+        private Assembly LoadAssembly(string path)
         {
             var reflectionAssembly = AssemblyName.GetAssemblyName(path);
 

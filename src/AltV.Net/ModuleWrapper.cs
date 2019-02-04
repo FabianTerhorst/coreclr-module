@@ -72,7 +72,7 @@ namespace AltV.Net
                 argArray = args.ToArray();
                 foreach (var eventHandler in eventHandlers)
                 {
-                    eventHandler.Call(Server.Instance.EntityPool, argArray);
+                    eventHandler.Call(_module.EntityPool, argArray);
                 }
             }
 

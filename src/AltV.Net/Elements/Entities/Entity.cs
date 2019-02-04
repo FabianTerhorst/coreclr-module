@@ -11,9 +11,9 @@ namespace AltV.Net.Elements.Entities
     {
         private readonly ConcurrentDictionary<string, object> data = new ConcurrentDictionary<string, object>();
 
-        private Position position = Position.Zero;
+        //private Position position = Position.Zero;
 
-        private Rotation rotation = Rotation.Zero;
+        //private Rotation rotation = Rotation.Zero;
 
         public IntPtr NativePointer { get; }
         public bool Exists { get; set; }
@@ -22,12 +22,6 @@ namespace AltV.Net.Elements.Entities
         public EntityType Type { get; }
 
         private protected Server Server { get; }
-
-        public object this[string key]
-        {
-            get => data.TryGetValue(key, out var value) ? value : null;
-            set => data[key] = value;
-        }
 
         protected Entity(IntPtr nativePointer, EntityType type, Server server)
         {
@@ -39,15 +33,12 @@ namespace AltV.Net.Elements.Entities
             Exists = true;
         }
 
-        /*public bool Get<T>(string key, ref T result)
+        public void SetData(string key, object value)
         {
-            if (!data.TryGetValue(key, out var value)) return false;
-            if (!(value is T cast)) return false;
-            result = cast;
-            return true;
-        }*/
+            data[key] = value;
+        }
 
-        public bool Get<T>(string key, out T result)
+        public bool GetData<T>(string key, out T result)
         {
             if (!data.TryGetValue(key, out var value))
             {
@@ -65,7 +56,7 @@ namespace AltV.Net.Elements.Entities
             return true;
         }
 
-        //Has needs to do the same calculations Get has to do so consider using Get always
+        //"Has" needs to do the same calculations Get has to do so consider using Get always
         public bool Has(string key)
         {
             return data.ContainsKey(key);
@@ -81,8 +72,7 @@ namespace AltV.Net.Elements.Entities
             throw new EntityDeletedException(this);
         }
 
-        //TODO: create an position object per thread, or threadsafe position get method that creates a new position
-        public Position PositionRef
+        /*public Position PositionRef for later performance optimization
         {
             get
             {
@@ -94,15 +84,9 @@ namespace AltV.Net.Elements.Entities
                 position = value;
                 AltVNative.Entity.Entity_SetPositionRef(NativePointer, ref value);
             }
-        }
-        
-        public Position Position
-        {
-            get => AltVNative.Entity.Entity_GetPosition(NativePointer);
-            set => AltVNative.Entity.Entity_SetPosition(NativePointer, value);
-        }
+        }*/
 
-        public Rotation RotationRef
+        /*public Rotation RotationRef for later performance optimization
         {
             get
             {
@@ -114,8 +98,14 @@ namespace AltV.Net.Elements.Entities
                 rotation = value;
                 AltVNative.Entity.Entity_SetRotationRef(NativePointer, ref value);
             }
+        }*/
+
+        public Position Position
+        {
+            get => AltVNative.Entity.Entity_GetPosition(NativePointer);
+            set => AltVNative.Entity.Entity_SetPosition(NativePointer, value);
         }
-        
+
         public Rotation Rotation
         {
             get => AltVNative.Entity.Entity_GetRotation(NativePointer);
