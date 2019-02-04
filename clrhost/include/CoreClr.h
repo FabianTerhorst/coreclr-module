@@ -27,6 +27,7 @@ class CoreClr
 {
   public:
     CoreClr(alt::IServer *server);
+    ~CoreClr();
 
     bool GetDelegate(alt::IServer *server, void *runtimeHost, unsigned int domainId, const char *moduleName,
                      const char *classPath, const char *methodName, void **callback);
@@ -45,6 +46,7 @@ class CoreClr
 #else
     void *_coreClrLib;
 #endif
+    char* runtimeDirectory;
     coreclr_initialize_ptr _initializeCoreCLR;
     coreclr_shutdown_2_ptr _shutdownCoreCLR;
     coreclr_create_delegate_ptr _createDelegate;

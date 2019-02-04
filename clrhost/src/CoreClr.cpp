@@ -13,14 +13,24 @@ CoreClr::CoreClr(alt::IServer *server) {
             CSIDL_PROGRAM_FILES,
             FALSE);
 
-    const char *path = "/dotnet/shared/Microsoft.NETCore.App/2.2.0/coreclr.dll";
+    const char *windowsProgramFilesPath = "/dotnet/shared/Microsoft.NETCore.App/2.2.0";
 
-    char *fullPath = (char *) malloc(strlen(pf) + strlen(path) + 1);
-    strcpy(fullPath, pf);
-    strcat(fullPath, path);
+    runtimeDirectory = (char *) malloc(strlen(pf) + strlen(windowsProgramFilesPath) + 1);
+    strcpy(runtimeDirectory, pf);
+    strcat(runtimeDirectory, windowsProgramFilesPath);
+#else
+    const char* linuxDefaultPath = "/usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.1";
+    runtimeDirectory = (char *) malloc(strlen(linuxDefaultPath) + 1);
+    strcpy(runtimeDirectory, linuxDefaultPath);
+#endif
+#ifdef _WIN32
+    const char *fileName = "/coreclr.dll";
+
+    char fullPath[strlen(fileName) + strlen(runtimeDirectory) + 1];
+    strcpy(fullPath, runtimeDirectory);
+    strcat(fullPath, fileName);
 
     _coreClrLib = LoadLibraryEx(fullPath, nullptr, 0);
-    free(fullPath);
     if (_coreClrLib == nullptr) {
         server->LogInfo(alt::String("[.NET] Unable to find CoreCLR dll"));
         return;
@@ -30,10 +40,13 @@ CoreClr::CoreClr(alt::IServer *server) {
     _shutdownCoreCLR = (coreclr_shutdown_2_ptr) GetProcAddress(_coreClrLib, "coreclr_shutdown_2");
     _createDelegate = (coreclr_create_delegate_ptr) GetProcAddress(_coreClrLib, "coreclr_create_delegate");
 #else
-    const char *path = "/usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.1/libcoreclr.so";
-    _coreClrLib = dlopen(path, RTLD_NOW | RTLD_LOCAL);
+    const char *fileName = "/libcoreclr.so";
+    char fullPath[strlen(fileName) + strlen(runtimeDirectory) + 1];
+    strcpy(fullPath, runtimeDirectory);
+    strcat(fullPath, fileName);
+    _coreClrLib = dlopen(fullPath, RTLD_NOW | RTLD_LOCAL);
     if (_coreClrLib == nullptr) {
-        server->LogInfo(alt::String("[.NET] Unable to find CoreCLR dll [") + path + "]: " + dlerror());
+        server->LogInfo(alt::String("[.NET] Unable to find CoreCLR dll [") + fullPath + "]: " + dlerror());
         return;
     }
     _initializeCoreCLR = (coreclr_initialize_ptr) dlsym(_coreClrLib, "coreclr_initialize");
@@ -45,6 +58,11 @@ CoreClr::CoreClr(alt::IServer *server) {
         return;
     }
     server->LogInfo(alt::String("[.NET] libcoreclr successfully loaded"));
+}
+
+CoreClr::~CoreClr() {
+    //TODO: check what else needs to be freed
+    delete runtimeDirectory;
 }
 
 bool CoreClr::GetDelegate(alt::IServer *server, void *runtimeHost, unsigned int domainId, const char *moduleName,
@@ -80,26 +98,6 @@ bool CoreClr::GetDelegate(alt::IServer *server, void *runtimeHost, unsigned int 
 alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer *server, const char *appPath) {
     alt::Array<alt::String> assemblies;
     const char *const tpaExtensions[] = {".ni.dll", ".dll", ".ni.exe", ".exe", ".winmd"};
-
-    char* runtimeDirectory;
-#ifdef _WIN32
-    char pf[MAX_PATH];
-    SHGetSpecialFolderPath(
-            nullptr,
-            pf,
-            CSIDL_PROGRAM_FILES,
-            FALSE);
-
-    const char *filePath = "/dotnet/shared/Microsoft.NETCore.App/2.2.0";
-
-    runtimeDirectory = (char *) malloc(strlen(pf) + strlen(filePath) + 1);
-    strcpy(runtimeDirectory, pf);
-    strcat(runtimeDirectory, filePath);
-#else
-    const char* linuxDefaultPath = "/usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.1";
-    runtimeDirectory = (char *) malloc(strlen(linuxDefaultPath) + 1);
-    strcpy(runtimeDirectory, linuxDefaultPath);
-#endif
 
     const char *directories[] = {runtimeDirectory/*, appPath*/ };
 
