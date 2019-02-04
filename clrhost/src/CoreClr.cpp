@@ -80,55 +80,29 @@ bool CoreClr::GetDelegate(alt::IServer *server, void *runtimeHost, unsigned int 
 alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer *server, const char *appPath) {
     alt::Array<alt::String> assemblies;
     const char *const tpaExtensions[] = {".ni.dll", ".dll", ".ni.exe", ".exe", ".winmd"};
-    const char *directories[] = {"/usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.1"/*, appPath*/ };
+
+    char* runtimeDirectory;
 #ifdef _WIN32
-    for (auto ext : tpaExtensions) {
-        char pf[MAX_PATH];
-        SHGetSpecialFolderPath(
-                nullptr,
-                pf,
-                CSIDL_PROGRAM_FILES,
-                FALSE);
+    char pf[MAX_PATH];
+    SHGetSpecialFolderPath(
+            nullptr,
+            pf,
+            CSIDL_PROGRAM_FILES,
+            FALSE);
 
-        const char *path = "/dotnet/shared/Microsoft.NETCore.App/2.2.0/*";
+    const char *filePath = "/dotnet/shared/Microsoft.NETCore.App/2.2.0";
 
-        const char *filePath = "/dotnet/shared/Microsoft.NETCore.App/2.2.0/";
-
-        char *fullPath = (char *) malloc(strlen(pf) + strlen(path) + strlen(ext) + 1);
-        strcpy(fullPath, pf);
-        strcat(fullPath, path);
-        strcat(fullPath, ext);
-
-        char *fullFilePath = (char *) malloc(strlen(pf) + strlen(filePath) + 1);
-        strcpy(fullFilePath, pf);
-        strcat(fullFilePath, filePath);
-
-        WIN32_FIND_DATA findData;
-        HANDLE fileHandle = FindFirstFile(fullPath, &findData);
-
-        if (fileHandle == INVALID_HANDLE_VALUE) {
-            continue;
-        }
-
-        do {
-            //std::string filePath = runtimeDirectory;
-            //filePath += findData.cFileName;
-
-            // Ensure assemblies are unique in the list
-            /*if (assemblies.find(filePath) != assemblies.end()) {
-                continue;
-            }*/
-
-            assemblies.Push(
-                    alt::String(fullFilePath) + findData.cFileName);
-
-        } while (FindNextFile(fileHandle, &findData));
-
-        FindClose(fileHandle);
-        free(fullPath);
-        free(fullFilePath);
-    }
+    runtimeDirectory = (char *) malloc(strlen(pf) + strlen(filePath) + 1);
+    strcpy(runtimeDirectory, pf);
+    strcat(runtimeDirectory, filePath);
 #else
+    const char* linuxDefaultPath = "/usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.1";
+    runtimeDirectory = (char *) malloc(strlen(linuxDefaultPath) + 1);
+    strcpy(runtimeDirectory, linuxDefaultPath);
+#endif
+
+    const char *directories[] = {runtimeDirectory/*, appPath*/ };
+
     for (auto path : directories) {
         auto directory = opendir(path);
         if (directory == nullptr) {
@@ -145,7 +119,9 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer *server, cons
                         break;
 
                         // Handle symlinks and file systems that do not support d_type
+#ifndef _WIN32
                     case DT_LNK:
+#endif
                     case DT_UNKNOWN: {
                         std::string fullFilename;
 
@@ -169,7 +145,7 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer *server, cons
                 }
 
                 // Check if the extension matches the one we are looking for
-                unsigned long extPos = strlen(entry->d_name) - extLength;
+                size_t extPos = strlen(entry->d_name) - extLength;
                 //server->LogInfo(alt::String(ext) + "," + extLength + "," + entry->d_name);
                 if (extPos <= 0 || memcmp(ext, entry->d_name + extPos, extLength) != 0) {
                     continue;
@@ -195,7 +171,7 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer *server, cons
         closedir(directory);
 #endif
     }
-#endif
+    delete runtimeDirectory;
     return assemblies;
 }
 

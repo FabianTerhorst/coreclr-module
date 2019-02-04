@@ -6,6 +6,7 @@
 //#include <shlobj_core.h>
 #include <shlobj.h>
 //#include <libloaderapi.h>
+#include "dirent_win.h"
 #else
 #include <dirent.h>
 #include <dlfcn.h>
