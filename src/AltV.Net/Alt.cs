@@ -1,3 +1,5 @@
+using AltV.Net.Events;
+
 namespace AltV.Net
 {
     public static partial class Alt
@@ -5,6 +7,24 @@ namespace AltV.Net
         private static Module _module;
 
         public static Server Server => _module.Server;
+        
+        public static event PlayerConnectDelegate OnPlayerConnect
+        {
+            add => _module.PlayerConnectEventHandler.Subscribe(value);
+            remove => _module.PlayerConnectEventHandler.Unsubscribe(value);
+        }
+        
+        public static event PlayerDisconnectDelegate OnPlayerDisconnect
+        {
+            add => _module.PlayerDisconnectEventHandler.Subscribe(value);
+            remove => _module.PlayerDisconnectEventHandler.Unsubscribe(value);
+        }
+        
+        public static event EntityRemoveDelegate OnEntityRemove
+        {
+            add => _module.EntityRemoveEventHandler.Subscribe(value);
+            remove => _module.EntityRemoveEventHandler.Unsubscribe(value);
+        }
 
         public static void On(string eventName, Function function)
         {

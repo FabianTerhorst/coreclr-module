@@ -26,7 +26,7 @@ namespace AltV.Net
         {
             foreach (var resource in resources)
             {
-                resource.onStart();
+                resource.OnStart();
             }
         }
 
@@ -34,7 +34,7 @@ namespace AltV.Net
         {
             foreach (var resource in resources)
             {
-                resource.onStop();
+                resource.OnStop();
             }
         }
     }

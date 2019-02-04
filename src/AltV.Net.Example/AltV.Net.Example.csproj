@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <Configurations>Debug;Release;Testing;Linux</Configurations>
+        <Platforms>AnyCPU</Platforms>
+        <RootNamespace>AltV.Net.Example</RootNamespace>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Testing' ">
+      <DebugSymbols>true</DebugSymbols>
+      <DebugType>full</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Linux' ">
+      <DebugSymbols>true</DebugSymbols>
+      <DebugType>full</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DebugType>full</DebugType>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />
+    </ItemGroup>
+
+    <Target Name="CopyFiles" AfterTargets="build">
+        <PropertyGroup>
+            <CopiedFiles>$(OutputPath)\AltV.Net.Example.dll;$(OutputPath)\AltV.Net.Example.pdb</CopiedFiles>
+
+            <TargetLocation Condition=" '$(Configuration)' == 'Testing' ">../../../altv-server/resources/example/</TargetLocation>
+            <TargetLocation Condition=" '$(Configuration)' == 'Linux' ">/altv-server/resources/example/</TargetLocation>
+        </PropertyGroup>
+
+        <Copy Condition=" '$(TargetLocation)' != '' " SourceFiles="$(CopiedFiles)" DestinationFolder="$(TargetLocation)" SkipUnchangedFiles="false" />
+    </Target>
+</Project>

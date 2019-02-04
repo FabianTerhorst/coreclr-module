@@ -7,7 +7,6 @@
 #include "player.h"
 #include "server.h"
 #include "vehicle.h"
-#include "events.h"
 #include "mvalue.h"
 #include "array.h"
 #include "function.h"

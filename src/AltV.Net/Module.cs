@@ -27,24 +27,6 @@ namespace AltV.Net
         internal readonly EventHandler<EntityRemoveDelegate> EntityRemoveEventHandler =
             new EventHandler<EntityRemoveDelegate>();
 
-        public event PlayerConnectDelegate PlayerConnectDelegate
-        {
-            add => PlayerConnectEventHandler.Subscribe(value);
-            remove => PlayerConnectEventHandler.Unsubscribe(value);
-        }
-
-        public event PlayerDisconnectDelegate PlayerDisconnectDelegate
-        {
-            add => PlayerDisconnectEventHandler.Subscribe(value);
-            remove => PlayerDisconnectEventHandler.Unsubscribe(value);
-        }
-
-        public event EntityRemoveDelegate EntityRemoveDelegate
-        {
-            add => EntityRemoveEventHandler.Subscribe(value);
-            remove => EntityRemoveEventHandler.Unsubscribe(value);
-        }
-
         public Module(IntPtr serverPointer)
         {
             Alt.Setup(this);
