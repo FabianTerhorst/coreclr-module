@@ -118,22 +118,22 @@ namespace AltV.Net.Elements.Entities
             set => AltVNative.Entity.Entity_SetDimension(NativePointer, value);
         }
 
-        public void setPosition(float x, float y, float z)
+        public void SetPosition(float x, float y, float z)
         {
             AltVNative.Entity.Entity_SetPositionXYZ(NativePointer, x, y, z);
         }
 
-        public void setRotation(float roll, float pitch, float yaw)
+        public void SetRotation(float roll, float pitch, float yaw)
         {
             AltVNative.Entity.Entity_SetRotationRPY(NativePointer, roll, pitch, yaw);
         }
 
-        public void setMetaData(string key, MValue value)
+        public void SetMetaData(string key, MValue value)
         {
             AltVNative.Entity.Entity_SetMetaData(NativePointer, key, ref value);
         }
 
-        public MValue getMetaData(string key)
+        public MValue GetMetaData(string key)
         {
             var value = MValue.Nil;
             AltVNative.Entity.Entity_SetMetaData(NativePointer, key, ref value);

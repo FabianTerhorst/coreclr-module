@@ -50,15 +50,15 @@ namespace AltV.Net.Elements.Entities
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
         ushort Dimension { get; set; }
 
-        void setPosition(float x, float y, float z);
+        void SetPosition(float x, float y, float z);
 
-        void setRotation(float roll, float pitch, float yaw);
+        void SetRotation(float roll, float pitch, float yaw);
 
-        void setMetaData(string key, MValue value);
+        void SetMetaData(string key, MValue value);
 
-        MValue getMetaData(string key);
+        MValue GetMetaData(string key);
 
-        void setData(string key, object value);
+        void SetData(string key, object value);
 
         bool GetData<T>(string key, out T result);
     }
