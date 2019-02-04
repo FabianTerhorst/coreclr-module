@@ -53,7 +53,7 @@ CSharpResource::CSharpResource(alt::IServer *server, CoreClr *coreClr, alt::IRes
 
 bool CSharpResource::Start() {
     alt::IResource::Start();
-    MainDelegate(this->server);
+    MainDelegate(this->server, this->name.CStr());
     return true;
 }
 

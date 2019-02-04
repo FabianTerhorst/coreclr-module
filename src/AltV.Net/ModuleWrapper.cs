@@ -1,5 +1,4 @@
 using System;
-using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
@@ -12,9 +11,11 @@ namespace AltV.Net
     {
         private static Module _module;
 
-        public static void Main(IntPtr serverPointer)
+        public static void Main(IntPtr serverPointer, string resourceName)
         {
-            _module = new Module(serverPointer);
+            _module = new Module(serverPointer, resourceName);
+            _module.Server.LogInfo("resource:" + resourceName);
+            _module.ResourceLoader.Prepare();
             _module.ResourceLoader.Start();
         }
 

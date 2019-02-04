@@ -49,7 +49,7 @@ class CSharpResource : public alt::IResource
     void (*OnEntityRemoveDelegate)(alt::IEntity *entity);
     void (*OnServerEventDelegate)(const char *name, alt::Array<alt::MValue> *args);
     void (*OnStopDelegate)();
-    void (*MainDelegate)(alt::IServer *server);
+    void (*MainDelegate)(alt::IServer *server, const char* resourceName);
     void *runtimeHost;
     unsigned int domainId;
 };
