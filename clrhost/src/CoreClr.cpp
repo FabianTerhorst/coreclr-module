@@ -32,14 +32,13 @@ CoreClr::CoreClr(alt::IServer *server) {
 #else
     const char *path = "/usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.1/libcoreclr.so";
     _coreClrLib = dlopen(path, RTLD_NOW | RTLD_LOCAL);
-    if (_coreClrLib == nullptr)
-    {
+    if (_coreClrLib == nullptr) {
         server->LogInfo(alt::String("[.NET] Unable to find CoreCLR dll [") + path + "]: " + dlerror());
         return;
     }
-    _initializeCoreCLR = (coreclr_initialize_ptr)dlsym(_coreClrLib, "coreclr_initialize");
-    _shutdownCoreCLR = (coreclr_shutdown_2_ptr)dlsym(_coreClrLib, "coreclr_shutdown_2");
-    _createDelegate = (coreclr_create_delegate_ptr)dlsym(_coreClrLib, "coreclr_create_delegate");
+    _initializeCoreCLR = (coreclr_initialize_ptr) dlsym(_coreClrLib, "coreclr_initialize");
+    _shutdownCoreCLR = (coreclr_shutdown_2_ptr) dlsym(_coreClrLib, "coreclr_shutdown_2");
+    _createDelegate = (coreclr_create_delegate_ptr) dlsym(_coreClrLib, "coreclr_create_delegate");
 #endif
     if (_initializeCoreCLR == nullptr || _shutdownCoreCLR == nullptr || _createDelegate == nullptr) {
         server->LogInfo(alt::String("[.NET] Unable to find CoreCLR dll methods"));
@@ -183,7 +182,7 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer *server, cons
                     continue;
                 }*/
 
-                if (strcmp(entry->d_name,"AltV.Net.dll") == 0) {
+                if (strcmp(entry->d_name, "AltV.Net.dll") == 0) {
                     continue;
                 }
                 assemblies.Push(
