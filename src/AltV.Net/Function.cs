@@ -497,7 +497,6 @@ namespace AltV.Net
         }
 
         //TODO: add support for nullable args, these are reducing the required length, add support for default values as well
-        //TODO: make private, internal just for testing
         internal MValue Call(IEntityPool entityPool, MValue[] values)
         {
             var length = values.Length;

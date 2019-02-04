@@ -8,7 +8,7 @@ add_library(${TARGET_NAME} SHARED altv.cpp CSharpScriptRuntime.cpp CSharpResourc
 if(UNIX AND NOT APPLE)
     target_compile_options(${TARGET_NAME} PRIVATE -std=c++17 -static -nostdinc++ -I/home/parallels/Desktop/clang_7.0.1/include/c++/v1 -nodefaultlibs -lc++ -lc++abi -lm -lc -lgcc_s -lgcc)
 else()
-    target_compile_options(${TARGET_NAME} PRIVATE -std=c++17 -stdlib=libc++ -static)
+    target_compile_options(${TARGET_NAME} PRIVATE)# -I/home/parallels/Desktop/clang_7.0.1/include/c++/v1  -stdlib=libc++ -I$ENV{PROGRAMFILES}/LLVM/lib/clang/7.0.1/include -nodefaultlibs
 endif()
 
 target_compile_definitions(${TARGET_NAME} PRIVATE ALT_SERVER_API=true)

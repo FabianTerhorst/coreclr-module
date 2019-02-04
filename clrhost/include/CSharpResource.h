@@ -23,7 +23,14 @@
 #include <sys/stat.h>
 #endif*/
 
+
+#ifdef _WIN32
+#include <iostream>
+#include <stdio.h>
+#include <direct.h>
+#else
 #include <unistd.h>
+#endif
 #include "CoreClr.h"
 #ifdef __clang__
 #pragma clang diagnostic pop

@@ -3,8 +3,10 @@
 
 alt::StringView getWD() {
 #ifdef _WIN32
-    char absolutePath[MAX_PATH];
-    GetFullPathName(relativePath.c_str(), MAX_PATH, absolutePath, NULL);
+    char* cwd = _getcwd( nullptr, 0 ) ;
+    auto str = alt::String(cwd);
+    free(cwd);
+    return str;
 #else
     char temp[PATH_MAX];
     if (getcwd(temp, PATH_MAX) != 0)
@@ -17,7 +19,12 @@ CSharpResource::CSharpResource(alt::IServer *server, CoreClr *coreClr, alt::IRes
         : alt::IResource(info) {
     this->server = server;
     const char *wd = getWD().CStr();
-    const char *resources = "/resources/";
+    const char *resources;
+    #ifdef _WIN32
+    resources = "\\resources\\";
+    #else
+    resources = "/resources/";
+    #endif
     const char *resourceName = name.CStr();
     fullPath = (char *) malloc(strlen(wd) + strlen(resources) + strlen(resourceName) + 1);
     strcpy(fullPath, wd);
@@ -53,16 +60,18 @@ CSharpResource::CSharpResource(alt::IServer *server, CoreClr *coreClr, alt::IRes
 
 bool CSharpResource::Start() {
     alt::IResource::Start();
+    if (MainDelegate == nullptr) return false;
     MainDelegate(this->server, this->name.CStr(), main.CStr());
     return true;
 }
 
 bool CSharpResource::Stop() {
     alt::IResource::Stop();
-    OnStopDelegate();
     for(int i = 0; i < invokers.GetSize();i++) {
         delete invokers[i];
     }
+    if (OnStopDelegate == nullptr) return false;
+    OnStopDelegate();
     return true;
 }
 
