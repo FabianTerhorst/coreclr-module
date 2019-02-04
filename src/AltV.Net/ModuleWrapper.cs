@@ -14,7 +14,6 @@ namespace AltV.Net
         public static void Main(IntPtr serverPointer, string resourceName)
         {
             _module = new Module(serverPointer, resourceName);
-            _module.Server.LogInfo("resource:" + resourceName);
             _module.ResourceLoader.Prepare();
             _module.ResourceLoader.Start();
         }
