@@ -11,9 +11,9 @@ namespace AltV.Net
     {
         private static Module _module;
 
-        public static void Main(IntPtr serverPointer, string resourceName)
+        public static void Main(IntPtr serverPointer, string resourceName, string entryPoint)
         {
-            _module = new Module(serverPointer, resourceName);
+            _module = new Module(serverPointer, resourceName, entryPoint);
             _module.ResourceLoader.Prepare();
             _module.ResourceLoader.Start();
         }

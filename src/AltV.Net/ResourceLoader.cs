@@ -12,57 +12,94 @@ namespace AltV.Net
         private readonly string basePath;
 
         private readonly Dictionary<string, Assembly> loadedAssemblies;
-        private List<ResourceHandler> resources;
+        private IResource resource;
 
-        internal ResourceLoader(Module module, string resourceName)
+        internal ResourceLoader(Module module, string resourceName, string entryPoint)
         {
             this.module = module;
-            basePath = $"resources/{resourceName}";
+            basePath = $"resources/{resourceName}/{entryPoint}";
             loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToDictionary(x => x.GetName().FullName, x => x);
         }
 
         public void Prepare()
         {
-            resources = new List<ResourceHandler>(FindResources());
-
-            foreach (var resource in resources)
+            var resourceInterfaceType = typeof(IResource);
+            var assembly = LoadAssembly(basePath);
+            Type[] types;
+            try
             {
-                resource.Prepare();
+                types = assembly.GetTypes();
             }
+            catch (Exception e)
+            {
+                Log(
+                    $"{basePath}: An error occured during entrypoint search in assembly \"{assembly.FullName}\": ",
+                    e);
+
+                if (e is ReflectionTypeLoadException reflectionException)
+                {
+                    Log("Following LoaderExceptions are given:");
+
+                    var loaderExceptions = reflectionException.LoaderExceptions;
+
+                    for (int i = 0; i < loaderExceptions.Length; i++)
+                    {
+                        Log($"LoaderException {i + 1} / {loaderExceptions.Length}: ",
+                            loaderExceptions[i]);
+                    }
+                }
+
+                return;
+            }
+
+            foreach (var type in types)
+            {
+                if (type.IsClass == false || type.IsAbstract ||
+                    resourceInterfaceType.IsAssignableFrom((Type) type) == false)
+                {
+                    continue;
+                }
+
+                var constructor =
+                    type.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public, null,
+                        Type.EmptyTypes, null);
+
+                if (constructor == null)
+                {
+                    Log(
+                        $"Possible type \"{type}\" was found, but no parameterless-constructor is available!");
+
+                    continue;
+                }
+
+                Log($"Entrypoint \"{type}\" found, executing constructor...");
+
+                try
+                {
+                    resource = (IResource) constructor.Invoke(null);
+                }
+                catch (Exception e)
+                {
+                    Log("An error occured during constructor-execution: ", e);
+                }
+            }
+        }
+
+        private void Log(string message, Exception exception = null)
+        {
+            module.Server.LogInfo($"{basePath}: {message} + {exception}");
         }
 
         public void Start()
         {
-            foreach (var resource in resources)
-            {
-                resource.Start();
-            }
+            resource?.OnStart();
         }
 
         public void Stop()
         {
-            foreach (var resource in resources)
-            {
-                resource.Stop();
-            }
+            resource?.OnStop();
         }
 
-        private IEnumerable<ResourceHandler> FindResources()
-        {
-            var directoryFolder = new DirectoryInfo(basePath);
-            foreach (var findResourceHandler in FindResourceHandlers(directoryFolder))
-                yield return findResourceHandler;
-        }
-
-        private IEnumerable<ResourceHandler> FindResourceHandlers(DirectoryInfo directoryInfo)
-        {
-            yield return new ResourceHandler(module, directoryInfo, this);
-            foreach (var directory in directoryInfo.GetDirectories())
-            {
-                foreach (var findResourceHandler in FindResourceHandlers(directory))
-                    yield return findResourceHandler;
-            }
-        }
 
         internal Assembly LoadAssembly(string path)
         {

@@ -29,12 +29,12 @@ namespace AltV.Net
         internal readonly EventHandler<EntityRemoveDelegate> EntityRemoveEventHandler =
             new EventHandler<EntityRemoveDelegate>();
 
-        public Module(IntPtr serverPointer, string resourceName)
+        public Module(IntPtr serverPointer, string resourceName, string entryPoint)
         {
             Alt.Setup(this);
             EntityPool = new EntityPool();
             Server = new Server(serverPointer, EntityPool);
-            ResourceLoader = new ResourceLoader(this, resourceName);
+            ResourceLoader = new ResourceLoader(this, resourceName, entryPoint);
         }
 
         public void On(string eventName, Function function)
