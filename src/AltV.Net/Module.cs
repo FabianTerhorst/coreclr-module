@@ -12,9 +12,11 @@ namespace AltV.Net
 
         internal readonly ResourceLoader ResourceLoader;
 
+        //For custom defined args event handlers
         internal readonly Dictionary<string, HashSet<Function>> EventHandlers =
             new Dictionary<string, HashSet<Function>>();
 
+        //For object[] args event handlers
         internal readonly Dictionary<string, HashSet<EventDelegate>> EventDelegateHandlers =
             new Dictionary<string, HashSet<EventDelegate>>();
 
