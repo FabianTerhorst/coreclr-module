@@ -61,5 +61,7 @@ namespace AltV.Net.Elements.Entities
         void SetData(string key, object value);
 
         bool GetData<T>(string key, out T result);
+
+        bool Remove();
     }
 }

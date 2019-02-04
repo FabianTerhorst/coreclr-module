@@ -91,10 +91,15 @@ namespace AltV.Net
             return vehicle;
         }
 
-        public void RemoveEntity(IEntity entity)
+        public bool RemoveEntity(IEntity entity)
         {
-            EntityPool.Remove(entity);
+            if (!EntityPool.Remove(entity))
+            {
+                return false;
+            }
+
             AltVNative.Server.Server_RemoveEntity(NativePointer, entity.NativePointer);
+            return true;
         }
     }
 }

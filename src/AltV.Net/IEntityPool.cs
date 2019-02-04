@@ -7,7 +7,7 @@ namespace AltV.Net
     {
         bool Get(IntPtr entityPointer, out IEntity entity);
         void Register(IEntity entity);
-        void Remove(IEntity entity);
-        void Remove(IntPtr entityPointer);
+        bool Remove(IEntity entity);
+        bool Remove(IntPtr entityPointer);
     }
 }

@@ -46,6 +46,6 @@ namespace AltV.Net
 
         IVehicle CreateVehicle(uint model, Position pos, float heading);
 
-        void RemoveEntity(IEntity entity);
+        bool RemoveEntity(IEntity entity);
     }
 }

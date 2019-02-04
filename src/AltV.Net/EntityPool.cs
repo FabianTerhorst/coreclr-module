@@ -25,19 +25,20 @@ namespace AltV.Net
             return true;
         }
 
-        public void Remove(IEntity entity)
+        public bool Remove(IEntity entity)
         {
-            Remove(entity.NativePointer);
+            return Remove(entity.NativePointer);
         }
 
-        public void Remove(IntPtr entityPointer)
+        public bool Remove(IntPtr entityPointer)
         {
-            if (!entities.Remove(entityPointer, out var entity)) return;
-            //todo find better solution
+            if (!entities.Remove(entityPointer, out var entity) || !entity.Exists) return false;
             if (entity is IInternalEntity internalEntity)
             {
                 internalEntity.Exists = false;
             }
+
+            return true;
         }
     }
 }

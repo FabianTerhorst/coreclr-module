@@ -139,5 +139,10 @@ namespace AltV.Net.Elements.Entities
             AltVNative.Entity.Entity_SetMetaData(NativePointer, key, ref value);
             return value;
         }
+
+        public bool Remove()
+        {
+            return Server.RemoveEntity(this);
+        }
     }
 }
