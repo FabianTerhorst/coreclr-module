@@ -47,14 +47,20 @@ namespace AltV.Net
             }
         }
 
-        //TODO: add recursively directory scan
         private IEnumerable<ResourceHandler> FindResources()
-        {   
+        {
             var directoryFolder = new DirectoryInfo(basePath);
-            yield return new ResourceHandler(module, directoryFolder, this);
-            foreach (var directory in directoryFolder.GetDirectories())
+            foreach (var findResourceHandler in FindResourceHandlers(directoryFolder))
+                yield return findResourceHandler;
+        }
+
+        private IEnumerable<ResourceHandler> FindResourceHandlers(DirectoryInfo directoryInfo)
+        {
+            yield return new ResourceHandler(module, directoryInfo, this);
+            foreach (var directory in directoryInfo.GetDirectories())
             {
-                yield return new ResourceHandler(module, directory, this);
+                foreach (var findResourceHandler in FindResourceHandlers(directory))
+                    yield return findResourceHandler;
             }
         }
 
