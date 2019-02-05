@@ -3,25 +3,26 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using AltV.Net.Native;
 
 namespace AltV.Net
 {
     internal class ResourceLoader
     {
-        private readonly Module module;
+        private readonly IntPtr serverPointer;
         private readonly string basePath;
 
         private readonly Dictionary<string, Assembly> loadedAssemblies;
         private IResource resource;
 
-        internal ResourceLoader(Module module, string resourceName, string entryPoint)
+        internal ResourceLoader(IntPtr serverPointer, string resourceName, string entryPoint)
         {
-            this.module = module;
+            this.serverPointer = serverPointer;
             basePath = $"resources/{resourceName}/{entryPoint}";
             loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToDictionary(x => x.GetName().FullName, x => x);
         }
 
-        public void Prepare()
+        public IResource Prepare()
         {
             var resourceInterfaceType = typeof(IResource);
             var assembly = LoadAssembly(basePath);
@@ -49,7 +50,7 @@ namespace AltV.Net
                     }
                 }
 
-                return;
+                return null;
             }
 
             foreach (var type in types)
@@ -83,11 +84,8 @@ namespace AltV.Net
                     Log("An error occured during constructor-execution: ", e);
                 }
             }
-        }
 
-        private void Log(string message, Exception exception = null)
-        {
-            module.Server.LogInfo($"{basePath}: {message} + {exception}");
+            return resource;
         }
 
         public void Start()
@@ -99,7 +97,6 @@ namespace AltV.Net
         {
             resource?.OnStop();
         }
-
 
         private Assembly LoadAssembly(string path)
         {
@@ -120,10 +117,15 @@ namespace AltV.Net
             }
             catch (FileLoadException e)
             {
-                module.Server.LogInfo($"An error occured while loading assembly \"{path}\": {e}");
+                Log($"An error occured while loading assembly \"{path}\": {e}");
 
                 return null;
             }
+        }
+
+        private void Log(string message, Exception exception = null)
+        {
+            AltVNative.Server.Server_LogInfo(serverPointer, $"{basePath}: {message} + {exception}");
         }
     }
 }

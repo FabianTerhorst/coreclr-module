@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using AltV.Net.Elements.Entities;
 
-namespace AltV.Net
+namespace AltV.Net.Elements.Pools
 {
     public class EntityPool : IEntityPool
     {
         private readonly Dictionary<IntPtr, IEntity> entities = new Dictionary<IntPtr, IEntity>();
 
-        public void Register(IEntity entity)
+        public void Add(IEntity entity)
         {
             entities[entity.NativePointer] = entity;
         }

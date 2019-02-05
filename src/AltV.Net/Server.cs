@@ -11,52 +11,55 @@ namespace AltV.Net
     {
         public static Server Instance { get; private set; }
 
-        private IntPtr NativePointer { get; }
+        private readonly IntPtr nativePointer;
 
-        internal IEntityPool EntityPool { get; }
+        private readonly IEntityPool entityPool;
 
-        internal Server(IntPtr nativePointer, IEntityPool entityPool)
+        private readonly IVehicleFactory vehicleFactory;
+
+        internal Server(IntPtr nativePointer, IEntityPool entityPool, IVehicleFactory vehicleFactory)
         {
-            NativePointer = nativePointer;
-            EntityPool = entityPool;
+            this.nativePointer = nativePointer;
+            this.entityPool = entityPool;
+            this.vehicleFactory = vehicleFactory;
             Instance = this;
         }
 
         public void LogInfo(string message)
         {
-            AltVNative.Server.Server_LogInfo(NativePointer, message);
+            AltVNative.Server.Server_LogInfo(nativePointer, message);
         }
 
         public void LogDebug(string message)
         {
-            AltVNative.Server.Server_LogDebug(NativePointer, message);
+            AltVNative.Server.Server_LogDebug(nativePointer, message);
         }
 
         public void LogWarning(string message)
         {
-            AltVNative.Server.Server_LogWarning(NativePointer, message);
+            AltVNative.Server.Server_LogWarning(nativePointer, message);
         }
 
         public void LogError(string message)
         {
-            AltVNative.Server.Server_LogError(NativePointer, message);
+            AltVNative.Server.Server_LogError(nativePointer, message);
         }
 
         public void LogColored(string message)
         {
-            AltVNative.Server.Server_LogColored(NativePointer, message);
+            AltVNative.Server.Server_LogColored(nativePointer, message);
         }
 
         public uint Hash(string hash)
         {
-            return AltVNative.Server.Server_Hash(NativePointer, hash);
+            return AltVNative.Server.Server_Hash(nativePointer, hash);
         }
 
         public void TriggerServerEvent(string eventName, params MValue[] args)
         {
             var mValueList = MValue.Nil;
             AltVNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
-            AltVNative.Server.Server_TriggerServerEvent(NativePointer, eventName, ref mValueList);
+            AltVNative.Server.Server_TriggerServerEvent(nativePointer, eventName, ref mValueList);
         }
 
         public void TriggerServerEvent(string eventName, params object[] args)
@@ -68,7 +71,7 @@ namespace AltV.Net
         {
             var mValueList = MValue.Nil;
             AltVNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
-            AltVNative.Server.Server_TriggerClientEvent(NativePointer, player.NativePointer, eventName, ref mValueList);
+            AltVNative.Server.Server_TriggerClientEvent(nativePointer, player.NativePointer, eventName, ref mValueList);
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)
@@ -87,19 +90,20 @@ namespace AltV.Net
 
         public IVehicle CreateVehicle(uint model, Position pos, float heading)
         {
-            var vehicle = new Vehicle(AltVNative.Server.Server_CreateVehicle(NativePointer, model, pos, heading), this);
-            EntityPool.Register(vehicle);
+            var vehicle =
+                vehicleFactory.Create(AltVNative.Server.Server_CreateVehicle(nativePointer, model, pos, heading));
+            entityPool.Add(vehicle);
             return vehicle;
         }
 
         public bool RemoveEntity(IEntity entity)
         {
-            if (!EntityPool.Remove(entity))
+            if (!entityPool.Remove(entity))
             {
                 return false;
             }
 
-            AltVNative.Server.Server_RemoveEntity(NativePointer, entity.NativePointer);
+            AltVNative.Server.Server_RemoveEntity(nativePointer, entity.NativePointer);
             return true;
         }
     }

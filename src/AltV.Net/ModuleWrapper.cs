@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Pools;
 using AltV.Net.Native;
 
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
@@ -11,16 +12,22 @@ namespace AltV.Net
     {
         private static Module _module;
 
+        private static ResourceLoader _resourceLoader;
+
         public static void Main(IntPtr serverPointer, string resourceName, string entryPoint)
         {
-            _module = new Module(serverPointer, resourceName, entryPoint);
-            _module.ResourceLoader.Prepare();
-            _module.ResourceLoader.Start();
+            _resourceLoader = new ResourceLoader(serverPointer, resourceName, entryPoint);
+            var resource = _resourceLoader.Prepare();
+            var vehicleFactory = resource.GetVehicleFactory();
+            var entityPool = new EntityPool();
+            var server = new Server(serverPointer, entityPool, vehicleFactory);
+            _module = new Module(server, entityPool);
+            _resourceLoader.Start();
         }
 
         public static void OnStop()
         {
-            _module.ResourceLoader.Stop();
+            _resourceLoader.Stop();
         }
 
         public static void OnPlayerConnect(IntPtr playerPointer, string reason)
@@ -87,7 +94,7 @@ namespace AltV.Net
                 var argObjects = new object[length];
                 for (var i = 0; i < length; i++)
                 {
-                    argObjects[i] = argArray[i].ToObject();
+                    argObjects[i] = argArray[i].ToObject(_module.EntityPool);
                 }
 
                 foreach (var eventHandler in eventDelegates)

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -7,6 +8,7 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Native
 {
+    //TODO: check the types in getter methods
     [StructLayout(LayoutKind.Sequential)]
     public struct MValue
     {
@@ -31,6 +33,7 @@ namespace AltV.Net.Native
 
         public static MValue Nil = new MValue(0, IntPtr.Zero);
 
+        //TODO: create a map that holds function pointers for each object type, its probably faster then this switch now
         public static MValue? CreateFromObject(object obj)
         {
             switch (obj)
@@ -55,31 +58,125 @@ namespace AltV.Net.Native
                     return value;
                 case MValue[] value:
                     return Create(value);
-                case Dictionary<string, object> value:
-                    var dictMValues = new List<MValue>();
+                /*case Dictionary<string, object> value:
+                    dictMValues = new List<MValue>();
                     foreach (var dictValue in value.Values)
                     {
                         var dictMValue = CreateFromObject(dictValue);
-                        if (!dictMValue.HasValue) continue;
-                        dictMValues.Add(dictMValue.Value);
+                        dictMValues.Add(dictMValue ?? Create());
                     }
 
                     return Create(dictMValues.ToArray(), value.Keys.ToArray());
+                case Dictionary<string, bool> value:
+                    dictMValues = new List<MValue>();
+                    foreach (var dictValue in value.Values)
+                    {
+                        dictMValues.Add(Create(dictValue));
+                    }
+
+                    return Create(dictMValues.ToArray(), value.Keys.ToArray());
+                case Dictionary<string, int> value:
+                    dictMValues = new List<MValue>();
+                    foreach (var dictValue in value.Values)
+                    {
+                        dictMValues.Add(Create(dictValue));
+                    }
+
+                    return Create(dictMValues.ToArray(), value.Keys.ToArray());
+                case Dictionary<string, long> value:
+                    dictMValues = new List<MValue>();
+                    foreach (var dictValue in value.Values)
+                    {
+                        dictMValues.Add(Create(dictValue));
+                    }
+
+                    return Create(dictMValues.ToArray(), value.Keys.ToArray());
+                case Dictionary<string, uint> value:
+                    dictMValues = new List<MValue>();
+                    foreach (var dictValue in value.Values)
+                    {
+                        dictMValues.Add(Create(dictValue));
+                    }
+
+                    return Create(dictMValues.ToArray(), value.Keys.ToArray());
+                case Dictionary<string, ulong> value:
+                    dictMValues = new List<MValue>();
+                    foreach (var dictValue in value.Values)
+                    {
+                        dictMValues.Add(Create(dictValue));
+                    }
+
+                    return Create(dictMValues.ToArray(), value.Keys.ToArray());
+                case Dictionary<string, double> value:
+                    dictMValues = new List<MValue>();
+                    foreach (var dictValue in value.Values)
+                    {
+                        dictMValues.Add(Create(dictValue));
+                    }
+
+                    return Create(dictMValues.ToArray(), value.Keys.ToArray());*/
                 case Invoker value:
                     return Create(value);
                 case Function value:
                     return Create(value);
-                case object[] value:
-                    return Create((from objArrayValue in value
-                        select CreateFromObject(objArrayValue)
-                        into objArrayMValue
-                        where objArrayMValue.HasValue
-                        select objArrayMValue.Value).ToArray());
+                /*case object[] value:
+                    return Create(value.Select(objArrayValue => CreateFromObject(objArrayValue) ?? Create()).ToArray());
+                case bool[] value:
+                    return Create(value.Select(Create).ToArray());
+                case int[] value:
+                    return Create(value.Select(objArrayValue => Create(objArrayValue)).ToArray());
+                case long[] value:
+                    return Create(value.Select(Create).ToArray());
+                case ulong[] value:
+                    return Create(value.Select(Create).ToArray());
+                case uint[] value:
+                    return Create(value.Select(objArrayValue => Create(objArrayValue)).ToArray());
+                case double[] value:
+                    return Create(value.Select(Create).ToArray());*/
                 case Net.Function function:
                     return Create(function.call);
+                case IDictionary dictionary:
+                    var dictKeys = new string[dictionary.Count];
+                    var dictValues = new MValue[dictionary.Count];
+                    var i = 0;
+                    foreach (var key in dictionary.Keys)
+                    {
+                        if (key is string stringKey)
+                        {
+                            dictKeys[i++] = stringKey;
+                        }
+                        else
+                        {
+                            return Create();
+                        }
+                    }
+
+                    i = 0;
+                    foreach (var value in dictionary.Values)
+                    {
+                        dictValues[i++] = CreateFromObject(value) ?? Create();
+                    }
+
+                    return Create(dictValues, dictKeys);
+                case ICollection collection:
+                    var listValues = new MValue[collection.Count];
+                    i = 0;
+                    foreach (var value in collection)
+                    {
+                        listValues[i++] = CreateFromObject(value) ?? Create();
+                    }
+                    return Create(listValues);
                 default:
-                    return null;
+                    Server.Instance.LogInfo("cant convert type:" + obj.GetType());
+                    return Create();
             }
+        }
+
+        public static MValue Create()
+        {
+            var mValue = Nil;
+            AltVNative.MValueCreate.MValue_CreateNil(ref mValue);
+            return mValue;
         }
 
         public static MValue Create(bool value)
@@ -126,7 +223,8 @@ namespace AltV.Net.Native
 
         public static MValue Create(MValue[] values, string[] keys)
         {
-            if (values.Length != keys.Length) throw new ArgumentException("values length != keys length");
+            if (values.Length != keys.Length)
+                throw new ArgumentException($"values length: {values.Length} != keys length: {keys.Length}");
             var mValue = Nil;
             AltVNative.MValueCreate.MValue_CreateDict(values, keys, (ulong) values.Length, ref mValue);
             return mValue;
@@ -272,7 +370,7 @@ namespace AltV.Net.Native
             return "MValue<>";
         }
 
-        public object ToObject()
+        public object ToObject(IEntityPool entityPool)
         {
             switch (type)
             {
@@ -295,7 +393,7 @@ namespace AltV.Net.Native
                     var arrayValues = new object[mValueArray.size];
                     for (var i = 0; i < arrayValues.Length; i++)
                     {
-                        arrayValues[i] = Marshal.PtrToStructure<MValue>(arrayValue).ToObject();
+                        arrayValues[i] = Marshal.PtrToStructure<MValue>(arrayValue).ToObject(entityPool);
                         arrayValue += Size;
                     }
 
@@ -310,7 +408,8 @@ namespace AltV.Net.Native
                     var length = (int) valueArrayRef.size;
                     for (var i = 0; i < length; i++)
                     {
-                        dictionary[stringViewArray[i].Text] = Marshal.PtrToStructure<MValue>(dictValue).ToObject();
+                        dictionary[stringViewArray[i].Text] =
+                            Marshal.PtrToStructure<MValue>(dictValue).ToObject(entityPool);
                         dictValue += Size;
                     }
 
@@ -318,7 +417,7 @@ namespace AltV.Net.Native
                 case Type.ENTITY:
                     var entityPointer = IntPtr.Zero;
                     GetEntityPointer(ref entityPointer);
-                    if (Server.Instance.EntityPool.Get(entityPointer, out var entity))
+                    if (entityPool.Get(entityPointer, out var entity))
                     {
                         return entity;
                     }

@@ -4,31 +4,31 @@ namespace AltV.Net
 {
     public static partial class Alt
     {
-        private static Module _module;
+        internal static Module Module;
 
-        public static Server Server => _module.Server;
+        public static IServer Server => Module.Server;
         
         public static event PlayerConnectDelegate OnPlayerConnect
         {
-            add => _module.PlayerConnectEventHandler.Subscribe(value);
-            remove => _module.PlayerConnectEventHandler.Unsubscribe(value);
+            add => Module.PlayerConnectEventHandler.Subscribe(value);
+            remove => Module.PlayerConnectEventHandler.Unsubscribe(value);
         }
         
         public static event PlayerDisconnectDelegate OnPlayerDisconnect
         {
-            add => _module.PlayerDisconnectEventHandler.Subscribe(value);
-            remove => _module.PlayerDisconnectEventHandler.Unsubscribe(value);
+            add => Module.PlayerDisconnectEventHandler.Subscribe(value);
+            remove => Module.PlayerDisconnectEventHandler.Unsubscribe(value);
         }
         
         public static event EntityRemoveDelegate OnEntityRemove
         {
-            add => _module.EntityRemoveEventHandler.Subscribe(value);
-            remove => _module.EntityRemoveEventHandler.Unsubscribe(value);
+            add => Module.EntityRemoveEventHandler.Subscribe(value);
+            remove => Module.EntityRemoveEventHandler.Unsubscribe(value);
         }
 
         public static void On(string eventName, Function function)
         {
-            _module.On(eventName, function);
+            Module.On(eventName, function);
         }
 
         public static void Emit(string eventName, params object[] args)
@@ -43,7 +43,7 @@ namespace AltV.Net
 
         internal static void Setup(Module module)
         {
-            _module = module;
+            Module = module;
         }
     }
 }

@@ -3,7 +3,7 @@ using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Entities
 {
-    internal class Vehicle : Entity, IVehicle
+    public class Vehicle : Entity, IVehicle
     {
         public IPlayer Driver
         {
@@ -12,7 +12,7 @@ namespace AltV.Net.Elements.Entities
                 if (!Exists) return null;
                 var entityPointer = AltVNative.Vehicle.Vehicle_GetDriver(NativePointer);
                 if (entityPointer == IntPtr.Zero) return null;
-                if (Server.EntityPool.Get(entityPointer, out var entity) && entity is IPlayer player)
+                if (Alt.Module.EntityPool.Get(entityPointer, out var entity) && entity is IPlayer player)
                 {
                     return player;
                 }
@@ -31,7 +31,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        internal Vehicle(IntPtr nativePointer, Server server) : base(nativePointer, EntityType.Vehicle, server)
+        public Vehicle(IntPtr nativePointer) : base(nativePointer, EntityType.Vehicle)
         {
         }
     }

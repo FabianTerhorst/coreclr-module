@@ -109,6 +109,7 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer* server, cons
         }
         server->LogInfo(alt::String("[.NET] Runtime directory found"));
         struct dirent* entry;
+        struct stat sb{};
         for (auto ext : tpaExtensions) {
             size_t extLength = strlen(ext);
             while ((entry = readdir(directory)) != nullptr) {
@@ -127,7 +128,6 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer* server, cons
                         fullFilename.append("/");
                         fullFilename.append(entry->d_name);
 
-                        struct stat sb;
                         if (stat(fullFilename.c_str(), &sb) == -1) {
                             continue;
                         }

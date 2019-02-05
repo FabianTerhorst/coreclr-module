@@ -6,8 +6,10 @@ using AltV.Net.Native;
 namespace AltV.Net.Data
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct ReadOnlyPlayer : IPlayer
+    public readonly struct ReadOnlyPlayer : IPlayer
     {
+        public static ReadOnlyPlayer Empty;
+        
         public ushort Id { get; }
         public EntityType Type { get; }
         private readonly Position position;
@@ -50,5 +52,7 @@ namespace AltV.Net.Data
         public bool Remove() => throw new NotImplementedException();
 
         public void Call(string eventName, params object[] args) => throw new NotImplementedException();
+
+        public ReadOnlyPlayer Copy() => throw new NotImplementedException();
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using AltV.Net.Events;
 
@@ -6,11 +5,9 @@ namespace AltV.Net
 {
     public class Module
     {
+        internal readonly IServer Server;
+
         internal readonly IEntityPool EntityPool;
-
-        internal readonly Server Server;
-
-        internal readonly ResourceLoader ResourceLoader;
 
         //For custom defined args event handlers
         internal readonly Dictionary<string, HashSet<Function>> EventHandlers =
@@ -29,12 +26,11 @@ namespace AltV.Net
         internal readonly EventHandler<EntityRemoveDelegate> EntityRemoveEventHandler =
             new EventHandler<EntityRemoveDelegate>();
 
-        public Module(IntPtr serverPointer, string resourceName, string entryPoint)
+        public Module(IServer server, IEntityPool entityPool)
         {
             Alt.Setup(this);
-            EntityPool = new EntityPool();
-            Server = new Server(serverPointer, EntityPool);
-            ResourceLoader = new ResourceLoader(this, resourceName, entryPoint);
+            Server = server;
+            EntityPool = entityPool;
         }
 
         public void On(string eventName, Function function)

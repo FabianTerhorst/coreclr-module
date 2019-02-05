@@ -8,7 +8,7 @@ using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Entities
 {
-    internal abstract class Entity : IInternalEntity, IEntity
+    public abstract class Entity : IInternalEntity, IEntity
     {
         private readonly ConcurrentDictionary<string, object> data = new ConcurrentDictionary<string, object>();
 
@@ -22,15 +22,12 @@ namespace AltV.Net.Elements.Entities
         public ushort Id { get; }
         public EntityType Type { get; }
 
-        private protected Server Server { get; }
-
-        protected Entity(IntPtr nativePointer, EntityType type, Server server)
+        protected Entity(IntPtr nativePointer, EntityType type)
         {
             NativePointer = nativePointer;
 
             Id = AltVNative.Entity.Entity_GetID(NativePointer);
             Type = type;
-            Server = server;
             Exists = true;
         }
 
@@ -143,7 +140,7 @@ namespace AltV.Net.Elements.Entities
 
         public bool Remove()
         {
-            return Server.RemoveEntity(this);
+            return Alt.RemoveEntity(this);
         }
     }
 }

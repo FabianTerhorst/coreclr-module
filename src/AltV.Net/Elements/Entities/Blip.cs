@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Entities
@@ -25,7 +23,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        internal Blip(IntPtr nativePointer, Server server) : base(nativePointer, EntityType.Blip, server)
+        internal Blip(IntPtr nativePointer) : base(nativePointer, EntityType.Blip)
         {
         }
     }

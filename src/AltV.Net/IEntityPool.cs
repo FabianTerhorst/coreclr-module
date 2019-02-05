@@ -6,7 +6,7 @@ namespace AltV.Net
     public interface IEntityPool
     {
         bool Get(IntPtr entityPointer, out IEntity entity);
-        void Register(IEntity entity);
+        void Add(IEntity entity);
         bool Remove(IEntity entity);
         bool Remove(IntPtr entityPointer);
     }

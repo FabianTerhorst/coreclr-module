@@ -4,5 +4,6 @@ namespace AltV.Net
     {
         void OnStart();
         void OnStop();
+        IVehicleFactory GetVehicleFactory();
     }
 }
