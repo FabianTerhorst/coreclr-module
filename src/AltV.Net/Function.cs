@@ -259,10 +259,12 @@ namespace AltV.Net
             for (var i = 0; i < length; i++)
             {
                 var currMValue = mValues[i];
-                if (!ValidateMValueType(currMValue.type, type, typeInfo?.Element))
-                    return null;
                 typeArray.SetValue(
-                    Convert.ChangeType(ParseObject(ref currMValue, type, entityPool, typeInfo?.Element), type), i);
+                    !ValidateMValueType(currMValue.type, type, typeInfo?.Element)
+                        ? null
+                        : Convert.ChangeType(ParseObject(ref currMValue, type, entityPool, typeInfo?.Element), type),
+                    i);
+
                 //typeArray.SetValue(ParseObject(ref currMValue, type, entityPool, typeInfo?.Element), i);
             }
 
@@ -398,7 +400,7 @@ namespace AltV.Net
 
                 return dict;
             }
-            
+
             if (valueType == Bool)
             {
                 var dict = new Dictionary<string, bool>();
@@ -536,9 +538,18 @@ namespace AltV.Net
             var typedDict = (System.Collections.IDictionary) Activator.CreateInstance(dictType);
             for (var i = 0; i < length; i++)
             {
-                typedDict[stringViewArray[i].Text] =
-                    Convert.ChangeType(ParseObject(ref valueArray[i], valueType, entityPool, typeInfo?.DictionaryValue),
-                        valueType);
+                currMValue = valueArray[i];
+                if (!ValidateMValueType(currMValue.type, valueType, typeInfo?.DictionaryValue))
+                {
+                    typedDict[stringViewArray[i].Text] = null;
+                }
+                else
+                {
+                    typedDict[stringViewArray[i].Text] =
+                        Convert.ChangeType(
+                            ParseObject(ref currMValue, valueType, entityPool, typeInfo?.DictionaryValue),
+                            valueType);
+                }
             }
 
             return typedDict;
