@@ -10,6 +10,21 @@
 #include <altv-cpp-api/events/CPlayerDisconnectEvent.h>
 #include <altv-cpp-api/events/CRemoveEntityEvent.h>
 #include <altv-cpp-api/events/CServerScriptEvent.h>
+
+#ifdef _WIN32
+#define RESOURCES_PATH "\\resources\\"
+#else
+#define RESOURCES_PATH "/resources/"
+#endif
+
+#ifdef _WIN32
+#include <direct.h>
+#define GetCurrentDir _getcwd
+#else
+#include <unistd.h>
+#define GetCurrentDir getcwd
+#endif
+
 //#include "clrHost.h"
 
 /*#include <iostream>
@@ -42,10 +57,8 @@ class CSharpResource : public alt::IResource
     void OnTick() override;
     bool Start() override;
     bool Stop() override;
-    alt::String GetFilePath(const char *fileName);
 
   private:
-    char *fullPath;
     alt::IServer *server;
 
   public:
