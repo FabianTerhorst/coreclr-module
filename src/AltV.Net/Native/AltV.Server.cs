@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using AltV.Net.Data;
 
 namespace AltV.Net.Native
 {

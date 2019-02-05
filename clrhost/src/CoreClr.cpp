@@ -4,7 +4,7 @@
 
 #include "CoreClr.h"
 
-CoreClr::CoreClr(alt::IServer *server) {
+CoreClr::CoreClr(alt::IServer* server) {
 #ifdef _WIN32
     char pf[MAX_PATH];
     SHGetSpecialFolderPath(
@@ -20,7 +20,7 @@ CoreClr::CoreClr(alt::IServer *server) {
     strcat(runtimeDirectory, windowsProgramFilesPath);
 #else
     const char* linuxDefaultPath = "/usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.1";
-    runtimeDirectory = (char *) malloc(strlen(linuxDefaultPath) + 1);
+    runtimeDirectory = (char*) malloc(strlen(linuxDefaultPath) + 1);
     strcpy(runtimeDirectory, linuxDefaultPath);
 #endif
 #ifdef _WIN32
@@ -40,7 +40,7 @@ CoreClr::CoreClr(alt::IServer *server) {
     _shutdownCoreCLR = (coreclr_shutdown_2_ptr) GetProcAddress(_coreClrLib, "coreclr_shutdown_2");
     _createDelegate = (coreclr_create_delegate_ptr) GetProcAddress(_coreClrLib, "coreclr_create_delegate");
 #else
-    const char *fileName = "/libcoreclr.so";
+    const char* fileName = "/libcoreclr.so";
     char fullPath[strlen(fileName) + strlen(runtimeDirectory) + 1];
     strcpy(fullPath, runtimeDirectory);
     strcat(fullPath, fileName);
@@ -65,8 +65,8 @@ CoreClr::~CoreClr() {
     delete runtimeDirectory;
 }
 
-bool CoreClr::GetDelegate(alt::IServer *server, void *runtimeHost, unsigned int domainId, const char *moduleName,
-                          const char *classPath, const char *methodName, void **callback) {
+bool CoreClr::GetDelegate(alt::IServer* server, void* runtimeHost, unsigned int domainId, const char* moduleName,
+                          const char* classPath, const char* methodName, void** callback) {
     if (runtimeHost == nullptr || domainId == 0) {
         server->LogInfo(alt::String("[.NET] Core CLR host not loaded"));
         return false;
@@ -81,7 +81,7 @@ bool CoreClr::GetDelegate(alt::IServer *server, void *runtimeHost, unsigned int 
             return false;
         }
         server->LogInfo(alt::String(strerror(errno)));
-        char *x_str = new char[10];
+        char* x_str = new char[10];
         sprintf(x_str, "%d", result);
         server->LogInfo(
                 alt::String(x_str));
@@ -95,11 +95,11 @@ bool CoreClr::GetDelegate(alt::IServer *server, void *runtimeHost, unsigned int 
 }
 
 //TODO: don't include own dll or exe ect that is in the directory
-alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer *server, const char *appPath) {
+alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer* server, const char* appPath) {
     alt::Array<alt::String> assemblies;
-    const char *const tpaExtensions[] = {".ni.dll", ".dll", ".ni.exe", ".exe", ".winmd"};
+    const char* const tpaExtensions[] = {".ni.dll", ".dll", ".ni.exe", ".exe", ".winmd"};
 
-    const char *directories[] = {runtimeDirectory/*, appPath*/ };
+    const char* directories[] = {runtimeDirectory/*, appPath*/ };
 
     for (auto path : directories) {
         auto directory = opendir(path);
@@ -108,7 +108,7 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer *server, cons
             return assemblies;
         }
         server->LogInfo(alt::String("[.NET] Runtime directory found"));
-        struct dirent *entry;
+        struct dirent* entry;
         for (auto ext : tpaExtensions) {
             size_t extLength = strlen(ext);
             while ((entry = readdir(directory)) != nullptr) {
@@ -173,8 +173,8 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer *server, cons
     return assemblies;
 }
 
-void CoreClr::CreateAppDomain(alt::IServer *server, const char *appPath, const char *libraryPath, void **runtimeHost,
-                              unsigned int *domainId) {
+void CoreClr::CreateAppDomain(alt::IServer* server, const char* appPath, const char* libraryPath, void** runtimeHost,
+                              unsigned int* domainId) {
     alt::String tpaList = "";
 
     //TODO: check if useless list separator at the end is fine
@@ -187,7 +187,7 @@ void CoreClr::CreateAppDomain(alt::IServer *server, const char *appPath, const c
 
     auto nativeDllPaths = alt::String(appPath) + LIST_SEPARATOR + libraryPath;
 
-    const char *propertyKeys[] = {
+    const char* propertyKeys[] = {
             "TRUSTED_PLATFORM_ASSEMBLIES",
             "APP_PATHS",
             "APP_NI_PATHS",
@@ -195,7 +195,7 @@ void CoreClr::CreateAppDomain(alt::IServer *server, const char *appPath, const c
             "System.GC.Server",
             "System.Globalization.Invariant"};
 
-    const char *propertyValues[] = {
+    const char* propertyValues[] = {
             tpaList.CStr(),
             appPath,
             appPath,
@@ -206,7 +206,7 @@ void CoreClr::CreateAppDomain(alt::IServer *server, const char *appPath, const c
     int result = _initializeCoreCLR(
             appPath,
             "host",
-            sizeof(propertyKeys) / sizeof(char *),
+            sizeof(propertyKeys) / sizeof(char*),
             propertyKeys,
             propertyValues,
             runtimeHost,
@@ -219,7 +219,7 @@ void CoreClr::CreateAppDomain(alt::IServer *server, const char *appPath, const c
     }
 }
 
-void CoreClr::Shutdown(alt::IServer *server, void *runtimeHost,
+void CoreClr::Shutdown(alt::IServer* server, void* runtimeHost,
                        unsigned int domainId) {
     int latchedExitCode = 0;
     int result = _shutdownCoreCLR(runtimeHost, domainId, &latchedExitCode);

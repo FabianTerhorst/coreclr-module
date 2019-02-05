@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Threading.Tasks;
+using AltV.Net.Data;
 using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Entities

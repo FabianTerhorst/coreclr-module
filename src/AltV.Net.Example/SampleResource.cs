@@ -1,4 +1,6 @@
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Enums;
 
 namespace AltV.Net.Example
 {
@@ -17,6 +19,11 @@ namespace AltV.Net.Example
             Alt.OnPlayerConnect += OnPlayerConnect;
             Alt.OnPlayerDisconnect += OnPlayerDisconnect;
             Alt.OnEntityRemove += OnEntityRemove;
+
+            var vehicle = Alt.CreateVehicle(VehicleHash.Apc, Position.Zero, float.MinValue);
+            vehicle.PrimaryColor = 7;
+
+            vehicle.Remove();
         }
 
         private void OnPlayerConnect(IPlayer player, string reason)

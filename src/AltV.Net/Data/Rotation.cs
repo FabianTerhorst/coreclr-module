@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace AltV.Net.Native
+namespace AltV.Net.Data
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct Rotation
