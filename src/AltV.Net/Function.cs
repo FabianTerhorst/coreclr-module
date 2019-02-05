@@ -8,6 +8,30 @@ namespace AltV.Net
 {
     public partial class Function
     {
+        public delegate object Func(params object[] args);
+
+        private class FuncWrapper
+        {
+            private readonly MValue.Function function;
+
+            public FuncWrapper(MValue.Function function)
+            {
+                this.function = function;
+            }
+
+            public object Call(params object[] args)
+            {
+                var result = MValue.Nil;
+                var mValueArgs = MValue.Create((from obj in args
+                    select MValue.CreateFromObject(obj)
+                    into mValue
+                    where mValue.HasValue
+                    select mValue.Value).ToArray());
+                function(ref mValueArgs, ref result);
+                return result.ToObject(Alt.Module.EntityPool);
+            }
+        }
+
         private class TypeInfo
         {
             public readonly bool IsEntity;
@@ -100,6 +124,8 @@ namespace AltV.Net
         private static readonly Type Blip = typeof(IBlip);
 
         private static readonly Type Obj = typeof(object);
+
+        private static readonly Type FunctionType = typeof(Func);
 
         //TODO: for high optimization add ParseBoolUnsafe ect. that doesn't contains the mValue type check for scenarios where we already had to check the mValue type
 
@@ -343,8 +369,10 @@ namespace AltV.Net
                     return ParseEntity(ref mValue, type, entityPool, typeInfo);
                 case MValue.Type.DICT:
                     return ParseDictionary(ref mValue, type, entityPool, typeInfo);
+                case MValue.Type.FUNCTION:
+                    return ParseFunction(ref mValue, type, entityPool, typeInfo);
                 default:
-                    return false; //TODO:, func, dict, ect.
+                    return false;
             }
         }
 
@@ -555,6 +583,17 @@ namespace AltV.Net
             return typedDict;
         }
 
+        private static object ParseFunction(ref MValue mValue, Type type, IEntityPool entityPool, TypeInfo typeInfo)
+        {
+            if (mValue.type == MValue.Type.FUNCTION)
+            {
+                return (Func) new FuncWrapper(mValue.GetFunction()).Call;
+            }
+
+            // Types doesn't match
+            return null;
+        }
+
         private static bool ValidateEntityType(EntityType entityType, Type type, TypeInfo typeInfo)
         {
             if (type == Obj)
@@ -680,6 +719,10 @@ namespace AltV.Net
                 else if (typeInfo.IsDict)
                 {
                     parsers[i] = ParseDictionary;
+                }
+                else if (arg == FunctionType)
+                {
+                    parsers[i] = ParseFunction;
                 }
                 else
                 {
