@@ -120,15 +120,41 @@ namespace AltV.Net
                 return array;
             }
 
+            if (type == Bool)
+            {
+                var array = new bool[length];
+                for (var i = 0; i < length; i++)
+                {
+                    var currMValue = mValues[i];
+                    if (currMValue.type == MValue.Type.BOOL)
+                    {
+                        array[i] = currMValue.GetBool();
+                    }
+                    else
+                    {
+                        array[i] = default;
+                    }
+
+                    array[i] = currMValue.GetBool();
+                }
+
+                return array;
+            }
+
             if (type == Int)
             {
                 var array = new int[length];
                 for (var i = 0; i < length; i++)
                 {
                     var currMValue = mValues[i];
-                    if (!ValidateMValueType(currMValue.type, type, typeInfo?.Element))
-                        return null;
-                    array[i] = (int) currMValue.GetInt();
+                    if (currMValue.type == MValue.Type.INT)
+                    {
+                        array[i] = (int) currMValue.GetInt();
+                    }
+                    else
+                    {
+                        array[i] = default;
+                    }
                 }
 
                 return array;
@@ -140,9 +166,14 @@ namespace AltV.Net
                 for (var i = 0; i < length; i++)
                 {
                     var currMValue = mValues[i];
-                    if (!ValidateMValueType(currMValue.type, type, typeInfo?.Element))
-                        return null;
-                    array[i] = currMValue.GetInt();
+                    if (currMValue.type == MValue.Type.INT)
+                    {
+                        array[i] = currMValue.GetInt();
+                    }
+                    else
+                    {
+                        array[i] = default;
+                    }
                 }
 
                 return array;
@@ -154,9 +185,14 @@ namespace AltV.Net
                 for (var i = 0; i < length; i++)
                 {
                     var currMValue = mValues[i];
-                    if (!ValidateMValueType(currMValue.type, type, typeInfo?.Element))
-                        return null;
-                    array[i] = (uint) currMValue.GetUint();
+                    if (currMValue.type == MValue.Type.UINT)
+                    {
+                        array[i] = (uint) currMValue.GetUint();
+                    }
+                    else
+                    {
+                        array[i] = default;
+                    }
                 }
 
                 return array;
@@ -168,9 +204,14 @@ namespace AltV.Net
                 for (var i = 0; i < length; i++)
                 {
                     var currMValue = mValues[i];
-                    if (!ValidateMValueType(currMValue.type, type, typeInfo?.Element))
-                        return null;
-                    array[i] = currMValue.GetUint();
+                    if (currMValue.type == MValue.Type.UINT)
+                    {
+                        array[i] = currMValue.GetUint();
+                    }
+                    else
+                    {
+                        array[i] = default;
+                    }
                 }
 
                 return array;
@@ -182,9 +223,14 @@ namespace AltV.Net
                 for (var i = 0; i < length; i++)
                 {
                     var currMValue = mValues[i];
-                    if (!ValidateMValueType(currMValue.type, type, typeInfo?.Element))
-                        return null;
-                    array[i] = currMValue.GetDouble();
+                    if (currMValue.type == MValue.Type.DOUBLE)
+                    {
+                        array[i] = currMValue.GetDouble();
+                    }
+                    else
+                    {
+                        array[i] = default;
+                    }
                 }
 
                 return array;
@@ -196,9 +242,14 @@ namespace AltV.Net
                 for (var i = 0; i < length; i++)
                 {
                     var currMValue = mValues[i];
-                    if (!ValidateMValueType(currMValue.type, type, typeInfo?.Element))
-                        return null;
-                    array[i] = currMValue.GetString();
+                    if (currMValue.type == MValue.Type.STRING)
+                    {
+                        array[i] = currMValue.GetString();
+                    }
+                    else
+                    {
+                        array[i] = null;
+                    }
                 }
 
                 return array;
@@ -210,7 +261,9 @@ namespace AltV.Net
                 var currMValue = mValues[i];
                 if (!ValidateMValueType(currMValue.type, type, typeInfo?.Element))
                     return null;
-                typeArray.SetValue(ParseObject(ref currMValue, type, entityPool, typeInfo?.Element), i);
+                typeArray.SetValue(
+                    Convert.ChangeType(ParseObject(ref currMValue, type, entityPool, typeInfo?.Element), type), i);
+                //typeArray.SetValue(ParseObject(ref currMValue, type, entityPool, typeInfo?.Element), i);
             }
 
             return typeArray;
@@ -267,6 +320,7 @@ namespace AltV.Net
 
         private static object ParseObject(ref MValue mValue, Type type, IEntityPool entityPool, TypeInfo typeInfo)
         {
+            //return mValue.ToObject(entityPool);
             switch (mValue.type)
             {
                 case MValue.Type.NIL:
@@ -344,6 +398,25 @@ namespace AltV.Net
 
                 return dict;
             }
+            
+            if (valueType == Bool)
+            {
+                var dict = new Dictionary<string, bool>();
+                for (var i = 0; i < length; i++)
+                {
+                    currMValue = valueArray[i];
+                    if (currMValue.type == MValue.Type.BOOL)
+                    {
+                        dict[stringViewArray[i].Text] = currMValue.GetBool();
+                    }
+                    else
+                    {
+                        dict[stringViewArray[i].Text] = default;
+                    }
+                }
+
+                return dict;
+            }
 
             if (valueType == Int)
             {
@@ -351,9 +424,14 @@ namespace AltV.Net
                 for (var i = 0; i < length; i++)
                 {
                     currMValue = valueArray[i];
-                    if (!ValidateMValueType(currMValue.type, valueType, typeInfo?.DictionaryValue))
-                        return null;
-                    dict[stringViewArray[i].Text] = (int) currMValue.GetInt();
+                    if (currMValue.type == MValue.Type.INT)
+                    {
+                        dict[stringViewArray[i].Text] = (int) currMValue.GetInt();
+                    }
+                    else
+                    {
+                        dict[stringViewArray[i].Text] = default;
+                    }
                 }
 
                 return dict;
@@ -365,9 +443,14 @@ namespace AltV.Net
                 for (var i = 0; i < length; i++)
                 {
                     currMValue = valueArray[i];
-                    if (!ValidateMValueType(currMValue.type, valueType, typeInfo?.DictionaryValue))
-                        return null;
-                    dict[stringViewArray[i].Text] = currMValue.GetInt();
+                    if (currMValue.type == MValue.Type.INT)
+                    {
+                        dict[stringViewArray[i].Text] = currMValue.GetInt();
+                    }
+                    else
+                    {
+                        dict[stringViewArray[i].Text] = default;
+                    }
                 }
 
                 return dict;
@@ -379,9 +462,14 @@ namespace AltV.Net
                 for (var i = 0; i < length; i++)
                 {
                     currMValue = valueArray[i];
-                    if (!ValidateMValueType(currMValue.type, valueType, typeInfo?.DictionaryValue))
-                        return null;
-                    dict[stringViewArray[i].Text] = (uint) currMValue.GetUint();
+                    if (currMValue.type == MValue.Type.UINT)
+                    {
+                        dict[stringViewArray[i].Text] = (uint) currMValue.GetUint();
+                    }
+                    else
+                    {
+                        dict[stringViewArray[i].Text] = default;
+                    }
                 }
 
                 return dict;
@@ -393,9 +481,14 @@ namespace AltV.Net
                 for (var i = 0; i < length; i++)
                 {
                     currMValue = valueArray[i];
-                    if (!ValidateMValueType(currMValue.type, valueType, typeInfo?.DictionaryValue))
-                        return null;
-                    dict[stringViewArray[i].Text] = currMValue.GetUint();
+                    if (currMValue.type == MValue.Type.UINT)
+                    {
+                        dict[stringViewArray[i].Text] = currMValue.GetUint();
+                    }
+                    else
+                    {
+                        dict[stringViewArray[i].Text] = default;
+                    }
                 }
 
                 return dict;
@@ -407,9 +500,14 @@ namespace AltV.Net
                 for (var i = 0; i < length; i++)
                 {
                     currMValue = valueArray[i];
-                    if (!ValidateMValueType(currMValue.type, valueType, typeInfo?.DictionaryValue))
-                        return null;
-                    dict[stringViewArray[i].Text] = currMValue.GetDouble();
+                    if (currMValue.type == MValue.Type.DOUBLE)
+                    {
+                        dict[stringViewArray[i].Text] = currMValue.GetDouble();
+                    }
+                    else
+                    {
+                        dict[stringViewArray[i].Text] = default;
+                    }
                 }
 
                 return dict;
@@ -421,9 +519,14 @@ namespace AltV.Net
                 for (var i = 0; i < length; i++)
                 {
                     currMValue = valueArray[i];
-                    if (!ValidateMValueType(currMValue.type, valueType, typeInfo?.DictionaryValue))
-                        return null;
-                    dict[stringViewArray[i].Text] = currMValue.GetString();
+                    if (currMValue.type == MValue.Type.STRING)
+                    {
+                        dict[stringViewArray[i].Text] = currMValue.GetString();
+                    }
+                    else
+                    {
+                        dict[stringViewArray[i].Text] = null;
+                    }
                 }
 
                 return dict;
@@ -434,7 +537,8 @@ namespace AltV.Net
             for (var i = 0; i < length; i++)
             {
                 typedDict[stringViewArray[i].Text] =
-                    ParseObject(ref valueArray[i], valueType, entityPool, typeInfo?.DictionaryValue);
+                    Convert.ChangeType(ParseObject(ref valueArray[i], valueType, entityPool, typeInfo?.DictionaryValue),
+                        valueType);
             }
 
             return typedDict;
@@ -473,7 +577,7 @@ namespace AltV.Net
             switch (valueType)
             {
                 case MValue.Type.NIL:
-                    return true;
+                    return !type.IsPrimitive || type == String; //TODO: check if there are more none nullable types
                 case MValue.Type.BOOL:
                     return type == Bool;
                 case MValue.Type.INT:

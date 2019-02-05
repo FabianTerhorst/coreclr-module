@@ -29,13 +29,15 @@ namespace AltV.Net.Example
 
             Alt.On("event_name",
                 delegate(string s, string s1, long i1, string[] arg3, object[] arg4, MyVehicle arg5,
-                    Dictionary<string, object> arg6, MyVehicle[] myVehicles, string probablyNull)
+                    Dictionary<string, object> arg6, MyVehicle[] myVehicles, string probablyNull, string[] nullArray, Dictionary<string, double> bla)
                 {
                     Alt.Server.LogInfo("bla:" + ((object[]) arg4[1])[0]);
                     Alt.Server.LogInfo("myData-2: " + arg5.Position.x + " " + arg5.MyData);
                     Alt.Server.LogInfo("myData-4: " + myVehicles[0].Position.x + " " + myVehicles[0].MyData);
                     Alt.Server.LogInfo("myData-3: " + arg6["test"]);
                     Alt.Server.LogInfo("null?" + (probablyNull == null ? "y" : "n"));
+                    Alt.Server.LogInfo("null2?" + (nullArray[0] == null ? "y" : "n"));
+                    Alt.Server.LogInfo("bla2:" + bla["test"]);
                 });
 
             Alt.Emit("event_name", "param_string_1", "param_string_2", 1, new[] {"array_1", "array_2"},
@@ -46,7 +48,11 @@ namespace AltV.Net.Example
                     //["test2"] = new Dictionary<string, long> {["test"] = 1},
                     //["test3"] = new Dictionary<string, long> {["test"] = 42}
                 },
-                new MyVehicle[] {(MyVehicle) vehicle}, null);
+                new MyVehicle[] {(MyVehicle) vehicle}, null, new string[] {null},
+                new Dictionary<string, object>
+                {
+                    ["test"] = null
+                });
 
             vehicle.Remove();
         }
