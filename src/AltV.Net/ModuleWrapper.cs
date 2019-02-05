@@ -19,7 +19,7 @@ namespace AltV.Net
             _resourceLoader = new ResourceLoader(serverPointer, resourceName, entryPoint);
             var resource = _resourceLoader.Prepare();
             var vehicleFactory = resource.GetVehicleFactory();
-            var entityPool = new EntityPool();
+            var entityPool = new EntityPool(vehicleFactory);
             var server = new Server(serverPointer, entityPool, vehicleFactory);
             _module = new Module(server, entityPool);
             _resourceLoader.Start();

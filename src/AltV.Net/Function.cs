@@ -6,7 +6,7 @@ using AltV.Net.Native;
 
 namespace AltV.Net
 {
-    public class Function
+    public partial class Function
     {
         private class TypeInfo
         {
@@ -26,17 +26,24 @@ namespace AltV.Net
 
             public readonly TypeInfo DictionaryValue;
 
+            public readonly Type[] GenericArguments;
+
+            public readonly Type DictType;
+
             public TypeInfo(Type type)
             {
                 IsList = type.BaseType == Array;
                 IsDict = type.Name.StartsWith("Dictionary");
                 if (IsDict)
                 {
-                    var genericArguments = type.GetGenericArguments();
-                    DictionaryValue = genericArguments.Length == 2 ? new TypeInfo(genericArguments[1]) : null;
+                    GenericArguments = type.GetGenericArguments();
+                    DictType = typeof(Dictionary<,>).MakeGenericType(GenericArguments[0], GenericArguments[1]);
+                    DictionaryValue = GenericArguments.Length == 2 ? new TypeInfo(GenericArguments[1]) : null;
                 }
                 else
                 {
+                    GenericArguments = null;
+                    DictType = null;
                     DictionaryValue = null;
                 }
 
@@ -262,6 +269,8 @@ namespace AltV.Net
         {
             switch (mValue.type)
             {
+                case MValue.Type.NIL:
+                    return null;
                 case MValue.Type.BOOL:
                     return ParseBool(ref mValue, type, entityPool, typeInfo);
                 case MValue.Type.INT:
@@ -299,8 +308,10 @@ namespace AltV.Net
             if (mValue.type != MValue.Type.ENTITY) return null;
             var entityPointer = IntPtr.Zero;
             mValue.GetEntityPointer(ref entityPointer);
-            if (!entityPool.Get(entityPointer, out var entity) ||
-                !ValidateEntityType(entity.Type, type, typeInfo)) return null;
+            if (entityPointer == IntPtr.Zero) return null;
+            if (!entityPool.GetOrCreate(entityPointer, out var entity) ||
+                !ValidateEntityType(entity.Type, type, typeInfo))
+                return null;
             return entity;
         }
 
@@ -308,7 +319,7 @@ namespace AltV.Net
         {
             // Types doesn't match
             if (mValue.type != MValue.Type.DICT) return null;
-            var args = type.GetGenericArguments();
+            var args = typeInfo?.GenericArguments ?? type.GetGenericArguments();
             if (args.Length != 2) return null;
             var keyType = args[0];
             if (keyType != String) return null;
@@ -320,12 +331,15 @@ namespace AltV.Net
             var valueArray = valueArrayRef.ToArray();
             var length = stringViewArray.Length;
 
+            MValue currMValue;
+
             if (valueType == Obj)
             {
                 var dict = new Dictionary<string, object>();
                 for (var i = 0; i < length; i++)
                 {
-                    dict[stringViewArray[i].Text] = ParseObject(ref valueArray[i], type, entityPool, typeInfo?.DictionaryValue);
+                    dict[stringViewArray[i].Text] = ParseObject(ref valueArray[i], valueType, entityPool,
+                        typeInfo?.DictionaryValue);
                 }
 
                 return dict;
@@ -336,7 +350,10 @@ namespace AltV.Net
                 var dict = new Dictionary<string, int>();
                 for (var i = 0; i < length; i++)
                 {
-                    dict[stringViewArray[i].Text] = (int) valueArray[i].GetInt();
+                    currMValue = valueArray[i];
+                    if (!ValidateMValueType(currMValue.type, valueType, typeInfo?.DictionaryValue))
+                        return null;
+                    dict[stringViewArray[i].Text] = (int) currMValue.GetInt();
                 }
 
                 return dict;
@@ -347,7 +364,10 @@ namespace AltV.Net
                 var dict = new Dictionary<string, long>();
                 for (var i = 0; i < length; i++)
                 {
-                    dict[stringViewArray[i].Text] = valueArray[i].GetInt();
+                    currMValue = valueArray[i];
+                    if (!ValidateMValueType(currMValue.type, valueType, typeInfo?.DictionaryValue))
+                        return null;
+                    dict[stringViewArray[i].Text] = currMValue.GetInt();
                 }
 
                 return dict;
@@ -358,7 +378,10 @@ namespace AltV.Net
                 var dict = new Dictionary<string, uint>();
                 for (var i = 0; i < length; i++)
                 {
-                    dict[stringViewArray[i].Text] = (uint) valueArray[i].GetUint();
+                    currMValue = valueArray[i];
+                    if (!ValidateMValueType(currMValue.type, valueType, typeInfo?.DictionaryValue))
+                        return null;
+                    dict[stringViewArray[i].Text] = (uint) currMValue.GetUint();
                 }
 
                 return dict;
@@ -369,7 +392,10 @@ namespace AltV.Net
                 var dict = new Dictionary<string, ulong>();
                 for (var i = 0; i < length; i++)
                 {
-                    dict[stringViewArray[i].Text] = valueArray[i].GetUint();
+                    currMValue = valueArray[i];
+                    if (!ValidateMValueType(currMValue.type, valueType, typeInfo?.DictionaryValue))
+                        return null;
+                    dict[stringViewArray[i].Text] = currMValue.GetUint();
                 }
 
                 return dict;
@@ -380,7 +406,10 @@ namespace AltV.Net
                 var dict = new Dictionary<string, double>();
                 for (var i = 0; i < length; i++)
                 {
-                    dict[stringViewArray[i].Text] = valueArray[i].GetDouble();
+                    currMValue = valueArray[i];
+                    if (!ValidateMValueType(currMValue.type, valueType, typeInfo?.DictionaryValue))
+                        return null;
+                    dict[stringViewArray[i].Text] = currMValue.GetDouble();
                 }
 
                 return dict;
@@ -391,17 +420,21 @@ namespace AltV.Net
                 var dict = new Dictionary<string, string>();
                 for (var i = 0; i < length; i++)
                 {
-                    dict[stringViewArray[i].Text] = valueArray[i].GetString();
+                    currMValue = valueArray[i];
+                    if (!ValidateMValueType(currMValue.type, valueType, typeInfo?.DictionaryValue))
+                        return null;
+                    dict[stringViewArray[i].Text] = currMValue.GetString();
                 }
 
                 return dict;
             }
 
-            var dictType = typeof(Dictionary<,>).MakeGenericType(keyType, valueType);
+            var dictType = typeInfo?.DictType ?? typeof(Dictionary<,>).MakeGenericType(keyType, valueType);
             var typedDict = (System.Collections.IDictionary) Activator.CreateInstance(dictType);
             for (var i = 0; i < length; i++)
             {
-                typedDict[stringViewArray[i].Text] = ParseObject(ref valueArray[i], valueType, entityPool, typeInfo?.DictionaryValue);
+                typedDict[stringViewArray[i].Text] =
+                    ParseObject(ref valueArray[i], valueType, entityPool, typeInfo?.DictionaryValue);
             }
 
             return typedDict;
@@ -439,6 +472,8 @@ namespace AltV.Net
 
             switch (valueType)
             {
+                case MValue.Type.NIL:
+                    return true;
                 case MValue.Type.BOOL:
                     return type == Bool;
                 case MValue.Type.INT:

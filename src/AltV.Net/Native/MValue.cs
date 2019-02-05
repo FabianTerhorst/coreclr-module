@@ -36,6 +36,10 @@ namespace AltV.Net.Native
         //TODO: create a map that holds function pointers for each object type, its probably faster then this switch now
         public static MValue? CreateFromObject(object obj)
         {
+            if (obj == null)
+            {
+                return Create();
+            }
             switch (obj)
             {
                 case IEntity entity:

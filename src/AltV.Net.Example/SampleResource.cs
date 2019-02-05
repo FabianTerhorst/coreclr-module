@@ -29,23 +29,24 @@ namespace AltV.Net.Example
 
             Alt.On("event_name",
                 delegate(string s, string s1, long i1, string[] arg3, object[] arg4, MyVehicle arg5,
-                    Dictionary<string, object> arg6, MyVehicle[] myVehicles)
+                    Dictionary<string, object> arg6, MyVehicle[] myVehicles, string probablyNull)
                 {
                     Alt.Server.LogInfo("bla:" + ((object[]) arg4[1])[0]);
                     Alt.Server.LogInfo("myData-2: " + arg5.Position.x + " " + arg5.MyData);
                     Alt.Server.LogInfo("myData-4: " + myVehicles[0].Position.x + " " + myVehicles[0].MyData);
                     Alt.Server.LogInfo("myData-3: " + arg6["test"]);
+                    Alt.Server.LogInfo("null?" + (probablyNull == null ? "y" : "n"));
                 });
 
             Alt.Emit("event_name", "param_string_1", "param_string_2", 1, new[] {"array_1", "array_2"},
                 new object[] {"test", new[] {1337}}, vehicle,
                 new Dictionary<string, object>
                 {
-                    ["test"] = "test" //,
+                    ["test"] = "test"//,
                     //["test2"] = new Dictionary<string, long> {["test"] = 1},
                     //["test3"] = new Dictionary<string, long> {["test"] = 42}
                 },
-                new MyVehicle[] {(MyVehicle) vehicle});
+                new MyVehicle[] {(MyVehicle) vehicle}, null);
 
             vehicle.Remove();
         }
