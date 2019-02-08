@@ -5,12 +5,8 @@ using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Entities
 {
-    internal class Player : Entity, IPlayer
+    public class Player : Entity, IPlayer
     {
-        internal Player(IntPtr nativePointer) : base(nativePointer, EntityType.Player)
-        {
-        }
-
         public bool IsConnected => Exists && AltVNative.Player.Player_IsConnected(NativePointer);
 
         public string Name
@@ -97,6 +93,10 @@ namespace AltV.Net.Elements.Entities
         }
 
         public byte Seat => !Exists ? default : AltVNative.Player.Player_GetSeat(NativePointer);
+        
+        public Player(IntPtr nativePointer) : base(nativePointer, EntityType.Player)
+        {
+        }
 
         public void Spawn(Position position)
         {

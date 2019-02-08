@@ -3,7 +3,7 @@ using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Entities
 {
-    internal class Blip : Entity, IBlip
+    public class Blip : Entity, IBlip
     {
         private uint color;
 
@@ -23,7 +23,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        internal Blip(IntPtr nativePointer) : base(nativePointer, EntityType.Blip)
+        public Blip(IntPtr nativePointer) : base(nativePointer, EntityType.Blip)
         {
         }
     }

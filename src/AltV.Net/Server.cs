@@ -15,13 +15,24 @@ namespace AltV.Net
 
         private readonly IEntityPool entityPool;
 
+        private readonly IPlayerFactory playerFactory;
+
         private readonly IVehicleFactory vehicleFactory;
 
-        internal Server(IntPtr nativePointer, IEntityPool entityPool, IVehicleFactory vehicleFactory)
+        private readonly IBlipFactory blipFactory;
+
+        private readonly ICheckpointFactory checkpointFactory;
+
+        internal Server(IntPtr nativePointer, IEntityPool entityPool, IPlayerFactory playerFactory,
+            IVehicleFactory vehicleFactory, IBlipFactory blipFactory,
+            ICheckpointFactory checkpointFactory)
         {
             this.nativePointer = nativePointer;
             this.entityPool = entityPool;
+            this.playerFactory = playerFactory;
             this.vehicleFactory = vehicleFactory;
+            this.blipFactory = blipFactory;
+            this.checkpointFactory = checkpointFactory;
             Instance = this;
         }
 

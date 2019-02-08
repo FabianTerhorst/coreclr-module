@@ -42,6 +42,8 @@ namespace AltV.Net
 
             public readonly bool IsBlip;
 
+            public readonly bool IsCheckpoint;
+
             public readonly bool IsDict;
 
             public readonly bool IsList;
@@ -78,6 +80,7 @@ namespace AltV.Net
                     IsVehicle = type == Vehicle || interfaces.Contains(Vehicle);
                     IsPlayer = type == Player || interfaces.Contains(Player);
                     IsBlip = type == Blip || interfaces.Contains(Blip);
+                    IsCheckpoint = type == Checkpoint || interfaces.Contains(Checkpoint);
                 }
                 else
                 {
@@ -85,6 +88,7 @@ namespace AltV.Net
                     IsVehicle = false;
                     IsPlayer = false;
                     IsBlip = false;
+                    IsCheckpoint = false;
                 }
 
                 var elementType = type.GetElementType();
@@ -116,6 +120,8 @@ namespace AltV.Net
         private static readonly Type Player = typeof(IPlayer);
 
         private static readonly Type Vehicle = typeof(IVehicle);
+        
+        private static readonly Type Checkpoint = typeof(ICheckpoint);
 
         private static readonly Type Array = typeof(System.Array);
 
@@ -608,13 +614,13 @@ namespace AltV.Net
             switch (entityType)
             {
                 case EntityType.Blip:
-                    return typeInfo?.IsBlip ?? type == Blip;
+                    return typeInfo?.IsBlip ?? type == Blip || type.GetInterfaces().Contains(Blip);
                 case EntityType.Player:
-                    return typeInfo?.IsPlayer ?? type == Player;
+                    return typeInfo?.IsPlayer ?? type == Player || type.GetInterfaces().Contains(Player);
                 case EntityType.Vehicle:
                     return typeInfo?.IsVehicle ?? type == Vehicle || type.GetInterfaces().Contains(Vehicle);
                 case EntityType.Checkpoint:
-                    return false; //TODO:
+                    return typeInfo?.IsCheckpoint ?? type == Checkpoint || type.GetInterfaces().Contains(Checkpoint);
                 default:
                     return false;
             }
@@ -771,6 +777,23 @@ namespace AltV.Net
             for (var i = 0; i < length; i++)
             {
                 invokeValues[i] = parsers[i](ref values[i], args[i], entityPool, typeInfos[i]);
+            }
+
+            var result = @delegate.DynamicInvoke(invokeValues);
+            if (returnType == Void) return MValue.Nil;
+            return MValue.CreateFromObject(result) ?? MValue.Nil;
+        }
+        
+        internal MValue Call(IPlayer player, IEntityPool entityPool, MValue[] values)
+        {
+            var length = values.Length;
+            if (length + 1 != args.Length) return MValue.Nil;
+            if (!typeInfos[0].IsPlayer) return MValue.Nil;
+            var invokeValues = new object[length + 1];
+            invokeValues[0] = player;
+            for (var i = 0; i < length; i++)
+            {
+                invokeValues[i + 1] = parsers[i](ref values[i], args[i], entityPool, typeInfos[i]);
             }
 
             var result = @delegate.DynamicInvoke(invokeValues);

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Factories;
 using AltV.Net.Enums;
 using AltV.Net.Native;
 
@@ -93,9 +94,24 @@ namespace AltV.Net.Example
         {
         }
 
+        IPlayerFactory IResource.GetPlayerFactory()
+        {
+            return new PlayerFactory();
+        }
+
         public IVehicleFactory GetVehicleFactory()
         {
             return new MyVehicleFactory();
+        }
+
+        public IBlipFactory GetBlipFactory()
+        {
+            return new BlipFactory();
+        }
+
+        ICheckpointFactory IResource.GetCheckpointFactory()
+        {
+            return new CheckpointFactory();
         }
 
         private void OnPlayerConnect(IPlayer player, string reason)

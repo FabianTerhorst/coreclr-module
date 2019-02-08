@@ -16,9 +16,30 @@ namespace AltV.Net
         //For object[] args event handlers
         internal readonly Dictionary<string, HashSet<EventDelegate>> EventDelegateHandlers =
             new Dictionary<string, HashSet<EventDelegate>>();
+        
+        internal readonly Dictionary<string, HashSet<ClientEventDelegate>> ClientEventDelegateHandlers =
+            new Dictionary<string, HashSet<ClientEventDelegate>>();
+        
+        internal readonly EventHandler<CheckpointDelegate> CheckpointEventHandler =
+            new EventHandler<CheckpointDelegate>();
 
         internal readonly EventHandler<PlayerConnectDelegate> PlayerConnectEventHandler =
             new EventHandler<PlayerConnectDelegate>();
+        
+        internal readonly EventHandler<PlayerDamageDelegate> PlayerDamageEventHandler =
+            new EventHandler<PlayerDamageDelegate>();
+        
+        internal readonly EventHandler<PlayerDeadDelegate> PlayerDeadEventHandler =
+            new EventHandler<PlayerDeadDelegate>();
+        
+        internal readonly EventHandler<VehicleChangeSeatDelegate> VehicleChangeSeatEventHandler =
+            new EventHandler<VehicleChangeSeatDelegate>();
+        
+        internal readonly EventHandler<VehicleEnterDelegate> VehicleEnterEventHandler =
+            new EventHandler<VehicleEnterDelegate>();
+        
+        internal readonly EventHandler<VehicleLeaveDelegate> VehicleLeaveEventHandler =
+            new EventHandler<VehicleLeaveDelegate>();
 
         internal readonly EventHandler<PlayerDisconnectDelegate> PlayerDisconnectEventHandler =
             new EventHandler<PlayerDisconnectDelegate>();
@@ -58,6 +79,20 @@ namespace AltV.Net
             {
                 eventHandlersForEvent = new HashSet<EventDelegate> {eventDelegate};
                 EventDelegateHandlers[eventName] = eventHandlersForEvent;
+            }
+        }
+        
+        public void On(string eventName, ClientEventDelegate eventDelegate)
+        {
+            if (eventDelegate == null) return;
+            if (ClientEventDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            {
+                eventHandlersForEvent.Add(eventDelegate);
+            }
+            else
+            {
+                eventHandlersForEvent = new HashSet<ClientEventDelegate> {eventDelegate};
+                ClientEventDelegateHandlers[eventName] = eventHandlersForEvent;
             }
         }
     }

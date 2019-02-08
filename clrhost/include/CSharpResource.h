@@ -7,9 +7,14 @@
 #include <altv-cpp-api/IResource.h>
 #include <altv-cpp-api/IServer.h>
 #include <altv-cpp-api/events/CPlayerConnectEvent.h>
+#include <altv-cpp-api/events/CPlayerDamageEvent.h>
+#include <altv-cpp-api/events/CPlayerDeadEvent.h>
 #include <altv-cpp-api/events/CPlayerDisconnectEvent.h>
 #include <altv-cpp-api/events/CRemoveEntityEvent.h>
 #include <altv-cpp-api/events/CServerScriptEvent.h>
+#include <altv-cpp-api/events/CVehicleChangeSeatEvent.h>
+#include <altv-cpp-api/events/CVehicleEnterEvent.h>
+#include <altv-cpp-api/events/CVehicleLeaveEvent.h>
 
 #ifdef _WIN32
 #define RESOURCES_PATH "\\resources\\"
@@ -64,10 +69,17 @@ class CSharpResource : public alt::IResource
   public:
     CSharpResource(alt::IServer *server, CoreClr *coreClr, alt::IResource::CreationInfo *info);
     ~CSharpResource();
+    void (*OnCheckpointDelegate)(alt::ICheckpoint *checkpoint, alt::IEntity *entity, bool state);
+    void (*OnClientEventDelegate)(alt::IPlayer *player, const char *name, alt::Array<alt::MValue> *args);
     void (*OnPlayerConnectDelegate)(alt::IPlayer *player, const char *reason);
+    void (*OnPlayerDamageDelegate)(alt::IPlayer *player, alt::IEntity* attacker, uint32_t weapon, uint8_t damage);
+    void (*OnPlayerDeadDelegate)(alt::IPlayer *player, alt::IEntity* killer, uint32_t weapon);
     void (*OnPlayerDisconnectDelegate)(alt::IPlayer *player, const char *reason);
     void (*OnEntityRemoveDelegate)(alt::IEntity *entity);
     void (*OnServerEventDelegate)(const char *name, alt::Array<alt::MValue> *args);
+    void (*OnVehicleChangeSeatDelegate)(alt::IVehicle* vehicle, alt::IPlayer *player, int8_t oldSeat, int8_t newSeat);
+    void (*OnVehicleEnterDelegate)(alt::IVehicle* vehicle, alt::IPlayer *player, int8_t seat);
+    void (*OnVehicleLeaveDelegate)(alt::IVehicle* vehicle, alt::IPlayer *player, int8_t seat);
     void (*OnStopDelegate)();
     void (*MainDelegate)(alt::IServer *server, const char* resourceName, const char* entryPoint);
     void *runtimeHost;
