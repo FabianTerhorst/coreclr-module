@@ -9,11 +9,21 @@ namespace AltV.Net.Elements.Pools
     {
         private readonly Dictionary<IntPtr, IEntity> entities = new Dictionary<IntPtr, IEntity>();
 
+        private readonly IPlayerFactory playerFactory;
+
         private readonly IVehicleFactory vehicleFactory;
 
-        public EntityPool(IVehicleFactory vehicleFactory)
+        private readonly IBlipFactory blipFactory;
+
+        private readonly ICheckpointFactory checkpointFactory;
+
+        public EntityPool(IPlayerFactory playerFactory, IVehicleFactory vehicleFactory, IBlipFactory blipFactory,
+            ICheckpointFactory checkpointFactory)
         {
+            this.playerFactory = playerFactory;
             this.vehicleFactory = vehicleFactory;
+            this.blipFactory = blipFactory;
+            this.checkpointFactory = checkpointFactory;
         }
 
         public void Add(IEntity entity)
@@ -39,15 +49,21 @@ namespace AltV.Net.Elements.Pools
             switch (entityType)
             {
                 case EntityType.Player:
-                    return false;
+                    entity = playerFactory.Create(entityPointer);
+                    Add(entity);
+                    break;
                 case EntityType.Vehicle:
                     entity = vehicleFactory.Create(entityPointer);
                     Add(entity);
                     break;
                 case EntityType.Blip:
-                    return false;
+                    entity = blipFactory.Create(entityPointer);
+                    Add(entity);
+                    break;
                 case EntityType.Checkpoint:
-                    return false;
+                    entity = checkpointFactory.Create(entityPointer);
+                    Add(entity);
+                    break;
                 default:
                     return false;
             }
