@@ -180,9 +180,9 @@ void Vehicle_SetNumberPlateIndex(alt::IVehicle *vehicle, uint32_t index)
     vehicle->SetNumberPlateIndex(index);
 }
 
-void Vehicle_GetNumberPlateText(alt::IVehicle *vehicle, alt::StringView& text)
+void Vehicle_GetNumberPlateText(alt::IVehicle *vehicle, const char*& text)
 {
-    text = vehicle->GetNumberPlateText();
+    text = vehicle->GetNumberPlateText().CStr();
 }
 
 void Vehicle_SetNumberPlateText(alt::IVehicle *vehicle, const char *text)

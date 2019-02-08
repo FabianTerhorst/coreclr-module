@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
+using AltV.Net.Native;
 
 namespace AltV.Net.Example
 {
@@ -24,6 +25,22 @@ namespace AltV.Net.Example
 
             var vehicle = Alt.CreateVehicle(VehicleHash.Apc, Position.Zero, float.MinValue);
             vehicle.PrimaryColor = 7;
+            vehicle.NumberPlateText = "AltV-C#";
+            vehicle.NumberPlateIndex = 2;
+            vehicle.SetMod(0, 0);
+            vehicle.GetMod(0);
+            vehicle.GetModsCount(0);
+            vehicle.GetModKitsCount();
+            vehicle.PrimaryColorRgb = new Rgba
+            {
+                r = 1,
+                g = 8,
+                b = 7,
+                a = 0
+            };
+            
+            Alt.Server.LogInfo("number-plate:" + vehicle.NumberPlateText + " " + vehicle.NumberPlateIndex);
+
 
             Alt.Emit("vehicleTest", vehicle);
 
@@ -32,6 +49,8 @@ namespace AltV.Net.Example
                     Dictionary<string, object> arg6, MyVehicle[] myVehicles, string probablyNull, string[] nullArray,
                     Dictionary<string, double> bla)
                 {
+                    Alt.Server.LogInfo("param1:" + s);
+                    Alt.Server.LogInfo("param2:" + s1);
                     Alt.Server.LogInfo("bla:" + ((object[]) arg4[1])[0]);
                     Alt.Server.LogInfo("myData-2: " + arg5.Position.x + " " + arg5.MyData);
                     Alt.Server.LogInfo("myData-4: " + myVehicles[0].Position.x + " " + myVehicles[0].MyData);

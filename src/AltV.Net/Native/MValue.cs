@@ -40,6 +40,7 @@ namespace AltV.Net.Native
             {
                 return Create();
             }
+
             switch (obj)
             {
                 case IEntity entity:
@@ -169,6 +170,7 @@ namespace AltV.Net.Native
                     {
                         listValues[i++] = CreateFromObject(value) ?? Create();
                     }
+
                     return Create(listValues);
                 default:
                     Server.Instance.LogInfo("cant convert type:" + obj.GetType());
@@ -286,9 +288,9 @@ namespace AltV.Net.Native
 
         public string GetString()
         {
-            var value = StringView.Empty;
+            var value = IntPtr.Zero;
             AltVNative.MValueGet.MValue_GetString(ref this, ref value);
-            return value.Text;
+            return Marshal.PtrToStringAnsi(value);
         }
 
         public void GetEntityPointer(ref IntPtr entityPointer)
@@ -317,16 +319,24 @@ namespace AltV.Net.Native
 
         public Dictionary<string, MValue> GetDictionary()
         {
-            var stringViewArrayRef = StringViewArray.Nil;
+            var stringViewArray = StringViewArray.Nil;
             var valueArrayRef = MValueArray.Nil;
-            AltVNative.MValueGet.MValue_GetDict(ref this, ref stringViewArrayRef, ref valueArrayRef);
-            var stringViewArray = stringViewArrayRef.ToArray();
-            var dictionary = new Dictionary<string, MValue>();
-            var valueArray = valueArrayRef.ToArray();
-            var i = 0;
-            foreach (var key in stringViewArray)
+            AltVNative.MValueGet.MValue_GetDict(ref this, ref stringViewArray, ref valueArrayRef);
+            var valueArrayPtr = valueArrayRef.data;
+            var stringViewArrayPtr = stringViewArray.data;
+            var size = (int) stringViewArray.size;
+            if (valueArrayRef.size != (ulong) size) // Value size != key size should never happen
             {
-                dictionary[key.Text] = valueArray[i++];
+                return null;
+            }
+
+            var dictionary = new Dictionary<string, MValue>();
+            for (var i = 0; i < size; i++)
+            {
+                dictionary[Marshal.PtrToStructure<StringView>(stringViewArrayPtr).Text] =
+                    Marshal.PtrToStructure<MValue>(valueArrayPtr);
+                valueArrayPtr += Size;
+                stringViewArrayPtr += StringView.Size;
             }
 
             return dictionary;
@@ -374,6 +384,11 @@ namespace AltV.Net.Native
             return "MValue<>";
         }
 
+        public object ToObject()
+        {
+            return ToObject(Alt.Module.EntityPool);
+        }
+
         public object ToObject(IEntityPool entityPool)
         {
             switch (type)
@@ -403,18 +418,24 @@ namespace AltV.Net.Native
 
                     return arrayValues;
                 case Type.DICT:
-                    var stringViewArrayRef = StringViewArray.Nil;
+                    var stringViewArray = StringViewArray.Nil;
                     var valueArrayRef = MValueArray.Nil;
-                    AltVNative.MValueGet.MValue_GetDict(ref this, ref stringViewArrayRef, ref valueArrayRef);
-                    var stringViewArray = stringViewArrayRef.ToArray();
-                    var dictionary = new Dictionary<string, object>();
-                    var dictValue = valueArrayRef.data;
-                    var length = (int) valueArrayRef.size;
-                    for (var i = 0; i < length; i++)
+                    AltVNative.MValueGet.MValue_GetDict(ref this, ref stringViewArray, ref valueArrayRef);
+                    var valueArrayPtr = valueArrayRef.data;
+                    var stringViewArrayPtr = stringViewArray.data;
+                    var size = (int) stringViewArray.size;
+                    if (valueArrayRef.size != (ulong) size) // Value size != key size should never happen
                     {
-                        dictionary[stringViewArray[i].Text] =
-                            Marshal.PtrToStructure<MValue>(dictValue).ToObject(entityPool);
-                        dictValue += Size;
+                        return null;
+                    }
+
+                    var dictionary = new Dictionary<string, object>();
+                    for (var i = 0; i < size; i++)
+                    {
+                        dictionary[Marshal.PtrToStructure<StringView>(stringViewArrayPtr).Text] =
+                            Marshal.PtrToStructure<MValue>(valueArrayPtr).ToObject(entityPool);
+                        valueArrayPtr += Size;
+                        stringViewArrayPtr += StringView.Size;
                     }
 
                     return dictionary;

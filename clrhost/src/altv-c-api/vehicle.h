@@ -34,7 +34,7 @@ extern "C"
     EXPORT uint8_t Vehicle_GetPearlColor(alt::IVehicle *vehicle);
     EXPORT void Vehicle_SetPearlColor(alt::IVehicle *vehicle, uint8_t color);
     EXPORT uint8_t Vehicle_GetWheelColor(alt::IVehicle *vehicle);
-    EXPORT void Vehicle_Vehicle_SetWheelColor(alt::IVehicle *vehicle, uint8_t color);
+    EXPORT void Vehicle_SetWheelColor(alt::IVehicle *vehicle, uint8_t color);
     EXPORT uint8_t Vehicle_GetInteriorColor(alt::IVehicle *vehicle);
     EXPORT void Vehicle_SetInteriorColor(alt::IVehicle *vehicle, uint8_t color);
     EXPORT uint8_t Vehicle_GetDashboardColor(alt::IVehicle *vehicle);
@@ -50,7 +50,7 @@ extern "C"
     EXPORT void Vehicle_SetSpecialDarkness(alt::IVehicle *vehicle, uint8_t value);
     EXPORT uint32_t Vehicle_GetNumberPlateIndex(alt::IVehicle *vehicle);
     EXPORT void Vehicle_SetNumberPlateIndex(alt::IVehicle *vehicle, uint32_t index);
-    EXPORT void Vehicle_GetNumberPlateText(alt::IVehicle *vehicle, alt::StringView &text);
+    EXPORT void Vehicle_GetNumberPlateText(alt::IVehicle *vehicle, const char*& text);
     EXPORT void Vehicle_SetNumberPlateText(alt::IVehicle *vehicle, const char *text);
     EXPORT uint8_t Vehicle_GetWindowTint(alt::IVehicle *vehicle);
     EXPORT void Vehicle_SetWindowTint(alt::IVehicle *vehicle, uint8_t tint);

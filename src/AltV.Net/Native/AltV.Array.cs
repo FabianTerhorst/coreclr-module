@@ -40,6 +40,33 @@ namespace AltV.Net.Native
     }
     
     [StructLayout(LayoutKind.Sequential)]
+    public struct StringArray
+    {
+        public IntPtr data; // Array of string's
+        public ulong size;
+        public ulong capacity;
+        
+        public static StringArray Nil = new StringArray
+        {
+            data = IntPtr.Zero,
+            size = 0,
+            capacity = 0
+        };
+
+        public string[] ToArray()
+        {
+            var values = new IntPtr[size];
+            Marshal.Copy(data, values, 0, (int) size);
+            var strings = new string[size];
+            for (var i = 0; i < values.Length; i++)
+            {
+                strings[i] = Marshal.PtrToStringAnsi(values[i]);
+            }
+            return strings;
+        }
+    }
+    
+    [StructLayout(LayoutKind.Sequential)]
     public struct StringViewArray
     {
         public IntPtr data; // Array of StringView's
@@ -53,13 +80,13 @@ namespace AltV.Net.Native
             capacity = 0
         };
 
-        public StringView[] ToArray()
+        public string[] ToArray()
         {
             var value = data;
-            var values = new StringView[size];
+            var values = new string[size];
             for (var i = 0; i < values.Length; i++)
             {
-                values[i] = Marshal.PtrToStructure<StringView>(value);
+                values[i] = Marshal.PtrToStructure<StringView>(value).Text;
                 value += StringView.Size;
             }
 

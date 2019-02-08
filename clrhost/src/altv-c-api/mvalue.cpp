@@ -60,8 +60,8 @@ double MValue_GetDouble(alt::MValue &mValue) {
     return mValue.Get<double>();
 }
 
-void MValue_GetString(alt::MValue &mValue, alt::String &value) {
-    value = mValue.Get<alt::String>();
+void MValue_GetString(alt::MValue &mValue, const char*& value) {
+    value = mValue.Get<alt::String>().CStr();
 }
 
 void MValue_GetList(alt::MValue &mValue, alt::MValue::List &value) {

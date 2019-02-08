@@ -22,5 +22,10 @@ namespace AltV.Net.Data
             this.pitch = pitch;
             this.yaw = yaw;
         }
+
+        public override string ToString()
+        {
+            return $"Rotation(roll: {roll}, pitch: {pitch}, yaw: {yaw})";
+        }
     }
 }

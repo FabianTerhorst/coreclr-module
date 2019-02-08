@@ -411,9 +411,13 @@ namespace AltV.Net
             var stringViewArrayRef = StringViewArray.Nil;
             var valueArrayRef = MValueArray.Nil;
             AltVNative.MValueGet.MValue_GetDict(ref mValue, ref stringViewArrayRef, ref valueArrayRef);
-            var stringViewArray = stringViewArrayRef.ToArray();
+            var strings = stringViewArrayRef.ToArray();
             var valueArray = valueArrayRef.ToArray();
-            var length = stringViewArray.Length;
+            var length = strings.Length;
+            if (valueArrayRef.size != (ulong) length) // Value size != key size should never happen
+            {
+                return null;
+            }
 
             MValue currMValue;
 
@@ -422,7 +426,7 @@ namespace AltV.Net
                 var dict = new Dictionary<string, object>();
                 for (var i = 0; i < length; i++)
                 {
-                    dict[stringViewArray[i].Text] = ParseObject(ref valueArray[i], valueType, entityPool,
+                    dict[strings[i]] = ParseObject(ref valueArray[i], valueType, entityPool,
                         typeInfo?.DictionaryValue);
                 }
 
@@ -437,11 +441,11 @@ namespace AltV.Net
                     currMValue = valueArray[i];
                     if (currMValue.type == MValue.Type.BOOL)
                     {
-                        dict[stringViewArray[i].Text] = currMValue.GetBool();
+                        dict[strings[i]] = currMValue.GetBool();
                     }
                     else
                     {
-                        dict[stringViewArray[i].Text] = default;
+                        dict[strings[i]] = default;
                     }
                 }
 
@@ -456,11 +460,11 @@ namespace AltV.Net
                     currMValue = valueArray[i];
                     if (currMValue.type == MValue.Type.INT)
                     {
-                        dict[stringViewArray[i].Text] = (int) currMValue.GetInt();
+                        dict[strings[i]] = (int) currMValue.GetInt();
                     }
                     else
                     {
-                        dict[stringViewArray[i].Text] = default;
+                        dict[strings[i]] = default;
                     }
                 }
 
@@ -475,11 +479,11 @@ namespace AltV.Net
                     currMValue = valueArray[i];
                     if (currMValue.type == MValue.Type.INT)
                     {
-                        dict[stringViewArray[i].Text] = currMValue.GetInt();
+                        dict[strings[i]] = currMValue.GetInt();
                     }
                     else
                     {
-                        dict[stringViewArray[i].Text] = default;
+                        dict[strings[i]] = default;
                     }
                 }
 
@@ -494,11 +498,11 @@ namespace AltV.Net
                     currMValue = valueArray[i];
                     if (currMValue.type == MValue.Type.UINT)
                     {
-                        dict[stringViewArray[i].Text] = (uint) currMValue.GetUint();
+                        dict[strings[i]] = (uint) currMValue.GetUint();
                     }
                     else
                     {
-                        dict[stringViewArray[i].Text] = default;
+                        dict[strings[i]] = default;
                     }
                 }
 
@@ -513,11 +517,11 @@ namespace AltV.Net
                     currMValue = valueArray[i];
                     if (currMValue.type == MValue.Type.UINT)
                     {
-                        dict[stringViewArray[i].Text] = currMValue.GetUint();
+                        dict[strings[i]] = currMValue.GetUint();
                     }
                     else
                     {
-                        dict[stringViewArray[i].Text] = default;
+                        dict[strings[i]] = default;
                     }
                 }
 
@@ -532,11 +536,11 @@ namespace AltV.Net
                     currMValue = valueArray[i];
                     if (currMValue.type == MValue.Type.DOUBLE)
                     {
-                        dict[stringViewArray[i].Text] = currMValue.GetDouble();
+                        dict[strings[i]] = currMValue.GetDouble();
                     }
                     else
                     {
-                        dict[stringViewArray[i].Text] = default;
+                        dict[strings[i]] = default;
                     }
                 }
 
@@ -551,11 +555,11 @@ namespace AltV.Net
                     currMValue = valueArray[i];
                     if (currMValue.type == MValue.Type.STRING)
                     {
-                        dict[stringViewArray[i].Text] = currMValue.GetString();
+                        dict[strings[i]] = currMValue.GetString();
                     }
                     else
                     {
-                        dict[stringViewArray[i].Text] = null;
+                        dict[strings[i]] = null;
                     }
                 }
 
@@ -569,11 +573,11 @@ namespace AltV.Net
                 currMValue = valueArray[i];
                 if (!ValidateMValueType(currMValue.type, valueType, typeInfo?.DictionaryValue))
                 {
-                    typedDict[stringViewArray[i].Text] = null;
+                    typedDict[strings[i]] = null;
                 }
                 else
                 {
-                    typedDict[stringViewArray[i].Text] =
+                    typedDict[strings[i]] =
                         Convert.ChangeType(
                             ParseObject(ref currMValue, valueType, entityPool, typeInfo?.DictionaryValue),
                             valueType);
@@ -628,6 +632,10 @@ namespace AltV.Net
             {
                 case MValue.Type.NIL:
                     return !type.IsPrimitive || type == String; //TODO: check if there are more none nullable types
+                         return type == String || type == Obj || typeInfo.IsList || typeInfo.IsDict || typeInfo.IsEntity;
+                     }*/
+                //case MValue.Type.NIL:
+                //    return true;
                 case MValue.Type.BOOL:
                     return type == Bool;
                 case MValue.Type.INT:
@@ -686,6 +694,7 @@ namespace AltV.Net
                 typeInfos[i] = typeInfo;
                 if (arg == Obj)
                 {
+                    //TODO: use MValue.ToObject here
                     parsers[i] = ParseObject;
                 }
                 else if (arg == Bool)
