@@ -12,12 +12,12 @@ void Player_Despawn(alt::IPlayer* player) {
     player->Despawn();
 }
 
-const char* Player_GetName(alt::IPlayer* player) {
-    return player->GetName().CStr();
+void Player_GetName(alt::IPlayer* player, const char*& name) {
+    name = player->GetName().CStr();
 }
 
 void Player_SetName(alt::IPlayer* player, const char* name) {
-    player->SetName(alt::StringView(name));
+    player->SetName(alt::String(name));
 }
 
 uint16_t Player_GetHealth(alt::IPlayer* player) {
@@ -100,8 +100,8 @@ uint8_t Player_GetSeat(alt::IPlayer* player) {
     return player->GetSeat();
 }
 
-void Player_Kick(alt::IPlayer* player, alt::StringView reason) {
-    player->Kick(reason);
+void Player_Kick(alt::IPlayer* player, const char* reason) {
+    player->Kick(alt::String(reason));
 }
 
 void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {

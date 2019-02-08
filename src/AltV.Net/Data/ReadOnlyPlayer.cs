@@ -15,6 +15,9 @@ namespace AltV.Net.Data
         private readonly Position position;
         private readonly Rotation rotation;
         private readonly ushort dimension;
+        private readonly string name;
+        private readonly ushort health;
+        private readonly ushort armor;
 
         public IntPtr NativePointer => IntPtr.Zero;
         public bool Exists => false;
@@ -35,6 +38,75 @@ namespace AltV.Net.Data
         {
             get => dimension;
             set { }
+        }
+
+        public bool IsConnected { get; }
+
+        public string Name
+        {
+            get => name;
+            set
+            {
+                
+            }
+        }
+
+        public ushort Health
+        {
+            get => health;
+            set
+            {
+                
+            }
+        }
+
+        public bool IsDead { get; }
+        public bool IsJumping { get; }
+        public bool IsInRagdoll { get; }
+        public bool IsAiming { get; }
+        public bool IsShooting { get; }
+        public bool IsReloading { get; }
+
+        public ushort Armor
+        {
+            get => armor;
+            set
+            {
+                
+            }
+        }
+
+        public float MoveSpeed { get; }
+        public uint Weapon { get; }
+        public ushort Ammo { get; }
+        public Position AimPosition { get; }
+        public Rotation HeadRotation { get; }
+        public bool IsInVehicle { get; }
+        public IVehicle Vehicle { get; }
+        public byte Seat { get; }
+        public void Spawn(Position position)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Despawn()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetDateTime(int day, int month, int year, int hour, int minute, int second)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetWeather(uint weather)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Kick(string reason)
+        {
+            throw new NotImplementedException();
         }
 
         public void SetPosition(float x, float y, float z) => throw new NotImplementedException();

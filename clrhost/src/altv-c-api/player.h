@@ -40,7 +40,7 @@ EXPORT bool Player_IsConnected(alt::IPlayer* player);
 EXPORT void Player_Spawn(alt::IPlayer* player, alt::Position pos);
 EXPORT void Player_Despawn(alt::IPlayer* player);
 
-EXPORT const char* Player_GetName(alt::IPlayer* player);
+EXPORT void Player_GetName(alt::IPlayer* player, const char*& name);
 EXPORT void Player_SetName(alt::IPlayer* player, const char* name);
 
 EXPORT uint16_t Player_GetHealth(alt::IPlayer* player);
@@ -71,7 +71,7 @@ EXPORT alt::Rotation Player_GetHeadRotation(alt::IPlayer* player);
 EXPORT bool Player_IsInVehicle(alt::IPlayer* player);
 EXPORT alt::IVehicle* Player_GetVehicle(alt::IPlayer* player);
 EXPORT uint8_t Player_GetSeat(alt::IPlayer* player);
-EXPORT void Player_Kick(alt::IPlayer* player, alt::StringView reason);
+EXPORT void Player_Kick(alt::IPlayer* player, const char* reason);
 
 EXPORT void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct);
 #ifdef __cplusplus
