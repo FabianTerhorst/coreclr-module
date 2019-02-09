@@ -82,7 +82,8 @@ namespace AltV.Net
         {
             var mValueList = MValue.Nil;
             AltVNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
-            AltVNative.Server.Server_TriggerClientEvent(nativePointer, player.NativePointer, eventName, ref mValueList);
+            AltVNative.Server.Server_TriggerClientEvent(nativePointer, player?.NativePointer ?? IntPtr.Zero, eventName,
+                ref mValueList);
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)

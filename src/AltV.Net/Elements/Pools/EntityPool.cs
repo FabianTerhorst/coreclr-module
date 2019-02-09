@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
@@ -7,7 +9,16 @@ namespace AltV.Net.Elements.Pools
 {
     public class EntityPool : IEntityPool
     {
-        private readonly Dictionary<IntPtr, IEntity> entities = new Dictionary<IntPtr, IEntity>();
+        private readonly ConcurrentDictionary<IntPtr, IEntity> entities = new ConcurrentDictionary<IntPtr, IEntity>();
+
+        private readonly ConcurrentDictionary<IntPtr, IPlayer> players = new ConcurrentDictionary<IntPtr, IPlayer>();
+
+        private readonly ConcurrentDictionary<IntPtr, IVehicle> vehicles = new ConcurrentDictionary<IntPtr, IVehicle>();
+
+        private readonly ConcurrentDictionary<IntPtr, IBlip> blips = new ConcurrentDictionary<IntPtr, IBlip>();
+
+        private readonly ConcurrentDictionary<IntPtr, ICheckpoint> checkpoints =
+            new ConcurrentDictionary<IntPtr, ICheckpoint>();
 
         private readonly IPlayerFactory playerFactory;
 
@@ -28,7 +39,22 @@ namespace AltV.Net.Elements.Pools
 
         public void Add(IEntity entity)
         {
-            entities[entity.NativePointer] = entity;
+            entities.TryAdd(entity.NativePointer, entity);
+            switch (entity)
+            {
+                case IPlayer player:
+                    players.TryAdd(entity.NativePointer, player);
+                    break;
+                case IVehicle vehicle:
+                    vehicles.TryAdd(entity.NativePointer, vehicle);
+                    break;
+                case IBlip blip:
+                    blips.TryAdd(entity.NativePointer, blip);
+                    break;
+                case ICheckpoint checkpoint:
+                    checkpoints.TryAdd(entity.NativePointer, checkpoint);
+                    break;
+            }
         }
 
         public bool Get(IntPtr entityPointer, out IEntity entity)
@@ -84,7 +110,32 @@ namespace AltV.Net.Elements.Pools
                 internalEntity.Exists = false;
             }
 
+            players.TryRemove(entityPointer, out _);
+            vehicles.TryRemove(entityPointer, out _);
+            blips.TryRemove(entityPointer, out _);
+            checkpoints.TryRemove(entityPointer, out _);
+
             return true;
+        }
+
+        public ReadOnlyCollection<IPlayer> GetPlayers()
+        {
+            return (ReadOnlyCollection<IPlayer>) players.Values;
+        }
+
+        public ReadOnlyCollection<IVehicle> GetVehicles()
+        {
+            return (ReadOnlyCollection<IVehicle>) vehicles.Values;
+        }
+
+        public ReadOnlyCollection<IBlip> GetBlips()
+        {
+            return (ReadOnlyCollection<IBlip>) blips.Values;
+        }
+
+        public ReadOnlyCollection<ICheckpoint> GetCheckpoints()
+        {
+            return (ReadOnlyCollection<ICheckpoint>) checkpoints.Values;
         }
     }
 }
