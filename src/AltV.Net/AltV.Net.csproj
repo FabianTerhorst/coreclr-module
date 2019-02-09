@@ -6,15 +6,20 @@
         <Configurations>Debug;Release;Testing</Configurations>
         <Platforms>AnyCPU</Platforms>
         <RootNamespace>AltV.Net</RootNamespace>
-        <Authors>AltV</Authors>
+        <Authors>AltMp</Authors>
         <Description>AltV .NET Core SDK</Description>
-        <Copyright>AltV</Copyright>
-        <PackageLicenseUrl>TODO:licenseurl</PackageLicenseUrl>
-        <PackageProjectUrl>https://github.com/FabianTerhorst/altv-csharp/</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/FabianTerhorst/altv-csharp</RepositoryUrl>
+        <Copyright>AltMp</Copyright>
+        <PackageProjectUrl>https://github.com/altmp-csharp/docs</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
+        <PackageVersion>1.0.0-dev-preview-1</PackageVersion>
+        <PackageLicenseFile>license.txt</PackageLicenseFile>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="license\license.txt" Pack="true" PackagePath=""/>
+    </ItemGroup>
 
     <PropertyGroup>
       <LangVersion>latest</LangVersion>
@@ -28,9 +33,4 @@
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
       <DebugType>full</DebugType>
     </PropertyGroup>
-
-    <Target Name="CopyFiles" AfterTargets="build" Condition=" '$(Configuration)' == 'Testing' ">
-        <Copy SourceFiles="$(OutputPath)\AALTV.Net.dll;$(OutputPath)\ALTV.Net.pdb" DestinationFolder="../../../server/dotnet/modules/" SkipUnchangedFiles="false" />
-    </Target>
-
 </Project>
