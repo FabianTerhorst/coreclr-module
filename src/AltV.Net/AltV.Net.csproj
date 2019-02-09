@@ -7,7 +7,7 @@
         <Platforms>AnyCPU</Platforms>
         <RootNamespace>AltV.Net</RootNamespace>
         <Authors>AltMp</Authors>
-        <Description>AltV .NET Core SDK</Description>
+        <Description>AltV .NET Core Server Api</Description>
         <Copyright>AltMp</Copyright>
         <PackageProjectUrl>https://github.com/altmp-csharp/docs</PackageProjectUrl>
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
@@ -18,7 +18,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="license\license.txt" Pack="true" PackagePath=""/>
+        <None Include="license\license.txt" Pack="true" PackagePath="" />
     </ItemGroup>
 
     <PropertyGroup>

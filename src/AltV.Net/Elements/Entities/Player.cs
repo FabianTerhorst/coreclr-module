@@ -138,7 +138,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public void Call(string eventName, params object[] args)
+        public void Emit(string eventName, params object[] args)
         {
             if (Exists)
             {

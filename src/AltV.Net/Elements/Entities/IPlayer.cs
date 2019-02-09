@@ -51,7 +51,7 @@ namespace AltV.Net.Elements.Entities
 
         void Kick(string reason);
 
-        void Call(string eventName, params object[] args);
+        void Emit(string eventName, params object[] args);
 
         ReadOnlyPlayer Copy();
     }

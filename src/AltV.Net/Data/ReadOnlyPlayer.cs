@@ -123,7 +123,7 @@ namespace AltV.Net.Data
 
         public bool Remove() => throw new NotImplementedException();
 
-        public void Call(string eventName, params object[] args) => throw new NotImplementedException();
+        public void Emit(string eventName, params object[] args) => throw new NotImplementedException();
 
         public ReadOnlyPlayer Copy() => throw new NotImplementedException();
     }
