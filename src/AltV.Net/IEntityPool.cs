@@ -1,5 +1,5 @@
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net
@@ -11,9 +11,9 @@ namespace AltV.Net
         void Add(IEntity entity);
         bool Remove(IEntity entity);
         bool Remove(IntPtr entityPointer);
-        ReadOnlyCollection<IPlayer> GetPlayers();
-        ReadOnlyCollection<IVehicle> GetVehicles();
-        ReadOnlyCollection<IBlip> GetBlips();
-        ReadOnlyCollection<ICheckpoint> GetCheckpoints();
+        Dictionary<IntPtr, IPlayer>.ValueCollection GetPlayers();
+        Dictionary<IntPtr, IVehicle>.ValueCollection GetVehicles();
+        Dictionary<IntPtr, IBlip>.ValueCollection GetBlips();
+        Dictionary<IntPtr, ICheckpoint>.ValueCollection GetCheckpoints();
     }
 }

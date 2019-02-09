@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
@@ -9,16 +7,15 @@ namespace AltV.Net.Elements.Pools
 {
     public class EntityPool : IEntityPool
     {
-        private readonly ConcurrentDictionary<IntPtr, IEntity> entities = new ConcurrentDictionary<IntPtr, IEntity>();
+        private readonly Dictionary<IntPtr, IEntity> entities = new Dictionary<IntPtr, IEntity>();
 
-        private readonly ConcurrentDictionary<IntPtr, IPlayer> players = new ConcurrentDictionary<IntPtr, IPlayer>();
+        private readonly Dictionary<IntPtr, IPlayer> players = new Dictionary<IntPtr, IPlayer>();
 
-        private readonly ConcurrentDictionary<IntPtr, IVehicle> vehicles = new ConcurrentDictionary<IntPtr, IVehicle>();
+        private readonly Dictionary<IntPtr, IVehicle> vehicles = new Dictionary<IntPtr, IVehicle>();
 
-        private readonly ConcurrentDictionary<IntPtr, IBlip> blips = new ConcurrentDictionary<IntPtr, IBlip>();
+        private readonly Dictionary<IntPtr, IBlip> blips = new Dictionary<IntPtr, IBlip>();
 
-        private readonly ConcurrentDictionary<IntPtr, ICheckpoint> checkpoints =
-            new ConcurrentDictionary<IntPtr, ICheckpoint>();
+        private readonly Dictionary<IntPtr, ICheckpoint> checkpoints = new Dictionary<IntPtr, ICheckpoint>();
 
         private readonly IPlayerFactory playerFactory;
 
@@ -39,20 +36,20 @@ namespace AltV.Net.Elements.Pools
 
         public void Add(IEntity entity)
         {
-            entities.TryAdd(entity.NativePointer, entity);
+            entities[entity.NativePointer] = entity;
             switch (entity)
             {
                 case IPlayer player:
-                    players.TryAdd(entity.NativePointer, player);
+                    players[entity.NativePointer] = player;
                     break;
                 case IVehicle vehicle:
-                    vehicles.TryAdd(entity.NativePointer, vehicle);
+                    vehicles[entity.NativePointer] = vehicle;
                     break;
                 case IBlip blip:
-                    blips.TryAdd(entity.NativePointer, blip);
+                    blips[entity.NativePointer] = blip;
                     break;
                 case ICheckpoint checkpoint:
-                    checkpoints.TryAdd(entity.NativePointer, checkpoint);
+                    checkpoints[entity.NativePointer] = checkpoint;
                     break;
             }
         }
@@ -110,32 +107,32 @@ namespace AltV.Net.Elements.Pools
                 internalEntity.Exists = false;
             }
 
-            players.TryRemove(entityPointer, out _);
-            vehicles.TryRemove(entityPointer, out _);
-            blips.TryRemove(entityPointer, out _);
-            checkpoints.TryRemove(entityPointer, out _);
+            players.Remove(entityPointer, out _);
+            vehicles.Remove(entityPointer, out _);
+            blips.Remove(entityPointer, out _);
+            checkpoints.Remove(entityPointer, out _);
 
             return true;
         }
 
-        public ReadOnlyCollection<IPlayer> GetPlayers()
+        public Dictionary<IntPtr, IPlayer>.ValueCollection GetPlayers()
         {
-            return (ReadOnlyCollection<IPlayer>) players.Values;
+            return players.Values;
         }
 
-        public ReadOnlyCollection<IVehicle> GetVehicles()
+        public Dictionary<IntPtr, IVehicle>.ValueCollection GetVehicles()
         {
-            return (ReadOnlyCollection<IVehicle>) vehicles.Values;
+            return vehicles.Values;
         }
 
-        public ReadOnlyCollection<IBlip> GetBlips()
+        public Dictionary<IntPtr, IBlip>.ValueCollection GetBlips()
         {
-            return (ReadOnlyCollection<IBlip>) blips.Values;
+            return blips.Values;
         }
 
-        public ReadOnlyCollection<ICheckpoint> GetCheckpoints()
+        public Dictionary<IntPtr, ICheckpoint>.ValueCollection GetCheckpoints()
         {
-            return (ReadOnlyCollection<ICheckpoint>) checkpoints.Values;
+            return checkpoints.Values;
         }
     }
 }
