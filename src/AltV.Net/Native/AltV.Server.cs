@@ -25,16 +25,30 @@ namespace AltV.Net.Native
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern uint Server_Hash(IntPtr serverPointer, string hash);
-            
+
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern void Server_TriggerServerEvent(IntPtr serverPointer, string eventName, ref MValue args);
-            
+            internal static extern void Server_TriggerServerEvent(IntPtr serverPointer, string eventName,
+                ref MValue args);
+
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern void Server_TriggerClientEvent(IntPtr serverPointer, IntPtr playerPointer, string eventName, ref MValue args);
+            internal static extern void Server_TriggerClientEvent(IntPtr serverPointer, IntPtr playerPointer,
+                string eventName, ref MValue args);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern IntPtr Server_CreateVehicle(IntPtr serverPointer, uint model, Position pos,
                 float heading);
+
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            internal static extern IntPtr Server_CreateCheckpoint(IntPtr serverPointer, IntPtr playerTargetPointer,
+                byte type, Position pos, float radius, float height, Rgba color);
+
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            internal static extern IntPtr Server_CreateBlip(IntPtr serverPointer, IntPtr playerTargetPointer, byte type,
+                Position pos);
+
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            internal static extern IntPtr Server_CreateBlipAttached(IntPtr serverPointer, IntPtr playerTargetPointer,
+                byte type, IntPtr entityAttachPointer);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Server_RemoveEntity(IntPtr serverPointer, IntPtr entityPointer);

@@ -1,4 +1,3 @@
-using System;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
@@ -46,6 +45,12 @@ namespace AltV.Net
         void TriggerClientEvent(IPlayer player, string eventName, params object[] args);
 
         IVehicle CreateVehicle(uint model, Position pos, float heading);
+
+        ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height, Rgba color);
+
+        IBlip CreateBlip(IPlayer player, byte type, Position pos);
+
+        IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach);
 
         bool RemoveEntity(IEntity entity);
     }

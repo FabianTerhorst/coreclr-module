@@ -107,6 +107,34 @@ namespace AltV.Net
             return vehicle;
         }
 
+        public ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height,
+            Rgba color)
+        {
+            var checkpoint =
+                checkpointFactory.Create(AltVNative.Server.Server_CreateCheckpoint(nativePointer, player.NativePointer,
+                    type, pos, radius, height, color));
+            entityPool.Add(checkpoint);
+            return checkpoint;
+        }
+
+        public IBlip CreateBlip(IPlayer player, byte type, Position pos)
+        {
+            var blip =
+                blipFactory.Create(AltVNative.Server.Server_CreateBlip(nativePointer, player.NativePointer,
+                    type, pos));
+            entityPool.Add(blip);
+            return blip;
+        }
+
+        public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
+        {
+            var blip =
+                blipFactory.Create(AltVNative.Server.Server_CreateBlipAttached(nativePointer, player.NativePointer,
+                    type, entityAttach.NativePointer));
+            entityPool.Add(blip);
+            return blip;
+        }
+
         public bool RemoveEntity(IEntity entity)
         {
             if (!entityPool.Remove(entity))
