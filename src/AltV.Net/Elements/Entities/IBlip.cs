@@ -2,10 +2,13 @@ namespace AltV.Net.Elements.Entities
 {
     public interface IBlip : IEntity
     {
-        /// <summary>
-        /// Get or set color of the blip.
-        /// </summary>
-        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint Color { /*get;*/ set; }
+        bool IsGlobal { get; }
+        bool IsAttached { get; }
+        IEntity AttachedTo { get; }
+        byte BlipType { get; }
+        ushort Sprite { set; }
+        byte Color { set; }
+        bool Route { set; }
+        byte RouteColor { set; }
     }
 }

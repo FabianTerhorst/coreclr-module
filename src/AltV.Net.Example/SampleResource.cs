@@ -94,7 +94,7 @@ namespace AltV.Net.Example
         {
         }
 
-        IPlayerFactory IResource.GetPlayerFactory()
+        public IPlayerFactory GetPlayerFactory()
         {
             return new PlayerFactory();
         }
@@ -109,7 +109,7 @@ namespace AltV.Net.Example
             return new BlipFactory();
         }
 
-        ICheckpointFactory IResource.GetCheckpointFactory()
+        public ICheckpointFactory GetCheckpointFactory()
         {
             return new CheckpointFactory();
         }

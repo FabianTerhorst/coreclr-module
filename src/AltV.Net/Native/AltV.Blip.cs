@@ -17,19 +17,19 @@ namespace AltV.Net.Native
             internal static extern IntPtr Blip_AttachedTo(IntPtr blipPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern uint Blip_GetType(IntPtr blipPointer);
+            internal static extern byte Blip_GetType(IntPtr blipPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern uint Blip_SetSprite(IntPtr blipPointer, uint sprite);
+            internal static extern void Blip_SetSprite(IntPtr blipPointer, ushort sprite);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void Blip_SetColor(IntPtr blipPointer, uint color);
+            internal static extern void Blip_SetColor(IntPtr blipPointer, byte color);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void Blip_SetRoute(IntPtr blipPointer, bool state);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void Blip_SetRouteColor(IntPtr blipPointer, uint color);
+            internal static extern void Blip_SetRouteColor(IntPtr blipPointer, byte color);
         }
     }
 }
