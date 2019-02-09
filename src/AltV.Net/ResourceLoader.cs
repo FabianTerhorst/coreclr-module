@@ -9,6 +9,8 @@ namespace AltV.Net
 {
     internal class ResourceLoader
     {
+        private static readonly Type ResourceInterfaceType = typeof(IResource);
+
         private readonly IntPtr serverPointer;
         private readonly string basePath;
 
@@ -24,7 +26,6 @@ namespace AltV.Net
 
         public IResource Prepare()
         {
-            var resourceInterfaceType = typeof(IResource);
             var assembly = LoadAssembly(basePath);
             Type[] types;
             try
@@ -34,20 +35,15 @@ namespace AltV.Net
             catch (Exception e)
             {
                 Log(
-                    $"{basePath}: An error occured during entrypoint search in assembly \"{assembly.FullName}\": ",
+                    $"{basePath}: An error occured during Resource search in assembly \"{assembly.FullName}\": ",
                     e);
 
-                if (e is ReflectionTypeLoadException reflectionException)
+                if (!(e is ReflectionTypeLoadException reflectionException)) return null;
+                Log("Following Exceptions are given:");
+
+                foreach (var exception in reflectionException.LoaderExceptions)
                 {
-                    Log("Following LoaderExceptions are given:");
-
-                    var loaderExceptions = reflectionException.LoaderExceptions;
-
-                    for (int i = 0; i < loaderExceptions.Length; i++)
-                    {
-                        Log($"LoaderException {i + 1} / {loaderExceptions.Length}: ",
-                            loaderExceptions[i]);
-                    }
+                    Log("Exception: ", exception);
                 }
 
                 return null;
@@ -56,7 +52,7 @@ namespace AltV.Net
             foreach (var type in types)
             {
                 if (type.IsClass == false || type.IsAbstract ||
-                    resourceInterfaceType.IsAssignableFrom((Type) type) == false)
+                    ResourceInterfaceType.IsAssignableFrom(type) == false)
                 {
                     continue;
                 }
@@ -68,12 +64,12 @@ namespace AltV.Net
                 if (constructor == null)
                 {
                     Log(
-                        $"Possible type \"{type}\" was found, but no parameterless-constructor is available!");
+                        $"Possible Resource \"{type}\" found, but no constructor without parameters available!");
 
                     continue;
                 }
 
-                Log($"Entrypoint \"{type}\" found, executing constructor...");
+                Log($"Resource \"{type}\" found, executing constructor...");
 
                 try
                 {
@@ -81,7 +77,7 @@ namespace AltV.Net
                 }
                 catch (Exception e)
                 {
-                    Log("An error occured during constructor-execution: ", e);
+                    Log("An error occured during constructor execution: ", e);
                 }
             }
 
@@ -118,7 +114,6 @@ namespace AltV.Net
             catch (FileLoadException e)
             {
                 Log($"An error occured while loading assembly \"{path}\": {e}");
-
                 return null;
             }
         }
