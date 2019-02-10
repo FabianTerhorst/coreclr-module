@@ -82,6 +82,8 @@ namespace AltV.Net
         public static Dictionary<IntPtr, ICheckpoint>.ValueCollection GetAllCheckpoints() =>
             Module.CheckpointPool.GetAllEntities();
 
+        public static uint Hash(string hash) => Server.Hash(hash);
+
         internal static void Setup(Module module)
         {
             Module = module;
