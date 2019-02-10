@@ -88,17 +88,16 @@ namespace AltV.Net.Mock
 
         public void TriggerClientEvent(IPlayer player, string eventName, params MValue[] args)
         {
-            Console.WriteLine("TriggerClientEvent(" + player + "," + eventName + "," + args);
+            player.PushEvent(eventName, args);
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)
         {
-            Console.WriteLine("TriggerClientEvent(" + player + "," + eventName + "," + args);
+            TriggerClientEvent(player, eventName, ConvertObjectsToMValues(args));
         }
 
         public IVehicle CreateVehicle(uint model, Position pos, float heading)
         {
-            Console.WriteLine("CreateVehicle(" + model + "," + pos + "," + heading);
             var ptr = MockEntities.GetNextPtr();
             vehiclePool.Create(ptr, out var vehicle);
             MockEntities.Insert(vehicle);
