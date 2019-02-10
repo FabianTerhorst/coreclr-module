@@ -8,9 +8,14 @@ namespace AltV.Net.Mock.Example
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            Console.WriteLine("Hello World!2");
             var mockAltV = new MockAltV<IPlayer, IMyVehicle, IBlip, ICheckpoint>();
+            Alt.EmitAllClients("bla");
+            var player = mockAltV.CreatePlayer("bla");
+            Console.WriteLine(player.DequeueEvent().name);
+            Alt.EmitAllClients("bla");
+            Console.WriteLine(player.DequeueEvent().name);
+            player.Emit("bla2");
+            Console.WriteLine(player.DequeueEvent().name);
         }
     }
 }
