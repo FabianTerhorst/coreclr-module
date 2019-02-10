@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <Platforms>AnyCPU</Platforms>
+        <RootNamespace>AltV.Net.Mock</RootNamespace>
+        <Authors>AltMp</Authors>
+        <Description>AltV .NET Core Server Mock Api</Description>
+        <Copyright>AltMp</Copyright>
+        <PackageProjectUrl>https://github.com/altmp-csharp/docs</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>altv gta bridge mock</PackageTags>
+        <PackageVersion>1.0.0-dev-preview-4</PackageVersion>
+        <PackageLicenseFile>license.txt</PackageLicenseFile>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="license\license.txt" Pack="true" PackagePath="" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />
+    </ItemGroup>
+
+    <PropertyGroup>
+      <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+
+</Project>

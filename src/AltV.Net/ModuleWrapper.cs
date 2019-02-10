@@ -5,7 +5,7 @@ using AltV.Net.Elements.Pools;
 using AltV.Net.Native;
 
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
-
+[assembly: InternalsVisibleTo("AltV.Net.Mock")]
 namespace AltV.Net
 {
     internal static class ModuleWrapper

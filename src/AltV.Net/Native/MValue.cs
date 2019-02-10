@@ -250,7 +250,7 @@ namespace AltV.Net.Native
             return mValue;
         }
 
-        public static MValue Create(Invoker invoker)
+        internal static MValue Create(Invoker invoker)
         {
             var mValue = Nil;
             AltVNative.MValueCreate.MValue_CreateFunction(invoker.NativePointer, ref mValue);

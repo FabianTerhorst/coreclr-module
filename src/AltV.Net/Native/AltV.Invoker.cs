@@ -2,7 +2,7 @@ using System;
 
 namespace AltV.Net.Native
 {
-    public class Invoker : IDisposable
+    internal class Invoker : IDisposable
     {
         public static Invoker Create(MValue.Function function)
         {

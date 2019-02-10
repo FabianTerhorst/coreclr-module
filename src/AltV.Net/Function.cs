@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
@@ -50,11 +51,15 @@ namespace AltV.Net
 
             public readonly TypeInfo Element;
 
+            public readonly Type ElementType;
+
             public readonly TypeInfo DictionaryValue;
 
             public readonly Type[] GenericArguments;
 
             public readonly Type DictType;
+
+            public readonly Func<System.Collections.IDictionary> CreateDictionary;
 
             public TypeInfo(Type type)
             {
@@ -65,12 +70,16 @@ namespace AltV.Net
                     GenericArguments = type.GetGenericArguments();
                     DictType = typeof(Dictionary<,>).MakeGenericType(GenericArguments[0], GenericArguments[1]);
                     DictionaryValue = GenericArguments.Length == 2 ? new TypeInfo(GenericArguments[1]) : null;
+                    CreateDictionary = Expression.Lambda<Func<System.Collections.IDictionary>>(
+                        Expression.New(DictType)
+                    ).Compile();
                 }
                 else
                 {
                     GenericArguments = null;
                     DictType = null;
                     DictionaryValue = null;
+                    CreateDictionary = null;
                 }
 
                 var interfaces = type.GetInterfaces();
@@ -94,6 +103,7 @@ namespace AltV.Net
                 var elementType = type.GetElementType();
                 if (elementType != null)
                 {
+                    ElementType = elementType;
                     Element = new TypeInfo(elementType);
                 }
             }
@@ -120,7 +130,7 @@ namespace AltV.Net
         private static readonly Type Player = typeof(IPlayer);
 
         private static readonly Type Vehicle = typeof(IVehicle);
-        
+
         private static readonly Type Checkpoint = typeof(ICheckpoint);
 
         private static readonly Type Array = typeof(System.Array);
@@ -135,7 +145,8 @@ namespace AltV.Net
 
         //TODO: for high optimization add ParseBoolUnsafe ect. that doesn't contains the mValue type check for scenarios where we already had to check the mValue type
 
-        private static object CreateArray(Type type, MValue[] mValues, IBaseEntityPool baseEntityPool, TypeInfo typeInfo)
+        private static object CreateArray(Type type, MValue[] mValues, IBaseEntityPool baseEntityPool,
+            TypeInfo typeInfo)
         {
             var length = mValues.Length;
             if (type == Obj)
@@ -291,13 +302,15 @@ namespace AltV.Net
             for (var i = 0; i < length; i++)
             {
                 var currMValue = mValues[i];
-                typeArray.SetValue(
-                    !ValidateMValueType(currMValue.type, type, typeInfo?.Element)
-                        ? null
-                        : Convert.ChangeType(ParseObject(ref currMValue, type, baseEntityPool, typeInfo?.Element), type),
-                    i);
-
-                //typeArray.SetValue(ParseObject(ref currMValue, type, entityPool, typeInfo?.Element), i);
+                if (!ValidateMValueType(currMValue.type, type, typeInfo?.Element))
+                {
+                    typeArray.SetValue(null, i);
+                }
+                else
+                {
+                    var obj = ParseObject(ref currMValue, type, baseEntityPool, typeInfo?.Element);
+                    typeArray.SetValue(obj is IConvertible ? Convert.ChangeType(obj, type) : obj, i);
+                }
             }
 
             return typeArray;
@@ -336,7 +349,8 @@ namespace AltV.Net
             return null;
         }
 
-        private static object ParseDouble(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool, TypeInfo typeInfo)
+        private static object ParseDouble(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+            TypeInfo typeInfo)
         {
             if (mValue.type == MValue.Type.DOUBLE)
             {
@@ -347,12 +361,14 @@ namespace AltV.Net
             return null;
         }
 
-        private static object ParseString(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool, TypeInfo typeInfo)
+        private static object ParseString(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+            TypeInfo typeInfo)
         {
             return mValue.type != MValue.Type.STRING ? null : mValue.GetString();
         }
 
-        private static object ParseObject(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool, TypeInfo typeInfo)
+        private static object ParseObject(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+            TypeInfo typeInfo)
         {
             //return mValue.ToObject(entityPool);
             switch (mValue.type)
@@ -382,17 +398,20 @@ namespace AltV.Net
             }
         }
 
-        private static object ParseArray(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool, TypeInfo typeInfo)
+        private static object ParseArray(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+            TypeInfo typeInfo)
         {
             // Types doesn't match
             if (mValue.type != MValue.Type.LIST) return null;
             var mValueList = mValue.GetList();
-            var elementType =
-                type.GetElementType() ?? type; // Object has no element type so we have to use the same type again
+            var elementType = typeInfo?.ElementType ?? (
+                                  type.GetElementType() ??
+                                  type); // Object has no element type so we have to use the same type again
             return CreateArray(elementType, mValueList, baseEntityPool, typeInfo);
         }
 
-        private static object ParseEntity(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool, TypeInfo typeInfo)
+        private static object ParseEntity(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+            TypeInfo typeInfo)
         {
             // Types doesn't match
             if (mValue.type != MValue.Type.ENTITY) return null;
@@ -405,7 +424,8 @@ namespace AltV.Net
             return entity;
         }
 
-        private static object ParseDictionary(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool, TypeInfo typeInfo)
+        private static object ParseDictionary(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+            TypeInfo typeInfo)
         {
             // Types doesn't match
             if (mValue.type != MValue.Type.DICT) return null;
@@ -573,7 +593,8 @@ namespace AltV.Net
             }
 
             var dictType = typeInfo?.DictType ?? typeof(Dictionary<,>).MakeGenericType(keyType, valueType);
-            var typedDict = (System.Collections.IDictionary) Activator.CreateInstance(dictType);
+            var typedDict = typeInfo?.CreateDictionary() ??
+                            (System.Collections.IDictionary) Activator.CreateInstance(dictType);
             for (var i = 0; i < length; i++)
             {
                 currMValue = valueArray[i];
@@ -583,17 +604,23 @@ namespace AltV.Net
                 }
                 else
                 {
-                    typedDict[strings[i]] =
-                        Convert.ChangeType(
-                            ParseObject(ref currMValue, valueType, baseEntityPool, typeInfo?.DictionaryValue),
-                            valueType);
+                    var obj = ParseObject(ref currMValue, valueType, baseEntityPool, typeInfo?.DictionaryValue);
+                    if (obj is IConvertible)
+                    {
+                        typedDict[strings[i]] = Convert.ChangeType(obj, valueType);
+                    }
+                    else
+                    {
+                        typedDict[strings[i]] = obj;
+                    }
                 }
             }
 
             return typedDict;
         }
 
-        private static object ParseFunction(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool, TypeInfo typeInfo)
+        private static object ParseFunction(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+            TypeInfo typeInfo)
         {
             if (mValue.type == MValue.Type.FUNCTION)
             {
@@ -783,7 +810,7 @@ namespace AltV.Net
             if (returnType == Void) return MValue.Nil;
             return MValue.CreateFromObject(result) ?? MValue.Nil;
         }
-        
+
         internal MValue Call(IPlayer player, IBaseEntityPool baseEntityPool, MValue[] values)
         {
             var length = values.Length;

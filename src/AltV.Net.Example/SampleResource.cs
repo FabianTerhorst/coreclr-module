@@ -24,7 +24,8 @@ namespace AltV.Net.Example
             Alt.OnPlayerDisconnect += OnPlayerDisconnect;
             Alt.OnEntityRemove += OnEntityRemove;
 
-            var vehicle = Alt.CreateVehicle(VehicleHash.Apc, Position.Zero, float.MinValue);
+            var vehicle = Alt.CreateVehicle(VehicleHash.Apc, new Position(1, 2, 3), float.MinValue);
+            Alt.Server.LogInfo(vehicle.Position.ToString());
             vehicle.PrimaryColor = 7;
             vehicle.NumberPlateText = "AltV-C#";
             vehicle.NumberPlateIndex = 2;
@@ -39,15 +40,18 @@ namespace AltV.Net.Example
                 b = 7,
                 a = 0
             };
-            
-            Alt.Server.LogInfo("number-plate:" + vehicle.NumberPlateText + " " + vehicle.NumberPlateIndex);
 
+            Alt.Log("number-plate:" + vehicle.NumberPlateText + " " + vehicle.NumberPlateIndex);
+
+            var bla200 = MValue.Create(vehicle);
+            //var veh2 = bla2.ToObject();
+            Alt.Log(bla200.ToString());
 
             Alt.Emit("vehicleTest", vehicle);
 
             Alt.On("event_name",
                 delegate(string s, string s1, long i1, string[] arg3, object[] arg4, MyVehicle arg5,
-                    Dictionary<string, object> arg6, MyVehicle[] myVehicles, string probablyNull, string[] nullArray,
+                    Dictionary<string, object> arg6, IMyVehicle[] myVehicles, string probablyNull, string[] nullArray,
                     Dictionary<string, double> bla)
                 {
                     Alt.Server.LogInfo("param1:" + s);
@@ -69,7 +73,7 @@ namespace AltV.Net.Example
                     //["test2"] = new Dictionary<string, long> {["test"] = 1},
                     //["test3"] = new Dictionary<string, long> {["test"] = 42}
                 },
-                new MyVehicle[] {(MyVehicle) vehicle}, null, new string[] {null},
+                new IMyVehicle[] {(IMyVehicle) vehicle}, null, new string[] {null},
                 new Dictionary<string, object>
                 {
                     ["test"] = null
@@ -87,6 +91,15 @@ namespace AltV.Net.Example
                 return 42;
             }));
 
+            foreach (var player in Alt.GetAllPlayers())
+            {
+            }
+
+            foreach (var veh in Alt.GetAllVehicles())
+            {
+                Alt.Log("vehicle:" + veh.Position.x + " " + veh.Position.y + " " + veh.Position.z);
+            }
+
             vehicle.Remove();
         }
 
@@ -94,28 +107,29 @@ namespace AltV.Net.Example
         {
         }
 
-        public IPlayerFactory GetPlayerFactory()
+        public IEntityFactory<IPlayer> GetPlayerFactory()
         {
             return new PlayerFactory();
         }
 
-        public IVehicleFactory GetVehicleFactory()
+        public IEntityFactory<IVehicle> GetVehicleFactory()
         {
             return new MyVehicleFactory();
         }
 
-        public IBlipFactory GetBlipFactory()
+        public IEntityFactory<IBlip> GetBlipFactory()
         {
             return new BlipFactory();
         }
 
-        public ICheckpointFactory GetCheckpointFactory()
+        public IEntityFactory<ICheckpoint> GetCheckpointFactory()
         {
             return new CheckpointFactory();
         }
 
         private void OnPlayerConnect(IPlayer player, string reason)
         {
+            player.Emit("bla");
         }
 
         private void OnPlayerDisconnect(IPlayer player, string reason)

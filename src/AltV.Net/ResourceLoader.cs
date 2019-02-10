@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
 namespace AltV.Net
@@ -12,7 +14,8 @@ namespace AltV.Net
         private static readonly Type ResourceInterfaceType = typeof(IResource);
 
         private readonly IntPtr serverPointer;
-        private readonly string basePath;
+        private readonly string resourceName;
+        private readonly string entryPoint;
 
         private readonly Dictionary<string, Assembly> loadedAssemblies;
         private IResource resource;
@@ -20,12 +23,19 @@ namespace AltV.Net
         internal ResourceLoader(IntPtr serverPointer, string resourceName, string entryPoint)
         {
             this.serverPointer = serverPointer;
-            basePath = $"resources/{resourceName}/{entryPoint}";
+            this.resourceName = resourceName;
+            this.entryPoint = entryPoint;
             loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToDictionary(x => x.GetName().FullName, x => x);
+        }
+
+        public virtual string GetPath(string pathResourceName, string pathEntryName)
+        {
+            return $"resources/{pathResourceName}/{pathEntryName}";
         }
 
         public IResource Prepare()
         {
+            var basePath = GetPath(resourceName, entryPoint);
             var assembly = LoadAssembly(basePath);
             Type[] types;
             try
@@ -118,9 +128,9 @@ namespace AltV.Net
             }
         }
 
-        private void Log(string message, Exception exception = null)
+        public virtual void Log(string message, Exception exception = null)
         {
-            AltVNative.Server.Server_LogInfo(serverPointer, $"{basePath}: {message} + {exception}");
+            AltVNative.Server.Server_LogInfo(serverPointer, $"{message} + {exception}");
         }
     }
 }
