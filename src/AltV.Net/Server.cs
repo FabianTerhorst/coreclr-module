@@ -13,26 +13,27 @@ namespace AltV.Net
 
         private readonly IntPtr nativePointer;
 
-        private readonly IEntityPool entityPool;
+        private readonly IBaseEntityPool baseEntityPool;
 
-        private readonly IPlayerFactory playerFactory;
+        private readonly IEntityPool<IPlayer> playerPool;
 
-        private readonly IVehicleFactory vehicleFactory;
+        private readonly IEntityPool<IVehicle> vehiclePool;
 
-        private readonly IBlipFactory blipFactory;
+        private readonly IEntityPool<IBlip> blipPool;
 
-        private readonly ICheckpointFactory checkpointFactory;
+        private readonly IEntityPool<ICheckpoint> checkpointPool;
 
-        internal Server(IntPtr nativePointer, IEntityPool entityPool, IPlayerFactory playerFactory,
-            IVehicleFactory vehicleFactory, IBlipFactory blipFactory,
-            ICheckpointFactory checkpointFactory)
+        internal Server(IntPtr nativePointer, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
+            IEntityPool<IVehicle> vehiclePool,
+            IEntityPool<IBlip> blipPool,
+            IEntityPool<ICheckpoint> checkpointPool)
         {
             this.nativePointer = nativePointer;
-            this.entityPool = entityPool;
-            this.playerFactory = playerFactory;
-            this.vehicleFactory = vehicleFactory;
-            this.blipFactory = blipFactory;
-            this.checkpointFactory = checkpointFactory;
+            this.baseEntityPool = baseEntityPool;
+            this.playerPool = playerPool;
+            this.vehiclePool = vehiclePool;
+            this.blipPool = blipPool;
+            this.checkpointPool = checkpointPool;
             Instance = this;
         }
 
@@ -103,8 +104,7 @@ namespace AltV.Net
         public IVehicle CreateVehicle(uint model, Position pos, float heading)
         {
             var vehicle =
-                vehicleFactory.Create(AltVNative.Server.Server_CreateVehicle(nativePointer, model, pos, heading));
-            entityPool.Add(vehicle);
+                vehiclePool.Create(AltVNative.Server.Server_CreateVehicle(nativePointer, model, pos, heading));
             return vehicle;
         }
 
@@ -112,33 +112,30 @@ namespace AltV.Net
             Rgba color)
         {
             var checkpoint =
-                checkpointFactory.Create(AltVNative.Server.Server_CreateCheckpoint(nativePointer, player.NativePointer,
+                checkpointPool.Create(AltVNative.Server.Server_CreateCheckpoint(nativePointer, player.NativePointer,
                     type, pos, radius, height, color));
-            entityPool.Add(checkpoint);
             return checkpoint;
         }
 
         public IBlip CreateBlip(IPlayer player, byte type, Position pos)
         {
             var blip =
-                blipFactory.Create(AltVNative.Server.Server_CreateBlip(nativePointer, player.NativePointer,
+                blipPool.Create(AltVNative.Server.Server_CreateBlip(nativePointer, player.NativePointer,
                     type, pos));
-            entityPool.Add(blip);
             return blip;
         }
 
         public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
         {
             var blip =
-                blipFactory.Create(AltVNative.Server.Server_CreateBlipAttached(nativePointer, player.NativePointer,
+                blipPool.Create(AltVNative.Server.Server_CreateBlipAttached(nativePointer, player.NativePointer,
                     type, entityAttach.NativePointer));
-            entityPool.Add(blip);
             return blip;
         }
 
         public bool RemoveEntity(IEntity entity)
         {
-            if (!entityPool.Remove(entity))
+            if (!baseEntityPool.Remove(entity))
             {
                 return false;
             }

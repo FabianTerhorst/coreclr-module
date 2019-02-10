@@ -22,9 +22,15 @@ namespace AltV.Net
             var vehicleFactory = resource.GetVehicleFactory();
             var blipFactory = resource.GetBlipFactory();
             var checkpointFactory = resource.GetCheckpointFactory();
-            var entityPool = new EntityPool(playerFactory, vehicleFactory, blipFactory, checkpointFactory);
-            var server = new Server(serverPointer, entityPool, playerFactory, vehicleFactory, blipFactory, checkpointFactory);
-            _module = new Module(server, entityPool);
+            var playerPool = new PlayerPool(playerFactory);
+            var vehiclePool = new VehiclePool(vehicleFactory);
+            var blipPool = new BlipPool(blipFactory);
+            var checkpointPool = new CheckpointPool(checkpointFactory);
+            var checkpoint = new CheckpointPool(checkpointFactory);
+            var entityPool = new BaseEntityPool(playerPool, vehiclePool, blipPool, checkpoint);
+            var server = new Server(serverPointer, entityPool, playerPool, vehiclePool, blipPool,
+                checkpointPool);
+            _module = new Module(server, entityPool, playerPool, vehiclePool, blipPool, checkpointPool);
             _resourceLoader.Start();
         }
 
@@ -32,15 +38,16 @@ namespace AltV.Net
         {
             _resourceLoader.Stop();
         }
-        
+
         public static void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, bool state)
         {
-            if (!_module.EntityPool.Get(checkpointPointer, out var checkpointEntity) || !(checkpointEntity is ICheckpoint checkpoint))
+            if (!_module.CheckpointPool.GetOrCreate(checkpointPointer, out var checkpointEntity) ||
+                !(checkpointEntity is ICheckpoint checkpoint))
             {
                 return;
             }
-            
-            if (!_module.EntityPool.Get(entityPointer, out var entity))
+
+            if (!_module.BaseEntityPool.GetOrCreate(entityPointer, out var entity))
             {
                 return;
             }
@@ -53,7 +60,7 @@ namespace AltV.Net
 
         public static void OnPlayerConnect(IntPtr playerPointer, string reason)
         {
-            if (!_module.EntityPool.Get(playerPointer, out var entity) || !(entity is IPlayer player))
+            if (!_module.PlayerPool.GetOrCreate(playerPointer, out var entity) || !(entity is IPlayer player))
             {
                 return;
             }
@@ -66,12 +73,12 @@ namespace AltV.Net
 
         public static void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer, uint weapon, byte damage)
         {
-            if (!_module.EntityPool.Get(playerPointer, out var entity) || !(entity is IPlayer player))
+            if (!_module.PlayerPool.GetOrCreate(playerPointer, out var entity) || !(entity is IPlayer player))
             {
                 return;
             }
 
-            if (!_module.EntityPool.Get(attackerEntityPointer, out var attacker))
+            if (!_module.BaseEntityPool.GetOrCreate(attackerEntityPointer, out var attacker))
             {
                 return;
             }
@@ -85,12 +92,12 @@ namespace AltV.Net
 
         public static void OnPlayerDead(IntPtr playerPointer, IntPtr killerEntityPointer, uint weapon)
         {
-            if (!_module.EntityPool.Get(playerPointer, out var entity) || !(entity is IPlayer player))
+            if (!_module.PlayerPool.GetOrCreate(playerPointer, out var entity) || !(entity is IPlayer player))
             {
                 return;
             }
 
-            if (!_module.EntityPool.Get(killerEntityPointer, out var killer))
+            if (!_module.BaseEntityPool.GetOrCreate(killerEntityPointer, out var killer))
             {
                 return;
             }
@@ -104,12 +111,12 @@ namespace AltV.Net
         public static void OnVehicleChangeSeat(IntPtr vehiclePointer, IntPtr playerPointer, sbyte oldSeat,
             sbyte newSeat)
         {
-            if (!_module.EntityPool.Get(vehiclePointer, out var vehicleEntity) || !(vehicleEntity is IVehicle vehicle))
+            if (!_module.VehiclePool.GetOrCreate(vehiclePointer, out var vehicle))
             {
                 return;
             }
 
-            if (!_module.EntityPool.Get(playerPointer, out var playerEntity) || !(playerEntity is IPlayer player))
+            if (!_module.PlayerPool.GetOrCreate(playerPointer, out var player))
             {
                 return;
             }
@@ -122,12 +129,12 @@ namespace AltV.Net
 
         public static void OnVehicleEnter(IntPtr vehiclePointer, IntPtr playerPointer, sbyte seat)
         {
-            if (!_module.EntityPool.Get(vehiclePointer, out var vehicleEntity) || !(vehicleEntity is IVehicle vehicle))
+            if (!_module.VehiclePool.GetOrCreate(vehiclePointer, out var vehicle))
             {
                 return;
             }
 
-            if (!_module.EntityPool.Get(playerPointer, out var playerEntity) || !(playerEntity is IPlayer player))
+            if (!_module.PlayerPool.GetOrCreate(playerPointer, out var player))
             {
                 return;
             }
@@ -140,12 +147,12 @@ namespace AltV.Net
 
         public static void OnVehicleLeave(IntPtr vehiclePointer, IntPtr playerPointer, sbyte seat)
         {
-            if (!_module.EntityPool.Get(vehiclePointer, out var vehicleEntity) || !(vehicleEntity is IVehicle vehicle))
+            if (!_module.VehiclePool.GetOrCreate(vehiclePointer, out var vehicle))
             {
                 return;
             }
 
-            if (!_module.EntityPool.Get(playerPointer, out var playerEntity) || !(playerEntity is IPlayer player))
+            if (!_module.PlayerPool.GetOrCreate(playerPointer, out var player))
             {
                 return;
             }
@@ -158,7 +165,7 @@ namespace AltV.Net
 
         public static void OnPlayerDisconnect(IntPtr playerPointer, string reason)
         {
-            if (!_module.EntityPool.Get(playerPointer, out var entity) || !(entity is IPlayer player))
+            if (!_module.PlayerPool.GetOrCreate(playerPointer, out var player))
             {
                 return;
             }
@@ -171,7 +178,7 @@ namespace AltV.Net
 
         public static void OnEntityRemove(IntPtr entityPointer)
         {
-            if (!_module.EntityPool.Get(entityPointer, out var entity))
+            if (!_module.BaseEntityPool.GetOrCreate(entityPointer, out var entity))
             {
                 return;
             }
@@ -181,12 +188,12 @@ namespace AltV.Net
                 @delegate(entity);
             }
 
-            _module.EntityPool.Remove(entityPointer);
+            _module.BaseEntityPool.Remove(entityPointer);
         }
 
         public static void OnClientEvent(IntPtr playerPointer, string name, ref MValueArray args)
         {
-            if (!_module.EntityPool.Get(playerPointer, out var playerEntity) || !(playerEntity is IPlayer player))
+            if (!_module.PlayerPool.GetOrCreate(playerPointer, out var player))
             {
                 return;
             }
@@ -197,7 +204,7 @@ namespace AltV.Net
                 argArray = args.ToArray();
                 foreach (var eventHandler in eventHandlers)
                 {
-                    eventHandler.Call(player, _module.EntityPool, argArray);
+                    eventHandler.Call(player, _module.BaseEntityPool, argArray);
                 }
             }
 
@@ -212,7 +219,7 @@ namespace AltV.Net
                 var argObjects = new object[length];
                 for (var i = 0; i < length; i++)
                 {
-                    argObjects[i] = argArray[i].ToObject(_module.EntityPool);
+                    argObjects[i] = argArray[i].ToObject(_module.BaseEntityPool);
                 }
 
                 foreach (var eventHandler in eventDelegates)
@@ -230,7 +237,7 @@ namespace AltV.Net
                 argArray = args.ToArray();
                 foreach (var eventHandler in eventHandlers)
                 {
-                    eventHandler.Call(_module.EntityPool, argArray);
+                    eventHandler.Call(_module.BaseEntityPool, argArray);
                 }
             }
 
@@ -245,7 +252,7 @@ namespace AltV.Net
                 var argObjects = new object[length];
                 for (var i = 0; i < length; i++)
                 {
-                    argObjects[i] = argArray[i].ToObject(_module.EntityPool);
+                    argObjects[i] = argArray[i].ToObject(_module.BaseEntityPool);
                 }
 
                 foreach (var eventHandler in eventDelegates)

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AltV.Net.Elements.Entities;
 using AltV.Net.Events;
 
 namespace AltV.Net
@@ -7,7 +8,15 @@ namespace AltV.Net
     {
         internal readonly IServer Server;
 
-        internal readonly IEntityPool EntityPool;
+        internal readonly IBaseEntityPool BaseEntityPool;
+        
+        internal readonly IEntityPool<IPlayer> PlayerPool;
+
+        internal readonly IEntityPool<IVehicle> VehiclePool;
+
+        internal readonly IEntityPool<IBlip> BlipPool;
+
+        internal readonly IEntityPool<ICheckpoint> CheckpointPool;
 
         //For custom defined args event handlers
         internal readonly Dictionary<string, HashSet<Function>> EventHandlers =
@@ -47,11 +56,18 @@ namespace AltV.Net
         internal readonly EventHandler<EntityRemoveDelegate> EntityRemoveEventHandler =
             new EventHandler<EntityRemoveDelegate>();
 
-        public Module(IServer server, IEntityPool entityPool)
+        public Module(IServer server, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
+            IEntityPool<IVehicle> vehiclePool,
+            IEntityPool<IBlip> blipPool,
+            IEntityPool<ICheckpoint> checkpointPool)
         {
             Alt.Setup(this);
             Server = server;
-            EntityPool = entityPool;
+            BaseEntityPool = baseEntityPool;
+            PlayerPool = playerPool;
+            VehiclePool = vehiclePool;
+            BlipPool = blipPool;
+            CheckpointPool = checkpointPool;
         }
 
         public void On(string eventName, Function function)

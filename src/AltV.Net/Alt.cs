@@ -1,4 +1,5 @@
-using System.Collections.ObjectModel;
+using System;
+using System.Collections.Generic;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Events;
 
@@ -64,8 +65,6 @@ namespace AltV.Net
             remove => Module.VehicleLeaveEventHandler.Unsubscribe(value);
         }
 
-        public static void On(string eventName, Function function) => Module.On(eventName, function);
-
         public static void Emit(string eventName, params object[] args) => Server.TriggerServerEvent(eventName, args);
 
         public static void EmitAllClients(string eventName, params object[] args) =>
@@ -73,13 +72,15 @@ namespace AltV.Net
 
         public static void Log(string message) => Server.LogInfo(message);
 
-        public static ReadOnlyCollection<IPlayer> GetAllPlayers() => Module.EntityPool.GetPlayers();
+        public static Dictionary<IntPtr, IPlayer>.ValueCollection GetAllPlayers() => Module.PlayerPool.GetAllEntities();
 
-        public static ReadOnlyCollection<IVehicle> GetAllVehicles() => Module.EntityPool.GetVehicles();
+        public static Dictionary<IntPtr, IVehicle>.ValueCollection GetAllVehicles() =>
+            Module.VehiclePool.GetAllEntities();
 
-        public static ReadOnlyCollection<IBlip> GetAllBlips() => Module.EntityPool.GetBlips();
+        public static Dictionary<IntPtr, IBlip>.ValueCollection GetAllBlips() => Module.BlipPool.GetAllEntities();
 
-        public static ReadOnlyCollection<ICheckpoint> GetAllCheckpoints() => Module.EntityPool.GetCheckpoints();
+        public static Dictionary<IntPtr, ICheckpoint>.ValueCollection GetAllCheckpoints() =>
+            Module.CheckpointPool.GetAllEntities();
 
         internal static void Setup(Module module)
         {

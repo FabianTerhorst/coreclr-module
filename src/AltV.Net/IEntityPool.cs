@@ -4,16 +4,20 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net
 {
-    public interface IEntityPool
+    public interface IEntityPool<TEntity> where TEntity : IEntity
     {
-        bool Get(IntPtr entityPointer, out IEntity entity);
-        bool GetOrCreate(IntPtr entityPointer, out IEntity entity);
-        void Add(IEntity entity);
-        bool Remove(IEntity entity);
+        TEntity Create(IntPtr entityPointer);
+
+        void Add(TEntity entity);
+
+        bool Remove(TEntity entity);
+
         bool Remove(IntPtr entityPointer);
-        Dictionary<IntPtr, IPlayer>.ValueCollection GetPlayers();
-        Dictionary<IntPtr, IVehicle>.ValueCollection GetVehicles();
-        Dictionary<IntPtr, IBlip>.ValueCollection GetBlips();
-        Dictionary<IntPtr, ICheckpoint>.ValueCollection GetCheckpoints();
+
+        bool Get(IntPtr entityPointer, out TEntity entity);
+
+        bool GetOrCreate(IntPtr entityPointer, out TEntity entity);
+
+        Dictionary<IntPtr, TEntity>.ValueCollection GetAllEntities();
     }
 }

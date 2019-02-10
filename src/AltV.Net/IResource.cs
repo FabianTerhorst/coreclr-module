@@ -1,3 +1,5 @@
+using AltV.Net.Elements.Entities;
+
 namespace AltV.Net
 {
     public interface IResource
@@ -6,9 +8,9 @@ namespace AltV.Net
 
         void OnStop();
 
-        IPlayerFactory GetPlayerFactory();
-        IVehicleFactory GetVehicleFactory();
-        IBlipFactory GetBlipFactory();
-        ICheckpointFactory GetCheckpointFactory();
+        IEntityFactory<IPlayer> GetPlayerFactory();
+        IEntityFactory<IVehicle> GetVehicleFactory();
+        IEntityFactory<IBlip> GetBlipFactory();
+        IEntityFactory<ICheckpoint> GetCheckpointFactory();
     }
 }

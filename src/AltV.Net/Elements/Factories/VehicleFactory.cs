@@ -3,9 +3,9 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Elements.Factories
 {
-    public class VehicleFactory : IVehicleFactory
+    public class VehicleFactory : IEntityFactory<IVehicle>
     {
-        public virtual IVehicle Create(IntPtr vehiclePointer)
+        public IVehicle Create(IntPtr vehiclePointer)
         {
             return new Vehicle(vehiclePointer);
         }

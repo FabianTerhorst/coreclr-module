@@ -15,7 +15,7 @@ namespace AltV.Net.Elements.Entities
                 if (!Exists) return null;
                 var entityPointer = AltVNative.Blip.Blip_AttachedTo(NativePointer);
                 if (entityPointer == IntPtr.Zero) return null;
-                return Alt.Module.EntityPool.GetOrCreate(entityPointer, out var entity) ? entity : null;
+                return Alt.Module.BaseEntityPool.GetOrCreate(entityPointer, out var entity) ? entity : null;
             }
         }
 

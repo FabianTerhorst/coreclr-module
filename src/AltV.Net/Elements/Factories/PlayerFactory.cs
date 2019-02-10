@@ -3,9 +3,9 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Elements.Factories
 {
-    public class PlayerFactory : IPlayerFactory
+    public class PlayerFactory : IEntityFactory<IPlayer>
     {
-        public virtual IPlayer Create(IntPtr playerPointer)
+        public IPlayer Create(IntPtr playerPointer)
         {
             return new Player(playerPointer);
         }

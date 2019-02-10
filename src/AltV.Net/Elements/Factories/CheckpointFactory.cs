@@ -3,9 +3,9 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Elements.Factories
 {
-    public class CheckpointFactory : ICheckpointFactory
+    public class CheckpointFactory : IEntityFactory<ICheckpoint>
     {
-        public virtual ICheckpoint Create(IntPtr checkpointFactory)
+        public ICheckpoint Create(IntPtr checkpointFactory)
         {
             return new Checkpoint(checkpointFactory);
         }

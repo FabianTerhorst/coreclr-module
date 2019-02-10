@@ -386,10 +386,10 @@ namespace AltV.Net.Native
 
         public object ToObject()
         {
-            return ToObject(Alt.Module.EntityPool);
+            return ToObject(Alt.Module.BaseEntityPool);
         }
 
-        public object ToObject(IEntityPool entityPool)
+        public object ToObject(IBaseEntityPool baseEntityPool)
         {
             switch (type)
             {
@@ -412,7 +412,7 @@ namespace AltV.Net.Native
                     var arrayValues = new object[mValueArray.size];
                     for (var i = 0; i < arrayValues.Length; i++)
                     {
-                        arrayValues[i] = Marshal.PtrToStructure<MValue>(arrayValue).ToObject(entityPool);
+                        arrayValues[i] = Marshal.PtrToStructure<MValue>(arrayValue).ToObject(baseEntityPool);
                         arrayValue += Size;
                     }
 
@@ -433,7 +433,7 @@ namespace AltV.Net.Native
                     for (var i = 0; i < size; i++)
                     {
                         dictionary[Marshal.PtrToStructure<StringView>(stringViewArrayPtr).Text] =
-                            Marshal.PtrToStructure<MValue>(valueArrayPtr).ToObject(entityPool);
+                            Marshal.PtrToStructure<MValue>(valueArrayPtr).ToObject(baseEntityPool);
                         valueArrayPtr += Size;
                         stringViewArrayPtr += StringView.Size;
                     }
@@ -442,7 +442,8 @@ namespace AltV.Net.Native
                 case Type.ENTITY:
                     var entityPointer = IntPtr.Zero;
                     GetEntityPointer(ref entityPointer);
-                    if (entityPool.Get(entityPointer, out var entity))
+                    if (entityPointer == IntPtr.Zero) return null;
+                    if (baseEntityPool.GetOrCreate(entityPointer, out var entity))
                     {
                         return entity;
                     }

@@ -1,12 +1,11 @@
 using System;
 using AltV.Net.Elements.Entities;
-using AltV.Net.Elements.Factories;
 
 namespace AltV.Net.Example
 {
-    public class MyVehicleFactory : VehicleFactory
+    public class MyVehicleFactory : IEntityFactory<IVehicle>
     {
-        public override IVehicle Create(IntPtr vehiclePointer)
+        public IVehicle Create(IntPtr vehiclePointer)
         {
             return new MyVehicle(vehiclePointer);
         }

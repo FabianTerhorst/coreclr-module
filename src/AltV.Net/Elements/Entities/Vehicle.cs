@@ -14,7 +14,7 @@ namespace AltV.Net.Elements.Entities
                 if (!Exists) return null;
                 var entityPointer = AltVNative.Vehicle.Vehicle_GetDriver(NativePointer);
                 if (entityPointer == IntPtr.Zero) return null;
-                if (Alt.Module.EntityPool.GetOrCreate(entityPointer, out var entity) && entity is IPlayer player)
+                if (Alt.Module.BaseEntityPool.GetOrCreate(entityPointer, out var entity) && entity is IPlayer player)
                 {
                     return player;
                 }
