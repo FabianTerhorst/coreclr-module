@@ -28,7 +28,7 @@ namespace AltV.Net.Mock
             resourceLoader.Start();
         }
 
-        public IPlayer CreatePlayer(string playerName)
+        public IPlayer ConnectPlayer(string playerName)
         {
             var ptr = MockEntities.GetNextPtr();
             Alt.Module.PlayerPool.Create(ptr, out var player);

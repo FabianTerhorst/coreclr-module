@@ -113,9 +113,25 @@ namespace AltV.Net.Data
 
         public void SetRotation(float roll, float pitch, float yaw) => throw new NotImplementedException();
 
-        public void SetMetaData(string key, MValue value) => throw new NotImplementedException();
+        public bool GetMetaData<T>(string key, out T result)
+        {
+            throw new NotImplementedException();
+        }
 
-        public MValue GetMetaData(string key) => throw new NotImplementedException();
+        public void SetMetaData(string key, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GetSyncedMetaData<T>(string key, out T result)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetSyncedMetaData(string key, object value)
+        {
+            throw new NotImplementedException();
+        }
 
         public void SetData(string key, object value) => throw new NotImplementedException();
 

@@ -10,7 +10,7 @@ namespace AltV.Net.Mock.Example
         {
             var mockAltV = new MockAltV<IPlayer, IMyVehicle, IBlip, ICheckpoint>();
             Alt.EmitAllClients("bla");
-            var player = mockAltV.CreatePlayer("bla");
+            var player = mockAltV.ConnectPlayer("bla");
             Console.WriteLine(player.DequeueEvent().name);
             Alt.EmitAllClients("bla");
             Console.WriteLine(player.DequeueEvent().name);

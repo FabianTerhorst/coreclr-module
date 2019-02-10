@@ -122,16 +122,44 @@ namespace AltV.Net.Elements.Entities
             AltVNative.Entity.Entity_SetRotationRPY(NativePointer, roll, pitch, yaw);
         }
 
-        public void SetMetaData(string key, MValue value)
+        public void SetMetaData(string key, object value)
         {
-            AltVNative.Entity.Entity_SetMetaData(NativePointer, key, ref value);
+            var mValue = MValue.CreateFromObject(value) ?? MValue.Nil;
+            AltVNative.Entity.Entity_SetMetaData(NativePointer, key, ref mValue);
         }
-
-        public MValue GetMetaData(string key)
+        
+        public bool GetMetaData<T>(string key, out T result)
         {
-            var value = MValue.Nil;
-            AltVNative.Entity.Entity_SetMetaData(NativePointer, key, ref value);
-            return value;
+            var mValue = MValue.Nil;
+            AltVNative.Entity.Entity_GetMetaData(NativePointer, key, ref mValue);
+            if (!(mValue.ToObject() is T cast))
+            {
+                result = default;
+                return false;
+            }
+
+            result = cast;
+            return true;
+        }
+        
+        public void SetSyncedMetaData(string key, object value)
+        {
+            var mValue = MValue.CreateFromObject(value) ?? MValue.Nil;
+            AltVNative.Entity.Entity_SetSyncedMetaData(NativePointer, key, ref mValue);
+        }
+        
+        public bool GetSyncedMetaData<T>(string key, out T result)
+        {
+            var mValue = MValue.Nil;
+            AltVNative.Entity.Entity_GetSyncedMetaData(NativePointer, key, ref mValue);
+            if (!(mValue.ToObject() is T cast))
+            {
+                result = default;
+                return false;
+            }
+
+            result = cast;
+            return true;
         }
 
         public bool Remove()

@@ -52,9 +52,13 @@ namespace AltV.Net.Elements.Entities
 
         void SetRotation(float roll, float pitch, float yaw);
 
-        void SetMetaData(string key, MValue value);
+        void SetMetaData(string key, object value);
 
-        MValue GetMetaData(string key);
+        bool GetMetaData<T>(string key, out T result);
+
+        void SetSyncedMetaData(string key, object value);
+        
+        bool GetSyncedMetaData<T>(string key, out T result);
 
         void SetData(string key, object value);
 

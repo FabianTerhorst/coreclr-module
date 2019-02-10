@@ -45,22 +45,22 @@ namespace AltV.Net.Mock
 
         public void LogDebug(string message)
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine(message);
         }
 
         public void LogWarning(string message)
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine(message);
         }
 
         public void LogError(string message)
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine(message);
         }
 
         public void LogColored(string message)
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine(message);
         }
 
         public uint Hash(string hash)
@@ -111,6 +111,8 @@ namespace AltV.Net.Mock
         {
             var ptr = MockEntities.GetNextPtr();
             vehiclePool.Create(ptr, out var vehicle);
+            vehicle.Position = pos;
+            //TODO: apis missing for more properties from create
             MockEntities.Insert(vehicle);
             return vehicle;
         }
@@ -118,22 +120,56 @@ namespace AltV.Net.Mock
         public ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height,
             Rgba color)
         {
-            throw new System.NotImplementedException();
+            var ptr = MockEntities.GetNextPtr();
+            checkpointPool.Create(ptr, out var checkpoint);
+            if (checkpoint is MockCheckpoint mockCheckpoint)
+            {
+                mockCheckpoint.Position = pos;
+                mockCheckpoint.CheckpointType = type;
+                mockCheckpoint.Radius = radius;
+                mockCheckpoint.Height = height;
+                mockCheckpoint.Color = color;
+            }
+            MockEntities.Insert(checkpoint);
+            return checkpoint;
         }
 
         public IBlip CreateBlip(IPlayer player, byte type, Position pos)
         {
-            throw new System.NotImplementedException();
+            var ptr = MockEntities.GetNextPtr();
+            blipPool.Create(ptr, out var blip);
+            if (blip is MockBlip mockBlip)
+            {
+                mockBlip.Position = pos;
+                mockBlip.BlipType = type;
+            }
+            MockEntities.Insert(blip);
+            return blip;
         }
 
         public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
         {
-            throw new System.NotImplementedException();
+            var ptr = MockEntities.GetNextPtr();
+            blipPool.Create(ptr, out var blip);
+            if (blip is MockBlip mockBlip)
+            {
+                mockBlip.BlipType = type;
+                mockBlip.IsAttached = true;
+                mockBlip.AttachedTo = entityAttach;
+            }
+            MockEntities.Insert(blip);
+            return blip;
         }
 
         public bool RemoveEntity(IEntity entity)
         {
-            throw new System.NotImplementedException();
+            if (!baseEntityPool.Remove(entity))
+            {
+                return false;
+            }
+
+            MockEntities.Entities.Remove(entity.NativePointer);
+            return true;
         }
     }
 }
