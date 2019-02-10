@@ -96,6 +96,10 @@ namespace AltV.Net.Mock
 
         public void Emit(string eventName, params object[] args)
         {
+            if (Exists)
+            {
+                Alt.Server.TriggerClientEvent(this, eventName, args);
+            }
         }
 
         public ReadOnlyPlayer Copy()

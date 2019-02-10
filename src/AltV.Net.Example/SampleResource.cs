@@ -131,7 +131,7 @@ namespace AltV.Net.Example
 
         private void OnPlayerConnect(IPlayer player, string reason)
         {
-            player.Emit("bla");
+            player.Emit("connect_event");
         }
 
         private void OnPlayerDisconnect(IPlayer player, string reason)

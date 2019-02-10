@@ -91,5 +91,15 @@ namespace AltV.Net.Mock
             var module = new Module(server, entityPool, playerPool, vehiclePool, blipPool, checkpointPool);
             resourceLoader.Start();
         }
+
+        public IPlayer CreatePlayer(string playerName)
+        {
+            var ptr = MockEntities.GetNextPtr();
+            Alt.Module.PlayerPool.Create(ptr, out var player);
+            player.Name = playerName;
+            MockEntities.Insert(player);
+            Alt.Module.OnPlayerConnect(ptr, "direct connect");
+            return player;
+        }
     }
 }

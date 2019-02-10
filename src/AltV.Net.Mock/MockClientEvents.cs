@@ -23,7 +23,7 @@ namespace AltV.Net.Mock
         private static readonly Dictionary<IntPtr, Queue<ClientEvent>> ClientEvents =
             new Dictionary<IntPtr, Queue<ClientEvent>>();
 
-        public static ClientEvent GetNextEvent(this IPlayer player)
+        public static ClientEvent DequeueEvent(this IPlayer player)
         {
             return ClientEvents.TryGetValue(player.NativePointer, out var events) ? events.Dequeue() : null;
         }

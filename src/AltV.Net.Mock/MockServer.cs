@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Pools;
 using AltV.Net.Native;
 
 namespace AltV.Net.Mock
@@ -88,7 +89,17 @@ namespace AltV.Net.Mock
 
         public void TriggerClientEvent(IPlayer player, string eventName, params MValue[] args)
         {
-            player.PushEvent(eventName, args);
+            if (player == null)
+            {
+                foreach (var currPlayer in playerPool.GetAllEntities())
+                {
+                    currPlayer.Emit(eventName, args);
+                }
+            }
+            else
+            {
+                player.PushEvent(eventName, args);
+            }
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)
