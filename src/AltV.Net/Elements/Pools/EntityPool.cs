@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Pools
 {
@@ -15,11 +16,15 @@ namespace AltV.Net.Elements.Pools
             this.entityFactory = entityFactory;
         }
 
-        public TEntity Create(IntPtr entityPointer)
+        public virtual ushort GetId(IntPtr entityPointer)
         {
-            var entity = entityFactory.Create(entityPointer);
+            return AltVNative.Entity.Entity_GetID(entityPointer);
+        }
+
+        public void Create(IntPtr entityPointer, out TEntity entity)
+        {
+            entity = entityFactory.Create(entityPointer, GetId(entityPointer));
             Add(entity);
-            return entity;
         }
 
         public void Add(TEntity entity)
@@ -57,8 +62,8 @@ namespace AltV.Net.Elements.Pools
             }
 
             if (entities.TryGetValue(entityPointer, out entity)) return entity.Exists;
-            entity = entityFactory.Create(entityPointer);
-            Add(entity);
+            
+            Create(entityPointer, out entity);
 
             return entity.Exists;
         }

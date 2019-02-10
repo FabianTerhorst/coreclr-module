@@ -103,33 +103,30 @@ namespace AltV.Net
 
         public IVehicle CreateVehicle(uint model, Position pos, float heading)
         {
-            var vehicle =
-                vehiclePool.Create(AltVNative.Server.Server_CreateVehicle(nativePointer, model, pos, heading));
+            vehiclePool.Create(AltVNative.Server.Server_CreateVehicle(nativePointer, model, pos, heading),
+                out var vehicle);
             return vehicle;
         }
 
         public ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height,
             Rgba color)
         {
-            var checkpoint =
-                checkpointPool.Create(AltVNative.Server.Server_CreateCheckpoint(nativePointer, player.NativePointer,
-                    type, pos, radius, height, color));
+            checkpointPool.Create(AltVNative.Server.Server_CreateCheckpoint(nativePointer, player.NativePointer,
+                type, pos, radius, height, color), out var checkpoint);
             return checkpoint;
         }
 
         public IBlip CreateBlip(IPlayer player, byte type, Position pos)
         {
-            var blip =
-                blipPool.Create(AltVNative.Server.Server_CreateBlip(nativePointer, player.NativePointer,
-                    type, pos));
+            blipPool.Create(AltVNative.Server.Server_CreateBlip(nativePointer, player.NativePointer,
+                type, pos), out var blip);
             return blip;
         }
 
         public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
         {
-            var blip =
-                blipPool.Create(AltVNative.Server.Server_CreateBlipAttached(nativePointer, player.NativePointer,
-                    type, entityAttach.NativePointer));
+            blipPool.Create(AltVNative.Server.Server_CreateBlipAttached(nativePointer, player.NativePointer,
+                type, entityAttach.NativePointer), out var blip);
             return blip;
         }
 

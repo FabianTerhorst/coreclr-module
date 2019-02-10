@@ -94,7 +94,7 @@ namespace AltV.Net.Elements.Entities
 
         public byte Seat => !Exists ? default : AltVNative.Player.Player_GetSeat(NativePointer);
         
-        public Player(IntPtr nativePointer) : base(nativePointer, EntityType.Player)
+        public Player(IntPtr nativePointer, ushort id) : base(nativePointer, EntityType.Player, id)
         {
         }
 

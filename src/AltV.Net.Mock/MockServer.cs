@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
@@ -34,7 +36,7 @@ namespace AltV.Net.Mock
             this.checkpointPool = checkpointPool;
             Instance = this;
         }
-        
+
         public void LogInfo(string message)
         {
             Console.WriteLine(message);
@@ -67,12 +69,21 @@ namespace AltV.Net.Mock
 
         public void TriggerServerEvent(string eventName, params MValue[] args)
         {
-            Console.WriteLine("TriggerServerEvent(" + eventName + "," + args);
+            Alt.Module.OnServerEvent(eventName, args);
+        }
+
+        private static MValue[] ConvertObjectsToMValues(IEnumerable<object> objects)
+        {
+            return (from obj in objects
+                select MValue.CreateFromObject(obj)
+                into mValue
+                where mValue.HasValue
+                select mValue.Value).ToArray();
         }
 
         public void TriggerServerEvent(string eventName, params object[] args)
         {
-           Console.WriteLine("TriggerServerEvent(" + eventName + "," + args);
+            TriggerServerEvent(eventName, ConvertObjectsToMValues(args));
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, params MValue[] args)
@@ -88,10 +99,14 @@ namespace AltV.Net.Mock
         public IVehicle CreateVehicle(uint model, Position pos, float heading)
         {
             Console.WriteLine("CreateVehicle(" + model + "," + pos + "," + heading);
-            return vehiclePool.Create(IntPtr.Zero);
+            var ptr = MockEntities.GetNextPtr();
+            vehiclePool.Create(ptr, out var vehicle);
+            MockEntities.Insert(vehicle);
+            return vehicle;
         }
 
-        public ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height, Rgba color)
+        public ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height,
+            Rgba color)
         {
             throw new System.NotImplementedException();
         }

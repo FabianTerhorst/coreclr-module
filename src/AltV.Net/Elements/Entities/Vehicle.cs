@@ -215,7 +215,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public Vehicle(IntPtr nativePointer) : base(nativePointer, EntityType.Vehicle)
+        public Vehicle(IntPtr nativePointer, ushort id) : base(nativePointer, EntityType.Vehicle, id)
         {
         }
 

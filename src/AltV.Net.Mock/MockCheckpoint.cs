@@ -15,10 +15,12 @@ namespace AltV.Net.Mock
         public Rotation Rotation { get; set; }
         public ushort Dimension { get; set; }
         
-        public MockCheckpoint()
+        public MockCheckpoint(IntPtr nativePointer, ushort id)
         {
+            NativePointer = nativePointer;
             Type = EntityType.Checkpoint;
-            Id = MockEntityId.Get();
+            Id = id;
+            Exists = true;
         }
         
         public void SetPosition(float x, float y, float z)

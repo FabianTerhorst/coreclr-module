@@ -5,9 +5,9 @@ namespace AltV.Net.Elements.Factories
 {
     public class CheckpointFactory : IEntityFactory<ICheckpoint>
     {
-        public ICheckpoint Create(IntPtr checkpointFactory)
+        public ICheckpoint Create(IntPtr checkpointFactory, ushort id)
         {
-            return new Checkpoint(checkpointFactory);
+            return new Checkpoint(checkpointFactory, id);
         }
     }
 }

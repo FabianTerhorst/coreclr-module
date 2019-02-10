@@ -65,7 +65,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public Blip(IntPtr nativePointer) : base(nativePointer, EntityType.Blip)
+        public Blip(IntPtr nativePointer, ushort id) : base(nativePointer, EntityType.Blip, id)
         {
         }
     }

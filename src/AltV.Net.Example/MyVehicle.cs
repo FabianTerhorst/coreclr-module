@@ -7,7 +7,7 @@ namespace AltV.Net.Example
     {
         public int MyData { get; set; }
 
-        public MyVehicle(IntPtr nativePointer) : base(nativePointer)
+        public MyVehicle(IntPtr nativePointer, ushort id) : base(nativePointer, id)
         {
             MyData = 6;
         }

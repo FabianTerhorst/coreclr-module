@@ -18,7 +18,7 @@ namespace AltV.Net.Example
             Alt.On<string>("bla2", bla2);
             Alt.On<string, bool>("bla3", bla3);
             Alt.On<string, string>("bla4", bla4);
-            Alt.On<MyVehicle>("vehicleTest", myVehicle => { Alt.Server.LogInfo("myData: " + myVehicle.MyData); });
+            Alt.On<IMyVehicle>("vehicleTest", myVehicle => { Alt.Server.LogInfo("myData: " + myVehicle.MyData); });
 
             Alt.OnPlayerConnect += OnPlayerConnect;
             Alt.OnPlayerDisconnect += OnPlayerDisconnect;
@@ -41,6 +41,8 @@ namespace AltV.Net.Example
                 a = 0
             };
 
+            Alt.Log("ptr:" + vehicle.NativePointer);
+            
             Alt.Log("number-plate:" + vehicle.NumberPlateText + " " + vehicle.NumberPlateIndex);
 
             var bla200 = MValue.Create(vehicle);
@@ -50,7 +52,7 @@ namespace AltV.Net.Example
             Alt.Emit("vehicleTest", vehicle);
 
             Alt.On("event_name",
-                delegate(string s, string s1, long i1, string[] arg3, object[] arg4, MyVehicle arg5,
+                delegate(string s, string s1, long i1, string[] arg3, object[] arg4, IMyVehicle arg5,
                     Dictionary<string, object> arg6, IMyVehicle[] myVehicles, string probablyNull, string[] nullArray,
                     Dictionary<string, double> bla)
                 {

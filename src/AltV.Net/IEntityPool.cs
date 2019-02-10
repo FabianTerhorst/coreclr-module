@@ -6,7 +6,7 @@ namespace AltV.Net
 {
     public interface IEntityPool<TEntity> where TEntity : IEntity
     {
-        TEntity Create(IntPtr entityPointer);
+        void Create(IntPtr entityPointer, out TEntity entity);
 
         void Add(TEntity entity);
 

@@ -12,7 +12,7 @@ namespace AltV.Net.Elements.Entities
         public float Radius => !Exists ? default : AltVNative.Checkpoint.Checkpoint_GetRadius(NativePointer);
         public Rgba Color => !Exists ? Rgba.Zero : AltVNative.Checkpoint.Checkpoint_GetColor(NativePointer);
 
-        public Checkpoint(IntPtr nativePointer) : base(nativePointer, EntityType.Checkpoint)
+        public Checkpoint(IntPtr nativePointer, ushort id) : base(nativePointer, EntityType.Checkpoint, id)
         {
         }
     }

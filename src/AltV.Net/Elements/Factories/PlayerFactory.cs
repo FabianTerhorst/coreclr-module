@@ -5,9 +5,9 @@ namespace AltV.Net.Elements.Factories
 {
     public class PlayerFactory : IEntityFactory<IPlayer>
     {
-        public IPlayer Create(IntPtr playerPointer)
+        public IPlayer Create(IntPtr playerPointer, ushort id)
         {
-            return new Player(playerPointer);
+            return new Player(playerPointer, id);
         }
     }
 }

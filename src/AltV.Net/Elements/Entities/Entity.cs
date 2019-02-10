@@ -19,11 +19,10 @@ namespace AltV.Net.Elements.Entities
         public ushort Id { get; }
         public EntityType Type { get; }
 
-        protected Entity(IntPtr nativePointer, EntityType type)
+        protected Entity(IntPtr nativePointer, EntityType type, ushort id)
         {
             NativePointer = nativePointer;
-
-            Id = AltVNative.Entity.Entity_GetID(NativePointer);
+            Id = id;
             Type = type;
             Exists = true;
         }
