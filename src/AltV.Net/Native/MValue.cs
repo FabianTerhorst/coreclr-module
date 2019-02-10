@@ -376,6 +376,13 @@ namespace AltV.Net.Native
                     return GetDictionary().Aggregate("Dict:",
                         (current, value) => current + value.Key.ToString() + "=" + value.Value.ToString() + ",");
                 case Type.ENTITY:
+                    var ptr = IntPtr.Zero;
+                    GetEntityPointer(ref ptr);
+                    if (Alt.Module.BaseEntityPool.GetOrCreate(ptr, out var entity))
+                    {
+                        return $"MValue<{entity.Type.ToString()}>";
+                    }
+
                     return "MValue<Entity>";
                 case Type.FUNCTION:
                     return "MValue<Function>";
