@@ -52,6 +52,6 @@ namespace AltV.Net
 
         IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach);
 
-        bool RemoveEntity(IEntity entity);
+        void RemoveEntity(IEntity entity);
     }
 }

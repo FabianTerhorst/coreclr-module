@@ -129,6 +129,7 @@ namespace AltV.Net.Mock
                 mockCheckpoint.Height = height;
                 mockCheckpoint.Color = color;
             }
+
             MockEntities.Insert(checkpoint);
             return checkpoint;
         }
@@ -142,6 +143,7 @@ namespace AltV.Net.Mock
                 mockBlip.Position = pos;
                 mockBlip.BlipType = type;
             }
+
             MockEntities.Insert(blip);
             return blip;
         }
@@ -156,19 +158,15 @@ namespace AltV.Net.Mock
                 mockBlip.IsAttached = true;
                 mockBlip.AttachedTo = entityAttach;
             }
+
             MockEntities.Insert(blip);
             return blip;
         }
 
-        public bool RemoveEntity(IEntity entity)
+        public void RemoveEntity(IEntity entity)
         {
-            if (!baseEntityPool.Remove(entity))
-            {
-                return false;
-            }
-
+            Alt.Module.OnEntityRemove(entity.NativePointer);
             MockEntities.Entities.Remove(entity.NativePointer);
-            return true;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace AltV.Net.Mock
         private readonly Dictionary<string, MValue> metaData = new Dictionary<string, MValue>();
 
         private readonly Dictionary<string, MValue> syncedMetaData = new Dictionary<string, MValue>();
-        
+
         public MockEntity(IntPtr nativePointer, EntityType entityType, ushort id)
         {
             NativePointer = nativePointer;
@@ -29,7 +29,7 @@ namespace AltV.Net.Mock
             Id = id;
             Exists = true;
         }
-        
+
         public void SetPosition(float x, float y, float z)
         {
             Position = new Position(x, y, z);
@@ -109,9 +109,9 @@ namespace AltV.Net.Mock
             return true;
         }
 
-        public bool Remove()
+        public void Remove()
         {
-            return Alt.Server.RemoveEntity(this);
+            Alt.Server.RemoveEntity(this);
         }
     }
 }

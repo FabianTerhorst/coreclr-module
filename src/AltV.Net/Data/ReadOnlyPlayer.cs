@@ -137,7 +137,7 @@ namespace AltV.Net.Data
 
         public bool GetData<T>(string key, out T result) => throw new NotImplementedException();
 
-        public bool Remove() => throw new NotImplementedException();
+        public void Remove() => throw new NotImplementedException();
 
         public void Emit(string eventName, params object[] args) => throw new NotImplementedException();
 

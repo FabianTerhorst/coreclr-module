@@ -57,13 +57,13 @@ namespace AltV.Net.Elements.Entities
         bool GetMetaData<T>(string key, out T result);
 
         void SetSyncedMetaData(string key, object value);
-        
+
         bool GetSyncedMetaData<T>(string key, out T result);
 
         void SetData(string key, object value);
 
         bool GetData<T>(string key, out T result);
 
-        bool Remove();
+        void Remove();
     }
 }

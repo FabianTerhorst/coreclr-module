@@ -43,6 +43,8 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
                          "OnPlayerConnect", reinterpret_cast<void**>(&OnPlayerConnectDelegate));
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                         "OnPlayerDisconnect", reinterpret_cast<void**>(&OnPlayerDisconnectDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
                          "OnPlayerDamage", reinterpret_cast<void**>(&OnPlayerDamageDelegate));
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
                          "OnPlayerDead", reinterpret_cast<void**>(&OnPlayerDeadDelegate));
@@ -134,7 +136,7 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
                                         ((alt::CVehicleLeaveEvent*) (ev))->GetSeat());
             break;
     }
-    return false;
+    return true;
 }
 
 void CSharpResource::OnTick() {

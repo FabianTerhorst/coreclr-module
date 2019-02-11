@@ -162,9 +162,9 @@ namespace AltV.Net.Elements.Entities
             return true;
         }
 
-        public bool Remove()
+        public void Remove()
         {
-            return Alt.RemoveEntity(this);
+            Alt.RemoveEntity(this);
         }
     }
 }

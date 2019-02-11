@@ -4,7 +4,7 @@ namespace AltV.Net
 {
     public partial class Alt
     {
-        public static bool RemoveEntity(IEntity entity) =>
+        public static void RemoveEntity(IEntity entity) =>
             Module.Server.RemoveEntity(entity);
     }
 }

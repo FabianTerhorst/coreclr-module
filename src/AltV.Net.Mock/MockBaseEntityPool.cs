@@ -14,7 +14,12 @@ namespace AltV.Net.Mock
 
         public override EntityType GetType(IntPtr entityPointer)
         {
-            return MockEntities.Entities[entityPointer].Type;
+            if (MockEntities.Entities.TryGetValue(entityPointer, out var entity))
+            {
+                return entity.Type;
+            }
+
+            throw new ArgumentException("Trying to access deleted entity");
         }
     }
 }

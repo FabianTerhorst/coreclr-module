@@ -130,15 +130,9 @@ namespace AltV.Net
             return blip;
         }
 
-        public bool RemoveEntity(IEntity entity)
+        public void RemoveEntity(IEntity entity)
         {
-            if (!baseEntityPool.Remove(entity))
-            {
-                return false;
-            }
-
             AltVNative.Server.Server_RemoveEntity(nativePointer, entity.NativePointer);
-            return true;
         }
     }
 }
