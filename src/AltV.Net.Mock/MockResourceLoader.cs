@@ -11,7 +11,7 @@ namespace AltV.Net.Mock
 
         public override string GetPath(string pathResourceName, string pathEntryName)
         {
-            return $"resource/{pathEntryName}";
+            return pathEntryName;
         }
 
         public override void Log(string message, Exception exception = null)

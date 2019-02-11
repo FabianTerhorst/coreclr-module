@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
+using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Native
 {
@@ -9,7 +10,7 @@ namespace AltV.Net.Native
         internal static class Entity
         {
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern ushort BaseObject_GetType(IntPtr baseObjectPointer);
+            internal static extern EntityType BaseObject_GetType(IntPtr baseObjectPointer);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern ushort Entity_GetID(IntPtr entityPointer);
@@ -19,7 +20,7 @@ namespace AltV.Net.Native
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Entity_SetPositionRef(IntPtr entityPointer, ref Position position);
-            
+
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern Position Entity_GetPosition(IntPtr entityPointer);
 
@@ -34,7 +35,7 @@ namespace AltV.Net.Native
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Entity_SetRotationRef(IntPtr entityPointer, ref Rotation rotation);
-            
+
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern Rotation Entity_GetRotation(IntPtr entityPointer);
 

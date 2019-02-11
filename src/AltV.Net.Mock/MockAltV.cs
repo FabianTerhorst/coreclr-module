@@ -9,9 +9,9 @@ namespace AltV.Net.Mock
         where TBlip : IBlip
         where TCheckpoint : ICheckpoint
     {
-        public MockAltV()
+        public MockAltV(string entryPoint)
         {
-            var resourceLoader = new MockResourceLoader(IntPtr.Zero, string.Empty, "AltV.Net.Example.dll");
+            var resourceLoader = new MockResourceLoader(IntPtr.Zero, string.Empty, entryPoint);
             var resource = resourceLoader.Prepare();
             var playerFactory = new MockPlayerFactory<TPlayer>(resource.GetPlayerFactory());
             var vehicleFactory = new MockVehicleFactory<TVehicle>(resource.GetVehicleFactory());
