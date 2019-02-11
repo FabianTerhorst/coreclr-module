@@ -13,9 +13,9 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.0.0-dev-preview-4</PackageVersion>
+        <PackageVersion>1.0.0-dev-preview-5</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>* Replace I{EntityType}Factory with IEntityFactory {EntityTypeGeneric} * Replace ReadOnlyCollection for GetAll calls with Dictionary IntPtr, I{EntityType} .ValueCollection * Add support for default client event delegate AltV.Net.Events.ClientEventDelegate * Improve entity add / remove / getAll performance</PackageReleaseNotes>
+        <PackageReleaseNotes>Add Entity GetSyncedMetaData, Add Entity SetSyncedMetaData</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

@@ -2,8 +2,7 @@ set(TARGET_NAME core_clr_host)
 
 add_library(${TARGET_NAME} SHARED altv.cpp CSharpScriptRuntime.cpp CSharpResource.cpp CoreClr.cpp
         altv-c-api/altv.cpp altv-c-api/blip.cpp altv-c-api/vehicle.cpp altv-c-api/player.cpp altv-c-api/checkpoint.cpp altv-c-api/entity.cpp altv-c-api/server.cpp
-        altv-c-api/baseobject.cpp altv-c-api/mvalue.cpp altv-c-api/array.cpp altv-c-api/function.cpp
-        )# clrHost.cpp
+        altv-c-api/baseobject.cpp altv-c-api/mvalue.cpp altv-c-api/array.cpp altv-c-api/function.cpp)# clrHost.cpp
 
 if(UNIX AND NOT APPLE)
     target_compile_options(${TARGET_NAME} PRIVATE -std=c++17 -static -nostdinc++ -I/home/parallels/Desktop/clang_7.0.1/include/c++/v1 -nodefaultlibs -lc++ -lc++abi -lm -lc -lgcc_s -lgcc)

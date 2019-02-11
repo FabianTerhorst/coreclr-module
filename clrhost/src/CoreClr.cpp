@@ -4,6 +4,67 @@
 
 #include "CoreClr.h"
 
+int tail_cmp ( char *lhs, char *rhs ) {
+    if ( !strcmp ( lhs, rhs ) ) return TAIL_CMP_EQ;
+
+    char *dot = ".";
+    char *l_last, *r_last;
+
+    char *l_token = strtok_r ( lhs, dot, &l_last );
+    char *r_token = strtok_r ( rhs, dot, &r_last );
+
+    if (  l_token && !r_token ) return TAIL_CMP_LT;
+    if ( !l_token &&  r_token ) return TAIL_CMP_GT;
+
+    while ( l_token || r_token ) {
+        if ( l_token && r_token ) {
+            int l_numeric = isdigit ( l_token[0] );
+            int r_numeric = isdigit ( r_token[0] );
+
+            if ( l_numeric && r_numeric ) {
+                int l_int = atoi ( l_token );
+                int r_int = atoi ( r_token );
+
+                if ( l_int < r_int ) return TAIL_CMP_LT;
+                if ( l_int > r_int ) return TAIL_CMP_GT;
+            }
+            else if ( l_numeric ) {
+                return TAIL_CMP_LT;
+            }
+            else if ( r_numeric ) {
+                return TAIL_CMP_GT;
+            }
+            else {
+                int cmp = strcmp ( l_token, r_token );
+
+                if ( cmp ) return cmp > 0 ? TAIL_CMP_GT : TAIL_CMP_LT;
+            }
+        }
+        else if ( l_token ) {
+            return TAIL_CMP_GT;
+        }
+        else if ( r_token ) {
+            return TAIL_CMP_LT;
+        }
+
+        l_token = strtok_r ( NULL, dot, &l_last );
+        r_token = strtok_r ( NULL, dot, &r_last );
+    }
+
+    return TAIL_CMP_KO;
+}
+
+int tail_lt ( char *lhs, char *rhs ) {
+    return tail_cmp ( lhs, rhs ) == TAIL_CMP_LT;
+}
+int tail_eq ( char *lhs, char *rhs ) {
+    return tail_cmp ( lhs, rhs ) == TAIL_CMP_EQ;
+}
+int tail_gt ( char *lhs, char *rhs ) {
+    return tail_cmp ( lhs, rhs ) == TAIL_CMP_GT;
+}
+
+
 CoreClr::CoreClr(alt::IServer* server) {
 #ifdef _WIN32
     char pf[MAX_PATH];
@@ -19,9 +80,7 @@ CoreClr::CoreClr(alt::IServer* server) {
     strcpy(runtimeDirectory, pf);
     strcat(runtimeDirectory, windowsProgramFilesPath);
 #else
-    const char* linuxDefaultPath = "/usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.1";
-    runtimeDirectory = (char*) malloc(strlen(linuxDefaultPath) + 1);
-    strcpy(runtimeDirectory, linuxDefaultPath);
+    GetPath(server, "/usr/share/dotnet/shared/Microsoft.NETCore.App/");
 #endif
 #ifdef _WIN32
     const char *fileName = "/coreclr.dll";
@@ -228,4 +287,38 @@ void CoreClr::Shutdown(alt::IServer* server, void* runtimeHost,
     } else {
         server->LogInfo(alt::String("[.NET] Host successfully shotted down"));
     }
+}
+
+void CoreClr::GetPath(alt::IServer* server, const char* defaultPath) {
+    auto directory = opendir(defaultPath);
+    if (directory == nullptr) {
+        server->LogInfo(alt::String("[.NET] Default path is not a directory"));
+        return;
+    }
+    struct dirent* entry;
+    char* greatest = nullptr;
+    while ((entry = readdir(directory)) != nullptr) {
+        if (entry->d_type == DT_DIR) {
+            server->LogInfo(alt::String("[.NET] version found: ") + entry->d_name);
+            if (greatest == nullptr) {
+                greatest = entry->d_name;
+                continue;
+            }
+            char compareCache[strlen(entry->d_name)];
+            strcpy(compareCache, entry->d_name);
+            char compareCache2[strlen(greatest)];
+            strcpy(compareCache2, greatest);
+            if (tail_lt(compareCache, compareCache2)) {
+                greatest = entry->d_name;
+            }
+        }
+    }
+    if (greatest == nullptr) {
+        server->LogInfo(alt::String("[.NET] No dotnet sdk version found"));
+        return;
+    }
+    server->LogInfo(alt::String("[.NET] greatest version: ") + greatest);
+    runtimeDirectory = (char*) malloc(strlen(defaultPath) + strlen(greatest) + 1);
+    strcpy(runtimeDirectory, defaultPath);
+    strcat(runtimeDirectory, greatest);
 }
