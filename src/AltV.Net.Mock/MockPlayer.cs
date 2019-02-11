@@ -47,6 +47,10 @@ namespace AltV.Net.Mock
 
         public void Kick(string reason)
         {
+            if (Exists)
+            {
+                Alt.Module.OnPlayerDisconnect(NativePointer, reason);
+            }
         }
 
         public void Emit(string eventName, params object[] args)
