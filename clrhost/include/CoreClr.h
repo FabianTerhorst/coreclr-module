@@ -21,6 +21,7 @@
 
 #ifdef _WIN32
 #define LIST_SEPARATOR ";"
+#define strtok_r strtok_s
 #else
 #define LIST_SEPARATOR ":"
 #endif
