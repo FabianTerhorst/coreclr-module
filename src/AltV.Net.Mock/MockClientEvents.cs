@@ -9,14 +9,14 @@ namespace AltV.Net.Mock
     {
         public class ClientEvent
         {
-            public readonly string name;
+            public readonly string Name;
 
-            public readonly object[] args;
+            public readonly object[] Args;
 
             public ClientEvent(string name, object[] args)
             {
-                this.name = name;
-                this.args = args;
+                Name = name;
+                Args = args;
             }
         }
 
