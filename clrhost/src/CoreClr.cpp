@@ -74,11 +74,11 @@ CoreClr::CoreClr(alt::IServer* server) {
             CSIDL_PROGRAM_FILES,
             FALSE);
 
-    const char *windowsProgramFilesPath = "/dotnet/shared/Microsoft.NETCore.App/2.2.0";
-
-    runtimeDirectory = (char *) malloc(strlen(pf) + strlen(windowsProgramFilesPath) + 1);
-    strcpy(runtimeDirectory, pf);
-    strcat(runtimeDirectory, windowsProgramFilesPath);
+    const char *windowsProgramFilesPath = "/dotnet/shared/Microsoft.NETCore.App/";
+    char defaultPath[strlen(windowsProgramFilesPath) + strlen(pf) + 1];
+    strcpy(defaultPath, pf);
+    strcat(defaultPath, windowsProgramFilesPath);
+    GetPath(server, defaultPath);
 #else
     GetPath(server, "/usr/share/dotnet/shared/Microsoft.NETCore.App/");
 #endif
