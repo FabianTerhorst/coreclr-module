@@ -83,7 +83,7 @@ namespace AltV.Net.Data
         public Rotation HeadRotation { get; }
         public bool IsInVehicle { get; }
         public IVehicle Vehicle { get; }
-        public byte Seat { get; }
+        public sbyte Seat { get; }
         public void Spawn(Position position)
         {
             throw new NotImplementedException();

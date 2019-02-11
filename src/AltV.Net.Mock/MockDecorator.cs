@@ -49,6 +49,10 @@ namespace AltV.Net.Mock
             this.mock = mock;
         }
 
+        public TM GetMock() => mock;
+        
+        public T GetDecorated() => decorated;
+
         private void LogException(Exception exception, MethodInfo methodInfo = null)
         {
             Console.WriteLine(

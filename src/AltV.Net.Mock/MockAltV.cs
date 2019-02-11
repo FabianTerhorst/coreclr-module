@@ -28,13 +28,13 @@ namespace AltV.Net.Mock
             resourceLoader.Start();
         }
 
-        public IPlayer ConnectPlayer(string playerName)
+        public IPlayer ConnectPlayer(string playerName, string reason)
         {
             var ptr = MockEntities.GetNextPtr();
             Alt.Module.PlayerPool.Create(ptr, out var player);
             player.Name = playerName;
             MockEntities.Insert(player);
-            Alt.Module.OnPlayerConnect(ptr, "direct connect");
+            Alt.Module.OnPlayerConnect(ptr, reason);
             return player;
         }
     }

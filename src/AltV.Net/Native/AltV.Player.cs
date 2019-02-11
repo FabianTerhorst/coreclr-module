@@ -82,7 +82,7 @@ namespace AltV.Net.Native
             internal static extern IntPtr Player_GetVehicle(IntPtr playerPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern byte Player_GetSeat(IntPtr playerPointer);
+            internal static extern sbyte Player_GetSeat(IntPtr playerPointer);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Player_Kick(IntPtr playerPointer, string reason);

@@ -116,8 +116,7 @@ namespace AltV.Net
 
         public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, bool state)
         {
-            if (!CheckpointPool.GetOrCreate(checkpointPointer, out var checkpointEntity) ||
-                !(checkpointEntity is ICheckpoint checkpoint))
+            if (!CheckpointPool.GetOrCreate(checkpointPointer, out var checkpoint))
             {
                 return;
             }
@@ -135,7 +134,7 @@ namespace AltV.Net
 
         public void OnPlayerConnect(IntPtr playerPointer, string reason)
         {
-            if (!PlayerPool.GetOrCreate(playerPointer, out var entity) || !(entity is IPlayer player))
+            if (!PlayerPool.GetOrCreate(playerPointer, out var player))
             {
                 return;
             }
@@ -148,15 +147,12 @@ namespace AltV.Net
 
         public void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer, uint weapon, byte damage)
         {
-            if (!PlayerPool.GetOrCreate(playerPointer, out var entity) || !(entity is IPlayer player))
+            if (!PlayerPool.GetOrCreate(playerPointer, out var player))
             {
                 return;
             }
 
-            if (!BaseEntityPool.GetOrCreate(attackerEntityPointer, out var attacker))
-            {
-                return;
-            }
+            BaseEntityPool.GetOrCreate(attackerEntityPointer, out var attacker);
 
             foreach (var @delegate in PlayerDamageEventHandler.GetSubscriptions())
             {
@@ -167,7 +163,7 @@ namespace AltV.Net
 
         public void OnPlayerDead(IntPtr playerPointer, IntPtr killerEntityPointer, uint weapon)
         {
-            if (!PlayerPool.GetOrCreate(playerPointer, out var entity) || !(entity is IPlayer player))
+            if (!PlayerPool.GetOrCreate(playerPointer, out var player))
             {
                 return;
             }
