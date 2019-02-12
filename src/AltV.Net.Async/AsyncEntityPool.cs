@@ -70,6 +70,7 @@ namespace AltV.Net.Async
 
         //TODO: what should happen on failure
         public void Add(TEntity entity)
+        {
             entities.TryAdd(entity.NativePointer, entity);
         }
 
@@ -80,6 +81,7 @@ namespace AltV.Net.Async
 
         //TODO: what should happen on failure
         public bool Remove(IntPtr entityPointer)
+        {
             if (!entities.TryRemove(entityPointer, out var entity) || !entity.Exists) return false;
             EntityPool<TEntity>.SetEntityNoLongerExists(entity);
             return true;
