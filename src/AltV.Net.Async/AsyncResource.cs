@@ -37,5 +37,13 @@ namespace AltV.Net.Async
         {
             return new AsyncEntityPool<ICheckpoint>(checkpointFactory);
         }
+        
+        public override Module GetModule(IServer server, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
+            IEntityPool<IVehicle> vehiclePool,
+            IEntityPool<IBlip> blipPool,
+            IEntityPool<ICheckpoint> checkpointPool)
+        {
+            return new AsyncModule(server, baseEntityPool, playerPool, vehiclePool, blipPool, checkpointPool);
+        }
     }
 }

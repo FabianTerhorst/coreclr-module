@@ -11,9 +11,9 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge mock</PackageTags>
-        <PackageVersion>1.0.0-dev-preview-7</PackageVersion>
+        <PackageVersion>1.0.0-dev-preview-8</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>*Fix player.Kick mock * Fix Entity Remove mock * Add player.On mock api * Add player connect intercept mock</PackageReleaseNotes>
+        <PackageReleaseNotes>Update dependencies</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

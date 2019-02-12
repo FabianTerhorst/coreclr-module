@@ -126,6 +126,11 @@ namespace AltV.Net
                 return;
             }
 
+            OnCheckPointEvent(checkpoint, entity, state);
+        }
+
+        public virtual void OnCheckPointEvent(ICheckpoint checkpoint, IEntity entity, bool state)
+        {
             foreach (var @delegate in CheckpointEventHandler.GetSubscriptions())
             {
                 @delegate(checkpoint, entity, state);
@@ -139,6 +144,11 @@ namespace AltV.Net
                 return;
             }
 
+            OnPlayerConnectEvent(player, reason);
+        }
+
+        public virtual void OnPlayerConnectEvent(IPlayer player, string reason)
+        {
             foreach (var @delegate in PlayerConnectEventHandler.GetSubscriptions())
             {
                 @delegate(player, reason);
@@ -154,6 +164,11 @@ namespace AltV.Net
 
             BaseEntityPool.GetOrCreate(attackerEntityPointer, out var attacker);
 
+            OnPlayerDamageEvent(player, attacker, weapon, damage);
+        }
+
+        public virtual void OnPlayerDamageEvent(IPlayer player, IEntity attacker, uint weapon, byte damage)
+        {
             foreach (var @delegate in PlayerDamageEventHandler.GetSubscriptions())
             {
                 @delegate(player, attacker, weapon, damage);
@@ -173,6 +188,11 @@ namespace AltV.Net
                 return;
             }
 
+            OnPlayerDeadEvent(player, killer, weapon);
+        }
+
+        public virtual void OnPlayerDeadEvent(IPlayer player, IEntity killer, uint weapon)
+        {
             foreach (var @delegate in PlayerDeadEventHandler.GetSubscriptions())
             {
                 @delegate(player, killer, weapon);
@@ -192,6 +212,11 @@ namespace AltV.Net
                 return;
             }
 
+            OnVehicleChangeSeatEvent(vehicle, player, oldSeat, newSeat);
+        }
+
+        public virtual void OnVehicleChangeSeatEvent(IVehicle vehicle, IPlayer player, sbyte oldSeat, sbyte newSeat)
+        {
             foreach (var @delegate in VehicleChangeSeatEventHandler.GetSubscriptions())
             {
                 @delegate(vehicle, player, oldSeat, newSeat);
@@ -210,6 +235,11 @@ namespace AltV.Net
                 return;
             }
 
+            OnVehicleEnterEvent(vehicle, player, seat);
+        }
+
+        public virtual void OnVehicleEnterEvent(IVehicle vehicle, IPlayer player, sbyte seat)
+        {
             foreach (var @delegate in VehicleEnterEventHandler.GetSubscriptions())
             {
                 @delegate(vehicle, player, seat);
@@ -228,6 +258,11 @@ namespace AltV.Net
                 return;
             }
 
+            OnVehicleLeaveEvent(vehicle, player, seat);
+        }
+
+        public virtual void OnVehicleLeaveEvent(IVehicle vehicle, IPlayer player, sbyte seat)
+        {
             foreach (var @delegate in VehicleLeaveEventHandler.GetSubscriptions())
             {
                 @delegate(vehicle, player, seat);
@@ -241,6 +276,11 @@ namespace AltV.Net
                 return;
             }
 
+            OnPlayerDisconnectEvent(player, reason);
+        }
+
+        public virtual void OnPlayerDisconnectEvent(IPlayer player, string reason)
+        {
             foreach (var @delegate in PlayerDisconnectEventHandler.GetSubscriptions())
             {
                 @delegate(player, reason);
@@ -254,12 +294,17 @@ namespace AltV.Net
                 return;
             }
 
+            OnEntityRemoveEvent(entity);
+
+            BaseEntityPool.Remove(entityPointer);
+        }
+
+        public virtual void OnEntityRemoveEvent(IEntity entity)
+        {
             foreach (var @delegate in EntityRemoveEventHandler.GetSubscriptions())
             {
                 @delegate(entity);
             }
-
-            BaseEntityPool.Remove(entityPointer);
         }
 
         public void OnClientEvent(IntPtr playerPointer, string name, ref MValueArray args)
@@ -279,6 +324,8 @@ namespace AltV.Net
                 }
             }
 
+            object[] argObjects = null;
+
             if (ClientEventDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
                 if (argArray == null)
@@ -287,7 +334,7 @@ namespace AltV.Net
                 }
 
                 var length = argArray.Length;
-                var argObjects = new object[length];
+                argObjects = new object[length];
                 for (var i = 0; i < length; i++)
                 {
                     argObjects[i] = argArray[i].ToObject(BaseEntityPool);
@@ -298,6 +345,13 @@ namespace AltV.Net
                     eventHandler(player, argObjects);
                 }
             }
+
+            OnClientEventEvent(player, name, ref args, argArray, argObjects);
+        }
+        
+        public virtual void OnClientEventEvent(IPlayer player, string name, ref MValueArray args,  MValue[] mValues, object[] objects)
+        {
+            
         }
 
         public void OnServerEvent(string name, ref MValueArray args)
@@ -311,6 +365,8 @@ namespace AltV.Net
                     eventHandler.Call(BaseEntityPool, argArray);
                 }
             }
+            
+            object[] argObjects = null;
 
             if (EventDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
@@ -320,7 +376,7 @@ namespace AltV.Net
                 }
 
                 var length = argArray.Length;
-                var argObjects = new object[length];
+                argObjects = new object[length];
                 for (var i = 0; i < length; i++)
                 {
                     argObjects[i] = argArray[i].ToObject(BaseEntityPool);
@@ -331,6 +387,13 @@ namespace AltV.Net
                     eventHandler(argObjects);
                 }
             }
+            
+            OnServerEventEvent(name, ref args, argArray, argObjects);
+        }
+        
+        public virtual void OnServerEventEvent(string name, ref MValueArray args,  MValue[] mValues, object[] objects)
+        {
+            
         }
 
         //TODO: currently only for testing
@@ -343,11 +406,13 @@ namespace AltV.Net
                     eventHandler.Call(BaseEntityPool, args);
                 }
             }
+            
+            object[] argObjects = null;
 
             if (EventDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
                 var length = args.Length;
-                var argObjects = new object[length];
+                argObjects = new object[length];
                 for (var i = 0; i < length; i++)
                 {
                     argObjects[i] = args[i].ToObject(BaseEntityPool);
@@ -358,6 +423,8 @@ namespace AltV.Net
                     eventHandler(argObjects);
                 }
             }
+            
+            OnServerEventEvent(name, ref MValueArray.Nil, args, argObjects);
         }
     }
 }

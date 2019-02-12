@@ -35,7 +35,7 @@ namespace AltV.Net
             var entityPool = _resource.GetBaseEntityPool(playerPool, vehiclePool, blipPool, checkpointPool);
             var server = new Server(serverPointer, entityPool, playerPool, vehiclePool, blipPool,
                 checkpointPool);
-            _module = new Module(server, entityPool, playerPool, vehiclePool, blipPool, checkpointPool);
+            _module = _resource.GetModule(server, entityPool, playerPool, vehiclePool, blipPool, checkpointPool);
             _resource.OnStart();
         }
 

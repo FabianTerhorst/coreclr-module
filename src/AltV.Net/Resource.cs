@@ -60,5 +60,13 @@ namespace AltV.Net
         {
             return new CheckpointFactory();
         }
+
+        public virtual Module GetModule(IServer server, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
+            IEntityPool<IVehicle> vehiclePool,
+            IEntityPool<IBlip> blipPool,
+            IEntityPool<ICheckpoint> checkpointPool)
+        {
+            return new Module(server, baseEntityPool, playerPool, vehiclePool, blipPool, checkpointPool);
+        }
     }
 }

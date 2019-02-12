@@ -13,9 +13,9 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.0.0-dev-preview-7</PackageVersion>
+        <PackageVersion>1.0.0-dev-preview-8</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>* static public function to convert EntityPointer to EntityId and EntityType * resources can now provide there own entity pool implementations * on tick callback * Resource abstract class to reduce initial setup * entities lists are now ICollection's for better compatibility with custom entity pools</PackageReleaseNotes>
+        <PackageReleaseNotes>Initial async module support</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

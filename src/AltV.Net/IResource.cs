@@ -22,5 +22,10 @@ namespace AltV.Net
         IEntityFactory<IVehicle> GetVehicleFactory();
         IEntityFactory<IBlip> GetBlipFactory();
         IEntityFactory<ICheckpoint> GetCheckpointFactory();
+
+        Module GetModule(IServer server, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
+            IEntityPool<IVehicle> vehiclePool,
+            IEntityPool<IBlip> blipPool,
+            IEntityPool<ICheckpoint> checkpointPool);
     }
 }
