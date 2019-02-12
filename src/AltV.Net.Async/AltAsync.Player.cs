@@ -42,10 +42,44 @@ namespace AltV.Net.Async
         public static async Task<float> GetMoveSpeed(this IPlayer player) =>
             await AltVAsync.Schedule(() => player.MoveSpeed);
 
-        public static async Task SetPosition(this IPlayer player, Position position) =>
-            await AltVAsync.Schedule(() => { player.Position = position; });
+        public static async Task<uint> GetWeapon(this IPlayer player) =>
+            await AltVAsync.Schedule(() => player.Weapon);
 
-        public static async Task<Position> GetPosition(this IPlayer player) =>
-            await AltVAsync.Schedule(() => player.Position);
+        public static async Task<ushort> GetAmmo(this IPlayer player) =>
+            await AltVAsync.Schedule(() => player.Ammo);
+
+        public static async Task<Position> GetAimPosition(this IPlayer player) =>
+            await AltVAsync.Schedule(() => player.AimPosition);
+
+        public static async Task<Rotation> GetHeadRotation(this IPlayer player) =>
+            await AltVAsync.Schedule(() => player.HeadRotation);
+
+        public static async Task<bool> IsInVehicle(this IPlayer player) =>
+            await AltVAsync.Schedule(() => player.IsInVehicle);
+
+        public static async Task<IVehicle> GetVehicle(this IPlayer player) =>
+            await AltVAsync.Schedule(() => player.Vehicle);
+
+        public static async Task<sbyte> GetSeat(this IPlayer player) =>
+            await AltVAsync.Schedule(() => player.Seat);
+
+        public static async Task Spawn(this IPlayer player, Position position) =>
+            await AltVAsync.Schedule(() => { player.Spawn(position); });
+
+        public static async Task Despawn(this IPlayer player) =>
+            await AltVAsync.Schedule(player.Despawn);
+
+        public static async Task SetDateTime(this IPlayer player, int day, int month, int year, int hour,
+            int minute, int second) =>
+            await AltVAsync.Schedule(() => { player.SetDateTime(day, month, year, hour, minute, second); });
+
+        public static async Task SetWeather(this IPlayer player, uint weather) =>
+            await AltVAsync.Schedule(() => { player.SetWeather(weather); });
+
+        public static async Task Kick(this IPlayer player, string reason) =>
+            await AltVAsync.Schedule(() => { player.Kick(reason); });
+
+        public static async Task Emit(this IPlayer player, string eventName, params object[] args) =>
+            await AltVAsync.Schedule(() => { player.Emit(eventName, args); });
     }
 }
