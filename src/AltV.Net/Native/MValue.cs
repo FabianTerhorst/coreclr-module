@@ -173,7 +173,7 @@ namespace AltV.Net.Native
 
                     return Create(listValues);
                 default:
-                    Server.Instance.LogInfo("cant convert type:" + obj.GetType());
+                    Alt.Log("cant convert type:" + obj.GetType());
                     return Create();
             }
         }

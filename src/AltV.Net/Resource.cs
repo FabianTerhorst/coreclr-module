@@ -14,7 +14,8 @@ namespace AltV.Net
         {
         }
 
-        public virtual IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
+        public virtual IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool,
+            IEntityPool<IVehicle> vehiclePool,
             IEntityPool<IBlip> blipPool, IEntityPool<ICheckpoint> checkpointPool)
         {
             return new BaseEntityPool(playerPool, vehiclePool, blipPool, checkpointPool);

@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("AltV.Net.Mock")]
 [assembly: InternalsVisibleTo("AltV.Net.Async")]
 
+//TODO: implement as singleton with swap out content to use async implementation
 namespace AltV.Net.Native
 {
     internal static partial class AltVNative

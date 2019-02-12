@@ -30,6 +30,26 @@ namespace AltV.Net.Async
         public static async Task SetDimension(this IEntity entity, ushort dimension) =>
             await AltVAsync.Schedule(() => { entity.Dimension = dimension; });
 
+        public static async Task SetMetaData(this IEntity entity, string key, object value) =>
+            await AltVAsync.Schedule(() => entity.SetMetaData(key, value));
+
+        public static async Task<T> GetMetaData<T>(this IEntity entity, string key) =>
+            await AltVAsync.Schedule(() =>
+            {
+                entity.GetMetaData<T>(key, out var value);
+                return value;
+            });
+
+        public static async Task SetSyncedMetaData(this IEntity entity, string key, object value) =>
+            await AltVAsync.Schedule(() => entity.SetSyncedMetaData(key, value));
+
+        public static async Task<T> GetSyncedMetaData<T>(this IEntity entity, string key) =>
+            await AltVAsync.Schedule(() =>
+            {
+                entity.GetSyncedMetaData<T>(key, out var value);
+                return value;
+            });
+
         public static async Task<ushort> GetDimension(this IEntity entity) =>
             await AltVAsync.Schedule(() => entity.Dimension);
 
