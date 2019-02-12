@@ -7,6 +7,9 @@ namespace AltV.Net.Elements.Entities
 {
     public abstract class Entity : IInternalEntity, IEntity
     {
+        public static ushort GetId(IntPtr entityPointer) => AltVNative.Entity.Entity_GetID(entityPointer);
+        public static EntityType GetType(IntPtr entityPointer) => AltVNative.Entity.BaseObject_GetType(entityPointer);
+
         private readonly ConcurrentDictionary<string, object> data = new ConcurrentDictionary<string, object>();
 
         //private Position position = Position.Zero;
@@ -127,7 +130,7 @@ namespace AltV.Net.Elements.Entities
             var mValue = MValue.CreateFromObject(value) ?? MValue.Nil;
             AltVNative.Entity.Entity_SetMetaData(NativePointer, key, ref mValue);
         }
-        
+
         public bool GetMetaData<T>(string key, out T result)
         {
             var mValue = MValue.Nil;
@@ -141,13 +144,13 @@ namespace AltV.Net.Elements.Entities
             result = cast;
             return true;
         }
-        
+
         public void SetSyncedMetaData(string key, object value)
         {
             var mValue = MValue.CreateFromObject(value) ?? MValue.Nil;
             AltVNative.Entity.Entity_SetSyncedMetaData(NativePointer, key, ref mValue);
         }
-        
+
         public bool GetSyncedMetaData<T>(string key, out T result)
         {
             var mValue = MValue.Nil;

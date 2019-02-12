@@ -79,10 +79,9 @@ namespace AltV.Net.Async
 
         private int runs;
 
-        public TickScheduler()
+        public TickScheduler(Thread mainThread)
         {
-            mainThread = Thread.CurrentThread;
-            mainThread.Name = "main";
+            this.mainThread = mainThread;
         }
 
         protected override IEnumerable<Task> GetScheduledTasks()

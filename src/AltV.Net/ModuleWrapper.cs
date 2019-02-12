@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.CompilerServices;
-using AltV.Net.Elements.Pools;
 using AltV.Net.Native;
 
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
@@ -24,16 +23,16 @@ namespace AltV.Net
             {
                 return;
             }
+
             var playerFactory = _resource.GetPlayerFactory();
             var vehicleFactory = _resource.GetVehicleFactory();
             var blipFactory = _resource.GetBlipFactory();
             var checkpointFactory = _resource.GetCheckpointFactory();
-            var playerPool = new PlayerPool(playerFactory);
-            var vehiclePool = new VehiclePool(vehicleFactory);
-            var blipPool = new BlipPool(blipFactory);
-            var checkpointPool = new CheckpointPool(checkpointFactory);
-            var checkpoint = new CheckpointPool(checkpointFactory);
-            var entityPool = new BaseEntityPool(playerPool, vehiclePool, blipPool, checkpoint);
+            var playerPool = _resource.GetPlayerPool(playerFactory);
+            var vehiclePool = _resource.GetVehiclePool(vehicleFactory);
+            var blipPool = _resource.GetBlipPool(blipFactory);
+            var checkpointPool = _resource.GetCheckpointPool(checkpointFactory);
+            var entityPool = _resource.GetBaseEntityPool(playerPool, vehiclePool, blipPool, checkpointPool);
             var server = new Server(serverPointer, entityPool, playerPool, vehiclePool, blipPool,
                 checkpointPool);
             _module = new Module(server, entityPool, playerPool, vehiclePool, blipPool, checkpointPool);

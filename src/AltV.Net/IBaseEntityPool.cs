@@ -1,9 +1,11 @@
 using System;
-using System.Collections.Generic;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net
 {
+    /// <summary>
+    /// This pool decides which entity pool to use depending on the entity type 
+    /// </summary>
     public interface IBaseEntityPool
     {
         bool GetOrCreate(IntPtr entityPointer, out IEntity entity);

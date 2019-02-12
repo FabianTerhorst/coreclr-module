@@ -14,12 +14,12 @@ namespace AltV.Net.Async
 
         public static async Task Do(Action action)
         {
-            await AltVAsync.TaskFactory.StartNew(action);
+            await AltVAsync.Schedule(action);
         }
 
         public static async Task<TResult> Do<TResult>(Func<TResult> action)
         {
-            return await AltVAsync.TaskFactory.StartNew(action);
+            return await AltVAsync.Schedule(action);
         }
     }
 }

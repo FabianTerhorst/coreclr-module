@@ -6,6 +6,8 @@ namespace AltV.Net
 {
     public interface IEntityPool<TEntity> where TEntity : IEntity
     {
+        void Create(IntPtr entityPointer, ushort id, out TEntity entity);
+        
         void Create(IntPtr entityPointer, out TEntity entity);
 
         void Add(TEntity entity);
@@ -18,6 +20,6 @@ namespace AltV.Net
 
         bool GetOrCreate(IntPtr entityPointer, out TEntity entity);
 
-        Dictionary<IntPtr, TEntity>.ValueCollection GetAllEntities();
+        ICollection<TEntity> GetAllEntities();
     }
 }

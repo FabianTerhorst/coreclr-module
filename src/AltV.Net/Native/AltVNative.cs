@@ -3,6 +3,8 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: InternalsVisibleTo("AltV.Net.Mock")]
+[assembly: InternalsVisibleTo("AltV.Net.Async")]
+
 namespace AltV.Net.Native
 {
     internal static partial class AltVNative

@@ -1,6 +1,8 @@
+using System;
 using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Native;
 
 namespace AltV.Net.Async
 {
@@ -57,8 +59,19 @@ namespace AltV.Net.Async
         public static async Task<bool> IsInVehicle(this IPlayer player) =>
             await AltVAsync.Schedule(() => player.IsInVehicle);
 
-        public static async Task<IVehicle> GetVehicle(this IPlayer player) =>
-            await AltVAsync.Schedule(() => player.Vehicle);
+        public static async Task<IVehicle> GetVehicle(this IPlayer player)
+        {
+            if (!player.Exists) return null;
+            var entityPointer =
+                await AltVAsync.Schedule(() => AltVNative.Player.Player_GetVehicle(player.NativePointer));
+            if (entityPointer == IntPtr.Zero) return null;
+            if (Alt.Module.BaseEntityPool.GetOrCreate(entityPointer, out var entity) && entity is IVehicle vehicle)
+            {
+                return vehicle;
+            }
+
+            return null;
+        }
 
         public static async Task<sbyte> GetSeat(this IPlayer player) =>
             await AltVAsync.Schedule(() => player.Seat);

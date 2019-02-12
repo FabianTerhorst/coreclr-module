@@ -7,6 +7,14 @@ namespace AltV.Net.Elements.Pools
 {
     public abstract class EntityPool<TEntity> : IEntityPool<TEntity> where TEntity : IEntity
     {
+        public static void SetEntityNoLongerExists(TEntity entity)
+        {
+            if (entity is IInternalEntity internalEntity)
+            {
+                internalEntity.Exists = false;
+            }
+        }
+
         private readonly Dictionary<IntPtr, TEntity> entities = new Dictionary<IntPtr, TEntity>();
 
         private readonly IEntityFactory<TEntity> entityFactory;
@@ -21,10 +29,15 @@ namespace AltV.Net.Elements.Pools
             return AltVNative.Entity.Entity_GetID(entityPointer);
         }
 
+        public void Create(IntPtr entityPointer, ushort id, out TEntity entity)
+        {
+            entity = entityFactory.Create(entityPointer, id);
+            Add(entity);
+        }
+
         public void Create(IntPtr entityPointer, out TEntity entity)
         {
-            entity = entityFactory.Create(entityPointer, GetId(entityPointer));
-            Add(entity);
+            Create(entityPointer, GetId(entityPointer), out entity);
         }
 
         public void Add(TEntity entity)
@@ -40,11 +53,7 @@ namespace AltV.Net.Elements.Pools
         public bool Remove(IntPtr entityPointer)
         {
             if (!entities.Remove(entityPointer, out var entity) || !entity.Exists) return false;
-            if (entity is IInternalEntity internalEntity)
-            {
-                internalEntity.Exists = false;
-            }
-
+            SetEntityNoLongerExists(entity);
             return true;
         }
 
@@ -62,13 +71,13 @@ namespace AltV.Net.Elements.Pools
             }
 
             if (entities.TryGetValue(entityPointer, out entity)) return entity.Exists;
-            
+
             Create(entityPointer, out entity);
 
             return entity.Exists;
         }
 
-        public Dictionary<IntPtr, TEntity>.ValueCollection GetAllEntities()
+        public ICollection<TEntity> GetAllEntities()
         {
             return entities.Values;
         }

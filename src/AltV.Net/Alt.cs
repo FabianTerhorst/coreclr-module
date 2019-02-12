@@ -72,14 +72,14 @@ namespace AltV.Net
 
         public static void Log(string message) => Server.LogInfo(message);
 
-        public static Dictionary<IntPtr, IPlayer>.ValueCollection GetAllPlayers() => Module.PlayerPool.GetAllEntities();
+        public static ICollection<IPlayer> GetAllPlayers() => Module.PlayerPool.GetAllEntities();
 
-        public static Dictionary<IntPtr, IVehicle>.ValueCollection GetAllVehicles() =>
+        public static ICollection<IVehicle> GetAllVehicles() =>
             Module.VehiclePool.GetAllEntities();
 
-        public static Dictionary<IntPtr, IBlip>.ValueCollection GetAllBlips() => Module.BlipPool.GetAllEntities();
+        public static ICollection<IBlip> GetAllBlips() => Module.BlipPool.GetAllEntities();
 
-        public static Dictionary<IntPtr, ICheckpoint>.ValueCollection GetAllCheckpoints() =>
+        public static ICollection<ICheckpoint> GetAllCheckpoints() =>
             Module.CheckpointPool.GetAllEntities();
 
         public static uint Hash(string hash) => Server.Hash(hash);
