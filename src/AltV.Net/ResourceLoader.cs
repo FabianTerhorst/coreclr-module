@@ -92,16 +92,6 @@ namespace AltV.Net
             return resource;
         }
 
-        public void Start()
-        {
-            resource?.OnStart();
-        }
-
-        public void Stop()
-        {
-            resource?.OnStop();
-        }
-
         private Assembly LoadAssembly(string path)
         {
             var reflectionAssembly = AssemblyName.GetAssemblyName(path);

@@ -81,6 +81,7 @@ class CSharpResource : public alt::IResource
     void (*OnVehicleEnterDelegate)(alt::IVehicle* vehicle, alt::IPlayer *player, int8_t seat);
     void (*OnVehicleLeaveDelegate)(alt::IVehicle* vehicle, alt::IPlayer *player, int8_t seat);
     void (*OnStopDelegate)();
+    void (*OnTickDelegate)();
     void (*MainDelegate)(alt::IServer *server, const char* resourceName, const char* entryPoint);
     void *runtimeHost;
     unsigned int domainId;

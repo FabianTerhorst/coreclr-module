@@ -30,6 +30,7 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     OnVehicleEnterDelegate = nullptr;
     OnVehicleLeaveDelegate = nullptr;
     OnStopDelegate = nullptr;
+    OnTickDelegate = nullptr;
 
     coreClr->CreateAppDomain(server, fullPath, "/usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.1", &runtimeHost,
                              &domainId);
@@ -60,6 +61,8 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
                          reinterpret_cast<void**>(&OnVehicleLeaveDelegate));
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnStop",
                          reinterpret_cast<void**>(&OnStopDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnTick",
+                         reinterpret_cast<void**>(&OnTickDelegate));
 }
 
 bool CSharpResource::Start() {
@@ -140,4 +143,5 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
 }
 
 void CSharpResource::OnTick() {
+    OnTickDelegate();
 }

@@ -24,7 +24,7 @@ namespace AltV.Net.Mock
             var server = new MockServer(IntPtr.Zero, entityPool, playerPool, vehiclePool, blipPool,
                 checkpointPool);
             var module = new Module(server, entityPool, playerPool, vehiclePool, blipPool, checkpointPool);
-            resourceLoader.Start();
+            resource.OnStart();
         }
 
         public IPlayer ConnectPlayer(string playerName, string reason, Action<IPlayer> intercept = null)

@@ -14,14 +14,20 @@ namespace AltV.Net
 
         private static ResourceLoader _resourceLoader;
 
+        private static IResource _resource;
+
         public static void Main(IntPtr serverPointer, string resourceName, string entryPoint)
         {
             _resourceLoader = new ResourceLoader(serverPointer, resourceName, entryPoint);
-            var resource = _resourceLoader.Prepare();
-            var playerFactory = resource.GetPlayerFactory();
-            var vehicleFactory = resource.GetVehicleFactory();
-            var blipFactory = resource.GetBlipFactory();
-            var checkpointFactory = resource.GetCheckpointFactory();
+            _resource = _resourceLoader.Prepare();
+            if (_resource == null)
+            {
+                return;
+            }
+            var playerFactory = _resource.GetPlayerFactory();
+            var vehicleFactory = _resource.GetVehicleFactory();
+            var blipFactory = _resource.GetBlipFactory();
+            var checkpointFactory = _resource.GetCheckpointFactory();
             var playerPool = new PlayerPool(playerFactory);
             var vehiclePool = new VehiclePool(vehicleFactory);
             var blipPool = new BlipPool(blipFactory);
@@ -31,12 +37,17 @@ namespace AltV.Net
             var server = new Server(serverPointer, entityPool, playerPool, vehiclePool, blipPool,
                 checkpointPool);
             _module = new Module(server, entityPool, playerPool, vehiclePool, blipPool, checkpointPool);
-            _resourceLoader.Start();
+            _resource.OnStart();
         }
 
         public static void OnStop()
         {
-            _resourceLoader.Stop();
+            _resource.OnStop();
+        }
+
+        public static void OnTick()
+        {
+            _resource.OnTick();
         }
 
         public static void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, bool state)
