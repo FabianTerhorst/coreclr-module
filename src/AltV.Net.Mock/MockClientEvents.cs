@@ -74,6 +74,12 @@ namespace AltV.Net.Mock
             }
         }
 
+        /// <summary>
+        /// Registers a event handler to this player that triggers on server to client events with the specified event name
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="eventName"></param>
+        /// <param name="clientEventMockDelegate"></param>
         public static void On(this IPlayer player, string eventName, ClientEventMockDelegate clientEventMockDelegate)
         {
             if (!PlayerEvents.TryGetValue(player.NativePointer, out var eventMockDelegates))
@@ -84,6 +90,11 @@ namespace AltV.Net.Mock
             PlayerEvents[player.NativePointer][eventName] = clientEventMockDelegate;
         }
 
+        /// <summary>
+        /// Registers a event handler to this player that triggers on any server to client event for this player
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="clientEventMockDelegate"></param>
         public static void On(this IPlayer player, ClientAnyEventMockDelegate clientEventMockDelegate)
         {
             if (!PlayerAnyEvents.TryGetValue(player.NativePointer, out var eventMockDelegates))
@@ -92,6 +103,17 @@ namespace AltV.Net.Mock
             }
 
             PlayerAnyEvents[player.NativePointer].Add(clientEventMockDelegate);
+        }
+
+        /// <summary>
+        /// Cancels all event handlers and queued events for this player, get called automatically when the player disconnects
+        /// </summary>
+        /// <param name="player"></param>
+        public static void CancelEvents(this IPlayer player)
+        {
+            ClientEvents.Remove(player.NativePointer);
+            PlayerEvents.Remove(player.NativePointer);
+            PlayerAnyEvents.Remove(player.NativePointer);
         }
     }
 }

@@ -67,20 +67,20 @@ void Entity_SetDimension(alt::IEntity *entity, uint16_t dimension)
 
 void Entity_GetMetaData(alt::IEntity *entity, const char *key, alt::MValue &val)
 {
-    val = entity->GetMetaData(alt::StringView(key));
+    val = entity->GetMetaData(key);
 }
 
 void Entity_SetMetaData(alt::IEntity *entity, const char *key, alt::MValue *val)
 {
-    entity->SetMetaData(alt::StringView(key), *val);
+    entity->SetMetaData(key, *val);
 }
 
 void Entity_GetSyncedMetaData(alt::IEntity *entity, const char *key, alt::MValue &val)
 {
-    val = entity->GetSyncedMetaData(alt::StringView(key));
+    val = entity->GetSyncedMetaData(key);
 }
 
 void Entity_SetSyncedMetaData(alt::IEntity *entity, const char *key, alt::MValue *val)
 {
-    entity->SetSyncedMetaData(alt::StringView(key), *val);
+    entity->SetSyncedMetaData(key, *val);
 }

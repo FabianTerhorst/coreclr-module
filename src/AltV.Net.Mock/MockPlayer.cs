@@ -49,8 +49,7 @@ namespace AltV.Net.Mock
         {
             if (Exists)
             {
-                Alt.Module.OnPlayerDisconnect(NativePointer, reason);
-                Alt.Server.RemoveEntity(this);
+                this.Disconnect(reason);
             }
         }
 

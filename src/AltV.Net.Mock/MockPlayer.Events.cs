@@ -7,6 +7,7 @@ namespace AltV.Net.Mock
     {
         public static void Disconnect(this IPlayer player, string reason)
         {
+            player.CancelEvents();
             Alt.Module.OnPlayerDisconnect(player.NativePointer, reason);
             Alt.Server.RemoveEntity(player);
         }

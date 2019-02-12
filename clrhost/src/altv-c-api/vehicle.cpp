@@ -187,7 +187,7 @@ void Vehicle_GetNumberPlateText(alt::IVehicle *vehicle, const char*& text)
 
 void Vehicle_SetNumberPlateText(alt::IVehicle *vehicle, const char *text)
 {
-    vehicle->SetNumberPlateText(alt::String(text));
+    vehicle->SetNumberPlateText(text);
 }
 
 uint8_t Vehicle_GetWindowTint(alt::IVehicle *vehicle)

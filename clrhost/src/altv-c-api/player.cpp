@@ -17,7 +17,7 @@ void Player_GetName(alt::IPlayer* player, const char*& name) {
 }
 
 void Player_SetName(alt::IPlayer* player, const char* name) {
-    player->SetName(alt::String(name));
+    player->SetName(name);
 }
 
 uint16_t Player_GetHealth(alt::IPlayer* player) {
@@ -101,7 +101,7 @@ uint8_t Player_GetSeat(alt::IPlayer* player) {
 }
 
 void Player_Kick(alt::IPlayer* player, const char* reason) {
-    player->Kick(alt::String(reason));
+    player->Kick(reason);
 }
 
 void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {

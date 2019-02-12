@@ -2,32 +2,32 @@
 
 void Server_LogInfo(alt::IServer *server, const char *str)
 {
-    server->LogInfo(alt::StringView(str));
+    server->LogInfo(str);
 }
 
 void Server_LogDebug(alt::IServer *server, const char *str)
 {
-    server->LogDebug(alt::StringView(str));
+    server->LogDebug(str);
 }
 
 void Server_LogWarning(alt::IServer *server, const char *str)
 {
-    server->LogWarning(alt::StringView(str));
+    server->LogWarning(str);
 }
 
 void Server_LogError(alt::IServer *server, const char *str)
 {
-    server->LogError(alt::StringView(str));
+    server->LogError(str);
 }
 
 void Server_LogColored(alt::IServer *server, const char *str)
 {
-    server->LogColored(alt::StringView(str));
+    server->LogColored(str);
 }
 
 uint32_t Server_Hash(alt::IServer *server, const char *str)
 {
-    return server->Hash(alt::StringView(str));
+    return server->Hash(str);
 }
 
 void Server_SubscribeEvent(alt::IServer *server, alt::CEvent::Type ev, alt::EventCallback cb)
@@ -42,17 +42,17 @@ void Server_SubscribeTick(alt::IServer *server, alt::TickCallback cb)
 
 void Server_SubscribeCommand(alt::IServer *server, const char *cmd, alt::CommandCallback cb)
 {
-    return server->SubscribeCommand(alt::StringView(cmd), cb);
+    return server->SubscribeCommand(cmd, cb);
 }
 
 void Server_TriggerServerEvent(alt::IServer *server, const char *ev, alt::MValueList &args)
 {
-    server->TriggerServerEvent(alt::StringView(ev), args);
+    server->TriggerServerEvent(ev, args);
 }
 
 void Server_TriggerClientEvent(alt::IServer *server, alt::IPlayer *target, const char *ev, const alt::MValueList &args)
 {
-    server->TriggerClientEvent(target, alt::StringView(ev), args);
+    server->TriggerClientEvent(target, ev, args);
 }
 
 alt::IVehicle *Server_CreateVehicle(alt::IServer *server, uint32_t model, alt::Position pos, float heading)
