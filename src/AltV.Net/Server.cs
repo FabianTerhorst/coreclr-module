@@ -129,7 +129,10 @@ namespace AltV.Net
 
         public void RemoveEntity(IEntity entity)
         {
-            AltVNative.Server.Server_RemoveEntity(NativePointer, entity.NativePointer);
+            if (entity.Exists)
+            {
+                AltVNative.Server.Server_RemoveEntity(NativePointer, entity.NativePointer);
+            }
         }
     }
 }

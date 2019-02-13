@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
@@ -824,6 +825,49 @@ namespace AltV.Net
             }
 
             var result = @delegate.DynamicInvoke(invokeValues);
+            if (returnType == Void) return MValue.Nil;
+            return MValue.CreateFromObject(result) ?? MValue.Nil;
+        }
+
+        internal object[] CalculateInvokeValues(IPlayer player, IBaseEntityPool baseEntityPool, MValue[] values)
+        {
+            var length = values.Length;
+            if (length + 1 != args.Length) return null;
+            if (!typeInfos[0].IsPlayer) return null;
+            var invokeValues = new object[length + 1];
+            invokeValues[0] = player;
+            for (var i = 0; i < length; i++)
+            {
+                invokeValues[i + 1] = parsers[i](ref values[i], args[i], baseEntityPool, typeInfos[i]);
+            }
+
+            return invokeValues;
+        }
+
+        internal object[] CalculateInvokeValues(IBaseEntityPool baseEntityPool, MValue[] values)
+        {
+            var length = values.Length;
+            if (length != args.Length) return null;
+            var invokeValues = new object[length];
+            for (var i = 0; i < length; i++)
+            {
+                invokeValues[i] = parsers[i](ref values[i], args[i], baseEntityPool, typeInfos[i]);
+            }
+
+            return invokeValues;
+        }
+
+        internal MValue Invoke(object[] invokeValues)
+        {
+            var result = @delegate.DynamicInvoke(invokeValues);
+            if (returnType == Void) return MValue.Nil;
+            return MValue.CreateFromObject(result) ?? MValue.Nil;
+        }
+        
+        internal async Task<MValue> InvokeAsync(object[] invokeValues)
+        {
+            var task = (Task<MValue>) @delegate.DynamicInvoke(invokeValues);
+            var result = await task;
             if (returnType == Void) return MValue.Nil;
             return MValue.CreateFromObject(result) ?? MValue.Nil;
         }

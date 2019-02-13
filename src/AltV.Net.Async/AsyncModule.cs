@@ -8,6 +8,9 @@ namespace AltV.Net.Async
 {
     public class AsyncModule : Module
     {
+        internal readonly Dictionary<string, HashSet<Function>> AsyncEventHandlers =
+            new Dictionary<string, HashSet<Function>>();
+
         internal readonly AsyncEventHandler<CheckpointAsyncDelegate> CheckpointAsyncEventHandler =
             new AsyncEventHandler<CheckpointAsyncDelegate>();
 
@@ -123,6 +126,20 @@ namespace AltV.Net.Async
         {
             base.OnClientEventEvent(player, name, ref args, mValues, objects);
 
+            if (AsyncEventHandlers.TryGetValue(name, out var eventHandlers))
+            {
+                if (mValues == null)
+                {
+                    mValues = args.ToArray();
+                }
+
+                foreach (var eventHandler in eventHandlers)
+                {
+                    var invokeValues = eventHandler.CalculateInvokeValues(player, BaseEntityPool, mValues);
+                    Task.Run(() => { eventHandler.InvokeAsync(invokeValues); });
+                }
+            }
+
             if (ClientEventAsyncDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
                 if (mValues == null)
@@ -154,6 +171,22 @@ namespace AltV.Net.Async
         public override void OnServerEventEvent(string name, ref MValueArray args, MValue[] mValues, object[] objects)
         {
             base.OnServerEventEvent(name, ref args, mValues, objects);
+
+            if (AsyncEventHandlers.TryGetValue(name, out var eventHandlers))
+            {
+                Alt.Log("async eventhandlers:" + eventHandlers.Count);
+                if (mValues == null)
+                {
+                    mValues = args.ToArray();
+                }
+
+                foreach (var eventHandler in eventHandlers)
+                {
+                    var invokeValues = eventHandler.CalculateInvokeValues(BaseEntityPool, mValues);
+                    Task.Run(() => { eventHandler.InvokeAsync(invokeValues); });
+                }
+            }
+
             if (ServerEventAsyncDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
                 if (mValues == null)
@@ -207,6 +240,20 @@ namespace AltV.Net.Async
             {
                 eventHandlersForEvent = new HashSet<ServerEventAsyncDelegate> {eventDelegate};
                 ServerEventAsyncDelegateHandlers[eventName] = eventHandlersForEvent;
+            }
+        }
+
+        public new void On(string eventName, Function function)
+        {
+            if (function == null) return;
+            if (AsyncEventHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            {
+                eventHandlersForEvent.Add(function);
+            }
+            else
+            {
+                eventHandlersForEvent = new HashSet<Function> {function};
+                AsyncEventHandlers[eventName] = eventHandlersForEvent;
             }
         }
     }

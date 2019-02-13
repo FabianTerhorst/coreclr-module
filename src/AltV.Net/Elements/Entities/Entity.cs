@@ -99,40 +99,72 @@ namespace AltV.Net.Elements.Entities
 
         public Position Position
         {
-            get => AltVNative.Entity.Entity_GetPosition(NativePointer);
-            set => AltVNative.Entity.Entity_SetPosition(NativePointer, value);
+            get => !Exists ? Position.Zero : AltVNative.Entity.Entity_GetPosition(NativePointer);
+            set
+            {
+                if (Exists)
+                {
+                    AltVNative.Entity.Entity_SetPosition(NativePointer, value);
+                }
+            }
         }
 
         public Rotation Rotation
         {
-            get => AltVNative.Entity.Entity_GetRotation(NativePointer);
-            set => AltVNative.Entity.Entity_SetRotation(NativePointer, value);
+            get => !Exists ? Rotation.Zero : AltVNative.Entity.Entity_GetRotation(NativePointer);
+            set
+            {
+                if (Exists)
+                {
+                    AltVNative.Entity.Entity_SetRotation(NativePointer, value);
+                }
+            }
         }
 
         public ushort Dimension
         {
-            get => AltVNative.Entity.Entity_GetDimension(NativePointer);
-            set => AltVNative.Entity.Entity_SetDimension(NativePointer, value);
+            get => !Exists ? default : AltVNative.Entity.Entity_GetDimension(NativePointer);
+            set
+            {
+                if (Exists)
+                {
+                    AltVNative.Entity.Entity_SetDimension(NativePointer, value);
+                }
+            }
         }
 
         public void SetPosition(float x, float y, float z)
         {
-            AltVNative.Entity.Entity_SetPositionXYZ(NativePointer, x, y, z);
+            if (Exists)
+            {
+                AltVNative.Entity.Entity_SetPositionXYZ(NativePointer, x, y, z);
+            }
         }
 
         public void SetRotation(float roll, float pitch, float yaw)
         {
-            AltVNative.Entity.Entity_SetRotationRPY(NativePointer, roll, pitch, yaw);
+            if (Exists)
+            {
+                AltVNative.Entity.Entity_SetRotationRPY(NativePointer, roll, pitch, yaw);
+            }
         }
 
         public void SetMetaData(string key, object value)
         {
-            var mValue = MValue.CreateFromObject(value) ?? MValue.Nil;
-            AltVNative.Entity.Entity_SetMetaData(NativePointer, key, ref mValue);
+            if (Exists)
+            {
+                var mValue = MValue.CreateFromObject(value) ?? MValue.Nil;
+                AltVNative.Entity.Entity_SetMetaData(NativePointer, key, ref mValue);
+            }
         }
 
         public bool GetMetaData<T>(string key, out T result)
         {
+            if (!Exists)
+            {
+                result = default;
+                return false;
+            }
             var mValue = MValue.Nil;
             AltVNative.Entity.Entity_GetMetaData(NativePointer, key, ref mValue);
             if (!(mValue.ToObject() is T cast))
@@ -147,12 +179,20 @@ namespace AltV.Net.Elements.Entities
 
         public void SetSyncedMetaData(string key, object value)
         {
-            var mValue = MValue.CreateFromObject(value) ?? MValue.Nil;
-            AltVNative.Entity.Entity_SetSyncedMetaData(NativePointer, key, ref mValue);
+            if (Exists)
+            {
+                var mValue = MValue.CreateFromObject(value) ?? MValue.Nil;
+                AltVNative.Entity.Entity_SetSyncedMetaData(NativePointer, key, ref mValue);
+            }
         }
 
         public bool GetSyncedMetaData<T>(string key, out T result)
         {
+            if (!Exists)
+            {
+                result = default;
+                return false;
+            }
             var mValue = MValue.Nil;
             AltVNative.Entity.Entity_GetSyncedMetaData(NativePointer, key, ref mValue);
             if (!(mValue.ToObject() is T cast))
