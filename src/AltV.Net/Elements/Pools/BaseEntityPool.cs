@@ -38,6 +38,11 @@ namespace AltV.Net.Elements.Pools
             }
 
             var entityType = GetType(entityPointer);
+            return GetOrCreate(entityPointer, entityType, out entity);
+        }
+
+        public bool GetOrCreate(IntPtr entityPointer, EntityType entityType, out IEntity entity)
+        {
             bool result;
             switch (entityType)
             {

@@ -135,15 +135,36 @@ namespace AltV.Net.Async
                 {
                     mValues = args.ToArray();
                 }
-
-                foreach (var eventHandler in eventHandlers)
+                
+                if (objects == null)
                 {
-                    var invokeValues = eventHandler.CalculateInvokeValues(player, BaseEntityPool, mValues);
-                    Task.Run(() => { eventHandler.InvokeAsync(invokeValues); });
+                    var length = mValues.Length;
+                    objects = new object[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        objects[i] = mValues[i].ToObject(BaseEntityPool);
+                    }
                 }
+                
+                Task.Run(() =>
+                {
+                    foreach (var eventHandler in eventHandlers)
+                    {
+                        var invokeValues = eventHandler.CalculateInvokeValues(objects);
+                        if (invokeValues != null)
+                        {
+                            eventHandler.InvokeNoResult(invokeValues);
+                        }
+                        else
+                        {
+                            AltAsync.Log("Wrong function params for " + name);
+                        }
+                    }
+                });
             }
 
-            if (ClientEventAsyncDelegateHandlers.Count != 0 && ClientEventAsyncDelegateHandlers.TryGetValue(name, out var eventDelegates))
+            if (ClientEventAsyncDelegateHandlers.Count != 0 &&
+                ClientEventAsyncDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
                 if (mValues == null)
                 {
@@ -209,11 +230,31 @@ namespace AltV.Net.Async
                     mValues = args.ToArray();
                 }
 
-                foreach (var eventHandler in eventHandlers)
+                if (objects == null)
                 {
-                    var invokeValues = eventHandler.CalculateInvokeValues(BaseEntityPool, mValues);
-                    Task.Run(() => { eventHandler.InvokeAsync(invokeValues); });
+                    var length = mValues.Length;
+                    objects = new object[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        objects[i] = mValues[i].ToObject(BaseEntityPool);
+                    }
                 }
+
+                Task.Run(() =>
+                {
+                    foreach (var eventHandler in eventHandlers)
+                    {
+                        var invokeValues = eventHandler.CalculateInvokeValues(objects);
+                        if (invokeValues != null)
+                        {
+                            eventHandler.InvokeNoResult(invokeValues);
+                        }
+                        else
+                        {
+                            AltAsync.Log("Wrong function params for " + name);
+                        }
+                    }
+                });
             }
 
             if (ServerEventAsyncDelegateHandlers.TryGetValue(name, out var eventDelegates))

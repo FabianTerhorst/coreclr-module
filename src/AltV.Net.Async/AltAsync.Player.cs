@@ -61,16 +61,11 @@ namespace AltV.Net.Async
 
         public static async Task<IVehicle> GetVehicleAsync(this IPlayer player)
         {
-            if (!player.Exists) return null;
             var entityPointer =
-                await AltVAsync.Schedule(() => AltVNative.Player.Player_GetVehicle(player.NativePointer));
+                await AltVAsync.Schedule(() =>
+                    !player.Exists ? IntPtr.Zero : AltVNative.Player.Player_GetVehicle(player.NativePointer));
             if (entityPointer == IntPtr.Zero) return null;
-            if (Alt.Module.BaseEntityPool.GetOrCreate(entityPointer, out var entity) && entity is IVehicle vehicle)
-            {
-                return vehicle;
-            }
-
-            return null;
+            return Alt.Module.VehiclePool.GetOrCreate(entityPointer, out var vehicle) ? vehicle : null;
         }
 
         public static async Task<sbyte> GetSeatAsync(this IPlayer player) =>

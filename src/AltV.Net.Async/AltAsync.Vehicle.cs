@@ -21,18 +21,13 @@ namespace AltV.Net.Async
         public static async Task<IVehicle> CreateVehicle(VehicleHash vehicleHash, Position pos, float heading) =>
             await CreateVehicle((uint) vehicleHash, pos, heading);
 
-        public static async Task<IPlayer> GetDriver(this IVehicle vehicle)
+        public static async Task<IPlayer> GetDriverAsync(this IVehicle vehicle)
         {
-            if (!vehicle.Exists) return null;
             var entityPointer =
-                await AltVAsync.Schedule(() => AltVNative.Vehicle.Vehicle_GetDriver(vehicle.NativePointer));
+                await AltVAsync.Schedule(() =>
+                    !vehicle.Exists ? IntPtr.Zero : AltVNative.Vehicle.Vehicle_GetDriver(vehicle.NativePointer));
             if (entityPointer == IntPtr.Zero) return null;
-            if (Alt.Module.BaseEntityPool.GetOrCreate(entityPointer, out var entity) && entity is IPlayer player)
-            {
-                return player;
-            }
-
-            return null;
+            return Alt.Module.PlayerPool.GetOrCreate(entityPointer, out var player) ? player : null;
         }
 
         public static async Task<byte> GetModKitAsync(this IVehicle vehicle) =>
@@ -127,11 +122,16 @@ namespace AltV.Net.Async
 
         public static async Task<string> GetNumberPlateTextAsync(this IVehicle vehicle)
         {
-            if (!vehicle.Exists) return string.Empty;
             var ptr = IntPtr.Zero;
             await AltVAsync.Schedule(
-                () => AltVNative.Vehicle.Vehicle_GetNumberPlateText(vehicle.NativePointer, ref ptr));
-            return Marshal.PtrToStringAnsi(ptr);
+                () =>
+                {
+                    if (vehicle.Exists)
+                    {
+                        AltVNative.Vehicle.Vehicle_GetNumberPlateText(vehicle.NativePointer, ref ptr);
+                    }
+                });
+            return ptr == IntPtr.Zero ? string.Empty : Marshal.PtrToStringAnsi(ptr);
         }
 
         public static async Task SetNumberPlateTextAsync(this IVehicle vehicle, string numberPlateText) =>
@@ -184,7 +184,8 @@ namespace AltV.Net.Async
                 return new Tuple<bool, bool, bool, bool>(left, right, front, back);
             });
 
-        public static async Task SetNeonActiveAsync(this IVehicle vehicle, bool left, bool right, bool front, bool back) =>
+        public static async Task
+            SetNeonActiveAsync(this IVehicle vehicle, bool left, bool right, bool front, bool back) =>
             await AltVAsync.Schedule(() => vehicle.SetNeonActive(left, right, front, back));
     }
 }

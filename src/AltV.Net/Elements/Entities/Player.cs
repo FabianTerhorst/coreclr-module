@@ -83,12 +83,7 @@ namespace AltV.Net.Elements.Entities
                 if (!Exists) return null;
                 var entityPointer = AltVNative.Player.Player_GetVehicle(NativePointer);
                 if (entityPointer == IntPtr.Zero) return null;
-                if (Alt.Module.BaseEntityPool.GetOrCreate(entityPointer, out var entity) && entity is IVehicle vehicle)
-                {
-                    return vehicle;
-                }
-
-                return null;
+                return Alt.Module.VehiclePool.GetOrCreate(entityPointer, out var vehicle) ? vehicle : null;
             }
         }
 

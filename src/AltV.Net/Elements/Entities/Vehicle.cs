@@ -14,12 +14,7 @@ namespace AltV.Net.Elements.Entities
                 if (!Exists) return null;
                 var entityPointer = AltVNative.Vehicle.Vehicle_GetDriver(NativePointer);
                 if (entityPointer == IntPtr.Zero) return null;
-                if (Alt.Module.BaseEntityPool.GetOrCreate(entityPointer, out var entity) && entity is IPlayer player)
-                {
-                    return player;
-                }
-
-                return null;
+                return Alt.Module.PlayerPool.GetOrCreate(entityPointer, out var player) ? player : null;
             }
         }
 
@@ -47,7 +42,6 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        //TODO: test
         public Rgba PrimaryColorRgb
         {
             get => !Exists ? Rgba.Zero : AltVNative.Vehicle.Vehicle_GetPrimaryColorRGB(NativePointer);
@@ -70,7 +64,6 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        //TODO: test
         public Rgba SecondaryColorRgb
         {
             get => !Exists ? Rgba.Zero : AltVNative.Vehicle.Vehicle_GetSecondaryColorRGB(NativePointer);

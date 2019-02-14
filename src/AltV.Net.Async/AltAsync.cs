@@ -80,7 +80,7 @@ namespace AltV.Net.Async
             Module.On(eventName, serverEventDelegate);
         }
 
-        public static async Task Log(string message) => await Do(() => Alt.Server.LogInfo(message));
+        public static async void Log(string message) => await Do(() => Alt.Server.LogInfo(message));
 
         internal static void Setup(AltVAsync altVAsync)
         {
