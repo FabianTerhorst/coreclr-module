@@ -57,6 +57,8 @@ namespace AltV.Net.Native
                     return Create(value);
                 case double value:
                     return Create(value);
+                case float value:
+                    return Create(value);
                 case string value:
                     return Create(value);
                 case MValue value:
