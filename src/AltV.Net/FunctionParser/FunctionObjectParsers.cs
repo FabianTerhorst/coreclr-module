@@ -25,55 +25,29 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
-        //TODO: check if returning value instead of boolean is ok as well
         public static object ParseBool(object value, Type type, FunctionTypeInfo typeInfo)
         {
-            if (value is bool boolean)
-            {
-                return boolean;
-            }
-
-            return null;
+            return value is bool ? value : null;
         }
 
         public static object ParseInt(object value, Type type, FunctionTypeInfo typeInfo)
         {
-            if (value is long longValue)
-            {
-                return longValue;
-            }
-
-            return null;
+            return value is long ? value : null;
         }
 
         public static object ParseUInt(object value, Type type, FunctionTypeInfo typeInfo)
         {
-            if (value is ulong ulongValue)
-            {
-                return ulongValue;
-            }
-
-            return null;
+            return value is ulong ? value : null;
         }
 
         public static object ParseDouble(object value, Type type, FunctionTypeInfo typeInfo)
         {
-            if (value is double doubleValue)
-            {
-                return doubleValue;
-            }
-
-            return null;
+            return value is double ? value : null;
         }
 
         public static object ParseString(object value, Type type, FunctionTypeInfo typeInfo)
         {
-            if (value is string stringValue)
-            {
-                return stringValue;
-            }
-
-            return null;
+            return value is string ? value : null;
         }
 
         public static object ParseEntity(object value, Type type, FunctionTypeInfo typeInfo)
@@ -135,10 +109,10 @@ namespace AltV.Net.FunctionParser
 
                 return stringArray;
             }
-            
+
             //TODO: optimize like in MValueParsers for default arrays,
             //TODO: and add IVehicle, IPlayer, IBlip and ICheckpoint types as well for optimization in both parsers
-            
+
             object defaultValue = null;
             var defaultValueSet = false;
             var nullableDefaultValue = typeInfo?.Element?.DefaultValue;
@@ -147,7 +121,7 @@ namespace AltV.Net.FunctionParser
                 defaultValue = nullableDefaultValue;
                 defaultValueSet = true;
             }
-            
+
             var typedArray = System.Array.CreateInstance(elementType, length);
 
             for (var i = 0; i < length; i++)
