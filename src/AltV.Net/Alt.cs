@@ -63,6 +63,12 @@ namespace AltV.Net
             add => Module.VehicleLeaveEventHandler.Subscribe(value);
             remove => Module.VehicleLeaveEventHandler.Unsubscribe(value);
         }
+        
+        public static event PlayerClientEventDelegate OnPlayerEvent
+        {
+            add => Module.PlayerClientEventEventHandler.Subscribe(value);
+            remove => Module.PlayerClientEventEventHandler.Unsubscribe(value);
+        }
 
         public static void Emit(string eventName, params object[] args) => Server.TriggerServerEvent(eventName, args);
 

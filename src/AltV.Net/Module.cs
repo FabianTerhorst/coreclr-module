@@ -58,6 +58,9 @@ namespace AltV.Net
         internal readonly EventHandler<EntityRemoveDelegate> EntityRemoveEventHandler =
             new EventHandler<EntityRemoveDelegate>();
 
+        internal readonly EventHandler<PlayerClientEventDelegate> PlayerClientEventEventHandler =
+            new EventHandler<PlayerClientEventDelegate>();
+
         public Module(IServer server, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IEntityPool<IBlip> blipPool,
@@ -315,7 +318,7 @@ namespace AltV.Net
             }
 
             MValue[] argArray = null;
-            if (EventHandlers.TryGetValue(name, out var eventHandlers))
+            if (EventHandlers.Count != 0 && EventHandlers.TryGetValue(name, out var eventHandlers))
             {
                 argArray = args.ToArray();
                 foreach (var eventHandler in eventHandlers)
@@ -326,7 +329,7 @@ namespace AltV.Net
 
             object[] argObjects = null;
 
-            if (ClientEventDelegateHandlers.TryGetValue(name, out var eventDelegates))
+            if (ClientEventDelegateHandlers.Count != 0 && ClientEventDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
                 if (argArray == null)
                 {
@@ -346,18 +349,41 @@ namespace AltV.Net
                 }
             }
 
+            if (PlayerClientEventEventHandler.HasSubscriptions())
+            {
+                if (argArray == null)
+                {
+                    argArray = args.ToArray();
+                }
+
+                if (argObjects == null)
+                {
+                    var length = argArray.Length;
+                    argObjects = new object[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        argObjects[i] = argArray[i].ToObject(BaseEntityPool);
+                    }
+                }
+
+                foreach (var eventHandler in PlayerClientEventEventHandler.GetSubscriptions())
+                {
+                    eventHandler(player, name, argObjects);
+                }
+            }
+
             OnClientEventEvent(player, name, ref args, argArray, argObjects);
         }
-        
-        public virtual void OnClientEventEvent(IPlayer player, string name, ref MValueArray args,  MValue[] mValues, object[] objects)
+
+        public virtual void OnClientEventEvent(IPlayer player, string name, ref MValueArray args, MValue[] mValues,
+            object[] objects)
         {
-            
         }
 
         public void OnServerEvent(string name, ref MValueArray args)
         {
             MValue[] argArray = null;
-            if (EventHandlers.TryGetValue(name, out var eventHandlers))
+            if (EventHandlers.Count != 0 && EventHandlers.TryGetValue(name, out var eventHandlers))
             {
                 argArray = args.ToArray();
                 foreach (var eventHandler in eventHandlers)
@@ -365,10 +391,10 @@ namespace AltV.Net
                     eventHandler.Call(BaseEntityPool, argArray);
                 }
             }
-            
+
             object[] argObjects = null;
 
-            if (EventDelegateHandlers.TryGetValue(name, out var eventDelegates))
+            if (EventDelegateHandlers.Count != 0 && EventDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
                 if (argArray == null)
                 {
@@ -387,29 +413,28 @@ namespace AltV.Net
                     eventHandler(argObjects);
                 }
             }
-            
+
             OnServerEventEvent(name, ref args, argArray, argObjects);
         }
-        
-        public virtual void OnServerEventEvent(string name, ref MValueArray args,  MValue[] mValues, object[] objects)
+
+        public virtual void OnServerEventEvent(string name, ref MValueArray args, MValue[] mValues, object[] objects)
         {
-            
         }
 
         //TODO: currently only for testing
         public void OnServerEvent(string name, MValue[] args)
         {
-            if (EventHandlers.TryGetValue(name, out var eventHandlers))
+            if (EventHandlers.Count != 0 && EventHandlers.TryGetValue(name, out var eventHandlers))
             {
                 foreach (var eventHandler in eventHandlers)
                 {
                     eventHandler.Call(BaseEntityPool, args);
                 }
             }
-            
+
             object[] argObjects = null;
 
-            if (EventDelegateHandlers.TryGetValue(name, out var eventDelegates))
+            if (EventDelegateHandlers.Count != 0 && EventDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
                 var length = args.Length;
                 argObjects = new object[length];
@@ -423,7 +448,7 @@ namespace AltV.Net
                     eventHandler(argObjects);
                 }
             }
-            
+
             OnServerEventEvent(name, ref MValueArray.Nil, args, argObjects);
         }
     }

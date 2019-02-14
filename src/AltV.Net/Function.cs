@@ -866,7 +866,7 @@ namespace AltV.Net
         
         internal async Task<MValue> InvokeAsync(object[] invokeValues)
         {
-            var task = (Task<MValue>) @delegate.DynamicInvoke(invokeValues);
+            var task = (Task<object>) @delegate.DynamicInvoke(invokeValues);
             var result = await task;
             if (returnType == Void) return MValue.Nil;
             return MValue.CreateFromObject(result) ?? MValue.Nil;

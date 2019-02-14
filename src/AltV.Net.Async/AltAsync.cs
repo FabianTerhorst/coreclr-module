@@ -64,6 +64,12 @@ namespace AltV.Net.Async
             remove => Module.EntityRemoveAsyncEventHandler.Unsubscribe(value);
         }
         
+        public static event PlayerClientEventAsyncDelegate OnPlayerEvent
+        {
+            add => Module.PlayerClientEventAsyncEventHandler.Subscribe(value);
+            remove => Module.PlayerClientEventAsyncEventHandler.Unsubscribe(value);
+        }
+        
         public static void On(string eventName, ClientEventAsyncDelegate clientEventDelegate)
         {
             Module.On(eventName, clientEventDelegate);
@@ -74,7 +80,7 @@ namespace AltV.Net.Async
             Module.On(eventName, serverEventDelegate);
         }
 
-        public static async void Log(string message) => await Do(() => Alt.Server.LogInfo(message));
+        public static async Task Log(string message) => await Do(() => Alt.Server.LogInfo(message));
 
         internal static void Setup(AltVAsync altVAsync)
         {

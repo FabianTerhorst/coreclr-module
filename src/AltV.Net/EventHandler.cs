@@ -22,5 +22,10 @@ namespace AltV.Net
         {
             return subscriptions;
         }
+        
+        public bool HasSubscriptions()
+        {
+            return subscriptions.Count != 0;
+        }
     }
 }

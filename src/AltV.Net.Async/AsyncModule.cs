@@ -38,6 +38,9 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<EntityRemoveAsyncDelegate> EntityRemoveAsyncEventHandler =
             new AsyncEventHandler<EntityRemoveAsyncDelegate>();
 
+        internal readonly AsyncEventHandler<PlayerClientEventAsyncDelegate> PlayerClientEventAsyncEventHandler =
+            new AsyncEventHandler<PlayerClientEventAsyncDelegate>();
+
         internal readonly Dictionary<string, HashSet<ClientEventAsyncDelegate>> ClientEventAsyncDelegateHandlers
             =
             new Dictionary<string, HashSet<ClientEventAsyncDelegate>>();
@@ -126,7 +129,7 @@ namespace AltV.Net.Async
         {
             base.OnClientEventEvent(player, name, ref args, mValues, objects);
 
-            if (AsyncEventHandlers.TryGetValue(name, out var eventHandlers))
+            if (AsyncEventHandlers.Count != 0 && AsyncEventHandlers.TryGetValue(name, out var eventHandlers))
             {
                 if (mValues == null)
                 {
@@ -140,7 +143,7 @@ namespace AltV.Net.Async
                 }
             }
 
-            if (ClientEventAsyncDelegateHandlers.TryGetValue(name, out var eventDelegates))
+            if (ClientEventAsyncDelegateHandlers.Count != 0 && ClientEventAsyncDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
                 if (mValues == null)
                 {
@@ -166,6 +169,33 @@ namespace AltV.Net.Async
                     }
                 });
             }
+
+            if (PlayerClientEventAsyncEventHandler.HasSubscriptions())
+            {
+                if (mValues == null)
+                {
+                    mValues = args.ToArray();
+                }
+
+                if (objects == null)
+                {
+                    var length = mValues.Length;
+                    objects = new object[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        objects[i] = mValues[i].ToObject(BaseEntityPool);
+                    }
+                }
+
+                Task.Run(() =>
+                {
+                    foreach (var eventHandler in PlayerClientEventAsyncEventHandler.GetSubscriptions())
+                    {
+                        AsyncEventHandler<PlayerClientEventAsyncDelegate>.ExecuteSubscriptionAsync(eventHandler,
+                            @delegate => @delegate(player, name, objects));
+                    }
+                });
+            }
         }
 
         public override void OnServerEventEvent(string name, ref MValueArray args, MValue[] mValues, object[] objects)
@@ -174,7 +204,6 @@ namespace AltV.Net.Async
 
             if (AsyncEventHandlers.TryGetValue(name, out var eventHandlers))
             {
-                Alt.Log("async eventhandlers:" + eventHandlers.Count);
                 if (mValues == null)
                 {
                     mValues = args.ToArray();
