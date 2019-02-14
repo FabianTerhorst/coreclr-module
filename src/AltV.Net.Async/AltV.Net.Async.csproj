@@ -12,9 +12,9 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.0.0-dev-preview-8</PackageVersion>
+        <PackageVersion>1.0.0-dev-preview-9</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Initial async api</PackageReleaseNotes>
+        <PackageReleaseNotes>Async events</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

@@ -196,6 +196,18 @@ namespace AltV.Net.FunctionParser
         {
             if (mValue.type == MValue.Type.INT)
             {
+                return (int) mValue.GetInt();
+            }
+
+            // Types doesn't match
+            return null;
+        }
+
+        public static object ParseLong(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+            FunctionTypeInfo typeInfo)
+        {
+            if (mValue.type == MValue.Type.INT)
+            {
                 return mValue.GetInt();
             }
 
@@ -208,7 +220,31 @@ namespace AltV.Net.FunctionParser
         {
             if (mValue.type == MValue.Type.UINT)
             {
+                return (uint) mValue.GetUint();
+            }
+
+            // Types doesn't match
+            return null;
+        }
+
+        public static object ParseULong(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+            FunctionTypeInfo typeInfo)
+        {
+            if (mValue.type == MValue.Type.UINT)
+            {
                 return mValue.GetUint();
+            }
+
+            // Types doesn't match
+            return null;
+        }
+
+        public static object ParseFloat(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+            FunctionTypeInfo typeInfo)
+        {
+            if (mValue.type == MValue.Type.DOUBLE)
+            {
+                return (float) mValue.GetDouble();
             }
 
             // Types doesn't match
@@ -244,11 +280,17 @@ namespace AltV.Net.FunctionParser
                 case MValue.Type.BOOL:
                     return ParseBool(ref mValue, type, baseEntityPool, typeInfo);
                 case MValue.Type.INT:
-                    return ParseInt(ref mValue, type, baseEntityPool, typeInfo);
+                    return type == FunctionTypes.Int
+                        ? ParseInt(ref mValue, type, baseEntityPool, typeInfo)
+                        : ParseLong(ref mValue, type, baseEntityPool, typeInfo);
                 case MValue.Type.UINT:
-                    return ParseUInt(ref mValue, type, baseEntityPool, typeInfo);
+                    return type == FunctionTypes.UInt
+                        ? ParseUInt(ref mValue, type, baseEntityPool, typeInfo)
+                        : ParseULong(ref mValue, type, baseEntityPool, typeInfo);
                 case MValue.Type.DOUBLE:
-                    return ParseDouble(ref mValue, type, baseEntityPool, typeInfo);
+                    return type == FunctionTypes.Float
+                        ? ParseFloat(ref mValue, type, baseEntityPool, typeInfo)
+                        : ParseDouble(ref mValue, type, baseEntityPool, typeInfo);
                 case MValue.Type.STRING:
                     return ParseString(ref mValue, type, baseEntityPool, typeInfo);
                 case MValue.Type.LIST:
@@ -410,6 +452,44 @@ namespace AltV.Net.FunctionParser
                     if (currMValue.type == MValue.Type.UINT)
                     {
                         dict[strings[i]] = currMValue.GetUint();
+                    }
+                    else
+                    {
+                        dict[strings[i]] = default;
+                    }
+                }
+
+                return dict;
+            }
+            
+            if (valueType == FunctionTypes.Float)
+            {
+                var dict = new Dictionary<string, float>();
+                for (var i = 0; i < length; i++)
+                {
+                    currMValue = valueArray[i];
+                    if (currMValue.type == MValue.Type.DOUBLE)
+                    {
+                        dict[strings[i]] = (float) currMValue.GetDouble();
+                    }
+                    else
+                    {
+                        dict[strings[i]] = default;
+                    }
+                }
+
+                return dict;
+            }
+            
+            if (valueType == FunctionTypes.Float)
+            {
+                var dict = new Dictionary<string, float>();
+                for (var i = 0; i < length; i++)
+                {
+                    currMValue = valueArray[i];
+                    if (currMValue.type == MValue.Type.DOUBLE)
+                    {
+                        dict[strings[i]] = (float) currMValue.GetDouble();
                     }
                     else
                     {

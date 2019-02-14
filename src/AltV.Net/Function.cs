@@ -58,15 +58,30 @@ namespace AltV.Net
                     parsers[i] = FunctionMValueParsers.ParseBool;
                     objectParsers[i] = FunctionObjectParsers.ParseBool;
                 }
-                else if (arg == FunctionTypes.Int || arg == FunctionTypes.Long)
+                else if (arg == FunctionTypes.Int)
                 {
                     parsers[i] = FunctionMValueParsers.ParseInt;
                     objectParsers[i] = FunctionObjectParsers.ParseInt;
                 }
-                else if (arg == FunctionTypes.UInt || arg == FunctionTypes.ULong)
+                else if (arg == FunctionTypes.Long)
+                {
+                    parsers[i] = FunctionMValueParsers.ParseLong;
+                    objectParsers[i] = FunctionObjectParsers.ParseLong;
+                }
+                else if (arg == FunctionTypes.UInt)
                 {
                     parsers[i] = FunctionMValueParsers.ParseUInt;
                     objectParsers[i] = FunctionObjectParsers.ParseUInt;
+                }
+                else if (arg == FunctionTypes.ULong)
+                {
+                    parsers[i] = FunctionMValueParsers.ParseULong;
+                    objectParsers[i] = FunctionObjectParsers.ParseULong;
+                }
+                else if (arg == FunctionTypes.Float)
+                {
+                    parsers[i] = FunctionMValueParsers.ParseFloat;
+                    objectParsers[i] = FunctionObjectParsers.ParseFloat;
                 }
                 else if (arg == FunctionTypes.Double)
                 {

@@ -17,6 +17,8 @@ namespace AltV.Net.FunctionParser
 
         public static readonly Type ULong = typeof(ulong);
 
+        public static readonly Type Float = typeof(float);
+        
         public static readonly Type Double = typeof(double);
 
         public static readonly Type String = typeof(string);

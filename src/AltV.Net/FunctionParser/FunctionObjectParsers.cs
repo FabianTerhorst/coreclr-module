@@ -32,12 +32,27 @@ namespace AltV.Net.FunctionParser
 
         public static object ParseInt(object value, Type type, FunctionTypeInfo typeInfo)
         {
+            return value is long l ? (int) l : default;
+        }
+
+        public static object ParseLong(object value, Type type, FunctionTypeInfo typeInfo)
+        {
             return value is long ? value : null;
         }
 
         public static object ParseUInt(object value, Type type, FunctionTypeInfo typeInfo)
         {
+            return value is ulong ul ? (uint) ul : default;
+        }
+
+        public static object ParseULong(object value, Type type, FunctionTypeInfo typeInfo)
+        {
             return value is ulong ? value : null;
+        }
+
+        public static object ParseFloat(object value, Type type, FunctionTypeInfo typeInfo)
+        {
+            return value is double d ? (float) d : default;
         }
 
         public static object ParseDouble(object value, Type type, FunctionTypeInfo typeInfo)
