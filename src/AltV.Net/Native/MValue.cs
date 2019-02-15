@@ -34,11 +34,11 @@ namespace AltV.Net.Native
         public static MValue Nil = new MValue(0, IntPtr.Zero);
 
         //TODO: create a map that holds function pointers for each object type, its probably faster then this switch now
-        public static MValue? CreateFromObject(object obj)
+        public static MValue CreateFromObject(object obj)
         {
             if (obj == null)
             {
-                return Create();
+                return Nil;
             }
 
             switch (obj)
@@ -154,29 +154,30 @@ namespace AltV.Net.Native
                         }
                         else
                         {
-                            return Create();
+                            return Nil;
                         }
                     }
 
                     i = 0;
                     foreach (var value in dictionary.Values)
                     {
-                        dictValues[i++] = CreateFromObject(value) ?? Create();
+                        dictValues[i++] = CreateFromObject(value);
                     }
 
                     return Create(dictValues, dictKeys);
                 case ICollection collection:
-                    var listValues = new MValue[collection.Count];
+                    var length = collection.Count;
+                    var listValues = new MValue[length];
                     i = 0;
                     foreach (var value in collection)
                     {
-                        listValues[i++] = CreateFromObject(value) ?? Create();
+                        listValues[i++] = CreateFromObject(value);
                     }
 
                     return Create(listValues);
                 default:
-                    Alt.Log("cant convert type:" + obj.GetType());
-                    return Create();
+                    Alt.Log("can't convert type:" + obj.GetType());
+                    return Nil;
             }
         }
 

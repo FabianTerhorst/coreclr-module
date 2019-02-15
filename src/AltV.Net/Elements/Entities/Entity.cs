@@ -153,7 +153,7 @@ namespace AltV.Net.Elements.Entities
         {
             if (Exists)
             {
-                var mValue = MValue.CreateFromObject(value) ?? MValue.Nil;
+                var mValue = MValue.CreateFromObject(value);
                 AltVNative.Entity.Entity_SetMetaData(NativePointer, key, ref mValue);
             }
         }
@@ -181,7 +181,7 @@ namespace AltV.Net.Elements.Entities
         {
             if (Exists)
             {
-                var mValue = MValue.CreateFromObject(value) ?? MValue.Nil;
+                var mValue = MValue.CreateFromObject(value);
                 AltVNative.Entity.Entity_SetSyncedMetaData(NativePointer, key, ref mValue);
             }
         }

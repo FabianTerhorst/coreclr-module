@@ -89,13 +89,16 @@ namespace AltV.Net
             TriggerClientEvent(player, eventName, ConvertObjectsToMValues(args));
         }
 
-        private static MValue[] ConvertObjectsToMValues(IEnumerable<object> objects)
+        private static MValue[] ConvertObjectsToMValues(object[] objects)
         {
-            return (from obj in objects
-                select MValue.CreateFromObject(obj)
-                into mValue
-                where mValue.HasValue
-                select mValue.Value).ToArray();
+            var length = objects.Length;
+            var mValues = new MValue[length];
+            for (var i = 0; i < length; i++)
+            {
+                mValues[i] = MValue.CreateFromObject(objects[i]);
+            }
+
+            return mValues;
         }
 
         public IVehicle CreateVehicle(uint model, Position pos, float heading)

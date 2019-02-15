@@ -17,7 +17,7 @@ alt::IEntity *Blip_AttachedTo(alt::IBlip *blip)
 
 uint8_t Blip_GetType(alt::IBlip *blip)
 {
-    return blip->GetType();
+    return blip->GetBlipType();
 }
 
 void Blip_SetSprite(alt::IBlip *blip, uint16_t sprite)

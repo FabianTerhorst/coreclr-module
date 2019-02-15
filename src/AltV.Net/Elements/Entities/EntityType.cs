@@ -1,11 +1,11 @@
 namespace AltV.Net.Elements.Entities
 {
-    public enum EntityType
+    public enum EntityType: byte
     {
-        Player,
-        Vehicle,
-        Checkpoint,
-        Blip,
-        WebView
+        Player = 0,
+        Vehicle = 1,
+        Checkpoint = 2,
+        Blip = 3,
+        WebView = 4
     }
 }

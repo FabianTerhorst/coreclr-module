@@ -72,6 +72,7 @@ namespace AltV.Net.Mock
                     @delegate(eventName, obj);
                 }
             }
+            Alt.Module.OnClientEvent(player.NativePointer, eventName, args);
         }
 
         /// <summary>

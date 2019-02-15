@@ -9,10 +9,10 @@ namespace AltV.Net.Native
     {
         internal static class Entity
         {
-            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern EntityType BaseObject_GetType(IntPtr baseObjectPointer);
 
-            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern ushort Entity_GetID(IntPtr entityPointer);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]

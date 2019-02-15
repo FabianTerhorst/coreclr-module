@@ -1,5 +1,4 @@
 using AltV.Net.Native;
-using System.Linq;
 
 namespace AltV.Net.FunctionParser
 {
@@ -15,11 +14,15 @@ namespace AltV.Net.FunctionParser
         public object Call(params object[] args)
         {
             var result = MValue.Nil;
-            var mValueArgs = MValue.Create((from obj in args
-                select MValue.CreateFromObject(obj)
-                into mValue
-                where mValue.HasValue
-                select mValue.Value).ToArray());
+
+            var length = args.Length;
+            var mValues = new MValue[length];
+            for (var i = 0; i < length; i++)
+            {
+                mValues[i] = MValue.CreateFromObject(args[i]);
+            }
+
+            var mValueArgs = MValue.Create(mValues);
             function(ref mValueArgs, ref result);
             return result.ToObject(Alt.Module.BaseEntityPool);
         }

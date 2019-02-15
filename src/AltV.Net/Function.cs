@@ -159,7 +159,7 @@ namespace AltV.Net
 
             var result = @delegate.DynamicInvoke(invokeValues);
             if (returnType == FunctionTypes.Void) return MValue.Nil;
-            return MValue.CreateFromObject(result) ?? MValue.Nil;
+            return MValue.CreateFromObject(result);
         }
 
         internal MValue Call(IPlayer player, IBaseEntityPool baseEntityPool, MValue[] values)
@@ -176,7 +176,7 @@ namespace AltV.Net
 
             var result = @delegate.DynamicInvoke(invokeValues);
             if (returnType == FunctionTypes.Void) return MValue.Nil;
-            return MValue.CreateFromObject(result) ?? MValue.Nil;
+            return MValue.CreateFromObject(result);
         }
 
         internal object[] CalculateInvokeValues(IPlayer player, IBaseEntityPool baseEntityPool, MValue[] values)
@@ -224,7 +224,7 @@ namespace AltV.Net
         {
             var result = @delegate.DynamicInvoke(invokeValues);
             if (returnType == FunctionTypes.Void) return MValue.Nil;
-            return MValue.CreateFromObject(result) ?? MValue.Nil;
+            return MValue.CreateFromObject(result);
         }
 
         internal async Task<MValue> InvokeAsync(object[] invokeValues)
@@ -237,7 +237,7 @@ namespace AltV.Net
 
             var result = await (Task<object>) @delegate.DynamicInvoke(invokeValues);
             if (returnType == FunctionTypes.Void) return MValue.Nil;
-            return MValue.CreateFromObject(result) ?? MValue.Nil;
+            return MValue.CreateFromObject(result);
         }
 
         internal void InvokeNoResult(object[] invokeValues)

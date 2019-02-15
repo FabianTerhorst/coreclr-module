@@ -329,7 +329,8 @@ namespace AltV.Net
 
             object[] argObjects = null;
 
-            if (ClientEventDelegateHandlers.Count != 0 && ClientEventDelegateHandlers.TryGetValue(name, out var eventDelegates))
+            if (ClientEventDelegateHandlers.Count != 0 &&
+                ClientEventDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
                 if (argArray == null)
                 {
@@ -450,6 +451,60 @@ namespace AltV.Net
             }
 
             OnServerEventEvent(name, ref MValueArray.Nil, args, argObjects);
+        }
+
+        public void OnClientEvent(IntPtr playerPointer, string name, MValue[] argArray)
+        {
+            if (!PlayerPool.GetOrCreate(playerPointer, out var player))
+            {
+                return;
+            }
+
+            if (EventHandlers.Count != 0 && EventHandlers.TryGetValue(name, out var eventHandlers))
+            {
+                foreach (var eventHandler in eventHandlers)
+                {
+                    eventHandler.Call(player, BaseEntityPool, argArray);
+                }
+            }
+
+            object[] argObjects = null;
+
+            if (ClientEventDelegateHandlers.Count != 0 &&
+                ClientEventDelegateHandlers.TryGetValue(name, out var eventDelegates))
+            {
+                var length = argArray.Length;
+                argObjects = new object[length];
+                for (var i = 0; i < length; i++)
+                {
+                    argObjects[i] = argArray[i].ToObject(BaseEntityPool);
+                }
+
+                foreach (var eventHandler in eventDelegates)
+                {
+                    eventHandler(player, argObjects);
+                }
+            }
+
+            if (PlayerClientEventEventHandler.HasSubscriptions())
+            {
+                if (argObjects == null)
+                {
+                    var length = argArray.Length;
+                    argObjects = new object[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        argObjects[i] = argArray[i].ToObject(BaseEntityPool);
+                    }
+                }
+
+                foreach (var eventHandler in PlayerClientEventEventHandler.GetSubscriptions())
+                {
+                    eventHandler(player, name, argObjects);
+                }
+            }
+
+            OnClientEventEvent(player, name, ref MValueArray.Nil, argArray, argObjects);
         }
     }
 }

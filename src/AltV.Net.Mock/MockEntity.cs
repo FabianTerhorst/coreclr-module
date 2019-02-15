@@ -42,7 +42,7 @@ namespace AltV.Net.Mock
 
         public void SetMetaData(string key, object value)
         {
-            metaData[key] = MValue.CreateFromObject(value) ?? MValue.Nil;
+            metaData[key] = MValue.CreateFromObject(value);
         }
 
         public bool GetMetaData<T>(string key, out T result)
@@ -88,7 +88,7 @@ namespace AltV.Net.Mock
 
         public void SetSyncedMetaData(string key, object value)
         {
-            syncedMetaData[key] = MValue.CreateFromObject(value) ?? MValue.Nil;
+            syncedMetaData[key] = MValue.CreateFromObject(value);
         }
 
         public bool GetSyncedMetaData<T>(string key, out T result)

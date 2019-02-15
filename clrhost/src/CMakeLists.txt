@@ -1,3 +1,5 @@
+cmake_minimum_required (VERSION 3.13)
+
 set(TARGET_NAME core_clr_host)
 
 add_library(${TARGET_NAME} SHARED altv.cpp CSharpScriptRuntime.cpp CSharpResource.cpp CoreClr.cpp

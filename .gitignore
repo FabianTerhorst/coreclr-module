@@ -334,3 +334,7 @@ ASALocalRun/
 cmake-build-*/
 
 .vscode/
+
+# windows cross compile
+clrhost/winsdk_lib_symlinks/
+clrhost/winsdk_vfs_overlay.yaml
