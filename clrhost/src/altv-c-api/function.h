@@ -4,8 +4,9 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wempty-body"
 #endif
-#include <altv-cpp-api/types/MValue.h>
+
 #include <altv-cpp-api/API.h>
+
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
@@ -14,7 +15,7 @@
 extern "C"
 {
 #endif
-    EXPORT alt::MValue::Function MValueFunction_Create(void *(*fct)());
+EXPORT alt::MValue::Function MValueFunction_Create(void* (* fct)());
 #ifdef __cplusplus
 }
 #endif

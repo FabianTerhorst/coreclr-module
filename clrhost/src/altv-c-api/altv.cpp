@@ -8,12 +8,10 @@
 #pragma clang diagnostic pop
 #endif
 
-void FreeObject(void *pointer)
-{
+void FreeObject(void* pointer) {
     delete pointer;
 }
 
-void FreeArray(void *array)
-{
+void FreeArray(void* array) {
     delete[] array;
 }

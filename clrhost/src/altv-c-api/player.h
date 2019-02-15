@@ -5,7 +5,6 @@
 #pragma clang diagnostic ignored "-Wempty-body"
 #endif
 
-#include <altv-cpp-api/entities/IPlayer.h>
 #include <altv-cpp-api/API.h>
 
 #ifdef __clang__
@@ -26,7 +25,7 @@ typedef struct {
 
 typedef struct {
     uint16_t id;
-    uint8_t type;
+    alt::IBaseObject::Type type;
     position_t position;
     rotation_t rotation;
     uint16_t dimension;
@@ -40,7 +39,7 @@ EXPORT bool Player_IsConnected(alt::IPlayer* player);
 EXPORT void Player_Spawn(alt::IPlayer* player, alt::Position pos);
 EXPORT void Player_Despawn(alt::IPlayer* player);
 
-EXPORT void Player_GetName(alt::IPlayer* player, const char*& name);
+EXPORT void Player_GetName(alt::IPlayer* player, const char*&name);
 EXPORT void Player_SetName(alt::IPlayer* player, const char* name);
 
 EXPORT uint16_t Player_GetHealth(alt::IPlayer* player);

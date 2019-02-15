@@ -2,7 +2,7 @@
 
 alt::Array<CustomInvoker*> invokers;
 
-void String_Create(const char *value, alt::String &string) {
+void String_Create(const char* value, alt::String &string) {
     string = alt::String(value);
 }
 
@@ -36,7 +36,7 @@ void MValue_CreateDouble(double val, alt::MValue &mValue) {
     mValue = alt::MValue(val);
 }
 
-void MValue_CreateString(const char *val, alt::MValue &value) {
+void MValue_CreateString(const char* val, alt::MValue &value) {
     value = alt::MValue(val);
 }
 
@@ -60,7 +60,7 @@ double MValue_GetDouble(alt::MValue &mValue) {
     return mValue.Get<double>();
 }
 
-void MValue_GetString(alt::MValue &mValue, const char*& value) {
+void MValue_GetString(alt::MValue &mValue, const char*&value) {
     value = mValue.Get<alt::String>().CStr();
 }
 
@@ -96,7 +96,7 @@ void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValueList &valueL
     valueList = value;
 }
 
-void MValue_CreateDict(alt::MValue *val, const char **keys, uint64_t size, alt::MValueDict &mValue) {
+void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::MValueDict &mValue) {
     alt::MValueDict value;
     for (int i = 0; i < size; i++) {
         value[alt::String(keys[i])] = val[i];
@@ -108,7 +108,7 @@ void MValue_CreateFunction(CustomInvoker* val, alt::MValue &mValue) {
     mValue = alt::MValueFunction(val);
 }
 
-void MValue_CallFunction(alt::MValueFunction &mValue, alt::MValue *args, uint64_t size, alt::MValue &result) {
+void MValue_CallFunction(alt::MValueFunction &mValue, alt::MValue* args, uint64_t size, alt::MValue &result) {
     alt::MValueList value;
     for (int i = 0; i < size; i++) {
         value.Push(args[i]);

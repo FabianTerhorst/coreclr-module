@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
@@ -9,8 +7,6 @@ namespace AltV.Net.Mock
 {
     public class MockServer : IServer
     {
-        public static IServer Instance { get; private set; }
-
         private readonly IntPtr nativePointer;
 
         private readonly IBaseEntityPool baseEntityPool;
@@ -34,7 +30,6 @@ namespace AltV.Net.Mock
             this.vehiclePool = vehiclePool;
             this.blipPool = blipPool;
             this.checkpointPool = checkpointPool;
-            Instance = this;
         }
 
         public void LogInfo(string message)
