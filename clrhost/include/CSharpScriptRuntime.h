@@ -4,6 +4,7 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wempty-body"
 #endif
+#include <altv-cpp-api/API.h>
 #include <altv-cpp-api/IScriptRuntime.h>
 #include "CSharpResource.h"
 #include "CoreClr.h"
