@@ -4,17 +4,9 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wempty-body"
 #endif
-#include <altv-cpp-api/IResource.h>
-#include <altv-cpp-api/IServer.h>
-#include <altv-cpp-api/events/CPlayerConnectEvent.h>
-#include <altv-cpp-api/events/CPlayerDamageEvent.h>
-#include <altv-cpp-api/events/CPlayerDeadEvent.h>
-#include <altv-cpp-api/events/CPlayerDisconnectEvent.h>
+
+#include <altv-cpp-api/API.h>
 #include <altv-cpp-api/events/CRemoveEntityEvent.h>
-#include <altv-cpp-api/events/CServerScriptEvent.h>
-#include <altv-cpp-api/events/CVehicleChangeSeatEvent.h>
-#include <altv-cpp-api/events/CVehicleEnterEvent.h>
-#include <altv-cpp-api/events/CVehicleLeaveEvent.h>
 
 #ifdef _WIN32
 #define RESOURCES_PATH "\\resources\\"
