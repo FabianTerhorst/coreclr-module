@@ -125,11 +125,13 @@ void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValue &valueList)
 }
 
 void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::MValue &mValue) {
-    alt::MValue value = alt::MValue(alt::MValue::Dict());
+    /*alt::MValue value = alt::MValue(alt::MValue::Dict());
     for (int i = 0; i < size; i++) {
         value.Get<alt::MValue::Dict>()[alt::String(keys[i])] = val[i];
     }
-    mValue = value;
+    mValue = value;*/
+    auto map = std::unordered_map<alt::String, alt::MValue>();
+    map["bla"] = alt::MValue("123");
 }
 
 void MValue_CreateFunction(CustomInvoker* val, alt::MValue &mValue) {
