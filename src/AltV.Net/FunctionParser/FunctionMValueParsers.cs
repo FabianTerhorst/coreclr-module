@@ -327,9 +327,16 @@ namespace AltV.Net.FunctionParser
             var entityType = EntityType.Undefined;
             mValue.GetEntityPointer(ref entityPointer, ref entityType);
             if (entityPointer == IntPtr.Zero) return null;
-            if (!baseEntityPool.GetOrCreate(entityPointer, entityType, out var entity) ||
-                !ValidateEntityType(entity.Type, type, typeInfo))
+            if (!ValidateEntityType(entityType, type, typeInfo))
+            {
                 return null;
+            }
+
+            if (!baseEntityPool.GetOrCreate(entityPointer, entityType, out var entity))
+            {
+                return null;
+            }
+
             return entity;
         }
 
@@ -462,7 +469,7 @@ namespace AltV.Net.FunctionParser
 
                 return dict;
             }
-            
+
             if (valueType == FunctionTypes.Float)
             {
                 var dict = new Dictionary<string, float>();
@@ -481,7 +488,7 @@ namespace AltV.Net.FunctionParser
 
                 return dict;
             }
-            
+
             if (valueType == FunctionTypes.Float)
             {
                 var dict = new Dictionary<string, float>();
