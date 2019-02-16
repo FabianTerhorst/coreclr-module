@@ -15,6 +15,19 @@
 extern "C"
 {
 #endif
+// Entity
+EXPORT uint16_t Vehicle_GetID(alt::IVehicle* vehicle);
+EXPORT alt::Position Vehicle_GetPosition(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetPosition(alt::IVehicle* vehicle, alt::Position pos);
+EXPORT alt::Rotation Vehicle_GetRotation(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetRotation(alt::IVehicle* vehicle, alt::Rotation rot);
+EXPORT uint16_t Vehicle_GetDimension(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetDimension(alt::IVehicle* vehicle, uint16_t dimension);
+EXPORT void Vehicle_GetMetaData(alt::IVehicle* vehicle, const char* key, alt::MValue &val);
+EXPORT void Vehicle_SetMetaData(alt::IVehicle* vehicle, const char* key, alt::MValue* val);
+EXPORT void Vehicle_GetSyncedMetaData(alt::IVehicle* vehicle, const char* key, alt::MValue &val);
+EXPORT void Vehicle_SetSyncedMetaData(alt::IVehicle* vehicle, const char* key, alt::MValue* val);
+// Vehicle
 EXPORT uint16_t Vehicle_GetId(alt::IVehicle* vehicle);
 EXPORT alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle);
 EXPORT uint8_t Vehicle_GetMod(alt::IVehicle* vehicle, uint8_t category);

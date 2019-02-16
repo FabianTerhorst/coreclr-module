@@ -1,8 +1,52 @@
 #include "vehicle.h"
 
-uint16_t Vehicle_GetId(alt::IVehicle* vehicle) {
-    return vehicle->GetID();
+// Entity
+
+uint16_t Vehicle_GetID(alt::IVehicle* entity) {
+    return entity->GetID();
 }
+
+alt::Position Vehicle_GetPosition(alt::IVehicle* entity) {
+    return entity->GetPosition();
+}
+
+void Vehicle_SetPosition(alt::IVehicle* entity, alt::Position pos) {
+    entity->SetPosition(pos);
+}
+
+alt::Rotation Vehicle_GetRotation(alt::IVehicle* entity) {
+    return entity->GetRotation();
+}
+
+void Vehicle_SetRotation(alt::IVehicle* entity, alt::Rotation rot) {
+    entity->SetRotation(rot);
+}
+
+uint16_t Vehicle_GetDimension(alt::IVehicle* entity) {
+    return entity->GetDimension();
+}
+
+void Vehicle_SetDimension(alt::IVehicle* entity, uint16_t dimension) {
+    entity->SetDimension(dimension);
+}
+
+void Vehicle_GetMetaData(alt::IVehicle* entity, const char* key, alt::MValue &val) {
+    val = entity->GetMetaData(key);
+}
+
+void Vehicle_SetMetaData(alt::IVehicle* entity, const char* key, alt::MValue* val) {
+    entity->SetMetaData(key, *val);
+}
+
+void Vehicle_GetSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MValue &val) {
+    val = entity->GetSyncedMetaData(key);
+}
+
+void Vehicle_SetSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MValue* val) {
+    entity->SetSyncedMetaData(key, *val);
+}
+
+// Vehicle
 
 alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle) {
     return vehicle->GetDriver();

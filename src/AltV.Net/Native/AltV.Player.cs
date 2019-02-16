@@ -8,6 +8,45 @@ namespace AltV.Net.Native
     {
         internal static class Player
         {
+            // Entity
+            
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern ushort Player_GetID(IntPtr entityPointer);
+
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern Position Player_GetPosition(IntPtr entityPointer);
+
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern void Player_SetPosition(IntPtr entityPointer, Position position);
+
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern Rotation Player_GetRotation(IntPtr entityPointer);
+
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern void Player_SetRotation(IntPtr entityPointer, Rotation rotation);
+
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern ushort Player_GetDimension(IntPtr entityPointer);
+
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern void Player_SetDimension(IntPtr entityPointer, ushort dimension);
+
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            internal static extern void Player_GetMetaData(IntPtr entityPointer, string key, ref MValue value);
+
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            internal static extern void Player_SetMetaData(IntPtr entityPointer, string key, ref MValue value);
+
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            internal static extern void
+                Player_GetSyncedMetaData(IntPtr entityPointer, string key, ref MValue value);
+
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            internal static extern void
+                Player_SetSyncedMetaData(IntPtr entityPointer, string key, ref MValue value);
+            
+            // Player
+            
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern bool Player_IsConnected(IntPtr playerPointer);
 

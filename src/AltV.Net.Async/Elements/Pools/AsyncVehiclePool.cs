@@ -1,7 +1,7 @@
 using System;
 using AltV.Net.Elements.Entities;
 
-namespace AltV.Net.Async
+namespace AltV.Net.Async.Elements.Pools
 {
     public class AsyncVehiclePool : AsyncEntityPool<IVehicle>
     {

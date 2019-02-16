@@ -12,7 +12,7 @@ namespace AltV.Net.Elements.Pools
 
         public override ushort GetId(IntPtr entityPointer)
         {
-            return AltVNative.Vehicle.Vehicle_GetId(entityPointer);
+            return AltVNative.Vehicle.Vehicle_GetID(entityPointer);
         }
     }
 }

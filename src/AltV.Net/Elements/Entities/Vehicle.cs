@@ -7,7 +7,99 @@ namespace AltV.Net.Elements.Entities
 {
     public class Vehicle : Entity, IVehicle
     {
-        public new static ushort GetId(IntPtr vehiclePointer) => AltVNative.Vehicle.Vehicle_GetId(vehiclePointer);
+        public new static ushort GetId(IntPtr vehiclePointer) => AltVNative.Vehicle.Vehicle_GetID(vehiclePointer);
+        
+        public override Position Position
+        {
+            get => !Exists ? Position.Zero : AltVNative.Vehicle.Vehicle_GetPosition(NativePointer);
+            set
+            {
+                if (Exists)
+                {
+                    AltVNative.Vehicle.Vehicle_SetPosition(NativePointer, value);
+                }
+            }
+        }
+
+        public override Rotation Rotation
+        {
+            get => !Exists ? Rotation.Zero : AltVNative.Vehicle.Vehicle_GetRotation(NativePointer);
+            set
+            {
+                if (Exists)
+                {
+                    AltVNative.Vehicle.Vehicle_SetRotation(NativePointer, value);
+                }
+            }
+        }
+
+        public override ushort Dimension
+        {
+            get => !Exists ? default : AltVNative.Vehicle.Vehicle_GetDimension(NativePointer);
+            set
+            {
+                if (Exists)
+                {
+                    AltVNative.Vehicle.Vehicle_SetDimension(NativePointer, value);
+                }
+            }
+        }
+
+        public override void SetMetaData(string key, object value)
+        {
+            if (Exists)
+            {
+                var mValue = MValue.CreateFromObject(value);
+                AltVNative.Vehicle.Vehicle_SetMetaData(NativePointer, key, ref mValue);
+            }
+        }
+
+        public override bool GetMetaData<T>(string key, out T result)
+        {
+            if (!Exists)
+            {
+                result = default;
+                return false;
+            }
+            var mValue = MValue.Nil;
+            AltVNative.Vehicle.Vehicle_GetMetaData(NativePointer, key, ref mValue);
+            if (!(mValue.ToObject() is T cast))
+            {
+                result = default;
+                return false;
+            }
+
+            result = cast;
+            return true;
+        }
+
+        public override void SetSyncedMetaData(string key, object value)
+        {
+            if (Exists)
+            {
+                var mValue = MValue.CreateFromObject(value);
+                AltVNative.Vehicle.Vehicle_SetSyncedMetaData(NativePointer, key, ref mValue);
+            }
+        }
+
+        public override bool GetSyncedMetaData<T>(string key, out T result)
+        {
+            if (!Exists)
+            {
+                result = default;
+                return false;
+            }
+            var mValue = MValue.Nil;
+            AltVNative.Vehicle.Vehicle_GetSyncedMetaData(NativePointer, key, ref mValue);
+            if (!(mValue.ToObject() is T cast))
+            {
+                result = default;
+                return false;
+            }
+
+            result = cast;
+            return true;
+        }
         
         public IPlayer Driver
         {

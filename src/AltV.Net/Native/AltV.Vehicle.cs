@@ -8,8 +8,44 @@ namespace AltV.Net.Native
     {
         internal static class Vehicle
         {
+            // Entity
+            
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern ushort Vehicle_GetId(IntPtr vehiclePointer);
+            internal static extern ushort Vehicle_GetID(IntPtr entityPointer);
+
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern Position Vehicle_GetPosition(IntPtr entityPointer);
+
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern void Vehicle_SetPosition(IntPtr entityPointer, Position position);
+
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern Rotation Vehicle_GetRotation(IntPtr entityPointer);
+
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern void Vehicle_SetRotation(IntPtr entityPointer, Rotation rotation);
+
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern ushort Vehicle_GetDimension(IntPtr entityPointer);
+
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern void Vehicle_SetDimension(IntPtr entityPointer, ushort dimension);
+
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            internal static extern void Vehicle_GetMetaData(IntPtr entityPointer, string key, ref MValue value);
+
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            internal static extern void Vehicle_SetMetaData(IntPtr entityPointer, string key, ref MValue value);
+
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            internal static extern void
+                Vehicle_GetSyncedMetaData(IntPtr entityPointer, string key, ref MValue value);
+
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            internal static extern void
+                Vehicle_SetSyncedMetaData(IntPtr entityPointer, string key, ref MValue value);
+            
+            // Vehicle
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern IntPtr Vehicle_GetDriver(IntPtr vehiclePointer);

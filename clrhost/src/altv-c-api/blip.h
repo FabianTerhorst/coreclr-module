@@ -15,6 +15,19 @@
 extern "C"
 {
 #endif
+// Entity
+EXPORT uint16_t Blip_GetID(alt::IBlip* blip);
+EXPORT alt::Position Blip_GetPosition(alt::IBlip* blip);
+EXPORT void Blip_SetPosition(alt::IBlip* blip, alt::Position pos);
+EXPORT alt::Rotation Blip_GetRotation(alt::IBlip* blip);
+EXPORT void Blip_SetRotation(alt::IBlip* blip, alt::Rotation rot);
+EXPORT uint16_t Blip_GetDimension(alt::IBlip* blip);
+EXPORT void Blip_SetDimension(alt::IBlip* blip, uint16_t dimension);
+EXPORT void Blip_GetMetaData(alt::IBlip* blip, const char* key, alt::MValue &val);
+EXPORT void Blip_SetMetaData(alt::IBlip* blip, const char* key, alt::MValue* val);
+EXPORT void Blip_GetSyncedMetaData(alt::IBlip* blip, const char* key, alt::MValue &val);
+EXPORT void Blip_SetSyncedMetaData(alt::IBlip* blip, const char* key, alt::MValue* val);
+// Blip
 EXPORT bool Blip_IsGlobal(alt::IBlip* blip);
 EXPORT bool Blip_IsAttached(alt::IBlip* blip);
 EXPORT alt::IEntity* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type);

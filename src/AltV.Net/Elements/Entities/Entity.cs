@@ -12,15 +12,19 @@ namespace AltV.Net.Elements.Entities
 
         private readonly ConcurrentDictionary<string, object> data = new ConcurrentDictionary<string, object>();
 
-        //private Position position = Position.Zero;
-
-        //private Rotation rotation = Rotation.Zero;
-
         public IntPtr NativePointer { get; }
         public bool Exists { get; set; }
 
         public ushort Id { get; }
         public EntityType Type { get; }
+        
+        public abstract Position Position { get; set; }
+        public abstract Rotation Rotation { get; set; }
+        public abstract ushort Dimension { get; set; }
+        public abstract void SetMetaData(string key, object value);
+        public abstract bool GetMetaData<T>(string key, out T result);
+        public abstract void SetSyncedMetaData(string key, object value);
+        public abstract bool GetSyncedMetaData<T>(string key, out T result);
 
         protected Entity(IntPtr nativePointer, EntityType type, ushort id)
         {
@@ -53,12 +57,6 @@ namespace AltV.Net.Elements.Entities
             return true;
         }
 
-        //"Has" needs to do the same calculations Get has to do so consider using Get always
-        public bool Has(string key)
-        {
-            return data.ContainsKey(key);
-        }
-
         protected void CheckExistence()
         {
             if (Exists)
@@ -69,35 +67,7 @@ namespace AltV.Net.Elements.Entities
             throw new EntityDeletedException(this);
         }
 
-        /*public Position PositionRef for later performance optimization
-        {
-            get
-            {
-                AltVNative.Entity.Entity_GetPositionRef(NativePointer, ref position);
-                return position;
-            }
-            set
-            {
-                position = value;
-                AltVNative.Entity.Entity_SetPositionRef(NativePointer, ref value);
-            }
-        }*/
-
-        /*public Rotation RotationRef for later performance optimization
-        {
-            get
-            {
-                AltVNative.Entity.Entity_GetRotationRef(NativePointer, ref rotation);
-                return rotation;
-            }
-            set
-            {
-                rotation = value;
-                AltVNative.Entity.Entity_SetRotationRef(NativePointer, ref value);
-            }
-        }*/
-
-        public Position Position
+        /*public Position Position
         {
             get => !Exists ? Position.Zero : AltVNative.Entity.Entity_GetPosition(NativePointer);
             set
@@ -130,22 +100,6 @@ namespace AltV.Net.Elements.Entities
                 {
                     AltVNative.Entity.Entity_SetDimension(NativePointer, value);
                 }
-            }
-        }
-
-        public void SetPosition(float x, float y, float z)
-        {
-            if (Exists)
-            {
-                AltVNative.Entity.Entity_SetPositionXYZ(NativePointer, x, y, z);
-            }
-        }
-
-        public void SetRotation(float roll, float pitch, float yaw)
-        {
-            if (Exists)
-            {
-                AltVNative.Entity.Entity_SetRotationRPY(NativePointer, roll, pitch, yaw);
             }
         }
 
@@ -203,7 +157,7 @@ namespace AltV.Net.Elements.Entities
 
             result = cast;
             return true;
-        }
+        }*/
 
         public void Remove()
         {

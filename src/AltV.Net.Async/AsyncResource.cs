@@ -1,3 +1,4 @@
+using AltV.Net.Async.Elements.Pools;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Async
@@ -20,7 +21,7 @@ namespace AltV.Net.Async
 
         public override IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory)
         {
-            return new AsyncEntityPool<IPlayer>(playerFactory);
+            return new AsyncPlayerPool(playerFactory);
         }
 
         public override IEntityPool<IVehicle> GetVehiclePool(IEntityFactory<IVehicle> vehicleFactory)
@@ -30,15 +31,16 @@ namespace AltV.Net.Async
 
         public override IEntityPool<IBlip> GetBlipPool(IEntityFactory<IBlip> blipFactory)
         {
-            return new AsyncEntityPool<IBlip>(blipFactory);
+            return new AsyncBlipPool(blipFactory);
         }
 
         public override IEntityPool<ICheckpoint> GetCheckpointPool(IEntityFactory<ICheckpoint> checkpointFactory)
         {
-            return new AsyncEntityPool<ICheckpoint>(checkpointFactory);
+            return new AsyncCheckpointPool(checkpointFactory);
         }
-        
-        public override Module GetModule(IServer server, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
+
+        public override Module GetModule(IServer server, IBaseEntityPool baseEntityPool,
+            IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IEntityPool<IBlip> blipPool,
             IEntityPool<ICheckpoint> checkpointPool)

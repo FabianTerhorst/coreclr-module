@@ -1,4 +1,6 @@
+using System;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Pools
 {
@@ -6,6 +8,11 @@ namespace AltV.Net.Elements.Pools
     {
         public PlayerPool(IEntityFactory<IPlayer> playerFactory) : base(playerFactory)
         {
+        }
+        
+        public override ushort GetId(IntPtr entityPointer)
+        {
+            return AltVNative.Player.Player_GetID(entityPointer);
         }
     }
 }

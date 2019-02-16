@@ -48,10 +48,6 @@ namespace AltV.Net.Elements.Entities
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
         ushort Dimension { get; set; }
 
-        void SetPosition(float x, float y, float z);
-
-        void SetRotation(float roll, float pitch, float yaw);
-
         void SetMetaData(string key, object value);
 
         bool GetMetaData<T>(string key, out T result);

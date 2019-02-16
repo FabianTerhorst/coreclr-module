@@ -35,6 +35,19 @@ typedef struct {
 extern "C"
 {
 #endif
+// Entity
+EXPORT uint16_t Player_GetID(alt::IPlayer* player);
+EXPORT alt::Position Player_GetPosition(alt::IPlayer* player);
+EXPORT void Player_SetPosition(alt::IPlayer* player, alt::Position pos);
+EXPORT alt::Rotation Player_GetRotation(alt::IPlayer* player);
+EXPORT void Player_SetRotation(alt::IPlayer* player, alt::Rotation rot);
+EXPORT uint16_t Player_GetDimension(alt::IPlayer* player);
+EXPORT void Player_SetDimension(alt::IPlayer* player, uint16_t dimension);
+EXPORT void Player_GetMetaData(alt::IPlayer* player, const char* key, alt::MValue &val);
+EXPORT void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValue* val);
+EXPORT void Player_GetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValue &val);
+EXPORT void Player_SetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValue* val);
+// Player
 EXPORT bool Player_IsConnected(alt::IPlayer* player);
 EXPORT void Player_Spawn(alt::IPlayer* player, alt::Position pos);
 EXPORT void Player_Despawn(alt::IPlayer* player);

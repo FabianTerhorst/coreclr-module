@@ -7,6 +7,100 @@ namespace AltV.Net.Elements.Entities
 {
     public class Player : Entity, IPlayer
     {
+        public new static ushort GetId(IntPtr playerPointer) => AltVNative.Player.Player_GetID(playerPointer);
+        
+        public override Position Position
+        {
+            get => !Exists ? Position.Zero : AltVNative.Player.Player_GetPosition(NativePointer);
+            set
+            {
+                if (Exists)
+                {
+                    AltVNative.Player.Player_SetPosition(NativePointer, value);
+                }
+            }
+        }
+
+        public override Rotation Rotation
+        {
+            get => !Exists ? Rotation.Zero : AltVNative.Player.Player_GetRotation(NativePointer);
+            set
+            {
+                if (Exists)
+                {
+                    AltVNative.Player.Player_SetRotation(NativePointer, value);
+                }
+            }
+        }
+
+        public override ushort Dimension
+        {
+            get => !Exists ? default : AltVNative.Player.Player_GetDimension(NativePointer);
+            set
+            {
+                if (Exists)
+                {
+                    AltVNative.Player.Player_SetDimension(NativePointer, value);
+                }
+            }
+        }
+
+        public override void SetMetaData(string key, object value)
+        {
+            if (Exists)
+            {
+                var mValue = MValue.CreateFromObject(value);
+                AltVNative.Player.Player_SetMetaData(NativePointer, key, ref mValue);
+            }
+        }
+
+        public override bool GetMetaData<T>(string key, out T result)
+        {
+            if (!Exists)
+            {
+                result = default;
+                return false;
+            }
+            var mValue = MValue.Nil;
+            AltVNative.Player.Player_GetMetaData(NativePointer, key, ref mValue);
+            if (!(mValue.ToObject() is T cast))
+            {
+                result = default;
+                return false;
+            }
+
+            result = cast;
+            return true;
+        }
+
+        public override void SetSyncedMetaData(string key, object value)
+        {
+            if (Exists)
+            {
+                var mValue = MValue.CreateFromObject(value);
+                AltVNative.Player.Player_SetSyncedMetaData(NativePointer, key, ref mValue);
+            }
+        }
+
+        public override bool GetSyncedMetaData<T>(string key, out T result)
+        {
+            if (!Exists)
+            {
+                result = default;
+                return false;
+            }
+            var mValue = MValue.Nil;
+            AltVNative.Player.Player_GetSyncedMetaData(NativePointer, key, ref mValue);
+            if (!(mValue.ToObject() is T cast))
+            {
+                result = default;
+                return false;
+            }
+
+            result = cast;
+            return true;
+        }
+        
         public bool IsConnected => Exists && AltVNative.Player.Player_IsConnected(NativePointer);
 
         public string Name

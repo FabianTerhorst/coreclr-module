@@ -1,5 +1,53 @@
 #include "player.h"
 
+// Entity
+
+uint16_t Player_GetID(alt::IPlayer* player) {
+    return player->GetID();
+}
+
+alt::Position Player_GetPosition(alt::IPlayer* player) {
+    return player->GetPosition();
+}
+
+void Player_SetPosition(alt::IPlayer* player, alt::Position pos) {
+    player->SetPosition(pos);
+}
+
+alt::Rotation Player_GetRotation(alt::IPlayer* player) {
+    return player->GetRotation();
+}
+
+void Player_SetRotation(alt::IPlayer* player, alt::Rotation rot) {
+    player->SetRotation(rot);
+}
+
+uint16_t Player_GetDimension(alt::IPlayer* player) {
+    return player->GetDimension();
+}
+
+void Player_SetDimension(alt::IPlayer* player, uint16_t dimension) {
+    player->SetDimension(dimension);
+}
+
+void Player_GetMetaData(alt::IPlayer* player, const char* key, alt::MValue &val) {
+    val = player->GetMetaData(key);
+}
+
+void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValue* val) {
+    player->SetMetaData(key, *val);
+}
+
+void Player_GetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValue &val) {
+    val = player->GetSyncedMetaData(key);
+}
+
+void Player_SetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValue* val) {
+    player->SetSyncedMetaData(key, *val);
+}
+
+// Player
+
 bool Player_IsConnected(alt::IPlayer* player) {
     return player->IsConnected();
 }
