@@ -84,7 +84,7 @@ void MValue_GetDict(alt::MValue &mValue, alt::Array<alt::String> &keys, alt::MVa
     values = mapValues;
 }
 
-alt::IEntity* MValue_GetEntity(alt::MValue &mValue, alt::IBaseObject::Type &type) {
+void* MValue_GetEntity(alt::MValue &mValue, alt::IBaseObject::Type &type) {
     auto entityPointer = mValue.Get<alt::MValue::Entity>();
     if (entityPointer != nullptr) {
         type = entityPointer->GetType();
