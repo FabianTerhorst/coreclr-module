@@ -6,9 +6,7 @@ using AltV.Net.Native;
 namespace AltV.Net.Elements.Entities
 {
     public class Vehicle : Entity, IVehicle
-    {
-        public new static ushort GetId(IntPtr vehiclePointer) => AltVNative.Vehicle.Vehicle_GetId(vehiclePointer);
-        
+    {   
         public IPlayer Driver
         {
             get

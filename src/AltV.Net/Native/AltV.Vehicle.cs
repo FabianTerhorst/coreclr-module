@@ -8,9 +8,6 @@ namespace AltV.Net.Native
     {
         internal static class Vehicle
         {
-            [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern ushort Vehicle_GetId(IntPtr vehiclePointer);
-
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern IntPtr Vehicle_GetDriver(IntPtr vehiclePointer);
 

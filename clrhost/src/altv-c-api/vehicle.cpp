@@ -1,9 +1,5 @@
 #include "vehicle.h"
 
-uint16_t Vehicle_GetId(alt::IVehicle* vehicle) {
-    return vehicle->GetID();
-}
-
 alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle) {
     return vehicle->GetDriver();
 }

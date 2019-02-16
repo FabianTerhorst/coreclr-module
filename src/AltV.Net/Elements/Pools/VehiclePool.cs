@@ -1,6 +1,4 @@
-using System;
 using AltV.Net.Elements.Entities;
-using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Pools
 {
@@ -8,11 +6,6 @@ namespace AltV.Net.Elements.Pools
     {
         public VehiclePool(IEntityFactory<IVehicle> vehicleFactory) : base(vehicleFactory)
         {
-        }
-
-        public override ushort GetId(IntPtr entityPointer)
-        {
-            return AltVNative.Vehicle.Vehicle_GetId(entityPointer);
         }
     }
 }
