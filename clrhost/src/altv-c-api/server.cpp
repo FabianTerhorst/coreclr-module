@@ -62,17 +62,29 @@ Server_CreateVehicle(alt::IServer* server, uint32_t model, alt::Position pos, fl
 
 alt::ICheckpoint*
 Server_CreateCheckpoint(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::Position pos, float radius,
-                        float height, alt::RGBA color) {
-    return server->CreateCheckpoint(target, type, pos, radius, height, color);
+                        float height, alt::RGBA color, uint16_t &id) {
+    auto checkpoint = server->CreateCheckpoint(target, type, pos, radius, height, color);
+    if (checkpoint != nullptr) {
+        id = checkpoint->GetID();
+    }
+    return checkpoint;
 }
 
-alt::IBlip* Server_CreateBlip(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::Position pos) {
-    return server->CreateBlip(target, type, pos);
+alt::IBlip* Server_CreateBlip(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::Position pos, uint16_t &id) {
+    auto blip = server->CreateBlip(target, type, pos);
+    if (blip != nullptr) {
+        id = blip->GetID();
+    }
+    return blip;
 }
 
 alt::IBlip*
-Server_CreateBlipAttached(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo) {
-    return server->CreateBlip(target, type, attachTo);
+Server_CreateBlipAttached(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo, uint16_t &id) {
+    auto blip = server->CreateBlip(target, type, attachTo);
+    if (blip != nullptr) {
+        id = blip->GetID();
+    }
+    return blip;
 }
 
 void Server_RemoveEntity(alt::IServer* server, alt::IEntity* entity) {

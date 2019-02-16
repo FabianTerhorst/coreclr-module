@@ -112,22 +112,25 @@ namespace AltV.Net
         public ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height,
             Rgba color)
         {
+            ushort id = default;
             checkpointPool.Create(AltVNative.Server.Server_CreateCheckpoint(NativePointer, player.NativePointer,
-                type, pos, radius, height, color), out var checkpoint);
+                type, pos, radius, height, color, ref id), id, out var checkpoint);
             return checkpoint;
         }
 
         public IBlip CreateBlip(IPlayer player, byte type, Position pos)
         {
+            ushort id = default;
             blipPool.Create(AltVNative.Server.Server_CreateBlip(NativePointer, player.NativePointer,
-                type, pos), out var blip);
+                type, pos, ref id), id, out var blip);
             return blip;
         }
 
         public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
         {
+            ushort id = default;
             blipPool.Create(AltVNative.Server.Server_CreateBlipAttached(NativePointer, player.NativePointer,
-                type, entityAttach.NativePointer), out var blip);
+                type, entityAttach.NativePointer, ref id), id, out var blip);
             return blip;
         }
 

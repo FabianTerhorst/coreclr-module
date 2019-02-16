@@ -40,15 +40,15 @@ namespace AltV.Net.Native
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern IntPtr Server_CreateCheckpoint(IntPtr serverPointer, IntPtr playerTargetPointer,
-                byte type, Position pos, float radius, float height, Rgba color);
+                byte type, Position pos, float radius, float height, Rgba color, ref ushort id);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern IntPtr Server_CreateBlip(IntPtr serverPointer, IntPtr playerTargetPointer, byte type,
-                Position pos);
+                Position pos, ref ushort id);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern IntPtr Server_CreateBlipAttached(IntPtr serverPointer, IntPtr playerTargetPointer,
-                byte type, IntPtr entityAttachPointer);
+                byte type, IntPtr entityAttachPointer, ref ushort id);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Server_RemoveEntity(IntPtr serverPointer, IntPtr entityPointer);
