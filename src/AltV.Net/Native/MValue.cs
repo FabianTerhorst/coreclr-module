@@ -43,10 +43,14 @@ namespace AltV.Net.Native
 
             switch (obj)
             {
+                case IPlayer player:
+                    return Create(player);
                 case IVehicle vehicle:
                     return Create(vehicle);
-                case IEntity entity:
-                    return Create(entity);
+                case IBlip blip:
+                    return Create(blip);
+                case ICheckpoint checkpoint:
+                    return Create(checkpoint);
                 case bool value:
                     return Create(value);
                 case int value:
@@ -241,17 +245,31 @@ namespace AltV.Net.Native
             return mValue;
         }
 
-        public static MValue Create(IEntity entity)
+        public static MValue Create(IPlayer player)
         {
             var mValue = Nil;
-            AltVNative.MValueCreate.MValue_CreateEntity(entity.NativePointer, ref mValue);
+            AltVNative.MValueCreate.MValue_CreatePlayer(player.NativePointer, ref mValue);
             return mValue;
         }
-        
+
         public static MValue Create(IVehicle vehicle)
         {
             var mValue = Nil;
             AltVNative.MValueCreate.MValue_CreateVehicle(vehicle.NativePointer, ref mValue);
+            return mValue;
+        }
+
+        public static MValue Create(IBlip blip)
+        {
+            var mValue = Nil;
+            AltVNative.MValueCreate.MValue_CreateBlip(blip.NativePointer, ref mValue);
+            return mValue;
+        }
+
+        public static MValue Create(ICheckpoint checkpoint)
+        {
+            var mValue = Nil;
+            AltVNative.MValueCreate.MValue_CreateCheckpoint(checkpoint.NativePointer, ref mValue);
             return mValue;
         }
 

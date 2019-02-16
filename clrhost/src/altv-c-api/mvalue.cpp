@@ -40,11 +40,19 @@ void MValue_CreateString(const char* val, alt::MValue &value) {
     value = alt::MValue(val);
 }
 
-void MValue_CreateEntity(alt::MValue::Entity val, alt::MValue &mValue) {
+void MValue_CreatePlayer(alt::IPlayer* val, alt::MValue &mValue) {
     mValue = alt::MValue(val);
 }
 
 void MValue_CreateVehicle(alt::IVehicle* val, alt::MValue &mValue) {
+    mValue = alt::MValue(val);
+}
+
+void MValue_CreateBlip(alt::IVehicle* val, alt::MValue &mValue) {
+    mValue = alt::MValue(val);
+}
+
+void MValue_CreateCheckpoint(alt::ICheckpoint* val, alt::MValue &mValue) {
     mValue = alt::MValue(val);
 }
 

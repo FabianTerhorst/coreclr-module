@@ -49,7 +49,10 @@ EXPORT void MValue_CreateDouble(double val, alt::MValue &mValue);
 EXPORT void MValue_CreateString(const char* val, alt::MValue &value);
 EXPORT void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValueList &valueList);
 EXPORT void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::MValueDict &mValue);
-EXPORT void MValue_CreateEntity(alt::MValue::Entity val, alt::MValue &mValue);
+EXPORT void MValue_CreatePlayer(alt::IPlayer* val, alt::MValue &mValue);
+EXPORT void MValue_CreateVehicle(alt::IVehicle* val, alt::MValue &mValue);
+EXPORT void MValue_CreateBlip(alt::IVehicle* val, alt::MValue &mValue);
+EXPORT void MValue_CreateCheckpoint(alt::ICheckpoint* val, alt::MValue &mValue);
 EXPORT void MValue_CreateFunction(CustomInvoker* val, alt::MValue &mValue);
 
 EXPORT bool MValue_GetBool(alt::MValue &mValue);
@@ -60,7 +63,6 @@ EXPORT void MValue_GetString(alt::MValue &mValue, const char*&value);
 EXPORT void MValue_GetList(alt::MValue &mValue, alt::MValue::List &value);
 EXPORT void MValue_GetDict(alt::MValue &mValue, alt::Array<alt::String> &keys, alt::MValue::List &values);
 EXPORT void* MValue_GetEntity(alt::MValue &mValue, alt::IBaseObject::Type &type);
-EXPORT void MValue_CreateVehicle(alt::IVehicle* val, alt::MValue &mValue);
 EXPORT MValueFunctionCallback MValue_GetFunction(alt::MValueFunction &mValue);
 
 EXPORT void MValue_CallFunction(alt::MValueFunction &mValue, alt::MValue* args, uint64_t size, alt::MValue &result);
