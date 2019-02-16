@@ -117,9 +117,9 @@ MValueFunctionCallback MValue_GetFunction(alt::MValueFunction &mValue) {
 }
 
 void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValue &valueList) {
-    alt::MValueList value;
+    alt::MValue value = alt::MValue(alt::MValue::List());
     for (int i = 0; i < size; i++) {
-        value.Push(val[i]);
+        value.Get<alt::MValue::List>().Push(val[i]);
     }
     valueList = value;
 }
