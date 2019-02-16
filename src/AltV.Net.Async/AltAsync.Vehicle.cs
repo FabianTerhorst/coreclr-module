@@ -12,9 +12,10 @@ namespace AltV.Net.Async
     {
         public static async Task<IVehicle> CreateVehicle(uint model, Position pos, float heading)
         {
+            ushort id = default;
             var vehiclePtr = await AltVAsync.Schedule(() =>
-                AltVNative.Server.Server_CreateVehicle(((Server) Alt.Server).NativePointer, model, pos, heading));
-            Alt.Module.VehiclePool.Create(vehiclePtr, out var vehicle);
+                AltVNative.Server.Server_CreateVehicle(((Server) Alt.Server).NativePointer, model, pos, heading, ref id));
+            Alt.Module.VehiclePool.Create(vehiclePtr, id, out var vehicle);
             return vehicle;
         }
 

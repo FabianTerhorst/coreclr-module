@@ -51,8 +51,13 @@ Server_TriggerClientEvent(alt::IServer* server, alt::IPlayer* target, const char
     server->TriggerClientEvent(target, ev, args);
 }
 
-alt::IVehicle* Server_CreateVehicle(alt::IServer* server, uint32_t model, alt::Position pos, float heading) {
-    return server->CreateVehicle(model, pos, heading);
+alt::IVehicle*
+Server_CreateVehicle(alt::IServer* server, uint32_t model, alt::Position pos, float heading, uint16_t &id) {
+    auto vehicle = server->CreateVehicle(model, pos, heading);
+    if (vehicle != nullptr) {
+        id = vehicle->GetID();
+    }
+    return vehicle;
 }
 
 alt::ICheckpoint*

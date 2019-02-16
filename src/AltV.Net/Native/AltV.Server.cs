@@ -36,7 +36,7 @@ namespace AltV.Net.Native
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern IntPtr Server_CreateVehicle(IntPtr serverPointer, uint model, Position pos,
-                float heading);
+                float heading, ref ushort id);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern IntPtr Server_CreateCheckpoint(IntPtr serverPointer, IntPtr playerTargetPointer,

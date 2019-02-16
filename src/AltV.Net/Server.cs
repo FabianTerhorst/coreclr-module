@@ -103,7 +103,8 @@ namespace AltV.Net
 
         public IVehicle CreateVehicle(uint model, Position pos, float heading)
         {
-            vehiclePool.Create(AltVNative.Server.Server_CreateVehicle(NativePointer, model, pos, heading),
+            ushort id = default;
+            vehiclePool.Create(AltVNative.Server.Server_CreateVehicle(NativePointer, model, pos, heading, ref id), id,
                 out var vehicle);
             return vehicle;
         }
