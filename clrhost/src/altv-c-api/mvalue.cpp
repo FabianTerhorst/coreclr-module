@@ -132,6 +132,7 @@ void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::
     mValue = value;*/
     auto map = std::unordered_map<alt::String, alt::MValue>();
     map["bla"] = alt::MValue("123");
+    mValue = alt::MValue(map);
 }
 
 void MValue_CreateFunction(CustomInvoker* val, alt::MValue &mValue) {
