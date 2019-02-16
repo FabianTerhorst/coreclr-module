@@ -90,13 +90,13 @@ alt::IEntity* MValue_GetEntity(alt::MValue &mValue, alt::IBaseObject::Type &type
         type = entityPointer->GetType();
         switch (type) {
             case alt::IBaseObject::Type::PLAYER:
-                return dynamic_cast<alt::IPlayer*>(entityPointer);
+                return reinterpret_cast<alt::IPlayer*>(entityPointer);
             case alt::IBaseObject::Type::VEHICLE:
-                return dynamic_cast<alt::IVehicle*>(entityPointer);
+                return reinterpret_cast<alt::IVehicle*>(entityPointer);
             case alt::IBaseObject::Type::BLIP:
-                return dynamic_cast<alt::IBlip*>(entityPointer);
+                return reinterpret_cast<alt::IBlip*>(entityPointer);
             case alt::IBaseObject::Type::CHECKPOINT:
-                return dynamic_cast<alt::ICheckpoint*>(entityPointer);
+                return reinterpret_cast<alt::ICheckpoint*>(entityPointer);
             default:
                 return nullptr;
         }
