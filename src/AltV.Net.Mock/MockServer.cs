@@ -107,7 +107,7 @@ namespace AltV.Net.Mock
         public IVehicle CreateVehicle(uint model, Position pos, float heading)
         {
             var ptr = MockEntities.GetNextPtr();
-            vehiclePool.Create(ptr, out var vehicle);
+            vehiclePool.Create(ptr, MockEntities.Id, out var vehicle);
             vehicle.Position = pos;
             //TODO: apis missing for more properties from create
             MockEntities.Insert(vehicle);
@@ -118,7 +118,7 @@ namespace AltV.Net.Mock
             Rgba color)
         {
             var ptr = MockEntities.GetNextPtr();
-            checkpointPool.Create(ptr, out var checkpoint);
+            checkpointPool.Create(ptr, MockEntities.Id, out var checkpoint);
             if (checkpoint is MockCheckpoint mockCheckpoint)
             {
                 mockCheckpoint.Position = pos;
@@ -135,7 +135,7 @@ namespace AltV.Net.Mock
         public IBlip CreateBlip(IPlayer player, byte type, Position pos)
         {
             var ptr = MockEntities.GetNextPtr();
-            blipPool.Create(ptr, out var blip);
+            blipPool.Create(ptr, MockEntities.Id, out var blip);
             if (blip is MockBlip mockBlip)
             {
                 mockBlip.Position = pos;
@@ -149,7 +149,7 @@ namespace AltV.Net.Mock
         public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
         {
             var ptr = MockEntities.GetNextPtr();
-            blipPool.Create(ptr, out var blip);
+            blipPool.Create(ptr, MockEntities.Id, out var blip);
             if (blip is MockBlip mockBlip)
             {
                 mockBlip.BlipType = type;
