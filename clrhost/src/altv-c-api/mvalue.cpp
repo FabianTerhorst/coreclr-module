@@ -44,6 +44,10 @@ void MValue_CreateEntity(alt::MValue::Entity val, alt::MValue &mValue) {
     mValue = alt::MValue(val);
 }
 
+void MValue_CreateVehicle(alt::IVehicle* val, alt::MValue &mValue) {
+    mValue = alt::MValue(val);
+}
+
 bool MValue_GetBool(alt::MValue &mValue) {
     return mValue.Get<bool>();
 }

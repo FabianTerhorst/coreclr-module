@@ -43,6 +43,8 @@ namespace AltV.Net.Native
 
             switch (obj)
             {
+                case IVehicle vehicle:
+                    return Create(vehicle);
                 case IEntity entity:
                     return Create(entity);
                 case bool value:
@@ -243,6 +245,13 @@ namespace AltV.Net.Native
         {
             var mValue = Nil;
             AltVNative.MValueCreate.MValue_CreateEntity(entity.NativePointer, ref mValue);
+            return mValue;
+        }
+        
+        public static MValue Create(IVehicle vehicle)
+        {
+            var mValue = Nil;
+            AltVNative.MValueCreate.MValue_CreateVehicle(vehicle.NativePointer, ref mValue);
             return mValue;
         }
 
