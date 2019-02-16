@@ -6,11 +6,21 @@ namespace AltV.Net.Elements.Entities
 {
     public class Checkpoint : Entity, ICheckpoint
     {
-        public new static ushort GetId(IntPtr checkpointPointer) => AltVNative.Checkpoint.Checkpoint_GetID(checkpointPointer);
-        
+        public new static ushort GetId(IntPtr checkpointPointer) =>
+            AltVNative.Checkpoint.Checkpoint_GetID(checkpointPointer);
+
         public override Position Position
         {
-            get => !Exists ? Position.Zero : AltVNative.Checkpoint.Checkpoint_GetPosition(NativePointer);
+            get
+            {
+                var position = Position.Zero;
+                if (Exists)
+                {
+                    AltVNative.Checkpoint.Checkpoint_GetPosition(NativePointer, ref position);
+                }
+
+                return position;
+            }
             set
             {
                 if (Exists)
@@ -22,7 +32,16 @@ namespace AltV.Net.Elements.Entities
 
         public override Rotation Rotation
         {
-            get => !Exists ? Rotation.Zero : AltVNative.Checkpoint.Checkpoint_GetRotation(NativePointer);
+            get
+            {
+                var rotation = Rotation.Zero;
+                if (Exists)
+                {
+                    AltVNative.Checkpoint.Checkpoint_GetRotation(NativePointer, ref rotation);
+                }
+
+                return rotation;
+            }
             set
             {
                 if (Exists)
@@ -60,6 +79,7 @@ namespace AltV.Net.Elements.Entities
                 result = default;
                 return false;
             }
+
             var mValue = MValue.Nil;
             AltVNative.Checkpoint.Checkpoint_GetMetaData(NativePointer, key, ref mValue);
             if (!(mValue.ToObject() is T cast))
@@ -88,6 +108,7 @@ namespace AltV.Net.Elements.Entities
                 result = default;
                 return false;
             }
+
             var mValue = MValue.Nil;
             AltVNative.Checkpoint.Checkpoint_GetSyncedMetaData(NativePointer, key, ref mValue);
             if (!(mValue.ToObject() is T cast))
@@ -99,12 +120,25 @@ namespace AltV.Net.Elements.Entities
             result = cast;
             return true;
         }
-        
+
         public bool IsGlobal => Exists && AltVNative.Checkpoint.Checkpoint_IsGlobal(NativePointer);
         public byte CheckpointType => !Exists ? default : AltVNative.Checkpoint.Checkpoint_GetType(NativePointer);
         public float Height => !Exists ? default : AltVNative.Checkpoint.Checkpoint_GetHeight(NativePointer);
         public float Radius => !Exists ? default : AltVNative.Checkpoint.Checkpoint_GetRadius(NativePointer);
-        public Rgba Color => !Exists ? Rgba.Zero : AltVNative.Checkpoint.Checkpoint_GetColor(NativePointer);
+
+        public Rgba Color
+        {
+            get
+            {
+                var color = Rgba.Zero;
+                if (Exists)
+                {
+                    AltVNative.Checkpoint.Checkpoint_GetColor(NativePointer, ref color);
+                }
+
+                return color;
+            }
+        }
 
         public Checkpoint(IntPtr nativePointer, ushort id) : base(nativePointer, EntityType.Checkpoint, id)
         {

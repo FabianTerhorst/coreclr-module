@@ -6,16 +6,22 @@ uint16_t Checkpoint_GetID(alt::ICheckpoint* checkpoint) {
     return checkpoint->GetID();
 }
 
-alt::Position Checkpoint_GetPosition(alt::ICheckpoint* checkpoint) {
-    return checkpoint->GetPosition();
+void Checkpoint_GetPosition(alt::ICheckpoint* checkpoint, position_t &position) {
+    auto checkpointPosition = checkpoint->GetPosition();
+    position.x = checkpointPosition.x;
+    position.y = checkpointPosition.y;
+    position.z = checkpointPosition.z;
 }
 
 void Checkpoint_SetPosition(alt::ICheckpoint* checkpoint, alt::Position pos) {
     checkpoint->SetPosition(pos);
 }
 
-alt::Rotation Checkpoint_GetRotation(alt::ICheckpoint* checkpoint) {
-    return checkpoint->GetRotation();
+void Checkpoint_GetRotation(alt::ICheckpoint* checkpoint, rotation_t &rotation) {
+    auto checkpointRotation = checkpoint->GetRotation();
+    rotation.roll = checkpointRotation.roll;
+    rotation.pitch = checkpointRotation.pitch;
+    rotation.yaw = checkpointRotation.yaw;
 }
 
 void Checkpoint_SetRotation(alt::ICheckpoint* checkpoint, alt::Rotation rot) {
@@ -64,6 +70,10 @@ float Checkpoint_GetRadius(alt::ICheckpoint* checkpoint) {
     return checkpoint->GetRadius();
 }
 
-alt::RGBA Checkpoint_GetColor(alt::ICheckpoint* checkpoint) {
-    return checkpoint->GetColor();
+void Checkpoint_GetColor(alt::ICheckpoint* checkpoint, rgba_t &color) {
+    auto checkpointColor = checkpoint->GetColor();
+    color.r = checkpointColor.r;
+    color.g = checkpointColor.g;
+    color.b = checkpointColor.b;
+    color.a = checkpointColor.a;
 }

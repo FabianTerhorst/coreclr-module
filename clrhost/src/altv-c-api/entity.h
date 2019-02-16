@@ -15,7 +15,7 @@
 extern "C"
 {
 #endif
-EXPORT uint16_t Entity_GetID(alt::IEntity* entity);
+/*EXPORT uint16_t Entity_GetID(alt::IEntity* entity);
 
 EXPORT void Entity_GetPositionRef(alt::IEntity* entity, alt::Position &pos);
 EXPORT void Entity_SetPositionRef(alt::IEntity* entity, alt::Position* pos);
@@ -36,7 +36,7 @@ EXPORT void Entity_GetMetaData(alt::IEntity* entity, const char* key, alt::MValu
 EXPORT void Entity_SetMetaData(alt::IEntity* entity, const char* key, alt::MValue* val);
 
 EXPORT void Entity_GetSyncedMetaData(alt::IEntity* entity, const char* key, alt::MValue &val);
-EXPORT void Entity_SetSyncedMetaData(alt::IEntity* entity, const char* key, alt::MValue* val);
+EXPORT void Entity_SetSyncedMetaData(alt::IEntity* entity, const char* key, alt::MValue* val);*/
 #ifdef __cplusplus
 }
 #endif

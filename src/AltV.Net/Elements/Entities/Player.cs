@@ -8,10 +8,19 @@ namespace AltV.Net.Elements.Entities
     public class Player : Entity, IPlayer
     {
         public new static ushort GetId(IntPtr playerPointer) => AltVNative.Player.Player_GetID(playerPointer);
-        
+
         public override Position Position
         {
-            get => !Exists ? Position.Zero : AltVNative.Player.Player_GetPosition(NativePointer);
+            get
+            {
+                var position = Position.Zero;
+                if (Exists)
+                {
+                    AltVNative.Player.Player_GetPosition(NativePointer, ref position);
+                }
+
+                return position;
+            }
             set
             {
                 if (Exists)
@@ -23,7 +32,16 @@ namespace AltV.Net.Elements.Entities
 
         public override Rotation Rotation
         {
-            get => !Exists ? Rotation.Zero : AltVNative.Player.Player_GetRotation(NativePointer);
+            get
+            {
+                var rotation = Rotation.Zero;
+                if (Exists)
+                {
+                    AltVNative.Player.Player_GetRotation(NativePointer, ref rotation);
+                }
+
+                return rotation;
+            }
             set
             {
                 if (Exists)
@@ -61,6 +79,7 @@ namespace AltV.Net.Elements.Entities
                 result = default;
                 return false;
             }
+
             var mValue = MValue.Nil;
             AltVNative.Player.Player_GetMetaData(NativePointer, key, ref mValue);
             if (!(mValue.ToObject() is T cast))
@@ -89,6 +108,7 @@ namespace AltV.Net.Elements.Entities
                 result = default;
                 return false;
             }
+
             var mValue = MValue.Nil;
             AltVNative.Player.Player_GetSyncedMetaData(NativePointer, key, ref mValue);
             if (!(mValue.ToObject() is T cast))
@@ -100,7 +120,7 @@ namespace AltV.Net.Elements.Entities
             result = cast;
             return true;
         }
-        
+
         public bool IsConnected => Exists && AltVNative.Player.Player_IsConnected(NativePointer);
 
         public string Name
@@ -163,10 +183,33 @@ namespace AltV.Net.Elements.Entities
 
         public ushort Ammo => !Exists ? default : AltVNative.Player.Player_GetAmmo(NativePointer);
 
-        public Position AimPosition => !Exists ? Position.Zero : AltVNative.Player.Player_GetAimPos(NativePointer);
+        public Position AimPosition
+        {
+            get
+            {
+                var position = Position.Zero;
+                if (Exists)
+                {
+                    AltVNative.Player.Player_GetAimPos(NativePointer, ref position);
+                }
 
-        public Rotation HeadRotation =>
-            !Exists ? Rotation.Zero : AltVNative.Player.Player_GetHeadRotation(NativePointer);
+                return position;
+            }
+        }
+
+        public Rotation HeadRotation
+        {
+            get
+            {
+                var rotation = Rotation.Zero;
+                if (Exists)
+                {
+                    AltVNative.Player.Player_GetHeadRotation(NativePointer, ref rotation);
+                }
+
+                return rotation;
+            }
+        }
 
         public bool IsInVehicle => Exists && AltVNative.Player.Player_IsInVehicle(NativePointer);
 

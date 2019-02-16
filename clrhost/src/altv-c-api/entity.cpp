@@ -1,6 +1,6 @@
 #include "entity.h"
 
-uint16_t Entity_GetID(alt::IEntity* entity) {
+/*uint16_t Entity_GetID(alt::IEntity* entity) {
     return entity->GetID();
 }
 
@@ -67,3 +67,4 @@ void Entity_GetSyncedMetaData(alt::IEntity* entity, const char* key, alt::MValue
 void Entity_SetSyncedMetaData(alt::IEntity* entity, const char* key, alt::MValue* val) {
     entity->SetSyncedMetaData(key, *val);
 }
+*/

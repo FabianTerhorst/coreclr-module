@@ -6,6 +6,9 @@
 #endif
 
 #include <altv-cpp-api/API.h>
+#include "rgba.h"
+#include "position.h"
+#include "rotation.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -17,9 +20,9 @@ extern "C"
 #endif
 // Entity
 EXPORT uint16_t Checkpoint_GetID(alt::ICheckpoint* checkpoint);
-EXPORT alt::Position Checkpoint_GetPosition(alt::ICheckpoint* checkpoint);
+EXPORT void Checkpoint_GetPosition(alt::ICheckpoint* checkpoint, position_t &position);
 EXPORT void Checkpoint_SetPosition(alt::ICheckpoint* checkpoint, alt::Position pos);
-EXPORT alt::Rotation Checkpoint_GetRotation(alt::ICheckpoint* checkpoint);
+EXPORT void Checkpoint_GetRotation(alt::ICheckpoint* checkpoint, rotation_t &rotation);
 EXPORT void Checkpoint_SetRotation(alt::ICheckpoint* checkpoint, alt::Rotation rot);
 EXPORT uint16_t Checkpoint_GetDimension(alt::ICheckpoint* checkpoint);
 EXPORT void Checkpoint_SetDimension(alt::ICheckpoint* checkpoint, uint16_t dimension);
@@ -32,7 +35,7 @@ EXPORT bool Checkpoint_IsGlobal(alt::ICheckpoint* checkpoint);
 EXPORT uint8_t Checkpoint_GetCheckpointType(alt::ICheckpoint* checkpoint);
 EXPORT float Checkpoint_GetHeight(alt::ICheckpoint* checkpoint);
 EXPORT float Checkpoint_GetRadius(alt::ICheckpoint* checkpoint);
-EXPORT alt::RGBA Checkpoint_GetColor(alt::ICheckpoint* checkpoint);
+EXPORT void Checkpoint_GetColor(alt::ICheckpoint* checkpoint, rgba_t &color);
 #ifdef __cplusplus
 }
 #endif

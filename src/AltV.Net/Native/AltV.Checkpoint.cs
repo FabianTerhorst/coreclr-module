@@ -14,13 +14,13 @@ namespace AltV.Net.Native
             internal static extern ushort Checkpoint_GetID(IntPtr entityPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern Position Checkpoint_GetPosition(IntPtr entityPointer);
+            internal static extern void Checkpoint_GetPosition(IntPtr entityPointer, ref Position position);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void Checkpoint_SetPosition(IntPtr entityPointer, Position position);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern Rotation Checkpoint_GetRotation(IntPtr entityPointer);
+            internal static extern void Checkpoint_GetRotation(IntPtr entityPointer, ref Rotation rotation);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void Checkpoint_SetRotation(IntPtr entityPointer, Rotation rotation);
@@ -60,7 +60,7 @@ namespace AltV.Net.Native
             internal static extern float Checkpoint_GetRadius(IntPtr checkpointPointer);
             
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern Rgba Checkpoint_GetColor(IntPtr checkpointPointer);
+            internal static extern void Checkpoint_GetColor(IntPtr checkpointPointer, ref Rgba color);
         }
     }
 }

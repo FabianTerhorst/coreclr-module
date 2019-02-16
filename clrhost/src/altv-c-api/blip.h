@@ -6,6 +6,8 @@
 #endif
 
 #include <altv-cpp-api/API.h>
+#include "position.h"
+#include "rotation.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -17,9 +19,9 @@ extern "C"
 #endif
 // Entity
 EXPORT uint16_t Blip_GetID(alt::IBlip* blip);
-EXPORT alt::Position Blip_GetPosition(alt::IBlip* blip);
+EXPORT void Blip_GetPosition(alt::IBlip* blip, position_t &position);
 EXPORT void Blip_SetPosition(alt::IBlip* blip, alt::Position pos);
-EXPORT alt::Rotation Blip_GetRotation(alt::IBlip* blip);
+EXPORT void Blip_GetRotation(alt::IBlip* blip, rotation_t &rotation);
 EXPORT void Blip_SetRotation(alt::IBlip* blip, alt::Rotation rot);
 EXPORT uint16_t Blip_GetDimension(alt::IBlip* blip);
 EXPORT void Blip_SetDimension(alt::IBlip* blip, uint16_t dimension);

@@ -15,13 +15,13 @@ namespace AltV.Net.Native
             internal static extern ushort Blip_GetID(IntPtr entityPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern Position Blip_GetPosition(IntPtr entityPointer);
+            internal static extern void Blip_GetPosition(IntPtr entityPointer, ref Position position);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void Blip_SetPosition(IntPtr entityPointer, Position position);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern Rotation Blip_GetRotation(IntPtr entityPointer);
+            internal static extern void Blip_GetRotation(IntPtr entityPointer, ref Rotation rotation);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void Blip_SetRotation(IntPtr entityPointer, Rotation rotation);

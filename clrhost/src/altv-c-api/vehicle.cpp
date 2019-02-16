@@ -6,16 +6,22 @@ uint16_t Vehicle_GetID(alt::IVehicle* entity) {
     return entity->GetID();
 }
 
-alt::Position Vehicle_GetPosition(alt::IVehicle* entity) {
-    return entity->GetPosition();
+void Vehicle_GetPosition(alt::IVehicle* entity, position_t &position) {
+    auto vehiclePosition = entity->GetPosition();
+    position.x = vehiclePosition.x;
+    position.y = vehiclePosition.y;
+    position.z = vehiclePosition.z;
 }
 
 void Vehicle_SetPosition(alt::IVehicle* entity, alt::Position pos) {
     entity->SetPosition(pos);
 }
 
-alt::Rotation Vehicle_GetRotation(alt::IVehicle* entity) {
-    return entity->GetRotation();
+void Vehicle_GetRotation(alt::IVehicle* entity, rotation_t &rotation) {
+    auto checkpointRotation = entity->GetRotation();
+    rotation.roll = checkpointRotation.roll;
+    rotation.pitch = checkpointRotation.pitch;
+    rotation.yaw = checkpointRotation.yaw;
 }
 
 void Vehicle_SetRotation(alt::IVehicle* entity, alt::Rotation rot) {
@@ -84,8 +90,12 @@ uint8_t Vehicle_GetPrimaryColor(alt::IVehicle* vehicle) {
     return vehicle->GetPrimaryColor();
 }
 
-alt::RGBA Vehicle_GetPrimaryColorRGB(alt::IVehicle* vehicle) {
-    return vehicle->GetPrimaryColorRGB();
+void Vehicle_GetPrimaryColorRGB(alt::IVehicle* vehicle, rgba_t &primaryColor) {
+    auto vehiclePrimaryColor = vehicle->GetPrimaryColorRGB();
+    primaryColor.r = vehiclePrimaryColor.r;
+    primaryColor.g = vehiclePrimaryColor.g;
+    primaryColor.b = vehiclePrimaryColor.b;
+    primaryColor.a = vehiclePrimaryColor.a;
 }
 
 void Vehicle_SetPrimaryColor(alt::IVehicle* vehicle, uint8_t color) {
@@ -104,8 +114,12 @@ uint8_t Vehicle_GetSecondaryColor(alt::IVehicle* vehicle) {
     return vehicle->GetSecondaryColor();
 }
 
-alt::RGBA Vehicle_GetSecondaryColorRGB(alt::IVehicle* vehicle) {
-    return vehicle->GetSecondaryColorRGB();
+void Vehicle_GetSecondaryColorRGB(alt::IVehicle* vehicle, rgba_t &secondaryColor) {
+    auto vehicleSecondaryColor = vehicle->GetSecondaryColorRGB();
+    secondaryColor.r = vehicleSecondaryColor.r;
+    secondaryColor.g = vehicleSecondaryColor.g;
+    secondaryColor.b = vehicleSecondaryColor.b;
+    secondaryColor.a = vehicleSecondaryColor.a;
 }
 
 void Vehicle_SetSecondaryColor(alt::IVehicle* vehicle, uint8_t color) {
@@ -148,8 +162,12 @@ void Vehicle_SetDashboardColor(alt::IVehicle* vehicle, uint8_t color) {
     vehicle->SetDashboardColor(color);
 }
 
-alt::RGBA Vehicle_GetTireSmokeColor(alt::IVehicle* vehicle) {
-    return vehicle->GetTireSmokeColor();
+void Vehicle_GetTireSmokeColor(alt::IVehicle* vehicle, rgba_t &tireSmokeColor) {
+    auto vehicleTireSmokeColor = vehicle->GetTireSmokeColor();
+    tireSmokeColor.r = vehicleTireSmokeColor.r;
+    tireSmokeColor.g = vehicleTireSmokeColor.g;
+    tireSmokeColor.b = vehicleTireSmokeColor.b;
+    tireSmokeColor.a = vehicleTireSmokeColor.a;
 }
 
 void Vehicle_SetTireSmokeColor(alt::IVehicle* vehicle, alt::RGBA color) {
@@ -232,8 +250,12 @@ void Vehicle_SetNeonActive(alt::IVehicle* vehicle, bool left, bool right, bool t
     vehicle->SetNeonActive(left, right, top, back);
 }
 
-alt::RGBA Vehicle_GetNeonColor(alt::IVehicle* vehicle) {
-    return vehicle->GetNeonColor();
+void Vehicle_GetNeonColor(alt::IVehicle* vehicle, rgba_t &neonColor) {
+    auto vehicleNeonColor = vehicle->GetNeonColor();
+    neonColor.r = vehicleNeonColor.r;
+    neonColor.g = vehicleNeonColor.g;
+    neonColor.b = vehicleNeonColor.b;
+    neonColor.a = vehicleNeonColor.a;
 }
 
 void Vehicle_SetNeonColor(alt::IVehicle* vehicle, alt::RGBA color) {

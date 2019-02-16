@@ -93,14 +93,4 @@ namespace AltV.Net.Native
             return values;
         }
     }
-
-    //TODO: remove these in module
-    /*internal static class MValueArray
-    {
-        [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-        internal static extern Array MValueArray_Create();
-
-        [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-        internal static extern void MValueArray_Push(Array array, IntPtr value);
-    }*/
 }

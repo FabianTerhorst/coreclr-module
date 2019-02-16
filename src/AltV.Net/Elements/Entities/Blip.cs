@@ -7,10 +7,18 @@ namespace AltV.Net.Elements.Entities
     public class Blip : Entity, IBlip
     {
         public new static ushort GetId(IntPtr blipPointer) => AltVNative.Blip.Blip_GetID(blipPointer);
-        
+
         public override Position Position
         {
-            get => !Exists ? Position.Zero : AltVNative.Blip.Blip_GetPosition(NativePointer);
+            get
+            {
+                var position = Position.Zero;
+                if (Exists)
+                {
+                    AltVNative.Blip.Blip_GetPosition(NativePointer, ref position);
+                }
+                return position;
+            }
             set
             {
                 if (Exists)
@@ -22,7 +30,15 @@ namespace AltV.Net.Elements.Entities
 
         public override Rotation Rotation
         {
-            get => !Exists ? Rotation.Zero : AltVNative.Blip.Blip_GetRotation(NativePointer);
+            get
+            {
+                var rotation = Rotation.Zero;
+                if (Exists)
+                {
+                    AltVNative.Blip.Blip_GetRotation(NativePointer, ref rotation);
+                }
+                return rotation;
+            }
             set
             {
                 if (Exists)
@@ -60,6 +76,7 @@ namespace AltV.Net.Elements.Entities
                 result = default;
                 return false;
             }
+
             var mValue = MValue.Nil;
             AltVNative.Blip.Blip_GetMetaData(NativePointer, key, ref mValue);
             if (!(mValue.ToObject() is T cast))
@@ -88,6 +105,7 @@ namespace AltV.Net.Elements.Entities
                 result = default;
                 return false;
             }
+
             var mValue = MValue.Nil;
             AltVNative.Blip.Blip_GetSyncedMetaData(NativePointer, key, ref mValue);
             if (!(mValue.ToObject() is T cast))
@@ -99,7 +117,7 @@ namespace AltV.Net.Elements.Entities
             result = cast;
             return true;
         }
-        
+
         public bool IsGlobal => Exists && AltVNative.Blip.Blip_IsGlobal(NativePointer);
         public bool IsAttached => Exists && AltVNative.Blip.Blip_IsAttached(NativePointer);
 

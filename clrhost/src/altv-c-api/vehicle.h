@@ -6,6 +6,9 @@
 #endif
 
 #include <altv-cpp-api/API.h>
+#include "position.h"
+#include "rotation.h"
+#include "rgba.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -17,9 +20,9 @@ extern "C"
 #endif
 // Entity
 EXPORT uint16_t Vehicle_GetID(alt::IVehicle* vehicle);
-EXPORT alt::Position Vehicle_GetPosition(alt::IVehicle* vehicle);
+EXPORT void Vehicle_GetPosition(alt::IVehicle* vehicle, position_t &position);
 EXPORT void Vehicle_SetPosition(alt::IVehicle* vehicle, alt::Position pos);
-EXPORT alt::Rotation Vehicle_GetRotation(alt::IVehicle* vehicle);
+EXPORT void Vehicle_GetRotation(alt::IVehicle* vehicle, rotation_t &rotation);
 EXPORT void Vehicle_SetRotation(alt::IVehicle* vehicle, alt::Rotation rot);
 EXPORT uint16_t Vehicle_GetDimension(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetDimension(alt::IVehicle* vehicle, uint16_t dimension);
@@ -38,12 +41,12 @@ EXPORT uint8_t Vehicle_GetModKit(alt::IVehicle* vehicle);
 EXPORT bool Vehicle_SetModKit(alt::IVehicle* vehicle, uint8_t id);
 EXPORT bool Vehicle_IsPrimaryColorRGB(alt::IVehicle* vehicle);
 EXPORT uint8_t Vehicle_GetPrimaryColor(alt::IVehicle* vehicle);
-EXPORT alt::RGBA Vehicle_GetPrimaryColorRGB(alt::IVehicle* vehicle);
+EXPORT void Vehicle_GetPrimaryColorRGB(alt::IVehicle* vehicle, rgba_t &primaryColor);
 EXPORT void Vehicle_SetPrimaryColor(alt::IVehicle* vehicle, uint8_t color);
 EXPORT void Vehicle_SetPrimaryColorRGB(alt::IVehicle* vehicle, alt::RGBA color);
 EXPORT bool Vehicle_IsSecondaryColorRGB(alt::IVehicle* vehicle);
 EXPORT uint8_t Vehicle_GetSecondaryColor(alt::IVehicle* vehicle);
-EXPORT alt::RGBA Vehicle_GetSecondaryColorRGB(alt::IVehicle* vehicle);
+EXPORT void Vehicle_GetSecondaryColorRGB(alt::IVehicle* vehicle, rgba_t &secondaryColor);
 EXPORT void Vehicle_SetSecondaryColor(alt::IVehicle* vehicle, uint8_t color);
 EXPORT void Vehicle_SetSecondaryColorRGB(alt::IVehicle* vehicle, alt::RGBA color);
 EXPORT uint8_t Vehicle_GetPearlColor(alt::IVehicle* vehicle);
@@ -54,7 +57,7 @@ EXPORT uint8_t Vehicle_GetInteriorColor(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetInteriorColor(alt::IVehicle* vehicle, uint8_t color);
 EXPORT uint8_t Vehicle_GetDashboardColor(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetDashboardColor(alt::IVehicle* vehicle, uint8_t color);
-EXPORT alt::RGBA Vehicle_GetTireSmokeColor(alt::IVehicle* vehicle);
+EXPORT void Vehicle_GetTireSmokeColor(alt::IVehicle* vehicle, rgba_t &tireSmokeColor);
 EXPORT void Vehicle_SetTireSmokeColor(alt::IVehicle* vehicle, alt::RGBA color);
 EXPORT uint8_t Vehicle_GetWheelType(alt::IVehicle* vehicle);
 EXPORT uint8_t Vehicle_GetWheelVariation(alt::IVehicle* vehicle);
@@ -75,7 +78,7 @@ EXPORT bool Vehicle_IsExtraOn(alt::IVehicle* vehicle, uint8_t extraID);
 EXPORT void Vehicle_ToggleExtra(alt::IVehicle* vehicle, uint8_t extraID, bool state);
 EXPORT void Vehicle_GetNeonActive(alt::IVehicle* vehicle, bool &left, bool &right, bool &top, bool &back);
 EXPORT void Vehicle_SetNeonActive(alt::IVehicle* vehicle, bool left, bool right, bool top, bool back);
-EXPORT alt::RGBA Vehicle_GetNeonColor(alt::IVehicle* vehicle);
+EXPORT void Vehicle_GetNeonColor(alt::IVehicle* vehicle, rgba_t &neonColor);
 EXPORT void Vehicle_SetNeonColor(alt::IVehicle* vehicle, alt::RGBA color);
 #ifdef __cplusplus
 }

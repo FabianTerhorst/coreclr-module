@@ -6,16 +6,22 @@ uint16_t Blip_GetID(alt::IBlip* blip) {
     return blip->GetID();
 }
 
-alt::Position Vehicle_GetPosition(alt::IBlip* blip) {
-    return blip->GetPosition();
+void Blip_GetPosition(alt::IBlip* blip, position_t &position) {
+    auto blipPosition = blip->GetPosition();
+    position.x = blipPosition.x;
+    position.y = blipPosition.y;
+    position.z = blipPosition.z;
 }
 
 void Blip_SetPosition(alt::IBlip* blip, alt::Position pos) {
     blip->SetPosition(pos);
 }
 
-alt::Rotation Blip_GetRotation(alt::IBlip* blip) {
-    return blip->GetRotation();
+void Blip_GetRotation(alt::IBlip* blip, rotation_t &rotation) {
+    auto blipRotation = blip->GetRotation();
+    rotation.roll = blipRotation.roll;
+    rotation.pitch = blipRotation.pitch;
+    rotation.yaw = blipRotation.yaw;
 }
 
 void Blip_SetRotation(alt::IBlip* blip, alt::Rotation rot) {

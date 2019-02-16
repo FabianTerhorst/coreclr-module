@@ -8,10 +8,19 @@ namespace AltV.Net.Elements.Entities
     public class Vehicle : Entity, IVehicle
     {
         public new static ushort GetId(IntPtr vehiclePointer) => AltVNative.Vehicle.Vehicle_GetID(vehiclePointer);
-        
+
         public override Position Position
         {
-            get => !Exists ? Position.Zero : AltVNative.Vehicle.Vehicle_GetPosition(NativePointer);
+            get
+            {
+                var position = Position.Zero;
+                if (Exists)
+                {
+                    AltVNative.Vehicle.Vehicle_GetPosition(NativePointer, ref position);
+                }
+
+                return position;
+            }
             set
             {
                 if (Exists)
@@ -23,7 +32,16 @@ namespace AltV.Net.Elements.Entities
 
         public override Rotation Rotation
         {
-            get => !Exists ? Rotation.Zero : AltVNative.Vehicle.Vehicle_GetRotation(NativePointer);
+            get
+            {
+                var rotation = Rotation.Zero;
+                if (Exists)
+                {
+                    AltVNative.Vehicle.Vehicle_GetRotation(NativePointer, ref rotation);
+                }
+
+                return rotation;
+            }
             set
             {
                 if (Exists)
@@ -61,6 +79,7 @@ namespace AltV.Net.Elements.Entities
                 result = default;
                 return false;
             }
+
             var mValue = MValue.Nil;
             AltVNative.Vehicle.Vehicle_GetMetaData(NativePointer, key, ref mValue);
             if (!(mValue.ToObject() is T cast))
@@ -89,6 +108,7 @@ namespace AltV.Net.Elements.Entities
                 result = default;
                 return false;
             }
+
             var mValue = MValue.Nil;
             AltVNative.Vehicle.Vehicle_GetSyncedMetaData(NativePointer, key, ref mValue);
             if (!(mValue.ToObject() is T cast))
@@ -100,7 +120,7 @@ namespace AltV.Net.Elements.Entities
             result = cast;
             return true;
         }
-        
+
         public IPlayer Driver
         {
             get
@@ -138,7 +158,16 @@ namespace AltV.Net.Elements.Entities
 
         public Rgba PrimaryColorRgb
         {
-            get => !Exists ? Rgba.Zero : AltVNative.Vehicle.Vehicle_GetPrimaryColorRGB(NativePointer);
+            get
+            {
+                var rgba = Rgba.Zero;
+                if (Exists)
+                {
+                    AltVNative.Vehicle.Vehicle_GetPrimaryColorRGB(NativePointer, ref rgba);
+                }
+
+                return rgba;
+            }
             set
             {
                 if (!Exists) return;
@@ -160,7 +189,16 @@ namespace AltV.Net.Elements.Entities
 
         public Rgba SecondaryColorRgb
         {
-            get => !Exists ? Rgba.Zero : AltVNative.Vehicle.Vehicle_GetSecondaryColorRGB(NativePointer);
+            get
+            {
+                var rgba = Rgba.Zero;
+                if (Exists)
+                {
+                    AltVNative.Vehicle.Vehicle_GetSecondaryColorRGB(NativePointer, ref rgba);
+                }
+
+                return rgba;
+            }
             set
             {
                 if (!Exists) return;
@@ -210,7 +248,16 @@ namespace AltV.Net.Elements.Entities
 
         public Rgba TireSmokeColor
         {
-            get => !Exists ? Rgba.Zero : AltVNative.Vehicle.Vehicle_GetTireSmokeColor(NativePointer);
+            get
+            {
+                var rgba = Rgba.Zero;
+                if (Exists)
+                {
+                    AltVNative.Vehicle.Vehicle_GetTireSmokeColor(NativePointer, ref rgba);
+                }
+
+                return rgba;
+            }
             set
             {
                 if (!Exists) return;
@@ -294,7 +341,16 @@ namespace AltV.Net.Elements.Entities
 
         public Rgba NeonColor
         {
-            get => !Exists ? Rgba.Zero : AltVNative.Vehicle.Vehicle_GetNeonColor(NativePointer);
+            get
+            {
+                var rgba = Rgba.Zero;
+                if (Exists)
+                {
+                    AltVNative.Vehicle.Vehicle_GetNeonColor(NativePointer, ref rgba);
+                }
+
+                return rgba;
+            }
             set
             {
                 if (!Exists) return;

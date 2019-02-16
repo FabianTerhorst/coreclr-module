@@ -6,22 +6,12 @@
 #endif
 
 #include <altv-cpp-api/API.h>
+#include "position.h"
+#include "rotation.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
-
-typedef struct {
-    float x;
-    float y;
-    float z;
-} position_t;
-
-typedef struct {
-    float roll;
-    float pitch;
-    float yaw;
-} rotation_t;
 
 typedef struct {
     uint16_t id;
@@ -37,9 +27,9 @@ extern "C"
 #endif
 // Entity
 EXPORT uint16_t Player_GetID(alt::IPlayer* player);
-EXPORT alt::Position Player_GetPosition(alt::IPlayer* player);
+EXPORT void Player_GetPosition(alt::IPlayer* player, position_t &position);
 EXPORT void Player_SetPosition(alt::IPlayer* player, alt::Position pos);
-EXPORT alt::Rotation Player_GetRotation(alt::IPlayer* player);
+EXPORT void Player_GetRotation(alt::IPlayer* player, rotation_t &rotation);
 EXPORT void Player_SetRotation(alt::IPlayer* player, alt::Rotation rot);
 EXPORT uint16_t Player_GetDimension(alt::IPlayer* player);
 EXPORT void Player_SetDimension(alt::IPlayer* player, uint16_t dimension);
@@ -77,8 +67,8 @@ EXPORT float Player_GetMoveSpeed(alt::IPlayer* player);
 EXPORT uint32_t Player_GetWeapon(alt::IPlayer* player);
 EXPORT uint16_t Player_GetAmmo(alt::IPlayer* player);
 
-EXPORT alt::Position Player_GetAimPos(alt::IPlayer* player);
-EXPORT alt::Rotation Player_GetHeadRotation(alt::IPlayer* player);
+EXPORT void Player_GetAimPos(alt::IPlayer* player, position_t &aimPosition);
+EXPORT void Player_GetHeadRotation(alt::IPlayer* player, rotation_t &headRotation);
 
 EXPORT bool Player_IsInVehicle(alt::IPlayer* player);
 EXPORT alt::IVehicle* Player_GetVehicle(alt::IPlayer* player);

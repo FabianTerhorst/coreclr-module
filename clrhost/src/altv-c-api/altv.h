@@ -8,7 +8,6 @@
 #include "server.h"
 #include "vehicle.h"
 #include "mvalue.h"
-#include "array.h"
 #include "function.h"
 
 #ifdef __cplusplus

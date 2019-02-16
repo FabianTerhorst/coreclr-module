@@ -14,13 +14,13 @@ namespace AltV.Net.Native
             internal static extern ushort Player_GetID(IntPtr entityPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern Position Player_GetPosition(IntPtr entityPointer);
+            internal static extern void Player_GetPosition(IntPtr entityPointer, ref Position position);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void Player_SetPosition(IntPtr entityPointer, Position position);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern Rotation Player_GetRotation(IntPtr entityPointer);
+            internal static extern void Player_GetRotation(IntPtr entityPointer, ref Rotation rotation);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void Player_SetRotation(IntPtr entityPointer, Rotation rotation);
@@ -109,10 +109,10 @@ namespace AltV.Net.Native
             internal static extern ushort Player_GetAmmo(IntPtr playerPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern Position Player_GetAimPos(IntPtr playerPointer);
+            internal static extern void Player_GetAimPos(IntPtr playerPointer, ref Position aimPosition);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern Rotation Player_GetHeadRotation(IntPtr playerPointer);
+            internal static extern void Player_GetHeadRotation(IntPtr playerPointer, ref Rotation headRotation);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern bool Player_IsInVehicle(IntPtr playerPointer);

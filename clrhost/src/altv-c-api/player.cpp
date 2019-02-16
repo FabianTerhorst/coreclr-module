@@ -6,16 +6,22 @@ uint16_t Player_GetID(alt::IPlayer* player) {
     return player->GetID();
 }
 
-alt::Position Player_GetPosition(alt::IPlayer* player) {
-    return player->GetPosition();
+void Player_GetPosition(alt::IPlayer* player, position_t& position) {
+    auto playerPosition = player->GetPosition();
+    position.x = playerPosition.x;
+    position.y = playerPosition.y;
+    position.z = playerPosition.z;
 }
 
 void Player_SetPosition(alt::IPlayer* player, alt::Position pos) {
     player->SetPosition(pos);
 }
 
-alt::Rotation Player_GetRotation(alt::IPlayer* player) {
-    return player->GetRotation();
+void Player_GetRotation(alt::IPlayer* player, rotation_t& rotation) {
+    auto playerRotation = player->GetRotation();
+    rotation.roll = playerRotation.roll;
+    rotation.pitch = playerRotation.pitch;
+    rotation.yaw = playerRotation.yaw;
 }
 
 void Player_SetRotation(alt::IPlayer* player, alt::Rotation rot) {
@@ -128,12 +134,18 @@ uint16_t Player_GetAmmo(alt::IPlayer* player) {
     return player->GetAmmo();
 }
 
-alt::Position Player_GetAimPos(alt::IPlayer* player) {
-    return player->GetAimPos();
+void Player_GetAimPos(alt::IPlayer* player, position_t& aimPosition) {
+    auto playerAimPosition = player->GetAimPos();
+    aimPosition.x = playerAimPosition.x;
+    aimPosition.y = playerAimPosition.y;
+    aimPosition.z = playerAimPosition.z;
 }
 
-alt::Rotation Player_GetHeadRotation(alt::IPlayer* player) {
-    return player->GetHeadRotation();
+void Player_GetHeadRotation(alt::IPlayer* player, rotation_t& headRotation) {
+    auto playerHeadRotation = player->GetHeadRotation();
+    headRotation.roll = playerHeadRotation.roll;
+    headRotation.pitch = playerHeadRotation.pitch;
+    headRotation.yaw = playerHeadRotation.yaw;
 }
 
 bool Player_IsInVehicle(alt::IPlayer* player) {
