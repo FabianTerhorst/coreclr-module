@@ -32,8 +32,7 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     OnStopDelegate = nullptr;
     OnTickDelegate = nullptr;
 
-    coreClr->CreateAppDomain(server, fullPath, "/usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.1", &runtimeHost,
-                             &domainId);
+    coreClr->CreateAppDomain(server, fullPath, &runtimeHost, &domainId);
 
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "Main",
                          reinterpret_cast<void**>(&MainDelegate));
