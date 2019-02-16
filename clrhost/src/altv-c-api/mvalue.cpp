@@ -124,10 +124,10 @@ void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValueList &valueL
     valueList = value;
 }
 
-void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::MValueDict &mValue) {
-    alt::MValueDict value;
+void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::MValue &mValue) {
+    alt::MValue value;
     for (int i = 0; i < size; i++) {
-        value[alt::String(keys[i])] = val[i];
+        value.Get<alt::MValue::Dict>()[alt::String(keys[i])] = val[i];
     }
     mValue = value;
 }

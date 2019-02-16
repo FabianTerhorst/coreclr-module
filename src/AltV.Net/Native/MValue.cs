@@ -41,6 +41,8 @@ namespace AltV.Net.Native
                 return Nil;
             }
 
+            int i;
+
             switch (obj)
             {
                 case IPlayer player:
@@ -151,7 +153,7 @@ namespace AltV.Net.Native
                 case IDictionary dictionary:
                     var dictKeys = new string[dictionary.Count];
                     var dictValues = new MValue[dictionary.Count];
-                    var i = 0;
+                    i = 0;
                     foreach (var key in dictionary.Keys)
                     {
                         if (key is string stringKey)
