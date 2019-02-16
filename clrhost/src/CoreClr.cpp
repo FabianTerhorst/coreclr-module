@@ -232,7 +232,7 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer* server, cons
     return assemblies;
 }
 
-void CoreClr::CreateAppDomain(alt::IServer* server, const char* appPath, const char* libraryPath, void** runtimeHost,
+void CoreClr::CreateAppDomain(alt::IServer* server, const char* appPath, void** runtimeHost,
                               unsigned int* domainId) {
     alt::String tpaList = "";
 
@@ -242,9 +242,7 @@ void CoreClr::CreateAppDomain(alt::IServer* server, const char* appPath, const c
         tpaList = tpaList + LIST_SEPARATOR;
     }
 
-    server->LogInfo(tpaList);
-
-    auto nativeDllPaths = alt::String(appPath) + LIST_SEPARATOR + libraryPath;
+    auto nativeDllPaths = alt::String(appPath) + LIST_SEPARATOR + runtimeDirectory;
 
     const char* propertyKeys[] = {
             "TRUSTED_PLATFORM_ASSEMBLIES",

@@ -50,7 +50,7 @@ public:
 
     alt::Array<alt::String> getTrustedAssemblies(alt::IServer* server, const char* appPath);
 
-    void CreateAppDomain(alt::IServer* server, const char* appPath, const char* libraryPath, void** runtimeHost,
+    void CreateAppDomain(alt::IServer* server, const char* appPath, void** runtimeHost,
                          unsigned int* domainId);
 
     void Shutdown(alt::IServer* server, void* runtimeHost,
