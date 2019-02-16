@@ -10,7 +10,7 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
         return;
     }
     const char* resourceName = name.CStr();
-    char fullPath[strlen(wd) + strlen(RESOURCES_PATH) + strlen(resourceName) + 1];
+    auto fullPath = new char[strlen(wd) + strlen(RESOURCES_PATH) + strlen(resourceName) + 1];
     strcpy(fullPath, wd);
     strcat(fullPath, RESOURCES_PATH);
     strcat(fullPath, resourceName);
@@ -33,6 +33,7 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     OnTickDelegate = nullptr;
 
     coreClr->CreateAppDomain(server, fullPath, &runtimeHost, &domainId);
+    delete[] fullPath;
 
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "Main",
                          reinterpret_cast<void**>(&MainDelegate));
