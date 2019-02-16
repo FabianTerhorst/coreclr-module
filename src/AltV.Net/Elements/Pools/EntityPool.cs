@@ -76,6 +76,21 @@ namespace AltV.Net.Elements.Pools
 
             return entity.Exists;
         }
+        
+        public bool GetOrCreate(IntPtr entityPointer, ushort entityId, out TEntity entity)
+        {
+            if (entityPointer == IntPtr.Zero)
+            {
+                entity = default;
+                return false;
+            }
+
+            if (entities.TryGetValue(entityPointer, out entity)) return entity.Exists;
+
+            Create(entityPointer, entityId, out entity);
+
+            return entity.Exists;
+        }
 
         public ICollection<TEntity> GetAllEntities()
         {

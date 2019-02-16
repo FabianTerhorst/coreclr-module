@@ -18,7 +18,9 @@
 #include <direct.h>
 #define GetCurrentDir _getcwd
 #else
+
 #include <unistd.h>
+
 #define GetCurrentDir getcwd
 #endif
 
@@ -41,40 +43,65 @@
 #include <stdio.h>
 #include <direct.h>
 #else
+
 #include <unistd.h>
+
 #endif
+
 #include "CoreClr.h"
+
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
 
-class CSharpResource : public alt::IResource
-{
-    bool OnEvent(const alt::CEvent *ev) override;
+class CSharpResource : public alt::IResource {
+    bool OnEvent(const alt::CEvent* ev) override;
+
     void OnTick() override;
+
     bool Start() override;
+
     bool Stop() override;
 
-  private:
-    alt::IServer *server;
+private:
+    alt::IServer* server;
 
-  public:
-    CSharpResource(alt::IServer *server, CoreClr *coreClr, alt::IResource::CreationInfo *info);
+public:
+    CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IResource::CreationInfo* info);
+
     ~CSharpResource();
-    void (*OnCheckpointDelegate)(alt::ICheckpoint *checkpoint, alt::IEntity *entity, alt::IBaseObject::Type type, bool state);
-    void (*OnClientEventDelegate)(alt::IPlayer *player, const char *name, alt::Array<alt::MValue> *args);
-    void (*OnPlayerConnectDelegate)(alt::IPlayer *player, const char *reason);
-    void (*OnPlayerDamageDelegate)(alt::IPlayer *player, alt::IEntity* attacker, uint32_t weapon, uint8_t damage);
-    void (*OnPlayerDeadDelegate)(alt::IPlayer *player, alt::IEntity* killer, uint32_t weapon);
-    void (*OnPlayerDisconnectDelegate)(alt::IPlayer *player, const char *reason);
-    void (*OnEntityRemoveDelegate)(alt::IEntity *entity);
-    void (*OnServerEventDelegate)(const char *name, alt::Array<alt::MValue> *args);
-    void (*OnVehicleChangeSeatDelegate)(alt::IVehicle* vehicle, alt::IPlayer *player, int8_t oldSeat, int8_t newSeat);
-    void (*OnVehicleEnterDelegate)(alt::IVehicle* vehicle, alt::IPlayer *player, int8_t seat);
-    void (*OnVehicleLeaveDelegate)(alt::IVehicle* vehicle, alt::IPlayer *player, int8_t seat);
-    void (*OnStopDelegate)();
-    void (*OnTickDelegate)();
-    void (*MainDelegate)(alt::IServer *server, const char* resourceName, const char* entryPoint);
-    void *runtimeHost;
+
+    void (* OnCheckpointDelegate)(alt::ICheckpoint* checkpoint, alt::IEntity* entity, alt::IBaseObject::Type type,
+                                  bool state);
+
+    void (* OnClientEventDelegate)(alt::IPlayer* player, const char* name, alt::Array<alt::MValue>* args);
+
+    void (* OnPlayerConnectDelegate)(alt::IPlayer* player, uint16_t playerId, const char* reason);
+
+    void (* OnPlayerDamageDelegate)(alt::IPlayer* player, alt::IEntity* attacker,
+                                    alt::IBaseObject::Type attackerType, uint16_t attackerId, uint32_t weapon,
+                                    uint8_t damage);
+
+    void (* OnPlayerDeadDelegate)(alt::IPlayer* player, alt::IEntity* killer, alt::IBaseObject::Type killerType, uint32_t weapon);
+
+    void (* OnPlayerDisconnectDelegate)(alt::IPlayer* player, const char* reason);
+
+    void (* OnEntityRemoveDelegate)(alt::IEntity* entity, alt::IBaseObject::Type entityType);
+
+    void (* OnServerEventDelegate)(const char* name, alt::Array<alt::MValue>* args);
+
+    void (* OnVehicleChangeSeatDelegate)(alt::IVehicle* vehicle, alt::IPlayer* player, int8_t oldSeat, int8_t newSeat);
+
+    void (* OnVehicleEnterDelegate)(alt::IVehicle* vehicle, alt::IPlayer* player, int8_t seat);
+
+    void (* OnVehicleLeaveDelegate)(alt::IVehicle* vehicle, alt::IPlayer* player, int8_t seat);
+
+    void (* OnStopDelegate)();
+
+    void (* OnTickDelegate)();
+
+    void (* MainDelegate)(alt::IServer* server, const char* resourceName, const char* entryPoint);
+
+    void* runtimeHost;
     unsigned int domainId;
 };

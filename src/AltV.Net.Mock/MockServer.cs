@@ -163,7 +163,7 @@ namespace AltV.Net.Mock
 
         public void RemoveEntity(IEntity entity)
         {
-            Alt.Module.OnEntityRemove(entity.NativePointer);
+            Alt.Module.OnEntityRemove(entity.NativePointer, entity.Type);
             MockEntities.Entities.Remove(entity.NativePointer);
         }
     }

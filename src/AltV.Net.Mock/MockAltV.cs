@@ -30,11 +30,11 @@ namespace AltV.Net.Mock
         public IPlayer ConnectPlayer(string playerName, string reason, Action<IPlayer> intercept = null)
         {
             var ptr = MockEntities.GetNextPtr();
-            Alt.Module.PlayerPool.Create(ptr, out var player);
+            Alt.Module.PlayerPool.Create(ptr, MockEntities.Id, out var player);
             player.Name = playerName;
             intercept?.Invoke(player);
             MockEntities.Insert(player);
-            Alt.Module.OnPlayerConnect(ptr, reason);
+            Alt.Module.OnPlayerConnect(ptr, player.Id, reason);
             return player;
         }
     }

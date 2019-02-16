@@ -140,9 +140,9 @@ namespace AltV.Net
             }
         }
 
-        public void OnPlayerConnect(IntPtr playerPointer, string reason)
+        public void OnPlayerConnect(IntPtr playerPointer, ushort playerId, string reason)
         {
-            if (!PlayerPool.GetOrCreate(playerPointer, out var player))
+            if (!PlayerPool.GetOrCreate(playerPointer, playerId, out var player))
             {
                 return;
             }
@@ -158,14 +158,15 @@ namespace AltV.Net
             }
         }
 
-        public void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer, uint weapon, byte damage)
+        public void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer, EntityType attackerEntityType,
+            ushort attackerEntityId, uint weapon, byte damage)
         {
             if (!PlayerPool.GetOrCreate(playerPointer, out var player))
             {
                 return;
             }
 
-            BaseEntityPool.GetOrCreate(attackerEntityPointer, out var attacker);
+            BaseEntityPool.GetOrCreate(attackerEntityPointer, attackerEntityType, attackerEntityId, out var attacker);
 
             OnPlayerDamageEvent(player, attacker, weapon, damage);
         }
@@ -179,14 +180,15 @@ namespace AltV.Net
         }
 
 
-        public void OnPlayerDead(IntPtr playerPointer, IntPtr killerEntityPointer, uint weapon)
+        public void OnPlayerDead(IntPtr playerPointer, IntPtr killerEntityPointer, EntityType killerEntityType,
+            uint weapon)
         {
             if (!PlayerPool.GetOrCreate(playerPointer, out var player))
             {
                 return;
             }
 
-            if (!BaseEntityPool.GetOrCreate(killerEntityPointer, out var killer))
+            if (!BaseEntityPool.GetOrCreate(killerEntityPointer, killerEntityType, out var killer))
             {
                 return;
             }
@@ -290,16 +292,16 @@ namespace AltV.Net
             }
         }
 
-        public void OnEntityRemove(IntPtr entityPointer)
+        public void OnEntityRemove(IntPtr entityPointer, EntityType entityType)
         {
-            if (!BaseEntityPool.GetOrCreate(entityPointer, out var entity))
+            if (!BaseEntityPool.GetOrCreate(entityPointer, entityType, out var entity))
             {
                 return;
             }
 
             OnEntityRemoveEvent(entity);
 
-            BaseEntityPool.Remove(entityPointer);
+            BaseEntityPool.Remove(entityPointer, entityType);
         }
 
         public virtual void OnEntityRemoveEvent(IEntity entity)

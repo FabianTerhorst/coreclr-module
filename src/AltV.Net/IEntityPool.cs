@@ -18,6 +18,8 @@ namespace AltV.Net
 
         bool Get(IntPtr entityPointer, out TEntity entity);
 
+        bool GetOrCreate(IntPtr entityPointer, ushort entityId, out TEntity entity);
+        
         bool GetOrCreate(IntPtr entityPointer, out TEntity entity);
 
         ICollection<TEntity> GetAllEntities();

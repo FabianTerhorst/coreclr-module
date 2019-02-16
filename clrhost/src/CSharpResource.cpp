@@ -86,6 +86,9 @@ CSharpResource::~CSharpResource() = default;
 
 bool CSharpResource::OnEvent(const alt::CEvent* ev) {
     alt::Array<alt::MValue> list;
+    alt::IEntity* entity;
+    const alt::CPlayerDisconnectEvent* disconnectEvent;
+    alt::IPlayer* player;
     switch (ev->GetType()) {
         case alt::CEvent::Type::CHECKPOINT_EVENT:
             OnCheckpointDelegate(((alt::CCheckpointEvent*) (ev))->GetTarget(),
@@ -99,26 +102,35 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
                                   ((alt::CClientScriptEvent*) (ev))->GetName().CStr(), &list);
             break;
         case alt::CEvent::Type::PLAYER_CONNECT:
-            OnPlayerConnectDelegate(((alt::CPlayerConnectEvent*) (ev))->GetTarget(),
-                                    ((alt::CPlayerConnectEvent*) (ev))->GetReason().CStr());
+            player = reinterpret_cast<const alt::CPlayerConnectEvent*>(ev)->GetTarget();
+            OnPlayerConnectDelegate(player, player->GetID(),
+                                    "");//TODO: maybe better solution
             break;
         case alt::CEvent::Type::PLAYER_DAMAGE:
+            entity = ((alt::CPlayerDamageEvent*) (ev))->GetAttacker();
             OnPlayerDamageDelegate(((alt::CPlayerDamageEvent*) (ev))->GetTarget(),
-                                   ((alt::CPlayerDamageEvent*) (ev))->GetAttacker(),
+                                   entity,
+                                   entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT,
+                                   entity != nullptr ? entity->GetID() : (uint16_t) 0,
                                    ((alt::CPlayerDamageEvent*) (ev))->GetWeapon(),
                                    ((alt::CPlayerDamageEvent*) (ev))->GetDamage());
             break;
         case alt::CEvent::Type::PLAYER_DEAD:
+            entity = ((alt::CPlayerDeadEvent*) (ev))->GetKiller();
             OnPlayerDeadDelegate(((alt::CPlayerDeadEvent*) (ev))->GetTarget(),
-                                 ((alt::CPlayerDeadEvent*) (ev))->GetKiller(),
+                                 entity,
+                                 entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT,
                                  ((alt::CPlayerDeadEvent*) (ev))->GetWeapon());
             break;
         case alt::CEvent::Type::PLAYER_DISCONNECT:
-            OnPlayerDisconnectDelegate(((alt::CPlayerDisconnectEvent*) (ev))->GetTarget(),
-                                       ((alt::CPlayerDisconnectEvent*) (ev))->GetReason().CStr());
+            disconnectEvent = reinterpret_cast<const alt::CPlayerDisconnectEvent*>(ev);
+            player = disconnectEvent->GetTarget();
+            OnPlayerDisconnectDelegate(player,
+                    /*((alt::CPlayerDisconnectEvent*) (ev))->GetReason().CStr()*/"");
             break;
         case alt::CEvent::Type::REMOVE_ENTITY_EVENT:
-            OnEntityRemoveDelegate(((alt::CRemoveEntityEvent*) (ev))->GetEntity());
+            entity = ((alt::CRemoveEntityEvent*) (ev))->GetEntity();
+            OnEntityRemoveDelegate(entity, entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT);
             break;
         case alt::CEvent::Type::SERVER_SCRIPT_EVENT:
             list = (((alt::CServerScriptEvent*) (ev))->GetArgs()).Get<alt::Array<alt::MValue>>();

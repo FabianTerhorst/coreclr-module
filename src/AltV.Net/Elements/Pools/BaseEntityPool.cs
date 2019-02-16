@@ -68,18 +68,45 @@ namespace AltV.Net.Elements.Pools
             }
         }
 
+        public bool GetOrCreate(IntPtr entityPointer, EntityType entityType, ushort entityId, out IEntity entity)
+        {
+            bool result;
+            switch (entityType)
+            {
+                case EntityType.Player:
+                    result = playerPool.GetOrCreate(entityPointer, entityId, out var player);
+                    entity = player;
+                    return result;
+                case EntityType.Vehicle:
+                    result = vehiclePool.GetOrCreate(entityPointer, entityId, out var vehicle);
+                    entity = vehicle;
+                    return result;
+                case EntityType.Blip:
+                    result = blipPool.GetOrCreate(entityPointer, entityId, out var blip);
+                    entity = blip;
+                    return result;
+                case EntityType.Checkpoint:
+                    result = checkpointPool.GetOrCreate(entityPointer, entityId, out var checkpoint);
+                    entity = checkpoint;
+                    return result;
+                default:
+                    entity = default;
+                    return false;
+            }
+        }
+
         public bool Remove(IntPtr entityPointer)
         {
             return entityPointer != IntPtr.Zero &&
-                   Remove(GetType(entityPointer), entityPointer);
+                   Remove(entityPointer, GetType(entityPointer));
         }
 
         public bool Remove(IEntity entity)
         {
-            return Remove(entity.Type, entity.NativePointer);
+            return Remove(entity.NativePointer, entity.Type);
         }
 
-        public bool Remove(EntityType entityType, IntPtr entityPointer)
+        public bool Remove(IntPtr entityPointer, EntityType entityType)
         {
             switch (entityType)
             {

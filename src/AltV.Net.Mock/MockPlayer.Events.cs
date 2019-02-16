@@ -16,7 +16,7 @@ namespace AltV.Net.Mock
         {
             player.Health -= damage;
 
-            Alt.Module.OnPlayerDamage(player.NativePointer, attacker?.NativePointer ?? IntPtr.Zero, weapon, damage);
+            Alt.Module.OnPlayerDamage(player.NativePointer, attacker?.NativePointer ?? IntPtr.Zero, attacker?.Type ?? EntityType.Undefined, attacker?.Id ?? 0, weapon, damage);
         }
 
         public static void Death(this IPlayer player, IEntity killer, uint weapon)
@@ -30,7 +30,7 @@ namespace AltV.Net.Mock
                 mockPlayer.IsDead = true;
             }
 
-            Alt.Module.OnPlayerDead(player.NativePointer, killer?.NativePointer ?? IntPtr.Zero, weapon);
+            Alt.Module.OnPlayerDead(player.NativePointer, killer?.NativePointer ?? IntPtr.Zero, killer?.Type ?? EntityType.Undefined, weapon);
         }
 
         public static void EnterVehicle(this IPlayer player, IVehicle vehicle, sbyte seat)

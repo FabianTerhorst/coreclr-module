@@ -106,6 +106,21 @@ namespace AltV.Net.Async
 
             return entity.Exists;
         }
+        
+        public bool GetOrCreate(IntPtr entityPointer, ushort id, out TEntity entity)
+        {
+            if (entityPointer == IntPtr.Zero)
+            {
+                entity = default;
+                return false;
+            }
+
+            if (entities.TryGetValue(entityPointer, out entity)) return entity.Exists;
+
+            Create(entityPointer, id, out entity);
+
+            return entity.Exists;
+        }
 
         public ICollection<TEntity> GetAllEntities()
         {

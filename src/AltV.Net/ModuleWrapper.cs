@@ -58,24 +58,26 @@ namespace AltV.Net
             _resource.OnTick();
         }
 
-        public static void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, EntityType entityType, bool state)
+        public static void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, EntityType entityType,
+            bool state)
         {
             _module.OnCheckpoint(checkpointPointer, entityPointer, entityType, state);
         }
 
-        public static void OnPlayerConnect(IntPtr playerPointer, string reason)
+        public static void OnPlayerConnect(IntPtr playerPointer, ushort playerId, string reason)
         {
-            _module.OnPlayerConnect(playerPointer, reason);
+            _module.OnPlayerConnect(playerPointer, playerId, reason);
         }
 
-        public static void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer, uint weapon, byte damage)
+        public static void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer, EntityType attackerEntityType,
+            ushort attackerEntityId, uint weapon, byte damage)
         {
-            _module.OnPlayerDamage(playerPointer, attackerEntityPointer, weapon, damage);
+            _module.OnPlayerDamage(playerPointer, attackerEntityPointer, attackerEntityType, attackerEntityId, weapon, damage);
         }
 
-        public static void OnPlayerDead(IntPtr playerPointer, IntPtr killerEntityPointer, uint weapon)
+        public static void OnPlayerDead(IntPtr playerPointer, IntPtr killerEntityPointer, EntityType killerEntityType, uint weapon)
         {
-            _module.OnPlayerDead(playerPointer, killerEntityPointer, weapon);
+            _module.OnPlayerDead(playerPointer, killerEntityPointer, killerEntityType, weapon);
         }
 
         public static void OnVehicleChangeSeat(IntPtr vehiclePointer, IntPtr playerPointer, sbyte oldSeat,
@@ -99,9 +101,9 @@ namespace AltV.Net
             _module.OnPlayerDisconnect(playerPointer, reason);
         }
 
-        public static void OnEntityRemove(IntPtr entityPointer)
+        public static void OnEntityRemove(IntPtr entityPointer, EntityType entityType)
         {
-            _module.OnEntityRemove(entityPointer);
+            _module.OnEntityRemove(entityPointer, entityType);
         }
 
         public static void OnClientEvent(IntPtr playerPointer, string name, ref MValueArray args)
