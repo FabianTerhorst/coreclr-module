@@ -84,9 +84,24 @@ void MValue_GetDict(alt::MValue &mValue, alt::Array<alt::String> &keys, alt::MVa
     values = mapValues;
 }
 
-void MValue_GetEntity(alt::MValue &mValue, alt::MValue::Entity &value, alt::IBaseObject::Type &type) {
-    value = mValue.Get<alt::MValue::Entity>();
-    type = value->GetType();
+alt::IEntity* MValue_GetEntity(alt::MValue &mValue, alt::IBaseObject::Type &type) {
+    auto entityPointer = mValue.Get<alt::MValue::Entity>();
+    if (entityPointer != nullptr) {
+        type = entityPointer->GetType();
+        switch (type) {
+            case alt::IBaseObject::Type::PLAYER:
+                return dynamic_cast<alt::IPlayer*>(entityPointer);
+            case alt::IBaseObject::Type::VEHICLE:
+                return dynamic_cast<alt::IVehicle*>(entityPointer);
+            case alt::IBaseObject::Type::BLIP:
+                return dynamic_cast<alt::IBlip*>(entityPointer);
+            case alt::IBaseObject::Type::CHECKPOINT:
+                return dynamic_cast<alt::ICheckpoint*>(entityPointer);
+            default:
+                return nullptr;
+        }
+    }
+    return nullptr;
 }
 
 MValueFunctionCallback MValue_GetFunction(alt::MValueFunction &mValue) {

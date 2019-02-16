@@ -117,14 +117,14 @@ namespace AltV.Net
             }
         }
 
-        public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, bool state)
+        public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, EntityType entityType, bool state)
         {
             if (!CheckpointPool.GetOrCreate(checkpointPointer, out var checkpoint))
             {
                 return;
             }
 
-            if (!BaseEntityPool.GetOrCreate(entityPointer, out var entity))
+            if (!BaseEntityPool.GetOrCreate(entityPointer, entityType, out var entity))
             {
                 return;
             }
@@ -389,7 +389,18 @@ namespace AltV.Net
                 argArray = args.ToArray();
                 foreach (var eventHandler in eventHandlers)
                 {
-                    eventHandler.Call(BaseEntityPool, argArray);
+                    try
+                    {
+                        eventHandler.Call(BaseEntityPool, argArray);
+                    }
+                    catch (TargetInvocationException exception)
+                    {
+                        Alt.Log("exception at event:" + name + ":" + exception.InnerException);
+                    }
+                    catch (Exception exception)
+                    {
+                        Alt.Log("exception at event:" + name + ":" + exception);
+                    }
                 }
             }
 

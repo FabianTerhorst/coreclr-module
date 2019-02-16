@@ -25,7 +25,7 @@ namespace AltV.Net.Async
 
         public override IEntityPool<IVehicle> GetVehiclePool(IEntityFactory<IVehicle> vehicleFactory)
         {
-            return new AsyncEntityPool<IVehicle>(vehicleFactory);
+            return new AsyncVehiclePool(vehicleFactory);
         }
 
         public override IEntityPool<IBlip> GetBlipPool(IEntityFactory<IBlip> blipFactory)

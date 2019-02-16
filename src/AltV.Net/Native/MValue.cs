@@ -305,16 +305,9 @@ namespace AltV.Net.Native
             return Marshal.PtrToStringAnsi(value);
         }
 
-        public void GetEntityPointer(ref IntPtr entityPointer, ref EntityType entityType)
-        {
-            AltVNative.MValueGet.MValue_GetEntity(ref this, ref entityPointer, ref entityType);
-        }
-
         public IntPtr GetEntityPointer(ref EntityType entityType)
         {
-            var entityPointer = IntPtr.Zero;
-            AltVNative.MValueGet.MValue_GetEntity(ref this, ref entityPointer, ref entityType);
-            return entityPointer;
+            return AltVNative.MValueGet.MValue_GetEntity(ref this, ref entityType);
         }
 
         public void GetList(ref MValueArray mValueArray)
@@ -388,9 +381,8 @@ namespace AltV.Net.Native
                     return GetDictionary().Aggregate("Dict:",
                         (current, value) => current + value.Key.ToString() + "=" + value.Value.ToString() + ",");
                 case Type.ENTITY:
-                    var ptr = IntPtr.Zero;
                     var entityType = EntityType.Undefined;
-                    GetEntityPointer(ref ptr, ref entityType);
+                    var ptr = GetEntityPointer(ref entityType);
                     if (Alt.Module.BaseEntityPool.GetOrCreate(ptr, entityType, out var entity))
                     {
                         return $"MValue<{entity.Type.ToString()}>";
@@ -460,9 +452,8 @@ namespace AltV.Net.Native
 
                     return dictionary;
                 case Type.ENTITY:
-                    var entityPointer = IntPtr.Zero;
                     var entityType = EntityType.Undefined;
-                    GetEntityPointer(ref entityPointer, ref entityType);
+                    var entityPointer = GetEntityPointer(ref entityType);
                     if (entityPointer == IntPtr.Zero) return null;
                     if (baseEntityPool.GetOrCreate(entityPointer, entityType, out var entity))
                     {
