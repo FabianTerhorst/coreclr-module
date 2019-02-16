@@ -75,23 +75,21 @@ CoreClr::CoreClr(alt::IServer* server) {
             FALSE);
 
     const char *windowsProgramFilesPath = "/dotnet/shared/Microsoft.NETCore.App/";
-    auto defaultPath = new char[strlen(windowsProgramFilesPath) + strlen(pf) + 1];
+    char defaultPath[strlen(windowsProgramFilesPath) + strlen(pf) + 1];
     strcpy(defaultPath, pf);
     strcat(defaultPath, windowsProgramFilesPath);
     GetPath(server, defaultPath);
-	delete[] defaultPath;
 #else
     GetPath(server, "/usr/share/dotnet/shared/Microsoft.NETCore.App/");
 #endif
 #ifdef _WIN32
     const char *fileName = "/coreclr.dll";
 
-    auto fullPath = new char[strlen(fileName) + strlen(runtimeDirectory) + 1];
+    char fullPath[strlen(fileName) + strlen(runtimeDirectory) + 1];
     strcpy(fullPath, runtimeDirectory);
     strcat(fullPath, fileName);
 
     _coreClrLib = LoadLibraryEx(fullPath, nullptr, 0);
-	delete[] fullPath;
     if (_coreClrLib == nullptr) {
         server->LogInfo(alt::String("[.NET] Unable to find CoreCLR dll"));
         return;
@@ -304,15 +302,13 @@ void CoreClr::GetPath(alt::IServer* server, const char* defaultPath) {
                 greatest = entry->d_name;
                 continue;
             }
-            auto compareCache = new char[strlen(entry->d_name)];
+            char compareCache[strlen(entry->d_name)];
             strcpy(compareCache, entry->d_name);
-            auto compareCache2 = new char[strlen(greatest)];
+            char compareCache2[strlen(greatest)];
             strcpy(compareCache2, greatest);
             if (tail_lt(compareCache, compareCache2)) {
                 greatest = entry->d_name;
             }
-            delete[] compareCache;
-            delete[] compareCache2;
         }
     }
     if (greatest == nullptr) {
