@@ -80,8 +80,9 @@ void MValue_GetDict(alt::MValue &mValue, alt::Array<alt::String> &keys, alt::MVa
     values = mapValues;
 }
 
-void MValue_GetEntity(alt::MValue &mValue, alt::MValue::Entity &value) {
+void MValue_GetEntity(alt::MValue &mValue, alt::MValue::Entity &value, alt::IBaseObject::Type &type) {
     value = mValue.Get<alt::MValue::Entity>();
+    type = value->GetType();
 }
 
 MValueFunctionCallback MValue_GetFunction(alt::MValueFunction &mValue) {

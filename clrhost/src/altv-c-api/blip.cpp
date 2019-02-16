@@ -8,7 +8,8 @@ bool Blip_IsAttached(alt::IBlip* blip) {
     return blip->IsAttached();
 }
 
-alt::IEntity* Blip_AttachedTo(alt::IBlip* blip) {
+alt::IEntity* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type) {
+    type = blip->AttachedTo()->GetType();
     return blip->AttachedTo();
 }
 

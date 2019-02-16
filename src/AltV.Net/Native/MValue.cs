@@ -296,15 +296,15 @@ namespace AltV.Net.Native
             return Marshal.PtrToStringAnsi(value);
         }
 
-        public void GetEntityPointer(ref IntPtr entityPointer)
+        public void GetEntityPointer(ref IntPtr entityPointer, ref EntityType entityType)
         {
-            AltVNative.MValueGet.MValue_GetEntity(ref this, ref entityPointer);
+            AltVNative.MValueGet.MValue_GetEntity(ref this, ref entityPointer, ref entityType);
         }
 
-        public IntPtr GetEntityPointer()
+        public IntPtr GetEntityPointer(ref EntityType entityType)
         {
             var entityPointer = IntPtr.Zero;
-            AltVNative.MValueGet.MValue_GetEntity(ref this, ref entityPointer);
+            AltVNative.MValueGet.MValue_GetEntity(ref this, ref entityPointer, ref entityType);
             return entityPointer;
         }
 
@@ -380,8 +380,9 @@ namespace AltV.Net.Native
                         (current, value) => current + value.Key.ToString() + "=" + value.Value.ToString() + ",");
                 case Type.ENTITY:
                     var ptr = IntPtr.Zero;
-                    GetEntityPointer(ref ptr);
-                    if (Alt.Module.BaseEntityPool.GetOrCreate(ptr, out var entity))
+                    var entityType = EntityType.Undefined;
+                    GetEntityPointer(ref ptr, ref entityType);
+                    if (Alt.Module.BaseEntityPool.GetOrCreate(ptr, entityType, out var entity))
                     {
                         return $"MValue<{entity.Type.ToString()}>";
                     }
@@ -451,9 +452,10 @@ namespace AltV.Net.Native
                     return dictionary;
                 case Type.ENTITY:
                     var entityPointer = IntPtr.Zero;
-                    GetEntityPointer(ref entityPointer);
+                    var entityType = EntityType.Undefined;
+                    GetEntityPointer(ref entityPointer, ref entityType);
                     if (entityPointer == IntPtr.Zero) return null;
-                    if (baseEntityPool.GetOrCreate(entityPointer, out var entity))
+                    if (baseEntityPool.GetOrCreate(entityPointer, entityType, out var entity))
                     {
                         return entity;
                     }

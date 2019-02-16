@@ -89,12 +89,14 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
     switch (ev->GetType()) {
         case alt::CEvent::Type::CHECKPOINT_EVENT:
             OnCheckpointDelegate(((alt::CCheckpointEvent*) (ev))->GetTarget(),
-                                    ((alt::CCheckpointEvent*) (ev))->GetEntity(),
-                                    ((alt::CCheckpointEvent*) (ev))->GetState());
+                                 ((alt::CCheckpointEvent*) (ev))->GetEntity(),
+                                 ((alt::CCheckpointEvent*) (ev))->GetEntity()->GetType(),
+                                 ((alt::CCheckpointEvent*) (ev))->GetState());
             break;
         case alt::CEvent::Type::CLIENT_SCRIPT_EVENT:
             list = (((alt::CClientScriptEvent*) (ev))->GetArgs()).Get<alt::Array<alt::MValue>>();
-            OnClientEventDelegate(((alt::CClientScriptEvent*) (ev))->GetTarget(), ((alt::CClientScriptEvent*) (ev))->GetName().CStr(), &list);
+            OnClientEventDelegate(((alt::CClientScriptEvent*) (ev))->GetTarget(),
+                                  ((alt::CClientScriptEvent*) (ev))->GetName().CStr(), &list);
             break;
         case alt::CEvent::Type::PLAYER_CONNECT:
             OnPlayerConnectDelegate(((alt::CPlayerConnectEvent*) (ev))->GetTarget(),
@@ -102,14 +104,14 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
             break;
         case alt::CEvent::Type::PLAYER_DAMAGE:
             OnPlayerDamageDelegate(((alt::CPlayerDamageEvent*) (ev))->GetTarget(),
-                                    ((alt::CPlayerDamageEvent*) (ev))->GetAttacker(),
-                                    ((alt::CPlayerDamageEvent*) (ev))->GetWeapon(),
-                                    ((alt::CPlayerDamageEvent*) (ev))->GetDamage());
+                                   ((alt::CPlayerDamageEvent*) (ev))->GetAttacker(),
+                                   ((alt::CPlayerDamageEvent*) (ev))->GetWeapon(),
+                                   ((alt::CPlayerDamageEvent*) (ev))->GetDamage());
             break;
         case alt::CEvent::Type::PLAYER_DEAD:
             OnPlayerDeadDelegate(((alt::CPlayerDeadEvent*) (ev))->GetTarget(),
-                                   ((alt::CPlayerDeadEvent*) (ev))->GetKiller(),
-                                   ((alt::CPlayerDeadEvent*) (ev))->GetWeapon());
+                                 ((alt::CPlayerDeadEvent*) (ev))->GetKiller(),
+                                 ((alt::CPlayerDeadEvent*) (ev))->GetWeapon());
             break;
         case alt::CEvent::Type::PLAYER_DISCONNECT:
             OnPlayerDisconnectDelegate(((alt::CPlayerDisconnectEvent*) (ev))->GetTarget(),
@@ -124,19 +126,19 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
             break;
         case alt::CEvent::Type::VEHICLE_CHANGE_SEAT_EVENT:
             OnVehicleChangeSeatDelegate(((alt::CVehicleChangeSeatEvent*) (ev))->GetTarget(),
-                                       ((alt::CVehicleChangeSeatEvent*) (ev))->GetPlayer(),
+                                        ((alt::CVehicleChangeSeatEvent*) (ev))->GetPlayer(),
                                         ((alt::CVehicleChangeSeatEvent*) (ev))->GetOldSeat(),
                                         ((alt::CVehicleChangeSeatEvent*) (ev))->GetNewSeat());
             break;
         case alt::CEvent::Type::VEHICLE_ENTER_EVENT:
             OnVehicleEnterDelegate(((alt::CVehicleEnterEvent*) (ev))->GetTarget(),
-                                        ((alt::CVehicleEnterEvent*) (ev))->GetPlayer(),
-                                        ((alt::CVehicleEnterEvent*) (ev))->GetSeat());
+                                   ((alt::CVehicleEnterEvent*) (ev))->GetPlayer(),
+                                   ((alt::CVehicleEnterEvent*) (ev))->GetSeat());
             break;
         case alt::CEvent::Type::VEHICLE_LEAVE_EVENT:
             OnVehicleLeaveDelegate(((alt::CVehicleLeaveEvent*) (ev))->GetTarget(),
-                                        ((alt::CVehicleLeaveEvent*) (ev))->GetPlayer(),
-                                        ((alt::CVehicleLeaveEvent*) (ev))->GetSeat());
+                                   ((alt::CVehicleLeaveEvent*) (ev))->GetPlayer(),
+                                   ((alt::CVehicleLeaveEvent*) (ev))->GetSeat());
             break;
     }
     return true;

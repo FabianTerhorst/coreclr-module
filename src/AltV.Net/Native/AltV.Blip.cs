@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Native
 {
@@ -14,7 +15,7 @@ namespace AltV.Net.Native
             internal static extern bool Blip_IsAttached(IntPtr blipPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern IntPtr Blip_AttachedTo(IntPtr blipPointer);
+            internal static extern IntPtr Blip_AttachedTo(IntPtr blipPointer, ref EntityType entityType);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern byte Blip_GetType(IntPtr blipPointer);

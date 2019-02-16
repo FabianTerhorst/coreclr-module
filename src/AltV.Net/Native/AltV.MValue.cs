@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
+using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Native
 {
@@ -78,7 +79,7 @@ namespace AltV.Net.Native
                 ref MValueArray values);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void MValue_GetEntity(ref MValue mValue, ref IntPtr value);
+            internal static extern void MValue_GetEntity(ref MValue mValue, ref IntPtr value, ref EntityType entityType);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern MValue.Function MValue_GetFunction(ref MValue mValue);

@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
@@ -36,7 +37,15 @@ namespace AltV.Net
             var server = new Server(serverPointer, entityPool, playerPool, vehiclePool, blipPool,
                 checkpointPool);
             _module = _resource.GetModule(server, entityPool, playerPool, vehiclePool, blipPool, checkpointPool);
+            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
             _resource.OnStart();
+        }
+
+        private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Alt.Log(
+                $"< ==== UNHANDLED EXCEPTION ==== > {Environment.NewLine} Received an unhandled exception from {sender?.GetType()}: " +
+                (Exception) e.ExceptionObject);
         }
 
         public static void OnStop()
@@ -49,9 +58,9 @@ namespace AltV.Net
             _resource.OnTick();
         }
 
-        public static void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, bool state)
+        public static void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, EntityType entityType, bool state)
         {
-            _module.OnCheckpoint(checkpointPointer, entityPointer, state);
+            _module.OnCheckpoint(checkpointPointer, entityPointer, entityType, state);
         }
 
         public static void OnPlayerConnect(IntPtr playerPointer, string reason)

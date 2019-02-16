@@ -61,7 +61,7 @@ class CSharpResource : public alt::IResource
   public:
     CSharpResource(alt::IServer *server, CoreClr *coreClr, alt::IResource::CreationInfo *info);
     ~CSharpResource();
-    void (*OnCheckpointDelegate)(alt::ICheckpoint *checkpoint, alt::IEntity *entity, bool state);
+    void (*OnCheckpointDelegate)(alt::ICheckpoint *checkpoint, alt::IEntity *entity, alt::IBaseObject::Type type, bool state);
     void (*OnClientEventDelegate)(alt::IPlayer *player, const char *name, alt::Array<alt::MValue> *args);
     void (*OnPlayerConnectDelegate)(alt::IPlayer *player, const char *reason);
     void (*OnPlayerDamageDelegate)(alt::IPlayer *player, alt::IEntity* attacker, uint32_t weapon, uint8_t damage);
