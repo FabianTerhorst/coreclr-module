@@ -41,11 +41,11 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<PlayerClientEventAsyncDelegate> PlayerClientEventAsyncEventHandler =
             new AsyncEventHandler<PlayerClientEventAsyncDelegate>();
 
-        internal readonly Dictionary<string, HashSet<ClientEventAsyncDelegate>> ClientEventAsyncDelegateHandlers
+        private readonly Dictionary<string, HashSet<ClientEventAsyncDelegate>> clientEventAsyncDelegateHandlers
             =
             new Dictionary<string, HashSet<ClientEventAsyncDelegate>>();
 
-        internal readonly Dictionary<string, HashSet<ServerEventAsyncDelegate>> ServerEventAsyncDelegateHandlers
+        private readonly Dictionary<string, HashSet<ServerEventAsyncDelegate>> serverEventAsyncDelegateHandlers
             =
             new Dictionary<string, HashSet<ServerEventAsyncDelegate>>();
 
@@ -135,7 +135,7 @@ namespace AltV.Net.Async
                 {
                     mValues = args.ToArray();
                 }
-                
+
                 if (objects == null)
                 {
                     var length = mValues.Length;
@@ -145,7 +145,7 @@ namespace AltV.Net.Async
                         objects[i] = mValues[i].ToObject(BaseEntityPool);
                     }
                 }
-                
+
                 Task.Run(() =>
                 {
                     foreach (var eventHandler in eventHandlers)
@@ -163,8 +163,8 @@ namespace AltV.Net.Async
                 });
             }
 
-            if (ClientEventAsyncDelegateHandlers.Count != 0 &&
-                ClientEventAsyncDelegateHandlers.TryGetValue(name, out var eventDelegates))
+            if (clientEventAsyncDelegateHandlers.Count != 0 &&
+                clientEventAsyncDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
                 if (mValues == null)
                 {
@@ -257,7 +257,8 @@ namespace AltV.Net.Async
                 });
             }
 
-            if (ServerEventAsyncDelegateHandlers.Count != 0 && ServerEventAsyncDelegateHandlers.TryGetValue(name, out var eventDelegates))
+            if (serverEventAsyncDelegateHandlers.Count != 0 &&
+                serverEventAsyncDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
                 if (mValues == null)
                 {
@@ -288,28 +289,28 @@ namespace AltV.Net.Async
         public void On(string eventName, ClientEventAsyncDelegate eventDelegate)
         {
             if (eventDelegate == null) return;
-            if (ClientEventAsyncDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            if (clientEventAsyncDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
             {
                 eventHandlersForEvent.Add(eventDelegate);
             }
             else
             {
                 eventHandlersForEvent = new HashSet<ClientEventAsyncDelegate> {eventDelegate};
-                ClientEventAsyncDelegateHandlers[eventName] = eventHandlersForEvent;
+                clientEventAsyncDelegateHandlers[eventName] = eventHandlersForEvent;
             }
         }
 
         public void On(string eventName, ServerEventAsyncDelegate eventDelegate)
         {
             if (eventDelegate == null) return;
-            if (ServerEventAsyncDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            if (serverEventAsyncDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
             {
                 eventHandlersForEvent.Add(eventDelegate);
             }
             else
             {
                 eventHandlersForEvent = new HashSet<ServerEventAsyncDelegate> {eventDelegate};
-                ServerEventAsyncDelegateHandlers[eventName] = eventHandlersForEvent;
+                serverEventAsyncDelegateHandlers[eventName] = eventHandlersForEvent;
             }
         }
 
