@@ -124,12 +124,12 @@ void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValue &valueList)
     valueList = value;
 }
 
-void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::MValue &mValue) {
+void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::MValueDict &mValue) {
     alt::MValue::Dict dict;
     for (int i = 0; i < size; i++) {
         dict[alt::String(keys[i])] = val[i];
     }
-    mValue = alt::MValue(dict);
+    mValue = dict;
 }
 
 void MValue_CreateFunction(CustomInvoker* val, alt::MValue &mValue) {

@@ -48,7 +48,7 @@ EXPORT void MValue_CreateUInt(uint64_t val, alt::MValue &mValue);
 EXPORT void MValue_CreateDouble(double val, alt::MValue &mValue);
 EXPORT void MValue_CreateString(const char* val, alt::MValue &value);
 EXPORT void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValue &valueList);
-EXPORT void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::MValue &mValue);
+EXPORT void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::MValueDict &mValue);
 EXPORT void MValue_CreatePlayer(alt::IPlayer* val, alt::MValue &mValue);
 EXPORT void MValue_CreateVehicle(alt::IVehicle* val, alt::MValue &mValue);
 EXPORT void MValue_CreateBlip(alt::IVehicle* val, alt::MValue &mValue);
