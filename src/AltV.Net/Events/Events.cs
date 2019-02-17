@@ -1,4 +1,5 @@
 using AltV.Net.Elements.Entities;
+using AltV.Net.Native;
 
 namespace AltV.Net.Events
 {
@@ -17,8 +18,10 @@ namespace AltV.Net.Events
     public delegate void EntityRemoveDelegate(IEntity entity);
 
     public delegate void EventDelegate(object[] args);
-    
+
     public delegate void PlayerClientEventDelegate(IPlayer player, string eventName, object[] args);
+
+    public delegate void PlayerClientCustomEventDelegate(IPlayer player, string eventName, ref MValueArray mValueArray);
 
     public delegate void VehicleChangeSeatDelegate(IVehicle vehicle, IPlayer player, sbyte oldSeat, sbyte newSeat);
 
