@@ -13,7 +13,7 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.0.0-dev-preview-10</PackageVersion>
+        <PackageVersion>1.0.1-dev-preview-1</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>Internal refactoring for windows and linux performance improvements</PackageReleaseNotes>
     </PropertyGroup>
