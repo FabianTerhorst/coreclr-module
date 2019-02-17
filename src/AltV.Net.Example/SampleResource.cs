@@ -138,7 +138,11 @@ namespace AltV.Net.Example
             AltAsync.On("1337", delegate(int int1) { Alt.Log("int1:" + int1); });
 
             Alt.Emit("1337", 1);
+            
+            Alt.On<IMyVehicle>("MyServerEvent3", MyServerEventHandler2, MyServerEventParser3);
 
+            Alt.Emit("MyServerEvent3", vehicle);
+            
             vehicle.Remove();
 
             Bla();
@@ -181,6 +185,14 @@ namespace AltV.Net.Example
             if (!valueReader.GetNext(out string value)) return;
             func(value);
         }
+        
+        public void MyServerEventParser3(ref MValueArray mValueArray, Action<IMyVehicle> func)
+        {
+            if (mValueArray.size != 1) return;
+            var reader = mValueArray.Reader();
+            if (!reader.GetNext(out IMyVehicle vehicle)) return;
+            func(vehicle);
+        }
 
         public void MyParser4(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string> func)
         {
@@ -222,6 +234,11 @@ namespace AltV.Net.Example
         public void MyServerEventHandler(string myString)
         {
             Alt.Log(myString);
+        }
+        
+        public void MyServerEventHandler2(IMyVehicle vehicle)
+        {
+            Alt.Log("data-custom-parser: " + vehicle.MyData);
         }
 
         //AltAsync.OnPlayerEvent += OnPlayerEvent;
