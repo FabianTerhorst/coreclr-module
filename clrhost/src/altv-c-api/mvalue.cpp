@@ -117,7 +117,7 @@ MValueFunctionCallback MValue_GetFunction(alt::MValueFunction &mValue) {
 }
 
 void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValue &valueList) {
-    alt::MValue value = alt::MValue(alt::MValue::List());
+    alt::MValueList value;
     for (int i = 0; i < size; i++) {
         value.Get<alt::MValue::List>().Push(val[i]);
     }
@@ -125,16 +125,11 @@ void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValue &valueList)
 }
 
 void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::MValue &mValue) {
-    /*alt::MValue value = alt::MValue(alt::MValue::Dict());
+    alt::MValueDict value;
     for (int i = 0; i < size; i++) {
-        value.Get<alt::MValue::Dict>()[alt::String(keys[i])] = val[i];
+        value[keys[i]] = val[i];
     }
-    mValue = value;*/
-    auto map = std::unordered_map<alt::String, alt::MValue>();
-    for (int i = 0; i < size; i++) {
-        map[alt::String(keys[i])] = val[i];
-    }
-    mValue = alt::MValue(map);
+    mValue = alt::MValue(value);
 }
 
 void MValue_CreateFunction(CustomInvoker* val, alt::MValue &mValue) {

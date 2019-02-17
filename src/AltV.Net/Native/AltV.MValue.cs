@@ -42,19 +42,19 @@ namespace AltV.Net.Native
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void MValue_CreateList(MValue[] values, ulong size, ref MValue mValue);
 
-            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            [DllImport(_dllName, CharSet = CharSet.Auto, CallingConvention = _callingConvention)]
             internal static extern MValue MValue_CreateDict(MValue[] values, string[] keys, ulong size,
                 ref MValue mValue);
-            
+
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void MValue_CreatePlayer(IntPtr playerPointer, ref MValue mValue);
-            
+
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void MValue_CreateVehicle(IntPtr vehiclePointer, ref MValue mValue);
-            
+
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void MValue_CreateBlip(IntPtr blipPointer, ref MValue mValue);
-            
+
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void MValue_CreateCheckpoint(IntPtr checkpointPointer, ref MValue mValue);
 
