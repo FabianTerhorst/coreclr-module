@@ -1,15 +1,17 @@
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using AltV.Net.Async;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
-using AltV.Net.Elements.Factories;
 using AltV.Net.Enums;
 using AltV.Net.Native;
 
 namespace AltV.Net.Example
 {
-    public class SampleResource : IResource
+    public class SampleResource : AsyncResource
     {
-        public void OnStart()
+        public override void OnStart()
         {
             Alt.On<string>("test", s => { Alt.Log("test=" + s); });
             Alt.On("test", args => { Alt.Log("args=" + args[0]); });
@@ -23,6 +25,15 @@ namespace AltV.Net.Example
             Alt.OnPlayerConnect += OnPlayerConnect;
             Alt.OnPlayerDisconnect += OnPlayerDisconnect;
             Alt.OnEntityRemove += OnEntityRemove;
+            AltAsync.OnPlayerConnect += OnPlayerConnectAsync;
+            Alt.OnPlayerEvent += (player, name, args) => { Alt.Log("event:" + name); };
+            AltAsync.OnPlayerEvent += (player, name, args) =>
+            {
+                AltAsync.Log("event:" + name);
+                return Task.CompletedTask;
+            };
+            AltAsync.On("bla", async args => { await AltAsync.Do(() => Alt.Log("bla with no args:" + args.Length)); });
+            Alt.Emit("bla");
 
             var vehicle = Alt.CreateVehicle(VehicleHash.Apc, new Position(1, 2, 3), float.MinValue);
             Alt.Server.LogInfo(vehicle.Position.ToString());
@@ -42,12 +53,8 @@ namespace AltV.Net.Example
             };
 
             Alt.Log("ptr:" + vehicle.NativePointer);
-            
-            Alt.Log("number-plate:" + vehicle.NumberPlateText + " " + vehicle.NumberPlateIndex);
 
-            var bla200 = MValue.Create(vehicle);
-            //var veh2 = bla2.ToObject();
-            Alt.Log(bla200.ToString());
+            Alt.Log("number-plate:" + vehicle.NumberPlateText + " " + vehicle.NumberPlateIndex);
 
             Alt.Emit("vehicleTest", vehicle);
 
@@ -67,6 +74,26 @@ namespace AltV.Net.Example
                     Alt.Server.LogInfo("bla2:" + bla["test"]);
                 });
 
+            AltAsync.On("event_name",
+                async delegate(string s, string s1, long i1, string[] arg3, object[] arg4, IMyVehicle arg5,
+                    Dictionary<string, object> arg6, IMyVehicle[] myVehicles, string probablyNull, string[] nullArray,
+                    Dictionary<string, double> bla)
+                {
+                    await Task.Delay(500);
+                    var asyncVehicle = await AltAsync.CreateVehicle(VehicleHash.Apc, Position.Zero, float.MaxValue);
+
+                    AltAsync.Log("async-param1:" + s);
+                    AltAsync.Log("async-param2:" + s1);
+                    AltAsync.Log("async-bla:" + ((object[]) arg4[1])[0]);
+                    AltAsync.Log("exists:" + arg5.Exists);
+                    AltAsync.Log("async-myData-2: " + arg5.Position.x + " " + arg5.MyData);
+                    AltAsync.Log("async-myData-4: " + myVehicles[0].Position.x + " " + myVehicles[0].MyData);
+                    AltAsync.Log("async-myData-3: " + arg6["test"]);
+                    AltAsync.Log("async-null?" + (probablyNull == null ? "y" : "n"));
+                    AltAsync.Log("async-null2?" + (nullArray[0] == null ? "y" : "n"));
+                    AltAsync.Log("async-bla2:" + bla["test"]);
+                });
+
             Alt.Emit("event_name", "param_string_1", "param_string_2", 1, new[] {"array_1", "array_2"},
                 new object[] {"test", new[] {1337}}, vehicle,
                 new Dictionary<string, object>
@@ -80,6 +107,10 @@ namespace AltV.Net.Example
                 {
                     ["test"] = null
                 });
+
+            Alt.On<string[]>("test_string_array", s => { Alt.Log("string-array-entry-0:" + s[0]); });
+
+            Alt.Emit("test_string_array", new object[] {new string[] {"bla"}});
 
             Alt.On("function_event", delegate(Function.Func func)
             {
@@ -102,31 +133,113 @@ namespace AltV.Net.Example
                 Alt.Log("vehicle:" + veh.Position.x + " " + veh.Position.y + " " + veh.Position.z);
             }
 
-            vehicle.Remove();
+            Alt.On("1337", delegate(int int1) { Alt.Log("int1:" + int1); });
+
+            AltAsync.On("1337", delegate(int int1) { Alt.Log("int1:" + int1); });
+
+            Alt.Emit("1337", 1);
+
+            vehicle.Remove();            
+
+            Bla();
+
+            Alt.On<IPlayer, string>("MyEvent", MyEventHandler, MyParser);
         }
 
-        public void OnStop()
+        public void MyParser(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string> func)
+        {
+            if (mValueArray.size != 1) return;
+            var mValue = mValueArray.GetNext();
+            if (mValue.type != MValue.Type.STRING) return;
+            func(player, mValue.GetString());
+        }
+        
+        public void MyParser4(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string> func)
+        {
+            if (mValueArray.size != 1) return;
+            if (!mValueArray.GetNext(out string value)) return;
+            func(player, value);
+        }
+        
+        public void MyParser5(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string[]> func)
+        {
+            if (mValueArray.size != 1) return;
+            if (!mValueArray.GetNext(out MValueArray values)) return;
+            var strings = new string[values.size];
+            var i = 0;
+            while (values.GetNext(out string value))
+            {
+                strings[i++] = value;
+            }
+            func(player, strings);
+        }
+        
+        public void MyParser6(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, IMyVehicle> func)
+        {
+            if (mValueArray.size != 1) return;
+            if (!mValueArray.GetNext(out IMyVehicle vehicle)) return;
+            func(player, vehicle);
+        }
+
+        public void MyEventHandler(IPlayer player, string myString)
+        {
+            Alt.Log(myString);
+        }
+
+        //AltAsync.OnPlayerEvent += OnPlayerEvent;
+        //...
+
+        /*class EventHandler
+        {
+            //...
+            public void Call(IPlayer player, object[] args)
+            {
+                //...
+            }
+        } 
+        
+        private EventHandler[] eventHandlers = new EventHandler[42];
+        
+        public async Task OnPlayerEvent(IPlayer player, string eventName, object[] args)
+        {
+            var number = FastStringToInt(eventName);
+            if (eventHandlers.Length < number)
+            {
+                eventHandlers[number].Call(player, args);
+            }
+        }
+
+        private static int FastStringToInt(string eventName)
+        {
+            var y = 0;
+            for (var i = 0; i < eventName.Length; i++)
+                y = y * 10 + (eventName[i] - '0');
+            return y;
+        }*/
+
+        public async void Bla2(IPlayer player)
+        {
+            await player.SetPositionAsync(new Position(1, 2, 3));
+            var position = await player.GetPositionAsync();
+            await AltAsync.Do(() => { });
+            var vehicle = await AltAsync.Do(() =>
+                Alt.CreateVehicle(VehicleHash.Apc, new Position(1, 2, 3), float.MinValue));
+        }
+
+        public async void Bla()
+        {
+            var vehicle = await AltAsync.CreateVehicle(VehicleHash.Apc, new Position(1, 2, 3), float.MinValue);
+            var vehicle2 = await AltAsync.CreateVehicle(VehicleHash.Apc, new Position(1, 2, 3), float.MinValue);
+            Alt.Log("veh:" + vehicle.Position.x + " " + vehicle2.Position.x);
+        }
+
+        public override void OnStop()
         {
         }
 
-        public IEntityFactory<IPlayer> GetPlayerFactory()
-        {
-            return new PlayerFactory();
-        }
-
-        public IEntityFactory<IVehicle> GetVehicleFactory()
+        public override IEntityFactory<IVehicle> GetVehicleFactory()
         {
             return new MyVehicleFactory();
-        }
-
-        public IEntityFactory<IBlip> GetBlipFactory()
-        {
-            return new BlipFactory();
-        }
-
-        public IEntityFactory<ICheckpoint> GetCheckpointFactory()
-        {
-            return new CheckpointFactory();
         }
 
         private void OnPlayerConnect(IPlayer player, string reason)
@@ -134,10 +247,15 @@ namespace AltV.Net.Example
             player.Emit("connect_event");
         }
 
+        private async Task OnPlayerConnectAsync(IPlayer player, string reason)
+        {
+            await player.EmitAsync("bla");
+        }
+
         private void OnPlayerDisconnect(IPlayer player, string reason)
         {
-            var readOnlyPlayer = player.Copy();
-            //Do async processing here even when player got already removed
+            //var readOnlyPlayer = player.Copy();
+            //Do async processing here with the copy even when player got already removed
         }
 
         private void OnEntityRemove(IEntity entity)
