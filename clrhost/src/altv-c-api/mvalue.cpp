@@ -129,7 +129,7 @@ void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::
     for (int i = 0; i < size; i++) {
         value[keys[i]] = val[i];
     }
-    mValue = alt::MValue(value);
+    mValue = value;
 }
 
 void MValue_CreateFunction(CustomInvoker* val, alt::MValue &mValue) {
