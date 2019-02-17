@@ -116,10 +116,10 @@ MValueFunctionCallback MValue_GetFunction(alt::MValueFunction &mValue) {
     return ((CustomInvoker *) mValue.GetInvoker())->mValueFunctionCallback;
 }
 
-void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValue &valueList) {
+void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValueList &valueList) {
     alt::MValueList value;
     for (int i = 0; i < size; i++) {
-        value.Get<alt::MValue::List>().Push(val[i]);
+        value.Push(val[i]);
     }
     valueList = value;
 }
