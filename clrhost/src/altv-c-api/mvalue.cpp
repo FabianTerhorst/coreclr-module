@@ -125,7 +125,7 @@ void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValue &valueList)
 }
 
 void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::MValueDict &mValue) {
-    alt::MValue::Dict dict;
+    alt::MValueDict dict;
     for (int i = 0; i < size; i++) {
         dict[alt::String(keys[i])] = val[i];
     }
