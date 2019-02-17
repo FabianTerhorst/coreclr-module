@@ -23,20 +23,20 @@ namespace AltV.Net
         internal readonly IEntityPool<ICheckpoint> CheckpointPool;
 
         //For custom defined args event handlers
-        internal readonly Dictionary<string, HashSet<Function>> EventHandlers =
+        private readonly Dictionary<string, HashSet<Function>> eventHandlers =
             new Dictionary<string, HashSet<Function>>();
 
-        internal readonly Dictionary<string, HashSet<IParserClientEventHandler>> ParserClientEventHandlers =
+        private readonly Dictionary<string, HashSet<IParserClientEventHandler>> parserClientEventHandlers =
             new Dictionary<string, HashSet<IParserClientEventHandler>>();
         
-        internal readonly Dictionary<string, HashSet<IParserServerEventHandler>> ParserServerEventHandlers =
+        private readonly Dictionary<string, HashSet<IParserServerEventHandler>> parserServerEventHandlers =
             new Dictionary<string, HashSet<IParserServerEventHandler>>();
 
         //For object[] args event handlers
-        internal readonly Dictionary<string, HashSet<EventDelegate>> EventDelegateHandlers =
+        private readonly Dictionary<string, HashSet<EventDelegate>> eventDelegateHandlers =
             new Dictionary<string, HashSet<EventDelegate>>();
 
-        internal readonly Dictionary<string, HashSet<ClientEventDelegate>> ClientEventDelegateHandlers =
+        private readonly Dictionary<string, HashSet<ClientEventDelegate>> clientEventDelegateHandlers =
             new Dictionary<string, HashSet<ClientEventDelegate>>();
 
         internal readonly EventHandler<CheckpointDelegate> CheckpointEventHandler =
@@ -86,70 +86,70 @@ namespace AltV.Net
         public void On(string eventName, Function function)
         {
             if (function == null) return;
-            if (EventHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            if (eventHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
             {
                 eventHandlersForEvent.Add(function);
             }
             else
             {
                 eventHandlersForEvent = new HashSet<Function> {function};
-                EventHandlers[eventName] = eventHandlersForEvent;
+                eventHandlers[eventName] = eventHandlersForEvent;
             }
         }
 
         public void On(string eventName, EventDelegate eventDelegate)
         {
             if (eventDelegate == null) return;
-            if (EventDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            if (eventDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
             {
                 eventHandlersForEvent.Add(eventDelegate);
             }
             else
             {
                 eventHandlersForEvent = new HashSet<EventDelegate> {eventDelegate};
-                EventDelegateHandlers[eventName] = eventHandlersForEvent;
+                eventDelegateHandlers[eventName] = eventHandlersForEvent;
             }
         }
 
         public void On(string eventName, ClientEventDelegate eventDelegate)
         {
             if (eventDelegate == null) return;
-            if (ClientEventDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            if (clientEventDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
             {
                 eventHandlersForEvent.Add(eventDelegate);
             }
             else
             {
                 eventHandlersForEvent = new HashSet<ClientEventDelegate> {eventDelegate};
-                ClientEventDelegateHandlers[eventName] = eventHandlersForEvent;
+                clientEventDelegateHandlers[eventName] = eventHandlersForEvent;
             }
         }
 
         public void On<TFunc>(string eventName, TFunc func, ClientEventParser<TFunc> parser) where TFunc : Delegate
         {
             if (func == null || parser == null) return;
-            if (ParserClientEventHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            if (parserClientEventHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
             {
                 eventHandlersForEvent.Add(new ParserClientEventHandler<TFunc>(func, parser));
             }
             else
             {
                 eventHandlersForEvent = new HashSet<IParserClientEventHandler> {new ParserClientEventHandler<TFunc>(func, parser)};
-                ParserClientEventHandlers[eventName] = eventHandlersForEvent;
+                parserClientEventHandlers[eventName] = eventHandlersForEvent;
             }
         }
         
         public void On<TFunc>(string eventName, TFunc func, ServerEventParser<TFunc> parser) where TFunc : Delegate
         {
             if (func == null || parser == null) return;
-            if (ParserServerEventHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            if (parserServerEventHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
             {
                 eventHandlersForEvent.Add(new ParserServerEventHandler<TFunc>(func, parser));
             }
             else
             {
                 eventHandlersForEvent = new HashSet<IParserServerEventHandler> {new ParserServerEventHandler<TFunc>(func, parser)};
-                ParserServerEventHandlers[eventName] = eventHandlersForEvent;
+                parserServerEventHandlers[eventName] = eventHandlersForEvent;
             }
         }
 
@@ -355,7 +355,7 @@ namespace AltV.Net
                 return;
             }
 
-            if (ParserClientEventHandlers.Count != 0 && ParserClientEventHandlers.TryGetValue(name, out var parserEventHandlers))
+            if (parserClientEventHandlers.Count != 0 && parserClientEventHandlers.TryGetValue(name, out var parserEventHandlers))
             {
                 foreach (var parserEventHandler in parserEventHandlers)
                 {
@@ -364,7 +364,7 @@ namespace AltV.Net
             }
 
             MValue[] argArray = null;
-            if (EventHandlers.Count != 0 && EventHandlers.TryGetValue(name, out var eventHandlers))
+            if (this.eventHandlers.Count != 0 && this.eventHandlers.TryGetValue(name, out var eventHandlers))
             {
                 argArray = args.ToArray();
                 foreach (var eventHandler in eventHandlers)
@@ -375,8 +375,8 @@ namespace AltV.Net
 
             object[] argObjects = null;
 
-            if (ClientEventDelegateHandlers.Count != 0 &&
-                ClientEventDelegateHandlers.TryGetValue(name, out var eventDelegates))
+            if (clientEventDelegateHandlers.Count != 0 &&
+                clientEventDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
                 if (argArray == null)
                 {
@@ -429,7 +429,7 @@ namespace AltV.Net
 
         public void OnServerEvent(string name, ref MValueArray args)
         {
-            if (ParserServerEventHandlers.Count != 0 && ParserServerEventHandlers.TryGetValue(name, out var parserEventHandlers))
+            if (parserServerEventHandlers.Count != 0 && parserServerEventHandlers.TryGetValue(name, out var parserEventHandlers))
             {
                 foreach (var parserEventHandler in parserEventHandlers)
                 {
@@ -438,7 +438,7 @@ namespace AltV.Net
             }
             
             MValue[] argArray = null;
-            if (EventHandlers.Count != 0 && EventHandlers.TryGetValue(name, out var eventHandlers))
+            if (this.eventHandlers.Count != 0 && this.eventHandlers.TryGetValue(name, out var eventHandlers))
             {
                 argArray = args.ToArray();
                 foreach (var eventHandler in eventHandlers)
@@ -460,7 +460,7 @@ namespace AltV.Net
 
             object[] argObjects = null;
 
-            if (EventDelegateHandlers.Count != 0 && EventDelegateHandlers.TryGetValue(name, out var eventDelegates))
+            if (eventDelegateHandlers.Count != 0 && eventDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
                 if (argArray == null)
                 {
@@ -490,7 +490,7 @@ namespace AltV.Net
         //TODO: currently only for testing
         public void OnServerEvent(string name, MValue[] args)
         {
-            if (EventHandlers.Count != 0 && EventHandlers.TryGetValue(name, out var eventHandlers))
+            if (this.eventHandlers.Count != 0 && this.eventHandlers.TryGetValue(name, out var eventHandlers))
             {
                 foreach (var eventHandler in eventHandlers)
                 {
@@ -500,7 +500,7 @@ namespace AltV.Net
 
             object[] argObjects = null;
 
-            if (EventDelegateHandlers.Count != 0 && EventDelegateHandlers.TryGetValue(name, out var eventDelegates))
+            if (eventDelegateHandlers.Count != 0 && eventDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
                 var length = args.Length;
                 argObjects = new object[length];
@@ -525,7 +525,7 @@ namespace AltV.Net
                 return;
             }
 
-            if (EventHandlers.Count != 0 && EventHandlers.TryGetValue(name, out var eventHandlers))
+            if (this.eventHandlers.Count != 0 && this.eventHandlers.TryGetValue(name, out var eventHandlers))
             {
                 foreach (var eventHandler in eventHandlers)
                 {
@@ -535,8 +535,8 @@ namespace AltV.Net
 
             object[] argObjects = null;
 
-            if (ClientEventDelegateHandlers.Count != 0 &&
-                ClientEventDelegateHandlers.TryGetValue(name, out var eventDelegates))
+            if (clientEventDelegateHandlers.Count != 0 &&
+                clientEventDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
                 var length = argArray.Length;
                 argObjects = new object[length];
