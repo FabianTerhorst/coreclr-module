@@ -20,7 +20,7 @@ namespace AltV.Net.Example
             Alt.On<string>("bla2", bla2);
             Alt.On<string, bool>("bla3", bla3);
             Alt.On<string, string>("bla4", bla4);
-            Alt.On<IMyVehicle>("vehicleTest", myVehicle => { Alt.Server.LogInfo("myData: " + myVehicle.MyData); });
+            Alt.On<IMyVehicle>("vehicleTest", myVehicle => { Alt.Log("myData: " + myVehicle.MyData); });
 
             Alt.OnPlayerConnect += OnPlayerConnect;
             Alt.OnPlayerDisconnect += OnPlayerDisconnect;
@@ -36,7 +36,7 @@ namespace AltV.Net.Example
             Alt.Emit("bla");
 
             var vehicle = Alt.CreateVehicle(VehicleHash.Apc, new Position(1, 2, 3), float.MinValue);
-            Alt.Server.LogInfo(vehicle.Position.ToString());
+            Alt.Log(vehicle.Position.ToString());
             vehicle.PrimaryColor = 7;
             vehicle.NumberPlateText = "AltV-C#";
             vehicle.NumberPlateIndex = 2;
@@ -63,15 +63,15 @@ namespace AltV.Net.Example
                     Dictionary<string, object> arg6, IMyVehicle[] myVehicles, string probablyNull, string[] nullArray,
                     Dictionary<string, double> bla)
                 {
-                    Alt.Server.LogInfo("param1:" + s);
-                    Alt.Server.LogInfo("param2:" + s1);
-                    Alt.Server.LogInfo("bla:" + ((object[]) arg4[1])[0]);
-                    Alt.Server.LogInfo("myData-2: " + arg5.Position.x + " " + arg5.MyData);
-                    Alt.Server.LogInfo("myData-4: " + myVehicles[0].Position.x + " " + myVehicles[0].MyData);
-                    Alt.Server.LogInfo("myData-3: " + arg6["test"]);
-                    Alt.Server.LogInfo("null?" + (probablyNull == null ? "y" : "n"));
-                    Alt.Server.LogInfo("null2?" + (nullArray[0] == null ? "y" : "n"));
-                    Alt.Server.LogInfo("bla2:" + bla["test"]);
+                    Alt.Log("param1:" + s);
+                    Alt.Log("param2:" + s1);
+                    Alt.Log("bla:" + ((object[]) arg4[1])[0]);
+                    Alt.Log("myData-2: " + arg5.Position.x + " " + arg5.MyData);
+                    Alt.Log("myData-4: " + myVehicles[0].Position.x + " " + myVehicles[0].MyData);
+                    Alt.Log("myData-3: " + arg6["test"]);
+                    Alt.Log("null?" + (probablyNull == null ? "y" : "n"));
+                    Alt.Log("null2?" + (nullArray[0] == null ? "y" : "n"));
+                    Alt.Log("bla2:" + bla["test"]);
                 });
 
             AltAsync.On("event_name",
@@ -115,12 +115,12 @@ namespace AltV.Net.Example
             Alt.On("function_event", delegate(Function.Func func)
             {
                 var result = func("parameter1");
-                Alt.Server.LogInfo("result:" + result);
+                Alt.Log("result:" + result);
             });
 
             Alt.Emit("function_event", Function.Create(delegate(string bla)
             {
-                Alt.Server.LogInfo("parameter=" + bla);
+                Alt.Log("parameter=" + bla);
                 return 42;
             }));
 
