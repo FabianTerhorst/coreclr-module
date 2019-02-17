@@ -54,34 +54,6 @@ namespace AltV.Net.Native
             return value;
         }
 
-        /// <summary>
-        /// Consumes and returns next MValue string value in the array if the type is correct otherwise returns false
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        //TODO: can we improve this with an own c method that only needs the storage pointer to read the string
-        /*public bool GetNext(out string value)
-        {
-            if (size == 0)
-            {
-                value = default;
-                return false;
-            }
-
-            var readType = Marshal.ReadByte(data);
-            if (readType != (byte) MValue.Type.STRING)
-            {
-                data += MValue.Size;
-                value = default;
-                return false;
-            }
-
-            data += 1;
-            value = new MValue((MValue.Type) readType, Marshal.ReadIntPtr(data)).GetString();
-            data += IntPtr.Size;
-            size--;
-            return true;
-        }*/
         public bool GetNext(out bool value)
         {
             if (size == 0)
@@ -418,6 +390,19 @@ namespace AltV.Net.Native
             }
 
             return values;
+        }
+
+        /// <summary>
+        /// Consumes and returns next string in the array
+        /// </summary>
+        /// <returns></returns>
+        public string GetNext()
+        {
+            if (size == 0) return null;
+            var value = Marshal.PtrToStructure<StringView>(data).Text;
+            size--;
+            data += StringView.Size;
+            return value;
         }
     }
 }
