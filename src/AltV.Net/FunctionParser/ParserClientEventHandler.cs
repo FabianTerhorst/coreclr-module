@@ -4,12 +4,12 @@ using AltV.Net.Native;
 
 namespace AltV.Net.FunctionParser
 {
-    public interface IParserEventHandler
+    public interface IParserClientEventHandler
     {
         void Call(IPlayer player, ref MValueArray mValueArray);
     }
 
-    public class ParserClientEventHandler<TFunc> : IParserEventHandler where TFunc : Delegate
+    public class ParserClientEventHandler<TFunc> : IParserClientEventHandler where TFunc : Delegate
     {
         private readonly TFunc @delegate;
 

@@ -144,30 +144,49 @@ namespace AltV.Net.Example
             Bla();
 
             Alt.On<IPlayer, string>("MyEvent", MyEventHandler, MyParser);
+            
+            Alt.On<string>("MyServerEvent", MyServerEventHandler, MyServerEventParser);
+            
+            Alt.Emit("MyServerEvent", "test-custom-parser");
         }
 
         public void MyParser(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string> func)
         {
             if (mValueArray.size != 1) return;
-            var mValue = mValueArray.GetNext();
+            var reader = mValueArray.Reader();
+            var mValue = reader.GetNext();
             if (mValue.type != MValue.Type.STRING) return;
             func(player, mValue.GetString());
+        }
+        
+        public void MyServerEventParser(ref MValueArray mValueArray, Action<string> func)
+        {
+            if (mValueArray.size != 1) return;
+            var reader = mValueArray.Reader();
+            //if (!mValueArray.GetNext(out string value)) return;
+            //func(value);
+            var mValue = reader.GetNext();
+            if (mValue.type != MValue.Type.STRING) return;
+            func(mValue.GetString());
         }
         
         public void MyParser4(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string> func)
         {
             if (mValueArray.size != 1) return;
-            if (!mValueArray.GetNext(out string value)) return;
+            var reader = mValueArray.Reader();
+            if (!reader.GetNext(out string value)) return;
             func(player, value);
         }
         
         public void MyParser5(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string[]> func)
         {
             if (mValueArray.size != 1) return;
-            if (!mValueArray.GetNext(out MValueArray values)) return;
+            var reader = mValueArray.Reader();
+            if (!reader.GetNext(out MValueArray values)) return;
             var strings = new string[values.size];
+            var valuesReader = values.Reader();
             var i = 0;
-            while (values.GetNext(out string value))
+            while (valuesReader.GetNext(out string value))
             {
                 strings[i++] = value;
             }
@@ -177,11 +196,17 @@ namespace AltV.Net.Example
         public void MyParser6(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, IMyVehicle> func)
         {
             if (mValueArray.size != 1) return;
-            if (!mValueArray.GetNext(out IMyVehicle vehicle)) return;
+            var reader = mValueArray.Reader();
+            if (!reader.GetNext(out IMyVehicle vehicle)) return;
             func(player, vehicle);
         }
 
         public void MyEventHandler(IPlayer player, string myString)
+        {
+            Alt.Log(myString);
+        }
+        
+        public void MyServerEventHandler(string myString)
         {
             Alt.Log(myString);
         }

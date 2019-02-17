@@ -223,7 +223,7 @@ namespace AltV.Net.Async
         {
             base.OnServerEventEvent(name, ref args, mValues, objects);
 
-            if (AsyncEventHandlers.TryGetValue(name, out var eventHandlers))
+            if (AsyncEventHandlers.Count != 0 && AsyncEventHandlers.TryGetValue(name, out var eventHandlers))
             {
                 if (mValues == null)
                 {
@@ -257,7 +257,7 @@ namespace AltV.Net.Async
                 });
             }
 
-            if (ServerEventAsyncDelegateHandlers.TryGetValue(name, out var eventDelegates))
+            if (ServerEventAsyncDelegateHandlers.Count != 0 && ServerEventAsyncDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
                 if (mValues == null)
                 {

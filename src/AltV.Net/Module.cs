@@ -26,8 +26,11 @@ namespace AltV.Net
         internal readonly Dictionary<string, HashSet<Function>> EventHandlers =
             new Dictionary<string, HashSet<Function>>();
 
-        internal readonly Dictionary<string, HashSet<IParserEventHandler>> ParserClientEventHandlers =
-            new Dictionary<string, HashSet<IParserEventHandler>>();
+        internal readonly Dictionary<string, HashSet<IParserClientEventHandler>> ParserClientEventHandlers =
+            new Dictionary<string, HashSet<IParserClientEventHandler>>();
+        
+        internal readonly Dictionary<string, HashSet<IParserServerEventHandler>> ParserServerEventHandlers =
+            new Dictionary<string, HashSet<IParserServerEventHandler>>();
 
         //For object[] args event handlers
         internal readonly Dictionary<string, HashSet<EventDelegate>> EventDelegateHandlers =
@@ -131,8 +134,22 @@ namespace AltV.Net
             }
             else
             {
-                eventHandlersForEvent = new HashSet<IParserEventHandler> {new ParserClientEventHandler<TFunc>(func, parser)};
+                eventHandlersForEvent = new HashSet<IParserClientEventHandler> {new ParserClientEventHandler<TFunc>(func, parser)};
                 ParserClientEventHandlers[eventName] = eventHandlersForEvent;
+            }
+        }
+        
+        public void On<TFunc>(string eventName, TFunc func, ServerEventParser<TFunc> parser) where TFunc : Delegate
+        {
+            if (func == null || parser == null) return;
+            if (ParserServerEventHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            {
+                eventHandlersForEvent.Add(new ParserServerEventHandler<TFunc>(func, parser));
+            }
+            else
+            {
+                eventHandlersForEvent = new HashSet<IParserServerEventHandler> {new ParserServerEventHandler<TFunc>(func, parser)};
+                ParserServerEventHandlers[eventName] = eventHandlersForEvent;
             }
         }
 
@@ -412,6 +429,14 @@ namespace AltV.Net
 
         public void OnServerEvent(string name, ref MValueArray args)
         {
+            if (ParserServerEventHandlers.Count != 0 && ParserServerEventHandlers.TryGetValue(name, out var parserEventHandlers))
+            {
+                foreach (var parserEventHandler in parserEventHandlers)
+                {
+                    parserEventHandler.Call(ref args);
+                }
+            }
+            
             MValue[] argArray = null;
             if (EventHandlers.Count != 0 && EventHandlers.TryGetValue(name, out var eventHandlers))
             {
