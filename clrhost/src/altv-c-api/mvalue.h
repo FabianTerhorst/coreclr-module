@@ -36,8 +36,6 @@ extern alt::Array<CustomInvoker*> invokers;
 extern "C"
 {
 #endif
-EXPORT void String_Create(const char* value, alt::String &string);
-
 EXPORT CustomInvoker* Invoker_Create(MValueFunctionCallback val);
 EXPORT void Invoker_Destroy(CustomInvoker* val);
 

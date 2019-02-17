@@ -10,10 +10,6 @@ namespace AltV.Net.Native
         [SuppressUnmanagedCodeSecurity]
         internal static class MValueCreate
         {
-            [DllImport(_dllName, CharSet = CharSet.Auto, CallingConvention = _callingConvention)]
-            internal static extern void String_Create([MarshalAs(UnmanagedType.LPStr)] string value,
-                ref StringView stringView);
-
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern IntPtr Invoker_Create(MValue.Function function);
 
@@ -35,14 +31,14 @@ namespace AltV.Net.Native
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void MValue_CreateDouble(double value, ref MValue mValue);
 
-            [DllImport(_dllName, CharSet = CharSet.Auto, CallingConvention = _callingConvention)]
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void MValue_CreateString([MarshalAs(UnmanagedType.LPStr)] string value,
                 ref MValue mValue);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void MValue_CreateList(MValue[] values, ulong size, ref MValue mValue);
 
-            [DllImport(_dllName, CharSet = CharSet.Auto, CallingConvention = _callingConvention)]
+            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern MValue MValue_CreateDict(MValue[] values, string[] keys, ulong size,
                 ref MValue mValue);
 

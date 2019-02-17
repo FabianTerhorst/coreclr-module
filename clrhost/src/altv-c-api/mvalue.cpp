@@ -2,10 +2,6 @@
 
 alt::Array<CustomInvoker*> invokers;
 
-void String_Create(const char* value, alt::String &string) {
-    string = alt::String(value);
-}
-
 CustomInvoker* Invoker_Create(MValueFunctionCallback val) {
     auto invoker = new CustomInvoker(val);
     invokers.Push(invoker);
@@ -127,7 +123,7 @@ void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValueList &valueL
 void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::MValueDict &mValue) {
     alt::MValueDict dict;
     for (int i = 0; i < size; i++) {
-        dict[alt::String(keys[i])] = val[i];
+        dict[keys[i]] = val[i];
     }
     mValue = dict;
 }

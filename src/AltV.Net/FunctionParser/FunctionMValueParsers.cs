@@ -324,9 +324,9 @@ namespace AltV.Net.FunctionParser
             // Types doesn't match
             if (mValue.type != MValue.Type.ENTITY) return null;
             var entityType = EntityType.Undefined;
-            
+
             var entityPointer = mValue.GetEntityPointer(ref entityType);
-            
+
             if (entityPointer == IntPtr.Zero) return null;
             if (!ValidateEntityType(entityType, type, typeInfo))
             {
