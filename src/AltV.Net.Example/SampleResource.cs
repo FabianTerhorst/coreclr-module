@@ -167,11 +167,8 @@ namespace AltV.Net.Example
         {
             if (mValueArray.size != 1) return;
             var reader = mValueArray.Reader();
-            //if (!mValueArray.GetNext(out string value)) return;
-            //func(value);
-            var mValue = reader.GetNext();
-            if (mValue.type != MValue.Type.STRING) return;
-            func(mValue.GetString());
+            if (!reader.GetNext(out string value)) return;
+            func(value);
         }
         
         // Converts string array to string
