@@ -17,7 +17,7 @@ namespace AltV.Net.Events
 
     public delegate void EntityRemoveDelegate(IEntity entity);
 
-    public delegate void EventDelegate(object[] args);
+    public delegate void ServerEventDelegate(object[] args);
 
     public delegate void PlayerClientEventDelegate(IPlayer player, string eventName, object[] args);
 
@@ -28,4 +28,8 @@ namespace AltV.Net.Events
     public delegate void VehicleEnterDelegate(IVehicle vehicle, IPlayer player, sbyte seat);
 
     public delegate void VehicleLeaveDelegate(IVehicle vehicle, IPlayer player, sbyte seat);
+
+    public delegate void ServerEventEventDelegate(string eventName, object[] args);
+
+    public delegate void ServerCustomEventEventDelegate(string eventName, ref MValueArray mValueArray);
 }

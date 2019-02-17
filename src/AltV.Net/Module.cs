@@ -33,8 +33,8 @@ namespace AltV.Net
             new Dictionary<string, HashSet<IParserServerEventHandler>>();
 
         //For object[] args event handlers
-        private readonly Dictionary<string, HashSet<EventDelegate>> eventDelegateHandlers =
-            new Dictionary<string, HashSet<EventDelegate>>();
+        private readonly Dictionary<string, HashSet<ServerEventDelegate>> eventDelegateHandlers =
+            new Dictionary<string, HashSet<ServerEventDelegate>>();
 
         private readonly Dictionary<string, HashSet<ClientEventDelegate>> clientEventDelegateHandlers =
             new Dictionary<string, HashSet<ClientEventDelegate>>();
@@ -72,6 +72,12 @@ namespace AltV.Net
         internal readonly EventHandler<PlayerClientCustomEventDelegate> PlayerClientCustomEventEventHandler =
             new EventHandler<PlayerClientCustomEventDelegate>();
 
+        internal readonly EventHandler<ServerEventEventDelegate> ServerEventEventHandler =
+            new EventHandler<ServerEventEventDelegate>();
+
+        internal readonly EventHandler<ServerCustomEventEventDelegate> ServerCustomEventEventHandler =
+            new EventHandler<ServerCustomEventEventDelegate>();
+
         public Module(IServer server, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IEntityPool<IBlip> blipPool,
@@ -100,16 +106,16 @@ namespace AltV.Net
             }
         }
 
-        public void On(string eventName, EventDelegate eventDelegate)
+        public void On(string eventName, ServerEventDelegate serverEventDelegate)
         {
-            if (eventDelegate == null) return;
+            if (serverEventDelegate == null) return;
             if (eventDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
             {
-                eventHandlersForEvent.Add(eventDelegate);
+                eventHandlersForEvent.Add(serverEventDelegate);
             }
             else
             {
-                eventHandlersForEvent = new HashSet<EventDelegate> {eventDelegate};
+                eventHandlersForEvent = new HashSet<ServerEventDelegate> {serverEventDelegate};
                 eventDelegateHandlers[eventName] = eventHandlersForEvent;
             }
         }
@@ -492,6 +498,37 @@ namespace AltV.Net
                 foreach (var eventHandler in eventDelegates)
                 {
                     eventHandler(argObjects);
+                }
+            }
+
+            if (ServerEventEventHandler.HasSubscriptions())
+            {
+                if (argArray == null)
+                {
+                    argArray = args.ToArray();
+                }
+
+                if (argObjects == null)
+                {
+                    var length = argArray.Length;
+                    argObjects = new object[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        argObjects[i] = argArray[i].ToObject(BaseEntityPool);
+                    }
+                }
+
+                foreach (var eventHandler in ServerEventEventHandler.GetSubscriptions())
+                {
+                    eventHandler(name, argObjects);
+                }
+            }
+
+            if (ServerCustomEventEventHandler.HasSubscriptions())
+            {
+                foreach (var eventHandler in ServerCustomEventEventHandler.GetSubscriptions())
+                {
+                    eventHandler(name, ref args);
                 }
             }
 

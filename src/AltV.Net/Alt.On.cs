@@ -12,9 +12,9 @@ namespace AltV.Net
             Module.On(eventName, clientEventDelegate);
         }
         
-        public static void On(string eventName, EventDelegate eventDelegate)
+        public static void On(string eventName, ServerEventDelegate serverEventDelegate)
         {
-            Module.On(eventName, eventDelegate);
+            Module.On(eventName, serverEventDelegate);
         }
         
         public static void On(string eventName, Action function)

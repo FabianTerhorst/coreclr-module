@@ -75,6 +75,18 @@ namespace AltV.Net
             add => Module.PlayerClientCustomEventEventHandler.Subscribe(value);
             remove => Module.PlayerClientCustomEventEventHandler.Unsubscribe(value);
         }
+        
+        public static event ServerEventEventDelegate OnServerEvent
+        {
+            add => Module.ServerEventEventHandler.Subscribe(value);
+            remove => Module.ServerEventEventHandler.Unsubscribe(value);
+        }
+        
+        public static event ServerCustomEventEventDelegate OnServerCustomEvent
+        {
+            add => Module.ServerCustomEventEventHandler.Subscribe(value);
+            remove => Module.ServerCustomEventEventHandler.Unsubscribe(value);
+        }
 
         public static void Emit(string eventName, params object[] args) => Server.TriggerServerEvent(eventName, args);
 
