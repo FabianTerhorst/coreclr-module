@@ -31,7 +31,7 @@ namespace AltV.Net.Native
 
         internal static readonly int Size = Marshal.SizeOf<MValue>();
 
-        public static MValue Nil = new MValue(0, IntPtr.Zero);
+        public static MValue Nil = new MValue(Type.NIL, IntPtr.Zero);
 
         //TODO: create a map that holds function pointers for each object type, its probably faster then this switch now
         public static MValue CreateFromObject(object obj)

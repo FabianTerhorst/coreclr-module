@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Events;
+using AltV.Net.FunctionParser;
 using AltV.Net.Native;
 
 namespace AltV.Net
@@ -23,6 +24,9 @@ namespace AltV.Net
         //For custom defined args event handlers
         internal readonly Dictionary<string, HashSet<Function>> EventHandlers =
             new Dictionary<string, HashSet<Function>>();
+
+        internal readonly Dictionary<string, HashSet<IParserEventHandler>> ParserClientEventHandlers =
+            new Dictionary<string, HashSet<IParserEventHandler>>();
 
         //For object[] args event handlers
         internal readonly Dictionary<string, HashSet<EventDelegate>> EventDelegateHandlers =
@@ -114,6 +118,20 @@ namespace AltV.Net
             {
                 eventHandlersForEvent = new HashSet<ClientEventDelegate> {eventDelegate};
                 ClientEventDelegateHandlers[eventName] = eventHandlersForEvent;
+            }
+        }
+
+        public void On<TFunc>(string eventName, TFunc func, ClientEventParser<TFunc> parser) where TFunc : Delegate
+        {
+            if (func == null || parser == null) return;
+            if (ParserClientEventHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            {
+                eventHandlersForEvent.Add(new ParserClientEventHandler<TFunc>(func, parser));
+            }
+            else
+            {
+                eventHandlersForEvent = new HashSet<IParserEventHandler> {new ParserClientEventHandler<TFunc>(func, parser)};
+                ParserClientEventHandlers[eventName] = eventHandlersForEvent;
             }
         }
 
@@ -317,6 +335,14 @@ namespace AltV.Net
             if (!PlayerPool.GetOrCreate(playerPointer, out var player))
             {
                 return;
+            }
+
+            if (ParserClientEventHandlers.Count != 0 && ParserClientEventHandlers.TryGetValue(name, out var parserEventHandlers))
+            {
+                foreach (var parserEventHandler in parserEventHandlers)
+                {
+                    parserEventHandler.Call(player, ref args);
+                }
             }
 
             MValue[] argArray = null;
