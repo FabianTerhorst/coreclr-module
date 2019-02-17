@@ -139,15 +139,19 @@ namespace AltV.Net.Example
 
             Alt.Emit("1337", 1);
 
-            vehicle.Remove();            
+            vehicle.Remove();
 
             Bla();
 
             Alt.On<IPlayer, string>("MyEvent", MyEventHandler, MyParser);
-            
+
             Alt.On<string>("MyServerEvent", MyServerEventHandler, MyServerEventParser);
-            
+
+            Alt.On<string>("MyServerEvent2", MyServerEventHandler, MyServerEventParser2);
+
             Alt.Emit("MyServerEvent", "test-custom-parser");
+
+            Alt.Emit("MyServerEvent2", new object[] {new string[] {"test-custom-parser-array"}});
         }
 
         public void MyParser(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string> func)
@@ -158,7 +162,7 @@ namespace AltV.Net.Example
             if (mValue.type != MValue.Type.STRING) return;
             func(player, mValue.GetString());
         }
-        
+
         public void MyServerEventParser(ref MValueArray mValueArray, Action<string> func)
         {
             if (mValueArray.size != 1) return;
@@ -170,6 +174,17 @@ namespace AltV.Net.Example
             func(mValue.GetString());
         }
         
+        // Converts string array to string
+        public void MyServerEventParser2(ref MValueArray mValueArray, Action<string> func)
+        {
+            if (mValueArray.size != 1) return;
+            var reader = mValueArray.Reader();
+            if (!reader.GetNext(out MValueArray array)) return;
+            var valueReader = array.Reader();
+            if (!valueReader.GetNext(out string value)) return;
+            func(value);
+        }
+
         public void MyParser4(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string> func)
         {
             if (mValueArray.size != 1) return;
@@ -177,7 +192,7 @@ namespace AltV.Net.Example
             if (!reader.GetNext(out string value)) return;
             func(player, value);
         }
-        
+
         public void MyParser5(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string[]> func)
         {
             if (mValueArray.size != 1) return;
@@ -190,9 +205,10 @@ namespace AltV.Net.Example
             {
                 strings[i++] = value;
             }
+
             func(player, strings);
         }
-        
+
         public void MyParser6(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, IMyVehicle> func)
         {
             if (mValueArray.size != 1) return;
@@ -205,7 +221,7 @@ namespace AltV.Net.Example
         {
             Alt.Log(myString);
         }
-        
+
         public void MyServerEventHandler(string myString)
         {
             Alt.Log(myString);

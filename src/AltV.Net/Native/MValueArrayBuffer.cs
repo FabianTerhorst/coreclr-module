@@ -17,7 +17,7 @@ namespace AltV.Net.Native
             this.size = size;
             this.capacity = capacity;
         }
-        
+
         /// <summary>
         /// Consumes and returns next MValue in the array
         /// </summary>
@@ -39,18 +39,16 @@ namespace AltV.Net.Native
                 return false;
             }
 
-            var readType = Marshal.ReadByte(data);
-            if (readType != (byte) MValue.Type.BOOL)
+            var mValue = Marshal.PtrToStructure<MValue>(data);
+            data += MValue.Size;
+            size--;
+            if (mValue.type != MValue.Type.BOOL)
             {
-                data += MValue.Size;
                 value = default;
                 return false;
             }
 
-            data += 1;
-            value = new MValue((MValue.Type) readType, Marshal.ReadIntPtr(data)).GetBool();
-            data += IntPtr.Size;
-            size--;
+            value = mValue.GetBool();
             return true;
         }
 
@@ -62,18 +60,16 @@ namespace AltV.Net.Native
                 return false;
             }
 
-            var readType = Marshal.ReadByte(data);
-            if (readType != (byte) MValue.Type.INT)
+            var mValue = Marshal.PtrToStructure<MValue>(data);
+            data += MValue.Size;
+            size--;
+            if (mValue.type != MValue.Type.INT)
             {
-                data += MValue.Size;
                 value = default;
                 return false;
             }
 
-            data += 1;
-            value = (int) new MValue((MValue.Type) readType, Marshal.ReadIntPtr(data)).GetInt();
-            data += IntPtr.Size;
-            size--;
+            value = (int) mValue.GetInt();
             return true;
         }
 
@@ -85,18 +81,16 @@ namespace AltV.Net.Native
                 return false;
             }
 
-            var readType = Marshal.ReadByte(data);
-            if (readType != (byte) MValue.Type.UINT)
+            var mValue = Marshal.PtrToStructure<MValue>(data);
+            data += MValue.Size;
+            size--;
+            if (mValue.type != MValue.Type.UINT)
             {
-                data += MValue.Size;
                 value = default;
                 return false;
             }
 
-            data += 1;
-            value = (uint) new MValue((MValue.Type) readType, Marshal.ReadIntPtr(data)).GetUint();
-            data += IntPtr.Size;
-            size--;
+            value = (uint) mValue.GetUint();
             return true;
         }
 
@@ -108,18 +102,16 @@ namespace AltV.Net.Native
                 return false;
             }
 
-            var readType = Marshal.ReadByte(data);
-            if (readType != (byte) MValue.Type.INT)
-            {
-                data += MValue.Size;
+            var mValue = Marshal.PtrToStructure<MValue>(data);
+            data += MValue.Size;
+            size--;
+            if (mValue.type != MValue.Type.INT)
+            { 
                 value = default;
                 return false;
             }
 
-            data += 1;
-            value = new MValue((MValue.Type) readType, Marshal.ReadIntPtr(data)).GetInt();
-            data += IntPtr.Size;
-            size--;
+            value = mValue.GetInt();
             return true;
         }
 
@@ -131,18 +123,16 @@ namespace AltV.Net.Native
                 return false;
             }
 
-            var readType = Marshal.ReadByte(data);
-            if (readType != (byte) MValue.Type.UINT)
-            {
-                data += MValue.Size;
+            var mValue = Marshal.PtrToStructure<MValue>(data);
+            data += MValue.Size;
+            size--;
+            if (mValue.type != MValue.Type.UINT)
+            { 
                 value = default;
                 return false;
             }
 
-            data += 1;
-            value = new MValue((MValue.Type) readType, Marshal.ReadIntPtr(data)).GetUint();
-            data += IntPtr.Size;
-            size--;
+            value = mValue.GetUint();
             return true;
         }
 
@@ -154,18 +144,16 @@ namespace AltV.Net.Native
                 return false;
             }
 
-            var readType = Marshal.ReadByte(data);
-            if (readType != (byte) MValue.Type.DOUBLE)
+            var mValue = Marshal.PtrToStructure<MValue>(data);
+            data += MValue.Size;
+            size--;
+            if (mValue.type != MValue.Type.DOUBLE)
             {
-                data += MValue.Size;
                 value = default;
                 return false;
             }
 
-            data += 1;
-            value = new MValue((MValue.Type) readType, Marshal.ReadIntPtr(data)).GetDouble();
-            data += IntPtr.Size;
-            size--;
+            value = mValue.GetDouble();
             return true;
         }
 
@@ -177,18 +165,16 @@ namespace AltV.Net.Native
                 return false;
             }
 
-            var readType = Marshal.ReadByte(data);
-            if (readType != (byte) MValue.Type.STRING)
+            var mValue = Marshal.PtrToStructure<MValue>(data);
+            data += MValue.Size;
+            size--;
+            if (mValue.type != MValue.Type.STRING)
             {
-                data += MValue.Size;
                 value = default;
                 return false;
             }
 
-            data += 1;
-            value = new MValue((MValue.Type) readType, Marshal.ReadIntPtr(data)).GetString();
-            data += IntPtr.Size;
-            size--;
+            value = mValue.GetString();
             return true;
         }
 
@@ -200,18 +186,16 @@ namespace AltV.Net.Native
                 return false;
             }
 
-            var readType = Marshal.ReadByte(data);
-            if (readType != (byte) MValue.Type.FUNCTION)
+            var mValue = Marshal.PtrToStructure<MValue>(data);
+            data += MValue.Size;
+            size--;
+            if (mValue.type != MValue.Type.FUNCTION)
             {
-                data += MValue.Size;
                 value = default;
                 return false;
             }
 
-            data += 1;
-            value = new MValue((MValue.Type) readType, Marshal.ReadIntPtr(data)).GetFunction();
-            data += IntPtr.Size;
-            size--;
+            value = mValue.GetFunction();            
             return true;
         }
 
@@ -223,19 +207,17 @@ namespace AltV.Net.Native
                 return false;
             }
 
-            var readType = Marshal.ReadByte(data);
-            if (readType != (byte) MValue.Type.ENTITY)
+            var mValue = Marshal.PtrToStructure<MValue>(data);
+            data += MValue.Size;
+            size--;
+            if (mValue.type != MValue.Type.ENTITY)
             {
-                data += MValue.Size;
                 value = default;
                 return false;
             }
 
-            data += 1;
             var entityType = EntityType.Undefined;
-            var ptr = new MValue((MValue.Type) readType, Marshal.ReadIntPtr(data)).GetEntityPointer(ref entityType);
-            data += IntPtr.Size;
-            size--;
+            var ptr = mValue.GetEntityPointer(ref entityType);
             if (Alt.Module.BaseEntityPool.GetOrCreate(ptr, entityType, out var entity))
             {
                 if (entity is TEntity typedEntity)
@@ -261,24 +243,21 @@ namespace AltV.Net.Native
                 return false;
             }
 
-            var readType = Marshal.ReadByte(data);
-            if (readType != (byte) MValue.Type.DICT)
+            var mValue = Marshal.PtrToStructure<MValue>(data);
+            data += MValue.Size;
+            size--;
+            if (mValue.type != MValue.Type.DICT)
             {
-                data += MValue.Size;
                 keys = default;
                 values = default;
                 return false;
             }
 
-            data += 1;
-            var mValue = new MValue((MValue.Type) readType, Marshal.ReadIntPtr(data));
             var stringViewArray = StringViewArray.Nil;
             var valueArrayRef = MValueArray.Nil;
             AltVNative.MValueGet.MValue_GetDict(ref mValue, ref stringViewArray, ref valueArrayRef);
             keys = stringViewArray;
             values = valueArrayRef;
-            data += IntPtr.Size;
-            size--;
             return true;
         }
 
@@ -290,21 +269,18 @@ namespace AltV.Net.Native
                 return false;
             }
 
-            var readType = Marshal.ReadByte(data);
-            if (readType != (byte) MValue.Type.LIST)
+            var mValue = Marshal.PtrToStructure<MValue>(data);
+            data += MValue.Size;
+            size--;
+            if (mValue.type != MValue.Type.LIST)
             {
-                data += MValue.Size;
                 values = default;
                 return false;
             }
 
-            data += 1;
-            var mValue = new MValue((MValue.Type) readType, Marshal.ReadIntPtr(data));
             var valueArrayRef = MValueArray.Nil;
             AltVNative.MValueGet.MValue_GetList(ref mValue, ref valueArrayRef);
             values = valueArrayRef;
-            data += IntPtr.Size;
-            size--;
             return true;
         }
 
