@@ -121,7 +121,7 @@ namespace AltV.Net
         public IBlip CreateBlip(IPlayer player, byte type, Position pos)
         {
             ushort id = default;
-            blipPool.Create(AltVNative.Server.Server_CreateBlip(NativePointer, player.NativePointer,
+            blipPool.Create(AltVNative.Server.Server_CreateBlip(NativePointer, player?.NativePointer ?? IntPtr.Zero,
                 type, pos, ref id), id, out var blip);
             return blip;
         }
@@ -129,7 +129,7 @@ namespace AltV.Net
         public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
         {
             ushort id = default;
-            blipPool.Create(AltVNative.Server.Server_CreateBlipAttached(NativePointer, player.NativePointer,
+            blipPool.Create(AltVNative.Server.Server_CreateBlipAttached(NativePointer, player?.NativePointer ?? IntPtr.Zero,
                 type, entityAttach.NativePointer, ref id), id, out var blip);
             return blip;
         }

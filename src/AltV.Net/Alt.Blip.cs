@@ -10,5 +10,11 @@ namespace AltV.Net
 
         public static IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach) =>
             Module.Server.CreateBlip(player, type, entityAttach);
+        
+        public static IBlip CreateBlip(byte type, Position pos) =>
+            Module.Server.CreateBlip(null, type, pos);
+
+        public static IBlip CreateBlip(byte type, IEntity entityAttach) =>
+            Module.Server.CreateBlip(null, type, entityAttach);
     }
 }
