@@ -13,9 +13,9 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.0.1-dev-preview-4</PackageVersion>
+        <PackageVersion>1.0.1-dev-preview-5</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Improve code style of position and mvaluelist, add more utility functions to position</PackageReleaseNotes>
+        <PackageReleaseNotes>Async emit optimizations</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

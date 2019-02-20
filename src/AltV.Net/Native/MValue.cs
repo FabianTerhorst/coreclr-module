@@ -43,6 +43,9 @@ namespace AltV.Net.Native
 
             int i;
 
+            string[] dictKeys;
+            MValue[] dictValues;
+
             switch (obj)
             {
                 case IPlayer player:
@@ -151,8 +154,8 @@ namespace AltV.Net.Native
                 case Net.Function function:
                     return Create(function.call);
                 case IDictionary dictionary:
-                    var dictKeys = new string[dictionary.Count];
-                    var dictValues = new MValue[dictionary.Count];
+                    dictKeys = new string[dictionary.Count];
+                    dictValues = new MValue[dictionary.Count];
                     i = 0;
                     foreach (var key in dictionary.Keys)
                     {
@@ -183,6 +186,22 @@ namespace AltV.Net.Native
                     }
 
                     return Create(listValues);
+                case IDictionary<string, object> dictionary:
+                    dictKeys = new string[dictionary.Count];
+                    dictValues = new MValue[dictionary.Count];
+                    i = 0;
+                    foreach (var key in dictionary.Keys)
+                    {
+                        dictKeys[i++] = key;
+                    }
+
+                    i = 0;
+                    foreach (var value in dictionary.Values)
+                    {
+                        dictValues[i++] = CreateFromObject(value);
+                    }
+
+                    return Create(dictValues, dictKeys);
                 default:
                     Alt.Log("can't convert type:" + obj.GetType());
                     return Nil;
