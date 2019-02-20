@@ -39,10 +39,14 @@ namespace AltV.Net
         void TriggerServerEvent(string eventName, params MValue[] args);
 
         void TriggerServerEvent(string eventName, params object[] args);
+        
+        void TriggerServerEvent(string eventName, ref MValue args);
 
         void TriggerClientEvent(IPlayer player, string eventName, params MValue[] args);
 
         void TriggerClientEvent(IPlayer player, string eventName, params object[] args);
+        
+        void TriggerClientEvent(IPlayer player, string eventName, ref MValue args);
 
         IVehicle CreateVehicle(uint model, Position pos, float heading);
 

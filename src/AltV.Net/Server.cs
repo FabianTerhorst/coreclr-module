@@ -70,6 +70,11 @@ namespace AltV.Net
             AltVNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
             AltVNative.Server.Server_TriggerServerEvent(NativePointer, eventName, ref mValueList);
         }
+        
+        public void TriggerServerEvent(string eventName, ref MValue args)
+        {
+            AltVNative.Server.Server_TriggerServerEvent(NativePointer, eventName, ref args);
+        }
 
         public void TriggerServerEvent(string eventName, params object[] args)
         {
@@ -82,6 +87,12 @@ namespace AltV.Net
             AltVNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
             AltVNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero, eventName,
                 ref mValueList);
+        }
+        
+        public void TriggerClientEvent(IPlayer player, string eventName, ref MValue args)
+        {
+            AltVNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero, eventName,
+                ref args);
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)

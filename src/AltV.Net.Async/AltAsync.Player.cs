@@ -89,8 +89,8 @@ namespace AltV.Net.Async
 
         public static async Task EmitAsync(this IPlayer player, string eventName, params object[] args)
         {
-            var mValues = MValue.CreateFromObjects(args);
-            await AltVAsync.Schedule(() => { Alt.Server.TriggerClientEvent(player, eventName, mValues); });
+            var mValueArgs = MValue.Create(MValue.CreateFromObjects(args));
+            await AltVAsync.Schedule(() => { Alt.Server.TriggerClientEvent(player, eventName, ref mValueArgs); });
         }
     }
 }

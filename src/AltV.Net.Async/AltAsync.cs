@@ -85,14 +85,14 @@ namespace AltV.Net.Async
 
         public static async void Emit(string eventName, params object[] args)
         {
-            var mValues = MValue.CreateFromObjects(args);
-            await AltVAsync.Schedule(() => Alt.Server.TriggerServerEvent(eventName, mValues));
+            var mValueArgs = MValue.Create(MValue.CreateFromObjects(args));
+            await AltVAsync.Schedule(() => Alt.Server.TriggerServerEvent(eventName, ref mValueArgs));
         }
 
         public static async void EmitAll(string eventName, params object[] args)
         {
-            var mValues = MValue.CreateFromObjects(args);
-            await AltVAsync.Schedule(() => Alt.Server.TriggerClientEvent(null, eventName, mValues));
+            var mValueArgs = MValue.Create(MValue.CreateFromObjects(args));
+            await AltVAsync.Schedule(() => Alt.Server.TriggerClientEvent(null, eventName, ref mValueArgs));
         }
 
         internal static void Setup(AltVAsync altVAsync)

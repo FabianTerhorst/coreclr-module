@@ -71,6 +71,13 @@ namespace AltV.Net.Mock
         {
             TriggerServerEvent(eventName, MValue.CreateFromObjects(args));
         }
+        
+        public void TriggerServerEvent(string eventName, ref MValue args)
+        {
+            var mValueArray = MValueArray.Nil;
+            AltVNative.MValueGet.MValue_GetList(ref args, ref mValueArray);
+            Alt.Module.OnServerEvent(eventName, ref mValueArray);
+        }
 
         public void TriggerClientEvent(IPlayer player, string eventName, params MValue[] args)
         {
@@ -85,6 +92,14 @@ namespace AltV.Net.Mock
             {
                 player.PushEvent(eventName, args);
             }
+            Alt.Module.OnClientEvent(player?.NativePointer ?? IntPtr.Zero, eventName, args);
+        }
+        
+        public void TriggerClientEvent(IPlayer player, string eventName, ref MValue args)
+        {
+            var mValueArray = MValueArray.Nil;
+            AltVNative.MValueGet.MValue_GetList(ref args, ref mValueArray);
+            Alt.Module.OnClientEvent(player?.NativePointer ?? IntPtr.Zero, eventName, ref mValueArray);
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)
