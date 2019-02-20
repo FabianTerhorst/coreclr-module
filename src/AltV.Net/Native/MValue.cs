@@ -76,81 +76,10 @@ namespace AltV.Net.Native
                     return value;
                 case MValue[] value:
                     return Create(value);
-                /*case Dictionary<string, object> value:
-                    dictMValues = new List<MValue>();
-                    foreach (var dictValue in value.Values)
-                    {
-                        var dictMValue = CreateFromObject(dictValue);
-                        dictMValues.Add(dictMValue ?? Create());
-                    }
-
-                    return Create(dictMValues.ToArray(), value.Keys.ToArray());
-                case Dictionary<string, bool> value:
-                    dictMValues = new List<MValue>();
-                    foreach (var dictValue in value.Values)
-                    {
-                        dictMValues.Add(Create(dictValue));
-                    }
-
-                    return Create(dictMValues.ToArray(), value.Keys.ToArray());
-                case Dictionary<string, int> value:
-                    dictMValues = new List<MValue>();
-                    foreach (var dictValue in value.Values)
-                    {
-                        dictMValues.Add(Create(dictValue));
-                    }
-
-                    return Create(dictMValues.ToArray(), value.Keys.ToArray());
-                case Dictionary<string, long> value:
-                    dictMValues = new List<MValue>();
-                    foreach (var dictValue in value.Values)
-                    {
-                        dictMValues.Add(Create(dictValue));
-                    }
-
-                    return Create(dictMValues.ToArray(), value.Keys.ToArray());
-                case Dictionary<string, uint> value:
-                    dictMValues = new List<MValue>();
-                    foreach (var dictValue in value.Values)
-                    {
-                        dictMValues.Add(Create(dictValue));
-                    }
-
-                    return Create(dictMValues.ToArray(), value.Keys.ToArray());
-                case Dictionary<string, ulong> value:
-                    dictMValues = new List<MValue>();
-                    foreach (var dictValue in value.Values)
-                    {
-                        dictMValues.Add(Create(dictValue));
-                    }
-
-                    return Create(dictMValues.ToArray(), value.Keys.ToArray());
-                case Dictionary<string, double> value:
-                    dictMValues = new List<MValue>();
-                    foreach (var dictValue in value.Values)
-                    {
-                        dictMValues.Add(Create(dictValue));
-                    }
-
-                    return Create(dictMValues.ToArray(), value.Keys.ToArray());*/
                 case Invoker value:
                     return Create(value);
                 case Function value:
                     return Create(value);
-                /*case object[] value:
-                    return Create(value.Select(objArrayValue => CreateFromObject(objArrayValue) ?? Create()).ToArray());
-                case bool[] value:
-                    return Create(value.Select(Create).ToArray());
-                case int[] value:
-                    return Create(value.Select(objArrayValue => Create(objArrayValue)).ToArray());
-                case long[] value:
-                    return Create(value.Select(Create).ToArray());
-                case ulong[] value:
-                    return Create(value.Select(Create).ToArray());
-                case uint[] value:
-                    return Create(value.Select(objArrayValue => Create(objArrayValue)).ToArray());
-                case double[] value:
-                    return Create(value.Select(Create).ToArray());*/
                 case Net.Function function:
                     return Create(function.call);
                 case IDictionary dictionary:
