@@ -66,8 +66,8 @@ namespace AltV.Net.Example
                     Alt.Log("param1:" + s);
                     Alt.Log("param2:" + s1);
                     Alt.Log("bla:" + ((object[]) arg4[1])[0]);
-                    Alt.Log("myData-2: " + arg5.Position.x + " " + arg5.MyData);
-                    Alt.Log("myData-4: " + myVehicles[0].Position.x + " " + myVehicles[0].MyData);
+                    Alt.Log("myData-2: " + arg5.Position.X + " " + arg5.MyData);
+                    Alt.Log("myData-4: " + myVehicles[0].Position.X + " " + myVehicles[0].MyData);
                     Alt.Log("myData-3: " + arg6["test"]);
                     Alt.Log("null?" + (probablyNull == null ? "y" : "n"));
                     Alt.Log("null2?" + (nullArray[0] == null ? "y" : "n"));
@@ -86,8 +86,8 @@ namespace AltV.Net.Example
                     AltAsync.Log("async-param2:" + s1);
                     AltAsync.Log("async-bla:" + ((object[]) arg4[1])[0]);
                     AltAsync.Log("exists:" + arg5.Exists);
-                    AltAsync.Log("async-myData-2: " + arg5.Position.x + " " + arg5.MyData);
-                    AltAsync.Log("async-myData-4: " + myVehicles[0].Position.x + " " + myVehicles[0].MyData);
+                    AltAsync.Log("async-myData-2: " + arg5.Position.X + " " + arg5.MyData);
+                    AltAsync.Log("async-myData-4: " + myVehicles[0].Position.X + " " + myVehicles[0].MyData);
                     AltAsync.Log("async-myData-3: " + arg6["test"]);
                     AltAsync.Log("async-null?" + (probablyNull == null ? "y" : "n"));
                     AltAsync.Log("async-null2?" + (nullArray[0] == null ? "y" : "n"));
@@ -130,7 +130,7 @@ namespace AltV.Net.Example
 
             foreach (var veh in Alt.GetAllVehicles())
             {
-                Alt.Log("vehicle:" + veh.Position.x + " " + veh.Position.y + " " + veh.Position.z);
+                Alt.Log("vehicle:" + veh.Position.X + " " + veh.Position.Y + " " + veh.Position.Z);
             }
 
             Alt.On("1337", delegate(int int1) { Alt.Log("int1:" + int1); });
@@ -162,7 +162,7 @@ namespace AltV.Net.Example
 
         public void MyParser(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string> func)
         {
-            if (mValueArray.size != 1) return;
+            if (mValueArray.Size != 1) return;
             var reader = mValueArray.Reader();
             var mValue = reader.GetNext();
             if (mValue.type != MValue.Type.STRING) return;
@@ -171,7 +171,7 @@ namespace AltV.Net.Example
 
         public void MyServerEventParser(ref MValueArray mValueArray, Action<string> func)
         {
-            if (mValueArray.size != 1) return;
+            if (mValueArray.Size != 1) return;
             var reader = mValueArray.Reader();
             if (!reader.GetNext(out string value)) return;
             func(value);
@@ -180,7 +180,7 @@ namespace AltV.Net.Example
         // Converts string array to string
         public void MyServerEventParser2(ref MValueArray mValueArray, Action<string> func)
         {
-            if (mValueArray.size != 1) return;
+            if (mValueArray.Size != 1) return;
             var reader = mValueArray.Reader();
             if (!reader.GetNext(out MValueArray array)) return;
             var valueReader = array.Reader();
@@ -190,7 +190,7 @@ namespace AltV.Net.Example
         
         public void MyServerEventParser3(ref MValueArray mValueArray, Action<IMyVehicle> func)
         {
-            if (mValueArray.size != 1) return;
+            if (mValueArray.Size != 1) return;
             var reader = mValueArray.Reader();
             if (!reader.GetNext(out IMyVehicle vehicle)) return;
             func(vehicle);
@@ -198,7 +198,7 @@ namespace AltV.Net.Example
         
         public void MyServerEventParserAsync(ref MValueArray mValueArray, Action<IMyVehicle> func)
         {
-            if (mValueArray.size != 1) return;
+            if (mValueArray.Size != 1) return;
             var reader = mValueArray.Reader();
             if (!reader.GetNext(out IMyVehicle vehicle)) return;
             Task.Run(() => func(vehicle));
@@ -206,7 +206,7 @@ namespace AltV.Net.Example
 
         public void MyParser4(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string> func)
         {
-            if (mValueArray.size != 1) return;
+            if (mValueArray.Size != 1) return;
             var reader = mValueArray.Reader();
             if (!reader.GetNext(out string value)) return;
             func(player, value);
@@ -214,10 +214,10 @@ namespace AltV.Net.Example
 
         public void MyParser5(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string[]> func)
         {
-            if (mValueArray.size != 1) return;
+            if (mValueArray.Size != 1) return;
             var reader = mValueArray.Reader();
             if (!reader.GetNext(out MValueArray values)) return;
-            var strings = new string[values.size];
+            var strings = new string[values.Size];
             var valuesReader = values.Reader();
             var i = 0;
             while (valuesReader.GetNext(out string value))
@@ -230,7 +230,7 @@ namespace AltV.Net.Example
 
         public void MyParser6(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, IMyVehicle> func)
         {
-            if (mValueArray.size != 1) return;
+            if (mValueArray.Size != 1) return;
             var reader = mValueArray.Reader();
             if (!reader.GetNext(out IMyVehicle vehicle)) return;
             func(player, vehicle);
@@ -300,7 +300,7 @@ namespace AltV.Net.Example
         {
             var vehicle = await AltAsync.CreateVehicle(VehicleHash.Apc, new Position(1, 2, 3), float.MinValue);
             var vehicle2 = await AltAsync.CreateVehicle(VehicleHash.Apc, new Position(1, 2, 3), float.MinValue);
-            Alt.Log("veh:" + vehicle.Position.x + " " + vehicle2.Position.x);
+            Alt.Log("veh:" + vehicle.Position.X + " " + vehicle2.Position.X);
         }
 
         public override void OnStop()

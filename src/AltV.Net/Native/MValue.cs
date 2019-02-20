@@ -350,7 +350,7 @@ namespace AltV.Net.Native
             var valueArrayPtr = valueArrayRef.data;
             var stringViewArrayPtr = stringViewArray.data;
             var size = (int) stringViewArray.size;
-            if (valueArrayRef.size != (ulong) size) // Value size != key size should never happen
+            if (valueArrayRef.Size != (ulong) size) // Value size != key size should never happen
             {
                 return null;
             }
@@ -441,7 +441,7 @@ namespace AltV.Net.Native
                     var mValueArray = MValueArray.Nil;
                     AltVNative.MValueGet.MValue_GetList(ref this, ref mValueArray);
                     var arrayValue = mValueArray.data;
-                    var arrayValues = new object[mValueArray.size];
+                    var arrayValues = new object[mValueArray.Size];
                     for (var i = 0; i < arrayValues.Length; i++)
                     {
                         arrayValues[i] = Marshal.PtrToStructure<MValue>(arrayValue).ToObject(baseEntityPool);
@@ -456,7 +456,7 @@ namespace AltV.Net.Native
                     var valueArrayPtr = valueArrayRef.data;
                     var stringViewArrayPtr = stringViewArray.data;
                     var size = (int) stringViewArray.size;
-                    if (valueArrayRef.size != (ulong) size) // Value size != key size should never happen
+                    if (valueArrayRef.Size != (ulong) size) // Value size != key size should never happen
                     {
                         return null;
                     }

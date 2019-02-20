@@ -7,9 +7,9 @@ namespace AltV.Net.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct MValueArrayBuffer
     {
-        public IntPtr data; // Array of MValue's
-        public ulong size;
-        public ulong capacity;
+        private IntPtr data; // Array of MValue's
+        private ulong size;
+        private ulong capacity;
 
         public MValueArrayBuffer(IntPtr data, ulong size, ulong capacity)
         {

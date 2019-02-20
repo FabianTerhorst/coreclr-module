@@ -357,7 +357,7 @@ namespace AltV.Net.FunctionParser
             var strings = stringViewArrayRef.ToArray();
             var valueArray = valueArrayRef.ToArray();
             var length = strings.Length;
-            if (valueArrayRef.size != (ulong) length) // Value size != key size should never happen
+            if (valueArrayRef.Size != (ulong) length) // Value size != key size should never happen
             {
                 return null;
             }

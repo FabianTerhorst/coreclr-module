@@ -14,21 +14,21 @@ namespace AltV.Net.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct MValueArray
     {
-        public IntPtr data; // Array of MValue's
-        public ulong size;
-        public ulong capacity;
+        internal IntPtr data; // Array of MValue's
+        public ulong Size;
+        private ulong capacity;
 
         public static MValueArray Nil = new MValueArray
         {
             data = IntPtr.Zero,
-            size = 0,
+            Size = 0,
             capacity = 0
         };
 
         public MValue[] ToArray()
         {
             var value = data;
-            var values = new MValue[size];
+            var values = new MValue[Size];
             for (var i = 0; i < values.Length; i++)
             {
                 values[i] = Marshal.PtrToStructure<MValue>(value);
@@ -40,7 +40,7 @@ namespace AltV.Net.Native
 
         public MValueArrayBuffer Reader()
         {
-            return new MValueArrayBuffer(data, size, capacity);
+            return new MValueArrayBuffer(data, Size, capacity);
         }
     }
 
