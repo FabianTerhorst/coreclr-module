@@ -73,7 +73,7 @@ namespace AltV.Net
 
         public void TriggerServerEvent(string eventName, params object[] args)
         {
-            TriggerServerEvent(eventName, ConvertObjectsToMValues(args));
+            TriggerServerEvent(eventName, MValue.CreateFromObjects(args));
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, params MValue[] args)
@@ -86,19 +86,7 @@ namespace AltV.Net
 
         public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)
         {
-            TriggerClientEvent(player, eventName, ConvertObjectsToMValues(args));
-        }
-
-        private static MValue[] ConvertObjectsToMValues(object[] objects)
-        {
-            var length = objects.Length;
-            var mValues = new MValue[length];
-            for (var i = 0; i < length; i++)
-            {
-                mValues[i] = MValue.CreateFromObject(objects[i]);
-            }
-
-            return mValues;
+            TriggerClientEvent(player, eventName, MValue.CreateFromObjects(args));
         }
 
         public IVehicle CreateVehicle(uint model, Position pos, float heading)

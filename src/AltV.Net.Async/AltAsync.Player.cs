@@ -87,7 +87,10 @@ namespace AltV.Net.Async
         public static async Task KickAsync(this IPlayer player, string reason) =>
             await AltVAsync.Schedule(() => { player.Kick(reason); });
 
-        public static async Task EmitAsync(this IPlayer player, string eventName, params object[] args) =>
-            await AltVAsync.Schedule(() => { player.Emit(eventName, args); });
+        public static async Task EmitAsync(this IPlayer player, string eventName, params object[] args)
+        {
+            var mValues = MValue.CreateFromObjects(args);
+            await AltVAsync.Schedule(() => { Alt.Server.TriggerClientEvent(player, eventName, mValues); });
+        }
     }
 }

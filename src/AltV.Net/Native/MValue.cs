@@ -289,6 +289,18 @@ namespace AltV.Net.Native
             return mValue;
         }
 
+        internal static MValue[] CreateFromObjects(object[] objects)
+        {
+            var length = objects.Length;
+            var mValues = new MValue[length];
+            for (var i = 0; i < length; i++)
+            {
+                mValues[i] = CreateFromObject(objects[i]);
+            }
+
+            return mValues;
+        }
+
         public readonly Type type;
         public readonly IntPtr storagePointer;
 

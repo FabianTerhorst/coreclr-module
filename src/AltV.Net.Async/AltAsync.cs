@@ -1,80 +1,81 @@
 using System;
 using System.Threading.Tasks;
 using AltV.Net.Async.Events;
+using AltV.Net.Native;
 
 namespace AltV.Net.Async
 {
     public static partial class AltAsync
     {
         internal static AsyncModule Module;
-        
+
         internal static AltVAsync AltVAsync;
-        
+
         public static event CheckpointAsyncDelegate OnCheckpoint
         {
             add => Module.CheckpointAsyncEventHandler.Subscribe(value);
             remove => Module.CheckpointAsyncEventHandler.Unsubscribe(value);
         }
-        
+
         public static event PlayerConnectAsyncDelegate OnPlayerConnect
         {
             add => Module.PlayerConnectAsyncEventHandler.Subscribe(value);
             remove => Module.PlayerConnectAsyncEventHandler.Unsubscribe(value);
         }
-        
+
         public static event PlayerDamageAsyncDelegate OnPlayerDamage
         {
             add => Module.PlayerDamageAsyncEventHandler.Subscribe(value);
             remove => Module.PlayerDamageAsyncEventHandler.Unsubscribe(value);
         }
-        
+
         public static event PlayerDeadAsyncDelegate OnPlayerDead
         {
             add => Module.PlayerDeadAsyncEventHandler.Subscribe(value);
             remove => Module.PlayerDeadAsyncEventHandler.Unsubscribe(value);
         }
-        
+
         public static event VehicleChangeSeatAsyncDelegate OnVehicleChangeSeat
         {
             add => Module.VehicleChangeSeatAsyncEventHandler.Subscribe(value);
             remove => Module.VehicleChangeSeatAsyncEventHandler.Unsubscribe(value);
         }
-        
+
         public static event VehicleEnterAsyncDelegate OnVehicleEnter
         {
             add => Module.VehicleEnterAsyncEventHandler.Subscribe(value);
             remove => Module.VehicleEnterAsyncEventHandler.Unsubscribe(value);
         }
-        
+
         public static event VehicleLeaveAsyncDelegate OnVehicleLeave
         {
             add => Module.VehicleLeaveAsyncEventHandler.Subscribe(value);
             remove => Module.VehicleLeaveAsyncEventHandler.Unsubscribe(value);
         }
-        
+
         public static event PlayerDisconnectAsyncDelegate OnPlayerDisconnect
         {
             add => Module.PlayerDisconnectAsyncEventHandler.Subscribe(value);
             remove => Module.PlayerDisconnectAsyncEventHandler.Unsubscribe(value);
         }
-        
+
         public static event EntityRemoveAsyncDelegate OnEntityRemove
         {
             add => Module.EntityRemoveAsyncEventHandler.Subscribe(value);
             remove => Module.EntityRemoveAsyncEventHandler.Unsubscribe(value);
         }
-        
+
         public static event PlayerClientEventAsyncDelegate OnPlayerEvent
         {
             add => Module.PlayerClientEventAsyncEventHandler.Subscribe(value);
             remove => Module.PlayerClientEventAsyncEventHandler.Unsubscribe(value);
         }
-        
+
         public static void On(string eventName, ClientEventAsyncDelegate clientEventDelegate)
         {
             Module.On(eventName, clientEventDelegate);
         }
-        
+
         public static void On(string eventName, ServerEventAsyncDelegate serverEventDelegate)
         {
             Module.On(eventName, serverEventDelegate);
@@ -82,11 +83,23 @@ namespace AltV.Net.Async
 
         public static async void Log(string message) => await Do(() => Alt.Server.LogInfo(message));
 
+        public static async void Emit(string eventName, params object[] args)
+        {
+            var mValues = MValue.CreateFromObjects(args);
+            await AltVAsync.Schedule(() => Alt.Server.TriggerServerEvent(eventName, mValues));
+        }
+
+        public static async void EmitAll(string eventName, params object[] args)
+        {
+            var mValues = MValue.CreateFromObjects(args);
+            await AltVAsync.Schedule(() => Alt.Server.TriggerClientEvent(null, eventName, mValues));
+        }
+
         internal static void Setup(AltVAsync altVAsync)
         {
             AltVAsync = altVAsync;
         }
-        
+
         internal static void Setup(AsyncModule module)
         {
             Module = module;
