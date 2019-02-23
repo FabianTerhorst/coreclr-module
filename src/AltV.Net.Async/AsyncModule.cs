@@ -49,10 +49,10 @@ namespace AltV.Net.Async
             =
             new Dictionary<string, HashSet<ServerEventAsyncDelegate>>();
 
-        public AsyncModule(IServer server, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
+        public AsyncModule(IServer server, CSharpNativeResource cSharpNativeResource, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IEntityPool<IBlip> blipPool,
-            IEntityPool<ICheckpoint> checkpointPool) : base(server, baseEntityPool, playerPool, vehiclePool, blipPool,
+            IEntityPool<ICheckpoint> checkpointPool) : base(server, cSharpNativeResource, baseEntityPool, playerPool, vehiclePool, blipPool,
             checkpointPool)
         {
             AltAsync.Setup(this);

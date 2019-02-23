@@ -61,12 +61,12 @@ namespace AltV.Net
             return new CheckpointFactory();
         }
 
-        public virtual Module GetModule(IServer server, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
+        public virtual Module GetModule(IServer server, CSharpNativeResource cSharpNativeResource, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IEntityPool<IBlip> blipPool,
             IEntityPool<ICheckpoint> checkpointPool)
         {
-            return new Module(server, baseEntityPool, playerPool, vehiclePool, blipPool, checkpointPool);
+            return new Module(server, cSharpNativeResource, baseEntityPool, playerPool, vehiclePool, blipPool, checkpointPool);
         }
     }
 }

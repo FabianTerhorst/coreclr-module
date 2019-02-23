@@ -11,6 +11,8 @@ namespace AltV.Net
     public class Module
     {
         internal readonly IServer Server;
+        
+        internal readonly CSharpNativeResource CSharpNativeResource;
 
         internal readonly IBaseEntityPool BaseEntityPool;
 
@@ -78,13 +80,14 @@ namespace AltV.Net
         internal readonly EventHandler<ServerCustomEventEventDelegate> ServerCustomEventEventHandler =
             new EventHandler<ServerCustomEventEventDelegate>();
 
-        public Module(IServer server, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
+        public Module(IServer server, CSharpNativeResource cSharpNativeResource, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IEntityPool<IBlip> blipPool,
             IEntityPool<ICheckpoint> checkpointPool)
         {
             Alt.Setup(this);
             Server = server;
+            CSharpNativeResource = cSharpNativeResource;
             BaseEntityPool = baseEntityPool;
             PlayerPool = playerPool;
             VehiclePool = vehiclePool;

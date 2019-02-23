@@ -64,6 +64,7 @@ EXPORT void* MValue_GetEntity(alt::MValue &mValue, alt::IBaseObject::Type &type)
 EXPORT MValueFunctionCallback MValue_GetFunction(alt::MValueFunction &mValue);
 
 EXPORT void MValue_CallFunction(alt::MValueFunction &mValue, alt::MValue* args, uint64_t size, alt::MValue &result);
+EXPORT void MValue_CallFunctionValue(alt::MValueFunction &mValue, alt::MValueList &value, alt::MValue &result);
 #ifdef __cplusplus
 }
 #endif

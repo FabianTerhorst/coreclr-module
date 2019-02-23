@@ -16,7 +16,7 @@ namespace AltV.Net
 
         private static IResource _resource;
 
-        public static void Main(IntPtr serverPointer, string resourceName, string entryPoint)
+        public static void Main(IntPtr serverPointer, IntPtr resourcePointer, string resourceName, string entryPoint)
         {
             _resourceLoader = new ResourceLoader(serverPointer, resourceName, entryPoint);
             _resource = _resourceLoader.Prepare();
@@ -36,7 +36,8 @@ namespace AltV.Net
             var entityPool = _resource.GetBaseEntityPool(playerPool, vehiclePool, blipPool, checkpointPool);
             var server = new Server(serverPointer, entityPool, playerPool, vehiclePool, blipPool,
                 checkpointPool);
-            _module = _resource.GetModule(server, entityPool, playerPool, vehiclePool, blipPool, checkpointPool);
+            var csharpResource = new CSharpNativeResource(resourcePointer);
+            _module = _resource.GetModule(server, csharpResource, entityPool, playerPool, vehiclePool, blipPool, checkpointPool);
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
             _resource.OnStart();
         }

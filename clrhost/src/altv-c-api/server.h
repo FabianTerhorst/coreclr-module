@@ -38,6 +38,7 @@ EXPORT alt::IBlip*
 Server_CreateBlipAttached(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo,
                           uint16_t &id);
 EXPORT void Server_RemoveEntity(alt::IServer* server, alt::IEntity* entity);
+EXPORT void Server_GetResource(alt::IServer* server, const char* resourceName, alt::IResource& resource);
 #ifdef __cplusplus
 }
 #endif

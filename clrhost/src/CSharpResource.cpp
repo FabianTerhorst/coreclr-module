@@ -68,7 +68,7 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
 bool CSharpResource::Start() {
     alt::IResource::Start();
     if (MainDelegate == nullptr) return false;
-    MainDelegate(this->server, this->name.CStr(), main.CStr());
+    MainDelegate(this->server, this, this->name.CStr(), main.CStr());
     return true;
 }
 
@@ -161,4 +161,8 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
 
 void CSharpResource::OnTick() {
     OnTickDelegate();
+}
+
+void CSharpResource_SetExport(CSharpResource* resource, const char* key, alt::MValue val) {
+    resource->SetExport(key, val);
 }

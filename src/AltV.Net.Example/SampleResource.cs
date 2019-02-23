@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Threading.Tasks;
 using AltV.Net.Async;
 using AltV.Net.Data;
@@ -138,13 +139,13 @@ namespace AltV.Net.Example
             AltAsync.On("1337", delegate(int int1) { Alt.Log("int1:" + int1); });
 
             Alt.Emit("1337", 1);
-            
+
             Alt.On<IMyVehicle>("MyServerEvent3", MyServerEventHandler2, MyServerEventParser3);
-            
+
             Alt.On<IMyVehicle>("MyServerEvent3", MyServerEventHandlerAsync, MyServerEventParserAsync);
 
             Alt.Emit("MyServerEvent3", vehicle);
-            
+
             vehicle.Remove();
 
             Bla();
@@ -158,6 +159,17 @@ namespace AltV.Net.Example
             Alt.Emit("MyServerEvent", "test-custom-parser");
 
             Alt.Emit("MyServerEvent2", new object[] {new string[] {"test-custom-parser-array"}});
+
+            dynamic dynamic = new ExpandoObject();
+
+            Alt.Emit("dynamic_test", dynamic);
+
+            Alt.Export("GetBla", () => { Alt.Log("GetBla called"); });
+
+            if (Alt.Import("Bla", "GetBla", out Action value))
+            {
+                value();
+            }
         }
 
         public void MyParser(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string> func)
@@ -176,7 +188,7 @@ namespace AltV.Net.Example
             if (!reader.GetNext(out string value)) return;
             func(value);
         }
-        
+
         // Converts string array to string
         public void MyServerEventParser2(ref MValueArray mValueArray, Action<string> func)
         {
@@ -187,7 +199,7 @@ namespace AltV.Net.Example
             if (!valueReader.GetNext(out string value)) return;
             func(value);
         }
-        
+
         public void MyServerEventParser3(ref MValueArray mValueArray, Action<IMyVehicle> func)
         {
             if (mValueArray.Size != 1) return;
@@ -195,7 +207,7 @@ namespace AltV.Net.Example
             if (!reader.GetNext(out IMyVehicle vehicle)) return;
             func(vehicle);
         }
-        
+
         public void MyServerEventParserAsync(ref MValueArray mValueArray, Action<IMyVehicle> func)
         {
             if (mValueArray.Size != 1) return;
@@ -245,12 +257,12 @@ namespace AltV.Net.Example
         {
             Alt.Log(myString);
         }
-        
+
         public void MyServerEventHandler2(IMyVehicle vehicle)
         {
             Alt.Log("data-custom-parser: " + vehicle.MyData);
         }
-        
+
         public async void MyServerEventHandlerAsync(IMyVehicle vehicle)
         {
             AltAsync.Log("data-custom-parser: " + vehicle.MyData);

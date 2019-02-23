@@ -338,6 +338,13 @@ namespace AltV.Net.Native
             AltVNative.MValueCall.MValue_CallFunction(ref this, args, (ulong) args.Length, ref result);
             return result;
         }
+        
+        public MValue CallFunction(params object[] args)
+        {
+            var result = Nil;
+            AltVNative.MValueCall.MValue_CallFunction(ref this, CreateFromObjects(args), (ulong) args.Length, ref result);
+            return result;
+        }
 
         public override string ToString()
         {

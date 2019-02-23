@@ -90,3 +90,7 @@ Server_CreateBlipAttached(alt::IServer* server, alt::IPlayer* target, uint8_t ty
 void Server_RemoveEntity(alt::IServer* server, alt::IEntity* entity) {
     return server->RemoveEntity(entity);
 }
+
+void Server_GetResource(alt::IServer* server, const char* resourceName, alt::IResource& resource) {
+    resource = server->GetResource(resourceName);
+}

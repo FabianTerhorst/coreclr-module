@@ -71,6 +71,10 @@ public:
 
     ~CSharpResource();
 
+    void SetExport(const char* key, alt::MValue& mValue) {
+        this->exports[key] = mValue;
+    }
+
     void (* OnCheckpointDelegate)(alt::ICheckpoint* checkpoint, alt::IEntity* entity, alt::IBaseObject::Type type,
                                   bool state);
 
@@ -82,7 +86,8 @@ public:
                                     alt::IBaseObject::Type attackerType, uint16_t attackerId, uint32_t weapon,
                                     uint8_t damage);
 
-    void (* OnPlayerDeadDelegate)(alt::IPlayer* player, alt::IEntity* killer, alt::IBaseObject::Type killerType, uint32_t weapon);
+    void (* OnPlayerDeadDelegate)(alt::IPlayer* player, alt::IEntity* killer, alt::IBaseObject::Type killerType,
+                                  uint32_t weapon);
 
     void (* OnPlayerDisconnectDelegate)(alt::IPlayer* player, const char* reason);
 
@@ -100,8 +105,10 @@ public:
 
     void (* OnTickDelegate)();
 
-    void (* MainDelegate)(alt::IServer* server, const char* resourceName, const char* entryPoint);
+    void (* MainDelegate)(alt::IServer* server, alt::IResource* resource, const char* resourceName, const char* entryPoint);
 
     void* runtimeHost;
     unsigned int domainId;
 };
+
+EXPORT void CSharpResource_SetExport(CSharpResource* resource, const char* key, alt::MValue val);

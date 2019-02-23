@@ -139,3 +139,7 @@ void MValue_CallFunction(alt::MValueFunction &mValue, alt::MValue* args, uint64_
     }
     result = mValue.GetInvoker()->Invoke(value);
 }
+
+void MValue_CallFunctionValue(alt::MValueFunction &mValue, alt::MValueList &value, alt::MValue &result) {
+    result = mValue.GetInvoker()->Invoke(value);
+}

@@ -1,4 +1,5 @@
 using AltV.Net.Elements.Entities;
+using AltV.Net.Native;
 
 namespace AltV.Net
 {
@@ -23,7 +24,8 @@ namespace AltV.Net
         IEntityFactory<IBlip> GetBlipFactory();
         IEntityFactory<ICheckpoint> GetCheckpointFactory();
 
-        Module GetModule(IServer server, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
+        Module GetModule(IServer server, CSharpNativeResource cSharpNativeResource, IBaseEntityPool baseEntityPool,
+            IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IEntityPool<IBlip> blipPool,
             IEntityPool<ICheckpoint> checkpointPool);

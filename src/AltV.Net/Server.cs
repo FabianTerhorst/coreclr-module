@@ -70,7 +70,7 @@ namespace AltV.Net
             AltVNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
             AltVNative.Server.Server_TriggerServerEvent(NativePointer, eventName, ref mValueList);
         }
-        
+
         public void TriggerServerEvent(string eventName, ref MValue args)
         {
             AltVNative.Server.Server_TriggerServerEvent(NativePointer, eventName, ref args);
@@ -88,7 +88,7 @@ namespace AltV.Net
             AltVNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero, eventName,
                 ref mValueList);
         }
-        
+
         public void TriggerClientEvent(IPlayer player, string eventName, ref MValue args)
         {
             AltVNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero, eventName,
@@ -128,7 +128,8 @@ namespace AltV.Net
         public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
         {
             ushort id = default;
-            blipPool.Create(AltVNative.Server.Server_CreateBlipAttached(NativePointer, player?.NativePointer ?? IntPtr.Zero,
+            blipPool.Create(AltVNative.Server.Server_CreateBlipAttached(NativePointer,
+                player?.NativePointer ?? IntPtr.Zero,
                 type, entityAttach.NativePointer, ref id), id, out var blip);
             return blip;
         }
@@ -139,6 +140,13 @@ namespace AltV.Net
             {
                 AltVNative.Server.Server_RemoveEntity(NativePointer, entity.NativePointer);
             }
+        }
+
+        public ServerNativeResource GetResource(string name)
+        {
+            var resourcePointer = IntPtr.Zero;
+            AltVNative.Server.Server_GetResource(NativePointer, name, ref resourcePointer);
+            return resourcePointer == IntPtr.Zero ? null : new ServerNativeResource(resourcePointer);
         }
     }
 }

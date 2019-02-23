@@ -63,25 +63,25 @@ namespace AltV.Net
             add => Module.VehicleLeaveEventHandler.Subscribe(value);
             remove => Module.VehicleLeaveEventHandler.Unsubscribe(value);
         }
-        
+
         public static event PlayerClientEventDelegate OnPlayerEvent
         {
             add => Module.PlayerClientEventEventHandler.Subscribe(value);
             remove => Module.PlayerClientEventEventHandler.Unsubscribe(value);
         }
-        
+
         public static event PlayerClientCustomEventDelegate OnPlayerCustomEvent
         {
             add => Module.PlayerClientCustomEventEventHandler.Subscribe(value);
             remove => Module.PlayerClientCustomEventEventHandler.Unsubscribe(value);
         }
-        
+
         public static event ServerEventEventDelegate OnServerEvent
         {
             add => Module.ServerEventEventHandler.Subscribe(value);
             remove => Module.ServerEventEventHandler.Unsubscribe(value);
         }
-        
+
         public static event ServerCustomEventEventDelegate OnServerCustomEvent
         {
             add => Module.ServerCustomEventEventHandler.Subscribe(value);
