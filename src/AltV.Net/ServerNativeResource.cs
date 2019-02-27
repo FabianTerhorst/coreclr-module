@@ -9,9 +9,9 @@ namespace AltV.Net
         {
         }
 
-        public void GetExport(string key, ref MValue value)
+        public bool GetExport(string key, ref MValue value)
         {
-            AltVNative.Resource.Resource_GetExport(NativePointer, key, ref value);
+            return AltVNative.Resource.Resource_GetExport(NativePointer, key, ref value);
         }
     }
 }

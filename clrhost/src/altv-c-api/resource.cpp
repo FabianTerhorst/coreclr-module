@@ -16,7 +16,12 @@ void Resource_GetExports(alt::IResource* resource, alt::Array<alt::String> &keys
     values = mapValues;
 }
 
-void Resource_GetExport(alt::IResource* resource, const char* key, alt::MValue &value) {
+bool Resource_GetExport(alt::IResource* resource, const char* key, alt::MValue &value) {
     auto dict = resource->GetExports().Get<alt::MValue::Dict>();
-    value = dict[key];
+    auto dictValue = dict.find(key);
+    if(dictValue == dict.end()) {
+        return false;
+    }
+    value = dictValue->second;
+    return true;
 }

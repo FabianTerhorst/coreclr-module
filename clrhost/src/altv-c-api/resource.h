@@ -16,7 +16,7 @@ extern "C"
 {
 #endif
 EXPORT void Resource_GetExports(alt::IResource* resource, alt::Array<alt::String> &keys, alt::MValue::List &values);
-EXPORT void Resource_GetExport(alt::IResource* resource, const char* key, alt::MValue &value);
+EXPORT bool Resource_GetExport(alt::IResource* resource, const char* key, alt::MValue &value);
 #ifdef __cplusplus
 }
 #endif

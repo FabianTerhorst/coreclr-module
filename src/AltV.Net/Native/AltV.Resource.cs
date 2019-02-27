@@ -15,7 +15,7 @@ namespace AltV.Net.Native
                 ref MValueArray values);
             
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern ushort Resource_GetExport(IntPtr resourcePointer, string key, ref MValue mvalue);
+            internal static extern bool Resource_GetExport(IntPtr resourcePointer, string key, ref MValue mvalue);
         }
     }
 }

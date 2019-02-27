@@ -11,5 +11,8 @@ namespace AltV.Net
 
         public static IVehicle CreateVehicle(VehicleHash vehicleHash, Position pos, float heading) =>
             Module.Server.CreateVehicle((uint) vehicleHash, pos, heading);
+
+        public static IVehicle CreateVehicle(string model, Position pos, float heading) =>
+            Module.Server.CreateVehicle(Module.Server.Hash(model), pos, heading);
     }
 }

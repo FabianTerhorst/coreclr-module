@@ -238,10 +238,7 @@ namespace AltV.Net
                 return;
             }
 
-            if (!BaseEntityPool.GetOrCreate(killerEntityPointer, killerEntityType, out var killer))
-            {
-                return;
-            }
+            BaseEntityPool.GetOrCreate(killerEntityPointer, killerEntityType, out var killer);
 
             OnPlayerDeadEvent(player, killer, weapon);
         }
