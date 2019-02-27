@@ -112,7 +112,7 @@ namespace AltV.Net
             Rgba color)
         {
             ushort id = default;
-            checkpointPool.Create(AltVNative.Server.Server_CreateCheckpoint(NativePointer, player.NativePointer,
+            checkpointPool.Create(AltVNative.Server.Server_CreateCheckpoint(NativePointer, player?.NativePointer ?? IntPtr.Zero,
                 type, pos, radius, height, color, ref id), id, out var checkpoint);
             return checkpoint;
         }

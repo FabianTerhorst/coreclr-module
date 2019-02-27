@@ -13,5 +13,14 @@ namespace AltV.Net
             float height,
             Rgba color) =>
             Module.Server.CreateCheckpoint(player, (byte) type, pos, radius, height, color);
+
+        public static ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height,
+            Rgba color) =>
+            Module.Server.CreateCheckpoint(null, type, pos, radius, height, color);
+
+        public static ICheckpoint CreateCheckpoint(CheckpointType type, Position pos, float radius,
+            float height,
+            Rgba color) =>
+            Module.Server.CreateCheckpoint(null, (byte) type, pos, radius, height, color);
     }
 }
