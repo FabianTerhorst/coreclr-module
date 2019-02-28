@@ -11,7 +11,7 @@ namespace AltV.Net
 
         public void SetExport(string key, MValue value)
         {
-            AltVNative.Resource.CSharpResource_SetExport(NativePointer, key, value);
+            AltVNative.Resource.CSharpResource_SetExport(NativePointer, key, ref value);
         }
     }
 }

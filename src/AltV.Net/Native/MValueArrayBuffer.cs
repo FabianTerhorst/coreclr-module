@@ -106,7 +106,7 @@ namespace AltV.Net.Native
             data += MValue.Size;
             size--;
             if (mValue.type != MValue.Type.INT)
-            { 
+            {
                 value = default;
                 return false;
             }
@@ -127,7 +127,7 @@ namespace AltV.Net.Native
             data += MValue.Size;
             size--;
             if (mValue.type != MValue.Type.UINT)
-            { 
+            {
                 value = default;
                 return false;
             }
@@ -195,7 +195,7 @@ namespace AltV.Net.Native
                 return false;
             }
 
-            value = mValue.GetFunction();            
+            value = mValue.GetFunction();
             return true;
         }
 
@@ -287,6 +287,12 @@ namespace AltV.Net.Native
         public bool HasNext()
         {
             return size != 0;
+        }
+
+        public MValue.Type GePreviousType()
+        {
+            var mValue = Marshal.PtrToStructure<MValue>(data - MValue.Size);
+            return mValue.type;
         }
     }
 }
