@@ -91,6 +91,6 @@ void Server_RemoveEntity(alt::IServer* server, alt::IEntity* entity) {
     return server->RemoveEntity(entity);
 }
 
-void Server_GetResource(alt::IServer* server, const char* resourceName, alt::IResource& resource) {
+void Server_GetResource(alt::IServer* server, const char* resourceName, alt::IResource*& resource) {
     resource = server->GetResource(resourceName);
 }

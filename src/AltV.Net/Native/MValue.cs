@@ -131,6 +131,10 @@ namespace AltV.Net.Native
                     }
 
                     return Create(dictValues, dictKeys);
+                case IWritable writable:
+                    var writer = new MValueWriter();
+                    writable.OnWrite(writer);
+                    return writer.ToMValue();
                 default:
                     Alt.Log("can't convert type:" + obj.GetType());
                     return Nil;
@@ -338,11 +342,12 @@ namespace AltV.Net.Native
             AltVNative.MValueCall.MValue_CallFunction(ref this, args, (ulong) args.Length, ref result);
             return result;
         }
-        
+
         public MValue CallFunction(params object[] args)
         {
             var result = Nil;
-            AltVNative.MValueCall.MValue_CallFunction(ref this, CreateFromObjects(args), (ulong) args.Length, ref result);
+            AltVNative.MValueCall.MValue_CallFunction(ref this, CreateFromObjects(args), (ulong) args.Length,
+                ref result);
             return result;
         }
 
