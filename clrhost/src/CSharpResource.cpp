@@ -163,6 +163,6 @@ void CSharpResource::OnTick() {
     OnTickDelegate();
 }
 
-void CSharpResource_SetExport(CSharpResource* resource, const char* key, alt::MValue val) {
+void CSharpResource_SetExport(CSharpResource* resource, const char* key, const alt::MValue& val) {
     resource->SetExport(key, val);
 }
