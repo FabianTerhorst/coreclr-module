@@ -172,6 +172,8 @@ namespace AltV.Net.Example
             }*/
             
             Alt.Emit("none-existing-event", new WritableObject());
+            
+            Alt.Emit("none-existing-event", new ConvertibleObject());
         }
 
         public void MyParser(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string> func)

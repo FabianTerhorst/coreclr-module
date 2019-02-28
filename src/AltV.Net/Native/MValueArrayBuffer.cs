@@ -198,6 +198,16 @@ namespace AltV.Net.Native
             value = mValue.GetFunction();
             return true;
         }
+        
+        public void SkipValue()
+        {
+            if (size == 0)
+            {
+                return;
+            }
+            data += MValue.Size;
+            size--;
+        }
 
         public bool GetNext<TEntity>(out TEntity value) where TEntity : IEntity
         {

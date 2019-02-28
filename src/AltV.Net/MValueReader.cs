@@ -178,6 +178,12 @@ namespace AltV.Net
             CheckObject();
             return ((MValueObjectReader) readableMValue).StringViewArray.GetNext();
         }
+        
+        public void SkipName()
+        {
+            CheckObject();
+            ((MValueObjectReader) readableMValue).StringViewArray.SkipValue();
+        }
 
         public bool NextBool()
         {
@@ -261,6 +267,12 @@ namespace AltV.Net
             }
 
             return value;
+        }
+        
+        public void SkipValue()
+        {
+            CheckObject();
+            ((MValueObjectReader) readableMValue).MValueArrayBuffer.SkipValue();
         }
     }
 }

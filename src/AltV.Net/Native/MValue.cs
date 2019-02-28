@@ -45,7 +45,8 @@ namespace AltV.Net.Native
 
             string[] dictKeys;
             MValue[] dictValues;
-
+            MValueWriter writer;
+            
             switch (obj)
             {
                 case IPlayer player:
@@ -132,8 +133,12 @@ namespace AltV.Net.Native
 
                     return Create(dictValues, dictKeys);
                 case IWritable writable:
-                    var writer = new MValueWriter();
+                    writer = new MValueWriter();
                     writable.OnWrite(writer);
+                    return writer.ToMValue();
+                case IMValueConvertible convertible:
+                    writer = new MValueWriter();
+                    convertible.GetAdapter().ToMValue(obj, writer);
                     return writer.ToMValue();
                 default:
                     Alt.Log("can't convert type:" + obj.GetType());
