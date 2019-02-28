@@ -2,7 +2,7 @@ namespace AltV.Net.Example
 {
     public class ConvertibleObject : IMValueConvertible
     {
-        public class ConvertibleObjectAdapter : IMValueAdapter<ConvertibleObject>
+        private class ConvertibleObjectAdapter : IMValueAdapter<ConvertibleObject>
         {
             public ConvertibleObject FromMValue(MValueReader reader)
             {
