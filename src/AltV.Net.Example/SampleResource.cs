@@ -166,10 +166,10 @@ namespace AltV.Net.Example
 
             Alt.Export("GetBla", () => { Alt.Log("GetBla called"); });
 
-            if (Alt.Import("Bla", "GetBla", out Action value))
+            /*if (Alt.Import("Bla", "GetBla", out Action value))
             {
                 value();
-            }
+            }*/
             
             Alt.Emit("none-existing-event", new WritableObject());
         }
