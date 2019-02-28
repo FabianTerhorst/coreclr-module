@@ -71,7 +71,7 @@ public:
 
     ~CSharpResource();
 
-    void SetExport(const char* key, alt::MValue& mValue) {
+    void SetExport(const char* key, const alt::MValue &mValue) {
         this->exports[key] = mValue;
     }
 
@@ -111,4 +111,4 @@ public:
     unsigned int domainId;
 };
 
-EXPORT void CSharpResource_SetExport(CSharpResource* resource, const char* key, alt::MValue val);
+EXPORT void CSharpResource_SetExport(CSharpResource* resource, const char* key, const alt::MValue& val);
