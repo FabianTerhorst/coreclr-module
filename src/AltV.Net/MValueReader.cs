@@ -72,35 +72,9 @@ namespace AltV.Net
 
         private IReadableMValue readableMValue;
 
-        //TODO: we need to construct inside the constructor a IReadableMValue that will deliver the actual object / array after BeginObject/BeginArray
-        
-        /*public MValueReader(IntPtr data, ulong size)
-        {
-            readableMValue = new MValueArrayReader(new MValueArrayBuffer(data, size));
-            currents.Push(readableMValue);
-            insideObject = true;
-        }*/
-
         public MValueReader(ref MValue mValue)
         {
             readableMValue = new MValueStartReader(ref mValue);
-            /*if (mValue.type == MValue.Type.DICT)
-            {
-                var stringViewArray = StringViewArray.Nil;
-                var valueArrayRef = MValueArray.Nil;
-                AltVNative.MValueGet.MValue_GetDict(ref mValue, ref stringViewArray, ref valueArrayRef);
-                readableMValue = new MValueObjectReader(stringViewArray, valueArrayRef.Reader());
-                currents.Push(readableMValue);
-                insideObject = true;
-            } else if (mValue.type == MValue.Type.LIST)
-            {
-                var mValueArray = MValueArray.Nil;
-                AltVNative.MValueGet.MValue_GetList(ref mValue, ref mValueArray);
-                readableMValue = new MValueArrayReader(new MValueArrayBuffer(mValueArray.data, mValueArray.Size));
-                currents.Push(readableMValue);
-                insideObject = true;
-            }*/
-            
         }
 
         public void BeginObject()
