@@ -15,6 +15,8 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
         byte ModKit { get; set; }
+        
+        byte ModKitsCount { get; }
 
         bool IsPrimaryColorRgb { get; }
 
@@ -73,8 +75,6 @@ namespace AltV.Net.Elements.Entities
         byte GetModsCount(byte category);
 
         bool SetMod(byte category, byte id);
-
-        byte GetModKitsCount();
 
         void SetWheels(byte type, byte variation);
 

@@ -14,7 +14,8 @@ namespace AltV.Net.Async
         {
             ushort id = default;
             var vehiclePtr = await AltVAsync.Schedule(() =>
-                AltVNative.Server.Server_CreateVehicle(((Server) Alt.Server).NativePointer, model, pos, heading, ref id));
+                AltVNative.Server.Server_CreateVehicle(((Server) Alt.Server).NativePointer, model, pos, heading,
+                    ref id));
             Alt.Module.VehiclePool.Create(vehiclePtr, id, out var vehicle);
             return vehicle;
         }
@@ -166,7 +167,7 @@ namespace AltV.Net.Async
             await AltVAsync.Schedule(() => vehicle.SetMod(category, id));
 
         public static async Task<byte> GetModKitsCountAsync(this IVehicle vehicle) =>
-            await AltVAsync.Schedule(vehicle.GetModKitsCount);
+            await AltVAsync.Schedule(() => vehicle.ModKitsCount);
 
         public static async Task SetWheelsAsync(this IVehicle vehicle, byte type, byte variation) =>
             await AltVAsync.Schedule(() => vehicle.SetWheels(type, variation));

@@ -44,7 +44,6 @@ namespace AltV.Net.Example
             vehicle.SetMod(0, 0);
             vehicle.GetMod(0);
             vehicle.GetModsCount(0);
-            vehicle.GetModKitsCount();
             vehicle.PrimaryColorRgb = new Rgba
             {
                 r = 1,

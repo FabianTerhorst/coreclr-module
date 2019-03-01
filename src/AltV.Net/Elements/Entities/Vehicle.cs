@@ -144,6 +144,8 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public byte ModKitsCount => !Exists ? default : AltVNative.Vehicle.Vehicle_GetModKitsCount(NativePointer);
+
         public bool IsPrimaryColorRgb => Exists && AltVNative.Vehicle.Vehicle_IsPrimaryColorRGB(NativePointer);
 
         public byte PrimaryColor
@@ -723,11 +725,6 @@ namespace AltV.Net.Elements.Entities
         public bool SetMod(byte category, byte id)
         {
             return Exists && AltVNative.Vehicle.Vehicle_SetMod(NativePointer, category, id);
-        }
-
-        public byte GetModKitsCount()
-        {
-            return !Exists ? (byte) 0 : AltVNative.Vehicle.Vehicle_GetModKitsCount(NativePointer);
         }
 
         public void SetWheels(byte type, byte variation)

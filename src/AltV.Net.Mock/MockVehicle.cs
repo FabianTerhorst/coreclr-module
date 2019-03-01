@@ -32,6 +32,7 @@ namespace AltV.Net.Mock
         public byte WindowTint { get; set; }
         public byte DirtLevel { get; set; }
         public Rgba NeonColor { get; set; }
+        public byte ModKitsCount { get; }
         public byte GetMod(byte category)
         {
             return 0;
@@ -45,11 +46,6 @@ namespace AltV.Net.Mock
         public bool SetMod(byte category, byte id)
         {
             return true;
-        }
-
-        public byte GetModKitsCount()
-        {
-            return 0;
         }
 
         public void SetWheels(byte type, byte variation)
