@@ -9,6 +9,8 @@ namespace AltV.Net
     {
         public interface IWritableMValue
         {
+            List<MValue> Values { get; }
+            
             void Append(IWritableMValue writable);
 
             MValue ToMValue();
@@ -17,7 +19,7 @@ namespace AltV.Net
         public struct MValueObject : IWritableMValue
         {
             public readonly List<string> Names;
-            public readonly List<MValue> Values;
+            public List<MValue> Values { get; }
 
             public MValueObject(List<string> names, List<MValue> values)
             {
@@ -42,7 +44,7 @@ namespace AltV.Net
 
         public struct MValueArray : IWritableMValue
         {
-            public readonly List<MValue> Values;
+            public List<MValue> Values { get; }
 
             public MValueArray(List<MValue> values)
             {
@@ -134,7 +136,7 @@ namespace AltV.Net
         {
             if (currents.TryPeek(out currCurr))
             {
-                ((MValueObject) currCurr).Values.Add(MValue.Create(value));
+                currCurr.Values.Add(MValue.Create(value));
             }
         }
 
@@ -142,7 +144,7 @@ namespace AltV.Net
         {
             if (currents.TryPeek(out currCurr))
             {
-                ((MValueObject) currCurr).Values.Add(MValue.Create(value));
+                currCurr.Values.Add(MValue.Create(value));
             }
         }
 
@@ -150,7 +152,7 @@ namespace AltV.Net
         {
             if (currents.TryPeek(out currCurr))
             {
-                ((MValueObject) currCurr).Values.Add(MValue.Create(value));
+                currCurr.Values.Add(MValue.Create(value));
             }
         }
 
@@ -158,7 +160,7 @@ namespace AltV.Net
         {
             if (currents.TryPeek(out currCurr))
             {
-                ((MValueObject) currCurr).Values.Add(MValue.Create(value));
+                currCurr.Values.Add(MValue.Create(value));
             }
         }
 
@@ -166,7 +168,7 @@ namespace AltV.Net
         {
             if (currents.TryPeek(out currCurr))
             {
-                ((MValueObject) currCurr).Values.Add(MValue.Create(value));
+                currCurr.Values.Add(MValue.Create(value));
             }
         }
 
@@ -174,7 +176,7 @@ namespace AltV.Net
         {
             if (currents.TryPeek(out currCurr))
             {
-                ((MValueObject) currCurr).Values.Add(MValue.Create(value));
+                currCurr.Values.Add(MValue.Create(value));
             }
         }
 
@@ -182,7 +184,7 @@ namespace AltV.Net
         {
             if (currents.TryPeek(out currCurr))
             {
-                ((MValueObject) currCurr).Values.Add(MValue.Create(value));
+                currCurr.Values.Add(MValue.Create(value));
             }
         }
 
@@ -190,7 +192,7 @@ namespace AltV.Net
         {
             if (currents.TryPeek(out currCurr))
             {
-                ((MValueObject) currCurr).Values.Add(MValue.Create(value));
+                currCurr.Values.Add(MValue.Create(value));
             }
         }
 
@@ -198,7 +200,7 @@ namespace AltV.Net
         {
             if (currents.TryPeek(out currCurr))
             {
-                ((MValueObject) currCurr).Values.Add(MValue.Create(value));
+                currCurr.Values.Add(MValue.Create(value));
             }
         }
 
@@ -206,7 +208,7 @@ namespace AltV.Net
         {
             if (currents.TryPeek(out currCurr))
             {
-                ((MValueObject) currCurr).Values.Add(MValue.Create(value));
+                currCurr.Values.Add(MValue.Create(value));
             }
         }
 
@@ -214,7 +216,7 @@ namespace AltV.Net
         {
             if (currents.TryPeek(out currCurr))
             {
-                ((MValueObject) currCurr).Values.Add(MValue.Create(value));
+                currCurr.Values.Add(MValue.Create(value));
             }
         }
 
