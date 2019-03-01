@@ -358,6 +358,354 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        //TODO: wip vehicle apis
+
+        public bool EngineOn
+        {
+            get => !Exists ? default : AltVNative.Vehicle.Vehicle_IsEngineOn(NativePointer);
+            set
+            {
+                if (Exists)
+                {
+                    AltVNative.Vehicle.Vehicle_SetEngineOn(NativePointer, value);
+                }
+            }
+        }
+
+        public bool IsHandbrakeActive =>
+            !Exists ? default : AltVNative.Vehicle.Vehicle_IsHandbrakeActive(NativePointer);
+
+        public byte HeadlightColor
+        {
+            get => !Exists ? default : AltVNative.Vehicle.Vehicle_GetHeadlightColor(NativePointer);
+            set
+            {
+                if (!Exists) return;
+                AltVNative.Vehicle.Vehicle_SetHeadlightColor(NativePointer, value);
+            }
+        }
+
+        public bool SirenActive
+        {
+            get => !Exists ? default : AltVNative.Vehicle.Vehicle_IsSirenActive(NativePointer);
+            set
+            {
+                if (Exists)
+                {
+                    AltVNative.Vehicle.Vehicle_SetSirenActive(NativePointer, value);
+                }
+            }
+        }
+
+        public byte LockState
+        {
+            get => !Exists ? default : AltVNative.Vehicle.Vehicle_GetLockState(NativePointer);
+            set
+            {
+                if (!Exists) return;
+                AltVNative.Vehicle.Vehicle_SetLockState(NativePointer, value);
+            }
+        }
+
+        public byte GetDoorState(byte doorId)
+        {
+            return !Exists ? default : AltVNative.Vehicle.Vehicle_GetDoorState(NativePointer, doorId);
+        }
+
+        public void SetDoorState(byte doorId, byte state)
+        {
+            if (Exists)
+            {
+                AltVNative.Vehicle.Vehicle_SetDoorState(NativePointer, doorId, state);
+            }
+        }
+
+        public bool IsWindowOpened(byte windowId)
+        {
+            return !Exists ? default : AltVNative.Vehicle.Vehicle_IsWindowOpened(NativePointer, windowId);
+        }
+
+        public void SetWindowOpened(byte windowId, bool state)
+        {
+            if (Exists)
+            {
+                AltVNative.Vehicle.Vehicle_SetWindowOpened(NativePointer, windowId, state);
+            }
+        }
+
+        public bool IsDaylightOn => !Exists ? default : AltVNative.Vehicle.Vehicle_IsDaylightOn(NativePointer);
+
+        public bool IsNightlightOn => !Exists ? default : AltVNative.Vehicle.Vehicle_IsNightlightOn(NativePointer);
+
+        public bool RoofOpened
+        {
+            get => !Exists ? default : AltVNative.Vehicle.Vehicle_IsRoofOpened(NativePointer);
+            set
+            {
+                if (Exists)
+                {
+                    AltVNative.Vehicle.Vehicle_SetRoofOpened(NativePointer, value);
+                }
+            }
+        }
+
+        public bool IsFlamethrowerActive =>
+            !Exists ? default : AltVNative.Vehicle.Vehicle_IsFlamethrowerActive(NativePointer);
+
+        public string State
+        {
+            get
+            {
+                if (!Exists) return string.Empty;
+                var ptr = IntPtr.Zero;
+                AltVNative.Vehicle.Vehicle_GetGameStateBase64(NativePointer, ref ptr);
+                return Marshal.PtrToStringAnsi(ptr);
+            }
+            set
+            {
+                if (Exists)
+                {
+                    AltVNative.Vehicle.Vehicle_LoadGameStateFromBase64(NativePointer, value);
+                }
+            }
+        }
+
+        public int EngineHealth
+        {
+            get => !Exists ? default : AltVNative.Vehicle.Vehicle_GetEngineHealth(NativePointer);
+            set
+            {
+                if (Exists)
+                {
+                    AltVNative.Vehicle.Vehicle_SetEngineHealth(NativePointer, value);
+                }
+            }
+        }
+
+        public int PetrolTankHealth
+        {
+            get => !Exists ? default : AltVNative.Vehicle.Vehicle_GetPetrolTankHealth(NativePointer);
+            set
+            {
+                if (Exists)
+                {
+                    AltVNative.Vehicle.Vehicle_SetPetrolTankHealth(NativePointer, value);
+                }
+            }
+        }
+
+        public byte WheelsCount => !Exists ? default : AltVNative.Vehicle.Vehicle_GetWheelsCount(NativePointer);
+
+        public bool IsWheelBurst(byte wheelId)
+        {
+            return !Exists ? default : AltVNative.Vehicle.Vehicle_IsWheelBurst(NativePointer, wheelId);
+        }
+
+        public void SetWheelBurst(byte wheelId, bool state)
+        {
+            if (Exists)
+            {
+                AltVNative.Vehicle.Vehicle_SetWheelBurst(NativePointer, wheelId, state);
+            }
+        }
+
+        public bool DoesWheelHasTire(byte wheelId)
+        {
+            return !Exists ? default : AltVNative.Vehicle.Vehicle_DoesWheelHasTire(NativePointer, wheelId);
+        }
+
+        public void SetWheelHasTire(byte wheelId, bool state)
+        {
+            if (Exists)
+            {
+                AltVNative.Vehicle.Vehicle_SetWheelHasTire(NativePointer, wheelId, state);
+            }
+        }
+
+        public float GetWheelHealth(byte wheelId)
+        {
+            return !Exists ? default : AltVNative.Vehicle.Vehicle_GetWheelHealth(NativePointer, wheelId);
+        }
+
+        public void SetWheelHealth(byte wheelId, float health)
+        {
+            if (Exists)
+            {
+                AltVNative.Vehicle.Vehicle_SetWheelHealth(NativePointer, wheelId, health);
+            }
+        }
+
+        public byte RepairsCount => !Exists ? default : AltVNative.Vehicle.Vehicle_GetRepairsCount(NativePointer);
+
+        public uint BodyHealth
+        {
+            get => !Exists ? default : AltVNative.Vehicle.Vehicle_GetBodyHealth(NativePointer);
+            set
+            {
+                if (Exists)
+                {
+                    AltVNative.Vehicle.Vehicle_SetBodyHealth(NativePointer, value);
+                }
+            }
+        }
+
+        public uint BodyAdditionalHealth
+        {
+            get => !Exists ? default : AltVNative.Vehicle.Vehicle_GetBodyAdditionalHealth(NativePointer);
+            set
+            {
+                if (Exists)
+                {
+                    AltVNative.Vehicle.Vehicle_SetBodyAdditionalHealth(NativePointer, value);
+                }
+            }
+        }
+
+        public string HealthData
+        {
+            get
+            {
+                if (!Exists) return string.Empty;
+                var ptr = IntPtr.Zero;
+                AltVNative.Vehicle.Vehicle_GetHealthDataBase64(NativePointer, ref ptr);
+                return Marshal.PtrToStringAnsi(ptr);
+            }
+            set
+            {
+                if (Exists)
+                {
+                    AltVNative.Vehicle.Vehicle_LoadHealthDataFromBase64(NativePointer, value);
+                }
+            }
+        }
+
+        public byte GetPartDamageLevel(byte partId)
+        {
+            return !Exists ? default : AltVNative.Vehicle.Vehicle_GetPartDamageLevel(NativePointer, partId);
+        }
+
+        public void SetPartDamageLevel(byte partId, byte damage)
+        {
+            if (Exists)
+            {
+                AltVNative.Vehicle.Vehicle_SetPartDamageLevel(NativePointer, partId, damage);
+            }
+        }
+
+        public byte GetPartBulletHoles(byte partId)
+        {
+            return !Exists ? default : AltVNative.Vehicle.Vehicle_GetPartBulletHoles(NativePointer, partId);
+        }
+
+        public void SetPartBulletHoles(byte partId, byte shootsCount)
+        {
+            if (Exists)
+            {
+                AltVNative.Vehicle.Vehicle_SetPartBulletHoles(NativePointer, partId, shootsCount);
+            }
+        }
+
+        public bool IsLightDamaged(byte lightId)
+        {
+            return !Exists ? default : AltVNative.Vehicle.Vehicle_IsLightDamaged(NativePointer, lightId);
+        }
+
+        public void SetLightDamaged(byte lightId, bool isDamaged)
+        {
+            if (Exists)
+            {
+                AltVNative.Vehicle.Vehicle_SetLightDamaged(NativePointer, lightId, isDamaged);
+            }
+        }
+
+        public bool IsWindowDamaged(byte windowId)
+        {
+            return !Exists ? default : AltVNative.Vehicle.Vehicle_IsWindowOpened(NativePointer, windowId);
+        }
+
+        public void SetWindowDamaged(byte windowId, bool isDamaged)
+        {
+            if (Exists)
+            {
+                AltVNative.Vehicle.Vehicle_SetWindowDamaged(NativePointer, windowId, isDamaged);
+            }
+        }
+
+        public bool IsSpecialLightDamaged(byte specialLightId)
+        {
+            return !Exists ? default : AltVNative.Vehicle.Vehicle_IsSpecialLightDamaged(NativePointer, specialLightId);
+        }
+
+        void IVehicle.SetSpecialLightDamaged(byte specialLightId, bool isDamaged)
+        {
+            if (Exists)
+            {
+                AltVNative.Vehicle.Vehicle_SetSpecialLightDamaged(NativePointer, specialLightId, isDamaged);
+            }
+        }
+
+        public bool HasArmoredWindows =>
+            !Exists ? default : AltVNative.Vehicle.Vehicle_HasArmoredWindows(NativePointer);
+
+        public float GetArmoredWindowHealth(byte windowId)
+        {
+            return !Exists
+                ? default
+                : AltVNative.Vehicle.Vehicle_GetArmoredWindowHealth(NativePointer, windowId);
+        }
+
+        public void SetArmoredWindowHealth(byte windowId, float health)
+        {
+            if (Exists)
+            {
+                AltVNative.Vehicle.Vehicle_SetArmoredWindowHealth(NativePointer, windowId, health);
+            }
+        }
+
+        public byte GetArmoredWindowShootCount(byte windowId)
+        {
+            return !Exists ? default : AltVNative.Vehicle.Vehicle_GetArmoredWindowShootCount(NativePointer, windowId);
+        }
+
+        public void SetArmoredWindowShootCount(byte windowId, byte count)
+        {
+            if (Exists)
+            {
+                AltVNative.Vehicle.Vehicle_SetArmoredWindowShootCount(NativePointer, windowId, count);
+            }
+        }
+
+        public byte GetBumperDamageLevel(byte bumperId)
+        {
+            return !Exists ? default : AltVNative.Vehicle.Vehicle_GetBumperDamageLevel(NativePointer, bumperId);
+        }
+
+        public void SetBumperDamageLevel(byte bumperId, byte damageLevel)
+        {
+            if (Exists)
+            {
+                AltVNative.Vehicle.Vehicle_SetBumperDamageLevel(NativePointer, bumperId, damageLevel);
+            }
+        }
+
+        public string DamageData
+        {
+            get
+            {
+                if (!Exists) return string.Empty;
+                var ptr = IntPtr.Zero;
+                AltVNative.Vehicle.Vehicle_GetDamageDataBase64(NativePointer, ref ptr);
+                return Marshal.PtrToStringAnsi(ptr);
+            }
+            set
+            {
+                if (Exists)
+                {
+                    AltVNative.Vehicle.Vehicle_LoadDamageDataFromBase64(NativePointer, value);
+                }
+            }
+        }
+
         public Vehicle(IntPtr nativePointer, ushort id) : base(nativePointer, EntityType.Vehicle, id)
         {
         }
@@ -411,7 +759,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        void IVehicle.GetNeonActive(ref bool left, ref bool right, ref bool top, ref bool back)
+        public void GetNeonActive(ref bool left, ref bool right, ref bool top, ref bool back)
         {
             if (Exists)
             {

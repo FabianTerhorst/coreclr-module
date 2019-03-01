@@ -43,7 +43,7 @@ namespace AltV.Net.Elements.Entities
         Rgba TireSmokeColor { get; set; }
 
         byte WheelType { get; }
-        
+
         byte WheelVariation { get; }
 
         bool CustomTires { get; set; }
@@ -85,5 +85,97 @@ namespace AltV.Net.Elements.Entities
         void GetNeonActive(ref bool left, ref bool right, ref bool top, ref bool back);
 
         void SetNeonActive(bool left, bool right, bool top, bool back);
+
+        //TODO: WIP apis
+
+        bool EngineOn { get; set; }
+
+        bool IsHandbrakeActive { get; }
+
+        byte HeadlightColor { get; set; }
+
+        bool SirenActive { get; set; }
+
+        byte LockState { get; set; }
+
+        byte GetDoorState(byte doorId);
+
+        void SetDoorState(byte doorId, byte state);
+
+        bool IsWindowOpened(byte windowId);
+
+        void SetWindowOpened(byte windowId, bool state);
+
+        bool IsDaylightOn { get; }
+
+        bool IsNightlightOn { get; }
+
+        bool RoofOpened { get; set; }
+
+        bool IsFlamethrowerActive { get; }
+
+        string State { get; set; }
+
+        int EngineHealth { get; set; }
+
+        int PetrolTankHealth { get; set; }
+
+        byte WheelsCount { get; }
+
+        bool IsWheelBurst(byte wheelId);
+        
+        void SetWheelBurst(byte wheelId, bool state);
+
+        bool DoesWheelHasTire(byte wheelId);
+
+        void SetWheelHasTire(byte wheelId, bool state);
+
+        float GetWheelHealth(byte wheelId);
+
+        void SetWheelHealth(byte wheelId, float health);
+
+        byte RepairsCount { get; }
+
+        uint BodyHealth { get; set; }
+
+        uint BodyAdditionalHealth { get; set; }
+
+        string HealthData { get; set; }
+
+        byte GetPartDamageLevel(byte partId);
+
+        void SetPartDamageLevel(byte partId, byte damage);
+
+        byte GetPartBulletHoles(byte partId);
+
+        void SetPartBulletHoles(byte partId, byte shootsCount);
+
+        bool IsLightDamaged(byte lightId);
+
+        void SetLightDamaged(byte lightId, bool isDamaged);
+
+        bool IsWindowDamaged(byte windowId);
+
+        void SetWindowDamaged(byte windowId, bool isDamaged);
+
+        bool IsSpecialLightDamaged(byte specialLightId);
+
+        void SetSpecialLightDamaged(byte specialLightId, bool isDamaged);
+
+        bool HasArmoredWindows { get; }
+
+        float GetArmoredWindowHealth(byte windowId);
+
+        void SetArmoredWindowHealth(byte windowId, float health);
+
+        byte GetArmoredWindowShootCount(byte windowId);
+
+        void SetArmoredWindowShootCount(byte windowId, byte count);
+
+        byte GetBumperDamageLevel(byte bumperId);
+
+        void SetBumperDamageLevel(byte bumperId, byte damageLevel);
+
+        string DamageData { get; set; }
     }
 }

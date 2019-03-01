@@ -31,7 +31,6 @@ EXPORT void Vehicle_SetMetaData(alt::IVehicle* vehicle, const char* key, alt::MV
 EXPORT void Vehicle_GetSyncedMetaData(alt::IVehicle* vehicle, const char* key, alt::MValue &val);
 EXPORT void Vehicle_SetSyncedMetaData(alt::IVehicle* vehicle, const char* key, alt::MValue* val);
 // Vehicle
-EXPORT uint16_t Vehicle_GetId(alt::IVehicle* vehicle);
 EXPORT alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle);
 EXPORT uint8_t Vehicle_GetMod(alt::IVehicle* vehicle, uint8_t category);
 EXPORT uint8_t Vehicle_GetModsCount(alt::IVehicle* vehicle, uint8_t category);
@@ -80,6 +79,92 @@ EXPORT void Vehicle_GetNeonActive(alt::IVehicle* vehicle, bool &left, bool &righ
 EXPORT void Vehicle_SetNeonActive(alt::IVehicle* vehicle, bool left, bool right, bool top, bool back);
 EXPORT void Vehicle_GetNeonColor(alt::IVehicle* vehicle, rgba_t &neonColor);
 EXPORT void Vehicle_SetNeonColor(alt::IVehicle* vehicle, alt::RGBA color);
+
+//TODO: WIP vehicle api's
+
+EXPORT bool Vehicle_IsEngineOn(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetEngineOn(alt::IVehicle* vehicle, bool state);
+
+EXPORT bool Vehicle_IsHandbrakeActive(alt::IVehicle* vehicle);
+
+EXPORT uint8_t Vehicle_GetHeadlightColor(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetHeadlightColor(alt::IVehicle* vehicle, uint8_t color);
+
+EXPORT bool Vehicle_IsSirenActive(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetSirenActive(alt::IVehicle* vehicle, bool state);
+
+// TODO document available values. Enum?
+EXPORT uint8_t Vehicle_GetLockState(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetLockState(alt::IVehicle* vehicle, uint8_t state);
+
+// TODO document available values. Enum?
+EXPORT uint8_t Vehicle_GetDoorState(alt::IVehicle* vehicle, uint8_t doorId);
+EXPORT void Vehicle_SetDoorState(alt::IVehicle* vehicle, uint8_t doorId, uint8_t state);
+
+EXPORT bool Vehicle_IsWindowOpened(alt::IVehicle* vehicle, uint8_t windowId);
+EXPORT void Vehicle_SetWindowOpened(alt::IVehicle* vehicle, uint8_t windowId, bool state);
+
+EXPORT bool Vehicle_IsDaylightOn(alt::IVehicle* vehicle);
+EXPORT bool Vehicle_IsNightlightOn(alt::IVehicle* vehicle);
+
+EXPORT bool Vehicle_IsRoofOpened(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetRoofOpened(alt::IVehicle* vehicle, bool state);
+
+EXPORT bool Vehicle_IsFlamethrowerActive(alt::IVehicle* vehicle);
+
+EXPORT void Vehicle_GetGameStateBase64(alt::IVehicle* vehicle, const char*&text);
+EXPORT void Vehicle_LoadGameStateFromBase64(alt::IVehicle* vehicle, const char* base64);
+
+//vehicle health
+EXPORT int32_t Vehicle_GetEngineHealth(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetEngineHealth(alt::IVehicle* vehicle, int32_t health);
+
+EXPORT int32_t Vehicle_GetPetrolTankHealth(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetPetrolTankHealth(alt::IVehicle* vehicle, int32_t health);
+
+EXPORT uint8_t Vehicle_GetWheelsCount(alt::IVehicle* vehicle);
+
+EXPORT bool Vehicle_IsWheelBurst(alt::IVehicle* vehicle, uint8_t wheelId);
+EXPORT void Vehicle_SetWheelBurst(alt::IVehicle* vehicle, uint8_t wheelId, bool state);
+
+EXPORT bool Vehicle_DoesWheelHasTire(alt::IVehicle* vehicle, uint8_t wheelId);
+EXPORT void Vehicle_SetWheelHasTire(alt::IVehicle* vehicle, uint8_t wheelId, bool state);
+
+EXPORT float Vehicle_GetWheelHealth(alt::IVehicle* vehicle, uint8_t wheelId);
+EXPORT void Vehicle_SetWheelHealth(alt::IVehicle* vehicle, uint8_t wheelId, float health);
+
+EXPORT uint8_t Vehicle_GetRepairsCount(alt::IVehicle* vehicle);
+
+EXPORT uint32_t Vehicle_GetBodyHealth(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetBodyHealth(alt::IVehicle* vehicle, uint32_t health);
+EXPORT uint32_t Vehicle_GetBodyAdditionalHealth(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetBodyAdditionalHealth(alt::IVehicle* vehicle, uint32_t health);
+
+EXPORT void Vehicle_GetHealthDataBase64(alt::IVehicle* vehicle, const char*&text);
+EXPORT void Vehicle_LoadHealthDataFromBase64(alt::IVehicle* vehicle, const char* base64);
+
+// vehicle damage
+EXPORT uint8_t Vehicle_GetPartDamageLevel(alt::IVehicle* vehicle, uint8_t partId);
+EXPORT void Vehicle_SetPartDamageLevel(alt::IVehicle* vehicle, uint8_t partId, uint8_t damage);
+EXPORT uint8_t Vehicle_GetPartBulletHoles(alt::IVehicle* vehicle, uint8_t partId);
+EXPORT void Vehicle_SetPartBulletHoles(alt::IVehicle* vehicle, uint8_t partId, uint8_t shootsCount);
+EXPORT bool Vehicle_IsLightDamaged(alt::IVehicle* vehicle, uint8_t lightId);
+EXPORT void Vehicle_SetLightDamaged(alt::IVehicle* vehicle, uint8_t lightId, bool isDamaged);
+EXPORT bool Vehicle_IsWindowDamaged(alt::IVehicle* vehicle, uint8_t windowId);
+EXPORT void Vehicle_SetWindowDamaged(alt::IVehicle* vehicle, uint8_t windowId, bool isDamaged);
+EXPORT bool Vehicle_IsSpecialLightDamaged(alt::IVehicle* vehicle, uint8_t specialLightId);
+EXPORT void Vehicle_SetSpecialLightDamaged(alt::IVehicle* vehicle, uint8_t specialLightId, bool isDamaged);
+EXPORT bool Vehicle_HasArmoredWindows(alt::IVehicle* vehicle);
+EXPORT float Vehicle_GetArmoredWindowHealth(alt::IVehicle* vehicle, uint8_t windowId);
+EXPORT void Vehicle_SetArmoredWindowHealth(alt::IVehicle* vehicle, uint8_t windowId, float health);
+EXPORT uint8_t Vehicle_GetArmoredWindowShootCount(alt::IVehicle* vehicle, uint8_t windowId);
+EXPORT void Vehicle_SetArmoredWindowShootCount(alt::IVehicle* vehicle, uint8_t windowId, uint8_t count);
+EXPORT uint8_t Vehicle_GetBumperDamageLevel(alt::IVehicle* vehicle, uint8_t bumperId);
+EXPORT void Vehicle_SetBumperDamageLevel(alt::IVehicle* vehicle, uint8_t bumperId, uint8_t damageLevel);
+
+EXPORT void Vehicle_GetDamageDataBase64(alt::IVehicle* vehicle, const char*&text);
+EXPORT void Vehicle_LoadDamageDataFromBase64(alt::IVehicle* vehicle, const char* base64);
+
 #ifdef __cplusplus
 }
 #endif
