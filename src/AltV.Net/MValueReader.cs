@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
 using AltV.Net.Native;
 
 namespace AltV.Net
@@ -11,6 +10,8 @@ namespace AltV.Net
         public interface IReadableMValue
         {
             MValueArrayBuffer MValueArrayBuffer { get; }
+
+            MValue GetNext();
         }
 
         public struct MValueArrayReader : IReadableMValue
@@ -20,6 +21,11 @@ namespace AltV.Net
             public MValueArrayReader(MValueArrayBuffer mValueArrayBuffer)
             {
                 MValueArrayBuffer = mValueArrayBuffer;
+            }
+
+            public MValue GetNext()
+            {
+                return MValueArrayBuffer.GetNext();
             }
         }
 
@@ -33,12 +39,32 @@ namespace AltV.Net
                 StringViewArray = stringViewArray;
                 MValueArrayBuffer = mValueArrayBuffer;
             }
+            
+            public MValue GetNext()
+            {
+                return MValueArrayBuffer.GetNext();
+            }
+        }
+        
+        public struct MValueStartReader : IReadableMValue
+        {
+            public MValueArrayBuffer MValueArrayBuffer { get; }
+
+            private MValue mValue;
+
+            public MValueStartReader(ref MValue mValue)
+            {
+                this.mValue = mValue;
+                MValueArrayBuffer = new MValueArrayBuffer();
+            }
+            
+            public MValue GetNext()
+            {
+                return mValue;
+            }
         }
 
-        private IntPtr data; // Array of MValue's
-        private ulong size;
-
-        private bool insideObject = true;
+        private bool insideObject = false;
 
         private readonly Stack<IReadableMValue> currents = new Stack<IReadableMValue>();
 
@@ -46,40 +72,41 @@ namespace AltV.Net
 
         private IReadableMValue readableMValue;
 
-        public MValueReader(IntPtr data, ulong size)
+        //TODO: we need to construct inside the constructor a IReadableMValue that will deliver the actual object / array after BeginObject/BeginArray
+        
+        /*public MValueReader(IntPtr data, ulong size)
         {
-            this.data = data;
-            this.size = size;
+            readableMValue = new MValueArrayReader(new MValueArrayBuffer(data, size));
+            currents.Push(readableMValue);
+            insideObject = true;
+        }*/
+
+        public MValueReader(ref MValue mValue)
+        {
+            readableMValue = new MValueStartReader(ref mValue);
+            /*if (mValue.type == MValue.Type.DICT)
+            {
+                var stringViewArray = StringViewArray.Nil;
+                var valueArrayRef = MValueArray.Nil;
+                AltVNative.MValueGet.MValue_GetDict(ref mValue, ref stringViewArray, ref valueArrayRef);
+                readableMValue = new MValueObjectReader(stringViewArray, valueArrayRef.Reader());
+                currents.Push(readableMValue);
+                insideObject = true;
+            } else if (mValue.type == MValue.Type.LIST)
+            {
+                var mValueArray = MValueArray.Nil;
+                AltVNative.MValueGet.MValue_GetList(ref mValue, ref mValueArray);
+                readableMValue = new MValueArrayReader(new MValueArrayBuffer(mValueArray.data, mValueArray.Size));
+                currents.Push(readableMValue);
+                insideObject = true;
+            }*/
+            
         }
 
         public void BeginObject()
         {
-            MValue mValue;
-            if (insideObject)
-            {
-                switch (readableMValue)
-                {
-                    case MValueObjectReader mValueObjectReader:
-                        mValue = mValueObjectReader.MValueArrayBuffer.GetNext();
-                        break;
-                    case MValueArrayReader mValueArrayReader:
-                        mValue = mValueArrayReader.MValueArrayBuffer.GetNext();
-                        break;
-                    default:
-                        return;
-                }
-            }
-            else
-            {
-                if (size == 0)
-                {
-                    return;
-                }
-
-                mValue = Marshal.PtrToStructure<MValue>(data);
-                data += MValue.Size;
-                size--;
-            }
+            CheckObject();
+            var mValue = readableMValue.GetNext();
 
             if (mValue.type != MValue.Type.DICT)
             {
@@ -96,28 +123,15 @@ namespace AltV.Net
 
         public void EndObject()
         {
+            CheckObject();
             currents.Pop(); // Pop mValueObject we already have
             insideObject = currents.TryPop(out readableMValue);
         }
 
         public void BeginArray()
         {
-            MValue mValue;
-            if (insideObject)
-            {
-                mValue = readableMValue.MValueArrayBuffer.GetNext();
-            }
-            else
-            {
-                if (size == 0)
-                {
-                    return;
-                }
-
-                mValue = Marshal.PtrToStructure<MValue>(data);
-                data += MValue.Size;
-                size--;
-            }
+            CheckObject();
+            var mValue = readableMValue.GetNext();
 
             if (mValue.type != MValue.Type.LIST)
             {
@@ -133,6 +147,7 @@ namespace AltV.Net
 
         public void EndArray()
         {
+            CheckObject();
             currents.Pop(); // Pop mValueObject we already have
             insideObject = currents.TryPop(out readableMValue);
         }
@@ -147,6 +162,7 @@ namespace AltV.Net
 
         public bool HasNext()
         {
+            CheckObject();
             switch (readableMValue)
             {
                 case MValueObjectReader mValueObjectReader:

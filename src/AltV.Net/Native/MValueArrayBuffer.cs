@@ -9,13 +9,11 @@ namespace AltV.Net.Native
     {
         private IntPtr data; // Array of MValue's
         private ulong size;
-        private ulong capacity;
 
-        public MValueArrayBuffer(IntPtr data, ulong size, ulong capacity)
+        public MValueArrayBuffer(IntPtr data, ulong size)
         {
             this.data = data;
             this.size = size;
-            this.capacity = capacity;
         }
 
         /// <summary>
@@ -178,6 +176,27 @@ namespace AltV.Net.Native
             return true;
         }
 
+        public bool GetNextConvertible<T>(out object obj)
+        {
+            if (size == 0)
+            {
+                obj = null;
+                return false;
+            }
+
+            var mValue = Marshal.PtrToStructure<MValue>(data);
+            data += MValue.Size;
+            size--;
+            if (mValue.type == MValue.Type.LIST || mValue.type == MValue.Type.DICT)
+            {
+                MValueAdapters.FromMValue(ref mValue, typeof(T), out obj);
+                return true;
+            }
+
+            obj = null;
+            return false;
+        }
+
         public bool GetNext(out MValue.Function value)
         {
             if (size == 0)
@@ -198,13 +217,14 @@ namespace AltV.Net.Native
             value = mValue.GetFunction();
             return true;
         }
-        
+
         public void SkipValue()
         {
             if (size == 0)
             {
                 return;
             }
+
             data += MValue.Size;
             size--;
         }

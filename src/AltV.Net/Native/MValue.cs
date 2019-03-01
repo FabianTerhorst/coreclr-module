@@ -46,7 +46,7 @@ namespace AltV.Net.Native
             string[] dictKeys;
             MValue[] dictValues;
             MValueWriter writer;
-            
+
             switch (obj)
             {
                 case IPlayer player:
