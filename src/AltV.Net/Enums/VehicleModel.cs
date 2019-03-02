@@ -1,6 +1,6 @@
 namespace AltV.Net.Enums
 {
-    public enum VehicleHash : uint
+    public enum VehicleModel : uint
     {
         Chimera = 6774487,
         CarbonRs = 11251904,
