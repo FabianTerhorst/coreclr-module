@@ -10,6 +10,7 @@ using AltV.Net.Native;
 namespace AltV.Net.Elements.Args
 {
     //TODO: check the types in getter methods
+    //TODO: maybe make MValue internal
     [StructLayout(LayoutKind.Sequential)]
     public struct MValue
     {
