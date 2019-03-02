@@ -93,7 +93,7 @@ CoreClr::CoreClr(alt::IServer* server) {
     _coreClrLib = LoadLibraryEx(fullPath, nullptr, 0);
 	delete[] fullPath;
     if (_coreClrLib == nullptr) {
-        server->LogInfo(alt::String("[.NET] Unable to find CoreCLR dll"));
+        server->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll"));
         return;
     }
 
@@ -107,7 +107,7 @@ CoreClr::CoreClr(alt::IServer* server) {
     strcat(fullPath, fileName);
     _coreClrLib = dlopen(fullPath, RTLD_NOW | RTLD_LOCAL);
     if (_coreClrLib == nullptr) {
-        server->LogInfo(alt::String("[.NET] Unable to find CoreCLR dll [") + fullPath + "]: " + dlerror());
+        server->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll [") + fullPath + "]: " + dlerror());
         return;
     }
     _initializeCoreCLR = (coreclr_initialize_ptr) dlsym(_coreClrLib, "coreclr_initialize");
@@ -115,10 +115,10 @@ CoreClr::CoreClr(alt::IServer* server) {
     _createDelegate = (coreclr_create_delegate_ptr) dlsym(_coreClrLib, "coreclr_create_delegate");
 #endif
     if (_initializeCoreCLR == nullptr || _shutdownCoreCLR == nullptr || _createDelegate == nullptr) {
-        server->LogInfo(alt::String("[.NET] Unable to find CoreCLR dll methods"));
+        server->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll methods"));
         return;
     }
-    server->LogInfo(alt::String("[.NET] libcoreclr successfully loaded"));
+    server->LogInfo(alt::String("coreclr-module: libcoreclr successfully loaded"));
 }
 
 CoreClr::~CoreClr() {
@@ -129,7 +129,7 @@ CoreClr::~CoreClr() {
 bool CoreClr::GetDelegate(alt::IServer* server, void* runtimeHost, unsigned int domainId, const char* moduleName,
                           const char* classPath, const char* methodName, void** callback) {
     if (runtimeHost == nullptr || domainId == 0) {
-        server->LogInfo(alt::String("[.NET] Core CLR host not loaded"));
+        server->LogInfo(alt::String("coreclr-module: Core CLR host not loaded"));
         return false;
     }
     int result = _createDelegate(runtimeHost, domainId, moduleName, classPath, methodName, callback);
@@ -138,7 +138,7 @@ bool CoreClr::GetDelegate(alt::IServer* server, void* runtimeHost, unsigned int 
         if (result == -2146234304) {
             server->LogInfo(
                     alt::String(
-                            "[.NET] Your server needs to be compiled and needs to target (<TargetFramework>netcoreappX.X</TargetFramework>) with the same .net core version that is installed on your workstation"));
+                            "coreclr-module: Your server needs to be compiled and needs to target (<TargetFramework>netcoreappX.X</TargetFramework>) with the same .net core version that is installed on your workstation"));
             return false;
         }
         server->LogInfo(alt::String(strerror(errno)));
@@ -148,7 +148,7 @@ bool CoreClr::GetDelegate(alt::IServer* server, void* runtimeHost, unsigned int 
                 alt::String(x_str));
         delete[] x_str;
         server->LogInfo(
-                alt::String("[.NET] Unable to get ") + moduleName + ":" + classPath + "." + methodName + " domain:" +
+                alt::String("coreclr-module: Unable to get ") + moduleName + ":" + classPath + "." + methodName + " domain:" +
                 domainId);
         return false;
     }
@@ -165,10 +165,10 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer* server, cons
     for (auto path : directories) {
         auto directory = opendir(path);
         if (directory == nullptr) {
-            server->LogInfo(alt::String("[.NET] Runtime directory not found"));
+            server->LogInfo(alt::String("coreclr-module: Runtime directory not found"));
             return assemblies;
         }
-        server->LogInfo(alt::String("[.NET] Runtime directory found"));
+        server->LogInfo(alt::String("coreclr-module: Runtime directory found"));
         struct dirent* entry;
         struct stat sb{};
         for (auto ext : tpaExtensions) {
@@ -272,9 +272,9 @@ void CoreClr::CreateAppDomain(alt::IServer* server, const char* appPath, void** 
             domainId);
 
     if (result < 0) {
-        server->LogInfo(alt::String("[.NET] Unable to create app domain: 0x"));
+        server->LogInfo(alt::String("coreclr-module: Unable to create app domain: 0x"));
     } else {
-        server->LogInfo(alt::String("[.NET] created app domain: 0x") + appPath);
+        server->LogInfo(alt::String("coreclr-module: created app domain: 0x") + appPath);
     }
 }
 
@@ -283,23 +283,23 @@ void CoreClr::Shutdown(alt::IServer* server, void* runtimeHost,
     int latchedExitCode = 0;
     int result = _shutdownCoreCLR(runtimeHost, domainId, &latchedExitCode);
     if (result < 0) {
-        server->LogInfo(alt::String("[.NET] Unable to shutdown host"));
+        server->LogInfo(alt::String("coreclr-module: Unable to shutdown host"));
     } else {
-        server->LogInfo(alt::String("[.NET] Host successfully shotted down"));
+        server->LogInfo(alt::String("coreclr-module: Host successfully shotted down"));
     }
 }
 
 void CoreClr::GetPath(alt::IServer* server, const char* defaultPath) {
     auto directory = opendir(defaultPath);
     if (directory == nullptr) {
-        server->LogInfo(alt::String("[.NET] Default path is not a directory"));
+        server->LogInfo(alt::String("coreclr-module: Default path is not a directory"));
         return;
     }
     struct dirent* entry;
     char* greatest = nullptr;
     while ((entry = readdir(directory)) != nullptr) {
         if (entry->d_type == DT_DIR) {
-            server->LogInfo(alt::String("[.NET] version found: ") + entry->d_name);
+            server->LogInfo(alt::String("coreclr-module: version found: ") + entry->d_name);
             if (greatest == nullptr) {
                 greatest = entry->d_name;
                 continue;
@@ -316,10 +316,10 @@ void CoreClr::GetPath(alt::IServer* server, const char* defaultPath) {
         }
     }
     if (greatest == nullptr) {
-        server->LogInfo(alt::String("[.NET] No dotnet sdk version found"));
+        server->LogInfo(alt::String("coreclr-module: No dotnet sdk version found"));
         return;
     }
-    server->LogInfo(alt::String("[.NET] greatest version: ") + greatest);
+    server->LogInfo(alt::String("coreclr-module: greatest version: ") + greatest);
     runtimeDirectory = (char*) malloc(strlen(defaultPath) + strlen(greatest) + 1);
     strcpy(runtimeDirectory, defaultPath);
     strcat(runtimeDirectory, greatest);

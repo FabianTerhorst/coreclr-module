@@ -6,7 +6,7 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     this->server = server;
     char wd[PATH_MAX];
     if (!GetCurrentDir(wd, PATH_MAX)) {
-        server->LogInfo(alt::String("[.NET] Unable to find the working directory"));
+        server->LogInfo(alt::String("coreclr-module: Unable to find the working directory"));
         return;
     }
     const char* resourceName = name.CStr();
