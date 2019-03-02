@@ -65,6 +65,9 @@ EXPORT MValueFunctionCallback MValue_GetFunction(alt::MValueFunction &mValue);
 
 EXPORT void MValue_CallFunction(alt::MValueFunction &mValue, alt::MValue* args, uint64_t size, alt::MValue &result);
 EXPORT void MValue_CallFunctionValue(alt::MValueFunction &mValue, alt::MValueList &value, alt::MValue &result);
+
+//EXPORT alt::MValueFunction::Invoker* MValue_GetInvoker(alt::MValueFunction &mValue);
+//EXPORT void MValue_CallInvoker(alt::MValueFunction::Invoker &invoker, alt::MValue &value);
 #ifdef __cplusplus
 }
 #endif

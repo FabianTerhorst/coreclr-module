@@ -109,8 +109,42 @@ void* MValue_GetEntity(alt::MValue &mValue, alt::IBaseObject::Type &type) {
 }
 
 MValueFunctionCallback MValue_GetFunction(alt::MValueFunction &mValue) {
-    return ((CustomInvoker *) mValue.GetInvoker())->mValueFunctionCallback;
+    //TODO: find better way, this only works for c# module invokers
+    return ((CustomInvoker*) mValue.GetInvoker())->mValueFunctionCallback;
 }
+
+/*alt::MValueFunction::Invoker* MValue_GetInvoker(alt::MValueFunction &mValue) {
+    return mValue.GetInvoker();
+}*/
+
+/*typedef union {
+    alt::IEntity* entityPointerValue;
+    const char* stringValue;
+    long intValue;
+    unsigned long uintValue;
+    double doubleValue;
+    alt::MValue::Dict dictValue;
+    alt::MValue::List listValue;
+    alt::MValue::Function functionValue;
+    bool boolValue;
+} mvalue_data;
+
+struct _Storage {
+    uint64_t refCount = 1;
+};
+
+struct Storage : _Storage {
+    mvalue_data value;
+};
+
+typedef struct {
+    uint8_t type;
+    Storage* storage;
+} alt_mvalue_t;
+
+void MValue_GetData(alt::MValue* mValue, mvalue_data*&data) {
+    data = &((alt_mvalue_t*) mValue)->storage->value;
+}*/
 
 void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValueList &valueList) {
     alt::MValueList value;
