@@ -89,7 +89,7 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
     alt::Array<alt::MValue> list;
     alt::StringView reason;
     alt::IEntity* entity;
-    server->LogInfo(alt::String("event:") + ((int) ev->GetType() + '0'));
+    server->LogInfo(alt::String("event: ") + ((int) ev->GetType() + '0'));
     const alt::CPlayerDisconnectEvent* disconnectEvent;
     alt::IPlayer* player;
     switch (ev->GetType()) {

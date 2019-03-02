@@ -2,7 +2,7 @@ using System;
 
 namespace AltV.Net.Native
 {
-    //TODO: maybe later when cancel is working
+    //TODO: maybe later when CEvent::cancel is working
     internal class CPlayerConnectEvent
     {
         private readonly IntPtr NativePointer;

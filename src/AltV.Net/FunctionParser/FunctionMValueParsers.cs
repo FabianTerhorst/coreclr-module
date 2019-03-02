@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Args;
 using AltV.Net.Native;
 
 namespace AltV.Net.FunctionParser
@@ -273,6 +274,7 @@ namespace AltV.Net.FunctionParser
             FunctionTypeInfo typeInfo)
         {
             //return mValue.ToObject(entityPool);
+            object obj;
             switch (mValue.type)
             {
                 case MValue.Type.NIL:
@@ -294,10 +296,20 @@ namespace AltV.Net.FunctionParser
                 case MValue.Type.STRING:
                     return ParseString(ref mValue, type, baseEntityPool, typeInfo);
                 case MValue.Type.LIST:
+                    if (MValueAdapters.FromMValue(ref mValue, type, out obj))
+                    {
+                        return obj;
+                    }
+
                     return ParseArray(ref mValue, type, baseEntityPool, typeInfo);
                 case MValue.Type.ENTITY:
                     return ParseEntity(ref mValue, type, baseEntityPool, typeInfo);
                 case MValue.Type.DICT:
+                    if (MValueAdapters.FromMValue(ref mValue, type, out obj))
+                    {
+                        return obj;
+                    }
+
                     return ParseDictionary(ref mValue, type, baseEntityPool, typeInfo);
                 case MValue.Type.FUNCTION:
                     return ParseFunction(ref mValue, type, baseEntityPool, typeInfo);
@@ -649,13 +661,35 @@ namespace AltV.Net.FunctionParser
                 case MValue.Type.STRING:
                     return type == FunctionTypes.String;
                 case MValue.Type.LIST:
-                    return typeInfo?.IsList ?? type.BaseType == FunctionTypes.Array;
+                    if (typeInfo?.IsList ?? type.BaseType == FunctionTypes.Array)
+                    {
+                        return true;
+                    }
+                    else if (MValueAdapters.IsConvertible(type))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 case MValue.Type.ENTITY:
                     return typeInfo?.IsEntity ?? type.GetInterfaces().Contains(FunctionTypes.Entity);
                 case MValue.Type.FUNCTION:
                     return false; //TODO: needs to be Func or Action
                 case MValue.Type.DICT:
-                    return typeInfo?.IsDict ?? type.Name.StartsWith("Dictionary");
+                    if (typeInfo?.IsDict ?? type.Name.StartsWith("Dictionary"))
+                    {
+                        return true;
+                    }
+                    else if (MValueAdapters.IsConvertible(type))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 default:
                     return false;
             }

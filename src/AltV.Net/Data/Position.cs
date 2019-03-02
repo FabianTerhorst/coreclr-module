@@ -6,8 +6,9 @@ namespace AltV.Net.Data
     [StructLayout(LayoutKind.Sequential)]
     public struct Position
     {
+        //TODO: migrate to System.Numerics.Vector3
 
-        public static readonly float TOLERANCE = 0.013F;
+        public static readonly float TOLERANCE = 0.013F;//0.01318359375F;
 
         public static Position Zero = new Position(0, 0, 0);
 

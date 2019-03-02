@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using AltV.Net.Native;
 
-namespace AltV.Net
+namespace AltV.Net.Elements.Args
 {
     public static class MValueAdapters
     {

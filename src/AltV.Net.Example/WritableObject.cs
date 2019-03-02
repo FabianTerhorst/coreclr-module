@@ -9,7 +9,7 @@ namespace AltV.Net.Example
             test = "123";
         }
 
-        public void OnWrite(MValueWriter writer)
+        public void OnWrite(IMValueWriter writer)
         {
             writer.BeginObject();
             writer.Name("test");

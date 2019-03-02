@@ -3,6 +3,9 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Mock
 {
+    //TODO: MValue_GetEntity is currently broken because the cpp code tries to access the getType method from entity
+    //TODO: we need a way now to create MValues that are giving back the correct values inside storage pointer but without using mvalue_get
+    //TODO: or create own mock cpp lib? maybe add an macro for building mock lib
     public class MockAltV<TPlayer, TVehicle, TBlip, TCheckpoint> where TPlayer : IPlayer
         where TVehicle : IVehicle
         where TBlip : IBlip

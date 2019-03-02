@@ -105,7 +105,7 @@ namespace AltV.Net
         public static ICollection<ICheckpoint> GetAllCheckpoints() =>
             Module.CheckpointPool.GetAllEntities();
 
-        public static uint Hash(string hash) => Server.Hash(hash);
+        public static uint Hash(string stringToHash) => Server.Hash(stringToHash);
 
         internal static void Setup(Module module)
         {

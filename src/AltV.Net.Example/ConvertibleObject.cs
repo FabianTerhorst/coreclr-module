@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AltV.Net.Elements.Args;
 
 namespace AltV.Net.Example
 {
@@ -10,10 +11,10 @@ namespace AltV.Net.Example
 
             public ConvertibleObjectAdapter()
             {
-                listAdapter = DefaultAdapters.GetArrayAdapter(this);
+                listAdapter = DefaultMValueAdapters.GetArrayAdapter(this);
             }
 
-            public ConvertibleObject FromMValue(MValueReader reader)
+            public ConvertibleObject FromMValue(IMValueReader reader)
             {
                 reader.BeginObject();
                 string test = null;
@@ -38,7 +39,7 @@ namespace AltV.Net.Example
                 return test == null ? null : new ConvertibleObject(test, list);
             }
 
-            public void ToMValue(ConvertibleObject value, MValueWriter writer)
+            public void ToMValue(ConvertibleObject value, IMValueWriter writer)
             {
                 writer.BeginObject();
                 writer.Name("test");
@@ -47,12 +48,12 @@ namespace AltV.Net.Example
                 writer.EndObject();
             }
 
-            object IMValueBaseAdapter.FromMValue(MValueReader reader)
+            object IMValueBaseAdapter.FromMValue(IMValueReader reader)
             {
                 return FromMValue(reader);
             }
 
-            public void ToMValue(object obj, MValueWriter writer)
+            public void ToMValue(object obj, IMValueWriter writer)
             {
                 if (obj is ConvertibleObject value)
                 {

@@ -1,14 +1,15 @@
 using System;
 using System.Runtime.InteropServices;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Native;
 
-namespace AltV.Net.Native
+namespace AltV.Net.Elements.Args
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct MValueArrayBuffer
     {
         private IntPtr data; // Array of MValue's
-        private ulong size;
+        internal ulong size;
 
         public MValueArrayBuffer(IntPtr data, ulong size)
         {

@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 
-namespace AltV.Net
+namespace AltV.Net.Elements.Args
 {
-    public static class DefaultAdapters
+    public static class DefaultMValueAdapters
     {
+        //TODO: create DefaultDictionaryAdapter
         public class DefaultArrayAdapter<T> : IMValueAdapter<List<T>>
         {
             private readonly IMValueAdapter<T> elementAdapter;
@@ -13,7 +14,7 @@ namespace AltV.Net
                 this.elementAdapter = elementAdapter;
             }
 
-            public List<T> FromMValue(MValueReader reader)
+            public List<T> FromMValue(IMValueReader reader)
             {
                 var list = new List<T>();
                 reader.BeginArray();
@@ -26,7 +27,7 @@ namespace AltV.Net
                 return list;
             }
 
-            public void ToMValue(List<T> list, MValueWriter writer)
+            public void ToMValue(List<T> list, IMValueWriter writer)
             {
                 writer.BeginArray();
                 foreach (var element in list)
@@ -37,12 +38,12 @@ namespace AltV.Net
                 writer.EndArray();
             }
 
-            object IMValueBaseAdapter.FromMValue(MValueReader reader)
+            object IMValueBaseAdapter.FromMValue(IMValueReader reader)
             {
                 return FromMValue(reader);
             }
 
-            public void ToMValue(object obj, MValueWriter writer)
+            public void ToMValue(object obj, IMValueWriter writer)
             {
                 if (obj is List<T> list)
                 {

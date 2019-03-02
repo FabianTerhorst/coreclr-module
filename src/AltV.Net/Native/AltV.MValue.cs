@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Args;
 
 namespace AltV.Net.Native
 {

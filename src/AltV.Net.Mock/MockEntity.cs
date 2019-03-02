@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Args;
 using AltV.Net.Native;
 
 namespace AltV.Net.Mock

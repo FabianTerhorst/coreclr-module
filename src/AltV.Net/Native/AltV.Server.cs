@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
+using AltV.Net.Elements.Args;
 
 namespace AltV.Net.Native
 {
@@ -22,9 +23,10 @@ namespace AltV.Net.Native
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Server_LogColored(IntPtr serverPointer, string message);
-
-            [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            internal static extern uint Server_Hash(IntPtr serverPointer, string hash);
+            
+            //TODO: is currently implemented in c#, maybe remove?
+            //[DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
+            //internal static extern uint Server_Hash(IntPtr serverPointer, string hash);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Server_TriggerServerEvent(IntPtr serverPointer, string eventName,

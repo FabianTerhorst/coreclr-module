@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using AltV.Net.Elements.Entities;
-using AltV.Net.Native;
 
-namespace AltV.Net
+namespace AltV.Net.Elements.Args
 {
-    public class MValueWriter
+    internal class MValueWriter : IMValueWriter
     {
         public interface IWritableMValue
         {

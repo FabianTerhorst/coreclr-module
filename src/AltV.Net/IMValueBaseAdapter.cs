@@ -2,8 +2,8 @@ namespace AltV.Net
 {
     public interface IMValueBaseAdapter
     {
-        object FromMValue(MValueReader reader);
+        object FromMValue(IMValueReader reader);
 
-        void ToMValue(object obj, MValueWriter writer);
+        void ToMValue(object obj, IMValueWriter writer);
     }
 }

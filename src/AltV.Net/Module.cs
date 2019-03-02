@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Args;
 using AltV.Net.Events;
 using AltV.Net.FunctionParser;
 using AltV.Net.Native;
@@ -537,25 +538,6 @@ namespace AltV.Net
 
         public virtual void OnServerEventEvent(string name, ref MValueArray args, MValue[] mValues, object[] objects)
         {
-        }
-
-        //TODO: currently only for testing
-        public void OnServerEvent(string name, MValue[] args)
-        {
-            var mValue = MValue.Nil;
-            AltVNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValue);
-            var mValueArray = MValueArray.Nil;
-            AltVNative.MValueGet.MValue_GetList(ref mValue, ref mValueArray);
-            OnServerEvent(name, ref mValueArray);
-        }
-
-        public void OnClientEvent(IntPtr playerPointer, string name, MValue[] args)
-        {
-            var mValue = MValue.Nil;
-            AltVNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValue);
-            var mValueArray = MValueArray.Nil;
-            AltVNative.MValueGet.MValue_GetList(ref mValue, ref mValueArray);
-            OnClientEvent(playerPointer, name, ref mValueArray);
         }
     }
 }

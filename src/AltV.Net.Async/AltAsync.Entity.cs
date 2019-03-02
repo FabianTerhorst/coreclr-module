@@ -4,6 +4,7 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Async
 {
+    //TODO: allocate position, rotation, rgba structs in task thread an pass them to the main thread instead of creating them in the main thread
     public partial class AltAsync
     {
         public static async Task<bool> ExistsAsync(this IEntity entity) =>

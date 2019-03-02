@@ -1,16 +1,9 @@
 using System;
 using System.Runtime.InteropServices;
+using AltV.Net.Elements.Args;
 
 namespace AltV.Net.Native
 {
-    [StructLayout(LayoutKind.Sequential)]
-    public struct Array
-    {
-        public IntPtr data;
-        public ulong size;
-        public ulong capacity;
-    }
-
     [StructLayout(LayoutKind.Sequential)]
     public struct MValueArray
     {
@@ -40,35 +33,7 @@ namespace AltV.Net.Native
 
         public MValueArrayBuffer Reader()
         {
-            return new MValueArrayBuffer(data, Size, capacity);
-        }
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct StringArray
-    {
-        public IntPtr data; // Array of string's
-        public ulong size;
-        public ulong capacity;
-
-        public static StringArray Nil = new StringArray
-        {
-            data = IntPtr.Zero,
-            size = 0,
-            capacity = 0
-        };
-
-        public string[] ToArray()
-        {
-            var values = new IntPtr[size];
-            Marshal.Copy(data, values, 0, (int) size);
-            var strings = new string[size];
-            for (var i = 0; i < values.Length; i++)
-            {
-                strings[i] = Marshal.PtrToStringAnsi(values[i]);
-            }
-
-            return strings;
+            return new MValueArrayBuffer(data, Size);
         }
     }
 
@@ -110,6 +75,13 @@ namespace AltV.Net.Native
             size--;
             data += StringView.Size;
             return value;
+        }
+        
+        public void SkipValue()
+        {
+            if (size == 0) return;
+            size--;
+            data += StringView.Size;
         }
     }
 }

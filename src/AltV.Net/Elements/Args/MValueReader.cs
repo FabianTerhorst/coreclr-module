@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.IO;
 using AltV.Net.Native;
 
-namespace AltV.Net
+namespace AltV.Net.Elements.Args
 {
-    public class MValueReader
+    internal class MValueReader : IMValueReader
     {
         public interface IReadableMValue
         {
@@ -38,13 +38,13 @@ namespace AltV.Net
                 StringViewArray = stringViewArray;
                 MValueArrayBuffer = mValueArrayBuffer;
             }
-            
+
             public MValue GetNext()
             {
                 return MValueArrayBuffer.GetNext();
             }
         }
-        
+
         public struct MValueStartReader : IReadableMValue
         {
             public MValueArrayBuffer MValueArrayBuffer { get; }
@@ -56,7 +56,7 @@ namespace AltV.Net
                 this.mValue = mValue;
                 MValueArrayBuffer = new MValueArrayBuffer();
             }
-            
+
             public MValue GetNext()
             {
                 return mValue;
@@ -133,6 +133,25 @@ namespace AltV.Net
             }
         }
 
+        private void CheckName()
+        {
+            // Check if we have more values then names
+            if (readableMValue.MValueArrayBuffer.size > ((MValueObjectReader) readableMValue).StringViewArray.size)
+            {
+                throw new InvalidDataException("Expect a NextValue call, but tried to read a name instead");
+            }
+        }
+
+        private void CheckValue()
+        {
+            if (!(readableMValue is MValueObjectReader mValueObjectReader)) return;
+            // Check if we have more names then values
+            if (readableMValue.MValueArrayBuffer.size < mValueObjectReader.StringViewArray.size)
+            {
+                throw new InvalidDataException("Expect a NextName() call, but tried to read a value instead");
+            }
+        }
+
         public bool HasNext()
         {
             CheckObject();
@@ -154,6 +173,8 @@ namespace AltV.Net
                 throw new InvalidDataException("Not inside a object");
             }
 
+            CheckName();
+
             return ((MValueObjectReader) readableMValue).StringViewArray.GetNext();
         }
 
@@ -165,12 +186,15 @@ namespace AltV.Net
                 throw new InvalidDataException("Not inside a object");
             }
 
+            CheckName();
+
             ((MValueObjectReader) readableMValue).StringViewArray.SkipValue();
         }
 
         public bool NextBool()
         {
             CheckObject();
+            CheckValue();
             if (!readableMValue.MValueArrayBuffer.GetNext(out bool value))
             {
                 throw new InvalidDataException(
@@ -183,6 +207,7 @@ namespace AltV.Net
         public int NextInt()
         {
             CheckObject();
+            CheckValue();
             if (!readableMValue.MValueArrayBuffer.GetNext(out int value))
             {
                 throw new InvalidDataException(
@@ -195,6 +220,7 @@ namespace AltV.Net
         public long NextLong()
         {
             CheckObject();
+            CheckValue();
             if (!readableMValue.MValueArrayBuffer.GetNext(out long value))
             {
                 throw new InvalidDataException(
@@ -207,6 +233,7 @@ namespace AltV.Net
         public uint NextUInt()
         {
             CheckObject();
+            CheckValue();
             if (!readableMValue.MValueArrayBuffer.GetNext(out uint value))
             {
                 throw new InvalidDataException(
@@ -219,6 +246,7 @@ namespace AltV.Net
         public ulong NextULong()
         {
             CheckObject();
+            CheckValue();
             if (!readableMValue.MValueArrayBuffer.GetNext(out ulong value))
             {
                 throw new InvalidDataException(
@@ -231,6 +259,7 @@ namespace AltV.Net
         public double NextDouble()
         {
             CheckObject();
+            CheckValue();
             if (!readableMValue.MValueArrayBuffer.GetNext(out double value))
             {
                 throw new InvalidDataException(
@@ -243,6 +272,7 @@ namespace AltV.Net
         public string NextString()
         {
             CheckObject();
+            CheckValue();
             if (!readableMValue.MValueArrayBuffer.GetNext(out string value))
             {
                 throw new InvalidDataException(
@@ -255,6 +285,7 @@ namespace AltV.Net
         public void SkipValue()
         {
             CheckObject();
+            CheckValue();
             readableMValue.MValueArrayBuffer.SkipValue();
         }
     }

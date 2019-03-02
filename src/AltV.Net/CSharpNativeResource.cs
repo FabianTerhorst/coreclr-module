@@ -1,4 +1,5 @@
 using System;
+using AltV.Net.Elements.Args;
 using AltV.Net.Native;
 
 namespace AltV.Net
@@ -11,6 +12,7 @@ namespace AltV.Net
 
         public void SetExport(string key, MValue value)
         {
+            //TODO: throw exception when not called in OnStart()
             AltVNative.Resource.CSharpResource_SetExport(NativePointer, key, ref value);
         }
     }

@@ -2,17 +2,21 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Args;
 using AltV.Net.FunctionParser;
 using AltV.Net.Native;
 
 namespace AltV.Net
 {
+    //TODO: when received MValue is from type null set the value to null
     public partial class Function
     {
         public delegate object Func(params object[] args);
 
         //TODO: for high optimization add ParseBoolUnsafe ect. that doesn't contains the mValue type check for scenarios where we already had to check the mValue type
 
+        
+        //TODO: add support for own function arguments parser for significant performance improvements with all benefits
         // Returns null when function signature isn't supported
         public static Function Create<T>(T func) where T : Delegate
         {
@@ -49,7 +53,7 @@ namespace AltV.Net
                 typeInfos[i] = typeInfo;
                 if (arg == FunctionTypes.Obj)
                 {
-                    //TODO: use MValue.ToObject here
+                    //TODO: use MValue.ToObject here 
                     parsers[i] = FunctionMValueParsers.ParseObject;
                     objectParsers[i] = FunctionObjectParsers.ParseObject;
                 }
@@ -146,16 +150,26 @@ namespace AltV.Net
             this.typeInfos = typeInfos;
         }
 
+        //TODO: make call async because it doesnt matter there is no concurrent problems inside
+
+        //TODO: write function parser in cpp so it can do that natively without any native calls for mvalues (experimental)
+        //TODO: register event callbacks to cpp as dynamic function pointers with void** so cpp knows the types it needs to check
+
         //TODO: add support for nullable args, these are reducing the required length, add support for default values as well
         internal MValue Call(IBaseEntityPool baseEntityPool, MValue[] values)
         {
             var length = values.Length;
             if (length != args.Length) return MValue.Nil;
+            //var watch = System.Diagnostics.Stopwatch.StartNew();
             var invokeValues = new object[length];
             for (var i = 0; i < length; i++)
             {
                 invokeValues[i] = parsers[i](ref values[i], args[i], baseEntityPool, typeInfos[i]);
             }
+
+            //watch.Stop();
+            //var elapsedMs = watch.ElapsedMilliseconds;
+            //Alt.Log("ms:" + elapsedMs);
 
             var result = @delegate.DynamicInvoke(invokeValues);
             if (returnType == FunctionTypes.Void) return MValue.Nil;
@@ -235,6 +249,7 @@ namespace AltV.Net
                 return MValue.Nil;
             }
 
+            //TODO: fix async with result
             var result = await (Task<object>) @delegate.DynamicInvoke(invokeValues);
             if (returnType == FunctionTypes.Void) return MValue.Nil;
             return MValue.CreateFromObject(result);

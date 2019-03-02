@@ -3,6 +3,7 @@ using AltV.Net.Native;
 
 namespace AltV.Net
 {
+    //TODO: add SubResource module maybe to load sub resources dependency dlls or just for own server architecture
     public interface IResource
     {
         void OnStart();
@@ -11,6 +12,7 @@ namespace AltV.Net
 
         void OnTick();
 
+        //TODO: default implementation in c# 8.0
         IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
             IEntityPool<IBlip> blipPool, IEntityPool<ICheckpoint> checkpointPool);
 

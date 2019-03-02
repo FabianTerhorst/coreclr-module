@@ -1,8 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Args;
 using AltV.Net.Native;
 
 namespace AltV.Net
@@ -59,9 +58,25 @@ namespace AltV.Net
             AltVNative.Server.Server_LogColored(NativePointer, message);
         }
 
-        public uint Hash(string hash)
+        public uint Hash(string stringToHash)
         {
-            return AltVNative.Server.Server_Hash(NativePointer, hash);
+            //return AltVNative.Server.Server_Hash(NativePointer, hash);
+            var stringToHashLowered = stringToHash.ToLower();
+            var length = stringToHashLowered.Length;
+            var chars = stringToHashLowered.ToCharArray();
+            uint hash;
+            uint i;
+            for (hash = i = 0; i < length; i++)
+            {
+                hash += chars[i];
+                hash += hash << 10;
+                hash ^= hash >> 6;
+            }
+
+            hash += hash << 3;
+            hash ^= hash >> 11;
+            hash += hash << 15;
+            return hash;
         }
 
         public void TriggerServerEvent(string eventName, params MValue[] args)

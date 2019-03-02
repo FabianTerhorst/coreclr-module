@@ -5,8 +5,9 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Native;
 
-namespace AltV.Net.Native
+namespace AltV.Net.Elements.Args
 {
     //TODO: check the types in getter methods
     [StructLayout(LayoutKind.Sequential)]

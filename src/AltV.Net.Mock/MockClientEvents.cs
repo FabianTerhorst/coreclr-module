@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Args;
 using AltV.Net.Native;
 
 namespace AltV.Net.Mock
@@ -72,7 +73,12 @@ namespace AltV.Net.Mock
                     @delegate(eventName, obj);
                 }
             }
-            Alt.Module.OnClientEvent(player.NativePointer, eventName, args);
+            
+            var mValue = MValue.Nil;
+            AltVNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValue);
+            var mValueArray = MValueArray.Nil;
+            AltVNative.MValueGet.MValue_GetList(ref mValue, ref mValueArray);
+            Alt.Module.OnClientEvent(player.NativePointer, eventName, ref mValueArray);
         }
 
         /// <summary>
