@@ -21,10 +21,13 @@ namespace AltV.Net.FunctionParser
                     var currMValue = mValues[i];
                     if (!TryParseObject(ref currMValue, type, baseEntityPool, typeInfo?.Element, out var obj))
                     {
-                        return null;
+                        array[i] = obj;
+                        //return null;
                     }
-
-                    array[i] = obj;
+                    else
+                    {
+                        array[i] = obj;
+                    }
                 }
 
                 return array;
@@ -171,7 +174,7 @@ namespace AltV.Net.FunctionParser
                 var currMValue = mValues[i];
                 if (!TryParseObject(ref currMValue, type, baseEntityPool, typeInfo?.Element, out var obj))
                 {
-                    typeArray.SetValue(null, i);
+                    typeArray.SetValue( /*null*/obj, i);
                 }
                 else
                 {
@@ -326,59 +329,122 @@ namespace AltV.Net.FunctionParser
             switch (mValue.type)
             {
                 case MValue.Type.NIL:
-                    obj = null;
-                    // Primitive types doesn't support null values except string, so we have to find a different solution for that
-                    if (type.IsPrimitive && type != FunctionTypes.String)
-                    {
-                        obj = typeInfo.DefaultValue ?? Activator.CreateInstance(type);
-                    }
-
+                    obj = GetDefault(type, typeInfo);
                     return true;
                 case MValue.Type.BOOL:
-                    obj = mValue.GetBool();
-                    return true;
+                    if (type == FunctionTypes.Obj || type == FunctionTypes.Bool)
+                    {
+                        obj = mValue.GetBool();
+                        return true;
+                    }
+                    else
+                    {
+                        obj = GetDefault(type, typeInfo);
+                        return false;
+                    }
                 case MValue.Type.INT:
-                    obj = type == FunctionTypes.Int
-                        ? (int) mValue.GetInt()
-                        : mValue.GetInt();
-                    return true;
+                    if (type == FunctionTypes.Int)
+                    {
+                        obj = (int) mValue.GetInt();
+                        return true;
+                    }
+                    else if (type == FunctionTypes.Obj || type == FunctionTypes.Long)
+                    {
+                        obj = mValue.GetInt();
+                        return true;
+                    }
+                    else
+                    {
+                        obj = GetDefault(type, typeInfo);
+                        return false;
+                    }
                 case MValue.Type.UINT:
-                    obj = type == FunctionTypes.UInt
-                        ? (uint) mValue.GetUint()
-                        : mValue.GetUint();
-                    return true;
+                    if (type == FunctionTypes.UInt)
+                    {
+                        obj = (uint) mValue.GetUint();
+                        return true;
+                    }
+                    else if (type == FunctionTypes.Obj || type == FunctionTypes.ULong)
+                    {
+                        obj = mValue.GetUint();
+                        return true;
+                    }
+                    else
+                    {
+                        obj = mValue.GetDouble();
+                        return false;
+                    }
                 case MValue.Type.DOUBLE:
-                    obj = type == FunctionTypes.Float
-                        ? (float) mValue.GetDouble()
-                        : mValue.GetDouble();
-                    return true;
+                    if (type == FunctionTypes.Float)
+                    {
+                        obj = (float) mValue.GetDouble();
+                        return true;
+                    }
+                    else if (type == FunctionTypes.Obj || type == FunctionTypes.Double)
+                    {
+                        obj = mValue.GetDouble();
+                        return true;
+                    }
+                    else
+                    {
+                        obj = GetDefault(type, typeInfo);
+                        return false;
+                    }
                 case MValue.Type.STRING:
-                    obj = mValue.GetString();
-                    return true;
+                    if (type == FunctionTypes.Obj || type == FunctionTypes.String)
+                    {
+                        obj = mValue.GetString();
+                        return true;
+                    }
+
+                    obj = GetDefault(type, typeInfo);
+                    return false;
                 case MValue.Type.LIST:
-                    if (MValueAdapters.FromMValue(ref mValue, type, out obj))
+                    if (type == FunctionTypes.Obj || (typeInfo?.IsList ?? type.BaseType == FunctionTypes.Array))
                     {
+                        if (MValueAdapters.FromMValue(ref mValue, type, out obj))
+                        {
+                            return true;
+                        }
+
+                        obj = ParseArray(ref mValue, type, baseEntityPool, typeInfo);
                         return true;
                     }
 
-                    obj = ParseArray(ref mValue, type, baseEntityPool, typeInfo);
-                    return true;
+                    obj = GetDefault(type, typeInfo);
+                    return false;
                 case MValue.Type.ENTITY:
-                    obj = ParseEntity(ref mValue, type, baseEntityPool, typeInfo);
-                    return true;
-                case MValue.Type.DICT:
-                    if (MValueAdapters.FromMValue(ref mValue, type, out obj))
+                    if (type == FunctionTypes.Obj ||
+                        (typeInfo?.IsEntity ?? type.GetInterfaces().Contains(FunctionTypes.Entity)))
                     {
+                        obj = ParseEntity(ref mValue, type, baseEntityPool, typeInfo);
+                        return true;
+                    }
+                    else
+                    {
+                        obj = GetDefault(type, typeInfo);
+                        return false;
+                    }
+                case MValue.Type.DICT:
+                    if (type == FunctionTypes.Obj || (typeInfo?.IsDict ?? type.Name.StartsWith("Dictionary")))
+                    {
+                        if (MValueAdapters.FromMValue(ref mValue, type, out obj))
+                        {
+                            return true;
+                        }
+
+                        obj = ParseDictionary(ref mValue, type, baseEntityPool, typeInfo);
                         return true;
                     }
 
-                    obj = ParseDictionary(ref mValue, type, baseEntityPool, typeInfo);
-                    return true;
+                    obj = GetDefault(type, typeInfo);
+                    return false;
                 case MValue.Type.FUNCTION:
+                    //TODO: validate type somehow
                     obj = ParseFunction(ref mValue, type, baseEntityPool, typeInfo);
                     return true;
                 default:
-                    obj = null;
+                    obj = GetDefault(type, typeInfo);
                     return false;
             }
         }
@@ -630,20 +696,21 @@ namespace AltV.Net.FunctionParser
             for (var i = 0; i < length; i++)
             {
                 currMValue = valueArray[i];
-                if (!ValidateMValueType(currMValue.type, valueType, typeInfo?.DictionaryValue))
+
+                if (!TryParseObject(ref currMValue, valueType, baseEntityPool, typeInfo?.DictionaryValue,
+                    out var dictObject))
                 {
-                    typedDict[strings[i]] = null;
+                    typedDict[strings[i]] = dictObject; //null;
                 }
                 else
                 {
-                    var obj = ParseObject(ref currMValue, valueType, baseEntityPool, typeInfo?.DictionaryValue);
-                    if (obj is IConvertible)
+                    if (dictObject is IConvertible)
                     {
-                        typedDict[strings[i]] = Convert.ChangeType(obj, valueType);
+                        typedDict[strings[i]] = Convert.ChangeType(dictObject, valueType);
                     }
                     else
                     {
-                        typedDict[strings[i]] = obj;
+                        typedDict[strings[i]] = dictObject;
                     }
                 }
             }
@@ -689,75 +756,14 @@ namespace AltV.Net.FunctionParser
             }
         }
 
-        public static bool ValidateMValueType(MValue.Type valueType, Type type, FunctionTypeInfo typeInfo)
+        private static object GetDefault(Type type, FunctionTypeInfo typeInfo)
         {
-            if (type == FunctionTypes.Obj)
+            if (type.IsPrimitive && type != FunctionTypes.String)
             {
-                // object[] or object accepts anything
-                return true;
+                return typeInfo?.DefaultValue ?? Activator.CreateInstance(type);
             }
 
-            switch (valueType)
-            {
-                case MValue.Type.NIL:
-                    return !type.IsPrimitive ||
-                           type == FunctionTypes.String; //TODO: check if there are more none nullable types
-                /*case MValue.Type.NIL:
-                     // Validate if the given type supports null values, otherwise the type isn't compatible
-                     if (typeInfo == null)
-                     {
-                         return type == String || type == Obj || type.BaseType == Array ||
-                                type.Name.StartsWith("Dictionary") || type.GetInterfaces().Contains(Entity);
-                     }
-                     else
-                     {
-                         return type == String || type == Obj || typeInfo.IsList || typeInfo.IsDict || typeInfo.IsEntity;
-                     }*/
-                //case MValue.Type.NIL:
-                //    return true;
-                case MValue.Type.BOOL:
-                    return type == FunctionTypes.Bool;
-                case MValue.Type.INT:
-                    return type == FunctionTypes.Int || type == FunctionTypes.UInt;
-                case MValue.Type.UINT:
-                    return type == FunctionTypes.UInt || type == FunctionTypes.ULong;
-                case MValue.Type.DOUBLE:
-                    return type == FunctionTypes.Double;
-                case MValue.Type.STRING:
-                    return type == FunctionTypes.String;
-                case MValue.Type.LIST:
-                    if (typeInfo?.IsList ?? type.BaseType == FunctionTypes.Array)
-                    {
-                        return true;
-                    }
-                    else if (MValueAdapters.IsConvertible(type))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                case MValue.Type.ENTITY:
-                    return typeInfo?.IsEntity ?? type.GetInterfaces().Contains(FunctionTypes.Entity);
-                case MValue.Type.FUNCTION:
-                    return false; //TODO: needs to be Func or Action
-                case MValue.Type.DICT:
-                    if (typeInfo?.IsDict ?? type.Name.StartsWith("Dictionary"))
-                    {
-                        return true;
-                    }
-                    else if (MValueAdapters.IsConvertible(type))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                default:
-                    return false;
-            }
+            return null;
         }
     }
 
