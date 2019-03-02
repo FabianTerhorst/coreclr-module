@@ -19,9 +19,12 @@ namespace AltV.Net.FunctionParser
                 for (var i = 0; i < length; i++)
                 {
                     var currMValue = mValues[i];
-                    if (!ValidateMValueType(currMValue.type, type, typeInfo?.Element))
+                    if (!TryParseObject(ref currMValue, type, baseEntityPool, typeInfo?.Element, out var obj))
+                    {
                         return null;
-                    array[i] = ParseObject(ref currMValue, type, baseEntityPool, typeInfo?.Element);
+                    }
+
+                    array[i] = obj;
                 }
 
                 return array;
@@ -166,13 +169,12 @@ namespace AltV.Net.FunctionParser
             for (var i = 0; i < length; i++)
             {
                 var currMValue = mValues[i];
-                if (!ValidateMValueType(currMValue.type, type, typeInfo?.Element))
+                if (!TryParseObject(ref currMValue, type, baseEntityPool, typeInfo?.Element, out var obj))
                 {
                     typeArray.SetValue(null, i);
                 }
                 else
                 {
-                    var obj = ParseObject(ref currMValue, type, baseEntityPool, typeInfo?.Element);
                     typeArray.SetValue(obj is IConvertible ? Convert.ChangeType(obj, type) : obj, i);
                 }
             }
@@ -314,6 +316,69 @@ namespace AltV.Net.FunctionParser
                 case MValue.Type.FUNCTION:
                     return ParseFunction(ref mValue, type, baseEntityPool, typeInfo);
                 default:
+                    return null;
+            }
+        }
+
+        public static bool TryParseObject(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+            FunctionTypeInfo typeInfo, out object obj)
+        {
+            switch (mValue.type)
+            {
+                case MValue.Type.NIL:
+                    obj = null;
+                    // Primitive types doesn't support null values except string, so we have to find a different solution for that
+                    if (type.IsPrimitive && type != FunctionTypes.String)
+                    {
+                        obj = typeInfo.DefaultValue ?? Activator.CreateInstance(type);
+                    }
+
+                    return true;
+                case MValue.Type.BOOL:
+                    obj = mValue.GetBool();
+                    return true;
+                case MValue.Type.INT:
+                    obj = type == FunctionTypes.Int
+                        ? (int) mValue.GetInt()
+                        : mValue.GetInt();
+                    return true;
+                case MValue.Type.UINT:
+                    obj = type == FunctionTypes.UInt
+                        ? (uint) mValue.GetUint()
+                        : mValue.GetUint();
+                    return true;
+                case MValue.Type.DOUBLE:
+                    obj = type == FunctionTypes.Float
+                        ? (float) mValue.GetDouble()
+                        : mValue.GetDouble();
+                    return true;
+                case MValue.Type.STRING:
+                    obj = mValue.GetString();
+                    return true;
+                case MValue.Type.LIST:
+                    if (MValueAdapters.FromMValue(ref mValue, type, out obj))
+                    {
+                        return true;
+                    }
+
+                    obj = ParseArray(ref mValue, type, baseEntityPool, typeInfo);
+                    return true;
+                case MValue.Type.ENTITY:
+                    obj = ParseEntity(ref mValue, type, baseEntityPool, typeInfo);
+                    return true;
+                case MValue.Type.DICT:
+                    if (MValueAdapters.FromMValue(ref mValue, type, out obj))
+                    {
+                        return true;
+                    }
+
+                    obj = ParseDictionary(ref mValue, type, baseEntityPool, typeInfo);
+                    return true;
+                case MValue.Type.FUNCTION:
+                    obj = ParseFunction(ref mValue, type, baseEntityPool, typeInfo);
+                    return true;
+                default:
+                    obj = null;
                     return false;
             }
         }

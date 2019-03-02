@@ -7,14 +7,14 @@ namespace AltV.Net
     {
         public static void On(string eventName, Function function) => Module.On(eventName, function);
         
-        public static void On(string eventName, ClientEventDelegate clientEventDelegate)
+        public static void OnClient(string eventName, ClientEventDelegate clientEventDelegate)
         {
-            Module.On(eventName, clientEventDelegate);
+            Module.OnClient(eventName, clientEventDelegate);
         }
         
-        public static void On(string eventName, ServerEventDelegate serverEventDelegate)
+        public static void OnServer(string eventName, ServerEventDelegate serverEventDelegate)
         {
-            Module.On(eventName, serverEventDelegate);
+            Module.OnServer(eventName, serverEventDelegate);
         }
         
         public static void On(string eventName, Action function)

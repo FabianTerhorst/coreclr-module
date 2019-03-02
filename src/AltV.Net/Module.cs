@@ -110,7 +110,7 @@ namespace AltV.Net
             }
         }
 
-        public void On(string eventName, ServerEventDelegate serverEventDelegate)
+        public void OnServer(string eventName, ServerEventDelegate serverEventDelegate)
         {
             if (serverEventDelegate == null) return;
             if (eventDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
@@ -124,7 +124,7 @@ namespace AltV.Net
             }
         }
 
-        public void On(string eventName, ClientEventDelegate eventDelegate)
+        public void OnClient(string eventName, ClientEventDelegate eventDelegate)
         {
             if (eventDelegate == null) return;
             if (clientEventDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))

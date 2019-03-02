@@ -16,7 +16,7 @@ namespace AltV.Net.Example
         public override void OnStart()
         {
             Alt.On<string>("test", s => { Alt.Log("test=" + s); });
-            Alt.On("test", args => { Alt.Log("args=" + args[0]); });
+            Alt.OnServer("test", args => { Alt.Log("args=" + args[0]); });
             Alt.Emit("test", "bla");
             Alt.On("bla", bla);
             Alt.On<string>("bla2", bla2);
@@ -68,11 +68,18 @@ namespace AltV.Net.Example
                     Alt.Log("param2:" + s1);
                     Alt.Log("bla:" + ((object[]) arg4[1])[0]);
                     Alt.Log("myData-2: " + arg5.Position.X + " " + arg5.MyData);
-                    Alt.Log("myData-4: " + myVehicles[0].Position.X + " " + myVehicles[0].MyData);
+                    Alt.Log("myData-4-veh-array: " + myVehicles[0].Position.X + " " + myVehicles[0].MyData);
                     Alt.Log("myData-3: " + arg6["test"]);
                     Alt.Log("null?" + (probablyNull == null ? "y" : "n"));
                     Alt.Log("null2?" + (nullArray[0] == null ? "y" : "n"));
                     Alt.Log("bla2:" + bla["test"]);
+                });
+
+            Alt.On("entity-array-obj",
+                delegate(object[] myVehicles)
+                {
+                    Alt.Log("entity-array-obj: " + ((MyVehicle) myVehicles[0]).Position.X + " " +
+                            ((MyVehicle) myVehicles[0]).MyData);
                 });
 
             AltAsync.On("event_name",
@@ -146,6 +153,8 @@ namespace AltV.Net.Example
 
             Alt.Emit("MyServerEvent3", vehicle);
 
+            Alt.Emit("entity-array-obj", new[] {new[] {vehicle}});
+
             vehicle.Remove();
 
             Bla();
@@ -170,9 +179,9 @@ namespace AltV.Net.Example
             {
                 value();
             }*/
-            
+
             Alt.Emit("none-existing-event", new WritableObject());
-            
+
             Alt.Emit("none-existing-event", new ConvertibleObject());
         }
 
