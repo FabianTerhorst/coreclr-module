@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
@@ -61,14 +62,18 @@ namespace AltV.Net
         public uint Hash(string stringToHash)
         {
             //return AltVNative.Server.Server_Hash(NativePointer, hash);
-            var stringToHashLowered = stringToHash.ToLower();
-            var length = stringToHashLowered.Length;
-            var chars = stringToHashLowered.ToCharArray();
-            uint hash;
-            uint i;
-            for (hash = i = 0; i < length; i++)
+            if (string.IsNullOrEmpty(stringToHash))
             {
-                hash += chars[i];
+                return 0;
+            }
+
+            var characters = Encoding.UTF8.GetBytes(stringToHash.ToLower());
+
+            uint hash = 0;
+
+            foreach (var t in characters)
+            {
+                hash += t;
                 hash += hash << 10;
                 hash ^= hash >> 6;
             }
@@ -76,6 +81,7 @@ namespace AltV.Net
             hash += hash << 3;
             hash ^= hash >> 11;
             hash += hash << 15;
+
             return hash;
         }
 
