@@ -24,10 +24,7 @@ namespace AltV.Net.Elements.Pools
             this.entityFactory = entityFactory;
         }
 
-        public virtual ushort GetId(IntPtr entityPointer)
-        {
-            return AltVNative.Entity.Entity_GetID(entityPointer);
-        }
+        public abstract ushort GetId(IntPtr entityPointer);
 
         public void Create(IntPtr entityPointer, ushort id, out TEntity entity)
         {

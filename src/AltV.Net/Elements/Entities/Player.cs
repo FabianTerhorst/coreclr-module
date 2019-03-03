@@ -8,7 +8,7 @@ namespace AltV.Net.Elements.Entities
 {
     public class Player : Entity, IPlayer
     {
-        public new static ushort GetId(IntPtr playerPointer) => AltVNative.Player.Player_GetID(playerPointer);
+        public static ushort GetId(IntPtr playerPointer) => AltVNative.Player.Player_GetID(playerPointer);
 
         public override Position Position
         {

@@ -1,15 +1,11 @@
 using System;
 using System.Collections.Concurrent;
 using AltV.Net.Data;
-using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Entities
 {
     public abstract class Entity : IInternalEntity, IEntity
     {
-        public static ushort GetId(IntPtr entityPointer) => AltVNative.Entity.Entity_GetID(entityPointer);
-        public static EntityType GetType(IntPtr entityPointer) => AltVNative.Entity.BaseObject_GetType(entityPointer);
-
         private readonly ConcurrentDictionary<string, object> data = new ConcurrentDictionary<string, object>();
 
         public IntPtr NativePointer { get; }

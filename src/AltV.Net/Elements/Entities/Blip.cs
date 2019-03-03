@@ -7,7 +7,7 @@ namespace AltV.Net.Elements.Entities
 {
     public class Blip : Entity, IBlip
     {
-        public new static ushort GetId(IntPtr blipPointer) => AltVNative.Blip.Blip_GetID(blipPointer);
+        public static ushort GetId(IntPtr blipPointer) => AltVNative.Blip.Blip_GetID(blipPointer);
 
         public override Position Position
         {

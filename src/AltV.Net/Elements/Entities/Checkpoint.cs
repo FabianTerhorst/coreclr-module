@@ -7,7 +7,7 @@ namespace AltV.Net.Elements.Entities
 {
     public class Checkpoint : Entity, ICheckpoint
     {
-        public new static ushort GetId(IntPtr checkpointPointer) =>
+        public static ushort GetId(IntPtr checkpointPointer) =>
             AltVNative.Checkpoint.Checkpoint_GetID(checkpointPointer);
 
         public override Position Position

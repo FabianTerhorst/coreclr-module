@@ -41,7 +41,7 @@ namespace AltV.Net.Async
         }
     }*/
 
-    public class AsyncEntityPool<TEntity> : IEntityPool<TEntity> where TEntity : IEntity
+    public abstract class AsyncEntityPool<TEntity> : IEntityPool<TEntity> where TEntity : IEntity
     {
         private readonly ConcurrentDictionary<IntPtr, TEntity> entities = new ConcurrentDictionary<IntPtr, TEntity>();
 
@@ -52,10 +52,7 @@ namespace AltV.Net.Async
             this.entityFactory = entityFactory;
         }
 
-        public virtual ushort GetId(IntPtr entityPointer)
-        {
-            return AltAsync.Do(() => Entity.GetId(entityPointer)).Result;
-        }
+        public abstract ushort GetId(IntPtr entityPointer);
 
         public void Create(IntPtr entityPointer, ushort id, out TEntity entity)
         {

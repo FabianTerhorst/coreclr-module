@@ -24,23 +24,6 @@ namespace AltV.Net.Elements.Pools
             this.checkpointPool = checkpointPool;
         }
 
-        public virtual EntityType GetType(IntPtr entityPointer)
-        {
-            return AltVNative.Entity.BaseObject_GetType(entityPointer);
-        }
-
-        public bool GetOrCreate(IntPtr entityPointer, out IEntity entity)
-        {
-            if (entityPointer == IntPtr.Zero)
-            {
-                entity = default;
-                return false;
-            }
-
-            var entityType = GetType(entityPointer);
-            return GetOrCreate(entityPointer, entityType, out entity);
-        }
-
         public bool GetOrCreate(IntPtr entityPointer, EntityType entityType, out IEntity entity)
         {
             bool result;
@@ -93,12 +76,6 @@ namespace AltV.Net.Elements.Pools
                     entity = default;
                     return false;
             }
-        }
-
-        public bool Remove(IntPtr entityPointer)
-        {
-            return entityPointer != IntPtr.Zero &&
-                   Remove(entityPointer, GetType(entityPointer));
         }
 
         public bool Remove(IEntity entity)

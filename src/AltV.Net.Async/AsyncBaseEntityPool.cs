@@ -1,4 +1,3 @@
-using System;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Pools;
 
@@ -10,11 +9,6 @@ namespace AltV.Net.Async
             IEntityPool<IBlip> blipPool,
             IEntityPool<ICheckpoint> checkpointPool) : base(playerPool, vehiclePool, blipPool, checkpointPool)
         {
-        }
-
-        public override EntityType GetType(IntPtr entityPointer)
-        {
-            return AltAsync.Do(() => Entity.GetType(entityPointer)).Result;
         }
     }
 }

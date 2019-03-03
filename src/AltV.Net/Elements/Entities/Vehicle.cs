@@ -8,7 +8,7 @@ namespace AltV.Net.Elements.Entities
 {
     public class Vehicle : Entity, IVehicle
     {
-        public new static ushort GetId(IntPtr vehiclePointer) => AltVNative.Vehicle.Vehicle_GetID(vehiclePointer);
+        public static ushort GetId(IntPtr vehiclePointer) => AltVNative.Vehicle.Vehicle_GetID(vehiclePointer);
 
         public override Position Position
         {
