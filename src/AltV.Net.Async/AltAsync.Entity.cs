@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using AltV.Net.Data;
+using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Async
@@ -31,8 +32,11 @@ namespace AltV.Net.Async
         public static async Task SetDimensionAsync(this IEntity entity, ushort dimension) =>
             await AltVAsync.Schedule(() => { entity.Dimension = dimension; });
 
-        public static async Task SetMetaDataAsync(this IEntity entity, string key, object value) =>
-            await AltVAsync.Schedule(() => entity.SetMetaData(key, value));
+        public static async Task SetMetaDataAsync(this IEntity entity, string key, object value)
+        {
+            var mValue = MValue.CreateFromObject(value);
+            await AltVAsync.Schedule(() => entity.SetMetaData(key, mValue));
+        }
 
         public static async Task<T> GetMetaDataAsync<T>(this IEntity entity, string key) =>
             await AltVAsync.Schedule(() =>
@@ -41,8 +45,11 @@ namespace AltV.Net.Async
                 return value;
             });
 
-        public static async Task SetSyncedMetaDataAsync(this IEntity entity, string key, object value) =>
-            await AltVAsync.Schedule(() => entity.SetSyncedMetaData(key, value));
+        public static async Task SetSyncedMetaDataAsync(this IEntity entity, string key, object value)
+        {
+            var mValue = MValue.CreateFromObject(value);
+            await AltVAsync.Schedule(() => entity.SetSyncedMetaData(key, mValue));
+        }
 
         public static async Task<T> GetSyncedMetaDataAsync<T>(this IEntity entity, string key) =>
             await AltVAsync.Schedule(() =>
