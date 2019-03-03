@@ -45,6 +45,18 @@ namespace AltV.Net.Elements.Args
             }
         }
 
+        public static bool FromObject(object obj, Type type, out object result)
+        {
+            if (Adapters.TryGetValue(type, out var adapter))
+            {
+                result = adapter.FromMValue(new MValueObjectReader(obj));
+                return true;
+            }
+
+            result = null;
+            return false;
+        }
+
         public static bool IsConvertible(Type type)
         {
             return Adapters.ContainsKey(type);

@@ -11,6 +11,10 @@ namespace AltV.Net.FunctionParser
     {
         public static object ParseObject(object value, Type type, FunctionTypeInfo typeInfo)
         {
+            if (MValueAdapters.FromObject(value, type, out var result))
+            {
+                return result;
+            }
             if (!type.IsValueType || type == FunctionTypes.String) return value;
             var defaultValue = typeInfo?.DefaultValue;
             return defaultValue ?? Activator.CreateInstance(type);
@@ -162,7 +166,14 @@ namespace AltV.Net.FunctionParser
                 }
                 else
                 {
-                    typedArray.SetValue(curr is IConvertible ? Convert.ChangeType(curr, elementType) : curr, i);
+                    if (MValueAdapters.FromObject(curr, elementType, out var result))
+                    {
+                        typedArray.SetValue(result, i);
+                    }
+                    else
+                    {
+                        typedArray.SetValue(curr is IConvertible ? Convert.ChangeType(curr, elementType) : curr, i);
+                    }
                 }
             }
 
@@ -218,13 +229,20 @@ namespace AltV.Net.FunctionParser
                 }
                 else
                 {
-                    if (obj is IConvertible)
+                    if (MValueAdapters.FromObject(obj, valueType, out var result))
                     {
-                        typedDictionary[key] = Convert.ChangeType(obj, valueType);
+                        typedDictionary[key] = result;
                     }
                     else
                     {
-                        typedDictionary[key] = obj;
+                        if (obj is IConvertible)
+                        {
+                            typedDictionary[key] = Convert.ChangeType(obj, valueType);
+                        }
+                        else
+                        {
+                            typedDictionary[key] = obj;
+                        }
                     }
                 }
             }
