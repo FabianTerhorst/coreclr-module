@@ -47,6 +47,11 @@ namespace AltV.Net.Elements.Entities
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
         ushort Dimension { get; set; }
 
+        /// <summary>
+        /// Sets the given object into the meta data with the given key
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
         void SetMetaData(string key, object value);
 
         bool GetMetaData<T>(string key, out T result);
