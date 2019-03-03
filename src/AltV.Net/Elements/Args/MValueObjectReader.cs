@@ -7,7 +7,7 @@ namespace AltV.Net.Elements.Args
     //TODO: needs more testing
     internal class MValueObjectReader : IMValueReader
     {
-        public interface IReadableMValue
+        private interface IReadableMValue
         {
             object GetNext();
 
@@ -16,9 +16,9 @@ namespace AltV.Net.Elements.Args
             void SkipValue();
         }
 
-        public struct MValueArrayReader : IReadableMValue
+        private struct MValueArrayReader : IReadableMValue
         {
-            private object[] values;
+            private readonly object[] values;
 
             private int index;
 
@@ -45,10 +45,8 @@ namespace AltV.Net.Elements.Args
             }
         }
 
-        public struct MValueDictionaryReader : IReadableMValue
+        private struct MValueDictionaryReader : IReadableMValue
         {
-            public readonly IDictionary Dictionary;
-
             private readonly object[] values;
 
             private readonly string[] names;
@@ -59,11 +57,10 @@ namespace AltV.Net.Elements.Args
 
             public MValueDictionaryReader(IDictionary dictionary)
             {
-                Dictionary = dictionary;
                 values = new object[dictionary.Count];
                 names = new string[dictionary.Count];
-                Dictionary.Values.CopyTo(values, 0);
-                Dictionary.Keys.CopyTo(names, 0);
+                dictionary.Values.CopyTo(values, 0);
+                dictionary.Keys.CopyTo(names, 0);
                 index = 0;
                 nameIndex = 0;
             }
@@ -99,7 +96,7 @@ namespace AltV.Net.Elements.Args
             }
         }
 
-        public struct MValueStartReader : IReadableMValue
+        private struct MValueStartReader : IReadableMValue
         {
             private object obj;
             

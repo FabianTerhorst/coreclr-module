@@ -6,14 +6,14 @@ namespace AltV.Net.Elements.Args
 {
     internal class MValueReader : IMValueReader
     {
-        public interface IReadableMValue
+        private interface IReadableMValue
         {
             MValueArrayBuffer MValueArrayBuffer { get; }
 
             MValue GetNext();
         }
 
-        public struct MValueArrayReader : IReadableMValue
+        private struct MValueArrayReader : IReadableMValue
         {
             public MValueArrayBuffer MValueArrayBuffer { get; }
 
@@ -28,7 +28,7 @@ namespace AltV.Net.Elements.Args
             }
         }
 
-        public struct MValueObjectReader : IReadableMValue
+        private struct MValueObjectReader : IReadableMValue
         {
             public StringViewArray StringViewArray;
             public MValueArrayBuffer MValueArrayBuffer { get; }
@@ -45,7 +45,7 @@ namespace AltV.Net.Elements.Args
             }
         }
 
-        public struct MValueStartReader : IReadableMValue
+        private struct MValueStartReader : IReadableMValue
         {
             public MValueArrayBuffer MValueArrayBuffer { get; }
 
