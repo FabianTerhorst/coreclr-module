@@ -19,17 +19,12 @@ extern "C"
 {
 #endif
 // Entity
-EXPORT uint16_t Checkpoint_GetID(alt::ICheckpoint* checkpoint);
 EXPORT void Checkpoint_GetPosition(alt::ICheckpoint* checkpoint, position_t &position);
 EXPORT void Checkpoint_SetPosition(alt::ICheckpoint* checkpoint, alt::Position pos);
-EXPORT void Checkpoint_GetRotation(alt::ICheckpoint* checkpoint, rotation_t &rotation);
-EXPORT void Checkpoint_SetRotation(alt::ICheckpoint* checkpoint, alt::Rotation rot);
 EXPORT int16_t Checkpoint_GetDimension(alt::ICheckpoint* checkpoint);
 EXPORT void Checkpoint_SetDimension(alt::ICheckpoint* checkpoint, uint16_t dimension);
 EXPORT void Checkpoint_GetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValue &val);
 EXPORT void Checkpoint_SetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValue* val);
-EXPORT void Checkpoint_GetSyncedMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValue &val);
-EXPORT void Checkpoint_SetSyncedMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValue* val);
 // Checkpoint
 EXPORT bool Checkpoint_IsGlobal(alt::ICheckpoint* checkpoint);
 EXPORT uint8_t Checkpoint_GetCheckpointType(alt::ICheckpoint* checkpoint);

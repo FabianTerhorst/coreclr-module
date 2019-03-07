@@ -2,10 +2,6 @@
 
 // Entity
 
-uint16_t Blip_GetID(alt::IBlip* blip) {
-    return blip->GetID();
-}
-
 void Blip_GetPosition(alt::IBlip* blip, position_t &position) {
     auto blipPosition = blip->GetPosition();
     position.x = blipPosition.x;
@@ -15,17 +11,6 @@ void Blip_GetPosition(alt::IBlip* blip, position_t &position) {
 
 void Blip_SetPosition(alt::IBlip* blip, alt::Position pos) {
     blip->SetPosition(pos);
-}
-
-void Blip_GetRotation(alt::IBlip* blip, rotation_t &rotation) {
-    auto blipRotation = blip->GetRotation();
-    rotation.roll = blipRotation.roll;
-    rotation.pitch = blipRotation.pitch;
-    rotation.yaw = blipRotation.yaw;
-}
-
-void Blip_SetRotation(alt::IBlip* blip, alt::Rotation rot) {
-    blip->SetRotation(rot);
 }
 
 int16_t Blip_GetDimension(alt::IBlip* blip) {
@@ -44,14 +29,6 @@ void Blip_SetMetaData(alt::IBlip* blip, const char* key, alt::MValue* val) {
     blip->SetMetaData(key, *val);
 }
 
-void Blip_GetSyncedMetaData(alt::IBlip* blip, const char* key, alt::MValue &val) {
-    val = blip->GetSyncedMetaData(key);
-}
-
-void Blip_SetSyncedMetaData(alt::IBlip* blip, const char* key, alt::MValue* val) {
-    blip->SetSyncedMetaData(key, *val);
-}
-
 // Blip
 
 bool Blip_IsGlobal(alt::IBlip* blip) {
@@ -68,7 +45,7 @@ alt::IEntity* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type) {
 }
 
 uint8_t Blip_GetType(alt::IBlip* blip) {
-    return blip->GetBlipType();
+    return (uint8_t) blip->GetBlipType();
 }
 
 void Blip_SetSprite(alt::IBlip* blip, uint16_t sprite) {

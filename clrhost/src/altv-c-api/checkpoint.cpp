@@ -2,10 +2,6 @@
 
 // Entity
 
-uint16_t Checkpoint_GetID(alt::ICheckpoint* checkpoint) {
-    return checkpoint->GetID();
-}
-
 void Checkpoint_GetPosition(alt::ICheckpoint* checkpoint, position_t &position) {
     auto checkpointPosition = checkpoint->GetPosition();
     position.x = checkpointPosition.x;
@@ -15,17 +11,6 @@ void Checkpoint_GetPosition(alt::ICheckpoint* checkpoint, position_t &position) 
 
 void Checkpoint_SetPosition(alt::ICheckpoint* checkpoint, alt::Position pos) {
     checkpoint->SetPosition(pos);
-}
-
-void Checkpoint_GetRotation(alt::ICheckpoint* checkpoint, rotation_t &rotation) {
-    auto checkpointRotation = checkpoint->GetRotation();
-    rotation.roll = checkpointRotation.roll;
-    rotation.pitch = checkpointRotation.pitch;
-    rotation.yaw = checkpointRotation.yaw;
-}
-
-void Checkpoint_SetRotation(alt::ICheckpoint* checkpoint, alt::Rotation rot) {
-    checkpoint->SetRotation(rot);
 }
 
 int16_t Checkpoint_GetDimension(alt::ICheckpoint* checkpoint) {
@@ -42,14 +27,6 @@ void Checkpoint_GetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::
 
 void Checkpoint_SetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValue* val) {
     checkpoint->SetMetaData(key, *val);
-}
-
-void Checkpoint_GetSyncedMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValue &val) {
-    val = checkpoint->GetSyncedMetaData(key);
-}
-
-void Checkpoint_SetSyncedMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValue* val) {
-    checkpoint->SetSyncedMetaData(key, *val);
 }
 
 // Checkpoint

@@ -32,7 +32,7 @@ void Player_SetRotation(alt::IPlayer* player, alt::Rotation rot) {
     player->SetRotation(rot);
 }
 
-uint16_t Player_GetDimension(alt::IPlayer* player) {
+int16_t Player_GetDimension(alt::IPlayer* player) {
     return player->GetDimension();
 }
 
