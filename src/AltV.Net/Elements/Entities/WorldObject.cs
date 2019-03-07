@@ -1,55 +1,18 @@
 using System;
-using System.Collections.Concurrent;
 using AltV.Net.Data;
 
 namespace AltV.Net.Elements.Entities
 {
-    public abstract class WorldObject : IWorldObject, IInternalBaseObject
+    public abstract class WorldObject : BaseObject, IWorldObject
     {
-        private readonly ConcurrentDictionary<string, object> data = new ConcurrentDictionary<string, object>();
-
-        public IntPtr NativePointer { get; }
-        public bool Exists { get; set; }
-
-        public BaseObjectType Type { get; }
-
         public abstract Position Position { get; set; }
         public abstract short Dimension { get; set; }
 
-        public abstract void SetMetaData(string key, object value);
-        public abstract bool GetMetaData<T>(string key, out T result);
-
-        protected WorldObject(IntPtr nativePointer, BaseObjectType type)
+        protected WorldObject(IntPtr nativePointer, BaseObjectType type) : base(nativePointer, type)
         {
-            NativePointer = nativePointer;
-            Type = type;
-            Exists = true;
         }
 
-        public void SetData(string key, object value)
-        {
-            data[key] = value;
-        }
-
-        public bool GetData<T>(string key, out T result)
-        {
-            if (!data.TryGetValue(key, out var value))
-            {
-                result = default;
-                return false;
-            }
-
-            if (!(value is T cast))
-            {
-                result = default;
-                return false;
-            }
-
-            result = cast;
-            return true;
-        }
-
-        protected void CheckExistence()
+        protected override void CheckExistence()
         {
             if (Exists)
             {
