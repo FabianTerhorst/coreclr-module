@@ -42,6 +42,8 @@ namespace AltV.Net.Elements.Entities
 
         byte DashboardColor { get; set; }
 
+        bool IsTireSmokeColorCustom { get; }
+        
         Rgba TireSmokeColor { get; set; }
 
         byte WheelType { get; }
@@ -82,11 +84,11 @@ namespace AltV.Net.Elements.Entities
 
         void ToggleExtra(byte extraId, bool state);
 
+        bool IsNeonActive { get; }
+        
         void GetNeonActive(ref bool left, ref bool right, ref bool top, ref bool back);
 
         void SetNeonActive(bool left, bool right, bool top, bool back);
-
-        //TODO: WIP apis
 
         bool EngineOn { get; set; }
 
@@ -177,5 +179,7 @@ namespace AltV.Net.Elements.Entities
         void SetBumperDamageLevel(byte bumperId, byte damageLevel);
 
         string DamageData { get; set; }
+
+        void Remove();
     }
 }

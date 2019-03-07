@@ -20,11 +20,12 @@ extern "C"
 #endif
 // Entity
 EXPORT uint16_t Vehicle_GetID(alt::IVehicle* vehicle);
+EXPORT uint32_t Vehicle_GetModel(alt::IVehicle* vehicle);
 EXPORT void Vehicle_GetPosition(alt::IVehicle* vehicle, position_t &position);
 EXPORT void Vehicle_SetPosition(alt::IVehicle* vehicle, alt::Position pos);
 EXPORT void Vehicle_GetRotation(alt::IVehicle* vehicle, rotation_t &rotation);
 EXPORT void Vehicle_SetRotation(alt::IVehicle* vehicle, alt::Rotation rot);
-EXPORT uint16_t Vehicle_GetDimension(alt::IVehicle* vehicle);
+EXPORT int16_t Vehicle_GetDimension(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetDimension(alt::IVehicle* vehicle, uint16_t dimension);
 EXPORT void Vehicle_GetMetaData(alt::IVehicle* vehicle, const char* key, alt::MValue &val);
 EXPORT void Vehicle_SetMetaData(alt::IVehicle* vehicle, const char* key, alt::MValue* val);
@@ -56,6 +57,7 @@ EXPORT uint8_t Vehicle_GetInteriorColor(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetInteriorColor(alt::IVehicle* vehicle, uint8_t color);
 EXPORT uint8_t Vehicle_GetDashboardColor(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetDashboardColor(alt::IVehicle* vehicle, uint8_t color);
+EXPORT bool Vehicle_IsTireSmokeColorCustom(alt::IVehicle* vehicle);
 EXPORT void Vehicle_GetTireSmokeColor(alt::IVehicle* vehicle, rgba_t &tireSmokeColor);
 EXPORT void Vehicle_SetTireSmokeColor(alt::IVehicle* vehicle, alt::RGBA color);
 EXPORT uint8_t Vehicle_GetWheelType(alt::IVehicle* vehicle);
@@ -75,8 +77,9 @@ EXPORT uint8_t Vehicle_GetDirtLevel(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetDirtLevel(alt::IVehicle* vehicle, uint8_t level);
 EXPORT bool Vehicle_IsExtraOn(alt::IVehicle* vehicle, uint8_t extraID);
 EXPORT void Vehicle_ToggleExtra(alt::IVehicle* vehicle, uint8_t extraID, bool state);
-EXPORT void Vehicle_GetNeonActive(alt::IVehicle* vehicle, bool &left, bool &right, bool &top, bool &back);
-EXPORT void Vehicle_SetNeonActive(alt::IVehicle* vehicle, bool left, bool right, bool top, bool back);
+EXPORT bool Vehicle_IsNeonActive(alt::IVehicle* vehicle);
+EXPORT void Vehicle_GetNeonActive(alt::IVehicle* vehicle, bool* left, bool* right, bool* front, bool* back);
+EXPORT void Vehicle_SetNeonActive(alt::IVehicle* vehicle, bool left, bool right, bool front, bool back);
 EXPORT void Vehicle_GetNeonColor(alt::IVehicle* vehicle, rgba_t &neonColor);
 EXPORT void Vehicle_SetNeonColor(alt::IVehicle* vehicle, alt::RGBA color);
 

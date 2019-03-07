@@ -9,21 +9,21 @@ namespace AltV.Net.Async.Events
 
     public delegate Task PlayerConnectAsyncDelegate(IPlayer player, string reason);
 
-    public delegate Task PlayerDamageAsyncDelegate(IPlayer player, IEntity attacker, uint weapon, byte damage);
+    public delegate Task PlayerDamageAsyncDelegate(IPlayer player, IEntity attacker, uint weapon, ushort damage);
 
     public delegate Task PlayerDeadAsyncDelegate(IPlayer player, IEntity killer, uint weapon);
 
     public delegate Task PlayerDisconnectAsyncDelegate(IPlayer player, string reason);
 
-    public delegate Task EntityRemoveAsyncDelegate(IEntity entity);
+    public delegate Task EntityRemoveAsyncDelegate(IBaseObject entity);
 
     public delegate Task ServerEventAsyncDelegate(object[] args);
 
-    public delegate Task VehicleChangeSeatAsyncDelegate(IVehicle vehicle, IPlayer player, sbyte oldSeat, sbyte newSeat);
+    public delegate Task PlayerChangeVehicleSeatAsyncDelegate(IVehicle vehicle, IPlayer player, byte oldSeat, byte newSeat);
 
-    public delegate Task VehicleEnterAsyncDelegate(IVehicle vehicle, IPlayer player, sbyte seat);
+    public delegate Task PlayerEnterVehicleAsyncDelegate(IVehicle vehicle, IPlayer player, byte seat);
 
-    public delegate Task VehicleLeaveAsyncDelegate(IVehicle vehicle, IPlayer player, sbyte seat);
-    
+    public delegate Task PlayerLeaveVehicleAsyncDelegate(IVehicle vehicle, IPlayer player, byte seat);
+
     public delegate Task PlayerClientEventAsyncDelegate(IPlayer player, string eventName, object[] args);
 }

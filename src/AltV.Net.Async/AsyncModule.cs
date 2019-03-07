@@ -24,14 +24,14 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<PlayerDeadAsyncDelegate> PlayerDeadAsyncEventHandler =
             new AsyncEventHandler<PlayerDeadAsyncDelegate>();
 
-        internal readonly AsyncEventHandler<VehicleChangeSeatAsyncDelegate> VehicleChangeSeatAsyncEventHandler =
-            new AsyncEventHandler<VehicleChangeSeatAsyncDelegate>();
+        internal readonly AsyncEventHandler<PlayerChangeVehicleSeatAsyncDelegate> PlayerChangeVehicleSeatAsyncEventHandler =
+            new AsyncEventHandler<PlayerChangeVehicleSeatAsyncDelegate>();
 
-        internal readonly AsyncEventHandler<VehicleEnterAsyncDelegate> VehicleEnterAsyncEventHandler =
-            new AsyncEventHandler<VehicleEnterAsyncDelegate>();
+        internal readonly AsyncEventHandler<PlayerEnterVehicleAsyncDelegate> PlayerEnterVehicleAsyncEventHandler =
+            new AsyncEventHandler<PlayerEnterVehicleAsyncDelegate>();
 
-        internal readonly AsyncEventHandler<VehicleLeaveAsyncDelegate> VehicleLeaveAsyncEventHandler =
-            new AsyncEventHandler<VehicleLeaveAsyncDelegate>();
+        internal readonly AsyncEventHandler<PlayerLeaveVehicleAsyncDelegate> PlayerLeaveVehicleAsyncEventHandler =
+            new AsyncEventHandler<PlayerLeaveVehicleAsyncDelegate>();
 
         internal readonly AsyncEventHandler<PlayerDisconnectAsyncDelegate> PlayerDisconnectAsyncEventHandler =
             new AsyncEventHandler<PlayerDisconnectAsyncDelegate>();
@@ -50,10 +50,10 @@ namespace AltV.Net.Async
             =
             new Dictionary<string, HashSet<ServerEventAsyncDelegate>>();
 
-        public AsyncModule(IServer server, CSharpNativeResource cSharpNativeResource, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
+        public AsyncModule(IServer server, CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
-            IEntityPool<IBlip> blipPool,
-            IEntityPool<ICheckpoint> checkpointPool) : base(server, cSharpNativeResource, baseEntityPool, playerPool, vehiclePool, blipPool,
+            IBaseObjectPool<IBlip> blipPool,
+            IBaseObjectPool<ICheckpoint> checkpointPool) : base(server, cSharpNativeResource, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool, blipPool,
             checkpointPool)
         {
             AltAsync.Setup(this);
@@ -71,41 +71,41 @@ namespace AltV.Net.Async
             Task.Run(() => PlayerConnectAsyncEventHandler.CallAsync(@delegate => @delegate(player, reason)));
         }
 
-        public override void OnPlayerDamageEvent(IPlayer player, IEntity attacker, uint weapon, byte damage)
+        public override void OnPlayerDamageEvent(IPlayer player, IEntity attacker, uint weapon, ushort damage)
         {
             base.OnPlayerDamageEvent(player, attacker, weapon, damage);
             Task.Run(() =>
                 PlayerDamageAsyncEventHandler.CallAsync(@delegate => @delegate(player, attacker, weapon, damage)));
         }
 
-        public override void OnPlayerDeadEvent(IPlayer player, IEntity killer, uint weapon)
+        public override void OnPlayerDeathEvent(IPlayer player, IEntity killer, uint weapon)
         {
-            base.OnPlayerDeadEvent(player, killer, weapon);
+            base.OnPlayerDeathEvent(player, killer, weapon);
             Task.Run(() =>
                 PlayerDeadAsyncEventHandler.CallAsync(@delegate => @delegate(player, killer, weapon)));
         }
 
-        public override void OnVehicleChangeSeatEvent(IVehicle vehicle, IPlayer player, sbyte oldSeat, sbyte newSeat)
+        public override void OnPlayerChangeVehicleSeatEvent(IVehicle vehicle, IPlayer player, byte oldSeat, byte newSeat)
         {
-            base.OnVehicleChangeSeatEvent(vehicle, player, oldSeat, newSeat);
+            base.OnPlayerChangeVehicleSeatEvent(vehicle, player, oldSeat, newSeat);
             Task.Run(() =>
-                VehicleChangeSeatAsyncEventHandler.CallAsync(@delegate =>
+                PlayerChangeVehicleSeatAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(vehicle, player, oldSeat, newSeat)));
         }
 
-        public override void OnVehicleEnterEvent(IVehicle vehicle, IPlayer player, sbyte seat)
+        public override void OnPlayerEnterVehicleEvent(IVehicle vehicle, IPlayer player, byte seat)
         {
-            base.OnVehicleEnterEvent(vehicle, player, seat);
+            base.OnPlayerEnterVehicleEvent(vehicle, player, seat);
             Task.Run(() =>
-                VehicleEnterAsyncEventHandler.CallAsync(@delegate =>
+                PlayerEnterVehicleAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(vehicle, player, seat)));
         }
 
-        public override void OnVehicleLeaveEvent(IVehicle vehicle, IPlayer player, sbyte seat)
+        public override void OnPlayerLeaveVehicleEvent(IVehicle vehicle, IPlayer player, byte seat)
         {
-            base.OnVehicleLeaveEvent(vehicle, player, seat);
+            base.OnPlayerLeaveVehicleEvent(vehicle, player, seat);
             Task.Run(() =>
-                VehicleLeaveAsyncEventHandler.CallAsync(@delegate =>
+                PlayerLeaveVehicleAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(vehicle, player, seat)));
         }
 
@@ -117,7 +117,7 @@ namespace AltV.Net.Async
                     @delegate(player, reason)));
         }
 
-        public override void OnEntityRemoveEvent(IEntity entity)
+        public override void OnEntityRemoveEvent(IBaseObject entity)
         {
             base.OnEntityRemoveEvent(entity);
             Task.Run(() =>
@@ -143,7 +143,7 @@ namespace AltV.Net.Async
                     objects = new object[length];
                     for (var i = 0; i < length; i++)
                     {
-                        objects[i] = mValues[i].ToObject(BaseEntityPool);
+                        objects[i] = mValues[i].ToObject(BaseBaseObjectPool);
                     }
                 }
 
@@ -178,7 +178,7 @@ namespace AltV.Net.Async
                     objects = new object[length];
                     for (var i = 0; i < length; i++)
                     {
-                        objects[i] = mValues[i].ToObject(BaseEntityPool);
+                        objects[i] = mValues[i].ToObject(BaseBaseObjectPool);
                     }
                 }
 
@@ -205,7 +205,7 @@ namespace AltV.Net.Async
                     objects = new object[length];
                     for (var i = 0; i < length; i++)
                     {
-                        objects[i] = mValues[i].ToObject(BaseEntityPool);
+                        objects[i] = mValues[i].ToObject(BaseBaseObjectPool);
                     }
                 }
 
@@ -237,7 +237,7 @@ namespace AltV.Net.Async
                     objects = new object[length];
                     for (var i = 0; i < length; i++)
                     {
-                        objects[i] = mValues[i].ToObject(BaseEntityPool);
+                        objects[i] = mValues[i].ToObject(BaseBaseObjectPool);
                     }
                 }
 
@@ -272,7 +272,7 @@ namespace AltV.Net.Async
                     objects = new object[length];
                     for (var i = 0; i < length; i++)
                     {
-                        objects[i] = mValues[i].ToObject(BaseEntityPool);
+                        objects[i] = mValues[i].ToObject(BaseBaseObjectPool);
                     }
                 }
 

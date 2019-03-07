@@ -36,22 +36,22 @@ namespace AltV.Net.Async
             remove => Module.PlayerDeadAsyncEventHandler.Unsubscribe(value);
         }
 
-        public static event VehicleChangeSeatAsyncDelegate OnVehicleChangeSeat
+        public static event PlayerChangeVehicleSeatAsyncDelegate OnPlayerChangeVehicleSeat
         {
-            add => Module.VehicleChangeSeatAsyncEventHandler.Subscribe(value);
-            remove => Module.VehicleChangeSeatAsyncEventHandler.Unsubscribe(value);
+            add => Module.PlayerChangeVehicleSeatAsyncEventHandler.Subscribe(value);
+            remove => Module.PlayerChangeVehicleSeatAsyncEventHandler.Unsubscribe(value);
         }
 
-        public static event VehicleEnterAsyncDelegate OnVehicleEnter
+        public static event PlayerEnterVehicleAsyncDelegate OnPlayerEnterVehicle
         {
-            add => Module.VehicleEnterAsyncEventHandler.Subscribe(value);
-            remove => Module.VehicleEnterAsyncEventHandler.Unsubscribe(value);
+            add => Module.PlayerEnterVehicleAsyncEventHandler.Subscribe(value);
+            remove => Module.PlayerEnterVehicleAsyncEventHandler.Unsubscribe(value);
         }
 
-        public static event VehicleLeaveAsyncDelegate OnVehicleLeave
+        public static event PlayerLeaveVehicleAsyncDelegate OnPlayerLeaveVehicle
         {
-            add => Module.VehicleLeaveAsyncEventHandler.Subscribe(value);
-            remove => Module.VehicleLeaveAsyncEventHandler.Unsubscribe(value);
+            add => Module.PlayerLeaveVehicleAsyncEventHandler.Subscribe(value);
+            remove => Module.PlayerLeaveVehicleAsyncEventHandler.Unsubscribe(value);
         }
 
         public static event PlayerDisconnectAsyncDelegate OnPlayerDisconnect

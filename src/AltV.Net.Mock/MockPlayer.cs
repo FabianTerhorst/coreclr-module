@@ -6,7 +6,7 @@ namespace AltV.Net.Mock
 {
     public class MockPlayer : MockEntity, IPlayer
     {
-        public MockPlayer(IntPtr nativePointer, ushort id) : base(nativePointer, EntityType.Player, id)
+        public MockPlayer(IntPtr nativePointer, ushort id) : base(nativePointer, BaseObjectType.Player, id)
         {
         }
 
@@ -27,7 +27,8 @@ namespace AltV.Net.Mock
         public Rotation HeadRotation { get; }
         public bool IsInVehicle { get; set; }
         public IVehicle Vehicle { get; set; }
-        public sbyte Seat { get; set; }
+        public byte Seat { get; set; }
+        public uint Ping { get; }
 
         public void Spawn(Position position)
         {

@@ -13,6 +13,9 @@ namespace AltV.Net.Native
             
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern ushort Player_GetID(IntPtr entityPointer);
+            
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern uint Player_GetModel(IntPtr entityPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void Player_GetPosition(IntPtr entityPointer, ref Position position);
@@ -27,10 +30,10 @@ namespace AltV.Net.Native
             internal static extern void Player_SetRotation(IntPtr entityPointer, Rotation rotation);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern ushort Player_GetDimension(IntPtr entityPointer);
+            internal static extern short Player_GetDimension(IntPtr entityPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void Player_SetDimension(IntPtr entityPointer, ushort dimension);
+            internal static extern void Player_SetDimension(IntPtr entityPointer, short dimension);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Player_GetMetaData(IntPtr entityPointer, string key, ref MValue value);
@@ -122,10 +125,13 @@ namespace AltV.Net.Native
             internal static extern IntPtr Player_GetVehicle(IntPtr playerPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern sbyte Player_GetSeat(IntPtr playerPointer);
+            internal static extern byte Player_GetSeat(IntPtr playerPointer);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Player_Kick(IntPtr playerPointer, string reason);
+            
+            [DllImport(_dllName,CallingConvention = _callingConvention)]
+            internal static extern uint Player_GetPing(IntPtr playerPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void Player_Copy(IntPtr playerPointer, ref ReadOnlyPlayer readOnlyPlayer);

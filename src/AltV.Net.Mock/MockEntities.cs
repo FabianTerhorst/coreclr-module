@@ -10,7 +10,7 @@ namespace AltV.Net.Mock
 
         public static ushort Id = 0;
 
-        public static readonly Dictionary<IntPtr, IEntity> Entities = new Dictionary<IntPtr, IEntity>();
+        public static readonly Dictionary<IntPtr, IBaseObject> Entities = new Dictionary<IntPtr, IBaseObject>();
 
         public static IntPtr GetNextPtr()
         {
@@ -19,7 +19,7 @@ namespace AltV.Net.Mock
             return Ptr;
         }
 
-        public static void Insert(IEntity entity)
+        public static void Insert(IBaseObject entity)
         {
             Entities[Ptr] = entity;
         }

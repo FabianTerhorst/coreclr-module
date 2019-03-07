@@ -3,9 +3,9 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Mock
 {
-    public class MockBlip : MockEntity, IBlip
+    public class MockBlip : MockWorldObject, IBlip
     {
-        public MockBlip(IntPtr nativePointer, ushort id) : base(nativePointer, EntityType.Blip, id)
+        public MockBlip(IntPtr nativePointer) : base(nativePointer, BaseObjectType.Blip)
         {
         }
 
@@ -17,5 +17,10 @@ namespace AltV.Net.Mock
         public byte Color { get; set; }
         public bool Route { get; set; }
         public byte RouteColor { get; set; }
+
+        public void Remove()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

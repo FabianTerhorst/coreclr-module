@@ -10,6 +10,15 @@ namespace AltV.Net.Elements.Entities
     {
         public static ushort GetId(IntPtr vehiclePointer) => AltVNative.Vehicle.Vehicle_GetID(vehiclePointer);
 
+        public override uint Model
+        {
+            get
+            {
+                CheckExistence();
+                return AltVNative.Vehicle.Vehicle_GetModel(NativePointer);
+            }
+        }
+
         public override Position Position
         {
             get
@@ -42,7 +51,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public override ushort Dimension
+        public override short Dimension
         {
             get
             {
@@ -268,6 +277,15 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public bool IsTireSmokeColorCustom
+        {
+            get
+            {
+                CheckExistence();
+                return AltVNative.Vehicle.Vehicle_IsTireSmokeColorCustom(NativePointer);
+            }
+        }
+
         public Rgba TireSmokeColor
         {
             get
@@ -403,8 +421,6 @@ namespace AltV.Net.Elements.Entities
                 AltVNative.Vehicle.Vehicle_SetNeonColor(NativePointer, value);
             }
         }
-
-        //TODO: wip vehicle apis
 
         public bool EngineOn
         {
@@ -799,7 +815,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public Vehicle(IntPtr nativePointer, ushort id) : base(nativePointer, EntityType.Vehicle, id)
+        public Vehicle(IntPtr nativePointer, ushort id) : base(nativePointer, BaseObjectType.Vehicle, id)
         {
         }
 
@@ -839,16 +855,30 @@ namespace AltV.Net.Elements.Entities
             AltVNative.Vehicle.Vehicle_ToggleExtra(NativePointer, extraId, state);
         }
 
-        public void SetNeonActive(bool left, bool right, bool top, bool back)
+        public bool IsNeonActive
         {
-            CheckExistence();
-            AltVNative.Vehicle.Vehicle_SetNeonActive(NativePointer, left, right, top, back);
+            get
+            {
+                CheckExistence();
+                return AltVNative.Vehicle.Vehicle_IsNeonActive(NativePointer);
+            }
         }
 
-        public void GetNeonActive(ref bool left, ref bool right, ref bool top, ref bool back)
+        public void SetNeonActive(bool left, bool right, bool front, bool back)
         {
             CheckExistence();
-            AltVNative.Vehicle.Vehicle_GetNeonActive(NativePointer, ref left, ref right, ref top, ref back);
+            AltVNative.Vehicle.Vehicle_SetNeonActive(NativePointer, left, right, front, back);
+        }
+
+        public void GetNeonActive(ref bool left, ref bool right, ref bool front, ref bool back)
+        {
+            CheckExistence();
+            AltVNative.Vehicle.Vehicle_GetNeonActive(NativePointer, ref left, ref right, ref front, ref back);
+        }
+
+        public void Remove()
+        {
+            Alt.RemoveVehicle(this);
         }
     }
 }

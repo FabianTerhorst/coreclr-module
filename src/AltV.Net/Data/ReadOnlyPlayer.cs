@@ -11,13 +11,15 @@ namespace AltV.Net.Data
         public static ReadOnlyPlayer Empty;
         
         public ushort Id { get; }
-        public EntityType Type { get; }
+        public BaseObjectType Type { get; }
         private readonly Position position;
         private readonly Rotation rotation;
-        private readonly ushort dimension;
+        private readonly short dimension;
         private readonly string name;
         private readonly ushort health;
         private readonly ushort armor;
+        public uint Model { get; }
+        public uint Ping { get; }
 
         public IntPtr NativePointer => IntPtr.Zero;
         public bool Exists => false;
@@ -34,7 +36,7 @@ namespace AltV.Net.Data
             set { }
         }
 
-        public ushort Dimension
+        public short Dimension
         {
             get => dimension;
             set { }
@@ -83,7 +85,7 @@ namespace AltV.Net.Data
         public Rotation HeadRotation { get; }
         public bool IsInVehicle { get; }
         public IVehicle Vehicle { get; }
-        public sbyte Seat { get; }
+        public byte Seat { get; }
         public void Spawn(Position position)
         {
             throw new NotImplementedException();

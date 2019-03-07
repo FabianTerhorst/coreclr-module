@@ -3,19 +3,19 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Mock
 {
-    public class MockCheckpointFactory<TEntity> : IEntityFactory<ICheckpoint> where TEntity : ICheckpoint
+    public class MockCheckpointFactory<TEntity> : IBaseObjectFactory<ICheckpoint> where TEntity : ICheckpoint
     {
-        private readonly IEntityFactory<ICheckpoint> checkpointFactory;
+        private readonly IBaseObjectFactory<ICheckpoint> checkpointFactory;
 
-        public MockCheckpointFactory(IEntityFactory<ICheckpoint> checkpointFactory)
+        public MockCheckpointFactory(IBaseObjectFactory<ICheckpoint> checkpointFactory)
         {
             this.checkpointFactory = checkpointFactory;
         }
 
-        public ICheckpoint Create(IntPtr entityPointer, ushort id)
+        public ICheckpoint Create(IntPtr entityPointer)
         {
-            return MockDecorator<TEntity, ICheckpoint>.Create((TEntity) checkpointFactory.Create(entityPointer, id),
-                new MockCheckpoint(entityPointer, id));
+            return MockDecorator<TEntity, ICheckpoint>.Create((TEntity) checkpointFactory.Create(entityPointer),
+                new MockCheckpoint(entityPointer));
         }
     }
 }

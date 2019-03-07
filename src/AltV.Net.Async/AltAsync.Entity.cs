@@ -14,7 +14,7 @@ namespace AltV.Net.Async
         public static async Task<ushort> GetIdAsync(this IEntity entity) =>
             await AltVAsync.Schedule(() => entity.Id);
 
-        public static async Task<EntityType> GetTypeAsync(this IEntity entity) =>
+        public static async Task<BaseObjectType> GetTypeAsync(this IEntity entity) =>
             await AltVAsync.Schedule(() => entity.Type);
 
         public static async Task SetPositionAsync(this IEntity entity, Position position) =>
@@ -29,7 +29,7 @@ namespace AltV.Net.Async
         public static async Task<Rotation> GetRotationAsync(this IEntity entity) =>
             await AltVAsync.Schedule(() => entity.Rotation);
 
-        public static async Task SetDimensionAsync(this IEntity entity, ushort dimension) =>
+        public static async Task SetDimensionAsync(this IEntity entity, short dimension) =>
             await AltVAsync.Schedule(() => { entity.Dimension = dimension; });
 
         public static async Task SetMetaDataAsync(this IEntity entity, string key, object value)
@@ -58,10 +58,7 @@ namespace AltV.Net.Async
                 return value;
             });
 
-        public static async Task<ushort> GetDimensionAsync(this IEntity entity) =>
+        public static async Task<short> GetDimensionAsync(this IEntity entity) =>
             await AltVAsync.Schedule(() => entity.Dimension);
-
-        public static async Task RemoveAsync(this IEntity entity) =>
-            await AltVAsync.Schedule(entity.Remove);
     }
 }

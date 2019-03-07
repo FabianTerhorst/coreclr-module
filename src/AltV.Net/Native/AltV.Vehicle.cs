@@ -15,6 +15,9 @@ namespace AltV.Net.Native
             internal static extern ushort Vehicle_GetID(IntPtr entityPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern uint Vehicle_GetModel(IntPtr entityPointer);
+
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void Vehicle_GetPosition(IntPtr entityPointer, ref Position position);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
@@ -27,10 +30,10 @@ namespace AltV.Net.Native
             internal static extern void Vehicle_SetRotation(IntPtr entityPointer, Rotation rotation);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern ushort Vehicle_GetDimension(IntPtr entityPointer);
+            internal static extern short Vehicle_GetDimension(IntPtr entityPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void Vehicle_SetDimension(IntPtr entityPointer, ushort dimension);
+            internal static extern void Vehicle_SetDimension(IntPtr entityPointer, short dimension);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Vehicle_GetMetaData(IntPtr entityPointer, string key, ref MValue value);
@@ -123,6 +126,9 @@ namespace AltV.Net.Native
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Vehicle_SetDashboardColor(IntPtr vehiclePointer, byte color);
 
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern bool Vehicle_IsTireSmokeColorCustom(IntPtr vehiclePointer);
+
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Vehicle_GetTireSmokeColor(IntPtr vehiclePointer, ref Rgba tireSmokeColor);
 
@@ -179,6 +185,9 @@ namespace AltV.Net.Native
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Vehicle_ToggleExtra(IntPtr vehiclePointer, byte extraID, bool state);
+            
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern bool Vehicle_IsNeonActive(IntPtr vehiclePointer);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Vehicle_GetNeonActive(IntPtr vehiclePointer, ref bool left, ref bool right,

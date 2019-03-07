@@ -25,7 +25,7 @@ namespace AltV.Net.FunctionParser
 
             var mValueArgs = MValue.Create(mValues);
             function(ref mValueArgs, ref result);
-            return result.ToObject(Alt.Module.BaseEntityPool);
+            return result.ToObject(Alt.Module.BaseBaseObjectPool);
         }
     }
 }

@@ -15,15 +15,17 @@ namespace AltV.Net
         
         internal readonly CSharpNativeResource CSharpNativeResource;
 
+        internal readonly IBaseBaseObjectPool BaseBaseObjectPool;
+        
         internal readonly IBaseEntityPool BaseEntityPool;
 
         internal readonly IEntityPool<IPlayer> PlayerPool;
 
         internal readonly IEntityPool<IVehicle> VehiclePool;
 
-        internal readonly IEntityPool<IBlip> BlipPool;
+        internal readonly IBaseObjectPool<IBlip> BlipPool;
 
-        internal readonly IEntityPool<ICheckpoint> CheckpointPool;
+        internal readonly IBaseObjectPool<ICheckpoint> CheckpointPool;
 
         //For custom defined args event handlers
         private readonly Dictionary<string, HashSet<Function>> eventHandlers =
@@ -54,14 +56,14 @@ namespace AltV.Net
         internal readonly EventHandler<PlayerDeadDelegate> PlayerDeadEventHandler =
             new EventHandler<PlayerDeadDelegate>();
 
-        internal readonly EventHandler<VehicleChangeSeatDelegate> VehicleChangeSeatEventHandler =
-            new EventHandler<VehicleChangeSeatDelegate>();
+        internal readonly EventHandler<PlayerChangeVehicleSeatDelegate> PlayerChangeVehicleSeatEventHandler =
+            new EventHandler<PlayerChangeVehicleSeatDelegate>();
 
-        internal readonly EventHandler<VehicleEnterDelegate> VehicleEnterEventHandler =
-            new EventHandler<VehicleEnterDelegate>();
+        internal readonly EventHandler<PlayerEnterVehicleDelegate> PlayerEnterVehicleEventHandler =
+            new EventHandler<PlayerEnterVehicleDelegate>();
 
-        internal readonly EventHandler<VehicleLeaveDelegate> VehicleLeaveEventHandler =
-            new EventHandler<VehicleLeaveDelegate>();
+        internal readonly EventHandler<PlayerLeaveVehicleDelegate> PlayerLeaveVehicleEventHandler =
+            new EventHandler<PlayerLeaveVehicleDelegate>();
 
         internal readonly EventHandler<PlayerDisconnectDelegate> PlayerDisconnectEventHandler =
             new EventHandler<PlayerDisconnectDelegate>();
@@ -81,14 +83,15 @@ namespace AltV.Net
         internal readonly EventHandler<ServerCustomEventEventDelegate> ServerCustomEventEventHandler =
             new EventHandler<ServerCustomEventEventDelegate>();
 
-        public Module(IServer server, CSharpNativeResource cSharpNativeResource, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
+        public Module(IServer server, CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
-            IEntityPool<IBlip> blipPool,
-            IEntityPool<ICheckpoint> checkpointPool)
+            IBaseObjectPool<IBlip> blipPool,
+            IBaseObjectPool<ICheckpoint> checkpointPool)
         {
             Alt.Setup(this);
             Server = server;
             CSharpNativeResource = cSharpNativeResource;
+            BaseBaseObjectPool = baseBaseObjectPool;
             BaseEntityPool = baseEntityPool;
             PlayerPool = playerPool;
             VehiclePool = vehiclePool;
@@ -168,14 +171,14 @@ namespace AltV.Net
             }
         }
 
-        public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, EntityType entityType, bool state)
+        public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType, bool state)
         {
             if (!CheckpointPool.GetOrCreate(checkpointPointer, out var checkpoint))
             {
                 return;
             }
 
-            if (!BaseEntityPool.GetOrCreate(entityPointer, entityType, out var entity))
+            if (!BaseEntityPool.GetOrCreate(entityPointer, baseObjectType, out var entity))
             {
                 return;
             }
@@ -209,20 +212,20 @@ namespace AltV.Net
             }
         }
 
-        public void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer, EntityType attackerEntityType,
-            ushort attackerEntityId, uint weapon, byte damage)
+        public void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer, BaseObjectType attackerBaseObjectType,
+            ushort attackerEntityId, uint weapon, ushort damage)
         {
             if (!PlayerPool.GetOrCreate(playerPointer, out var player))
             {
                 return;
             }
 
-            BaseEntityPool.GetOrCreate(attackerEntityPointer, attackerEntityType, attackerEntityId, out var attacker);
+            BaseEntityPool.GetOrCreate(attackerEntityPointer, attackerBaseObjectType, attackerEntityId, out var attacker);
 
             OnPlayerDamageEvent(player, attacker, weapon, damage);
         }
 
-        public virtual void OnPlayerDamageEvent(IPlayer player, IEntity attacker, uint weapon, byte damage)
+        public virtual void OnPlayerDamageEvent(IPlayer player, IEntity attacker, uint weapon, ushort damage)
         {
             foreach (var @delegate in PlayerDamageEventHandler.GetSubscriptions())
             {
@@ -231,7 +234,7 @@ namespace AltV.Net
         }
 
 
-        public void OnPlayerDead(IntPtr playerPointer, IntPtr killerEntityPointer, EntityType killerEntityType,
+        public void OnPlayerDeath(IntPtr playerPointer, IntPtr killerEntityPointer, BaseObjectType killerBaseObjectType,
             uint weapon)
         {
             if (!PlayerPool.GetOrCreate(playerPointer, out var player))
@@ -239,12 +242,12 @@ namespace AltV.Net
                 return;
             }
 
-            BaseEntityPool.GetOrCreate(killerEntityPointer, killerEntityType, out var killer);
+            BaseEntityPool.GetOrCreate(killerEntityPointer, killerBaseObjectType, out var killer);
 
-            OnPlayerDeadEvent(player, killer, weapon);
+            OnPlayerDeathEvent(player, killer, weapon);
         }
 
-        public virtual void OnPlayerDeadEvent(IPlayer player, IEntity killer, uint weapon)
+        public virtual void OnPlayerDeathEvent(IPlayer player, IEntity killer, uint weapon)
         {
             foreach (var @delegate in PlayerDeadEventHandler.GetSubscriptions())
             {
@@ -252,8 +255,8 @@ namespace AltV.Net
             }
         }
 
-        public void OnVehicleChangeSeat(IntPtr vehiclePointer, IntPtr playerPointer, sbyte oldSeat,
-            sbyte newSeat)
+        public void OnPlayerChangeVehicleSeat(IntPtr vehiclePointer, IntPtr playerPointer, byte oldSeat,
+            byte newSeat)
         {
             if (!VehiclePool.GetOrCreate(vehiclePointer, out var vehicle))
             {
@@ -265,18 +268,18 @@ namespace AltV.Net
                 return;
             }
 
-            OnVehicleChangeSeatEvent(vehicle, player, oldSeat, newSeat);
+            OnPlayerChangeVehicleSeatEvent(vehicle, player, oldSeat, newSeat);
         }
 
-        public virtual void OnVehicleChangeSeatEvent(IVehicle vehicle, IPlayer player, sbyte oldSeat, sbyte newSeat)
+        public virtual void OnPlayerChangeVehicleSeatEvent(IVehicle vehicle, IPlayer player, byte oldSeat, byte newSeat)
         {
-            foreach (var @delegate in VehicleChangeSeatEventHandler.GetSubscriptions())
+            foreach (var @delegate in PlayerChangeVehicleSeatEventHandler.GetSubscriptions())
             {
                 @delegate(vehicle, player, oldSeat, newSeat);
             }
         }
 
-        public void OnVehicleEnter(IntPtr vehiclePointer, IntPtr playerPointer, sbyte seat)
+        public void OnPlayerEnterVehicle(IntPtr vehiclePointer, IntPtr playerPointer, byte seat)
         {
             if (!VehiclePool.GetOrCreate(vehiclePointer, out var vehicle))
             {
@@ -288,18 +291,18 @@ namespace AltV.Net
                 return;
             }
 
-            OnVehicleEnterEvent(vehicle, player, seat);
+            OnPlayerEnterVehicleEvent(vehicle, player, seat);
         }
 
-        public virtual void OnVehicleEnterEvent(IVehicle vehicle, IPlayer player, sbyte seat)
+        public virtual void OnPlayerEnterVehicleEvent(IVehicle vehicle, IPlayer player, byte seat)
         {
-            foreach (var @delegate in VehicleEnterEventHandler.GetSubscriptions())
+            foreach (var @delegate in PlayerEnterVehicleEventHandler.GetSubscriptions())
             {
                 @delegate(vehicle, player, seat);
             }
         }
 
-        public void OnVehicleLeave(IntPtr vehiclePointer, IntPtr playerPointer, sbyte seat)
+        public void OnPlayerLeaveVehicle(IntPtr vehiclePointer, IntPtr playerPointer, byte seat)
         {
             if (!VehiclePool.GetOrCreate(vehiclePointer, out var vehicle))
             {
@@ -311,12 +314,12 @@ namespace AltV.Net
                 return;
             }
 
-            OnVehicleLeaveEvent(vehicle, player, seat);
+            OnPlayerLeaveVehicleEvent(vehicle, player, seat);
         }
 
-        public virtual void OnVehicleLeaveEvent(IVehicle vehicle, IPlayer player, sbyte seat)
+        public virtual void OnPlayerLeaveVehicleEvent(IVehicle vehicle, IPlayer player, byte seat)
         {
-            foreach (var @delegate in VehicleLeaveEventHandler.GetSubscriptions())
+            foreach (var @delegate in PlayerLeaveVehicleEventHandler.GetSubscriptions())
             {
                 @delegate(vehicle, player, seat);
             }
@@ -340,19 +343,19 @@ namespace AltV.Net
             }
         }
 
-        public void OnEntityRemove(IntPtr entityPointer, EntityType entityType)
+        public void OnEntityRemove(IntPtr entityPointer, BaseObjectType baseObjectType)
         {
-            if (!BaseEntityPool.GetOrCreate(entityPointer, entityType, out var entity))
+            if (!BaseBaseObjectPool.GetOrCreate(entityPointer, baseObjectType, out var entity))
             {
                 return;
             }
 
             OnEntityRemoveEvent(entity);
 
-            BaseEntityPool.Remove(entityPointer, entityType);
+            BaseBaseObjectPool.Remove(entityPointer, baseObjectType);
         }
 
-        public virtual void OnEntityRemoveEvent(IEntity entity)
+        public virtual void OnEntityRemoveEvent(IBaseObject entity)
         {
             foreach (var @delegate in EntityRemoveEventHandler.GetSubscriptions())
             {
@@ -382,7 +385,7 @@ namespace AltV.Net
                 argArray = args.ToArray();
                 foreach (var eventHandler in eventHandlers)
                 {
-                    eventHandler.Call(player, BaseEntityPool, argArray);
+                    eventHandler.Call(player, BaseBaseObjectPool, argArray);
                 }
             }
 
@@ -400,7 +403,7 @@ namespace AltV.Net
                 argObjects = new object[length];
                 for (var i = 0; i < length; i++)
                 {
-                    argObjects[i] = argArray[i].ToObject(BaseEntityPool);
+                    argObjects[i] = argArray[i].ToObject(BaseBaseObjectPool);
                 }
 
                 foreach (var eventHandler in eventDelegates)
@@ -422,7 +425,7 @@ namespace AltV.Net
                     argObjects = new object[length];
                     for (var i = 0; i < length; i++)
                     {
-                        argObjects[i] = argArray[i].ToObject(BaseEntityPool);
+                        argObjects[i] = argArray[i].ToObject(BaseBaseObjectPool);
                     }
                 }
 
@@ -467,7 +470,7 @@ namespace AltV.Net
                 {
                     try
                     {
-                        eventHandler.Call(BaseEntityPool, argArray);
+                        eventHandler.Call(BaseBaseObjectPool, argArray);
                     }
                     catch (TargetInvocationException exception)
                     {
@@ -493,7 +496,7 @@ namespace AltV.Net
                 argObjects = new object[length];
                 for (var i = 0; i < length; i++)
                 {
-                    argObjects[i] = argArray[i].ToObject(BaseEntityPool);
+                    argObjects[i] = argArray[i].ToObject(BaseBaseObjectPool);
                 }
 
                 foreach (var eventHandler in eventDelegates)
@@ -515,7 +518,7 @@ namespace AltV.Net
                     argObjects = new object[length];
                     for (var i = 0; i < length; i++)
                     {
-                        argObjects[i] = argArray[i].ToObject(BaseEntityPool);
+                        argObjects[i] = argArray[i].ToObject(BaseBaseObjectPool);
                     }
                 }
 

@@ -13,23 +13,27 @@ namespace AltV.Net
         void OnTick();
 
         //TODO: default implementation in c# 8.0
-        IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
-            IEntityPool<IBlip> blipPool, IEntityPool<ICheckpoint> checkpointPool);
+        IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool);
+
+        IBaseBaseObjectPool GetBaseBaseObjectPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
+            IBaseObjectPool<IBlip> blipPool, IBaseObjectPool<ICheckpoint> checkpointPool);
 
         IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory);
         IEntityPool<IVehicle> GetVehiclePool(IEntityFactory<IVehicle> vehicleFactory);
-        IEntityPool<IBlip> GetBlipPool(IEntityFactory<IBlip> blipFactory);
-        IEntityPool<ICheckpoint> GetCheckpointPool(IEntityFactory<ICheckpoint> checkpointFactory);
+        IBaseObjectPool<IBlip> GetBlipPool(IBaseObjectFactory<IBlip> blipFactory);
+        IBaseObjectPool<ICheckpoint> GetCheckpointPool(IBaseObjectFactory<ICheckpoint> checkpointFactory);
 
         IEntityFactory<IPlayer> GetPlayerFactory();
         IEntityFactory<IVehicle> GetVehicleFactory();
-        IEntityFactory<IBlip> GetBlipFactory();
-        IEntityFactory<ICheckpoint> GetCheckpointFactory();
+        IBaseObjectFactory<IBlip> GetBlipFactory();
+        IBaseObjectFactory<ICheckpoint> GetCheckpointFactory();
 
-        Module GetModule(IServer server, CSharpNativeResource cSharpNativeResource, IBaseEntityPool baseEntityPool,
+        Module GetModule(IServer server, CSharpNativeResource cSharpNativeResource,
+            IBaseBaseObjectPool baseBaseObjectPool,
+            IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
-            IEntityPool<IBlip> blipPool,
-            IEntityPool<ICheckpoint> checkpointPool);
+            IBaseObjectPool<IBlip> blipPool,
+            IBaseObjectPool<ICheckpoint> checkpointPool);
     }
 }

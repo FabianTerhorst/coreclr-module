@@ -9,7 +9,7 @@ namespace AltV.Net.FunctionParser
 {
     internal static class FunctionMValueParsers
     {
-        public static object CreateArray(Type type, MValue[] mValues, IBaseEntityPool baseEntityPool,
+        public static object CreateArray(Type type, MValue[] mValues, IBaseBaseObjectPool baseBaseObjectPool,
             FunctionTypeInfo typeInfo)
         {
             var length = mValues.Length;
@@ -19,7 +19,7 @@ namespace AltV.Net.FunctionParser
                 for (var i = 0; i < length; i++)
                 {
                     var currMValue = mValues[i];
-                    if (!TryParseObject(ref currMValue, type, baseEntityPool, typeInfo?.Element, out var obj))
+                    if (!TryParseObject(ref currMValue, type, baseBaseObjectPool, typeInfo?.Element, out var obj))
                     {
                         array[i] = obj;
                         //return null;
@@ -172,7 +172,7 @@ namespace AltV.Net.FunctionParser
             for (var i = 0; i < length; i++)
             {
                 var currMValue = mValues[i];
-                if (!TryParseObject(ref currMValue, type, baseEntityPool, typeInfo?.Element, out var obj))
+                if (!TryParseObject(ref currMValue, type, baseBaseObjectPool, typeInfo?.Element, out var obj))
                 {
                     typeArray.SetValue( /*null*/obj, i);
                 }
@@ -185,7 +185,7 @@ namespace AltV.Net.FunctionParser
             return typeArray;
         }
 
-        public static object ParseBool(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+        public static object ParseBool(ref MValue mValue, Type type, IBaseBaseObjectPool baseBaseObjectPool,
             FunctionTypeInfo typeInfo)
         {
             if (mValue.type == MValue.Type.BOOL)
@@ -197,7 +197,7 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
-        public static object ParseInt(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+        public static object ParseInt(ref MValue mValue, Type type, IBaseBaseObjectPool baseBaseObjectPool,
             FunctionTypeInfo typeInfo)
         {
             if (mValue.type == MValue.Type.INT)
@@ -209,7 +209,7 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
-        public static object ParseLong(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+        public static object ParseLong(ref MValue mValue, Type type, IBaseBaseObjectPool baseBaseObjectPool,
             FunctionTypeInfo typeInfo)
         {
             if (mValue.type == MValue.Type.INT)
@@ -221,7 +221,7 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
-        public static object ParseUInt(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+        public static object ParseUInt(ref MValue mValue, Type type, IBaseBaseObjectPool baseBaseObjectPool,
             FunctionTypeInfo typeInfo)
         {
             if (mValue.type == MValue.Type.UINT)
@@ -233,7 +233,7 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
-        public static object ParseULong(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+        public static object ParseULong(ref MValue mValue, Type type, IBaseBaseObjectPool baseBaseObjectPool,
             FunctionTypeInfo typeInfo)
         {
             if (mValue.type == MValue.Type.UINT)
@@ -245,7 +245,7 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
-        public static object ParseFloat(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+        public static object ParseFloat(ref MValue mValue, Type type, IBaseBaseObjectPool baseBaseObjectPool,
             FunctionTypeInfo typeInfo)
         {
             if (mValue.type == MValue.Type.DOUBLE)
@@ -257,7 +257,7 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
-        public static object ParseDouble(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+        public static object ParseDouble(ref MValue mValue, Type type, IBaseBaseObjectPool baseBaseObjectPool,
             FunctionTypeInfo typeInfo)
         {
             if (mValue.type == MValue.Type.DOUBLE)
@@ -269,13 +269,13 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
-        public static object ParseString(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+        public static object ParseString(ref MValue mValue, Type type, IBaseBaseObjectPool baseBaseObjectPool,
             FunctionTypeInfo typeInfo)
         {
             return mValue.type != MValue.Type.STRING ? null : mValue.GetString();
         }
 
-        public static object ParseObject(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+        public static object ParseObject(ref MValue mValue, Type type, IBaseBaseObjectPool baseBaseObjectPool,
             FunctionTypeInfo typeInfo)
         {
             //return mValue.ToObject(entityPool);
@@ -285,45 +285,45 @@ namespace AltV.Net.FunctionParser
                 case MValue.Type.NIL:
                     return null;
                 case MValue.Type.BOOL:
-                    return ParseBool(ref mValue, type, baseEntityPool, typeInfo);
+                    return ParseBool(ref mValue, type, baseBaseObjectPool, typeInfo);
                 case MValue.Type.INT:
                     return type == FunctionTypes.Int
-                        ? ParseInt(ref mValue, type, baseEntityPool, typeInfo)
-                        : ParseLong(ref mValue, type, baseEntityPool, typeInfo);
+                        ? ParseInt(ref mValue, type, baseBaseObjectPool, typeInfo)
+                        : ParseLong(ref mValue, type, baseBaseObjectPool, typeInfo);
                 case MValue.Type.UINT:
                     return type == FunctionTypes.UInt
-                        ? ParseUInt(ref mValue, type, baseEntityPool, typeInfo)
-                        : ParseULong(ref mValue, type, baseEntityPool, typeInfo);
+                        ? ParseUInt(ref mValue, type, baseBaseObjectPool, typeInfo)
+                        : ParseULong(ref mValue, type, baseBaseObjectPool, typeInfo);
                 case MValue.Type.DOUBLE:
                     return type == FunctionTypes.Float
-                        ? ParseFloat(ref mValue, type, baseEntityPool, typeInfo)
-                        : ParseDouble(ref mValue, type, baseEntityPool, typeInfo);
+                        ? ParseFloat(ref mValue, type, baseBaseObjectPool, typeInfo)
+                        : ParseDouble(ref mValue, type, baseBaseObjectPool, typeInfo);
                 case MValue.Type.STRING:
-                    return ParseString(ref mValue, type, baseEntityPool, typeInfo);
+                    return ParseString(ref mValue, type, baseBaseObjectPool, typeInfo);
                 case MValue.Type.LIST:
                     if (MValueAdapters.FromMValue(ref mValue, type, out obj))
                     {
                         return obj;
                     }
 
-                    return ParseArray(ref mValue, type, baseEntityPool, typeInfo);
+                    return ParseArray(ref mValue, type, baseBaseObjectPool, typeInfo);
                 case MValue.Type.ENTITY:
-                    return ParseEntity(ref mValue, type, baseEntityPool, typeInfo);
+                    return ParseEntity(ref mValue, type, baseBaseObjectPool, typeInfo);
                 case MValue.Type.DICT:
                     if (MValueAdapters.FromMValue(ref mValue, type, out obj))
                     {
                         return obj;
                     }
 
-                    return ParseDictionary(ref mValue, type, baseEntityPool, typeInfo);
+                    return ParseDictionary(ref mValue, type, baseBaseObjectPool, typeInfo);
                 case MValue.Type.FUNCTION:
-                    return ParseFunction(ref mValue, type, baseEntityPool, typeInfo);
+                    return ParseFunction(ref mValue, type, baseBaseObjectPool, typeInfo);
                 default:
                     return null;
             }
         }
 
-        public static bool TryParseObject(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+        public static bool TryParseObject(ref MValue mValue, Type type, IBaseBaseObjectPool baseBaseObjectPool,
             FunctionTypeInfo typeInfo, out object obj)
         {
             switch (mValue.type)
@@ -407,7 +407,7 @@ namespace AltV.Net.FunctionParser
                             return true;
                         }
 
-                        obj = ParseArray(ref mValue, type, baseEntityPool, typeInfo);
+                        obj = ParseArray(ref mValue, type, baseBaseObjectPool, typeInfo);
                         return true;
                     }
 
@@ -417,7 +417,7 @@ namespace AltV.Net.FunctionParser
                     if (type == FunctionTypes.Obj ||
                         (typeInfo?.IsEntity ?? type.GetInterfaces().Contains(FunctionTypes.Entity)))
                     {
-                        obj = ParseEntity(ref mValue, type, baseEntityPool, typeInfo);
+                        obj = ParseEntity(ref mValue, type, baseBaseObjectPool, typeInfo);
                         return true;
                     }
                     else
@@ -433,7 +433,7 @@ namespace AltV.Net.FunctionParser
                             return true;
                         }
 
-                        obj = ParseDictionary(ref mValue, type, baseEntityPool, typeInfo);
+                        obj = ParseDictionary(ref mValue, type, baseBaseObjectPool, typeInfo);
                         return true;
                     }
 
@@ -441,7 +441,7 @@ namespace AltV.Net.FunctionParser
                     return false;
                 case MValue.Type.FUNCTION:
                     //TODO: validate type somehow
-                    obj = ParseFunction(ref mValue, type, baseEntityPool, typeInfo);
+                    obj = ParseFunction(ref mValue, type, baseBaseObjectPool, typeInfo);
                     return true;
                 default:
                     obj = GetDefault(type, typeInfo);
@@ -449,7 +449,7 @@ namespace AltV.Net.FunctionParser
             }
         }
 
-        public static object ParseArray(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+        public static object ParseArray(ref MValue mValue, Type type, IBaseBaseObjectPool baseBaseObjectPool,
             FunctionTypeInfo typeInfo)
         {
             // Types doesn't match
@@ -458,15 +458,15 @@ namespace AltV.Net.FunctionParser
             var elementType = typeInfo?.ElementType ?? (
                                   type.GetElementType() ??
                                   type); // Object has no element type so we have to use the same type again
-            return CreateArray(elementType, mValueList, baseEntityPool, typeInfo);
+            return CreateArray(elementType, mValueList, baseBaseObjectPool, typeInfo);
         }
 
-        public static object ParseEntity(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+        public static object ParseEntity(ref MValue mValue, Type type, IBaseBaseObjectPool baseBaseObjectPool,
             FunctionTypeInfo typeInfo)
         {
             // Types doesn't match
             if (mValue.type != MValue.Type.ENTITY) return null;
-            var entityType = EntityType.Undefined;
+            var entityType = BaseObjectType.Undefined;
 
             var entityPointer = mValue.GetEntityPointer(ref entityType);
 
@@ -476,7 +476,7 @@ namespace AltV.Net.FunctionParser
                 return null;
             }
 
-            if (!baseEntityPool.GetOrCreate(entityPointer, entityType, out var entity))
+            if (!baseBaseObjectPool.GetOrCreate(entityPointer, entityType, out var entity))
             {
                 return null;
             }
@@ -484,7 +484,7 @@ namespace AltV.Net.FunctionParser
             return entity;
         }
 
-        public static object ParseDictionary(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+        public static object ParseDictionary(ref MValue mValue, Type type, IBaseBaseObjectPool baseBaseObjectPool,
             FunctionTypeInfo typeInfo)
         {
             // Types doesn't match
@@ -512,7 +512,7 @@ namespace AltV.Net.FunctionParser
                 var dict = new Dictionary<string, object>();
                 for (var i = 0; i < length; i++)
                 {
-                    dict[strings[i]] = ParseObject(ref valueArray[i], valueType, baseEntityPool,
+                    dict[strings[i]] = ParseObject(ref valueArray[i], valueType, baseBaseObjectPool,
                         typeInfo?.DictionaryValue);
                 }
 
@@ -697,7 +697,7 @@ namespace AltV.Net.FunctionParser
             {
                 currMValue = valueArray[i];
 
-                if (!TryParseObject(ref currMValue, valueType, baseEntityPool, typeInfo?.DictionaryValue,
+                if (!TryParseObject(ref currMValue, valueType, baseBaseObjectPool, typeInfo?.DictionaryValue,
                     out var dictObject))
                 {
                     typedDict[strings[i]] = dictObject; //null;
@@ -718,7 +718,7 @@ namespace AltV.Net.FunctionParser
             return typedDict;
         }
 
-        public static object ParseFunction(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+        public static object ParseFunction(ref MValue mValue, Type type, IBaseBaseObjectPool baseBaseObjectPool,
             FunctionTypeInfo typeInfo)
         {
             if (mValue.type == MValue.Type.FUNCTION)
@@ -730,25 +730,25 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
-        public static bool ValidateEntityType(EntityType entityType, Type type, FunctionTypeInfo typeInfo)
+        public static bool ValidateEntityType(BaseObjectType baseObjectType, Type type, FunctionTypeInfo typeInfo)
         {
             if (type == FunctionTypes.Obj)
             {
                 return true;
             }
 
-            switch (entityType)
+            switch (baseObjectType)
             {
-                case EntityType.Blip:
+                case BaseObjectType.Blip:
                     return typeInfo?.IsBlip ??
                            type == FunctionTypes.Blip || type.GetInterfaces().Contains(FunctionTypes.Blip);
-                case EntityType.Player:
+                case BaseObjectType.Player:
                     return typeInfo?.IsPlayer ?? type == FunctionTypes.Player ||
                            type.GetInterfaces().Contains(FunctionTypes.Player);
-                case EntityType.Vehicle:
+                case BaseObjectType.Vehicle:
                     return typeInfo?.IsVehicle ?? type == FunctionTypes.Vehicle ||
                            type.GetInterfaces().Contains(FunctionTypes.Vehicle);
-                case EntityType.Checkpoint:
+                case BaseObjectType.Checkpoint:
                     return typeInfo?.IsCheckpoint ?? type == FunctionTypes.Checkpoint ||
                            type.GetInterfaces().Contains(FunctionTypes.Checkpoint);
                 default:
@@ -767,6 +767,6 @@ namespace AltV.Net.FunctionParser
         }
     }
 
-    internal delegate object FunctionMValueParser(ref MValue mValue, Type type, IBaseEntityPool baseEntityPool,
+    internal delegate object FunctionMValueParser(ref MValue mValue, Type type, IBaseBaseObjectPool baseBaseObjectPool,
         FunctionTypeInfo typeInfo);
 }

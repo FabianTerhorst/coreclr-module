@@ -31,14 +31,16 @@ EXPORT alt::IVehicle*
 Server_CreateVehicle(alt::IServer* server, uint32_t model, alt::Position pos, float heading, uint16_t &id);
 EXPORT alt::ICheckpoint*
 Server_CreateCheckpoint(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::Position pos, float radius,
-                        float height, alt::RGBA color, uint16_t &id);
+                        float height, alt::RGBA color);
 EXPORT alt::IBlip*
-Server_CreateBlip(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::Position pos, uint16_t &id);
+Server_CreateBlip(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::Position pos);
 EXPORT alt::IBlip*
-Server_CreateBlipAttached(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo,
-                          uint16_t &id);
+Server_CreateBlipAttached(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo);
 EXPORT void Server_RemoveEntity(alt::IServer* server, alt::IEntity* entity);
-EXPORT void Server_GetResource(alt::IServer* server, const char* resourceName, alt::IResource*& resource);
+EXPORT void Server_RemoveBlip(alt::IServer* server, alt::IBlip* blip);
+EXPORT void Server_RemoveCheckpoint(alt::IServer* server, alt::ICheckpoint* checkpoint);
+EXPORT void Server_RemoveVehicle(alt::IServer* server, alt::IVehicle* vehicle);
+EXPORT void Server_GetResource(alt::IServer* server, const char* resourceName, alt::IResource*&resource);
 #ifdef __cplusplus
 }
 #endif

@@ -22,13 +22,13 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     OnClientEventDelegate = nullptr;
     OnPlayerConnectDelegate = nullptr;
     OnPlayerDamageDelegate = nullptr;
-    OnPlayerDeadDelegate = nullptr;
+    OnPlayerDeathDelegate = nullptr;
     OnPlayerDisconnectDelegate = nullptr;
     OnEntityRemoveDelegate = nullptr;
     OnServerEventDelegate = nullptr;
-    OnVehicleChangeSeatDelegate = nullptr;
-    OnVehicleEnterDelegate = nullptr;
-    OnVehicleLeaveDelegate = nullptr;
+    OnPlayerChangeVehicleSeatDelegate = nullptr;
+    OnPlayerEnterVehicleDelegate = nullptr;
+    OnPlayerLeaveVehicleDelegate = nullptr;
     OnStopDelegate = nullptr;
     OnTickDelegate = nullptr;
 
@@ -48,17 +48,17 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
                          "OnPlayerDamage", reinterpret_cast<void**>(&OnPlayerDamageDelegate));
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                         "OnPlayerDead", reinterpret_cast<void**>(&OnPlayerDeadDelegate));
+                         "OnPlayerDeath", reinterpret_cast<void**>(&OnPlayerDeathDelegate));
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnEntityRemove",
                          reinterpret_cast<void**>(&OnEntityRemoveDelegate));
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnServerEvent",
                          reinterpret_cast<void**>(&OnServerEventDelegate));
-    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnVehicleChangeSeat",
-                         reinterpret_cast<void**>(&OnVehicleChangeSeatDelegate));
-    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnVehicleEnter",
-                         reinterpret_cast<void**>(&OnVehicleEnterDelegate));
-    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnVehicleLeave",
-                         reinterpret_cast<void**>(&OnVehicleLeaveDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnPlayerChangeVehicleSeat",
+                         reinterpret_cast<void**>(&OnPlayerChangeVehicleSeatDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnPlayerEnterVehicle",
+                         reinterpret_cast<void**>(&OnPlayerEnterVehicleDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnPlayerLeaveVehicle",
+                         reinterpret_cast<void**>(&OnPlayerLeaveVehicleDelegate));
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnStop",
                          reinterpret_cast<void**>(&OnStopDelegate));
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnTick",
@@ -118,9 +118,9 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
                                    ((alt::CPlayerDamageEvent*) (ev))->GetWeapon(),
                                    ((alt::CPlayerDamageEvent*) (ev))->GetDamage());
             break;
-        case alt::CEvent::Type::PLAYER_DEAD:
+        case alt::CEvent::Type::PLAYER_DEATH:
             entity = ((alt::CPlayerDeadEvent*) (ev))->GetKiller();
-            OnPlayerDeadDelegate(((alt::CPlayerDeadEvent*) (ev))->GetTarget(),
+            OnPlayerDeathDelegate(((alt::CPlayerDeadEvent*) (ev))->GetTarget(),
                                  entity,
                                  entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT,
                                  ((alt::CPlayerDeadEvent*) (ev))->GetWeapon());
@@ -139,21 +139,21 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
             list = (((alt::CServerScriptEvent*) (ev))->GetArgs()).Get<alt::Array<alt::MValue>>();
             OnServerEventDelegate(((alt::CServerScriptEvent*) (ev))->GetName().CStr(), &list);
             break;
-        case alt::CEvent::Type::VEHICLE_CHANGE_SEAT_EVENT:
-            OnVehicleChangeSeatDelegate(((alt::CVehicleChangeSeatEvent*) (ev))->GetTarget(),
-                                        ((alt::CVehicleChangeSeatEvent*) (ev))->GetPlayer(),
-                                        ((alt::CVehicleChangeSeatEvent*) (ev))->GetOldSeat(),
-                                        ((alt::CVehicleChangeSeatEvent*) (ev))->GetNewSeat());
+        case alt::CEvent::Type::PLAYER_CHANGE_VEHICLE_SEAT:
+            OnPlayerChangeVehicleSeatDelegate(((alt::CPlayerChangeVehicleSeatEvent*) (ev))->GetTarget(),
+                                        ((alt::CPlayerChangeVehicleSeatEvent*) (ev))->GetPlayer(),
+                                        ((alt::CPlayerChangeVehicleSeatEvent*) (ev))->GetOldSeat(),
+                                        ((alt::CPlayerChangeVehicleSeatEvent*) (ev))->GetNewSeat());
             break;
-        case alt::CEvent::Type::VEHICLE_ENTER_EVENT:
-            OnVehicleEnterDelegate(((alt::CVehicleEnterEvent*) (ev))->GetTarget(),
-                                   ((alt::CVehicleEnterEvent*) (ev))->GetPlayer(),
-                                   ((alt::CVehicleEnterEvent*) (ev))->GetSeat());
+        case alt::CEvent::Type::PLAYER_ENTER_VEHICLE:
+            OnPlayerEnterVehicleDelegate(((alt::CPlayerEnterVehicleEvent*) (ev))->GetTarget(),
+                                   ((alt::CPlayerEnterVehicleEvent*) (ev))->GetPlayer(),
+                                   ((alt::CPlayerEnterVehicleEvent*) (ev))->GetSeat());
             break;
-        case alt::CEvent::Type::VEHICLE_LEAVE_EVENT:
-            OnVehicleLeaveDelegate(((alt::CVehicleLeaveEvent*) (ev))->GetTarget(),
-                                   ((alt::CVehicleLeaveEvent*) (ev))->GetPlayer(),
-                                   ((alt::CVehicleLeaveEvent*) (ev))->GetSeat());
+        case alt::CEvent::Type::PLAYER_LEAVE_VEHICLE:
+            OnPlayerLeaveVehicleDelegate(((alt::CPlayerLeaveVehicleEvent*) (ev))->GetTarget(),
+                                   ((alt::CPlayerLeaveVehicleEvent*) (ev))->GetPlayer(),
+                                   ((alt::CPlayerLeaveVehicleEvent*) (ev))->GetSeat());
             break;
     }
     return true;

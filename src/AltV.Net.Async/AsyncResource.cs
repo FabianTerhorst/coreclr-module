@@ -13,10 +13,9 @@ namespace AltV.Net.Async
         }
 
         public override IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool, IEntityPool<IBlip> blipPool,
-            IEntityPool<ICheckpoint> checkpointPool)
+            IEntityPool<IVehicle> vehiclePool)
         {
-            return new AsyncBaseEntityPool(playerPool, vehiclePool, blipPool, checkpointPool);
+            return new AsyncBaseBaseObjectPool(playerPool, vehiclePool);
         }
 
         public override IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory)
@@ -28,24 +27,15 @@ namespace AltV.Net.Async
         {
             return new AsyncVehiclePool(vehicleFactory);
         }
-
-        public override IEntityPool<IBlip> GetBlipPool(IEntityFactory<IBlip> blipFactory)
-        {
-            return new AsyncBlipPool(blipFactory);
-        }
-
-        public override IEntityPool<ICheckpoint> GetCheckpointPool(IEntityFactory<ICheckpoint> checkpointFactory)
-        {
-            return new AsyncCheckpointPool(checkpointFactory);
-        }
-
-        public override Module GetModule(IServer server, CSharpNativeResource cSharpNativeResource, IBaseEntityPool baseEntityPool,
+        
+        public override Module GetModule(IServer server, CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool,
+            IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
-            IEntityPool<IBlip> blipPool,
-            IEntityPool<ICheckpoint> checkpointPool)
+            IBaseObjectPool<IBlip> blipPool,
+            IBaseObjectPool<ICheckpoint> checkpointPool)
         {
-            return new AsyncModule(server, cSharpNativeResource, baseEntityPool, playerPool, vehiclePool, blipPool, checkpointPool);
+            return new AsyncModule(server, cSharpNativeResource, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool, blipPool, checkpointPool);
         }
     }
 }

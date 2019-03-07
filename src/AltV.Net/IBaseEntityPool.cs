@@ -8,9 +8,9 @@ namespace AltV.Net
     /// </summary>
     public interface IBaseEntityPool
     {
-        bool GetOrCreate(IntPtr entityPointer, EntityType entityType, ushort entityId, out IEntity entity);
-        bool GetOrCreate(IntPtr entityPointer, EntityType entityType, out IEntity entity);
-        bool Remove(IEntity entity);
-        bool Remove(IntPtr entityPointer, EntityType entityType);
+        bool GetOrCreate(IntPtr entityPointer, BaseObjectType baseObjectType, ushort entityId, out IEntity baseObject);
+        bool GetOrCreate(IntPtr entityPointer, BaseObjectType baseObjectType, out IEntity baseObject);
+        bool Remove(IEntity baseObject);
+        bool Remove(IntPtr entityPointer, BaseObjectType baseObjectType);
     }
 }

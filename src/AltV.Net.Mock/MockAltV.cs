@@ -23,11 +23,12 @@ namespace AltV.Net.Mock
             var vehiclePool = new MockVehiclePool(vehicleFactory);
             var blipPool = new MockBlipPool(blipFactory);
             var checkpointPool = new MockCheckpointPool(checkpointFactory);
-            var entityPool = new MockBaseEntityPool(playerPool, vehiclePool, blipPool, checkpointPool);
-            var server = new MockServer(IntPtr.Zero, entityPool, playerPool, vehiclePool, blipPool,
+            var entityPool = new MockBaseEntityPool(playerPool, vehiclePool);
+            var baseObjectPool = new MockBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool);
+            var server = new MockServer(IntPtr.Zero, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool,
                 checkpointPool);
             var cSharpNativeResource = new CSharpNativeResource(IntPtr.Zero);
-            var module = resource.GetModule(server, cSharpNativeResource, entityPool, playerPool, vehiclePool, blipPool, checkpointPool);
+            var module = resource.GetModule(server, cSharpNativeResource, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool, checkpointPool);
             resource.OnStart();
         }
 

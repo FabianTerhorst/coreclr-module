@@ -46,22 +46,22 @@ namespace AltV.Net
             remove => Module.EntityRemoveEventHandler.Unsubscribe(value);
         }
 
-        public static event VehicleChangeSeatDelegate OnVehicleChangeSeat
+        public static event PlayerChangeVehicleSeatDelegate OnPlayerChangeVehicleSeat
         {
-            add => Module.VehicleChangeSeatEventHandler.Subscribe(value);
-            remove => Module.VehicleChangeSeatEventHandler.Unsubscribe(value);
+            add => Module.PlayerChangeVehicleSeatEventHandler.Subscribe(value);
+            remove => Module.PlayerChangeVehicleSeatEventHandler.Unsubscribe(value);
         }
 
-        public static event VehicleEnterDelegate OnVehicleEnter
+        public static event PlayerEnterVehicleDelegate OnPlayerEnterVehicle
         {
-            add => Module.VehicleEnterEventHandler.Subscribe(value);
-            remove => Module.VehicleEnterEventHandler.Unsubscribe(value);
+            add => Module.PlayerEnterVehicleEventHandler.Subscribe(value);
+            remove => Module.PlayerEnterVehicleEventHandler.Unsubscribe(value);
         }
 
-        public static event VehicleLeaveDelegate OnVehicleLeave
+        public static event PlayerLeaveVehicleDelegate OnPlayerLeaveVehicle
         {
-            add => Module.VehicleLeaveEventHandler.Subscribe(value);
-            remove => Module.VehicleLeaveEventHandler.Unsubscribe(value);
+            add => Module.PlayerLeaveVehicleEventHandler.Subscribe(value);
+            remove => Module.PlayerLeaveVehicleEventHandler.Unsubscribe(value);
         }
 
         public static event PlayerClientEventDelegate OnPlayerEvent
@@ -100,10 +100,10 @@ namespace AltV.Net
         public static ICollection<IVehicle> GetAllVehicles() =>
             Module.VehiclePool.GetAllEntities();
 
-        public static ICollection<IBlip> GetAllBlips() => Module.BlipPool.GetAllEntities();
+        public static ICollection<IBlip> GetAllBlips() => Module.BlipPool.GetAllObjects();
 
         public static ICollection<ICheckpoint> GetAllCheckpoints() =>
-            Module.CheckpointPool.GetAllEntities();
+            Module.CheckpointPool.GetAllObjects();
 
         public static uint Hash(string stringToHash) => Server.Hash(stringToHash);
 

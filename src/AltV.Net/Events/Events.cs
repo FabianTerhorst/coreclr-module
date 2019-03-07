@@ -9,13 +9,13 @@ namespace AltV.Net.Events
 
     public delegate void PlayerConnectDelegate(IPlayer player, string reason);
 
-    public delegate void PlayerDamageDelegate(IPlayer player, IEntity attacker, uint weapon, byte damage);
+    public delegate void PlayerDamageDelegate(IPlayer player, IEntity attacker, uint weapon, ushort damage);
 
     public delegate void PlayerDeadDelegate(IPlayer player, IEntity killer, uint weapon);
 
     public delegate void PlayerDisconnectDelegate(IPlayer player, string reason);
 
-    public delegate void EntityRemoveDelegate(IEntity entity);
+    public delegate void EntityRemoveDelegate(IBaseObject entity);
 
     public delegate void ServerEventDelegate(object[] args);
 
@@ -23,11 +23,11 @@ namespace AltV.Net.Events
 
     public delegate void PlayerClientCustomEventDelegate(IPlayer player, string eventName, ref MValueArray mValueArray);
 
-    public delegate void VehicleChangeSeatDelegate(IVehicle vehicle, IPlayer player, sbyte oldSeat, sbyte newSeat);
+    public delegate void PlayerChangeVehicleSeatDelegate(IVehicle vehicle, IPlayer player, byte oldSeat, byte newSeat);
 
-    public delegate void VehicleEnterDelegate(IVehicle vehicle, IPlayer player, sbyte seat);
+    public delegate void PlayerEnterVehicleDelegate(IVehicle vehicle, IPlayer player, byte seat);
 
-    public delegate void VehicleLeaveDelegate(IVehicle vehicle, IPlayer player, sbyte seat);
+    public delegate void PlayerLeaveVehicleDelegate(IVehicle vehicle, IPlayer player, byte seat);
 
     public delegate void ServerEventEventDelegate(string eventName, object[] args);
 

@@ -62,35 +62,36 @@ Server_CreateVehicle(alt::IServer* server, uint32_t model, alt::Position pos, fl
 
 alt::ICheckpoint*
 Server_CreateCheckpoint(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::Position pos, float radius,
-                        float height, alt::RGBA color, uint16_t &id) {
-    auto checkpoint = server->CreateCheckpoint(target, type, pos, radius, height, color);
-    if (checkpoint != nullptr) {
-        id = checkpoint->GetID();
-    }
-    return checkpoint;
-}
-
-alt::IBlip* Server_CreateBlip(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::Position pos, uint16_t &id) {
-    auto blip = server->CreateBlip(target, type, pos);
-    if (blip != nullptr) {
-        id = blip->GetID();
-    }
-    return blip;
+                        float height, alt::RGBA color) {
+    return server->CreateCheckpoint(target, type, pos, radius, height, color);
 }
 
 alt::IBlip*
-Server_CreateBlipAttached(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo, uint16_t &id) {
-    auto blip = server->CreateBlip(target, type, attachTo);
-    if (blip != nullptr) {
-        id = blip->GetID();
-    }
-    return blip;
+Server_CreateBlip(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::Position pos) {
+    return server->CreateBlip(target, (alt::IBlip::Type) type, pos);
+}
+
+alt::IBlip*
+Server_CreateBlipAttached(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo) {
+    return server->CreateBlip(target, (alt::IBlip::Type) type, attachTo);
 }
 
 void Server_RemoveEntity(alt::IServer* server, alt::IEntity* entity) {
     return server->RemoveEntity(entity);
 }
 
-void Server_GetResource(alt::IServer* server, const char* resourceName, alt::IResource*& resource) {
+void Server_RemoveBlip(alt::IServer* server, alt::IBlip* blip) {
+    server->RemoveBlip(blip);
+}
+
+void Server_RemoveCheckpoint(alt::IServer* server, alt::ICheckpoint* checkpoint) {
+    server->RemoveCheckpoint(checkpoint);
+}
+
+void Server_RemoveVehicle(alt::IServer* server, alt::IVehicle* vehicle) {
+    server->RemoveEntity(vehicle);
+}
+
+void Server_GetResource(alt::IServer* server, const char* resourceName, alt::IResource*&resource) {
     resource = server->GetResource(resourceName);
 }

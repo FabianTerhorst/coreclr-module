@@ -1,39 +1,13 @@
-using System;
 using AltV.Net.Data;
 
 namespace AltV.Net.Elements.Entities
 {
-    public interface IEntity
+    public interface IEntity : IWorldObject
     {
-        /// <summary>
-        /// Get the internal entity pointer.
-        ///
-        /// WARNING: Do NOT use this.
-        /// </summary>
-        IntPtr NativePointer { get; }
-
-        /// <summary>
-        /// Get current entity existence
-        ///
-        /// WARNING: Do NOT use this.
-        /// </summary>
-        bool Exists { get; }
-
         /// <summary>
         /// Get the entity id.
         /// </summary>
         ushort Id { get; }
-
-        /// <summary>
-        /// Get the entity type.
-        /// </summary>
-        EntityType Type { get; }
-
-        /// <summary>
-        /// Get or set position of the entity.
-        /// </summary>
-        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Position Position { get; set; }
 
         /// <summary>
         /// Get or set rotation of the entity.
@@ -45,26 +19,16 @@ namespace AltV.Net.Elements.Entities
         /// Get or set dimension of the entity.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        ushort Dimension { get; set; }
-
+        short Dimension { get; set; }
+        
         /// <summary>
-        /// Sets the given object into the meta data with the given key
+        /// Get model of the entity.
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetMetaData(string key, object value);
-
-        bool GetMetaData<T>(string key, out T result);
+        uint Model { get; }
 
         void SetSyncedMetaData(string key, object value);
 
         bool GetSyncedMetaData<T>(string key, out T result);
-
-        void SetData(string key, object value);
-
-        bool GetData<T>(string key, out T result);
-
-        void Remove();
     }
 }

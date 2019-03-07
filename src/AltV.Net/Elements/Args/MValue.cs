@@ -296,9 +296,9 @@ namespace AltV.Net.Elements.Args
             return Marshal.PtrToStringAnsi(value);
         }
 
-        public IntPtr GetEntityPointer(ref EntityType entityType)
+        public IntPtr GetEntityPointer(ref BaseObjectType baseObjectType)
         {
-            return AltVNative.MValueGet.MValue_GetEntity(ref this, ref entityType);
+            return AltVNative.MValueGet.MValue_GetEntity(ref this, ref baseObjectType);
         }
 
         public void GetList(ref MValueArray mValueArray)
@@ -380,9 +380,9 @@ namespace AltV.Net.Elements.Args
                     return GetDictionary().Aggregate("Dict:",
                         (current, value) => current + value.Key.ToString() + "=" + value.Value.ToString() + ",");
                 case Type.ENTITY:
-                    var entityType = EntityType.Undefined;
+                    var entityType = BaseObjectType.Undefined;
                     var ptr = GetEntityPointer(ref entityType);
-                    if (Alt.Module.BaseEntityPool.GetOrCreate(ptr, entityType, out var entity))
+                    if (Alt.Module.BaseBaseObjectPool.GetOrCreate(ptr, entityType, out var entity))
                     {
                         return $"MValue<{entity.Type.ToString()}>";
                     }
@@ -397,10 +397,10 @@ namespace AltV.Net.Elements.Args
 
         public object ToObject()
         {
-            return ToObject(Alt.Module.BaseEntityPool);
+            return ToObject(Alt.Module.BaseBaseObjectPool);
         }
 
-        public object ToObject(IBaseEntityPool baseEntityPool)
+        public object ToObject(IBaseBaseObjectPool baseBaseObjectPool)
         {
             switch (type)
             {
@@ -423,7 +423,7 @@ namespace AltV.Net.Elements.Args
                     var arrayValues = new object[mValueArray.Size];
                     for (var i = 0; i < arrayValues.Length; i++)
                     {
-                        arrayValues[i] = Marshal.PtrToStructure<MValue>(arrayValue).ToObject(baseEntityPool);
+                        arrayValues[i] = Marshal.PtrToStructure<MValue>(arrayValue).ToObject(baseBaseObjectPool);
                         arrayValue += Size;
                     }
 
@@ -444,17 +444,17 @@ namespace AltV.Net.Elements.Args
                     for (var i = 0; i < size; i++)
                     {
                         dictionary[Marshal.PtrToStructure<StringView>(stringViewArrayPtr).Text] =
-                            Marshal.PtrToStructure<MValue>(valueArrayPtr).ToObject(baseEntityPool);
+                            Marshal.PtrToStructure<MValue>(valueArrayPtr).ToObject(baseBaseObjectPool);
                         valueArrayPtr += Size;
                         stringViewArrayPtr += StringView.Size;
                     }
 
                     return dictionary;
                 case Type.ENTITY:
-                    var entityType = EntityType.Undefined;
+                    var entityType = BaseObjectType.Undefined;
                     var entityPointer = GetEntityPointer(ref entityType);
                     if (entityPointer == IntPtr.Zero) return null;
-                    if (baseEntityPool.GetOrCreate(entityPointer, entityType, out var entity))
+                    if (baseBaseObjectPool.GetOrCreate(entityPointer, entityType, out var entity))
                     {
                         return entity;
                     }

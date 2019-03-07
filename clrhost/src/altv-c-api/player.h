@@ -27,11 +27,12 @@ extern "C"
 #endif
 // Entity
 EXPORT uint16_t Player_GetID(alt::IPlayer* player);
+EXPORT uint32_t Player_GetModel(alt::IPlayer* player);
 EXPORT void Player_GetPosition(alt::IPlayer* player, position_t &position);
 EXPORT void Player_SetPosition(alt::IPlayer* player, alt::Position pos);
 EXPORT void Player_GetRotation(alt::IPlayer* player, rotation_t &rotation);
 EXPORT void Player_SetRotation(alt::IPlayer* player, alt::Rotation rot);
-EXPORT uint16_t Player_GetDimension(alt::IPlayer* player);
+EXPORT int16_t Player_GetDimension(alt::IPlayer* player);
 EXPORT void Player_SetDimension(alt::IPlayer* player, uint16_t dimension);
 EXPORT void Player_GetMetaData(alt::IPlayer* player, const char* key, alt::MValue &val);
 EXPORT void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValue* val);
@@ -74,6 +75,8 @@ EXPORT bool Player_IsInVehicle(alt::IPlayer* player);
 EXPORT alt::IVehicle* Player_GetVehicle(alt::IPlayer* player);
 EXPORT uint8_t Player_GetSeat(alt::IPlayer* player);
 EXPORT void Player_Kick(alt::IPlayer* player, const char* reason);
+
+EXPORT uint32_t Player_GetPing(alt::IPlayer* player);
 
 EXPORT void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct);
 #ifdef __cplusplus

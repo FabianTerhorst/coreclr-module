@@ -85,7 +85,7 @@ namespace AltV.Net.Native
                 ref MValueArray values);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern IntPtr MValue_GetEntity(ref MValue mValue, ref EntityType entityType);
+            internal static extern IntPtr MValue_GetEntity(ref MValue mValue, ref BaseObjectType baseObjectType);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern MValue.Function MValue_GetFunction(ref MValue mValue);

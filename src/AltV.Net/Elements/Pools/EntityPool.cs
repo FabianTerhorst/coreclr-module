@@ -9,7 +9,7 @@ namespace AltV.Net.Elements.Pools
     {
         public static void SetEntityNoLongerExists(TEntity entity)
         {
-            if (entity is IInternalEntity internalEntity)
+            if (entity is IInternalBaseObject internalEntity)
             {
                 internalEntity.Exists = false;
             }

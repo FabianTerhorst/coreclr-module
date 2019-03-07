@@ -11,9 +11,6 @@ namespace AltV.Net.Native
         internal static class Blip
         {
             // Entity
-            
-            [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern ushort Blip_GetID(IntPtr entityPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void Blip_GetPosition(IntPtr entityPointer, ref Position position);
@@ -28,10 +25,10 @@ namespace AltV.Net.Native
             internal static extern void Blip_SetRotation(IntPtr entityPointer, Rotation rotation);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern ushort Blip_GetDimension(IntPtr entityPointer);
+            internal static extern short Blip_GetDimension(IntPtr entityPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void Blip_SetDimension(IntPtr entityPointer, ushort dimension);
+            internal static extern void Blip_SetDimension(IntPtr entityPointer, short dimension);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Blip_GetMetaData(IntPtr entityPointer, string key, ref MValue value);
@@ -56,7 +53,7 @@ namespace AltV.Net.Native
             internal static extern bool Blip_IsAttached(IntPtr blipPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern IntPtr Blip_AttachedTo(IntPtr blipPointer, ref EntityType entityType);
+            internal static extern IntPtr Blip_AttachedTo(IntPtr blipPointer, ref BaseObjectType baseObjectType);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern byte Blip_GetType(IntPtr blipPointer);

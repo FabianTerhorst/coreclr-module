@@ -84,9 +84,9 @@ public:
 
     void (* OnPlayerDamageDelegate)(alt::IPlayer* player, alt::IEntity* attacker,
                                     alt::IBaseObject::Type attackerType, uint16_t attackerId, uint32_t weapon,
-                                    uint8_t damage);
+                                    uint16_t damage);
 
-    void (* OnPlayerDeadDelegate)(alt::IPlayer* player, alt::IEntity* killer, alt::IBaseObject::Type killerType,
+    void (* OnPlayerDeathDelegate)(alt::IPlayer* player, alt::IEntity* killer, alt::IBaseObject::Type killerType,
                                   uint32_t weapon);
 
     void (* OnPlayerDisconnectDelegate)(alt::IPlayer* player, const char* reason);
@@ -95,11 +95,11 @@ public:
 
     void (* OnServerEventDelegate)(const char* name, alt::Array<alt::MValue>* args);
 
-    void (* OnVehicleChangeSeatDelegate)(alt::IVehicle* vehicle, alt::IPlayer* player, int8_t oldSeat, int8_t newSeat);
+    void (* OnPlayerChangeVehicleSeatDelegate)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t oldSeat, uint8_t newSeat);
 
-    void (* OnVehicleEnterDelegate)(alt::IVehicle* vehicle, alt::IPlayer* player, int8_t seat);
+    void (* OnPlayerEnterVehicleDelegate)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t seat);
 
-    void (* OnVehicleLeaveDelegate)(alt::IVehicle* vehicle, alt::IPlayer* player, int8_t seat);
+    void (* OnPlayerLeaveVehicleDelegate)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t seat);
 
     void (* OnStopDelegate)();
 

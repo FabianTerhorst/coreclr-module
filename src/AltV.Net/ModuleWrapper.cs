@@ -33,11 +33,12 @@ namespace AltV.Net
             var vehiclePool = _resource.GetVehiclePool(vehicleFactory);
             var blipPool = _resource.GetBlipPool(blipFactory);
             var checkpointPool = _resource.GetCheckpointPool(checkpointFactory);
-            var entityPool = _resource.GetBaseEntityPool(playerPool, vehiclePool, blipPool, checkpointPool);
-            var server = new Server(serverPointer, entityPool, playerPool, vehiclePool, blipPool,
+            var entityPool = _resource.GetBaseEntityPool(playerPool, vehiclePool);
+            var baseObjectPool = _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool);
+            var server = new Server(serverPointer, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool,
                 checkpointPool);
             var csharpResource = new CSharpNativeResource(resourcePointer);
-            _module = _resource.GetModule(server, csharpResource, entityPool, playerPool, vehiclePool, blipPool, checkpointPool);
+            _module = _resource.GetModule(server, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool, checkpointPool);
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
             _resource.OnStart();
         }
@@ -59,10 +60,10 @@ namespace AltV.Net
             _resource.OnTick();
         }
 
-        public static void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, EntityType entityType,
+        public static void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
             bool state)
         {
-            _module.OnCheckpoint(checkpointPointer, entityPointer, entityType, state);
+            _module.OnCheckpoint(checkpointPointer, entityPointer, baseObjectType, state);
         }
 
         public static void OnPlayerConnect(IntPtr playerPointer, ushort playerId, string reason)
@@ -70,31 +71,31 @@ namespace AltV.Net
             _module.OnPlayerConnect(playerPointer, playerId, reason);
         }
 
-        public static void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer, EntityType attackerEntityType,
-            ushort attackerEntityId, uint weapon, byte damage)
+        public static void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer, BaseObjectType attackerBaseObjectType,
+            ushort attackerEntityId, uint weapon, ushort damage)
         {
-            _module.OnPlayerDamage(playerPointer, attackerEntityPointer, attackerEntityType, attackerEntityId, weapon, damage);
+            _module.OnPlayerDamage(playerPointer, attackerEntityPointer, attackerBaseObjectType, attackerEntityId, weapon, damage);
         }
 
-        public static void OnPlayerDead(IntPtr playerPointer, IntPtr killerEntityPointer, EntityType killerEntityType, uint weapon)
+        public static void OnPlayerDeath(IntPtr playerPointer, IntPtr killerEntityPointer, BaseObjectType killerBaseObjectType, uint weapon)
         {
-            _module.OnPlayerDead(playerPointer, killerEntityPointer, killerEntityType, weapon);
+            _module.OnPlayerDeath(playerPointer, killerEntityPointer, killerBaseObjectType, weapon);
         }
 
-        public static void OnVehicleChangeSeat(IntPtr vehiclePointer, IntPtr playerPointer, sbyte oldSeat,
-            sbyte newSeat)
+        public static void OnPlayerChangeVehicleSeat(IntPtr vehiclePointer, IntPtr playerPointer, byte oldSeat,
+            byte newSeat)
         {
-            _module.OnVehicleChangeSeat(vehiclePointer, playerPointer, oldSeat, newSeat);
+            _module.OnPlayerChangeVehicleSeat(vehiclePointer, playerPointer, oldSeat, newSeat);
         }
 
-        public static void OnVehicleEnter(IntPtr vehiclePointer, IntPtr playerPointer, sbyte seat)
+        public static void OnPlayerEnterVehicle(IntPtr vehiclePointer, IntPtr playerPointer, byte seat)
         {
-            _module.OnVehicleEnter(vehiclePointer, playerPointer, seat);
+            _module.OnPlayerEnterVehicle(vehiclePointer, playerPointer, seat);
         }
 
-        public static void OnVehicleLeave(IntPtr vehiclePointer, IntPtr playerPointer, sbyte seat)
+        public static void OnPlayerLeaveVehicle(IntPtr vehiclePointer, IntPtr playerPointer, byte seat)
         {
-            _module.OnVehicleLeave(vehiclePointer, playerPointer, seat);
+            _module.OnPlayerLeaveVehicle(vehiclePointer, playerPointer, seat);
         }
 
         public static void OnPlayerDisconnect(IntPtr playerPointer, string reason)
@@ -102,9 +103,9 @@ namespace AltV.Net
             _module.OnPlayerDisconnect(playerPointer, reason);
         }
 
-        public static void OnEntityRemove(IntPtr entityPointer, EntityType entityType)
+        public static void OnEntityRemove(IntPtr entityPointer, BaseObjectType baseObjectType)
         {
-            _module.OnEntityRemove(entityPointer, entityType);
+            _module.OnEntityRemove(entityPointer, baseObjectType);
         }
 
         public static void OnClientEvent(IntPtr playerPointer, string name, ref MValueArray args)

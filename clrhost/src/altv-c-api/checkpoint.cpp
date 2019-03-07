@@ -28,7 +28,7 @@ void Checkpoint_SetRotation(alt::ICheckpoint* checkpoint, alt::Rotation rot) {
     checkpoint->SetRotation(rot);
 }
 
-uint16_t Checkpoint_GetDimension(alt::ICheckpoint* checkpoint) {
+int16_t Checkpoint_GetDimension(alt::ICheckpoint* checkpoint) {
     return checkpoint->GetDimension();
 }
 
@@ -76,4 +76,16 @@ void Checkpoint_GetColor(alt::ICheckpoint* checkpoint, rgba_t &color) {
     color.g = checkpointColor.g;
     color.b = checkpointColor.b;
     color.a = checkpointColor.a;
+}
+
+bool Checkpoint_IsPlayerIn(alt::ICheckpoint* checkpoint, alt::IPlayer* player) {
+    return checkpoint->IsEntityIn(player);
+}
+
+bool Checkpoint_IsVehicleIn(alt::ICheckpoint* checkpoint, alt::IVehicle* vehicle) {
+    return checkpoint->IsEntityIn(vehicle);
+}
+
+alt::IPlayer* Checkpoint_GetTarget(alt::ICheckpoint* checkpoint) {
+    return checkpoint->GetTarget();
 }

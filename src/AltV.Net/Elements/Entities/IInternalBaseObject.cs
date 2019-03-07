@@ -1,6 +1,6 @@
 namespace AltV.Net.Elements.Entities
 {
-    internal interface IInternalEntity
+    internal interface IInternalBaseObject
     {
         bool Exists { set; }
     }

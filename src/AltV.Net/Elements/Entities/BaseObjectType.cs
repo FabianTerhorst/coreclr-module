@@ -1,6 +1,6 @@
 namespace AltV.Net.Elements.Entities
 {
-    public enum EntityType : byte
+    public enum BaseObjectType : byte
     {
         Player = 0,
         Vehicle = 1,

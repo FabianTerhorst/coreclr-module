@@ -14,11 +14,16 @@ namespace AltV.Net
         {
         }
 
-        public virtual IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool,
-            IEntityPool<IBlip> blipPool, IEntityPool<ICheckpoint> checkpointPool)
+        public virtual IBaseBaseObjectPool GetBaseBaseObjectPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool, IBaseObjectPool<IBlip> blipPool,
+            IBaseObjectPool<ICheckpoint> checkpointPool)
         {
-            return new BaseEntityPool(playerPool, vehiclePool, blipPool, checkpointPool);
+            return new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool);
+        }
+
+        public virtual IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool,
+            IEntityPool<IVehicle> vehiclePool)
+        {
+            return new BaseEntityPool(playerPool, vehiclePool);
         }
 
         public virtual IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory)
@@ -31,12 +36,12 @@ namespace AltV.Net
             return new VehiclePool(vehicleFactory);
         }
 
-        public virtual IEntityPool<IBlip> GetBlipPool(IEntityFactory<IBlip> blipFactory)
+        public virtual IBaseObjectPool<IBlip> GetBlipPool(IBaseObjectFactory<IBlip> blipFactory)
         {
             return new BlipPool(blipFactory);
         }
 
-        public virtual IEntityPool<ICheckpoint> GetCheckpointPool(IEntityFactory<ICheckpoint> checkpointFactory)
+        public virtual IBaseObjectPool<ICheckpoint> GetCheckpointPool(IBaseObjectFactory<ICheckpoint> checkpointFactory)
         {
             return new CheckpointPool(checkpointFactory);
         }
@@ -51,22 +56,21 @@ namespace AltV.Net
             return new VehicleFactory();
         }
 
-        public virtual IEntityFactory<IBlip> GetBlipFactory()
+        public virtual IBaseObjectFactory<IBlip> GetBlipFactory()
         {
             return new BlipFactory();
         }
 
-        public virtual IEntityFactory<ICheckpoint> GetCheckpointFactory()
+        public virtual IBaseObjectFactory<ICheckpoint> GetCheckpointFactory()
         {
             return new CheckpointFactory();
         }
 
-        public virtual Module GetModule(IServer server, CSharpNativeResource cSharpNativeResource, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
-            IEntityPool<IVehicle> vehiclePool,
-            IEntityPool<IBlip> blipPool,
-            IEntityPool<ICheckpoint> checkpointPool)
+        public virtual Module GetModule(IServer server, CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool,
+            IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool, IBaseObjectPool<IBlip> blipPool,
+            IBaseObjectPool<ICheckpoint> checkpointPool)
         {
-            return new Module(server, cSharpNativeResource, baseEntityPool, playerPool, vehiclePool, blipPool, checkpointPool);
+            return new Module(server, cSharpNativeResource, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool, blipPool, checkpointPool);
         }
     }
 }

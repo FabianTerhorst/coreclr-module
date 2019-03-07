@@ -39,7 +39,9 @@ namespace AltV.Net.Elements.Entities
 
         IVehicle Vehicle { get; }
 
-        sbyte Seat { get; }
+        byte Seat { get; }
+        
+        uint Ping { get; }
 
         void Spawn(Position position);
 

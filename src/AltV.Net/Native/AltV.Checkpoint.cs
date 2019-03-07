@@ -10,9 +10,6 @@ namespace AltV.Net.Native
         internal static class Checkpoint
         {
             // Entity
-            
-            [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern ushort Checkpoint_GetID(IntPtr entityPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void Checkpoint_GetPosition(IntPtr entityPointer, ref Position position);
@@ -27,10 +24,10 @@ namespace AltV.Net.Native
             internal static extern void Checkpoint_SetRotation(IntPtr entityPointer, Rotation rotation);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern ushort Checkpoint_GetDimension(IntPtr entityPointer);
+            internal static extern short Checkpoint_GetDimension(IntPtr entityPointer);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void Checkpoint_SetDimension(IntPtr entityPointer, ushort dimension);
+            internal static extern void Checkpoint_SetDimension(IntPtr entityPointer, short dimension);
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Checkpoint_GetMetaData(IntPtr entityPointer, string key, ref MValue value);
@@ -62,6 +59,15 @@ namespace AltV.Net.Native
             
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void Checkpoint_GetColor(IntPtr checkpointPointer, ref Rgba color);
+            
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern bool Checkpoint_IsPlayerIn(IntPtr checkpointPointer, IntPtr playerPointer);
+            
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern bool Checkpoint_IsVehicleIn(IntPtr checkpointPointer, IntPtr vehiclePointer);
+            
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
+            internal static extern IntPtr Checkpoint_GetTarget(IntPtr checkpointPointer);
         }
     }
 }

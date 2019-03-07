@@ -6,7 +6,7 @@ namespace AltV.Net.Mock
 {
     public class MockVehicle: MockEntity, IVehicle
     {   
-        public MockVehicle(IntPtr nativePointer, ushort id): base(nativePointer, EntityType.Vehicle, id)
+        public MockVehicle(IntPtr nativePointer, ushort id): base(nativePointer, BaseObjectType.Vehicle, id)
         {
         }
 
@@ -33,6 +33,10 @@ namespace AltV.Net.Mock
         public byte DirtLevel { get; set; }
         public Rgba NeonColor { get; set; }
         public byte ModKitsCount { get; }
+
+        public bool IsTireSmokeColorCustom { get; }
+        public bool IsNeonActive { get; }
+
         public byte GetMod(byte category)
         {
             return 0;

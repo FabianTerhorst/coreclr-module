@@ -3,11 +3,11 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Elements.Factories
 {
-    public class CheckpointFactory : IEntityFactory<ICheckpoint>
+    public class CheckpointFactory : IBaseObjectFactory<ICheckpoint>
     {
-        public ICheckpoint Create(IntPtr checkpointFactory, ushort id)
+        public ICheckpoint Create(IntPtr checkpointFactory)
         {
-            return new Checkpoint(checkpointFactory, id);
+            return new Checkpoint(checkpointFactory);
         }
     }
 }

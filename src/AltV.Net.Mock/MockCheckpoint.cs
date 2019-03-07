@@ -4,9 +4,9 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Mock
 {
-    public class MockCheckpoint : MockEntity, ICheckpoint
+    public class MockCheckpoint : MockWorldObject, ICheckpoint
     {
-        public MockCheckpoint(IntPtr nativePointer, ushort id) : base(nativePointer, EntityType.Checkpoint, id)
+        public MockCheckpoint(IntPtr nativePointer) : base(nativePointer, BaseObjectType.Checkpoint)
         {
         }
 
@@ -15,9 +15,21 @@ namespace AltV.Net.Mock
         public float Height { get; set; }
         public float Radius { get; set; }
         public Rgba Color { get; set; }
-
-        public void Init()
+        public bool IsPlayerIn(IPlayer player)
         {
+            throw new NotImplementedException();
+        }
+
+        bool ICheckpoint.IsVehicleIn(IVehicle vehicle)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPlayer Target { get; }
+
+        public void Remove()
+        {
+            throw new NotImplementedException();
         }
     }
 }

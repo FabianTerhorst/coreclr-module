@@ -6,6 +6,10 @@ uint16_t Player_GetID(alt::IPlayer* player) {
     return player->GetID();
 }
 
+uint32_t Player_GetModel(alt::IPlayer* player) {
+    return player->GetModel();
+}
+
 void Player_GetPosition(alt::IPlayer* player, position_t& position) {
     auto playerPosition = player->GetPosition();
     position.x = playerPosition.x;
@@ -162,6 +166,10 @@ uint8_t Player_GetSeat(alt::IPlayer* player) {
 
 void Player_Kick(alt::IPlayer* player, const char* reason) {
     player->Kick(reason);
+}
+
+uint32_t Player_GetPing(alt::IPlayer* player) {
+    return player->GetPing();
 }
 
 void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {

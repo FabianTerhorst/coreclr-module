@@ -5,10 +5,8 @@ using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Entities
 {
-    public class Blip : Entity, IBlip
+    public class Blip : WorldObject, IBlip
     {
-        public static ushort GetId(IntPtr blipPointer) => AltVNative.Blip.Blip_GetID(blipPointer);
-
         public override Position Position
         {
             get
@@ -25,23 +23,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public override Rotation Rotation
-        {
-            get
-            {
-                CheckExistence();
-                var rotation = Rotation.Zero;
-                AltVNative.Blip.Blip_GetRotation(NativePointer, ref rotation);
-                return rotation;
-            }
-            set
-            {
-                CheckExistence();
-                AltVNative.Blip.Blip_SetRotation(NativePointer, value);
-            }
-        }
-
-        public override ushort Dimension
+        public override short Dimension
         {
             get
             {
@@ -77,28 +59,6 @@ namespace AltV.Net.Elements.Entities
             return true;
         }
 
-        public override void SetSyncedMetaData(string key, object value)
-        {
-            CheckExistence();
-            var mValue = MValue.CreateFromObject(value);
-            AltVNative.Blip.Blip_SetSyncedMetaData(NativePointer, key, ref mValue);
-        }
-
-        public override bool GetSyncedMetaData<T>(string key, out T result)
-        {
-            CheckExistence();
-            var mValue = MValue.Nil;
-            AltVNative.Blip.Blip_GetSyncedMetaData(NativePointer, key, ref mValue);
-            if (!(mValue.ToObject() is T cast))
-            {
-                result = default;
-                return false;
-            }
-
-            result = cast;
-            return true;
-        }
-
         public bool IsGlobal
         {
             get
@@ -122,7 +82,7 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                var entityType = EntityType.Undefined;
+                var entityType = BaseObjectType.Undefined;
                 var entityPointer = AltVNative.Blip.Blip_AttachedTo(NativePointer, ref entityType);
                 if (entityPointer == IntPtr.Zero) return null;
                 return Alt.Module.BaseEntityPool.GetOrCreate(entityPointer, entityType, out var entity) ? entity : null;
@@ -174,8 +134,13 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public Blip(IntPtr nativePointer, ushort id) : base(nativePointer, EntityType.Blip, id)
+        public Blip(IntPtr nativePointer) : base(nativePointer, BaseObjectType.Blip)
         {
+        }
+        
+        public void Remove()
+        {
+            Alt.RemoveBlip(this);
         }
     }
 }

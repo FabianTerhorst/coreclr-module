@@ -3,11 +3,11 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Elements.Factories
 {
-    public class BlipFactory : IEntityFactory<IBlip>
+    public class BlipFactory : IBaseObjectFactory<IBlip>
     {
-        public IBlip Create(IntPtr blipPointer, ushort id)
+        public IBlip Create(IntPtr blipPointer)
         {
-            return new Blip(blipPointer, id);
+            return new Blip(blipPointer);
         }
     }
 }

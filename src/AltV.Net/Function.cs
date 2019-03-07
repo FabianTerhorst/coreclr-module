@@ -156,7 +156,7 @@ namespace AltV.Net
         //TODO: register event callbacks to cpp as dynamic function pointers with void** so cpp knows the types it needs to check
 
         //TODO: add support for nullable args, these are reducing the required length, add support for default values as well
-        internal MValue Call(IBaseEntityPool baseEntityPool, MValue[] values)
+        internal MValue Call(IBaseBaseObjectPool baseBaseObjectPool, MValue[] values)
         {
             var length = values.Length;
             if (length != args.Length) return MValue.Nil;
@@ -164,7 +164,7 @@ namespace AltV.Net
             var invokeValues = new object[length];
             for (var i = 0; i < length; i++)
             {
-                invokeValues[i] = parsers[i](ref values[i], args[i], baseEntityPool, typeInfos[i]);
+                invokeValues[i] = parsers[i](ref values[i], args[i], baseBaseObjectPool, typeInfos[i]);
             }
 
             //watch.Stop();
@@ -176,7 +176,7 @@ namespace AltV.Net
             return MValue.CreateFromObject(result);
         }
 
-        internal MValue Call(IPlayer player, IBaseEntityPool baseEntityPool, MValue[] values)
+        internal MValue Call(IPlayer player, IBaseBaseObjectPool baseBaseObjectPool, MValue[] values)
         {
             var length = values.Length;
             if (length + 1 != args.Length) return MValue.Nil;
@@ -185,7 +185,7 @@ namespace AltV.Net
             invokeValues[0] = player;
             for (var i = 0; i < length; i++)
             {
-                invokeValues[i + 1] = parsers[i](ref values[i], args[i], baseEntityPool, typeInfos[i]);
+                invokeValues[i + 1] = parsers[i](ref values[i], args[i], baseBaseObjectPool, typeInfos[i]);
             }
 
             var result = @delegate.DynamicInvoke(invokeValues);
@@ -193,7 +193,7 @@ namespace AltV.Net
             return MValue.CreateFromObject(result);
         }
 
-        internal object[] CalculateInvokeValues(IPlayer player, IBaseEntityPool baseEntityPool, MValue[] values)
+        internal object[] CalculateInvokeValues(IPlayer player, IBaseBaseObjectPool baseBaseObjectPool, MValue[] values)
         {
             var length = values.Length;
             if (length + 1 != args.Length) return null;
@@ -202,20 +202,20 @@ namespace AltV.Net
             invokeValues[0] = player;
             for (var i = 0; i < length; i++)
             {
-                invokeValues[i + 1] = parsers[i](ref values[i], args[i], baseEntityPool, typeInfos[i]);
+                invokeValues[i + 1] = parsers[i](ref values[i], args[i], baseBaseObjectPool, typeInfos[i]);
             }
 
             return invokeValues;
         }
 
-        internal object[] CalculateInvokeValues(IBaseEntityPool baseEntityPool, MValue[] values)
+        internal object[] CalculateInvokeValues(IBaseBaseObjectPool baseBaseObjectPool, MValue[] values)
         {
             var length = values.Length;
             if (length != args.Length) return null;
             var invokeValues = new object[length];
             for (var i = 0; i < length; i++)
             {
-                invokeValues[i] = parsers[i](ref values[i], args[i], baseEntityPool, typeInfos[i]);
+                invokeValues[i] = parsers[i](ref values[i], args[i], baseBaseObjectPool, typeInfos[i]);
             }
 
             return invokeValues;
@@ -260,14 +260,14 @@ namespace AltV.Net
             @delegate.DynamicInvoke(invokeValues);
         }
 
-        internal MValue Call(IBaseEntityPool baseEntityPool, MValue valueArgs)
+        internal MValue Call(IBaseBaseObjectPool baseBaseObjectPool, MValue valueArgs)
         {
-            return valueArgs.type != MValue.Type.LIST ? MValue.Nil : Call(baseEntityPool, valueArgs.GetList());
+            return valueArgs.type != MValue.Type.LIST ? MValue.Nil : Call(baseBaseObjectPool, valueArgs.GetList());
         }
 
         internal void call(ref MValue args, ref MValue result)
         {
-            result = Call(Alt.Module.BaseEntityPool, args);
+            result = Call(Alt.Module.BaseBaseObjectPool, args);
         }
     }
 }

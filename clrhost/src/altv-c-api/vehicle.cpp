@@ -6,6 +6,10 @@ uint16_t Vehicle_GetID(alt::IVehicle* entity) {
     return entity->GetID();
 }
 
+uint32_t Vehicle_GetModel(alt::IVehicle* vehicle) {
+    return vehicle->GetModel();
+}
+
 void Vehicle_GetPosition(alt::IVehicle* entity, position_t &position) {
     auto vehiclePosition = entity->GetPosition();
     position.x = vehiclePosition.x;
@@ -28,7 +32,7 @@ void Vehicle_SetRotation(alt::IVehicle* entity, alt::Rotation rot) {
     entity->SetRotation(rot);
 }
 
-uint16_t Vehicle_GetDimension(alt::IVehicle* entity) {
+int16_t Vehicle_GetDimension(alt::IVehicle* entity) {
     return entity->GetDimension();
 }
 
@@ -162,6 +166,10 @@ void Vehicle_SetDashboardColor(alt::IVehicle* vehicle, uint8_t color) {
     vehicle->SetDashboardColor(color);
 }
 
+bool Vehicle_IsTireSmokeColorCustom(alt::IVehicle* vehicle) {
+    return vehicle->IsTireSmokeColorCustom();
+}
+
 void Vehicle_GetTireSmokeColor(alt::IVehicle* vehicle, rgba_t &tireSmokeColor) {
     auto vehicleTireSmokeColor = vehicle->GetTireSmokeColor();
     tireSmokeColor.r = vehicleTireSmokeColor.r;
@@ -242,12 +250,16 @@ void Vehicle_ToggleExtra(alt::IVehicle* vehicle, uint8_t extraID, bool state) {
     vehicle->ToggleExtra(extraID, state);
 }
 
-void Vehicle_GetNeonActive(alt::IVehicle* vehicle, bool &left, bool &right, bool &top, bool &back) {
-    vehicle->GetNeonActive(left, right, top, back);
+bool Vehicle_IsNeonActive(alt::IVehicle* vehicle) {
+    return vehicle->IsNeonActive();
 }
 
-void Vehicle_SetNeonActive(alt::IVehicle* vehicle, bool left, bool right, bool top, bool back) {
-    vehicle->SetNeonActive(left, right, top, back);
+void Vehicle_GetNeonActive(alt::IVehicle* vehicle, bool* left, bool* right, bool* front, bool* back) {
+    vehicle->GetNeonActive(left, right, front, back);
+}
+
+void Vehicle_SetNeonActive(alt::IVehicle* vehicle, bool left, bool right, bool front, bool back) {
+    vehicle->SetNeonActive(left, right, front, back);
 }
 
 void Vehicle_GetNeonColor(alt::IVehicle* vehicle, rgba_t &neonColor) {
@@ -263,229 +275,229 @@ void Vehicle_SetNeonColor(alt::IVehicle* vehicle, alt::RGBA color) {
 }
 
 bool Vehicle_IsEngineOn(alt::IVehicle* vehicle) {
-    return false;
+    return vehicle->IsEngineOn();
 }
 
 void Vehicle_SetEngineOn(alt::IVehicle* vehicle, bool state) {
-
+    vehicle->SetEngineOn(state);
 }
 
 bool Vehicle_IsHandbrakeActive(alt::IVehicle* vehicle) {
-    return false;
+    return vehicle->IsHandbrakeActive();
 }
 
 uint8_t Vehicle_GetHeadlightColor(alt::IVehicle* vehicle) {
-    return 0;
+    return vehicle->GetHeadlightColor();
 }
 
 void Vehicle_SetHeadlightColor(alt::IVehicle* vehicle, uint8_t color) {
-
+    vehicle->SetHeadlightColor(color);
 }
 
 bool Vehicle_IsSirenActive(alt::IVehicle* vehicle) {
-    return false;
+    return vehicle->IsSirenActive();
 }
 
 void Vehicle_SetSirenActive(alt::IVehicle* vehicle, bool state) {
-
+    vehicle->SetSirenActive(state);
 }
 
 uint8_t Vehicle_GetLockState(alt::IVehicle* vehicle) {
-    return 0;
+    return vehicle->GetLockState();
 }
 
 void Vehicle_SetLockState(alt::IVehicle* vehicle, uint8_t state) {
-
+    vehicle->SetLockState(state);
 }
 
 uint8_t Vehicle_GetDoorState(alt::IVehicle* vehicle, uint8_t doorId) {
-    return 0;
+    return vehicle->GetDoorState(doorId);
 }
 
 void Vehicle_SetDoorState(alt::IVehicle* vehicle, uint8_t doorId, uint8_t state) {
-
+    vehicle->SetDoorState(doorId, state);
 }
 
 bool Vehicle_IsWindowOpened(alt::IVehicle* vehicle, uint8_t windowId) {
-    return false;
+    return vehicle->IsWindowOpened(windowId);
 }
 
 void Vehicle_SetWindowOpened(alt::IVehicle* vehicle, uint8_t windowId, bool state) {
-
+    vehicle->SetWindowOpened(windowId, state);
 }
 
 bool Vehicle_IsDaylightOn(alt::IVehicle* vehicle) {
-    return false;
+    return vehicle->IsDaylightOn();
 }
 
 bool Vehicle_IsNightlightOn(alt::IVehicle* vehicle) {
-    return false;
+    return vehicle->IsNightlightOn();
 }
 
 bool Vehicle_IsRoofOpened(alt::IVehicle* vehicle) {
-    return false;
+    return vehicle->IsRoofOpened();
 }
 
 void Vehicle_SetRoofOpened(alt::IVehicle* vehicle, bool state) {
-
+    vehicle->SetRoofOpened(state);
 }
 
 bool Vehicle_IsFlamethrowerActive(alt::IVehicle* vehicle) {
-    return false;
+    return vehicle->IsFlamethrowerActive();
 }
 
 void Vehicle_GetGameStateBase64(alt::IVehicle* vehicle, const char*&text) {
-
+    text = vehicle->GetGameStateBase64().CStr();
 }
 
 void Vehicle_LoadGameStateFromBase64(alt::IVehicle* vehicle, const char* base64) {
-
+    vehicle->LoadGameStateFromBase64(base64);
 }
 
 int32_t Vehicle_GetEngineHealth(alt::IVehicle* vehicle) {
-    return 0;
+    return vehicle->GetEngineHealth();
 }
 
 void Vehicle_SetEngineHealth(alt::IVehicle* vehicle, int32_t health) {
-
+    vehicle->SetEngineHealth(health);
 }
 
 int32_t Vehicle_GetPetrolTankHealth(alt::IVehicle* vehicle) {
-    return 0;
+    return vehicle->GetPetrolTankHealth();
 }
 
 void Vehicle_SetPetrolTankHealth(alt::IVehicle* vehicle, int32_t health) {
-
+    vehicle->SetPetrolTankHealth(health);
 }
 
 uint8_t Vehicle_GetWheelsCount(alt::IVehicle* vehicle) {
-    return 0;
+    return vehicle->GetWheelsCount();
 }
 
 bool Vehicle_IsWheelBurst(alt::IVehicle* vehicle, uint8_t wheelId) {
-    return false;
+    return vehicle->IsWheelBurst(wheelId);
 }
 
 void Vehicle_SetWheelBurst(alt::IVehicle* vehicle, uint8_t wheelId, bool state) {
-
+    vehicle->SetWheelBurst(wheelId, state);
 }
 
 bool Vehicle_DoesWheelHasTire(alt::IVehicle* vehicle, uint8_t wheelId) {
-    return false;
+    return vehicle->DoesWheelHasTire(wheelId);
 }
 
 void Vehicle_SetWheelHasTire(alt::IVehicle* vehicle, uint8_t wheelId, bool state) {
-
+    vehicle->SetWheelHasTire(wheelId, state);
 }
 
 float Vehicle_GetWheelHealth(alt::IVehicle* vehicle, uint8_t wheelId) {
-    return 0;
+    return vehicle->GetWheelHealth(wheelId);
 }
 
 void Vehicle_SetWheelHealth(alt::IVehicle* vehicle, uint8_t wheelId, float health) {
-
+    vehicle->SetWheelHealth(wheelId, health);
 }
 
 uint8_t Vehicle_GetRepairsCount(alt::IVehicle* vehicle) {
-    return 0;
+    return vehicle->GetRepairsCount();
 }
 
 uint32_t Vehicle_GetBodyHealth(alt::IVehicle* vehicle) {
-    return 0;
+    return vehicle->GetBodyHealth();
 }
 
 void Vehicle_SetBodyHealth(alt::IVehicle* vehicle, uint32_t health) {
-
+    vehicle->SetBodyHealth(health);
 }
 
 uint32_t Vehicle_GetBodyAdditionalHealth(alt::IVehicle* vehicle) {
-    return 0;
+    return vehicle->GetBodyAdditionalHealth();
 }
 
 void Vehicle_SetBodyAdditionalHealth(alt::IVehicle* vehicle, uint32_t health) {
-
+    vehicle->SetBodyAdditionalHealth(health);
 }
 
 void Vehicle_GetHealthDataBase64(alt::IVehicle* vehicle, const char*&text) {
-
+    text = vehicle->GetHealthDataBase64().CStr();
 }
 
 void Vehicle_LoadHealthDataFromBase64(alt::IVehicle* vehicle, const char* base64) {
-
+    vehicle->LoadHealthDataFromBase64(base64);
 }
 
 uint8_t Vehicle_GetPartDamageLevel(alt::IVehicle* vehicle, uint8_t partId) {
-    return 0;
+    return vehicle->GetPartDamageLevel(partId);
 }
 
 void Vehicle_SetPartDamageLevel(alt::IVehicle* vehicle, uint8_t partId, uint8_t damage) {
-
+    vehicle->SetPartDamageLevel(partId, damage);
 }
 
 uint8_t Vehicle_GetPartBulletHoles(alt::IVehicle* vehicle, uint8_t partId) {
-    return 0;
+    return vehicle->GetPartBulletHoles(partId);
 }
 
 void Vehicle_SetPartBulletHoles(alt::IVehicle* vehicle, uint8_t partId, uint8_t shootsCount) {
-
+    vehicle->SetPartBulletHoles(partId, shootsCount);
 }
 
 bool Vehicle_IsLightDamaged(alt::IVehicle* vehicle, uint8_t lightId) {
-    return false;
+    return vehicle->IsLightDamaged(lightId);
 }
 
 void Vehicle_SetLightDamaged(alt::IVehicle* vehicle, uint8_t lightId, bool isDamaged) {
-
+    vehicle->SetLightDamaged(lightId, isDamaged);
 }
 
 bool Vehicle_IsWindowDamaged(alt::IVehicle* vehicle, uint8_t windowId) {
-    return false;
+    return vehicle->IsWindowDamaged(windowId);
 }
 
 void Vehicle_SetWindowDamaged(alt::IVehicle* vehicle, uint8_t windowId, bool isDamaged) {
-
+    vehicle->SetWindowDamaged(windowId, isDamaged);
 }
 
 bool Vehicle_IsSpecialLightDamaged(alt::IVehicle* vehicle, uint8_t specialLightId) {
-    return false;
+    return vehicle->IsSpecialLightDamaged(specialLightId);
 }
 
 void Vehicle_SetSpecialLightDamaged(alt::IVehicle* vehicle, uint8_t specialLightId, bool isDamaged) {
-
+    vehicle->SetSpecialLightDamaged(specialLightId, isDamaged);
 }
 
 bool Vehicle_HasArmoredWindows(alt::IVehicle* vehicle) {
-    return false;
+    return vehicle->HasArmoredWindows();
 }
 
 float Vehicle_GetArmoredWindowHealth(alt::IVehicle* vehicle, uint8_t windowId) {
-    return 0;
+    return vehicle->GetArmoredWindowHealth(windowId);
 }
 
 void Vehicle_SetArmoredWindowHealth(alt::IVehicle* vehicle, uint8_t windowId, float health) {
-
+    vehicle->SetArmoredWindowHealth(windowId, health);
 }
 
 uint8_t Vehicle_GetArmoredWindowShootCount(alt::IVehicle* vehicle, uint8_t windowId) {
-    return 0;
+    return vehicle->GetArmoredWindowShootCount(windowId);
 }
 
 void Vehicle_SetArmoredWindowShootCount(alt::IVehicle* vehicle, uint8_t windowId, uint8_t count) {
-
+    vehicle->SetArmoredWindowShootCount(windowId, count);
 }
 
 uint8_t Vehicle_GetBumperDamageLevel(alt::IVehicle* vehicle, uint8_t bumperId) {
-    return 0;
+    return vehicle->GetBumperDamageLevel(bumperId);
 }
 
 void Vehicle_SetBumperDamageLevel(alt::IVehicle* vehicle, uint8_t bumperId, uint8_t damageLevel) {
-
+    vehicle->SetBumperDamageLevel(bumperId, damageLevel);
 }
 
 void Vehicle_GetDamageDataBase64(alt::IVehicle* vehicle, const char*&text) {
-
+    text = vehicle->GetDamageDataBase64().CStr();
 }
 
 void Vehicle_LoadDamageDataFromBase64(alt::IVehicle* vehicle, const char* base64) {
-
+    vehicle->LoadDamageDataFromBase64(base64);
 }

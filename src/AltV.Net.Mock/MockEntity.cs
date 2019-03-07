@@ -12,10 +12,11 @@ namespace AltV.Net.Mock
         public IntPtr NativePointer { get; }
         public bool Exists { get; }
         public ushort Id { get; }
-        public EntityType Type { get; }
+        public BaseObjectType Type { get; }
         public Position Position { get; set; }
         public Rotation Rotation { get; set; }
-        public ushort Dimension { get; set; }
+        public short Dimension { get; set; }
+        public uint Model { get; }
 
         private readonly Dictionary<string, object> data = new Dictionary<string, object>();
 
@@ -23,10 +24,10 @@ namespace AltV.Net.Mock
 
         private readonly Dictionary<string, MValue> syncedMetaData = new Dictionary<string, MValue>();
 
-        public MockEntity(IntPtr nativePointer, EntityType entityType, ushort id)
+        public MockEntity(IntPtr nativePointer, BaseObjectType baseObjectType, ushort id)
         {
             NativePointer = nativePointer;
-            Type = entityType;
+            Type = baseObjectType;
             Id = id;
             Exists = true;
         }

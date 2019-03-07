@@ -353,7 +353,7 @@ namespace AltV.Net.Example
             //Do async processing here with the copy even when player got already removed
         }
 
-        private void OnEntityRemove(IEntity entity)
+        private void OnEntityRemove(IBaseObject entity)
         {
         }
 

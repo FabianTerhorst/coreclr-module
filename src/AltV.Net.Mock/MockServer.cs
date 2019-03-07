@@ -10,22 +10,25 @@ namespace AltV.Net.Mock
     {
         private readonly IntPtr nativePointer;
 
+        private readonly IBaseBaseObjectPool baseBaseObjectPool;
+        
         private readonly IBaseEntityPool baseEntityPool;
 
         private readonly IEntityPool<IPlayer> playerPool;
 
         private readonly IEntityPool<IVehicle> vehiclePool;
 
-        private readonly IEntityPool<IBlip> blipPool;
+        private readonly IBaseObjectPool<IBlip> blipPool;
 
-        private readonly IEntityPool<ICheckpoint> checkpointPool;
+        private readonly IBaseObjectPool<ICheckpoint> checkpointPool;
 
-        internal MockServer(IntPtr nativePointer, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
+        internal MockServer(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
-            IEntityPool<IBlip> blipPool,
-            IEntityPool<ICheckpoint> checkpointPool)
+            IBaseObjectPool<IBlip> blipPool,
+            IBaseObjectPool<ICheckpoint> checkpointPool)
         {
             this.nativePointer = nativePointer;
+            this.baseBaseObjectPool = baseBaseObjectPool;
             this.baseEntityPool = baseEntityPool;
             this.playerPool = playerPool;
             this.vehiclePool = vehiclePool;
@@ -131,7 +134,7 @@ namespace AltV.Net.Mock
             Rgba color)
         {
             var ptr = MockEntities.GetNextPtr();
-            checkpointPool.Create(ptr, MockEntities.Id, out var checkpoint);
+            checkpointPool.Create(ptr, out var checkpoint);
             if (checkpoint is MockCheckpoint mockCheckpoint)
             {
                 mockCheckpoint.Position = pos;
@@ -148,7 +151,7 @@ namespace AltV.Net.Mock
         public IBlip CreateBlip(IPlayer player, byte type, Position pos)
         {
             var ptr = MockEntities.GetNextPtr();
-            blipPool.Create(ptr, MockEntities.Id, out var blip);
+            blipPool.Create(ptr, out var blip);
             if (blip is MockBlip mockBlip)
             {
                 mockBlip.Position = pos;
@@ -162,7 +165,7 @@ namespace AltV.Net.Mock
         public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
         {
             var ptr = MockEntities.GetNextPtr();
-            blipPool.Create(ptr, MockEntities.Id, out var blip);
+            blipPool.Create(ptr, out var blip);
             if (blip is MockBlip mockBlip)
             {
                 mockBlip.BlipType = type;
@@ -178,6 +181,24 @@ namespace AltV.Net.Mock
         {
             Alt.Module.OnEntityRemove(entity.NativePointer, entity.Type);
             MockEntities.Entities.Remove(entity.NativePointer);
+        }
+
+        public void RemoveBlip(IBlip blip)
+        {
+            Alt.Module.OnEntityRemove(blip.NativePointer, blip.Type);
+            MockEntities.Entities.Remove(blip.NativePointer);
+        }
+
+        public void RemoveCheckpoint(ICheckpoint checkpoint)
+        {
+            Alt.Module.OnEntityRemove(checkpoint.NativePointer, checkpoint.Type);
+            MockEntities.Entities.Remove(checkpoint.NativePointer);
+        }
+
+        void IServer.RemoveVehicle(IVehicle vehicle)
+        {
+            Alt.Module.OnEntityRemove(vehicle.NativePointer, vehicle.Type);
+            MockEntities.Entities.Remove(vehicle.NativePointer);
         }
 
         public ServerNativeResource GetResource(string name)

@@ -58,6 +58,12 @@ namespace AltV.Net
         IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach);
 
         void RemoveEntity(IEntity entity);
+        
+        void RemoveBlip(IBlip blip);
+        
+        void RemoveCheckpoint(ICheckpoint checkpoint);
+        
+        void RemoveVehicle(IVehicle vehicle);
 
         ServerNativeResource GetResource(string name);
     }

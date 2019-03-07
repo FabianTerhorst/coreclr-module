@@ -1,6 +1,6 @@
 namespace AltV.Net.Elements.Entities
 {
-    public interface IBlip : IEntity
+    public interface IBlip : IWorldObject
     {
         bool IsGlobal { get; }
         bool IsAttached { get; }
@@ -10,5 +10,6 @@ namespace AltV.Net.Elements.Entities
         byte Color { set; }
         bool Route { set; }
         byte RouteColor { set; }
+        void Remove();
     }
 }

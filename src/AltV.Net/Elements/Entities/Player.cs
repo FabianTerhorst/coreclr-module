@@ -10,6 +10,15 @@ namespace AltV.Net.Elements.Entities
     {
         public static ushort GetId(IntPtr playerPointer) => AltVNative.Player.Player_GetID(playerPointer);
 
+        public override uint Model
+        {
+            get
+            {
+                CheckExistence();
+                return AltVNative.Player.Player_GetModel(NativePointer);
+            }
+        }
+
         public override Position Position
         {
             get
@@ -42,7 +51,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public override ushort Dimension
+        public override short Dimension
         {
             get
             {
@@ -53,6 +62,15 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckExistence();
                 AltVNative.Player.Player_SetDimension(NativePointer, value);
+            }
+        }
+
+        public uint Ping
+        {
+            get
+            {
+                CheckExistence();
+                return AltVNative.Player.Player_GetPing(NativePointer);
             }
         }
 
@@ -276,7 +294,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public sbyte Seat
+        public byte Seat
         {
             get
             {
@@ -285,7 +303,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public Player(IntPtr nativePointer, ushort id) : base(nativePointer, EntityType.Player, id)
+        public Player(IntPtr nativePointer, ushort id) : base(nativePointer, BaseObjectType.Player, id)
         {
         }
 

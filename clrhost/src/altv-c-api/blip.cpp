@@ -28,7 +28,7 @@ void Blip_SetRotation(alt::IBlip* blip, alt::Rotation rot) {
     blip->SetRotation(rot);
 }
 
-uint16_t Blip_GetDimension(alt::IBlip* blip) {
+int16_t Blip_GetDimension(alt::IBlip* blip) {
     return blip->GetDimension();
 }
 
