@@ -820,22 +820,22 @@ namespace AltV.Net.Elements.Entities
         {
         }
 
-        public byte GetMod(VehicleModType category)
+        public byte GetMod(byte category)
         {
             CheckExistence();
-            return AltVNative.Vehicle.Vehicle_GetMod(NativePointer, (byte)category);
+            return AltVNative.Vehicle.Vehicle_GetMod(NativePointer, category);
         }
 
-        public byte GetModsCount(VehicleModType category)
+        public byte GetModsCount(byte category)
         {
             CheckExistence();
-            return AltVNative.Vehicle.Vehicle_GetModsCount(NativePointer, (byte)category);
+            return AltVNative.Vehicle.Vehicle_GetModsCount(NativePointer, category);
         }
 
-        public bool SetMod(VehicleModType category, byte id)
+        public bool SetMod(byte category, byte id)
         {
             CheckExistence();
-            return AltVNative.Vehicle.Vehicle_SetMod(NativePointer, (byte)category, id);
+            return AltVNative.Vehicle.Vehicle_SetMod(NativePointer, category, id);
         }
 
         public void SetWheels(byte type, byte variation)
