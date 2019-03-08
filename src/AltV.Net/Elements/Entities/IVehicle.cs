@@ -1,4 +1,5 @@
 using AltV.Net.Data;
+using AltV.Net.Enums;
 
 namespace AltV.Net.Elements.Entities
 {
@@ -15,7 +16,7 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
         byte ModKit { get; set; }
-        
+
         byte ModKitsCount { get; }
 
         bool IsPrimaryColorRgb { get; }
@@ -43,7 +44,7 @@ namespace AltV.Net.Elements.Entities
         byte DashboardColor { get; set; }
 
         bool IsTireSmokeColorCustom { get; }
-        
+
         Rgba TireSmokeColor { get; set; }
 
         byte WheelType { get; }
@@ -85,7 +86,7 @@ namespace AltV.Net.Elements.Entities
         void ToggleExtra(byte extraId, bool state);
 
         bool IsNeonActive { get; }
-        
+
         void GetNeonActive(ref bool left, ref bool right, ref bool top, ref bool back);
 
         void SetNeonActive(bool left, bool right, bool top, bool back);
@@ -98,7 +99,7 @@ namespace AltV.Net.Elements.Entities
 
         bool SirenActive { get; set; }
 
-        byte LockState { get; set; }
+        VehicleLockState LockState { get; set; }
 
         byte GetDoorState(byte doorId);
 
@@ -125,7 +126,7 @@ namespace AltV.Net.Elements.Entities
         byte WheelsCount { get; }
 
         bool IsWheelBurst(byte wheelId);
-        
+
         void SetWheelBurst(byte wheelId, bool state);
 
         bool DoesWheelHasTire(byte wheelId);

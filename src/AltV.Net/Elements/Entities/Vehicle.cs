@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
+using AltV.Net.Enums;
 using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Entities
@@ -473,17 +474,17 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public byte LockState
+        public VehicleLockState LockState
         {
             get
             {
                 CheckExistence();
-                return AltVNative.Vehicle.Vehicle_GetLockState(NativePointer);
+                return (VehicleLockState)AltVNative.Vehicle.Vehicle_GetLockState(NativePointer);
             }
             set
             {
                 CheckExistence();
-                AltVNative.Vehicle.Vehicle_SetLockState(NativePointer, value);
+                AltVNative.Vehicle.Vehicle_SetLockState(NativePointer, (byte)value);
             }
         }
 
