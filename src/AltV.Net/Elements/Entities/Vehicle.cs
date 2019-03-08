@@ -479,7 +479,7 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                return (VehicleLockState)AltVNative.Vehicle.Vehicle_GetLockState(NativePointer);
+                return (VehicleLockState) AltVNative.Vehicle.Vehicle_GetLockState(NativePointer);
             }
             set
             {
