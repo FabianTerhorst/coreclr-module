@@ -182,5 +182,13 @@ namespace AltV.Net.Elements.Entities
         string DamageData { get; set; }
 
         void Remove();
+
+#if NETCOREAPP3_0
+        byte GetMod(VehicleModType category) => GetMod((byte) category);
+        
+        byte GetModsCount(VehicleModType category) => GetModsCount((byte) category);
+        
+        bool SetMod(VehicleModType category, byte id) => SetMod((byte) category, id);
+#endif
     }
 }
