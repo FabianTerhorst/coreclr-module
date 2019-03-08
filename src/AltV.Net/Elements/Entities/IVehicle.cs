@@ -149,6 +149,11 @@ namespace AltV.Net.Elements.Entities
 
         void SetPartDamageLevel(byte partId, byte damage);
 
+        /// <summary>
+        /// Get the amount of bullet holes for the current part id
+        /// </summary>
+        /// <param name="partId">The current path between 0 and 5</param>
+        /// <returns>The bullet holes count between 0 and 15</returns>
         byte GetPartBulletHoles(byte partId);
 
         void SetPartBulletHoles(byte partId, byte shootsCount);
