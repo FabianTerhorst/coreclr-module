@@ -175,9 +175,9 @@ namespace AltV.Net.Elements.Entities
 
         void SetArmoredWindowShootCount(byte windowId, byte count);
 
-        byte GetBumperDamageLevel(VehicleBumper bumperId);
+        byte GetBumperDamageLevel(byte bumperId);
 
-        void SetBumperDamageLevel(VehicleBumper bumperId, VehicleBumperDamage damageLevel);
+        void SetBumperDamageLevel(byte bumperId, byte damageLevel);
 
         string DamageData { get; set; }
 
@@ -196,7 +196,7 @@ namespace AltV.Net.Elements.Entities
 
         void SetPartBulletHoles(VehiclePart partId, byte shootsCount) => SetPartBulletHoles((byte) partId, byte shootsCount);
 
-        byte GetBumperDamageLevel(VehicleBumper bumperId) => GetBumperDamageLevel((byte) bumperId) 
+        VehicleBumperDamage GetBumperDamageLevel(VehicleBumper bumperId) => GetBumperDamageLevel((byte) bumperId) 
 
         void SetBumperDamageLevel(VehicleBumper bumperId, VehicleBumperDamage damageLevel) => SetBumperDamageLevel((byte) bumperId, (byte) damageLevel)
 #endif
