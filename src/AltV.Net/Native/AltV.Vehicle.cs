@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
+using AltV.Net.Enums;
 
 namespace AltV.Net.Native
 {
@@ -185,7 +186,7 @@ namespace AltV.Net.Native
 
             [DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             internal static extern void Vehicle_ToggleExtra(IntPtr vehiclePointer, byte extraID, bool state);
-            
+
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern bool Vehicle_IsNeonActive(IntPtr vehiclePointer);
 
