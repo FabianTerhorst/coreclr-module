@@ -60,10 +60,16 @@ namespace AltV.Net.Async
             remove => Module.PlayerDisconnectAsyncEventHandler.Unsubscribe(value);
         }
 
-        public static event EntityRemoveAsyncDelegate OnEntityRemove
+        public static event PlayerRemoveAsyncDelegate OnPlayerRemove
         {
-            add => Module.EntityRemoveAsyncEventHandler.Subscribe(value);
-            remove => Module.EntityRemoveAsyncEventHandler.Unsubscribe(value);
+            add => Module.PlayerRemoveAsyncEventHandler.Subscribe(value);
+            remove => Module.PlayerRemoveAsyncEventHandler.Unsubscribe(value);
+        }
+        
+        public static event VehicleRemoveAsyncDelegate OnVehicleRemove
+        {
+            add => Module.VehicleRemoveAsyncEventHandler.Subscribe(value);
+            remove => Module.VehicleRemoveAsyncEventHandler.Unsubscribe(value);
         }
 
         public static event PlayerClientEventAsyncDelegate OnPlayerEvent

@@ -36,8 +36,11 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<PlayerDisconnectAsyncDelegate> PlayerDisconnectAsyncEventHandler =
             new AsyncEventHandler<PlayerDisconnectAsyncDelegate>();
 
-        internal readonly AsyncEventHandler<EntityRemoveAsyncDelegate> EntityRemoveAsyncEventHandler =
-            new AsyncEventHandler<EntityRemoveAsyncDelegate>();
+        internal readonly AsyncEventHandler<PlayerRemoveAsyncDelegate> PlayerRemoveAsyncEventHandler =
+            new AsyncEventHandler<PlayerRemoveAsyncDelegate>();
+        
+        internal readonly AsyncEventHandler<VehicleRemoveAsyncDelegate> VehicleRemoveAsyncEventHandler =
+            new AsyncEventHandler<VehicleRemoveAsyncDelegate>();
 
         internal readonly AsyncEventHandler<PlayerClientEventAsyncDelegate> PlayerClientEventAsyncEventHandler =
             new AsyncEventHandler<PlayerClientEventAsyncDelegate>();
@@ -117,12 +120,20 @@ namespace AltV.Net.Async
                     @delegate(player, reason)));
         }
 
-        public override void OnEntityRemoveEvent(IBaseObject entity)
+        public override void OnPlayerRemoveEvent(IPlayer player)
         {
-            base.OnEntityRemoveEvent(entity);
+            base.OnPlayerRemoveEvent(player);
             Task.Run(() =>
-                EntityRemoveAsyncEventHandler.CallAsync(@delegate =>
-                    @delegate(entity)));
+                PlayerRemoveAsyncEventHandler.CallAsync(@delegate =>
+                    @delegate(player)));
+        }
+        
+        public override void OnVehicleRemoveEvent(IVehicle vehicle)
+        {
+            base.OnVehicleRemoveEvent(vehicle);
+            Task.Run(() =>
+                VehicleRemoveAsyncEventHandler.CallAsync(@delegate =>
+                    @delegate(vehicle)));
         }
 
         public override void OnClientEventEvent(IPlayer player, string name, ref MValueArray args, MValue[] mValues,

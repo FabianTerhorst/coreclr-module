@@ -40,10 +40,16 @@ namespace AltV.Net
             remove => Module.PlayerDisconnectEventHandler.Unsubscribe(value);
         }
 
-        public static event EntityRemoveDelegate OnEntityRemove
+        public static event PlayerRemoveDelegate OnPlayerRemove
         {
-            add => Module.EntityRemoveEventHandler.Subscribe(value);
-            remove => Module.EntityRemoveEventHandler.Unsubscribe(value);
+            add => Module.PlayerRemoveEventHandler.Subscribe(value);
+            remove => Module.PlayerRemoveEventHandler.Unsubscribe(value);
+        }
+        
+        public static event VehicleRemoveDelegate OnVehicleRemove
+        {
+            add => Module.VehicleRemoveEventHandler.Subscribe(value);
+            remove => Module.VehicleRemoveEventHandler.Unsubscribe(value);
         }
 
         public static event PlayerChangeVehicleSeatDelegate OnPlayerChangeVehicleSeat

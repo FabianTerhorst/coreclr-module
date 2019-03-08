@@ -67,6 +67,10 @@ class CSharpResource : public alt::IResource {
 
     void OnRemoveBaseObject(alt::IBaseObject* object) override;
 
+    void* GetBaseObjectPointer(alt::IBaseObject* baseObject);
+
+    void* GetEntityPointer(alt::IEntity* entity);
+
 private:
     alt::IServer* server;
 
@@ -79,27 +83,30 @@ public:
         this->exports[key] = mValue;
     }
 
-    void (* OnCheckpointDelegate)(alt::ICheckpoint* checkpoint, alt::IEntity* entity, alt::IBaseObject::Type type,
+    void (* OnCheckpointDelegate)(alt::ICheckpoint* checkpoint, void* entity, alt::IBaseObject::Type type,
                                   bool state);
 
     void (* OnClientEventDelegate)(alt::IPlayer* player, const char* name, alt::Array<alt::MValue>* args);
 
     void (* OnPlayerConnectDelegate)(alt::IPlayer* player, uint16_t playerId, const char* reason);
 
-    void (* OnPlayerDamageDelegate)(alt::IPlayer* player, alt::IEntity* attacker,
+    void (* OnPlayerDamageDelegate)(alt::IPlayer* player, void* attacker,
                                     alt::IBaseObject::Type attackerType, uint16_t attackerId, uint32_t weapon,
                                     uint16_t damage);
 
-    void (* OnPlayerDeathDelegate)(alt::IPlayer* player, alt::IEntity* killer, alt::IBaseObject::Type killerType,
-                                  uint32_t weapon);
+    void (* OnPlayerDeathDelegate)(alt::IPlayer* player, void* killer, alt::IBaseObject::Type killerType,
+                                   uint32_t weapon);
 
     void (* OnPlayerDisconnectDelegate)(alt::IPlayer* player, const char* reason);
 
-    void (* OnEntityRemoveDelegate)(alt::IEntity* entity, alt::IBaseObject::Type entityType);
+    void (* OnPlayerRemoveDelegate)(alt::IPlayer* player);
+
+    void (* OnVehicleRemoveDelegate)(alt::IVehicle* vehicle);
 
     void (* OnServerEventDelegate)(const char* name, alt::Array<alt::MValue>* args);
 
-    void (* OnPlayerChangeVehicleSeatDelegate)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t oldSeat, uint8_t newSeat);
+    void (* OnPlayerChangeVehicleSeatDelegate)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t oldSeat,
+                                               uint8_t newSeat);
 
     void (* OnPlayerEnterVehicleDelegate)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t seat);
 
@@ -109,26 +116,27 @@ public:
 
     void (* OnTickDelegate)();
 
-    void (* MainDelegate)(alt::IServer* server, alt::IResource* resource, const char* resourceName, const char* entryPoint);
+    void
+    (* MainDelegate)(alt::IServer* server, alt::IResource* resource, const char* resourceName, const char* entryPoint);
 
-    void (* OnCreatePlayerDelegate) (alt::IPlayer* player, uint16_t id);
+    void (* OnCreatePlayerDelegate)(alt::IPlayer* player, uint16_t id);
 
-    void (* OnRemovePlayerDelegate) (alt::IPlayer* player);
+    void (* OnRemovePlayerDelegate)(alt::IPlayer* player);
 
-    void (* OnCreateVehicleDelegate) (alt::IVehicle* vehicle, uint16_t id);
+    void (* OnCreateVehicleDelegate)(alt::IVehicle* vehicle, uint16_t id);
 
-    void (* OnRemoveVehicleDelegate) (alt::IVehicle* vehicle);
+    void (* OnRemoveVehicleDelegate)(alt::IVehicle* vehicle);
 
-    void (* OnCreateBlipDelegate) (alt::IBlip* blip);
+    void (* OnCreateBlipDelegate)(alt::IBlip* blip);
 
-    void (* OnRemoveBlipDelegate) (alt::IBlip* blip);
+    void (* OnRemoveBlipDelegate)(alt::IBlip* blip);
 
-    void (* OnCreateCheckpointDelegate) (alt::ICheckpoint* checkpoint);
+    void (* OnCreateCheckpointDelegate)(alt::ICheckpoint* checkpoint);
 
-    void (* OnRemoveCheckpointDelegate) (alt::ICheckpoint* checkpoint);
+    void (* OnRemoveCheckpointDelegate)(alt::ICheckpoint* checkpoint);
 
     void* runtimeHost;
     unsigned int domainId;
 };
 
-EXPORT void CSharpResource_SetExport(CSharpResource* resource, const char* key, const alt::MValue& val);
+EXPORT void CSharpResource_SetExport(CSharpResource* resource, const char* key, const alt::MValue &val);

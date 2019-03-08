@@ -24,13 +24,22 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     OnPlayerDamageDelegate = nullptr;
     OnPlayerDeathDelegate = nullptr;
     OnPlayerDisconnectDelegate = nullptr;
-    OnEntityRemoveDelegate = nullptr;
+    OnPlayerRemoveDelegate = nullptr;
+    OnVehicleRemoveDelegate = nullptr;
     OnServerEventDelegate = nullptr;
     OnPlayerChangeVehicleSeatDelegate = nullptr;
     OnPlayerEnterVehicleDelegate = nullptr;
     OnPlayerLeaveVehicleDelegate = nullptr;
     OnStopDelegate = nullptr;
     OnTickDelegate = nullptr;
+    OnCreatePlayerDelegate = nullptr;
+    OnRemovePlayerDelegate = nullptr;
+    OnCreateVehicleDelegate = nullptr;
+    OnRemoveVehicleDelegate = nullptr;
+    OnCreateBlipDelegate = nullptr;
+    OnRemoveBlipDelegate = nullptr;
+    OnCreateCheckpointDelegate = nullptr;
+    OnRemoveCheckpointDelegate = nullptr;
 
     coreClr->CreateAppDomain(server, fullPath, &runtimeHost, &domainId);
     delete[] fullPath;
@@ -49,8 +58,10 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
                          "OnPlayerDamage", reinterpret_cast<void**>(&OnPlayerDamageDelegate));
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
                          "OnPlayerDeath", reinterpret_cast<void**>(&OnPlayerDeathDelegate));
-    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnEntityRemove",
-                         reinterpret_cast<void**>(&OnEntityRemoveDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnPlayerRemove",
+                         reinterpret_cast<void**>(&OnPlayerRemoveDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnVehicleRemove",
+                         reinterpret_cast<void**>(&OnVehicleRemoveDelegate));
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnServerEvent",
                          reinterpret_cast<void**>(&OnServerEventDelegate));
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
@@ -111,9 +122,10 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
     alt::IPlayer* player;
     switch (ev->GetType()) {
         case alt::CEvent::Type::CHECKPOINT_EVENT:
+            entity = ((alt::CCheckpointEvent*) (ev))->GetEntity();
             OnCheckpointDelegate(((alt::CCheckpointEvent*) (ev))->GetTarget(),
-                                 ((alt::CCheckpointEvent*) (ev))->GetEntity(),
-                                 ((alt::CCheckpointEvent*) (ev))->GetEntity()->GetType(),
+                                 GetEntityPointer(entity),
+                                 entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT,
                                  ((alt::CCheckpointEvent*) (ev))->GetState());
             break;
         case alt::CEvent::Type::CLIENT_SCRIPT_EVENT:
@@ -129,7 +141,7 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
         case alt::CEvent::Type::PLAYER_DAMAGE:
             entity = ((alt::CPlayerDamageEvent*) (ev))->GetAttacker();
             OnPlayerDamageDelegate(((alt::CPlayerDamageEvent*) (ev))->GetTarget(),
-                                   entity,
+                                   GetEntityPointer(entity),
                                    entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT,
                                    entity != nullptr ? entity->GetID() : (uint16_t) 0,
                                    ((alt::CPlayerDamageEvent*) (ev))->GetWeapon(),
@@ -138,7 +150,7 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
         case alt::CEvent::Type::PLAYER_DEATH:
             entity = ((alt::CPlayerDeadEvent*) (ev))->GetKiller();
             OnPlayerDeathDelegate(((alt::CPlayerDeadEvent*) (ev))->GetTarget(),
-                                  entity,
+                                  GetEntityPointer(entity),
                                   entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT,
                                   ((alt::CPlayerDeadEvent*) (ev))->GetWeapon());
             break;
@@ -150,7 +162,16 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
             break;
         case alt::CEvent::Type::REMOVE_ENTITY_EVENT:
             entity = ((alt::CRemoveEntityEvent*) (ev))->GetEntity();
-            OnEntityRemoveDelegate(entity, entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT);
+            if (entity != nullptr) {
+                switch(entity->GetType()) {
+                    case alt::IBaseObject::Type::PLAYER:
+                        OnPlayerRemoveDelegate(dynamic_cast<alt::IPlayer*>(entity));
+                        break;
+                    case alt::IBaseObject::Type::VEHICLE:
+                        OnVehicleRemoveDelegate(dynamic_cast<alt::IVehicle*>(entity));
+                        break;
+                }
+            }
             break;
         case alt::CEvent::Type::SERVER_SCRIPT_EVENT:
             list = (((alt::CServerScriptEvent*) (ev))->GetArgs()).Get<alt::Array<alt::MValue>>();
@@ -217,4 +238,36 @@ void CSharpResource::OnTick() {
 
 void CSharpResource_SetExport(CSharpResource* resource, const char* key, const alt::MValue &val) {
     resource->SetExport(key, val);
+}
+
+void* CSharpResource::GetBaseObjectPointer(alt::IBaseObject* baseObject) {
+    if (baseObject != nullptr) {
+        switch (baseObject->GetType()) {
+            case alt::IBaseObject::Type::PLAYER:
+                return dynamic_cast<alt::IPlayer*>(baseObject);
+            case alt::IBaseObject::Type::VEHICLE:
+                return dynamic_cast<alt::IVehicle*>(baseObject);
+            case alt::IBaseObject::Type::BLIP:
+                return dynamic_cast<alt::IBlip*>(baseObject);
+            case alt::IBaseObject::Type::CHECKPOINT:
+                return dynamic_cast<alt::ICheckpoint*>(baseObject);
+            default:
+                return nullptr;
+        }
+    }
+    return nullptr;
+}
+
+void* CSharpResource::GetEntityPointer(alt::IEntity* entity) {
+    if (entity != nullptr) {
+        switch (entity->GetType()) {
+            case alt::IBaseObject::Type::PLAYER:
+                return dynamic_cast<alt::IPlayer*>(entity);
+            case alt::IBaseObject::Type::VEHICLE:
+                return dynamic_cast<alt::IVehicle*>(entity);
+            default:
+                return nullptr;
+        }
+    }
+    return nullptr;
 }

@@ -15,7 +15,9 @@ namespace AltV.Net.Async.Events
 
     public delegate Task PlayerDisconnectAsyncDelegate(IPlayer player, string reason);
 
-    public delegate Task EntityRemoveAsyncDelegate(IBaseObject entity);
+    public delegate Task PlayerRemoveAsyncDelegate(IPlayer player);
+    
+    public delegate Task VehicleRemoveAsyncDelegate(IVehicle vehicle);
 
     public delegate Task ServerEventAsyncDelegate(object[] args);
 

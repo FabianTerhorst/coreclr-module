@@ -68,8 +68,11 @@ namespace AltV.Net
         internal readonly EventHandler<PlayerDisconnectDelegate> PlayerDisconnectEventHandler =
             new EventHandler<PlayerDisconnectDelegate>();
 
-        internal readonly EventHandler<EntityRemoveDelegate> EntityRemoveEventHandler =
-            new EventHandler<EntityRemoveDelegate>();
+        internal readonly EventHandler<PlayerRemoveDelegate> PlayerRemoveEventHandler =
+            new EventHandler<PlayerRemoveDelegate>();
+
+        internal readonly EventHandler<VehicleRemoveDelegate> VehicleRemoveEventHandler =
+            new EventHandler<VehicleRemoveDelegate>();
 
         internal readonly EventHandler<PlayerClientEventDelegate> PlayerClientEventEventHandler =
             new EventHandler<PlayerClientEventDelegate>();
@@ -172,8 +175,7 @@ namespace AltV.Net
             }
         }
 
-        public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
-            bool state)
+        public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType, bool state)
         {
             if (!CheckpointPool.GetOrCreate(checkpointPointer, out var checkpoint))
             {
@@ -347,21 +349,39 @@ namespace AltV.Net
             }
         }
 
-        public void OnEntityRemove(IntPtr entityPointer, BaseObjectType baseObjectType)
+        public void OnPlayerRemove(IntPtr playerPointer)
         {
-            if (!BaseBaseObjectPool.GetOrCreate(entityPointer, baseObjectType, out var entity))
+            if (!PlayerPool.GetOrCreate(playerPointer, out var player))
             {
                 return;
             }
 
-            OnEntityRemoveEvent(entity);
+            OnPlayerRemoveEvent(player);
         }
 
-        public virtual void OnEntityRemoveEvent(IBaseObject entity)
+        public virtual void OnPlayerRemoveEvent(IPlayer player)
         {
-            foreach (var @delegate in EntityRemoveEventHandler.GetSubscriptions())
+            foreach (var @delegate in PlayerRemoveEventHandler.GetSubscriptions())
             {
-                @delegate(entity);
+                @delegate(player);
+            }
+        }
+
+        public void OnVehicleRemove(IntPtr vehiclePointer)
+        {
+            if (!VehiclePool.GetOrCreate(vehiclePointer, out var vehicle))
+            {
+                return;
+            }
+
+            OnVehicleRemoveEvent(vehicle);
+        }
+
+        public virtual void OnVehicleRemoveEvent(IVehicle vehicle)
+        {
+            foreach (var @delegate in VehicleRemoveEventHandler.GetSubscriptions())
+            {
+                @delegate(vehicle);
             }
         }
 

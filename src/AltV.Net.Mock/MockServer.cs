@@ -11,7 +11,7 @@ namespace AltV.Net.Mock
         private readonly IntPtr nativePointer;
 
         private readonly IBaseBaseObjectPool baseBaseObjectPool;
-        
+
         private readonly IBaseEntityPool baseEntityPool;
 
         private readonly IEntityPool<IPlayer> playerPool;
@@ -22,7 +22,8 @@ namespace AltV.Net.Mock
 
         private readonly IBaseObjectPool<ICheckpoint> checkpointPool;
 
-        internal MockServer(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
+        internal MockServer(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,
+            IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool)
@@ -179,25 +180,30 @@ namespace AltV.Net.Mock
 
         public void RemoveEntity(IEntity entity)
         {
-            Alt.Module.OnEntityRemove(entity.NativePointer, entity.Type);
-            MockEntities.Entities.Remove(entity.NativePointer);
+            switch (entity.Type)
+            {
+                case BaseObjectType.Vehicle:
+                    RemoveVehicle((IVehicle)entity);
+                    break;
+                
+            }
         }
 
         public void RemoveBlip(IBlip blip)
         {
-            Alt.Module.OnEntityRemove(blip.NativePointer, blip.Type);
+            Alt.Module.OnRemoveBlip(blip.NativePointer);
             MockEntities.Entities.Remove(blip.NativePointer);
         }
 
         public void RemoveCheckpoint(ICheckpoint checkpoint)
         {
-            Alt.Module.OnEntityRemove(checkpoint.NativePointer, checkpoint.Type);
+            Alt.Module.OnRemoveCheckpoint(checkpoint.NativePointer);
             MockEntities.Entities.Remove(checkpoint.NativePointer);
         }
 
-        void IServer.RemoveVehicle(IVehicle vehicle)
+        public void RemoveVehicle(IVehicle vehicle)
         {
-            Alt.Module.OnEntityRemove(vehicle.NativePointer, vehicle.Type);
+            Alt.Module.OnRemoveVehicle(vehicle.NativePointer);
             MockEntities.Entities.Remove(vehicle.NativePointer);
         }
 

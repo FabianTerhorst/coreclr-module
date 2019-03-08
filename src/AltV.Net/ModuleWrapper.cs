@@ -107,11 +107,6 @@ namespace AltV.Net
             _module.OnPlayerDisconnect(playerPointer, reason);
         }
 
-        public static void OnEntityRemove(IntPtr entityPointer, BaseObjectType baseObjectType)
-        {
-            _module.OnEntityRemove(entityPointer, baseObjectType);
-        }
-
         public static void OnClientEvent(IntPtr playerPointer, string name, ref MValueArray args)
         {
             _module.OnClientEvent(playerPointer, name, ref args);
@@ -160,6 +155,16 @@ namespace AltV.Net
         public static void OnRemoveCheckpoint(IntPtr checkpointPointer)
         {
             _module.OnRemoveCheckpoint(checkpointPointer);
+        }
+
+        public static void OnPlayerRemove(IntPtr playerPointer)
+        {
+            _module.OnPlayerRemove(playerPointer);
+        }
+
+        public static void OnVehicleRemove(IntPtr vehiclePointer)
+        {
+            _module.OnVehicleRemove(vehiclePointer);
         }
     }
 }

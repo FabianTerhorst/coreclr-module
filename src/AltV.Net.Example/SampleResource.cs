@@ -26,7 +26,8 @@ namespace AltV.Net.Example
 
             Alt.OnPlayerConnect += OnPlayerConnect;
             Alt.OnPlayerDisconnect += OnPlayerDisconnect;
-            Alt.OnEntityRemove += OnEntityRemove;
+            Alt.OnPlayerRemove += OnPlayerRemove;
+            Alt.OnVehicleRemove += OnVehicleRemove;
             AltAsync.OnPlayerConnect += OnPlayerConnectAsync;
             Alt.OnPlayerEvent += (player, name, args) => { Alt.Log("event:" + name); };
             AltAsync.OnPlayerEvent += (player, name, args) =>
@@ -355,7 +356,11 @@ namespace AltV.Net.Example
             //Do async processing here with the copy even when player got already removed
         }
 
-        private void OnEntityRemove(IBaseObject entity)
+        private void OnPlayerRemove(IPlayer player)
+        {
+        }
+        
+        private void OnVehicleRemove(IVehicle vehicle)
         {
         }
 
