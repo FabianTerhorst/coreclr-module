@@ -484,7 +484,7 @@ namespace AltV.Net.Elements.Entities
             set
             {
                 CheckExistence();
-                AltVNative.Vehicle.Vehicle_SetLockState(NativePointer, (byte)value);
+                AltVNative.Vehicle.Vehicle_SetLockState(NativePointer, (byte) value);
             }
         }
 
