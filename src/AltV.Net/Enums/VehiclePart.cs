@@ -1,6 +1,6 @@
 ﻿namespace AltV.Net.Enums
 {
-    public enum VehiclePartId : byte
+    public enum VehiclePart : byte
     {
         FrontLeft,
         FrontRight,
