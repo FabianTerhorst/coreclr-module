@@ -4,7 +4,7 @@
     {
         None = 0,
         Unlocked = 1,
-        PlayerOnly = 2,
+        Locked = 2,
         LockoutPlayerOnly = 3,
         LockPlayerInside = 4,
         InitiallyLocked = 5,
