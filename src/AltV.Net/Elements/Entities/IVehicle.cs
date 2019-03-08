@@ -73,11 +73,11 @@ namespace AltV.Net.Elements.Entities
 
         Rgba NeonColor { get; set; }
 
-        byte GetMod(byte category);
+        byte GetMod(VehicleModType category);
 
-        byte GetModsCount(byte category);
+        byte GetModsCount(VehicleModType category);
 
-        bool SetMod(byte category, byte id);
+        bool SetMod(VehicleModType category, byte id);
 
         void SetWheels(byte type, byte variation);
 

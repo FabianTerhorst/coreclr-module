@@ -479,12 +479,12 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                return (VehicleLockState) AltVNative.Vehicle.Vehicle_GetLockState(NativePointer);
+                return (VehicleLockState)AltVNative.Vehicle.Vehicle_GetLockState(NativePointer);
             }
             set
             {
                 CheckExistence();
-                AltVNative.Vehicle.Vehicle_SetLockState(NativePointer, (byte) value);
+                AltVNative.Vehicle.Vehicle_SetLockState(NativePointer, (byte)value);
             }
         }
 
@@ -820,22 +820,22 @@ namespace AltV.Net.Elements.Entities
         {
         }
 
-        public byte GetMod(byte category)
+        public byte GetMod(VehicleModType category)
         {
             CheckExistence();
-            return AltVNative.Vehicle.Vehicle_GetMod(NativePointer, category);
+            return AltVNative.Vehicle.Vehicle_GetMod(NativePointer, (byte)category);
         }
 
-        public byte GetModsCount(byte category)
+        public byte GetModsCount(VehicleModType category)
         {
             CheckExistence();
-            return AltVNative.Vehicle.Vehicle_GetModsCount(NativePointer, category);
+            return AltVNative.Vehicle.Vehicle_GetModsCount(NativePointer, (byte)category);
         }
 
-        public bool SetMod(byte category, byte id)
+        public bool SetMod(VehicleModType category, byte id)
         {
             CheckExistence();
-            return AltVNative.Vehicle.Vehicle_SetMod(NativePointer, category, id);
+            return AltVNative.Vehicle.Vehicle_SetMod(NativePointer, (byte)category, id);
         }
 
         public void SetWheels(byte type, byte variation)
