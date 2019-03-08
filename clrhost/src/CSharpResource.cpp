@@ -53,7 +53,8 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
                          reinterpret_cast<void**>(&OnEntityRemoveDelegate));
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnServerEvent",
                          reinterpret_cast<void**>(&OnServerEventDelegate));
-    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnPlayerChangeVehicleSeat",
+    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                         "OnPlayerChangeVehicleSeat",
                          reinterpret_cast<void**>(&OnPlayerChangeVehicleSeatDelegate));
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnPlayerEnterVehicle",
                          reinterpret_cast<void**>(&OnPlayerEnterVehicleDelegate));
@@ -63,6 +64,22 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
                          reinterpret_cast<void**>(&OnStopDelegate));
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnTick",
                          reinterpret_cast<void**>(&OnTickDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnCreatePlayer",
+                         reinterpret_cast<void**>(&OnCreatePlayerDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemovePlayer",
+                         reinterpret_cast<void**>(&OnRemovePlayerDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnCreateVehicle",
+                         reinterpret_cast<void**>(&OnCreateVehicleDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemoveVehicle",
+                         reinterpret_cast<void**>(&OnRemoveVehicleDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnCreateBlip",
+                         reinterpret_cast<void**>(&OnCreateBlipDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemoveBlip",
+                         reinterpret_cast<void**>(&OnRemoveBlipDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnCreateCheckpoint",
+                         reinterpret_cast<void**>(&OnCreateCheckpointDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemoveCheckpoint",
+                         reinterpret_cast<void**>(&OnRemoveCheckpointDelegate));
 }
 
 bool CSharpResource::Start() {
@@ -121,9 +138,9 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
         case alt::CEvent::Type::PLAYER_DEATH:
             entity = ((alt::CPlayerDeadEvent*) (ev))->GetKiller();
             OnPlayerDeathDelegate(((alt::CPlayerDeadEvent*) (ev))->GetTarget(),
-                                 entity,
-                                 entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT,
-                                 ((alt::CPlayerDeadEvent*) (ev))->GetWeapon());
+                                  entity,
+                                  entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT,
+                                  ((alt::CPlayerDeadEvent*) (ev))->GetWeapon());
             break;
         case alt::CEvent::Type::PLAYER_DISCONNECT:
             disconnectEvent = reinterpret_cast<const alt::CPlayerDisconnectEvent*>(ev);
@@ -141,28 +158,63 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
             break;
         case alt::CEvent::Type::PLAYER_CHANGE_VEHICLE_SEAT:
             OnPlayerChangeVehicleSeatDelegate(((alt::CPlayerChangeVehicleSeatEvent*) (ev))->GetTarget(),
-                                        ((alt::CPlayerChangeVehicleSeatEvent*) (ev))->GetPlayer(),
-                                        ((alt::CPlayerChangeVehicleSeatEvent*) (ev))->GetOldSeat(),
-                                        ((alt::CPlayerChangeVehicleSeatEvent*) (ev))->GetNewSeat());
+                                              ((alt::CPlayerChangeVehicleSeatEvent*) (ev))->GetPlayer(),
+                                              ((alt::CPlayerChangeVehicleSeatEvent*) (ev))->GetOldSeat(),
+                                              ((alt::CPlayerChangeVehicleSeatEvent*) (ev))->GetNewSeat());
             break;
         case alt::CEvent::Type::PLAYER_ENTER_VEHICLE:
             OnPlayerEnterVehicleDelegate(((alt::CPlayerEnterVehicleEvent*) (ev))->GetTarget(),
-                                   ((alt::CPlayerEnterVehicleEvent*) (ev))->GetPlayer(),
-                                   ((alt::CPlayerEnterVehicleEvent*) (ev))->GetSeat());
+                                         ((alt::CPlayerEnterVehicleEvent*) (ev))->GetPlayer(),
+                                         ((alt::CPlayerEnterVehicleEvent*) (ev))->GetSeat());
             break;
         case alt::CEvent::Type::PLAYER_LEAVE_VEHICLE:
             OnPlayerLeaveVehicleDelegate(((alt::CPlayerLeaveVehicleEvent*) (ev))->GetTarget(),
-                                   ((alt::CPlayerLeaveVehicleEvent*) (ev))->GetPlayer(),
-                                   ((alt::CPlayerLeaveVehicleEvent*) (ev))->GetSeat());
+                                         ((alt::CPlayerLeaveVehicleEvent*) (ev))->GetPlayer(),
+                                         ((alt::CPlayerLeaveVehicleEvent*) (ev))->GetSeat());
             break;
     }
     return true;
+}
+
+void CSharpResource::OnCreateBaseObject(alt::IBaseObject* object) {
+    switch (object->GetType()) {
+        case alt::IBaseObject::Type::PLAYER:
+            OnCreatePlayerDelegate(dynamic_cast<alt::IPlayer*>(object), dynamic_cast<alt::IPlayer*>(object)->GetID());
+            break;
+        case alt::IBaseObject::Type::VEHICLE:
+            OnCreateVehicleDelegate(dynamic_cast<alt::IVehicle*>(object),
+                                    dynamic_cast<alt::IVehicle*>(object)->GetID());
+            break;
+        case alt::IBaseObject::Type::BLIP:
+            OnCreateBlipDelegate(dynamic_cast<alt::IBlip*>(object));
+            break;
+        case alt::IBaseObject::Type::CHECKPOINT:
+            OnCreateCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+            break;
+    }
+}
+
+void CSharpResource::OnRemoveBaseObject(alt::IBaseObject* object) {
+    switch (object->GetType()) {
+        case alt::IBaseObject::Type::PLAYER:
+            OnRemovePlayerDelegate(dynamic_cast<alt::IPlayer*>(object));
+            break;
+        case alt::IBaseObject::Type::VEHICLE:
+            OnRemoveVehicleDelegate(dynamic_cast<alt::IVehicle*>(object));
+            break;
+        case alt::IBaseObject::Type::BLIP:
+            OnRemoveBlipDelegate(dynamic_cast<alt::IBlip*>(object));
+            break;
+        case alt::IBaseObject::Type::CHECKPOINT:
+            OnRemoveCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+            break;
+    }
 }
 
 void CSharpResource::OnTick() {
     OnTickDelegate();
 }
 
-void CSharpResource_SetExport(CSharpResource* resource, const char* key, const alt::MValue& val) {
+void CSharpResource_SetExport(CSharpResource* resource, const char* key, const alt::MValue &val) {
     resource->SetExport(key, val);
 }

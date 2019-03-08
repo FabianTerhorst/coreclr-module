@@ -6,6 +6,7 @@ namespace AltV.Net
 {
     public interface IBaseObjectPool<TBaseObject> where TBaseObject : IBaseObject
     {
+        void Create(IntPtr entityPointer);
         void Create(IntPtr entityPointer, out TBaseObject entity);
         void Add(TBaseObject entity);
         bool Remove(TBaseObject entity);

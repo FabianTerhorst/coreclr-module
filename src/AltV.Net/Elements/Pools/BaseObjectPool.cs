@@ -22,6 +22,11 @@ namespace AltV.Net.Elements.Pools
         {
             this.entityFactory = entityFactory;
         }
+        
+        public void Create(IntPtr entityPointer)
+        {
+            Add(entityFactory.Create(entityPointer));
+        }
 
         public void Create(IntPtr entityPointer, out TBaseObject entity)
         {

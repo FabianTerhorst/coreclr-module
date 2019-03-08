@@ -63,6 +63,10 @@ class CSharpResource : public alt::IResource {
 
     bool Stop() override;
 
+    void OnCreateBaseObject(alt::IBaseObject* object) override;
+
+    void OnRemoveBaseObject(alt::IBaseObject* object) override;
+
 private:
     alt::IServer* server;
 
@@ -106,6 +110,22 @@ public:
     void (* OnTickDelegate)();
 
     void (* MainDelegate)(alt::IServer* server, alt::IResource* resource, const char* resourceName, const char* entryPoint);
+
+    void (* OnCreatePlayerDelegate) (alt::IPlayer* player, uint16_t id);
+
+    void (* OnRemovePlayerDelegate) (alt::IPlayer* player);
+
+    void (* OnCreateVehicleDelegate) (alt::IVehicle* vehicle, uint16_t id);
+
+    void (* OnRemoveVehicleDelegate) (alt::IVehicle* vehicle);
+
+    void (* OnCreateBlipDelegate) (alt::IBlip* blip);
+
+    void (* OnRemoveBlipDelegate) (alt::IBlip* blip);
+
+    void (* OnCreateCheckpointDelegate) (alt::ICheckpoint* checkpoint);
+
+    void (* OnRemoveCheckpointDelegate) (alt::ICheckpoint* checkpoint);
 
     void* runtimeHost;
     unsigned int domainId;

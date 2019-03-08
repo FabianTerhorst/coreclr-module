@@ -12,11 +12,11 @@ namespace AltV.Net
     public class Module
     {
         internal readonly IServer Server;
-        
+
         internal readonly CSharpNativeResource CSharpNativeResource;
 
         internal readonly IBaseBaseObjectPool BaseBaseObjectPool;
-        
+
         internal readonly IBaseEntityPool BaseEntityPool;
 
         internal readonly IEntityPool<IPlayer> PlayerPool;
@@ -83,7 +83,8 @@ namespace AltV.Net
         internal readonly EventHandler<ServerCustomEventEventDelegate> ServerCustomEventEventHandler =
             new EventHandler<ServerCustomEventEventDelegate>();
 
-        public Module(IServer server, CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
+        public Module(IServer server, CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool,
+            IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool)
@@ -171,7 +172,8 @@ namespace AltV.Net
             }
         }
 
-        public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType, bool state)
+        public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
+            bool state)
         {
             if (!CheckpointPool.GetOrCreate(checkpointPointer, out var checkpoint))
             {
@@ -212,7 +214,8 @@ namespace AltV.Net
             }
         }
 
-        public void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer, BaseObjectType attackerBaseObjectType,
+        public void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer,
+            BaseObjectType attackerBaseObjectType,
             ushort attackerEntityId, uint weapon, ushort damage)
         {
             if (!PlayerPool.GetOrCreate(playerPointer, out var player))
@@ -220,7 +223,8 @@ namespace AltV.Net
                 return;
             }
 
-            BaseEntityPool.GetOrCreate(attackerEntityPointer, attackerBaseObjectType, attackerEntityId, out var attacker);
+            BaseEntityPool.GetOrCreate(attackerEntityPointer, attackerBaseObjectType, attackerEntityId,
+                out var attacker);
 
             OnPlayerDamageEvent(player, attacker, weapon, damage);
         }
@@ -351,8 +355,6 @@ namespace AltV.Net
             }
 
             OnEntityRemoveEvent(entity);
-
-            BaseBaseObjectPool.Remove(entityPointer, baseObjectType);
         }
 
         public virtual void OnEntityRemoveEvent(IBaseObject entity)
@@ -541,6 +543,46 @@ namespace AltV.Net
 
         public virtual void OnServerEventEvent(string name, ref MValueArray args, MValue[] mValues, object[] objects)
         {
+        }
+
+        public void OnCreatePlayer(IntPtr playerPointer, ushort playerId)
+        {
+            PlayerPool.Create(playerPointer, playerId);
+        }
+
+        public void OnRemovePlayer(IntPtr playerPointer)
+        {
+            PlayerPool.Remove(playerPointer);
+        }
+
+        public void OnCreateVehicle(IntPtr vehiclePointer, ushort vehicleId)
+        {
+            VehiclePool.Create(vehiclePointer, vehicleId);
+        }
+
+        public void OnRemoveVehicle(IntPtr vehiclePointer)
+        {
+            VehiclePool.Remove(vehiclePointer);
+        }
+
+        public void OnCreateBlip(IntPtr blipPointer)
+        {
+            BlipPool.Create(blipPointer);
+        }
+
+        public void OnRemoveBlip(IntPtr blipPointer)
+        {
+            BlipPool.Remove(blipPointer);
+        }
+
+        public void OnCreateCheckpoint(IntPtr checkpointPointer)
+        {
+            CheckpointPool.Create(checkpointPointer);
+        }
+
+        public void OnRemoveCheckpoint(IntPtr checkpointPointer)
+        {
+            CheckpointPool.Remove(checkpointPointer);
         }
     }
 }

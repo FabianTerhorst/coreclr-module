@@ -26,6 +26,11 @@ namespace AltV.Net.Elements.Pools
 
         public abstract ushort GetId(IntPtr entityPointer);
 
+        public void Create(IntPtr entityPointer, ushort id)
+        {
+            Add(entityFactory.Create(entityPointer, id));
+        }
+        
         public void Create(IntPtr entityPointer, ushort id, out TEntity entity)
         {
             entity = entityFactory.Create(entityPointer, id);

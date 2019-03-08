@@ -38,7 +38,8 @@ namespace AltV.Net
             var server = new Server(serverPointer, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool,
                 checkpointPool);
             var csharpResource = new CSharpNativeResource(resourcePointer);
-            _module = _resource.GetModule(server, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool, checkpointPool);
+            _module = _resource.GetModule(server, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool,
+                blipPool, checkpointPool);
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
             _resource.OnStart();
         }
@@ -71,13 +72,16 @@ namespace AltV.Net
             _module.OnPlayerConnect(playerPointer, playerId, reason);
         }
 
-        public static void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer, BaseObjectType attackerBaseObjectType,
+        public static void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer,
+            BaseObjectType attackerBaseObjectType,
             ushort attackerEntityId, uint weapon, ushort damage)
         {
-            _module.OnPlayerDamage(playerPointer, attackerEntityPointer, attackerBaseObjectType, attackerEntityId, weapon, damage);
+            _module.OnPlayerDamage(playerPointer, attackerEntityPointer, attackerBaseObjectType, attackerEntityId,
+                weapon, damage);
         }
 
-        public static void OnPlayerDeath(IntPtr playerPointer, IntPtr killerEntityPointer, BaseObjectType killerBaseObjectType, uint weapon)
+        public static void OnPlayerDeath(IntPtr playerPointer, IntPtr killerEntityPointer,
+            BaseObjectType killerBaseObjectType, uint weapon)
         {
             _module.OnPlayerDeath(playerPointer, killerEntityPointer, killerBaseObjectType, weapon);
         }
@@ -116,6 +120,46 @@ namespace AltV.Net
         public static void OnServerEvent(string name, ref MValueArray args)
         {
             _module.OnServerEvent(name, ref args);
+        }
+
+        public static void OnCreatePlayer(IntPtr playerPointer, ushort playerId)
+        {
+            _module.OnCreatePlayer(playerPointer, playerId);
+        }
+
+        public static void OnRemovePlayer(IntPtr playerPointer)
+        {
+            _module.OnRemovePlayer(playerPointer);
+        }
+
+        public static void OnCreateVehicle(IntPtr vehiclePointer, ushort vehicleId)
+        {
+            _module.OnCreateVehicle(vehiclePointer, vehicleId);
+        }
+
+        public static void OnRemoveVehicle(IntPtr vehiclePointer)
+        {
+            _module.OnRemoveVehicle(vehiclePointer);
+        }
+
+        public static void OnCreateBlip(IntPtr blipPointer)
+        {
+            _module.OnCreateBlip(blipPointer);
+        }
+
+        public static void OnRemoveBlip(IntPtr blipPointer)
+        {
+            _module.OnRemoveBlip(blipPointer);
+        }
+
+        public static void OnCreateCheckpoint(IntPtr checkpointPointer)
+        {
+            _module.OnCreateCheckpoint(checkpointPointer);
+        }
+
+        public static void OnRemoveCheckpoint(IntPtr checkpointPointer)
+        {
+            _module.OnRemoveCheckpoint(checkpointPointer);
         }
     }
 }

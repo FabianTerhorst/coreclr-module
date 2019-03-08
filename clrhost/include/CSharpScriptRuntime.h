@@ -15,7 +15,7 @@
 class CSharpScriptRuntime : public alt::IScriptRuntime
 {
     alt::IResource *CreateResource(alt::IResource::CreationInfo *info) override;
-    void DeleteResource(alt::IResource *resource) override;
+    void RemoveResource(alt::IResource *resource) override;
 
     void OnTick() override;
 

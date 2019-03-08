@@ -12,7 +12,7 @@ alt::IResource *CSharpScriptRuntime::CreateResource(alt::IResource::CreationInfo
     return cSharpResource;
 }
 
-void CSharpScriptRuntime::DeleteResource(alt::IResource *resource)
+void CSharpScriptRuntime::RemoveResource(alt::IResource *resource)
 {
     this->coreClr->Shutdown(this->server, ((CSharpResource*)resource)->runtimeHost, ((CSharpResource*)resource)->domainId);   
     delete resource;
