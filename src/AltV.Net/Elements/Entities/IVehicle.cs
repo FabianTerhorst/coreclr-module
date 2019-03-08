@@ -189,6 +189,16 @@ namespace AltV.Net.Elements.Entities
         byte GetModsCount(VehicleModType category) => GetModsCount((byte) category);
         
         bool SetMod(VehicleModType category, byte id) => SetMod((byte) category, id);
+        
+        void SetPartDamageLevel(VehiclePartId partId, byte damage) => SetPartDamageLevel((byte) partId, byte damage);
+
+        byte GetPartBulletHoles(VehiclePartId partId) => GetPartBulletHoles((byte) partId);
+
+        void SetPartBulletHoles(VehiclePartId partId, byte shootsCount) => SetPartBulletHoles((byte) partId, byte shootsCount);
+
+        byte GetBumperDamageLevel(VehicleBumper bumperId) => GetBumperDamageLevel((byte) bumperId) 
+
+        void SetBumperDamageLevel(VehicleBumper bumperId, VehicleBumperDamage damageLevel) => SetBumperDamageLevel((byte) bumperId, (byte) damageLevel)
 #endif
     }
 }
