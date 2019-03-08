@@ -196,13 +196,9 @@ namespace AltV.Net.Elements.Entities
 
         void SetPartBulletHoles(VehiclePart partId, byte shootsCount) => SetPartBulletHoles((byte) partId, byte shootsCount);
 
-        VehicleBumperDamage GetBumperDamageLevel(VehicleBumper bumperId) => GetBumperDamageLevel((byte) bumperId); 
+        VehicleBumperDamage GetBumperDamageLevel(VehicleBumper bumperId) => GetBumperDamageLevel((byte) bumperId) 
 
-        void SetBumperDamageLevel(VehicleBumper bumperId, VehicleBumperDamage damageLevel) => SetBumperDamageLevel((byte) bumperId, (byte) damageLevel);
-
-        VehiclePartDamage GetPartDamageLevel(VehiclePart partId) => GetPartDamageLevel((byte) partId);
-
-        void SetPartDamageLevel(VehiclePart partId, VehiclePartDamage damage) =>  SetPartDamageLevel((byte) partId, (byte) damage); 
+        void SetBumperDamageLevel(VehicleBumper bumperId, VehicleBumperDamage damageLevel) => SetBumperDamageLevel((byte) bumperId, (byte) damageLevel)
 #endif
     }
 }
