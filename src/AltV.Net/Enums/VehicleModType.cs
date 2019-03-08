@@ -36,6 +36,6 @@
         Livery = 48,
         Plate = 62,
         Color1 = 66,
-        Color 2
+        Color2
     }
 }
