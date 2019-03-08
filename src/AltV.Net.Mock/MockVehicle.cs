@@ -1,6 +1,7 @@
 using System;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Enums;
 
 namespace AltV.Net.Mock
 {
@@ -83,7 +84,7 @@ namespace AltV.Net.Mock
         public bool IsHandbrakeActive { get; }
         public byte HeadlightColor { get; set; }
         public bool SirenActive { get; set; }
-        public byte LockState { get; set; }
+        public VehicleLockState LockState { get; set; }
         public byte GetDoorState(byte doorId)
         {
             throw new NotImplementedException();
