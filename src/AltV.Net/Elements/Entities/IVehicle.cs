@@ -152,10 +152,15 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Get the amount of bullet holes for the current part id
         /// </summary>
-        /// <param name="partId">The current path between 0 and 5</param>
+        /// <param name="partId">The current part od between 0 and 5</param>
         /// <returns>The bullet holes count between 0 and 15</returns>
         byte GetPartBulletHoles(byte partId);
 
+        /// <summary>
+        /// Set the amount of bullet holes for the current part id
+        /// </summary>
+        /// <param name="partId">The current part id between 0 and 5</param>
+        /// <param name="shootsCount">The bullet holes count between 0 and 15</param>
         void SetPartBulletHoles(byte partId, byte shootsCount);
 
         bool IsLightDamaged(byte lightId);
