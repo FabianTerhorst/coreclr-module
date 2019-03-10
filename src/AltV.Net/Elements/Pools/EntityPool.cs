@@ -6,14 +6,6 @@ namespace AltV.Net.Elements.Pools
 {
     public abstract class EntityPool<TEntity> : IEntityPool<TEntity> where TEntity : IEntity
     {
-        public static void SetEntityNoLongerExists(TEntity entity)
-        {
-            if (entity is IInternalBaseObject internalEntity)
-            {
-                internalEntity.Exists = false;
-            }
-        }
-
         private readonly Dictionary<IntPtr, TEntity> entities = new Dictionary<IntPtr, TEntity>();
 
         private readonly IEntityFactory<TEntity> entityFactory;
@@ -56,7 +48,7 @@ namespace AltV.Net.Elements.Pools
         public bool Remove(IntPtr entityPointer)
         {
             if (!entities.Remove(entityPointer, out var entity) || !entity.Exists) return false;
-            SetEntityNoLongerExists(entity);
+            BaseObjectPool<TEntity>.SetEntityNoLongerExists(entity);
             return true;
         }
 
