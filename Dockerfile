@@ -1,16 +1,6 @@
-# Check http://releases.llvm.org/download.html#7.0.1 for the latest available binaries
-FROM ubuntu:18.04
-# FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build
-# FROM mcr.microsoft.com/dotnet/core/runtime:2.2 AS runtime
-FROM 7hazard/node-clang-7
+FROM 7hazard/node-clang-7 as cmake
 
 RUN apt-get update && apt-get install -y software-properties-common wget valgrind 
-
-RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
-RUN dpkg -i packages-microsoft-prod.deb
-RUN add-apt-repository universe
-RUN apt-get update && apt-get install -y dotnet-sdk-2.2
-RUN rm packages-microsoft-prod.deb
 
 # build coreclr-module
 WORKDIR /clrhost
@@ -18,34 +8,32 @@ COPY clrhost/ .
 
 RUN sh linux-build.sh
 WORKDIR /clrhost/cmake-build-linux/src
-RUN mkdir -p /altv-server/modules/
-RUN cp libcsharp-module.so /altv-server/modules/
+
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2 as dotnet
+
+# build example resource
+WORKDIR /altv-example/
+COPY src/ .
+
+RUN dotnet publish -c Release
+
+FROM ubuntu:18.04
 
 # construct server structure
 WORKDIR /altv-server
 COPY altv-server .
 COPY server.cfg .
+COPY resource.cfg resources/example/
 COPY data/ ./data
+COPY --from=cmake /clrhost/cmake-build-linux/src/libcsharp-module.so modules/
+COPY --from=dotnet /altv-example/AltV.Net.Example/bin/Release/netcoreapp2.2/publish resources/example/
+COPY --from=dotnet /usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.2 /usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.2
 
 RUN chmod +x ./altv-server
-
-RUN mkdir -p /altv-server/resources/
-
-RUN mkdir -p /altv-server/resources/example
-WORKDIR /altv-server/resources/example
-COPY resource.cfg .
-
-# build example resource
-WORKDIR /altv-server/resources/example
-COPY src/ .
-
-RUN dotnet publish -c Release
-
-RUN mv -v AltV.Net.Example/bin/Release/netcoreapp2.2/publish/* .
 
 EXPOSE 7788/udp
 EXPOSE 7788/tcp
 EXPOSE 80/tcp
 
-WORKDIR /altv-server
+#ENTRYPOINT ["tail", "-f", "/dev/null"]
 CMD ./altv-server
