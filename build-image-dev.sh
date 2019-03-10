@@ -1,0 +1,1 @@
+docker build -t altv-server -f Dockerfile.dev .

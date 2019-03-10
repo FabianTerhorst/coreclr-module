@@ -338,3 +338,8 @@ cmake-build-*/
 # windows cross compile
 clrhost/winsdk_lib_symlinks/
 clrhost/winsdk_vfs_overlay.yaml
+
+altv-server
+Data
+resource.cfg
+server.cfg
