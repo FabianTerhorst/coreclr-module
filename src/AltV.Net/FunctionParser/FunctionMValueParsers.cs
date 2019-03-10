@@ -496,7 +496,7 @@ namespace AltV.Net.FunctionParser
             var valueType = args[1];
             var stringViewArrayRef = StringViewArray.Nil;
             var valueArrayRef = MValueArray.Nil;
-            AltVNative.MValueGet.MValue_GetDict(ref mValue, ref stringViewArrayRef, ref valueArrayRef);
+            AltNative.MValueGet.MValue_GetDict(ref mValue, ref stringViewArrayRef, ref valueArrayRef);
             var strings = stringViewArrayRef.ToArray();
             var valueArray = valueArrayRef.ToArray();
             var length = strings.Length;

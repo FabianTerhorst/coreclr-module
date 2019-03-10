@@ -12,7 +12,7 @@ namespace AltV.Net
 
         public bool GetExport(string key, ref MValue value)
         {
-            return AltVNative.Resource.Resource_GetExport(NativePointer, key, ref value);
+            return AltNative.Resource.Resource_GetExport(NativePointer, key, ref value);
         }
     }
 }

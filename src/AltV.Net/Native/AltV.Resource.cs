@@ -4,7 +4,7 @@ using AltV.Net.Elements.Args;
 
 namespace AltV.Net.Native
 {
-    internal static partial class AltVNative
+    internal static partial class AltNative
     {
         internal static class Resource
         {

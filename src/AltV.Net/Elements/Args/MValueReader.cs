@@ -88,7 +88,7 @@ namespace AltV.Net.Elements.Args
 
             var stringViewArray = StringViewArray.Nil;
             var valueArrayRef = MValueArray.Nil;
-            AltVNative.MValueGet.MValue_GetDict(ref mValue, ref stringViewArray, ref valueArrayRef);
+            AltNative.MValueGet.MValue_GetDict(ref mValue, ref stringViewArray, ref valueArrayRef);
             readableMValue = new MValueObjectReader(stringViewArray, valueArrayRef.Reader());
             currents.Push(readableMValue);
             insideObject = true;
@@ -112,7 +112,7 @@ namespace AltV.Net.Elements.Args
             }
 
             var valueArrayRef = MValueArray.Nil;
-            AltVNative.MValueGet.MValue_GetList(ref mValue, ref valueArrayRef);
+            AltNative.MValueGet.MValue_GetList(ref mValue, ref valueArrayRef);
             readableMValue = new MValueArrayReader(valueArrayRef.Reader());
             currents.Push(readableMValue);
             insideObject = true;

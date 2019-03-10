@@ -6,7 +6,7 @@ using AltV.Net.Enums;
 
 namespace AltV.Net.Native
 {
-    internal static partial class AltVNative
+    internal static partial class AltNative
     {
         internal static class Vehicle
         {

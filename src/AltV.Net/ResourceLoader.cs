@@ -118,7 +118,7 @@ namespace AltV.Net
 
         public virtual void Log(string message, Exception exception = null)
         {
-            AltVNative.Server.Server_LogInfo(serverPointer, $"{message} + {exception}");
+            AltNative.Server.Server_LogInfo(serverPointer, $"{message} + {exception}");
         }
     }
 }

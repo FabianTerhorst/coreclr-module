@@ -125,7 +125,7 @@ namespace AltV.Net
         {
             var mValueArgs = MValue.CreateFromObject(args);
             var result = MValue.Nil;
-            AltVNative.MValueCall.MValue_CallFunctionValue(ref mValue, ref mValueArgs, ref result);
+            AltNative.MValueCall.MValue_CallFunctionValue(ref mValue, ref mValueArgs, ref result);
             return result;
         }
 

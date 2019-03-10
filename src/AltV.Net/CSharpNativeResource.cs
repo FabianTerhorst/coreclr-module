@@ -13,7 +13,7 @@ namespace AltV.Net
         public void SetExport(string key, MValue value)
         {
             //TODO: throw exception when not called in OnStart()
-            AltVNative.Resource.CSharpResource_SetExport(NativePointer, key, ref value);
+            AltNative.Resource.CSharpResource_SetExport(NativePointer, key, ref value);
         }
     }
 }

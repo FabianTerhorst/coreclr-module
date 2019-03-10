@@ -14,7 +14,7 @@ namespace AltV.Net.Async
         {
             ushort id = default;
             var vehiclePtr = await AltVAsync.Schedule(() =>
-                AltVNative.Server.Server_CreateVehicle(((Server) Alt.Server).NativePointer, model, pos, heading,
+                AltNative.Server.Server_CreateVehicle(((Server) Alt.Server).NativePointer, model, pos, heading,
                     ref id));
             Alt.Module.VehiclePool.Create(vehiclePtr, id, out var vehicle);
             return vehicle;
@@ -27,7 +27,7 @@ namespace AltV.Net.Async
         {
             var entityPointer =
                 await AltVAsync.Schedule(() =>
-                    !vehicle.Exists ? IntPtr.Zero : AltVNative.Vehicle.Vehicle_GetDriver(vehicle.NativePointer));
+                    !vehicle.Exists ? IntPtr.Zero : AltNative.Vehicle.Vehicle_GetDriver(vehicle.NativePointer));
             if (entityPointer == IntPtr.Zero) return null;
             return Alt.Module.PlayerPool.GetOrCreate(entityPointer, out var player) ? player : null;
         }
@@ -130,7 +130,7 @@ namespace AltV.Net.Async
                 {
                     if (vehicle.Exists)
                     {
-                        AltVNative.Vehicle.Vehicle_GetNumberPlateText(vehicle.NativePointer, ref ptr);
+                        AltNative.Vehicle.Vehicle_GetNumberPlateText(vehicle.NativePointer, ref ptr);
                     }
                 });
             return ptr == IntPtr.Zero ? string.Empty : Marshal.PtrToStringAnsi(ptr);

@@ -75,9 +75,9 @@ namespace AltV.Net.Mock
             }
             
             var mValue = MValue.Nil;
-            AltVNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValue);
+            AltNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValue);
             var mValueArray = MValueArray.Nil;
-            AltVNative.MValueGet.MValue_GetList(ref mValue, ref mValueArray);
+            AltNative.MValueGet.MValue_GetList(ref mValue, ref mValueArray);
             Alt.Module.OnClientEvent(player.NativePointer, eventName, ref mValueArray);
         }
 

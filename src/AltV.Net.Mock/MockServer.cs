@@ -70,9 +70,9 @@ namespace AltV.Net.Mock
         public void TriggerServerEvent(string eventName, params MValue[] args)
         {
             var mValue = MValue.Nil;
-            AltVNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValue);
+            AltNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValue);
             var mValueArray = MValueArray.Nil;
-            AltVNative.MValueGet.MValue_GetList(ref mValue, ref mValueArray);
+            AltNative.MValueGet.MValue_GetList(ref mValue, ref mValueArray);
             Alt.Module.OnServerEvent(eventName, ref mValueArray);
         }
 
@@ -84,7 +84,7 @@ namespace AltV.Net.Mock
         public void TriggerServerEvent(string eventName, ref MValue args)
         {
             var mValueArray = MValueArray.Nil;
-            AltVNative.MValueGet.MValue_GetList(ref args, ref mValueArray);
+            AltNative.MValueGet.MValue_GetList(ref args, ref mValueArray);
             Alt.Module.OnServerEvent(eventName, ref mValueArray);
         }
 
@@ -103,16 +103,16 @@ namespace AltV.Net.Mock
             }
 
             var mValue = MValue.Nil;
-            AltVNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValue);
+            AltNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValue);
             var mValueArray = MValueArray.Nil;
-            AltVNative.MValueGet.MValue_GetList(ref mValue, ref mValueArray);
+            AltNative.MValueGet.MValue_GetList(ref mValue, ref mValueArray);
             Alt.Module.OnClientEvent(player?.NativePointer ?? IntPtr.Zero, eventName, ref mValueArray);
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, ref MValue args)
         {
             var mValueArray = MValueArray.Nil;
-            AltVNative.MValueGet.MValue_GetList(ref args, ref mValueArray);
+            AltNative.MValueGet.MValue_GetList(ref args, ref mValueArray);
             Alt.Module.OnClientEvent(player?.NativePointer ?? IntPtr.Zero, eventName, ref mValueArray);
         }
 

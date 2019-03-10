@@ -64,7 +64,7 @@ namespace AltV.Net.Async
         {
             var entityPointer =
                 await AltVAsync.Schedule(() =>
-                    !player.Exists ? IntPtr.Zero : AltVNative.Player.Player_GetVehicle(player.NativePointer));
+                    !player.Exists ? IntPtr.Zero : AltNative.Player.Player_GetVehicle(player.NativePointer));
             if (entityPointer == IntPtr.Zero) return null;
             return Alt.Module.VehiclePool.GetOrCreate(entityPointer, out var vehicle) ? vehicle : null;
         }

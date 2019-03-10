@@ -8,14 +8,14 @@ namespace AltV.Net.Elements.Entities
 {
     public class Player : Entity, IPlayer
     {
-        public static ushort GetId(IntPtr playerPointer) => AltVNative.Player.Player_GetID(playerPointer);
+        public static ushort GetId(IntPtr playerPointer) => AltNative.Player.Player_GetID(playerPointer);
 
         public override uint Model
         {
             get
             {
                 CheckExistence();
-                return AltVNative.Player.Player_GetModel(NativePointer);
+                return AltNative.Player.Player_GetModel(NativePointer);
             }
         }
 
@@ -25,13 +25,13 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckExistence();
                 var position = Position.Zero;
-                AltVNative.Player.Player_GetPosition(NativePointer, ref position);
+                AltNative.Player.Player_GetPosition(NativePointer, ref position);
                 return position;
             }
             set
             {
                 CheckExistence();
-                AltVNative.Player.Player_SetPosition(NativePointer, value);
+                AltNative.Player.Player_SetPosition(NativePointer, value);
             }
         }
 
@@ -41,13 +41,13 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckExistence();
                 var rotation = Rotation.Zero;
-                AltVNative.Player.Player_GetRotation(NativePointer, ref rotation);
+                AltNative.Player.Player_GetRotation(NativePointer, ref rotation);
                 return rotation;
             }
             set
             {
                 CheckExistence();
-                AltVNative.Player.Player_SetRotation(NativePointer, value);
+                AltNative.Player.Player_SetRotation(NativePointer, value);
             }
         }
 
@@ -56,12 +56,12 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                return AltVNative.Player.Player_GetDimension(NativePointer);
+                return AltNative.Player.Player_GetDimension(NativePointer);
             }
             set
             {
                 CheckExistence();
-                AltVNative.Player.Player_SetDimension(NativePointer, value);
+                AltNative.Player.Player_SetDimension(NativePointer, value);
             }
         }
 
@@ -70,7 +70,7 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                return AltVNative.Player.Player_GetPing(NativePointer);
+                return AltNative.Player.Player_GetPing(NativePointer);
             }
         }
 
@@ -78,14 +78,14 @@ namespace AltV.Net.Elements.Entities
         {
             CheckExistence();
             var mValue = MValue.CreateFromObject(value);
-            AltVNative.Player.Player_SetMetaData(NativePointer, key, ref mValue);
+            AltNative.Player.Player_SetMetaData(NativePointer, key, ref mValue);
         }
 
         public override bool GetMetaData<T>(string key, out T result)
         {
             CheckExistence();
             var mValue = MValue.Nil;
-            AltVNative.Player.Player_GetMetaData(NativePointer, key, ref mValue);
+            AltNative.Player.Player_GetMetaData(NativePointer, key, ref mValue);
             if (!(mValue.ToObject() is T cast))
             {
                 result = default;
@@ -100,14 +100,14 @@ namespace AltV.Net.Elements.Entities
         {
             CheckExistence();
             var mValue = MValue.CreateFromObject(value);
-            AltVNative.Player.Player_SetSyncedMetaData(NativePointer, key, ref mValue);
+            AltNative.Player.Player_SetSyncedMetaData(NativePointer, key, ref mValue);
         }
 
         public override bool GetSyncedMetaData<T>(string key, out T result)
         {
             CheckExistence();
             var mValue = MValue.Nil;
-            AltVNative.Player.Player_GetSyncedMetaData(NativePointer, key, ref mValue);
+            AltNative.Player.Player_GetSyncedMetaData(NativePointer, key, ref mValue);
             if (!(mValue.ToObject() is T cast))
             {
                 result = default;
@@ -123,7 +123,7 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                return AltVNative.Player.Player_IsConnected(NativePointer);
+                return AltNative.Player.Player_IsConnected(NativePointer);
             }
         }
 
@@ -133,13 +133,13 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckExistence();
                 var ptr = IntPtr.Zero;
-                AltVNative.Player.Player_GetName(NativePointer, ref ptr);
+                AltNative.Player.Player_GetName(NativePointer, ref ptr);
                 return Marshal.PtrToStringAnsi(ptr);
             }
             set
             {
                 CheckExistence();
-                AltVNative.Player.Player_SetName(NativePointer, value);
+                AltNative.Player.Player_SetName(NativePointer, value);
             }
         }
 
@@ -148,12 +148,12 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                return AltVNative.Player.Player_GetHealth(NativePointer);
+                return AltNative.Player.Player_GetHealth(NativePointer);
             }
             set
             {
                 CheckExistence();
-                AltVNative.Player.Player_SetHealth(NativePointer, value);
+                AltNative.Player.Player_SetHealth(NativePointer, value);
             }
         }
 
@@ -162,7 +162,7 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                return AltVNative.Player.Player_IsDead(NativePointer);
+                return AltNative.Player.Player_IsDead(NativePointer);
             }
         }
 
@@ -171,7 +171,7 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                return AltVNative.Player.Player_IsJumping(NativePointer);
+                return AltNative.Player.Player_IsJumping(NativePointer);
             }
         }
 
@@ -180,7 +180,7 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                return AltVNative.Player.Player_IsInRagdoll(NativePointer);
+                return AltNative.Player.Player_IsInRagdoll(NativePointer);
             }
         }
 
@@ -189,7 +189,7 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                return AltVNative.Player.Player_IsAiming(NativePointer);
+                return AltNative.Player.Player_IsAiming(NativePointer);
             }
         }
 
@@ -198,7 +198,7 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                return AltVNative.Player.Player_IsShooting(NativePointer);
+                return AltNative.Player.Player_IsShooting(NativePointer);
             }
         }
 
@@ -207,7 +207,7 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                return AltVNative.Player.Player_IsReloading(NativePointer);
+                return AltNative.Player.Player_IsReloading(NativePointer);
             }
         }
 
@@ -216,12 +216,12 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                return AltVNative.Player.Player_GetArmor(NativePointer);
+                return AltNative.Player.Player_GetArmor(NativePointer);
             }
             set
             {
                 CheckExistence();
-                AltVNative.Player.Player_SetArmor(NativePointer, value);
+                AltNative.Player.Player_SetArmor(NativePointer, value);
             }
         }
 
@@ -230,7 +230,7 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                return AltVNative.Player.Player_GetMoveSpeed(NativePointer);
+                return AltNative.Player.Player_GetMoveSpeed(NativePointer);
             }
         }
 
@@ -239,7 +239,7 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                return AltVNative.Player.Player_GetWeapon(NativePointer);
+                return AltNative.Player.Player_GetWeapon(NativePointer);
             }
         }
 
@@ -248,7 +248,7 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                return AltVNative.Player.Player_GetAmmo(NativePointer);
+                return AltNative.Player.Player_GetAmmo(NativePointer);
             }
         }
 
@@ -258,7 +258,7 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckExistence();
                 var position = Position.Zero;
-                AltVNative.Player.Player_GetAimPos(NativePointer, ref position);
+                AltNative.Player.Player_GetAimPos(NativePointer, ref position);
                 return position;
             }
         }
@@ -269,7 +269,7 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckExistence();
                 var rotation = Rotation.Zero;
-                AltVNative.Player.Player_GetHeadRotation(NativePointer, ref rotation);
+                AltNative.Player.Player_GetHeadRotation(NativePointer, ref rotation);
                 return rotation;
             }
         }
@@ -279,7 +279,7 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                return AltVNative.Player.Player_IsInVehicle(NativePointer);
+                return AltNative.Player.Player_IsInVehicle(NativePointer);
             }
         }
 
@@ -288,7 +288,7 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                var entityPointer = AltVNative.Player.Player_GetVehicle(NativePointer);
+                var entityPointer = AltNative.Player.Player_GetVehicle(NativePointer);
                 if (entityPointer == IntPtr.Zero) return null;
                 return Alt.Module.VehiclePool.GetOrCreate(entityPointer, out var vehicle) ? vehicle : null;
             }
@@ -299,7 +299,7 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckExistence();
-                return AltVNative.Player.Player_GetSeat(NativePointer);
+                return AltNative.Player.Player_GetSeat(NativePointer);
             }
         }
 
@@ -310,31 +310,31 @@ namespace AltV.Net.Elements.Entities
         public void Spawn(Position position)
         {
             CheckExistence();
-            AltVNative.Player.Player_Spawn(NativePointer, position);
+            AltNative.Player.Player_Spawn(NativePointer, position);
         }
 
         public void Despawn()
         {
             CheckExistence();
-            AltVNative.Player.Player_Despawn(NativePointer);
+            AltNative.Player.Player_Despawn(NativePointer);
         }
 
         public void SetDateTime(int day, int month, int year, int hour, int minute, int second)
         {
             CheckExistence();
-            AltVNative.Player.Player_SetDateTime(NativePointer, day, month, year, hour, minute, second);
+            AltNative.Player.Player_SetDateTime(NativePointer, day, month, year, hour, minute, second);
         }
 
         public void SetWeather(uint weather)
         {
             CheckExistence();
-            AltVNative.Player.Player_SetWeather(NativePointer, weather);
+            AltNative.Player.Player_SetWeather(NativePointer, weather);
         }
 
         public void Kick(string reason)
         {
             CheckExistence();
-            AltVNative.Player.Player_Kick(NativePointer, reason);
+            AltNative.Player.Player_Kick(NativePointer, reason);
         }
 
         public void Emit(string eventName, params object[] args)
@@ -347,7 +347,7 @@ namespace AltV.Net.Elements.Entities
         {
             CheckExistence();
             var readOnlyPlayer = ReadOnlyPlayer.Empty;
-            AltVNative.Player.Player_Copy(NativePointer, ref readOnlyPlayer);
+            AltNative.Player.Player_Copy(NativePointer, ref readOnlyPlayer);
             return readOnlyPlayer;
         }
     }

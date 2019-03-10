@@ -286,7 +286,7 @@ namespace AltV.Net.Elements.Args
 
             var stringViewArray = StringViewArray.Nil;
             var valueArrayRef = MValueArray.Nil;
-            AltVNative.MValueGet.MValue_GetDict(ref mValue, ref stringViewArray, ref valueArrayRef);
+            AltNative.MValueGet.MValue_GetDict(ref mValue, ref stringViewArray, ref valueArrayRef);
             keys = stringViewArray;
             values = valueArrayRef;
             return true;
@@ -310,7 +310,7 @@ namespace AltV.Net.Elements.Args
             }
 
             var valueArrayRef = MValueArray.Nil;
-            AltVNative.MValueGet.MValue_GetList(ref mValue, ref valueArrayRef);
+            AltNative.MValueGet.MValue_GetList(ref mValue, ref valueArrayRef);
             values = valueArrayRef;
             return true;
         }

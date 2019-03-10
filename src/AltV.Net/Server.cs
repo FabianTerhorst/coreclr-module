@@ -40,27 +40,27 @@ namespace AltV.Net
 
         public void LogInfo(string message)
         {
-            AltVNative.Server.Server_LogInfo(NativePointer, message);
+            AltNative.Server.Server_LogInfo(NativePointer, message);
         }
 
         public void LogDebug(string message)
         {
-            AltVNative.Server.Server_LogDebug(NativePointer, message);
+            AltNative.Server.Server_LogDebug(NativePointer, message);
         }
 
         public void LogWarning(string message)
         {
-            AltVNative.Server.Server_LogWarning(NativePointer, message);
+            AltNative.Server.Server_LogWarning(NativePointer, message);
         }
 
         public void LogError(string message)
         {
-            AltVNative.Server.Server_LogError(NativePointer, message);
+            AltNative.Server.Server_LogError(NativePointer, message);
         }
 
         public void LogColored(string message)
         {
-            AltVNative.Server.Server_LogColored(NativePointer, message);
+            AltNative.Server.Server_LogColored(NativePointer, message);
         }
 
         public uint Hash(string stringToHash)
@@ -92,13 +92,13 @@ namespace AltV.Net
         public void TriggerServerEvent(string eventName, params MValue[] args)
         {
             var mValueList = MValue.Nil;
-            AltVNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
-            AltVNative.Server.Server_TriggerServerEvent(NativePointer, eventName, ref mValueList);
+            AltNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
+            AltNative.Server.Server_TriggerServerEvent(NativePointer, eventName, ref mValueList);
         }
 
         public void TriggerServerEvent(string eventName, ref MValue args)
         {
-            AltVNative.Server.Server_TriggerServerEvent(NativePointer, eventName, ref args);
+            AltNative.Server.Server_TriggerServerEvent(NativePointer, eventName, ref args);
         }
 
         public void TriggerServerEvent(string eventName, params object[] args)
@@ -109,14 +109,14 @@ namespace AltV.Net
         public void TriggerClientEvent(IPlayer player, string eventName, params MValue[] args)
         {
             var mValueList = MValue.Nil;
-            AltVNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
-            AltVNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero, eventName,
+            AltNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
+            AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero, eventName,
                 ref mValueList);
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, ref MValue args)
         {
-            AltVNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero, eventName,
+            AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero, eventName,
                 ref args);
         }
 
@@ -128,7 +128,7 @@ namespace AltV.Net
         public IVehicle CreateVehicle(uint model, Position pos, float heading)
         {
             ushort id = default;
-            vehiclePool.Create(AltVNative.Server.Server_CreateVehicle(NativePointer, model, pos, heading, ref id), id,
+            vehiclePool.Create(AltNative.Server.Server_CreateVehicle(NativePointer, model, pos, heading, ref id), id,
                 out var vehicle);
             return vehicle;
         }
@@ -136,7 +136,7 @@ namespace AltV.Net
         public ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height,
             Rgba color)
         {
-            checkpointPool.Create(AltVNative.Server.Server_CreateCheckpoint(NativePointer,
+            checkpointPool.Create(AltNative.Server.Server_CreateCheckpoint(NativePointer,
                 player?.NativePointer ?? IntPtr.Zero,
                 type, pos, radius, height, color), out var checkpoint);
             return checkpoint;
@@ -144,14 +144,14 @@ namespace AltV.Net
 
         public IBlip CreateBlip(IPlayer player, byte type, Position pos)
         {
-            blipPool.Create(AltVNative.Server.Server_CreateBlip(NativePointer, player?.NativePointer ?? IntPtr.Zero,
+            blipPool.Create(AltNative.Server.Server_CreateBlip(NativePointer, player?.NativePointer ?? IntPtr.Zero,
                 type, pos), out var blip);
             return blip;
         }
 
         public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
         {
-            blipPool.Create(AltVNative.Server.Server_CreateBlipAttached(NativePointer,
+            blipPool.Create(AltNative.Server.Server_CreateBlipAttached(NativePointer,
                 player?.NativePointer ?? IntPtr.Zero,
                 type, entityAttach.NativePointer), out var blip);
             return blip;
@@ -161,7 +161,7 @@ namespace AltV.Net
         {
             if (entity.Exists)
             {
-                AltVNative.Server.Server_RemoveEntity(NativePointer, entity.NativePointer);
+                AltNative.Server.Server_RemoveEntity(NativePointer, entity.NativePointer);
             }
         }
 
@@ -169,7 +169,7 @@ namespace AltV.Net
         {
             if (blip.Exists)
             {
-                AltVNative.Server.Server_RemoveBlip(NativePointer, blip.NativePointer);
+                AltNative.Server.Server_RemoveBlip(NativePointer, blip.NativePointer);
             }
         }
 
@@ -177,7 +177,7 @@ namespace AltV.Net
         {
             if (checkpoint.Exists)
             {
-                AltVNative.Server.Server_RemoveCheckpoint(NativePointer, checkpoint.NativePointer);
+                AltNative.Server.Server_RemoveCheckpoint(NativePointer, checkpoint.NativePointer);
             }
         }
 
@@ -185,14 +185,14 @@ namespace AltV.Net
         {
             if (vehicle.Exists)
             {
-                AltVNative.Server.Server_RemoveVehicle(NativePointer, vehicle.NativePointer);
+                AltNative.Server.Server_RemoveVehicle(NativePointer, vehicle.NativePointer);
             }
         }
 
         public ServerNativeResource GetResource(string name)
         {
             var resourcePointer = IntPtr.Zero;
-            AltVNative.Server.Server_GetResource(NativePointer, name, ref resourcePointer);
+            AltNative.Server.Server_GetResource(NativePointer, name, ref resourcePointer);
             return resourcePointer == IntPtr.Zero ? null : new ServerNativeResource(resourcePointer);
         }
     }
