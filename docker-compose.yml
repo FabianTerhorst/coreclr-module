@@ -1,0 +1,10 @@
+version: '1'
+
+services:
+  ragemp:
+    build: .
+    ports:
+      - "7788:7788/udp"
+      - "80:80"
+    volumes:
+      - ./src/AltV.Net.Example/bin/Testing/netcoreapp2.2/:/altv-server/resources/example
