@@ -84,20 +84,12 @@ namespace AltV.Net.Async
             this.mainThread = mainThread;
         }
 
-        protected override IEnumerable<Task> GetScheduledTasks()
-        {
-            return tasks;
-        }
+        protected override IEnumerable<Task> GetScheduledTasks() => tasks;
 
-        protected override void QueueTask(Task task)
-        {
-            tasks.Enqueue(task);
-        }
+        protected override void QueueTask(Task task) => tasks.Enqueue(task);
 
-        protected override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued)
-        {
-            return Thread.CurrentThread == mainThread && TryExecuteTask(task);
-        }
+        protected override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued) =>
+            Thread.CurrentThread == mainThread && TryExecuteTask(task);
 
         internal void Tick()
         {
