@@ -347,6 +347,7 @@ namespace AltV.Net.Elements.Entities
         {
             CheckIfEntityExists();
             var readOnlyPlayer = ReadOnlyPlayer.Empty;
+            readOnlyPlayer.Origin = this;
             AltNative.Player.Player_Copy(NativePointer, ref readOnlyPlayer);
             return readOnlyPlayer;
         }
