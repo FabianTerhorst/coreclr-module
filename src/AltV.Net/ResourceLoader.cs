@@ -25,10 +25,8 @@ namespace AltV.Net
             this.entryPoint = entryPoint;
         }
 
-        public virtual string GetPath(string pathResourceName, string pathEntryName)
-        {
-            return $"resources/{pathResourceName}/{pathEntryName}";
-        }
+        public virtual string GetPath(string pathResourceName, string pathEntryName) =>
+            $"resources/{pathResourceName}/{pathEntryName}";
 
         public IResource Init()
         {
@@ -74,12 +72,12 @@ namespace AltV.Net
                 if (constructor == null)
                 {
                     Log(
-                        $"Possible Resource \"{type}\" found, but no constructor without parameters available!");
+                        $"Possible Resource \"{type}\" found, but no constructor without parameters available");
 
                     continue;
                 }
 
-                Log($"Resource \"{type}\" found, executing constructor...");
+                Log($"Resource \"{type}\" found, executing constructor");
 
                 try
                 {
@@ -87,7 +85,7 @@ namespace AltV.Net
                 }
                 catch (Exception e)
                 {
-                    Log($"An error occured during constructor execution: + {e}");
+                    Log($"Threw a exception while executing constructor: + {e}");
                 }
             }
 
@@ -110,14 +108,11 @@ namespace AltV.Net
             }
             catch (FileLoadException e)
             {
-                Log($"An error occured while loading assembly \"{path}\": {e}");
+                Log($"Threw a exception while loading the assembly \"{path}\": {e}");
                 return null;
             }
         }
 
-        public virtual void Log(string message)
-        {
-            AltNative.Server.Server_LogInfo(serverPointer, message);
-        }
+        public virtual void Log(string message) => AltNative.Server.Server_LogInfo(serverPointer, message);
     }
 }

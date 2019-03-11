@@ -9,14 +9,8 @@ namespace AltV.Net.Mock
         {
         }
 
-        public override string GetPath(string pathResourceName, string pathEntryName)
-        {
-            return pathEntryName;
-        }
+        public override string GetPath(string pathResourceName, string pathEntryName) => pathEntryName;
 
-        public override void Log(string message, Exception exception = null)
-        {
-            Console.WriteLine(message, exception);
-        }
+        public override void Log(string message) => Console.WriteLine(message);
     }
 }
