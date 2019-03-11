@@ -12,86 +12,86 @@ namespace AltV.Net
 
         public static event CheckpointDelegate OnCheckpoint
         {
-            add => Module.CheckpointEventHandler.Subscribe(value);
-            remove => Module.CheckpointEventHandler.Unsubscribe(value);
+            add => Module.CheckpointEventHandler.Add(value);
+            remove => Module.CheckpointEventHandler.Remove(value);
         }
 
         public static event PlayerConnectDelegate OnPlayerConnect
         {
-            add => Module.PlayerConnectEventHandler.Subscribe(value);
-            remove => Module.PlayerConnectEventHandler.Unsubscribe(value);
+            add => Module.PlayerConnectEventHandler.Add(value);
+            remove => Module.PlayerConnectEventHandler.Remove(value);
         }
 
         public static event PlayerDamageDelegate OnPlayerDamage
         {
-            add => Module.PlayerDamageEventHandler.Subscribe(value);
-            remove => Module.PlayerDamageEventHandler.Unsubscribe(value);
+            add => Module.PlayerDamageEventHandler.Add(value);
+            remove => Module.PlayerDamageEventHandler.Remove(value);
         }
 
         public static event PlayerDeadDelegate OnPlayerDead
         {
-            add => Module.PlayerDeadEventHandler.Subscribe(value);
-            remove => Module.PlayerDeadEventHandler.Unsubscribe(value);
+            add => Module.PlayerDeadEventHandler.Add(value);
+            remove => Module.PlayerDeadEventHandler.Remove(value);
         }
 
         public static event PlayerDisconnectDelegate OnPlayerDisconnect
         {
-            add => Module.PlayerDisconnectEventHandler.Subscribe(value);
-            remove => Module.PlayerDisconnectEventHandler.Unsubscribe(value);
+            add => Module.PlayerDisconnectEventHandler.Add(value);
+            remove => Module.PlayerDisconnectEventHandler.Remove(value);
         }
 
         public static event PlayerRemoveDelegate OnPlayerRemove
         {
-            add => Module.PlayerRemoveEventHandler.Subscribe(value);
-            remove => Module.PlayerRemoveEventHandler.Unsubscribe(value);
+            add => Module.PlayerRemoveEventHandler.Add(value);
+            remove => Module.PlayerRemoveEventHandler.Remove(value);
         }
         
         public static event VehicleRemoveDelegate OnVehicleRemove
         {
-            add => Module.VehicleRemoveEventHandler.Subscribe(value);
-            remove => Module.VehicleRemoveEventHandler.Unsubscribe(value);
+            add => Module.VehicleRemoveEventHandler.Add(value);
+            remove => Module.VehicleRemoveEventHandler.Remove(value);
         }
 
         public static event PlayerChangeVehicleSeatDelegate OnPlayerChangeVehicleSeat
         {
-            add => Module.PlayerChangeVehicleSeatEventHandler.Subscribe(value);
-            remove => Module.PlayerChangeVehicleSeatEventHandler.Unsubscribe(value);
+            add => Module.PlayerChangeVehicleSeatEventHandler.Add(value);
+            remove => Module.PlayerChangeVehicleSeatEventHandler.Remove(value);
         }
 
         public static event PlayerEnterVehicleDelegate OnPlayerEnterVehicle
         {
-            add => Module.PlayerEnterVehicleEventHandler.Subscribe(value);
-            remove => Module.PlayerEnterVehicleEventHandler.Unsubscribe(value);
+            add => Module.PlayerEnterVehicleEventHandler.Add(value);
+            remove => Module.PlayerEnterVehicleEventHandler.Remove(value);
         }
 
         public static event PlayerLeaveVehicleDelegate OnPlayerLeaveVehicle
         {
-            add => Module.PlayerLeaveVehicleEventHandler.Subscribe(value);
-            remove => Module.PlayerLeaveVehicleEventHandler.Unsubscribe(value);
+            add => Module.PlayerLeaveVehicleEventHandler.Add(value);
+            remove => Module.PlayerLeaveVehicleEventHandler.Remove(value);
         }
 
         public static event PlayerClientEventDelegate OnPlayerEvent
         {
-            add => Module.PlayerClientEventEventHandler.Subscribe(value);
-            remove => Module.PlayerClientEventEventHandler.Unsubscribe(value);
+            add => Module.PlayerClientEventEventHandler.Add(value);
+            remove => Module.PlayerClientEventEventHandler.Remove(value);
         }
 
         public static event PlayerClientCustomEventDelegate OnPlayerCustomEvent
         {
-            add => Module.PlayerClientCustomEventEventHandler.Subscribe(value);
-            remove => Module.PlayerClientCustomEventEventHandler.Unsubscribe(value);
+            add => Module.PlayerClientCustomEventEventHandler.Add(value);
+            remove => Module.PlayerClientCustomEventEventHandler.Remove(value);
         }
 
         public static event ServerEventEventDelegate OnServerEvent
         {
-            add => Module.ServerEventEventHandler.Subscribe(value);
-            remove => Module.ServerEventEventHandler.Unsubscribe(value);
+            add => Module.ServerEventEventHandler.Add(value);
+            remove => Module.ServerEventEventHandler.Remove(value);
         }
 
         public static event ServerCustomEventEventDelegate OnServerCustomEvent
         {
-            add => Module.ServerCustomEventEventHandler.Subscribe(value);
-            remove => Module.ServerCustomEventEventHandler.Unsubscribe(value);
+            add => Module.ServerCustomEventEventHandler.Add(value);
+            remove => Module.ServerCustomEventEventHandler.Remove(value);
         }
 
         public static void Emit(string eventName, params object[] args) => Server.TriggerServerEvent(eventName, args);

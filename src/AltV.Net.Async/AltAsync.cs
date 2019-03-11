@@ -13,68 +13,68 @@ namespace AltV.Net.Async
 
         public static event CheckpointAsyncDelegate OnCheckpoint
         {
-            add => Module.CheckpointAsyncEventHandler.Subscribe(value);
-            remove => Module.CheckpointAsyncEventHandler.Unsubscribe(value);
+            add => Module.CheckpointAsyncEventHandler.Add(value);
+            remove => Module.CheckpointAsyncEventHandler.Remove(value);
         }
 
         public static event PlayerConnectAsyncDelegate OnPlayerConnect
         {
-            add => Module.PlayerConnectAsyncEventHandler.Subscribe(value);
-            remove => Module.PlayerConnectAsyncEventHandler.Unsubscribe(value);
+            add => Module.PlayerConnectAsyncEventHandler.Add(value);
+            remove => Module.PlayerConnectAsyncEventHandler.Remove(value);
         }
 
         public static event PlayerDamageAsyncDelegate OnPlayerDamage
         {
-            add => Module.PlayerDamageAsyncEventHandler.Subscribe(value);
-            remove => Module.PlayerDamageAsyncEventHandler.Unsubscribe(value);
+            add => Module.PlayerDamageAsyncEventHandler.Add(value);
+            remove => Module.PlayerDamageAsyncEventHandler.Remove(value);
         }
 
         public static event PlayerDeadAsyncDelegate OnPlayerDead
         {
-            add => Module.PlayerDeadAsyncEventHandler.Subscribe(value);
-            remove => Module.PlayerDeadAsyncEventHandler.Unsubscribe(value);
+            add => Module.PlayerDeadAsyncEventHandler.Add(value);
+            remove => Module.PlayerDeadAsyncEventHandler.Remove(value);
         }
 
         public static event PlayerChangeVehicleSeatAsyncDelegate OnPlayerChangeVehicleSeat
         {
-            add => Module.PlayerChangeVehicleSeatAsyncEventHandler.Subscribe(value);
-            remove => Module.PlayerChangeVehicleSeatAsyncEventHandler.Unsubscribe(value);
+            add => Module.PlayerChangeVehicleSeatAsyncEventHandler.Add(value);
+            remove => Module.PlayerChangeVehicleSeatAsyncEventHandler.Remove(value);
         }
 
         public static event PlayerEnterVehicleAsyncDelegate OnPlayerEnterVehicle
         {
-            add => Module.PlayerEnterVehicleAsyncEventHandler.Subscribe(value);
-            remove => Module.PlayerEnterVehicleAsyncEventHandler.Unsubscribe(value);
+            add => Module.PlayerEnterVehicleAsyncEventHandler.Add(value);
+            remove => Module.PlayerEnterVehicleAsyncEventHandler.Remove(value);
         }
 
         public static event PlayerLeaveVehicleAsyncDelegate OnPlayerLeaveVehicle
         {
-            add => Module.PlayerLeaveVehicleAsyncEventHandler.Subscribe(value);
-            remove => Module.PlayerLeaveVehicleAsyncEventHandler.Unsubscribe(value);
+            add => Module.PlayerLeaveVehicleAsyncEventHandler.Add(value);
+            remove => Module.PlayerLeaveVehicleAsyncEventHandler.Remove(value);
         }
 
         public static event PlayerDisconnectAsyncDelegate OnPlayerDisconnect
         {
-            add => Module.PlayerDisconnectAsyncEventHandler.Subscribe(value);
-            remove => Module.PlayerDisconnectAsyncEventHandler.Unsubscribe(value);
+            add => Module.PlayerDisconnectAsyncEventHandler.Add(value);
+            remove => Module.PlayerDisconnectAsyncEventHandler.Remove(value);
         }
 
         public static event PlayerRemoveAsyncDelegate OnPlayerRemove
         {
-            add => Module.PlayerRemoveAsyncEventHandler.Subscribe(value);
-            remove => Module.PlayerRemoveAsyncEventHandler.Unsubscribe(value);
+            add => Module.PlayerRemoveAsyncEventHandler.Add(value);
+            remove => Module.PlayerRemoveAsyncEventHandler.Remove(value);
         }
         
         public static event VehicleRemoveAsyncDelegate OnVehicleRemove
         {
-            add => Module.VehicleRemoveAsyncEventHandler.Subscribe(value);
-            remove => Module.VehicleRemoveAsyncEventHandler.Unsubscribe(value);
+            add => Module.VehicleRemoveAsyncEventHandler.Add(value);
+            remove => Module.VehicleRemoveAsyncEventHandler.Remove(value);
         }
 
         public static event PlayerClientEventAsyncDelegate OnPlayerEvent
         {
-            add => Module.PlayerClientEventAsyncEventHandler.Subscribe(value);
-            remove => Module.PlayerClientEventAsyncEventHandler.Unsubscribe(value);
+            add => Module.PlayerClientEventAsyncEventHandler.Add(value);
+            remove => Module.PlayerClientEventAsyncEventHandler.Remove(value);
         }
 
         public static void On(string eventName, ClientEventAsyncDelegate clientEventDelegate)

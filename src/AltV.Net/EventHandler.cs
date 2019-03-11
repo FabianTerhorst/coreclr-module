@@ -4,22 +4,22 @@ namespace AltV.Net
 {
     public class EventHandler<TEvent>
     {
-        private readonly HashSet<TEvent> subscriptions = new HashSet<TEvent>();
+        private readonly HashSet<TEvent> events = new HashSet<TEvent>();
 
-        public void Subscribe(TEvent callback)
+        public void Add(TEvent callback)
         {
             if (callback == null) return;
-            subscriptions.Add(callback);
+            events.Add(callback);
         }
 
-        public void Unsubscribe(TEvent callback)
+        public void Remove(TEvent callback)
         {
             if (callback == null) return;
-            subscriptions.Remove(callback);
+            events.Remove(callback);
         }
 
-        public HashSet<TEvent> GetSubscriptions() => subscriptions;
+        public HashSet<TEvent> GetSubscriptions() => events;
 
-        public bool HasSubscriptions() => subscriptions.Count != 0;
+        public bool HasSubscriptions() => events.Count != 0;
     }
 }
