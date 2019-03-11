@@ -27,7 +27,7 @@ namespace AltV.Net.Async
             }
             catch (Exception e)
             {
-                Alt.Log($"Execution of {typeof(TEvent)} threw an error" + e);
+                Alt.Log($"Execution of {typeof(TEvent)} threw an error: {e}");
             }
         }
     }
