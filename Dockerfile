@@ -1,6 +1,6 @@
 FROM 7hazard/node-clang-7 as cmake
 
-RUN apt-get update && apt-get install -y software-properties-common wget valgrind 
+RUN apt-get update && apt-get install -y valgrind
 
 # build coreclr-module
 WORKDIR /clrhost
