@@ -1,92 +1,140 @@
 using System;
 using System.Runtime.InteropServices;
 using AltV.Net.Elements.Entities;
-using AltV.Net.Native;
 
 namespace AltV.Net.Data
 {
     [StructLayout(LayoutKind.Sequential)]
-    public readonly struct ReadOnlyPlayer : IPlayer
+    public struct ReadOnlyPlayer : IPlayer, IDisposable
     {
         public static ReadOnlyPlayer Empty;
-        
-        public ushort Id { get; }
-        public BaseObjectType Type { get; }
-        private readonly Position position;
-        private readonly Rotation rotation;
-        private readonly short dimension;
-        private readonly string name;
-        private readonly ushort health;
-        private readonly ushort armor;
-        public uint Model { get; }
-        public uint Ping { get; }
+
+        private ushort id;
+        private Position position;
+        private Rotation rotation;
+        private short dimension;
+        private uint ping;
+        private uint model;
+        private byte seat;
+        private Position aimPosition;
+        private Rotation headRotation;
+        private ushort armor;
+        private float moveSpeed;
+        private IntPtr name;
+        private ushort health;
+        private bool isInRagdoll;
+        private bool isDead;
+        private bool isShooting;
+        private bool isAiming;
+        private bool isInVehicle;
+        private bool isJumping;
+        private bool isReloading;
+        private bool isConnected;
+        private IntPtr vehiclePointer;
 
         public IntPtr NativePointer => IntPtr.Zero;
         public bool Exists => false;
+        public BaseObjectType Type => BaseObjectType.Player;
+
+        public void SetMetaData(string key, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GetMetaData<T>(string key, out T result)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetData(string key, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GetData<T>(string key, out T result)
+        {
+            throw new NotImplementedException();
+        }
 
         public Position Position
         {
             get => position;
-            set { }
-        }
-
-        public Rotation Rotation
-        {
-            get => rotation;
-            set { }
+            set => throw new NotImplementedException();
         }
 
         public short Dimension
         {
             get => dimension;
-            set { }
+            set => throw new NotImplementedException();
         }
 
-        public bool IsConnected { get; }
+        public ushort Id => id;
+
+        public Rotation Rotation
+        {
+            get => rotation;
+            set => throw new NotImplementedException();
+        }
+
+        public uint Model => model;
+
+        public void SetSyncedMetaData(string key, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GetSyncedMetaData<T>(string key, out T result)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsConnected => isConnected;
 
         public string Name
         {
-            get => name;
-            set
-            {
-                
-            }
+            get => Marshal.PtrToStringAnsi(name);
+            set => throw new NotImplementedException();
         }
 
         public ushort Health
         {
             get => health;
-            set
-            {
-                
-            }
+            set => throw new NotImplementedException();
         }
 
-        public bool IsDead { get; }
-        public bool IsJumping { get; }
-        public bool IsInRagdoll { get; }
-        public bool IsAiming { get; }
-        public bool IsShooting { get; }
-        public bool IsReloading { get; }
+        public bool IsDead => isDead;
+        public bool IsJumping => isJumping;
+        public bool IsInRagdoll => isInRagdoll;
+        public bool IsAiming => isAiming;
+        public bool IsShooting => isShooting;
+        public bool IsReloading => isReloading;
 
         public ushort Armor
         {
             get => armor;
-            set
+            set => throw new NotImplementedException();
+        }
+
+        public float MoveSpeed => moveSpeed;
+        public uint Weapon => throw new NotImplementedException();
+        public ushort Ammo => throw new NotImplementedException();
+        public Position AimPosition => aimPosition;
+        public Rotation HeadRotation => headRotation;
+        public bool IsInVehicle => isInVehicle;
+
+        public IVehicle Vehicle
+        {
+            get
             {
-                
+                if (vehiclePointer == IntPtr.Zero) return null;
+                return Alt.Module.VehiclePool.GetOrCreate(vehiclePointer, out var vehicle) ? vehicle : null;
             }
         }
 
-        public float MoveSpeed { get; }
-        public uint Weapon { get; }
-        public ushort Ammo { get; }
-        public Position AimPosition { get; }
-        public Rotation HeadRotation { get; }
-        public bool IsInVehicle { get; }
-        public IVehicle Vehicle { get; }
-        public byte Seat { get; }
-        public void Spawn(Position position, uint delayMs)
+        public byte Seat => seat;
+        public uint Ping => ping;
+
+        public void Spawn(Position position, uint delayMs = 0)
         {
             throw new NotImplementedException();
         }
@@ -111,38 +159,19 @@ namespace AltV.Net.Data
             throw new NotImplementedException();
         }
 
-        public void SetPosition(float x, float y, float z) => throw new NotImplementedException();
-
-        public void SetRotation(float roll, float pitch, float yaw) => throw new NotImplementedException();
-
-        public bool GetMetaData<T>(string key, out T result)
+        public void Emit(string eventName, params object[] args)
         {
             throw new NotImplementedException();
         }
 
-        public void SetMetaData(string key, object value)
+        public ReadOnlyPlayer Copy()
         {
             throw new NotImplementedException();
         }
 
-        public bool GetSyncedMetaData<T>(string key, out T result)
+        public void Dispose()
         {
-            throw new NotImplementedException();
+            Marshal.FreeCoTaskMem(name);
         }
-
-        public void SetSyncedMetaData(string key, object value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetData(string key, object value) => throw new NotImplementedException();
-
-        public bool GetData<T>(string key, out T result) => throw new NotImplementedException();
-
-        public void Remove() => throw new NotImplementedException();
-
-        public void Emit(string eventName, params object[] args) => throw new NotImplementedException();
-
-        public ReadOnlyPlayer Copy() => throw new NotImplementedException();
     }
 }

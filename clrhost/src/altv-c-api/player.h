@@ -24,7 +24,7 @@ typedef struct {
     position_t aim_position;
     rotation_t head_rotation;
     uint16_t armor;
-    float movement_speed;
+    float move_speed;
     const char* name;
     uint16_t health;
     bool is_in_ragdoll;

@@ -195,7 +195,7 @@ void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
     player_struct->head_rotation.pitch = headRotation.pitch;
     player_struct->head_rotation.yaw = headRotation.yaw;
     player_struct->armor = player->GetArmor();
-    player_struct->movement_speed = player->GetMoveSpeed();
+    player_struct->move_speed = player->GetMoveSpeed();
     auto name = player->GetName();
     // Free in c# after async method ends
     auto copiedName = new char[name.GetSize()];
