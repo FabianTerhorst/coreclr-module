@@ -6,16 +6,16 @@ namespace AltV.Net
     {
         private readonly HashSet<TEvent> events = new HashSet<TEvent>();
 
-        public void Add(TEvent callback)
+        public void Add(TEvent value)
         {
-            if (callback == null) return;
-            events.Add(callback);
+            if (value == null) return;
+            events.Add(value);
         }
 
-        public void Remove(TEvent callback)
+        public void Remove(TEvent value)
         {
-            if (callback == null) return;
-            events.Remove(callback);
+            if (value == null) return;
+            events.Remove(value);
         }
 
         public HashSet<TEvent> GetSubscriptions() => events;
