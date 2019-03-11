@@ -1,1 +1,1 @@
-docker run altv-server
+docker run -d --publish 7788:7788 altv-server 

@@ -33,7 +33,6 @@ RUN chmod +x ./altv-server
 
 EXPOSE 7788/udp
 EXPOSE 7788/tcp
-EXPOSE 80/tcp
 
 #ENTRYPOINT ["tail", "-f", "/dev/null"]
 CMD ./altv-server
