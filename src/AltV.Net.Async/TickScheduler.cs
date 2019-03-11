@@ -22,9 +22,9 @@ namespace AltV.Net.Async
 
         private readonly ChannelWriter<Task> writer;
 
-        public TickScheduler()
+        public TickScheduler(Thread mainThread)
         {
-            mainThread = Thread.CurrentThread;
+            this.mainThread = mainThread;
             reader = tasks.Reader;
             writer = tasks.Writer;
         }
