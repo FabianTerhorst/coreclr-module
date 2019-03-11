@@ -126,7 +126,7 @@ namespace AltV.Net.Elements.Entities
             CheckIfEntityExists();
             if (!player.Exists)
             {
-                throw new EntityDeletedException(player);
+                throw new EntityRemovedException(player);
             }
 
             return AltNative.Checkpoint.Checkpoint_IsPlayerIn(NativePointer, player.NativePointer);
@@ -137,7 +137,7 @@ namespace AltV.Net.Elements.Entities
             CheckIfEntityExists();
             if (!vehicle.Exists)
             {
-                throw new EntityDeletedException(vehicle);
+                throw new EntityRemovedException(vehicle);
             }
 
             return AltNative.Checkpoint.Checkpoint_IsVehicleIn(NativePointer, vehicle.NativePointer);

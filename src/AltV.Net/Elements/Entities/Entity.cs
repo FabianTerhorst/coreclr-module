@@ -26,7 +26,7 @@ namespace AltV.Net.Elements.Entities
                 return;
             }
 
-            throw new EntityDeletedException(this);
+            throw new EntityRemovedException(this);
         }
     }
 }

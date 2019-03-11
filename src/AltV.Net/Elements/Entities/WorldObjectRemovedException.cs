@@ -2,9 +2,9 @@ using System;
 
 namespace AltV.Net.Elements.Entities
 {
-    public class WorldObjectDeletedException : Exception
+    public class WorldObjectRemovedException : Exception
     {
-        internal WorldObjectDeletedException(IWorldObject worldObject) : base(
+        internal WorldObjectRemovedException(IWorldObject worldObject) : base(
             $"WorldObject(Type: {worldObject.Type.ToString()}: Dimension {worldObject.Dimension}) got deleted.")
         {
         }

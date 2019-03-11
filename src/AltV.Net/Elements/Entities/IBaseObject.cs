@@ -25,7 +25,7 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        /// <exception cref="EntityRemovedException">This entity was deleted before</exception>
         void SetMetaData(string key, object value);
 
         bool GetMetaData<T>(string key, out T result);

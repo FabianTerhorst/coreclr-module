@@ -19,7 +19,7 @@ namespace AltV.Net.Elements.Entities
                 return;
             }
 
-            throw new WorldObjectDeletedException(this);
+            throw new WorldObjectRemovedException(this);
         }
     }
 }

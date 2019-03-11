@@ -7,13 +7,13 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Get or set position of the entity.
         /// </summary>
-        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        /// <exception cref="EntityRemovedException">This entity was deleted before</exception>
         Position Position { get; set; }
 
         /// <summary>
         /// Get or set dimension of the entity.
         /// </summary>
-        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        /// <exception cref="EntityRemovedException">This entity was deleted before</exception>
         short Dimension { get; set; }
     }
 }

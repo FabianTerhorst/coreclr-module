@@ -52,7 +52,7 @@ namespace AltV.Net.Elements.Entities
                 return;
             }
 
-            throw new BaseObjectDeletedException(this);
+            throw new BaseObjectRemovedException(this);
         }
     }
 }
