@@ -42,16 +42,17 @@ namespace AltV.Net
             catch (Exception e)
             {
                 Log(
-                    $"{basePath}: An error occured during Resource search in assembly \"{assembly.FullName}\": ",
-                    e);
+                    $"{basePath}: Threw a exception while looking in assembly '{assembly.FullName}': {e}");
 
                 if (!(e is ReflectionTypeLoadException reflectionException)) return null;
-                Log("Following Exceptions are given:");
+                Log("---");
 
                 foreach (var exception in reflectionException.LoaderExceptions)
                 {
-                    Log("Exception: ", exception);
+                    Log($"Exception: {exception}");
                 }
+
+                Log("---");
 
                 return null;
             }
@@ -86,7 +87,7 @@ namespace AltV.Net
                 }
                 catch (Exception e)
                 {
-                    Log("An error occured during constructor execution: ", e);
+                    Log($"An error occured during constructor execution: + {e}");
                 }
             }
 
@@ -114,9 +115,9 @@ namespace AltV.Net
             }
         }
 
-        public virtual void Log(string message, Exception exception = null)
+        public virtual void Log(string message)
         {
-            AltNative.Server.Server_LogInfo(serverPointer, $"{message} + {exception}");
+            AltNative.Server.Server_LogInfo(serverPointer, message);
         }
     }
 }
