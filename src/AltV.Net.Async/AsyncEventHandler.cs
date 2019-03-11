@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AltV.Net.Events;
 
@@ -6,18 +7,19 @@ namespace AltV.Net.Async
 {
     internal class AsyncEventHandler<TEvent> : HashSetEventHandler<TEvent>
     {
-        public void CallAsync(Func<TEvent, Task> func)
+        public async Task CallAsync(Func<TEvent, Task> func)
         {
-            Task.Run(() =>
+            var events = GetEvents();
+            var tasks = new List<Task>(events.Count);
+            foreach (var value in events)
             {
-                foreach (var value in GetEvents())
-                {
-                    ExecuteEventAsync(value, func);
-                }
-            });
+                tasks.Add(ExecuteEventAsync(value, func));
+            }
+
+            await Task.WhenAll(tasks);
         }
 
-        public static async void ExecuteEventAsync(TEvent subscription, Func<TEvent, Task> callback)
+        public static async Task ExecuteEventAsync(TEvent subscription, Func<TEvent, Task> callback)
         {
             try
             {

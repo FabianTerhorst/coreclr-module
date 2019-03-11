@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Async.Events
@@ -13,7 +14,7 @@ namespace AltV.Net.Async.Events
 
     public delegate Task PlayerDeadAsyncDelegate(IPlayer player, IEntity killer, uint weapon);
 
-    public delegate Task PlayerDisconnectAsyncDelegate(IPlayer player, string reason);
+    public delegate Task PlayerDisconnectAsyncDelegate(ReadOnlyPlayer player, string reason);
 
     public delegate Task PlayerRemoveAsyncDelegate(IPlayer player);
     

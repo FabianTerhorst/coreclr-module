@@ -26,6 +26,7 @@ namespace AltV.Net.Example
 
             Alt.OnPlayerConnect += OnPlayerConnect;
             Alt.OnPlayerDisconnect += OnPlayerDisconnect;
+            AltAsync.OnPlayerDisconnect += OnPlayerDisconnectAsync;
             Alt.OnPlayerRemove += OnPlayerRemove;
             Alt.OnVehicleRemove += OnVehicleRemove;
             AltAsync.OnPlayerConnect += OnPlayerConnectAsync;
@@ -356,10 +357,21 @@ namespace AltV.Net.Example
             //Do async processing here with the copy even when player got already removed
         }
 
+        private async Task<int> OnPlayerDisconnectAsync(ReadOnlyPlayer readOnlyPlayer, string reason)
+        {
+            if (readOnlyPlayer.GetOrigin(out IMyPlayer myPlayer))
+            {
+            }
+
+            await Task.Delay(1000);
+
+            return 42;
+        }
+
         private void OnPlayerRemove(IPlayer player)
         {
         }
-        
+
         private void OnVehicleRemove(IVehicle vehicle)
         {
         }

@@ -24,8 +24,9 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<PlayerDeadAsyncDelegate> PlayerDeadAsyncEventHandler =
             new AsyncEventHandler<PlayerDeadAsyncDelegate>();
 
-        internal readonly AsyncEventHandler<PlayerChangeVehicleSeatAsyncDelegate> PlayerChangeVehicleSeatAsyncEventHandler =
-            new AsyncEventHandler<PlayerChangeVehicleSeatAsyncDelegate>();
+        internal readonly AsyncEventHandler<PlayerChangeVehicleSeatAsyncDelegate>
+            PlayerChangeVehicleSeatAsyncEventHandler =
+                new AsyncEventHandler<PlayerChangeVehicleSeatAsyncDelegate>();
 
         internal readonly AsyncEventHandler<PlayerEnterVehicleAsyncDelegate> PlayerEnterVehicleAsyncEventHandler =
             new AsyncEventHandler<PlayerEnterVehicleAsyncDelegate>();
@@ -38,7 +39,7 @@ namespace AltV.Net.Async
 
         internal readonly AsyncEventHandler<PlayerRemoveAsyncDelegate> PlayerRemoveAsyncEventHandler =
             new AsyncEventHandler<PlayerRemoveAsyncDelegate>();
-        
+
         internal readonly AsyncEventHandler<VehicleRemoveAsyncDelegate> VehicleRemoveAsyncEventHandler =
             new AsyncEventHandler<VehicleRemoveAsyncDelegate>();
 
@@ -53,10 +54,12 @@ namespace AltV.Net.Async
             =
             new Dictionary<string, HashSet<ServerEventAsyncDelegate>>();
 
-        public AsyncModule(IServer server, CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
+        public AsyncModule(IServer server, CSharpNativeResource cSharpNativeResource,
+            IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool) : base(server, cSharpNativeResource, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool, blipPool,
+            IBaseObjectPool<ICheckpoint> checkpointPool) : base(server, cSharpNativeResource, baseBaseObjectPool,
+            baseEntityPool, playerPool, vehiclePool, blipPool,
             checkpointPool)
         {
             AltAsync.Setup(this);
@@ -88,7 +91,8 @@ namespace AltV.Net.Async
                 PlayerDeadAsyncEventHandler.CallAsync(@delegate => @delegate(player, killer, weapon)));
         }
 
-        public override void OnPlayerChangeVehicleSeatEvent(IVehicle vehicle, IPlayer player, byte oldSeat, byte newSeat)
+        public override void OnPlayerChangeVehicleSeatEvent(IVehicle vehicle, IPlayer player, byte oldSeat,
+            byte newSeat)
         {
             base.OnPlayerChangeVehicleSeatEvent(vehicle, player, oldSeat, newSeat);
             Task.Run(() =>
@@ -115,9 +119,14 @@ namespace AltV.Net.Async
         public override void OnPlayerDisconnectEvent(IPlayer player, string reason)
         {
             base.OnPlayerDisconnectEvent(player, reason);
-            Task.Run(() =>
-                PlayerDisconnectAsyncEventHandler.CallAsync(@delegate =>
-                    @delegate(player, reason)));
+            var readOnlyPlayer = player.Copy();
+            Task.Run(async () =>
+                {
+                    await PlayerDisconnectAsyncEventHandler.CallAsync(@delegate =>
+                        @delegate(readOnlyPlayer, reason));
+                    readOnlyPlayer.Dispose();
+                }
+            );
         }
 
         public override void OnPlayerRemoveEvent(IPlayer player)
@@ -127,7 +136,7 @@ namespace AltV.Net.Async
                 PlayerRemoveAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(player)));
         }
-        
+
         public override void OnVehicleRemoveEvent(IVehicle vehicle)
         {
             base.OnVehicleRemoveEvent(vehicle);
