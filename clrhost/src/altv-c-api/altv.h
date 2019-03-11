@@ -15,9 +15,6 @@ extern "C"
 {
 #endif
 
-EXPORT void FreeObject(void* pointer);
-EXPORT void FreeArray(void* array);
-
 #ifdef __cplusplus
 }
 #endif
