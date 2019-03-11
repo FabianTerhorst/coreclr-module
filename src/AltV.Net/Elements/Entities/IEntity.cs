@@ -7,6 +7,7 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Get the entity id.
         /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
         ushort Id { get; }
 
         /// <summary>
@@ -14,15 +15,29 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         Rotation Rotation { get; set; }
-        
+
         /// <summary>
         /// Get model of the entity.
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         uint Model { get; }
 
+        /// <summary>
+        /// Set synced meta data of the entity.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
         void SetSyncedMetaData(string key, object value);
 
+        /// <summary>
+        /// Get synced meta data of the entity.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="result"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool GetSyncedMetaData<T>(string key, out T result);
     }
 }
