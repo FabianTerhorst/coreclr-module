@@ -197,13 +197,13 @@ namespace AltV.Net.Async
                 {
                     foreach (var eventHandler in eventDelegates)
                     {
-                        AsyncEventHandler<ClientEventAsyncDelegate>.ExecuteSubscriptionAsync(eventHandler,
+                        AsyncEventHandler<ClientEventAsyncDelegate>.ExecuteEventAsync(eventHandler,
                             @delegate => @delegate(player, objects));
                     }
                 });
             }
 
-            if (PlayerClientEventAsyncEventHandler.HasSubscriptions())
+            if (PlayerClientEventAsyncEventHandler.HasEvents())
             {
                 if (mValues == null)
                 {
@@ -222,9 +222,9 @@ namespace AltV.Net.Async
 
                 Task.Run(() =>
                 {
-                    foreach (var eventHandler in PlayerClientEventAsyncEventHandler.GetSubscriptions())
+                    foreach (var eventHandler in PlayerClientEventAsyncEventHandler.GetEvents())
                     {
-                        AsyncEventHandler<PlayerClientEventAsyncDelegate>.ExecuteSubscriptionAsync(eventHandler,
+                        AsyncEventHandler<PlayerClientEventAsyncDelegate>.ExecuteEventAsync(eventHandler,
                             @delegate => @delegate(player, name, objects));
                     }
                 });
@@ -291,7 +291,7 @@ namespace AltV.Net.Async
                 {
                     foreach (var eventHandler in eventDelegates)
                     {
-                        AsyncEventHandler<ServerEventAsyncDelegate>.ExecuteSubscriptionAsync(eventHandler,
+                        AsyncEventHandler<ServerEventAsyncDelegate>.ExecuteEventAsync(eventHandler,
                             @delegate => @delegate(objects));
                     }
                 });

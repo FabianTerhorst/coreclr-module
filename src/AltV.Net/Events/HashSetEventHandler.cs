@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace AltV.Net
+namespace AltV.Net.Events
 {
-    internal class EventHandler<TEvent>
+    internal class HashSetEventHandler<TEvent>
     {
         private readonly HashSet<TEvent> events = new HashSet<TEvent>();
 
@@ -18,8 +18,8 @@ namespace AltV.Net
             events.Remove(value);
         }
 
-        public HashSet<TEvent> GetSubscriptions() => events;
+        public HashSet<TEvent> GetEvents() => events;
 
-        public bool HasSubscriptions() => events.Count != 0;
+        public bool HasEvents() => events.Count != 0;
     }
 }

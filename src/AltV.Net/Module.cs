@@ -44,47 +44,47 @@ namespace AltV.Net
         private readonly Dictionary<string, HashSet<ClientEventDelegate>> clientEventDelegateHandlers =
             new Dictionary<string, HashSet<ClientEventDelegate>>();
 
-        internal readonly EventHandler<CheckpointDelegate> CheckpointEventHandler =
-            new EventHandler<CheckpointDelegate>();
+        internal readonly Events.HashSetEventHandler<CheckpointDelegate> CheckpointEventHandler =
+            new Events.HashSetEventHandler<CheckpointDelegate>();
 
-        internal readonly EventHandler<PlayerConnectDelegate> PlayerConnectEventHandler =
-            new EventHandler<PlayerConnectDelegate>();
+        internal readonly Events.HashSetEventHandler<PlayerConnectDelegate> PlayerConnectEventHandler =
+            new Events.HashSetEventHandler<PlayerConnectDelegate>();
 
-        internal readonly EventHandler<PlayerDamageDelegate> PlayerDamageEventHandler =
-            new EventHandler<PlayerDamageDelegate>();
+        internal readonly Events.HashSetEventHandler<PlayerDamageDelegate> PlayerDamageEventHandler =
+            new Events.HashSetEventHandler<PlayerDamageDelegate>();
 
-        internal readonly EventHandler<PlayerDeadDelegate> PlayerDeadEventHandler =
-            new EventHandler<PlayerDeadDelegate>();
+        internal readonly Events.HashSetEventHandler<PlayerDeadDelegate> PlayerDeadEventHandler =
+            new Events.HashSetEventHandler<PlayerDeadDelegate>();
 
-        internal readonly EventHandler<PlayerChangeVehicleSeatDelegate> PlayerChangeVehicleSeatEventHandler =
-            new EventHandler<PlayerChangeVehicleSeatDelegate>();
+        internal readonly Events.HashSetEventHandler<PlayerChangeVehicleSeatDelegate> PlayerChangeVehicleSeatEventHandler =
+            new Events.HashSetEventHandler<PlayerChangeVehicleSeatDelegate>();
 
-        internal readonly EventHandler<PlayerEnterVehicleDelegate> PlayerEnterVehicleEventHandler =
-            new EventHandler<PlayerEnterVehicleDelegate>();
+        internal readonly Events.HashSetEventHandler<PlayerEnterVehicleDelegate> PlayerEnterVehicleEventHandler =
+            new Events.HashSetEventHandler<PlayerEnterVehicleDelegate>();
 
-        internal readonly EventHandler<PlayerLeaveVehicleDelegate> PlayerLeaveVehicleEventHandler =
-            new EventHandler<PlayerLeaveVehicleDelegate>();
+        internal readonly Events.HashSetEventHandler<PlayerLeaveVehicleDelegate> PlayerLeaveVehicleEventHandler =
+            new Events.HashSetEventHandler<PlayerLeaveVehicleDelegate>();
 
-        internal readonly EventHandler<PlayerDisconnectDelegate> PlayerDisconnectEventHandler =
-            new EventHandler<PlayerDisconnectDelegate>();
+        internal readonly Events.HashSetEventHandler<PlayerDisconnectDelegate> PlayerDisconnectEventHandler =
+            new Events.HashSetEventHandler<PlayerDisconnectDelegate>();
 
-        internal readonly EventHandler<PlayerRemoveDelegate> PlayerRemoveEventHandler =
-            new EventHandler<PlayerRemoveDelegate>();
+        internal readonly Events.HashSetEventHandler<PlayerRemoveDelegate> PlayerRemoveEventHandler =
+            new Events.HashSetEventHandler<PlayerRemoveDelegate>();
 
-        internal readonly EventHandler<VehicleRemoveDelegate> VehicleRemoveEventHandler =
-            new EventHandler<VehicleRemoveDelegate>();
+        internal readonly Events.HashSetEventHandler<VehicleRemoveDelegate> VehicleRemoveEventHandler =
+            new Events.HashSetEventHandler<VehicleRemoveDelegate>();
 
-        internal readonly EventHandler<PlayerClientEventDelegate> PlayerClientEventEventHandler =
-            new EventHandler<PlayerClientEventDelegate>();
+        internal readonly Events.HashSetEventHandler<PlayerClientEventDelegate> PlayerClientEventEventHandler =
+            new Events.HashSetEventHandler<PlayerClientEventDelegate>();
 
-        internal readonly EventHandler<PlayerClientCustomEventDelegate> PlayerClientCustomEventEventHandler =
-            new EventHandler<PlayerClientCustomEventDelegate>();
+        internal readonly Events.HashSetEventHandler<PlayerClientCustomEventDelegate> PlayerClientCustomEventEventHandler =
+            new Events.HashSetEventHandler<PlayerClientCustomEventDelegate>();
 
-        internal readonly EventHandler<ServerEventEventDelegate> ServerEventEventHandler =
-            new EventHandler<ServerEventEventDelegate>();
+        internal readonly Events.HashSetEventHandler<ServerEventEventDelegate> ServerEventEventHandler =
+            new Events.HashSetEventHandler<ServerEventEventDelegate>();
 
-        internal readonly EventHandler<ServerCustomEventEventDelegate> ServerCustomEventEventHandler =
-            new EventHandler<ServerCustomEventEventDelegate>();
+        internal readonly Events.HashSetEventHandler<ServerCustomEventEventDelegate> ServerCustomEventEventHandler =
+            new Events.HashSetEventHandler<ServerCustomEventEventDelegate>();
 
         public Module(IServer server, CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
@@ -192,7 +192,7 @@ namespace AltV.Net
 
         public virtual void OnCheckPointEvent(ICheckpoint checkpoint, IEntity entity, bool state)
         {
-            foreach (var @delegate in CheckpointEventHandler.GetSubscriptions())
+            foreach (var @delegate in CheckpointEventHandler.GetEvents())
             {
                 @delegate(checkpoint, entity, state);
             }
@@ -210,7 +210,7 @@ namespace AltV.Net
 
         public virtual void OnPlayerConnectEvent(IPlayer player, string reason)
         {
-            foreach (var @delegate in PlayerConnectEventHandler.GetSubscriptions())
+            foreach (var @delegate in PlayerConnectEventHandler.GetEvents())
             {
                 @delegate(player, reason);
             }
@@ -233,7 +233,7 @@ namespace AltV.Net
 
         public virtual void OnPlayerDamageEvent(IPlayer player, IEntity attacker, uint weapon, ushort damage)
         {
-            foreach (var @delegate in PlayerDamageEventHandler.GetSubscriptions())
+            foreach (var @delegate in PlayerDamageEventHandler.GetEvents())
             {
                 @delegate(player, attacker, weapon, damage);
             }
@@ -255,7 +255,7 @@ namespace AltV.Net
 
         public virtual void OnPlayerDeathEvent(IPlayer player, IEntity killer, uint weapon)
         {
-            foreach (var @delegate in PlayerDeadEventHandler.GetSubscriptions())
+            foreach (var @delegate in PlayerDeadEventHandler.GetEvents())
             {
                 @delegate(player, killer, weapon);
             }
@@ -279,7 +279,7 @@ namespace AltV.Net
 
         public virtual void OnPlayerChangeVehicleSeatEvent(IVehicle vehicle, IPlayer player, byte oldSeat, byte newSeat)
         {
-            foreach (var @delegate in PlayerChangeVehicleSeatEventHandler.GetSubscriptions())
+            foreach (var @delegate in PlayerChangeVehicleSeatEventHandler.GetEvents())
             {
                 @delegate(vehicle, player, oldSeat, newSeat);
             }
@@ -302,7 +302,7 @@ namespace AltV.Net
 
         public virtual void OnPlayerEnterVehicleEvent(IVehicle vehicle, IPlayer player, byte seat)
         {
-            foreach (var @delegate in PlayerEnterVehicleEventHandler.GetSubscriptions())
+            foreach (var @delegate in PlayerEnterVehicleEventHandler.GetEvents())
             {
                 @delegate(vehicle, player, seat);
             }
@@ -325,7 +325,7 @@ namespace AltV.Net
 
         public virtual void OnPlayerLeaveVehicleEvent(IVehicle vehicle, IPlayer player, byte seat)
         {
-            foreach (var @delegate in PlayerLeaveVehicleEventHandler.GetSubscriptions())
+            foreach (var @delegate in PlayerLeaveVehicleEventHandler.GetEvents())
             {
                 @delegate(vehicle, player, seat);
             }
@@ -343,7 +343,7 @@ namespace AltV.Net
 
         public virtual void OnPlayerDisconnectEvent(IPlayer player, string reason)
         {
-            foreach (var @delegate in PlayerDisconnectEventHandler.GetSubscriptions())
+            foreach (var @delegate in PlayerDisconnectEventHandler.GetEvents())
             {
                 @delegate(player, reason);
             }
@@ -361,7 +361,7 @@ namespace AltV.Net
 
         public virtual void OnPlayerRemoveEvent(IPlayer player)
         {
-            foreach (var @delegate in PlayerRemoveEventHandler.GetSubscriptions())
+            foreach (var @delegate in PlayerRemoveEventHandler.GetEvents())
             {
                 @delegate(player);
             }
@@ -379,7 +379,7 @@ namespace AltV.Net
 
         public virtual void OnVehicleRemoveEvent(IVehicle vehicle)
         {
-            foreach (var @delegate in VehicleRemoveEventHandler.GetSubscriptions())
+            foreach (var @delegate in VehicleRemoveEventHandler.GetEvents())
             {
                 @delegate(vehicle);
             }
@@ -434,7 +434,7 @@ namespace AltV.Net
                 }
             }
 
-            if (PlayerClientEventEventHandler.HasSubscriptions())
+            if (PlayerClientEventEventHandler.HasEvents())
             {
                 if (argArray == null)
                 {
@@ -451,15 +451,15 @@ namespace AltV.Net
                     }
                 }
 
-                foreach (var eventHandler in PlayerClientEventEventHandler.GetSubscriptions())
+                foreach (var eventHandler in PlayerClientEventEventHandler.GetEvents())
                 {
                     eventHandler(player, name, argObjects);
                 }
             }
 
-            if (PlayerClientCustomEventEventHandler.HasSubscriptions())
+            if (PlayerClientCustomEventEventHandler.HasEvents())
             {
-                foreach (var eventHandler in PlayerClientCustomEventEventHandler.GetSubscriptions())
+                foreach (var eventHandler in PlayerClientCustomEventEventHandler.GetEvents())
                 {
                     eventHandler(player, name, ref args);
                 }
@@ -527,7 +527,7 @@ namespace AltV.Net
                 }
             }
 
-            if (ServerEventEventHandler.HasSubscriptions())
+            if (ServerEventEventHandler.HasEvents())
             {
                 if (argArray == null)
                 {
@@ -544,15 +544,15 @@ namespace AltV.Net
                     }
                 }
 
-                foreach (var eventHandler in ServerEventEventHandler.GetSubscriptions())
+                foreach (var eventHandler in ServerEventEventHandler.GetEvents())
                 {
                     eventHandler(name, argObjects);
                 }
             }
 
-            if (ServerCustomEventEventHandler.HasSubscriptions())
+            if (ServerCustomEventEventHandler.HasEvents())
             {
-                foreach (var eventHandler in ServerCustomEventEventHandler.GetSubscriptions())
+                foreach (var eventHandler in ServerCustomEventEventHandler.GetEvents())
                 {
                     eventHandler(name, ref args);
                 }

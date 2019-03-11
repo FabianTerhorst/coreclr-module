@@ -1,22 +1,23 @@
 using System;
 using System.Threading.Tasks;
+using AltV.Net.Events;
 
 namespace AltV.Net.Async
 {
-    internal class AsyncEventHandler<TEvent> : EventHandler<TEvent>
+    internal class AsyncEventHandler<TEvent> : HashSetEventHandler<TEvent>
     {
-        public void CallAsync(Func<TEvent, Task> callback)
+        public void CallAsync(Func<TEvent, Task> func)
         {
             Task.Run(() =>
             {
-                foreach (var subscription in GetSubscriptions())
+                foreach (var value in GetEvents())
                 {
-                    ExecuteSubscriptionAsync(subscription, callback);
+                    ExecuteEventAsync(value, func);
                 }
             });
         }
 
-        public static async void ExecuteSubscriptionAsync(TEvent subscription, Func<TEvent, Task> callback)
+        public static async void ExecuteEventAsync(TEvent subscription, Func<TEvent, Task> callback)
         {
             try
             {
@@ -24,7 +25,7 @@ namespace AltV.Net.Async
             }
             catch (Exception e)
             {
-                Alt.Log($"An error occured during execution of event {typeof(TEvent)}:" + e);
+                Alt.Log($"Execution of {typeof(TEvent)} threw an error" + e);
             }
         }
     }
