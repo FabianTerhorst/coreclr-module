@@ -18,14 +18,8 @@ namespace AltV.Net
             subscriptions.Remove(callback);
         }
 
-        public HashSet<TEvent> GetSubscriptions()
-        {
-            return subscriptions;
-        }
+        public HashSet<TEvent> GetSubscriptions() => subscriptions;
 
-        public bool HasSubscriptions()
-        {
-            return subscriptions.Count != 0;
-        }
+        public bool HasSubscriptions() => subscriptions.Count != 0;
     }
 }
