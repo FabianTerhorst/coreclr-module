@@ -1,4 +1,4 @@
-FROM 7hazard/node-clang-7 as cmake
+FROM 7hazard/node-clang-7 as clang
 
 RUN apt-get update && apt-get install -y valgrind
 
@@ -25,7 +25,7 @@ COPY altv-server .
 COPY server.cfg .
 COPY resource.cfg resources/example/
 COPY data/ ./data
-COPY --from=cmake /clrhost/cmake-build-linux/src/libcsharp-module.so modules/
+COPY --from=clang /clrhost/cmake-build-linux/src/libcsharp-module.so modules/
 COPY --from=dotnet /altv-example/AltV.Net.Example/bin/Release/netcoreapp2.2/publish resources/example/
 COPY --from=dotnet /usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.2 /usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.2
 
