@@ -25,4 +25,8 @@
       <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="System.Threading.Channels" Version="4.6.0-preview3.19128.7" />
+    </ItemGroup>
+
 </Project>

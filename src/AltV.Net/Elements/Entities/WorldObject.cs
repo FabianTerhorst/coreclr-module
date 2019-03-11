@@ -12,7 +12,7 @@ namespace AltV.Net.Elements.Entities
         {
         }
 
-        protected override void CheckExistence()
+        protected override void CheckIfEntityExists()
         {
             if (Exists)
             {

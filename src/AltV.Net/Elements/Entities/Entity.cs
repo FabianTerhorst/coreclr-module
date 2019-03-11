@@ -19,7 +19,7 @@ namespace AltV.Net.Elements.Entities
             Id = id;
         }
 
-        protected override void CheckExistence()
+        protected override void CheckIfEntityExists()
         {
             if (Exists)
             {

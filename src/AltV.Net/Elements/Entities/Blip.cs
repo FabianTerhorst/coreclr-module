@@ -11,14 +11,14 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 var position = Position.Zero;
                 AltNative.Blip.Blip_GetPosition(NativePointer, ref position);
                 return position;
             }
             set
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 AltNative.Blip.Blip_SetPosition(NativePointer, value);
             }
         }
@@ -27,26 +27,26 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 return AltNative.Blip.Blip_GetDimension(NativePointer);
             }
             set
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 AltNative.Blip.Blip_SetDimension(NativePointer, value);
             }
         }
 
         public override void SetMetaData(string key, object value)
         {
-            CheckExistence();
+            CheckIfEntityExists();
             var mValue = MValue.CreateFromObject(value);
             AltNative.Blip.Blip_SetMetaData(NativePointer, key, ref mValue);
         }
 
         public override bool GetMetaData<T>(string key, out T result)
         {
-            CheckExistence();
+            CheckIfEntityExists();
             var mValue = MValue.Nil;
             AltNative.Blip.Blip_GetMetaData(NativePointer, key, ref mValue);
             if (!(mValue.ToObject() is T cast))
@@ -63,7 +63,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 return AltNative.Blip.Blip_IsGlobal(NativePointer);
             }
         }
@@ -72,7 +72,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 return AltNative.Blip.Blip_IsAttached(NativePointer);
             }
         }
@@ -81,7 +81,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 var entityType = BaseObjectType.Undefined;
                 var entityPointer = AltNative.Blip.Blip_AttachedTo(NativePointer, ref entityType);
                 if (entityPointer == IntPtr.Zero) return null;
@@ -93,7 +93,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 return AltNative.Blip.Blip_GetType(NativePointer);
             }
         }
@@ -102,7 +102,7 @@ namespace AltV.Net.Elements.Entities
         {
             set
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 AltNative.Blip.Blip_SetSprite(NativePointer, value);
             }
         }
@@ -111,7 +111,7 @@ namespace AltV.Net.Elements.Entities
         {
             set
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 AltNative.Blip.Blip_SetColor(NativePointer, value);
             }
         }
@@ -120,7 +120,7 @@ namespace AltV.Net.Elements.Entities
         {
             set
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 AltNative.Blip.Blip_SetRoute(NativePointer, value);
             }
         }
@@ -129,7 +129,7 @@ namespace AltV.Net.Elements.Entities
         {
             set
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 AltNative.Blip.Blip_SetRouteColor(NativePointer, value);
             }
         }

@@ -11,14 +11,14 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 var position = Position.Zero;
                 AltNative.Checkpoint.Checkpoint_GetPosition(NativePointer, ref position);
                 return position;
             }
             set
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 AltNative.Checkpoint.Checkpoint_SetPosition(NativePointer, value);
             }
         }
@@ -27,12 +27,12 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 return AltNative.Checkpoint.Checkpoint_GetDimension(NativePointer);
             }
             set
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 AltNative.Checkpoint.Checkpoint_SetDimension(NativePointer, value);
             }
         }
@@ -41,7 +41,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 var playerPointer = AltNative.Checkpoint.Checkpoint_GetTarget(NativePointer);
                 if (playerPointer == IntPtr.Zero) return null;
                 return Alt.Module.PlayerPool.GetOrCreate(playerPointer, out var player) ? player : null;
@@ -50,14 +50,14 @@ namespace AltV.Net.Elements.Entities
 
         public override void SetMetaData(string key, object value)
         {
-            CheckExistence();
+            CheckIfEntityExists();
             var mValue = MValue.CreateFromObject(value);
             AltNative.Checkpoint.Checkpoint_SetMetaData(NativePointer, key, ref mValue);
         }
 
         public override bool GetMetaData<T>(string key, out T result)
         {
-            CheckExistence();
+            CheckIfEntityExists();
             var mValue = MValue.Nil;
             AltNative.Checkpoint.Checkpoint_GetMetaData(NativePointer, key, ref mValue);
             if (!(mValue.ToObject() is T cast))
@@ -74,7 +74,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 return AltNative.Checkpoint.Checkpoint_IsGlobal(NativePointer);
             }
         }
@@ -83,7 +83,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 return AltNative.Checkpoint.Checkpoint_GetType(NativePointer);
             }
         }
@@ -92,7 +92,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 return AltNative.Checkpoint.Checkpoint_GetHeight(NativePointer);
             }
         }
@@ -101,7 +101,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 return AltNative.Checkpoint.Checkpoint_GetRadius(NativePointer);
             }
         }
@@ -110,7 +110,7 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckExistence();
+                CheckIfEntityExists();
                 var color = Rgba.Zero;
                 AltNative.Checkpoint.Checkpoint_GetColor(NativePointer, ref color);
                 return color;
@@ -123,7 +123,7 @@ namespace AltV.Net.Elements.Entities
 
         public bool IsPlayerIn(IPlayer player)
         {
-            CheckExistence();
+            CheckIfEntityExists();
             if (!player.Exists)
             {
                 throw new EntityDeletedException(player);
@@ -134,7 +134,7 @@ namespace AltV.Net.Elements.Entities
 
         public bool IsVehicleIn(IVehicle vehicle)
         {
-            CheckExistence();
+            CheckIfEntityExists();
             if (!vehicle.Exists)
             {
                 throw new EntityDeletedException(vehicle);
