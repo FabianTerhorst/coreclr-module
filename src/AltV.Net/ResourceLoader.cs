@@ -25,7 +25,7 @@ namespace AltV.Net
             this.entryPoint = entryPoint;
         }
 
-        public virtual string GetPath(string pathResourceName, string pathEntryName) =>
+        protected virtual string GetPath(string pathResourceName, string pathEntryName) =>
             $"resources/{pathResourceName}/{pathEntryName}";
 
         public IResource Init()
@@ -113,6 +113,6 @@ namespace AltV.Net
             }
         }
 
-        public virtual void Log(string message) => AltNative.Server.Server_LogInfo(serverPointer, message);
+        protected virtual void Log(string message) => AltNative.Server.Server_LogInfo(serverPointer, message);
     }
 }
