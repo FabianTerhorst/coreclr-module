@@ -15,10 +15,27 @@
 
 typedef struct {
     uint16_t id;
-    alt::IBaseObject::Type type;
     position_t position;
     rotation_t rotation;
-    uint16_t dimension;
+    int16_t dimension;
+    uint32_t ping;
+    uint32_t model;
+    uint8_t seat;
+    position_t aim_position;
+    rotation_t head_rotation;
+    uint16_t armor;
+    float movement_speed;
+    const char* name;
+    uint16_t health;
+    bool is_in_ragdoll;
+    bool is_dead;
+    bool is_shooting;
+    bool is_aiming;
+    bool is_in_vehicle;
+    bool is_jumping;
+    bool is_reloading;
+    bool is_connected;
+    alt::IVehicle* vehicle;
 } player_struct_t;
 
 #ifdef __cplusplus

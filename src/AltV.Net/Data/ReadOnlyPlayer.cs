@@ -86,7 +86,7 @@ namespace AltV.Net.Data
         public bool IsInVehicle { get; }
         public IVehicle Vehicle { get; }
         public byte Seat { get; }
-        public void Spawn(Position position)
+        public void Spawn(Position position, uint delayMs)
         {
             throw new NotImplementedException();
         }

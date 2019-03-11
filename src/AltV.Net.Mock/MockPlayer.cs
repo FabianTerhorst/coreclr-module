@@ -30,7 +30,7 @@ namespace AltV.Net.Mock
         public byte Seat { get; set; }
         public uint Ping { get; }
 
-        public void Spawn(Position position)
+        public void Spawn(Position position, uint delayMs)
         {
         }
 

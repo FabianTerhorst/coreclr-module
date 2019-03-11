@@ -10,7 +10,7 @@ uint32_t Player_GetModel(alt::IPlayer* player) {
     return player->GetModel();
 }
 
-void Player_GetPosition(alt::IPlayer* player, position_t& position) {
+void Player_GetPosition(alt::IPlayer* player, position_t &position) {
     auto playerPosition = player->GetPosition();
     position.x = playerPosition.x;
     position.y = playerPosition.y;
@@ -21,7 +21,7 @@ void Player_SetPosition(alt::IPlayer* player, alt::Position pos) {
     player->SetPosition(pos);
 }
 
-void Player_GetRotation(alt::IPlayer* player, rotation_t& rotation) {
+void Player_GetRotation(alt::IPlayer* player, rotation_t &rotation) {
     auto playerRotation = player->GetRotation();
     rotation.roll = playerRotation.roll;
     rotation.pitch = playerRotation.pitch;
@@ -138,14 +138,14 @@ uint16_t Player_GetAmmo(alt::IPlayer* player) {
     return player->GetAmmo();
 }
 
-void Player_GetAimPos(alt::IPlayer* player, position_t& aimPosition) {
+void Player_GetAimPos(alt::IPlayer* player, position_t &aimPosition) {
     auto playerAimPosition = player->GetAimPos();
     aimPosition.x = playerAimPosition.x;
     aimPosition.y = playerAimPosition.y;
     aimPosition.z = playerAimPosition.z;
 }
 
-void Player_GetHeadRotation(alt::IPlayer* player, rotation_t& headRotation) {
+void Player_GetHeadRotation(alt::IPlayer* player, rotation_t &headRotation) {
     auto playerHeadRotation = player->GetHeadRotation();
     headRotation.roll = playerHeadRotation.roll;
     headRotation.pitch = playerHeadRotation.pitch;
@@ -174,7 +174,6 @@ uint32_t Player_GetPing(alt::IPlayer* player) {
 
 void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
     player_struct->id = player->GetID();
-    player_struct->type = player->GetType();
     auto position = player->GetPosition();
     player_struct->position.x = position.x;
     player_struct->position.y = position.y;
@@ -184,4 +183,32 @@ void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
     player_struct->rotation.pitch = rotation.pitch;
     player_struct->rotation.yaw = rotation.yaw;
     player_struct->dimension = player->GetDimension();
+    player_struct->ping = player->GetPing();
+    player_struct->model = player->GetModel();
+    player_struct->seat = player->GetSeat();
+    auto aimPosition = player->GetAimPos();
+    player_struct->aim_position.x = aimPosition.x;
+    player_struct->aim_position.y = aimPosition.y;
+    player_struct->aim_position.z = aimPosition.x;
+    auto headRotation = player->GetHeadRotation();
+    player_struct->head_rotation.roll = headRotation.roll;
+    player_struct->head_rotation.pitch = headRotation.pitch;
+    player_struct->head_rotation.yaw = headRotation.yaw;
+    player_struct->armor = player->GetArmor();
+    player_struct->movement_speed = player->GetMoveSpeed();
+    auto name = player->GetName();
+    // Free in c# after async method ends
+    auto copiedName = new char[name.GetSize()];
+    memcpy(copiedName, name.GetData(), name.GetSize());
+    player_struct->name = copiedName;
+    player_struct->health = player->GetHealth();
+    player_struct->is_in_ragdoll = player->IsInRagdoll();
+    player_struct->is_dead = player->IsDead();
+    player_struct->is_shooting = player->IsShooting();
+    player_struct->is_aiming = player->IsAiming();
+    player_struct->is_in_vehicle = player->IsInVehicle();
+    player_struct->is_jumping = player->IsJumping();
+    player_struct->is_reloading = player->IsReloading();
+    player_struct->is_connected = player->IsConnected();
+    player_struct->vehicle = player->GetVehicle();
 }
