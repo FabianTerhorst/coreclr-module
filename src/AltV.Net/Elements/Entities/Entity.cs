@@ -21,10 +21,7 @@ namespace AltV.Net.Elements.Entities
 
         protected override void CheckIfEntityExists()
         {
-            if (Exists)
-            {
-                return;
-            }
+            if (Exists) return;
 
             throw new EntityRemovedException(this);
         }
