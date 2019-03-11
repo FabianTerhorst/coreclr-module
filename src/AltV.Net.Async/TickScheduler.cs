@@ -77,7 +77,7 @@ namespace AltV.Net.Async
 
         private Task currentTask;
 
-        private int runs;
+        private int tasksCount;
 
         public TickScheduler(Thread mainThread)
         {
@@ -93,9 +93,9 @@ namespace AltV.Net.Async
 
         internal void Tick()
         {
-            runs = tasks.Count;
+            tasksCount = tasks.Count;
 
-            while (runs-- > 0 && tasks.TryDequeue(out currentTask))
+            while (tasksCount-- > 0 && tasks.TryDequeue(out currentTask))
             {
                 TryExecuteTask(currentTask);
             }
