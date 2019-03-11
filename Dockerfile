@@ -27,7 +27,7 @@ COPY resource.cfg resources/example/
 COPY data/ ./data
 COPY --from=clang /clrhost/cmake-build-linux/src/libcsharp-module.so modules/
 COPY --from=dotnet /altv-example/AltV.Net.Example/bin/Release/netcoreapp2.2/publish resources/example/
-COPY --from=dotnet /usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.2 /usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.2
+COPY --from=dotnet /usr/share/dotnet/shared/Microsoft.NETCore.App /usr/share/dotnet/shared/Microsoft.NETCore.App
 
 RUN chmod +x ./altv-server
 
