@@ -5,11 +5,11 @@ namespace AltV.Net.Native
     //TODO: maybe later when CEvent::cancel is working
     internal class CPlayerConnectEvent
     {
-        private readonly IntPtr NativePointer;
+        private readonly IntPtr nativePointer;
 
         internal CPlayerConnectEvent(IntPtr nativePointer)
         {
-            NativePointer = nativePointer;
+            this.nativePointer = nativePointer;
         }
 
         private IntPtr GetTarget()

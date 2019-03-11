@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
-using AltV.Net.Native;
 
 namespace AltV.Net.FunctionParser
 {
