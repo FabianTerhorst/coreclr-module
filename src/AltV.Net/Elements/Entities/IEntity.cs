@@ -12,13 +12,13 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Get or set rotation of the entity.
         /// </summary>
-        /// <exception cref="EntityRemovedException">This entity was deleted before</exception>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
         Rotation Rotation { get; set; }
         
         /// <summary>
         /// Get model of the entity.
         /// </summary>
-        /// <exception cref="EntityRemovedException">This entity was deleted before</exception>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
         uint Model { get; }
 
         void SetSyncedMetaData(string key, object value);
