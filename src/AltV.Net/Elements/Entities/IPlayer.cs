@@ -43,7 +43,13 @@ namespace AltV.Net.Elements.Entities
         
         uint Ping { get; }
 
-        void Spawn(Position position);
+        /// <summary>
+        /// Spawns a player at the designated position with a optional delay in milliseconds
+        /// </summary>
+        /// <param name="position">position</param>
+        /// <param name="delayMs">delay in milliseconds until player is spawned</param>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        void Spawn(Position position, uint delayMs = 0);
 
         void Despawn();
 

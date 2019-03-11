@@ -40,7 +40,7 @@ EXPORT void Player_GetSyncedMetaData(alt::IPlayer* player, const char* key, alt:
 EXPORT void Player_SetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValue* val);
 // Player
 EXPORT bool Player_IsConnected(alt::IPlayer* player);
-EXPORT void Player_Spawn(alt::IPlayer* player, alt::Position pos);
+EXPORT void Player_Spawn(alt::IPlayer* player, alt::Position pos, uint32_t delayMs);
 EXPORT void Player_Despawn(alt::IPlayer* player);
 
 EXPORT void Player_GetName(alt::IPlayer* player, const char*&name);

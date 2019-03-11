@@ -62,8 +62,8 @@ bool Player_IsConnected(alt::IPlayer* player) {
     return player->IsConnected();
 }
 
-void Player_Spawn(alt::IPlayer* player, alt::Position pos) {
-    player->Spawn(pos);
+void Player_Spawn(alt::IPlayer* player, alt::Position pos, uint32_t delayMs) {
+    player->Spawn(pos, delayMs);
 }
 
 void Player_Despawn(alt::IPlayer* player) {

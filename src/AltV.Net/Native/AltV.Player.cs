@@ -55,7 +55,7 @@ namespace AltV.Net.Native
             internal static extern bool Player_IsConnected(IntPtr playerPointer);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Player_Spawn(IntPtr playerPointer, Position pos);
+            internal static extern void Player_Spawn(IntPtr playerPointer, Position pos, uint delayMs);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_Despawn(IntPtr playerPointer);

@@ -307,10 +307,10 @@ namespace AltV.Net.Elements.Entities
         {
         }
 
-        public void Spawn(Position position)
+        public void Spawn(Position position, uint delayMs)
         {
             CheckIfEntityExists();
-            AltNative.Player.Player_Spawn(NativePointer, position);
+            AltNative.Player.Player_Spawn(NativePointer, position, delayMs);
         }
 
         public void Despawn()

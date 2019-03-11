@@ -122,8 +122,7 @@ CoreClr::CoreClr(alt::IServer* server) {
 }
 
 CoreClr::~CoreClr() {
-    //TODO: check what else needs to be freed
-    delete runtimeDirectory;
+    free(runtimeDirectory);
 }
 
 bool CoreClr::GetDelegate(alt::IServer* server, void* runtimeHost, unsigned int domainId, const char* moduleName,
@@ -230,7 +229,6 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer* server, cons
         closedir(directory);
 #endif
     }
-    delete runtimeDirectory;
     return assemblies;
 }
 
@@ -320,7 +318,9 @@ void CoreClr::GetPath(alt::IServer* server, const char* defaultPath) {
         return;
     }
     server->LogInfo(alt::String("coreclr-module: greatest version: ") + greatest);
-    runtimeDirectory = (char*) malloc(strlen(defaultPath) + strlen(greatest) + 1);
+    size_t size = strlen(defaultPath) + strlen(greatest) + 1;
+    runtimeDirectory = (char*) malloc(size);
+    memset(runtimeDirectory, '\0', size);
     strcpy(runtimeDirectory, defaultPath);
     strcat(runtimeDirectory, greatest);
 }

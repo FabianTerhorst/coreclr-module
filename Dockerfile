@@ -1,7 +1,5 @@
 FROM 7hazard/node-clang-7 as clang
 
-RUN apt-get update && apt-get install -y valgrind
-
 # build coreclr-module
 WORKDIR /clrhost
 COPY clrhost/ .
@@ -18,6 +16,9 @@ COPY src/ .
 RUN dotnet publish -c Release
 
 FROM ubuntu:18.04
+
+# install valgrind
+RUN apt-get update && apt-get install -y valgrind
 
 # construct server structure
 WORKDIR /altv-server
