@@ -13,8 +13,7 @@ namespace AltV.Net.Mock
     {
         public MockAltV(string entryPoint)
         {
-            var resourceLoader = new MockResourceLoader(IntPtr.Zero, string.Empty, entryPoint);
-            var resource = resourceLoader.Prepare();
+            var resource = new MockResourceLoader(IntPtr.Zero, string.Empty, entryPoint).Resource;
             var playerFactory = new MockPlayerFactory<TPlayer>(resource.GetPlayerFactory());
             var vehicleFactory = new MockVehicleFactory<TVehicle>(resource.GetVehicleFactory());
             var blipFactory = new MockBlipFactory<TBlip>(resource.GetBlipFactory());

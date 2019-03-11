@@ -15,15 +15,17 @@ namespace AltV.Net
         private readonly string resourceName;
         private readonly string entryPoint;
 
-        private readonly Dictionary<string, Assembly> loadedAssemblies;
-        private IResource resource;
+        private readonly Dictionary<string, Assembly> loadedAssemblies =
+            AppDomain.CurrentDomain.GetAssemblies().ToDictionary(x => x.GetName().FullName, x => x);
+
+        public readonly IResource Resource;
 
         internal ResourceLoader(IntPtr serverPointer, string resourceName, string entryPoint)
         {
             this.serverPointer = serverPointer;
             this.resourceName = resourceName;
             this.entryPoint = entryPoint;
-            loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToDictionary(x => x.GetName().FullName, x => x);
+            Resource = Init();
         }
 
         public virtual string GetPath(string pathResourceName, string pathEntryName)
@@ -31,7 +33,7 @@ namespace AltV.Net
             return $"resources/{pathResourceName}/{pathEntryName}";
         }
 
-        public IResource Prepare()
+        private IResource Init()
         {
             var basePath = GetPath(resourceName, entryPoint);
             var assembly = LoadAssembly(basePath);
@@ -56,6 +58,8 @@ namespace AltV.Net
 
                 return null;
             }
+
+            IResource resource = null;
 
             foreach (var type in types)
             {
@@ -96,10 +100,7 @@ namespace AltV.Net
         {
             var reflectionAssembly = AssemblyName.GetAssemblyName(path);
 
-            if (loadedAssemblies.TryGetValue(reflectionAssembly.FullName, out var element))
-            {
-                return element;
-            }
+            if (loadedAssemblies.TryGetValue(reflectionAssembly.FullName, out var element)) return element;
 
             try
             {

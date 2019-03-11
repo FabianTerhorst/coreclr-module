@@ -12,14 +12,11 @@ namespace AltV.Net
     {
         private static Module _module;
 
-        private static ResourceLoader _resourceLoader;
-
         private static IResource _resource;
 
         public static void Main(IntPtr serverPointer, IntPtr resourcePointer, string resourceName, string entryPoint)
         {
-            _resourceLoader = new ResourceLoader(serverPointer, resourceName, entryPoint);
-            _resource = _resourceLoader.Prepare();
+            _resource = new ResourceLoader(serverPointer, resourceName, entryPoint).Resource;
             if (_resource == null)
             {
                 return;
