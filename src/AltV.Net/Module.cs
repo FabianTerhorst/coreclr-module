@@ -92,7 +92,7 @@ namespace AltV.Net
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool)
         {
-            Alt.Setup(this);
+            Alt.Init(this);
             Server = server;
             CSharpNativeResource = cSharpNativeResource;
             BaseBaseObjectPool = baseBaseObjectPool;

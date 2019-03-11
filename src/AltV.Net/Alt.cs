@@ -113,7 +113,7 @@ namespace AltV.Net
 
         public static uint Hash(string stringToHash) => Server.Hash(stringToHash);
 
-        internal static void Setup(Module module)
+        internal static void Init(Module module)
         {
             Module = module;
         }
