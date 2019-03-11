@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace AltV.Net
 {
-    public class EventHandler<TEvent>
+    internal class EventHandler<TEvent>
     {
         private readonly HashSet<TEvent> events = new HashSet<TEvent>();
 
