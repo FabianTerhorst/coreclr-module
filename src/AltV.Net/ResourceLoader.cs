@@ -91,7 +91,7 @@ namespace AltV.Net
 
             if (resource == null)
             {
-                Log($"No resource found for type: \"{ResourceInterfaceType}\"");
+                Log($"No resource in assembly \"{basePath}\" found for type: \"{ResourceInterfaceType}\"");
             }
 
             return resource;
