@@ -37,12 +37,6 @@ void Server_SubscribeCommand(alt::IServer* server, const char* cmd, alt::Command
 }
 
 void Server_TriggerServerEvent(alt::IServer* server, const char* ev, alt::MValueList &args) {
-    /*auto list = args.Get<alt::MValue::List>();
-    auto dict = list[list.GetSize() - 1].Get<alt::MValue::Dict>();
-    for (auto &it : dict) {
-        server->LogInfo(it.first);
-        server->LogInfo(it.second.ToString());
-    }*/
     server->TriggerServerEvent(ev, args);
 }
 
