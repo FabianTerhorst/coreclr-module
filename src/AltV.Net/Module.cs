@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
+using AltV.Net.Elements.Entities;
 using AltV.Net.Events;
 using AltV.Net.FunctionParser;
 using AltV.Net.Native;
@@ -44,47 +44,47 @@ namespace AltV.Net
         private readonly Dictionary<string, HashSet<ClientEventDelegate>> clientEventDelegateHandlers =
             new Dictionary<string, HashSet<ClientEventDelegate>>();
 
-        internal readonly Events.HashSetEventHandler<CheckpointDelegate> CheckpointEventHandler =
-            new Events.HashSetEventHandler<CheckpointDelegate>();
+        internal readonly IEventHandler<CheckpointDelegate> CheckpointEventHandler =
+            new HashSetEventHandler<CheckpointDelegate>();
 
-        internal readonly Events.HashSetEventHandler<PlayerConnectDelegate> PlayerConnectEventHandler =
-            new Events.HashSetEventHandler<PlayerConnectDelegate>();
+        internal readonly IEventHandler<PlayerConnectDelegate> PlayerConnectEventHandler =
+            new HashSetEventHandler<PlayerConnectDelegate>();
 
-        internal readonly Events.HashSetEventHandler<PlayerDamageDelegate> PlayerDamageEventHandler =
-            new Events.HashSetEventHandler<PlayerDamageDelegate>();
+        internal readonly IEventHandler<PlayerDamageDelegate> PlayerDamageEventHandler =
+            new HashSetEventHandler<PlayerDamageDelegate>();
 
-        internal readonly Events.HashSetEventHandler<PlayerDeadDelegate> PlayerDeadEventHandler =
-            new Events.HashSetEventHandler<PlayerDeadDelegate>();
+        internal readonly IEventHandler<PlayerDeadDelegate> PlayerDeadEventHandler =
+            new HashSetEventHandler<PlayerDeadDelegate>();
 
-        internal readonly Events.HashSetEventHandler<PlayerChangeVehicleSeatDelegate> PlayerChangeVehicleSeatEventHandler =
-            new Events.HashSetEventHandler<PlayerChangeVehicleSeatDelegate>();
+        internal readonly IEventHandler<PlayerChangeVehicleSeatDelegate> PlayerChangeVehicleSeatEventHandler =
+            new HashSetEventHandler<PlayerChangeVehicleSeatDelegate>();
 
-        internal readonly Events.HashSetEventHandler<PlayerEnterVehicleDelegate> PlayerEnterVehicleEventHandler =
-            new Events.HashSetEventHandler<PlayerEnterVehicleDelegate>();
+        internal readonly IEventHandler<PlayerEnterVehicleDelegate> PlayerEnterVehicleEventHandler =
+            new HashSetEventHandler<PlayerEnterVehicleDelegate>();
 
-        internal readonly Events.HashSetEventHandler<PlayerLeaveVehicleDelegate> PlayerLeaveVehicleEventHandler =
-            new Events.HashSetEventHandler<PlayerLeaveVehicleDelegate>();
+        internal readonly IEventHandler<PlayerLeaveVehicleDelegate> PlayerLeaveVehicleEventHandler =
+            new HashSetEventHandler<PlayerLeaveVehicleDelegate>();
 
-        internal readonly Events.HashSetEventHandler<PlayerDisconnectDelegate> PlayerDisconnectEventHandler =
-            new Events.HashSetEventHandler<PlayerDisconnectDelegate>();
+        internal readonly IEventHandler<PlayerDisconnectDelegate> PlayerDisconnectEventHandler =
+            new HashSetEventHandler<PlayerDisconnectDelegate>();
 
-        internal readonly Events.HashSetEventHandler<PlayerRemoveDelegate> PlayerRemoveEventHandler =
-            new Events.HashSetEventHandler<PlayerRemoveDelegate>();
+        internal readonly IEventHandler<PlayerRemoveDelegate> PlayerRemoveEventHandler =
+            new HashSetEventHandler<PlayerRemoveDelegate>();
 
-        internal readonly Events.HashSetEventHandler<VehicleRemoveDelegate> VehicleRemoveEventHandler =
-            new Events.HashSetEventHandler<VehicleRemoveDelegate>();
+        internal readonly IEventHandler<VehicleRemoveDelegate> VehicleRemoveEventHandler =
+            new HashSetEventHandler<VehicleRemoveDelegate>();
 
-        internal readonly Events.HashSetEventHandler<PlayerClientEventDelegate> PlayerClientEventEventHandler =
-            new Events.HashSetEventHandler<PlayerClientEventDelegate>();
+        internal readonly IEventHandler<PlayerClientEventDelegate> PlayerClientEventEventHandler =
+            new HashSetEventHandler<PlayerClientEventDelegate>();
 
-        internal readonly Events.HashSetEventHandler<PlayerClientCustomEventDelegate> PlayerClientCustomEventEventHandler =
-            new Events.HashSetEventHandler<PlayerClientCustomEventDelegate>();
+        internal readonly IEventHandler<PlayerClientCustomEventDelegate> PlayerClientCustomEventEventHandler =
+            new HashSetEventHandler<PlayerClientCustomEventDelegate>();
 
-        internal readonly Events.HashSetEventHandler<ServerEventEventDelegate> ServerEventEventHandler =
-            new Events.HashSetEventHandler<ServerEventEventDelegate>();
+        internal readonly IEventHandler<ServerEventEventDelegate> ServerEventEventHandler =
+            new HashSetEventHandler<ServerEventEventDelegate>();
 
-        internal readonly Events.HashSetEventHandler<ServerCustomEventEventDelegate> ServerCustomEventEventHandler =
-            new Events.HashSetEventHandler<ServerCustomEventEventDelegate>();
+        internal readonly IEventHandler<ServerCustomEventEventDelegate> ServerCustomEventEventHandler =
+            new HashSetEventHandler<ServerCustomEventEventDelegate>();
 
         public Module(IServer server, CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
