@@ -29,5 +29,32 @@ namespace AltV.Net.Async
 
         public static async Task<IBlip> CreateBlip(BlipType type, IEntity entityAttach) =>
             await AltVAsync.Schedule(() => Alt.CreateBlip(type, entityAttach)).ConfigureAwait(false);
+
+        public static async Task<bool> IsGlobalAsync(this IBlip blip) =>
+            await AltVAsync.Schedule(() => blip.IsGlobal).ConfigureAwait(false);
+
+        public static async Task<bool> IsAttachedAsync(this IBlip blip) =>
+            await AltVAsync.Schedule(() => blip.IsAttached).ConfigureAwait(false);
+
+        public static async Task<IEntity> AttachedToAsync(this IBlip blip) =>
+            await AltVAsync.Schedule(() => blip.AttachedTo).ConfigureAwait(false);
+
+        public static async Task<BlipType> GetBlipTypeAsync(this IBlip blip) =>
+            await AltVAsync.Schedule(() => (BlipType) blip.BlipType).ConfigureAwait(false);
+
+        public static async Task SetSpriteAsync(this IBlip blip, ushort sprite) =>
+            await AltVAsync.Schedule(() => blip.Sprite = sprite).ConfigureAwait(false);
+
+        public static async Task SetColorAsync(this IBlip blip, byte color) =>
+            await AltVAsync.Schedule(() => blip.Color = color).ConfigureAwait(false);
+
+        public static async Task SetRouteAsync(this IBlip blip, bool route) =>
+            await AltVAsync.Schedule(() => blip.Route = route).ConfigureAwait(false);
+
+        public static async Task SetRouteColorAsync(this IBlip blip, byte color) =>
+            await AltVAsync.Schedule(() => blip.RouteColor = color).ConfigureAwait(false);
+
+        public static async Task RemoveAsync(this IBlip blip) =>
+            await AltVAsync.Schedule(blip.RemoveAsync).ConfigureAwait(false);
     }
 }
