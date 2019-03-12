@@ -5,8 +5,7 @@
 #pragma clang diagnostic ignored "-Wempty-body"
 #endif
 
-#include <altv-cpp-api/types/MValueFunction.h>
-#include <altv-cpp-api/API.h>
+#include <altv-cpp-api/SDK.h>
 
 #ifdef __clang__
 #pragma clang diagnostic pop

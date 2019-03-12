@@ -6,7 +6,7 @@
 #pragma clang diagnostic pop
 #endif
 
-#include <altv-cpp-api/API.h>
+#include <altv-cpp-api/SDK.h>
 #include "altv-c-api/altv.h"
 #include "CSharpScriptRuntime.h"
 

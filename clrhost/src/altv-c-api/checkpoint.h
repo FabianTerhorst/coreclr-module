@@ -5,7 +5,7 @@
 #pragma clang diagnostic ignored "-Wempty-body"
 #endif
 
-#include <altv-cpp-api/API.h>
+#include <altv-cpp-api/SDK.h>
 #include "rgba.h"
 #include "position.h"
 #include "rotation.h"

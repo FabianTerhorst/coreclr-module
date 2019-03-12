@@ -210,20 +210,20 @@ void Vehicle_SetSpecialDarkness(alt::IVehicle* vehicle, uint8_t value) {
     vehicle->SetSpecialDarkness(value);
 }
 
-uint32_t Vehicle_GetNumberPlateIndex(alt::IVehicle* vehicle) {
-    return vehicle->GetNumberPlateIndex();
+uint32_t Vehicle_GetNumberplateIndex(alt::IVehicle* vehicle) {
+    return vehicle->GetNumberplateIndex();
 }
 
-void Vehicle_SetNumberPlateIndex(alt::IVehicle* vehicle, uint32_t index) {
-    vehicle->SetNumberPlateIndex(index);
+void Vehicle_SetNumberplateIndex(alt::IVehicle* vehicle, uint32_t index) {
+    vehicle->SetNumberplateIndex(index);
 }
 
-void Vehicle_GetNumberPlateText(alt::IVehicle* vehicle, const char*&text) {
-    text = vehicle->GetNumberPlateText().CStr();
+void Vehicle_GetNumberplateText(alt::IVehicle* vehicle, const char*&text) {
+    text = vehicle->GetNumberplateText().CStr();
 }
 
-void Vehicle_SetNumberPlateText(alt::IVehicle* vehicle, const char* text) {
-    vehicle->SetNumberPlateText(text);
+void Vehicle_SetNumberplateText(alt::IVehicle* vehicle, const char* text) {
+    vehicle->SetNumberplateText(text);
 }
 
 uint8_t Vehicle_GetWindowTint(alt::IVehicle* vehicle) {

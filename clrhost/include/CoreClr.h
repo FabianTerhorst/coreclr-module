@@ -14,7 +14,7 @@
 
 #endif
 
-#include <altv-cpp-api/API.h>
+#include <altv-cpp-api/SDK.h>
 #include <coreclr/coreclrhost.h>
 #include <sys/stat.h>
 #include <string.h>

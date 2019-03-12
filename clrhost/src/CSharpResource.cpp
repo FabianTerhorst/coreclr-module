@@ -148,11 +148,11 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
                                    ((alt::CPlayerDamageEvent*) (ev))->GetDamage());
             break;
         case alt::CEvent::Type::PLAYER_DEATH:
-            entity = ((alt::CPlayerDeadEvent*) (ev))->GetKiller();
-            OnPlayerDeathDelegate(((alt::CPlayerDeadEvent*) (ev))->GetTarget(),
+            entity = ((alt::CPlayerDeathEvent*) (ev))->GetKiller();
+            OnPlayerDeathDelegate(((alt::CPlayerDeathEvent*) (ev))->GetTarget(),
                                   GetEntityPointer(entity),
                                   entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT,
-                                  ((alt::CPlayerDeadEvent*) (ev))->GetWeapon());
+                                  ((alt::CPlayerDeathEvent*) (ev))->GetWeapon());
             break;
         case alt::CEvent::Type::PLAYER_DISCONNECT:
             disconnectEvent = reinterpret_cast<const alt::CPlayerDisconnectEvent*>(ev);

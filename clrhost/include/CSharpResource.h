@@ -5,8 +5,7 @@
 #pragma clang diagnostic ignored "-Wempty-body"
 #endif
 
-#include <altv-cpp-api/API.h>
-#include <altv-cpp-api/events/CRemoveEntityEvent.h>
+#include <altv-cpp-api/SDK.h>
 
 #ifdef _WIN32
 #define RESOURCES_PATH "\\resources\\"
