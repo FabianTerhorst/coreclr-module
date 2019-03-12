@@ -11,9 +11,9 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge mock</PackageTags>
-        <PackageVersion>1.1.0-beta-4</PackageVersion>
+        <PackageVersion>1.1.1</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Improve entity pool management</PackageReleaseNotes>
+        <PackageReleaseNotes>Support for latest server</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

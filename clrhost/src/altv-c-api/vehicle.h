@@ -67,10 +67,10 @@ EXPORT bool Vehicle_GetCustomTires(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetCustomTires(alt::IVehicle* vehicle, bool state);
 EXPORT uint8_t Vehicle_GetSpecialDarkness(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetSpecialDarkness(alt::IVehicle* vehicle, uint8_t value);
-EXPORT uint32_t Vehicle_GetNumberPlateIndex(alt::IVehicle* vehicle);
-EXPORT void Vehicle_SetNumberPlateIndex(alt::IVehicle* vehicle, uint32_t index);
-EXPORT void Vehicle_GetNumberPlateText(alt::IVehicle* vehicle, const char*&text);
-EXPORT void Vehicle_SetNumberPlateText(alt::IVehicle* vehicle, const char* text);
+EXPORT uint32_t Vehicle_GetNumberplateIndex(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetNumberplateIndex(alt::IVehicle* vehicle, uint32_t index);
+EXPORT void Vehicle_GetNumberplateText(alt::IVehicle* vehicle, const char*&text);
+EXPORT void Vehicle_SetNumberplateText(alt::IVehicle* vehicle, const char* text);
 EXPORT uint8_t Vehicle_GetWindowTint(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetWindowTint(alt::IVehicle* vehicle, uint8_t tint);
 EXPORT uint8_t Vehicle_GetDirtLevel(alt::IVehicle* vehicle);
@@ -82,8 +82,6 @@ EXPORT void Vehicle_GetNeonActive(alt::IVehicle* vehicle, bool* left, bool* righ
 EXPORT void Vehicle_SetNeonActive(alt::IVehicle* vehicle, bool left, bool right, bool front, bool back);
 EXPORT void Vehicle_GetNeonColor(alt::IVehicle* vehicle, rgba_t &neonColor);
 EXPORT void Vehicle_SetNeonColor(alt::IVehicle* vehicle, alt::RGBA color);
-
-//TODO: WIP vehicle api's
 
 EXPORT bool Vehicle_IsEngineOn(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetEngineOn(alt::IVehicle* vehicle, bool state);
