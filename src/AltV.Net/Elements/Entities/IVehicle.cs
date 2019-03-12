@@ -4,7 +4,7 @@ using AltV.Net.Enums;
 namespace AltV.Net.Elements.Entities
 {
     public interface IVehicle : IEntity
-    {
+    {   
         /// <summary>
         /// Get the current driver of the vehicle.
         /// </summary>
