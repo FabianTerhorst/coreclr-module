@@ -42,8 +42,8 @@ namespace AltV.Net.Example
             var vehicle = Alt.CreateVehicle(VehicleModel.Apc, new Position(1, 2, 3), float.MinValue);
             Alt.Log(vehicle.Position.ToString());
             vehicle.PrimaryColor = 7;
-            vehicle.NumberPlateText = "AltV-C#";
-            vehicle.NumberPlateIndex = 2;
+            vehicle.NumberplateText = "AltV-C#";
+            vehicle.NumberplateIndex = 2;
             vehicle.SetMod(0, 0);
             vehicle.GetMod(0);
             vehicle.GetModsCount(0);
@@ -59,7 +59,7 @@ namespace AltV.Net.Example
 
             Alt.Log("ptr:" + vehicle.NativePointer);
 
-            Alt.Log("number-plate:" + vehicle.NumberPlateText + " " + vehicle.NumberPlateIndex);
+            Alt.Log("number-plate:" + vehicle.NumberplateText + " " + vehicle.NumberplateIndex);
 
             Alt.Emit("vehicleTest", vehicle);
 

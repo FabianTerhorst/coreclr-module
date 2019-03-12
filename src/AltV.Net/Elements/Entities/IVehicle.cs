@@ -59,13 +59,13 @@ namespace AltV.Net.Elements.Entities
         /// Get or set number plate index of the vehicle.
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
-        uint NumberPlateIndex { get; set; }
+        uint NumberplateIndex { get; set; }
 
         /// <summary>
         /// Get or set number plate text of the vehicle.
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
-        string NumberPlateText { get; set; }
+        string NumberplateText { get; set; }
 
         byte WindowTint { get; set; }
 

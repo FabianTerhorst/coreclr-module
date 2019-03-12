@@ -117,10 +117,10 @@ namespace AltV.Net.Async
             await AltVAsync.Schedule(() => vehicle.SpecialDarkness = specialDarkness);
 
         public static async Task<uint> GetNumberPlateIndexAsync(this IVehicle vehicle) =>
-            await AltVAsync.Schedule(() => vehicle.NumberPlateIndex);
+            await AltVAsync.Schedule(() => vehicle.NumberplateIndex);
 
         public static async Task SetNumberPlateIndexAsync(this IVehicle vehicle, uint numberPlateIndex) =>
-            await AltVAsync.Schedule(() => vehicle.NumberPlateIndex = numberPlateIndex);
+            await AltVAsync.Schedule(() => vehicle.NumberplateIndex = numberPlateIndex);
 
         public static async Task<string> GetNumberPlateTextAsync(this IVehicle vehicle)
         {
@@ -137,7 +137,7 @@ namespace AltV.Net.Async
         }
 
         public static async Task SetNumberPlateTextAsync(this IVehicle vehicle, string numberPlateText) =>
-            await AltVAsync.Schedule(() => vehicle.NumberPlateText = numberPlateText);
+            await AltVAsync.Schedule(() => vehicle.NumberplateText = numberPlateText);
 
         public static async Task<byte> GetWindowTintAsync(this IVehicle vehicle) =>
             await AltVAsync.Schedule(() => vehicle.WindowTint);

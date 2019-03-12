@@ -28,8 +28,8 @@ namespace AltV.Net.Mock
         public byte WheelVariation { get; }
         public bool CustomTires { get; set; }
         public byte SpecialDarkness { get; set; }
-        public uint NumberPlateIndex { get; set; }
-        public string NumberPlateText { get; set; }
+        public uint NumberplateIndex { get; set; }
+        public string NumberplateText { get; set; }
         public byte WindowTint { get; set; }
         public byte DirtLevel { get; set; }
         public Rgba NeonColor { get; set; }

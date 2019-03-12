@@ -349,33 +349,33 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public uint NumberPlateIndex
+        public uint NumberplateIndex
         {
             get
             {
                 CheckIfEntityExists();
-                return AltNative.Vehicle.Vehicle_GetNumberPlateIndex(NativePointer);
+                return AltNative.Vehicle.Vehicle_GetNumberplateIndex(NativePointer);
             }
             set
             {
                 CheckIfEntityExists();
-                AltNative.Vehicle.Vehicle_SetNumberPlateIndex(NativePointer, value);
+                AltNative.Vehicle.Vehicle_SetNumberplateIndex(NativePointer, value);
             }
         }
 
-        public string NumberPlateText
+        public string NumberplateText
         {
             get
             {
                 CheckIfEntityExists();
                 var ptr = IntPtr.Zero;
-                AltNative.Vehicle.Vehicle_GetNumberPlateText(NativePointer, ref ptr);
+                AltNative.Vehicle.Vehicle_GetNumberplateText(NativePointer, ref ptr);
                 return Marshal.PtrToStringAnsi(ptr);
             }
             set
             {
                 CheckIfEntityExists();
-                AltNative.Vehicle.Vehicle_SetNumberPlateText(NativePointer, value);
+                AltNative.Vehicle.Vehicle_SetNumberplateText(NativePointer, value);
             }
         }
 
