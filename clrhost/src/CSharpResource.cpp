@@ -40,6 +40,7 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     OnRemoveBlipDelegate = nullptr;
     OnCreateCheckpointDelegate = nullptr;
     OnRemoveCheckpointDelegate = nullptr;
+    OnConsoleCommandDelegate = nullptr;
 
     coreClr->CreateAppDomain(server, fullPath, &runtimeHost, &domainId);
     delete[] fullPath;
@@ -91,6 +92,8 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
                          reinterpret_cast<void**>(&OnCreateCheckpointDelegate));
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemoveCheckpoint",
                          reinterpret_cast<void**>(&OnRemoveCheckpointDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnConsoleCommand",
+                         reinterpret_cast<void**>(&OnConsoleCommandDelegate));
 }
 
 bool CSharpResource::Start() {
@@ -192,6 +195,10 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
             OnPlayerLeaveVehicleDelegate(((alt::CPlayerLeaveVehicleEvent*) (ev))->GetTarget(),
                                          ((alt::CPlayerLeaveVehicleEvent*) (ev))->GetPlayer(),
                                          ((alt::CPlayerLeaveVehicleEvent*) (ev))->GetSeat());
+            break;
+        case alt::CEvent::Type::CONSOLE_COMMAND_EVENT:
+            OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*)(ev))->GetName().CStr(),
+                                     ((alt::CConsoleCommandEvent*)(ev))->GetArgs());
             break;
     }
     return true;

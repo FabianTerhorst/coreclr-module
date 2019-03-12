@@ -46,6 +46,9 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<PlayerClientEventAsyncDelegate> PlayerClientEventAsyncEventHandler =
             new AsyncEventHandler<PlayerClientEventAsyncDelegate>();
 
+        internal readonly AsyncEventHandler<ConsoleCommandAsyncDelegate> ConsoleCommandAsyncDelegateHandlers =
+            new AsyncEventHandler<ConsoleCommandAsyncDelegate>();
+
         private readonly Dictionary<string, HashSet<ClientEventAsyncDelegate>> clientEventAsyncDelegateHandlers
             =
             new Dictionary<string, HashSet<ClientEventAsyncDelegate>>();
@@ -305,6 +308,14 @@ namespace AltV.Net.Async
                     }
                 });
             }
+        }
+
+        public override void OnConsoleCommandEvent(string name, string[] args)
+        {
+            base.OnConsoleCommandEvent(name, args);
+            Task.Run(() =>
+                ConsoleCommandAsyncDelegateHandlers.CallAsync(@delegate =>
+                    @delegate(name, args)));
         }
 
         public void On(string eventName, ClientEventAsyncDelegate eventDelegate)

@@ -163,5 +163,10 @@ namespace AltV.Net
         {
             _module.OnVehicleRemove(vehiclePointer);
         }
+
+        public static void OnConsoleCommand(string name, StringViewArray args)
+        {
+            _module.OnConsoleCommand(name, args);
+        }
     }
 }

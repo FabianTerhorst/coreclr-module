@@ -134,6 +134,8 @@ public:
 
     void (* OnRemoveCheckpointDelegate)(alt::ICheckpoint* checkpoint);
 
+    void (* OnConsoleCommandDelegate) (const char* name, alt::Array<alt::StringView> args);
+
     void* runtimeHost;
     unsigned int domainId;
 };

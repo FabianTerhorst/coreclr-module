@@ -64,7 +64,7 @@ namespace AltV.Net.Async
             add => Module.PlayerRemoveAsyncEventHandler.Add(value);
             remove => Module.PlayerRemoveAsyncEventHandler.Remove(value);
         }
-        
+
         public static event VehicleRemoveAsyncDelegate OnVehicleRemove
         {
             add => Module.VehicleRemoveAsyncEventHandler.Add(value);
@@ -75,6 +75,12 @@ namespace AltV.Net.Async
         {
             add => Module.PlayerClientEventAsyncEventHandler.Add(value);
             remove => Module.PlayerClientEventAsyncEventHandler.Remove(value);
+        }
+
+        public static event ConsoleCommandAsyncDelegate OnConsoleCommand
+        {
+            add => Module.ConsoleCommandAsyncDelegateHandlers.Add(value);
+            remove => Module.ConsoleCommandAsyncDelegateHandlers.Remove(value);
         }
 
         public static void On(string eventName, ClientEventAsyncDelegate clientEventDelegate)

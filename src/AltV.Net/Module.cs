@@ -86,6 +86,9 @@ namespace AltV.Net
         internal readonly IEventHandler<ServerCustomEventEventDelegate> ServerCustomEventEventHandler =
             new HashSetEventHandler<ServerCustomEventEventDelegate>();
 
+        internal readonly IEventHandler<ConsoleCommandDelegate> ConsoleCommandEventHandler =
+            new HashSetEventHandler<ConsoleCommandDelegate>();
+
         public Module(IServer server, CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
@@ -175,7 +178,8 @@ namespace AltV.Net
             }
         }
 
-        public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType, bool state)
+        public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
+            bool state)
         {
             if (!CheckpointPool.GetOrCreate(checkpointPointer, out var checkpoint))
             {
@@ -603,6 +607,24 @@ namespace AltV.Net
         public void OnRemoveCheckpoint(IntPtr checkpointPointer)
         {
             CheckpointPool.Remove(checkpointPointer);
+        }
+
+        public void OnConsoleCommand(string name, StringViewArray args)
+        {
+            var stringArgs = args.ToArray();
+            if (ConsoleCommandEventHandler.HasEvents())
+            {
+                foreach (var eventHandler in ConsoleCommandEventHandler.GetEvents())
+                {
+                    eventHandler(name, stringArgs);
+                }
+            }
+
+            OnConsoleCommandEvent(name, stringArgs);
+        }
+
+        public virtual void OnConsoleCommandEvent(string name, string[] args)
+        {
         }
     }
 }

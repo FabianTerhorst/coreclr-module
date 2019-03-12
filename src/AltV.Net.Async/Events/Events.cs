@@ -29,4 +29,6 @@ namespace AltV.Net.Async.Events
     public delegate Task PlayerLeaveVehicleAsyncDelegate(IVehicle vehicle, IPlayer player, byte seat);
 
     public delegate Task PlayerClientEventAsyncDelegate(IPlayer player, string eventName, object[] args);
+
+    public delegate Task ConsoleCommandAsyncDelegate(string name, string[] args);
 }

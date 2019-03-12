@@ -93,6 +93,12 @@ namespace AltV.Net
             add => Module.ServerCustomEventEventHandler.Add(value);
             remove => Module.ServerCustomEventEventHandler.Remove(value);
         }
+        
+        public static event ConsoleCommandDelegate OnConsoleCommand
+        {
+            add => Module.ConsoleCommandEventHandler.Add(value);
+            remove => Module.ConsoleCommandEventHandler.Remove(value);
+        }
 
         public static void Emit(string eventName, params object[] args) => Server.TriggerServerEvent(eventName, args);
 

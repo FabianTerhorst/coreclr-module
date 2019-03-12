@@ -30,6 +30,10 @@ namespace AltV.Net.Example
             Alt.OnPlayerRemove += OnPlayerRemove;
             Alt.OnVehicleRemove += OnVehicleRemove;
             AltAsync.OnPlayerConnect += OnPlayerConnectAsync;
+            Alt.OnConsoleCommand += (name, args) =>
+            {
+                
+            }; 
             Alt.OnPlayerEvent += (player, name, args) => { Alt.Log("event:" + name); };
             AltAsync.OnPlayerEvent += (player, name, args) =>
             {

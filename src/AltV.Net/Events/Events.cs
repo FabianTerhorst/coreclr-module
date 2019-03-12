@@ -16,7 +16,7 @@ namespace AltV.Net.Events
     public delegate void PlayerDisconnectDelegate(IPlayer player, string reason);
 
     public delegate void PlayerRemoveDelegate(IPlayer player);
-    
+
     public delegate void VehicleRemoveDelegate(IVehicle vehicle);
 
     public delegate void ServerEventDelegate(object[] args);
@@ -34,4 +34,6 @@ namespace AltV.Net.Events
     public delegate void ServerEventEventDelegate(string eventName, object[] args);
 
     public delegate void ServerCustomEventEventDelegate(string eventName, ref MValueArray mValueArray);
+
+    public delegate void ConsoleCommandDelegate(string name, string[] args);
 }
