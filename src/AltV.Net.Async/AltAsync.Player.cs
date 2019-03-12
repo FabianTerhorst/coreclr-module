@@ -72,6 +72,9 @@ namespace AltV.Net.Async
         public static async Task<byte> GetSeatAsync(this IPlayer player) =>
             await AltVAsync.Schedule(() => player.Seat);
 
+        public static async Task<uint> GetPingAsync(this IPlayer player) =>
+            await AltVAsync.Schedule(() => player.Ping);
+
         public static async Task SpawnAsync(this IPlayer player, Position position) =>
             await AltVAsync.Schedule(() => { player.Spawn(position); });
 
@@ -93,5 +96,8 @@ namespace AltV.Net.Async
             var mValueArgs = MValue.Create(MValue.CreateFromObjects(args));
             await AltVAsync.Schedule(() => { Alt.Server.TriggerClientEvent(player, eventName, ref mValueArgs); });
         }
+
+        public static async Task<ReadOnlyPlayer> CopyAsync(this IPlayer player) =>
+            await AltVAsync.Schedule(player.Copy);
     }
 }
