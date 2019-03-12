@@ -66,18 +66,15 @@ namespace AltV.Net
         public uint Hash(string stringToHash)
         {
             //return AltVNative.Server.Server_Hash(NativePointer, hash);
-            if (string.IsNullOrEmpty(stringToHash))
-            {
-                return 0;
-            }
+            if (string.IsNullOrEmpty(stringToHash)) return 0;
 
             var characters = Encoding.UTF8.GetBytes(stringToHash.ToLower());
 
             uint hash = 0;
 
-            foreach (var t in characters)
+            foreach (var c in characters)
             {
-                hash += t;
+                hash += c;
                 hash += hash << 10;
                 hash ^= hash >> 6;
             }
