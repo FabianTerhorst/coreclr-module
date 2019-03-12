@@ -206,7 +206,7 @@ namespace AltV.Net.Async
                 {
                     foreach (var eventHandler in eventDelegates)
                     {
-                        AsyncEventHandler<ClientEventAsyncDelegate>.ExecuteEventAsync(eventHandler,
+                        AsyncEventHandler<ClientEventAsyncDelegate>.ExecuteEventAsyncWithoutTask(eventHandler,
                             @delegate => @delegate(player, objects));
                     }
                 });
@@ -233,7 +233,7 @@ namespace AltV.Net.Async
                 {
                     foreach (var eventHandler in PlayerClientEventAsyncEventHandler.GetEvents())
                     {
-                        AsyncEventHandler<PlayerClientEventAsyncDelegate>.ExecuteEventAsync(eventHandler,
+                        AsyncEventHandler<PlayerClientEventAsyncDelegate>.ExecuteEventAsyncWithoutTask(eventHandler,
                             @delegate => @delegate(player, name, objects));
                     }
                 });
@@ -300,7 +300,7 @@ namespace AltV.Net.Async
                 {
                     foreach (var eventHandler in eventDelegates)
                     {
-                        AsyncEventHandler<ServerEventAsyncDelegate>.ExecuteEventAsync(eventHandler,
+                        AsyncEventHandler<ServerEventAsyncDelegate>.ExecuteEventAsyncWithoutTask(eventHandler,
                             @delegate => @delegate(objects));
                     }
                 });

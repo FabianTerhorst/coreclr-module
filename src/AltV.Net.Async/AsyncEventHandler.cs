@@ -30,5 +30,17 @@ namespace AltV.Net.Async
                 Alt.Log($"Execution of {typeof(TEvent)} threw an error: {e}");
             }
         }
+        
+        public static async void ExecuteEventAsyncWithoutTask(TEvent subscription, Func<TEvent, Task> callback)
+        {
+            try
+            {
+                await callback(subscription).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                Alt.Log($"Execution of {typeof(TEvent)} threw an error: {e}");
+            }
+        }
     }
 }
