@@ -200,23 +200,61 @@ namespace AltV.Net.Elements.Entities
         
         bool SetMod(VehicleModType category, byte id) => SetMod((byte) category, id);
         
-        void SetPartDamageLevel(VehiclePart partId, byte damage) => SetPartDamageLevel((byte) partId, byte damage);
+        void SetPartDamageLevel(VehiclePart part, byte damage) => SetPartDamageLevel((byte) part, byte damage);
 
-        byte GetPartBulletHoles(VehiclePart partId) => GetPartBulletHoles((byte) partId);
+        byte GetPartBulletHoles(VehiclePart part) => GetPartBulletHoles((byte) part);
 
-        void SetPartBulletHoles(VehiclePart partId, byte shootsCount) => SetPartBulletHoles((byte) partId, byte shootsCount);
+        void SetPartBulletHoles(VehiclePart part, byte shootsCount) => SetPartBulletHoles((byte) part, byte shootsCount);
         
-        VehicleBumperDamage GetBumperDamageLevelEnum(VehicleBumper bumperId) => (VehicleBumperDamage) GetBumperDamageLevel((byte) bumperId); 
+        VehicleBumperDamage GetBumperDamageLevel(VehicleBumper bumper) => (VehicleBumperDamage) GetBumperDamageLevel((byte) bumper); 
         
-        void SetBumperDamageLevel(VehicleBumper bumperId, VehicleBumperDamage damageLevel) => SetBumperDamageLevel((byte) bumperId, (byte) damageLevel);
+        void SetBumperDamageLevel(VehicleBumper bumper, VehicleBumperDamage damageLevel) => SetBumperDamageLevel((byte) bumper, (byte) damageLevel);
 
-        VehiclePartDamage GetPartDamageLevelEnum(VehiclePart partId) => (VehiclePartDamage) GetPartDamageLevel((byte) partId);
+        VehiclePartDamage GetPartDamageLevel(VehiclePart part) => (VehiclePartDamage) GetPartDamageLevel((byte) part);
 
-        void SetPartDamageLevel(VehiclePart partId, VehiclePartDamage damage) =>  SetPartDamageLevel((byte) partId, (byte) damage); 
+        void SetPartDamageLevel(VehiclePart part, VehiclePartDamage damage) =>  SetPartDamageLevel((byte) part, (byte) damage); 
         
-        VehicleDoorState GetDoorStateEnum(byte doorId) => (VehicleDoorState) GetDoorState(doorId);
+        VehicleDoorState GetDoorState(VehicleDoor door) => (VehicleDoorState) GetDoorState((byte)door);
 
-        void SetDoorState(byte doorId, VehicleDoorState state) => SetDoorState(doorId, (byte) state);
+        void SetDoorState(VehicleDoor door, VehicleDoorState state) => SetDoorState((byte) door, (byte) state);
 #endif
+    }
+
+    public static class VehicleEnumExtensions
+    {
+        public static byte GetMod(this IVehicle vehicle, VehicleModType category) => vehicle.GetMod((byte) category);
+
+        public static byte GetModsCount(this IVehicle vehicle, VehicleModType category) =>
+            vehicle.GetModsCount((byte) category);
+
+        public static bool SetMod(this IVehicle vehicle, VehicleModType category, byte id) =>
+            vehicle.SetMod((byte) category, id);
+
+        public static void SetPartDamageLevel(this IVehicle vehicle, VehiclePart part, byte damage) =>
+            vehicle.SetPartDamageLevel((byte) part, damage);
+
+        public static byte GetPartBulletHoles(this IVehicle vehicle, VehiclePart part) =>
+            vehicle.GetPartBulletHoles((byte) part);
+
+        public static void SetPartBulletHoles(this IVehicle vehicle, VehiclePart part, byte shootsCount) =>
+            vehicle.SetPartBulletHoles((byte) part, shootsCount);
+
+        public static VehicleBumperDamage GetBumperDamageLevel(this IVehicle vehicle, VehicleBumper bumper) =>
+            (VehicleBumperDamage) vehicle.GetBumperDamageLevel((byte) bumper);
+
+        public static void SetBumperDamageLevel(this IVehicle vehicle, VehicleBumper bumper,
+            VehicleBumperDamage damageLevel) => vehicle.SetBumperDamageLevel((byte) bumper, (byte) damageLevel);
+
+        public static VehiclePartDamage GetPartDamageLevel(this IVehicle vehicle, VehiclePart part) =>
+            (VehiclePartDamage) vehicle.GetPartDamageLevel((byte) part);
+
+        public static void SetPartDamageLevel(this IVehicle vehicle, VehiclePart part, VehiclePartDamage damage) =>
+            vehicle.SetPartDamageLevel((byte) part, (byte) damage);
+
+        public static VehicleDoorState GetDoorState(this IVehicle vehicle, VehicleDoor door) =>
+            (VehicleDoorState) vehicle.GetDoorState((byte) door);
+
+        public static void SetDoorState(this IVehicle vehicle, VehicleDoor door, VehicleDoorState state) =>
+            vehicle.SetDoorState((byte) door, (byte) state);
     }
 }
