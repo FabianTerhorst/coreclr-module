@@ -116,13 +116,13 @@ namespace AltV.Net.Async
         public static async Task SetSpecialDarknessAsync(this IVehicle vehicle, byte specialDarkness) =>
             await AltVAsync.Schedule(() => vehicle.SpecialDarkness = specialDarkness);
 
-        public static async Task<uint> GetNumberPlateIndexAsync(this IVehicle vehicle) =>
+        public static async Task<uint> GetNumberplateIndexAsync(this IVehicle vehicle) =>
             await AltVAsync.Schedule(() => vehicle.NumberplateIndex);
 
-        public static async Task SetNumberPlateIndexAsync(this IVehicle vehicle, uint numberPlateIndex) =>
+        public static async Task SetNumberplateIndexAsync(this IVehicle vehicle, uint numberPlateIndex) =>
             await AltVAsync.Schedule(() => vehicle.NumberplateIndex = numberPlateIndex);
 
-        public static async Task<string> GetNumberPlateTextAsync(this IVehicle vehicle)
+        public static async Task<string> GetNumberplateTextAsync(this IVehicle vehicle)
         {
             var ptr = IntPtr.Zero;
             await AltVAsync.Schedule(
@@ -130,13 +130,13 @@ namespace AltV.Net.Async
                 {
                     if (vehicle.Exists)
                     {
-                        AltNative.Vehicle.Vehicle_GetNumberPlateText(vehicle.NativePointer, ref ptr);
+                        AltNative.Vehicle.Vehicle_GetNumberplateText(vehicle.NativePointer, ref ptr);
                     }
                 });
             return ptr == IntPtr.Zero ? string.Empty : Marshal.PtrToStringAnsi(ptr);
         }
 
-        public static async Task SetNumberPlateTextAsync(this IVehicle vehicle, string numberPlateText) =>
+        public static async Task SetNumberplateTextAsync(this IVehicle vehicle, string numberPlateText) =>
             await AltVAsync.Schedule(() => vehicle.NumberplateText = numberPlateText);
 
         public static async Task<byte> GetWindowTintAsync(this IVehicle vehicle) =>
