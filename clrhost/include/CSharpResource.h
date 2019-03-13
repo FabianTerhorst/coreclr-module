@@ -134,6 +134,10 @@ public:
 
     void (* OnRemoveCheckpointDelegate)(alt::ICheckpoint* checkpoint);
 
+    void (* OnCreateVoiceChannelDelegate)(alt::IVoiceChannel* channel);
+
+    void (* OnRemoveVoiceChannelDelegate)(alt::IVoiceChannel* channel);
+
     void (* OnConsoleCommandDelegate) (const char* name, alt::Array<alt::StringView> args);
 
     void* runtimeHost;

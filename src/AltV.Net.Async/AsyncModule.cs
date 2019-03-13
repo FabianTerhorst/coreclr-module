@@ -61,9 +61,10 @@ namespace AltV.Net.Async
             IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool) : base(server, cSharpNativeResource, baseBaseObjectPool,
+            IBaseObjectPool<ICheckpoint> checkpointPool,
+            IBaseObjectPool<IVoiceChannel> voiceChannelPool) : base(server, cSharpNativeResource, baseBaseObjectPool,
             baseEntityPool, playerPool, vehiclePool, blipPool,
-            checkpointPool)
+            checkpointPool, voiceChannelPool)
         {
             AltAsync.Setup(this);
         }

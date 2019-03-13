@@ -9,7 +9,8 @@ namespace AltV.Net.Mock.Example
     {
         static void Main(string[] args)
         {
-            var mockAltV = new MockAltV<IPlayer, IMyVehicle, IBlip, ICheckpoint>("resource/AltV.Net.Example.dll");
+            var mockAltV =
+                new MockAltV<IPlayer, IMyVehicle, IBlip, ICheckpoint, IVoiceChannel>("resource/AltV.Net.Example.dll");
             Alt.EmitAllClients("bla");
             var player = mockAltV.ConnectPlayer("bla", "direct connect", iPlayer =>
             {

@@ -41,6 +41,8 @@ EXPORT void Server_RemoveBlip(alt::IServer* server, alt::IBlip* blip);
 EXPORT void Server_RemoveCheckpoint(alt::IServer* server, alt::ICheckpoint* checkpoint);
 EXPORT void Server_RemoveVehicle(alt::IServer* server, alt::IVehicle* vehicle);
 EXPORT void Server_GetResource(alt::IServer* server, const char* resourceName, alt::IResource*&resource);
+EXPORT alt::IVoiceChannel* Server_CreateVoiceChannel(alt::IServer* server, bool spatial, float maxDistance);
+EXPORT void Server_RemoveVoiceChannel(alt::IServer* server, alt::IVoiceChannel* channel);
 #ifdef __cplusplus
 }
 #endif

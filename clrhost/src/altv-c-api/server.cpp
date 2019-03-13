@@ -89,3 +89,11 @@ void Server_RemoveVehicle(alt::IServer* server, alt::IVehicle* vehicle) {
 void Server_GetResource(alt::IServer* server, const char* resourceName, alt::IResource*&resource) {
     resource = server->GetResource(resourceName);
 }
+
+alt::IVoiceChannel* Server_CreateVoiceChannel(alt::IServer* server, bool spatial, float maxDistance) {
+    return server->CreateVoiceChannel(spatial, maxDistance);
+}
+
+void Server_RemoveVoiceChannel(alt::IServer* server, alt::IVoiceChannel* channel) {
+    return server->RemoveVoiceChannel(channel);
+}

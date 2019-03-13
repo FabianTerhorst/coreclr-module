@@ -16,17 +16,20 @@ namespace AltV.Net
         IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool);
 
         IBaseBaseObjectPool GetBaseBaseObjectPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
-            IBaseObjectPool<IBlip> blipPool, IBaseObjectPool<ICheckpoint> checkpointPool);
+            IBaseObjectPool<IBlip> blipPool, IBaseObjectPool<ICheckpoint> checkpointPool,
+            IBaseObjectPool<IVoiceChannel> voiceChannelPool);
 
         IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory);
         IEntityPool<IVehicle> GetVehiclePool(IEntityFactory<IVehicle> vehicleFactory);
         IBaseObjectPool<IBlip> GetBlipPool(IBaseObjectFactory<IBlip> blipFactory);
         IBaseObjectPool<ICheckpoint> GetCheckpointPool(IBaseObjectFactory<ICheckpoint> checkpointFactory);
+        IBaseObjectPool<IVoiceChannel> GetVoiceChannelPool(IBaseObjectFactory<IVoiceChannel> voiceChannelFactory);
 
         IEntityFactory<IPlayer> GetPlayerFactory();
         IEntityFactory<IVehicle> GetVehicleFactory();
         IBaseObjectFactory<IBlip> GetBlipFactory();
         IBaseObjectFactory<ICheckpoint> GetCheckpointFactory();
+        IBaseObjectFactory<IVoiceChannel> GetVoiceChannelFactory();
 
         Module GetModule(IServer server, CSharpNativeResource cSharpNativeResource,
             IBaseBaseObjectPool baseBaseObjectPool,
@@ -34,6 +37,7 @@ namespace AltV.Net
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool);
+            IBaseObjectPool<ICheckpoint> checkpointPool,
+            IBaseObjectPool<IVoiceChannel> voiceChannelPool);
     }
 }

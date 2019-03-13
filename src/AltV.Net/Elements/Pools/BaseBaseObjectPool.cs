@@ -13,14 +13,17 @@ namespace AltV.Net.Elements.Pools
 
         private readonly IBaseObjectPool<ICheckpoint> checkpointPool;
 
+        private readonly IBaseObjectPool<IVoiceChannel> voiceChannelPool;
+
         public BaseBaseObjectPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool)
+            IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool)
         {
             this.playerPool = playerPool;
             this.vehiclePool = vehiclePool;
             this.blipPool = blipPool;
             this.checkpointPool = checkpointPool;
+            this.voiceChannelPool = voiceChannelPool;
         }
 
         public bool GetOrCreate(IntPtr entityPointer, BaseObjectType baseObjectType, out IBaseObject entity)
@@ -44,13 +47,18 @@ namespace AltV.Net.Elements.Pools
                     result = checkpointPool.GetOrCreate(entityPointer, out var checkpoint);
                     entity = checkpoint;
                     return result;
+                case BaseObjectType.VoiceChannel:
+                    result = voiceChannelPool.GetOrCreate(entityPointer, out var voiceChannel);
+                    entity = voiceChannel;
+                    return result;
                 default:
                     entity = default;
                     return false;
             }
         }
 
-        public bool GetOrCreate(IntPtr entityPointer, BaseObjectType baseObjectType, ushort entityId, out IBaseObject entity)
+        public bool GetOrCreate(IntPtr entityPointer, BaseObjectType baseObjectType, ushort entityId,
+            out IBaseObject entity)
         {
             bool result;
             switch (baseObjectType)
@@ -70,6 +78,10 @@ namespace AltV.Net.Elements.Pools
                 case BaseObjectType.Checkpoint:
                     result = checkpointPool.GetOrCreate(entityPointer, out var checkpoint);
                     entity = checkpoint;
+                    return result;
+                case BaseObjectType.VoiceChannel:
+                    result = voiceChannelPool.GetOrCreate(entityPointer, out var voiceChannel);
+                    entity = voiceChannel;
                     return result;
                 default:
                     entity = default;
@@ -94,6 +106,8 @@ namespace AltV.Net.Elements.Pools
                     return blipPool.Remove(entityPointer);
                 case BaseObjectType.Checkpoint:
                     return checkpointPool.Remove(entityPointer);
+                case BaseObjectType.VoiceChannel:
+                    return voiceChannelPool.Remove(entityPointer);
                 default:
                     return false;
             }

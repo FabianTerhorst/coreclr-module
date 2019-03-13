@@ -26,17 +26,19 @@ namespace AltV.Net
             var vehicleFactory = _resource.GetVehicleFactory();
             var blipFactory = _resource.GetBlipFactory();
             var checkpointFactory = _resource.GetCheckpointFactory();
+            var voiceChannelFactory = _resource.GetVoiceChannelFactory();
             var playerPool = _resource.GetPlayerPool(playerFactory);
             var vehiclePool = _resource.GetVehiclePool(vehicleFactory);
             var blipPool = _resource.GetBlipPool(blipFactory);
             var checkpointPool = _resource.GetCheckpointPool(checkpointFactory);
+            var voiceChannelPool = _resource.GetVoiceChannelPool(voiceChannelFactory);
             var entityPool = _resource.GetBaseEntityPool(playerPool, vehiclePool);
-            var baseObjectPool = _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool);
+            var baseObjectPool = _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool);
             var server = new Server(serverPointer, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool,
-                checkpointPool);
+                checkpointPool, voiceChannelPool);
             var csharpResource = new CSharpNativeResource(resourcePointer);
             _module = _resource.GetModule(server, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool,
-                blipPool, checkpointPool);
+                blipPool, checkpointPool, voiceChannelPool);
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
             _resource.OnStart();
         }
@@ -138,6 +140,11 @@ namespace AltV.Net
         {
             _module.OnCreateBlip(blipPointer);
         }
+        
+        public static void OnCreateVoiceChannel(IntPtr channelPointer)
+        {
+            _module.OnCreateVoiceChannel(channelPointer);
+        }
 
         public static void OnRemoveBlip(IntPtr blipPointer)
         {
@@ -152,6 +159,11 @@ namespace AltV.Net
         public static void OnRemoveCheckpoint(IntPtr checkpointPointer)
         {
             _module.OnRemoveCheckpoint(checkpointPointer);
+        }
+        
+        public static void OnRemoveVoiceChannel(IntPtr channelPointer)
+        {
+            _module.OnRemoveVoiceChannel(channelPointer);
         }
 
         public static void OnPlayerRemove(IntPtr playerPointer)

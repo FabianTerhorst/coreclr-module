@@ -14,10 +14,11 @@ namespace AltV.Net
         {
         }
 
-        public virtual IBaseBaseObjectPool GetBaseBaseObjectPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool, IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool)
+        public virtual IBaseBaseObjectPool GetBaseBaseObjectPool(IEntityPool<IPlayer> playerPool,
+            IEntityPool<IVehicle> vehiclePool, IBaseObjectPool<IBlip> blipPool,
+            IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool)
         {
-            return new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool);
+            return new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool);
         }
 
         public virtual IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool,
@@ -46,6 +47,11 @@ namespace AltV.Net
             return new CheckpointPool(checkpointFactory);
         }
 
+        public virtual IBaseObjectPool<IVoiceChannel> GetVoiceChannelPool(IBaseObjectFactory<IVoiceChannel> voiceChannelFactory)
+        {
+            return new VoiceChannelPool(voiceChannelFactory);
+        }
+
         public virtual IEntityFactory<IPlayer> GetPlayerFactory()
         {
             return new PlayerFactory();
@@ -61,16 +67,24 @@ namespace AltV.Net
             return new BlipFactory();
         }
 
+        public virtual IBaseObjectFactory<IVoiceChannel> GetVoiceChannelFactory()
+        {
+            return new VoiceChannelFactory();
+        }
+
         public virtual IBaseObjectFactory<ICheckpoint> GetCheckpointFactory()
         {
             return new CheckpointFactory();
         }
 
-        public virtual Module GetModule(IServer server, CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool,
-            IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool, IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool)
+        public virtual Module GetModule(IServer server, CSharpNativeResource cSharpNativeResource,
+            IBaseBaseObjectPool baseBaseObjectPool,
+            IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
+            IBaseObjectPool<IBlip> blipPool,
+            IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool)
         {
-            return new Module(server, cSharpNativeResource, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool, blipPool, checkpointPool);
+            return new Module(server, cSharpNativeResource, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool,
+                blipPool, checkpointPool, voiceChannelPool);
         }
     }
 }

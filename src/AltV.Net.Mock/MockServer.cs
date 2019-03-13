@@ -21,12 +21,15 @@ namespace AltV.Net.Mock
         private readonly IBaseObjectPool<IBlip> blipPool;
 
         private readonly IBaseObjectPool<ICheckpoint> checkpointPool;
+        
+        private readonly IBaseObjectPool<IVoiceChannel> voiceChannelPool;
 
         internal MockServer(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool)
+            IBaseObjectPool<ICheckpoint> checkpointPool,
+            IBaseObjectPool<IVoiceChannel> voiceChannelPool)
         {
             this.nativePointer = nativePointer;
             this.baseBaseObjectPool = baseBaseObjectPool;
@@ -35,6 +38,7 @@ namespace AltV.Net.Mock
             this.vehiclePool = vehiclePool;
             this.blipPool = blipPool;
             this.checkpointPool = checkpointPool;
+            this.voiceChannelPool = voiceChannelPool;
         }
 
         public void LogInfo(string message)
@@ -178,6 +182,20 @@ namespace AltV.Net.Mock
             return blip;
         }
 
+        public IVoiceChannel CreateVoiceChannel(bool spatial, float maxDistance)
+        {
+            var ptr = MockEntities.GetNextPtr();
+            voiceChannelPool.Create(ptr, out var voiceChannel);
+            if (voiceChannel is MockVoiceChannel mockVoiceChannel)
+            {
+                mockVoiceChannel.IsSpatial = spatial;
+                mockVoiceChannel.MaxDistance = maxDistance;
+            }
+
+            MockEntities.Insert(voiceChannel);
+            return voiceChannel;
+        }
+
         public void RemoveEntity(IEntity entity)
         {
             switch (entity.Type)
@@ -205,6 +223,12 @@ namespace AltV.Net.Mock
         {
             Alt.Module.OnRemoveVehicle(vehicle.NativePointer);
             MockEntities.Entities.Remove(vehicle.NativePointer);
+        }
+
+        public void RemoveVoiceChannel(IVoiceChannel channel)
+        {
+            Alt.Module.OnRemoveVoiceChannel(channel.NativePointer);
+            MockEntities.Entities.Remove(channel.NativePointer);
         }
 
         public ServerNativeResource GetResource(string name)

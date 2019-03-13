@@ -4,68 +4,69 @@
 
 #include "CoreClr.h"
 
-int tail_cmp ( char *lhs, char *rhs ) {
-    if ( !strcmp ( lhs, rhs ) ) return TAIL_CMP_EQ;
+int tail_cmp(char* lhs, char* rhs) {
+    if (!strcmp(lhs, rhs)) return TAIL_CMP_EQ;
 
-    char *dot = ".";
-    char *l_last, *r_last;
+    char* dot = ".";
+    char* l_last, * r_last;
 
-    char *l_token = strtok_r ( lhs, dot, &l_last );
-    char *r_token = strtok_r ( rhs, dot, &r_last );
+    char* l_token = strtok_r(lhs, dot, &l_last);
+    char* r_token = strtok_r(rhs, dot, &r_last);
 
-    if (  l_token && !r_token ) return TAIL_CMP_LT;
-    if ( !l_token &&  r_token ) return TAIL_CMP_GT;
+    if (l_token && !r_token) return TAIL_CMP_LT;
+    if (!l_token && r_token) return TAIL_CMP_GT;
 
-    while ( l_token || r_token ) {
-        if ( l_token && r_token ) {
-            int l_numeric = isdigit ( l_token[0] );
-            int r_numeric = isdigit ( r_token[0] );
+    while (l_token || r_token) {
+        if (l_token && r_token) {
+            int l_numeric = isdigit(l_token[0]);
+            int r_numeric = isdigit(r_token[0]);
 
-            if ( l_numeric && r_numeric ) {
-                int l_int = atoi ( l_token );
-                int r_int = atoi ( r_token );
+            if (l_numeric && r_numeric) {
+                int l_int = atoi(l_token);
+                int r_int = atoi(r_token);
 
-                if ( l_int < r_int ) return TAIL_CMP_LT;
-                if ( l_int > r_int ) return TAIL_CMP_GT;
-            }
-            else if ( l_numeric ) {
+                if (l_int < r_int) return TAIL_CMP_LT;
+                if (l_int > r_int) return TAIL_CMP_GT;
+            } else if (l_numeric) {
                 return TAIL_CMP_LT;
-            }
-            else if ( r_numeric ) {
+            } else if (r_numeric) {
                 return TAIL_CMP_GT;
-            }
-            else {
-                int cmp = strcmp ( l_token, r_token );
+            } else {
+                int cmp = strcmp(l_token, r_token);
 
-                if ( cmp ) return cmp > 0 ? TAIL_CMP_GT : TAIL_CMP_LT;
+                if (cmp) return cmp > 0 ? TAIL_CMP_GT : TAIL_CMP_LT;
             }
-        }
-        else if ( l_token ) {
+        } else if (l_token) {
             return TAIL_CMP_GT;
-        }
-        else if ( r_token ) {
+        } else if (r_token) {
             return TAIL_CMP_LT;
         }
 
-        l_token = strtok_r ( NULL, dot, &l_last );
-        r_token = strtok_r ( NULL, dot, &r_last );
+        l_token = strtok_r(NULL, dot, &l_last);
+        r_token = strtok_r(NULL, dot, &r_last);
     }
 
     return TAIL_CMP_KO;
 }
 
-int tail_lt ( char *lhs, char *rhs ) {
-    return tail_cmp ( lhs, rhs ) == TAIL_CMP_LT;
+int tail_lt(char* lhs, char* rhs) {
+    return tail_cmp(lhs, rhs) == TAIL_CMP_LT;
 }
-int tail_eq ( char *lhs, char *rhs ) {
-    return tail_cmp ( lhs, rhs ) == TAIL_CMP_EQ;
+
+int tail_eq(char* lhs, char* rhs) {
+    return tail_cmp(lhs, rhs) == TAIL_CMP_EQ;
 }
-int tail_gt ( char *lhs, char *rhs ) {
-    return tail_cmp ( lhs, rhs ) == TAIL_CMP_GT;
+
+int tail_gt(char* lhs, char* rhs) {
+    return tail_cmp(lhs, rhs) == TAIL_CMP_GT;
 }
 
 
 CoreClr::CoreClr(alt::IServer* server) {
+    _initializeCoreCLR = nullptr;
+    _shutdownCoreCLR = nullptr;
+    _createDelegate = nullptr;
+    _executeAssembly = nullptr;
 #ifdef _WIN32
     char pf[MAX_PATH];
     SHGetSpecialFolderPath(
@@ -79,7 +80,7 @@ CoreClr::CoreClr(alt::IServer* server) {
     strcpy(defaultPath, pf);
     strcat(defaultPath, windowsProgramFilesPath);
     GetPath(server, defaultPath);
-	delete[] defaultPath;
+    delete[] defaultPath;
 #else
     GetPath(server, "/usr/share/dotnet/shared/Microsoft.NETCore.App/");
 #endif
@@ -91,7 +92,7 @@ CoreClr::CoreClr(alt::IServer* server) {
     strcat(fullPath, fileName);
 
     _coreClrLib = LoadLibraryEx(fullPath, nullptr, 0);
-	delete[] fullPath;
+    delete[] fullPath;
     if (_coreClrLib == nullptr) {
         server->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll"));
         return;
@@ -100,6 +101,7 @@ CoreClr::CoreClr(alt::IServer* server) {
     _initializeCoreCLR = (coreclr_initialize_ptr) GetProcAddress(_coreClrLib, "coreclr_initialize");
     _shutdownCoreCLR = (coreclr_shutdown_2_ptr) GetProcAddress(_coreClrLib, "coreclr_shutdown_2");
     _createDelegate = (coreclr_create_delegate_ptr) GetProcAddress(_coreClrLib, "coreclr_create_delegate");
+    _executeAssembly = (coreclr_execute_assembly_ptr) GetProcAddress(_coreClrLib, "coreclr_execute_assembly");
 #else
     const char* fileName = "/libcoreclr.so";
     char fullPath[strlen(fileName) + strlen(runtimeDirectory) + 1];
@@ -113,8 +115,10 @@ CoreClr::CoreClr(alt::IServer* server) {
     _initializeCoreCLR = (coreclr_initialize_ptr) dlsym(_coreClrLib, "coreclr_initialize");
     _shutdownCoreCLR = (coreclr_shutdown_2_ptr) dlsym(_coreClrLib, "coreclr_shutdown_2");
     _createDelegate = (coreclr_create_delegate_ptr) dlsym(_coreClrLib, "coreclr_create_delegate");
+    _executeAssembly = (coreclr_execute_assembly_ptr) dlsym(_coreClrLib, "coreclr_execute_assembly");
 #endif
-    if (_initializeCoreCLR == nullptr || _shutdownCoreCLR == nullptr || _createDelegate == nullptr) {
+    if (_initializeCoreCLR == nullptr || _shutdownCoreCLR == nullptr || _createDelegate == nullptr ||
+        _executeAssembly == nullptr) {
         server->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll methods"));
         return;
     }
@@ -147,7 +151,8 @@ bool CoreClr::GetDelegate(alt::IServer* server, void* runtimeHost, unsigned int 
                 alt::String(x_str));
         delete[] x_str;
         server->LogInfo(
-                alt::String("coreclr-module: Unable to get ") + moduleName + ":" + classPath + "." + methodName + " domain:" +
+                alt::String("coreclr-module: Unable to get ") + moduleName + ":" + classPath + "." + methodName +
+                " domain:" +
                 domainId);
         return false;
     }
@@ -272,7 +277,7 @@ void CoreClr::CreateAppDomain(alt::IServer* server, const char* appPath, void** 
     if (result < 0) {
         server->LogInfo(alt::String("coreclr-module: Unable to create app domain: 0x"));
     } else {
-        server->LogInfo(alt::String("coreclr-module: created app domain: 0x") + appPath);
+        server->LogInfo(alt::String("coreclr-module: Created app domain: 0x") + appPath);
     }
 }
 

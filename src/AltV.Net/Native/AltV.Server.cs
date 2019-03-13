@@ -23,7 +23,7 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_LogColored(IntPtr serverPointer, string message);
-            
+
             //TODO: is currently implemented in c#, maybe remove?
             //[DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
             //internal static extern uint Server_Hash(IntPtr serverPointer, string hash);
@@ -54,19 +54,26 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_RemoveEntity(IntPtr serverPointer, IntPtr entityPointer);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_RemoveBlip(IntPtr serverPointer, IntPtr blipPointer);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_RemoveCheckpoint(IntPtr serverPointer, IntPtr checkpointPointer);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_RemoveVehicle(IntPtr serverPointer, IntPtr vehiclePointer);
 
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_GetResource(IntPtr serverPointer, string resourceName,
                 ref IntPtr resourcePointer);
+
+            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Server_CreateVoiceChannel(IntPtr serverPointer, bool spatial,
+                float maxDistance);
+
+            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_RemoveVoiceChannel(IntPtr serverPointer, IntPtr channelPointer);
         }
     }
 }

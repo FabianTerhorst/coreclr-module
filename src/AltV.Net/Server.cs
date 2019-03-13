@@ -22,12 +22,15 @@ namespace AltV.Net
         private readonly IBaseObjectPool<IBlip> blipPool;
 
         private readonly IBaseObjectPool<ICheckpoint> checkpointPool;
+        
+        private readonly IBaseObjectPool<IVoiceChannel> voiceChannelPool;
 
         public Server(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool)
+            IBaseObjectPool<ICheckpoint> checkpointPool,
+            IBaseObjectPool<IVoiceChannel> voiceChannelPool)
         {
             this.NativePointer = nativePointer;
             this.baseBaseObjectPool = baseBaseObjectPool;
@@ -36,6 +39,7 @@ namespace AltV.Net
             this.vehiclePool = vehiclePool;
             this.blipPool = blipPool;
             this.checkpointPool = checkpointPool;
+            this.voiceChannelPool = voiceChannelPool;
         }
 
         public void LogInfo(string message)
@@ -153,6 +157,13 @@ namespace AltV.Net
                 type, entityAttach.NativePointer), out var blip);
             return blip;
         }
+        
+        public IVoiceChannel CreateVoiceChannel(bool spatial, float maxDistance)
+        {
+            voiceChannelPool.Create(AltNative.Server.Server_CreateVoiceChannel(NativePointer,
+                spatial, maxDistance), out var voiceChannel);
+            return voiceChannel;
+        }
 
         public void RemoveEntity(IEntity entity)
         {
@@ -183,6 +194,14 @@ namespace AltV.Net
             if (vehicle.Exists)
             {
                 AltNative.Server.Server_RemoveVehicle(NativePointer, vehicle.NativePointer);
+            }
+        }
+        
+        public void RemoveVoiceChannel(IVoiceChannel channel)
+        {
+            if (channel.Exists)
+            {
+                AltNative.Server.Server_RemoveVoiceChannel(NativePointer, channel.NativePointer);
             }
         }
 

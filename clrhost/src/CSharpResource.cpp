@@ -15,6 +15,8 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     strcat(fullPath, RESOURCES_PATH);
     strcat(fullPath, resourceName);
 
+    //TODO: determinate main file ending to check if it will be a executable
+
     runtimeHost = nullptr;
     domainId = 0;
     MainDelegate = nullptr;
@@ -40,6 +42,8 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     OnRemoveBlipDelegate = nullptr;
     OnCreateCheckpointDelegate = nullptr;
     OnRemoveCheckpointDelegate = nullptr;
+    OnCreateVoiceChannelDelegate = nullptr;
+    OnRemoveVoiceChannelDelegate = nullptr;
     OnConsoleCommandDelegate = nullptr;
 
     coreClr->CreateAppDomain(server, fullPath, &runtimeHost, &domainId);
@@ -91,6 +95,10 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnCreateCheckpoint",
                          reinterpret_cast<void**>(&OnCreateCheckpointDelegate));
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemoveCheckpoint",
+                         reinterpret_cast<void**>(&OnRemoveCheckpointDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnCreateVoiceChannel",
+                         reinterpret_cast<void**>(&OnCreateCheckpointDelegate));
+    coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemoveVoiceChannel",
                          reinterpret_cast<void**>(&OnRemoveCheckpointDelegate));
     coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnConsoleCommand",
                          reinterpret_cast<void**>(&OnConsoleCommandDelegate));
@@ -219,6 +227,9 @@ void CSharpResource::OnCreateBaseObject(alt::IBaseObject* object) {
         case alt::IBaseObject::Type::CHECKPOINT:
             OnCreateCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
             break;
+        case alt::IBaseObject::Type::VOICE_CHANNEL:
+            OnCreateVoiceChannelDelegate(dynamic_cast<alt::IVoiceChannel*>(object));
+            break;
     }
 }
 
@@ -235,6 +246,9 @@ void CSharpResource::OnRemoveBaseObject(alt::IBaseObject* object) {
             break;
         case alt::IBaseObject::Type::CHECKPOINT:
             OnRemoveCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+            break;
+        case alt::IBaseObject::Type::VOICE_CHANNEL:
+            OnRemoveVoiceChannelDelegate(dynamic_cast<alt::IVoiceChannel*>(object));
             break;
     }
 }

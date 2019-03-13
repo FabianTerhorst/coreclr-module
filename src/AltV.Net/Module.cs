@@ -26,6 +26,8 @@ namespace AltV.Net
         internal readonly IBaseObjectPool<IBlip> BlipPool;
 
         internal readonly IBaseObjectPool<ICheckpoint> CheckpointPool;
+        
+        internal readonly IBaseObjectPool<IVoiceChannel> VoiceChannelPool;
 
         //For custom defined args event handlers
         private readonly Dictionary<string, HashSet<Function>> eventHandlers =
@@ -93,7 +95,8 @@ namespace AltV.Net
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool)
+            IBaseObjectPool<ICheckpoint> checkpointPool,
+            IBaseObjectPool<IVoiceChannel> voiceChannelPool)
         {
             Alt.Init(this);
             Server = server;
@@ -104,6 +107,7 @@ namespace AltV.Net
             VehiclePool = vehiclePool;
             BlipPool = blipPool;
             CheckpointPool = checkpointPool;
+            VoiceChannelPool = voiceChannelPool;
         }
 
         public void On(string eventName, Function function)
@@ -583,6 +587,11 @@ namespace AltV.Net
         {
             VehiclePool.Create(vehiclePointer, vehicleId);
         }
+        
+        public void OnCreateVoiceChannel(IntPtr channelPointer)
+        {
+            VoiceChannelPool.Create(channelPointer);
+        }
 
         public void OnRemoveVehicle(IntPtr vehiclePointer)
         {
@@ -607,6 +616,11 @@ namespace AltV.Net
         public void OnRemoveCheckpoint(IntPtr checkpointPointer)
         {
             CheckpointPool.Remove(checkpointPointer);
+        }
+        
+        public void OnRemoveVoiceChannel(IntPtr channelPointer)
+        {
+            VoiceChannelPool.Remove(channelPointer);
         }
 
         public void OnConsoleCommand(string name, StringViewArray args)

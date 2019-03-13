@@ -55,6 +55,8 @@ namespace AltV.Net
         IBlip CreateBlip(IPlayer player, byte type, Position pos);
 
         IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach);
+        
+        IVoiceChannel CreateVoiceChannel(bool spatial, float maxDistance);
 
         void RemoveEntity(IEntity entity);
         
@@ -63,6 +65,8 @@ namespace AltV.Net
         void RemoveCheckpoint(ICheckpoint checkpoint);
         
         void RemoveVehicle(IVehicle vehicle);
+        
+        void RemoveVoiceChannel(IVoiceChannel channel);
 
         ServerNativeResource GetResource(string name);
     }
