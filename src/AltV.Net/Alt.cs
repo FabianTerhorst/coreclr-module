@@ -116,6 +116,9 @@ namespace AltV.Net
 
         public static ICollection<ICheckpoint> GetAllCheckpoints() =>
             Module.CheckpointPool.GetAllObjects();
+            
+        public static ICollection<IVoiceChannel> GetAllVoiceChannels() =>
+            Module.VoiceChannelPool.GetAllObjects();
 
         public static uint Hash(string stringToHash) => Server.Hash(stringToHash);
 
