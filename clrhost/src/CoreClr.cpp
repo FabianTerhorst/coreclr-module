@@ -279,6 +279,21 @@ void CoreClr::CreateAppDomain(alt::IServer* server, const char* appPath, void** 
     } else {
         server->LogInfo(alt::String("coreclr-module: Created app domain: 0x") + appPath);
     }
+    /*unsigned int exitCode = 0;
+    result = _executeAssembly(
+            runtimeHost,
+            *domainId,
+            0,
+            nullptr,
+            appPath,
+            &exitCode
+    );
+
+    if (result < 0) {
+        server->LogInfo(alt::String("coreclr-module: Unable to execute assembly in app path:") + appPath + " exitCode:" + exitCode);
+    } else {
+        server->LogInfo(alt::String("coreclr-module: Assembly executed exitCode:") + exitCode);
+    }*/
 }
 
 void CoreClr::Shutdown(alt::IServer* server, void* runtimeHost,
