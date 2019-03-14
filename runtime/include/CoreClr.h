@@ -14,7 +14,18 @@
 
 #endif
 
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wempty-body"
+#pragma clang diagnostic ignored "-Wswitch"
+#endif
+
 #include <altv-cpp-api/SDK.h>
+
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+
 #include <coreclr/coreclrhost.h>
 #include <sys/stat.h>
 #include <string.h>
