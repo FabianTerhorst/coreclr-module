@@ -165,6 +165,7 @@ namespace AltV.Net
             return voiceChannel;
         }
 
+        //TODO: deprecate
         public void RemoveEntity(IEntity entity)
         {
             if (entity.Exists)
