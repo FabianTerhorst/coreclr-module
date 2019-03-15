@@ -136,7 +136,8 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
             auto index = resourcesCache.GetSize() - 1;
 
             const char* currResourceName = name.CStr();
-            auto currFullPath = new char[strlen(wd) + strlen(RESOURCES_PATH) + strlen(currResourceName) + strlen(main.CStr()) + 1 + 1];
+            auto currFullPath = new char[strlen(wd) + strlen(RESOURCES_PATH) + strlen(currResourceName) +
+                                         strlen(main.CStr()) + 1 + 1];
             strcpy(currFullPath, wd);
             strcat(currFullPath, RESOURCES_PATH);
             strcat(currFullPath, currResourceName);
@@ -191,7 +192,7 @@ CSharpResource::~CSharpResource() {
     int i = 0;
     for (auto resource : resourcesCache) {
         if (resource == this) {
-            alt::Array < CSharpResource * > newResourcesCache;
+            alt::Array<CSharpResource*> newResourcesCache;
             for (auto cloneResource : resourcesCache) {
                 if (cloneResource != this) {
                     newResourcesCache.Push(cloneResource);
@@ -206,7 +207,7 @@ CSharpResource::~CSharpResource() {
 
 //TODO: needs entity type enum value for undefined
 bool CSharpResource::OnEvent(const alt::CEvent* ev) {
-    alt::Array <alt::MValue> list;
+    alt::Array<alt::MValue> list;
     alt::StringView reason;
     alt::IEntity* entity;
     server->LogInfo(alt::String("event: ") + ((int) ev->GetType() + '0'));
@@ -214,16 +215,16 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
     alt::IPlayer* player;
     switch (ev->GetType()) {
         case alt::CEvent::Type::CHECKPOINT_EVENT:
-            entity = ((alt::CCheckpointEvent * )(ev))->GetEntity();
-            OnCheckpointDelegate(((alt::CCheckpointEvent * )(ev))->GetTarget(),
+            entity = ((alt::CCheckpointEvent*) (ev))->GetEntity();
+            OnCheckpointDelegate(((alt::CCheckpointEvent*) (ev))->GetTarget(),
                                  GetEntityPointer(entity),
                                  entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT,
-                                 ((alt::CCheckpointEvent * )(ev))->GetState());
+                                 ((alt::CCheckpointEvent*) (ev))->GetState());
             break;
         case alt::CEvent::Type::CLIENT_SCRIPT_EVENT:
-            list = (((alt::CClientScriptEvent * )(ev))->GetArgs()).Get < alt::Array < alt::MValue >> ();
-            OnClientEventDelegate(((alt::CClientScriptEvent * )(ev))->GetTarget(),
-                                  ((alt::CClientScriptEvent * )(ev))->GetName().CStr(), &list);
+            list = (((alt::CClientScriptEvent*) (ev))->GetArgs()).Get<alt::Array<alt::MValue >>();
+            OnClientEventDelegate(((alt::CClientScriptEvent*) (ev))->GetTarget(),
+                                  ((alt::CClientScriptEvent*) (ev))->GetName().CStr(), &list);
             break;
         case alt::CEvent::Type::PLAYER_CONNECT:
             player = reinterpret_cast<const alt::CPlayerConnectEvent*>(ev)->GetTarget();
@@ -231,20 +232,20 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
                                     "");//TODO: maybe better solution
             break;
         case alt::CEvent::Type::PLAYER_DAMAGE:
-            entity = ((alt::CPlayerDamageEvent * )(ev))->GetAttacker();
-            OnPlayerDamageDelegate(((alt::CPlayerDamageEvent * )(ev))->GetTarget(),
+            entity = ((alt::CPlayerDamageEvent*) (ev))->GetAttacker();
+            OnPlayerDamageDelegate(((alt::CPlayerDamageEvent*) (ev))->GetTarget(),
                                    GetEntityPointer(entity),
                                    entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT,
                                    entity != nullptr ? entity->GetID() : (uint16_t) 0,
-                                   ((alt::CPlayerDamageEvent * )(ev))->GetWeapon(),
-                                   ((alt::CPlayerDamageEvent * )(ev))->GetDamage());
+                                   ((alt::CPlayerDamageEvent*) (ev))->GetWeapon(),
+                                   ((alt::CPlayerDamageEvent*) (ev))->GetDamage());
             break;
         case alt::CEvent::Type::PLAYER_DEATH:
-            entity = ((alt::CPlayerDeathEvent * )(ev))->GetKiller();
-            OnPlayerDeathDelegate(((alt::CPlayerDeathEvent * )(ev))->GetTarget(),
+            entity = ((alt::CPlayerDeathEvent*) (ev))->GetKiller();
+            OnPlayerDeathDelegate(((alt::CPlayerDeathEvent*) (ev))->GetTarget(),
                                   GetEntityPointer(entity),
                                   entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT,
-                                  ((alt::CPlayerDeathEvent * )(ev))->GetWeapon());
+                                  ((alt::CPlayerDeathEvent*) (ev))->GetWeapon());
             break;
         case alt::CEvent::Type::PLAYER_DISCONNECT:
             disconnectEvent = reinterpret_cast<const alt::CPlayerDisconnectEvent*>(ev);
@@ -253,7 +254,7 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
                     /*((alt::CPlayerDisconnectEvent*) (ev))->GetReason().CStr()*/"");
             break;
         case alt::CEvent::Type::REMOVE_ENTITY_EVENT:
-            entity = ((alt::CRemoveEntityEvent * )(ev))->GetEntity();
+            entity = ((alt::CRemoveEntityEvent*) (ev))->GetEntity();
             if (entity != nullptr) {
                 switch (entity->GetType()) {
                     case alt::IBaseObject::Type::PLAYER:
@@ -266,28 +267,28 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
             }
             break;
         case alt::CEvent::Type::SERVER_SCRIPT_EVENT:
-            list = (((alt::CServerScriptEvent * )(ev))->GetArgs()).Get < alt::Array < alt::MValue >> ();
-            OnServerEventDelegate(((alt::CServerScriptEvent * )(ev))->GetName().CStr(), &list);
+            list = (((alt::CServerScriptEvent*) (ev))->GetArgs()).Get<alt::Array<alt::MValue >>();
+            OnServerEventDelegate(((alt::CServerScriptEvent*) (ev))->GetName().CStr(), &list);
             break;
         case alt::CEvent::Type::PLAYER_CHANGE_VEHICLE_SEAT:
-            OnPlayerChangeVehicleSeatDelegate(((alt::CPlayerChangeVehicleSeatEvent * )(ev))->GetTarget(),
-                                              ((alt::CPlayerChangeVehicleSeatEvent * )(ev))->GetPlayer(),
-                                              ((alt::CPlayerChangeVehicleSeatEvent * )(ev))->GetOldSeat(),
-                                              ((alt::CPlayerChangeVehicleSeatEvent * )(ev))->GetNewSeat());
+            OnPlayerChangeVehicleSeatDelegate(((alt::CPlayerChangeVehicleSeatEvent*) (ev))->GetTarget(),
+                                              ((alt::CPlayerChangeVehicleSeatEvent*) (ev))->GetPlayer(),
+                                              ((alt::CPlayerChangeVehicleSeatEvent*) (ev))->GetOldSeat(),
+                                              ((alt::CPlayerChangeVehicleSeatEvent*) (ev))->GetNewSeat());
             break;
         case alt::CEvent::Type::PLAYER_ENTER_VEHICLE:
-            OnPlayerEnterVehicleDelegate(((alt::CPlayerEnterVehicleEvent * )(ev))->GetTarget(),
-                                         ((alt::CPlayerEnterVehicleEvent * )(ev))->GetPlayer(),
-                                         ((alt::CPlayerEnterVehicleEvent * )(ev))->GetSeat());
+            OnPlayerEnterVehicleDelegate(((alt::CPlayerEnterVehicleEvent*) (ev))->GetTarget(),
+                                         ((alt::CPlayerEnterVehicleEvent*) (ev))->GetPlayer(),
+                                         ((alt::CPlayerEnterVehicleEvent*) (ev))->GetSeat());
             break;
         case alt::CEvent::Type::PLAYER_LEAVE_VEHICLE:
-            OnPlayerLeaveVehicleDelegate(((alt::CPlayerLeaveVehicleEvent * )(ev))->GetTarget(),
-                                         ((alt::CPlayerLeaveVehicleEvent * )(ev))->GetPlayer(),
-                                         ((alt::CPlayerLeaveVehicleEvent * )(ev))->GetSeat());
+            OnPlayerLeaveVehicleDelegate(((alt::CPlayerLeaveVehicleEvent*) (ev))->GetTarget(),
+                                         ((alt::CPlayerLeaveVehicleEvent*) (ev))->GetPlayer(),
+                                         ((alt::CPlayerLeaveVehicleEvent*) (ev))->GetSeat());
             break;
         case alt::CEvent::Type::CONSOLE_COMMAND_EVENT:
-            OnConsoleCommandDelegate(((alt::CConsoleCommandEvent * )(ev))->GetName().CStr(),
-                                     ((alt::CConsoleCommandEvent * )(ev))->GetArgs());
+            OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(),
+                                     ((alt::CConsoleCommandEvent*) (ev))->GetArgs());
             break;
     }
     return true;
