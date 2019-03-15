@@ -16,8 +16,6 @@ namespace AltV.Net.Async
 
         private Task currentTask;
 
-        private bool taskAvailable;
-
         private readonly ChannelReader<Task> reader;
 
         private readonly ChannelWriter<Task> writer;
@@ -38,8 +36,7 @@ namespace AltV.Net.Async
 
         internal void Tick()
         {
-            taskAvailable = reader.TryRead(out currentTask);
-            if (taskAvailable)
+            if (reader.TryRead(out currentTask))
             {
                 TryExecuteTask(currentTask);
             }
