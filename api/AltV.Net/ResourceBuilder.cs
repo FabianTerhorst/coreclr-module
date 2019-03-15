@@ -17,8 +17,10 @@ namespace AltV.Net
 
         public void Start()
         {
+            var indexChar = args[0].ToCharArray()[0];
+            var resourceIndex = indexChar - '0';
             var serverPointer = AltNative.Resource.CSharpResource_GetServerPointer();
-            var resourcePointer = AltNative.Resource.CSharpResource_GetResourcePointer();
+            var resourcePointer = AltNative.Resource.CSharpResource_GetResourcePointer(resourceIndex);
 
             ModuleWrapper.MainWithResource(serverPointer, resourcePointer, resource);
 

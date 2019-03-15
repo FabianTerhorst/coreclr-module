@@ -23,7 +23,7 @@ namespace AltV.Net.Native
             //Todo: define function pointers for standalone resource here
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr CSharpResource_GetResourcePointer();
+            internal static extern IntPtr CSharpResource_GetResourcePointer(int resourceIndex);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr CSharpResource_GetServerPointer();

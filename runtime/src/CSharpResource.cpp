@@ -1,13 +1,13 @@
 #include "CSharpResource.h"
 #include "altv-c-api/mvalue.h"
 
-//TODO: manage array of arrays and deliver index of current resource array position pointers to assembly main
-CSharpResource* currResource = nullptr;
 alt::IServer* currServer = nullptr;
+alt::Array<CSharpResource*> resourcesCache;
 
 CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IResource::CreationInfo* info)
         : alt::IResource(info) {
     this->server = server;
+    resourcesCache.Push(this);
     char wd[PATH_MAX];
     if (!GetCurrentDir(wd, PATH_MAX)) {
         server->LogInfo(alt::String("coreclr-module: Unable to find the working directory"));
@@ -50,12 +50,11 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     OnRemoveVoiceChannelDelegate = nullptr;
     OnConsoleCommandDelegate = nullptr;
 
-    auto executable = false;
+    auto executable = true;
 
-    currResource = this;
     currServer = server;
 
-    coreClr->CreateAppDomain(server, this, fullPath, &runtimeHost, &domainId, executable);
+    coreClr->CreateAppDomain(server, this, fullPath, &runtimeHost, &domainId, executable, resourcesCache.GetSize() - 1);
     delete[] fullPath;
 
     if (!executable) {
@@ -136,7 +135,22 @@ bool CSharpResource::Stop() {
     return true;
 }
 
-CSharpResource::~CSharpResource() = default;
+CSharpResource::~CSharpResource() {
+    int i = 0;
+    for (auto resource : resourcesCache) {
+        if (resource == this) {
+            alt::Array<CSharpResource*> newResourcesCache;
+            for (auto cloneResource : resourcesCache) {
+                if (cloneResource != this) {
+                    newResourcesCache.Push(cloneResource);
+                }
+            }
+            resourcesCache = newResourcesCache;
+            break;
+        }
+        i++;
+    }
+}
 
 //TODO: needs entity type enum value for undefined
 bool CSharpResource::OnEvent(const alt::CEvent* ev) {
@@ -331,8 +345,8 @@ alt::IServer* CSharpResource_GetServerPointer() {
     return currServer;
 }
 
-CSharpResource* CSharpResource_GetResourcePointer() {
-    return currResource;
+CSharpResource* CSharpResource_GetResourcePointer(int32_t resourceIndex) {
+    return resourcesCache[resourceIndex];
 }
 
 void* CSharpResource::GetBaseObjectPointer(alt::IBaseObject* baseObject) {

@@ -238,7 +238,7 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer* server, cons
 }
 
 void CoreClr::CreateAppDomain(alt::IServer* server, alt::IResource* resource, const char* appPath, void** runtimeHost,
-                              unsigned int* domainId, bool executable) {
+                              unsigned int* domainId, bool executable, uint64_t resourceIndex) {
     alt::String tpaList = "";
 
     //TODO: check if useless list separator at the end is fine
@@ -285,13 +285,15 @@ void CoreClr::CreateAppDomain(alt::IServer* server, alt::IResource* resource, co
     if (executable) {
         server->LogInfo(alt::String("coreclr-module: Prepare for executing assembly:") + executablePath);
         unsigned int exitCode = 0;
-        const char* args[2];
-        args[0] = (char*) server;
-        args[1] = (char*) resource;
+        const char* args[1];
+        char resourceIndexChar = resourceIndex + '0';
+        char resourceIndexString[1];
+        resourceIndexString[0] = resourceIndexChar;
+        args[0] = resourceIndexString;
         result = _executeAssembly(
                 *runtimeHost,
                 *domainId,
-                2,
+                1,
                 args,
                 executablePath.CStr(),
                 &exitCode

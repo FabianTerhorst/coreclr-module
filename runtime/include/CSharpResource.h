@@ -203,4 +203,4 @@ EXPORT void CSharpResource_SetMain(CSharpResource* resource,
 
 EXPORT alt::IServer* CSharpResource_GetServerPointer();
 
-EXPORT CSharpResource* CSharpResource_GetResourcePointer();
+EXPORT CSharpResource* CSharpResource_GetResourcePointer(int32_t resourceIndex);
