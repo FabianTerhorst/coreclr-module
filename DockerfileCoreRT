@@ -30,6 +30,7 @@ COPY server.cfg .
 COPY resource-corert.cfg resources/example/resource.cfg
 COPY data/ ./data
 COPY --from=clang /runtime/cmake-build-linux/src/libcsharp-module.so modules/
+COPY --from=clang /runtime/cmake-build-linux/src/libcsharp-module.so resources/example/
 COPY --from=dotnet /altv-example/AltV.Net.CoreRT.Example/bin/Release/netcoreapp2.2/linux-x64/publish resources/example/
 COPY --from=dotnet /usr/share/dotnet/shared/Microsoft.NETCore.App /usr/share/dotnet/shared/Microsoft.NETCore.App
 

@@ -19,6 +19,15 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     strcat(fullPath, RESOURCES_PATH);
     strcat(fullPath, resourceName);
 
+    auto mainStr = main.CStr();
+    auto mainSize = main.GetSize();
+
+    auto isDll = true;
+
+    if (mainSize < 5 || memcmp(mainStr + mainSize - 4, ".dll", 4) != 0) {
+        isDll = false;
+    }
+
     runtimeHost = nullptr;
     domainId = 0;
     MainDelegate = nullptr;
@@ -48,72 +57,117 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     OnRemoveVoiceChannelDelegate = nullptr;
     OnConsoleCommandDelegate = nullptr;
 
-    auto executable = false;//TODO: needs resource cfg "assembly"
+    if (isDll) {
+        auto executable = false;//TODO: needs resource cfg "assembly"
 
-    currServer = server;
+        currServer = server;
+        coreClr->CreateAppDomain(server, this, fullPath, &runtimeHost, &domainId, executable,
+                                 resourcesCache.GetSize() - 1);
 
-    coreClr->CreateAppDomain(server, this, fullPath, &runtimeHost, &domainId, executable, resourcesCache.GetSize() - 1);
-    delete[] fullPath;
+        if (!executable) {
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "Main",
+                                 reinterpret_cast<void**>(&MainDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                                 "OnCheckpoint", reinterpret_cast<void**>(&OnCheckpointDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                                 "OnClientEvent", reinterpret_cast<void**>(&OnClientEventDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                                 "OnPlayerConnect", reinterpret_cast<void**>(&OnPlayerConnectDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                                 "OnPlayerDisconnect", reinterpret_cast<void**>(&OnPlayerDisconnectDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                                 "OnPlayerDamage", reinterpret_cast<void**>(&OnPlayerDamageDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                                 "OnPlayerDeath", reinterpret_cast<void**>(&OnPlayerDeathDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnPlayerRemove",
+                                 reinterpret_cast<void**>(&OnPlayerRemoveDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnVehicleRemove",
+                                 reinterpret_cast<void**>(&OnVehicleRemoveDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnServerEvent",
+                                 reinterpret_cast<void**>(&OnServerEventDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                                 "OnPlayerChangeVehicleSeat",
+                                 reinterpret_cast<void**>(&OnPlayerChangeVehicleSeatDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                                 "OnPlayerEnterVehicle",
+                                 reinterpret_cast<void**>(&OnPlayerEnterVehicleDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                                 "OnPlayerLeaveVehicle",
+                                 reinterpret_cast<void**>(&OnPlayerLeaveVehicleDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnStop",
+                                 reinterpret_cast<void**>(&OnStopDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnTick",
+                                 reinterpret_cast<void**>(&OnTickDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnCreatePlayer",
+                                 reinterpret_cast<void**>(&OnCreatePlayerDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemovePlayer",
+                                 reinterpret_cast<void**>(&OnRemovePlayerDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnCreateVehicle",
+                                 reinterpret_cast<void**>(&OnCreateVehicleDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemoveVehicle",
+                                 reinterpret_cast<void**>(&OnRemoveVehicleDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnCreateBlip",
+                                 reinterpret_cast<void**>(&OnCreateBlipDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemoveBlip",
+                                 reinterpret_cast<void**>(&OnRemoveBlipDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                                 "OnCreateCheckpoint",
+                                 reinterpret_cast<void**>(&OnCreateCheckpointDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                                 "OnRemoveCheckpoint",
+                                 reinterpret_cast<void**>(&OnRemoveCheckpointDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                                 "OnCreateVoiceChannel",
+                                 reinterpret_cast<void**>(&OnCreateCheckpointDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                                 "OnRemoveVoiceChannel",
+                                 reinterpret_cast<void**>(&OnRemoveCheckpointDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                                 "OnConsoleCommand",
+                                 reinterpret_cast<void**>(&OnConsoleCommandDelegate));
+        }
+    } else {
+        server->LogInfo("Executable found, will fork");
+        int status;
+        pid_t pid = fork();
+        if (pid == -1) {
+            server->LogInfo("Can't fork, error occured");
+        } else if (pid == 0) {
+            auto index = resourcesCache.GetSize() - 1;
 
-    if (!executable) {
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "Main",
-                             reinterpret_cast<void**>(&MainDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                             "OnCheckpoint", reinterpret_cast<void**>(&OnCheckpointDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                             "OnClientEvent", reinterpret_cast<void**>(&OnClientEventDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                             "OnPlayerConnect", reinterpret_cast<void**>(&OnPlayerConnectDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                             "OnPlayerDisconnect", reinterpret_cast<void**>(&OnPlayerDisconnectDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                             "OnPlayerDamage", reinterpret_cast<void**>(&OnPlayerDamageDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                             "OnPlayerDeath", reinterpret_cast<void**>(&OnPlayerDeathDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnPlayerRemove",
-                             reinterpret_cast<void**>(&OnPlayerRemoveDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnVehicleRemove",
-                             reinterpret_cast<void**>(&OnVehicleRemoveDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnServerEvent",
-                             reinterpret_cast<void**>(&OnServerEventDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                             "OnPlayerChangeVehicleSeat",
-                             reinterpret_cast<void**>(&OnPlayerChangeVehicleSeatDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                             "OnPlayerEnterVehicle",
-                             reinterpret_cast<void**>(&OnPlayerEnterVehicleDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                             "OnPlayerLeaveVehicle",
-                             reinterpret_cast<void**>(&OnPlayerLeaveVehicleDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnStop",
-                             reinterpret_cast<void**>(&OnStopDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnTick",
-                             reinterpret_cast<void**>(&OnTickDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnCreatePlayer",
-                             reinterpret_cast<void**>(&OnCreatePlayerDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemovePlayer",
-                             reinterpret_cast<void**>(&OnRemovePlayerDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnCreateVehicle",
-                             reinterpret_cast<void**>(&OnCreateVehicleDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemoveVehicle",
-                             reinterpret_cast<void**>(&OnRemoveVehicleDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnCreateBlip",
-                             reinterpret_cast<void**>(&OnCreateBlipDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemoveBlip",
-                             reinterpret_cast<void**>(&OnRemoveBlipDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnCreateCheckpoint",
-                             reinterpret_cast<void**>(&OnCreateCheckpointDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemoveCheckpoint",
-                             reinterpret_cast<void**>(&OnRemoveCheckpointDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                             "OnCreateVoiceChannel",
-                             reinterpret_cast<void**>(&OnCreateCheckpointDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                             "OnRemoveVoiceChannel",
-                             reinterpret_cast<void**>(&OnRemoveCheckpointDelegate));
-        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnConsoleCommand",
-                             reinterpret_cast<void**>(&OnConsoleCommandDelegate));
+            const char* currResourceName = name.CStr();
+            auto currFullPath = new char[strlen(wd) + strlen(RESOURCES_PATH) + strlen(currResourceName) + strlen(main.CStr()) + 1 + 1];
+            strcpy(currFullPath, wd);
+            strcat(currFullPath, RESOURCES_PATH);
+            strcat(currFullPath, currResourceName);
+            strcat(currFullPath, "/");
+            strcat(currFullPath, main.CStr());
+
+            char resourceIndexChar = index + '0';
+            char resourceIndexString[1];
+            resourceIndexString[0] = resourceIndexChar;
+            char* argv[4];
+            argv[0] = currFullPath;
+            argv[1] = "start";
+            argv[2] = resourceIndexString;
+            argv[3] = NULL;
+
+            printf("Executing resource with index %lld at path: %s\n", index, currFullPath);
+            auto result = execvp(argv[0], &argv[1]);//TODO: fix / for windows
+            if (result == -1) {
+                printf("execvp-error: %s\n", strerror(errno));
+            } else {
+                printf("%s\n", "Resource executed successfully");
+            }
+            free(currFullPath);
+        } else {
+            printf("Execute resource in pid: %d\n", pid);
+            while (wait(&status) != pid);
+            printf("Executed resource in pid: %d\n", pid);
+        }
     }
+
+    delete[] fullPath;
 }
 
 bool CSharpResource::Start() {
@@ -137,7 +191,7 @@ CSharpResource::~CSharpResource() {
     int i = 0;
     for (auto resource : resourcesCache) {
         if (resource == this) {
-            alt::Array<CSharpResource*> newResourcesCache;
+            alt::Array < CSharpResource * > newResourcesCache;
             for (auto cloneResource : resourcesCache) {
                 if (cloneResource != this) {
                     newResourcesCache.Push(cloneResource);
@@ -152,7 +206,7 @@ CSharpResource::~CSharpResource() {
 
 //TODO: needs entity type enum value for undefined
 bool CSharpResource::OnEvent(const alt::CEvent* ev) {
-    alt::Array<alt::MValue> list;
+    alt::Array <alt::MValue> list;
     alt::StringView reason;
     alt::IEntity* entity;
     server->LogInfo(alt::String("event: ") + ((int) ev->GetType() + '0'));
@@ -160,16 +214,16 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
     alt::IPlayer* player;
     switch (ev->GetType()) {
         case alt::CEvent::Type::CHECKPOINT_EVENT:
-            entity = ((alt::CCheckpointEvent*) (ev))->GetEntity();
-            OnCheckpointDelegate(((alt::CCheckpointEvent*) (ev))->GetTarget(),
+            entity = ((alt::CCheckpointEvent * )(ev))->GetEntity();
+            OnCheckpointDelegate(((alt::CCheckpointEvent * )(ev))->GetTarget(),
                                  GetEntityPointer(entity),
                                  entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT,
-                                 ((alt::CCheckpointEvent*) (ev))->GetState());
+                                 ((alt::CCheckpointEvent * )(ev))->GetState());
             break;
         case alt::CEvent::Type::CLIENT_SCRIPT_EVENT:
-            list = (((alt::CClientScriptEvent*) (ev))->GetArgs()).Get<alt::Array<alt::MValue>>();
-            OnClientEventDelegate(((alt::CClientScriptEvent*) (ev))->GetTarget(),
-                                  ((alt::CClientScriptEvent*) (ev))->GetName().CStr(), &list);
+            list = (((alt::CClientScriptEvent * )(ev))->GetArgs()).Get < alt::Array < alt::MValue >> ();
+            OnClientEventDelegate(((alt::CClientScriptEvent * )(ev))->GetTarget(),
+                                  ((alt::CClientScriptEvent * )(ev))->GetName().CStr(), &list);
             break;
         case alt::CEvent::Type::PLAYER_CONNECT:
             player = reinterpret_cast<const alt::CPlayerConnectEvent*>(ev)->GetTarget();
@@ -177,20 +231,20 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
                                     "");//TODO: maybe better solution
             break;
         case alt::CEvent::Type::PLAYER_DAMAGE:
-            entity = ((alt::CPlayerDamageEvent*) (ev))->GetAttacker();
-            OnPlayerDamageDelegate(((alt::CPlayerDamageEvent*) (ev))->GetTarget(),
+            entity = ((alt::CPlayerDamageEvent * )(ev))->GetAttacker();
+            OnPlayerDamageDelegate(((alt::CPlayerDamageEvent * )(ev))->GetTarget(),
                                    GetEntityPointer(entity),
                                    entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT,
                                    entity != nullptr ? entity->GetID() : (uint16_t) 0,
-                                   ((alt::CPlayerDamageEvent*) (ev))->GetWeapon(),
-                                   ((alt::CPlayerDamageEvent*) (ev))->GetDamage());
+                                   ((alt::CPlayerDamageEvent * )(ev))->GetWeapon(),
+                                   ((alt::CPlayerDamageEvent * )(ev))->GetDamage());
             break;
         case alt::CEvent::Type::PLAYER_DEATH:
-            entity = ((alt::CPlayerDeathEvent*) (ev))->GetKiller();
-            OnPlayerDeathDelegate(((alt::CPlayerDeathEvent*) (ev))->GetTarget(),
+            entity = ((alt::CPlayerDeathEvent * )(ev))->GetKiller();
+            OnPlayerDeathDelegate(((alt::CPlayerDeathEvent * )(ev))->GetTarget(),
                                   GetEntityPointer(entity),
                                   entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT,
-                                  ((alt::CPlayerDeathEvent*) (ev))->GetWeapon());
+                                  ((alt::CPlayerDeathEvent * )(ev))->GetWeapon());
             break;
         case alt::CEvent::Type::PLAYER_DISCONNECT:
             disconnectEvent = reinterpret_cast<const alt::CPlayerDisconnectEvent*>(ev);
@@ -199,7 +253,7 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
                     /*((alt::CPlayerDisconnectEvent*) (ev))->GetReason().CStr()*/"");
             break;
         case alt::CEvent::Type::REMOVE_ENTITY_EVENT:
-            entity = ((alt::CRemoveEntityEvent*) (ev))->GetEntity();
+            entity = ((alt::CRemoveEntityEvent * )(ev))->GetEntity();
             if (entity != nullptr) {
                 switch (entity->GetType()) {
                     case alt::IBaseObject::Type::PLAYER:
@@ -212,28 +266,28 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
             }
             break;
         case alt::CEvent::Type::SERVER_SCRIPT_EVENT:
-            list = (((alt::CServerScriptEvent*) (ev))->GetArgs()).Get<alt::Array<alt::MValue>>();
-            OnServerEventDelegate(((alt::CServerScriptEvent*) (ev))->GetName().CStr(), &list);
+            list = (((alt::CServerScriptEvent * )(ev))->GetArgs()).Get < alt::Array < alt::MValue >> ();
+            OnServerEventDelegate(((alt::CServerScriptEvent * )(ev))->GetName().CStr(), &list);
             break;
         case alt::CEvent::Type::PLAYER_CHANGE_VEHICLE_SEAT:
-            OnPlayerChangeVehicleSeatDelegate(((alt::CPlayerChangeVehicleSeatEvent*) (ev))->GetTarget(),
-                                              ((alt::CPlayerChangeVehicleSeatEvent*) (ev))->GetPlayer(),
-                                              ((alt::CPlayerChangeVehicleSeatEvent*) (ev))->GetOldSeat(),
-                                              ((alt::CPlayerChangeVehicleSeatEvent*) (ev))->GetNewSeat());
+            OnPlayerChangeVehicleSeatDelegate(((alt::CPlayerChangeVehicleSeatEvent * )(ev))->GetTarget(),
+                                              ((alt::CPlayerChangeVehicleSeatEvent * )(ev))->GetPlayer(),
+                                              ((alt::CPlayerChangeVehicleSeatEvent * )(ev))->GetOldSeat(),
+                                              ((alt::CPlayerChangeVehicleSeatEvent * )(ev))->GetNewSeat());
             break;
         case alt::CEvent::Type::PLAYER_ENTER_VEHICLE:
-            OnPlayerEnterVehicleDelegate(((alt::CPlayerEnterVehicleEvent*) (ev))->GetTarget(),
-                                         ((alt::CPlayerEnterVehicleEvent*) (ev))->GetPlayer(),
-                                         ((alt::CPlayerEnterVehicleEvent*) (ev))->GetSeat());
+            OnPlayerEnterVehicleDelegate(((alt::CPlayerEnterVehicleEvent * )(ev))->GetTarget(),
+                                         ((alt::CPlayerEnterVehicleEvent * )(ev))->GetPlayer(),
+                                         ((alt::CPlayerEnterVehicleEvent * )(ev))->GetSeat());
             break;
         case alt::CEvent::Type::PLAYER_LEAVE_VEHICLE:
-            OnPlayerLeaveVehicleDelegate(((alt::CPlayerLeaveVehicleEvent*) (ev))->GetTarget(),
-                                         ((alt::CPlayerLeaveVehicleEvent*) (ev))->GetPlayer(),
-                                         ((alt::CPlayerLeaveVehicleEvent*) (ev))->GetSeat());
+            OnPlayerLeaveVehicleDelegate(((alt::CPlayerLeaveVehicleEvent * )(ev))->GetTarget(),
+                                         ((alt::CPlayerLeaveVehicleEvent * )(ev))->GetPlayer(),
+                                         ((alt::CPlayerLeaveVehicleEvent * )(ev))->GetSeat());
             break;
         case alt::CEvent::Type::CONSOLE_COMMAND_EVENT:
-            OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(),
-                                     ((alt::CConsoleCommandEvent*) (ev))->GetArgs());
+            OnConsoleCommandDelegate(((alt::CConsoleCommandEvent * )(ev))->GetName().CStr(),
+                                     ((alt::CConsoleCommandEvent * )(ev))->GetArgs());
             break;
     }
     return true;

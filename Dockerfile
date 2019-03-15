@@ -13,7 +13,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:2.2 as dotnet
 WORKDIR /altv-example/
 COPY api/ .
 
-RUN dotnet publish -c Release
+RUN cd AltV.Net.Example && dotnet publish -c Release
 
 FROM ubuntu:18.04
 
