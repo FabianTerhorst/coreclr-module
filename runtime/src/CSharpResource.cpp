@@ -19,8 +19,6 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     strcat(fullPath, RESOURCES_PATH);
     strcat(fullPath, resourceName);
 
-    //TODO: determinate main file ending to check if it will be a executable
-
     runtimeHost = nullptr;
     domainId = 0;
     MainDelegate = nullptr;
@@ -50,7 +48,7 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     OnRemoveVoiceChannelDelegate = nullptr;
     OnConsoleCommandDelegate = nullptr;
 
-    auto executable = true;
+    auto executable = false;//TODO: needs resource cfg "assembly"
 
     currServer = server;
 
