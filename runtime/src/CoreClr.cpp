@@ -237,8 +237,8 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer* server, cons
     return assemblies;
 }
 
-void CoreClr::CreateAppDomain(alt::IServer* server, const char* appPath, void** runtimeHost,
-                              unsigned int* domainId) {
+void CoreClr::CreateAppDomain(alt::IServer* server, alt::IResource* resource, const char* appPath, void** runtimeHost,
+                              unsigned int* domainId, bool executable) {
     alt::String tpaList = "";
 
     //TODO: check if useless list separator at the end is fine
@@ -248,6 +248,8 @@ void CoreClr::CreateAppDomain(alt::IServer* server, const char* appPath, void** 
     }
 
     auto nativeDllPaths = alt::String(appPath) + LIST_SEPARATOR + runtimeDirectory;
+
+    auto executablePath = alt::String(appPath) + "/" + resource->GetMain();
 
     const char* propertyKeys[] = {
             "TRUSTED_PLATFORM_ASSEMBLIES",
@@ -279,21 +281,30 @@ void CoreClr::CreateAppDomain(alt::IServer* server, const char* appPath, void** 
     } else {
         server->LogInfo(alt::String("coreclr-module: Created app domain: 0x") + appPath);
     }
-    /*unsigned int exitCode = 0;
-    result = _executeAssembly(
-            runtimeHost,
-            *domainId,
-            0,
-            nullptr,
-            appPath,
-            &exitCode
-    );
 
-    if (result < 0) {
-        server->LogInfo(alt::String("coreclr-module: Unable to execute assembly in app path:") + appPath + " exitCode:" + exitCode);
-    } else {
-        server->LogInfo(alt::String("coreclr-module: Assembly executed exitCode:") + exitCode);
-    }*/
+    if (executable) {
+        server->LogInfo(alt::String("coreclr-module: Prepare for executing assembly:") + executablePath);
+        unsigned int exitCode = 0;
+        const char* args[2];
+        args[0] = (char*) server;
+        args[1] = (char*) resource;
+        result = _executeAssembly(
+                *runtimeHost,
+                *domainId,
+                2,
+                args,
+                executablePath.CStr(),
+                &exitCode
+        );
+
+        if (result < 0) {
+            server->LogInfo(
+                    alt::String("coreclr-module: Unable to execute assembly in app path:") + executablePath + " exitCode:" +
+                    exitCode);
+        } else {
+            server->LogInfo(alt::String("coreclr-module: Assembly executed exitCode:") + exitCode);
+        }
+    }
 }
 
 void CoreClr::Shutdown(alt::IServer* server, void* runtimeHost,

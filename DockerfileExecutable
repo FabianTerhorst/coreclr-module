@@ -13,7 +13,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:2.2 as dotnet
 WORKDIR /altv-example/
 COPY api/ .
 
-RUN dotnet publish -c Release
+RUN cd AltV.Net.Executable.Example && dotnet publish -c Release -r linux-x64
 
 FROM ubuntu:18.04
 
@@ -24,10 +24,10 @@ RUN apt-get update && apt-get install -y valgrind
 WORKDIR /altv-server
 COPY altv-server .
 COPY server.cfg .
-COPY resource.cfg resources/example/
+COPY resource-executable.cfg resources/example/resource.cfg
 COPY data/ ./data
 COPY --from=clang /runtime/cmake-build-linux/src/libcsharp-module.so modules/
-COPY --from=dotnet /altv-example/AltV.Net.Example/bin/Release/netcoreapp2.2/publish resources/example/
+COPY --from=dotnet /altv-example/AltV.Net.Executable.Example/bin/Release/netcoreapp2.2/linux-x64 resources/example/
 COPY --from=dotnet /usr/share/dotnet/shared/Microsoft.NETCore.App /usr/share/dotnet/shared/Microsoft.NETCore.App
 
 RUN chmod +x ./altv-server

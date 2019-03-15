@@ -54,6 +54,39 @@
 #pragma clang diagnostic pop
 #endif
 
+typedef void (* MainDelegate_t)(alt::IServer* server, alt::IResource* resource, const char* resourceName,
+                              const char* entryPoint);
+typedef void (* TickDelegate_t)();
+typedef void (* ServerEventDelegate_t)(const char* name, alt::Array<alt::MValue>* args);
+typedef void (* CheckpointDelegate_t)(alt::ICheckpoint* checkpoint, void* entity, alt::IBaseObject::Type type,
+                                    bool state);
+typedef void (* ClientEventDelegate_t)(alt::IPlayer* player, const char* name, alt::Array<alt::MValue>* args);
+typedef void (* PlayerConnectDelegate_t)(alt::IPlayer* player, uint16_t playerId, const char* reason);
+typedef void (* PlayerDamageDelegate_t)(alt::IPlayer* player, void* attacker,
+                                        alt::IBaseObject::Type attackerType, uint16_t attackerId, uint32_t weapon,
+                                        uint16_t damage);
+typedef void (* PlayerDeathDelegate_t)(alt::IPlayer* player, void* killer, alt::IBaseObject::Type killerType,
+                                       uint32_t weapon);
+typedef void (* PlayerDisconnectDelegate_t)(alt::IPlayer* player, const char* reason);
+typedef void (* PlayerRemoveDelegate_t)(alt::IPlayer* player);
+typedef void (* VehicleRemoveDelegate_t)(alt::IVehicle* vehicle);
+typedef void (* PlayerChangeVehicleSeatDelegate_t)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t oldSeat,
+                                                   uint8_t newSeat);
+typedef void (* PlayerEnterVehicleDelegate_t)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t seat);
+typedef void (* PlayerLeaveVehicleDelegate_t)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t seat);
+typedef void (* StopDelegate_t)();
+typedef void (* CreatePlayerDelegate_t)(alt::IPlayer* player, uint16_t id);
+typedef void (* RemovePlayerDelegate_t)(alt::IPlayer* player);
+typedef void (* CreateVehicleDelegate_t)(alt::IVehicle* vehicle, uint16_t id);
+typedef void (* RemoveVehicleDelegate_t)(alt::IVehicle* vehicle);
+typedef void (* CreateBlipDelegate_t)(alt::IBlip* blip);
+typedef void (* RemoveBlipDelegate_t)(alt::IBlip* blip);
+typedef void (* CreateCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
+typedef void (* RemoveCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
+typedef void (* OnCreateVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
+typedef void (* OnRemoveVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
+typedef void (* OnConsoleCommandDelegate_t)(const char* name, alt::Array<alt::StringView> args);
+
 class CSharpResource : public alt::IResource {
     bool OnEvent(const alt::CEvent* ev) override;
 
@@ -83,66 +116,91 @@ public:
         this->exports[key] = mValue;
     }
 
-    void (* OnCheckpointDelegate)(alt::ICheckpoint* checkpoint, void* entity, alt::IBaseObject::Type type,
-                                  bool state);
+    CheckpointDelegate_t OnCheckpointDelegate;
 
-    void (* OnClientEventDelegate)(alt::IPlayer* player, const char* name, alt::Array<alt::MValue>* args);
+    ClientEventDelegate_t OnClientEventDelegate;
 
-    void (* OnPlayerConnectDelegate)(alt::IPlayer* player, uint16_t playerId, const char* reason);
+    PlayerConnectDelegate_t OnPlayerConnectDelegate;
 
-    void (* OnPlayerDamageDelegate)(alt::IPlayer* player, void* attacker,
-                                    alt::IBaseObject::Type attackerType, uint16_t attackerId, uint32_t weapon,
-                                    uint16_t damage);
+    PlayerDamageDelegate_t OnPlayerDamageDelegate;
 
-    void (* OnPlayerDeathDelegate)(alt::IPlayer* player, void* killer, alt::IBaseObject::Type killerType,
-                                   uint32_t weapon);
+    PlayerDeathDelegate_t OnPlayerDeathDelegate;
 
-    void (* OnPlayerDisconnectDelegate)(alt::IPlayer* player, const char* reason);
+    PlayerDisconnectDelegate_t OnPlayerDisconnectDelegate;
 
-    void (* OnPlayerRemoveDelegate)(alt::IPlayer* player);
+    PlayerRemoveDelegate_t OnPlayerRemoveDelegate;
 
-    void (* OnVehicleRemoveDelegate)(alt::IVehicle* vehicle);
+    VehicleRemoveDelegate_t OnVehicleRemoveDelegate;
 
-    void (* OnServerEventDelegate)(const char* name, alt::Array<alt::MValue>* args);
+    ServerEventDelegate_t OnServerEventDelegate;
 
-    void (* OnPlayerChangeVehicleSeatDelegate)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t oldSeat,
-                                               uint8_t newSeat);
+    PlayerChangeVehicleSeatDelegate_t OnPlayerChangeVehicleSeatDelegate;
 
-    void (* OnPlayerEnterVehicleDelegate)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t seat);
+    PlayerEnterVehicleDelegate_t OnPlayerEnterVehicleDelegate;
 
-    void (* OnPlayerLeaveVehicleDelegate)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t seat);
+    PlayerLeaveVehicleDelegate_t OnPlayerLeaveVehicleDelegate;
 
-    void (* OnStopDelegate)();
+    StopDelegate_t OnStopDelegate;
 
-    void (* OnTickDelegate)();
+    MainDelegate_t MainDelegate;
 
-    void
-    (* MainDelegate)(alt::IServer* server, alt::IResource* resource, const char* resourceName, const char* entryPoint);
+    TickDelegate_t OnTickDelegate;
 
-    void (* OnCreatePlayerDelegate)(alt::IPlayer* player, uint16_t id);
+    CreatePlayerDelegate_t OnCreatePlayerDelegate;
 
-    void (* OnRemovePlayerDelegate)(alt::IPlayer* player);
+    RemovePlayerDelegate_t OnRemovePlayerDelegate;
 
-    void (* OnCreateVehicleDelegate)(alt::IVehicle* vehicle, uint16_t id);
+    CreateVehicleDelegate_t OnCreateVehicleDelegate;
 
-    void (* OnRemoveVehicleDelegate)(alt::IVehicle* vehicle);
+    RemoveVehicleDelegate_t OnRemoveVehicleDelegate;
 
-    void (* OnCreateBlipDelegate)(alt::IBlip* blip);
+    CreateBlipDelegate_t OnCreateBlipDelegate;
 
-    void (* OnRemoveBlipDelegate)(alt::IBlip* blip);
+    RemoveBlipDelegate_t OnRemoveBlipDelegate;
 
-    void (* OnCreateCheckpointDelegate)(alt::ICheckpoint* checkpoint);
+    CreateCheckpointDelegate_t OnCreateCheckpointDelegate;
 
-    void (* OnRemoveCheckpointDelegate)(alt::ICheckpoint* checkpoint);
+    RemoveCheckpointDelegate_t OnRemoveCheckpointDelegate;
 
-    void (* OnCreateVoiceChannelDelegate)(alt::IVoiceChannel* channel);
+    OnCreateVoiceChannelDelegate_t OnCreateVoiceChannelDelegate;
 
-    void (* OnRemoveVoiceChannelDelegate)(alt::IVoiceChannel* channel);
+    OnRemoveVoiceChannelDelegate_t OnRemoveVoiceChannelDelegate;
 
-    void (* OnConsoleCommandDelegate) (const char* name, alt::Array<alt::StringView> args);
+    OnConsoleCommandDelegate_t OnConsoleCommandDelegate;
 
     void* runtimeHost;
     unsigned int domainId;
 };
 
 EXPORT void CSharpResource_SetExport(CSharpResource* resource, const char* key, const alt::MValue &val);
+
+EXPORT void CSharpResource_SetMain(CSharpResource* resource,
+                                   MainDelegate_t mainDelegate,
+                                   TickDelegate_t tickDelegate,
+                                   ServerEventDelegate_t serverEventDelegate,
+                                   CheckpointDelegate_t checkpointDelegate,
+                                   ClientEventDelegate_t clientEventDelegate,
+                                   PlayerDamageDelegate_t playerDamageDelegate,
+                                   PlayerConnectDelegate_t playerConnectDelegate,
+                                   PlayerDeathDelegate_t playerDeathDelegate,
+                                   PlayerDisconnectDelegate_t playerDisconnectDelegate,
+                                   PlayerRemoveDelegate_t playerRemoveDelegate,
+                                   VehicleRemoveDelegate_t vehicleRemoveDelegate,
+                                   PlayerChangeVehicleSeatDelegate_t playerChangeVehicleSeatDelegate,
+                                   PlayerEnterVehicleDelegate_t playerEnterVehicleDelegate,
+                                   PlayerLeaveVehicleDelegate_t playerLeaveVehicleDelegate,
+                                   CreatePlayerDelegate_t createPlayerDelegate,
+                                   RemovePlayerDelegate_t removePlayerDelegate,
+                                   CreateVehicleDelegate_t createVehicleDelegate,
+                                   RemoveVehicleDelegate_t removeVehicleDelegate,
+                                   CreateBlipDelegate_t createBlipDelegate,
+                                   RemoveBlipDelegate_t removeBlipDelegate,
+                                   CreateCheckpointDelegate_t createCheckpointDelegate,
+                                   RemoveCheckpointDelegate_t removeCheckpointDelegate,
+                                   OnCreateVoiceChannelDelegate_t createVoiceChannelDelegate,
+                                   OnRemoveVoiceChannelDelegate_t removeVoiceChannelDelegate,
+                                   OnConsoleCommandDelegate_t consoleCommandDelegate);
+
+EXPORT alt::IServer* CSharpResource_GetServerPointer();
+
+EXPORT CSharpResource* CSharpResource_GetResourcePointer();

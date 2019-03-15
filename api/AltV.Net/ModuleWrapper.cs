@@ -16,7 +16,12 @@ namespace AltV.Net
 
         public static void Main(IntPtr serverPointer, IntPtr resourcePointer, string resourceName, string entryPoint)
         {
-            _resource = new ResourceLoader(serverPointer, resourceName, entryPoint).Init();
+            MainWithResource(serverPointer, resourcePointer, new ResourceLoader(serverPointer, resourceName, entryPoint).Init());
+        }
+        
+        public static void MainWithResource(IntPtr serverPointer, IntPtr resourcePointer, IResource resource)
+        {
+            _resource = resource;
             if (_resource == null)
             {
                 return;
