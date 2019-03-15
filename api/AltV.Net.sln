@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.Mock.Example", "Al
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.Async", "AltV.Net.Async\AltV.Net.Async.csproj", "{24055D62-A4EB-4F4E-928F-4CB46D58F65B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.CoreRT.Example", "AltV.Net.CoreRT.Example\AltV.Net.CoreRT.Example.csproj", "{5687CC8F-F11D-4C6E-9DDB-202163A44218}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,5 +57,11 @@ Global
 		{24055D62-A4EB-4F4E-928F-4CB46D58F65B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{24055D62-A4EB-4F4E-928F-4CB46D58F65B}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
 		{24055D62-A4EB-4F4E-928F-4CB46D58F65B}.Testing|Any CPU.Build.0 = Debug|Any CPU
+		{5687CC8F-F11D-4C6E-9DDB-202163A44218}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5687CC8F-F11D-4C6E-9DDB-202163A44218}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5687CC8F-F11D-4C6E-9DDB-202163A44218}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5687CC8F-F11D-4C6E-9DDB-202163A44218}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5687CC8F-F11D-4C6E-9DDB-202163A44218}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
+		{5687CC8F-F11D-4C6E-9DDB-202163A44218}.Testing|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal
