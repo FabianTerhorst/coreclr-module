@@ -323,7 +323,7 @@ void CoreClr::Shutdown(alt::IServer* server, void* runtimeHost,
 void CoreClr::GetPath(alt::IServer* server, const char* defaultPath) {
     auto directory = opendir(defaultPath);
     if (directory == nullptr) {
-        server->LogInfo(alt::String("coreclr-module: Default path is not a directory"));
+        server->LogInfo(alt::String("coreclr-module: dotnet core sdk not found in ") + defaultPath);
         return;
     }
     struct dirent* entry;
