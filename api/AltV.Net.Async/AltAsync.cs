@@ -83,12 +83,12 @@ namespace AltV.Net.Async
             remove => Module.ConsoleCommandAsyncDelegateHandlers.Remove(value);
         }
 
-        public static void On(string eventName, ClientEventAsyncDelegate clientEventDelegate)
+        public static void OnClient(string eventName, ClientEventAsyncDelegate clientEventDelegate)
         {
             Module.On(eventName, clientEventDelegate);
         }
 
-        public static void On(string eventName, ServerEventAsyncDelegate serverEventDelegate)
+        public static void OnServer(string eventName, ServerEventAsyncDelegate serverEventDelegate)
         {
             Module.On(eventName, serverEventDelegate);
         }
