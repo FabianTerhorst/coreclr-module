@@ -37,7 +37,7 @@ namespace AltV.Net.Example
                 AltAsync.Log("event:" + name);
                 return Task.CompletedTask;
             };
-            AltAsync.On("bla", async args => { await AltAsync.Do(() => Alt.Log("bla with no args:" + args.Length)); });
+            AltAsync.OnServer("bla", async args => { await AltAsync.Do(() => Alt.Log("bla with no args:" + args.Length)); });
             Alt.Emit("bla");
 
             var vehicle = Alt.CreateVehicle(VehicleModel.Apc, new Position(1, 2, 3), float.MinValue);
