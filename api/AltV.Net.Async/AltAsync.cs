@@ -83,16 +83,6 @@ namespace AltV.Net.Async
             remove => Module.ConsoleCommandAsyncDelegateHandlers.Remove(value);
         }
 
-        public static void OnClient(string eventName, ClientEventAsyncDelegate clientEventDelegate)
-        {
-            Module.On(eventName, clientEventDelegate);
-        }
-
-        public static void OnServer(string eventName, ServerEventAsyncDelegate serverEventDelegate)
-        {
-            Module.On(eventName, serverEventDelegate);
-        }
-
         public static async void Log(string message) => await Do(() => Alt.Server.LogInfo(message));
 
         public static async void Emit(string eventName, params object[] args)

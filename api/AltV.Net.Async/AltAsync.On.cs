@@ -1,4 +1,5 @@
 using System;
+using AltV.Net.Async.Events;
 using AltV.Net.Events;
 
 namespace AltV.Net.Async
@@ -7,12 +8,12 @@ namespace AltV.Net.Async
     {
         public static void On(string eventName, Function function) => Module.On(eventName, function);
         
-        public static void OnClient(string eventName, ClientEventDelegate clientEventDelegate)
+        public static void OnClient(string eventName, ClientEventAsyncDelegate clientEventDelegate)
         {
             Module.OnClient(eventName, clientEventDelegate);
         }
         
-        public static void OnServer(string eventName, ServerEventDelegate serverEventDelegate)
+        public static void OnServer(string eventName, ServerEventAsyncDelegate serverEventDelegate)
         {
             Module.OnServer(eventName, serverEventDelegate);
         }

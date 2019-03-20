@@ -319,7 +319,7 @@ namespace AltV.Net.Async
                     @delegate(name, args)));
         }
 
-        public void On(string eventName, ClientEventAsyncDelegate eventDelegate)
+        public void OnClient(string eventName, ClientEventAsyncDelegate eventDelegate)
         {
             if (eventDelegate == null) return;
             if (clientEventAsyncDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
@@ -333,7 +333,7 @@ namespace AltV.Net.Async
             }
         }
 
-        public void On(string eventName, ServerEventAsyncDelegate eventDelegate)
+        public void OnServer(string eventName, ServerEventAsyncDelegate eventDelegate)
         {
             if (eventDelegate == null) return;
             if (serverEventAsyncDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
