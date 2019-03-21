@@ -4,11 +4,17 @@ FROM ubuntu:18.04
 
 # construct server structure
 WORKDIR /altv-server
+# copy altv-server executable
 COPY altv-server .
+# copy server config
 COPY server.cfg .
+# copy data
 COPY data/ ./data
+# copy modules
 COPY modules/ ./modules
+# copy resources
 COPY resources/ ./resources
+# copy dotnet sdk
 COPY --from=dotnet /usr/share/dotnet/shared/Microsoft.NETCore.App /usr/share/dotnet/shared/Microsoft.NETCore.App
 
 RUN chmod +x ./altv-server
@@ -16,4 +22,4 @@ RUN chmod +x ./altv-server
 EXPOSE 7788/udp
 EXPOSE 7788/tcp
 
-CMD ./altv-server
+CMD sh start.sh
