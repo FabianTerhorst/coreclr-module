@@ -15,7 +15,7 @@ namespace AltV.Net
 
         //TODO: for high optimization add ParseBoolUnsafe ect. that doesn't contains the mValue type check for scenarios where we already had to check the mValue type
 
-        
+
         //TODO: add support for own function arguments parser for significant performance improvements with all benefits
         // Returns null when function signature isn't supported
         public static Function Create<T>(T func) where T : Delegate
@@ -200,7 +200,7 @@ namespace AltV.Net
             if (!typeInfos[0].IsPlayer) return null;
             var invokeValues = new object[length + 1];
             invokeValues[0] = player;
-            for (var i = 1; i < length; i++)
+            for (var i = 1; i < length + 1; i++)
             {
                 invokeValues[i] = parsers[i](ref values[i - 1], args[i], baseBaseObjectPool, typeInfos[i]);
             }
