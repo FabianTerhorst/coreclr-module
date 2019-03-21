@@ -200,9 +200,9 @@ namespace AltV.Net
             if (!typeInfos[0].IsPlayer) return null;
             var invokeValues = new object[length + 1];
             invokeValues[0] = player;
-            for (var i = 0; i < length; i++)
+            for (var i = 1; i < length; i++)
             {
-                invokeValues[i + 1] = parsers[i](ref values[i], args[i], baseBaseObjectPool, typeInfos[i]);
+                invokeValues[i] = parsers[i](ref values[i - 1], args[i], baseBaseObjectPool, typeInfos[i]);
             }
 
             return invokeValues;
