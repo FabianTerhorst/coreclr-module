@@ -1,0 +1,19 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2 as dotnet
+
+FROM ubuntu:18.04
+
+# construct server structure
+WORKDIR /altv-server
+COPY altv-server .
+COPY server.cfg .
+COPY data/ ./data
+COPY modules/ ./modules
+COPY resources/ ./resources
+COPY --from=dotnet /usr/share/dotnet/shared/Microsoft.NETCore.App /usr/share/dotnet/shared/Microsoft.NETCore.App
+
+RUN chmod +x ./altv-server
+
+EXPOSE 7788/udp
+EXPOSE 7788/tcp
+
+CMD ./altv-server
