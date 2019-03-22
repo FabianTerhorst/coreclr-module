@@ -182,9 +182,10 @@ namespace AltV.Net
             if (!typeInfos[0].IsPlayer) return MValue.Nil;
             var invokeValues = new object[length + 1];
             invokeValues[0] = player;
-            for (var i = 0; i < length - 1; i++)
+            for (var i = 0; i < length; i++)
             {
-                invokeValues[i + 1] = parsers[i + 1](ref values[i], args[i + 1], baseBaseObjectPool, typeInfos[i + 1]);
+                invokeValues[i + 1] =
+                    parsers[i + 1](ref values[i], args[i + 1], baseBaseObjectPool, typeInfos[i + 1]);
             }
 
             var result = @delegate.DynamicInvoke(invokeValues);
@@ -199,10 +200,12 @@ namespace AltV.Net
             if (!typeInfos[0].IsPlayer) return null;
             var invokeValues = new object[length + 1];
             invokeValues[0] = player;
-            for (var i = 0; i < length - 1; i++)
+            for (var i = 0; i < length; i++)
             {
-                invokeValues[i + 1] = parsers[i + 1](ref values[i], args[i + 1], baseBaseObjectPool, typeInfos[i + 1]);
+                invokeValues[i + 1] =
+                    parsers[i + 1](ref values[i], args[i + 1], baseBaseObjectPool, typeInfos[i + 1]);
             }
+
 
             return invokeValues;
         }
