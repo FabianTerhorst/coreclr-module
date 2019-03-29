@@ -13,7 +13,7 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.1.8</PackageVersion>
+        <PackageVersion>1.1.9</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>Add voice channel apis</PackageReleaseNotes>
     </PropertyGroup>

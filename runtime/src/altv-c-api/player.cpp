@@ -10,6 +10,10 @@ uint32_t Player_GetModel(alt::IPlayer* player) {
     return player->GetModel();
 }
 
+void Player_SetModel(alt::IPlayer* player, uint32_t model) {
+    player->SetModel(model);
+}
+
 void Player_GetPosition(alt::IPlayer* player, position_t &position) {
     auto playerPosition = player->GetPosition();
     position.x = playerPosition.x;

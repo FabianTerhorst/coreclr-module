@@ -18,7 +18,7 @@ namespace AltV.Net.Native
             internal static extern uint Player_GetModel(IntPtr entityPointer);
             
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern uint Player_SetModel(IntPtr entityPointer, uint model);
+            internal static extern void Player_SetModel(IntPtr entityPointer, uint model);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_GetPosition(IntPtr entityPointer, ref Position position);
