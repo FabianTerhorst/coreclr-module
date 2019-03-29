@@ -9,7 +9,7 @@ namespace AltV.Net.Elements.Entities
 
         public abstract Rotation Rotation { get; set; }
 
-        public abstract uint Model { get; }
+        public abstract uint Model { get; set; }
 
         public abstract void SetSyncedMetaData(string key, object value);
         public abstract bool GetSyncedMetaData<T>(string key, out T result);

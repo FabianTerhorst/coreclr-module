@@ -18,6 +18,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 return AltNative.Vehicle.Vehicle_GetModel(NativePointer);
             }
+            set => throw new NotImplementedException("vehicle doesn't support set model");
         }
 
         public override Position Position

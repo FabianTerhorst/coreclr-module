@@ -76,7 +76,11 @@ namespace AltV.Net.Data
             set => throw new NotImplementedException();
         }
 
-        public uint Model => model;
+        public uint Model
+        {
+            get => model;
+            set => model = value;
+        }
 
         public void SetSyncedMetaData(string key, object value)
         {

@@ -17,6 +17,11 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 return AltNative.Player.Player_GetModel(NativePointer);
             }
+            set
+            {
+                CheckIfEntityExists();
+                AltNative.Player.Player_SetModel(NativePointer, value);
+            }
         }
 
         public override Position Position

@@ -5,6 +5,8 @@ namespace AltV.Net.Elements.Entities
 {
     public interface IPlayer : IEntity
     {
+        new uint Model { get; set; }
+        
         bool IsConnected { get; }
 
         string Name { get; set; }

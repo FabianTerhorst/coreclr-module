@@ -16,7 +16,7 @@ namespace AltV.Net.Mock
         public Position Position { get; set; }
         public Rotation Rotation { get; set; }
         public short Dimension { get; set; }
-        public uint Model { get; }
+        public uint Model { get; set; }
 
         private readonly Dictionary<string, object> data = new Dictionary<string, object>();
 
