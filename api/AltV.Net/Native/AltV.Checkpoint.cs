@@ -49,7 +49,7 @@ namespace AltV.Net.Native
             internal static extern bool Checkpoint_IsGlobal(IntPtr checkpointPointer);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Checkpoint_GetType(IntPtr checkpointPointer);
+            internal static extern byte Checkpoint_GetCheckpointType(IntPtr checkpointPointer);
             
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern float Checkpoint_GetHeight(IntPtr checkpointPointer);

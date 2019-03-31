@@ -84,7 +84,7 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckIfEntityExists();
-                return AltNative.Checkpoint.Checkpoint_GetType(NativePointer);
+                return AltNative.Checkpoint.Checkpoint_GetCheckpointType(NativePointer);
             }
         }
 
