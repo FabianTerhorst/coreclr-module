@@ -14,14 +14,14 @@ namespace AltV.Net.Async
         {
             ushort id = default;
             var vehiclePtr = await AltVAsync.Schedule(() =>
-                AltNative.Server.Server_CreateVehicle(((Server) Alt.Server).NativePointer, model, pos, heading,
+                AltNative.Server.Server_CreateVehicle(((Server)Alt.Server).NativePointer, model, pos, heading,
                     ref id));
             Alt.Module.VehiclePool.Create(vehiclePtr, id, out var vehicle);
             return vehicle;
         }
 
         public static async Task<IVehicle> CreateVehicle(VehicleModel model, Position pos, float heading) =>
-            await CreateVehicle((uint) model, pos, heading);
+            await CreateVehicle((uint)model, pos, heading);
 
         public static async Task<IPlayer> GetDriverAsync(this IVehicle vehicle)
         {
@@ -67,6 +67,9 @@ namespace AltV.Net.Async
 
         public static async Task SetSecondaryColorRgbAsync(this IVehicle vehicle, Rgba secondaryColor) =>
             await AltVAsync.Schedule(() => vehicle.SecondaryColorRgb = secondaryColor);
+
+        public static async Task<bool> IsTireSmokeColorCustomAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.IsTireSmokeColorCustom);
 
         public static async Task<byte> GetPearlColorAsync(this IVehicle vehicle) =>
             await AltVAsync.Schedule(() => vehicle.PearlColor);
@@ -157,6 +160,102 @@ namespace AltV.Net.Async
         public static async Task SetNeonColorAsync(this IVehicle vehicle, Rgba neonColor) =>
             await AltVAsync.Schedule(() => vehicle.NeonColor = neonColor);
 
+        public static async Task<string> GetHealthDataAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.HealthData);
+
+        public static async Task SetHealthDataAsync(this IVehicle vehicle, string healthData) =>
+            await AltVAsync.Schedule(() => vehicle.HealthData = healthData);
+
+        public static async Task<bool> IsEngineOnAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.EngineOn);
+
+        public static async Task SetEngineOnAsync(this IVehicle vehicle, bool engineOn) =>
+            await AltVAsync.Schedule(() => vehicle.EngineOn = engineOn);
+
+        public static async Task<uint> GetBodyAdditionalHealthAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.BodyAdditionalHealth);
+
+        public static async Task SetBodyAdditionalHealthAsync(this IVehicle vehicle, uint bodyAdditionalHealth) =>
+            await AltVAsync.Schedule(() => vehicle.BodyAdditionalHealth = bodyAdditionalHealth);
+
+        public static async Task<uint> GetBodyHealthAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.BodyHealth);
+
+        public static async Task SetBodyHealthAsync(this IVehicle vehicle, uint bodyHealth) =>
+            await AltVAsync.Schedule(() => vehicle.BodyHealth = bodyHealth);
+
+        public static async Task<byte> GetRepairsCountAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.RepairsCount);
+
+        public static async Task<byte> GetWheelsCountAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.WheelsCount);
+
+        public static async Task<int> GetPetrolTankHealthAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.PetrolTankHealth);
+
+        public static async Task SetPetrolTankHealthAsync(this IVehicle vehicle, int petrolTankHealth) =>
+            await AltVAsync.Schedule(() => vehicle.PetrolTankHealth = petrolTankHealth);
+
+        public static async Task<int> GetEngineHealthAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.EngineHealth);
+
+        public static async Task SetEngineHealthAsync(this IVehicle vehicle, int engineHealth) =>
+            await AltVAsync.Schedule(() => vehicle.EngineHealth = engineHealth);
+
+        public static async Task<bool> IsNeonActiveAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.IsNeonActive);
+
+        public static async Task<string> GetStateAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.State);
+
+        public static async Task SetStateAsync(this IVehicle vehicle, string state) =>
+            await AltVAsync.Schedule(() => vehicle.State = state);
+
+        public static async Task<bool> IsRoofOpenAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.RoofOpened);
+
+        public static async Task SetRoofOpenAsync(this IVehicle vehicle, bool roofOpen) =>
+            await AltVAsync.Schedule(() => vehicle.RoofOpened = roofOpen);
+
+        public static async Task<bool> IsNightlightOnAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.IsNightlightOn);
+
+        public static async Task<bool> IsDaylightOnAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.IsDaylightOn);
+
+        public static async Task<VehicleLockState> GetLockStateAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.LockState);
+
+        public static async Task SetLockStateAsync(this IVehicle vehicle, VehicleLockState lockState) =>
+            await AltVAsync.Schedule(() => vehicle.LockState = lockState);
+
+        public static async Task<bool> IsSirenActiveAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.SirenActive);
+
+        public static async Task SetSirenActiveAsync(this IVehicle vehicle, bool sirenActive) =>
+            await AltVAsync.Schedule(() => vehicle.SirenActive = sirenActive);
+
+        public static async Task<byte> GetHeadlightColorAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.HeadlightColor);
+
+        public static async Task SetHeadlightColorAsync(this IVehicle vehicle, byte headlightColor) =>
+            await AltVAsync.Schedule(() => vehicle.HeadlightColor = headlightColor);
+
+        public static async Task<bool> IsHandbrakeActiveAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.IsHandbrakeActive);
+
+        public static async Task<bool> IsFlamethrowerActiveAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.IsFlamethrowerActive);
+
+        public static async Task<bool> HasArmoredWindowsAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.HasArmoredWindows);
+
+        public static async Task<string> GetDamageDataAsync(this IVehicle vehicle) =>
+            await AltVAsync.Schedule(() => vehicle.DamageData);
+
+        public static async Task SetDamageDataAsync(this IVehicle vehicle, string damageData) =>
+            await AltVAsync.Schedule(() => vehicle.DamageData = damageData);
+
         public static async Task<byte> GetModAsync(this IVehicle vehicle, byte category) =>
             await AltVAsync.Schedule(() => vehicle.GetMod(category));
 
@@ -186,8 +285,7 @@ namespace AltV.Net.Async
                 return new Tuple<bool, bool, bool, bool>(left, right, front, back);
             });
 
-        public static async Task
-            SetNeonActiveAsync(this IVehicle vehicle, bool left, bool right, bool front, bool back) =>
+        public static async Task SetNeonActiveAsync(this IVehicle vehicle, bool left, bool right, bool front, bool back) =>
             await AltVAsync.Schedule(() => vehicle.SetNeonActive(left, right, front, back));
     }
 }
