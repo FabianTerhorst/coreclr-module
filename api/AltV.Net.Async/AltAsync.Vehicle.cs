@@ -14,14 +14,14 @@ namespace AltV.Net.Async
         {
             ushort id = default;
             var vehiclePtr = await AltVAsync.Schedule(() =>
-                AltNative.Server.Server_CreateVehicle(((Server)Alt.Server).NativePointer, model, pos, heading,
+                AltNative.Server.Server_CreateVehicle(((Server) Alt.Server).NativePointer, model, pos, heading,
                     ref id));
             Alt.Module.VehiclePool.Create(vehiclePtr, id, out var vehicle);
             return vehicle;
         }
 
         public static async Task<IVehicle> CreateVehicle(VehicleModel model, Position pos, float heading) =>
-            await CreateVehicle((uint)model, pos, heading);
+            await CreateVehicle((uint) model, pos, heading);
 
         public static async Task<IPlayer> GetDriverAsync(this IVehicle vehicle)
         {
