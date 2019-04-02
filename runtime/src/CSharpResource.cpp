@@ -150,14 +150,16 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
             char resourceIndexChar = index + '0';
             char resourceIndexString[1];
             resourceIndexString[0] = resourceIndexChar;
-            char* argv[4];
+            //TODO: fix / for windows
+            /*char* argv[4];
             argv[0] = currFullPath;
             argv[1] = "start";
             argv[2] = resourceIndexString;
             argv[3] = NULL;
 
             printf("Executing resource with index %lld at path: %s\n", index, currFullPath);
-            auto result = execvp(argv[0], &argv[1]);//TODO: fix / for windows
+            auto result = execvp(argv[0], &argv[1]);*/
+            auto result = execl(currFullPath, main.CStr(), resourceIndexString, NULL);
             if (result == -1) {
                 printf("execvp-error: %s\n", strerror(errno));
             } else {

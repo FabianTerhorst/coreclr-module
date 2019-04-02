@@ -6,7 +6,7 @@ namespace AltV.Net.Elements.Entities
     public interface IPlayer : IEntity
     {
         new uint Model { get; set; }
-        
+
         bool IsConnected { get; }
 
         string Name { get; set; }
@@ -41,8 +41,12 @@ namespace AltV.Net.Elements.Entities
 
         IVehicle Vehicle { get; }
 
+        /**
+         * The current vehicle seat
+         * driver: 1
+         */
         byte Seat { get; }
-        
+
         uint Ping { get; }
 
         /// <summary>
