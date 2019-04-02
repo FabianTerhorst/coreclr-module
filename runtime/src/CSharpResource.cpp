@@ -128,7 +128,7 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
         }
     } else {
 #ifdef _WIN32
-        server->LogInfo("Executable found, but not supported on windowså");
+        server->LogInfo("Executable found, but not supported on windows");
 #else
         server->LogInfo("Executable found, will fork");
         int status;
