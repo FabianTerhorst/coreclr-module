@@ -23,6 +23,9 @@ namespace AltV.Net.Async
         public static Task<IVehicle> CreateVehicle(VehicleModel model, Position pos, float heading) =>
             CreateVehicle((uint) model, pos, heading);
 
+        public static Task<IVehicle> CreateVehicle(string model, Position pos, float heading) =>
+            CreateVehicle(Alt.Hash(model), pos, heading);
+
         public static async Task<IPlayer> GetDriverAsync(this IVehicle vehicle)
         {
             var entityPointer =
