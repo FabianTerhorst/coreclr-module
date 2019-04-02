@@ -371,12 +371,14 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 var ptr = IntPtr.Zero;
                 AltNative.Vehicle.Vehicle_GetNumberplateText(NativePointer, ref ptr);
-                return Marshal.PtrToStringAnsi(ptr);
+                return Marshal.PtrToStringUTF8(ptr);
             }
             set
             {
                 CheckIfEntityExists();
-                AltNative.Vehicle.Vehicle_SetNumberplateText(NativePointer, value);
+                var stringPtr = StringUtils.StringToHGlobalUtf8(value);
+                AltNative.Vehicle.Vehicle_SetNumberplateText(NativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
             }
         }
 
