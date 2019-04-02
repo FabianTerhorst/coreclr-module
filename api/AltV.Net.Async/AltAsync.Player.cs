@@ -12,11 +12,17 @@ namespace AltV.Net.Async
         public static async Task<bool> IsConnectedAsync(this IPlayer player) =>
             await AltVAsync.Schedule(() => player.IsConnected);
 
+        public static async Task SetModelAsync(this IPlayer player, uint model) =>
+            await AltVAsync.Schedule(() => player.Model = model);
+
         public static async Task<string> GetNameAsync(this IPlayer player) =>
             await AltVAsync.Schedule(() => player.Name);
 
         public static async Task<ushort> GetHealthAsync(this IPlayer player) =>
             await AltVAsync.Schedule(() => player.Health);
+
+        public static async Task SetHealthAsync(this IPlayer player, ushort health) =>
+            await AltVAsync.Schedule(() => player.Health = health);
 
         public static async Task<bool> IsDeadAsync(this IPlayer player) =>
             await AltVAsync.Schedule(() => player.IsDead);
