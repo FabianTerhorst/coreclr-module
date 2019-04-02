@@ -166,8 +166,8 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_GetNumberplateText(IntPtr vehiclePointer, ref IntPtr text);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetNumberplateText(IntPtr vehiclePointer, string text);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetNumberplateText(IntPtr vehiclePointer, IntPtr text);
 
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern byte Vehicle_GetWindowTint(IntPtr vehiclePointer);

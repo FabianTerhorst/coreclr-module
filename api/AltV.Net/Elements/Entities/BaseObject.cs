@@ -45,7 +45,7 @@ namespace AltV.Net.Elements.Entities
             return true;
         }
 
-        protected virtual void CheckIfEntityExists()
+        public virtual void CheckIfEntityExists()
         {
             if (Exists)
             {

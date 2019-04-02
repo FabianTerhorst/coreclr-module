@@ -115,5 +115,9 @@ namespace AltV.Net.Mock
         {
             Alt.Server.RemoveEntity(this);
         }
+
+        public void CheckIfEntityExists()
+        {
+        }
     }
 }
