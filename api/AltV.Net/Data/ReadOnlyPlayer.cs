@@ -191,5 +191,9 @@ namespace AltV.Net.Data
         {
             Marshal.FreeCoTaskMem(name);
         }
+
+        public void CheckIfEntityExists()
+        {
+        }
     }
 }
