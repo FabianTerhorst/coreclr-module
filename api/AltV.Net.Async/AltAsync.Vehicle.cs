@@ -285,7 +285,8 @@ namespace AltV.Net.Async
                 return new Tuple<bool, bool, bool, bool>(left, right, front, back);
             });
 
-        public static async Task SetNeonActiveAsync(this IVehicle vehicle, bool left, bool right, bool front, bool back) =>
+        public static async Task
+            SetNeonActiveAsync(this IVehicle vehicle, bool left, bool right, bool front, bool back) =>
             await AltVAsync.Schedule(() => vehicle.SetNeonActive(left, right, front, back));
     }
 }
