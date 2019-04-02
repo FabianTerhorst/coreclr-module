@@ -186,7 +186,13 @@ namespace AltV.Net.Elements.Args
         public static MValue Create(string value)
         {
             var mValue = Nil;
-            AltNative.MValueCreate.MValue_CreateString(value, ref mValue);
+            var stringPtr = StringUtils.StringToHGlobalUtf8(value);
+            AltNative.MValueCreate.MValue_CreateString(stringPtr, ref mValue);
+            if (stringPtr != IntPtr.Zero)
+            {
+                Marshal.FreeHGlobal(stringPtr);
+            }
+
             return mValue;
         }
 
@@ -292,8 +298,9 @@ namespace AltV.Net.Elements.Args
         public string GetString()
         {
             var value = IntPtr.Zero;
-            AltNative.MValueGet.MValue_GetString(ref this, ref value);
-            return Marshal.PtrToStringAnsi(value);
+            ulong size = 0;
+            AltNative.MValueGet.MValue_GetString(ref this, ref value, ref size);
+            return Marshal.PtrToStringUTF8(value, (int) size);
         }
 
         public IntPtr GetEntityPointer(ref BaseObjectType baseObjectType)

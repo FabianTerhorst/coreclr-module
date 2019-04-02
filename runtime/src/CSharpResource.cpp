@@ -127,6 +127,9 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
                                  reinterpret_cast<void**>(&OnConsoleCommandDelegate));
         }
     } else {
+#ifdef _WIN32
+        server->LogInfo("Executable found, but not supported on windowså");
+#else
         server->LogInfo("Executable found, will fork");
         int status;
         pid_t pid = fork();
@@ -166,6 +169,7 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
             while (wait(&status) != pid);
             printf("Executed resource in pid: %d\n", pid);
         }
+#endif
     }
 
     delete[] fullPath;

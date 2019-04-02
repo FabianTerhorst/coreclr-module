@@ -31,10 +31,9 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void MValue_CreateDouble(double value, ref MValue mValue);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void MValue_CreateString([MarshalAs(UnmanagedType.LPStr)] string value,
-                ref MValue mValue);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void MValue_CreateString(IntPtr value, ref MValue mValue);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void MValue_CreateList(MValue[] values, ulong size, ref MValue mValue);
@@ -75,7 +74,7 @@ namespace AltV.Net.Native
             internal static extern double MValue_GetDouble(ref MValue mValue);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void MValue_GetString(ref MValue mValue, ref IntPtr value);
+            internal static extern void MValue_GetString(ref MValue mValue, ref IntPtr value, ref ulong size);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void MValue_GetList(ref MValue mValue, ref MValueArray value);

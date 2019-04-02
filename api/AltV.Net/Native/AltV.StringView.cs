@@ -21,6 +21,6 @@ namespace AltV.Net.Native
         //private string _text;
 
         //public string Text => _text ?? (_text = Marshal.PtrToStringAnsi(data));
-        public string Text => Marshal.PtrToStringAnsi(data, (int) size);
+        public string Text => Marshal.PtrToStringUTF8(data, (int) size);
     }
 }
