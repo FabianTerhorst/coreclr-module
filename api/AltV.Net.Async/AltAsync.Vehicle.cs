@@ -23,15 +23,8 @@ namespace AltV.Net.Async
         public static async Task<IVehicle> CreateVehicle(VehicleModel model, Position pos, float heading) =>
             await CreateVehicle((uint) model, pos, heading);
 
-        public static Task<IVehicle> CreateVehicle(string model, Position pos, float heading)
-        {
-            if (Enum.TryParse<VehicleModel>(model, true, out var vehicleModel))
-            {
-                return CreateVehicle(vehicleModel, pos, heading);
-            }
-
-            return Task.FromResult<IVehicle>(null);
-        }
+        public static Task<IVehicle> CreateVehicle(string model, Position pos, float heading) =>
+            CreateVehicle(Alt.Hash(model), pos, heading);
 
         public static async Task<IPlayer> GetDriverAsync(this IVehicle vehicle)
         {
