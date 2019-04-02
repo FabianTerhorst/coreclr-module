@@ -19,7 +19,7 @@ namespace AltV.Net.Native
 
             Marshal.Copy(bytes, 0, pointer, bytes.Length);
             // Add null terminator
-            Marshal.WriteByte(IntPtr.Add(pointer, bytes.Length), 0);
+            Marshal.WriteByte(pointer + bytes.Length, 0);
 
             return pointer;
         }
