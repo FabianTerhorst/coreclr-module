@@ -107,14 +107,14 @@ namespace AltV.Net.Async
             Module = module;
         }
 
-        public static async Task Do(Action action)
+        public static Task Do(Action action)
         {
-            await AltVAsync.Schedule(action);
+            return AltVAsync.Schedule(action);
         }
 
-        public static async Task<TResult> Do<TResult>(Func<TResult> action)
+        public static Task<TResult> Do<TResult>(Func<TResult> action)
         {
-            return await AltVAsync.Schedule(action);
+            return AltVAsync.Schedule(action);
         }
     }
 }
