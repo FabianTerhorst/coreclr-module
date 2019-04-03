@@ -6,55 +6,55 @@ namespace AltV.Net.Async
 {
     public static partial class AltAsync
     {
-        public static async Task<IBlip> CreateBlip(IPlayer player, byte type, Position pos) =>
-            await AltVAsync.Schedule(() => Alt.CreateBlip(player, type, pos)).ConfigureAwait(false);
+        public static Task<IBlip> CreateBlip(IPlayer player, byte type, Position pos) =>
+            AltVAsync.Schedule(() => Alt.CreateBlip(player, type, pos));
 
-        public static async Task<IBlip> CreateBlip(IPlayer player, byte type, IEntity entityAttach) =>
-            await AltVAsync.Schedule(() => Alt.CreateBlip(player, type, entityAttach)).ConfigureAwait(false);
+        public static Task<IBlip> CreateBlip(IPlayer player, byte type, IEntity entityAttach) =>
+            AltVAsync.Schedule(() => Alt.CreateBlip(player, type, entityAttach));
 
-        public static async Task<IBlip> CreateBlip(IPlayer player, BlipType type, Position pos) =>
-            await AltVAsync.Schedule(() => Alt.CreateBlip(player, type, pos)).ConfigureAwait(false);
+        public static Task<IBlip> CreateBlip(IPlayer player, BlipType type, Position pos) =>
+            AltVAsync.Schedule(() => Alt.CreateBlip(player, type, pos));
 
-        public static async Task<IBlip> CreateBlip(IPlayer player, BlipType type, IEntity entityAttach) =>
-            await AltVAsync.Schedule(() => Alt.CreateBlip(player, type, entityAttach)).ConfigureAwait(false);
+        public static Task<IBlip> CreateBlip(IPlayer player, BlipType type, IEntity entityAttach) =>
+            AltVAsync.Schedule(() => Alt.CreateBlip(player, type, entityAttach));
 
-        public static async Task<IBlip> CreateBlip(byte type, Position pos) =>
-            await AltVAsync.Schedule(() => Alt.CreateBlip(type, pos)).ConfigureAwait(false);
+        public static Task<IBlip> CreateBlip(byte type, Position pos) =>
+            AltVAsync.Schedule(() => Alt.CreateBlip(type, pos));
 
-        public static async Task<IBlip> CreateBlip(byte type, IEntity entityAttach) =>
-            await AltVAsync.Schedule(() => Alt.CreateBlip(type, entityAttach)).ConfigureAwait(false);
+        public static Task<IBlip> CreateBlip(byte type, IEntity entityAttach) =>
+            AltVAsync.Schedule(() => Alt.CreateBlip(type, entityAttach));
 
-        public static async Task<IBlip> CreateBlip(BlipType type, Position pos) =>
-            await AltVAsync.Schedule(() => Alt.CreateBlip(type, pos)).ConfigureAwait(false);
+        public static Task<IBlip> CreateBlip(BlipType type, Position pos) =>
+            AltVAsync.Schedule(() => Alt.CreateBlip(type, pos));
 
-        public static async Task<IBlip> CreateBlip(BlipType type, IEntity entityAttach) =>
-            await AltVAsync.Schedule(() => Alt.CreateBlip(type, entityAttach)).ConfigureAwait(false);
+        public static Task<IBlip> CreateBlip(BlipType type, IEntity entityAttach) =>
+            AltVAsync.Schedule(() => Alt.CreateBlip(type, entityAttach));
 
-        public static async Task<bool> IsGlobalAsync(this IBlip blip) =>
-            await AltVAsync.Schedule(() => blip.IsGlobal).ConfigureAwait(false);
+        public static Task<bool> IsGlobalAsync(this IBlip blip) =>
+            AltVAsync.Schedule(() => blip.IsGlobal);
 
-        public static async Task<bool> IsAttachedAsync(this IBlip blip) =>
-            await AltVAsync.Schedule(() => blip.IsAttached).ConfigureAwait(false);
+        public static Task<bool> IsAttachedAsync(this IBlip blip) =>
+            AltVAsync.Schedule(() => blip.IsAttached);
 
-        public static async Task<IEntity> AttachedToAsync(this IBlip blip) =>
-            await AltVAsync.Schedule(() => blip.AttachedTo).ConfigureAwait(false);
+        public static Task<IEntity> AttachedToAsync(this IBlip blip) =>
+            AltVAsync.Schedule(() => blip.AttachedTo);
 
-        public static async Task<BlipType> GetBlipTypeAsync(this IBlip blip) =>
-            await AltVAsync.Schedule(() => (BlipType) blip.BlipType).ConfigureAwait(false);
+        public static Task<BlipType> GetBlipTypeAsync(this IBlip blip) =>
+            AltVAsync.Schedule(() => (BlipType) blip.BlipType);
 
-        public static async Task SetSpriteAsync(this IBlip blip, ushort sprite) =>
-            await AltVAsync.Schedule(() => blip.Sprite = sprite).ConfigureAwait(false);
+        public static Task SetSpriteAsync(this IBlip blip, ushort sprite) =>
+            AltVAsync.Schedule(() => blip.Sprite = sprite);
 
-        public static async Task SetColorAsync(this IBlip blip, byte color) =>
-            await AltVAsync.Schedule(() => blip.Color = color).ConfigureAwait(false);
+        public static Task SetColorAsync(this IBlip blip, byte color) =>
+            AltVAsync.Schedule(() => blip.Color = color);
 
-        public static async Task SetRouteAsync(this IBlip blip, bool route) =>
-            await AltVAsync.Schedule(() => blip.Route = route).ConfigureAwait(false);
+        public static Task SetRouteAsync(this IBlip blip, bool route) =>
+            AltVAsync.Schedule(() => blip.Route = route);
 
-        public static async Task SetRouteColorAsync(this IBlip blip, byte color) =>
-            await AltVAsync.Schedule(() => blip.RouteColor = color).ConfigureAwait(false);
+        public static Task SetRouteColorAsync(this IBlip blip, byte color) =>
+            AltVAsync.Schedule(() => blip.RouteColor = color);
 
-        public static async Task RemoveAsync(this IBlip blip) =>
-            await AltVAsync.Schedule(blip.RemoveAsync).ConfigureAwait(false);
+        public static Task RemoveAsync(this IBlip blip) =>
+            AltVAsync.Schedule(blip.RemoveAsync);
     }
 }

@@ -204,8 +204,6 @@ namespace AltV.Net.Native
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_SetNeonColor(IntPtr vehiclePointer, Rgba color);
 
-            //TODO: WIP apis
-
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern bool Vehicle_IsEngineOn(IntPtr vehiclePointer);
 
