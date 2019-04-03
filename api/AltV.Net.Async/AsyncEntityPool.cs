@@ -56,12 +56,19 @@ namespace AltV.Net.Async
 
         public void Create(IntPtr entityPointer, ushort id)
         {
+            if (entityPointer == IntPtr.Zero) return;
             if (entities.ContainsKey(entityPointer)) return;
             Add(entityFactory.Create(entityPointer, id));
         }
 
         public void Create(IntPtr entityPointer, ushort id, out TEntity entity)
         {
+            if (entityPointer == IntPtr.Zero)
+            {
+                entity = default;
+                return;
+            }
+
             if (entities.TryGetValue(entityPointer, out entity)) return;
             entity = entityFactory.Create(entityPointer, id);
             Add(entity);
