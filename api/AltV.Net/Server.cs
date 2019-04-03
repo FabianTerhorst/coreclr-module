@@ -23,7 +23,7 @@ namespace AltV.Net
         private readonly IBaseObjectPool<IBlip> blipPool;
 
         private readonly IBaseObjectPool<ICheckpoint> checkpointPool;
-        
+
         private readonly IBaseObjectPool<IVoiceChannel> voiceChannelPool;
 
         public Server(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool,
@@ -43,29 +43,64 @@ namespace AltV.Net
             this.voiceChannelPool = voiceChannelPool;
         }
 
+        public void LogInfo(IntPtr messagePtr)
+        {
+            AltNative.Server.Server_LogInfo(NativePointer, messagePtr);
+        }
+
+        public void LogDebug(IntPtr messagePtr)
+        {
+            AltNative.Server.Server_LogDebug(NativePointer, messagePtr);
+        }
+
+        public void LogWarning(IntPtr messagePtr)
+        {
+            AltNative.Server.Server_LogWarning(NativePointer, messagePtr);
+        }
+
+        public void LogError(IntPtr messagePtr)
+        {
+            AltNative.Server.Server_LogError(NativePointer, messagePtr);
+        }
+
+        public void LogColored(IntPtr messagePtr)
+        {
+            AltNative.Server.Server_LogColored(NativePointer, messagePtr);
+        }
+
         public void LogInfo(string message)
         {
-            AltNative.Server.Server_LogInfo(NativePointer, message);
+            var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);
+            AltNative.Server.Server_LogInfo(NativePointer, messagePtr);
+            Marshal.FreeHGlobal(messagePtr);
         }
 
         public void LogDebug(string message)
         {
-            AltNative.Server.Server_LogDebug(NativePointer, message);
+            var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);
+            AltNative.Server.Server_LogDebug(NativePointer, messagePtr);
+            Marshal.FreeHGlobal(messagePtr);
         }
 
         public void LogWarning(string message)
         {
-            AltNative.Server.Server_LogWarning(NativePointer, message);
+            var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);
+            AltNative.Server.Server_LogWarning(NativePointer, messagePtr);
+            Marshal.FreeHGlobal(messagePtr);
         }
 
         public void LogError(string message)
         {
-            AltNative.Server.Server_LogError(NativePointer, message);
+            var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);
+            AltNative.Server.Server_LogError(NativePointer, messagePtr);
+            Marshal.FreeHGlobal(messagePtr);
         }
 
         public void LogColored(string message)
         {
-            AltNative.Server.Server_LogColored(NativePointer, message);
+            var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);
+            AltNative.Server.Server_LogColored(NativePointer, messagePtr);
+            Marshal.FreeHGlobal(messagePtr);
         }
 
         public uint Hash(string stringToHash)
@@ -90,7 +125,7 @@ namespace AltV.Net
 
             return hash;
         }
-        
+
         public void TriggerServerEvent(string eventName, params MValue[] args)
         {
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
@@ -111,7 +146,7 @@ namespace AltV.Net
             TriggerServerEvent(eventNamePtr, ref args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
-        
+
         public void TriggerServerEvent(IntPtr eventNamePtr, ref MValue args)
         {
             AltNative.Server.Server_TriggerServerEvent(NativePointer, eventNamePtr, ref args);
@@ -121,17 +156,18 @@ namespace AltV.Net
         {
             TriggerServerEvent(eventNamePtr, MValue.CreateFromObjects(args));
         }
-        
+
         public void TriggerServerEvent(string eventName, params object[] args)
         {
             TriggerServerEvent(eventName, MValue.CreateFromObjects(args));
         }
-        
+
         public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params MValue[] args)
         {
             var mValueList = MValue.Nil;
             AltNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
-            AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero, eventNamePtr,
+            AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero,
+                eventNamePtr,
                 ref mValueList);
         }
 
@@ -141,10 +177,11 @@ namespace AltV.Net
             TriggerClientEvent(player, eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
-        
+
         public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, ref MValue args)
         {
-            AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero, eventNamePtr,
+            AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero,
+                eventNamePtr,
                 ref args);
         }
 
@@ -154,7 +191,7 @@ namespace AltV.Net
             TriggerClientEvent(player, eventNamePtr, ref args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
-        
+
         public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params object[] args)
         {
             TriggerClientEvent(player, eventNamePtr, MValue.CreateFromObjects(args));
@@ -196,7 +233,7 @@ namespace AltV.Net
                 type, entityAttach.NativePointer), out var blip);
             return blip;
         }
-        
+
         public IVoiceChannel CreateVoiceChannel(bool spatial, float maxDistance)
         {
             voiceChannelPool.Create(AltNative.Server.Server_CreateVoiceChannel(NativePointer,
@@ -236,7 +273,7 @@ namespace AltV.Net
                 AltNative.Server.Server_RemoveVehicle(NativePointer, vehicle.NativePointer);
             }
         }
-        
+
         public void RemoveVoiceChannel(IVoiceChannel channel)
         {
             if (channel.Exists)

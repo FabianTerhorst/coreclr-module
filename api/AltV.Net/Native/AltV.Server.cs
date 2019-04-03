@@ -9,20 +9,20 @@ namespace AltV.Net.Native
     {
         internal static class Server
         {
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_LogInfo(IntPtr serverPointer, string message);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_LogInfo(IntPtr serverPointer, IntPtr message);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_LogDebug(IntPtr serverPointer, string message);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_LogDebug(IntPtr serverPointer, IntPtr message);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_LogWarning(IntPtr serverPointer, string message);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_LogWarning(IntPtr serverPointer, IntPtr message);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_LogError(IntPtr serverPointer, string message);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_LogError(IntPtr serverPointer, IntPtr message);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_LogColored(IntPtr serverPointer, string message);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_LogColored(IntPtr serverPointer, IntPtr message);
 
             //TODO: is currently implemented in c#, maybe remove?
             //[DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]

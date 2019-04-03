@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using AltV.Net.Async.Events;
 using AltV.Net.Elements.Args;
+using AltV.Net.Native;
 
 namespace AltV.Net.Async
 {
@@ -84,12 +85,17 @@ namespace AltV.Net.Async
             remove => Module.ConsoleCommandAsyncDelegateHandlers.Remove(value);
         }
 
-        public static async void Log(string message) => await Do(() => Alt.Server.LogInfo(message));
+        public static async void Log(string message)
+        {
+            var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);
+            await Do(() => Alt.Server.LogInfo(messagePtr));
+            Marshal.FreeHGlobal(messagePtr);
+        }
 
         public static async void Emit(string eventName, params object[] args)
         {
             var mValueArgs = MValue.Create(MValue.CreateFromObjects(args));
-            var eventNamePtr = Native.AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
             await AltVAsync.Schedule(() => Alt.Server.TriggerServerEvent(eventNamePtr, ref mValueArgs));
             Marshal.FreeHGlobal(eventNamePtr); 
         }
@@ -97,7 +103,7 @@ namespace AltV.Net.Async
         public static async void EmitAll(string eventName, params object[] args)
         {
             var mValueArgs = MValue.Create(MValue.CreateFromObjects(args));
-            var eventNamePtr = Native.AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
             await AltVAsync.Schedule(() => Alt.Server.TriggerClientEvent(null, eventNamePtr, ref mValueArgs));
             Marshal.FreeHGlobal(eventNamePtr);
         }

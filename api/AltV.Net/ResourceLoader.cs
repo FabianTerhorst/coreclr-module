@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using AltV.Net.Native;
 
 namespace AltV.Net
@@ -118,6 +119,11 @@ namespace AltV.Net
             }
         }
 
-        protected virtual void Log(string message) => AltNative.Server.Server_LogInfo(serverPointer, message);
+        protected virtual void Log(string message)
+        {
+            var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);
+            AltNative.Server.Server_LogInfo(serverPointer, messagePtr);
+            Marshal.FreeHGlobal(messagePtr);
+        }
     }
 }
