@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Runtime.InteropServices;
 
 namespace AltV.Net.Data
@@ -26,6 +27,26 @@ namespace AltV.Net.Data
         public override string ToString()
         {
             return $"Rotation(roll: {roll}, pitch: {pitch}, yaw: {yaw})";
+        }
+
+        public static implicit operator Vector3(Rotation rotation)
+        {
+            return new Vector3
+            {
+                X = rotation.roll,
+                Y = rotation.pitch,
+                Z = rotation.yaw
+            };
+        }
+
+        public static implicit operator Rotation(Vector3 vector3)
+        {
+            return new Rotation
+            {
+                roll = vector3.X,
+                pitch = vector3.Y,
+                yaw = vector3.Z
+            };
         }
     }
 }
