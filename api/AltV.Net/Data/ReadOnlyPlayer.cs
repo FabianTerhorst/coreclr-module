@@ -96,7 +96,7 @@ namespace AltV.Net.Data
 
         public string Name
         {
-            get => Marshal.PtrToStringAnsi(name);
+            get => Marshal.PtrToStringUTF8(name);
             set => throw new NotImplementedException();
         }
 
