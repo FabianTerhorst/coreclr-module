@@ -345,6 +345,7 @@ namespace AltV.Net.Example
         private void OnPlayerConnect(IPlayer player, string reason)
         {
             player.Emit("connect_event");
+            player.SetDateTime(DateTime.Now);
         }
 
         private async Task OnPlayerConnectAsync(IPlayer player, string reason)
