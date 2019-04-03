@@ -10,13 +10,13 @@ namespace AltV.Net.Native
         internal static class Player
         {
             // Entity
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern ushort Player_GetID(IntPtr entityPointer);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern uint Player_GetModel(IntPtr entityPointer);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_SetModel(IntPtr entityPointer, uint model);
 
@@ -51,9 +51,9 @@ namespace AltV.Net.Native
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern void
                 Player_SetSyncedMetaData(IntPtr entityPointer, string key, ref MValue value);
-            
+
             // Player
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool Player_IsConnected(IntPtr playerPointer);
 
@@ -130,10 +130,10 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern byte Player_GetSeat(IntPtr playerPointer);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Player_Kick(IntPtr playerPointer, string reason);
-            
-            [DllImport(DllName,CallingConvention = NativeCallingConvention)]
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_Kick(IntPtr playerPointer, IntPtr reason);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern uint Player_GetPing(IntPtr playerPointer);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]

@@ -1,3 +1,4 @@
+using System;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
@@ -36,11 +37,23 @@ namespace AltV.Net
         /// </summary>
         uint Hash(string hash);
 
+        void TriggerServerEvent(IntPtr eventNamePtr, params MValue[] args);
+
+        void TriggerServerEvent(IntPtr eventNamePtr, params object[] args);
+
+        void TriggerServerEvent(IntPtr eventNamePtr, ref MValue args);
+        
         void TriggerServerEvent(string eventName, params MValue[] args);
 
         void TriggerServerEvent(string eventName, params object[] args);
         
         void TriggerServerEvent(string eventName, ref MValue args);
+
+        void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params MValue[] args);
+
+        void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params object[] args);
+
+        void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, ref MValue args);
 
         void TriggerClientEvent(IPlayer player, string eventName, params MValue[] args);
 

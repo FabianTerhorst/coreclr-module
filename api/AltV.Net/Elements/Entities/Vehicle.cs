@@ -376,7 +376,7 @@ namespace AltV.Net.Elements.Entities
             set
             {
                 CheckIfEntityExists();
-                var stringPtr = StringUtils.StringToHGlobalUtf8(value);
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
                 AltNative.Vehicle.Vehicle_SetNumberplateText(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
             }

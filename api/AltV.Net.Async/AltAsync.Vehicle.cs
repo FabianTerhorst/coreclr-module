@@ -142,7 +142,7 @@ namespace AltV.Net.Async
 
         public static async Task SetNumberplateTextAsync(this IVehicle vehicle, string numberPlateText)
         {
-            var numberPlateTextPtr = StringUtils.StringToHGlobalUtf8(numberPlateText);
+            var numberPlateTextPtr = AltNative.StringUtils.StringToHGlobalUtf8(numberPlateText);
             await AltVAsync.Schedule(() =>
             {
                 vehicle.CheckIfEntityExists();

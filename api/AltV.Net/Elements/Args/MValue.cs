@@ -186,7 +186,7 @@ namespace AltV.Net.Elements.Args
         public static MValue Create(string value)
         {
             var mValue = Nil;
-            var stringPtr = StringUtils.StringToHGlobalUtf8(value);
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
             AltNative.MValueCreate.MValue_CreateString(stringPtr, ref mValue);
             if (stringPtr != IntPtr.Zero)
             {

@@ -30,7 +30,7 @@ namespace AltV.Net.Async
 
         public static async Task SetNameAsync(this IPlayer player, string name)
         {
-            var namePtr = StringUtils.StringToHGlobalUtf8(name);
+            var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
             await AltVAsync.Schedule(() =>
             {
                 player.CheckIfEntityExists();
@@ -115,13 +115,23 @@ namespace AltV.Net.Async
         public static Task SetWeatherAsync(this IPlayer player, uint weather) =>
             AltVAsync.Schedule(() => player.SetWeather(weather));
 
-        public static Task KickAsync(this IPlayer player, string reason) =>
-            AltVAsync.Schedule(() => player.Kick(reason));
+        public static async Task KickAsync(this IPlayer player, string reason)
+        {
+            var reasonPtr = AltNative.StringUtils.StringToHGlobalUtf8(reason);
+            await AltVAsync.Schedule(() =>
+            {
+                player.CheckIfEntityExists();
+                AltNative.Player.Player_Kick(player.NativePointer, reasonPtr);
+            });
+            Marshal.FreeHGlobal(reasonPtr);
+        }
 
-        public static Task EmitAsync(this IPlayer player, string eventName, params object[] args)
+        public static async Task EmitAsync(this IPlayer player, string eventName, params object[] args)
         {
             var mValueArgs = MValue.Create(MValue.CreateFromObjects(args));
-            return AltVAsync.Schedule(() => Alt.Server.TriggerClientEvent(player, eventName, ref mValueArgs));
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            await AltVAsync.Schedule(() => Alt.Server.TriggerClientEvent(player, eventNamePtr, ref mValueArgs));
+            Marshal.FreeHGlobal(eventNamePtr);
         }
 
         public static Task<ReadOnlyPlayer> CopyAsync(this IPlayer player) =>

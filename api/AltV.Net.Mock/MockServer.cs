@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
@@ -123,6 +124,36 @@ namespace AltV.Net.Mock
         public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)
         {
             TriggerClientEvent(player, eventName, MValue.CreateFromObjects(args));
+        }
+
+        public void TriggerServerEvent(IntPtr eventNamePtr, params MValue[] args)
+        {
+            TriggerServerEvent(Marshal.PtrToStringUTF8(eventNamePtr), args);
+        }
+
+        public void TriggerServerEvent(IntPtr eventNamePtr, params object[] args)
+        {
+            TriggerServerEvent(Marshal.PtrToStringUTF8(eventNamePtr), args);
+        }
+
+        public void TriggerServerEvent(IntPtr eventNamePtr, ref MValue args)
+        {
+            TriggerServerEvent(Marshal.PtrToStringUTF8(eventNamePtr), ref args);
+        }
+
+        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params MValue[] args)
+        {
+            TriggerClientEvent(player, Marshal.PtrToStringUTF8(eventNamePtr), args);
+        }
+
+        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params object[] args)
+        {
+            TriggerClientEvent(player, Marshal.PtrToStringUTF8(eventNamePtr), args);
+        }
+
+        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, ref MValue args)
+        {
+            TriggerClientEvent(player, Marshal.PtrToStringUTF8(eventNamePtr), ref args);
         }
 
         public IVehicle CreateVehicle(uint model, Position pos, float heading)

@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using System.Text;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
@@ -89,36 +90,74 @@ namespace AltV.Net
 
             return hash;
         }
-
+        
         public void TriggerServerEvent(string eventName, params MValue[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerServerEvent(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        public void TriggerServerEvent(IntPtr eventNamePtr, params MValue[] args)
         {
             var mValueList = MValue.Nil;
             AltNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
-            AltNative.Server.Server_TriggerServerEvent(NativePointer, eventName, ref mValueList);
+            AltNative.Server.Server_TriggerServerEvent(NativePointer, eventNamePtr, ref mValueList);
         }
 
         public void TriggerServerEvent(string eventName, ref MValue args)
         {
-            AltNative.Server.Server_TriggerServerEvent(NativePointer, eventName, ref args);
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerServerEvent(eventNamePtr, ref args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+        
+        public void TriggerServerEvent(IntPtr eventNamePtr, ref MValue args)
+        {
+            AltNative.Server.Server_TriggerServerEvent(NativePointer, eventNamePtr, ref args);
         }
 
+        public void TriggerServerEvent(IntPtr eventNamePtr, params object[] args)
+        {
+            TriggerServerEvent(eventNamePtr, MValue.CreateFromObjects(args));
+        }
+        
         public void TriggerServerEvent(string eventName, params object[] args)
         {
             TriggerServerEvent(eventName, MValue.CreateFromObjects(args));
         }
-
-        public void TriggerClientEvent(IPlayer player, string eventName, params MValue[] args)
+        
+        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params MValue[] args)
         {
             var mValueList = MValue.Nil;
             AltNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
-            AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero, eventName,
+            AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero, eventNamePtr,
                 ref mValueList);
+        }
+
+        public void TriggerClientEvent(IPlayer player, string eventName, params MValue[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerClientEvent(player, eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+        
+        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, ref MValue args)
+        {
+            AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero, eventNamePtr,
+                ref args);
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, ref MValue args)
         {
-            AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero, eventName,
-                ref args);
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerClientEvent(player, eventNamePtr, ref args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+        
+        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params object[] args)
+        {
+            TriggerClientEvent(player, eventNamePtr, MValue.CreateFromObjects(args));
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)

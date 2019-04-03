@@ -144,7 +144,7 @@ namespace AltV.Net.Elements.Entities
             set
             {
                 CheckIfEntityExists();
-                var stringPtr = StringUtils.StringToHGlobalUtf8(value);
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
                 AltNative.Player.Player_SetName(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
             }
@@ -341,7 +341,9 @@ namespace AltV.Net.Elements.Entities
         public void Kick(string reason)
         {
             CheckIfEntityExists();
-            AltNative.Player.Player_Kick(NativePointer, reason);
+            var reasonPtr = AltNative.StringUtils.StringToHGlobalUtf8(reason);
+            AltNative.Player.Player_Kick(NativePointer, reasonPtr);
+            Marshal.FreeHGlobal(reasonPtr);
         }
 
         public void Emit(string eventName, params object[] args)

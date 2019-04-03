@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using AltV.Net.Async.Events;
 using AltV.Net.Elements.Args;
@@ -88,13 +89,17 @@ namespace AltV.Net.Async
         public static async void Emit(string eventName, params object[] args)
         {
             var mValueArgs = MValue.Create(MValue.CreateFromObjects(args));
-            await AltVAsync.Schedule(() => Alt.Server.TriggerServerEvent(eventName, ref mValueArgs));
+            var eventNamePtr = Native.AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            await AltVAsync.Schedule(() => Alt.Server.TriggerServerEvent(eventNamePtr, ref mValueArgs));
+            Marshal.FreeHGlobal(eventNamePtr); 
         }
 
         public static async void EmitAll(string eventName, params object[] args)
         {
             var mValueArgs = MValue.Create(MValue.CreateFromObjects(args));
-            await AltVAsync.Schedule(() => Alt.Server.TriggerClientEvent(null, eventName, ref mValueArgs));
+            var eventNamePtr = Native.AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            await AltVAsync.Schedule(() => Alt.Server.TriggerClientEvent(null, eventNamePtr, ref mValueArgs));
+            Marshal.FreeHGlobal(eventNamePtr);
         }
 
         internal static void Setup(AltVAsync altVAsync)
