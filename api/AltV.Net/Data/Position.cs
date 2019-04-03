@@ -74,7 +74,7 @@ namespace AltV.Net.Data
         }
 
         // Returns this vector with a magnitude of 1.
-        public Vector3 Normalized => Normalize(this);
+        public Position Normalized => Normalize(this);
 
         public float Distance(Position b) =>
             MathF.Sqrt((X - b.X) * (X - b.X) + (Y - b.Y) * (Y - b.Y) + (Z - b.Z) * (Z - b.Z));
