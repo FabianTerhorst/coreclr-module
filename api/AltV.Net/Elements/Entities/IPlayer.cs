@@ -1,3 +1,4 @@
+using System;
 using AltV.Net.Data;
 using AltV.Net.Native;
 
@@ -69,5 +70,11 @@ namespace AltV.Net.Elements.Entities
         void Emit(string eventName, params object[] args);
 
         ReadOnlyPlayer Copy();
+    }
+
+    public static class PlayerExtensions
+    {
+        public static void SetDateTime(this IPlayer player, DateTime dateTime) => player.SetDateTime(dateTime.Day,
+            dateTime.Month, dateTime.Year, dateTime.Hour, dateTime.Minute, dateTime.Second);
     }
 }
