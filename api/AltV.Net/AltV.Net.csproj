@@ -15,7 +15,7 @@
         <PackageTags>altv gta bridge</PackageTags>
         <PackageVersion>1.2.0</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Utf8 support, optimizations, player DateTime support, implicit cast between vector3 &lt;=&gt; rotation / position, fix rotation struct attributes code style</PackageReleaseNotes>
+        <PackageReleaseNotes>Utf8 support, optimizations, player DateTime support, implicit cast between vector3 &lt;=&gt; rotation / position, fix rotation struct attributes code style, position normalized</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

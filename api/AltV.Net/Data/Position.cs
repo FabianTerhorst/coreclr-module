@@ -11,8 +11,10 @@ namespace AltV.Net.Data
 
         public static readonly float TOLERANCE = 0.013F; //0.01318359375F;
 
+        public const float KEpsilon = 0.00001F;
+
         public static Position Zero = new Position(0, 0, 0);
-        
+
         public static implicit operator Vector3(Position position)
         {
             return new Vector3
@@ -45,6 +47,34 @@ namespace AltV.Net.Data
         }
 
         public float GetMagnitude() => MathF.Sqrt(X * X + Y * Y + Z * Z);
+
+        public static Position Normalize(Position value)
+        {
+            var mag = value.GetMagnitude();
+            if (mag > KEpsilon) return value / mag;
+            return Zero;
+        }
+
+        // Makes this vector have a magnitude of 1.
+        public void Normalize()
+        {
+            var mag = GetMagnitude();
+            if (mag > KEpsilon)
+            {
+                X /= mag;
+                Y /= mag;
+                Z /= mag;
+            }
+            else
+            {
+                X = 0;
+                Y = 0;
+                Z = 0;
+            }
+        }
+
+        // Returns this vector with a magnitude of 1.
+        public Vector3 Normalized => Normalize(this);
 
         public float Distance(Position b) =>
             MathF.Sqrt((X - b.X) * (X - b.X) + (Y - b.Y) * (Y - b.Y) + (Z - b.Z) * (Z - b.Z));
