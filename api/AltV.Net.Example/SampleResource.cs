@@ -52,10 +52,10 @@ namespace AltV.Net.Example
             vehicle.LockState = VehicleLockState.Locked;
             vehicle.PrimaryColorRgb = new Rgba
             {
-                r = 1,
-                g = 8,
-                b = 7,
-                a = 0
+                R = 1,
+                G = 8,
+                B = 7,
+                A = 0
             };
 
             Alt.Log("ptr:" + vehicle.NativePointer);
