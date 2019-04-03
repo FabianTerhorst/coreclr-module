@@ -66,8 +66,8 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_GetName(IntPtr playerPointer, ref IntPtr name);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Player_SetName(IntPtr playerPointer, string name);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_SetName(IntPtr playerPointer, IntPtr name);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern ushort Player_GetHealth(IntPtr playerPointer);

@@ -139,12 +139,14 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 var ptr = IntPtr.Zero;
                 AltNative.Player.Player_GetName(NativePointer, ref ptr);
-                return Marshal.PtrToStringAnsi(ptr);
+                return Marshal.PtrToStringUTF8(ptr);
             }
             set
             {
                 CheckIfEntityExists();
-                AltNative.Player.Player_SetName(NativePointer, value);
+                var stringPtr = StringUtils.StringToHGlobalUtf8(value);
+                AltNative.Player.Player_SetName(NativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
             }
         }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
@@ -15,8 +16,28 @@ namespace AltV.Net.Async
         public static Task SetModelAsync(this IPlayer player, uint model) =>
             AltVAsync.Schedule(() => player.Model = model);
 
-        public static Task<string> GetNameAsync(this IPlayer player) =>
-            AltVAsync.Schedule(() => player.Name);
+        public static async Task<string> GetNameAsync(this IPlayer player)
+        {
+            var ptr = IntPtr.Zero;
+            await AltVAsync.Schedule(
+                () =>
+                {
+                    player.CheckIfEntityExists();
+                    AltNative.Player.Player_GetName(player.NativePointer, ref ptr);
+                });
+            return ptr == IntPtr.Zero ? string.Empty : Marshal.PtrToStringUTF8(ptr);
+        }
+
+        public static async Task SetNameAsync(this IPlayer player, string name)
+        {
+            var namePtr = StringUtils.StringToHGlobalUtf8(name);
+            await AltVAsync.Schedule(() =>
+            {
+                player.CheckIfEntityExists();
+                AltNative.Player.Player_SetName(player.NativePointer, namePtr);
+            });
+            Marshal.FreeHGlobal(namePtr);
+        }
 
         public static Task<ushort> GetHealthAsync(this IPlayer player) =>
             AltVAsync.Schedule(() => player.Health);
