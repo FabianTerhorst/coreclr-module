@@ -22,7 +22,7 @@ namespace AltV.Net.Mock
         private readonly IBaseObjectPool<IBlip> blipPool;
 
         private readonly IBaseObjectPool<ICheckpoint> checkpointPool;
-        
+
         private readonly IBaseObjectPool<IVoiceChannel> voiceChannelPool;
 
         internal MockServer(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,
@@ -65,6 +65,31 @@ namespace AltV.Net.Mock
         public void LogColored(string message)
         {
             Console.WriteLine(message);
+        }
+
+        public void LogInfo(IntPtr message)
+        {
+            Console.WriteLine(Marshal.PtrToStringUTF8(message));
+        }
+
+        public void LogDebug(IntPtr message)
+        {
+            Console.WriteLine(Marshal.PtrToStringUTF8(message));
+        }
+
+        public void LogWarning(IntPtr message)
+        {
+            Console.WriteLine(Marshal.PtrToStringUTF8(message));
+        }
+
+        public void LogError(IntPtr message)
+        {
+            Console.WriteLine(Marshal.PtrToStringUTF8(message));
+        }
+
+        public void LogColored(IntPtr message)
+        {
+            Console.WriteLine(Marshal.PtrToStringUTF8(message));
         }
 
         public uint Hash(string hash)
@@ -232,9 +257,8 @@ namespace AltV.Net.Mock
             switch (entity.Type)
             {
                 case BaseObjectType.Vehicle:
-                    RemoveVehicle((IVehicle)entity);
+                    RemoveVehicle((IVehicle) entity);
                     break;
-                
             }
         }
 
