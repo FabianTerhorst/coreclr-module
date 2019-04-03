@@ -12,6 +12,26 @@ namespace AltV.Net.Data
         public static readonly float TOLERANCE = 0.013F; //0.01318359375F;
 
         public static Position Zero = new Position(0, 0, 0);
+        
+        public static implicit operator Vector3(Position position)
+        {
+            return new Vector3
+            {
+                X = position.X,
+                Y = position.Y,
+                Z = position.Z
+            };
+        }
+
+        public static implicit operator Position(Vector3 vector3)
+        {
+            return new Position
+            {
+                X = vector3.X,
+                Y = vector3.Y,
+                Z = vector3.Z
+            };
+        }
 
         public float X;
         public float Y;
@@ -81,26 +101,6 @@ namespace AltV.Net.Data
         public override int GetHashCode()
         {
             return X.GetHashCode() ^ (Y.GetHashCode() << 2) ^ (Z.GetHashCode() >> 2);
-        }
-
-        public static implicit operator Vector3(Position position)
-        {
-            return new Vector3
-            {
-                X = position.X,
-                Y = position.Y,
-                Z = position.Z
-            };
-        }
-
-        public static implicit operator Position(Vector3 vector3)
-        {
-            return new Position
-            {
-                X = vector3.X,
-                Y = vector3.Y,
-                Z = vector3.Z
-            };
         }
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using AltV.Net.Data;
-using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Entities
 {
