@@ -7,28 +7,28 @@ namespace AltV.Net.Data
     {
         public static Rgba Zero = new Rgba
         {
-            r = 0,
-            g = 0,
-            b = 0,
-            a = 0
+            R = 0,
+            G = 0,
+            B = 0,
+            A = 0
         };
 
-        public byte r;
-        public byte g;
-        public byte b;
-        public byte a;
+        public byte R;
+        public byte G;
+        public byte B;
+        public byte A;
 
         public Rgba(byte r, byte g, byte b, byte a)
         {
-            this.r = r;
-            this.g = g;
-            this.b = b;
-            this.a = a;
+            this.R = r;
+            this.G = g;
+            this.B = b;
+            this.A = a;
         }
 
         public override string ToString()
         {
-            return $"RGBA(r: {r}, g: {g}, b: {b}, a: {a})";
+            return $"RGBA(r: {R}, g: {G}, b: {B}, a: {A})";
         }
     }
 }
