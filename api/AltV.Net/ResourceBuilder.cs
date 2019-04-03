@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.InteropServices;
 using AltV.Net.Native;
 
@@ -24,7 +25,7 @@ namespace AltV.Net
 
             ModuleWrapper.MainWithResource(serverPointer, resourcePointer, resource);
 
-            AltNative.Resource.MainDelegate onStart = (pointer, ptr, name, point) => { resource.OnStart(); };
+            AltNative.Resource.MainDelegate onStart = OnStart;
 
             GCHandle.Alloc(onStart);
 
@@ -132,6 +133,11 @@ namespace AltV.Net
                 onCreateVehicle, onRemoveVehicle,
                 onCreateBlip, onRemoveBlip, onCreateCheckpoint, onRemoveCheckpoint, onCreateVoiceChannel,
                 onRemoveVoiceChannel, onConsoleCommand);
+        }
+
+        private void OnStart(IntPtr pointer, IntPtr ptr, string name, string point)
+        {
+            resource.OnStart();
         }
     }
 }

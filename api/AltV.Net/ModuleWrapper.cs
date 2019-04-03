@@ -17,6 +17,7 @@ namespace AltV.Net
         public static void Main(IntPtr serverPointer, IntPtr resourcePointer, string resourceName, string entryPoint)
         {
             MainWithResource(serverPointer, resourcePointer, new ResourceLoader(serverPointer, resourceName, entryPoint).Init());
+            _resource.OnStart();
         }
         
         public static void MainWithResource(IntPtr serverPointer, IntPtr resourcePointer, IResource resource)
@@ -45,7 +46,6 @@ namespace AltV.Net
             _module = _resource.GetModule(server, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool,
                 blipPool, checkpointPool, voiceChannelPool);
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-            _resource.OnStart();
         }
 
         private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
