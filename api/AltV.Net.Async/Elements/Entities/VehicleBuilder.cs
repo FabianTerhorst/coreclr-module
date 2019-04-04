@@ -35,8 +35,7 @@ namespace AltV.Net.Async.Elements.Entities
 
         public IVehicleBuilder NumberPlate(string value)
         {
-            var numberPlate = AltNative.StringUtils.StringToHGlobalUtf8(value);
-            memoryToFree.Add(numberPlate);
+            var numberPlate = StringToHGlobalUtf8(value);
             functions["numberPlate"] = ptr => AltNative.Vehicle.Vehicle_SetNumberplateText(ptr, numberPlate);
             return this;
         }
@@ -71,6 +70,13 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 Marshal.FreeHGlobal(ptr);
             }
+        }
+
+        private IntPtr StringToHGlobalUtf8(string str)
+        {
+            var strPtr = AltNative.StringUtils.StringToHGlobalUtf8(str);
+            memoryToFree.Add(strPtr);
+            return strPtr;
         }
     }
 }
