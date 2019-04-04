@@ -29,14 +29,14 @@ namespace AltV.Net.Async.Elements.Entities
 
         public IVehicleBuilder PrimaryColor(byte value)
         {
-            functions[nameof(PrimaryColor)] = ptr => AltNative.Vehicle.Vehicle_SetPrimaryColor(ptr, value);
+            Add(ptr => AltNative.Vehicle.Vehicle_SetPrimaryColor(ptr, value));
             return this;
         }
 
         public IVehicleBuilder NumberPlate(string value)
         {
             var numberPlate = StringToHGlobalUtf8(value);
-            functions[nameof(NumberPlate)] = ptr => AltNative.Vehicle.Vehicle_SetNumberplateText(ptr, numberPlate);
+            Add(ptr => AltNative.Vehicle.Vehicle_SetNumberplateText(ptr, numberPlate));
             return this;
         }
 
@@ -70,6 +70,12 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 Marshal.FreeHGlobal(ptr);
             }
+        }
+
+        private void Add(Action<IntPtr> action, [System.Runtime.CompilerServices.CallerMemberName]
+            string memberName = "")
+        {
+            functions[memberName] = action;
         }
 
         private IntPtr StringToHGlobalUtf8(string str)
