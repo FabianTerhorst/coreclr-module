@@ -16,9 +16,9 @@ namespace AltV.Net.Async.Elements.Entities
 
         private readonly float heading;
 
-        private IntPtr numberPlate = IntPtr.Zero;
+        private readonly Dictionary<string, Action<IntPtr>> functions = new Dictionary<string, Action<IntPtr>>();
 
-        private readonly List<Action<IntPtr>> functions = new List<Action<IntPtr>>();
+        private readonly List<IntPtr> memoryToFree = new List<IntPtr>();
 
         public VehicleBuilder(uint model, Position position, float heading)
         {
@@ -29,21 +29,22 @@ namespace AltV.Net.Async.Elements.Entities
 
         public IVehicleBuilder PrimaryColor(byte value)
         {
-            functions.Add(ptr => AltNative.Vehicle.Vehicle_SetPrimaryColor(ptr, value));
+            functions["primaryColor"] = ptr => AltNative.Vehicle.Vehicle_SetPrimaryColor(ptr, value);
             return this;
         }
 
         public IVehicleBuilder NumberPlate(string value)
         {
-            numberPlate = AltNative.StringUtils.StringToHGlobalUtf8(value);
-            functions.Add(ptr => AltNative.Vehicle.Vehicle_SetNumberplateText(ptr, numberPlate));
+            var numberPlate = AltNative.StringUtils.StringToHGlobalUtf8(value);
+            memoryToFree.Add(numberPlate);
+            functions["numberPlate"] = ptr => AltNative.Vehicle.Vehicle_SetNumberplateText(ptr, numberPlate);
             return this;
         }
 
         public async Task<IVehicle> Build()
         {
             ushort id = default;
-            var enumerator = functions.GetEnumerator();
+            var enumerator = functions.Values.GetEnumerator();
             var vehiclePtr = await AltAsync.AltVAsync.Schedule(() =>
             {
                 var ptr = AltNative.Server.Server_CreateVehicle(((Server) Alt.Server).NativePointer, model,
@@ -66,9 +67,9 @@ namespace AltV.Net.Async.Elements.Entities
         // Call Dispose when you don't wanna continue building the vehicle anymore to cleanup memory
         public void Dispose()
         {
-            if (numberPlate != IntPtr.Zero)
+            foreach (var ptr in memoryToFree)
             {
-                Marshal.FreeHGlobal(numberPlate);
+                Marshal.FreeHGlobal(ptr);
             }
         }
     }
