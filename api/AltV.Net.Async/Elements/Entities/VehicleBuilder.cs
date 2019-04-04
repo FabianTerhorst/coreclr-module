@@ -16,9 +16,9 @@ namespace AltV.Net.Async.Elements.Entities
 
         private readonly float heading;
 
-        private byte? primaryColor;
-
         private IntPtr numberPlate = IntPtr.Zero;
+
+        private readonly List<Action<IntPtr>> functions = new List<Action<IntPtr>>();
 
         public VehicleBuilder(uint model, Position position, float heading)
         {
@@ -29,32 +29,21 @@ namespace AltV.Net.Async.Elements.Entities
 
         public IVehicleBuilder PrimaryColor(byte value)
         {
-            primaryColor = value;
+            functions.Add(ptr => AltNative.Vehicle.Vehicle_SetPrimaryColor(ptr, value));
             return this;
         }
 
         public IVehicleBuilder NumberPlate(string value)
         {
             numberPlate = AltNative.StringUtils.StringToHGlobalUtf8(value);
+            functions.Add(ptr => AltNative.Vehicle.Vehicle_SetNumberplateText(ptr, numberPlate));
             return this;
         }
 
         public async Task<IVehicle> Build()
         {
             ushort id = default;
-            var functions = new List<Action<IntPtr>>();
-            if (primaryColor.HasValue)
-            {
-                functions.Add(ptr => AltNative.Vehicle.Vehicle_SetPrimaryColor(ptr, primaryColor.Value));
-            }
-
-            if (numberPlate != IntPtr.Zero)
-            {
-                functions.Add(ptr => AltNative.Vehicle.Vehicle_SetNumberplateText(ptr, numberPlate));
-            }
-
             var enumerator = functions.GetEnumerator();
-
             var vehiclePtr = await AltAsync.AltVAsync.Schedule(() =>
             {
                 var ptr = AltNative.Server.Server_CreateVehicle(((Server) Alt.Server).NativePointer, model,
