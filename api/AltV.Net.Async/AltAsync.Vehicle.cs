@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using AltV.Net.Async.Elements.Entities;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
@@ -25,6 +26,15 @@ namespace AltV.Net.Async
 
         public static Task<IVehicle> CreateVehicle(string model, Position pos, float heading) =>
             CreateVehicle(Alt.Hash(model), pos, heading);
+
+        public static IVehicleBuilder CreateVehicleBuilder(uint model, Position pos, float heading) =>
+            new VehicleBuilder(model, pos, heading);
+
+        public static IVehicleBuilder CreateVehicleBuilder(VehicleModel model, Position pos, float heading) =>
+            new VehicleBuilder((uint) model, pos, heading);
+
+        public static IVehicleBuilder CreateVehicleBuilder(string model, Position pos, float heading) =>
+            new VehicleBuilder(Alt.Hash(model), pos, heading);
 
         public static async Task<IPlayer> GetDriverAsync(this IVehicle vehicle)
         {
