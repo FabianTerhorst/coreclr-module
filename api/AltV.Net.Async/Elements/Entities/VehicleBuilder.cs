@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using AltV.Net.Data;
@@ -41,23 +42,33 @@ namespace AltV.Net.Async.Elements.Entities
         public async Task<IVehicle> Build()
         {
             ushort id = default;
+            var functions = new List<Action<IntPtr>>();
+            if (primaryColor.HasValue)
+            {
+                functions.Add(ptr => AltNative.Vehicle.Vehicle_SetPrimaryColor(ptr, primaryColor.Value));
+            }
+
+            if (numberPlate != IntPtr.Zero)
+            {
+                functions.Add(ptr => AltNative.Vehicle.Vehicle_SetNumberplateText(ptr, numberPlate));
+            }
+
+            var enumerator = functions.GetEnumerator();
+
             var vehiclePtr = await AltAsync.AltVAsync.Schedule(() =>
             {
                 var ptr = AltNative.Server.Server_CreateVehicle(((Server) Alt.Server).NativePointer, model,
                     position, heading,
                     ref id);
-                if (primaryColor.HasValue)
-                {
-                    AltNative.Vehicle.Vehicle_SetPrimaryColor(ptr, primaryColor.Value);
-                }
 
-                if (numberPlate != IntPtr.Zero)
+                while (enumerator.MoveNext())
                 {
-                    AltNative.Vehicle.Vehicle_SetNumberplateText(ptr, numberPlate);
+                    enumerator.Current(ptr);
                 }
 
                 return ptr;
             });
+            enumerator.Dispose();
             Dispose();
             Alt.Module.VehiclePool.Create(vehiclePtr, id, out var vehicle);
             return vehicle;
