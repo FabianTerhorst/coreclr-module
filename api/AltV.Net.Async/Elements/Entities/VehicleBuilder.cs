@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Enums;
 using AltV.Net.Native;
 
 namespace AltV.Net.Async.Elements.Entities
@@ -27,16 +29,178 @@ namespace AltV.Net.Async.Elements.Entities
             this.heading = heading;
         }
 
+        public IVehicleBuilder ModKit(byte value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetModKit(ptr, value));
+            return this;
+        }
+
         public IVehicleBuilder PrimaryColor(byte value)
         {
             Add(ptr => AltNative.Vehicle.Vehicle_SetPrimaryColor(ptr, value));
             return this;
         }
 
-        public IVehicleBuilder NumberPlate(string value)
+        public IVehicleBuilder PrimaryColorRgb(Rgba value)
         {
-            var numberPlate = StringToHGlobalUtf8(value);
-            Add(ptr => AltNative.Vehicle.Vehicle_SetNumberplateText(ptr, numberPlate));
+            Add(ptr => AltNative.Vehicle.Vehicle_SetPrimaryColorRGB(ptr, value));
+            return this;
+        }
+
+        public IVehicleBuilder SecondaryColor(byte value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetSecondaryColor(ptr, value));
+            return this;
+        }
+
+        public IVehicleBuilder SecondaryColorRgb(Rgba value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetSecondaryColorRGB(ptr, value));
+            return this;
+        }
+
+        public IVehicleBuilder PearlColor(byte value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetPearlColor(ptr, value));
+            return this;
+        }
+        
+        public IVehicleBuilder WheelColor(byte value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetWheelColor(ptr, value));
+            return this;
+        }
+
+        public IVehicleBuilder InteriorColor(byte value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetInteriorColor(ptr, value));
+            return this;
+        }
+        
+        public IVehicleBuilder DashboardColor(byte value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetDashboardColor(ptr, value));
+            return this;
+        }
+        
+        public IVehicleBuilder TireSmokeColor(Rgba value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetTireSmokeColor(ptr, value));
+            return this;
+        }
+        
+        public IVehicleBuilder CustomTires(bool value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetCustomTires(ptr, value));
+            return this;
+        }
+        
+        public IVehicleBuilder SpecialDarkness(byte value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetSpecialDarkness(ptr, value));
+            return this;
+        }
+
+        public IVehicleBuilder NumberplateIndex(uint value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetNumberplateIndex(ptr, value));
+            return this;
+        }
+
+        public IVehicleBuilder NumberplateText(string value)
+        {
+            var valuePtr = StringToHGlobalUtf8(value);
+            Add(ptr => AltNative.Vehicle.Vehicle_SetNumberplateText(ptr, valuePtr));
+            return this;
+        }
+
+        public IVehicleBuilder WindowTint(byte value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetWindowTint(ptr, value));
+            return this;
+        }
+
+        public IVehicleBuilder DirtLevel(byte value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetDirtLevel(ptr, value));
+            return this;
+        }
+
+        public IVehicleBuilder NeonColor(Rgba value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetNeonColor(ptr, value));
+            return this;
+        }
+
+        public IVehicleBuilder EngineOn(bool value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetEngineOn(ptr, value));
+            return this;
+        }
+
+        public IVehicleBuilder HeadlightColor(byte value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetHeadlightColor(ptr, value));
+            return this;
+        }
+
+        public IVehicleBuilder SirenActive(bool value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetSirenActive(ptr, value));
+            return this;
+        }
+
+        public IVehicleBuilder LockState(VehicleLockState value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetLockState(ptr, (byte)value));
+            return this;
+        }
+
+        public IVehicleBuilder RoofOpened(bool value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetRoofOpened(ptr, value));
+            return this;
+        }
+
+        public IVehicleBuilder State(string value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_LoadGameStateFromBase64(ptr, value));
+            return this;
+        }
+
+        public IVehicleBuilder EngineHealth(int value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetEngineHealth(ptr, value));
+            return this;
+        }
+
+        public IVehicleBuilder PetrolTankHealth(int value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetPetrolTankHealth(ptr, value));
+            return this;
+        }
+
+        public IVehicleBuilder BodyHealth(uint value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetBodyHealth(ptr, value));
+            return this;
+        }
+
+        public IVehicleBuilder BodyAdditionalHealth(uint value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_SetBodyAdditionalHealth(ptr, value));
+            return this;
+        }
+
+        public IVehicleBuilder HealthData(string value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_LoadHealthDataFromBase64(ptr, value));
+            return this;
+        }
+
+        public IVehicleBuilder DamageData(string value)
+        {
+            Add(ptr => AltNative.Vehicle.Vehicle_LoadDamageDataFromBase64(ptr, value));
             return this;
         }
 
@@ -71,9 +235,7 @@ namespace AltV.Net.Async.Elements.Entities
                 Marshal.FreeHGlobal(ptr);
             }
         }
-
-        private void Add(Action<IntPtr> action, [System.Runtime.CompilerServices.CallerMemberName]
-            string memberName = "")
+        private void Add(Action<IntPtr> action, [CallerMemberName] string memberName = "")
         {
             functions[memberName] = action;
         }

@@ -8,6 +8,7 @@ using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
 using AltV.Net.Enums;
 using AltV.Net.Native;
+using System.Drawing;
 
 namespace AltV.Net.Example
 {
@@ -62,8 +63,9 @@ namespace AltV.Net.Example
 
             Task.Factory.StartNew(() =>
                 AltAsync.CreateVehicleBuilder(VehicleModel.Apc, new Position(1, 2, 3), float.MinValue)
-                    .PrimaryColor(1)
-                    .NumberPlate("C#")
+                    .PrimaryColorRgb(Color.GreenYellow)
+                    .SecondaryColor(24)
+                    .NumberplateText("C#")
                     .Build()
             );
 
