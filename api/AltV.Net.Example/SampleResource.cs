@@ -37,7 +37,8 @@ namespace AltV.Net.Example
                 AltAsync.Log("event:" + name);
                 return Task.CompletedTask;
             };
-            AltAsync.OnServer("bla", async args => { await AltAsync.Do(() => Alt.Log("bla with no args:" + args.Length)); });
+            AltAsync.OnServer("bla",
+                async args => { await AltAsync.Do(() => Alt.Log("bla with no args:" + args.Length)); });
             Alt.Emit("bla");
 
             var vehicle = Alt.CreateVehicle(VehicleModel.Apc, new Position(1, 2, 3), float.MinValue);
@@ -57,6 +58,14 @@ namespace AltV.Net.Example
                 B = 7,
                 A = 0
             };
+
+
+            Task.Factory.StartNew(() =>
+                AltAsync.CreateVehicleBuilder(VehicleModel.Apc, new Position(1, 2, 3), float.MinValue)
+                    .PrimaryColor(1)
+                    .NumberPlate("C#")
+                    .Build()
+            );
 
             Alt.Log("ptr:" + vehicle.NativePointer);
 
@@ -346,6 +355,7 @@ namespace AltV.Net.Example
         {
             player.Emit("connect_event");
             player.SetDateTime(DateTime.Now);
+            player.Model = (uint) PedModel.FreemodeMale01;
         }
 
         private async Task OnPlayerConnectAsync(IPlayer player, string reason)
