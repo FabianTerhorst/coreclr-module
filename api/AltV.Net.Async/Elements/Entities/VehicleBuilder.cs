@@ -64,7 +64,7 @@ namespace AltV.Net.Async.Elements.Entities
             Add(ptr => AltNative.Vehicle.Vehicle_SetPearlColor(ptr, value));
             return this;
         }
-        
+
         public IVehicleBuilder WheelColor(byte value)
         {
             Add(ptr => AltNative.Vehicle.Vehicle_SetWheelColor(ptr, value));
@@ -76,25 +76,25 @@ namespace AltV.Net.Async.Elements.Entities
             Add(ptr => AltNative.Vehicle.Vehicle_SetInteriorColor(ptr, value));
             return this;
         }
-        
+
         public IVehicleBuilder DashboardColor(byte value)
         {
             Add(ptr => AltNative.Vehicle.Vehicle_SetDashboardColor(ptr, value));
             return this;
         }
-        
+
         public IVehicleBuilder TireSmokeColor(Rgba value)
         {
             Add(ptr => AltNative.Vehicle.Vehicle_SetTireSmokeColor(ptr, value));
             return this;
         }
-        
+
         public IVehicleBuilder CustomTires(bool value)
         {
             Add(ptr => AltNative.Vehicle.Vehicle_SetCustomTires(ptr, value));
             return this;
         }
-        
+
         public IVehicleBuilder SpecialDarkness(byte value)
         {
             Add(ptr => AltNative.Vehicle.Vehicle_SetSpecialDarkness(ptr, value));
@@ -152,7 +152,7 @@ namespace AltV.Net.Async.Elements.Entities
 
         public IVehicleBuilder LockState(VehicleLockState value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetLockState(ptr, (byte)value));
+            Add(ptr => AltNative.Vehicle.Vehicle_SetLockState(ptr, (byte) value));
             return this;
         }
 
@@ -235,6 +235,7 @@ namespace AltV.Net.Async.Elements.Entities
                 Marshal.FreeHGlobal(ptr);
             }
         }
+
         private void Add(Action<IntPtr> action, [CallerMemberName] string memberName = "")
         {
             functions[memberName] = action;
