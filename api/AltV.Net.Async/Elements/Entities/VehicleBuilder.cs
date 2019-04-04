@@ -29,14 +29,14 @@ namespace AltV.Net.Async.Elements.Entities
 
         public IVehicleBuilder PrimaryColor(byte value)
         {
-            functions["primaryColor"] = ptr => AltNative.Vehicle.Vehicle_SetPrimaryColor(ptr, value);
+            functions[nameof(PrimaryColor)] = ptr => AltNative.Vehicle.Vehicle_SetPrimaryColor(ptr, value);
             return this;
         }
 
         public IVehicleBuilder NumberPlate(string value)
         {
             var numberPlate = StringToHGlobalUtf8(value);
-            functions["numberPlate"] = ptr => AltNative.Vehicle.Vehicle_SetNumberplateText(ptr, numberPlate);
+            functions[nameof(NumberPlate)] = ptr => AltNative.Vehicle.Vehicle_SetNumberplateText(ptr, numberPlate);
             return this;
         }
 
