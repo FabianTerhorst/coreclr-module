@@ -72,25 +72,32 @@ namespace AltV.Net.Async
         public override void OnCheckPointEvent(ICheckpoint checkpoint, IEntity entity, bool state)
         {
             base.OnCheckPointEvent(checkpoint, entity, state);
+            if (!CheckpointAsyncEventHandler.HasEvents()) return;
             Task.Run(() => CheckpointAsyncEventHandler.CallAsync(@delegate => @delegate(checkpoint, entity, state)));
         }
 
         public override void OnPlayerConnectEvent(IPlayer player, string reason)
         {
             base.OnPlayerConnectEvent(player, reason);
+            if (!PlayerConnectAsyncEventHandler.HasEvents()) return;
             Task.Run(() => PlayerConnectAsyncEventHandler.CallAsync(@delegate => @delegate(player, reason)));
         }
 
         public override void OnPlayerDamageEvent(IPlayer player, IEntity attacker, uint weapon, ushort damage)
         {
             base.OnPlayerDamageEvent(player, attacker, weapon, damage);
+            if (!PlayerDamageAsyncEventHandler.HasEvents()) return;
+            var oldHealth = player.Health;
+            var oldArmor = player.Armor;
             Task.Run(() =>
-                PlayerDamageAsyncEventHandler.CallAsync(@delegate => @delegate(player, attacker, weapon, damage)));
+                PlayerDamageAsyncEventHandler.CallAsync(@delegate =>
+                    @delegate(player, attacker, oldHealth, oldArmor, weapon, damage)));
         }
 
         public override void OnPlayerDeathEvent(IPlayer player, IEntity killer, uint weapon)
         {
             base.OnPlayerDeathEvent(player, killer, weapon);
+            if (!PlayerDeadAsyncEventHandler.HasEvents()) return;
             Task.Run(() =>
                 PlayerDeadAsyncEventHandler.CallAsync(@delegate => @delegate(player, killer, weapon)));
         }
@@ -99,6 +106,7 @@ namespace AltV.Net.Async
             byte newSeat)
         {
             base.OnPlayerChangeVehicleSeatEvent(vehicle, player, oldSeat, newSeat);
+            if (!PlayerChangeVehicleSeatAsyncEventHandler.HasEvents()) return;
             Task.Run(() =>
                 PlayerChangeVehicleSeatAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(vehicle, player, oldSeat, newSeat)));
@@ -107,6 +115,7 @@ namespace AltV.Net.Async
         public override void OnPlayerEnterVehicleEvent(IVehicle vehicle, IPlayer player, byte seat)
         {
             base.OnPlayerEnterVehicleEvent(vehicle, player, seat);
+            if (!PlayerEnterVehicleAsyncEventHandler.HasEvents()) return;
             Task.Run(() =>
                 PlayerEnterVehicleAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(vehicle, player, seat)));
@@ -115,6 +124,7 @@ namespace AltV.Net.Async
         public override void OnPlayerLeaveVehicleEvent(IVehicle vehicle, IPlayer player, byte seat)
         {
             base.OnPlayerLeaveVehicleEvent(vehicle, player, seat);
+            if (!PlayerLeaveVehicleAsyncEventHandler.HasEvents()) return;
             Task.Run(() =>
                 PlayerLeaveVehicleAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(vehicle, player, seat)));
@@ -123,6 +133,7 @@ namespace AltV.Net.Async
         public override void OnPlayerDisconnectEvent(IPlayer player, string reason)
         {
             base.OnPlayerDisconnectEvent(player, reason);
+            if (!PlayerDisconnectAsyncEventHandler.HasEvents()) return;
             var readOnlyPlayer = player.Copy();
             Task.Run(async () =>
                 {
@@ -136,6 +147,7 @@ namespace AltV.Net.Async
         public override void OnPlayerRemoveEvent(IPlayer player)
         {
             base.OnPlayerRemoveEvent(player);
+            if (!PlayerRemoveAsyncEventHandler.HasEvents()) return;
             Task.Run(() =>
                 PlayerRemoveAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(player)));
@@ -144,6 +156,7 @@ namespace AltV.Net.Async
         public override void OnVehicleRemoveEvent(IVehicle vehicle)
         {
             base.OnVehicleRemoveEvent(vehicle);
+            if (!VehicleRemoveAsyncEventHandler.HasEvents()) return;
             Task.Run(() =>
                 VehicleRemoveAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(vehicle)));
@@ -314,6 +327,7 @@ namespace AltV.Net.Async
         public override void OnConsoleCommandEvent(string name, string[] args)
         {
             base.OnConsoleCommandEvent(name, args);
+            if (!ConsoleCommandAsyncDelegateHandlers.HasEvents()) return;
             Task.Run(() =>
                 ConsoleCommandAsyncDelegateHandlers.CallAsync(@delegate =>
                     @delegate(name, args)));

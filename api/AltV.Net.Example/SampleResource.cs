@@ -66,6 +66,7 @@ namespace AltV.Net.Example
                     .PrimaryColorRgb(Color.GreenYellow)
                     .SecondaryColor(24)
                     .NumberplateText("C#")
+                    .LockState(VehicleLockState.Locked)
                     .Build()
             );
 

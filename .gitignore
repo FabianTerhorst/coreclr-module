@@ -344,3 +344,6 @@ data/*
 resource.cfg
 resource-executable.cfg
 server.cfg
+libnode.so.64
+libcsharp-module.so
+csharp-module.dll
