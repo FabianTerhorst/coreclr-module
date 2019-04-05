@@ -202,8 +202,9 @@ void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
     player_struct->move_speed = player->GetMoveSpeed();
     auto name = player->GetName();
     // Free in c# after async method ends
-    auto copiedName = new char[name.GetSize()];
+    auto copiedName = new char[name.GetSize() + 1];
     memcpy(copiedName, name.GetData(), name.GetSize());
+    copiedName[name.GetSize()] = '\0';
     player_struct->name = copiedName;
     player_struct->health = player->GetHealth();
     player_struct->is_in_ragdoll = player->IsInRagdoll();
