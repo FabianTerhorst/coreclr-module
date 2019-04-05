@@ -181,7 +181,7 @@ void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
     auto position = player->GetPosition();
     player_struct->position.x = position.x;
     player_struct->position.y = position.y;
-    player_struct->position.z = position.x;
+    player_struct->position.z = position.z;
     auto rotation = player->GetRotation();
     player_struct->rotation.roll = rotation.roll;
     player_struct->rotation.pitch = rotation.pitch;
