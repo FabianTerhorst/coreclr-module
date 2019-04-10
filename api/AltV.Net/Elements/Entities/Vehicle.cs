@@ -737,7 +737,7 @@ namespace AltV.Net.Elements.Entities
         public bool IsWindowDamaged(byte windowId)
         {
             CheckIfEntityExists();
-            return AltNative.Vehicle.Vehicle_IsWindowOpened(NativePointer, windowId);
+            return AltNative.Vehicle.Vehicle_IsWindowDamaged(NativePointer, windowId);
         }
 
         public void SetWindowDamaged(byte windowId, bool isDamaged)
