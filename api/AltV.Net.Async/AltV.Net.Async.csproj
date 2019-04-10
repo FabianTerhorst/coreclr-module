@@ -12,9 +12,12 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.2.0</PackageVersion>
+        <PackageVersion>1.2.1</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Optimizations, CreateVehicle with string parameter, SetDateTimeAsync with DateTime object, AltAsync.CreateVehicleBuilder, add oldHealth and oldArmor to playerDamageEvent, only schedule tasks for eventhandlers where events are defined, a few fixes for async disconnect event</PackageReleaseNotes>
+        <PackageReleaseNotes>Some internal cleanup
+Improve ReadOnlyPlayer dispose
+Fix console command event
+Optimize events</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

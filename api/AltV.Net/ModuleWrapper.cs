@@ -16,10 +16,11 @@ namespace AltV.Net
 
         public static void Main(IntPtr serverPointer, IntPtr resourcePointer, string resourceName, string entryPoint)
         {
-            MainWithResource(serverPointer, resourcePointer, new ResourceLoader(serverPointer, resourceName, entryPoint).Init());
+            MainWithResource(serverPointer, resourcePointer,
+                new ResourceLoader(serverPointer, resourceName, entryPoint).Init());
             _resource.OnStart();
         }
-        
+
         public static void MainWithResource(IntPtr serverPointer, IntPtr resourcePointer, IResource resource)
         {
             _resource = resource;
@@ -39,13 +40,19 @@ namespace AltV.Net
             var checkpointPool = _resource.GetCheckpointPool(checkpointFactory);
             var voiceChannelPool = _resource.GetVoiceChannelPool(voiceChannelFactory);
             var entityPool = _resource.GetBaseEntityPool(playerPool, vehiclePool);
-            var baseObjectPool = _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool);
+            var baseObjectPool =
+                _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool);
             var server = new Server(serverPointer, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool,
                 checkpointPool, voiceChannelPool);
             var csharpResource = new CSharpNativeResource(resourcePointer);
             _module = _resource.GetModule(server, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool,
                 blipPool, checkpointPool, voiceChannelPool);
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (var assembly in assemblies)
+            {
+                Alt.Log("Loaded:" + assembly.GetName());
+            }
         }
 
         private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -145,7 +152,7 @@ namespace AltV.Net
         {
             _module.OnCreateBlip(blipPointer);
         }
-        
+
         public static void OnCreateVoiceChannel(IntPtr channelPointer)
         {
             _module.OnCreateVoiceChannel(channelPointer);
@@ -165,7 +172,7 @@ namespace AltV.Net
         {
             _module.OnRemoveCheckpoint(checkpointPointer);
         }
-        
+
         public static void OnRemoveVoiceChannel(IntPtr channelPointer)
         {
             _module.OnRemoveVoiceChannel(channelPointer);

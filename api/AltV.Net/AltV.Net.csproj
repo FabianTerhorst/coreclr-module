@@ -13,9 +13,12 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.2.0</PackageVersion>
+        <PackageVersion>1.2.1</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Utf8 support, optimizations, player DateTime support, implicit cast between vector3 &lt;=&gt; rotation / position, fix rotation struct attributes code style, position normalized</PackageReleaseNotes>
+        <PackageReleaseNotes>Some internal cleanup
+Improve ReadOnlyPlayer dispose
+Fix console command event
+Optimize events</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
