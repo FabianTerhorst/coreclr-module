@@ -181,9 +181,9 @@ namespace AltV.Net
             _module.OnVehicleRemove(vehiclePointer);
         }
 
-        public static void OnConsoleCommand(string name, StringViewArray args)
+        public static void OnConsoleCommand(string name, ref StringViewArray args)
         {
-            _module.OnConsoleCommand(name, args);
+            _module.OnConsoleCommand(name, ref args);
         }
     }
 }

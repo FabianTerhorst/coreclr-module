@@ -623,7 +623,7 @@ namespace AltV.Net
             VoiceChannelPool.Remove(channelPointer);
         }
 
-        public void OnConsoleCommand(string name, StringViewArray args)
+        public void OnConsoleCommand(string name, ref StringViewArray args)
         {
             var stringArgs = args.ToArray();
             if (ConsoleCommandEventHandler.HasEvents())

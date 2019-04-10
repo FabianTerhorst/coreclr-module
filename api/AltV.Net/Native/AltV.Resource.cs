@@ -84,7 +84,7 @@ namespace AltV.Net.Native
 
             internal delegate void VehicleRemoveDelegate(IntPtr vehiclePointer);
 
-            internal delegate void ConsoleCommandDelegate(string name, StringViewArray args);
+            internal delegate void ConsoleCommandDelegate(string name, ref StringViewArray args);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResource_SetMain(IntPtr resourcePointer, MainDelegate mainDelegate,

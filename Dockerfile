@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install -y valgrind
 WORKDIR /altv-server
 COPY altv-server .
 COPY server.cfg .
+COPY start.sh .
 COPY resource.cfg resources/example/
 COPY data/ ./data
 COPY --from=clang /runtime/cmake-build-linux/src/libcsharp-module.so modules/

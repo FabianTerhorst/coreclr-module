@@ -89,7 +89,7 @@ typedef void (* CreateCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
 typedef void (* RemoveCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
 typedef void (* OnCreateVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
 typedef void (* OnRemoveVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
-typedef void (* OnConsoleCommandDelegate_t)(const char* name, alt::Array<alt::StringView> args);
+typedef void (* OnConsoleCommandDelegate_t)(const char* name, alt::Array<alt::StringView>* args);
 
 class CSharpResource : public alt::IResource {
     bool OnEvent(const alt::CEvent* ev) override;
