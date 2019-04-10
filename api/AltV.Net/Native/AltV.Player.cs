@@ -138,6 +138,9 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_Copy(IntPtr playerPointer, ref ReadOnlyPlayer readOnlyPlayer);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_Copy_Dispose(ref ReadOnlyPlayer readOnlyPlayer);
         }
     }
 }

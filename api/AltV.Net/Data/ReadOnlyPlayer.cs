@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Native;
 
 namespace AltV.Net.Data
 {
@@ -189,7 +190,7 @@ namespace AltV.Net.Data
 
         public void Dispose()
         {
-            Marshal.FreeCoTaskMem(name);
+            AltNative.Player.Player_Copy_Dispose(ref this);
         }
 
         public void CheckIfEntityExists()

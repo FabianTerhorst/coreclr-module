@@ -98,6 +98,7 @@ EXPORT void Player_Kick(alt::IPlayer* player, const char* reason);
 EXPORT uint32_t Player_GetPing(alt::IPlayer* player);
 
 EXPORT void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct);
+EXPORT void Player_Copy_Dispose(player_struct_t* player_struct);
 #ifdef __cplusplus
 }
 #endif

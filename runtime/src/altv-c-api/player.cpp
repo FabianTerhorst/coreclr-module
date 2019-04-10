@@ -217,3 +217,7 @@ void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
     player_struct->is_connected = player->IsConnected();
     player_struct->vehicle = player->GetVehicle();
 }
+
+void Player_Copy_Dispose(player_struct_t* player_struct) {
+    delete[] player_struct->name;
+}
