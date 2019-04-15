@@ -17,7 +17,8 @@
         <PackageReleaseNotes>Some internal cleanup
 Improve ReadOnlyPlayer dispose
 Fix console command event
-Optimize events</PackageReleaseNotes>
+Optimize events
+Fixes for player disconnect event</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
