@@ -372,9 +372,9 @@ namespace AltV.Net.Example
             //Do async processing here with the copy even when player got already removed
         }
 
-        private async Task<int> OnPlayerDisconnectAsync(ReadOnlyPlayer readOnlyPlayer, string reason)
+        private async Task<int> OnPlayerDisconnectAsync(ReadOnlyPlayer readOnlyPlayer, IPlayer origin, string reason)
         {
-            if (readOnlyPlayer.GetOrigin(out IMyPlayer myPlayer))
+            if (origin is IMyPlayer myPlayer)
             {
             }
 

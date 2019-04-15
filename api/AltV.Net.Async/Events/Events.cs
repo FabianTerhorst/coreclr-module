@@ -15,7 +15,7 @@ namespace AltV.Net.Async.Events
 
     public delegate Task PlayerDeadAsyncDelegate(IPlayer player, IEntity killer, uint weapon);
 
-    public delegate Task PlayerDisconnectAsyncDelegate(ReadOnlyPlayer player, string reason);
+    public delegate Task PlayerDisconnectAsyncDelegate(ReadOnlyPlayer player, IPlayer origin, string reason);
 
     public delegate Task PlayerRemoveAsyncDelegate(IPlayer player);
 

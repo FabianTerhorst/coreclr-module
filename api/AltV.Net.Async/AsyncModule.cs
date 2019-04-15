@@ -138,7 +138,7 @@ namespace AltV.Net.Async
             Task.Run(async () =>
                 {
                     await PlayerDisconnectAsyncEventHandler.CallAsync(@delegate =>
-                        @delegate(readOnlyPlayer, reason));
+                        @delegate(readOnlyPlayer, player, reason));
                     readOnlyPlayer.Dispose();
                 }
             );

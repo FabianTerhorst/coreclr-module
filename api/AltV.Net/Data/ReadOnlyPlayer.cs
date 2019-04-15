@@ -49,12 +49,12 @@ namespace AltV.Net.Data
 
         public void SetData(string key, object value)
         {
-            Origin.SetData(key, value);
+            throw new NotImplementedException();
         }
 
         public bool GetData<T>(string key, out T result)
         {
-            return Origin.GetData(key, out result);
+            throw new NotImplementedException();
         }
 
         public Position Position
@@ -171,21 +171,7 @@ namespace AltV.Net.Data
 
         public ReadOnlyPlayer Copy()
         {
-            return Origin.Copy();
-        }
-
-        internal IPlayer Origin;
-
-        public bool GetOrigin<T>(out T player) where T : IPlayer
-        {
-            if (!(Origin is T originT))
-            {
-                player = default;
-                return true;
-            }
-
-            player = originT;
-            return true;
+            throw new NotImplementedException();
         }
 
         public void Dispose()
