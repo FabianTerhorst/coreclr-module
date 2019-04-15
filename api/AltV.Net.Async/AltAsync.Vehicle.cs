@@ -307,5 +307,7 @@ namespace AltV.Net.Async
         public static Task
             SetNeonActiveAsync(this IVehicle vehicle, bool left, bool right, bool front, bool back) =>
             AltVAsync.Schedule(() => vehicle.SetNeonActive(left, right, front, back));
+
+        public static Task RemoveAsync(this IVehicle vehicle) => AltVAsync.Schedule(vehicle.Remove);
     }
 }

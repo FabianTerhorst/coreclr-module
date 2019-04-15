@@ -100,7 +100,7 @@ namespace AltV.Net.Async
             Marshal.FreeHGlobal(eventNamePtr); 
         }
 
-        public static async void EmitAll(string eventName, params object[] args)
+        public static async void EmitAllClients(string eventName, params object[] args)
         {
             var mValueArgs = MValue.Create(MValue.CreateFromObjects(args));
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);

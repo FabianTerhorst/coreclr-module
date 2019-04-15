@@ -111,7 +111,7 @@ namespace AltV.Net.Async
         public static Task SetDateTimeAsync(this IPlayer player, int day, int month, int year, int hour,
             int minute, int second) =>
             AltVAsync.Schedule(() => player.SetDateTime(day, month, year, hour, minute, second));
-        
+
         public static Task SetDateTimeAsync(this IPlayer player, DateTime dateTime) =>
             AltVAsync.Schedule(() => player.SetDateTime(dateTime));
 
