@@ -25,9 +25,7 @@ namespace AltV.Net.Elements.Entities
         public static void SetPosition(this IWorldObject worldObject, float x, float y, float z) =>
             worldObject.Position = new Position(x, y, z);
 
-        public static (float X, float Y, float Z) GetPosition(this IWorldObject worldObject)
-        {
-            return (worldObject.Position.X, worldObject.Position.Y, worldObject.Position.Z);
-        }
+        public static (float X, float Y, float Z) GetPosition(this IWorldObject worldObject) =>
+            (worldObject.Position.X, worldObject.Position.Y, worldObject.Position.Z);
     }
 }
