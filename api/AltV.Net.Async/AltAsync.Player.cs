@@ -131,10 +131,13 @@ namespace AltV.Net.Async
 
         public static async Task EmitAsync(this IPlayer player, string eventName, params object[] args)
         {
-            var mValueArgs = MValue.Create(MValue.CreateFromObjects(args));
+            var mValues = MValue.CreateFromObjects(args);
+            var mValueArgs = MValue.Create(mValues);
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
             await AltVAsync.Schedule(() => Alt.Server.TriggerClientEvent(player, eventNamePtr, ref mValueArgs));
             Marshal.FreeHGlobal(eventNamePtr);
+            MValue.Dispose(mValues);
+            mValueArgs.Dispose();
         }
 
         public static Task<ReadOnlyPlayer> CopyAsync(this IPlayer player) =>

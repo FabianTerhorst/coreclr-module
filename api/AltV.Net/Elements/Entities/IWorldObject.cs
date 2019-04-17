@@ -16,4 +16,18 @@ namespace AltV.Net.Elements.Entities
         /// <exception cref="EntityRemovedException">This entity was deleted before</exception>
         short Dimension { get; set; }
     }
+
+    public static class WorldObjectExtensions
+    {
+        public static void SetPosition(this IWorldObject worldObject, (float X, float Y, float Z) position) =>
+            worldObject.Position = new Position(position.X, position.Y, position.Z);
+
+        public static void SetPosition(this IWorldObject worldObject, float x, float y, float z) =>
+            worldObject.Position = new Position(x, y, z);
+
+        public static (float X, float Y, float Z) GetPosition(this IWorldObject worldObject)
+        {
+            return (worldObject.Position.X, worldObject.Position.Y, worldObject.Position.Z);
+        }
+    }
 }

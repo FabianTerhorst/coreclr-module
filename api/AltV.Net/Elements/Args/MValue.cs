@@ -266,6 +266,14 @@ namespace AltV.Net.Elements.Args
             return mValues;
         }
 
+        internal static void Dispose(MValue[] mValues)
+        {
+            for (int i = 0, length = mValues.Length; i < length; i++)
+            {
+                AltNative.MValueDispose.MValue_Dispose(ref mValues[i]);
+            }
+        }
+
         public readonly Type type;
         public readonly IntPtr storagePointer;
 
@@ -472,6 +480,11 @@ namespace AltV.Net.Elements.Args
                 default:
                     return null;
             }
+        }
+
+        public void Dispose()
+        {
+            AltNative.MValueDispose.MValue_Dispose(ref this);
         }
     }
 }

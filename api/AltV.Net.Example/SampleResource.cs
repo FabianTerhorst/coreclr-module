@@ -60,6 +60,12 @@ namespace AltV.Net.Example
                 A = 0
             };
 
+            var (x, y, z) = vehicle.GetPosition();
+            vehicle.SetPosition(1, 1, 1);
+            vehicle.SetPosition((x, y, z));
+            var tuple = vehicle.GetPosition();
+            vehicle.SetPosition(tuple);
+
 
             Task.Factory.StartNew(() =>
                 AltAsync.CreateVehicleBuilder(VehicleModel.Apc, new Position(1, 2, 3), float.MinValue)

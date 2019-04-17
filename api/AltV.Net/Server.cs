@@ -138,6 +138,7 @@ namespace AltV.Net
             var mValueList = MValue.Nil;
             AltNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
             AltNative.Server.Server_TriggerServerEvent(NativePointer, eventNamePtr, ref mValueList);
+            AltNative.MValueDispose.MValue_Dispose(ref mValueList);
         }
 
         public void TriggerServerEvent(string eventName, ref MValue args)
@@ -154,12 +155,16 @@ namespace AltV.Net
 
         public void TriggerServerEvent(IntPtr eventNamePtr, params object[] args)
         {
-            TriggerServerEvent(eventNamePtr, MValue.CreateFromObjects(args));
+            var mValues = MValue.CreateFromObjects(args);
+            TriggerServerEvent(eventNamePtr, mValues);
+            MValue.Dispose(mValues);
         }
 
         public void TriggerServerEvent(string eventName, params object[] args)
         {
-            TriggerServerEvent(eventName, MValue.CreateFromObjects(args));
+            var mValues = MValue.CreateFromObjects(args);
+            TriggerServerEvent(eventName, mValues);
+            MValue.Dispose(mValues);
         }
 
         public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params MValue[] args)
@@ -169,6 +174,7 @@ namespace AltV.Net
             AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero,
                 eventNamePtr,
                 ref mValueList);
+            AltNative.MValueDispose.MValue_Dispose(ref mValueList);
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, params MValue[] args)
@@ -194,12 +200,16 @@ namespace AltV.Net
 
         public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params object[] args)
         {
-            TriggerClientEvent(player, eventNamePtr, MValue.CreateFromObjects(args));
+            var mValues = MValue.CreateFromObjects(args);
+            TriggerClientEvent(player, eventNamePtr, mValues);
+            MValue.Dispose(mValues);
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)
         {
-            TriggerClientEvent(player, eventName, MValue.CreateFromObjects(args));
+            var mValues = MValue.CreateFromObjects(args);
+            TriggerClientEvent(player, eventName, mValues);
+            MValue.Dispose(mValues);
         }
 
         public IVehicle CreateVehicle(uint model, Position pos, float heading)

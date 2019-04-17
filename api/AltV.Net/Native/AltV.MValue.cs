@@ -31,7 +31,7 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void MValue_CreateDouble(double value, ref MValue mValue);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void MValue_CreateString(IntPtr value, ref MValue mValue);
 
@@ -99,6 +99,13 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void MValue_CallFunctionValue(ref MValue mValue, ref MValue args, ref MValue result);
+        }
+
+        [SuppressUnmanagedCodeSecurity]
+        internal static class MValueDispose
+        {
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void MValue_Dispose(ref MValue mValue);
         }
     }
 }
