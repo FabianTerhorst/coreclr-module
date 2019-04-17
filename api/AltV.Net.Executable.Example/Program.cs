@@ -7,8 +7,7 @@ namespace AltV.Net.Executable.Example
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-
-            new ResourceBuilder(args, new MyResource()).Start();
+            new MyResource().Start(args);
         }
     }
 }

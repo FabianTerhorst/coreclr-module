@@ -40,4 +40,10 @@ namespace AltV.Net
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool);
     }
+
+    public static class ResourceExtensions
+    {
+        public static void Start(this IResource resource, string[] args) =>
+            new ResourceBuilder(args, resource).Start();
+    }
 }
