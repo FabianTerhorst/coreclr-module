@@ -6,17 +6,17 @@ namespace AltV.Net
     public static partial class Alt
     {
         public static void On(string eventName, Function function) => Module.On(eventName, function);
-        
+
         public static void OnClient(string eventName, ClientEventDelegate clientEventDelegate)
         {
             Module.OnClient(eventName, clientEventDelegate);
         }
-        
+
         public static void OnServer(string eventName, ServerEventDelegate serverEventDelegate)
         {
             Module.OnServer(eventName, serverEventDelegate);
         }
-        
+
         public static void On(string eventName, Action function)
         {
             Module.On(eventName, Function.Create(function));

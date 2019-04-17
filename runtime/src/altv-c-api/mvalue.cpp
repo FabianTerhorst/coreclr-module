@@ -180,5 +180,5 @@ void MValue_CallFunctionValue(alt::MValueFunction &mValue, alt::MValueList &valu
 }
 
 void MValue_Dispose(alt::MValue* mValue) {
-    delete mValue;
+    mValue->~MValue();
 }
