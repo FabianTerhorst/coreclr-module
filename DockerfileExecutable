@@ -27,6 +27,7 @@ COPY altv-server .
 COPY server.cfg .
 COPY start.sh .
 COPY resource-executable.cfg resources/example/resource.cfg
+COPY assembly.cfg resources/example/assembly.cfg
 COPY data/ ./data
 COPY --from=clang /runtime/cmake-build-linux/src/libcsharp-module.so modules/
 # COPY --from=dotnet /altv-example/AltV.Net.Executable.Example/bin/Release/netcoreapp2.2/linux-x64 resources/example/

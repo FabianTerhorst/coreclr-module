@@ -58,7 +58,15 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     OnConsoleCommandDelegate = nullptr;
 
     if (isDll) {
-        auto executable = false;//TODO: needs resource cfg "assembly"
+
+        auto assemblyConfigFullPath = new char[strlen(wd) + strlen(RESOURCES_PATH) + strlen(resourceName) + strlen(ASSEMBLY_PATH) + 1];
+        strcpy(assemblyConfigFullPath, wd);
+        strcat(assemblyConfigFullPath, RESOURCES_PATH);
+        strcat(assemblyConfigFullPath, resourceName);
+        strcat(assemblyConfigFullPath, ASSEMBLY_PATH);
+        struct stat buf;
+        auto executable = (stat(assemblyConfigFullPath, &buf) == 0);//TODO: needs resource cfg "assembly"
+        free(assemblyConfigFullPath);
 
         currServer = server;
         coreClr->CreateAppDomain(server, this, fullPath, &runtimeHost, &domainId, executable,

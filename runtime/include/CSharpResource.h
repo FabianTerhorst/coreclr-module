@@ -10,8 +10,10 @@
 
 #ifdef _WIN32
 #define RESOURCES_PATH "\\resources\\"
+#define ASSEMBLY_PATH "\\assembly.cfg"
 #else
 #define RESOURCES_PATH "/resources/"
+#define ASSEMBLY_PATH "/assembly.cfg"
 #endif
 
 #ifdef _WIN32
