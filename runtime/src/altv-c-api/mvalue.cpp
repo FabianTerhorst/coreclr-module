@@ -178,3 +178,7 @@ void MValue_CallFunction(alt::MValueFunction &mValue, alt::MValue* args, uint64_
 void MValue_CallFunctionValue(alt::MValueFunction &mValue, alt::MValueList &value, alt::MValue &result) {
     result = mValue.GetInvoker()->Invoke(value);
 }
+
+void MValue_Dispose(alt::MValue* mValue) {
+    delete mValue;
+}
