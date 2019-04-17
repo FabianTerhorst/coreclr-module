@@ -18,7 +18,8 @@
         <PackageReleaseNotes>Some internal cleanup
 Improve ReadOnlyPlayer dispose
 Fix console command event
-Optimize events</PackageReleaseNotes>
+Optimize events
+New SetPosition, GetPosition overloads</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

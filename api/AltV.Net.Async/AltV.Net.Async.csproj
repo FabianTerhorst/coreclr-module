@@ -18,7 +18,8 @@
 Improve ReadOnlyPlayer dispose
 Fix console command event
 Optimize events
-Fixes for player disconnect event</PackageReleaseNotes>
+Fixes for player disconnect event
+New SetPositionAsync, GetPositionTupleAsync overloads</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

@@ -19,7 +19,7 @@ namespace AltV.Net.Async
         public static Task<Position> GetPositionAsync(this IWorldObject worldObject) =>
             AltVAsync.Schedule(() => worldObject.Position);
 
-        public static Task<(float X, float Y, float Z)> GetTuplePositionAsync(this IWorldObject worldObject) =>
+        public static Task<(float X, float Y, float Z)> GetPositionTupleAsync(this IWorldObject worldObject) =>
             AltVAsync.Schedule(worldObject.GetPosition);
 
         public static Task SetDimensionAsync(this IWorldObject worldObject, short dimension) =>
