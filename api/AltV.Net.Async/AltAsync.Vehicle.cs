@@ -235,6 +235,24 @@ namespace AltV.Net.Async
 
         public static Task SetRoofOpenAsync(this IVehicle vehicle, bool roofOpen) =>
             AltVAsync.Schedule(() => vehicle.RoofOpened = roofOpen);
+        
+        public static Task<byte> GetDoorStateAsync(this IVehicle vehicle, byte doorId) =>
+            AltVAsync.Schedule(() => vehicle.GetDoorState(doorId));
+        
+        public static Task SetDoorStateAsync(this IVehicle vehicle, byte doorId, byte state) =>
+            AltVAsync.Schedule(() => vehicle.SetDoorState(doorId, state));
+        
+        public static Task<VehicleDoorState> GetDoorStateAsync(this IVehicle vehicle, VehicleDoor door) =>
+            AltVAsync.Schedule(() => vehicle.GetDoorState(door));
+        
+        public static Task SetDoorStateAsync(this IVehicle vehicle, VehicleDoor door, VehicleDoorState state) =>
+            AltVAsync.Schedule(() => vehicle.SetDoorState(door, state));
+        
+        public static Task<bool> IsWindowOpenedAsync(this IVehicle vehicle, byte windowId) =>
+            AltVAsync.Schedule(() => vehicle.IsWindowOpened(windowId));
+        
+        public static Task SetWindowOpenedAsync(this IVehicle vehicle, byte windowId, bool state) =>
+            AltVAsync.Schedule(() => vehicle.SetWindowOpened(windowId, state));
 
         public static Task<bool> IsNightlightOnAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.IsNightlightOn);
@@ -268,6 +286,11 @@ namespace AltV.Net.Async
 
         public static Task<bool> HasArmoredWindowsAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.HasArmoredWindows);
+        
+        // TODO: Add: SetSpecialLightDamaged, IsSpecialLightDamaged, SetWindowDamaged, IsWindowDamaged,
+        // TODO: Add: SetLightDamaged, IsLightDamaged, SetPartBulletHoles, GetPartBulletHoles, SetPartDamageLevel, GetPartDamageLevel
+        // TODO: GetArmoredWindowHealth, SetArmoredWindowHealth, GetArmoredWindowShootCount, SetArmoredWindowShootCount
+        // TODO: GetBumperDamageLevel, SetBumperDamageLevel
 
         public static Task<string> GetDamageDataAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.DamageData);
