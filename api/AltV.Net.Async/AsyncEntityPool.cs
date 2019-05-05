@@ -82,7 +82,10 @@ namespace AltV.Net.Async
         //TODO: what should happen on failure
         public void Add(TEntity entity)
         {
-            entities.TryAdd(entity.NativePointer, entity);
+            if (entities.TryAdd(entity.NativePointer, entity))
+            {
+                OnAdd(entity);
+            }
         }
 
         public bool Remove(TEntity entity)
@@ -95,6 +98,7 @@ namespace AltV.Net.Async
         {
             if (!entities.TryRemove(entityPointer, out var entity) || !entity.Exists) return false;
             BaseObjectPool<TEntity>.SetEntityNoLongerExists(entity);
+            OnRemove(entity);
             return true;
         }
 
@@ -136,6 +140,14 @@ namespace AltV.Net.Async
         public ICollection<TEntity> GetAllEntities()
         {
             return entities.Values;
+        }
+
+        public virtual void OnAdd(TEntity entity)
+        {
+        }
+
+        public virtual void OnRemove(TEntity entity)
+        {
         }
     }
 }

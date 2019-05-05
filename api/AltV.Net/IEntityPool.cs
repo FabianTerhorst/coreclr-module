@@ -25,5 +25,9 @@ namespace AltV.Net
         bool GetOrCreate(IntPtr entityPointer, out TEntity entity);
 
         ICollection<TEntity> GetAllEntities();
+
+        void OnAdd(TEntity entity);
+
+        void OnRemove(TEntity entity);
     }
 }
