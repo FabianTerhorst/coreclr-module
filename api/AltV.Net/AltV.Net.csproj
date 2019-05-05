@@ -13,14 +13,9 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.3.0</PackageVersion>
+        <PackageVersion>1.3.1</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Some internal cleanup
-Improve ReadOnlyPlayer dispose
-Fix console command event
-Optimize events
-New SetPosition, GetPosition overloads
-assembly support (look into executable example)</PackageReleaseNotes>
+        <PackageReleaseNotes>Add virtual OnAdd, OnRemove functions for entity pools</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

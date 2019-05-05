@@ -12,6 +12,7 @@ namespace AltV.Net.Elements.Entities
         Radius = 7,
         Pickup = 8,
         Cop = 9,
+        Area = 11,
         Gallery = 12,
         PickupObject = 13
     }
