@@ -212,10 +212,10 @@ namespace AltV.Net
             MValue.Dispose(mValues);
         }
 
-        public IVehicle CreateVehicle(uint model, Position pos, float heading)
+        public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
             ushort id = default;
-            vehiclePool.Create(AltNative.Server.Server_CreateVehicle(NativePointer, model, pos, heading, ref id), id,
+            vehiclePool.Create(AltNative.Server.Server_CreateVehicle(NativePointer, model, pos, rotation, ref id), id,
                 out var vehicle);
             return vehicle;
         }

@@ -11,30 +11,30 @@ namespace AltV.Net.Async
 {
     public static partial class AltAsync
     {
-        public static async Task<IVehicle> CreateVehicle(uint model, Position pos, float heading)
+        public static async Task<IVehicle> CreateVehicle(uint model, Position pos, Rotation rot)
         {
             ushort id = default;
             var vehiclePtr = await AltVAsync.Schedule(() =>
-                AltNative.Server.Server_CreateVehicle(((Server) Alt.Server).NativePointer, model, pos, heading,
+                AltNative.Server.Server_CreateVehicle(((Server) Alt.Server).NativePointer, model, pos, rot,
                     ref id));
             Alt.Module.VehiclePool.Create(vehiclePtr, id, out var vehicle);
             return vehicle;
         }
 
-        public static Task<IVehicle> CreateVehicle(VehicleModel model, Position pos, float heading) =>
-            CreateVehicle((uint) model, pos, heading);
+        public static Task<IVehicle> CreateVehicle(VehicleModel model, Position pos, Rotation rot) =>
+            CreateVehicle((uint) model, pos, rot);
 
-        public static Task<IVehicle> CreateVehicle(string model, Position pos, float heading) =>
-            CreateVehicle(Alt.Hash(model), pos, heading);
+        public static Task<IVehicle> CreateVehicle(string model, Position pos, Rotation rot) =>
+            CreateVehicle(Alt.Hash(model), pos, rot);
 
-        public static IVehicleBuilder CreateVehicleBuilder(uint model, Position pos, float heading) =>
-            new VehicleBuilder(model, pos, heading);
+        public static IVehicleBuilder CreateVehicleBuilder(uint model, Position pos, Rotation rot) =>
+            new VehicleBuilder(model, pos, rot);
 
-        public static IVehicleBuilder CreateVehicleBuilder(VehicleModel model, Position pos, float heading) =>
-            new VehicleBuilder((uint) model, pos, heading);
+        public static IVehicleBuilder CreateVehicleBuilder(VehicleModel model, Position pos, Rotation rot) =>
+            new VehicleBuilder((uint) model, pos, rot);
 
-        public static IVehicleBuilder CreateVehicleBuilder(string model, Position pos, float heading) =>
-            new VehicleBuilder(Alt.Hash(model), pos, heading);
+        public static IVehicleBuilder CreateVehicleBuilder(string model, Position pos, Rotation rot) =>
+            new VehicleBuilder(Alt.Hash(model), pos, rot);
 
         public static async Task<IPlayer> GetDriverAsync(this IVehicle vehicle)
         {

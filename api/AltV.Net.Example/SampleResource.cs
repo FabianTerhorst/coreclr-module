@@ -42,7 +42,7 @@ namespace AltV.Net.Example
                 async args => { await AltAsync.Do(() => Alt.Log("bla with no args:" + args.Length)); });
             Alt.Emit("bla");
 
-            var vehicle = Alt.CreateVehicle(VehicleModel.Apc, new Position(1, 2, 3), float.MinValue);
+            var vehicle = Alt.CreateVehicle(VehicleModel.Apc, new Position(1, 2, 3), new Rotation(1, 2, 3));
             Alt.Log(vehicle.Position.ToString());
             vehicle.PrimaryColor = 7;
             vehicle.NumberplateText = "AltV-C#";
@@ -68,7 +68,7 @@ namespace AltV.Net.Example
 
 
             Task.Factory.StartNew(() =>
-                AltAsync.CreateVehicleBuilder(VehicleModel.Apc, new Position(1, 2, 3), float.MinValue)
+                AltAsync.CreateVehicleBuilder(VehicleModel.Apc, new Position(1, 2, 3), new Rotation(1, 2, 3))
                     .PrimaryColorRgb(Color.GreenYellow)
                     .SecondaryColor(24)
                     .NumberplateText("C#")
@@ -111,7 +111,7 @@ namespace AltV.Net.Example
                     Dictionary<string, double> bla)
                 {
                     await Task.Delay(500);
-                    var asyncVehicle = await AltAsync.CreateVehicle(VehicleModel.Apc, Position.Zero, float.MaxValue);
+                    var asyncVehicle = await AltAsync.CreateVehicle(VehicleModel.Apc, Position.Zero, new Rotation(1, 2, 3));
 
                     AltAsync.Log("async-param1:" + s);
                     AltAsync.Log("async-param2:" + s1);
@@ -341,13 +341,13 @@ namespace AltV.Net.Example
             var position = await player.GetPositionAsync();
             await AltAsync.Do(() => { });
             var vehicle = await AltAsync.Do(() =>
-                Alt.CreateVehicle(VehicleModel.Apc, new Position(1, 2, 3), float.MinValue));
+                Alt.CreateVehicle(VehicleModel.Apc, new Position(1, 2, 3), new Rotation(1, 2, 3)));
         }
 
         public async void Bla()
         {
-            var vehicle = await AltAsync.CreateVehicle(VehicleModel.Apc, new Position(1, 2, 3), float.MinValue);
-            var vehicle2 = await AltAsync.CreateVehicle(VehicleModel.Apc, new Position(1, 2, 3), float.MinValue);
+            var vehicle = await AltAsync.CreateVehicle(VehicleModel.Apc, new Position(1, 2, 3), new Rotation(1, 2, 3));
+            var vehicle2 = await AltAsync.CreateVehicle(VehicleModel.Apc, new Position(1, 2, 3), new Rotation(1, 2, 3));
             Alt.Log("veh:" + vehicle.Position.X + " " + vehicle2.Position.X);
         }
 

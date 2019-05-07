@@ -29,7 +29,7 @@ EXPORT void Server_TriggerServerEvent(alt::IServer* server, const char* ev, alt:
 EXPORT void
 Server_TriggerClientEvent(alt::IServer* server, alt::IPlayer* target, const char* ev, const alt::MValueList &args);
 EXPORT alt::IVehicle*
-Server_CreateVehicle(alt::IServer* server, uint32_t model, alt::Position pos, float heading, uint16_t &id);
+Server_CreateVehicle(alt::IServer* server, uint32_t model, alt::Position pos, alt::Rotation rot, uint16_t &id);
 EXPORT alt::ICheckpoint*
 Server_CreateCheckpoint(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::Position pos, float radius,
                         float height, alt::RGBA color);

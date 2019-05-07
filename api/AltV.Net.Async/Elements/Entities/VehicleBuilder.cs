@@ -16,17 +16,17 @@ namespace AltV.Net.Async.Elements.Entities
 
         private readonly Position position;
 
-        private readonly float heading;
+        private readonly Rotation rotation;
 
         private readonly Dictionary<string, Action<IntPtr>> functions = new Dictionary<string, Action<IntPtr>>();
 
         private readonly List<IntPtr> memoryToFree = new List<IntPtr>();
 
-        public VehicleBuilder(uint model, Position position, float heading)
+        public VehicleBuilder(uint model, Position position, Rotation rotation)
         {
             this.model = model;
             this.position = position;
-            this.heading = heading;
+            this.rotation = rotation;
         }
 
         public IVehicleBuilder ModKit(byte value)
@@ -211,7 +211,7 @@ namespace AltV.Net.Async.Elements.Entities
             var vehiclePtr = await AltAsync.AltVAsync.Schedule(() =>
             {
                 var ptr = AltNative.Server.Server_CreateVehicle(((Server) Alt.Server).NativePointer, model,
-                    position, heading,
+                    position, rotation,
                     ref id);
 
                 while (enumerator.MoveNext())

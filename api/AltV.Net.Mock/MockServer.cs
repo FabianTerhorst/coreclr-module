@@ -181,7 +181,7 @@ namespace AltV.Net.Mock
             TriggerClientEvent(player, Marshal.PtrToStringUTF8(eventNamePtr), ref args);
         }
 
-        public IVehicle CreateVehicle(uint model, Position pos, float heading)
+        public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
             var ptr = MockEntities.GetNextPtr();
             vehiclePool.Create(ptr, MockEntities.Id, out var vehicle);

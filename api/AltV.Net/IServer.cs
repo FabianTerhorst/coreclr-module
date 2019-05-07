@@ -59,7 +59,7 @@ namespace AltV.Net
 
         void TriggerClientEvent(IPlayer player, string eventName, ref MValue args);
 
-        IVehicle CreateVehicle(uint model, Position pos, float heading);
+        IVehicle CreateVehicle(uint model, Position pos, Rotation rotation);
 
         ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height, Rgba color);
 
