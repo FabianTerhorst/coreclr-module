@@ -175,6 +175,18 @@ resources/
 
 There is currently a single limitation that dictionaries aren't working in windows but on linux.
 
+### Defined events
+
+```
+Alt.OnPlayerConnect += OnPlayerConnect;
+Alt.OnPlayerDisconnect += OnPlayerDisconnect; (play disconnected)
+Alt.OnPlayerRemove += OnPlayerRemove; (player entity removed from memory)
+Alt.OnVehicleRemove += OnVehicleRemove;
+Alt.OnConsoleCommand += (name, args) => { };
+Alt.OnPlayerEvent += (player, name, args) => { Alt.Log("event:" + name); }; (generic event handler for all event names)
+...(and a lot more)
+```
+
 ### On (Custom Events)
 
 Alt.Emit is used to illustrate event triggering from server -> server, in most use cases the client would trigger the events.
