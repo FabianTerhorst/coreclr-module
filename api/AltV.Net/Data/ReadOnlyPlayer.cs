@@ -159,6 +159,21 @@ namespace AltV.Net.Data
             throw new NotImplementedException();
         }
 
+        public void GiveWeapon(uint weapon, int ammo, bool selectWeapon)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveWeapon(uint weapon)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveAllWeapons()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Kick(string reason)
         {
             throw new NotImplementedException();
