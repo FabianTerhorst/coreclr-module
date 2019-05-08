@@ -36,11 +36,9 @@ matrix:
         - ls -l
         - MSBuild.exe "altv-clr-host.sln" //p:Configuration="Release" //p:Platform="x64"
         - ls -l
-        - cd x64
+        - cd src
         - ls -l
         - cd Release
-        - ls -l
-        - cd ALL_BUILD
         - ls -l
 deploy:
   skip_cleanup: true
