@@ -29,7 +29,7 @@ matrix:
     - os: windows
       before_script: cd runtime
       script:
-        - cmake -B"visual-studio-project" -G"Visual Studio 15 2017 Win64"
+        - cmake -B"visual-studio-project" -G"Visual Studio 15 2017 Win64" .
 deploy:
   skip_cleanup: true
   provider: releases
