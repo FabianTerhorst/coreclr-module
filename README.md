@@ -18,6 +18,25 @@ https://altv.mp/#/downloads
 ## Download Linux
 - Download libcsharp-module.so
 
+### Server file structure
+
+**Folder Structure**
+
+```
+modules/
+└── csharp-module.dll
+└── node-module.dll
+resources/
+└── my-example-csharp-resource/
+    ├── Alt.Net.Example.dll
+    ├── resource.cfg
+    └── ... (any .dll dependency like "AltV.Net.dll" or "mysql.dll")
+└── my-example-client-resource/
+    ├── index.mjs
+    ├── client.mjs
+    └── resource.cfg
+```
+
 ## Install
 - Add csharp-module to server.cfg
 ```
@@ -159,25 +178,6 @@ namespace My.Package
 * Now go to "Project -> {Your Project Name} Properties... -> Build", here you can select the Output path where the dll should be saved.
 
 To get the Resource running on the server, you have to create a "resource.cfg" file. Copy the resource.cfg, AltV.Net.dll and all other dependencied with your resource dll file to altv-server/resources/{YourResourceName}/.
-
-### Server file structure
-
-**Folder Structure**
-
-```
-modules/
-└── csharp-module.dll
-└── node-module.dll
-resources/
-└── my-example-csharp-resource/
-    ├── Alt.Net.Example.dll
-    ├── resource.cfg
-    └── ... (any .dll dependency like "AltV.Net.dll" or "mysql.dll")
-└── my-example-client-resource/
-    ├── index.mjs
-    ├── client.mjs
-    └── resource.cfg
-```
 
 
 ### Events
