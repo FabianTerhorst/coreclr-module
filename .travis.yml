@@ -30,6 +30,10 @@ matrix:
       before_script: cd runtime
       script:
         - cmake -B"visual-studio-project" -G"Visual Studio 15 2017 Win64" .
+        - ls -l
+        - cd visual-studio-project
+        - ls -l
+        - msbuild csharp-module.sln /p:Platform=x64
 deploy:
   skip_cleanup: true
   provider: releases
