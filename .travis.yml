@@ -5,4 +5,4 @@ dist: xenial
 compiler: gcc
 
 script:
-  - sh runtime/linux-build.sh
+  - cd runtime && sh linux-build.sh
