@@ -7,4 +7,5 @@ compiler: gcc
 before_script: cd runtime
 
 script:
-  - sh linux-build.sh
+  - cmake --build .
+  - make .
