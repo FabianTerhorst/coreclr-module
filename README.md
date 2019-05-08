@@ -282,4 +282,8 @@ namespace AltV.Net.Example
     }
 }
 ```
-```
+ All entity apis can be found in the interfaces of the entities
+ [IPlayer](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Elements/Entities/IPlayer.cs)
+ [IVehicle](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Elements/Entities/IVehicle.cs)
+ [IBlip](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Elements/Entities/IBlip.cs)
+ [ICheckpoint](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Elements/Entities/ICheckpoint.cs)
