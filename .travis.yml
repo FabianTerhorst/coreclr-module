@@ -24,3 +24,6 @@ deploy:
   file: libcsharp-module.so
   on:
     repo: FabianTerhorst/coreclr-module
+    branches:
+      only:
+        - master
