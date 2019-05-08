@@ -58,6 +58,8 @@ client-files: [
 "client/*"
 ]
 ```
+client file imports are based on ecmascript2015 imports https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/import
+but require full path import like ```import * as auth from 'client/auth.mjs';``` (relative from resource folder)
 
 ### Download altv server binary
 
@@ -73,7 +75,7 @@ https://altv.mp/#/downloads
 * In the left Column select "Installed -> Visual C# -> .NET Core".
 * Now select "Class Library (.NET Core)" and choose "Name", "Location" and the "Solution name".
 * To setup the correct NuGet Packages open the Manager under "Tools -> NuGet Package Manager -> Manage NuGet Packages for Solution..."
-* Select Browse and search for AltV.Net and install the packages "AltV.Net", "AltV.Net.Async" and "AltV.Net.Mock"
+* Select Browse and search for AltV.Net and install the packages "AltV.Net", ("AltV.Net.Async" when you need async thread save api access)
 * Now go to "Project -> {Your Project Name} Properties... -> Build", here you can select the Output path where the dll should be saved.
 
 To get the Resource running on the server, you have to create a "resource.cfg" file. Copy the resource.cfg, AltV.Net.dll and all other dependencied with your resource dll file to altv-server/resources/{YourResourceName}/.
