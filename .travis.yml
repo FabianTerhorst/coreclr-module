@@ -4,10 +4,10 @@ language: cpp
 compiler: gcc
 before_script: cd runtime
 script:
-- cmake -DCMAKE_BUILD_TYPE=Release -B"cmake-build-linux" .
+- cmake -DCMAKE_BUILD_TYPE=Release .
+- make
 - ls -l
-- cd cmake-build-linux
-- make .
+- cd2
 deploy:
   provider: releases
   api_key:
