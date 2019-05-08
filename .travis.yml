@@ -34,7 +34,7 @@ matrix:
         - export PATH=$MSBUILD_PATH:$PATH
         - cmake -B"visual-studio-project" -G"Visual Studio 15 2017 Win64" .
         - ls -l
-        - MSBuild.exe "altv-clr-host.sln" //p:Platform="x64"
+        - MSBuild.exe "altv-clr-host.sln" //p:Configuration="Release" //p:Platform="x64"
         - ls -l
         - cd x64
         - ls -l
