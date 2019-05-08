@@ -38,6 +38,8 @@ matrix:
         - ls -l
         - cd x64
         - ls -l
+        - cd Release
+        - ls -l
 deploy:
   skip_cleanup: true
   provider: releases
