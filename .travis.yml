@@ -4,5 +4,7 @@ language: cpp
 dist: xenial
 compiler: gcc
 
+before_script: cd runtime
+
 script:
-  - cd runtime && sh linux-build.sh
+  - sh linux-build.sh
