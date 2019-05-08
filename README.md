@@ -79,8 +79,10 @@ client-files specify files downloaded by the client
 client-files: [ 
 "file1.mjs"
 "file2.mjs"
+index.html
+image.png
 ]
-```
+``` ("" around files are optional)
 wildcards are also supported
 ```
 client-files: [ 
