@@ -1,9 +1,18 @@
 dist: xenial
 sudo: false
 language: cpp
-compiler: gcc
+#compiler: gcc
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-8
+      - g++-8
 before_script: cd runtime
 script:
+- CXX=/usr/bin/g++-8 
+- CC=/usr/bin/gcc-8
 - cmake -DCMAKE_BUILD_TYPE=Release .
 - make
 - ls -l
