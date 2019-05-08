@@ -7,10 +7,9 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - g++-8 
-      - clang-7.0
+      - g++-6 
 
 script:
   - cd runtime
-  - CXX=/usr/bin/g++-8 CC=/usr/bin/gcc-8 cmake .
+  - CXX=/usr/bin/g++-6 CC=/usr/bin/gcc-6 cmake .
   - cmake --build .
