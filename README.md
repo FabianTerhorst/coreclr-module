@@ -69,6 +69,44 @@ https://altv.mp/#/downloads
 
 .NET Core SDK can be found [here](https://dotnet.microsoft.com/download). You have to install the sdk, the runtime isn't needed.
 
+## Assembly setup (more control for server developers, probably better performance as well)
+
+(TODO: more docs)
+- Create console application
+- (For now) create empty assembly.cfg in your resource.cfg
+Boilerplate AltV.Net.Example.csproj:
+```
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AltV.Net" Version="1.4.0" />
+    </ItemGroup>
+    
+    <!--This copies the publish directory to the resource folder which is named "my-server"-->
+    
+    <ItemGroup>
+        <AllOutputFiles Include="$(OutputPath)\publish\*.*" />
+    </ItemGroup>
+
+    <Target Name="CopyFiles" AfterTargets="publish">
+        <PropertyGroup>
+            <CopiedFiles>$(OutputPath)\publish\*.*</CopiedFiles>
+
+            <TargetLocation Condition=" '$(Configuration)' == 'Release' ">../../my-server/</TargetLocation>
+        </PropertyGroup>
+        <Copy Condition=" '$(TargetLocation)' != '' " SourceFiles="@(AllOutputFiles)" DestinationFolder="$(TargetLocation)" SkipUnchangedFiles="false" />
+    </Target>
+
+</Project>
+```
+
+## Class Library setup (less control for server developers (don't support mysql))
+
 ### Create a project with Visual Studio 17 (Windows)
 
 * Go to "File -> New -> Project..." now the Project Wizard should appear.
