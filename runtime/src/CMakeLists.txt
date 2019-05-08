@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.13)
+cmake_minimum_required (VERSION 3.12.4)
 
 set(TARGET_NAME core_clr_host)
 

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.12.4)
 project(altv-clr-host LANGUAGES CXX)
 
 include(GNUInstallDirs)
