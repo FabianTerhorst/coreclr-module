@@ -81,6 +81,15 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_SetWeather(IntPtr playerPointer, uint weather);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_GiveWeapon(IntPtr playerPointer, uint weapon, int ammo, bool selectWeapon);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_RemoveWeapon(IntPtr playerPointer, uint weapon);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_RemoveAllWeapons(IntPtr playerPointer);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool Player_IsDead(IntPtr playerPointer);

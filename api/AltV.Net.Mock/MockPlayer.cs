@@ -46,6 +46,18 @@ namespace AltV.Net.Mock
         {
         }
 
+        public void GiveWeapon(uint weapon, int ammo, bool selectWeapon)
+        {
+        }
+
+        public void RemoveWeapon(uint weapon)
+        {
+        }
+
+        public void RemoveAllWeapons()
+        {
+        }
+
         public void Kick(string reason)
         {
             if (Exists)

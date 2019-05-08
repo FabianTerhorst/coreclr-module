@@ -337,6 +337,24 @@ namespace AltV.Net.Elements.Entities
             CheckIfEntityExists();
             AltNative.Player.Player_SetWeather(NativePointer, weather);
         }
+        
+        public void GiveWeapon(uint weapon, int ammo, bool selectWeapon)
+        {
+            CheckIfEntityExists();
+            AltNative.Player.Player_GiveWeapon(NativePointer, weapon, ammo, selectWeapon);
+        }
+        
+        public void RemoveWeapon(uint weapon)
+        {
+            CheckIfEntityExists();
+            AltNative.Player.Player_RemoveWeapon(NativePointer, weapon);
+        }
+        
+        public void RemoveAllWeapons()
+        {
+            CheckIfEntityExists();
+            AltNative.Player.Player_RemoveAllWeapons(NativePointer);
+        }
 
         public void Kick(string reason)
         {

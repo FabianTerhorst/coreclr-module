@@ -91,7 +91,10 @@ namespace AltV.Net.Async
         {
             var entityPointer =
                 await AltVAsync.Schedule(() =>
-                    !player.Exists ? IntPtr.Zero : AltNative.Player.Player_GetVehicle(player.NativePointer));
+                {
+                    player.CheckIfEntityExists();
+                    return AltNative.Player.Player_GetVehicle(player.NativePointer);
+                });
             if (entityPointer == IntPtr.Zero) return null;
             return Alt.Module.VehiclePool.GetOrCreate(entityPointer, out var vehicle) ? vehicle : null;
         }
@@ -118,6 +121,15 @@ namespace AltV.Net.Async
         public static Task SetWeatherAsync(this IPlayer player, uint weather) =>
             AltVAsync.Schedule(() => player.SetWeather(weather));
 
+        public static Task GiveWeaponAsync(this IPlayer player, uint weapon, int ammo, bool selectWeapon) =>
+            AltVAsync.Schedule(() => player.GiveWeapon(weapon, ammo, selectWeapon));
+
+        public static Task RemoveWeaponAsync(this IPlayer player, uint weapon) =>
+            AltVAsync.Schedule(() => player.RemoveWeapon(weapon));
+
+        public static Task RemoveAllWeaponsAsync(this IPlayer player) =>
+            AltVAsync.Schedule(player.RemoveAllWeapons);
+
         public static async Task KickAsync(this IPlayer player, string reason)
         {
             var reasonPtr = AltNative.StringUtils.StringToHGlobalUtf8(reason);
@@ -134,7 +146,11 @@ namespace AltV.Net.Async
             var mValues = MValue.CreateFromObjects(args);
             var mValueArgs = MValue.Create(mValues);
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
-            await AltVAsync.Schedule(() => Alt.Server.TriggerClientEvent(player, eventNamePtr, ref mValueArgs));
+            await AltVAsync.Schedule(() =>
+            {
+                player.CheckIfEntityExists();
+                Alt.Server.TriggerClientEvent(player, eventNamePtr, ref mValueArgs);
+            });
             Marshal.FreeHGlobal(eventNamePtr);
             MValue.Dispose(mValues);
             mValueArgs.Dispose();

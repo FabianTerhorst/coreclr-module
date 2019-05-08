@@ -98,6 +98,18 @@ void Player_SetWeather(alt::IPlayer* player, uint32_t weather) {
     player->SetWeather(weather);
 }
 
+void Player_GiveWeapon(alt::IPlayer* player, uint32_t weapon, int32_t ammo, bool selectWeapon) {
+    player->GiveWeapon(weapon, ammo, selectWeapon);
+}
+
+void Player_RemoveWeapon(alt::IPlayer* player, uint32_t weapon) {
+    player->RemoveWeapon(weapon);
+}
+
+void Player_RemoveAllWeapons(alt::IPlayer* player) {
+    player->RemoveAllWeapons();
+}
+
 bool Player_IsDead(alt::IPlayer* player) {
     return player->IsDead();
 }

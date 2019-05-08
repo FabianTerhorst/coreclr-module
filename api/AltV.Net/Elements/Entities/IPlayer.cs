@@ -64,6 +64,12 @@ namespace AltV.Net.Elements.Entities
 
         void SetWeather(uint weather);
 
+        void GiveWeapon(uint weapon, int ammo, bool selectWeapon);
+
+        void RemoveWeapon(uint weapon);
+
+        void RemoveAllWeapons();
+
         void Kick(string reason);
 
         void Emit(string eventName, params object[] args);

@@ -71,6 +71,10 @@ EXPORT void Player_SetHealth(alt::IPlayer* player, uint16_t health);
 EXPORT void Player_SetDateTime(alt::IPlayer* player, int day, int month, int year, int hour, int minute, int second);
 EXPORT void Player_SetWeather(alt::IPlayer* player, uint32_t weather);
 
+EXPORT void Player_GiveWeapon(alt::IPlayer* player, uint32_t weapon, int32_t ammo, bool selectWeapon);
+EXPORT void Player_RemoveWeapon(alt::IPlayer* player, uint32_t weapon);
+EXPORT void Player_RemoveAllWeapons(alt::IPlayer* player);
+
 EXPORT bool Player_IsDead(alt::IPlayer* player);
 
 EXPORT bool Player_IsJumping(alt::IPlayer* player);
