@@ -1,0 +1,16 @@
+dist: trusty
+sudo: false
+language: cpp
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-8 
+      - clang-7.0
+
+script:
+  - cd runtime
+  - CXX=/usr/bin/g++-8 CC=/usr/bin/gcc-8 cmake .
+  - cmake --build .
