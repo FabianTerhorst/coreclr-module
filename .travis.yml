@@ -6,6 +6,9 @@ before_script: cd runtime
 script:
 - cmake -DCMAKE_BUILD_TYPE=Release .
 - make .
+- ls -l
+- cd CMakeFiles
+- ls -l
 - cd src
 - ls -l
 before_deploy: cd src
@@ -14,6 +17,6 @@ deploy:
   api_key:
     secure: eYKVpb7Or9sI3GFJtnd1k5Hx4fRiQaFaVFZCFLICD5tx2SHukokd0b2Tse66S37FCOEl57irFyJtB3L7rWF12RUZuLsHcX+woZlvqF3NO+7fmK+Ug9sTeqOwtOHt/PTMN7D3S3sIpW4Vs5BrBJv23K2VUVKgo4bcMseuBpaPM/Qe9/aTTcWPvAHejLkmn2Cz9HJM0A74/QBZigTGi8SHHh9nTiN3ZoRoCorKzu9/ZlVScRZI+G8U7Kkfs8t2QWD+wiw7SGEIp/dUGoXW7EtqODDwntANZwpkQ+AJVbonCmNkZtr7SJLntNrC4zlIfuGLL+Wr50v77I2q1AAI+8rL3PCSe3V9dpjheztooJyst5Ir7WVqvROJ2U2tYoKvEMiL0Wo7Ffq30NJ+d4xyaovVffdUIAyqqxA+tsorvNSju55CQXTkVGnyrbRAsYK/bh4k8LIln868RqAffzGkXmquW7dGiHAVF/fREWTxJAx45acp2AcB0OkWtA3KgO6i/zSE9BP+PabxXYY7tAl1gbXcRvB08mnW43cbCqJ00Hp2G5oWcNo1EH2Gmf7Jp4NlXOcq2zOddBhUImx+kG7v9y4nCu3KvtYOeY67t8TYF2U6Az+yxxyX1jHVtSkt8iUfk3K4jl6w5X31gq4Ss5f1GKrny0rWPRptBnuYtYdPIMGLHVo=
     file_glob: true
-    file: runtime/src/libcsharp-module.so
+    file: runtime/CMakeFiles/src/libcsharp-module.so
   on:
     repo: FabianTerhorst/coreclr-module
