@@ -104,6 +104,39 @@ Boilerplate AltV.Net.Example.csproj:
 
 </Project>
 ```
+Program.cs
+```csharp
+namespace My.Package
+{
+    internal static class Program
+    {
+        private static void Main(string[] args) => new MyResource().Start(args);
+    }
+}
+```
+MyResource.cs
+```csharp
+using System;
+
+namespace My.Package
+{
+    internal class MyResource : Resource
+    {
+        public override void OnStart()
+        {
+            Alt.OnServerEvent += (name, args) => { Alt.Log(name + " " + args.Length); };
+            Alt.Emit("test");
+
+            Console.WriteLine("Started");
+        }
+
+        public override void OnStop()
+        {
+            Console.WriteLine("Stopped");
+        }
+    }
+}
+```
 
 ## Class Library setup (less control for server developers (don't support mysql))
 
@@ -135,4 +168,106 @@ resources/
     ├── index.mjs
     ├── client.mjs
     └── resource.cfg
+```
+
+
+### Events
+
+There is currently a single limitation that dictionaries aren't working in windows but on linux.
+
+### On (Custom Events)
+
+Alt.Emit is used to illustrate event triggering from server -> server, in most use cases the client would trigger the events.
+
+#### Supported Argument Types
+
+`null`, `bool`, `int`, `uint,` `long`, `ulong`, `double`, `string`, `object`, `float`
+
+All types above as an array, eg. `int []`, `string[]`, ....
+
+Furthermore Dictionaries with `string`-Type as Key, eg. `Dictionary<string, object>` (linux only currently)
+
+But also all interfaces of the AltV API or extend these, eg. `IEntity`, `IVehicle`, `IBlip`, `ICheckpoint`, `MyVehicle` ...
+
+#### Examples
+
+```csharp
+Alt.On("test", args => { Alt.Log("args=" + args[0]); });
+
+Alt.Emit("test", "bla");
+```
+
+```csharp
+Alt.On<string>("test", str => { Alt.Log("str=" + str); });
+
+Alt.Emit("test", "bla");
+```
+
+```csharp
+Alt.On("test", delegate(string str){ Alt.Log("str=" + str); });
+
+Alt.Emit("test", "bla");
+```
+
+```csharp
+Alt.On<string>("test", bla);
+void bla(string str) {
+    Alt.Log("str=" + str);
+}
+Alt.Emit("test", "bla");
+```
+
+##### Advanced Example
+
+The first Generics (in our example below `int` and `string`) are the Types for the parameters, the last generic (`bool`) is the return-type.
+
+**Note**: Return types are optional at events
+
+```csharp
+Alt.On<int, string, bool>("test", (number, str) => {
+    Alt.Log("str=" + str + " - " + number);
+	return true;
+});
+```
+
+## Own entity factories (only needed when you want to improve performance by not using entity.GetData(..), entity.SetData(...) but entity.MyData instead)
+
+SampleResource.cs:
+```csharp
+public class SampleResource : Resource
+...
+public override IEntityFactory<IVehicle> GetVehicleFactory()
+{
+    return new MyVehicleFactory();
+}
+...(also supports player, blip, checkpoint, ....)
+```
+MyVehicleFactory.cs:
+```csharp
+namespace My.Package
+{
+    public class MyVehicleFactory : IEntityFactory<IVehicle>
+    {
+        public IVehicle Create(IntPtr vehiclePointer, ushort id)
+        {
+            return new MyVehicle(vehiclePointer, id);
+        }
+    }
+}
+```
+MyVehicle.cs
+```csharp
+namespace AltV.Net.Example
+{
+    public class MyVehicle : Vehicle, IMyVehicle
+    {
+        public int MyData { get; set; }
+
+        public MyVehicle(IntPtr nativePointer, ushort id) : base(nativePointer, id)
+        {
+            MyData = 6;
+        }
+    }
+}
+```
 ```
