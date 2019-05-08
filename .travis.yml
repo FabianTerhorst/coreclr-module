@@ -5,6 +5,4 @@ dist: xenial
 compiler: gcc
 
 script:
-  - cd runtime
-  - cmake .
-  - cmake --build .
+  - sh runtime/linux-build.sh
