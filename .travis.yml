@@ -1,22 +1,35 @@
-dist: xenial
+#dist: xenial
+os:
+  - linux
+  - windows
 sudo: false
 language: cpp
 #compiler: gcc
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - gcc-8
-      - g++-8
-before_script: cd runtime
-script:
-- CXX=/usr/bin/g++-8 
-- CC=/usr/bin/gcc-8
-- cmake -DCMAKE_BUILD_TYPE=Release -B"cmake-build-linux" .
-- make
-- cd src
-- ls -l
+
+
+matrix:
+  include:
+    - os: linux
+      dist: xenial
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - gcc-8
+            - g++-8
+      before_script: cd runtime
+      script:
+        - CXX=/usr/bin/g++-8 
+        - CC=/usr/bin/gcc-8
+        - cmake -DCMAKE_BUILD_TYPE=Release -B"cmake-build-linux" .
+        - make
+        - cd src
+        - ls -l
+    - os: windows
+      before_script: cd runtime
+      script:
+        - cmake -B"visual-studio-project" -G"Visual Studio 15 2017 Win64"
 deploy:
   skip_cleanup: true
   provider: releases
