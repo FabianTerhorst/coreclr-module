@@ -13,7 +13,7 @@ before_script: cd runtime
 script:
 - CXX=/usr/bin/g++-8 
 - CC=/usr/bin/gcc-8
-- cmake -DCMAKE_BUILD_TYPE=Release -G"cmake-build-output" .
+- cmake -DCMAKE_BUILD_TYPE=Release -B"cmake-build-linux" .
 - cd cmake-build-output
 - make
 - ls -l
