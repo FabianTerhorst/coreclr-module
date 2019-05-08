@@ -8,5 +8,5 @@ before_script: cd runtime
 
 script:
   - cmake -DCMAKE_BUILD_TYPE=Release .
-  - ls -l
   - make .
+  - ls -l
