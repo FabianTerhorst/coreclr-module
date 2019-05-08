@@ -1,15 +1,10 @@
 dist: trusty
 sudo: false
 language: cpp
-
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-6 
+dist: xenial
+compiler: gcc
 
 script:
   - cd runtime
-  - CXX=/usr/bin/g++-6 CC=/usr/bin/gcc-6 cmake .
+  - CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake .
   - cmake --build .
