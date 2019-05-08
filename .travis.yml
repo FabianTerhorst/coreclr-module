@@ -27,11 +27,14 @@ matrix:
         - cd src
         - ls -l
     - os: windows
+      env:
+        - MSBUILD_PATH="c:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
       before_script: cd runtime
       script:
+        - export PATH=$MSBUILD_PATH:$PATH
         - cmake -B"visual-studio-project" -G"Visual Studio 15 2017 Win64" .
         - ls -l
-        - msbuild altv-clr-host.sln /p:Platform=x64
+        - MSBuild.exe altv-clr-host.sln /p:Platform=x64
         - ls -l
 deploy:
   skip_cleanup: true
