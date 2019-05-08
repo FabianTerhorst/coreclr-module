@@ -8,6 +8,10 @@ https://cdn.discordapp.com/attachments/555489845514993665/575318526907121674/lib
 
 - [Releases for upcomming server build](https://github.com/FabianTerhorst/coreclr-module/releases)
 
+### Download altv server binary
+
+https://altv.mp/#/downloads
+
 ## Download Windows
 - Download csharp-module.dll
 
@@ -65,9 +69,10 @@ client-files: [
 client file imports are based on ecmascript2015 imports https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/import
 but require full path import like ```import * as auth from 'client/auth.mjs';``` (relative from resource folder)
 
-### Download altv server binary
+### Nuget
 
-https://altv.mp/#/downloads
+- https://www.nuget.org/packages/AltV.Net
+- optional async module https://www.nuget.org/packages/AltV.Net.Async
 
 ### Installing .NET Core SDK >= 2.2
 
