@@ -5,6 +5,7 @@ compiler: gcc
 before_script: cd runtime
 script:
 - cmake -DCMAKE_BUILD_TYPE=Release -B"cmake-build-linux" .
+- ls -l
 - cd cmake-build-linux
 - make .
 deploy:
