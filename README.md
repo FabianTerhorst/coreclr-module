@@ -35,6 +35,8 @@ resources/
     ├── index.mjs
     ├── client.mjs
     └── resource.cfg
+server.cfg
+altv-server.exe
 ```
 
 ## Install
