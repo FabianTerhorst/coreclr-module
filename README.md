@@ -2,7 +2,11 @@
 CoreClr (.NET Core Common Language Runtime) module
 
 ## Download (windows / linux)
-- [Releases](https://github.com/FabianTerhorst/coreclr-module/releases)
+- Use discord release until next server build 
+https://cdn.discordapp.com/attachments/555489845514993665/575318541486784522/csharp-module.dll
+https://cdn.discordapp.com/attachments/555489845514993665/575318526907121674/libcsharp-module.so
+
+- [Releases for upcomming server build](https://github.com/FabianTerhorst/coreclr-module/releases)
 
 ## Download Windows
 - Download csharp-module.dll
