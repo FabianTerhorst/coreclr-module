@@ -14,7 +14,7 @@ script:
 - CXX=/usr/bin/g++-8 
 - CC=/usr/bin/gcc-8
 - cmake -DCMAKE_BUILD_TYPE=Release -B"cmake-build-linux" .
-- cd cmake-build-output
+- cd cmake-build-linux
 - make
 - ls -l
 - cd src
