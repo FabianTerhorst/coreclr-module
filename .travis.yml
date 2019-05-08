@@ -7,5 +7,6 @@ compiler: gcc
 before_script: cd runtime
 
 script:
-  - cmake --build .
+  - cmake -DCMAKE_BUILD_TYPE=Release .
+  - ls -l
   - make .
