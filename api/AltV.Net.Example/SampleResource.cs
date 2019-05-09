@@ -213,12 +213,11 @@ namespace AltV.Net.Example
             // But when you don't use a entity factory you can validate that by checking if the ivehicle is a imyvehicle
             try
             {
-                IMyVehicle myConstructedVehicle = new MyVehicle((uint) VehicleModel.Apc, new Position(1, 1, 1), new Rotation(1, 1, 1));
-                
+                IMyVehicle myConstructedVehicle =
+                    new MyVehicle((uint) VehicleModel.Apc, new Position(1, 1, 1), new Rotation(1, 1, 1));
             }
             catch (BaseObjectRemovedException baseObjectRemovedException)
             {
-                
             }
         }
 

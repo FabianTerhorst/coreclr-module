@@ -13,10 +13,9 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.4.0</PackageVersion>
+        <PackageVersion>1.4.1</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Add virtual OnAdd, OnRemove functions for entity pools
-Add rotation to create vehicle</PackageReleaseNotes>
+        <PackageReleaseNotes>Add not working GiveWeapon, RemoveWeapon, RemoveAllWeapons</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
