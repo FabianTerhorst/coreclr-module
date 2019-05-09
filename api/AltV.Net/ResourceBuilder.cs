@@ -128,11 +128,11 @@ namespace AltV.Net
             
             AltNative.Resource.MetaDataChange onMetaDataChange = ModuleWrapper.OnMetaDataChange;
 
-            GCHandle.Alloc(onConsoleCommand);
+            GCHandle.Alloc(onMetaDataChange);
             
             AltNative.Resource.MetaDataChange onSyncedMetaDataChange = ModuleWrapper.OnSyncedMetaDataChange;
 
-            GCHandle.Alloc(onConsoleCommand);
+            GCHandle.Alloc(onSyncedMetaDataChange);
 
             AltNative.Resource.CSharpResource_SetMain(resourcePointer, onStart, onTick, onServerEvent, onCheckpoint,
                 onClientEvent, onPlayerDamage, onPlayerConnect, onPlayerDeath, onPlayerDisconnect, onPlayerRemove,

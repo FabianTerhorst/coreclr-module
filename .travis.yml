@@ -69,7 +69,7 @@ deploy:
       secure: YaQvAptQYu7h9DdeeCMjyDrqjC14c07zTiOeswnFQPMjFssRXy0kvhXUlq+B+ODUs9Ia0icmIhLiw3m2f2K/EVTQ/DqYYo7Beg/0f2yeaKxZ6T8d6hQW/D0XSPM6pzlShN7AWy7YT6c1L6XstwnoL7zBCCPDsebW0iWCqa425uej0h9UaeJkVGzdE8GGIIygy+PhleJIYi9k0p6rynaMbdN57FfMLvb2gcXct9Utp5VuiIIg5Msji9yV16s8s7vCXVrscXbIFca2UMsoY3qTzmCqj/IUq23tgGmdR06IPJ+AagMsApaSg2A69L2pwt2fr0TESNnsPqhDNX2WcZNMU82/aaHiuSiWaOm8STyWd5/h2v3lnZIlbZFyOSmt9hSRUaEg6xbt69/DruVnoiSAsARvsnTvt74Ti+RiGNeHlOWctWAGwA6sXQ8geFXbmLin9ECc7lAmRjonocYVy7XxRrzrFZgG1qKr8wKTbOT/h//zts4iyYxB3QtyKG1+3hYbc4qK39hz3m4apnsgE2Q7HUGKAGfunCypPNBwWYLiGsWQavArvEJpzayxhmyvdP5oVIuyVRTxzf+0uzexxhqjzqqebTo3AqYyFDIJtYl9Oy5cL/EK83ADIpaCIYnMWUAFyuWtW9eblUc2qc4bR9XnKyDCm6EAy/0vkbgLrx2AdO0=
     bucket: alt-cdn
     file: libcsharp-module.so
-    region: nl-ams.scw.cloud
+    endpoint: https://alt-cdn.s3.nl-ams.scw.cloud
     upload-dir: coreclr-module
     on:
       repo: FabianTerhorst/coreclr-module
@@ -85,7 +85,7 @@ deploy:
     access_key_id:
       secure: YaQvAptQYu7h9DdeeCMjyDrqjC14c07zTiOeswnFQPMjFssRXy0kvhXUlq+B+ODUs9Ia0icmIhLiw3m2f2K/EVTQ/DqYYo7Beg/0f2yeaKxZ6T8d6hQW/D0XSPM6pzlShN7AWy7YT6c1L6XstwnoL7zBCCPDsebW0iWCqa425uej0h9UaeJkVGzdE8GGIIygy+PhleJIYi9k0p6rynaMbdN57FfMLvb2gcXct9Utp5VuiIIg5Msji9yV16s8s7vCXVrscXbIFca2UMsoY3qTzmCqj/IUq23tgGmdR06IPJ+AagMsApaSg2A69L2pwt2fr0TESNnsPqhDNX2WcZNMU82/aaHiuSiWaOm8STyWd5/h2v3lnZIlbZFyOSmt9hSRUaEg6xbt69/DruVnoiSAsARvsnTvt74Ti+RiGNeHlOWctWAGwA6sXQ8geFXbmLin9ECc7lAmRjonocYVy7XxRrzrFZgG1qKr8wKTbOT/h//zts4iyYxB3QtyKG1+3hYbc4qK39hz3m4apnsgE2Q7HUGKAGfunCypPNBwWYLiGsWQavArvEJpzayxhmyvdP5oVIuyVRTxzf+0uzexxhqjzqqebTo3AqYyFDIJtYl9Oy5cL/EK83ADIpaCIYnMWUAFyuWtW9eblUc2qc4bR9XnKyDCm6EAy/0vkbgLrx2AdO0=
     bucket: alt-cdn
-    region: nl-ams.scw.cloud
+    endpoint: https://alt-cdn.s3.nl-ams.scw.cloud
     upload-dir: coreclr-module
     file: csharp-module.dll
     on:
