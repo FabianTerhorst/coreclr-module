@@ -188,7 +188,7 @@ namespace AltV.Net.Async
                 {
                     foreach (var eventHandler in eventHandlers)
                     {
-                        var invokeValues = eventHandler.CalculateInvokeValues(objects);
+                        var invokeValues = eventHandler.CalculateInvokeValues(objects, player);
                         if (invokeValues != null)
                         {
                             eventHandler.InvokeNoResult(invokeValues);

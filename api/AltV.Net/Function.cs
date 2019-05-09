@@ -236,6 +236,21 @@ namespace AltV.Net
             return invokeValues;
         }
 
+        internal object[] CalculateInvokeValues(object[] values, IPlayer player)
+        {
+            var length = values.Length;
+            if (length + 1 != args.Length) return null;
+            if (!typeInfos[0].IsPlayer) return null;
+            var invokeValues = new object[length + 1];
+            invokeValues[0] = player;
+            for (var i = 0; i < length; i++)
+            {
+                invokeValues[i + 1] = objectParsers[i + 1](values[i], args[i + 1], typeInfos[i + 1]);
+            }
+
+            return invokeValues;
+        }
+
         internal MValue Invoke(object[] invokeValues)
         {
             var result = @delegate.DynamicInvoke(invokeValues);
