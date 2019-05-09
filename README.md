@@ -82,7 +82,9 @@ client-files: [
 index.html
 image.png
 ]
-``` ("" around files are optional)
+```
+"" around files are optional
+
 wildcards are also supported
 ```
 client-files: [ 
