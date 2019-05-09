@@ -257,7 +257,9 @@ Alt.On<int, string, bool>("test", (number, str) => {
 });
 ```
 
-## Own entity factories (only needed when you want to improve performance by not using entity.GetData(..), entity.SetData(...) but entity.MyData instead)
+## entity factories 
+
+Needed when you want to improve performance by not using entity.GetData(..), entity.SetData(...) but entity.MyData... instead
 
 SampleResource.cs:
 ```csharp
