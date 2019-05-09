@@ -111,7 +111,8 @@ namespace AltV.Net.Example
                     Dictionary<string, double> bla)
                 {
                     await Task.Delay(500);
-                    var asyncVehicle = await AltAsync.CreateVehicle(VehicleModel.Apc, Position.Zero, new Rotation(1, 2, 3));
+                    var asyncVehicle =
+                        await AltAsync.CreateVehicle(VehicleModel.Apc, Position.Zero, new Rotation(1, 2, 3));
 
                     AltAsync.Log("async-param1:" + s);
                     AltAsync.Log("async-param2:" + s1);
@@ -154,6 +155,12 @@ namespace AltV.Net.Example
                 Alt.Log("parameter=" + bla);
                 return 42;
             }));
+
+            Alt.Emit("function_event", delegate(string bla)
+            {
+                Alt.Log("parameter=" + bla);
+                return 42;
+            });
 
             foreach (var player in Alt.GetAllPlayers())
             {
@@ -206,6 +213,19 @@ namespace AltV.Net.Example
             Alt.Emit("none-existing-event", new WritableObject());
 
             Alt.Emit("none-existing-event", new ConvertibleObject());
+
+            // You need to catch this with a exception because its not possible to construct a invalid entity
+            // Remember not all vehicles you receive from events has to be constructored by this constructor when there got created from different resources ect.
+            // But when you don't use a entity factory you can validate that by checking if the ivehicle is a imyvehicle
+            try
+            {
+                IMyVehicle myConstructedVehicle = new MyVehicle((uint) VehicleModel.Apc, new Position(1, 1, 1), new Rotation(1, 1, 1));
+                
+            }
+            catch (BaseObjectRemovedException baseObjectRemovedException)
+            {
+                
+            }
         }
 
         public void MyParser(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string> func)

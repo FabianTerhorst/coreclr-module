@@ -1,4 +1,5 @@
 using System;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Example
@@ -7,6 +8,12 @@ namespace AltV.Net.Example
     {
         public int MyData { get; set; }
 
+        // This constructor is used for creation via constructor
+        public MyVehicle(uint model, Position position, Rotation rotation) : base(model, position, rotation)
+        {
+        }
+
+        // This constructor is used for creation via entity factory
         public MyVehicle(IntPtr nativePointer, ushort id) : base(nativePointer, id)
         {
             MyData = 6;

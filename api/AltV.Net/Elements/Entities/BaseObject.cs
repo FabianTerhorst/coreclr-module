@@ -17,6 +17,10 @@ namespace AltV.Net.Elements.Entities
 
         protected BaseObject(IntPtr nativePointer, BaseObjectType type)
         {
+            if (nativePointer == IntPtr.Zero)
+            {
+                throw new BaseObjectRemovedException(this);
+            }
             NativePointer = nativePointer;
             Type = type;
             Exists = true;

@@ -191,6 +191,13 @@ namespace AltV.Net.Mock
             return vehicle;
         }
 
+        public IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation)
+        {
+            var ptr = MockEntities.GetNextPtr();
+            id = MockEntities.Id;
+            return ptr;
+        }
+
         public ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height,
             Rgba color)
         {

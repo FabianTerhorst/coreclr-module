@@ -298,5 +298,11 @@ namespace AltV.Net
             AltNative.Server.Server_GetResource(NativePointer, name, ref resourcePointer);
             return resourcePointer == IntPtr.Zero ? null : new ServerNativeResource(resourcePointer);
         }
+        
+        public IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation)
+        {
+            id = default;
+            return AltNative.Server.Server_CreateVehicle(NativePointer, model, pos, rotation, ref id);
+        }
     }
 }

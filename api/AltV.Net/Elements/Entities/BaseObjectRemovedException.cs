@@ -8,5 +8,9 @@ namespace AltV.Net.Elements.Entities
             $"BaseObject(Type: {baseObject.Type.ToString()}) got deleted.")
         {
         }
+
+        public BaseObjectRemovedException(string message) : base(message)
+        {
+        }
     }
 }
