@@ -156,12 +156,6 @@ namespace AltV.Net.Example
                 return 42;
             }));
 
-            Alt.Emit("function_event", delegate(string bla)
-            {
-                Alt.Log("parameter=" + bla);
-                return 42;
-            });
-
             foreach (var player in Alt.GetAllPlayers())
             {
             }
