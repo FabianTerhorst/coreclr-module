@@ -48,6 +48,12 @@ namespace AltV.Net.Async
 
         internal readonly AsyncEventHandler<ConsoleCommandAsyncDelegate> ConsoleCommandAsyncDelegateHandlers =
             new AsyncEventHandler<ConsoleCommandAsyncDelegate>();
+        
+        internal readonly AsyncEventHandler<MetaDataChangeAsyncDelegate> MetaDataChangeAsyncDelegateHandlers =
+            new AsyncEventHandler<MetaDataChangeAsyncDelegate>();
+        
+        internal readonly AsyncEventHandler<MetaDataChangeAsyncDelegate> SyncedMetaDataChangeAsyncDelegateHandlers =
+            new AsyncEventHandler<MetaDataChangeAsyncDelegate>();
 
         private readonly Dictionary<string, HashSet<ClientEventAsyncDelegate>> clientEventAsyncDelegateHandlers
             =
@@ -331,6 +337,24 @@ namespace AltV.Net.Async
             Task.Run(() =>
                 ConsoleCommandAsyncDelegateHandlers.CallAsync(@delegate =>
                     @delegate(name, args)));
+        }
+
+        public override void OnMetaDataChangeEvent(IEntity entity, string key, object value)
+        {
+            base.OnMetaDataChangeEvent(entity, key, value);
+            if (!MetaDataChangeAsyncDelegateHandlers.HasEvents()) return;
+            Task.Run(() =>
+                MetaDataChangeAsyncDelegateHandlers.CallAsync(@delegate =>
+                    @delegate(entity, key, value)));
+        }
+
+        public override void OnSyncedMetaDataChangeEvent(IEntity entity, string key, object value)
+        {
+            base.OnSyncedMetaDataChangeEvent(entity, key, value);
+            if (!SyncedMetaDataChangeAsyncDelegateHandlers.HasEvents()) return;
+            Task.Run(() =>
+                SyncedMetaDataChangeAsyncDelegateHandlers.CallAsync(@delegate =>
+                    @delegate(entity, key, value)));
         }
 
         public void OnClient(string eventName, ClientEventAsyncDelegate eventDelegate)

@@ -84,6 +84,18 @@ namespace AltV.Net.Async
             add => Module.ConsoleCommandAsyncDelegateHandlers.Add(value);
             remove => Module.ConsoleCommandAsyncDelegateHandlers.Remove(value);
         }
+        
+        public static event MetaDataChangeAsyncDelegate OnMetaDataChange
+        {
+            add => Module.MetaDataChangeAsyncDelegateHandlers.Add(value);
+            remove => Module.MetaDataChangeAsyncDelegateHandlers.Remove(value);
+        }
+        
+        public static event MetaDataChangeAsyncDelegate OnSyncedMetaDataChange
+        {
+            add => Module.SyncedMetaDataChangeAsyncDelegateHandlers.Add(value);
+            remove => Module.SyncedMetaDataChangeAsyncDelegateHandlers.Remove(value);
+        }
 
         public static async void Log(string message)
         {

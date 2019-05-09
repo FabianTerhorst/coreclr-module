@@ -133,6 +133,12 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
             coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
                                  "OnConsoleCommand",
                                  reinterpret_cast<void**>(&OnConsoleCommandDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                                 "OnMetaDataChange",
+                                 reinterpret_cast<void**>(&OnMetaChangeDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                                 "OnSyncedMetaDataChange",
+                                 reinterpret_cast<void**>(&OnSyncedMetaChangeDelegate));
         }
     } else {
 #ifdef _WIN32

@@ -37,5 +37,5 @@ namespace AltV.Net.Events
 
     public delegate void ConsoleCommandDelegate(string name, string[] args);
     
-    public delegate void MetaDataChangeDelegate(IEntity entity, string name, object value);
+    public delegate void MetaDataChangeDelegate(IEntity entity, string key, object value);
 }

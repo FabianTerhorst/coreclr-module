@@ -33,4 +33,6 @@ namespace AltV.Net.Async.Events
     public delegate Task PlayerClientEventAsyncDelegate(IPlayer player, string eventName, object[] args);
 
     public delegate Task ConsoleCommandAsyncDelegate(string name, string[] args);
+    
+    public delegate Task MetaDataChangeAsyncDelegate(IEntity entity, string key, object value);
 }
