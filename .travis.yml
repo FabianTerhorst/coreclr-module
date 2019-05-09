@@ -1,68 +1,98 @@
-#dist: xenial
 os:
-  - linux
-  - windows
+- linux
+- windows
 sudo: false
 language: cpp
-#compiler: gcc
-
-
 matrix:
   include:
-    - os: linux
-      dist: xenial
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - gcc-8
-            - g++-8
-      before_script: cd runtime
-      script:
-        - CXX=/usr/bin/g++-8 
-        - CC=/usr/bin/gcc-8
-        - cmake -DCMAKE_BUILD_TYPE=Release -B"cmake-build-linux" .
-        - make
-        - cd src
-        - ls -l
-    - os: windows
-      env:
-        - MSBUILD_PATH="c:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
-      before_script: cd runtime
-      script:
-        - export PATH=$MSBUILD_PATH:$PATH
-        - cmake -B"visual-studio-project" -G"Visual Studio 15 2017 Win64" .
-        - ls -l
-        - MSBuild.exe "altv-clr-host.sln" //p:Configuration="Release" //p:Platform="x64"
-        - ls -l
-        - cd src
-        - ls -l
-        - cd Release
-        - ls -l
-
+  - os: linux
+    dist: xenial
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - gcc-8
+        - g++-8
+    before_script: cd runtime
+    script:
+    - CXX=/usr/bin/g++-8
+    - CC=/usr/bin/gcc-8
+    - cmake -DCMAKE_BUILD_TYPE=Release -B"cmake-build-linux" .
+    - make
+    - cd src
+    - ls -l
+  - os: windows
+    env:
+    - MSBUILD_PATH="c:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
+    before_script: cd runtime
+    script:
+    - export PATH=$MSBUILD_PATH:$PATH
+    - cmake -B"visual-studio-project" -G"Visual Studio 15 2017 Win64" .
+    - ls -l
+    - MSBuild.exe "altv-clr-host.sln" //p:Configuration="Release" //p:Platform="x64"
+    - ls -l
+    - cd src
+    - ls -l
+    - cd Release
+    - ls -l
 deploy:
+  matrix:
   - provider: releases
     skip_cleanup: true
     api_key:
       secure: eYKVpb7Or9sI3GFJtnd1k5Hx4fRiQaFaVFZCFLICD5tx2SHukokd0b2Tse66S37FCOEl57irFyJtB3L7rWF12RUZuLsHcX+woZlvqF3NO+7fmK+Ug9sTeqOwtOHt/PTMN7D3S3sIpW4Vs5BrBJv23K2VUVKgo4bcMseuBpaPM/Qe9/aTTcWPvAHejLkmn2Cz9HJM0A74/QBZigTGi8SHHh9nTiN3ZoRoCorKzu9/ZlVScRZI+G8U7Kkfs8t2QWD+wiw7SGEIp/dUGoXW7EtqODDwntANZwpkQ+AJVbonCmNkZtr7SJLntNrC4zlIfuGLL+Wr50v77I2q1AAI+8rL3PCSe3V9dpjheztooJyst5Ir7WVqvROJ2U2tYoKvEMiL0Wo7Ffq30NJ+d4xyaovVffdUIAyqqxA+tsorvNSju55CQXTkVGnyrbRAsYK/bh4k8LIln868RqAffzGkXmquW7dGiHAVF/fREWTxJAx45acp2AcB0OkWtA3KgO6i/zSE9BP+PabxXYY7tAl1gbXcRvB08mnW43cbCqJ00Hp2G5oWcNo1EH2Gmf7Jp4NlXOcq2zOddBhUImx+kG7v9y4nCu3KvtYOeY67t8TYF2U6Az+yxxyX1jHVtSkt8iUfk3K4jl6w5X31gq4Ss5f1GKrny0rWPRptBnuYtYdPIMGLHVo=
-    file: "libcsharp-module.so"
+    file: libcsharp-module.so
     on:
       repo: FabianTerhorst/coreclr-module
-      condition: $TRAVIS_OS_NAME = linux
+      condition: "$TRAVIS_OS_NAME = linux"
       tags: true
       branches:
         only:
-          - master
+        - master
   - provider: releases
     skip_cleanup: true
     api_key:
       secure: eYKVpb7Or9sI3GFJtnd1k5Hx4fRiQaFaVFZCFLICD5tx2SHukokd0b2Tse66S37FCOEl57irFyJtB3L7rWF12RUZuLsHcX+woZlvqF3NO+7fmK+Ug9sTeqOwtOHt/PTMN7D3S3sIpW4Vs5BrBJv23K2VUVKgo4bcMseuBpaPM/Qe9/aTTcWPvAHejLkmn2Cz9HJM0A74/QBZigTGi8SHHh9nTiN3ZoRoCorKzu9/ZlVScRZI+G8U7Kkfs8t2QWD+wiw7SGEIp/dUGoXW7EtqODDwntANZwpkQ+AJVbonCmNkZtr7SJLntNrC4zlIfuGLL+Wr50v77I2q1AAI+8rL3PCSe3V9dpjheztooJyst5Ir7WVqvROJ2U2tYoKvEMiL0Wo7Ffq30NJ+d4xyaovVffdUIAyqqxA+tsorvNSju55CQXTkVGnyrbRAsYK/bh4k8LIln868RqAffzGkXmquW7dGiHAVF/fREWTxJAx45acp2AcB0OkWtA3KgO6i/zSE9BP+PabxXYY7tAl1gbXcRvB08mnW43cbCqJ00Hp2G5oWcNo1EH2Gmf7Jp4NlXOcq2zOddBhUImx+kG7v9y4nCu3KvtYOeY67t8TYF2U6Az+yxxyX1jHVtSkt8iUfk3K4jl6w5X31gq4Ss5f1GKrny0rWPRptBnuYtYdPIMGLHVo=
-    file: "csharp-module.dll"
+    file: csharp-module.dll
     on:
       repo: FabianTerhorst/coreclr-module
-      condition: $TRAVIS_OS_NAME = windows
+      condition: "$TRAVIS_OS_NAME = windows"
       tags: true
       branches:
         only:
-          - master
+        - master
+  - provider: s3
+    skip_cleanup: true
+    secret_access_key:
+      secure: zo4iiMkx/uGrd5cid1PO2SDXFfqSR+Z9pvG0fORU159S+9q9EdVkv8xzM6xI98Srsgr5XMF6eGmU1MWDh/qGV9EKyWAVNz3qAcXMIhH7MTDw0XaBkEYToGWPkQB+dYTaLYUmIODgGNtcQaJLvH8ie9oCpaQ4yElZZY0l0g/UEvfaXlOuP7N+LTm5mgM5LMSxT2h+bBcdnlWs2w+jUoukpDOqgbwYCUKo3dwr6QN+PBNIcvfDtodOxXpql06Yzc4uBrIgEwvrsbV13MEG7vsQE9EUppqXEj1tBxCw/cLpwEZYKM+wDUpYDFvQ9hPZr+Mh3cSAylUzNjGOw7MGejkmWid4wHsKWnq9bFF8C//bu+7yaBhvTJGRjeSzjNT2z8Ng/KA8zRWdzV6LHO8+eNycwcp77tsnw4a9AQKDSiDoDCak6Tdud3K1n/t3FcOAUOgHwQkcShrXhFgKRCqE0A4xbIY7hlQ6KDR8PPmL4nQL8n5O3z/yIlURO500DjfM8lmG8GoJW4+rM+izSOt3oa7OEktaTHNihyR/nskMlNxGJCi+7i18MV7ulnNHJznNI+OaAQB8dD3bBP8Z/PR2/JKC1Zcy7zr5RE0EhOCJEx0aZTVeyPpw9dO+XrHlIg7FAYY+FfMz0bYxJPBNO0magh6WLyBHduo9rkfgQ+cPdYtBokU=
+    access_key_id:
+      secure: YaQvAptQYu7h9DdeeCMjyDrqjC14c07zTiOeswnFQPMjFssRXy0kvhXUlq+B+ODUs9Ia0icmIhLiw3m2f2K/EVTQ/DqYYo7Beg/0f2yeaKxZ6T8d6hQW/D0XSPM6pzlShN7AWy7YT6c1L6XstwnoL7zBCCPDsebW0iWCqa425uej0h9UaeJkVGzdE8GGIIygy+PhleJIYi9k0p6rynaMbdN57FfMLvb2gcXct9Utp5VuiIIg5Msji9yV16s8s7vCXVrscXbIFca2UMsoY3qTzmCqj/IUq23tgGmdR06IPJ+AagMsApaSg2A69L2pwt2fr0TESNnsPqhDNX2WcZNMU82/aaHiuSiWaOm8STyWd5/h2v3lnZIlbZFyOSmt9hSRUaEg6xbt69/DruVnoiSAsARvsnTvt74Ti+RiGNeHlOWctWAGwA6sXQ8geFXbmLin9ECc7lAmRjonocYVy7XxRrzrFZgG1qKr8wKTbOT/h//zts4iyYxB3QtyKG1+3hYbc4qK39hz3m4apnsgE2Q7HUGKAGfunCypPNBwWYLiGsWQavArvEJpzayxhmyvdP5oVIuyVRTxzf+0uzexxhqjzqqebTo3AqYyFDIJtYl9Oy5cL/EK83ADIpaCIYnMWUAFyuWtW9eblUc2qc4bR9XnKyDCm6EAy/0vkbgLrx2AdO0=
+    bucket: alt-cdn
+    file: libcsharp-module.so
+    region: s3.nl-ams.scw.cloud
+    upload-dir: coreclr-module
+    on:
+      repo: FabianTerhorst/coreclr-module
+      condition: "$TRAVIS_OS_NAME = linux"
+      tags: true
+      branches:
+        only:
+        - master
+  - provider: s3
+    skip_cleanup: true
+    secret_access_key:
+      secure: zo4iiMkx/uGrd5cid1PO2SDXFfqSR+Z9pvG0fORU159S+9q9EdVkv8xzM6xI98Srsgr5XMF6eGmU1MWDh/qGV9EKyWAVNz3qAcXMIhH7MTDw0XaBkEYToGWPkQB+dYTaLYUmIODgGNtcQaJLvH8ie9oCpaQ4yElZZY0l0g/UEvfaXlOuP7N+LTm5mgM5LMSxT2h+bBcdnlWs2w+jUoukpDOqgbwYCUKo3dwr6QN+PBNIcvfDtodOxXpql06Yzc4uBrIgEwvrsbV13MEG7vsQE9EUppqXEj1tBxCw/cLpwEZYKM+wDUpYDFvQ9hPZr+Mh3cSAylUzNjGOw7MGejkmWid4wHsKWnq9bFF8C//bu+7yaBhvTJGRjeSzjNT2z8Ng/KA8zRWdzV6LHO8+eNycwcp77tsnw4a9AQKDSiDoDCak6Tdud3K1n/t3FcOAUOgHwQkcShrXhFgKRCqE0A4xbIY7hlQ6KDR8PPmL4nQL8n5O3z/yIlURO500DjfM8lmG8GoJW4+rM+izSOt3oa7OEktaTHNihyR/nskMlNxGJCi+7i18MV7ulnNHJznNI+OaAQB8dD3bBP8Z/PR2/JKC1Zcy7zr5RE0EhOCJEx0aZTVeyPpw9dO+XrHlIg7FAYY+FfMz0bYxJPBNO0magh6WLyBHduo9rkfgQ+cPdYtBokU=
+    access_key_id:
+      secure: YaQvAptQYu7h9DdeeCMjyDrqjC14c07zTiOeswnFQPMjFssRXy0kvhXUlq+B+ODUs9Ia0icmIhLiw3m2f2K/EVTQ/DqYYo7Beg/0f2yeaKxZ6T8d6hQW/D0XSPM6pzlShN7AWy7YT6c1L6XstwnoL7zBCCPDsebW0iWCqa425uej0h9UaeJkVGzdE8GGIIygy+PhleJIYi9k0p6rynaMbdN57FfMLvb2gcXct9Utp5VuiIIg5Msji9yV16s8s7vCXVrscXbIFca2UMsoY3qTzmCqj/IUq23tgGmdR06IPJ+AagMsApaSg2A69L2pwt2fr0TESNnsPqhDNX2WcZNMU82/aaHiuSiWaOm8STyWd5/h2v3lnZIlbZFyOSmt9hSRUaEg6xbt69/DruVnoiSAsARvsnTvt74Ti+RiGNeHlOWctWAGwA6sXQ8geFXbmLin9ECc7lAmRjonocYVy7XxRrzrFZgG1qKr8wKTbOT/h//zts4iyYxB3QtyKG1+3hYbc4qK39hz3m4apnsgE2Q7HUGKAGfunCypPNBwWYLiGsWQavArvEJpzayxhmyvdP5oVIuyVRTxzf+0uzexxhqjzqqebTo3AqYyFDIJtYl9Oy5cL/EK83ADIpaCIYnMWUAFyuWtW9eblUc2qc4bR9XnKyDCm6EAy/0vkbgLrx2AdO0=
+    bucket: alt-cdn
+    region: s3.nl-ams.scw.cloud
+    upload-dir: coreclr-module
+    file: csharp-module.dll
+    on:
+      repo: FabianTerhorst/coreclr-module
+      condition: "$TRAVIS_OS_NAME = windows"
+      tags: true
+      branches:
+        only:
+        - master
