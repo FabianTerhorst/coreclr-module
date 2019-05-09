@@ -193,9 +193,9 @@ namespace AltV.Net.Example
 
             Alt.Emit("MyServerEvent2", new object[] {new string[] {"test-custom-parser-array"}});
 
-            dynamic dynamic = new ExpandoObject();
+            //dynamic dynamic = new ExpandoObject();
 
-            Alt.Emit("dynamic_test", dynamic);
+            //Alt.Emit("dynamic_test", dynamic);
 
             Alt.Export("GetBla", () => { Alt.Log("GetBla called"); });
 
