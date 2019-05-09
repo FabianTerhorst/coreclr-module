@@ -125,6 +125,14 @@ namespace AltV.Net
             AltNative.Resource.ConsoleCommandDelegate onConsoleCommand = ModuleWrapper.OnConsoleCommand;
 
             GCHandle.Alloc(onConsoleCommand);
+            
+            AltNative.Resource.MetaDataChange onMetaDataChange = ModuleWrapper.OnMetaDataChange;
+
+            GCHandle.Alloc(onConsoleCommand);
+            
+            AltNative.Resource.MetaDataChange onSyncedMetaDataChange = ModuleWrapper.OnSyncedMetaDataChange;
+
+            GCHandle.Alloc(onConsoleCommand);
 
             AltNative.Resource.CSharpResource_SetMain(resourcePointer, onStart, onTick, onServerEvent, onCheckpoint,
                 onClientEvent, onPlayerDamage, onPlayerConnect, onPlayerDeath, onPlayerDisconnect, onPlayerRemove,
@@ -132,7 +140,7 @@ namespace AltV.Net
                 onPlayerChangeVehicleSeat, onPlayerEnterVehicle, onPlayerLeaveVehicle, onCreatePlayer, onRemovePlayer,
                 onCreateVehicle, onRemoveVehicle,
                 onCreateBlip, onRemoveBlip, onCreateCheckpoint, onRemoveCheckpoint, onCreateVoiceChannel,
-                onRemoveVoiceChannel, onConsoleCommand);
+                onRemoveVoiceChannel, onConsoleCommand, onMetaDataChange, onSyncedMetaDataChange);
         }
 
         private void OnStart(IntPtr pointer, IntPtr ptr, string name, string point)

@@ -36,4 +36,6 @@ namespace AltV.Net.Events
     public delegate void ServerCustomEventEventDelegate(string eventName, ref MValueArray mValueArray);
 
     public delegate void ConsoleCommandDelegate(string name, string[] args);
+    
+    public delegate void MetaDataChangeDelegate(IEntity entity, string name, object value);
 }

@@ -223,6 +223,24 @@ CSharpResource::~CSharpResource() {
 bool CSharpResource::OnEvent(const alt::CEvent* ev) {
     server->LogInfo(alt::String("event: ") + ((int) ev->GetType() + '0'));
     switch (ev->GetType()) {
+        case alt::CEvent::Type::META_CHANGE: {
+            auto event = ((alt::CMetaChangeEvent*) (ev));
+            auto entity = event->GetTarget();
+            if (entity == nullptr) return true;
+            auto key = event->GetKey();
+            auto value = event->GetVal();
+            OnMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), key == nullptr ? "" : key.CStr(), &value);
+            break;
+        }
+        case alt::CEvent::Type::SYNCED_META_CHANGE: {
+            auto event = ((alt::CSyncedMetaDataChangeEvent*) (ev));
+            auto entity = event->GetTarget();
+            if (entity == nullptr) return true;
+            auto key = event->GetKey();
+            auto value = event->GetVal();
+            OnSyncedMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), key == nullptr ? "" : key.CStr(), &value);
+            break;
+        }
         case alt::CEvent::Type::CHECKPOINT_EVENT: {
             auto entity = ((alt::CCheckpointEvent*) (ev))->GetEntity();
             OnCheckpointDelegate(((alt::CCheckpointEvent*) (ev))->GetTarget(),
@@ -386,7 +404,9 @@ void CSharpResource_SetMain(CSharpResource* resource, MainDelegate_t mainDelegat
                             RemoveCheckpointDelegate_t removeCheckpointDelegate,
                             OnCreateVoiceChannelDelegate_t createVoiceChannelDelegate,
                             OnRemoveVoiceChannelDelegate_t removeVoiceChannelDelegate,
-                            OnConsoleCommandDelegate_t consoleCommandDelegate) {
+                            OnConsoleCommandDelegate_t consoleCommandDelegate,
+                            MetaChangeDelegate_t metaChangeDelegate,
+                            MetaChangeDelegate_t syncedMetaChangeDelegate) {
     resource->MainDelegate = mainDelegate;
     resource->OnTickDelegate = tickDelegate;
     resource->OnServerEventDelegate = serverEventDelegate;
@@ -412,6 +432,8 @@ void CSharpResource_SetMain(CSharpResource* resource, MainDelegate_t mainDelegat
     resource->OnCreateVoiceChannelDelegate = createVoiceChannelDelegate;
     resource->OnRemoveVoiceChannelDelegate = removeVoiceChannelDelegate;
     resource->OnConsoleCommandDelegate = consoleCommandDelegate;
+    resource->OnMetaChangeDelegate = metaChangeDelegate;
+    resource->OnSyncedMetaChangeDelegate = syncedMetaChangeDelegate;
 }
 
 alt::IServer* CSharpResource_GetServerPointer() {

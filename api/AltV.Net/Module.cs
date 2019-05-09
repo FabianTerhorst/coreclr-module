@@ -90,6 +90,12 @@ namespace AltV.Net
 
         internal readonly IEventHandler<ConsoleCommandDelegate> ConsoleCommandEventHandler =
             new HashSetEventHandler<ConsoleCommandDelegate>();
+        
+        internal readonly IEventHandler<MetaDataChangeDelegate> MetaDataChangeEventHandler =
+            new HashSetEventHandler<MetaDataChangeDelegate>();
+        
+        internal readonly IEventHandler<MetaDataChangeDelegate> SyncedMetaDataChangeEventHandler =
+            new HashSetEventHandler<MetaDataChangeDelegate>();
 
         public Module(IServer server, CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
@@ -639,6 +645,46 @@ namespace AltV.Net
 
         public virtual void OnConsoleCommandEvent(string name, string[] args)
         {
+        }
+
+        public void OnMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key,
+            ref MValue value)
+        {
+            if (!BaseEntityPool.GetOrCreate(entityPointer, entityType, out var entity))
+            {
+                return;
+            }
+
+            OnMetaDataChangeEvent(entity, key, value.ToObject());
+        }
+        
+        public virtual void OnMetaDataChangeEvent(IEntity entity, string key, object value)
+        {
+            if (!MetaDataChangeEventHandler.HasEvents()) return;
+            foreach (var eventHandler in MetaDataChangeEventHandler.GetEvents())
+            {
+                eventHandler(entity, key, value);
+            }
+        }
+        
+        public void OnSyncedMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key,
+            ref MValue value)
+        {
+            if (!BaseEntityPool.GetOrCreate(entityPointer, entityType, out var entity))
+            {
+                return;
+            }
+            
+            OnSyncedMetaDataChangeEvent(entity, key, value.ToObject());
+        }
+        
+        public virtual void OnSyncedMetaDataChangeEvent(IEntity entity, string key, object value)
+        {
+            if (!SyncedMetaDataChangeEventHandler.HasEvents()) return;
+            foreach (var eventHandler in SyncedMetaDataChangeEventHandler.GetEvents())
+            {
+                eventHandler(entity, key, value);
+            }
         }
     }
 }

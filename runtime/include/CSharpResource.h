@@ -7,6 +7,8 @@
 #endif
 
 #include <altv-cpp-api/SDK.h>
+#include <altv-cpp-api/events/CMetaDataChangeEvent.h>
+#include <altv-cpp-api/events/CSyncedMetaDataChangeEvent.h>
 
 #ifdef _WIN32
 #define RESOURCES_PATH "\\resources\\"
@@ -92,6 +94,7 @@ typedef void (* RemoveCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
 typedef void (* OnCreateVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
 typedef void (* OnRemoveVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
 typedef void (* OnConsoleCommandDelegate_t)(const char* name, alt::Array<alt::StringView>* args);
+typedef void (* MetaChangeDelegate_t)(void* entity, alt::IBaseObject::Type type, alt::StringView key, alt::MValue* value);
 
 class CSharpResource : public alt::IResource {
     bool OnEvent(const alt::CEvent* ev) override;
@@ -174,6 +177,10 @@ public:
 
     OnConsoleCommandDelegate_t OnConsoleCommandDelegate;
 
+    MetaChangeDelegate_t OnMetaChangeDelegate;
+
+    MetaChangeDelegate_t OnSyncedMetaChangeDelegate;
+
     void* runtimeHost;
     unsigned int domainId;
 };
@@ -205,7 +212,9 @@ EXPORT void CSharpResource_SetMain(CSharpResource* resource,
                                    RemoveCheckpointDelegate_t removeCheckpointDelegate,
                                    OnCreateVoiceChannelDelegate_t createVoiceChannelDelegate,
                                    OnRemoveVoiceChannelDelegate_t removeVoiceChannelDelegate,
-                                   OnConsoleCommandDelegate_t consoleCommandDelegate);
+                                   OnConsoleCommandDelegate_t consoleCommandDelegate,
+                                   MetaChangeDelegate_t metaChangeDelegate,
+                                   MetaChangeDelegate_t syncedMetaChangeDelegate);
 
 EXPORT alt::IServer* CSharpResource_GetServerPointer();
 

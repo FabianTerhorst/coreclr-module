@@ -86,6 +86,9 @@ namespace AltV.Net.Native
 
             internal delegate void ConsoleCommandDelegate(string name, ref StringViewArray args);
 
+            internal delegate void MetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key,
+                ref MValue value);
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResource_SetMain(IntPtr resourcePointer, MainDelegate mainDelegate,
                 TickDelegate tickDelegate, ServerEventDelegate serverEventDelegate,
@@ -103,7 +106,9 @@ namespace AltV.Net.Native
                 CreateCheckpointDelegate createCheckpointDelegate, RemoveCheckpointDelegate removeCheckpointDelegate,
                 CreateVoiceChannelDelegate createVoiceChannelDelegate,
                 RemoveVoiceChannelDelegate removeVoiceChannelDelegate,
-                ConsoleCommandDelegate consoleCommandDelegate
+                ConsoleCommandDelegate consoleCommandDelegate,
+                MetaDataChange metaDataChange,
+                MetaDataChange syncedMetaDataChange
             );
         }
     }

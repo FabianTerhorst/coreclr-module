@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
@@ -191,6 +192,16 @@ namespace AltV.Net
         public static void OnConsoleCommand(string name, ref StringViewArray args)
         {
             _module.OnConsoleCommand(name, ref args);
+        }
+        
+        public static void OnMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key, ref MValue value)
+        {
+            _module.OnMetaDataChange(entityPointer, entityType, key, ref value);
+        }
+        
+        public static void OnSyncedMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key, ref MValue value)
+        {
+            _module.OnSyncedMetaDataChange(entityPointer, entityType, key, ref value);
         }
     }
 }

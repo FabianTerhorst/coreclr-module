@@ -37,7 +37,6 @@ matrix:
     - cd Release
     - ls -l
 deploy:
-  matrix:
   - provider: releases
     skip_cleanup: true
     api_key:

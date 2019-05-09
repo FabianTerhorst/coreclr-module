@@ -99,6 +99,18 @@ namespace AltV.Net
             add => Module.ConsoleCommandEventHandler.Add(value);
             remove => Module.ConsoleCommandEventHandler.Remove(value);
         }
+        
+        public static event MetaDataChangeDelegate OnMetaDataChange
+        {
+            add => Module.MetaDataChangeEventHandler.Add(value);
+            remove => Module.MetaDataChangeEventHandler.Remove(value);
+        }
+        
+        public static event MetaDataChangeDelegate OnSyncedMetaDataChange
+        {
+            add => Module.SyncedMetaDataChangeEventHandler.Add(value);
+            remove => Module.SyncedMetaDataChangeEventHandler.Remove(value);
+        }
 
         public static void Emit(string eventName, params object[] args) => Server.TriggerServerEvent(eventName, args);
 
