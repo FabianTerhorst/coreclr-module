@@ -52,11 +52,12 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     OnRemoveVoiceChannelDelegate = nullptr;
     OnConsoleCommandDelegate = nullptr;
 
+    currServer = server;
+
     if (isDll) {
         struct stat buf;
         auto executable = (stat((alt::String(this->GetPath()) + ASSEMBLY_PATH).CStr(), &buf) == 0);//TODO: needs resource cfg "assembly"
 
-        currServer = server;
         coreClr->CreateAppDomain(server, this, this->GetPath().CStr(), &runtimeHost, &domainId, executable,
                                  resourcesCache.GetSize() - 1);
 
