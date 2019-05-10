@@ -13,11 +13,6 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
         server->LogInfo(alt::String("coreclr-module: Unable to find the working directory"));
         return;
     }
-    const char* resourceName = name.CStr();
-    auto fullPath = new char[strlen(wd) + strlen(RESOURCES_PATH) + strlen(resourceName) + 1];
-    strcpy(fullPath, wd);
-    strcat(fullPath, RESOURCES_PATH);
-    strcat(fullPath, resourceName);
 
     auto mainStr = main.CStr();
     auto mainSize = main.GetSize();
@@ -58,18 +53,11 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     OnConsoleCommandDelegate = nullptr;
 
     if (isDll) {
-
-        auto assemblyConfigFullPath = new char[strlen(wd) + strlen(RESOURCES_PATH) + strlen(resourceName) + strlen(ASSEMBLY_PATH) + 1];
-        strcpy(assemblyConfigFullPath, wd);
-        strcat(assemblyConfigFullPath, RESOURCES_PATH);
-        strcat(assemblyConfigFullPath, resourceName);
-        strcat(assemblyConfigFullPath, ASSEMBLY_PATH);
         struct stat buf;
-        auto executable = (stat(assemblyConfigFullPath, &buf) == 0);//TODO: needs resource cfg "assembly"
-        free(assemblyConfigFullPath);
+        auto executable = (stat((alt::String(this->GetPath()) + ASSEMBLY_PATH).CStr(), &buf) == 0);//TODO: needs resource cfg "assembly"
 
         currServer = server;
-        coreClr->CreateAppDomain(server, this, fullPath, &runtimeHost, &domainId, executable,
+        coreClr->CreateAppDomain(server, this, this->GetPath().CStr(), &runtimeHost, &domainId, executable,
                                  resourcesCache.GetSize() - 1);
 
         if (!executable) {
@@ -187,8 +175,6 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
         }
 #endif
     }
-
-    delete[] fullPath;
 }
 
 bool CSharpResource::Start() {
