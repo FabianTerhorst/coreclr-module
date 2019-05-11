@@ -10,11 +10,11 @@ namespace AltV.Net.Async
         private readonly TickScheduler scheduler;
         private readonly Thread mainThread;
 
-        public AltVAsync()
+        public AltVAsync(ITickSchedulerFactory tickSchedulerFactory)
         {
             mainThread = Thread.CurrentThread;
             mainThread.Name = "main";
-            scheduler = new TickScheduler(mainThread);
+            scheduler = tickSchedulerFactory.Create(mainThread);
             taskFactory = new TaskFactory(
                 CancellationToken.None, TaskCreationOptions.DenyChildAttach,
                 TaskContinuationOptions.None, scheduler);

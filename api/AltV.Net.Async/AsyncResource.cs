@@ -5,7 +5,16 @@ namespace AltV.Net.Async
 {
     public abstract class AsyncResource : Resource
     {
-        private readonly AltVAsync altVAsync = new AltVAsync();
+        private readonly AltVAsync altVAsync;
+
+        public AsyncResource() : this(new DefaultTickSchedulerFactory())
+        {
+        }
+
+        public AsyncResource(ITickSchedulerFactory tickSchedulerFactory)
+        {
+            altVAsync = new AltVAsync(tickSchedulerFactory);
+        }
 
         public override void OnTick()
         {

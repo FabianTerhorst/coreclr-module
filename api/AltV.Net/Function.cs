@@ -276,6 +276,17 @@ namespace AltV.Net
         {
             @delegate.DynamicInvoke(invokeValues);
         }
+        
+        internal Task InvokeTaskOrNull(object[] invokeValues)
+        {
+            var result = @delegate.DynamicInvoke(invokeValues);
+            if (result is Task task)
+            {
+                return task;
+            }
+
+            return null;
+        }
 
         internal MValue Call(IBaseBaseObjectPool baseBaseObjectPool, MValue valueArgs)
         {

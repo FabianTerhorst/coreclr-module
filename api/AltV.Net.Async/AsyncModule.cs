@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AltV.Net.Async.Events;
@@ -48,10 +49,10 @@ namespace AltV.Net.Async
 
         internal readonly AsyncEventHandler<ConsoleCommandAsyncDelegate> ConsoleCommandAsyncDelegateHandlers =
             new AsyncEventHandler<ConsoleCommandAsyncDelegate>();
-        
+
         internal readonly AsyncEventHandler<MetaDataChangeAsyncDelegate> MetaDataChangeAsyncDelegateHandlers =
             new AsyncEventHandler<MetaDataChangeAsyncDelegate>();
-        
+
         internal readonly AsyncEventHandler<MetaDataChangeAsyncDelegate> SyncedMetaDataChangeAsyncDelegateHandlers =
             new AsyncEventHandler<MetaDataChangeAsyncDelegate>();
 
@@ -79,14 +80,15 @@ namespace AltV.Net.Async
         {
             base.OnCheckPointEvent(checkpoint, entity, state);
             if (!CheckpointAsyncEventHandler.HasEvents()) return;
-            Task.Run(() => CheckpointAsyncEventHandler.CallAsync(@delegate => @delegate(checkpoint, entity, state)));
+            Task.Run(() =>
+                CheckpointAsyncEventHandler.CallAsyncWithoutTask(@delegate => @delegate(checkpoint, entity, state)));
         }
 
         public override void OnPlayerConnectEvent(IPlayer player, string reason)
         {
             base.OnPlayerConnectEvent(player, reason);
             if (!PlayerConnectAsyncEventHandler.HasEvents()) return;
-            Task.Run(() => PlayerConnectAsyncEventHandler.CallAsync(@delegate => @delegate(player, reason)));
+            Task.Run(() => PlayerConnectAsyncEventHandler.CallAsyncWithoutTask(@delegate => @delegate(player, reason)));
         }
 
         public override void OnPlayerDamageEvent(IPlayer player, IEntity attacker, uint weapon, ushort damage)
@@ -96,7 +98,7 @@ namespace AltV.Net.Async
             var oldHealth = player.Health;
             var oldArmor = player.Armor;
             Task.Run(() =>
-                PlayerDamageAsyncEventHandler.CallAsync(@delegate =>
+                PlayerDamageAsyncEventHandler.CallAsyncWithoutTask(@delegate =>
                     @delegate(player, attacker, oldHealth, oldArmor, weapon, damage)));
         }
 
@@ -105,7 +107,7 @@ namespace AltV.Net.Async
             base.OnPlayerDeathEvent(player, killer, weapon);
             if (!PlayerDeadAsyncEventHandler.HasEvents()) return;
             Task.Run(() =>
-                PlayerDeadAsyncEventHandler.CallAsync(@delegate => @delegate(player, killer, weapon)));
+                PlayerDeadAsyncEventHandler.CallAsyncWithoutTask(@delegate => @delegate(player, killer, weapon)));
         }
 
         public override void OnPlayerChangeVehicleSeatEvent(IVehicle vehicle, IPlayer player, byte oldSeat,
@@ -114,7 +116,7 @@ namespace AltV.Net.Async
             base.OnPlayerChangeVehicleSeatEvent(vehicle, player, oldSeat, newSeat);
             if (!PlayerChangeVehicleSeatAsyncEventHandler.HasEvents()) return;
             Task.Run(() =>
-                PlayerChangeVehicleSeatAsyncEventHandler.CallAsync(@delegate =>
+                PlayerChangeVehicleSeatAsyncEventHandler.CallAsyncWithoutTask(@delegate =>
                     @delegate(vehicle, player, oldSeat, newSeat)));
         }
 
@@ -123,7 +125,7 @@ namespace AltV.Net.Async
             base.OnPlayerEnterVehicleEvent(vehicle, player, seat);
             if (!PlayerEnterVehicleAsyncEventHandler.HasEvents()) return;
             Task.Run(() =>
-                PlayerEnterVehicleAsyncEventHandler.CallAsync(@delegate =>
+                PlayerEnterVehicleAsyncEventHandler.CallAsyncWithoutTask(@delegate =>
                     @delegate(vehicle, player, seat)));
         }
 
@@ -132,7 +134,7 @@ namespace AltV.Net.Async
             base.OnPlayerLeaveVehicleEvent(vehicle, player, seat);
             if (!PlayerLeaveVehicleAsyncEventHandler.HasEvents()) return;
             Task.Run(() =>
-                PlayerLeaveVehicleAsyncEventHandler.CallAsync(@delegate =>
+                PlayerLeaveVehicleAsyncEventHandler.CallAsyncWithoutTask(@delegate =>
                     @delegate(vehicle, player, seat)));
         }
 
@@ -155,7 +157,7 @@ namespace AltV.Net.Async
             base.OnPlayerRemoveEvent(player);
             if (!PlayerRemoveAsyncEventHandler.HasEvents()) return;
             Task.Run(() =>
-                PlayerRemoveAsyncEventHandler.CallAsync(@delegate =>
+                PlayerRemoveAsyncEventHandler.CallAsyncWithoutTask(@delegate =>
                     @delegate(player)));
         }
 
@@ -164,7 +166,7 @@ namespace AltV.Net.Async
             base.OnVehicleRemoveEvent(vehicle);
             if (!VehicleRemoveAsyncEventHandler.HasEvents()) return;
             Task.Run(() =>
-                VehicleRemoveAsyncEventHandler.CallAsync(@delegate =>
+                VehicleRemoveAsyncEventHandler.CallAsyncWithoutTask(@delegate =>
                     @delegate(vehicle)));
         }
 
@@ -190,14 +192,25 @@ namespace AltV.Net.Async
                     }
                 }
 
-                Task.Run(() =>
+                Task.Run(async () =>
                 {
                     foreach (var eventHandler in eventHandlers)
                     {
                         var invokeValues = eventHandler.CalculateInvokeValues(objects, player);
                         if (invokeValues != null)
                         {
-                            eventHandler.InvokeNoResult(invokeValues);
+                            try
+                            {
+                                var task = eventHandler.InvokeTaskOrNull(invokeValues);
+                                if (task != null)
+                                {
+                                    await task;
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                AltAsync.Log($"Execution of ${name} threw an error: {e}");
+                            }
                         }
                         else
                         {
@@ -284,14 +297,25 @@ namespace AltV.Net.Async
                     }
                 }
 
-                Task.Run(() =>
+                Task.Run(async () =>
                 {
                     foreach (var eventHandler in eventHandlers)
                     {
                         var invokeValues = eventHandler.CalculateInvokeValues(objects);
                         if (invokeValues != null)
                         {
-                            eventHandler.InvokeNoResult(invokeValues);
+                            try
+                            {
+                                var task = eventHandler.InvokeTaskOrNull(invokeValues);
+                                if (task != null)
+                                {
+                                    await task;
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                AltAsync.Log($"Execution of ${name} threw an error: {e}");
+                            }
                         }
                         else
                         {
@@ -335,7 +359,7 @@ namespace AltV.Net.Async
             base.OnConsoleCommandEvent(name, args);
             if (!ConsoleCommandAsyncDelegateHandlers.HasEvents()) return;
             Task.Run(() =>
-                ConsoleCommandAsyncDelegateHandlers.CallAsync(@delegate =>
+                ConsoleCommandAsyncDelegateHandlers.CallAsyncWithoutTask(@delegate =>
                     @delegate(name, args)));
         }
 
@@ -344,7 +368,7 @@ namespace AltV.Net.Async
             base.OnMetaDataChangeEvent(entity, key, value);
             if (!MetaDataChangeAsyncDelegateHandlers.HasEvents()) return;
             Task.Run(() =>
-                MetaDataChangeAsyncDelegateHandlers.CallAsync(@delegate =>
+                MetaDataChangeAsyncDelegateHandlers.CallAsyncWithoutTask(@delegate =>
                     @delegate(entity, key, value)));
         }
 
@@ -353,7 +377,7 @@ namespace AltV.Net.Async
             base.OnSyncedMetaDataChangeEvent(entity, key, value);
             if (!SyncedMetaDataChangeAsyncDelegateHandlers.HasEvents()) return;
             Task.Run(() =>
-                SyncedMetaDataChangeAsyncDelegateHandlers.CallAsync(@delegate =>
+                SyncedMetaDataChangeAsyncDelegateHandlers.CallAsyncWithoutTask(@delegate =>
                     @delegate(entity, key, value)));
         }
 

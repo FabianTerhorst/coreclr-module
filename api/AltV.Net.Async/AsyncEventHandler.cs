@@ -19,6 +19,15 @@ namespace AltV.Net.Async
             await Task.WhenAll(tasks);
         }
 
+        public async void CallAsyncWithoutTask(Func<TEvent, Task> callback)
+        {
+            var events = GetEvents();
+            foreach (var value in events)
+            {
+                await ExecuteEventAsync(value, callback);
+            }
+        }
+
         public static async Task ExecuteEventAsync(TEvent subscription, Func<TEvent, Task> callback)
         {
             try
@@ -27,7 +36,7 @@ namespace AltV.Net.Async
             }
             catch (Exception e)
             {
-                Alt.Log($"Execution of {typeof(TEvent)} threw an error: {e}");
+                AltAsync.Log($"Execution of {typeof(TEvent)} threw an error: {e}");
             }
         }
         
@@ -39,7 +48,7 @@ namespace AltV.Net.Async
             }
             catch (Exception e)
             {
-                Alt.Log($"Execution of {typeof(TEvent)} threw an error: {e}");
+                AltAsync.Log($"Execution of {typeof(TEvent)} threw an error: {e}");
             }
         }
     }
