@@ -13,14 +13,9 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.5.1</PackageVersion>
+        <PackageVersion>1.5.2</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Add player.GiveWeapon(), player.RemoveWeapon(), player.RemoveAllWeapons()
-Add player.GiveWeaponAsync, player.RemoveWeaponAsync(), player.RemoveAllWeaponsAsync()
-Add Alt.OnMetaDataChange
-Add Alt.OnSyncedMetaDataChange
-Add AltAsync.OnMetaDataChange
-Add Altasync.OnSyncedMetaDataChange</PackageReleaseNotes>
+        <PackageReleaseNotes>Async improvements</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
