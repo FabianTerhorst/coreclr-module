@@ -87,6 +87,16 @@ client-files: [
 "client/*"
 ]
 ```
+
+### Add resources to server.cfg
+
+server.cfg:
+```
+resources: [
+"login-screen"
+]
+```
+
 client file imports are based on ecmascript2015 imports https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/import
 but require full path import like ```import * as auth from 'client/auth.mjs';``` (relative from resource folder)
 
