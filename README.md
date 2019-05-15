@@ -9,10 +9,10 @@ CoreClr (.NET Core Common Language Runtime) module
 https://altv.mp/#/downloads
 
 ## Download Windows
-- Download csharp-module.dll
+- Download csharp-module.dll [Releases](https://github.com/FabianTerhorst/coreclr-module/releases)
 
 ## Download Linux
-- Download libcsharp-module.so
+- Download libcsharp-module.so [Releases](https://github.com/FabianTerhorst/coreclr-module/releases)
 
 ### Server file structure
 
