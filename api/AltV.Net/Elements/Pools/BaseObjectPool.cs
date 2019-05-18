@@ -22,7 +22,7 @@ namespace AltV.Net.Elements.Pools
         {
             this.entityFactory = entityFactory;
         }
-        
+
         public void Create(IntPtr entityPointer)
         {
             Add(entityFactory.Create(entityPointer));
@@ -37,6 +37,7 @@ namespace AltV.Net.Elements.Pools
         public void Add(TBaseObject entity)
         {
             entities[entity.NativePointer] = entity;
+            OnAdd(entity);
         }
 
         public bool Remove(TBaseObject entity)
@@ -48,6 +49,7 @@ namespace AltV.Net.Elements.Pools
         {
             if (!entities.Remove(entityPointer, out var entity) || !entity.Exists) return false;
             SetEntityNoLongerExists(entity);
+            OnRemove(entity);
             return true;
         }
 
@@ -74,6 +76,14 @@ namespace AltV.Net.Elements.Pools
         public ICollection<TBaseObject> GetAllObjects()
         {
             return entities.Values;
+        }
+
+        public virtual void OnAdd(TBaseObject entity)
+        {
+        }
+
+        public virtual void OnRemove(TBaseObject entity)
+        {
         }
     }
 }

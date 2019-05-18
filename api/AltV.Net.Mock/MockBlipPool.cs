@@ -8,5 +8,10 @@ namespace AltV.Net.Mock
         public MockBlipPool(IBaseObjectFactory<IBlip> blipFactory) : base(blipFactory)
         {
         }
+
+        public override void OnRemove(IBlip entity)
+        {
+            MockEntities.FreeNoId(entity.NativePointer);
+        }
     }
 }

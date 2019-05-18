@@ -8,5 +8,10 @@ namespace AltV.Net.Mock
         public MockCheckpointPool(IBaseObjectFactory<ICheckpoint> checkpointFactory) : base(checkpointFactory)
         {
         }
+
+        public override void OnRemove(ICheckpoint entity)
+        {
+            MockEntities.FreeNoId(entity.NativePointer);
+        }
     }
 }

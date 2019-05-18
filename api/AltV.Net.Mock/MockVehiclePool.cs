@@ -14,5 +14,10 @@ namespace AltV.Net.Mock
         {
             return 0;
         }
+
+        public override void OnRemove(IVehicle entity)
+        {
+            MockEntities.Free(entity.NativePointer, entity.Id);
+        }
     }
 }

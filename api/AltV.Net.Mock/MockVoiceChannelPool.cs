@@ -8,5 +8,10 @@ namespace AltV.Net.Mock
         public MockVoiceChannelPool(IBaseObjectFactory<IVoiceChannel> voiceChannelFactory) : base(voiceChannelFactory)
         {
         }
+
+        public override void OnRemove(IVoiceChannel entity)
+        {
+            MockEntities.FreeNoId(entity.NativePointer);
+        }
     }
 }
