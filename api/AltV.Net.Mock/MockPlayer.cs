@@ -78,5 +78,10 @@ namespace AltV.Net.Mock
         {
             return ReadOnlyPlayer.Empty;
         }
+
+        public override void Remove()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

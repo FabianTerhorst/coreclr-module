@@ -10,6 +10,8 @@ namespace AltV.Net.Mock
         public MockVehicle(IntPtr nativePointer, ushort id): base(nativePointer, BaseObjectType.Vehicle, id)
         {
         }
+        
+        
 
         public IPlayer Driver { get; }
         public byte ModKit { get; set; }
@@ -229,5 +231,10 @@ namespace AltV.Net.Mock
         }
 
         public string DamageData { get; set; }
+
+        public override void Remove()
+        {
+            Alt.Server.RemoveVehicle(this);
+        }
     }
 }

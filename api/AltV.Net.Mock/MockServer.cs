@@ -186,8 +186,13 @@ namespace AltV.Net.Mock
             var ptr = MockEntities.GetNextPtr();
             vehiclePool.Create(ptr, MockEntities.Id, out var vehicle);
             vehicle.Position = pos;
-            //TODO: apis missing for more properties from create
-            MockEntities.Insert(vehicle);
+            if (vehicle is MockVehicle mockVehicle)
+            {
+                mockVehicle.Position = pos;
+                mockVehicle.Rotation = rotation;
+                mockVehicle.Model = model;
+            }
+            Alt.Module.OnCreateVehicle(ptr, MockEntities.Id);
             return vehicle;
         }
 
@@ -195,6 +200,7 @@ namespace AltV.Net.Mock
         {
             var ptr = MockEntities.GetNextPtr();
             id = MockEntities.Id;
+            Alt.Module.OnCreateVehicle(ptr, id);
             return ptr;
         }
 
@@ -211,8 +217,7 @@ namespace AltV.Net.Mock
                 mockCheckpoint.Height = height;
                 mockCheckpoint.Color = color;
             }
-
-            MockEntities.Insert(checkpoint);
+            Alt.Module.OnCreateCheckpoint(ptr);
             return checkpoint;
         }
 
@@ -225,8 +230,7 @@ namespace AltV.Net.Mock
                 mockBlip.Position = pos;
                 mockBlip.BlipType = type;
             }
-
-            MockEntities.Insert(blip);
+            Alt.Module.OnCreateBlip(ptr);
             return blip;
         }
 
@@ -240,8 +244,7 @@ namespace AltV.Net.Mock
                 mockBlip.IsAttached = true;
                 mockBlip.AttachedTo = entityAttach;
             }
-
-            MockEntities.Insert(blip);
+            Alt.Module.OnCreateBlip(ptr);
             return blip;
         }
 
@@ -254,8 +257,7 @@ namespace AltV.Net.Mock
                 mockVoiceChannel.IsSpatial = spatial;
                 mockVoiceChannel.MaxDistance = maxDistance;
             }
-
-            MockEntities.Insert(voiceChannel);
+            Alt.Module.OnCreateVoiceChannel(ptr);
             return voiceChannel;
         }
 
@@ -272,25 +274,22 @@ namespace AltV.Net.Mock
         public void RemoveBlip(IBlip blip)
         {
             Alt.Module.OnRemoveBlip(blip.NativePointer);
-            MockEntities.Entities.Remove(blip.NativePointer);
         }
 
         public void RemoveCheckpoint(ICheckpoint checkpoint)
         {
-            Alt.Module.OnRemoveCheckpoint(checkpoint.NativePointer);
-            MockEntities.Entities.Remove(checkpoint.NativePointer);
+            Alt.Module.OnRemoveCheckpoint(checkpoint.NativePointer); 
         }
 
         public void RemoveVehicle(IVehicle vehicle)
         {
+            Alt.Module.OnVehicleRemove(vehicle.NativePointer);
             Alt.Module.OnRemoveVehicle(vehicle.NativePointer);
-            MockEntities.Entities.Remove(vehicle.NativePointer);
         }
 
         public void RemoveVoiceChannel(IVoiceChannel channel)
         {
             Alt.Module.OnRemoveVoiceChannel(channel.NativePointer);
-            MockEntities.Entities.Remove(channel.NativePointer);
         }
 
         public ServerNativeResource GetResource(string name)

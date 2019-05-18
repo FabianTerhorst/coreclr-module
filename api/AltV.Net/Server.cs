@@ -251,15 +251,6 @@ namespace AltV.Net
             return voiceChannel;
         }
 
-        //TODO: deprecate
-        public void RemoveEntity(IEntity entity)
-        {
-            if (entity.Exists)
-            {
-                AltNative.Server.Server_RemoveEntity(NativePointer, entity.NativePointer);
-            }
-        }
-
         public void RemoveBlip(IBlip blip)
         {
             if (blip.Exists)

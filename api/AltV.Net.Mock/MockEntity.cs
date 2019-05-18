@@ -7,7 +7,7 @@ using AltV.Net.Native;
 
 namespace AltV.Net.Mock
 {
-    public class MockEntity : IEntity
+    public abstract class MockEntity : IEntity
     {
         public IntPtr NativePointer { get; }
         public bool Exists { get; }
@@ -111,13 +111,15 @@ namespace AltV.Net.Mock
             return true;
         }
 
-        public void Remove()
-        {
-            Alt.Server.RemoveEntity(this);
-        }
+        public abstract void Remove();
 
         public void CheckIfEntityExists()
         {
+            if (Exists)
+            {
+                return;
+            }
+            throw new EntityRemovedException(this);
         }
     }
 }

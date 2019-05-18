@@ -69,8 +69,6 @@ namespace AltV.Net
 
         IVoiceChannel CreateVoiceChannel(bool spatial, float maxDistance);
 
-        void RemoveEntity(IEntity entity);
-
         void RemoveBlip(IBlip blip);
 
         void RemoveCheckpoint(ICheckpoint checkpoint);

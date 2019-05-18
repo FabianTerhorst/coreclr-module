@@ -29,7 +29,7 @@ namespace AltV.Net.Mock
 
         public void Remove()
         {
-            throw new NotImplementedException();
+            Alt.Server.RemoveCheckpoint(this);
         }
     }
 }

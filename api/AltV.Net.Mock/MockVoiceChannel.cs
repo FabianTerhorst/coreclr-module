@@ -3,35 +3,10 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Mock
 {
-    public class MockVoiceChannel : IVoiceChannel
+    public class MockVoiceChannel : MockWorldObject, IVoiceChannel
     {
-        public MockVoiceChannel(IntPtr nativePointer)
+        public MockVoiceChannel(IntPtr nativePointer): base(nativePointer, BaseObjectType.VoiceChannel)
         {
-            NativePointer = nativePointer;
-        }
-
-        public IntPtr NativePointer { get; }
-        public bool Exists { get; }
-        public BaseObjectType Type { get; }
-
-        public void SetMetaData(string key, object value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetMetaData<T>(string key, out T result)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetData(string key, object value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetData<T>(string key, out T result)
-        {
-            throw new NotImplementedException();
         }
 
         public void AddPlayer(IPlayer player)
@@ -69,11 +44,7 @@ namespace AltV.Net.Mock
 
         public void Remove()
         {
-            throw new NotImplementedException();
-        }
-
-        public void CheckIfEntityExists()
-        {
+            Alt.Server.RemoveVoiceChannel(this);
         }
     }
 }
