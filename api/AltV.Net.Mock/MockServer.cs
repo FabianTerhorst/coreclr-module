@@ -261,16 +261,6 @@ namespace AltV.Net.Mock
             return voiceChannel;
         }
 
-        public void RemoveEntity(IEntity entity)
-        {
-            switch (entity.Type)
-            {
-                case BaseObjectType.Vehicle:
-                    RemoveVehicle((IVehicle) entity);
-                    break;
-            }
-        }
-
         public void RemoveBlip(IBlip blip)
         {
             Alt.Module.OnRemoveBlip(blip.NativePointer);
