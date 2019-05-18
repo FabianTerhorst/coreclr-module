@@ -183,8 +183,8 @@ namespace AltV.Net.Mock
 
         public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
-            var ptr = MockEntities.GetNextPtr();
-            vehiclePool.Create(ptr, MockEntities.Id, out var vehicle);
+            var ptr = MockEntities.GetNextPtr(out var entityId);
+            vehiclePool.Create(ptr, entityId, out var vehicle);
             vehicle.Position = pos;
             if (vehicle is MockVehicle mockVehicle)
             {
@@ -192,22 +192,22 @@ namespace AltV.Net.Mock
                 mockVehicle.Rotation = rotation;
                 mockVehicle.Model = model;
             }
-            Alt.Module.OnCreateVehicle(ptr, MockEntities.Id);
+            Alt.Module.OnCreateVehicle(ptr, entityId);
             return vehicle;
         }
 
         public IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation)
         {
-            var ptr = MockEntities.GetNextPtr();
-            id = MockEntities.Id;
-            Alt.Module.OnCreateVehicle(ptr, id);
+            var ptr = MockEntities.GetNextPtr(out var entityId);
+            id = entityId;
+            Alt.Module.OnCreateVehicle(ptr, entityId);
             return ptr;
         }
 
         public ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height,
             Rgba color)
         {
-            var ptr = MockEntities.GetNextPtr();
+            var ptr = MockEntities.GetNextPtrNoId();
             checkpointPool.Create(ptr, out var checkpoint);
             if (checkpoint is MockCheckpoint mockCheckpoint)
             {
@@ -223,7 +223,7 @@ namespace AltV.Net.Mock
 
         public IBlip CreateBlip(IPlayer player, byte type, Position pos)
         {
-            var ptr = MockEntities.GetNextPtr();
+            var ptr = MockEntities.GetNextPtrNoId();
             blipPool.Create(ptr, out var blip);
             if (blip is MockBlip mockBlip)
             {
@@ -236,7 +236,7 @@ namespace AltV.Net.Mock
 
         public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
         {
-            var ptr = MockEntities.GetNextPtr();
+            var ptr = MockEntities.GetNextPtrNoId();
             blipPool.Create(ptr, out var blip);
             if (blip is MockBlip mockBlip)
             {
@@ -250,7 +250,7 @@ namespace AltV.Net.Mock
 
         public IVoiceChannel CreateVoiceChannel(bool spatial, float maxDistance)
         {
-            var ptr = MockEntities.GetNextPtr();
+            var ptr = MockEntities.GetNextPtrNoId();
             voiceChannelPool.Create(ptr, out var voiceChannel);
             if (voiceChannel is MockVoiceChannel mockVoiceChannel)
             {

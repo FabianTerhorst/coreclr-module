@@ -1,20 +1,24 @@
 using System;
-using System.Collections.Generic;
-using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Mock
 {
-    public class MockEntities
+    public static class MockEntities
     {
-        public static IntPtr Ptr = IntPtr.Zero;
+        private static IntPtr _ptr = IntPtr.Zero;
 
-        public static ushort Id = 0;
+        private static ushort _id = 0;
 
-        public static IntPtr GetNextPtr()
+        public static IntPtr GetNextPtr(out ushort id)
         {
-            Ptr += 1;
-            Id++;
-            return Ptr;
+            _ptr += 1;
+            id = ++_id;
+            return _ptr;
+        }
+        
+        public static IntPtr GetNextPtrNoId()
+        {
+            _ptr += 1;
+            return _ptr;
         }
     }
 }
