@@ -37,6 +37,21 @@ namespace AltV.Net.Async
             return new AsyncVehiclePool(vehicleFactory);
         }
 
+        public override IBaseObjectPool<IBlip> GetBlipPool(IBaseObjectFactory<IBlip> blipFactory)
+        {
+            return new AsyncBlipPool(blipFactory);
+        }
+
+        public override IBaseObjectPool<ICheckpoint> GetCheckpointPool(IBaseObjectFactory<ICheckpoint> checkpointFactory)
+        {
+            return new AsyncCheckpointPool(checkpointFactory);
+        }
+
+        public override IBaseObjectPool<IVoiceChannel> GetVoiceChannelPool(IBaseObjectFactory<IVoiceChannel> voiceChannelFactory)
+        {
+            return new AsyncVoiceChannelPool(voiceChannelFactory);
+        }
+
         public override Module GetModule(IServer server, CSharpNativeResource cSharpNativeResource,
             IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,

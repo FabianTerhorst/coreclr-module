@@ -156,6 +156,30 @@ namespace AltV.Net.Async
             mValueArgs.Dispose();
         }
 
+        public static bool EmitLocked(this IPlayer player, string eventName, params object[] args)
+        {
+            var mValues = MValueLocked.CreateFromObjectsLocked(args);
+            var mValueArgs = MValue.Create(mValues);
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            var successfully = true;
+            lock (player)
+            {
+                if (player.Exists)
+                {
+                    Alt.Server.TriggerClientEvent(player, eventNamePtr, ref mValueArgs);
+                }
+                else
+                {
+                    successfully = false;
+                }
+            }
+
+            Marshal.FreeHGlobal(eventNamePtr);
+            MValue.Dispose(mValues);
+            mValueArgs.Dispose();
+            return successfully;
+        }
+
         public static Task<ReadOnlyPlayer> CopyAsync(this IPlayer player) =>
             AltVAsync.Schedule(player.Copy);
     }
