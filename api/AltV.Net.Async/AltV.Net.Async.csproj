@@ -12,10 +12,9 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.5.2</PackageVersion>
+        <PackageVersion>1.6.0</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Add possibility to create own tick scheduler
-Fix exception printing for async events</PackageReleaseNotes>
+        <PackageReleaseNotes>Add experimental player.EmitLocked</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
