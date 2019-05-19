@@ -10,6 +10,7 @@ namespace AltV.Net
     {
         bool GetOrCreate(IntPtr entityPointer, BaseObjectType baseObjectType, ushort entityId, out IBaseObject baseObject);
         bool GetOrCreate(IntPtr entityPointer, BaseObjectType baseObjectType, out IBaseObject baseObject);
+        bool Get(IntPtr entityPointer, BaseObjectType baseObjectType, out IBaseObject baseObject);
         bool Remove(IBaseObject baseObject);
         bool Remove(IntPtr entityPointer, BaseObjectType baseObjectType);
     }

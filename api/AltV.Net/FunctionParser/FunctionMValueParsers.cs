@@ -476,7 +476,7 @@ namespace AltV.Net.FunctionParser
                 return null;
             }
 
-            if (!baseBaseObjectPool.GetOrCreate(entityPointer, entityType, out var entity))
+            if (!baseBaseObjectPool.Get(entityPointer, entityType, out var entity))
             {
                 return null;
             }

@@ -26,6 +26,37 @@ namespace AltV.Net.Elements.Pools
             this.voiceChannelPool = voiceChannelPool;
         }
 
+        public bool Get(IntPtr entityPointer, BaseObjectType baseObjectType, out IBaseObject entity)
+        {
+            bool result;
+            switch (baseObjectType)
+            {
+                case BaseObjectType.Player:
+                    result = playerPool.Get(entityPointer, out var player);
+                    entity = player;
+                    return result;
+                case BaseObjectType.Vehicle:
+                    result = vehiclePool.Get(entityPointer, out var vehicle);
+                    entity = vehicle;
+                    return result;
+                case BaseObjectType.Blip:
+                    result = blipPool.Get(entityPointer, out var blip);
+                    entity = blip;
+                    return result;
+                case BaseObjectType.Checkpoint:
+                    result = checkpointPool.Get(entityPointer, out var checkpoint);
+                    entity = checkpoint;
+                    return result;
+                case BaseObjectType.VoiceChannel:
+                    result = voiceChannelPool.Get(entityPointer, out var voiceChannel);
+                    entity = voiceChannel;
+                    return result;
+                default:
+                    entity = default;
+                    return false;
+            }
+        }
+
         public bool GetOrCreate(IntPtr entityPointer, BaseObjectType baseObjectType, out IBaseObject entity)
         {
             bool result;

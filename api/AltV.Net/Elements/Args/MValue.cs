@@ -469,7 +469,7 @@ namespace AltV.Net.Elements.Args
                     var entityType = BaseObjectType.Undefined;
                     var entityPointer = GetEntityPointer(ref entityType);
                     if (entityPointer == IntPtr.Zero) return null;
-                    if (baseBaseObjectPool.GetOrCreate(entityPointer, entityType, out var entity))
+                    if (baseBaseObjectPool.Get(entityPointer, entityType, out var entity))
                     {
                         return entity;
                     }
