@@ -10,62 +10,62 @@ namespace AltV.Net.Async
     {
         public static MValue CreateLocked(IPlayer player)
         {
+            var mValue = MValue.Nil;
             lock (player)
             {
                 if (!player.Exists)
                 {
                     return MValue.Nil;
                 }
-            }
 
-            var mValue = MValue.Nil;
-            AltNative.MValueCreate.MValue_CreatePlayer(player.NativePointer, ref mValue);
-            return mValue;
+                AltNative.MValueCreate.MValue_CreatePlayer(player.NativePointer, ref mValue);
+                return mValue;
+            }
         }
 
         public static MValue CreateLocked(IVehicle vehicle)
         {
+            var mValue = MValue.Nil;
             lock (vehicle)
             {
                 if (!vehicle.Exists)
                 {
                     return MValue.Nil;
                 }
-            }
 
-            var mValue = MValue.Nil;
-            AltNative.MValueCreate.MValue_CreateVehicle(vehicle.NativePointer, ref mValue);
-            return mValue;
+                AltNative.MValueCreate.MValue_CreateVehicle(vehicle.NativePointer, ref mValue);
+                return mValue;
+            }
         }
 
         public static MValue CreateLocked(IBlip blip)
         {
+            var mValue = MValue.Nil;
             lock (blip)
             {
                 if (!blip.Exists)
                 {
                     return MValue.Nil;
                 }
-            }
 
-            var mValue = MValue.Nil;
-            AltNative.MValueCreate.MValue_CreateBlip(blip.NativePointer, ref mValue);
-            return mValue;
+                AltNative.MValueCreate.MValue_CreateBlip(blip.NativePointer, ref mValue);
+                return mValue;
+            }
         }
 
         public static MValue CreateLocked(ICheckpoint checkpoint)
         {
+            var mValue = MValue.Nil;
             lock (checkpoint)
             {
                 if (!checkpoint.Exists)
                 {
                     return MValue.Nil;
                 }
-            }
 
-            var mValue = MValue.Nil;
-            AltNative.MValueCreate.MValue_CreateCheckpoint(checkpoint.NativePointer, ref mValue);
-            return mValue;
+                AltNative.MValueCreate.MValue_CreateCheckpoint(checkpoint.NativePointer, ref mValue);
+                return mValue;
+            }
         }
 
         public static MValue CreateFromObjectLocked(object obj)
