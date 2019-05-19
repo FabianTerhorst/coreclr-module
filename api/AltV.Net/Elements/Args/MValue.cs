@@ -397,7 +397,8 @@ namespace AltV.Net.Elements.Args
                 case Type.ENTITY:
                     var entityType = BaseObjectType.Undefined;
                     var ptr = GetEntityPointer(ref entityType);
-                    if (Alt.Module.BaseBaseObjectPool.GetOrCreate(ptr, entityType, out var entity))
+                    if (ptr == IntPtr.Zero) return $"MValue<entity:nilptr>";
+                    if (Alt.Module.BaseBaseObjectPool.Get(ptr, entityType, out var entity))
                     {
                         return $"MValue<{entity.Type.ToString()}>";
                     }
