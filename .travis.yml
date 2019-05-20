@@ -78,7 +78,7 @@ deploy:
         - master
   - provider: script
     skip_cleanup: true
-    script: ls -l && cd .. && cd .. && ls -l && ./scs3-linux upload ./runtime/src/libcsharp-module.so coreclr-module/x64_linux/libcsharp-module.so
+    script: ls -l && cd .. && cd .. && ls -l && chmod +x ./scs3-linux && ./scs3-linux upload ./runtime/src/libcsharp-module.so coreclr-module/x64_linux/libcsharp-module.so
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$TRAVIS_OS_NAME = linux"
