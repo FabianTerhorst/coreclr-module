@@ -13,9 +13,12 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.6.0</PackageVersion>
+        <PackageVersion>1.7.0-beta</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Add WeaponModel</PackageReleaseNotes>
+        <PackageReleaseNotes>Add IVehicle::AppearanceData
+Add IVehicle::RadioStation
+Add IVehicle::ManualEngineControl
+Add IVehicle::ScriptData</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

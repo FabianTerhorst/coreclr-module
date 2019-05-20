@@ -341,7 +341,31 @@ namespace AltV.Net.Async
         public static Task
             SetNeonActiveAsync(this IVehicle vehicle, bool left, bool right, bool front, bool back) =>
             AltVAsync.Schedule(() => vehicle.SetNeonActive(left, right, front, back));
+        
+        public static Task<string> GetAppearanceDataAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(() => vehicle.AppearanceData);
 
+        public static Task SetAppearanceDataAsync(this IVehicle vehicle, string text) =>
+            AltVAsync.Schedule(() => vehicle.AppearanceData = text);
+        
+        public static Task<uint> GetRadioStationAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(() => vehicle.RadioStation);
+
+        public static Task SetRadioStationAsync(this IVehicle vehicle, uint radioStation) =>
+            AltVAsync.Schedule(() => vehicle.RadioStation = radioStation);
+        
+        public static Task<bool> GetManualEngineControlAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(() => vehicle.ManualEngineControl);
+
+        public static Task SetManualEngineControlAsync(this IVehicle vehicle, bool state) =>
+            AltVAsync.Schedule(() => vehicle.ManualEngineControl = state);
+        
+        public static Task<string> GetScriptDataAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(() => vehicle.ScriptData);
+
+        public static Task SetScriptDataAsync(this IVehicle vehicle, string text) =>
+            AltVAsync.Schedule(() => vehicle.ScriptData = text);
+        
         public static Task RemoveAsync(this IVehicle vehicle) => AltVAsync.Schedule(vehicle.Remove);
     }
 }
