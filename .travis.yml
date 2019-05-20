@@ -68,7 +68,7 @@ deploy:
         - master
   - provider: script
     skip_cleanup: true
-    script: ls -l && cd .. && cd .. && ls -l && scs3-win.exe upload .\src\Release\csharp-module.dll coreclr-module/x64_win32/csharp-module.dll
+    script: ls -l && cd .. && cd .. && cd .. && ls -l && scs3-win.exe upload .\runtime\src\Release\csharp-module.dll coreclr-module/x64_win32/csharp-module.dll
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$TRAVIS_OS_NAME = windows"
@@ -78,7 +78,7 @@ deploy:
         - master
   - provider: script
     skip_cleanup: true
-    script: ls -l && cd .. && ls -l && ./scs3-linux upload ./src/libcsharp-module.so coreclr-module/x64_linux/libcsharp-module.so
+    script: ls -l && cd .. && cd .. && ls -l && ./scs3-linux upload ./runtime/src/libcsharp-module.so coreclr-module/x64_linux/libcsharp-module.so
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$TRAVIS_OS_NAME = linux"
