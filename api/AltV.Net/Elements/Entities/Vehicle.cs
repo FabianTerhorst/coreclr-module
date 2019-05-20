@@ -426,6 +426,22 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public string AppearanceData
+        {
+            get
+            {
+                CheckIfEntityExists();
+                var ptr = IntPtr.Zero;
+                AltNative.Vehicle.Vehicle_GetAppearanceDataBase64(NativePointer, ref ptr);
+                return Marshal.PtrToStringAnsi(ptr);
+            }
+            set
+            {
+                CheckIfEntityExists();
+                AltNative.Vehicle.Vehicle_LoadAppearanceDataFromBase64(NativePointer, value);
+            }
+        }
+
         public bool EngineOn
         {
             get
@@ -460,6 +476,20 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckIfEntityExists();
                 AltNative.Vehicle.Vehicle_SetHeadlightColor(NativePointer, value);
+            }
+        }
+
+        public uint RadioStation
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Vehicle.Vehicle_GetRadioStationIndex(NativePointer);
+            }
+            set
+            {
+                CheckIfEntityExists();
+                AltNative.Vehicle.Vehicle_SetRadioStationIndex(NativePointer, value);
             }
         }
 
@@ -819,7 +849,38 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public Vehicle(uint model, Position position, Rotation rotation): this(Alt.Module.Server.CreateVehicleEntity(out var id, model, position, rotation), id)
+        public bool ManualEngineControl
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Vehicle.Vehicle_IsManualEngineControl(NativePointer);
+            }
+            set
+            {
+                CheckIfEntityExists();
+                AltNative.Vehicle.Vehicle_SetManualEngineControl(NativePointer, value);
+            }
+        }
+
+        public string ScriptData
+        {
+            get
+            {
+                CheckIfEntityExists();
+                var ptr = IntPtr.Zero;
+                AltNative.Vehicle.Vehicle_GetScriptDataBase64(NativePointer, ref ptr);
+                return Marshal.PtrToStringAnsi(ptr);
+            }
+            set
+            {
+                CheckIfEntityExists();
+                AltNative.Vehicle.Vehicle_LoadScriptDataFromBase64(NativePointer, value);
+            }
+        }
+
+        public Vehicle(uint model, Position position, Rotation rotation) : this(
+            Alt.Module.Server.CreateVehicleEntity(out var id, model, position, rotation), id)
         {
             Alt.Module.VehiclePool.Add(this);
         }

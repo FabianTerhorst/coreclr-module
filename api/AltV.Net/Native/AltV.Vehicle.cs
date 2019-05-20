@@ -202,6 +202,12 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_SetNeonColor(IntPtr vehiclePointer, Rgba color);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_GetAppearanceDataBase64(IntPtr vehiclePointer, ref IntPtr text);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_LoadAppearanceDataFromBase64(IntPtr vehiclePointer, string base64);
 
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern bool Vehicle_IsEngineOn(IntPtr vehiclePointer);
@@ -217,6 +223,12 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_SetHeadlightColor(IntPtr vehiclePointer, byte color);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern uint Vehicle_GetRadioStationIndex(IntPtr vehiclePointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetRadioStationIndex(IntPtr vehiclePointer, uint stationIndex);
 
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern bool Vehicle_IsSirenActive(IntPtr vehiclePointer);
@@ -378,6 +390,18 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_LoadDamageDataFromBase64(IntPtr vehiclePointer, string base64);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsManualEngineControl(IntPtr vehiclePointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetManualEngineControl(IntPtr vehiclePointer, bool state);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_GetScriptDataBase64(IntPtr vehiclePointer, ref IntPtr text);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_LoadScriptDataFromBase64(IntPtr vehiclePointer, string base64);
         }
     }
 }

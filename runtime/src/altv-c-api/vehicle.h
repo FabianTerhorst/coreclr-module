@@ -84,6 +84,9 @@ EXPORT void Vehicle_SetNeonActive(alt::IVehicle* vehicle, bool left, bool right,
 EXPORT void Vehicle_GetNeonColor(alt::IVehicle* vehicle, rgba_t &neonColor);
 EXPORT void Vehicle_SetNeonColor(alt::IVehicle* vehicle, alt::RGBA color);
 
+EXPORT void Vehicle_GetAppearanceDataBase64(alt::IVehicle* vehicle, const char*&base64);
+EXPORT void Vehicle_LoadAppearanceDataFromBase64(alt::IVehicle* vehicle, const char* base64);
+
 EXPORT bool Vehicle_IsEngineOn(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetEngineOn(alt::IVehicle* vehicle, bool state);
 
@@ -91,6 +94,9 @@ EXPORT bool Vehicle_IsHandbrakeActive(alt::IVehicle* vehicle);
 
 EXPORT uint8_t Vehicle_GetHeadlightColor(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetHeadlightColor(alt::IVehicle* vehicle, uint8_t color);
+
+EXPORT uint32_t Vehicle_GetRadioStationIndex(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetRadioStationIndex(alt::IVehicle* vehicle, uint32_t stationIndex);
 
 EXPORT bool Vehicle_IsSirenActive(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetSirenActive(alt::IVehicle* vehicle, bool state);
@@ -166,6 +172,13 @@ EXPORT void Vehicle_SetBumperDamageLevel(alt::IVehicle* vehicle, uint8_t bumperI
 
 EXPORT void Vehicle_GetDamageDataBase64(alt::IVehicle* vehicle, const char*&text);
 EXPORT void Vehicle_LoadDamageDataFromBase64(alt::IVehicle* vehicle, const char* base64);
+
+//vehicle script data
+EXPORT void Vehicle_SetManualEngineControl(alt::IVehicle* vehicle, bool state);
+EXPORT bool Vehicle_IsManualEngineControl(alt::IVehicle* vehicle);
+
+EXPORT void Vehicle_GetScriptDataBase64(alt::IVehicle* vehicle, const char*&base64);
+EXPORT void Vehicle_LoadScriptDataFromBase64(alt::IVehicle* vehicle, const char* base64);
 
 #ifdef __cplusplus
 }

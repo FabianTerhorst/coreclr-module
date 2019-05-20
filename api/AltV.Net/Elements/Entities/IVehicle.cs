@@ -72,6 +72,8 @@ namespace AltV.Net.Elements.Entities
         byte DirtLevel { get; set; }
 
         Rgba NeonColor { get; set; }
+        
+        string AppearanceData { get; set; }
 
         byte GetMod(byte category);
 
@@ -96,6 +98,8 @@ namespace AltV.Net.Elements.Entities
         bool IsHandbrakeActive { get; }
 
         byte HeadlightColor { get; set; }
+        
+        uint RadioStation { get; set; }
 
         bool SirenActive { get; set; }
 
@@ -190,6 +194,10 @@ namespace AltV.Net.Elements.Entities
         void SetBumperDamageLevel(byte bumperId, byte damageLevel);
 
         string DamageData { get; set; }
+        
+        bool ManualEngineControl { get; set; }
+        
+        string ScriptData { get; set; }
 
         void Remove();
 

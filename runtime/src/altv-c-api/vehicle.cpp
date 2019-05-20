@@ -274,6 +274,14 @@ void Vehicle_SetNeonColor(alt::IVehicle* vehicle, alt::RGBA color) {
     return vehicle->SetNeonColor(color);
 }
 
+void Vehicle_GetAppearanceDataBase64(alt::IVehicle* vehicle, const char*&base64) {
+    base64 = vehicle->GetAppearanceDataBase64().CStr();
+}
+
+void Vehicle_LoadAppearanceDataFromBase64(alt::IVehicle* vehicle, const char* base64) {
+    vehicle->LoadAppearanceDataFromBase64(base64);
+}
+
 bool Vehicle_IsEngineOn(alt::IVehicle* vehicle) {
     return vehicle->IsEngineOn();
 }
@@ -292,6 +300,14 @@ uint8_t Vehicle_GetHeadlightColor(alt::IVehicle* vehicle) {
 
 void Vehicle_SetHeadlightColor(alt::IVehicle* vehicle, uint8_t color) {
     vehicle->SetHeadlightColor(color);
+}
+
+uint32_t Vehicle_GetRadioStationIndex(alt::IVehicle* vehicle) {
+    return vehicle->GetRadioStationIndex();
+}
+
+void Vehicle_SetRadioStationIndex(alt::IVehicle* vehicle, uint32_t stationIndex) {
+    vehicle->SetRadioStationIndex(stationIndex);
 }
 
 bool Vehicle_IsSirenActive(alt::IVehicle* vehicle) {
@@ -500,4 +516,20 @@ void Vehicle_GetDamageDataBase64(alt::IVehicle* vehicle, const char*&text) {
 
 void Vehicle_LoadDamageDataFromBase64(alt::IVehicle* vehicle, const char* base64) {
     vehicle->LoadDamageDataFromBase64(base64);
+}
+
+void Vehicle_SetManualEngineControl(alt::IVehicle* vehicle, bool state) {
+    vehicle->SetManualEngineControl(state);
+}
+
+bool Vehicle_IsManualEngineControl(alt::IVehicle* vehicle) {
+    return vehicle->IsManualEngineControl();
+}
+
+void Vehicle_GetScriptDataBase64(alt::IVehicle* vehicle, const char*&base64) {
+    base64 = vehicle->GetScriptDataBase64().CStr();
+}
+
+void Vehicle_LoadScriptDataFromBase64(alt::IVehicle* vehicle, const char* base64) {
+    vehicle->LoadScriptDataFromBase64(base64);
 }
