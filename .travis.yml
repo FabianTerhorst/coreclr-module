@@ -23,16 +23,11 @@ matrix:
     - cd src
     - ls -l
   - os: windows
-    env:
-    - MSBUILD_PATH="c:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
     before_script: cd runtime
     script:
-    - export PATH=$MSBUILD_PATH:$PATH
-    - cmake -B"visual-studio-project" -G"Visual Studio 15 2017 Win64" .
-    - ls -l
-    - MSBuild.exe "altv-clr-host.sln" //p:Configuration="Release" //p:Platform="x64"
-    - ls -l
-    - cd src
+    - mkdir build && cd build
+    - cmake -G"Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release -T host=x64 ..
+    - cmake --build . --config Release
     - ls -l
     - cd Release
     - ls -l
