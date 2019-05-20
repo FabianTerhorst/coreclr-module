@@ -232,6 +232,11 @@ namespace AltV.Net.Mock
 
         public string DamageData { get; set; }
 
+        public string AppearanceData { get; set; }
+        public uint RadioStation { get; set; }
+        public bool ManualEngineControl { get; set; }
+        public string ScriptData { get; set; }
+
         public override void Remove()
         {
             Alt.Server.RemoveVehicle(this);
