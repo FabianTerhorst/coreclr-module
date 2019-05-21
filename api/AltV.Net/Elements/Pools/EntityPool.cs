@@ -76,7 +76,8 @@ namespace AltV.Net.Elements.Pools
 
             if (entities.TryGetValue(entityPointer, out entity)) return entity.Exists;
 
-            Create(entityPointer, out entity);
+            entity = entityFactory.Create(entityPointer, GetId(entityPointer));
+            Add(entity);
 
             return entity.Exists;
         }
@@ -91,7 +92,8 @@ namespace AltV.Net.Elements.Pools
 
             if (entities.TryGetValue(entityPointer, out entity)) return entity.Exists;
 
-            Create(entityPointer, entityId, out entity);
+            entity = entityFactory.Create(entityPointer, entityId);
+            Add(entity);
 
             return entity.Exists;
         }

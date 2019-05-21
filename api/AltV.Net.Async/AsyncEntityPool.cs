@@ -43,7 +43,7 @@ namespace AltV.Net.Async
 
     public abstract class AsyncEntityPool<TEntity> : IEntityPool<TEntity> where TEntity : IEntity
     {
-        private readonly ConcurrentDictionary<IntPtr, TEntity> entities = new ConcurrentDictionary<IntPtr, TEntity>();
+        private readonly Dictionary<IntPtr, TEntity> entities = new Dictionary<IntPtr, TEntity>();
 
         private readonly IEntityFactory<TEntity> entityFactory;
 
@@ -82,10 +82,8 @@ namespace AltV.Net.Async
         //TODO: what should happen on failure
         public void Add(TEntity entity)
         {
-            if (entities.TryAdd(entity.NativePointer, entity))
-            {
-                OnAdd(entity);
-            }
+            entities[entity.NativePointer] = entity;
+            OnAdd(entity);
         }
 
         public bool Remove(TEntity entity)
@@ -96,7 +94,7 @@ namespace AltV.Net.Async
         //TODO: what should happen on failure
         public bool Remove(IntPtr entityPointer)
         {
-            if (!entities.TryRemove(entityPointer, out var entity) || !entity.Exists) return false;
+            if (!entities.Remove(entityPointer, out var entity) || !entity.Exists) return false;
             lock (entity)
             {
                 BaseObjectPool<TEntity>.SetEntityNoLongerExists(entity);
@@ -122,7 +120,8 @@ namespace AltV.Net.Async
 
             if (entities.TryGetValue(entityPointer, out entity)) return entity.Exists;
 
-            Create(entityPointer, out entity);
+            entity = entityFactory.Create(entityPointer, GetId(entityPointer));
+            Add(entity);
 
             return entity.Exists;
         }
@@ -137,7 +136,8 @@ namespace AltV.Net.Async
 
             if (entities.TryGetValue(entityPointer, out entity)) return entity.Exists;
 
-            Create(entityPointer, id, out entity);
+            entity = entityFactory.Create(entityPointer, id);
+            Add(entity);
 
             return entity.Exists;
         }
