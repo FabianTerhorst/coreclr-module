@@ -8,10 +8,9 @@ namespace AltV.Net.Elements.Pools
     {
         public static void SetEntityNoLongerExists(TBaseObject entity)
         {
-            if (entity is IInternalBaseObject internalEntity)
-            {
-                internalEntity.Exists = false;
-            }
+            if (!(entity is IInternalBaseObject internalEntity)) return;
+            internalEntity.Exists = false;
+            internalEntity.ClearData();
         }
 
         private readonly Dictionary<IntPtr, TBaseObject> entities = new Dictionary<IntPtr, TBaseObject>();

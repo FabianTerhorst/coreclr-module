@@ -49,6 +49,11 @@ namespace AltV.Net.Elements.Entities
             return true;
         }
 
+        public void ClearData()
+        {
+            data.Clear();
+        }
+
         public virtual void CheckIfEntityExists()
         {
             if (Exists)
