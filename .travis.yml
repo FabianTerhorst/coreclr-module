@@ -24,6 +24,7 @@ script:
 - if [ "$TRAVIS_OS_NAME" = "windows" ]; then cmake -G"Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release -T host=x64 .. ; fi
 - cmake --build . --config Release
 - cd src
+- ls -l
 - cd Release
 deploy:
   - provider: releases
