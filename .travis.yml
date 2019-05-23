@@ -14,13 +14,12 @@ matrix:
         packages:
         - gcc-8
         - g++-8
-    env:
-    - CXX=/usr/bin/g++-8
-    - CC=/usr/bin/gcc-8
   - os: windows
 before_script: cd runtime
 script:
 - mkdir build && cd build
+- if [ "$TRAVIS_OS_NAME" = "linux" ]; then CXX=/usr/bin/g++-8 ; fi
+- if [ "$TRAVIS_OS_NAME" = "linux" ]; then CC=/usr/bin/gcc-8 ; fi
 - if [ "$TRAVIS_OS_NAME" = "linux" ]; then cmake -DCMAKE_BUILD_TYPE=Release .. ; fi
 - if [ "$TRAVIS_OS_NAME" = "windows" ]; then cmake -G"Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release -T host=x64 .. ; fi
 - cmake --build . --config Release
