@@ -21,8 +21,8 @@ matrix:
 before_script: cd runtime
 script:
 - mkdir build && cd build
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; cmake -DCMAKE_BUILD_TYPE=Release .. ; fi
-- if [ "$TRAVIS_OS_NAME" = "windows" ]; cmake -G"Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release -T host=x64 .. ; fi
+- if [ "$TRAVIS_OS_NAME" = "linux" ]; then cmake -DCMAKE_BUILD_TYPE=Release .. ; fi
+- if [ "$TRAVIS_OS_NAME" = "windows" ]; then cmake -G"Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release -T host=x64 .. ; fi
 - cmake --build . --config Release
 - cd Release
 deploy:
