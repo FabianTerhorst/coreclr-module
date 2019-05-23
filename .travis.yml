@@ -18,6 +18,7 @@ matrix:
 before_script: cd runtime
 script:
 - mkdir build && cd build
+- if [ "$TRAVIS_OS_NAME" = "linux" ]; then if ! [ -x "$(command /usr/bin/g++-8 --version)" ]; then sudo add-apt-repository ppa:ubuntu-toolchain-r/test;sudo apt-get update;sudo apt-get install gcc-8 g++-8 ; fi ; fi
 - if [ "$TRAVIS_OS_NAME" = "linux" ]; then CXX=/usr/bin/g++-8 ; fi
 - if [ "$TRAVIS_OS_NAME" = "linux" ]; then CC=/usr/bin/gcc-8 ; fi
 - if [ "$TRAVIS_OS_NAME" = "linux" ]; then cmake -DCMAKE_BUILD_TYPE=Release .. ; fi
