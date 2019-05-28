@@ -144,6 +144,12 @@ bool CoreClr::GetDelegate(alt::IServer* server, void* runtimeHost, unsigned int 
                             "coreclr-module: Your server needs to be compiled and needs to target (<TargetFramework>netcoreappX.X</TargetFramework>) with the same .net core version that is installed on your workstation"));
             return false;
         }
+        if (result == -2147024894) {
+            server->LogInfo(
+                    alt::String(
+                            "coreclr-module: You need to place the AltV.Net.dll in your resource directory. Use publish to generate all dlls."));
+            return false;
+        }
         server->LogInfo(alt::String(strerror(errno)));
         char* x_str = new char[10];
         sprintf(x_str, "%d", result);
