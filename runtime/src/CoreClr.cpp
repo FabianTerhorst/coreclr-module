@@ -190,7 +190,7 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer* server, cons
                         std::string fullFilename;
 
                         fullFilename.append(path);
-                        fullFilename.append("/");
+                        fullFilename.append(PATH_SEPARATOR);
                         fullFilename.append(entry->d_name);
 
                         if (stat(fullFilename.c_str(), &sb) == -1) {
@@ -225,7 +225,7 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer* server, cons
                     continue;
                 }
                 assemblies.Push(
-                        alt::String(path) + "/" + entry->d_name);
+                        alt::String(path) + PATH_SEPARATOR + entry->d_name);
             }
             // rewind directory to search for next extension
             rewinddir(directory);
@@ -249,7 +249,7 @@ void CoreClr::CreateAppDomain(alt::IServer* server, alt::IResource* resource, co
 
     auto nativeDllPaths = alt::String(appPath) + LIST_SEPARATOR + runtimeDirectory;
 
-    auto executablePath = alt::String(appPath) + "/" + resource->GetMain();
+    auto executablePath = alt::String(appPath) + PATH_SEPARATOR + resource->GetMain();
 
     const char* propertyKeys[] = {
             "TRUSTED_PLATFORM_ASSEMBLIES",

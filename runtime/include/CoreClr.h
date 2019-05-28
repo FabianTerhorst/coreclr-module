@@ -33,8 +33,10 @@
 #ifdef _WIN32
 #define LIST_SEPARATOR ";"
 #define strtok_r strtok_s
+#define PATH_SEPARATOR "\\"
 #else
 #define LIST_SEPARATOR ":"
+#define PATH_SEPARATOR "/"
 #endif
 
 #define TAIL_CMP_LT -1
