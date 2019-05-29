@@ -1,6 +1,7 @@
 os:
 - linux
 - windows
+filter_secrets: false
 sudo: false
 language: cpp
 matrix:
