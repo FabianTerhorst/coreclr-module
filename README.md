@@ -113,7 +113,7 @@ but require full path import like ```import * as auth from 'client/auth.mjs';```
 
 (TODO: more docs)
 - Create console application
-- (For now) create empty assembly.cfg in your resource.cfg
+- (For now) create empty assembly.cfg in your resource.
 Boilerplate AltV.Net.Example.csproj:
 ```
 <Project Sdk="Microsoft.NET.Sdk">
