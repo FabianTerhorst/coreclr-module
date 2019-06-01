@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.NetworkingEntity
@@ -7,6 +6,8 @@ namespace AltV.Net.NetworkingEntity
     public class AuthProvider
     {
         private readonly Dictionary<string, IPlayer> playerTokens = new Dictionary<string, IPlayer>();
+
+        private readonly Dictionary<IPlayer, string> playerTokenAccess = new Dictionary<IPlayer, string>();
 
         public void SendAuthentication(IPlayer player)
         {
@@ -18,6 +19,7 @@ namespace AltV.Net.NetworkingEntity
                     lock (playerTokens)
                     {
                         playerTokens[token] = player;
+                        playerTokenAccess[player] = token;
 
                         player.Emit("streamingToken", token);
                     }
@@ -39,9 +41,11 @@ namespace AltV.Net.NetworkingEntity
         {
             lock (playerTokens)
             {
-                //TODO: create another dictionary to improve performance of remove lookup
-                var item = playerTokens.First(kvp => kvp.Value == player);
-                playerTokens.Remove(item.Key);
+                if (playerTokenAccess.TryGetValue(player, out var token))
+                {
+                    playerTokens.Remove(token);
+                    playerTokenAccess.Remove(player);
+                }
             }
         }
     }

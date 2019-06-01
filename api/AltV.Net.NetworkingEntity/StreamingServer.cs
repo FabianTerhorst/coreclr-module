@@ -10,6 +10,8 @@ namespace AltV.Net.NetworkingEntity
     //TODO: verify if the synchronization of the entity storage is enough to verify order of (entity delete) / (entity add) and (get all entities) on connect 
     //TODO: add data change events
     //TODO: add position change events
+    //TODO: sync entity data only to near players on change ect and only send entity data when entering streaming range
+    //TODO: regenerate tokens for both players when two are trying to use same token
     public class StreamingServer
     {
         private readonly WebSocket webSocket;
