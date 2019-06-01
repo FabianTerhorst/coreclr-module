@@ -22,10 +22,29 @@ namespace AltV.Net.NetworkingEntity
 
         private readonly EntityRepository entityRepository = new EntityRepository();
 
-        private readonly object eventSynchronization = new object();
-
         public StreamingServer()
         {
+            entityRepository.OnEntityAdd += entity =>
+            {
+                var createEvent = new Event {Create = {Entity = entity}};
+                webSocketRepository.SendToAll(createEvent);
+            };
+            entityRepository.OnEntityRemove += id =>
+            {
+                var deleteEvent = new Event {Delete = {Id = id}};
+                webSocketRepository.SendToAll(deleteEvent);
+            };
+            entityRepository.OnEntityPositionUpdate += (id, position) =>
+            {
+                var deleteEvent = new Event {PositionChange = {Id = id, Position = position}};
+                webSocketRepository.SendToAll(deleteEvent);
+            };
+            entityRepository.OnEntityDataUpdate += (id, key, value) =>
+            {
+                var deleteEvent = new Event {DataChange = {Id = id, Key = key, Value = value}};
+                webSocketRepository.SendToAll(deleteEvent);
+            };
+            
             Alt.OnPlayerConnect += (player, reason) =>
             {
                 Task.Run(() => { authProvider.SendAuthentication(player); });
@@ -75,7 +94,7 @@ namespace AltV.Net.NetworkingEntity
 
                         var sendEvent = new Event();
                         var currSendEvent = new EntitySendEvent();
-                        lock (eventSynchronization)
+                        lock (entityRepository.Entities)
                         {
                             currSendEvent.Entities.Add(entityRepository.GetAll());
                             sendEvent.Send = currSendEvent;
@@ -91,43 +110,23 @@ namespace AltV.Net.NetworkingEntity
         {
             var id = entityIdStorage.GetNext();
             entity.Id = id;
-            lock (eventSynchronization)
-            {
-                entityRepository.Add(entity);
-                var createEvent = new Event {Create = {Entity = entity}};
-                webSocketRepository.SendToAll(createEvent);
-            }
+            entityRepository.Add(entity);
         }
 
         public void DeleteEntity(ulong id)
         {
             entityIdStorage.Free(id);
-            lock (eventSynchronization)
-            {
-                entityRepository.Delete(id);
-                var deleteEvent = new Event {Delete = {Id = id}};
-                webSocketRepository.SendToAll(deleteEvent);
-            }
+            entityRepository.Delete(id);
         }
 
         public void UpdateEntityPosition(ulong id, Position position)
         {
-            lock (eventSynchronization)
-            {
-                entityRepository.Get(id).Position = position;
-                var deleteEvent = new Event {PositionChange = {Id = id, Position = position}};
-                webSocketRepository.SendToAll(deleteEvent);
-            }
+            entityRepository.UpdatePosition(id, position);
         }
 
         public void UpdateEntityData(ulong id, string key, MValue value)
         {
-            lock (eventSynchronization)
-            {
-                entityRepository.Get(id).Data[key] = value;
-                var deleteEvent = new Event {DataChange = {Id = id, Key = key, Value = value}};
-                webSocketRepository.SendToAll(deleteEvent);
-            }
+            entityRepository.UpdateData(id, key, value);
         }
     }
 }
