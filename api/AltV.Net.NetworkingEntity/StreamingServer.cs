@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using AltV.Net.Elements.Entities;
 using Entity;
 using Google.Protobuf;
 using WebSocket = net.vieapps.Components.WebSockets.WebSocket;
@@ -11,6 +13,8 @@ namespace AltV.Net.NetworkingEntity
     //TODO: add position change events
     //TODO: sync entity data only to near players on change ect and only send entity data when entering streaming range
     //TODO: regenerate tokens for both players when two are trying to use same token
+    
+    //TODO: we can extend the managed websocket and store the player reference i think
     public class StreamingServer
     {
         private readonly WebSocket webSocket;
@@ -22,6 +26,10 @@ namespace AltV.Net.NetworkingEntity
         private readonly EntityIdStorage entityIdStorage = new EntityIdStorage();
 
         private readonly EntityRepository entityRepository = new EntityRepository();
+        
+        public event Action<Entity.Entity, IPlayer> EntityStreamInHandler;
+
+        public event Action<Entity.Entity, IPlayer> EntityStreamOutHandler;
 
         public StreamingServer()
         {
@@ -44,6 +52,17 @@ namespace AltV.Net.NetworkingEntity
             {
                 var deleteEvent = new ServerEvent {DataChange = {Id = id, Key = key, Value = value}};
                 webSocketRepository.SendToAll(deleteEvent);
+            };
+            entityRepository.OnEntityStreamIn += (entity, player) =>
+            {
+                //TODO: send entity data to player, maybe create a snapshot version and check if player already knows the entity data
+                //TODO: snapshot version needs to reset to 0 and transfers data to entity when stream in even when it doesnt change for consistency
+                EntityStreamInHandler?.Invoke(entity, player);
+            };
+            entityRepository.OnEntityStreamOut += (entity, player) =>
+            {
+                //TODO: forward this event to AltNetworking because here is no use case for it, but forward the stream in as well
+                EntityStreamOutHandler?.Invoke(entity, player);
             };
 
             Alt.OnPlayerConnect += (player, reason) =>

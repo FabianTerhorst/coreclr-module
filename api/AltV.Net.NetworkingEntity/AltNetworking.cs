@@ -1,3 +1,5 @@
+using System;
+using AltV.Net.Elements.Entities;
 using Entity;
 
 namespace AltV.Net.NetworkingEntity
@@ -5,6 +7,16 @@ namespace AltV.Net.NetworkingEntity
     public static class AltNetworking
     {
         private static StreamingServer _streamingServer;
+        
+        public static Action<Entity.Entity, IPlayer> OnEntityStreamIn
+        {
+            set => _streamingServer.EntityStreamInHandler += value;
+        }
+
+        public static Action<Entity.Entity, IPlayer> OnEntityStreamOut
+        {
+            set => _streamingServer.EntityStreamOutHandler += value;
+        }
 
         public static void Init()
         {
