@@ -14,15 +14,13 @@ namespace AltV.Net.NetworkingEntity
             var token = SecretToken.GenerateToken(128);
             lock (player)
             {
-                if (player.Exists)
+                if (!player.Exists) return;
+                lock (playerTokens)
                 {
-                    lock (playerTokens)
-                    {
-                        playerTokens[token] = player;
-                        playerTokenAccess[player] = token;
+                    playerTokens[token] = player;
+                    playerTokenAccess[player] = token;
 
-                        player.Emit("streamingToken", token);
-                    }
+                    player.Emit("streamingToken", token);
                 }
             }
         }
@@ -41,11 +39,9 @@ namespace AltV.Net.NetworkingEntity
         {
             lock (playerTokens)
             {
-                if (playerTokenAccess.TryGetValue(player, out var token))
-                {
-                    playerTokens.Remove(token);
-                    playerTokenAccess.Remove(player);
-                }
+                if (!playerTokenAccess.TryGetValue(player, out var token)) return;
+                playerTokens.Remove(token);
+                playerTokenAccess.Remove(player);
             }
         }
     }

@@ -13,11 +13,15 @@ namespace AltV.Net.NetworkingEntity
         private readonly Dictionary<IPlayer, ManagedWebSocket> playerWebSockets =
             new Dictionary<IPlayer, ManagedWebSocket>();
 
+        private readonly Dictionary<ManagedWebSocket, IPlayer> webSocketPlayers =
+            new Dictionary<ManagedWebSocket, IPlayer>();
+
         public void Add(IPlayer player, ManagedWebSocket webSocket)
         {
             lock (playerWebSockets)
             {
                 playerWebSockets[player] = webSocket;
+                webSocketPlayers[webSocket] = player;
             }
         }
 
@@ -40,12 +44,26 @@ namespace AltV.Net.NetworkingEntity
             lock (playerWebSockets)
             {
                 webSocketExists = playerWebSockets.Remove(player, out currWebSocket);
+                if (webSocketExists)
+                {
+                    webSocketPlayers.Remove(currWebSocket);
+                }
             }
 
             if (webSocketExists && currWebSocket != null)
             {
                 return webSocket.CloseWebSocketAsync(currWebSocket, WebSocketCloseStatus.NormalClosure,
                     "disconnected");
+            }
+
+            return null;
+        }
+
+        public IPlayer GetPlayer(ManagedWebSocket webSocket)
+        {
+            lock (playerWebSockets)
+            {
+                if (webSocketPlayers.TryGetValue(webSocket, out var player)) return player;
             }
 
             return null;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AltV.Net.Elements.Entities;
 using Entity;
 
 namespace AltV.Net.NetworkingEntity
@@ -39,6 +40,9 @@ namespace AltV.Net.NetworkingEntity
         }
 
         public readonly Dictionary<ulong, Entity.Entity> Entities = new Dictionary<ulong, Entity.Entity>();
+
+        private readonly Dictionary<ulong, HashSet<IPlayer>> streamedInPlayers =
+            new Dictionary<ulong, HashSet<IPlayer>>();
 
         public void Add(Entity.Entity entity)
         {
@@ -87,6 +91,25 @@ namespace AltV.Net.NetworkingEntity
                 entity.Data[key] = value;
                 if (EntityDataUpdateHandler == null) return;
                 EntityDataUpdateHandler(id, key, value);
+            }
+        }
+
+        public void StreamedIn(IPlayer player, ulong id)
+        {
+            if (!streamedInPlayers.TryGetValue(id, out var players))
+            {
+                players = new HashSet<IPlayer>();
+                streamedInPlayers[id] = players;
+            }
+
+            players.Add(player);
+        }
+
+        public void StreamedOut(IPlayer player, ulong id)
+        {
+            if (streamedInPlayers.TryGetValue(id, out var players))
+            {
+                players.Remove(player);
             }
         }
 

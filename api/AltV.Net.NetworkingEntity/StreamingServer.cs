@@ -13,10 +13,6 @@ namespace AltV.Net.NetworkingEntity
     //TODO: regenerate tokens for both players when two are trying to use same token
     public class StreamingServer
     {
-        //TODO: manage streamed in players for each entity to deliver to them the change events
-
-        //TODO: maybe write authenticated player in websocket connection header to know which player send each message for calculating stream in / out events
-
         private readonly WebSocket webSocket;
 
         private readonly AuthProvider authProvider = new AuthProvider();
@@ -116,11 +112,15 @@ namespace AltV.Net.NetworkingEntity
                         }
                         else if (streamIn != null)
                         {
-                            //TODO:   
+                            var player = webSocketRepository.GetPlayer(webSocket);
+                            if (player == null) return;
+                            entityRepository.StreamedIn(player, streamIn.EntityId);
                         }
                         else if (streamOut != null)
                         {
-                            //TODO:
+                            var player = webSocketRepository.GetPlayer(webSocket);
+                            if (player == null) return;
+                            entityRepository.StreamedOut(player, streamOut.EntityId);
                         }
                     });
                 }

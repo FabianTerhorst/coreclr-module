@@ -60,11 +60,11 @@ message EntityCreateEvent {
 }
 
 message EntityStreamInEvent {
-    Entity entity = 1;
+    uint64 entityId = 1;
 }
 
 message EntityStreamOutEvent {
-    Entity entity = 1;
+    uint64 entityId = 1;
 }
 
 message AuthEvent {
