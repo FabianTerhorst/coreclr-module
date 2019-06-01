@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.Async", "AltV.Net.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.CoreRT.Example", "AltV.Net.CoreRT.Example\AltV.Net.CoreRT.Example.csproj", "{5687CC8F-F11D-4C6E-9DDB-202163A44218}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.NetworkingEntity", "AltV.Net.NetworkingEntity\AltV.Net.NetworkingEntity.csproj", "{411373D9-84E7-4E21-AB51-198C987A654B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,5 +65,11 @@ Global
 		{5687CC8F-F11D-4C6E-9DDB-202163A44218}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5687CC8F-F11D-4C6E-9DDB-202163A44218}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
 		{5687CC8F-F11D-4C6E-9DDB-202163A44218}.Testing|Any CPU.Build.0 = Debug|Any CPU
+		{411373D9-84E7-4E21-AB51-198C987A654B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{411373D9-84E7-4E21-AB51-198C987A654B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{411373D9-84E7-4E21-AB51-198C987A654B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{411373D9-84E7-4E21-AB51-198C987A654B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{411373D9-84E7-4E21-AB51-198C987A654B}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
+		{411373D9-84E7-4E21-AB51-198C987A654B}.Testing|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal

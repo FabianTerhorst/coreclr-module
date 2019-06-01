@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Protobuf Include="Protos\entity.proto">
+          <GrpcServices>Both</GrpcServices>
+          <Access>Public</Access>
+          <ProtoCompile>True</ProtoCompile>
+          <ProtoRoot></ProtoRoot>
+          <CompileOutputs>True</CompileOutputs>
+          <OutputDir>obj\Debug\netcoreapp3.0\</OutputDir>
+          <Link>Protos\entity.proto</Link>
+        </Protobuf>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="VIEApps.Components.WebSockets" Version="10.2.1906.1" />
+      <PackageReference Include="Google.Protobuf" Version="3.7.0" />
+      <PackageReference Include="Grpc" Version="1.20.1" />
+      <PackageReference Include="Grpc.Tools" Version="1.20.1" PrivateAssets="All" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package Entity;
+
+message Position {
+    float x = 1;
+    float y = 2;
+    float z = 3;
+}
+
+message Entity {
+    uint64 id = 1;
+    Position position = 2;
+    int32 dimension = 3;
+    map<string, MValue> data = 5;
+}
+
+message DictionaryMValue {
+    map<string, MValue> value = 1;
+}
+
+message ListMValue {
+    repeated MValue value = 1;
+}
+
+message MValue {
+    oneof MValue {
+        bool boolValue = 1;
+        double doubleValue = 2;
+        string stringValue = 3;
+        int64 intValue = 4;
+        uint64 uintValue = 5;
+        DictionaryMValue dictionaryValue = 6;
+        ListMValue listValue = 7;
+        uint64 entityValue = 8;
+    }
+}
+
+message EntityDataChangeEvent {
+    uint64 id = 1;
+    string key = 2;
+    MValue value = 3;
+}
+
+message EntitySendEvent {
+    repeated Entity entities = 1;
+}
+
+message EntityPositionChangeEvent {
+    uint64 id = 1;
+    Position position = 2;
+}
+
+message EntityDeleteEvent {
+    uint64 id = 1;
+}
+
+message EntityCreateEvent {
+    Entity entity = 1;
+}
+
+message Event {
+    oneof Event {
+        EntityDataChangeEvent dataChange = 1;
+        EntitySendEvent send = 2;
+        EntityPositionChangeEvent positionChange = 3;
+        EntityDeleteEvent delete = 4;
+        EntityCreateEvent create = 5;
+    }
+}
