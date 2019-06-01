@@ -14,6 +14,14 @@ namespace AltV.Net.NetworkingEntity
             }
         }
 
+        public Entity.Entity Get(ulong id)
+        {
+            lock (entities)
+            {
+                return entities[id];
+            }
+        }
+
         public void Delete(ulong id)
         {
             lock (entities)

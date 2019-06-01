@@ -8,6 +8,8 @@ namespace AltV.Net.NetworkingEntity
 {
     //TODO: synchronize events via channel, also the event for transferring all entities to keep order, but for speed we probably need a channel for each player
     //TODO: verify if the synchronization of the entity storage is enough to verify order of (entity delete) / (entity add) and (get all entities) on connect 
+    //TODO: add data change events
+    //TODO: add position change events
     public class StreamingServer
     {
         private readonly WebSocket webSocket;
@@ -69,7 +71,7 @@ namespace AltV.Net.NetworkingEntity
                             //players.Remove(token); //TODO: keep token alive so we can reconnect on connection lost
                         }
 
-                        var sendEvent = new Entity.Event();
+                        var sendEvent = new Event();
                         var currSendEvent = new EntitySendEvent();
                         currSendEvent.Entities.Add(entityRepository.GetAll());
 
@@ -87,7 +89,7 @@ namespace AltV.Net.NetworkingEntity
             entity.Id = id;
             entityRepository.Add(entity);
 
-            var createEvent = new Entity.Event {Create = {Entity = entity}};
+            var createEvent = new Event {Create = {Entity = entity}};
             webSocketRepository.SendToAll(createEvent);
         }
 
@@ -96,7 +98,21 @@ namespace AltV.Net.NetworkingEntity
             entityIdStorage.Free(id);
             entityRepository.Delete(id);
 
-            var deleteEvent = new Entity.Event {Delete = {Id = id}};
+            var deleteEvent = new Event {Delete = {Id = id}};
+            webSocketRepository.SendToAll(deleteEvent);
+        }
+
+        public void UpdateEntityPosition(ulong id, Position position)
+        {
+            entityRepository.Get(id).Position = position;
+            var deleteEvent = new Event {PositionChange = {Id = id, Position = position}};
+            webSocketRepository.SendToAll(deleteEvent);
+        }
+
+        public void UpdateEntityData(ulong id, string key, MValue value)
+        {
+            entityRepository.Get(id).Data[key] = value;
+            var deleteEvent = new Event {DataChange = {Id = id, Key = key, Value = value}};
             webSocketRepository.SendToAll(deleteEvent);
         }
     }
