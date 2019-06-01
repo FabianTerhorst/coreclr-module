@@ -59,12 +59,32 @@ message EntityCreateEvent {
     Entity entity = 1;
 }
 
-message Event {
+message EntityStreamInEvent {
+    Entity entity = 1;
+}
+
+message EntityStreamOutEvent {
+    Entity entity = 1;
+}
+
+message AuthEvent {
+    string token = 1;
+}
+
+message ServerEvent {
     oneof Event {
         EntityDataChangeEvent dataChange = 1;
         EntitySendEvent send = 2;
         EntityPositionChangeEvent positionChange = 3;
         EntityDeleteEvent delete = 4;
         EntityCreateEvent create = 5;
+    }
+}
+
+message ClientEvent {
+    oneof Event {
+        AuthEvent auth = 1;
+        EntityStreamInEvent streamIn = 2;
+        EntityStreamOutEvent streamOut = 3;
     }
 }

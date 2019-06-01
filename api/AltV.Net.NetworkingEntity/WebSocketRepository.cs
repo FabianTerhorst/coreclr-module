@@ -21,7 +21,7 @@ namespace AltV.Net.NetworkingEntity
             }
         }
 
-        public void SendToAll(Entity.Event entityEvent)
+        public void SendToAll(Entity.ServerEvent entityEvent)
         {
             var bytes = entityEvent.ToByteArray();
             lock (playerWebSockets)

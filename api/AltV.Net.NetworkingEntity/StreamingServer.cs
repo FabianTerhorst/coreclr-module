@@ -1,5 +1,4 @@
-﻿using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Entity;
 using Google.Protobuf;
 using WebSocket = net.vieapps.Components.WebSockets.WebSocket;
@@ -14,6 +13,10 @@ namespace AltV.Net.NetworkingEntity
     //TODO: regenerate tokens for both players when two are trying to use same token
     public class StreamingServer
     {
+        //TODO: manage streamed in players for each entity to deliver to them the change events
+
+        //TODO: maybe write authenticated player in websocket connection header to know which player send each message for calculating stream in / out events
+
         private readonly WebSocket webSocket;
 
         private readonly AuthProvider authProvider = new AuthProvider();
@@ -28,25 +31,25 @@ namespace AltV.Net.NetworkingEntity
         {
             entityRepository.OnEntityAdd += entity =>
             {
-                var createEvent = new Event {Create = {Entity = entity}};
+                var createEvent = new ServerEvent {Create = {Entity = entity}};
                 webSocketRepository.SendToAll(createEvent);
             };
             entityRepository.OnEntityRemove += id =>
             {
-                var deleteEvent = new Event {Delete = {Id = id}};
+                var deleteEvent = new ServerEvent {Delete = {Id = id}};
                 webSocketRepository.SendToAll(deleteEvent);
             };
             entityRepository.OnEntityPositionUpdate += (id, position) =>
             {
-                var deleteEvent = new Event {PositionChange = {Id = id, Position = position}};
+                var deleteEvent = new ServerEvent {PositionChange = {Id = id, Position = position}};
                 webSocketRepository.SendToAll(deleteEvent);
             };
             entityRepository.OnEntityDataUpdate += (id, key, value) =>
             {
-                var deleteEvent = new Event {DataChange = {Id = id, Key = key, Value = value}};
+                var deleteEvent = new ServerEvent {DataChange = {Id = id, Key = key, Value = value}};
                 webSocketRepository.SendToAll(deleteEvent);
             };
-            
+
             Alt.OnPlayerConnect += (player, reason) =>
             {
                 Task.Run(() => { authProvider.SendAuthentication(player); });
@@ -82,25 +85,42 @@ namespace AltV.Net.NetworkingEntity
                 {
                     Task.Run(() =>
                     {
-                        var token = Encoding.UTF8.GetString(data, 0, data.Length);
-                        var player = authProvider.VerifyAuthentication(token);
-                        lock (player)
+                        var clientEvent = ClientEvent.Parser.ParseFrom(data);
+                        if (clientEvent == null) return;
+                        var authEvent = clientEvent.Auth;
+                        var streamIn = clientEvent.StreamIn;
+                        var streamOut = clientEvent.StreamOut;
+                        if (authEvent != null)
                         {
-                            if (player.Exists)
+                            var token = authEvent.Token;
+                            if (token == null) return;
+                            var player = authProvider.VerifyAuthentication(token);
+                            lock (player)
                             {
-                                webSocketRepository.Add(player, webSocket);
+                                if (player.Exists)
+                                {
+                                    webSocketRepository.Add(player, webSocket);
+                                }
+
+                                //players.Remove(token); //TODO: keep token alive so we can reconnect on connection lost
                             }
 
-                            //players.Remove(token); //TODO: keep token alive so we can reconnect on connection lost
+                            var sendEvent = new ServerEvent();
+                            var currSendEvent = new EntitySendEvent();
+                            lock (entityRepository.Entities)
+                            {
+                                currSendEvent.Entities.Add(entityRepository.GetAll());
+                                sendEvent.Send = currSendEvent;
+                                webSocket.SendAsync(sendEvent.ToByteArray(), false);
+                            }
                         }
-
-                        var sendEvent = new Event();
-                        var currSendEvent = new EntitySendEvent();
-                        lock (entityRepository.Entities)
+                        else if (streamIn != null)
                         {
-                            currSendEvent.Entities.Add(entityRepository.GetAll());
-                            sendEvent.Send = currSendEvent;
-                            webSocket.SendAsync(sendEvent.ToByteArray(), false);
+                            //TODO:   
+                        }
+                        else if (streamOut != null)
+                        {
+                            //TODO:
                         }
                     });
                 }
