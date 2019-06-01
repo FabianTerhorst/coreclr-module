@@ -8,6 +8,9 @@ using WebSocket = net.vieapps.Components.WebSockets.WebSocket;
 
 namespace AltV.Net.NetworkingEntity
 {
+    /// <summary>
+    /// Manages websockets associated with the players and sends events to them
+    /// </summary>
     public class WebSocketRepository
     {
         private readonly Dictionary<IPlayer, ManagedWebSocket> playerWebSockets =
@@ -33,6 +36,22 @@ namespace AltV.Net.NetworkingEntity
                 foreach (var value in playerWebSockets.Values)
                 {
                     value.SendAsync(bytes, false);
+                }
+            }
+        }
+
+        public void SendToPlayers(HashSet<IPlayer>.Enumerator players, Entity.ServerEvent entityEvent)
+        {
+            var bytes = entityEvent.ToByteArray();
+            lock (playerWebSockets)
+            {
+                while (players.MoveNext())
+                {
+                    var player = players.Current;
+                    if (playerWebSockets.TryGetValue(player, out var webSocket))
+                    {
+                        webSocket.SendAsync(bytes, false);
+                    }
                 }
             }
         }

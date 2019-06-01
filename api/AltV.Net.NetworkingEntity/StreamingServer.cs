@@ -15,6 +15,11 @@ namespace AltV.Net.NetworkingEntity
     //TODO: regenerate tokens for both players when two are trying to use same token
     
     //TODO: we can extend the managed websocket and store the player reference i think
+    
+    //TODO: maybe dont use IPlayer so we can host streaming server optional on different server as well,
+    //TODO: but then we need communication way between game server and streaming server to send token to player or allow sending it
+    //TODO: via own abstraction as a callback everyone can implement with own method
+    //TODO: so that authentication verification can be handled by own tokens ect.
     public class StreamingServer
     {
         private readonly WebSocket webSocket;
@@ -50,8 +55,9 @@ namespace AltV.Net.NetworkingEntity
             };
             entityRepository.OnEntityDataUpdate += (id, key, value) =>
             {
-                var deleteEvent = new ServerEvent {DataChange = {Id = id, Key = key, Value = value}};
-                webSocketRepository.SendToAll(deleteEvent);
+                var dataChangeEvent = new ServerEvent {DataChange = {Id = id, Key = key, Value = value}};
+                var streamedInPlayers = entityRepository.GetStreamedInPlayers(id);
+                webSocketRepository.SendToPlayers(streamedInPlayers.GetEnumerator(), dataChangeEvent);
             };
             entityRepository.OnEntityStreamIn += (entity, player) =>
             {
@@ -134,6 +140,11 @@ namespace AltV.Net.NetworkingEntity
                             var player = webSocketRepository.GetPlayer(webSocket);
                             if (player == null) return;
                             entityRepository.StreamedIn(player, streamIn.EntityId);
+                            if (entityRepository.DoesPlayerNeedsNewData(streamIn.EntityId, player))
+                            {
+                                //var dataChangeEvent = new ServerEvent {DataChange = {Id = id, Key = key, Value = value}};
+                                //webSocket.SendAsync(dataChangeEvent.ToByteArray(), false);
+                            }
                         }
                         else if (streamOut != null)
                         {

@@ -59,11 +59,11 @@ namespace AltV.Net.NetworkingEntity
 
         private readonly Dictionary<ulong, HashSet<IPlayer>> streamedInPlayers =
             new Dictionary<ulong, HashSet<IPlayer>>();
-        
+
         // Stores the version of the entity data to not transfer already transferred data
         private readonly Dictionary<IPlayer, Dictionary<ulong, ulong>> playerEntityDataSnapshotVersions =
             new Dictionary<IPlayer, Dictionary<ulong, ulong>>();
-        
+
         // Stores the entities snapshot version, maybe wrap entity in own object so we get more control over creation ect. and don't need this dictionary
         private readonly Dictionary<ulong, ulong> entitiesSnapshotVersions =
             new Dictionary<ulong, ulong>();
@@ -114,6 +114,7 @@ namespace AltV.Net.NetworkingEntity
                 //TODO: increase snapshot version
                 var entity = Entities[id];
                 entity.Data[key] = value;
+                IncreaseEntitySnapshotVersion(id);
                 if (EntityDataUpdateHandler == null) return;
                 EntityDataUpdateHandler(id, key, value);
             }
@@ -152,11 +153,68 @@ namespace AltV.Net.NetworkingEntity
             }
         }
 
+        // Not thread safe, needs to be called in one of the listeners
+        public HashSet<IPlayer> GetStreamedInPlayers(ulong id)
+        {
+            return streamedInPlayers.TryGetValue(id, out var players) ? players : null;
+        }
+
         public IEnumerable<Entity.Entity> GetAll()
         {
             lock (Entities)
             {
                 return new Dictionary<ulong, Entity.Entity>(Entities).Values;
+            }
+        }
+
+        //TODO: handle overflow, needs another flag in entity, we need a own entity object now for sure
+        private void IncreaseEntitySnapshotVersion(ulong id)
+        {
+            if (entitiesSnapshotVersions.TryGetValue(id, out var snapshotVersion))
+            {
+                entitiesSnapshotVersions[id] = ++snapshotVersion;
+            }
+            else
+            {
+                entitiesSnapshotVersions[id] = 1;
+            }
+        }
+
+        //TODO: This method believes that the player will always receive newest snapshot after execution, this needs to change in the future
+        //TODO: keep snapshot version of each entity data and when a data is removed, increase snapshot version because players needs to know updated value
+        public bool DoesPlayerNeedsNewData(ulong id, IPlayer player)
+        {
+            Dictionary<ulong, ulong> snapshots;
+            if (!playerEntityDataSnapshotVersions.TryGetValue(player, out snapshots))
+            {
+                snapshots = new Dictionary<ulong, ulong>();
+                playerEntityDataSnapshotVersions[player] = snapshots;
+            }
+
+            if (snapshots.TryGetValue(id, out var currSnapshot))
+            {
+                if (entitiesSnapshotVersions.TryGetValue(id, out var entitySnapshot))
+                {
+                    snapshots[id] = entitySnapshot;
+                    return entitySnapshot > currSnapshot;
+                }
+                else // entity doesn't has a snapshot anymore, so we remove player snapshot as well
+                {
+                    snapshots.Remove(id);
+                    return true;
+                }
+            }
+            else // player never received data, send it now
+            {
+                if (entitiesSnapshotVersions.TryGetValue(id, out var entitySnapshot))
+                {
+                    snapshots[id] = entitySnapshot;
+                    return true;
+                }
+                else // Entity doesnt has a snapshot, so it has no data
+                {
+                    return false;
+                }
             }
         }
     }
