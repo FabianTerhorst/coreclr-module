@@ -12,6 +12,7 @@ namespace AltV.Net.NetworkingEntity
     {
         private readonly WebSocket webSocket;
 
+        private readonly AuthProvider authProvider = new AuthProvider();
 
         private readonly WebSocketRepository webSocketRepository = new WebSocketRepository();
 
