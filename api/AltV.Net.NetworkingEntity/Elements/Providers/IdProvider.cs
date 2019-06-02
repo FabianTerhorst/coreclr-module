@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 
-namespace AltV.Net.NetworkingEntity
+namespace AltV.Net.NetworkingEntity.Elements.Providers
 {
     /// <summary>
-    /// This generates unique id's for each networking entity
+    /// Default id provider that returns unique ids and reuses freed ids
     /// </summary>
-    public class EntityIdStorage
+    public class IdProvider : IIdProvider<ulong>
     {
         private readonly Stack<ulong> freeIds = new Stack<ulong>();
 
         private ulong currId;
-
+        
         public ulong GetNext()
         {
             lock (freeIds)

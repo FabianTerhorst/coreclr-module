@@ -1,46 +1,61 @@
 using System;
-using AltV.Net.Elements.Entities;
+using System.Collections.Generic;
+using AltV.Net.NetworkingEntity.Elements.Entities;
 using Entity;
 
 namespace AltV.Net.NetworkingEntity
 {
+    // TODO: We don't trigger stream out in entity remove because client can calculate that himself
     public static class AltNetworking
     {
-        private static StreamingServer _streamingServer;
-        
-        public static Action<Entity.Entity, IPlayer> OnEntityStreamIn
+        internal static NetworkingModule Module;
+
+        public static Action<INetworkingEntity, INetworkingClient> OnEntityStreamIn
         {
-            set => _streamingServer.EntityStreamInHandler += value;
+            set => Module.Server.EntityStreamInHandler += value;
         }
 
-        public static Action<Entity.Entity, IPlayer> OnEntityStreamOut
+        public static Action<INetworkingEntity, INetworkingClient> OnEntityStreamOut
         {
-            set => _streamingServer.EntityStreamOutHandler += value;
+            set => Module.Server.EntityStreamOutHandler += value;
         }
 
         public static void Init()
         {
-            _streamingServer = new StreamingServer();
+            Module = new NetworkingModule();
         }
 
-        public static void Create(Entity.Entity entity)
+        public static void Init(NetworkingModule networkingModule)
         {
-            _streamingServer?.CreateEntity(entity);
+            Module = networkingModule;
         }
 
-        public static void Delete(ulong id)
+        public static INetworkingEntity CreateEntity(Position position, int dimension, IDictionary<string, object> data)
         {
-            _streamingServer?.DeleteEntity(id);
+            var entity = new Entity.Entity {Position = position, Dimension = dimension};
+            foreach (var (key, value) in data)
+            {
+                entity.Data[key] = MValueUtils.ToMValue(value);
+            }
+
+            Module.Streamer.CreateEntity(entity);
+            return Module.EntityPool.Create(Module.Streamer, entity);
         }
 
-        public static void UpdatePosition(ulong id, Position position)
+        public static void RemoveEntity(INetworkingEntity entity)
         {
-            _streamingServer?.UpdateEntityPosition(id, position);
+            Module.Streamer.RemoveEntity(entity.StreamedEntity);
+            Module.EntityPool.Remove(entity);
         }
 
-        public static void UpdateData(ulong id, string key, MValue value)
+        public static INetworkingClient CreateClient()
         {
-            _streamingServer?.UpdateEntityData(id, key, value);
+            return Module.ClientPool.Create();
+        }
+
+        public static void RemoveClient(INetworkingClient client)
+        {
+            Module.ClientPool.Remove(client);
         }
     }
 }

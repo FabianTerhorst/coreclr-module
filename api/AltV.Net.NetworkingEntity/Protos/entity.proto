@@ -33,6 +33,7 @@ message MValue {
         DictionaryMValue dictionaryValue = 6;
         ListMValue listValue = 7;
         uint64 entityValue = 8;
+        bool nullValue = 9;// We send this to indicate MValue is null for e.g. remove event
     }
 }
 
@@ -42,6 +43,16 @@ message EntityDataChangeEvent {
     MValue value = 3;
 }
 
+message EntityDataEntry {
+    string key = 2;
+    MValue value = 3;
+}
+
+message EntityMultipleDataChangeEvent {
+    uint64 id = 1;
+    map<string, MValue> data = 2;
+}
+
 message EntitySendEvent {
     repeated Entity entities = 1;
 }
@@ -49,6 +60,11 @@ message EntitySendEvent {
 message EntityPositionChangeEvent {
     uint64 id = 1;
     Position position = 2;
+}
+
+message EntityDimensionChangeEvent {
+    uint64 id = 1;
+    int32 dimension = 2;
 }
 
 message EntityDeleteEvent {
@@ -78,6 +94,8 @@ message ServerEvent {
         EntityPositionChangeEvent positionChange = 3;
         EntityDeleteEvent delete = 4;
         EntityCreateEvent create = 5;
+        EntityMultipleDataChangeEvent multipleDataChange = 6;
+        EntityDimensionChangeEvent dimensionChange = 7;
     }
 }
 

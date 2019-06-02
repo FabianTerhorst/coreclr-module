@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
@@ -142,6 +143,26 @@ namespace AltV.Net.Elements.Args
                     writer = new MValueWriter();
                     convertible.GetAdapter().ToMValue(obj, writer);
                     return writer.ToMValue();
+                case Position position:
+                    var posValues = new MValue[3];
+                    posValues[0] = Create(position.X);
+                    posValues[1] = Create(position.Y);
+                    posValues[2] = Create(position.Z);
+                    var posKeys = new string[3];
+                    posKeys[0] = "x";
+                    posKeys[1] = "y";
+                    posKeys[2] = "z";
+                    return Create(posValues, posKeys);
+                case Rotation rotation:
+                    var rotValues = new MValue[3];
+                    rotValues[0] = Create(rotation.Roll);
+                    rotValues[1] = Create(rotation.Pitch);
+                    rotValues[2] = Create(rotation.Yaw);
+                    var rotKeys = new string[3];
+                    rotKeys[0] = "roll";
+                    rotKeys[1] = "pitch";
+                    rotKeys[2] = "yaw";
+                    return Create(rotValues, rotKeys);
                 default:
                     Alt.Log("can't convert type:" + obj.GetType());
                     return Nil;

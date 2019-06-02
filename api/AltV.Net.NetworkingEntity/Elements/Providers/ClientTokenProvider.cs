@@ -1,10 +1,20 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace AltV.Net.NetworkingEntity
+namespace AltV.Net.NetworkingEntity.Elements.Providers
 {
-    public static class SecretToken
+    /// <summary>
+    /// client token provider
+    /// </summary>
+    public class ClientTokenProvider : IIdProvider<string>
     {
+        //TODO: validate that same token didnt got generated
+        public string GetNext() => GenerateToken(128);
+
+        public void Free(string token)
+        {
+        }
+
         private const string CharSet =
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789?=:;_+*ß.,<>%$§!&()^°@€-";
 
