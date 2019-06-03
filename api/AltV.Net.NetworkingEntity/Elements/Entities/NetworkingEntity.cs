@@ -36,6 +36,16 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
             }
         }
 
+        public uint Range
+        {
+            get => StreamedEntity.Range;
+            set
+            {
+                StreamedEntity.Range = value;
+                entityStreamer.UpdateEntityRange(StreamedEntity, value);
+            }
+        }
+
         public bool Exists { get; set; }
 
         public NetworkingEntity(IEntityStreamer entityStreamer, Entity.Entity streamedEntity)

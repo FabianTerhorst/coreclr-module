@@ -12,6 +12,7 @@ message Entity {
     uint64 id = 1;
     Position position = 2;
     int32 dimension = 3;
+    uint32 range = 4;
     map<string, MValue> data = 5;
 }
 
@@ -43,11 +44,6 @@ message EntityDataChangeEvent {
     MValue value = 3;
 }
 
-message EntityDataEntry {
-    string key = 2;
-    MValue value = 3;
-}
-
 message EntityMultipleDataChangeEvent {
     uint64 id = 1;
     map<string, MValue> data = 2;
@@ -60,6 +56,11 @@ message EntitySendEvent {
 message EntityPositionChangeEvent {
     uint64 id = 1;
     Position position = 2;
+}
+
+message EntityRangeChangeEvent {
+    uint64 id = 1;
+    uint32 range = 2;
 }
 
 message EntityDimensionChangeEvent {
@@ -92,10 +93,11 @@ message ServerEvent {
         EntityDataChangeEvent dataChange = 1;
         EntitySendEvent send = 2;
         EntityPositionChangeEvent positionChange = 3;
-        EntityDeleteEvent delete = 4;
-        EntityCreateEvent create = 5;
-        EntityMultipleDataChangeEvent multipleDataChange = 6;
-        EntityDimensionChangeEvent dimensionChange = 7;
+        EntityRangeChangeEvent rangeChange = 4;
+        EntityDeleteEvent delete = 5;
+        EntityCreateEvent create = 6;
+        EntityMultipleDataChangeEvent multipleDataChange = 7;
+        EntityDimensionChangeEvent dimensionChange = 8;
     }
 }
 

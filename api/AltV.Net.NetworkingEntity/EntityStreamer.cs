@@ -50,7 +50,16 @@ namespace AltV.Net.NetworkingEntity
             AltNetworking.Module.ClientPool.SendToAll(bytes);
         }
 
-        //TODO: should this only be streamed to players with old dimension and new dimension
+        public void UpdateEntityRange(Entity.Entity entity, uint range)
+        {
+            var entityRangeChangeEvent = new EntityRangeChangeEvent {Id = entity.Id, Range = range};
+            var serverEvent = new ServerEvent {RangeChange = entityRangeChangeEvent};
+            var bytes = serverEvent.ToByteArray();
+            AltNetworking.Module.ClientPool.SendToAll(bytes);
+        }
+
+        //TODO: should this only be streamed to players with old dimension and new dimension,
+        //TODO: but then we would have to send a client all entities again when the client changes the dimension, which we should implement as well
         public void UpdateEntityDimension(Entity.Entity entity, int dimension)
         {
             var entityDimensionChangeEvent = new EntityDimensionChangeEvent {Id = entity.Id, Dimension = dimension};

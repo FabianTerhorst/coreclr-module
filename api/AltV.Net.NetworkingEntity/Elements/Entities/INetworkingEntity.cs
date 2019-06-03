@@ -22,6 +22,11 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
         Position Position { get; set; }
 
         /// <summary>
+        /// The distance the entity will stream in, out
+        /// </summary>
+        uint Range { get; set; }
+
+        /// <summary>
         /// Check if the entity still exists, when you do it inside a lock(entity) it will even be thread safe
         /// </summary>
         bool Exists { get; }
@@ -73,7 +78,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
         /// <param name="value"></param>
         void SetData(string key, IEnumerable<object> value);
 
-        
+
         /// <summary>
         /// This method is required to call to change entity data after creation to update data snapshot
         /// </summary>
