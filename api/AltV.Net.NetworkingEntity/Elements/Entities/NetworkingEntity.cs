@@ -76,6 +76,30 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
             UpdateData(key, new MValue {NullValue = true});
         }
 
+        public void SetData(string key, IDictionary<string, object> value)
+        {
+            var dictionaryMValue = new DictionaryMValue();
+            foreach (var (currKey, dictValue) in value)
+            {
+                dictionaryMValue.Value[currKey] = MValueUtils.ToMValue(dictValue);
+            }
+
+            var mValue = new MValue {DictionaryValue = dictionaryMValue};
+            UpdateData(key, mValue);
+        }
+        
+        public void SetData(string key, IEnumerable<object> value)
+        {
+            var listMValue = new ListMValue();
+            foreach (var curr in value)
+            {
+                listMValue.Value.Add(MValueUtils.ToMValue(curr));
+            }
+
+            var mValue = new MValue {ListValue = listMValue};
+            UpdateData(key, mValue);
+        }
+
         public bool GetData(string key, out bool value)
         {
             if (StreamedEntity.Data.TryGetValue(key, out var mValue) &&

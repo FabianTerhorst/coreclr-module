@@ -70,6 +70,21 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
         /// This method is required to call to change entity data after creation to update data snapshot
         /// </summary>
         /// <param name="key"></param>
+        /// <param name="value"></param>
+        void SetData(string key, IEnumerable<object> value);
+
+        
+        /// <summary>
+        /// This method is required to call to change entity data after creation to update data snapshot
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        void SetData(string key, IDictionary<string, object> value);
+
+        /// <summary>
+        /// This method is required to call to change entity data after creation to update data snapshot
+        /// </summary>
+        /// <param name="key"></param>
         void SetDataNull(string key);
 
         bool GetData(string key, out bool value);

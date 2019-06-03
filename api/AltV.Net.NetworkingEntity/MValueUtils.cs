@@ -8,6 +8,7 @@ namespace AltV.Net.NetworkingEntity
     {
         public static MValue ToMValue(object value)
         {
+            if (value == null) return new MValue {NullValue = false};
             switch (value)
             {
                 case string currValue:
