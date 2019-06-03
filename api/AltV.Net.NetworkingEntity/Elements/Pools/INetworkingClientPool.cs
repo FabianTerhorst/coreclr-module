@@ -6,15 +6,15 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
     public interface INetworkingClientPool
     {
         IDictionary<string, INetworkingClient> Clients { get; }
-        
+
         INetworkingClient Create();
 
-        void Add(INetworkingClient client);
+        bool Add(INetworkingClient client);
 
         void Remove(INetworkingClient client);
-        
+
         void Remove(string token);
-        
+
         bool Remove(string token, out INetworkingClient client);
 
         bool TryGet(string token, out INetworkingClient client);

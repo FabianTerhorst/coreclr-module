@@ -9,7 +9,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
 
         INetworkingEntity Create(IEntityStreamer entityStreamer, Entity.Entity streamedEntity);
 
-        void Add(INetworkingEntity entity);
+        bool Add(INetworkingEntity entity);
 
         void Remove(INetworkingEntity entity);
         

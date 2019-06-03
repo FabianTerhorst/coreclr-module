@@ -28,12 +28,11 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
             return entity;
         }
 
-        public void Add(INetworkingClient client)
+        public bool Add(INetworkingClient client)
         {
             lock (entities)
             {
-                if (entities.ContainsKey(client.Token)) return;
-                entities[client.Token] = client;
+                return entities.TryAdd(client.Token, client);
             }
         }
 

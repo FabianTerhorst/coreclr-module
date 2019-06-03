@@ -29,29 +29,37 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
             return entity;
         }
 
-        public void Add(INetworkingEntity entity)
+        public bool Add(INetworkingEntity entity)
         {
-            if (entities.ContainsKey(entity.Id)) return;
-            entities[entity.Id] = entity;
+            lock (entities)
+            {
+                return entities.TryAdd(entity.Id, entity);
+            }
         }
 
         public void Remove(INetworkingEntity entity) => Remove(entity.Id);
 
         public void Remove(ulong id)
         {
-            if (entities.Remove(id, out var removedEntity))
+            INetworkingEntity removedEntity;
+            idProvider.Free(id);
+            lock (entities)
             {
-                idProvider.Free(id);
-                if (removedEntity is IInternalNetworkingEntity internalNetworkingEntity)
+                if (!entities.Remove(id, out removedEntity))
                 {
-                    lock (internalNetworkingEntity)
-                    {
-                        internalNetworkingEntity.Exists = false;
-                    }
+                    return;
+                }
+            }
+
+            if (removedEntity is IInternalNetworkingEntity internalNetworkingEntity)
+            {
+                lock (internalNetworkingEntity)
+                {
+                    internalNetworkingEntity.Exists = false;
                 }
             }
         }
-        
+
         public bool TryGet(ulong id, out INetworkingEntity entity)
         {
             lock (entities)
