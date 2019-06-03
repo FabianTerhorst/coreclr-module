@@ -24,7 +24,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
         /// <summary>
         /// The distance the entity will stream in, out
         /// </summary>
-        uint Range { get; set; }
+        float Range { get; set; }
 
         /// <summary>
         /// Check if the entity still exists, when you do it inside a lock(entity) it will even be thread safe

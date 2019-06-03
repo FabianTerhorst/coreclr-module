@@ -36,7 +36,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
             }
         }
 
-        public uint Range
+        public float Range
         {
             get => StreamedEntity.Range;
             set

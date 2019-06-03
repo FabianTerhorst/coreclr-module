@@ -5,14 +5,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos\entity.proto">
+        <Protobuf Include="Client\entity.proto">
           <GrpcServices>Both</GrpcServices>
           <Access>Public</Access>
           <ProtoCompile>True</ProtoCompile>
           <ProtoRoot></ProtoRoot>
           <CompileOutputs>True</CompileOutputs>
           <OutputDir>obj\Debug\netcoreapp3.0\</OutputDir>
-          <Link>Protos\entity.proto</Link>
+          <Link>Client\entity.proto</Link>
         </Protobuf>
     </ItemGroup>
 
@@ -25,6 +25,42 @@
       <PackageReference Include="Google.Protobuf" Version="3.7.0" />
       <PackageReference Include="Grpc" Version="1.20.1" />
       <PackageReference Include="Grpc.Tools" Version="1.20.1" PrivateAssets="All" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Client\deps\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Client\deps\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Client\deps\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Client\index.html" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Client\index.html" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Client\index.html" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Client\networking-entity.js" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Client\networking-entity.js" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Client\networking-entity.js" />
     </ItemGroup>
 
 </Project>

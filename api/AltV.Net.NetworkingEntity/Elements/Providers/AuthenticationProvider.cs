@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
@@ -83,6 +84,21 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
             if (!webSocket.Extra.TryGetValue(ClientExtra, out var playerObject) ||
                 !(playerObject is INetworkingClient client)) return null;
             return client;
+        }
+
+        public void OnConnectionBroken(ManagedWebSocket webSocket)
+        {
+            webSocket.Extra.Remove(ClientExtra);
+        }
+
+        public void OnConnectionEstablished(ManagedWebSocket webSocket)
+        {
+            // we don't care about websockets that are just here, maybe timeout them after 5sec without authentication
+        }
+
+        public void OnError(ManagedWebSocket webSocket, Exception exception)
+        {
+            Console.WriteLine(exception);
         }
     }
 }

@@ -12,7 +12,7 @@ message Entity {
     uint64 id = 1;
     Position position = 2;
     int32 dimension = 3;
-    uint32 range = 4;
+    float range = 4;
     map<string, MValue> data = 5;
 }
 
@@ -60,7 +60,7 @@ message EntityPositionChangeEvent {
 
 message EntityRangeChangeEvent {
     uint64 id = 1;
-    uint32 range = 2;
+    float range = 2;
 }
 
 message EntityDimensionChangeEvent {

@@ -50,7 +50,7 @@ namespace AltV.Net.NetworkingEntity
             AltNetworking.Module.ClientPool.SendToAll(bytes);
         }
 
-        public void UpdateEntityRange(Entity.Entity entity, uint range)
+        public void UpdateEntityRange(Entity.Entity entity, float range)
         {
             var entityRangeChangeEvent = new EntityRangeChangeEvent {Id = entity.Id, Range = range};
             var serverEvent = new ServerEvent {RangeChange = entityRangeChangeEvent};

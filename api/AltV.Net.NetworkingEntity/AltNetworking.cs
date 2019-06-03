@@ -30,9 +30,9 @@ namespace AltV.Net.NetworkingEntity
             Module = networkingModule;
         }
 
-        public static INetworkingEntity CreateEntity(Position position, int dimension, IDictionary<string, object> data)
+        public static INetworkingEntity CreateEntity(Position position, int dimension, float range, IDictionary<string, object> data)
         {
-            var entity = new Entity.Entity {Position = position, Dimension = dimension};
+            var entity = new Entity.Entity {Position = position, Dimension = dimension, Range = range};
             foreach (var (key, value) in data)
             {
                 entity.Data[key] = MValueUtils.ToMValue(value);

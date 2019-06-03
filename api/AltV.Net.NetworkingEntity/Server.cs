@@ -28,15 +28,15 @@ namespace AltV.Net.NetworkingEntity
             {
                 OnError = (webSocket, exception) =>
                 {
-                    // your code to handle error
+                    authenticationProvider.OnError(webSocket, exception);
                 },
                 OnConnectionEstablished = (webSocket) =>
                 {
-                    // your code to handle established connection
+                    authenticationProvider.OnConnectionEstablished(webSocket); 
                 },
                 OnConnectionBroken = (webSocket) =>
                 {
-                    // your code to handle broken connection
+                    authenticationProvider.OnConnectionBroken(webSocket);
                 },
                 OnMessageReceived = (webSocket, result, data) =>
                 {

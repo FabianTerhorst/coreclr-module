@@ -13,7 +13,7 @@ namespace AltV.Net.NetworkingEntity
 
         void UpdateEntityPosition(Entity.Entity entity, Position position);
         
-        void UpdateEntityRange(Entity.Entity entity, uint range);
+        void UpdateEntityRange(Entity.Entity entity, float range);
 
         void UpdateEntityDimension(Entity.Entity entity, int dimension);
     }
