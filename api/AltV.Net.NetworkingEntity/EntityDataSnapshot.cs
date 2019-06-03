@@ -20,12 +20,6 @@ namespace AltV.Net.NetworkingEntity
             this.entityId = entityId;
         }
 
-        //TODO: maybe store hashset of networking clients here that knows about this entity and cleanup the list when iteration over them an exists is false
-
-        //TODO: use ManagedWebSocket for identify a player to get away from none default apis for different host
-        //TODO: this dictionary is useless because we won't cache client snapshots in entity because we have networkingclient now
-        //public Dictionary<INetworkingClient, ClientDataSnapshot> PlayerSnapshots;
-
         public override void OnOverflow(string key)
         {
             HashSet<INetworkingClient> clientsToRemove = null;
