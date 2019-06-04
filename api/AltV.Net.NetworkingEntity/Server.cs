@@ -16,7 +16,7 @@ namespace AltV.Net.NetworkingEntity
         private readonly IAuthenticationProvider authenticationProvider;
 
         private readonly IEntityStreamer streamer;
-        
+
         public event Action<INetworkingEntity, INetworkingClient> EntityStreamInHandler;
 
         public event Action<INetworkingEntity, INetworkingClient> EntityStreamOutHandler;
@@ -26,18 +26,9 @@ namespace AltV.Net.NetworkingEntity
             this.streamer = streamer;
             webSocket = new WebSocket
             {
-                OnError = (webSocket, exception) =>
-                {
-                    authenticationProvider.OnError(webSocket, exception);
-                },
-                OnConnectionEstablished = (webSocket) =>
-                {
-                    authenticationProvider.OnConnectionEstablished(webSocket); 
-                },
-                OnConnectionBroken = (webSocket) =>
-                {
-                    authenticationProvider.OnConnectionBroken(webSocket);
-                },
+                OnError = (webSocket, exception) => { authenticationProvider.OnError(webSocket, exception); },
+                OnConnectionEstablished = (webSocket) => { authenticationProvider.OnConnectionEstablished(webSocket); },
+                OnConnectionBroken = (webSocket) => { authenticationProvider.OnConnectionBroken(webSocket); },
                 OnMessageReceived = (webSocket, result, data) =>
                 {
                     Task.Run(() =>
@@ -77,6 +68,7 @@ namespace AltV.Net.NetworkingEntity
                             var entityId = streamIn.EntityId;
                             if (AltNetworking.Module.EntityPool.TryGet(entityId, out var entity))
                             {
+                                if (!authenticationProvider.VerifyPosition(client, entity)) return;
                                 EntityStreamInHandler?.Invoke(entity, client);
                                 entity.ClientStreamedIn(client);
                                 var changedKeys = entity.Snapshot.CompareWithClient(client);
@@ -107,8 +99,11 @@ namespace AltV.Net.NetworkingEntity
                             var entityId = streamOut.EntityId;
                             if (AltNetworking.Module.EntityPool.TryGet(entityId, out var entity))
                             {
-                                EntityStreamOutHandler?.Invoke(entity, client);
-                                entity.ClientStreamedOut(client);
+                                if (authenticationProvider.VerifyPosition(client, entity)) return;
+                                if (entity.ClientStreamedOut(client))
+                                {
+                                    EntityStreamOutHandler?.Invoke(entity, client);
+                                }
                             }
                         }
                     });
