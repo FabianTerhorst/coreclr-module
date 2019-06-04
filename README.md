@@ -218,7 +218,7 @@ Alt.Emit is used to illustrate event triggering from server -> server, in most u
 
 All types above as an array, eg. `int []`, `string[]`, ....
 
-Furthermore Dictionaries with `string`-Type as Key, eg. `Dictionary<string, object>` (linux only currently)
+Furthermore Dictionaries with `string`-Type as Key, eg. `Dictionary<string, object>`
 
 But also all interfaces of the AltV API or extend these, eg. `IEntity`, `IVehicle`, `IBlip`, `ICheckpoint`, `MyVehicle` ...
 
@@ -261,6 +261,36 @@ Alt.On<int, string, bool>("test", (number, str) => {
     Alt.Log("str=" + str + " - " + number);
 	return true;
 });
+```
+
+## Custom serialization
+
+You can send objects when the objects are implementing IWritable.
+
+e.g.
+```csharp
+List<WritableObject> objects;
+player.Emit("objects", objects);
+```
+`WritableObject.cs`:
+```csharp
+public class WritableObject : IWritable
+{
+    private readonly string test;
+
+    public WritableObject()
+    {
+        test = "123";
+    }
+
+    public void OnWrite(IMValueWriter writer)
+    {
+        writer.BeginObject();
+        writer.Name("test");
+        writer.Value(test);
+        writer.EndObject();
+    }
+}
 ```
 
 ## entity factories 
