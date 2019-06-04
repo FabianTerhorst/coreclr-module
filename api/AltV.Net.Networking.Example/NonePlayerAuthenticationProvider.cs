@@ -48,5 +48,10 @@ namespace AltV.Net.Networking.Example
         {
             Console.WriteLine(exception);
         }
+
+        public bool VerifyPosition(INetworkingClient client, INetworkingEntity entity)
+        {
+            return true;
+        }
     }
 }

@@ -43,5 +43,13 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
         /// <param name="webSocket"></param>
         /// <param name="exception"></param>
         void OnError(ManagedWebSocket webSocket, Exception exception);
+
+        /// <summary>
+        /// Triggers when client says it would be in streaming range, we can use this to make stream in / out more trustful
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        bool VerifyPosition(INetworkingClient client, INetworkingEntity entity);
     }
 }

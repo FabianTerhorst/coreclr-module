@@ -117,6 +117,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
 
         void ClientStreamedIn(INetworkingClient client);
 
-        void ClientStreamedOut(INetworkingClient client);
+        // Returns true when removed successfully
+        bool ClientStreamedOut(INetworkingClient client);
     }
 }

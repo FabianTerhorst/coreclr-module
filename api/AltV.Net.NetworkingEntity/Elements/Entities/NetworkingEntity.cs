@@ -3,7 +3,6 @@ using Entity;
 
 namespace AltV.Net.NetworkingEntity.Elements.Entities
 {
-    //TODO: dict, entity, list mvalues later
     public class NetworkingEntity : INetworkingEntity, IInternalNetworkingEntity
     {
         public Entity.Entity StreamedEntity { get; }
@@ -97,7 +96,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
             var mValue = new MValue {DictionaryValue = dictionaryMValue};
             UpdateData(key, mValue);
         }
-        
+
         public void SetData(string key, IEnumerable<object> value)
         {
             var listMValue = new ListMValue();
@@ -203,11 +202,11 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
             }
         }
 
-        public void ClientStreamedOut(INetworkingClient client)
+        public bool ClientStreamedOut(INetworkingClient client)
         {
             lock (StreamedInClients)
             {
-                StreamedInClients.Remove(client);
+                return StreamedInClients.Remove(client);
             }
         }
     }
