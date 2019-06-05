@@ -10,9 +10,12 @@ protobuf.load("entity.proto", function (err, root) {
     if (err)
         throw err;
     proto = {
-        clientEvent: root.lookupType("Entity.ClientEvent"),
-        serverEvent: root.lookupType("Entity.ServerEvent"),
-        authEvent: root.lookupType("Entity.AuthEvent")
+        Position: root.lookupType("Entity.Position"),
+        ClientEvent: root.lookupType("Entity.ClientEvent"),
+        ServerEvent: root.lookupType("Entity.ServerEvent"),
+        AuthEvent: root.lookupType("Entity.AuthEvent"),
+        EntityStreamInEvent: root.lookupType("Entity.EntityStreamInEvent"),
+        EntityStreamOutEvent: root.lookupType("Entity.EntityStreamOutEvent")
     };
     for (const get of protoBufGets) {
         get(proto);
@@ -31,9 +34,9 @@ function getProto() {
 
 connection.onopen = function () {
     getProto().then((proto) => {
-        const authEvent = proto.authEvent.create({token: "123"});
-        const clientEvent = proto.clientEvent.create({auth: authEvent});
-        const buffer = proto.clientEvent.encode(clientEvent).finish();
+        const authEvent = proto.AuthEvent.create({token: "123"});
+        const clientEvent = proto.ClientEvent.create({auth: authEvent});
+        const buffer = proto.ClientEvent.encode(clientEvent).finish();
         connection.send(buffer);
     });
 };
@@ -43,5 +46,5 @@ connection.onerror = function (error) {
 };
 
 connection.onmessage = async function (e) {
-    console.log('event', proto.serverEvent.decode(new Uint8Array(await new Response(e.data).arrayBuffer())));
+    console.log('event', proto.ServerEvent.decode(new Uint8Array(await new Response(e.data).arrayBuffer())));
 };

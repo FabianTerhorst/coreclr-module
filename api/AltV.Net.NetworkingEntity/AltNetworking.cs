@@ -12,12 +12,12 @@ namespace AltV.Net.NetworkingEntity
 
         public static Action<INetworkingEntity, INetworkingClient> OnEntityStreamIn
         {
-            set => Module.Server.EntityStreamInHandler += value;
+            set => Module.Server.StreamingHandler.EntityStreamInHandler += value;
         }
 
         public static Action<INetworkingEntity, INetworkingClient> OnEntityStreamOut
         {
-            set => Module.Server.EntityStreamOutHandler += value;
+            set => Module.Server.StreamingHandler.EntityStreamOutHandler += value;
         }
 
         public static void Init()
@@ -30,7 +30,8 @@ namespace AltV.Net.NetworkingEntity
             Module = networkingModule;
         }
 
-        public static INetworkingEntity CreateEntity(Position position, int dimension, float range, IDictionary<string, object> data)
+        public static INetworkingEntity CreateEntity(Position position, int dimension, float range,
+            IDictionary<string, object> data)
         {
             var entity = new Entity.Entity {Position = position, Dimension = dimension, Range = range};
             foreach (var (key, value) in data)
