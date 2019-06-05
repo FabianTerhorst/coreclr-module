@@ -10,6 +10,9 @@ using net.vieapps.Components.WebSockets;
 namespace AltV.Net.NetworkingEntity
 {
     //TODO: create a server entity streaming handler as well that calculates the stream in, stream out from server side
+    /// <summary>
+    /// Handles entity streaming via events emitted from client
+    /// </summary>
     public class ClientEntityStreamingHandler : IStreamingHandler
     {
         private readonly IAuthenticationProvider authenticationProvider;
