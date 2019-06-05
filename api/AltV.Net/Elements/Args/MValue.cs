@@ -163,6 +163,10 @@ namespace AltV.Net.Elements.Args
                     rotKeys[1] = "pitch";
                     rotKeys[2] = "yaw";
                     return Create(rotValues, rotKeys);
+                case short value:
+                    return Create(value);
+                case ushort value:
+                    return Create(value);
                 default:
                     Alt.Log("can't convert type:" + obj.GetType());
                     return Nil;
