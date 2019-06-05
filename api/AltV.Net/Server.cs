@@ -255,7 +255,7 @@ namespace AltV.Net
         {
             if (blip.Exists)
             {
-                AltNative.Server.Server_RemoveBlip(NativePointer, blip.NativePointer);
+                AltNative.Server.Server_DestroyBlip(NativePointer, blip.NativePointer);
             }
         }
 
@@ -263,7 +263,7 @@ namespace AltV.Net
         {
             if (checkpoint.Exists)
             {
-                AltNative.Server.Server_RemoveCheckpoint(NativePointer, checkpoint.NativePointer);
+                AltNative.Server.Server_DestroyCheckpoint(NativePointer, checkpoint.NativePointer);
             }
         }
 
@@ -271,7 +271,7 @@ namespace AltV.Net
         {
             if (vehicle.Exists)
             {
-                AltNative.Server.Server_RemoveVehicle(NativePointer, vehicle.NativePointer);
+                AltNative.Server.Server_DestroyVehicle(NativePointer, vehicle.NativePointer);
             }
         }
 
@@ -279,7 +279,7 @@ namespace AltV.Net
         {
             if (channel.Exists)
             {
-                AltNative.Server.Server_RemoveVoiceChannel(NativePointer, channel.NativePointer);
+                AltNative.Server.Server_DestroyVoiceChannel(NativePointer, channel.NativePointer);
             }
         }
 

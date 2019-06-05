@@ -37,13 +37,13 @@ EXPORT alt::IBlip*
 Server_CreateBlip(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::Position pos);
 EXPORT alt::IBlip*
 Server_CreateBlipAttached(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo);
-EXPORT void Server_RemoveEntity(alt::IServer* server, alt::IEntity* entity);
-EXPORT void Server_RemoveBlip(alt::IServer* server, alt::IBlip* blip);
-EXPORT void Server_RemoveCheckpoint(alt::IServer* server, alt::ICheckpoint* checkpoint);
-EXPORT void Server_RemoveVehicle(alt::IServer* server, alt::IVehicle* vehicle);
 EXPORT void Server_GetResource(alt::IServer* server, const char* resourceName, alt::IResource*&resource);
 EXPORT alt::IVoiceChannel* Server_CreateVoiceChannel(alt::IServer* server, bool spatial, float maxDistance);
-EXPORT void Server_RemoveVoiceChannel(alt::IServer* server, alt::IVoiceChannel* channel);
+EXPORT void Server_DestroyBaseObject(alt::IServer* server, alt::IBaseObject* baseObject);
+EXPORT void Server_DestroyVehicle(alt::IServer* server, alt::IVehicle* baseObject);
+EXPORT void Server_DestroyBlip(alt::IServer* server, alt::IBlip* baseObject);
+EXPORT void Server_DestroyCheckpoint(alt::IServer* server, alt::ICheckpoint* baseObject);
+EXPORT void Server_DestroyVoiceChannel(alt::IServer* server, alt::IVoiceChannel* baseObject);
 #ifdef __cplusplus
 }
 #endif

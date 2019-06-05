@@ -70,22 +70,6 @@ Server_CreateBlipAttached(alt::IServer* server, alt::IPlayer* target, uint8_t ty
     return server->CreateBlip(target, (alt::IBlip::Type) type, attachTo);
 }
 
-void Server_RemoveEntity(alt::IServer* server, alt::IEntity* entity) {
-    return server->RemoveEntity(entity);
-}
-
-void Server_RemoveBlip(alt::IServer* server, alt::IBlip* blip) {
-    server->RemoveBlip(blip);
-}
-
-void Server_RemoveCheckpoint(alt::IServer* server, alt::ICheckpoint* checkpoint) {
-    server->RemoveCheckpoint(checkpoint);
-}
-
-void Server_RemoveVehicle(alt::IServer* server, alt::IVehicle* vehicle) {
-    server->RemoveEntity(vehicle);
-}
-
 void Server_GetResource(alt::IServer* server, const char* resourceName, alt::IResource*&resource) {
     resource = server->GetResource(resourceName);
 }
@@ -94,6 +78,22 @@ alt::IVoiceChannel* Server_CreateVoiceChannel(alt::IServer* server, bool spatial
     return server->CreateVoiceChannel(spatial, maxDistance);
 }
 
-void Server_RemoveVoiceChannel(alt::IServer* server, alt::IVoiceChannel* channel) {
-    return server->RemoveVoiceChannel(channel);
+void Server_DestroyBaseObject(alt::IServer* server, alt::IBaseObject* baseObject) {
+    return server->DestroyBaseObject(baseObject);
+}
+
+void Server_DestroyVehicle(alt::IServer* server, alt::IVehicle* baseObject) {
+    return server->DestroyBaseObject(baseObject);
+}
+
+void Server_DestroyBlip(alt::IServer* server, alt::IBlip* baseObject) {
+    return server->DestroyBaseObject(baseObject);
+}
+
+void Server_DestroyCheckpoint(alt::IServer* server, alt::ICheckpoint* baseObject) {
+    return server->DestroyBaseObject(baseObject);
+}
+
+void Server_DestroyVoiceChannel(alt::IServer* server, alt::IVoiceChannel* baseObject) {
+    return server->DestroyBaseObject(baseObject);
 }

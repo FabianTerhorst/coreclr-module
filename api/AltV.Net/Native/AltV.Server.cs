@@ -52,18 +52,6 @@ namespace AltV.Net.Native
             internal static extern IntPtr Server_CreateBlipAttached(IntPtr serverPointer, IntPtr playerTargetPointer,
                 byte type, IntPtr entityAttachPointer);
 
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_RemoveEntity(IntPtr serverPointer, IntPtr entityPointer);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_RemoveBlip(IntPtr serverPointer, IntPtr blipPointer);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_RemoveCheckpoint(IntPtr serverPointer, IntPtr checkpointPointer);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_RemoveVehicle(IntPtr serverPointer, IntPtr vehiclePointer);
-
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_GetResource(IntPtr serverPointer, string resourceName,
                 ref IntPtr resourcePointer);
@@ -72,8 +60,20 @@ namespace AltV.Net.Native
             internal static extern IntPtr Server_CreateVoiceChannel(IntPtr serverPointer, bool spatial,
                 float maxDistance);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_RemoveVoiceChannel(IntPtr serverPointer, IntPtr channelPointer);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_DestroyBaseObject(IntPtr serverPointer, IntPtr baseObjectPointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_DestroyVehicle(IntPtr serverPointer, IntPtr baseObjectPointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_DestroyBlip(IntPtr serverPointer, IntPtr baseObjectPointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_DestroyCheckpoint(IntPtr serverPointer, IntPtr baseObjectPointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_DestroyVoiceChannel(IntPtr serverPointer, IntPtr baseObjectPointer);
         }
     }
 }
