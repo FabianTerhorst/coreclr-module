@@ -1,7 +1,4 @@
 using AltV.Net.NetworkingEntity.Elements.Factories;
-using AltV.Net.NetworkingEntity.Elements.Providers;
-using Entity;
-using Google.Protobuf;
 using net.vieapps.Components.WebSockets;
 
 //TODO: move proto file to Client folder to share same file
