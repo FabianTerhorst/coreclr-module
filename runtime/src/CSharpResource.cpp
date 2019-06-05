@@ -56,7 +56,8 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
 
     if (isDll) {
         struct stat buf;
-        auto executable = (stat((alt::String(this->GetPath()) + ASSEMBLY_PATH).CStr(), &buf) == 0);//TODO: needs resource cfg "assembly"
+        auto executable = (stat((alt::String(this->GetPath()) + ASSEMBLY_PATH).CStr(), &buf) ==
+                           0);//TODO: needs resource cfg "assembly"
 
         coreClr->CreateAppDomain(server, this, this->GetPath().CStr(), &runtimeHost, &domainId, executable,
                                  resourcesCache.GetSize() - 1);
@@ -231,7 +232,8 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
             if (entity == nullptr) return true;
             auto key = event->GetKey();
             auto value = event->GetVal();
-            OnSyncedMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), key == nullptr ? "" : key.CStr(), &value);
+            OnSyncedMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), key == nullptr ? "" : key.CStr(),
+                                       &value);
             break;
         }
         case alt::CEvent::Type::CHECKPOINT_EVENT: {
@@ -435,6 +437,10 @@ alt::IServer* CSharpResource_GetServerPointer() {
 
 CSharpResource* CSharpResource_GetResourcePointer(int32_t resourceIndex) {
     return resourcesCache[resourceIndex];
+}
+
+void CSharpResource::MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files) {
+    info->type = "js";
 }
 
 void* CSharpResource::GetBaseObjectPointer(alt::IBaseObject* baseObject) {

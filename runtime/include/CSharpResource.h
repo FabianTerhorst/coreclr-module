@@ -125,6 +125,8 @@ public:
         this->exports[key] = mValue;
     }
 
+    void MakeClient(CreationInfo* info, alt::Array<alt::String> files) override;
+
     CheckpointDelegate_t OnCheckpointDelegate;
 
     ClientEventDelegate_t OnClientEventDelegate;
