@@ -37,6 +37,16 @@ namespace AltV.Net.NetworkingEntity
                     }
 
                     return new MValue {ListValue = listMValue};
+                case int currValue:
+                    return new MValue {IntValue = currValue};
+                case uint currValue:
+                    return new MValue {UintValue = currValue};
+                case short currValue:
+                    return new MValue {IntValue = currValue};
+                case ushort currValue:
+                    return new MValue {UintValue = currValue};
+                case float currValue:
+                    return new MValue {DoubleValue = currValue};
                 default:
                     return new MValue {NullValue = false};
             }
