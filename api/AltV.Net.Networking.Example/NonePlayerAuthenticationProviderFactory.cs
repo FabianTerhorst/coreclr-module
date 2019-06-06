@@ -6,7 +6,7 @@ namespace AltV.Net.Networking.Example
 {
     public class NonePlayerAuthenticationProviderFactory : IAuthenticationProviderFactory
     {
-        public IAuthenticationProvider Create(WebSocket webSocket)
+        public IAuthenticationProvider Create(int port, WebSocket webSocket)
         {
             return new NonePlayerAuthenticationProvider(webSocket);
         }

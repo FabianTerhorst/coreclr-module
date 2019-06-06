@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
@@ -9,9 +10,8 @@ using WebSocket = net.vieapps.Components.WebSockets.WebSocket;
 
 namespace AltV.Net.NetworkingEntity.Elements.Providers
 {
-    //TODO: move this to sub project to have no altv.net dependency
     /// <summary>
-    /// Default authentication provider to handle authentication based on player connect, disconnect
+    /// Default authentication provider to handle authentication based on player connect, disconnect and sends the player the url to connect the websocket to
     /// </summary>
     public class AuthenticationProvider : IAuthenticationProvider
     {
@@ -21,7 +21,12 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
 
         private readonly Dictionary<IPlayer, string> playerTokenAccess = new Dictionary<IPlayer, string>();
 
-        public AuthenticationProvider(WebSocket webSocket)
+        public AuthenticationProvider(int port, WebSocket webSocket) : this("ws://" + GetIpAddress() + $":{port}/",
+            webSocket)
+        {
+        }
+
+        public AuthenticationProvider(string url, WebSocket webSocket)
         {
             Alt.OnPlayerConnect += (player, reason) =>
             {
@@ -36,7 +41,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
                             playerTokens[client.Token] = player;
                             playerTokenAccess[player] = client.Token;
 
-                            player.Emit("streamingToken", client.Token);
+                            player.Emit("streamingToken", url, client.Token);
                         }
                     }
                 });
@@ -69,6 +74,15 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
                     }
                 });
             };
+        }
+
+        private static string GetIpAddress()
+        {
+            var ipHostInfo = Dns.GetHostEntry(Dns.GetHostName()); // `Dns.Resolve()` method is deprecated.
+            if (ipHostInfo.AddressList.Length == 0) return null;
+            var ipAddress = ipHostInfo.AddressList[0];
+
+            return ipAddress.ToString();
         }
 
         public bool Verify(ManagedWebSocket webSocket, string token, out INetworkingClient client)

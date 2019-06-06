@@ -42,7 +42,8 @@ export default class WebSocket {
                         const newEntity = this.entityRepository.entities.get(dataChange.id);
                         console.log("data changed", newEntity.id, newEntity.data);
                         try {
-                            alt.emit("networkingEntityDataChange", newEntity);
+                            delete dataChange.id;
+                            alt.emit("networkingEntityDataChange", newEntity, dataChange);
                         } catch (e) {
                             console.log(e);
                         }
@@ -99,7 +100,7 @@ export default class WebSocket {
                         const newEntity = this.entityRepository.entities.get(multipleDataChange.id);
                         console.log("multiple data change", newEntity.id, newEntity.data);
                         try {
-                            alt.emit("networkingEntityDataChange", newEntity);
+                            alt.emit("networkingEntityDataChange", newEntity, multipleDataChange.data);
                         } catch (e) {
                             console.log(e);
                         }

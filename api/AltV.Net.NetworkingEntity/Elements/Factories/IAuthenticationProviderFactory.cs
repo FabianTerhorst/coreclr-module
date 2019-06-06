@@ -5,6 +5,6 @@ namespace AltV.Net.NetworkingEntity.Elements.Factories
 {
     public interface IAuthenticationProviderFactory
     {
-        IAuthenticationProvider Create(WebSocket webSocket);
+        IAuthenticationProvider Create(int port, WebSocket webSocket);
     }
 }

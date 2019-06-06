@@ -5,9 +5,9 @@ namespace AltV.Net.NetworkingEntity.Elements.Factories
 {
     public class AuthenticationProviderFactory : IAuthenticationProviderFactory
     {
-        public IAuthenticationProvider Create(WebSocket webSocket)
+        public IAuthenticationProvider Create(int port, WebSocket webSocket)
         {
-            return new AuthenticationProvider(webSocket);
+            return new AuthenticationProvider(port, webSocket);
         }
     }
 }

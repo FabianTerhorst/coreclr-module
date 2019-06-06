@@ -12,6 +12,7 @@ namespace AltV.Net.Networking.Example
     {
         private static void Main(string[] args)
         {
+            //AltNetworking.Init() is enough for most projects
             AltNetworking.Init(new NetworkingModule(46429, new IdProvider(), new NetworkingEntityFactory(),
                 new ClientTokenProvider(), new NetworkingClientFactory(),
                 new NonePlayerAuthenticationProviderFactory(), new ClientEntityStreamingHandlerFactory()));
@@ -52,6 +53,7 @@ namespace AltV.Net.Networking.Example
                     break;
                 }
             }
+
             Console.ReadKey();
         }
     }
