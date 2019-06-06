@@ -10,11 +10,12 @@ class EntityRepository {
             this.updateWorker();
         };
         this.streamingWorker.onmessage = event => {
-            if (event.streamIn) {
-                this.addStreamedInEntity(event.streamIn);
+            console.log(event.data);
+            if (event.data.streamIn) {
+                this.addStreamedInEntity(event.data.streamIn);
                 //TODO: send event to server
-            } else if (event.streamOut) {
-                this.removeStreamedInEntity(event.streamOut);
+            } else if (event.data.streamOut) {
+                this.removeStreamedInEntity(event.data.streamOut);
                 //TODO: send event to server
             }
         };
@@ -39,12 +40,10 @@ class EntityRepository {
 
     addStreamedInEntity(entity) {
         this.streamedInEntities.set(entity.id, entity);
-        this.updateWorker();
     }
 
     removeStreamedInEntity(entity) {
         this.streamedInEntities.delete(entity.id);
-        this.updateWorker();
     }
 
     updateWorker() {

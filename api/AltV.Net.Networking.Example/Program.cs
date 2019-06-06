@@ -16,6 +16,7 @@ namespace AltV.Net.Networking.Example
                 new NonePlayerAuthenticationProviderFactory(), new ClientEntityStreamingHandlerFactory()));
             var data = new Dictionary<string, object>();
             AltNetworking.CreateEntity(new Position {X = 0, Y = 0, Z = 0}, 1, 50, data);
+            AltNetworking.CreateEntity(new Position {X = 1, Y = 1, Z = 1}, 1, 50, data);
             Console.ReadKey();
         }
     }

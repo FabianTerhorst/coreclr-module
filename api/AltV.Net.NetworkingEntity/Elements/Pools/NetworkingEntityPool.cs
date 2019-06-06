@@ -33,8 +33,14 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
         {
             lock (entities)
             {
-                return entities.TryAdd(entity.Id, entity);
+                if (entities.TryAdd(entity.Id, entity))
+                {
+                    OnAdd(entity);
+                    return true;
+                }
             }
+
+            return false;
         }
 
         public void Remove(INetworkingEntity entity) => Remove(entity.Id);
@@ -50,6 +56,8 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
                     return;
                 }
             }
+            
+            OnRemove(removedEntity);
 
             if (removedEntity is IInternalNetworkingEntity internalNetworkingEntity)
             {
@@ -66,6 +74,16 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
             {
                 return entities.TryGetValue(id, out entity);
             }
+        }
+
+        public virtual void OnAdd(INetworkingEntity entity)
+        {
+            AltNetworking.Module.Streamer.CreateEntity(entity.StreamedEntity);
+        }
+
+        public virtual void OnRemove(INetworkingEntity entity)
+        {
+            AltNetworking.Module.Streamer.RemoveEntity(entity.StreamedEntity);
         }
     }
 }

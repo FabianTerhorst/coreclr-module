@@ -13,6 +13,14 @@ class PlayerPosition {
             })
         } catch (e) {
             console.log(e);
+            window.setMockPosition = (x, y, z) => {
+                this.position.x = x;
+                this.position.y = y;
+                this.position.z = z;
+                if (this.update) {
+                    this.update(this.position);
+                }
+            }
         }
     }
 

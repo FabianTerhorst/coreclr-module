@@ -20,11 +20,15 @@ class WebSocket {
 
         this.connection.onmessage = async (e) => {
             const serverEvent = proto.getValue().ServerEvent.decode(new Uint8Array(await new Response(e.data).arrayBuffer()));
-            if (serverEvent.send != null) {
-                const entities = serverEvent.send.entities;
+            const obj = proto.getValue().ServerEvent.toObject(serverEvent, {
+                defaults: true
+            });
+            console.log('event', obj, serverEvent);
+            if (obj.send != null) {
+                const entities = obj.send.entities;
+
                 entitiesRepository.setEntities(entities);
             }
-            console.log('event', serverEvent);
         };
     }
 }

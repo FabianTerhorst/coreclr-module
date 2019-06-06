@@ -22,16 +22,19 @@ function distance(v1, v2) {
 }
 
 function start(position, entities, streamedIn) {
+    console.log(entities);
     for (const [id, entity] of entities) {
         if (!streamedIn.has(id)) {
             if (distance(entity.position, position) <= entity.range) {
                 postMessage({streamIn: entity});
+                streamedIn.set(id, entity)
             }
         }
     }
-    for (const [_, entity] of streamedIn) {
+    for (const [id, entity] of streamedIn) {
         if (distance(entity.position, position) > entity.range) {
             postMessage({streamOut: entity});
+            streamedIn.delete(id);
         }
     }
 }

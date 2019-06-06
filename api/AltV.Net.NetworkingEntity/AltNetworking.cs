@@ -38,14 +38,12 @@ namespace AltV.Net.NetworkingEntity
             {
                 entity.Data[key] = MValueUtils.ToMValue(value);
             }
-
-            Module.Streamer.CreateEntity(entity);
+            
             return Module.EntityPool.Create(Module.Streamer, entity);
         }
 
         public static void RemoveEntity(INetworkingEntity entity)
         {
-            Module.Streamer.RemoveEntity(entity.StreamedEntity);
             Module.EntityPool.Remove(entity);
         }
 
