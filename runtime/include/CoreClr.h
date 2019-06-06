@@ -71,6 +71,14 @@ public:
 
     void GetPath(alt::IServer* server, const char* defaultPath);
 
+    /**
+     * prints out error when error code in known
+     * @param server
+     * @param errorCode
+     * @return true when error code is known
+     */
+    bool PrintError(alt::IServer* server, int errorCode);
+
 private:
 #ifdef _WIN32
     HMODULE _coreClrLib;

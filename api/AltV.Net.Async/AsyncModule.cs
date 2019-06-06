@@ -209,7 +209,7 @@ namespace AltV.Net.Async
                             }
                             catch (Exception e)
                             {
-                                AltAsync.Log($"Execution of ${name} threw an error: {e}");
+                                AltAsync.Log($"Execution of {name} threw an error: {e}");
                             }
                         }
                         else
@@ -314,7 +314,7 @@ namespace AltV.Net.Async
                             }
                             catch (Exception e)
                             {
-                                AltAsync.Log($"Execution of ${name} threw an error: {e}");
+                                AltAsync.Log($"Execution of {name} threw an error: {e}");
                             }
                         }
                         else

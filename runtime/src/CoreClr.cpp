@@ -137,25 +137,9 @@ bool CoreClr::GetDelegate(alt::IServer* server, void* runtimeHost, unsigned int 
     }
     int result = _createDelegate(runtimeHost, domainId, moduleName, classPath, methodName, callback);
     if (result < 0) {
-        //TODO: https://github.com/rashiph/DecompliedDotNetLibraries/blob/6056fc6ff7ae8fb3057c936d9ebf36da73f990a6/mscorlib/System/__HResults.cs
-        if (result == -2146234304) {
-            server->LogInfo(
-                    alt::String(
-                            "coreclr-module: Your server needs to be compiled and needs to target (<TargetFramework>netcoreappX.X</TargetFramework>) with the same .net core version that is installed on your workstation"));
+        if (this->PrintError(server, result)) {
             return false;
         }
-        if (result == -2147024894) {
-            server->LogInfo(
-                    alt::String(
-                            "coreclr-module: You need to place the AltV.Net.dll in your resource directory. Use publish to generate all dlls."));
-            return false;
-        }
-        server->LogInfo(alt::String(strerror(errno)));
-        char* x_str = new char[10];
-        sprintf(x_str, "%d", result);
-        server->LogInfo(
-                alt::String(x_str));
-        delete[] x_str;
         server->LogInfo(
                 alt::String("coreclr-module: Unable to get ") + moduleName + ":" + classPath + "." + methodName +
                 " domain:" +
@@ -284,6 +268,7 @@ void CoreClr::CreateAppDomain(alt::IServer* server, alt::IResource* resource, co
 
     if (result < 0) {
         server->LogInfo(alt::String("coreclr-module: Unable to create app domain: 0x"));
+        this->PrintError(server, result);
     } else {
         server->LogInfo(alt::String("coreclr-module: Created app domain: 0x") + appPath);
     }
@@ -335,7 +320,7 @@ void CoreClr::GetPath(alt::IServer* server, const char* defaultPath) {
     struct dirent* entry;
     char* greatest = nullptr;
     while ((entry = readdir(directory)) != nullptr) {
-        if (entry->d_type == DT_DIR) {
+        if (entry->d_type == DT_DIR && memcmp(entry->d_name, ".", 1) != 0 && memcmp(entry->d_name, "..", 2) != 0) {
             server->LogInfo(alt::String("coreclr-module: version found: ") + entry->d_name);
             if (greatest == nullptr) {
                 greatest = entry->d_name;
@@ -362,4 +347,26 @@ void CoreClr::GetPath(alt::IServer* server, const char* defaultPath) {
     memset(runtimeDirectory, '\0', size);
     strcpy(runtimeDirectory, defaultPath);
     strcat(runtimeDirectory, greatest);
+}
+
+//TODO: https://github.com/rashiph/DecompliedDotNetLibraries/blob/6056fc6ff7ae8fb3057c936d9ebf36da73f990a6/mscorlib/System/__HResults.cs
+bool CoreClr::PrintError(alt::IServer* server, int errorCode) {
+    if (errorCode == -2146234304) {
+        server->LogInfo(
+                alt::String(
+                        "coreclr-module: Your server needs to be compiled and needs to target (<TargetFramework>netcoreappX.X</TargetFramework>) with the same .net core version that is installed on your workstation"));
+        return true;
+    } else if (errorCode == -2147024894) {
+        server->LogInfo(
+                alt::String(
+                        "coreclr-module: You need to place the AltV.Net.dll in your resource directory. Use publish to generate all dlls."));
+        return true;
+    }
+    server->LogInfo(alt::String(strerror(errno)));
+    char* x_str = new char[10];
+    sprintf(x_str, "%d", errorCode);
+    server->LogInfo(
+            alt::String(x_str));
+    delete[] x_str;
+    return false;
 }
