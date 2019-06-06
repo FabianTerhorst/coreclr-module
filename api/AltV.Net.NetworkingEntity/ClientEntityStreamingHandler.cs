@@ -65,7 +65,7 @@ namespace AltV.Net.NetworkingEntity
                     var entityId = streamIn.EntityId;
                     if (AltNetworking.Module.EntityPool.TryGet(entityId, out var entity))
                     {
-                        if (!authenticationProvider.VerifyPosition(client, entity)) return;
+                        if (!authenticationProvider.VerifyPosition(client, entity, true)) return;
                         EntityStreamInHandler?.Invoke(entity, client);
                         entity.ClientStreamedIn(client);
                         var changedKeys = entity.Snapshot.CompareWithClient(client);
@@ -96,7 +96,7 @@ namespace AltV.Net.NetworkingEntity
                     var entityId = streamOut.EntityId;
                     if (AltNetworking.Module.EntityPool.TryGet(entityId, out var entity))
                     {
-                        if (authenticationProvider.VerifyPosition(client, entity)) return;
+                        if (!authenticationProvider.VerifyPosition(client, entity, false)) return;
                         if (entity.ClientStreamedOut(client))
                         {
                             EntityStreamOutHandler?.Invoke(entity, client);

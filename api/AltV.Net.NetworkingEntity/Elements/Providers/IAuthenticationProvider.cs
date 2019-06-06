@@ -49,7 +49,8 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
         /// </summary>
         /// <param name="client"></param>
         /// <param name="entity"></param>
+        /// <param name="inRange">Defines if the request is for entity is in range or not</param>
         /// <returns></returns>
-        bool VerifyPosition(INetworkingClient client, INetworkingEntity entity);
+        bool VerifyPosition(INetworkingClient client, INetworkingEntity entity, bool inRange);
     }
 }

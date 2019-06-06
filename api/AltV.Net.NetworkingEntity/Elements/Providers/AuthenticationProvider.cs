@@ -101,7 +101,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
             Console.WriteLine(exception);
         }
 
-        public bool VerifyPosition(INetworkingClient client, INetworkingEntity entity)
+        public bool VerifyPosition(INetworkingClient client, INetworkingEntity entity, bool inRange)
         {
             // Can be extended when more trustful position checking is needed 
             return true;

@@ -1,7 +1,9 @@
 import playerPosition from "./player-position.mjs"
+import proto from "./proto.mjs"
 
-class EntityRepository {
-    constructor() {
+export default class EntityRepository {
+    constructor(websocket) {
+        this.websocket = websocket;
         // entity-id, entity
         this.entities = new Map();
         this.streamedInEntities = new Map();
@@ -11,12 +13,18 @@ class EntityRepository {
         };
         this.streamingWorker.onmessage = event => {
             console.log(event.data);
-            if (event.data.streamIn) {
-                this.addStreamedInEntity(event.data.streamIn);
-                //TODO: send event to server
-            } else if (event.data.streamOut) {
-                this.removeStreamedInEntity(event.data.streamOut);
-                //TODO: send event to server
+            const streamIn = event.data.streamIn;
+            const streamOut = event.data.streamOut;
+            if (streamIn) {
+                this.addStreamedInEntity(streamIn);
+                proto.getProto().then((proto) => {
+                    websocket.sendEvent({ streamIn:  proto.EntityStreamInEvent.create({ entityId: streamIn.id })})
+                });
+            } else if (streamOut) {
+                this.removeStreamedInEntity(streamOut);
+                proto.getProto().then((proto) => {
+                    websocket.sendEvent({ streamOut:  proto.EntityStreamOutEvent.create({ entityId: streamOut.id })})
+                });
             }
         };
     }
@@ -54,5 +62,3 @@ class EntityRepository {
         })
     }
 }
-
-export default new EntityRepository();
