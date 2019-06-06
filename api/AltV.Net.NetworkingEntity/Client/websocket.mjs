@@ -39,7 +39,7 @@ class WebSocket {
                             entity.data = {};
                         }
                         entity.data[dataChange.key] = dataChange.value;
-                        console.log("data changed", entity);
+                        console.log("data changed", entity.id, entity.data);
                     }
                 } else if (obj.positionChange) {
                     const positionChange = obj.positionChange;
@@ -47,7 +47,7 @@ class WebSocket {
                         const entity = this.entityRepository.entities.get(positionChange.id);
                         entity.position = positionChange.position;
                         this.entityRepository.updateWorker();
-                        console.log("position changed", entity);
+                        console.log("position changed", entity.id, entity.position);
                     }
                 } else if (obj.rangeChange) {
                     const rangeChange = obj.rangeChange;
@@ -55,7 +55,7 @@ class WebSocket {
                         const entity = this.entityRepository.entities.get(rangeChange.id);
                         entity.range = rangeChange.range;
                         this.entityRepository.updateWorker();
-                        console.log("range changed", entity);
+                        console.log("range changed", entity.id, entity.range);
                     }
                 } else if (obj.delete) {
                     const deleteEvent = obj.delete;
@@ -76,10 +76,12 @@ class WebSocket {
                         if (!entity.data) {
                             entity.data = {};
                         }
-                        for (const [newKey, newValue] of multipleDataChange.data) {
-                            entity.data[newKey] = newValue;
+                        for (const key in multipleDataChange.data) {
+                            if (multipleDataChange.data.hasOwnProperty(key)) {
+                                entity.data[key] = multipleDataChange.data[key];
+                            }
                         }
-                        console.log("multiple data change", entity);
+                        console.log("multiple data change", this.entityRepository.entities.get(multipleDataChange.id).data);
                     }
                 } else if (obj.dimensionChange) {
                     const dimensionChange = obj.dimensionChange;
@@ -87,7 +89,7 @@ class WebSocket {
                         const entity = this.entityRepository.entities.get(dimensionChange.id);
                         entity.dimension = dimensionChange.dimension;
                         this.entityRepository.updateWorker();
-                        console.log("dimension changed", entity);
+                        console.log("dimension changed", entity.id, entity.dimension);
                     }
                 }
             });

@@ -96,19 +96,29 @@ namespace AltV.Net.NetworkingEntity
         {
             var missing = false;
             //TODO: do we need to create a buffer for the hash sets?
-            var changedKeys = new HashSet<string>();
+            HashSet<string> changedKeys = null;
             foreach (var (key, value) in Snapshots)
             {
                 if (dataSnapshot.Snapshots.TryGetValue(key, out var snapShotValue))
                 {
                     if (snapShotValue < value)
                     {
+                        if (changedKeys == null)
+                        {
+                            changedKeys = new HashSet<string>();
+                        }
+
                         changedKeys.Add(key);
                     }
                 }
                 else
                 {
                     missing = true;
+                    if (changedKeys == null)
+                    {
+                        changedKeys = new HashSet<string>();
+                    }
+
                     changedKeys.Add(key);
                 }
             }
@@ -121,6 +131,11 @@ namespace AltV.Net.NetworkingEntity
                 {
                     if (!Snapshots.ContainsKey(key))
                     {
+                        if (changedKeys == null)
+                        {
+                            changedKeys = new HashSet<string>();
+                        }
+
                         changedKeys.Add(key);
                     }
                 }
