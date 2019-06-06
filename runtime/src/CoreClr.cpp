@@ -295,7 +295,12 @@ void CoreClr::CreateAppDomain(alt::IServer* server, alt::IResource* resource, co
                     alt::String("coreclr-module: Unable to execute assembly in app path:") + executablePath + " exitCode:" +
                     exitCode);
         } else {
-            server->LogInfo(alt::String("coreclr-module: Assembly executed exitCode:") + exitCode);
+            server->LogInfo("coreclr-module: Assembly executed");
+            char* x_str = new char[10];
+            sprintf(x_str, "exit code: %d", exitCode);
+            server->LogInfo(
+                    alt::String(x_str));
+            delete[] x_str;
         }
     }
 }
