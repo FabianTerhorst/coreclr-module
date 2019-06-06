@@ -10,7 +10,6 @@ class Proto {
                 throw err;
             this.proto = {
                 Position: root.lookupType("Entity.Position"),
-                Entity: root.lookupType("Entity.Entity"),
                 ClientEvent: root.lookupType("Entity.ClientEvent"),
                 ServerEvent: root.lookupType("Entity.ServerEvent"),
                 AuthEvent: root.lookupType("Entity.AuthEvent"),
