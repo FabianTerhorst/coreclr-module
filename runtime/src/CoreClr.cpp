@@ -275,7 +275,7 @@ void CoreClr::CreateAppDomain(alt::IServer* server, alt::IResource* resource, co
 
     if (executable) {
         server->LogInfo(alt::String("coreclr-module: Prepare for executing assembly:") + executablePath);
-        unsigned int exitCode = 0;
+        int exitCode = -1;
         const char* args[1];
         char resourceIndexChar = resourceIndex + '0';
         char resourceIndexString[1];
@@ -287,20 +287,21 @@ void CoreClr::CreateAppDomain(alt::IServer* server, alt::IResource* resource, co
                 1,
                 args,
                 executablePath.CStr(),
-                &exitCode
+                (unsigned int*)&exitCode
         );
 
         if (result < 0) {
+            exitCode = -1;
             server->LogInfo(
-                    alt::String("coreclr-module: Unable to execute assembly in app path:") + executablePath + " exitCode:" +
-                    exitCode);
+                    alt::String("coreclr-module: Unable to execute assembly in app path:") + executablePath);
+            this->PrintError(server, result);
         } else {
             server->LogInfo("coreclr-module: Assembly executed");
-            char* x_str = new char[10];
+            /*char* x_str = new char[10];
             sprintf(x_str, "exit code: %d", exitCode);
             server->LogInfo(
                     alt::String(x_str));
-            delete[] x_str;
+            delete[] x_str;*/
         }
     }
 }
