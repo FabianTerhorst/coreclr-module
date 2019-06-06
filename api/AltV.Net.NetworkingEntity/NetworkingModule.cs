@@ -14,13 +14,13 @@ namespace AltV.Net.NetworkingEntity
 
         public readonly IEntityStreamer Streamer;
 
-        public NetworkingModule() : this(new IdProvider(), new NetworkingEntityFactory(),
+        public NetworkingModule(int port = 46429) : this(port, new IdProvider(), new NetworkingEntityFactory(),
             new ClientTokenProvider(), new NetworkingClientFactory(), new AuthenticationProviderFactory(),
             new ClientEntityStreamingHandlerFactory())
         {
         }
 
-        public NetworkingModule(IIdProvider<ulong> idProvider, INetworkingEntityFactory entityFactory,
+        public NetworkingModule(int port, IIdProvider<ulong> idProvider, INetworkingEntityFactory entityFactory,
             IIdProvider<string> tokenProvider, INetworkingClientFactory clientFactory,
             IAuthenticationProviderFactory authenticationProviderFactory,
             IStreamingHandlerFactory streamingHandlerFactory)
@@ -28,7 +28,7 @@ namespace AltV.Net.NetworkingEntity
             EntityPool = new NetworkingEntityPool(idProvider, entityFactory);
             ClientPool = new NetworkingClientPool(tokenProvider, clientFactory);
             Streamer = new EntityStreamer();
-            Server = new Server(authenticationProviderFactory, Streamer, streamingHandlerFactory);
+            Server = new Server(port, authenticationProviderFactory, Streamer, streamingHandlerFactory);
         }
     }
 }

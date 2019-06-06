@@ -20,11 +20,21 @@ export default class EntityRepository {
                 proto.getProto().then((proto) => {
                     websocket.sendEvent({ streamIn:  proto.EntityStreamInEvent.create({ entityId: streamIn.id })})
                 });
+                try {
+                    alt.emit("networkingEntityStreamIn", streamIn);
+                } catch (e) {
+                    console.log(e);
+                }
             } else if (streamOut) {
                 this.removeStreamedInEntity(streamOut);
                 proto.getProto().then((proto) => {
                     websocket.sendEvent({ streamOut:  proto.EntityStreamOutEvent.create({ entityId: streamOut.id })})
                 });
+                try {
+                    alt.emit("networkingEntityStreamOut", streamOut);
+                } catch (e) {
+                    console.log(e);
+                }
             }
         };
     }

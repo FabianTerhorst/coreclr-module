@@ -1,16 +1,16 @@
 import EntityRepository from "./entity-repository.mjs";
 import proto from "./proto.mjs";
 
-class WebSocket {
-    constructor() {
-        this.connection = new ReconnectingWebSocket('ws://localhost:46429');
+export default class WebSocket {
+    constructor(url, token) {
+        this.connection = new ReconnectingWebSocket(url);
         this.connection.binaryType = 'arraybuffer';
 
         this.entityRepository = new EntityRepository(this);
 
         this.connection.onopen = () => {
             proto.getProto().then((proto) => {
-                const authEvent = proto.AuthEvent.create({token: "123"});
+                const authEvent = proto.AuthEvent.create({token: token});
                 const clientEvent = proto.ClientEvent.create({auth: authEvent});
                 const buffer = proto.ClientEvent.encode(clientEvent).finish();
                 this.connection.send(buffer);
@@ -39,7 +39,13 @@ class WebSocket {
                             entity.data = {};
                         }
                         entity.data[dataChange.key] = dataChange.value;
-                        console.log("data changed", entity.id, entity.data);
+                        const newEntity = this.entityRepository.entities.get(dataChange.id);
+                        console.log("data changed", newEntity.id, newEntity.data);
+                        try {
+                            alt.emit("networkingEntityDataChange", newEntity);
+                        } catch (e) {
+                            console.log(e);
+                        }
                     }
                 } else if (obj.positionChange) {
                     const positionChange = obj.positionChange;
@@ -61,6 +67,15 @@ class WebSocket {
                     const deleteEvent = obj.delete;
                     if (this.entityRepository.entities.delete(deleteEvent.id)) {
                         this.entityRepository.updateWorker();
+                        if (this.entityRepository.streamedInEntities.has(deleteEvent.id)) {
+                            const deletedEntity = this.entityRepository.streamedInEntities.get(deleteEvent.id);
+                            try {
+                                alt.emit("networkingEntityStreamOut", deletedEntity);
+                            } catch (e) {
+                                console.log(e);
+                            }
+                            this.entityRepository.streamedInEntities.delete(deleteEvent.id);
+                        }
                         console.log("entity deleted", deleteEvent.id);
                     }
                 } else if (obj.create) {
@@ -81,7 +96,13 @@ class WebSocket {
                                 entity.data[key] = multipleDataChange.data[key];
                             }
                         }
-                        console.log("multiple data change", this.entityRepository.entities.get(multipleDataChange.id).data);
+                        const newEntity = this.entityRepository.entities.get(multipleDataChange.id);
+                        console.log("multiple data change", newEntity.id, newEntity.data);
+                        try {
+                            alt.emit("networkingEntityDataChange", newEntity);
+                        } catch (e) {
+                            console.log(e);
+                        }
                     }
                 } else if (obj.dimensionChange) {
                     const dimensionChange = obj.dimensionChange;
@@ -104,5 +125,3 @@ class WebSocket {
         })
     }
 }
-
-export default new WebSocket();
