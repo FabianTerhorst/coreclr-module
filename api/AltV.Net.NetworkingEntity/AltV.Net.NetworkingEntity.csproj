@@ -31,12 +31,15 @@
       <Compile Remove="Client\deps\**" />
       <Compile Remove="Client\index.html" />
       <Compile Remove="Client\*.mjs" />
+      <Compile Remove="Client\*.js" />
       <EmbeddedResource Remove="Client\deps\**" />
       <EmbeddedResource Remove="Client\index.html" />
       <EmbeddedResource Remove="Client\*.mjs" />
+      <EmbeddedResource Remove="Client\*.js" />
       <None Remove="Client\deps\**" />
       <None Remove="Client\index.html" />
       <None Remove="Client\*.mjs" />
+      <None Remove="Client\*.js" />
     </ItemGroup>
 
 </Project>

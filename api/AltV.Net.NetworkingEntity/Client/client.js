@@ -12,12 +12,6 @@ export default class NetworkingEntityClient {
         };
         this.onDataChange = () => {
         };
-        const localPlayer = alt.getLocalPlayer();
-        let pos;
-        alt.setInterval(() => {
-            pos = localPlayer.pos;
-            webview.emit("playerPosition", pos.x, pos.y, pos.z);
-        }, 100);
         webview.on("networkingEntityStreamIn", (entity) => {
             this.onStreamIn(entity);
         });
@@ -36,5 +30,11 @@ export default class NetworkingEntityClient {
 
     init(url, token) {
         this.webview.emit("networkingEntitySetup", url, token);
+        const localPlayer = alt.getLocalPlayer();
+        let pos;
+        alt.setInterval(() => {
+            pos = localPlayer.pos;
+            webview.emit("playerPosition", pos.x, pos.y, pos.z);
+        }, 100);
     }
 }
