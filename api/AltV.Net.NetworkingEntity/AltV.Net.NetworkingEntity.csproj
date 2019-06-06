@@ -29,38 +29,14 @@
 
     <ItemGroup>
       <Compile Remove="Client\deps\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <EmbeddedResource Remove="Client\deps\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="Client\deps\**" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Compile Remove="Client\index.html" />
-    </ItemGroup>
-
-    <ItemGroup>
+      <Compile Remove="Client\*.mjs" />
+      <EmbeddedResource Remove="Client\deps\**" />
       <EmbeddedResource Remove="Client\index.html" />
-    </ItemGroup>
-
-    <ItemGroup>
+      <EmbeddedResource Remove="Client\*.mjs" />
+      <None Remove="Client\deps\**" />
       <None Remove="Client\index.html" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Remove="Client\networking-entity.js" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <EmbeddedResource Remove="Client\networking-entity.js" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="Client\networking-entity.js" />
+      <None Remove="Client\*.mjs" />
     </ItemGroup>
 
 </Project>
