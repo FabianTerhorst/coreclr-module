@@ -60,7 +60,7 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
                            0);//TODO: needs resource cfg "assembly"
 
         coreClr->CreateAppDomain(server, this, this->GetPath().CStr(), &runtimeHost, &domainId, executable,
-                                 resourcesCache.GetSize() - 1);
+                                 resourcesCache.GetSize() - 1, this->name.CStr());
 
         if (!executable) {
             coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "Main",

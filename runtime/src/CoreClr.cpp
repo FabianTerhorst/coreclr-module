@@ -228,7 +228,7 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer* server, cons
 }
 
 void CoreClr::CreateAppDomain(alt::IServer* server, alt::IResource* resource, const char* appPath, void** runtimeHost,
-                              unsigned int* domainId, bool executable, uint64_t resourceIndex) {
+                              unsigned int* domainId, bool executable, uint64_t resourceIndex, const char* domainName) {
     alt::String tpaList = "";
 
     //TODO: check if useless list separator at the end is fine
