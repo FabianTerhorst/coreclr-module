@@ -259,7 +259,7 @@ void CoreClr::CreateAppDomain(alt::IServer* server, alt::IResource* resource, co
 
     int result = _initializeCoreCLR(
             appPath,
-            "host",
+            domainName,
             sizeof(propertyKeys) / sizeof(char*),
             propertyKeys,
             propertyValues,
