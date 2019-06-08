@@ -341,7 +341,6 @@ clrhost/winsdk_vfs_overlay.yaml
 
 altv-server
 data/*
-resource.cfg
 resource-executable.cfg
 server.cfg
 libnode.so.64
