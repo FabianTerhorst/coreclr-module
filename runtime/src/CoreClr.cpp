@@ -297,11 +297,11 @@ void CoreClr::CreateAppDomain(alt::IServer* server, alt::IResource* resource, co
             this->PrintError(server, result);
         } else {
             server->LogInfo("coreclr-module: Assembly executed");
-            /*char* x_str = new char[10];
+            char* x_str = new char[10];
             sprintf(x_str, "exit code: %d", exitCode);
             server->LogInfo(
                     alt::String(x_str));
-            delete[] x_str;*/
+            delete[] x_str;
         }
     }
 }

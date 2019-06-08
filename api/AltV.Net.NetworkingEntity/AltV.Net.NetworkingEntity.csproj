@@ -2,7 +2,13 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
+        <PackageVersion>1.0.0-dev-preview-1</PackageVersion>
+        <PackageLicenseFile>license.txt</PackageLicenseFile>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="license\license.txt" Pack="true" PackagePath="" />
+    </ItemGroup>
 
     <ItemGroup>
         <Protobuf Include="Client\entity.proto">
@@ -22,9 +28,9 @@
 
     <ItemGroup>
       <PackageReference Include="VIEApps.Components.WebSockets" Version="10.2.1906.1" />
-      <PackageReference Include="Google.Protobuf" Version="3.7.0" />
-      <PackageReference Include="Grpc" Version="1.20.1" />
-      <PackageReference Include="Grpc.Tools" Version="1.20.1" PrivateAssets="All" />
+      <PackageReference Include="Google.Protobuf" Version="3.8.0" />
+      <PackageReference Include="Grpc" Version="1.21.0" />
+      <PackageReference Include="Grpc.Tools" Version="1.21.0" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup>
