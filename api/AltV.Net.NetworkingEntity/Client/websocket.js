@@ -1,5 +1,5 @@
-import EntityRepository from "./entity-repository.mjs";
-import proto from "./proto.mjs";
+import EntityRepository from "./entity-repository.js";
+import proto from "./proto.js";
 
 export default class WebSocket {
     constructor(url, token) {
@@ -41,12 +41,8 @@ export default class WebSocket {
                         entity.data[dataChange.key] = dataChange.value;
                         const newEntity = this.entityRepository.entities.get(dataChange.id);
                         console.log("data changed", newEntity.id, newEntity.data);
-                        try {
-                            delete dataChange.id;
-                            alt.emit("networkingEntityDataChange", newEntity, dataChange);
-                        } catch (e) {
-                            console.log(e);
-                        }
+                        delete dataChange.id;
+                        alt.emit("networkingEntityDataChange", newEntity, dataChange);
                     }
                 } else if (obj.positionChange) {
                     const positionChange = obj.positionChange;
@@ -70,11 +66,7 @@ export default class WebSocket {
                         this.entityRepository.updateWorker();
                         if (this.entityRepository.streamedInEntities.has(deleteEvent.id)) {
                             const deletedEntity = this.entityRepository.streamedInEntities.get(deleteEvent.id);
-                            try {
-                                alt.emit("networkingEntityStreamOut", deletedEntity);
-                            } catch (e) {
-                                console.log(e);
-                            }
+                            alt.emit("networkingEntityStreamOut", deletedEntity);
                             this.entityRepository.streamedInEntities.delete(deleteEvent.id);
                         }
                         console.log("entity deleted", deleteEvent.id);
@@ -99,11 +91,7 @@ export default class WebSocket {
                         }
                         const newEntity = this.entityRepository.entities.get(multipleDataChange.id);
                         console.log("multiple data change", newEntity.id, newEntity.data);
-                        try {
-                            alt.emit("networkingEntityDataChange", newEntity, multipleDataChange.data);
-                        } catch (e) {
-                            console.log(e);
-                        }
+                        alt.emit("networkingEntityDataChange", newEntity, multipleDataChange.data);
                     }
                 } else if (obj.dimensionChange) {
                     const dimensionChange = obj.dimensionChange;

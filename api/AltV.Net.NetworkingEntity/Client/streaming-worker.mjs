@@ -9,7 +9,6 @@ onmessage = function (e) {
     if (data.streamedIn) {
         this.streamedIn = data.streamedIn;
     }
-    console.log("execute worker", this.position, this.entities, this.streamedIn);
     start(this.position, this.entities, this.streamedIn);
 };
 

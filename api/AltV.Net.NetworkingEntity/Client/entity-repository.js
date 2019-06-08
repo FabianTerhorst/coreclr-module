@@ -1,5 +1,6 @@
-import playerPosition from "./player-position.mjs"
-import proto from "./proto.mjs"
+import playerPosition from "./player-position.js"
+import proto from "./proto.js"
+import streamingWorker from "./streaming-worker.mjs";
 
 export default class EntityRepository {
     constructor(websocket) {
@@ -7,7 +8,8 @@ export default class EntityRepository {
         // entity-id, entity
         this.entities = new Map();
         this.streamedInEntities = new Map();
-        this.streamingWorker = new Worker('streaming-worker.mjs');
+        const workerBlob = new Blob([streamingWorker], {type: 'application/javascript'});
+        this.streamingWorker = new Worker(window.URL.createObjectURL(workerBlob));
         playerPosition.update = (position) => {
             this.updateWorker();
         };
@@ -18,23 +20,16 @@ export default class EntityRepository {
             if (streamIn) {
                 this.addStreamedInEntity(streamIn);
                 proto.getProto().then((proto) => {
-                    websocket.sendEvent({ streamIn:  proto.EntityStreamInEvent.create({ entityId: streamIn.id })})
+                    websocket.sendEvent({streamIn: proto.EntityStreamInEvent.create({entityId: streamIn.id})})
                 });
-                try {
-                    alt.emit("networkingEntityStreamIn", streamIn);
-                } catch (e) {
-                    console.log(e);
-                }
+
+                alt.emit("networkingEntityStreamIn", streamIn);
             } else if (streamOut) {
                 this.removeStreamedInEntity(streamOut);
                 proto.getProto().then((proto) => {
-                    websocket.sendEvent({ streamOut:  proto.EntityStreamOutEvent.create({ entityId: streamOut.id })})
+                    websocket.sendEvent({streamOut: proto.EntityStreamOutEvent.create({entityId: streamOut.id})})
                 });
-                try {
-                    alt.emit("networkingEntityStreamOut", streamOut);
-                } catch (e) {
-                    console.log(e);
-                }
+                alt.emit("networkingEntityStreamOut", streamOut);
             }
         };
     }
