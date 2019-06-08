@@ -15,6 +15,7 @@ matrix:
         packages:
         - gcc-8
         - g++-8
+        - clang
   - os: windows
   - filter_secrets: false
 before_script: cd runtime
