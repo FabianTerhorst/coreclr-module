@@ -1,6 +1,12 @@
 # corecrl-module
 CoreClr (.NET Core Common Language Runtime) module
 
+## Beta
+Only use the beta versions when you use the beta server from #server-updates channel on discord.
+
+## Stable
+Latest stable version: https://github.com/FabianTerhorst/coreclr-module/releases/tag/1.6.0
+
 ## Download (windows / linux)
 - [Releases](https://github.com/FabianTerhorst/coreclr-module/releases)
 
