@@ -17,6 +17,8 @@ matrix:
         - g++-8
         - clang
         - curl
+        - xz-utils
+        - build-essential
   - os: windows
   - filter_secrets: false
 before_script: cd runtime
