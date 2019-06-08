@@ -123,9 +123,17 @@ namespace AltV.Net
 
         private static MValue ImportCall(MValue mValue, object[] args)
         {
-            var mValueArgs = MValue.CreateFromObject(args);
+            //var mValueArgs = MValue.CreateFromObject(args);
             var result = MValue.Nil;
-            AltNative.MValueCall.MValue_CallFunctionValue(ref mValue, ref mValueArgs, ref result);
+            var length = (ulong) args.Length;
+            var mValueArgs = new MValue[length];
+            for (uint i = 0; i < length; i++)
+            {
+                mValueArgs[i] = MValue.CreateFromObject(args[i]);
+            }
+
+            //AltNative.MValueCall.MValue_CallFunctionValue(ref mValue, ref mValueArgs, ref result);
+            AltNative.MValueCall.MValue_CallFunction(ref mValue, mValueArgs, length, ref result);
             return result;
         }
 
