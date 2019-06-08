@@ -34,7 +34,7 @@ export default class NetworkingEntityClient {
         let pos;
         alt.setInterval(() => {
             pos = localPlayer.pos;
-            webview.emit("playerPosition", pos.x, pos.y, pos.z);
+            this.webview.emit("playerPosition", pos.x, pos.y, pos.z);
         }, 100);
     }
 }
