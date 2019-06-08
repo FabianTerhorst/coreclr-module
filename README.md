@@ -54,6 +54,8 @@ modules: [
 
 ### Create Resource
 
+Only one server c# resource is supported at the same time.
+
 resource.cfg:
 ```
 type: "csharp",
