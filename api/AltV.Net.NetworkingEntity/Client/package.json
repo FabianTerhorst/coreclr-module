@@ -11,7 +11,8 @@
   "scripts": {
     "createEmptyServerMain": "cd build && echo '' > empty.mjs",
     "cpyCfg": "cp resource.cfg build",
-    "build": "rm -rf build && mkdir build && npm run createEmptyServerMain && npm run cpyCfg && rollup -c"
+    "cpyClient": "cp client.js build",
+    "build": "rm -rf build && mkdir build && npm run createEmptyServerMain && npm run cpyCfg && npm run cpyClient && rollup -c"
   },
   "author": "Fabian Terhorst",
   "license": "Apache 2.0"

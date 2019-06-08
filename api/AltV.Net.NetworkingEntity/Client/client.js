@@ -2,7 +2,7 @@ import alt from 'alt';
 
 // This is the client class to communicate with the webview
 // e.g. const client = new NetworkingEntityClient(webview);
-export default class NetworkingEntityClient {
+class NetworkingEntityClient {
     // create position submit interval
     constructor(webview, defaultToken = true) {
         this.webview = webview;
@@ -37,4 +37,44 @@ export default class NetworkingEntityClient {
             this.webview.emit("playerPosition", pos.x, pos.y, pos.z);
         }, 100);
     }
+}
+
+let networkingEntityClient = null;
+
+export function init(webview) {
+    networkingEntityClient = new NetworkingEntityClient(webview, true);
+}
+
+export function initNoneDefault(webview) {
+    networkingEntityClient = new NetworkingEntityClient(webview, false);
+}
+
+export function onStreamIn(callback) {
+    if (networkingEntityClient == null) {
+        alt.log("call init(webview) first");
+        return;
+    }
+    networkingEntityClient.onStreamIn = (entity) => {
+        callback(entity);
+    };
+}
+
+export function onStreamOut(callback) {
+    if (networkingEntityClient == null) {
+        alt.log("call init(webview) first");
+        return;
+    }
+    networkingEntityClient.onStreamOut = (entity) => {
+        callback(entity);
+    };
+}
+
+export function onDataChange(callback) {
+    if (networkingEntityClient == null) {
+        alt.log("call init(webview) first");
+        return;
+    }
+    networkingEntityClient.onStreamOut = (entity, newData) => {
+        callback(entity, newData);
+    };
 }
