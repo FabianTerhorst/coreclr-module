@@ -78,3 +78,5 @@ export function onDataChange(callback) {
         callback(entity, newData);
     };
 }
+
+export default {init, initNoneDefault, onStreamIn, onStreamOut, onDataChange};
