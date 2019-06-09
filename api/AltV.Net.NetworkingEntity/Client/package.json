@@ -14,8 +14,7 @@
     "cpyCfg": "cp resource.cfg build",
     "cpyClient": "cp client.js build",
     "cpyProto": "cp entity.proto build",
-    "cpyIndex": "cp index.html build",
-    "build": "rm -rf build && mkdir build && npm run createEmptyServerMain && npm run cpyCfg && npm run cpyClient && npm run cpyProto && npm run cpyIndex && rollup -c"
+    "build": "rm -rf build && mkdir build && npm run createEmptyServerMain && npm run cpyCfg && npm run cpyClient && npm run cpyProto && rollup -c"
   },
   "author": "Fabian Terhorst",
   "license": "Apache 2.0"
