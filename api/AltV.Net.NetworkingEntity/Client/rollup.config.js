@@ -1,5 +1,6 @@
 import resolve from 'rollup-plugin-node-resolve';
 import {string} from "rollup-plugin-string";
+import minify from 'rollup-plugin-babel-minify';
 
 export default [{
     input: ['networking-entity.js'],
@@ -21,6 +22,9 @@ export default [{
         string({
             include: "**/*.mjs",
             exclude: []
+        }),
+        minify({
+            sourceMap: false
         })
     ]
 }];
