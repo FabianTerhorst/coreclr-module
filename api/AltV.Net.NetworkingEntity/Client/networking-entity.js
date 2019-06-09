@@ -1,4 +1,5 @@
 import WebSocket from "./websocket.js";
+import "./deps/reconnecting-websocket.min.js";
 
 class NetworkingEntity {
     constructor() {

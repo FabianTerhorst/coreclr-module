@@ -12,7 +12,9 @@
     "createEmptyServerMain": "cd build && echo '' > empty.mjs",
     "cpyCfg": "cp resource.cfg build",
     "cpyClient": "cp client.js build",
-    "build": "rm -rf build && mkdir build && npm run createEmptyServerMain && npm run cpyCfg && npm run cpyClient && rollup -c"
+    "cpyProto": "cp entity.proto build",
+    "cpyIndex": "cp index.html build",
+    "build": "rm -rf build && mkdir build && npm run createEmptyServerMain && npm run cpyCfg && npm run cpyClient && npm run cpyProto && npm run cpyIndex && rollup -c"
   },
   "author": "Fabian Terhorst",
   "license": "Apache 2.0"
