@@ -21,7 +21,6 @@ function distance(v1, v2) {
 }
 
 function start(position, entities, streamedIn) {
-    console.log(entities);
     for (const [id, entity] of entities) {
         if (!streamedIn.has(id)) {
             if (distance(entity.position, position) <= entity.range) {

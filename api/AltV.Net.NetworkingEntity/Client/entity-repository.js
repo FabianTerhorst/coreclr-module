@@ -14,7 +14,7 @@ export default class EntityRepository {
             this.updateWorker();
         };
         this.streamingWorker.onmessage = event => {
-            console.log(event.data);
+            console.log(JSON.stringify(event.data));
             const streamIn = event.data.streamIn;
             const streamOut = event.data.streamOut;
             if (streamIn) {
