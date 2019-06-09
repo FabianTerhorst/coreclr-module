@@ -3,8 +3,9 @@
 //
 
 #include "CoreClr.h"
+#include <semver.h>
 
-int tail_cmp(char* lhs, char* rhs) {
+/*int tail_cmp(char* lhs, char* rhs) {
     if (!strcmp(lhs, rhs)) return TAIL_CMP_EQ;
 
     char* dot = ".";
@@ -59,7 +60,7 @@ int tail_eq(char* lhs, char* rhs) {
 
 int tail_gt(char* lhs, char* rhs) {
     return tail_cmp(lhs, rhs) == TAIL_CMP_GT;
-}
+}*/
 
 
 CoreClr::CoreClr(alt::IServer* server) {
@@ -325,14 +326,31 @@ void CoreClr::GetPath(alt::IServer* server, const char* defaultPath) {
     }
     struct dirent* entry;
     char* greatest = nullptr;
+    semver_t greatest_version = {};
+    semver_t compare_version = {};
     while ((entry = readdir(directory)) != nullptr) {
         if (entry->d_type == DT_DIR && memcmp(entry->d_name, ".", 1) != 0 && memcmp(entry->d_name, "..", 2) != 0) {
             server->LogInfo(alt::String("coreclr-module: version found: ") + entry->d_name);
             if (greatest == nullptr) {
+                if (semver_parse(entry->d_name, &greatest_version)) {
+                    server->LogInfo(alt::String("coreclr-module: invalid version found: ") + entry->d_name);
+                    continue;
+                }
                 greatest = entry->d_name;
                 continue;
             }
-            auto compareCache = new char[strlen(entry->d_name)];
+            if(semver_parse(entry->d_name, &compare_version)) {
+                server->LogInfo(alt::String("coreclr-module: invalid version found: ") + entry->d_name);
+                continue;
+            }
+            if (semver_compare(compare_version, greatest_version) > 0) {
+                semver_free(&greatest_version);
+                greatest_version = compare_version;
+                greatest = entry->d_name;
+            } else {
+                semver_free(&compare_version);
+            }
+            /*auto compareCache = new char[strlen(entry->d_name)];
             strcpy(compareCache, entry->d_name);
             auto compareCache2 = new char[strlen(greatest)];
             strcpy(compareCache2, greatest);
@@ -340,12 +358,14 @@ void CoreClr::GetPath(alt::IServer* server, const char* defaultPath) {
                 greatest = entry->d_name;
             }
             delete[] compareCache;
-            delete[] compareCache2;
+            delete[] compareCache2;*/
         }
     }
     if (greatest == nullptr) {
         server->LogInfo(alt::String("coreclr-module: No dotnet sdk version found"));
         return;
+    } else {
+        semver_free(&greatest_version);
     }
     server->LogInfo(alt::String("coreclr-module: greatest version: ") + greatest);
     size_t size = strlen(defaultPath) + strlen(greatest) + 1;
