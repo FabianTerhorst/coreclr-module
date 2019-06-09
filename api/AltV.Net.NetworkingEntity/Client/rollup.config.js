@@ -7,7 +7,7 @@ export default [{
     output: {
         file: 'build/networking-entity.js',
         format: 'esm',
-        sourcemap: true
+        sourcemap: false
     },
     moduleContext: (id) => {
         const path = id.split("/");
