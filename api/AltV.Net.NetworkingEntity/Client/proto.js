@@ -1,3 +1,5 @@
+import "./deps/protobuf.min.js";
+
 class Proto {
 
     constructor() {
