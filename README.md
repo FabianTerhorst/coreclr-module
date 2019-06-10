@@ -348,3 +348,64 @@ namespace AltV.Net.Example
  [IVehicle](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Elements/Entities/IVehicle.cs)
  [IBlip](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Elements/Entities/IBlip.cs)
  [ICheckpoint](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Elements/Entities/ICheckpoint.cs)
+ 
+ ### Experimental entity streaming
+ 
+ Include the js file in your index.html 
+```html
+<script type="module" src="networking-entity.js"></script>
+```
+Add the networking-entity.js and entity.proto file to your client config and save the entity.proto in top level of client files
+Add the https://www.nuget.org/packages/AltV.Net.NetworkingEntity/ to your project where you want to run the server
+```csharp
+AltNetworking.Init();
+AltNetworking.CreateEntity(new Position {X = 0, Y = 0, Z = 73}, 1, 50,  new Dictionary<string, object>());
+```
+Add the client.js to your client and maybe rename the file
+Use it like this
+```js
+import { create, onStreamIn, onStreamOut, onDataChange } from "client/streaming/client.js";
+import game from "natives";
+import hudWebView from "client/hud-webview.js";
+
+class EntityStreamer {
+    constructor() {
+        create(hudWebView.webview);
+        this.peds = new Map();
+        this.onStreamIn = this.onStreamIn.bind(this);
+        this.onStreamOut = this.onStreamOut.bind(this);
+        this.onDataChange = this.onDataChange.bind(this);
+        onStreamIn(this.onStreamIn);
+        onStreamOut(this.onStreamOut);
+        onDataChange(this.onDataChange);
+    }
+
+    onStreamIn(entity) {
+        const ped = game.createPed(2, 1885233650, entity.position.x, entity.position.y, entity.position.z, 61, false, true);
+        this.peds.set(entity.id, ped);
+
+    }
+
+    onStreamOut(entity) {
+        if (this.peds.has(entity.id)) {
+            game.deleteEntity(this.peds.get(entity.id));
+        }
+    }
+
+    onDataChange(entity, data) {
+        //TODO: when model changes ect.
+    }
+
+}
+
+export default new EntityStreamer();
+```
+Import the streamer in your main client file
+```js
+import "client/entity-streamer.js";
+```
+When running on server don't forget to open the websocket port 46429 or change it to a own port with
+```csharp
+AltNetworking.Init(new NetworkingModule(myPort))
+```
+
