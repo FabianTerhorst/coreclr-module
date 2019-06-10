@@ -74,7 +74,7 @@ export function onDataChange(callback) {
         alt.log("call init(webview) first");
         return;
     }
-    networkingEntityClient.onStreamOut = (entity, newData) => {
+    networkingEntityClient.onDataChange = (entity, newData) => {
         callback(entity, newData);
     };
 }
