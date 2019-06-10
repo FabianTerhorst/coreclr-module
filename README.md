@@ -370,7 +370,7 @@ import hudWebView from "client/hud-webview.js";
 
 class EntityStreamer {
     constructor() {
-        create(hudWebView.webview);
+        create(hudWebView);
         this.peds = new Map();
         this.onStreamIn = this.onStreamIn.bind(this);
         this.onStreamOut = this.onStreamOut.bind(this);
