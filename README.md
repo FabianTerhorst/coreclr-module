@@ -351,6 +351,8 @@ namespace AltV.Net.Example
  
  ### Experimental entity streaming
  
+ https://github.com/FabianTerhorst/coreclr-module/releases/download/1.7.4-beta/networking-entity.zip
+ 
  Include the js file in your index.html 
 ```html
 <script type="module" src="networking-entity.js"></script>
