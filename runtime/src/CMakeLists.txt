@@ -7,13 +7,8 @@ add_library(${TARGET_NAME} SHARED altv.cpp CSharpScriptRuntime.cpp CSharpResourc
         altv-c-api/baseobject.cpp altv-c-api/mvalue.cpp altv-c-api/function.cpp altv-c-api/position.h altv-c-api/rotation.h altv-c-api/rgba.h altv-c-api/resource.h altv-c-api/resource.cpp altv-c-api/voice_channel.cpp)# clrHost.cpp
 
 if(UNIX AND NOT APPLE)
-    #target_compile_options(${TARGET_NAME} PRIVATE -std=c++17 -static -nostdinc++ -I/home/parallels/Desktop/clang_7.0.1/include/c++/v1 -nodefaultlibs -lc++ -lc++abi -lm -lc -lgcc_s -lgcc)
-    target_compile_options(${TARGET_NAME} PRIVATE -std=c++17 -static -Wall -Wpedantic -fsanitize=address -g )
-    #target_compile_options(${TARGET_NAME} PRIVATE -std=c++17 -static-libstdc++ -static-libgcc -lstdc++)
-    #target_link_libraries(${TARGET_NAME} -static-libstdc++)
-    #target_link_libraries(${TARGET_NAME} -static-libstdc++)
-    set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
-    set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
+    target_compile_options(${TARGET_NAME} PRIVATE -std=c++17)
+    target_link_libraries(${TARGET_NAME} -static-libgcc -static-libstdc++)
 else()
     target_compile_options(${TARGET_NAME} PRIVATE)# -I/home/parallels/Desktop/clang_7.0.1/include/c++/v1  -stdlib=libc++ -I$ENV{PROGRAMFILES}/LLVM/lib/clang/7.0.1/include -nodefaultlibs
 endif()
