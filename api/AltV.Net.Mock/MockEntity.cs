@@ -111,6 +111,26 @@ namespace AltV.Net.Mock
             return true;
         }
 
+        public void SetMetaData(string key, ref MValue value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetMetaData(string key, ref MValue value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetSyncedMetaData(string key, ref MValue value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetSyncedMetaData(string key, ref MValue value)
+        {
+            throw new NotImplementedException();
+        }
+
         public abstract void Remove();
 
         public void CheckIfEntityExists()
@@ -119,6 +139,7 @@ namespace AltV.Net.Mock
             {
                 return;
             }
+
             throw new EntityRemovedException(this);
         }
     }

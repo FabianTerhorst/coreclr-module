@@ -1,8 +1,10 @@
 using System;
 using AltV.Net.Data;
+using AltV.Net.Elements.Args;
 
 namespace AltV.Net.Elements.Entities
 {
+    //TODO: implement all meta data implementation here and require a AltNative.Player.Player_SetSyncedMetaData(NativePointer, key, ref mValue); implementation for each entity
     public abstract class Entity : WorldObject, IEntity
     {
         public ushort Id { get; }
@@ -11,8 +13,30 @@ namespace AltV.Net.Elements.Entities
 
         public abstract uint Model { get; set; }
 
-        public abstract void SetSyncedMetaData(string key, object value);
-        public abstract bool GetSyncedMetaData<T>(string key, out T result);
+        public abstract void SetSyncedMetaData(string key, ref MValue value);
+        public abstract void GetSyncedMetaData(string key, ref MValue value);
+        
+        public void SetSyncedMetaData(string key, object value)
+        {
+            CheckIfEntityExists();
+            var mValue = MValue.CreateFromObject(value);
+            SetSyncedMetaData(key, ref mValue);
+        }
+
+        public bool GetSyncedMetaData<T>(string key, out T result)
+        {
+            CheckIfEntityExists();
+            var mValue = MValue.Nil;
+            GetSyncedMetaData(key, ref mValue);
+            if (!(mValue.ToObject() is T cast))
+            {
+                result = default;
+                return false;
+            }
+
+            result = cast;
+            return true;
+        }
 
         protected Entity(IntPtr nativePointer, BaseObjectType type, ushort id) : base(nativePointer, type)
         {

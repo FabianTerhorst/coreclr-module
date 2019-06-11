@@ -1,4 +1,5 @@
 using AltV.Net.Data;
+using AltV.Net.Elements.Args;
 
 namespace AltV.Net.Elements.Entities
 {
@@ -39,5 +40,57 @@ namespace AltV.Net.Elements.Entities
         /// <returns></returns>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool GetSyncedMetaData<T>(string key, out T result);
+
+        void SetSyncedMetaData(string key, ref MValue value);
+
+        void GetSyncedMetaData(string key, ref MValue value);
+    }
+
+    public static class EntityExtensions
+    {
+        public static bool GetSyncedMetaData(this IEntity entity, string key, out int result)
+        {
+            entity.CheckIfEntityExists();
+            var mValue = MValue.Nil;
+            entity.GetSyncedMetaData(key, ref mValue);
+            if (mValue.type != MValue.Type.INT)
+            {
+                result = default;
+                return false;
+            }
+
+            result = (int) mValue.GetInt();
+            return true;
+        }
+        
+        public static bool GetSyncedMetaData(this IEntity entity, string key, out uint result)
+        {
+            entity.CheckIfEntityExists();
+            var mValue = MValue.Nil;
+            entity.GetSyncedMetaData(key, ref mValue);
+            if (mValue.type != MValue.Type.UINT)
+            {
+                result = default;
+                return false;
+            }
+
+            result = (uint) mValue.GetUint();
+            return true;
+        }
+        
+        public static bool GetSyncedMetaData(this IEntity entity, string key, out float result)
+        {
+            entity.CheckIfEntityExists();
+            var mValue = MValue.Nil;
+            entity.GetSyncedMetaData(key, ref mValue);
+            if (mValue.type != MValue.Type.DOUBLE)
+            {
+                result = default;
+                return false;
+            }
+
+            result = (float) mValue.GetDouble();
+            return true;
+        }
     }
 }

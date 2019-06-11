@@ -48,27 +48,11 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public override void SetMetaData(string key, object value)
-        {
-            CheckIfEntityExists();
-            var mValue = MValue.CreateFromObject(value);
-            AltNative.Checkpoint.Checkpoint_SetMetaData(NativePointer, key, ref mValue);
-        }
+        public override void GetMetaData(string key, ref MValue value) =>
+            AltNative.Checkpoint.Checkpoint_SetMetaData(NativePointer, key, ref value);
 
-        public override bool GetMetaData<T>(string key, out T result)
-        {
-            CheckIfEntityExists();
-            var mValue = MValue.Nil;
-            AltNative.Checkpoint.Checkpoint_GetMetaData(NativePointer, key, ref mValue);
-            if (!(mValue.ToObject() is T cast))
-            {
-                result = default;
-                return false;
-            }
-
-            result = cast;
-            return true;
-        }
+        public override void SetMetaData(string key, ref MValue value) =>
+            AltNative.Checkpoint.Checkpoint_SetMetaData(NativePointer, key, ref value);
 
         public bool IsGlobal
         {

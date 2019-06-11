@@ -1,5 +1,6 @@
 using System;
 using AltV.Net.Data;
+using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Mock
@@ -12,12 +13,13 @@ namespace AltV.Net.Mock
 
         public override Position Position { get; set; }
         public override short Dimension { get; set; }
-        public override void SetMetaData(string key, object value)
+
+        public override void SetMetaData(string key, ref MValue value)
         {
             throw new NotImplementedException();
         }
 
-        public override bool GetMetaData<T>(string key, out T result)
+        public override void GetMetaData(string key, ref MValue value)
         {
             throw new NotImplementedException();
         }

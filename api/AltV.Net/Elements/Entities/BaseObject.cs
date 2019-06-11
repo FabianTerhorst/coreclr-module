@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using AltV.Net.Elements.Args;
 
 namespace AltV.Net.Elements.Entities
 {
@@ -12,8 +13,8 @@ namespace AltV.Net.Elements.Entities
 
         public BaseObjectType Type { get; }
 
-        public abstract void SetMetaData(string key, object value);
-        public abstract bool GetMetaData<T>(string key, out T result);
+        public abstract void SetMetaData(string key, ref MValue value);
+        public abstract void GetMetaData(string key, ref MValue value);
 
         protected BaseObject(IntPtr nativePointer, BaseObjectType type)
         {
@@ -21,9 +22,77 @@ namespace AltV.Net.Elements.Entities
             {
                 throw new BaseObjectRemovedException(this);
             }
+
             NativePointer = nativePointer;
             Type = type;
             Exists = true;
+        }
+
+        public void SetMetaData(string key, object value)
+        {
+            CheckIfEntityExists();
+            var mValue = MValue.CreateFromObject(value);
+            SetMetaData(key, ref mValue);
+        }
+
+        public bool GetMetaData(string key, out int result)
+        {
+            CheckIfEntityExists();
+            var mValue = MValue.Nil;
+            GetMetaData(key, ref mValue);
+            if (mValue.type != MValue.Type.INT)
+            {
+                result = default;
+                return false;
+            }
+
+            result = (int) mValue.GetInt();
+            return true;
+        }
+        
+        public bool GetMetaData(string key, out uint result)
+        {
+            CheckIfEntityExists();
+            var mValue = MValue.Nil;
+            GetMetaData(key, ref mValue);
+            if (mValue.type != MValue.Type.UINT)
+            {
+                result = default;
+                return false;
+            }
+
+            result = (uint) mValue.GetUint();
+            return true;
+        }
+        
+        public bool GetMetaData(string key, out float result)
+        {
+            CheckIfEntityExists();
+            var mValue = MValue.Nil;
+            GetMetaData(key, ref mValue);
+            if (mValue.type != MValue.Type.DOUBLE)
+            {
+                result = default;
+                return false;
+            }
+
+            result = (float) mValue.GetDouble();
+            return true;
+        }
+
+        public bool GetMetaData<T>(string key, out T result)
+        {
+            CheckIfEntityExists();
+            var mValue = MValue.Nil;
+            GetMetaData(key, ref mValue);
+            if (!(mValue.ToObject() is T cast))
+            {
+                result = default;
+                return false;
+            }
+
+            result = cast;
+            return true;
         }
 
         public void SetData(string key, object value)

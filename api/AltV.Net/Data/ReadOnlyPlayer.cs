@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
@@ -53,6 +54,26 @@ namespace AltV.Net.Data
         }
 
         public bool GetData<T>(string key, out T result)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetMetaData(string key, ref MValue value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetMetaData(string key, ref MValue value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetSyncedMetaData(string key, ref MValue value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetSyncedMetaData(string key, ref MValue value)
         {
             throw new NotImplementedException();
         }
