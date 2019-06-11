@@ -21,7 +21,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
 
         private readonly Dictionary<IPlayer, string> playerTokenAccess = new Dictionary<IPlayer, string>();
 
-        public AuthenticationProvider(int port, WebSocket webSocket) : this("ws://" + GetIpAddress() + $":{port}/",
+        public AuthenticationProvider(string ip, int port, WebSocket webSocket) : this("ws://" + (ip ?? GetIpAddress()) + $":{port}/",
             webSocket)
         {
         }
@@ -76,15 +76,6 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
             };
         }
 
-        private static string GetIpAddress()
-        {
-            var ipHostInfo = Dns.GetHostEntry(Dns.GetHostName()); // `Dns.Resolve()` method is deprecated.
-            if (ipHostInfo.AddressList.Length == 0) return null;
-            var ipAddress = ipHostInfo.AddressList[0];
-
-            return ipAddress.ToString();
-        }
-
         public bool Verify(ManagedWebSocket webSocket, string token, out INetworkingClient client)
         {
             if (!AltNetworking.Module.ClientPool.TryGet(token, out client)) return false;
@@ -119,6 +110,15 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
         {
             // Can be extended when more trustful position checking is needed 
             return true;
+        }
+        
+        private static string GetIpAddress()
+        {
+            var ipHostInfo = Dns.GetHostEntry(Dns.GetHostName()); // `Dns.Resolve()` method is deprecated.
+            if (ipHostInfo.AddressList.Length == 0) return null;
+            var ipAddress = ipHostInfo.AddressList[0];
+
+            return ipAddress.ToString();
         }
     }
 }

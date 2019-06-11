@@ -13,11 +13,11 @@ namespace AltV.Net.NetworkingEntity
     {
         public readonly IStreamingHandler StreamingHandler;
 
-        public Server(int port, IAuthenticationProviderFactory authenticationProviderFactory, IEntityStreamer streamer,
+        public Server(string ip, int port, IAuthenticationProviderFactory authenticationProviderFactory, IEntityStreamer streamer,
             IStreamingHandlerFactory factory)
         {
             var webSocket = new WebSocket();
-            var authenticationProvider = authenticationProviderFactory.Create(port, webSocket);
+            var authenticationProvider = authenticationProviderFactory.Create(ip, port, webSocket);
             var streamingHandler = factory.Create(authenticationProvider);
             StreamingHandler = streamingHandler;
             webSocket.OnMessageReceived = streamingHandler.OnMessage;

@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using AltV.Net.NetworkingEntity;
-using AltV.Net.NetworkingEntity.Elements.Factories;
-using AltV.Net.NetworkingEntity.Elements.Providers;
 using Entity;
 
 namespace AltV.Net.Networking.Example
@@ -13,9 +11,12 @@ namespace AltV.Net.Networking.Example
         private static void Main(string[] args)
         {
             //AltNetworking.Init() is enough for most projects
-            AltNetworking.Init(new NetworkingModule(46429, new IdProvider(), new NetworkingEntityFactory(),
-                new ClientTokenProvider(), new NetworkingClientFactory(),
-                new NonePlayerAuthenticationProviderFactory(), new ClientEntityStreamingHandlerFactory()));
+            AltNetworking.Init(new NetworkingModuleBuilder()
+                .SetPort(46429)
+                .SetAuthenticationProviderFactory(new NonePlayerAuthenticationProviderFactory())
+                .Build()
+            );
+
             var data = new Dictionary<string, object>();
             var data2 = new Dictionary<string, object>();
             data["bla"] = "123";

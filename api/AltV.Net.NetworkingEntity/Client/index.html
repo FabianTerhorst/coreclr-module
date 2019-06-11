@@ -4,10 +4,11 @@
     <script>
         window.callbacks = new Map();
         window.alt = {
-            emit: function(eventname, ...args) {
-                window.callbacks.get(eventname)( ...args);
+            emit: (eventname, ...args) => {
+                const func = window.callbacks.get(eventname);
+                func( ...args);
             },
-            on: function(eventname, callback) {
+            on: (eventname, callback) => {
                 window.callbacks.set(eventname, callback);
             }
         }
