@@ -41,17 +41,25 @@ class NetworkingEntityClient {
 
 let networkingEntityClient = null;
 
-export function init(webview) {
+export function create(webview) {
     networkingEntityClient = new NetworkingEntityClient(webview, true);
 }
 
-export function initNoneDefault(webview) {
+export function createNoneDefault(webview) {
     networkingEntityClient = new NetworkingEntityClient(webview, false);
+}
+
+export function init(url, token) {
+    if (networkingEntityClient == null) {
+        alt.log("call create(webview) first");
+        return;
+    }
+    networkingEntityClient.init(url, token)
 }
 
 export function onStreamIn(callback) {
     if (networkingEntityClient == null) {
-        alt.log("call init(webview) first");
+        alt.log("call create(webview) first");
         return;
     }
     networkingEntityClient.onStreamIn = (entity) => {
@@ -61,7 +69,7 @@ export function onStreamIn(callback) {
 
 export function onStreamOut(callback) {
     if (networkingEntityClient == null) {
-        alt.log("call init(webview) first");
+        alt.log("call create(webview) first");
         return;
     }
     networkingEntityClient.onStreamOut = (entity) => {
@@ -71,7 +79,7 @@ export function onStreamOut(callback) {
 
 export function onDataChange(callback) {
     if (networkingEntityClient == null) {
-        alt.log("call init(webview) first");
+        alt.log("call create(webview) first");
         return;
     }
     networkingEntityClient.onDataChange = (entity, newData) => {
@@ -79,4 +87,4 @@ export function onDataChange(callback) {
     };
 }
 
-export default {init, initNoneDefault, onStreamIn, onStreamOut, onDataChange};
+export default {create, createNoneDefault, init, onStreamIn, onStreamOut, onDataChange};
