@@ -21,7 +21,8 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
 
         private readonly Dictionary<IPlayer, string> playerTokenAccess = new Dictionary<IPlayer, string>();
 
-        public AuthenticationProvider(string ip, int port, WebSocket webSocket) : this("ws://" + (ip ?? GetIpAddress()) + $":{port}/",
+        public AuthenticationProvider(string ip, int port, WebSocket webSocket) : this(
+            "ws://" + (ip ?? GetIpAddress()) + $":{port}/",
             webSocket)
         {
         }
@@ -76,12 +77,12 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
             };
         }
 
-        public bool Verify(ManagedWebSocket webSocket, string token, out INetworkingClient client)
+        public Task<bool> Verify(ManagedWebSocket webSocket, string token, out INetworkingClient client)
         {
-            if (!AltNetworking.Module.ClientPool.TryGet(token, out client)) return false;
+            if (!AltNetworking.Module.ClientPool.TryGet(token, out client)) return Task.FromResult(false);
             client.WebSocket = webSocket; //TODO: check if already has websocket ect.
             webSocket.Extra[ClientExtra] = client;
-            return true;
+            return Task.FromResult(true);
         }
 
         public INetworkingClient GetClient(ManagedWebSocket webSocket)
@@ -111,7 +112,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
             // Can be extended when more trustful position checking is needed 
             return true;
         }
-        
+
         private static string GetIpAddress()
         {
             var ipHostInfo = Dns.GetHostEntry(Dns.GetHostName()); // `Dns.Resolve()` method is deprecated.

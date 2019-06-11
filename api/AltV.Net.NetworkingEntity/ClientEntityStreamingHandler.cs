@@ -28,7 +28,7 @@ namespace AltV.Net.NetworkingEntity
 
         public void OnMessage(ManagedWebSocket managedWebSocket, WebSocketReceiveResult result, byte[] data)
         {
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 var clientEvent = ClientEvent.Parser.ParseFrom(data);
                 if (clientEvent == null) return;
@@ -39,7 +39,7 @@ namespace AltV.Net.NetworkingEntity
                 {
                     var token = authEvent.Token;
                     if (token == null) return;
-                    var verified = authenticationProvider.Verify(managedWebSocket, token, out var client);
+                    var verified = await authenticationProvider.Verify(managedWebSocket, token, out var client);
                     if (!verified)
                     {
                         return;
@@ -56,7 +56,7 @@ namespace AltV.Net.NetworkingEntity
                     }
 
                     sendEvent.Send = currSendEvent;
-                    managedWebSocket.SendAsync(sendEvent.ToByteArray(), true);
+                    await managedWebSocket.SendAsync(sendEvent.ToByteArray(), true);
                 }
                 else if (streamIn != null)
                 {
@@ -85,7 +85,7 @@ namespace AltV.Net.NetworkingEntity
                             }
 
                             var serverEvent = new ServerEvent {MultipleDataChange = multipleDataChangeEvent};
-                            managedWebSocket.SendAsync(serverEvent.ToByteArray(), true);
+                            await managedWebSocket.SendAsync(serverEvent.ToByteArray(), true);
                         }
                     }
                 }

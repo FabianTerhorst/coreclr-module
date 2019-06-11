@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using AltV.Net.NetworkingEntity;
 using AltV.Net.NetworkingEntity.Elements.Entities;
 using AltV.Net.NetworkingEntity.Elements.Providers;
@@ -15,13 +16,13 @@ namespace AltV.Net.Networking.Example
             this.webSocket = webSocket;
         }
 
-        public bool Verify(ManagedWebSocket managedWebSocket, string token, out INetworkingClient client)
+        public Task<bool> Verify(ManagedWebSocket managedWebSocket, string token, out INetworkingClient client)
         {
             client = AltNetworking.CreateClient();
             client.Token = token;
             client.WebSocket = managedWebSocket; //TODO: maybe do that automatically, but we would lost freedom
             managedWebSocket.Extra.TryAdd("client", client);
-            return true;
+            return Task.FromResult(true);
         }
 
         public INetworkingClient GetClient(ManagedWebSocket managedWebSocket)

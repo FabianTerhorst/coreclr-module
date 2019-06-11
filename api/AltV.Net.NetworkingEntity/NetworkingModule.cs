@@ -14,6 +14,10 @@ namespace AltV.Net.NetworkingEntity
 
         public readonly IEntityStreamer Streamer;
 
+        public readonly IIdProvider<ulong> IdProvider;
+
+        public readonly IIdProvider<string> TokenProvider;
+
         public NetworkingModule(string ip = null, int port = 46429) : this(ip, port, new IdProvider(),
             new NetworkingEntityFactory(),
             new ClientTokenProvider(), new NetworkingClientFactory(), new AuthenticationProviderFactory(),
@@ -27,6 +31,8 @@ namespace AltV.Net.NetworkingEntity
             IAuthenticationProviderFactory authenticationProviderFactory,
             IStreamingHandlerFactory streamingHandlerFactory)
         {
+            IdProvider = idProvider;
+            TokenProvider = tokenProvider;
             EntityPool = new NetworkingEntityPool(idProvider, entityFactory);
             ClientPool = new NetworkingClientPool(tokenProvider, clientFactory);
             Streamer = new EntityStreamer();

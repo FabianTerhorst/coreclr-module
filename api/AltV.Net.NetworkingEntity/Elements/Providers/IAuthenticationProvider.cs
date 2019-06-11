@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using AltV.Net.NetworkingEntity.Elements.Entities;
 using net.vieapps.Components.WebSockets;
 
@@ -16,7 +17,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
         /// <param name="token">Token received via AuthEvent</param>
         /// <param name="client">The client that matches the authentication</param>
         /// <returns></returns>
-        bool Verify(ManagedWebSocket webSocket, string token, out INetworkingClient client);
+        Task<bool> Verify(ManagedWebSocket webSocket, string token, out INetworkingClient client);
 
         /// <summary>
         /// Returns the client that is designated to a given websocket

@@ -7,6 +7,8 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
     {
         IDictionary<string, INetworkingClient> Clients { get; }
 
+        INetworkingClient Create(string token);
+        
         INetworkingClient Create();
 
         bool Add(INetworkingClient client);

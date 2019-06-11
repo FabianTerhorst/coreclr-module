@@ -33,13 +33,19 @@ namespace AltV.Net.NetworkingEntity
         public static INetworkingEntity CreateEntity(Position position, int dimension, float range,
             IDictionary<string, object> data)
         {
+            return CreateEntity(Module.IdProvider.GetNext(), position, dimension, range, data);
+        }
+
+        public static INetworkingEntity CreateEntity(ulong id, Position position, int dimension, float range,
+            IDictionary<string, object> data)
+        {
             var entity = new Entity.Entity {Position = position, Dimension = dimension, Range = range};
             foreach (var (key, value) in data)
             {
                 entity.Data[key] = MValueUtils.ToMValue(value);
             }
-            
-            return Module.EntityPool.Create(Module.Streamer, entity);
+
+            return Module.EntityPool.Create(id, Module.Streamer, entity);
         }
 
         public static void RemoveEntity(INetworkingEntity entity)
@@ -49,7 +55,12 @@ namespace AltV.Net.NetworkingEntity
 
         public static INetworkingClient CreateClient()
         {
-            return Module.ClientPool.Create();
+            return Module.ClientPool.Create(Module.TokenProvider.GetNext());
+        }
+
+        public static INetworkingClient CreateClient(string token)
+        {
+            return Module.ClientPool.Create(token);
         }
 
         public static void RemoveClient(INetworkingClient client)

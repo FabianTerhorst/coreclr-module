@@ -22,6 +22,13 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
             this.factory = factory;
         }
 
+        public INetworkingClient Create(string token)
+        {
+            var entity = factory.Create(token);
+            Add(entity);
+            return entity;
+        }
+
         public INetworkingClient Create()
         {
             var entity = factory.Create(idProvider.GetNext());
