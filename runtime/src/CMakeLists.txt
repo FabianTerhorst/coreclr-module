@@ -8,7 +8,8 @@ add_library(${TARGET_NAME} SHARED altv.cpp CSharpScriptRuntime.cpp CSharpResourc
 
 if(UNIX AND NOT APPLE)
     #target_compile_options(${TARGET_NAME} PRIVATE -std=c++17 -static -nostdinc++ -I/home/parallels/Desktop/clang_7.0.1/include/c++/v1 -nodefaultlibs -lc++ -lc++abi -lm -lc -lgcc_s -lgcc)
-    target_compile_options(${TARGET_NAME} PRIVATE -std=c++17 -lstdc++ -static-libstdc++)
+    #target_compile_options(${TARGET_NAME} PRIVATE -std=c++17 -lstdc++ -static-libstdc++)
+    target_link_libraries(${TARGET_NAME} -static-libstdc++)
 else()
     target_compile_options(${TARGET_NAME} PRIVATE)# -I/home/parallels/Desktop/clang_7.0.1/include/c++/v1  -stdlib=libc++ -I$ENV{PROGRAMFILES}/LLVM/lib/clang/7.0.1/include -nodefaultlibs
 endif()
