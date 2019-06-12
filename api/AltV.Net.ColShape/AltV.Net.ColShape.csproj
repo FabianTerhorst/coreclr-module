@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <Platforms>AnyCPU</Platforms>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="license\license.txt" Pack="true" PackagePath="" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />
+    </ItemGroup>
+
+</Project>
