@@ -240,8 +240,6 @@ void CoreClr::CreateAppDomain(alt::IServer* server, alt::IResource* resource, co
 
     auto nativeDllPaths = alt::String(appPath) + LIST_SEPARATOR + runtimeDirectory;
 
-    auto executablePath = alt::String(appPath) + PATH_SEPARATOR + resource->GetMain();
-
     const char* propertyKeys[] = {
             "TRUSTED_PLATFORM_ASSEMBLIES",
             "APP_PATHS",
@@ -275,6 +273,8 @@ void CoreClr::CreateAppDomain(alt::IServer* server, alt::IResource* resource, co
     }
 
     if (executable) {
+        auto executablePath = alt::String(appPath) + PATH_SEPARATOR + resource->GetMain();
+
         server->LogInfo(alt::String("coreclr-module: Prepare for executing assembly:") + executablePath);
         int exitCode = -1;
         const char* args[1];
@@ -288,7 +288,7 @@ void CoreClr::CreateAppDomain(alt::IServer* server, alt::IResource* resource, co
                 1,
                 args,
                 executablePath.CStr(),
-                (unsigned int*)&exitCode
+                (unsigned int*) &exitCode
         );
 
         if (result < 0) {
@@ -297,7 +297,7 @@ void CoreClr::CreateAppDomain(alt::IServer* server, alt::IResource* resource, co
                     alt::String("coreclr-module: Unable to execute assembly in app path:") + executablePath);
             this->PrintError(server, result);
         } else {
-            server->LogInfo("coreclr-module: Assembly executed");
+            server->LogInfo(alt::String("coreclr-module: Assembly executed"));
             char* x_str = new char[10];
             sprintf(x_str, "exit code: %d", exitCode);
             server->LogInfo(
@@ -339,7 +339,7 @@ void CoreClr::GetPath(alt::IServer* server, const char* defaultPath) {
                 greatest = entry->d_name;
                 continue;
             }
-            if(semver_parse(entry->d_name, &compare_version)) {
+            if (semver_parse(entry->d_name, &compare_version)) {
                 server->LogInfo(alt::String("coreclr-module: invalid version found: ") + entry->d_name);
                 continue;
             }
