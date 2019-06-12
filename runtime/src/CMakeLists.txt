@@ -7,8 +7,8 @@ add_library(${TARGET_NAME} SHARED altv.cpp CSharpScriptRuntime.cpp CSharpResourc
         altv-c-api/baseobject.cpp altv-c-api/mvalue.cpp altv-c-api/function.cpp altv-c-api/position.h altv-c-api/rotation.h altv-c-api/rgba.h altv-c-api/resource.h altv-c-api/resource.cpp altv-c-api/voice_channel.cpp)# clrHost.cpp
 
 if(UNIX AND NOT APPLE)
-    target_compile_options(${TARGET_NAME} PRIVATE -std=c++17)
-    target_link_libraries(${TARGET_NAME} -static-libgcc -static-libstdc++)
+    target_compile_options(${TARGET_NAME} PRIVATE -std=c++17 -static)
+    # target_link_libraries(${TARGET_NAME} -static-libgcc -static-libstdc++)
 else()
     target_compile_options(${TARGET_NAME} PRIVATE)# -I/home/parallels/Desktop/clang_7.0.1/include/c++/v1  -stdlib=libc++ -I$ENV{PROGRAMFILES}/LLVM/lib/clang/7.0.1/include -nodefaultlibs
 endif()
