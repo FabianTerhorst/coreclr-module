@@ -2,17 +2,12 @@
 #include "altv-c-api/mvalue.h"
 
 alt::IServer* currServer = nullptr;
-alt::Array<CSharpResource*> resourcesCache;
+auto resourcesCache = new alt::Array<CSharpResource*>;
 
 CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IResource::CreationInfo* info)
         : alt::IResource(info) {
     this->server = server;
-    resourcesCache.Push(this);
-    char wd[PATH_MAX];
-    if (!GetCurrentDir(wd, PATH_MAX)) {
-        server->LogInfo(alt::String("coreclr-module: Unable to find the working directory"));
-        return;
-    }
+    resourcesCache->Push(this);
 
     auto mainStr = main.CStr();
     auto mainSize = main.GetSize();
@@ -56,11 +51,17 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
 
     if (isDll) {
         struct stat buf;
-        auto executable = (stat((alt::String(this->GetPath()) + ASSEMBLY_PATH).CStr(), &buf) ==
+        char* assemblyPath = new char[this->GetPath().GetSize() + strlen(ASSEMBLY_PATH) + 1];
+        memcpy(assemblyPath, this->GetPath().CStr(), this->GetPath().GetSize());
+        memcpy(assemblyPath + this->GetPath().GetSize(), ASSEMBLY_PATH, strlen(ASSEMBLY_PATH));
+        strcpy(assemblyPath + this->GetPath().GetSize() + strlen(ASSEMBLY_PATH), "\0");
+
+        auto executable = (stat(assemblyPath, &buf) ==
                            0);//TODO: needs resource cfg "assembly"
+        delete[] assemblyPath;
 
         coreClr->CreateAppDomain(server, this, this->GetPath().CStr(), &runtimeHost, &domainId, executable,
-                                 resourcesCache.GetSize() - 1, this->name.CStr());
+                                 resourcesCache->GetSize() - 1, this->name.CStr());
 
         if (!executable) {
             coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "Main",
@@ -140,7 +141,13 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
         if (pid == -1) {
             server->LogInfo("Can't fork, error occured");
         } else if (pid == 0) {
-            auto index = resourcesCache.GetSize() - 1;
+            auto index = resourcesCache->GetSize() - 1;
+
+            char wd[PATH_MAX];
+            if (!GetCurrentDir(wd, PATH_MAX)) {
+                server->LogInfo(alt::String("coreclr-module: Unable to find the working directory"));
+                return;
+            }
 
             const char* currResourceName = name.CStr();
             auto currFullPath = new char[strlen(wd) + strlen(RESOURCES_PATH) + strlen(currResourceName) +
@@ -198,14 +205,15 @@ bool CSharpResource::Stop() {
 
 CSharpResource::~CSharpResource() {
     int i = 0;
-    for (auto resource : resourcesCache) {
+    for (auto resource : *resourcesCache) {
         if (resource == this) {
-            alt::Array<CSharpResource*> newResourcesCache;
-            for (auto cloneResource : resourcesCache) {
+            auto newResourcesCache = new alt::Array<CSharpResource*>;
+            for (auto cloneResource : *resourcesCache) {
                 if (cloneResource != this) {
-                    newResourcesCache.Push(cloneResource);
+                    newResourcesCache->Push(cloneResource);
                 }
             }
+            free(resourcesCache);
             resourcesCache = newResourcesCache;
             break;
         }
@@ -215,7 +223,7 @@ CSharpResource::~CSharpResource() {
 
 //TODO: needs entity type enum value for undefined
 bool CSharpResource::OnEvent(const alt::CEvent* ev) {
-    server->LogInfo(alt::String("event: ") + ((int) ev->GetType() + '0'));
+    if (ev == nullptr) return true;
     switch (ev->GetType()) {
         case alt::CEvent::Type::META_CHANGE: {
             auto event = ((alt::CMetaChangeEvent*) (ev));
@@ -328,43 +336,48 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
 }
 
 void CSharpResource::OnCreateBaseObject(alt::IBaseObject* object) {
-    switch (object->GetType()) {
-        case alt::IBaseObject::Type::PLAYER:
-            OnCreatePlayerDelegate(dynamic_cast<alt::IPlayer*>(object), dynamic_cast<alt::IPlayer*>(object)->GetID());
-            break;
-        case alt::IBaseObject::Type::VEHICLE:
-            OnCreateVehicleDelegate(dynamic_cast<alt::IVehicle*>(object),
-                                    dynamic_cast<alt::IVehicle*>(object)->GetID());
-            break;
-        case alt::IBaseObject::Type::BLIP:
-            OnCreateBlipDelegate(dynamic_cast<alt::IBlip*>(object));
-            break;
-        case alt::IBaseObject::Type::CHECKPOINT:
-            OnCreateCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
-            break;
-        case alt::IBaseObject::Type::VOICE_CHANNEL:
-            OnCreateVoiceChannelDelegate(dynamic_cast<alt::IVoiceChannel*>(object));
-            break;
+    if (object != nullptr) {
+        switch (object->GetType()) {
+            case alt::IBaseObject::Type::PLAYER:
+                OnCreatePlayerDelegate(dynamic_cast<alt::IPlayer*>(object),
+                                       dynamic_cast<alt::IPlayer*>(object)->GetID());
+                break;
+            case alt::IBaseObject::Type::VEHICLE:
+                OnCreateVehicleDelegate(dynamic_cast<alt::IVehicle*>(object),
+                                        dynamic_cast<alt::IVehicle*>(object)->GetID());
+                break;
+            case alt::IBaseObject::Type::BLIP:
+                OnCreateBlipDelegate(dynamic_cast<alt::IBlip*>(object));
+                break;
+            case alt::IBaseObject::Type::CHECKPOINT:
+                OnCreateCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+                break;
+            case alt::IBaseObject::Type::VOICE_CHANNEL:
+                OnCreateVoiceChannelDelegate(dynamic_cast<alt::IVoiceChannel*>(object));
+                break;
+        }
     }
 }
 
 void CSharpResource::OnRemoveBaseObject(alt::IBaseObject* object) {
-    switch (object->GetType()) {
-        case alt::IBaseObject::Type::PLAYER:
-            OnRemovePlayerDelegate(dynamic_cast<alt::IPlayer*>(object));
-            break;
-        case alt::IBaseObject::Type::VEHICLE:
-            OnRemoveVehicleDelegate(dynamic_cast<alt::IVehicle*>(object));
-            break;
-        case alt::IBaseObject::Type::BLIP:
-            OnRemoveBlipDelegate(dynamic_cast<alt::IBlip*>(object));
-            break;
-        case alt::IBaseObject::Type::CHECKPOINT:
-            OnRemoveCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
-            break;
-        case alt::IBaseObject::Type::VOICE_CHANNEL:
-            OnRemoveVoiceChannelDelegate(dynamic_cast<alt::IVoiceChannel*>(object));
-            break;
+    if (object != nullptr) {
+        switch (object->GetType()) {
+            case alt::IBaseObject::Type::PLAYER:
+                OnRemovePlayerDelegate(dynamic_cast<alt::IPlayer*>(object));
+                break;
+            case alt::IBaseObject::Type::VEHICLE:
+                OnRemoveVehicleDelegate(dynamic_cast<alt::IVehicle*>(object));
+                break;
+            case alt::IBaseObject::Type::BLIP:
+                OnRemoveBlipDelegate(dynamic_cast<alt::IBlip*>(object));
+                break;
+            case alt::IBaseObject::Type::CHECKPOINT:
+                OnRemoveCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+                break;
+            case alt::IBaseObject::Type::VOICE_CHANNEL:
+                OnRemoveVoiceChannelDelegate(dynamic_cast<alt::IVoiceChannel*>(object));
+                break;
+        }
     }
 }
 
@@ -436,7 +449,7 @@ alt::IServer* CSharpResource_GetServerPointer() {
 }
 
 CSharpResource* CSharpResource_GetResourcePointer(int32_t resourceIndex) {
-    return resourcesCache[resourceIndex];
+    return (*resourcesCache)[resourceIndex];
 }
 
 void CSharpResource::MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files) {
