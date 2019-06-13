@@ -26,6 +26,7 @@ script:
 - if [ "$TRAVIS_OS_NAME" = "linux" ]; then cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. ; fi
 - if [ "$TRAVIS_OS_NAME" = "windows" ]; then cmake -G"Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=RelWithDebInfo -T host=x64 .. ; fi
 - cmake --build . --config Release
+- cmake -LA | awk '{if(f)print} /-- Cache values/{f=1}'
 - cd src
 - if [ "$TRAVIS_OS_NAME" = "windows" ]; then cd Release ; fi
 deploy:
