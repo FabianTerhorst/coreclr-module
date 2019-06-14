@@ -47,5 +47,15 @@ namespace AltV.Net.Data
         {
             return $"RGBA(r: {R}, g: {G}, b: {B}, a: {A})";
         }
+
+        public static bool operator ==(Rgba rgba1, Rgba rgba2)
+        {
+            return rgba1.R == rgba2.R && rgba1.G == rgba2.G && rgba1.B == rgba2.B && rgba1.A == rgba2.A;
+        }
+
+        public static bool operator !=(Rgba rgba1, Rgba rgba2)
+        {
+            return rgba1.R != rgba2.R || rgba1.G != rgba2.G || rgba1.B != rgba2.B || rgba1.A != rgba2.A;
+        }
     }
 }

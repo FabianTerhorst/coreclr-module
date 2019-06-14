@@ -120,6 +120,18 @@ namespace AltV.Net.Data
             return $"Position(x: {X}, y: {Y}, z: {Z})";
         }
 
+        public static bool operator ==(Position p1, Position p2)
+        {
+            return Math.Abs(p1.X - p2.X) < TOLERANCE && Math.Abs(p1.Y - p2.Y) < TOLERANCE &&
+                   Math.Abs(p1.Z - p2.Z) < TOLERANCE;
+        }
+
+        public static bool operator !=(Position p1, Position p2)
+        {
+            return Math.Abs(p1.X - p2.X) >= TOLERANCE || Math.Abs(p1.Y - p2.Y) >= TOLERANCE ||
+                   Math.Abs(p1.Z - p2.Z) >= TOLERANCE;
+        }
+
         public override bool Equals(object obj)
         {
             if (obj is Position position)
