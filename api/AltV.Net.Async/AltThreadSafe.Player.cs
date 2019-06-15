@@ -98,8 +98,6 @@ namespace AltV.Net.Async
 
         public static bool EmitLocked(this IPlayer player, string eventName, params object[] args)
         {
-            player.ExecuteLocked<float, float, float>(player.SetPosition, 1, 2, 3);
-
             var mValues = MValueLocked.CreateFromObjectsLocked(args);
             var mValueArgs = MValue.Create(mValues);
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
