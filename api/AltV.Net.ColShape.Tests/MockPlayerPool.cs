@@ -7,6 +7,13 @@ namespace AltV.Net.ColShape.Tests
 {
     public class MockPlayerPool : IEntityPool<IPlayer>
     {
+        private readonly List<IPlayer> players;
+        
+        public MockPlayerPool(List<IPlayer> players)
+        {
+            this.players = players;
+        }
+        
         public void Create(IntPtr entityPointer, ushort id)
         {
             throw new NotImplementedException();
@@ -54,8 +61,6 @@ namespace AltV.Net.ColShape.Tests
 
         public ICollection<IPlayer> GetAllEntities()
         {
-            var mockPlayer = new MockPlayer {Position = new Position(1, 1, 1)};
-            var players = new List<IPlayer> {mockPlayer};
             return players;
         }
 
