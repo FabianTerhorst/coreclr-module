@@ -9,12 +9,10 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     this->server = server;
     resourcesCache->Push(this);
 
-    auto mainStr = main.CStr();
-    auto mainSize = main.GetSize();
-
     auto isDll = true;
 
-    if (mainSize < 5 || memcmp(mainStr + mainSize - 4, ".dll", 4) != 0) {
+    auto mainSize = main.GetSize();
+    if (mainSize < 5 || memcmp(main.CStr() + mainSize - 4, ".dll", 4) != 0) {
         isDll = false;
     }
 
@@ -46,6 +44,8 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     OnCreateVoiceChannelDelegate = nullptr;
     OnRemoveVoiceChannelDelegate = nullptr;
     OnConsoleCommandDelegate = nullptr;
+    OnMetaChangeDelegate = nullptr;
+    OnSyncedMetaChangeDelegate = nullptr;
 
     currServer = server;
 

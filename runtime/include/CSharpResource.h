@@ -119,7 +119,7 @@ private:
 public:
     CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IResource::CreationInfo* info);
 
-    ~CSharpResource();
+    ~CSharpResource() override;
 
     void SetExport(const char* key, const alt::MValue &mValue) {
         this->exports[key] = mValue;
