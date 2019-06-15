@@ -31,6 +31,7 @@ namespace AltV.Net.ColShape
         // x-index, y-index, col shapes
         private readonly IColShape[][][] colShapeAreas = new IColShape[500][][];
 
+        // all col shapes
         private IColShape[] colShapes = new IColShape[0];
 
         internal Action<IWorldObject, IColShape> OnEntityEnterColShape;

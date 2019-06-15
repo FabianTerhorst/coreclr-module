@@ -45,7 +45,7 @@ namespace AltV.Net.ColShape
             return worldObjects.Contains(worldObject);
         }
 
-        public bool IsPositionInside(in Position position)
+        public virtual bool IsPositionInside(in Position position)
         {
             return Position.Distance(position) <= Radius;
         }
