@@ -51,6 +51,11 @@ namespace AltV.Net.ColShape.Tests
         public Rotation Rotation { get; set; }
         public uint Model { get; set; }
 
+        public MockPlayer()
+        {
+            Exists = true;
+        }
+
         public void SetSyncedMetaData(string key, object value)
         {
             throw new NotImplementedException();

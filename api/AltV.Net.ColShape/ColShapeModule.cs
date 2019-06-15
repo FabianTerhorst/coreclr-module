@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
-using AltV.Net.Elements.Pools;
 
 namespace AltV.Net.ColShape
 {
@@ -40,9 +39,9 @@ namespace AltV.Net.ColShape
         // x-index, y-index, col shapes
         private readonly ColShape[][][] colShapeAreas = new ColShape[500][][];
 
-        private Action<IWorldObject, ColShape> OnEntityEnterColShape;
+        internal Action<IWorldObject, ColShape> OnEntityEnterColShape;
 
-        private Action<IWorldObject, ColShape> OnEntityExitColShape;
+        internal Action<IWorldObject, ColShape> OnEntityExitColShape;
 
         private readonly IEntityPool<IPlayer> playerPool;
 
@@ -71,21 +70,24 @@ namespace AltV.Net.ColShape
         // we need to save in players somehow current state to check if its not inside anymore for this player to call exit
         private void Loop()
         {
-            //TODO: lock in each loop or lock for full loop
-            using (var players = playerPool.GetAllEntities().GetEnumerator())
+            while (true)
             {
-                while (players.MoveNext())
+                using (var players = playerPool.GetAllEntities().GetEnumerator())
                 {
-                    ComputeWorldObject(players.Current);
+                    while (players.MoveNext())
+                    {
+                        ComputeWorldObject(players.Current);
+                    }
                 }
-            }
 
-            using (var vehicles = vehiclePool.GetAllEntities().GetEnumerator())
-            {
-                while (vehicles.MoveNext())
+                using (var vehicles = vehiclePool.GetAllEntities().GetEnumerator())
                 {
-                    ComputeWorldObject(vehicles.Current);
+                    while (vehicles.MoveNext())
+                    {
+                        ComputeWorldObject(vehicles.Current);
+                    }
                 }
+                Thread.Sleep(100);
             }
         }
 
