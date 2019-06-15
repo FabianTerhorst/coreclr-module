@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
@@ -6,42 +7,37 @@ using AltV.Net.Elements.Entities;
 namespace AltV.Net.ColShape
 {
     /// <summary>
-    /// Requires a lock in entity pool, so probably always requires async
+    /// Requires a lock in entity pool and concurrent dictionary for looping, only use with AltV.Net.Async together
     /// </summary>
     public class ColShapeModule
     {
+        //TODO: we maybe need two colShapeAreas then when using dimensions, because negative dimensions are supported as well
+        //TODO: add support for multi dimensions by making another dimension as first index of array for dimension value,
+        //TODO: but first check how global and private dimensions work
+
         //TODO: for removing col shapes we need to calculate x, y index again and remove it from the system array
-
-        //TODO: just round up always when inserting col shapes then it can't happen,
-        //TODO: btw for large colshapes we need to put same colshape in multiple areas because it can be bigger then the area
-
-        //TODO: col shape with size <= 100 size will always be in at least all border areas
-
-        //TODO: colshape with n = size / 100 will be in all n border areas around the calculated area
-
-        //TODO: when x = size / 100 and n > 1 then 1 is x instead of e.g. +1 x times in a increasing 4-edge circle with the radius of size / 100
-
-        //TODO: border areas are when index is (m, n) {(m, n), (m+1, n), (m-1, n), (m, n+1), (m, n-1), (m+1, n+1), (m+1, n-1), (m-1, n+1), (m-1, n-1)}
-
-        //TODO: this is still not perfect, because colshapes are then expected to be placed on multiple places at ones
-
-        //TODO: calculate the range radius with the colshape coordinates and
-        //TODO: range and check which areas contains these coordinates and add it to the areas that contains the coordinates
+        //TODO: just round up always when inserting col shapes then it can't happen
 
         // To reduce gc work
         private Position pos;
-        private ColShape shape;
+        private IColShape shape;
+        private readonly HashSet<IWorldObject> worldObjectsToRemove = new HashSet<IWorldObject>();
+        private readonly HashSet<IWorldObject> worldObjectsToReset = new HashSet<IWorldObject>();
 
         private static readonly float tolerance = 0.013F; //0.01318359375F;
 
         private const int Max = 100 * 500;
 
         // x-index, y-index, col shapes
-        private readonly ColShape[][][] colShapeAreas = new ColShape[500][][];
+        private readonly IColShape[][][] colShapeAreas = new IColShape[500][][];
 
-        internal Action<IWorldObject, ColShape> OnEntityEnterColShape;
+        private IColShape[] colShapes = new IColShape[0];
 
-        internal Action<IWorldObject, ColShape> OnEntityExitColShape;
+        internal Action<IWorldObject, IColShape> OnEntityEnterColShape;
+
+        internal Action<IWorldObject, IColShape> OnEntityExitColShape;
+
+        private bool running = true;
 
         private readonly IEntityPool<IPlayer> playerPool;
 
@@ -53,10 +49,10 @@ namespace AltV.Net.ColShape
             this.vehiclePool = vehiclePool;
             for (int i = 0, length = colShapeAreas.Length; i < length; i++)
             {
-                colShapeAreas[i] = new ColShape[500][];
+                colShapeAreas[i] = new IColShape[500][];
                 for (int j = 0, innerLength = colShapeAreas[i].Length; j < innerLength; j++)
                 {
-                    colShapeAreas[i][j] = new ColShape[0];
+                    colShapeAreas[i][j] = new IColShape[0];
                 }
             }
 
@@ -70,7 +66,7 @@ namespace AltV.Net.ColShape
         // we need to save in players somehow current state to check if its not inside anymore for this player to call exit
         private void Loop()
         {
-            while (true)
+            while (running)
             {
                 using (var players = playerPool.GetAllEntities().GetEnumerator())
                 {
@@ -87,8 +83,77 @@ namespace AltV.Net.ColShape
                         ComputeWorldObject(vehicles.Current);
                     }
                 }
+
+                if (worldObjectsToRemove.Count != 0)
+                {
+                    worldObjectsToRemove.Clear();
+                }
+
+                if (worldObjectsToReset.Count != 0)
+                {
+                    worldObjectsToReset.Clear();
+                }
+
+                // col shape exit is calculated via bool that gets set to false before each iteration and will set back to true when the entity is inside
+                // when its still false after iteration entity isn't inside anymore
+                lock (colShapes)
+                {
+                    for (int i = 0, length = colShapes.Length; i < length; i++)
+                    {
+                        var colShape = colShapes[i];
+                        if (colShape.LastChecked.Count == 0) continue;
+                        using (var colShapeWorldObjects = colShape.LastChecked.GetEnumerator())
+                        {
+                            while (colShapeWorldObjects.MoveNext())
+                            {
+                                if (!colShapeWorldObjects.Current.Value)
+                                {
+                                    shape.RemoveWorldObject(colShapeWorldObjects.Current.Key);
+                                    OnEntityExitColShape?.Invoke(colShapeWorldObjects.Current.Key, shape);
+                                    worldObjectsToRemove.Add(colShapeWorldObjects.Current.Key);
+                                }
+                                else
+                                {
+                                    worldObjectsToReset.Add(colShapeWorldObjects.Current.Key);
+                                }
+                            }
+                        }
+
+                        if (worldObjectsToReset.Count != 0)
+                        {
+                            using (var worldObjectsToResetEnumerator = worldObjectsToReset.GetEnumerator())
+                            {
+                                while (worldObjectsToResetEnumerator.MoveNext())
+                                {
+                                    colShape.ResetCheck(worldObjectsToResetEnumerator.Current);
+                                }
+                            }
+
+                            worldObjectsToReset.Clear();
+                        }
+
+                        if (worldObjectsToRemove.Count != 0)
+                        {
+                            using (var worldObjectsToRemoveEnumerator = worldObjectsToRemove.GetEnumerator())
+                            {
+                                while (worldObjectsToRemoveEnumerator.MoveNext())
+                                {
+                                    colShape.RemoveCheck(worldObjectsToRemoveEnumerator.Current);
+                                }
+                            }
+
+                            worldObjectsToRemove.Clear();
+                        }
+                    }
+                }
+
                 Thread.Sleep(100);
             }
+        }
+
+        public void Shutdown()
+        {
+            running = false;
         }
 
         private void ComputeWorldObject(IWorldObject worldObject)
@@ -110,31 +175,26 @@ namespace AltV.Net.ColShape
 
             var yIndex = (int) Math.Floor(posY / 100);
 
+            Console.WriteLine("player: (" + xIndex + "," + yIndex + ")");
+
             lock (colShapeAreas)
             {
-                var colShapes = colShapeAreas[xIndex][yIndex];
+                var areaColShapes = colShapeAreas[xIndex][yIndex];
 
-                for (int j = 0, innerLength = colShapes.Length; j < innerLength; j++)
+                for (int j = 0, innerLength = areaColShapes.Length; j < innerLength; j++)
                 {
-                    shape = colShapes[j];
-                    if (shape.WorldObjects.Contains(worldObject))
-                    {
-                        if (pos.Distance(shape.Position) <= shape.Radius) continue;
-                        shape.WorldObjects.Remove(worldObject);
-                        OnEntityExitColShape?.Invoke(worldObject, shape);
-                    }
-                    else if (pos.Distance(shape.Position) <= shape.Radius)
-                    {
-                        shape.WorldObjects.Add(worldObject);
-                        OnEntityEnterColShape?.Invoke(worldObject, shape);
-                    }
+                    shape = areaColShapes[j];
+                    if (!shape.IsPositionInside(in pos)) continue;
+                    shape.SetCheck(worldObject);
+                    shape.AddWorldObject(worldObject);
+                    OnEntityEnterColShape?.Invoke(worldObject, shape);
                 }
             }
         }
 
-        public void Add(ColShape colShape)
+        public void Add(IColShape colShape)
         {
-            //TODO: create list here instead of lock wigh volatile
+            //TODO: create list here instead of lock with volatile
             //var newColShapeAreas = new ColShape[500][][];
             //TODO: we need to copy array one by one, since copy doesnt support multi dimensions
             //Array.Copy(colShapeAreas, newColShapeAreas, colShapeAreas.Length);
@@ -153,6 +213,14 @@ namespace AltV.Net.ColShape
             var colShapePositionY = OffsetPosition(colShape.Position.Y);
             if (colShape.Radius == 0 || colShapePositionX < 0 || colShapePositionY < 0 || colShapePositionX > Max ||
                 colShapePositionY > Max) return;
+
+            lock (colShapes)
+            {
+                var colShapesLength = colShapes.Length;
+                Array.Resize(ref colShapes, colShapesLength + 1);
+                colShapes[colShapesLength] = colShape;
+            }
+
             // we actually have a circle but we use this as a square for performance reasons
             // we now find all areas that are inside this square
             var maxX = colShapePositionX + colShape.Radius;
@@ -164,9 +232,11 @@ namespace AltV.Net.ColShape
             // We now define starting x index to start filling
             var startingXIndex = (int) Math.Floor(minX / 100);
             // Also define stopping indexes
-            var stoppingYIndex = (int) Math.Ceiling(maxY / 100);
-            var stoppingXIndex = (int) Math.Ceiling(maxX / 100);
+            var stoppingYIndex = (int) Math.Floor(maxY / 100); //TODO: Math.Ceiling when inconsistency happens
+            var stoppingXIndex = (int) Math.Floor(maxX / 100); //TODO: Math.Ceiling when inconsistency happens
             // Now fill all areas from min {x, y} to max {x, y}
+            Console.WriteLine("ColShape X Areas (" + startingXIndex + "," + stoppingXIndex + ")");
+            Console.WriteLine("ColShape Y Areas (" + startingYIndex + "," + stoppingYIndex + ")");
             lock (colShapeAreas)
             {
                 for (var i = startingYIndex; i <= stoppingYIndex; i++)

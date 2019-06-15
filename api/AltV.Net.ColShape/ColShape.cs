@@ -16,6 +16,8 @@ namespace AltV.Net.ColShape
 
         private readonly HashSet<IWorldObject> worldObjects;
 
+        public IDictionary<IWorldObject, bool> LastChecked { get; }
+
         public IEnumerable<IWorldObject> WorldObjects => worldObjects;
 
         public ColShape(ulong id, int dimension, Position position, uint radius)
@@ -25,6 +27,7 @@ namespace AltV.Net.ColShape
             Position = position;
             Radius = radius;
             worldObjects = new HashSet<IWorldObject>();
+            LastChecked = new Dictionary<IWorldObject, bool>();
         }
 
         public void AddWorldObject(IWorldObject worldObject)
@@ -45,6 +48,26 @@ namespace AltV.Net.ColShape
         public bool IsPositionInside(in Position position)
         {
             return Position.Distance(position) <= Radius;
+        }
+
+        public void SetCheck(IWorldObject worldObject)
+        {
+            LastChecked[worldObject] = true;
+        }
+
+        public void ResetCheck(IWorldObject worldObject)
+        {
+            LastChecked[worldObject] = false;
+        }
+
+        public void RemoveCheck(IWorldObject worldObject)
+        {
+            LastChecked.Remove(worldObject);
+        }
+
+        public bool HasCheck(IWorldObject worldObject)
+        {
+            return LastChecked.TryGetValue(worldObject, out var checkState) && checkState;
         }
     }
 }

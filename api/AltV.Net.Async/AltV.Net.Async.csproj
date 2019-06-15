@@ -12,9 +12,9 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.7.5-beta</PackageVersion>
+        <PackageVersion>1.7.6-beta</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Update dependencies</PackageReleaseNotes>
+        <PackageReleaseNotes>Fix EmitLocked</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
