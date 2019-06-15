@@ -10,7 +10,7 @@ namespace AltV.Net.Async
 {
     public static partial class AltAsync
     {
-        public static bool ExecuteLocked(this IPlayer player, Action action)
+        public static bool ExecuteLocked(this IBaseObject player, Action action)
         {
             lock (player)
             {
@@ -24,7 +24,7 @@ namespace AltV.Net.Async
             }
         }
 
-        public static bool ExecuteLocked<T>(this IPlayer player, Action<T> action, T param)
+        public static bool ExecuteLocked<T>(this IBaseObject player, Action<T> action, T param)
         {
             lock (player)
             {
@@ -38,7 +38,7 @@ namespace AltV.Net.Async
             }
         }
 
-        public static bool ExecuteLocked<T1, T2, T3>(this IPlayer player, Action<T1, T2, T3> action, T1 param1,
+        public static bool ExecuteLocked<T1, T2, T3>(this IBaseObject player, Action<T1, T2, T3> action, T1 param1,
             T2 param2, T3 param3)
         {
             lock (player)
@@ -49,6 +49,21 @@ namespace AltV.Net.Async
                 }
 
                 action(param1, param2, param3);
+                return true;
+            }
+        }
+
+        public static bool ExecuteLocked<T1, T2, T3, T4>(this IBaseObject player, Action<T1, T2, T3, T4> action,
+            T1 param1, T2 param2, T3 param3, T4 param4)
+        {
+            lock (player)
+            {
+                if (!player.Exists)
+                {
+                    return false;
+                }
+
+                action(param1, param2, param3, param4);
                 return true;
             }
         }
@@ -66,7 +81,7 @@ namespace AltV.Net.Async
                 return true;
             }
         }
-        
+
         public static bool GetPositionLocked(this IPlayer player, ref Position position)
         {
             lock (player)
@@ -83,6 +98,8 @@ namespace AltV.Net.Async
 
         public static bool EmitLocked(this IPlayer player, string eventName, params object[] args)
         {
+            player.ExecuteLocked<float, float, float>(player.SetPosition, 1, 2, 3);
+
             var mValues = MValueLocked.CreateFromObjectsLocked(args);
             var mValueArgs = MValue.Create(mValues);
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
