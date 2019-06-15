@@ -40,14 +40,8 @@ namespace AltV.Net.ColShape
 
         private bool running = true;
 
-        private readonly IEntityPool<IPlayer> playerPool;
-
-        private readonly IEntityPool<IVehicle> vehiclePool;
-
-        public ColShapeModule(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool)
+        public ColShapeModule()
         {
-            this.playerPool = playerPool;
-            this.vehiclePool = vehiclePool;
             for (int i = 0, length = colShapeAreas.Length; i < length; i++)
             {
                 colShapeAreas[i] = new IColShape[500][];
@@ -64,12 +58,22 @@ namespace AltV.Net.ColShape
             thread.Start();
         }
 
+        public virtual ICollection<IPlayer> GetAllPlayers()
+        {
+            return Alt.GetAllPlayers();
+        }
+        
+        public virtual ICollection<IVehicle> GetAllVehicles()
+        {
+            return Alt.GetAllVehicles();
+        }
+
         // we need to save in players somehow current state to check if its not inside anymore for this player to call exit
         private void Loop()
         {
             while (running)
             {
-                using (var players = playerPool.GetAllEntities().GetEnumerator())
+                using (var players = GetAllPlayers().GetEnumerator())
                 {
                     while (players.MoveNext())
                     {
@@ -77,7 +81,7 @@ namespace AltV.Net.ColShape
                     }
                 }
 
-                using (var vehicles = vehiclePool.GetAllEntities().GetEnumerator())
+                using (var vehicles = GetAllVehicles().GetEnumerator())
                 {
                     while (vehicles.MoveNext())
                     {

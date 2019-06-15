@@ -4,6 +4,7 @@
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Platforms>AnyCPU</Platforms>
+        <PackageVersion>1.0.0-dev-preview</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>

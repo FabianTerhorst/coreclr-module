@@ -17,7 +17,7 @@ namespace AltV.Net.ColShape.Tests
         {
             player = new MockPlayer {Position = new Position(1, 1, 1)};
             players = new List<IPlayer> {player};
-            AltColShape.Init(new ColShapeModule(new MockPlayerPool(players), new MockVehiclePool()));
+            AltColShape.Init(new MockColShapeModule(new MockPlayerPool(players), new MockVehiclePool()));
         }
 
         [Test]
