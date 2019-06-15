@@ -11,7 +11,7 @@ namespace AltV.Net.ColShape.Tests
         private List<IPlayer> players;
 
         private IPlayer player;
-        
+
         [SetUp]
         public void Setup()
         {
@@ -25,7 +25,7 @@ namespace AltV.Net.ColShape.Tests
         {
             var enter = false;
             AltColShape.OnEntityEnterColShape = (o, shape) => { enter = true; };
-            AltColShape.Create(new Position(1, 1, 1), 50);
+            AltColShape.Create(0, 0, new Position(1, 1, 1), 50);
             Thread.Sleep(1000);
             Assert.True(enter);
             AltColShape.OnEntityExitColShape = (o, shape) => { enter = false; };

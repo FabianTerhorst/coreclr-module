@@ -1,5 +1,9 @@
 namespace AltV.Net.NetworkingEntity.Elements.Providers
 {
+    /// <summary>
+    /// Custom id provider to generate unique ids
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IIdProvider<T>
     {
         /// <summary>
