@@ -4,8 +4,15 @@
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Platforms>AnyCPU</Platforms>
+        <Authors>AltMp</Authors>
+        <Description>AltV .NET Core ColShape Api</Description>
+        <Copyright>AltMp</Copyright>
+        <PackageProjectUrl>https://github.com/fabianterhorst/coreclr-module</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/fabianterhorst/coreclr-module</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
         <PackageVersion>1.0.0-dev-preview</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
+        <PackageReleaseNotes>Initial commit</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
