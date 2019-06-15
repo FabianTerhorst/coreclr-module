@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.Networking.Example
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.ColShape", "AltV.Net.ColShape\AltV.Net.ColShape.csproj", "{E4376702-6BBF-4275-AE38-0C762C28BE05}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.ColShape.Tests", "AltV.Net.ColShape.Tests\AltV.Net.ColShape.Tests.csproj", "{C2A3B28B-41E5-49CD-AF57-1A3D394AA3A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,5 +89,11 @@ Global
 		{E4376702-6BBF-4275-AE38-0C762C28BE05}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E4376702-6BBF-4275-AE38-0C762C28BE05}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
 		{E4376702-6BBF-4275-AE38-0C762C28BE05}.Testing|Any CPU.Build.0 = Debug|Any CPU
+		{C2A3B28B-41E5-49CD-AF57-1A3D394AA3A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2A3B28B-41E5-49CD-AF57-1A3D394AA3A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2A3B28B-41E5-49CD-AF57-1A3D394AA3A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2A3B28B-41E5-49CD-AF57-1A3D394AA3A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2A3B28B-41E5-49CD-AF57-1A3D394AA3A6}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2A3B28B-41E5-49CD-AF57-1A3D394AA3A6}.Testing|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal

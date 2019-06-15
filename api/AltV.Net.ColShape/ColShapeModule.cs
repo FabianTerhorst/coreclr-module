@@ -1,8 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Pools;
 
 namespace AltV.Net.ColShape
 {
@@ -30,9 +30,6 @@ namespace AltV.Net.ColShape
         //TODO: range and check which areas contains these coordinates and add it to the areas that contains the coordinates
 
         // To reduce gc work
-        private List<IPlayer> players;
-        private List<IVehicle> vehicles;
-        private IPlayer curr;
         private Position pos;
         private ColShape shape;
 
@@ -45,8 +42,16 @@ namespace AltV.Net.ColShape
 
         private Action<IWorldObject, ColShape> OnEntityEnterColShape;
 
-        public ColShapeModule()
+        private Action<IWorldObject, ColShape> OnEntityExitColShape;
+
+        private readonly IEntityPool<IPlayer> playerPool;
+
+        private readonly IEntityPool<IVehicle> vehiclePool;
+
+        public ColShapeModule(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool)
         {
+            this.playerPool = playerPool;
+            this.vehiclePool = vehiclePool;
             for (int i = 0, length = colShapeAreas.Length; i < length; i++)
             {
                 colShapeAreas[i] = new ColShape[500][];
@@ -66,21 +71,21 @@ namespace AltV.Net.ColShape
         // we need to save in players somehow current state to check if its not inside anymore for this player to call exit
         private void Loop()
         {
-            //TODO: copy colShapeAreas array here or do lock, currently we do lock
-            //TODO: add support for vehicles
-            players = new List<IPlayer>(Alt.GetAllPlayers());
-            vehicles = new List<IVehicle>(Alt.GetAllVehicles());
-
-            //TODO: now hash pos in fragments of map areas and create matrix of col shape lists for map areas
-            //100x100 is one area we create them when creating a col shape
-            for (int i = 0, length = players.Count; i < length; i++)
+            //TODO: lock in each loop or lock for full loop
+            using (var players = playerPool.GetAllEntities().GetEnumerator())
             {
-                ComputeWorldObject(players[i]);
+                while (players.MoveNext())
+                {
+                    ComputeWorldObject(players.Current);
+                }
             }
 
-            for (int i = 0, length = vehicles.Count; i < length; i++)
+            using (var vehicles = vehiclePool.GetAllEntities().GetEnumerator())
             {
-                ComputeWorldObject(vehicles[i]);
+                while (vehicles.MoveNext())
+                {
+                    ComputeWorldObject(vehicles.Current);
+                }
             }
         }
 
@@ -92,13 +97,17 @@ namespace AltV.Net.ColShape
                 pos = worldObject.Position;
             }
 
-            if (pos.X > Max || pos.Y > Max) return;
+            var posX = OffsetPosition(pos.X);
+            var posY = OffsetPosition(pos.Y);
+
+            if (posX < 0 || posY < 0 || posX > Max || posY > Max) return;
 
             //TODO: when ceiling and floor is not the same divided by 100 we need to check two areas, that can happen on border
 
-            var xIndex = (int) Math.Floor(pos.X / 100);
+            var xIndex = (int) Math.Floor(posX / 100);
 
-            var yIndex = (int) Math.Floor(pos.Y / 100);
+            var yIndex = (int) Math.Floor(posY / 100);
+
             lock (colShapeAreas)
             {
                 var colShapes = colShapeAreas[xIndex][yIndex];
@@ -106,15 +115,16 @@ namespace AltV.Net.ColShape
                 for (int j = 0, innerLength = colShapes.Length; j < innerLength; j++)
                 {
                     shape = colShapes[j];
-                    if (pos.Distance(shape.Position) <= shape.Radius)
+                    if (shape.WorldObjects.Contains(worldObject))
+                    {
+                        if (pos.Distance(shape.Position) <= shape.Radius) continue;
+                        shape.WorldObjects.Remove(worldObject);
+                        OnEntityExitColShape?.Invoke(worldObject, shape);
+                    }
+                    else if (pos.Distance(shape.Position) <= shape.Radius)
                     {
                         shape.WorldObjects.Add(worldObject);
                         OnEntityEnterColShape?.Invoke(worldObject, shape);
-                        // inside
-                    }
-                    else
-                    {
-                        // outside
                     }
                 }
             }
@@ -123,23 +133,40 @@ namespace AltV.Net.ColShape
         public void Add(ColShape colShape)
         {
             //TODO: create list here instead of lock wigh volatile
+            //var newColShapeAreas = new ColShape[500][][];
+            //TODO: we need to copy array one by one, since copy doesnt support multi dimensions
+            //Array.Copy(colShapeAreas, newColShapeAreas, colShapeAreas.Length);
+            /*for (int i = 0, length = newColShapeAreas.Length; i < length; i++)
+            {
+                newColShapeAreas[i] = new ColShape[500][];
+                for (int j = 0, innerLength = newColShapeAreas[i].Length; j < innerLength; j++)
+                {
+                    var newColShapes = new ColShape[colShapeAreas[i][j].Length];
+                    Array.Copy(colShapeAreas[i][j], newColShapes, newColShapes.Length);
+                    newColShapeAreas[i][j] = newColShapes;
+                }
+            }*/
+
+            var colShapePositionX = OffsetPosition(colShape.Position.X);
+            var colShapePositionY = OffsetPosition(colShape.Position.Y);
+            if (colShape.Radius == 0 || colShapePositionX < 0 || colShapePositionY < 0 || colShapePositionX > Max ||
+                colShapePositionY > Max) return;
+            // we actually have a circle but we use this as a square for performance reasons
+            // we now find all areas that are inside this square
+            var maxX = colShapePositionX + colShape.Radius;
+            var maxY = colShapePositionY + colShape.Radius;
+            var minX = colShapePositionX - colShape.Radius;
+            var minY = colShapePositionY - colShape.Radius;
+            // We first use starting y index to start filling
+            var startingYIndex = (int) Math.Floor(minY / 100);
+            // We now define starting x index to start filling
+            var startingXIndex = (int) Math.Floor(minX / 100);
+            // Also define stopping indexes
+            var stoppingYIndex = (int) Math.Ceiling(maxY / 100);
+            var stoppingXIndex = (int) Math.Ceiling(maxX / 100);
+            // Now fill all areas from min {x, y} to max {x, y}
             lock (colShapeAreas)
             {
-                if (colShape.Position.X > Max || colShape.Position.Y > Max) return;
-                // we actually have a circle but we use this as a square for performance reasons
-                // we now find all areas that are inside this square
-                var maxX = colShape.Position.X + colShape.Radius;
-                var maxY = colShape.Position.Y + colShape.Radius;
-                var minX = colShape.Position.X - colShape.Radius;
-                var minY = colShape.Position.Y - colShape.Radius;
-                // We first use starting y index to start filling
-                var startingYIndex = (int) Math.Floor(minY / 100);
-                // We now define starting x index to start filling
-                var startingXIndex = (int) Math.Floor(minX / 100);
-                // Also define stopping indexes
-                var stoppingYIndex = (int) Math.Floor(maxY / 100);
-                var stoppingXIndex = (int) Math.Floor(maxX / 100);
-                // Now fill all areas from min {x, y} to max {x, y}
                 for (var i = startingYIndex; i <= stoppingYIndex; i++)
                 {
                     for (var j = startingXIndex; j <= stoppingXIndex; j++)
@@ -149,14 +176,26 @@ namespace AltV.Net.ColShape
                         colShapeAreas[i][j][length] = colShape;
                     }
                 }
-
-                //TODO: trivial area should be between
-                /*var xIndex = (int) Math.Floor(colShape.Position.X / 100);
-                var yIndex = (int) Math.Floor(colShape.Position.Y / 100);
-                var length = colShapeAreas[xIndex][yIndex].Length;
-                Array.Resize(ref colShapeAreas[xIndex][yIndex], length + 1);
-                colShapeAreas[xIndex][yIndex][length] = colShape;*/
             }
+
+            //TODO: trivial area should be between
+            /*var xIndex = (int) Math.Floor(colShape.Position.X / 100);
+            var yIndex = (int) Math.Floor(colShape.Position.Y / 100);
+            var length = colShapeAreas[xIndex][yIndex].Length;
+            Array.Resize(ref colShapeAreas[xIndex][yIndex], length + 1);
+            colShapeAreas[xIndex][yIndex][length] = colShape;*/
+
+            //colShapeAreas = newColShapeAreas TODO: when done, lock can be removed from loop and here
+        }
+
+        /// <summary>
+        /// We offset the position so the maps negative positions doesn't break
+        /// </summary>
+        /// <param name="value">x, y, z value to offset</param>
+        /// <returns></returns>
+        private static float OffsetPosition(float value)
+        {
+            return value + 10000;
         }
     }
 }
