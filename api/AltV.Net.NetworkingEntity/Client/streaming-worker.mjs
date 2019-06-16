@@ -1,4 +1,3 @@
-//TODO: test if its needed to send streamedIn entities to worker and not just compute them in worker instance
 let maxCoordinate = 50000;
 let areaSize = 100;
 let maxAreaIndex = maxCoordinate / areaSize;
