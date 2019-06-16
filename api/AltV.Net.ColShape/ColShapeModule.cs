@@ -56,10 +56,10 @@ namespace AltV.Net.ColShape
             this.areaSize = areaSize;
             maxAreaIndex = MaxCoordinate / areaSize;
             colShapeAreas = new IColShape[maxAreaIndex][][];
-            for (int i = 0, length = colShapeAreas.Length; i < length; i++)
+            for (var i = 0; i < maxAreaIndex; i++)
             {
                 colShapeAreas[i] = new IColShape[maxAreaIndex][];
-                for (int j = 0, innerLength = colShapeAreas[i].Length; j < innerLength; j++)
+                for (var j = 0; j < maxAreaIndex; j++)
                 {
                     colShapeAreas[i][j] = new IColShape[0];
                 }
