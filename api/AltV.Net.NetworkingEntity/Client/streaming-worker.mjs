@@ -112,7 +112,7 @@ function start(position) {
     let entitiesInArea = this.areas[xIndex][yIndex];
 
     for (let entity of entitiesInArea) {
-        if (!this.streamedIn.has(id)) {
+        if (!this.streamedIn.has(entity.id)) {
             if (distance(entity.position, position) <= entity.range) {
                 postMessage({streamIn: entity});
                 this.streamedIn.set(id, entity)
