@@ -45,7 +45,7 @@ namespace AltV.Net.ColShape
         private const int MaxCoordinate = 50_000;
         
         /// <summary>
-        /// Init col shape module, areaSize = 1 requires
+        /// Init col shape module
         /// areaSize of 1 requires 10gb ram
         /// areaSize of 10 requires 100mb ram
         /// areaSize of 100 requires 1mb ram
