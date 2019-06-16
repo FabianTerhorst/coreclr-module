@@ -7,7 +7,6 @@ export default class EntityRepository {
         this.websocket = websocket;
         // entity-id, entity
         this.entities = new Map();
-        this.streamedInEntities = new Map();
         const workerBlob = new Blob([streamingWorker], {type: 'application/javascript'});
         this.streamingWorker = new Worker(window.URL.createObjectURL(workerBlob));
         playerPosition.update = (position) => {
@@ -18,14 +17,12 @@ export default class EntityRepository {
             const streamIn = event.data.streamIn;
             const streamOut = event.data.streamOut;
             if (streamIn) {
-                this.addStreamedInEntity(streamIn);
                 proto.getProto().then((proto) => {
                     websocket.sendEvent({streamIn: proto.EntityStreamInEvent.create({entityId: streamIn.id})})
                 });
 
                 alt.emit("networkingEntityStreamIn", streamIn);
             } else if (streamOut) {
-                this.removeStreamedInEntity(streamOut);
                 proto.getProto().then((proto) => {
                     websocket.sendEvent({streamOut: proto.EntityStreamOutEvent.create({entityId: streamOut.id})})
                 });
@@ -38,10 +35,6 @@ export default class EntityRepository {
         return this.entities.values();
     }
 
-    getStreamedInEntities() {
-        return this.streamedInEntities;
-    }
-
     setEntities(entities) {
         let newEntities = new Map();
         for (const entity of entities) {
@@ -51,19 +44,10 @@ export default class EntityRepository {
         this.updateWorker();
     }
 
-    addStreamedInEntity(entity) {
-        this.streamedInEntities.set(entity.id, entity);
-    }
-
-    removeStreamedInEntity(entity) {
-        this.streamedInEntities.delete(entity.id);
-    }
-
     updateWorker() {
         this.streamingWorker.postMessage({
             position: playerPosition.getPosition(),
-            entities: this.entities,
-            streamedIn: this.streamedInEntities
+            entities: this.entities
         })
     }
 }

@@ -1,3 +1,4 @@
+//TODO: test if its needed to send streamedIn entities to worker and not just compute them in worker instance
 let maxCoordinate = 50000;
 let areaSize = 100;
 let maxAreaIndex = maxCoordinate / areaSize;
@@ -12,6 +13,9 @@ onmessage = function (e) {
                 this.areas[i][j] = [];
             }
         }
+    }
+    if (!this.streamedIn) {
+        this.streamedIn = new Map();
     }
     if (data.position) {
         this.position = data.position;
@@ -40,12 +44,8 @@ onmessage = function (e) {
                 }
             }
         }
-        this.entities = data.entities;
     }
-    if (data.streamedIn) {
-        this.streamedIn = data.streamedIn;
-    }
-    start(this.position, this.entities, this.streamedIn);
+    start(this.position);
 };
 
 function distance(v1, v2) {
@@ -60,7 +60,18 @@ function offsetPosition(value) {
     return value + 10000;
 }
 
-function start(position, entities, streamedIn) {
+function start(position) {
+    let keysToDeleteFromStreamedIn = [];
+    for (const [id, entity] of this.streamedIn) {
+        if (distance(entity.position, position) > entity.range) {
+            postMessage({streamOut: entity});
+            keysToDeleteFromStreamedIn.push(id);
+        }
+    }
+    for (let key of keysToDeleteFromStreamedIn) {
+        this.streamedIn.delete(key);
+    }
+
     let posX = offsetPosition(position.x);
     let posY = offsetPosition(position.y);
 
@@ -72,25 +83,11 @@ function start(position, entities, streamedIn) {
     let entitiesInArea = this.areas[xIndex][yIndex];
 
     for (let entity of entitiesInArea) {
-        if (!streamedIn.has(id)) {
+        if (!this.streamedIn.has(id)) {
             if (distance(entity.position, position) <= entity.range) {
                 postMessage({streamIn: entity});
-                streamedIn.set(id, entity)
+                this.streamedIn.set(id, entity)
             }
-        }
-    }
-    /*for (const [id, entity] of entities) {
-        if (!streamedIn.has(id)) {
-            if (distance(entity.position, position) <= entity.range) {
-                postMessage({streamIn: entity});
-                streamedIn.set(id, entity)
-            }
-        }
-    }*/
-    for (const [id, entity] of streamedIn) {
-        if (distance(entity.position, position) > entity.range) {
-            postMessage({streamOut: entity});
-            streamedIn.delete(id);
         }
     }
 }
