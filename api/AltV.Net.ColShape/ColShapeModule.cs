@@ -26,10 +26,8 @@ namespace AltV.Net.ColShape
 
         private static readonly float tolerance = 0.013F; //0.01318359375F;
 
-        private const int Max = 100 * 500;
-
         // x-index, y-index, col shapes
-        private readonly IColShape[][][] colShapeAreas = new IColShape[500][][];
+        private readonly IColShape[][][] colShapeAreas;
 
         // all col shapes
         private IColShape[] colShapes = new IColShape[0];
@@ -40,11 +38,27 @@ namespace AltV.Net.ColShape
 
         private bool running = true;
 
-        public ColShapeModule()
+        private readonly int areaSize;
+
+        private readonly int maxAreaIndex;
+
+        private const int MaxCoordinate = 50_000;
+        
+        /// <summary>
+        /// Init col shape module, areaSize = 1 requires
+        /// areaSize of 1 requires 10gb ram
+        /// areaSize of 10 requires 100mb ram
+        /// areaSize of 100 requires 1mb ram
+        /// </summary>
+        /// <param name="areaSize">Larger area size => more ram, less cpu usage</param>
+        public ColShapeModule(int areaSize = 100)
         {
+            this.areaSize = areaSize;
+            maxAreaIndex = MaxCoordinate / areaSize;
+            colShapeAreas = new IColShape[maxAreaIndex][][];
             for (int i = 0, length = colShapeAreas.Length; i < length; i++)
             {
-                colShapeAreas[i] = new IColShape[500][];
+                colShapeAreas[i] = new IColShape[maxAreaIndex][];
                 for (int j = 0, innerLength = colShapeAreas[i].Length; j < innerLength; j++)
                 {
                     colShapeAreas[i][j] = new IColShape[0];
@@ -62,7 +76,7 @@ namespace AltV.Net.ColShape
         {
             return Alt.GetAllPlayers();
         }
-        
+
         public virtual ICollection<IVehicle> GetAllVehicles()
         {
             return Alt.GetAllVehicles();
@@ -172,13 +186,13 @@ namespace AltV.Net.ColShape
             var posX = OffsetPosition(pos.X);
             var posY = OffsetPosition(pos.Y);
 
-            if (posX < 0 || posY < 0 || posX > Max || posY > Max) return;
+            if (posX < 0 || posY < 0 || posX > MaxCoordinate || posY > MaxCoordinate) return;
 
-            //TODO: when ceiling and floor is not the same divided by 100 we need to check two areas, that can happen on border
+            //TODO: when ceiling and floor is not the same divided by AreaSize we need to check two areas, that can happen on border
 
-            var xIndex = (int) Math.Floor(posX / 100);
+            var xIndex = (int) Math.Floor(posX / areaSize);
 
-            var yIndex = (int) Math.Floor(posY / 100);
+            var yIndex = (int) Math.Floor(posY / areaSize);
 
             Console.WriteLine("player: (" + xIndex + "," + yIndex + ")");
 
@@ -216,8 +230,8 @@ namespace AltV.Net.ColShape
 
             var colShapePositionX = OffsetPosition(colShape.Position.X);
             var colShapePositionY = OffsetPosition(colShape.Position.Y);
-            if (colShape.Radius == 0 || colShapePositionX < 0 || colShapePositionY < 0 || colShapePositionX > Max ||
-                colShapePositionY > Max) return;
+            if (colShape.Radius == 0 || colShapePositionX < 0 || colShapePositionY < 0 || colShapePositionX > MaxCoordinate ||
+                colShapePositionY > MaxCoordinate) return;
 
             lock (colShapes)
             {
@@ -233,12 +247,12 @@ namespace AltV.Net.ColShape
             var minX = colShapePositionX - colShape.Radius;
             var minY = colShapePositionY - colShape.Radius;
             // We first use starting y index to start filling
-            var startingYIndex = (int) Math.Floor(minY / 100);
+            var startingYIndex = (int) Math.Floor(minY / areaSize);
             // We now define starting x index to start filling
-            var startingXIndex = (int) Math.Floor(minX / 100);
+            var startingXIndex = (int) Math.Floor(minX / areaSize);
             // Also define stopping indexes
-            var stoppingYIndex = (int) Math.Floor(maxY / 100); //TODO: Math.Ceiling when inconsistency happens
-            var stoppingXIndex = (int) Math.Floor(maxX / 100); //TODO: Math.Ceiling when inconsistency happens
+            var stoppingYIndex = (int) Math.Floor(maxY / areaSize); //TODO: Math.Ceiling when inconsistency happens
+            var stoppingXIndex = (int) Math.Floor(maxX / areaSize); //TODO: Math.Ceiling when inconsistency happens
             // Now fill all areas from min {x, y} to max {x, y}
             Console.WriteLine("ColShape X Areas (" + startingXIndex + "," + stoppingXIndex + ")");
             Console.WriteLine("ColShape Y Areas (" + startingYIndex + "," + stoppingYIndex + ")");
@@ -256,8 +270,8 @@ namespace AltV.Net.ColShape
             }
 
             //TODO: trivial area should be between
-            /*var xIndex = (int) Math.Floor(colShape.Position.X / 100);
-            var yIndex = (int) Math.Floor(colShape.Position.Y / 100);
+            /*var xIndex = (int) Math.Floor(colShape.Position.X / AreaSize);
+            var yIndex = (int) Math.Floor(colShape.Position.Y / AreaSize);
             var length = colShapeAreas[xIndex][yIndex].Length;
             Array.Resize(ref colShapeAreas[xIndex][yIndex], length + 1);
             colShapeAreas[xIndex][yIndex][length] = colShape;*/

@@ -23,9 +23,16 @@ namespace AltV.Net.ColShape
             Module = module;
         }
 
-        public static void Init()
+        /// <summary>
+        /// Init col shape module, areaSize = 1 requires
+        /// areaSize of 1 requires 10gb ram
+        /// areaSize of 10 requires 100mb ram
+        /// areaSize of 100 requires 1mb ram
+        /// </summary>
+        /// <param name="areaSize">Larger area size => more ram, less cpu usage</param>
+        public static void Init(int areaSize = 100)
         {
-            Init(new ColShapeModule());
+            Init(new ColShapeModule(areaSize));
         }
 
         public static void Create(ulong id, int dimension, Position position, uint radius)

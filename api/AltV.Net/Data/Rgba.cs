@@ -57,5 +57,12 @@ namespace AltV.Net.Data
         {
             return rgba1.R != rgba2.R || rgba1.G != rgba2.G || rgba1.B != rgba2.B || rgba1.A != rgba2.A;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Rgba rgba2)
+                return R == rgba2.R && G == rgba2.G && B == rgba2.B && A == rgba2.A;
+            return false;
+        }
     }
 }
