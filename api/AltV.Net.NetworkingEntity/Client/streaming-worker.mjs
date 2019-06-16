@@ -22,30 +22,56 @@ onmessage = function (e) {
     if (data.entities) {
         // Fill entities in areas
         for (const [id, entity] of data.entities) {
-            let posX = offsetPosition(entity.position.x);
-            let posY = offsetPosition(entity.position.y);
-
-            if (posX < 0 || posY < 0 || posX > maxCoordinate || posY > maxCoordinate) continue;
-
-            let maxX = posX + entity.range;
-            let maxY = posY + entity.range;
-            let minX = posX - entity.range;
-            let minY = posY - entity.range;
-
-            let startingYIndex = Math.floor(minY / areaSize);
-            let startingXIndex = Math.floor(minX / areaSize);
-            let stoppingYIndex = Math.floor(maxY / areaSize);
-            let stoppingXIndex = Math.floor(maxX / areaSize);
-
-            for (let i = startingYIndex; i <= stoppingYIndex; i++) {
-                for (let j = startingXIndex; j <= stoppingXIndex; j++) {
-                    this.areas[i][j].push(entity);
-                }
-            }
+            addEntityToArea(entity);
         }
+    }
+    if (data.entityToAdd) {
+        addEntityToArea(data.entityToAdd);
+    }
+    if (data.entityToRemove) {
+        removeEntityFromArea(data.entityToRemove);
     }
     start(this.position);
 };
+
+function addEntityToArea(entity) {
+    const [startingYIndex, startingXIndex, stoppingYIndex, stoppingXIndex] = calcStartStopIndex(entity);
+    if (startingYIndex == null || startingXIndex == null || stoppingYIndex == null || stoppingXIndex == null) return;
+    for (let i = startingYIndex; i <= stoppingYIndex; i++) {
+        for (let j = startingXIndex; j <= stoppingXIndex; j++) {
+            this.areas[i][j].push(entity);
+        }
+    }
+}
+
+function calcStartStopIndex(entity) {
+    let posX = offsetPosition(entity.position.x);
+    let posY = offsetPosition(entity.position.y);
+
+    if (posX < 0 || posY < 0 || posX > maxCoordinate || posY > maxCoordinate) return [null, null, null, null];
+
+    let maxX = posX + entity.range;
+    let maxY = posY + entity.range;
+    let minX = posX - entity.range;
+    let minY = posY - entity.range;
+
+    let startingYIndex = Math.floor(minY / areaSize);
+    let startingXIndex = Math.floor(minX / areaSize);
+    let stoppingYIndex = Math.floor(maxY / areaSize);
+    let stoppingXIndex = Math.floor(maxX / areaSize);
+
+    return [startingYIndex, startingXIndex, stoppingYIndex, stoppingXIndex];
+}
+
+function removeEntityFromArea(entity) {
+    const [startingYIndex, startingXIndex, stoppingYIndex, stoppingXIndex] = calcStartStopIndex(entity);
+    if (startingYIndex == null || startingXIndex == null || stoppingYIndex == null || stoppingXIndex == null) return;
+    for (let i = startingYIndex; i <= stoppingYIndex; i++) {
+        for (let j = startingXIndex; j <= stoppingXIndex; j++) {
+            this.areas[i][j].filter((arrEntity) => arrEntity.id !== entity.id)
+        }
+    }
+}
 
 function distance(v1, v2) {
     const dx = v1.x - v2.x;
