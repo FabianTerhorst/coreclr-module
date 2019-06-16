@@ -44,6 +44,27 @@ export default class EntityRepository {
         this.updateWorker();
     }
 
+    addEntity(entity) {
+        this.entities.set(entity.id, entity);
+        this.streamingWorker.postMessage({
+            position: playerPosition.getPosition(),
+            entityToAdd: entity
+        });
+    }
+
+    removeEntity(id) {
+        if (!this.entities.has(id)) {
+            return;
+        }
+        let entity = this.entities.get(id);
+        if (!entity) return;
+        this.entities.delete(id);
+        this.streamingWorker.postMessage({
+            position: playerPosition.getPosition(),
+            entityToRemove: entity
+        });
+    }
+
     updateWorker() {
         this.streamingWorker.postMessage({
             position: playerPosition.getPosition(),

@@ -62,20 +62,13 @@ export default class WebSocket {
                     }
                 } else if (obj.delete) {
                     const deleteEvent = obj.delete;
-                    if (this.entityRepository.entities.delete(deleteEvent.id)) {
-                        this.entityRepository.updateWorker();
-                        if (this.entityRepository.streamedInEntities.has(deleteEvent.id)) {
-                            const deletedEntity = this.entityRepository.streamedInEntities.get(deleteEvent.id);
-                            alt.emit("networkingEntityStreamOut", deletedEntity);
-                            this.entityRepository.streamedInEntities.delete(deleteEvent.id);
-                        }
-                        console.log("entity deleted", deleteEvent.id);
+                    if (deleteEvent) {
+                        this.entityRepository.removeEntity(deleteEvent.id);
                     }
                 } else if (obj.create) {
                     const createEvent = obj.create;
                     if (createEvent.entity) {
-                        this.entityRepository.entities.set(createEvent.entity.id, createEvent.entity);
-                        this.entityRepository.updateWorker();
+                        this.entityRepository.addEntity(createEvent.entity);
                     }
                 } else if (obj.multipleDataChange) {
                     const multipleDataChange = obj.multipleDataChange;
