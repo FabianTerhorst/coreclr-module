@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <OutputType>Exe</OutputType>
+        <PackageVersion>1.0.0-dev-preview</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
