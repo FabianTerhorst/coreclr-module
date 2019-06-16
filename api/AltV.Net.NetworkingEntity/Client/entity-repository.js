@@ -7,6 +7,7 @@ export default class EntityRepository {
         this.websocket = websocket;
         // entity-id, entity
         this.entities = new Map();
+        this.streamedInEntities = new Map();
         const workerBlob = new Blob([streamingWorker], {type: 'application/javascript'});
         this.streamingWorker = new Worker(window.URL.createObjectURL(workerBlob));
         playerPosition.update = (position) => {
@@ -17,18 +18,26 @@ export default class EntityRepository {
             const streamIn = event.data.streamIn;
             const streamOut = event.data.streamOut;
             if (streamIn) {
+                if (this.entities.has(streamIn.id)) {
+                    this.streamedInEntities.set(streamIn.id, this.entities.get(streamIn.id));
+                }
                 proto.getProto().then((proto) => {
                     websocket.sendEvent({streamIn: proto.EntityStreamInEvent.create({entityId: streamIn.id})})
                 });
 
                 alt.emit("networkingEntityStreamIn", streamIn);
             } else if (streamOut) {
+                this.streamedInEntities.delete(streamOut.id);
                 proto.getProto().then((proto) => {
                     websocket.sendEvent({streamOut: proto.EntityStreamOutEvent.create({entityId: streamOut.id})})
                 });
                 alt.emit("networkingEntityStreamOut", streamOut);
             }
         };
+    }
+
+    isStreamedIn(id) {
+        return this.streamedInEntities.has(id);
     }
 
     getEntities() {

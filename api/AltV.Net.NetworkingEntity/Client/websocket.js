@@ -42,7 +42,9 @@ export default class WebSocket {
                         const newEntity = this.entityRepository.entities.get(dataChange.id);
                         console.log("data changed", newEntity.id, newEntity.data);
                         delete dataChange.id;
-                        alt.emit("networkingEntityDataChange", newEntity, dataChange);
+                        if (this.entityRepository.isStreamedIn(dataChange.id)) {
+                            alt.emit("networkingEntityDataChange", newEntity, dataChange);
+                        }
                     }
                 } else if (obj.positionChange) {
                     const positionChange = obj.positionChange;
@@ -84,7 +86,9 @@ export default class WebSocket {
                         }
                         const newEntity = this.entityRepository.entities.get(multipleDataChange.id);
                         console.log("multiple data change", newEntity.id, newEntity.data);
-                        alt.emit("networkingEntityDataChange", newEntity, multipleDataChange.data);
+                        if (this.entityRepository.isStreamedIn(multipleDataChange.id)) {
+                            alt.emit("networkingEntityDataChange", newEntity, multipleDataChange.data);
+                        }
                     }
                 } else if (obj.dimensionChange) {
                     const dimensionChange = obj.dimensionChange;
