@@ -115,7 +115,7 @@ function start(position) {
         if (!this.streamedIn.has(entity.id)) {
             if (distance(entity.position, position) <= entity.range) {
                 postMessage({streamIn: entity});
-                this.streamedIn.set(id, entity)
+                this.streamedIn.set(entity.id, entity)
             }
         }
     }
