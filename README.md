@@ -349,6 +349,50 @@ namespace AltV.Net.Example
  [IBlip](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Elements/Entities/IBlip.cs)
  [ICheckpoint](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Elements/Entities/ICheckpoint.cs)
  
+ ### Experimental collision shapes
+ 
+Add the https://www.nuget.org/packages/AltV.Net.ColShape/ dependency to your gameserver resource. Your resource needs to use https://www.nuget.org/packages/AltV.Net.Async/ as well and needs to extend AsyncResource.
+ 
+Configure AltColShape
+```csharp
+AltColShape.Configure(options =>
+{
+    // AreaSize defines the internal size of the colshape areas that are used for fast colshape algorithm
+    // This doesn't influence colshape radius
+    // smaller size => less cpu usage, more ram
+    options.AreaSize = 100;
+});
+```
+Configure event handlers
+```csharp
+AltColShape.OnEntityEnterColShape = (entity, shape) => {  };
+AltColShape.OnEntityExitColShape = (entity, shape) => {  };
+```
+
+Add collision shapes
+```csharp
+AltColShape.Add(new ColShape(id, dimension, new Position(x, y, z), radius));
+```
+
+Extend ColShapes
+```csharp
+public class CustomColShape : ColShape
+{
+    public int MyData;
+    
+    public CustomColShape(ulong id, int dimension, Position position, uint radius) : base(id, dimension, position,
+            radius)
+    {
+    }
+}
+AltColShape.Add(new CustomColShape(id, dimension, new Position(x, y, z), radius));
+AltColShape.OnEntityEnterColShape = (entity, shape) => {
+    if(shape is CustomColShape customColShape) {
+        Console.WriteLine(customColShape.MyData.ToString());
+    }
+};
+```
+ 
  ### Experimental entity streaming
  
  https://github.com/FabianTerhorst/coreclr-module/releases/download/1.7.6-beta6/networking-entity.zip
