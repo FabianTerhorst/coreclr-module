@@ -21,6 +21,12 @@ onmessage = function (e) {
     }
     if (data.entities) {
         // Fill entities in areas
+        for (let i = 0; i < maxAreaIndex; i++) {
+            this.areas[i] = new Array(maxAreaIndex);
+            for (let j = 0; j < maxAreaIndex; j++) {
+                this.areas[i][j] = [];
+            }
+        }
         for (const [id, entity] of data.entities) {
             addEntityToArea(entity);
         }
