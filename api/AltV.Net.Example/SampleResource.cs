@@ -9,6 +9,7 @@ using AltV.Net.Elements.Args;
 using AltV.Net.Enums;
 using AltV.Net.Native;
 using System.Drawing;
+using AltV.Net.ColShape;
 
 namespace AltV.Net.Example
 {
@@ -16,6 +17,8 @@ namespace AltV.Net.Example
     {
         public override void OnStart()
         {
+            AltColShape.Configure(options => { options.AreaSize = 100; });
+
             Alt.On<string>("test", s => { Alt.Log("test=" + s); });
             Alt.OnServer("test", args => { Alt.Log("args=" + args[0]); });
             Alt.Emit("test", "bla");

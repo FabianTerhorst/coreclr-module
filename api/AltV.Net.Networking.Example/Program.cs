@@ -10,12 +10,11 @@ namespace AltV.Net.Networking.Example
     {
         private static void Main(string[] args)
         {
-            //AltNetworking.Init() is enough for most projects
-            AltNetworking.Init(new NetworkingModuleBuilder()
-                .SetPort(46429)
-                .SetAuthenticationProviderFactory(new NonePlayerAuthenticationProviderFactory())
-                .Build()
-            );
+            AltNetworking.Configure(options =>
+            {
+                options.Port = 46429;
+                options.AuthenticationProviderFactory = new NonePlayerAuthenticationProviderFactory();
+            });
 
             var data = new Dictionary<string, object>();
             var data2 = new Dictionary<string, object>();

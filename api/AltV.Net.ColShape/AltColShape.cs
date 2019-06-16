@@ -18,21 +18,20 @@ namespace AltV.Net.ColShape
             set => Module.OnEntityExitColShape += value;
         }
 
-        public static void Init(ColShapeModule module)
+        public static void Configure(Action<ColShapeModuleOptions> options)
         {
-            Module = module;
+            var defaultOptions = new ColShapeModuleOptions();
+            options(defaultOptions);
+            Init(new ColShapeModule(defaultOptions.AreaSize));
         }
 
         /// <summary>
-        /// Init col shape module
-        /// areaSize of 1 requires 10gb ram
-        /// areaSize of 10 requires 100mb ram
-        /// areaSize of 100 requires 1mb ram
+        /// Only use init when you know what you are doing
         /// </summary>
-        /// <param name="areaSize">Larger area size => more ram, less cpu usage</param>
-        public static void Init(int areaSize = 100)
+        /// <param name="module"></param>
+        public static void Init(ColShapeModule module)
         {
-            Init(new ColShapeModule(areaSize));
+            Module = module;
         }
 
         public static void Create(ulong id, int dimension, Position position, uint radius)

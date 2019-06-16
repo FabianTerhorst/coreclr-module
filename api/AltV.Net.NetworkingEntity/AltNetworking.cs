@@ -6,11 +6,11 @@ using Entity;
 namespace AltV.Net.NetworkingEntity
 {
     // TODO: We don't trigger stream out in entity remove because client can calculate that himself
-    
+
     //TODO: make streaming handler depending on entity if streamed to all players or only the players that are in range
     //TODO: so that server calculates stream in, out for entities that shouldn't be send to all players that aren't in range
     //TODO: that information does only the server need because it will send the entity to the client when in range with all data or snapshot cache
-    
+
     //TODO: make it possible to set if server should even be notified when enter stream in ,out like we know no data will ever change so no need to spam server with that entity
     public static class AltNetworking
     {
@@ -26,11 +26,21 @@ namespace AltV.Net.NetworkingEntity
             set => Module.Server.StreamingHandler.EntityStreamOutHandler += value;
         }
 
-        public static void Init()
+        /// <summary>
+        /// Configure networking entity module
+        /// </summary>
+        /// <param name="options"></param>
+        public static void Configure(Action<NetworkingEntityModuleOptions> options)
         {
-            Module = new NetworkingModule();
+            var defaultOptions = new NetworkingEntityModuleOptions();
+            options(defaultOptions);
+            Init(defaultOptions.Build());
         }
 
+        /// <summary>
+        /// Init module manually, only use when you know what you are doing
+        /// </summary>
+        /// <param name="networkingModule"></param>
         public static void Init(NetworkingModule networkingModule)
         {
             Module = networkingModule;
