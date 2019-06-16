@@ -18,6 +18,10 @@ namespace AltV.Net.ColShape
             set => Module.OnEntityExitColShape += value;
         }
 
+        /// <summary>
+        /// Configures the ColShape module
+        /// </summary>
+        /// <param name="options"></param>
         public static void Configure(Action<ColShapeModuleOptions> options)
         {
             var defaultOptions = new ColShapeModuleOptions();
