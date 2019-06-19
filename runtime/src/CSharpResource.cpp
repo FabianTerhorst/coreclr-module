@@ -137,7 +137,7 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
                                  "OnRemoveColShape",
                                  reinterpret_cast<void**>(&OnRemoveColShapeDelegate));
             coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnColShapeEvent",
+                                 "OnColShape",
                                  reinterpret_cast<void**>(&ColShapeDelegate));
         }
     } else {
