@@ -2,9 +2,9 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
-        <PackageVersion>1.0.2-dev-preview</PackageVersion>
+        <PackageVersion>1.1.0-dev-preview</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Improve init</PackageReleaseNotes>
+        <PackageReleaseNotes>update dependencies</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

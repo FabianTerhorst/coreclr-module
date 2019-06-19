@@ -10,9 +10,9 @@
         <PackageProjectUrl>https://github.com/fabianterhorst/coreclr-module</PackageProjectUrl>
         <RepositoryUrl>https://github.com/fabianterhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageVersion>1.0.1-dev-preview</PackageVersion>
+        <PackageVersion>1.1.0-dev-preview</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Improve init</PackageReleaseNotes>
+        <PackageReleaseNotes>update dependencies</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
