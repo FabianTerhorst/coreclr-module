@@ -111,6 +111,12 @@ namespace AltV.Net
             add => Module.SyncedMetaDataChangeEventHandler.Add(value);
             remove => Module.SyncedMetaDataChangeEventHandler.Remove(value);
         }
+        
+        public static event ColShapeDelegate OnColShape
+        {
+            add => Module.ColShapeEventHandler.Add(value);
+            remove => Module.ColShapeEventHandler.Remove(value);
+        }
 
         public static void Emit(string eventName, params object[] args) => Server.TriggerServerEvent(eventName, args);
 
@@ -131,6 +137,9 @@ namespace AltV.Net
             
         public static ICollection<IVoiceChannel> GetAllVoiceChannels() =>
             Module.VoiceChannelPool.GetAllObjects();
+        
+        public static ICollection<IColShape> GetAllColShapes() =>
+            Module.ColShapePool.GetAllObjects();
 
         public static uint Hash(string stringToHash) => Server.Hash(stringToHash);
 

@@ -26,12 +26,15 @@ namespace AltV.Net
 
         private readonly IBaseObjectPool<IVoiceChannel> voiceChannelPool;
 
+        private readonly IBaseObjectPool<IColShape> colShapePool;
+
         public Server(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
-            IBaseObjectPool<IVoiceChannel> voiceChannelPool)
+            IBaseObjectPool<IVoiceChannel> voiceChannelPool,
+            IBaseObjectPool<IColShape> colShapePool)
         {
             this.NativePointer = nativePointer;
             this.baseBaseObjectPool = baseBaseObjectPool;
@@ -41,6 +44,7 @@ namespace AltV.Net
             this.blipPool = blipPool;
             this.checkpointPool = checkpointPool;
             this.voiceChannelPool = voiceChannelPool;
+            this.colShapePool = colShapePool;
         }
 
         public void LogInfo(IntPtr messagePtr)
@@ -251,6 +255,40 @@ namespace AltV.Net
             return voiceChannel;
         }
 
+        public IColShape CreateColShapeCylinder(Position pos, float radius, float height)
+        {
+            colShapePool.Create(AltNative.Server.Server_CreateColShapeCylinder(NativePointer, pos, radius, height),
+                out var colShape);
+            return colShape;
+        }
+
+        public IColShape CreateColShapeSphere(Position pos, float radius)
+        {
+            colShapePool.Create(AltNative.Server.Server_CreateColShapeSphere(NativePointer, pos, radius),
+                out var colShape);
+            return colShape;
+        }
+
+        public IColShape CreateColShapeCircle(Position pos, float radius)
+        {
+            colShapePool.Create(AltNative.Server.Server_CreateColShapeCircle(NativePointer, pos, radius),
+                out var colShape);
+            return colShape;
+        }
+
+        public IColShape CreateColShapeCube(Position pos, Position pos2)
+        {
+            colShapePool.Create(AltNative.Server.Server_CreateColShapeCube(NativePointer, pos, pos2), out var colShape);
+            return colShape;
+        }
+
+        public IColShape CreateColShapeRectangle(Position pos, Position pos2)
+        {
+            colShapePool.Create(AltNative.Server.Server_CreateColShapeRectangle(NativePointer, pos, pos2),
+                out var colShape);
+            return colShape;
+        }
+
         public void RemoveBlip(IBlip blip)
         {
             if (blip.Exists)
@@ -283,13 +321,21 @@ namespace AltV.Net
             }
         }
 
+        public void RemoveColShape(IColShape colShape)
+        {
+            if (colShape.Exists)
+            {
+                AltNative.Server.Server_DestroyColShape(NativePointer, colShape.NativePointer);
+            }
+        }
+
         public ServerNativeResource GetResource(string name)
         {
             var resourcePointer = IntPtr.Zero;
             AltNative.Server.Server_GetResource(NativePointer, name, ref resourcePointer);
             return resourcePointer == IntPtr.Zero ? null : new ServerNativeResource(resourcePointer);
         }
-        
+
         public IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation)
         {
             id = default;

@@ -93,8 +93,11 @@ typedef void (* CreateCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
 typedef void (* RemoveCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
 typedef void (* OnCreateVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
 typedef void (* OnRemoveVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
+typedef void (* OnCreateColShapeDelegate_t)(alt::IColShape* colShape);
+typedef void (* OnRemoveColShapeDelegate_t)(alt::IColShape* colShape);
 typedef void (* OnConsoleCommandDelegate_t)(const char* name, alt::Array<alt::StringView>* args);
 typedef void (* MetaChangeDelegate_t)(void* entity, alt::IBaseObject::Type type, alt::StringView key, alt::MValue* value);
+typedef void (* ColShapeDelegate_t)(alt::IColShape* colShape, alt::IEntity* entity, alt::IBaseObject::Type baseObjectType, bool state);
 
 class CSharpResource : public alt::IResource {
     bool OnEvent(const alt::CEvent* ev) override;
@@ -183,6 +186,12 @@ public:
 
     MetaChangeDelegate_t OnSyncedMetaChangeDelegate;
 
+    OnCreateColShapeDelegate_t OnCreateColShapeDelegate;
+
+    OnRemoveColShapeDelegate_t OnRemoveColShapeDelegate;
+
+    ColShapeDelegate_t ColShapeDelegate;
+
     void* runtimeHost;
     unsigned int domainId;
 };
@@ -216,7 +225,10 @@ EXPORT void CSharpResource_SetMain(CSharpResource* resource,
                                    OnRemoveVoiceChannelDelegate_t removeVoiceChannelDelegate,
                                    OnConsoleCommandDelegate_t consoleCommandDelegate,
                                    MetaChangeDelegate_t metaChangeDelegate,
-                                   MetaChangeDelegate_t syncedMetaChangeDelegate);
+                                   MetaChangeDelegate_t syncedMetaChangeDelegate,
+                                   OnCreateColShapeDelegate_t createColShapeDelegate,
+                                   OnRemoveColShapeDelegate_t removeColShapeDelegate,
+                                   ColShapeDelegate_t colShapeDelegate);
 
 EXPORT alt::IServer* CSharpResource_GetServerPointer();
 

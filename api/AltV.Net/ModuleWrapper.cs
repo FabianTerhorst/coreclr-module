@@ -35,19 +35,21 @@ namespace AltV.Net
             var blipFactory = _resource.GetBlipFactory();
             var checkpointFactory = _resource.GetCheckpointFactory();
             var voiceChannelFactory = _resource.GetVoiceChannelFactory();
+            var colShapeFactory = _resource.GetColShapeFactory();
             var playerPool = _resource.GetPlayerPool(playerFactory);
             var vehiclePool = _resource.GetVehiclePool(vehicleFactory);
             var blipPool = _resource.GetBlipPool(blipFactory);
             var checkpointPool = _resource.GetCheckpointPool(checkpointFactory);
             var voiceChannelPool = _resource.GetVoiceChannelPool(voiceChannelFactory);
+            var colShapePool = _resource.GetColShapePool(colShapeFactory);
             var entityPool = _resource.GetBaseEntityPool(playerPool, vehiclePool);
             var baseObjectPool =
-                _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool);
+                _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool);
             var server = new Server(serverPointer, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool,
                 checkpointPool, voiceChannelPool);
             var csharpResource = new CSharpNativeResource(resourcePointer);
             _module = _resource.GetModule(server, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool,
-                blipPool, checkpointPool, voiceChannelPool);
+                blipPool, checkpointPool, voiceChannelPool, colShapePool);
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             foreach (var assembly in assemblies)
@@ -158,6 +160,11 @@ namespace AltV.Net
         {
             _module.OnCreateVoiceChannel(channelPointer);
         }
+        
+        public static void OnCreateColShape(IntPtr colShapePointer)
+        {
+            _module.OnCreateColShape(colShapePointer);
+        }
 
         public static void OnRemoveBlip(IntPtr blipPointer)
         {
@@ -177,6 +184,11 @@ namespace AltV.Net
         public static void OnRemoveVoiceChannel(IntPtr channelPointer)
         {
             _module.OnRemoveVoiceChannel(channelPointer);
+        }
+        
+        public static void OnRemoveColShape(IntPtr colShapePointer)
+        {
+            _module.OnRemoveColShape(colShapePointer);
         }
 
         public static void OnPlayerRemove(IntPtr playerPointer)
@@ -202,6 +214,11 @@ namespace AltV.Net
         public static void OnSyncedMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key, ref MValue value)
         {
             _module.OnSyncedMetaDataChange(entityPointer, entityType, key, ref value);
+        }
+
+        public static void OnColShape(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType, bool state)
+        {
+            _module.OnColShape(colShapePointer, targetEntityPointer, entityType, state);
         }
     }
 }

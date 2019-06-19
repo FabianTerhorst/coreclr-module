@@ -60,20 +60,40 @@ namespace AltV.Net.Native
             internal static extern IntPtr Server_CreateVoiceChannel(IntPtr serverPointer, bool spatial,
                 float maxDistance);
 
+            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Server_CreateColShapeCylinder(IntPtr serverPointer, Position pos,
+                float radius, float height);
+
+            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Server_CreateColShapeSphere(IntPtr serverPointer, Position pos, float radius);
+
+            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Server_CreateColShapeCircle(IntPtr serverPointer, Position pos, float radius);
+
+            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Server_CreateColShapeCube(IntPtr serverPointer, Position pos, Position pos2);
+
+            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Server_CreateColShapeRectangle(IntPtr serverPointer, Position pos,
+                Position pos2);
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_DestroyBaseObject(IntPtr serverPointer, IntPtr baseObjectPointer);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_DestroyVehicle(IntPtr serverPointer, IntPtr baseObjectPointer);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_DestroyBlip(IntPtr serverPointer, IntPtr baseObjectPointer);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_DestroyCheckpoint(IntPtr serverPointer, IntPtr baseObjectPointer);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_DestroyVoiceChannel(IntPtr serverPointer, IntPtr baseObjectPointer);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_DestroyColShape(IntPtr serverPointer, IntPtr baseObjectPointer);
         }
     }
 }

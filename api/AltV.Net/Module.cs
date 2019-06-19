@@ -28,6 +28,8 @@ namespace AltV.Net
         internal readonly IBaseObjectPool<ICheckpoint> CheckpointPool;
         
         internal readonly IBaseObjectPool<IVoiceChannel> VoiceChannelPool;
+        
+        internal readonly IBaseObjectPool<IColShape> ColShapePool;
 
         //For custom defined args event handlers
         private readonly Dictionary<string, HashSet<Function>> eventHandlers =
@@ -96,13 +98,17 @@ namespace AltV.Net
         
         internal readonly IEventHandler<MetaDataChangeDelegate> SyncedMetaDataChangeEventHandler =
             new HashSetEventHandler<MetaDataChangeDelegate>();
+        
+        internal readonly IEventHandler<ColShapeDelegate> ColShapeEventHandler =
+            new HashSetEventHandler<ColShapeDelegate>();
 
         public Module(IServer server, CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
-            IBaseObjectPool<IVoiceChannel> voiceChannelPool)
+            IBaseObjectPool<IVoiceChannel> voiceChannelPool,
+            IBaseObjectPool<IColShape> colShapePool)
         {
             Alt.Init(this);
             Server = server;
@@ -114,6 +120,7 @@ namespace AltV.Net
             BlipPool = blipPool;
             CheckpointPool = checkpointPool;
             VoiceChannelPool = voiceChannelPool;
+            ColShapePool = colShapePool;
         }
 
         public void On(string eventName, Function function)
@@ -598,6 +605,11 @@ namespace AltV.Net
         {
             VoiceChannelPool.Create(channelPointer);
         }
+        
+        public void OnCreateColShape(IntPtr colShapePointer)
+        {
+            ColShapePool.Create(colShapePointer);
+        }
 
         public void OnRemoveVehicle(IntPtr vehiclePointer)
         {
@@ -627,6 +639,11 @@ namespace AltV.Net
         public void OnRemoveVoiceChannel(IntPtr channelPointer)
         {
             VoiceChannelPool.Remove(channelPointer);
+        }
+        
+        public void OnRemoveColShape(IntPtr colShapePointer)
+        {
+            ColShapePool.Remove(colShapePointer);
         }
 
         public void OnConsoleCommand(string name, ref StringViewArray args)
@@ -684,6 +701,30 @@ namespace AltV.Net
             foreach (var eventHandler in SyncedMetaDataChangeEventHandler.GetEvents())
             {
                 eventHandler(entity, key, value);
+            }
+        }
+        
+        public void OnColShape(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType, bool state)
+        {
+            if (!ColShapePool.GetOrCreate(colShapePointer, out var colShape))
+            {
+                return;
+            }
+
+            if (!BaseEntityPool.GetOrCreate(targetEntityPointer, entityType, out var entity))
+            {
+                return;
+            }
+
+            OnColShapeEvent(colShape, entity, state);
+        }
+        
+        public virtual void OnColShapeEvent(IColShape colShape, IEntity entity, bool state)
+        {
+            if (!ColShapeEventHandler.HasEvents()) return;
+            foreach (var eventHandler in ColShapeEventHandler.GetEvents())
+            {
+                eventHandler(colShape, entity, state);
             }
         }
     }

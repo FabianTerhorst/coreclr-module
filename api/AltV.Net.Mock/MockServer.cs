@@ -261,6 +261,36 @@ namespace AltV.Net.Mock
             return voiceChannel;
         }
 
+        public IColShape CreateColShapeCylinder(Position pos, float radius, float height)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IColShape CreateColShapeSphere(Position pos, float radius)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IColShape CreateColShapeCircle(Position pos, float radius)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IColShape CreateColShapeCube(Position pos, Position pos2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IColShape CreateColShapeRectangle(Position pos, Position pos2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveColShape(IColShape colShape)
+        {
+            throw new NotImplementedException();
+        }
+
         public void RemoveBlip(IBlip blip)
         {
             Alt.Module.OnRemoveBlip(blip.NativePointer);

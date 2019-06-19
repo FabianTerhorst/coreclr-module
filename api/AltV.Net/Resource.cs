@@ -16,9 +16,10 @@ namespace AltV.Net
 
         public virtual IBaseBaseObjectPool GetBaseBaseObjectPool(IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool, IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool)
+            IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool,
+            IBaseObjectPool<IColShape> colShapePool)
         {
-            return new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool);
+            return new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool);
         }
 
         public virtual IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool,
@@ -51,6 +52,11 @@ namespace AltV.Net
         {
             return new VoiceChannelPool(voiceChannelFactory);
         }
+        
+        public virtual IBaseObjectPool<IColShape> GetColShapePool(IBaseObjectFactory<IColShape> colShapeFactory)
+        {
+            return new ColShapePool(colShapeFactory);
+        }
 
         public virtual IEntityFactory<IPlayer> GetPlayerFactory()
         {
@@ -67,24 +73,30 @@ namespace AltV.Net
             return new BlipFactory();
         }
 
+        public virtual IBaseObjectFactory<ICheckpoint> GetCheckpointFactory()
+        {
+            return new CheckpointFactory();
+        }
+        
         public virtual IBaseObjectFactory<IVoiceChannel> GetVoiceChannelFactory()
         {
             return new VoiceChannelFactory();
         }
-
-        public virtual IBaseObjectFactory<ICheckpoint> GetCheckpointFactory()
+        
+        public virtual IBaseObjectFactory<IColShape> GetColShapeFactory()
         {
-            return new CheckpointFactory();
+            return new ColShapeFactory();
         }
 
         public virtual Module GetModule(IServer server, CSharpNativeResource cSharpNativeResource,
             IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool)
+            IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool,
+            IBaseObjectPool<IColShape> colShapePool)
         {
             return new Module(server, cSharpNativeResource, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool,
-                blipPool, checkpointPool, voiceChannelPool);
+                blipPool, checkpointPool, voiceChannelPool, colShapePool);
         }
     }
 }

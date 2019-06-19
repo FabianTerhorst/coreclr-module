@@ -78,6 +78,26 @@ alt::IVoiceChannel* Server_CreateVoiceChannel(alt::IServer* server, bool spatial
     return server->CreateVoiceChannel(spatial, maxDistance);
 }
 
+alt::IColShape* Server_CreateColShapeCylinder(alt::IServer* server, alt::Position pos, float radius, float height) {
+    return server->CreateColShapeCylinder(pos, radius, height);
+}
+
+alt::IColShape* Server_CreateColShapeSphere(alt::IServer* server, alt::Position pos, float radius) {
+    return server->CreateColShapeSphere(pos, radius);
+}
+
+alt::IColShape* Server_CreateColShapeCircle(alt::IServer* server, alt::Position pos, float radius) {
+    return server->CreateColShapeCircle(pos, radius);
+}
+
+alt::IColShape* Server_CreateColShapeCube(alt::IServer* server, alt::Position pos, alt::Position pos2) {
+    return server->CreateColShapeCube(pos, pos2);
+}
+
+alt::IColShape* Server_CreateColShapeRectangle(alt::IServer* server, alt::Position pos, alt::Position pos2) {
+    return server->CreateColShapeRectangle(pos, pos2);
+}
+
 void Server_DestroyBaseObject(alt::IServer* server, alt::IBaseObject* baseObject) {
     return server->DestroyBaseObject(baseObject);
 }
@@ -95,5 +115,9 @@ void Server_DestroyCheckpoint(alt::IServer* server, alt::ICheckpoint* baseObject
 }
 
 void Server_DestroyVoiceChannel(alt::IServer* server, alt::IVoiceChannel* baseObject) {
+    return server->DestroyBaseObject(baseObject);
+}
+
+void Server_DestroyColShape(alt::IServer* server, alt::IColShape* baseObject) {
     return server->DestroyBaseObject(baseObject);
 }

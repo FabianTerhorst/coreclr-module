@@ -8,6 +8,7 @@ namespace AltV.Net.Elements.Entities
         Blip = 3,
         WebView = 4,
         VoiceChannel = 5,
+        ColShape = 6,
         Undefined = 255
     }
 }

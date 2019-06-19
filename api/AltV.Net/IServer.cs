@@ -19,7 +19,7 @@ namespace AltV.Net
         void LogError(string message);
 
         void LogColored(string message);
-        
+
         void LogInfo(IntPtr message);
 
         /// <summary>
@@ -69,6 +69,16 @@ namespace AltV.Net
 
         IVoiceChannel CreateVoiceChannel(bool spatial, float maxDistance);
 
+        IColShape CreateColShapeCylinder(Position pos, float radius, float height);
+
+        IColShape CreateColShapeSphere(Position pos, float radius);
+
+        IColShape CreateColShapeCircle(Position pos, float radius);
+
+        IColShape CreateColShapeCube(Position pos, Position pos2);
+
+        IColShape CreateColShapeRectangle(Position pos, Position pos2);
+
         void RemoveBlip(IBlip blip);
 
         void RemoveCheckpoint(ICheckpoint checkpoint);
@@ -77,10 +87,12 @@ namespace AltV.Net
 
         void RemoveVoiceChannel(IVoiceChannel channel);
 
+        void RemoveColShape(IColShape colShape);
+
         ServerNativeResource GetResource(string name);
-        
+
         // Only for advanced use cases
-        
+
         IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation);
     }
 }

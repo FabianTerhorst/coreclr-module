@@ -51,6 +51,11 @@ namespace AltV.Net.Async
         {
             return new AsyncVoiceChannelPool(voiceChannelFactory);
         }
+        
+        public override IBaseObjectPool<IColShape> GetColShapePool(IBaseObjectFactory<IColShape> colShapeFactory)
+        {
+            return new AsyncColShapePool(colShapeFactory);
+        }
 
         public override Module GetModule(IServer server, CSharpNativeResource cSharpNativeResource,
             IBaseBaseObjectPool baseBaseObjectPool,
@@ -59,10 +64,11 @@ namespace AltV.Net.Async
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
-            IBaseObjectPool<IVoiceChannel> voiceChannelPool)
+            IBaseObjectPool<IVoiceChannel> voiceChannelPool,
+            IBaseObjectPool<IColShape> colShapePool)
         {
             return new AsyncModule(server, cSharpNativeResource, baseBaseObjectPool, baseEntityPool, playerPool,
-                vehiclePool, blipPool, checkpointPool, voiceChannelPool);
+                vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool);
         }
     }
 }

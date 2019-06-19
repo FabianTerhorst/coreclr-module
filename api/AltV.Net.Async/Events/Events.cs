@@ -35,4 +35,6 @@ namespace AltV.Net.Async.Events
     public delegate Task ConsoleCommandAsyncDelegate(string name, string[] args);
     
     public delegate Task MetaDataChangeAsyncDelegate(IEntity entity, string key, object value);
+
+    public delegate Task ColShapeAsyncDelegate(IColShape colShape, IEntity targetEntity, bool state);
 }

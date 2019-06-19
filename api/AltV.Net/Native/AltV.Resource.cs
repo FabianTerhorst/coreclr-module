@@ -83,6 +83,12 @@ namespace AltV.Net.Native
             internal delegate void PlayerRemoveDelegate(IntPtr playerPointer);
 
             internal delegate void VehicleRemoveDelegate(IntPtr vehiclePointer);
+            
+            internal delegate void CreateColShapeDelegate(IntPtr colShapePointer);
+
+            internal delegate void RemoveColShapeDelegate(IntPtr colShapePointer);
+            
+            internal delegate void ColShapeDelegate(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType, bool state);
 
             internal delegate void ConsoleCommandDelegate(string name, ref StringViewArray args);
 
@@ -108,7 +114,10 @@ namespace AltV.Net.Native
                 RemoveVoiceChannelDelegate removeVoiceChannelDelegate,
                 ConsoleCommandDelegate consoleCommandDelegate,
                 MetaDataChange metaDataChange,
-                MetaDataChange syncedMetaDataChange
+                MetaDataChange syncedMetaDataChange,
+                CreateColShapeDelegate createColShapeDelegate,
+                RemoveColShapeDelegate removeColShapeDelegate,
+                ColShapeDelegate colShapeDelegate
             );
         }
     }

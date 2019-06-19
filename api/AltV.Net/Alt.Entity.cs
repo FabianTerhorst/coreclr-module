@@ -12,5 +12,8 @@ namespace AltV.Net
 
         public static void RemoveCheckpoint(ICheckpoint checkpoint) =>
             Module.Server.RemoveCheckpoint(checkpoint);
+        
+        public static void RemoveColShape(IColShape colShape) =>
+            Module.Server.RemoveColShape(colShape);
     }
 }

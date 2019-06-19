@@ -130,6 +130,15 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
             coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
                                  "OnSyncedMetaDataChange",
                                  reinterpret_cast<void**>(&OnSyncedMetaChangeDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                                 "OnCreateColShape",
+                                 reinterpret_cast<void**>(&OnCreateColShapeDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                                 "OnRemoveColShape",
+                                 reinterpret_cast<void**>(&OnRemoveColShapeDelegate));
+            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                                 "OnColShapeEvent",
+                                 reinterpret_cast<void**>(&ColShapeDelegate));
         }
     } else {
 #ifdef _WIN32
@@ -331,6 +340,26 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
             OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(), &args);
             break;
         }
+        case alt::CEvent::Type::COLSHAPE_EVENT: {
+            auto entity = ((alt::CColShapeEvent*) (ev))->GetEntity();
+            if (entity != nullptr) {
+                switch (entity->GetType()) {
+                    case alt::IBaseObject::Type::PLAYER:
+                        ColShapeDelegate(((alt::CColShapeEvent*) (ev))->GetTarget(),
+                                         dynamic_cast<alt::IPlayer*>(entity),
+                                         entity->GetType(),
+                                         ((alt::CColShapeEvent*) (ev))->GetState());
+                        break;
+                    case alt::IBaseObject::Type::VEHICLE:
+                        ColShapeDelegate(((alt::CColShapeEvent*) (ev))->GetTarget(),
+                                         dynamic_cast<alt::IVehicle*>(entity),
+                                         entity->GetType(),
+                                         ((alt::CColShapeEvent*) (ev))->GetState());
+                        break;
+                }
+            }
+            break;
+        }
     }
     return true;
 }
@@ -355,6 +384,9 @@ void CSharpResource::OnCreateBaseObject(alt::IBaseObject* object) {
             case alt::IBaseObject::Type::VOICE_CHANNEL:
                 OnCreateVoiceChannelDelegate(dynamic_cast<alt::IVoiceChannel*>(object));
                 break;
+            case alt::IBaseObject::Type::COLSHAPE:
+                OnCreateColShapeDelegate(dynamic_cast<alt::IColShape*>(object));
+                break;
         }
     }
 }
@@ -376,6 +408,9 @@ void CSharpResource::OnRemoveBaseObject(alt::IBaseObject* object) {
                 break;
             case alt::IBaseObject::Type::VOICE_CHANNEL:
                 OnRemoveVoiceChannelDelegate(dynamic_cast<alt::IVoiceChannel*>(object));
+                break;
+            case alt::IBaseObject::Type::COLSHAPE:
+                OnRemoveColShapeDelegate(dynamic_cast<alt::IColShape*>(object));
                 break;
         }
     }
@@ -414,7 +449,10 @@ void CSharpResource_SetMain(CSharpResource* resource, MainDelegate_t mainDelegat
                             OnRemoveVoiceChannelDelegate_t removeVoiceChannelDelegate,
                             OnConsoleCommandDelegate_t consoleCommandDelegate,
                             MetaChangeDelegate_t metaChangeDelegate,
-                            MetaChangeDelegate_t syncedMetaChangeDelegate) {
+                            MetaChangeDelegate_t syncedMetaChangeDelegate,
+                            OnCreateColShapeDelegate_t createColShapeDelegate,
+                            OnRemoveColShapeDelegate_t removeColShapeDelegate,
+                            ColShapeDelegate_t colShapeDelegate) {
     resource->MainDelegate = mainDelegate;
     resource->OnTickDelegate = tickDelegate;
     resource->OnServerEventDelegate = serverEventDelegate;
@@ -442,6 +480,9 @@ void CSharpResource_SetMain(CSharpResource* resource, MainDelegate_t mainDelegat
     resource->OnConsoleCommandDelegate = consoleCommandDelegate;
     resource->OnMetaChangeDelegate = metaChangeDelegate;
     resource->OnSyncedMetaChangeDelegate = syncedMetaChangeDelegate;
+    resource->OnCreateColShapeDelegate = createColShapeDelegate;
+    resource->OnRemoveColShapeDelegate = removeColShapeDelegate;
+    resource->ColShapeDelegate = colShapeDelegate;
 }
 
 alt::IServer* CSharpResource_GetServerPointer() {
@@ -467,6 +508,8 @@ void* CSharpResource::GetBaseObjectPointer(alt::IBaseObject* baseObject) {
                 return dynamic_cast<alt::IBlip*>(baseObject);
             case alt::IBaseObject::Type::CHECKPOINT:
                 return dynamic_cast<alt::ICheckpoint*>(baseObject);
+            case alt::IBaseObject::Type::COLSHAPE:
+                return dynamic_cast<alt::IColShape*>(baseObject);
             default:
                 return nullptr;
         }

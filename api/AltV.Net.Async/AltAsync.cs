@@ -96,6 +96,12 @@ namespace AltV.Net.Async
             add => Module.SyncedMetaDataChangeAsyncDelegateHandlers.Add(value);
             remove => Module.SyncedMetaDataChangeAsyncDelegateHandlers.Remove(value);
         }
+        
+        public static event ColShapeAsyncDelegate OnColShape
+        {
+            add => Module.ColShapeAsyncDelegateHandlers.Add(value);
+            remove => Module.ColShapeAsyncDelegateHandlers.Remove(value);
+        }
 
         public static async void Log(string message)
         {

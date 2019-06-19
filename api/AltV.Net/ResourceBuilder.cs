@@ -125,14 +125,26 @@ namespace AltV.Net
             AltNative.Resource.ConsoleCommandDelegate onConsoleCommand = ModuleWrapper.OnConsoleCommand;
 
             GCHandle.Alloc(onConsoleCommand);
-            
+
             AltNative.Resource.MetaDataChange onMetaDataChange = ModuleWrapper.OnMetaDataChange;
 
             GCHandle.Alloc(onMetaDataChange);
-            
+
             AltNative.Resource.MetaDataChange onSyncedMetaDataChange = ModuleWrapper.OnSyncedMetaDataChange;
 
             GCHandle.Alloc(onSyncedMetaDataChange);
+
+            AltNative.Resource.CreateColShapeDelegate onCreateColShape = ModuleWrapper.OnCreateColShape;
+
+            GCHandle.Alloc(onCreateColShape);
+
+            AltNative.Resource.RemoveColShapeDelegate onRemoveColShape = ModuleWrapper.OnRemoveColShape;
+
+            GCHandle.Alloc(onRemoveColShape);
+
+            AltNative.Resource.ColShapeDelegate onColShape = ModuleWrapper.OnColShape;
+
+            GCHandle.Alloc(onColShape);
 
             AltNative.Resource.CSharpResource_SetMain(resourcePointer, onStart, onTick, onServerEvent, onCheckpoint,
                 onClientEvent, onPlayerDamage, onPlayerConnect, onPlayerDeath, onPlayerDisconnect, onPlayerRemove,
@@ -140,7 +152,8 @@ namespace AltV.Net
                 onPlayerChangeVehicleSeat, onPlayerEnterVehicle, onPlayerLeaveVehicle, onCreatePlayer, onRemovePlayer,
                 onCreateVehicle, onRemoveVehicle,
                 onCreateBlip, onRemoveBlip, onCreateCheckpoint, onRemoveCheckpoint, onCreateVoiceChannel,
-                onRemoveVoiceChannel, onConsoleCommand, onMetaDataChange, onSyncedMetaDataChange);
+                onRemoveVoiceChannel, onConsoleCommand, onMetaDataChange, onSyncedMetaDataChange, onCreateColShape,
+                onRemoveColShape, onColShape);
         }
 
         private void OnStart(IntPtr pointer, IntPtr ptr, string name, string point)

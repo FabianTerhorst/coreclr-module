@@ -35,14 +35,6 @@ namespace AltV.Net.Native
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern void Checkpoint_SetMetaData(IntPtr entityPointer, string key, ref MValue value);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void
-                Checkpoint_GetSyncedMetaData(IntPtr entityPointer, string key, ref MValue value);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void
-                Checkpoint_SetSyncedMetaData(IntPtr entityPointer, string key, ref MValue value);
-            
             // Checkpoint
             
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]

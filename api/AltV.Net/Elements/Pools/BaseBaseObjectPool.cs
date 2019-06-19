@@ -15,15 +15,18 @@ namespace AltV.Net.Elements.Pools
 
         private readonly IBaseObjectPool<IVoiceChannel> voiceChannelPool;
 
+        private readonly IBaseObjectPool<IColShape> colShapePool;
+
         public BaseBaseObjectPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
-            IBaseObjectPool<IBlip> blipPool,
-            IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool)
+            IBaseObjectPool<IBlip> blipPool, IBaseObjectPool<ICheckpoint> checkpointPool,
+            IBaseObjectPool<IVoiceChannel> voiceChannelPool, IBaseObjectPool<IColShape> colShapePool)
         {
             this.playerPool = playerPool;
             this.vehiclePool = vehiclePool;
             this.blipPool = blipPool;
             this.checkpointPool = checkpointPool;
             this.voiceChannelPool = voiceChannelPool;
+            this.colShapePool = colShapePool;
         }
 
         public bool Get(IntPtr entityPointer, BaseObjectType baseObjectType, out IBaseObject entity)
@@ -50,6 +53,10 @@ namespace AltV.Net.Elements.Pools
                 case BaseObjectType.VoiceChannel:
                     result = voiceChannelPool.Get(entityPointer, out var voiceChannel);
                     entity = voiceChannel;
+                    return result;
+                case BaseObjectType.ColShape:
+                    result = colShapePool.Get(entityPointer, out var colShape);
+                    entity = colShape;
                     return result;
                 default:
                     entity = default;
@@ -81,6 +88,10 @@ namespace AltV.Net.Elements.Pools
                 case BaseObjectType.VoiceChannel:
                     result = voiceChannelPool.GetOrCreate(entityPointer, out var voiceChannel);
                     entity = voiceChannel;
+                    return result;
+                case BaseObjectType.ColShape:
+                    result = colShapePool.GetOrCreate(entityPointer, out var colShape);
+                    entity = colShape;
                     return result;
                 default:
                     entity = default;
@@ -114,6 +125,10 @@ namespace AltV.Net.Elements.Pools
                     result = voiceChannelPool.GetOrCreate(entityPointer, out var voiceChannel);
                     entity = voiceChannel;
                     return result;
+                case BaseObjectType.ColShape:
+                    result = colShapePool.GetOrCreate(entityPointer, out var colShape);
+                    entity = colShape;
+                    return result;
                 default:
                     entity = default;
                     return false;
@@ -139,6 +154,8 @@ namespace AltV.Net.Elements.Pools
                     return checkpointPool.Remove(entityPointer);
                 case BaseObjectType.VoiceChannel:
                     return voiceChannelPool.Remove(entityPointer);
+                case BaseObjectType.ColShape:
+                    return colShapePool.Remove(entityPointer);
                 default:
                     return false;
             }

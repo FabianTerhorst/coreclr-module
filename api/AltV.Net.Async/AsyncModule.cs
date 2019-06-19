@@ -56,6 +56,9 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<MetaDataChangeAsyncDelegate> SyncedMetaDataChangeAsyncDelegateHandlers =
             new AsyncEventHandler<MetaDataChangeAsyncDelegate>();
 
+        internal readonly AsyncEventHandler<ColShapeAsyncDelegate> ColShapeAsyncDelegateHandlers =
+            new AsyncEventHandler<ColShapeAsyncDelegate>();
+
         private readonly Dictionary<string, HashSet<ClientEventAsyncDelegate>> clientEventAsyncDelegateHandlers
             =
             new Dictionary<string, HashSet<ClientEventAsyncDelegate>>();
@@ -69,9 +72,10 @@ namespace AltV.Net.Async
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
-            IBaseObjectPool<IVoiceChannel> voiceChannelPool) : base(server, cSharpNativeResource, baseBaseObjectPool,
+            IBaseObjectPool<IVoiceChannel> voiceChannelPool,
+            IBaseObjectPool<IColShape> colShapePool) : base(server, cSharpNativeResource, baseBaseObjectPool,
             baseEntityPool, playerPool, vehiclePool, blipPool,
-            checkpointPool, voiceChannelPool)
+            checkpointPool, voiceChannelPool, colShapePool)
         {
             AltAsync.Setup(this);
         }
@@ -379,6 +383,15 @@ namespace AltV.Net.Async
             Task.Run(() =>
                 SyncedMetaDataChangeAsyncDelegateHandlers.CallAsyncWithoutTask(@delegate =>
                     @delegate(entity, key, value)));
+        }
+
+        public override void OnColShapeEvent(IColShape colShape, IEntity entity, bool state)
+        {
+            base.OnColShapeEvent(colShape, entity, state);
+            if (!ColShapeAsyncDelegateHandlers.HasEvents()) return;
+            Task.Run(() =>
+                ColShapeAsyncDelegateHandlers.CallAsyncWithoutTask(@delegate =>
+                    @delegate(colShape, entity, state)));
         }
 
         public void OnClient(string eventName, ClientEventAsyncDelegate eventDelegate)

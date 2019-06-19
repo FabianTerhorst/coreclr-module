@@ -38,4 +38,6 @@ namespace AltV.Net.Events
     public delegate void ConsoleCommandDelegate(string name, string[] args);
     
     public delegate void MetaDataChangeDelegate(IEntity entity, string key, object value);
+    
+    public delegate void ColShapeDelegate(IColShape colShape, IEntity targetEntity, bool state);
 }

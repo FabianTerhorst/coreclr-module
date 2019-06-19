@@ -39,11 +39,18 @@ EXPORT alt::IBlip*
 Server_CreateBlipAttached(alt::IServer* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo);
 EXPORT void Server_GetResource(alt::IServer* server, const char* resourceName, alt::IResource*&resource);
 EXPORT alt::IVoiceChannel* Server_CreateVoiceChannel(alt::IServer* server, bool spatial, float maxDistance);
+EXPORT alt::IColShape*
+Server_CreateColShapeCylinder(alt::IServer* server, alt::Position pos, float radius, float height);
+EXPORT alt::IColShape* Server_CreateColShapeSphere(alt::IServer* server, alt::Position pos, float radius);
+EXPORT alt::IColShape* Server_CreateColShapeCircle(alt::IServer* server, alt::Position pos, float radius);
+EXPORT alt::IColShape* Server_CreateColShapeCube(alt::IServer* server, alt::Position pos, alt::Position pos2);
+EXPORT alt::IColShape* Server_CreateColShapeRectangle(alt::IServer* server, alt::Position pos, alt::Position pos2);
 EXPORT void Server_DestroyBaseObject(alt::IServer* server, alt::IBaseObject* baseObject);
 EXPORT void Server_DestroyVehicle(alt::IServer* server, alt::IVehicle* baseObject);
 EXPORT void Server_DestroyBlip(alt::IServer* server, alt::IBlip* baseObject);
 EXPORT void Server_DestroyCheckpoint(alt::IServer* server, alt::ICheckpoint* baseObject);
 EXPORT void Server_DestroyVoiceChannel(alt::IServer* server, alt::IVoiceChannel* baseObject);
+EXPORT void Server_DestroyColShape(alt::IServer* server, alt::IColShape* baseObject);
 #ifdef __cplusplus
 }
 #endif
