@@ -15,10 +15,15 @@ COPY api/ .
 
 RUN cd AltV.Net.Example && dotnet publish -c Release
 
-FROM ubuntu:18.04
+#FROM debian:stable
+FROM ubuntu:18.10
+
+RUN apt-get update
+RUN apt-get install -y apt-utils
+RUN apt-get install -y libc6-i386
 
 # install valgrind
-RUN apt-get update && apt-get install -y valgrind
+#RUN apt-get update && apt-get install -y valgrind
 
 # construct server structure
 WORKDIR /altv-server
