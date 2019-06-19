@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Elements.Args
@@ -9,7 +9,9 @@ namespace AltV.Net.Elements.Args
         public interface IWritableMValue
         {
             List<MValue> Values { get; }
-            
+
+            byte Type { get; }
+
             void Append(IWritableMValue writable);
 
             MValue ToMValue();
@@ -17,6 +19,7 @@ namespace AltV.Net.Elements.Args
 
         public struct MValueObject : IWritableMValue
         {
+            public byte Type => 0;
             public readonly List<string> Names;
             public List<MValue> Values { get; }
 
@@ -31,7 +34,7 @@ namespace AltV.Net.Elements.Args
                 // Only valid when we have a open Name without a value
                 if (Names.Count > Values.Count)
                 {
-                    Values.Append(writable.ToMValue());
+                    Values.Add(writable.ToMValue());
                 }
             }
 
@@ -43,6 +46,7 @@ namespace AltV.Net.Elements.Args
 
         public struct MValueArray : IWritableMValue
         {
+            public byte Type => 1;
             public List<MValue> Values { get; }
 
             public MValueArray(List<MValue> values)
@@ -52,7 +56,7 @@ namespace AltV.Net.Elements.Args
 
             public void Append(IWritableMValue writable)
             {
-                Values.Append(writable.ToMValue());
+                Values.Add(writable.ToMValue());
             }
 
             public MValue ToMValue()
@@ -88,6 +92,11 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPop(out currCurr))
             {
+                if (currCurr.Type != 0)
+                {
+                    throw new ArithmeticException("Expected EndArray, got EndObject");
+                }
+
                 if (currents.TryPeek(out curr))
                 {
                     curr.Append(currCurr);
@@ -97,6 +106,10 @@ namespace AltV.Net.Elements.Args
                     // We are first current
                     root = currCurr;
                 }
+            }
+            else
+            {
+                throw new ArithmeticException("Invalid EndObject without BeginObject");
             }
         }
 
@@ -111,6 +124,11 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPop(out currCurr))
             {
+                if (currCurr.Type != 1)
+                {
+                    throw new ArithmeticException("Expected EndObject, got EndArray");
+                }
+
                 if (currents.TryPeek(out curr))
                 {
                     curr.Append(currCurr);
@@ -120,6 +138,10 @@ namespace AltV.Net.Elements.Args
                     // We are first current
                     root = currCurr;
                 }
+            }
+            else
+            {
+                throw new ArithmeticException("Invalid EndArray without BeginArray");
             }
         }
 

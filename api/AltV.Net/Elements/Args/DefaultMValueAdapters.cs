@@ -49,6 +49,11 @@ namespace AltV.Net.Elements.Args
                 {
                     ToMValue(list, writer);
                 }
+                else
+                {
+                    writer.BeginArray();
+                    writer.EndArray();
+                }
             }
         }
 

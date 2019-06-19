@@ -7,18 +7,18 @@ namespace AltV.Net.Example
     {
         private class ConvertibleObjectAdapter : IMValueAdapter<ConvertibleObject>
         {
-            private readonly IMValueAdapter<List<ConvertibleObject>> listAdapter;
+            private readonly IMValueAdapter<List<ChildConvertibleObject>> listAdapter;
 
             public ConvertibleObjectAdapter()
             {
-                listAdapter = DefaultMValueAdapters.GetArrayAdapter(this);
+                listAdapter = DefaultMValueAdapters.GetArrayAdapter(new ChildConvertibleObject.ChildConvertibleObjectAdapter());
             }
 
             public ConvertibleObject FromMValue(IMValueReader reader)
             {
                 reader.BeginObject();
                 string test = null;
-                List<ConvertibleObject> list = null;
+                List<ChildConvertibleObject> list = null;
                 while (reader.HasNext())
                 {
                     switch (reader.NextName())
@@ -44,7 +44,8 @@ namespace AltV.Net.Example
                 writer.BeginObject();
                 writer.Name("test");
                 writer.Value(value.test);
-                listAdapter.ToMValue(value, writer);
+                writer.Name("bla");
+                listAdapter.ToMValue(value.list, writer);
                 writer.EndObject();
             }
 
@@ -66,15 +67,18 @@ namespace AltV.Net.Example
 
         private readonly string test;
 
-        private readonly List<ConvertibleObject> list;
+        private readonly List<ChildConvertibleObject> list;
 
         public ConvertibleObject()
         {
             test = "123";
-            list = new List<ConvertibleObject>();
+            list = new List<ChildConvertibleObject>();
+            list.Add(new ChildConvertibleObject());
+            list.Add(new ChildConvertibleObject());
+            list.Add(new ChildConvertibleObject());
         }
 
-        private ConvertibleObject(string test, List<ConvertibleObject> list)
+        private ConvertibleObject(string test, List<ChildConvertibleObject> list)
         {
             this.test = test;
             this.list = list;
