@@ -174,6 +174,7 @@ namespace AltV.Net.Async
                     @delegate(vehicle)));
         }
 
+        //TODO: we could write mvalues to own onion struct in cpp to better share it but we would need to execute at least getorcreate entity when it contains a entity type in main thread
         public override void OnClientEventEvent(IPlayer player, string name, ref MValueArray args, MValue[] mValues,
             object[] objects)
         {
