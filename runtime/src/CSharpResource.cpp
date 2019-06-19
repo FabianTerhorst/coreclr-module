@@ -46,6 +46,9 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     OnConsoleCommandDelegate = nullptr;
     OnMetaChangeDelegate = nullptr;
     OnSyncedMetaChangeDelegate = nullptr;
+    OnCreateColShapeDelegate = nullptr;
+    OnRemoveColShapeDelegate = nullptr;
+    ColShapeDelegate = nullptr;
 
     currServer = server;
 
