@@ -53,6 +53,34 @@ deploy:
       branches:
         only:
         - master
+        
+  - provider: releases
+    skip_cleanup: true
+    prerelease: true
+    api_key:
+      secure: SHN0O0J2NFHAXP5bIRKufF3u8RqHDSKSNbVNXKnDS5FXJkhwDlHYfL1mF9xIlkAUSNvYvrKaReDAxWwRulKWisZi4JXA4OL96j2Pqiovw7npomDmEQpXLC8TgiH9TvkIFFXr4L5Cm6zzXTVjrI2FA1WiHR2rga1A367dCVX0wdSjsH4qwC3CsNFBhStsbPMQl49U2hHGe+Nl02LkzSqS0QBZ6RZsChF+fzs35512Xvfiz0qXExCIIQpIYbnPAKbNA4vd6/zTkj72xYYsK8pKGKu56ENCPf2uvzfacUDQKrTKLTVVVWlJ8865VfIwjPixfD/dvnD4XZ/mC3SQbAwEE5WjSApOXCs/eL/zKq4Wa3oaJTc0mFf31wCySAQfL3vD51Wu/pjPuixsH1o6JPxWZuGA5KbL7Bi0D3I8T3mD4CJoPwIYbmu/6kwUHbOi/Nd9fb0YraL9k1uX4WzROIpGLbADccr1L7itGVdnhD5vlrp07ETluOxyJZlsB4gNVaSk4MUAppNVlXAi/4UOmEmQYIZRg1akO+4nDN0+nfwzNRSM4chSDBFwDBthqsADErFf5yFGy9JmLHLD2qkeSjqEm/rc1a2zV66nucVmwKHZyPL92GhGkguxsYKFNu/42382W1wHJ47nDCpEQWOVgFgix7xdgSKeZiYvoEs0JgWSjLU=
+    file: libcsharp-module.so
+    on:
+      repo: FabianTerhorst/coreclr-module
+      condition: "$TRAVIS_OS_NAME = linux"
+      tags: true
+      branches:
+        only:
+        - dev
+  - provider: releases
+    skip_cleanup: true
+    prerelease: true
+    api_key:
+      secure: SHN0O0J2NFHAXP5bIRKufF3u8RqHDSKSNbVNXKnDS5FXJkhwDlHYfL1mF9xIlkAUSNvYvrKaReDAxWwRulKWisZi4JXA4OL96j2Pqiovw7npomDmEQpXLC8TgiH9TvkIFFXr4L5Cm6zzXTVjrI2FA1WiHR2rga1A367dCVX0wdSjsH4qwC3CsNFBhStsbPMQl49U2hHGe+Nl02LkzSqS0QBZ6RZsChF+fzs35512Xvfiz0qXExCIIQpIYbnPAKbNA4vd6/zTkj72xYYsK8pKGKu56ENCPf2uvzfacUDQKrTKLTVVVWlJ8865VfIwjPixfD/dvnD4XZ/mC3SQbAwEE5WjSApOXCs/eL/zKq4Wa3oaJTc0mFf31wCySAQfL3vD51Wu/pjPuixsH1o6JPxWZuGA5KbL7Bi0D3I8T3mD4CJoPwIYbmu/6kwUHbOi/Nd9fb0YraL9k1uX4WzROIpGLbADccr1L7itGVdnhD5vlrp07ETluOxyJZlsB4gNVaSk4MUAppNVlXAi/4UOmEmQYIZRg1akO+4nDN0+nfwzNRSM4chSDBFwDBthqsADErFf5yFGy9JmLHLD2qkeSjqEm/rc1a2zV66nucVmwKHZyPL92GhGkguxsYKFNu/42382W1wHJ47nDCpEQWOVgFgix7xdgSKeZiYvoEs0JgWSjLU=
+    file: csharp-module.dll
+    on:
+      repo: FabianTerhorst/coreclr-module
+      condition: "$TRAVIS_OS_NAME = windows"
+      tags: true
+      branches:
+        only:
+        - dev     
+  
   - provider: script
     skip_cleanup: true
     script: cd .. && cd .. && cd .. && cd .. && scs3-win.exe upload .\runtime\build\src\Release\csharp-module.dll coreclr-module/x64_win32/csharp-module.dll
