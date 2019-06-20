@@ -120,7 +120,7 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
                                  reinterpret_cast<void**>(&OnRemoveCheckpointDelegate));
             coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
                                  "OnCreateVoiceChannel",
-                                 reinterpret_cast<void**>(&OnCreateCheckpointDelegate));
+                                 reinterpret_cast<void**>(&OnCreateVoiceChannelDelegate));
             coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
                                  "OnRemoveVoiceChannel",
                                  reinterpret_cast<void**>(&OnRemoveCheckpointDelegate));
