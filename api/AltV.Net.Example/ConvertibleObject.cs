@@ -44,7 +44,7 @@ namespace AltV.Net.Example
                 writer.BeginObject();
                 writer.Name("test");
                 writer.Value(value.test);
-                writer.Name("bla");
+                writer.Name("list");
                 listAdapter.ToMValue(value.list, writer);
                 writer.EndObject();
             }
