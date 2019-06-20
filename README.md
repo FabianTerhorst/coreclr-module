@@ -141,7 +141,8 @@ Boilerplate AltV.Net.Example.csproj:
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="AltV.Net" Version="1.4.0" />
+      <!--Use latest version from https://www.nuget.org/packages/AltV.Net-->
+      <PackageReference Include="AltV.Net" Version="1.8.1" />
     </ItemGroup>
     
     <!--This copies the publish directory to the resource folder which is named "my-server"-->
