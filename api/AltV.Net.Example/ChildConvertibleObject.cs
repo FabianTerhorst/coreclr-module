@@ -2,7 +2,7 @@ namespace AltV.Net.Example
 {
     public class ChildConvertibleObject : IMValueConvertible
     {
-        public class ChildConvertibleObjectAdapter : IMValueAdapter<ChildConvertibleObject>
+        private class ChildConvertibleObjectAdapter : IMValueAdapter<ChildConvertibleObject>
         {
             public ChildConvertibleObjectAdapter()
             {
@@ -51,7 +51,7 @@ namespace AltV.Net.Example
             }
         }
 
-        private static readonly IMValueBaseAdapter MyAdapter = new ChildConvertibleObjectAdapter();
+        public static readonly IMValueAdapter<ChildConvertibleObject> Adapter = new ChildConvertibleObjectAdapter();
 
         private readonly string test;
 
@@ -67,7 +67,7 @@ namespace AltV.Net.Example
 
         public IMValueBaseAdapter GetAdapter()
         {
-            return MyAdapter;
+            return Adapter;
         }
     }
 }

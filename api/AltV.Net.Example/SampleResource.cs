@@ -17,7 +17,12 @@ namespace AltV.Net.Example
     {
         public override void OnStart()
         {
-            AltColShape.Configure(options => { options.AreaSize = 100; });
+            var convertibleObject = new ConvertibleObject();
+            Alt.Emit("convertible_test", convertibleObject);
+
+            Alt.CreateColShapeCircle(new Position(0, 0, 0), 1);
+
+            Alt.OnColShape += (shape, entity, state) => { };
 
             Alt.On<string>("test", s => { Alt.Log("test=" + s); });
             Alt.OnServer("test", args => { Alt.Log("args=" + args[0]); });

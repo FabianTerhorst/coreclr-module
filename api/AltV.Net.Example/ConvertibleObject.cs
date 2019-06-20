@@ -11,7 +11,7 @@ namespace AltV.Net.Example
 
             public ConvertibleObjectAdapter()
             {
-                listAdapter = DefaultMValueAdapters.GetArrayAdapter(new ChildConvertibleObject.ChildConvertibleObjectAdapter());
+                listAdapter = DefaultMValueAdapters.GetArrayAdapter(ChildConvertibleObject.Adapter);
             }
 
             public ConvertibleObject FromMValue(IMValueReader reader)
