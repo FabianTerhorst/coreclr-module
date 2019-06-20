@@ -119,8 +119,17 @@ but require full path import like ```import * as auth from 'client/auth.mjs';```
 
 ## Assembly setup (more control for server developers, probably better performance as well)
 
-(TODO: more docs)
-- Create console application
+### Create a project with Visual Studio 17 (Windows)
+
+* Go to "File -> New -> Project..." now the Project Wizard should appear.
+* In the left Column select "Installed -> Visual C# -> .NET Core".
+* Now select "Console Application (.NET Core)" and choose "Name", "Location" and the "Solution name".
+* To setup the correct NuGet Packages open the Manager under "Tools -> NuGet Package Manager -> Manage NuGet Packages for Solution..."
+* Select Browse and search for AltV.Net and install the packages "AltV.Net", ("AltV.Net.Async" when you need async thread save api access)
+* Now go to "Project -> {Your Project Name} Properties... -> Build", here you can select the Output path where the dll should be saved.
+
+To get the Resource running on the server, you have to create a "resource.cfg" file. Copy the resource.cfg, AltV.Net.dll and all other dependencied with your resource dll file to altv-server/resources/{YourResourceName}/.
+
 - (For now) create empty assembly.cfg in your resource.
 Boilerplate AltV.Net.Example.csproj:
 ```
