@@ -1,13 +1,13 @@
- branches:
-  only:
-    - master
-    - dev
 os:
 - linux
 - windows
 filter_secrets: false
 sudo: false
 language: cpp
+branches:
+  only:
+    - master
+    - dev
 matrix:
   include:
   - os: linux
