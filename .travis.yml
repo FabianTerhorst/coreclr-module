@@ -53,7 +53,6 @@ deploy:
       branches:
         only:
         - master
-        
   - provider: releases
     skip_cleanup: true
     prerelease: true
@@ -101,7 +100,6 @@ deploy:
       branches:
         only:
         - master
-        
 - provider: script
     skip_cleanup: true
     script: cd .. && cd .. && cd .. && cd .. && scs3-win.exe upload .\runtime\build\src\Release\csharp-module.dll coreclr-module/beta/x64_win32/csharp-module.dll
