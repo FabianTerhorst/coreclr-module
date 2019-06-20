@@ -1,3 +1,7 @@
+ branches:
+  only:
+    - master
+    - dev
 os:
 - linux
 - windows
@@ -78,8 +82,7 @@ deploy:
       tags: true
       branches:
         only:
-        - dev     
-  
+        - dev
   - provider: script
     skip_cleanup: true
     script: cd .. && cd .. && cd .. && cd .. && scs3-win.exe upload .\runtime\build\src\Release\csharp-module.dll coreclr-module/stable/x64_win32/csharp-module.dll
