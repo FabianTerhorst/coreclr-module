@@ -7,7 +7,7 @@ export default class EntityRepository {
         this.websocket = websocket;
         // entity-id, entity
         this.entities = new Map();
-        this.streamedInEntities = new Map();
+        this.streamedInEntities = new Set();
         const workerBlob = new Blob([streamingWorker], {type: 'application/javascript'});
         this.streamingWorker = new Worker(window.URL.createObjectURL(workerBlob));
         playerPosition.update = (position) => {
@@ -18,9 +18,7 @@ export default class EntityRepository {
             const streamIn = event.data.streamIn;
             const streamOut = event.data.streamOut;
             if (streamIn) {
-                if (this.entities.has(streamIn.id)) {
-                    this.streamedInEntities.set(streamIn.id, this.entities.get(streamIn.id));
-                }
+                this.streamedInEntities.add(streamIn.id);
                 proto.getProto().then((proto) => {
                     websocket.sendEvent({streamIn: proto.EntityStreamInEvent.create({entityId: streamIn.id})})
                 });
