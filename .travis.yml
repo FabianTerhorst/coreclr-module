@@ -100,7 +100,7 @@ deploy:
       branches:
         only:
         - master
-- provider: script
+  - provider: script
     skip_cleanup: true
     script: cd .. && cd .. && cd .. && cd .. && scs3-win.exe upload .\runtime\build\src\Release\csharp-module.dll coreclr-module/beta/x64_win32/csharp-module.dll
     on:
@@ -110,7 +110,7 @@ deploy:
       branches:
         only:
         - dev
-- provider: script
+  - provider: script
     skip_cleanup: true
     script: cd .. && cd .. && cd .. && chmod +x ./scs3-linux && ./scs3-linux upload ./runtime/build/src/libcsharp-module.so coreclr-module/beta/x64_linux/libcsharp-module.so
     on:
