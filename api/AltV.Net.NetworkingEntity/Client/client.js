@@ -34,8 +34,16 @@ class NetworkingEntityClient {
         let pos;
         alt.setInterval(() => {
             pos = localPlayer.pos;
-            this.webview.emit("playerPosition", pos.x, pos.y, pos.z);
+            this.webview.emit("playerPosition",
+                NetworkingEntityClient.roundDecimal(pos.x, 3),
+                NetworkingEntityClient.roundDecimal(pos.y, 3),
+                NetworkingEntityClient.roundDecimal(pos.z, 3));
         }, 100);
+    }
+
+    static roundDecimal(number, precision) {
+        let factor = Math.pow(10, precision);
+        return Math.round(number * factor) / factor;
     }
 }
 
