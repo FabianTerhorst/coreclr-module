@@ -16,24 +16,36 @@ export default class EntityRepository {
             });
         };
         this.streamingWorker.onmessage = event => {
-            const streamIn = event.data.streamIn;
-            const streamOut = event.data.streamOut;
-            if (streamIn !== undefined) {
-                this.streamedInEntities.add(streamIn);
-                proto.getProto().then((proto) => {
-                    websocket.sendEvent({streamIn: proto.EntityStreamInEvent.create({entityId: streamIn})})
-                });
-                if (!this.entities.has(streamIn)) return;
-                let streamInEntity = this.entities.get(streamIn);
-                alt.emit("networkingEntityStreamIn", streamInEntity);
-            } else if (streamOut !== undefined) {
-                this.streamedInEntities.delete(streamOut);
-                proto.getProto().then((proto) => {
-                    websocket.sendEvent({streamOut: proto.EntityStreamOutEvent.create({entityId: streamOut})})
-                });
-                if (!this.entities.has(streamOut)) return;
-                let streamOutEntity = this.entities.get(streamOut);
-                alt.emit("networkingEntityStreamOut", streamOutEntity);
+            const streamIns = event.data.streamIn;
+            const streamOuts = event.data.streamOut;
+            if (streamIns !== undefined) {
+                const entities = [];
+                for (const streamIn of streamIns) {
+                    this.streamedInEntities.add(streamIn);
+                    proto.getProto().then((proto) => {
+                        websocket.sendEvent({streamIn: proto.EntityStreamInEvent.create({entityId: streamIn})})
+                    });
+                    if (!this.entities.has(streamIn)) {
+                        console.log("entity " + streamIn + " not found");
+                        return;
+                    }
+                    entities.push(this.entities.get(streamIn));
+                }
+                alt.emit("networkingEntityStreamIn", entities);
+            } else if (streamOuts !== undefined) {
+                const entities = [];
+                for (const streamOut of streamOuts) {
+                    this.streamedInEntities.delete(streamOut);
+                    proto.getProto().then((proto) => {
+                        websocket.sendEvent({streamOut: proto.EntityStreamOutEvent.create({entityId: streamOut})})
+                    });
+                    if (!this.entities.has(streamOut)) {
+                        console.log("entity " + streamOut + " not found");
+                        return;
+                    }
+                    entities.push(this.entities.get(streamOut));
+                }
+                alt.emit("networkingEntityStreamOut", entities);
             }
         };
     }

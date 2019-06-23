@@ -12,11 +12,15 @@ class NetworkingEntityClient {
         };
         this.onDataChange = () => {
         };
-        webview.on("networkingEntityStreamIn", (entity) => {
-            this.onStreamIn(entity);
+        webview.on("networkingEntityStreamIn", (entities) => {
+            for (const entity of entities) {
+                this.onStreamIn(entity);
+            }
         });
-        webview.on("networkingEntityStreamOut", (entity) => {
-            this.onStreamOut(entity);
+        webview.on("networkingEntityStreamOut", (entities) => {
+            for (const entity of entities) {
+                this.onStreamOut(entity);
+            }
         });
         webview.on("networkingEntityDataChange", (entity, newData) => {
             this.onDataChange(entity, newData);
