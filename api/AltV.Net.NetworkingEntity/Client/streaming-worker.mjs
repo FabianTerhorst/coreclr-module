@@ -48,7 +48,7 @@ function addEntityToArea(entity) {
     if (startingYIndex == null || startingXIndex == null || stoppingYIndex == null || stoppingXIndex == null) return;
     for (let i = startingYIndex; i <= stoppingYIndex; i++) {
         for (let j = startingXIndex; j <= stoppingXIndex; j++) {
-            this.areas[i][j].push(entity);
+            this.areas[j][i].push(entity);
         }
     }
 }
@@ -77,7 +77,7 @@ function removeEntityFromArea(entity) {
     if (startingYIndex == null || startingXIndex == null || stoppingYIndex == null || stoppingXIndex == null) return;
     for (let i = startingYIndex; i <= stoppingYIndex; i++) {
         for (let j = startingXIndex; j <= stoppingXIndex; j++) {
-            this.areas[i][j].filter((arrEntity) => arrEntity.id !== entity.id)
+            this.areas[j][i].filter((arrEntity) => arrEntity.id !== entity.id)
         }
     }
 }

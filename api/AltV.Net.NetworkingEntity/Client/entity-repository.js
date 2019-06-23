@@ -23,7 +23,7 @@ export default class EntityRepository {
                 proto.getProto().then((proto) => {
                     websocket.sendEvent({streamIn: proto.EntityStreamInEvent.create({entityId: streamIn})})
                 });
-                if(!this.entities.has(streamIn)) return;
+                if (!this.entities.has(streamIn)) return;
                 let streamInEntity = this.entities.get(streamIn);
                 alt.emit("networkingEntityStreamIn", streamInEntity);
             } else if (streamOut !== undefined) {
@@ -31,7 +31,7 @@ export default class EntityRepository {
                 proto.getProto().then((proto) => {
                     websocket.sendEvent({streamOut: proto.EntityStreamOutEvent.create({entityId: streamOut})})
                 });
-                if(!this.entities.has(streamOut)) return;
+                if (!this.entities.has(streamOut)) return;
                 let streamOutEntity = this.entities.get(streamOut);
                 alt.emit("networkingEntityStreamOut", streamOutEntity);
             }
@@ -68,13 +68,22 @@ export default class EntityRepository {
             id: entity.id,
             range: entity.range,
             dimension: entity.dimension,
-            position: {x: entity.position.x, y: entity.position.y, z: entity.position.z}
+            position: {
+                x: EntityRepository.roundDecimal(entity.position.x, 3),
+                y: EntityRepository.roundDecimal(entity.position.y, 3),
+                z: EntityRepository.roundDecimal(entity.position.z, 3)
+            }
         };
+    }
+
+    static roundDecimal(number, precision) {
+        let factor = Math.pow(10, precision);
+        return Math.round(number * factor) / factor;
     }
 
     copyEntitiesWithoutData() {
         let copiedEntities = [];
-        for(const [_, entity] of this.entities) {
+        for (const [_, entity] of this.entities) {
             copiedEntities.push(EntityRepository.copyEntityWithoutData(entity));
         }
         return copiedEntities;
