@@ -26,7 +26,7 @@ onmessage = function (e) {
                 this.areas[i][j] = [];
             }
         }
-        for (const [id, entity] of data.entities) {
+        for (const entity of data.entities) {
             addEntityToArea(entity);
         }
     }

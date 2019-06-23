@@ -27,11 +27,12 @@ namespace AltV.Net.NetworkingEntity
 
         public void UpdateEntityData(INetworkingEntity entity, string key, MValue value)
         {
-            var entityDataChangeEvent = new EntityDataChangeEvent {Id = entity.Id, Key = key, Value = value};
-            var serverEvent = new ServerEvent {DataChange = entityDataChangeEvent};
-            var bytes = serverEvent.ToByteArray();
             lock (entity.StreamedInClients)
             {
+                if (entity.StreamedInClients.Count <= 0) return;
+                var entityDataChangeEvent = new EntityDataChangeEvent {Id = entity.Id, Key = key, Value = value};
+                var serverEvent = new ServerEvent {DataChange = entityDataChangeEvent};
+                var bytes = serverEvent.ToByteArray();
                 foreach (var streamedInClient in entity.StreamedInClients)
                 {
                     if (streamedInClient.Exists)

@@ -11,13 +11,14 @@ export default class EntityRepository {
         const workerBlob = new Blob([streamingWorker], {type: 'application/javascript'});
         this.streamingWorker = new Worker(window.URL.createObjectURL(workerBlob));
         playerPosition.update = (position) => {
-            this.updateWorker();
+            this.streamingWorker.postMessage({
+                position: position
+            });
         };
         this.streamingWorker.onmessage = event => {
-            console.log(JSON.stringify(event.data));
             const streamIn = event.data.streamIn;
             const streamOut = event.data.streamOut;
-            if (streamIn) {
+            if (streamIn !== undefined) {
                 this.streamedInEntities.add(streamIn);
                 proto.getProto().then((proto) => {
                     websocket.sendEvent({streamIn: proto.EntityStreamInEvent.create({entityId: streamIn})})
@@ -25,7 +26,7 @@ export default class EntityRepository {
                 if(!this.entities.has(streamIn)) return;
                 let streamInEntity = this.entities.get(streamIn);
                 alt.emit("networkingEntityStreamIn", streamInEntity);
-            } else if (streamOut) {
+            } else if (streamOut !== undefined) {
                 this.streamedInEntities.delete(streamOut);
                 proto.getProto().then((proto) => {
                     websocket.sendEvent({streamOut: proto.EntityStreamOutEvent.create({entityId: streamOut})})
@@ -68,12 +69,12 @@ export default class EntityRepository {
             range: entity.range,
             dimension: entity.dimension,
             position: {x: entity.position.x, y: entity.position.y, z: entity.position.z}
-        }
+        };
     }
 
-    static copyEntitiesWithoutData(entities) {
-        let copiedEntities = new Array(entities);
-        for(const entity of entities) {
+    copyEntitiesWithoutData() {
+        let copiedEntities = [];
+        for(const [_, entity] of this.entities) {
             copiedEntities.push(EntityRepository.copyEntityWithoutData(entity));
         }
         return copiedEntities;
@@ -95,7 +96,7 @@ export default class EntityRepository {
     updateWorker() {
         this.streamingWorker.postMessage({
             position: playerPosition.getPosition(),
-            entities: EntityRepository.copyEntitiesWithoutData(this.entities)
+            entities: this.copyEntitiesWithoutData()
         })
     }
 }
