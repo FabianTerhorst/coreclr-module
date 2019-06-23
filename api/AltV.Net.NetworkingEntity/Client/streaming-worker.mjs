@@ -98,7 +98,7 @@ function start(position) {
     let keysToDeleteFromStreamedIn = [];
     for (const [id, entity] of this.streamedIn) {
         if (distance(entity.position, position) > entity.range) {
-            postMessage({streamOut: entity});
+            postMessage({streamOut: entity.id});
             keysToDeleteFromStreamedIn.push(id);
         }
     }
@@ -119,7 +119,7 @@ function start(position) {
     for (let entity of entitiesInArea) {
         if (!this.streamedIn.has(entity.id)) {
             if (distance(entity.position, position) <= entity.range) {
-                postMessage({streamIn: entity});
+                postMessage({streamIn: entity.id});
                 this.streamedIn.set(entity.id, entity)
             }
         }

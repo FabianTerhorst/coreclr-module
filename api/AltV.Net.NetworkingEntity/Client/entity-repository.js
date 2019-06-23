@@ -18,18 +18,21 @@ export default class EntityRepository {
             const streamIn = event.data.streamIn;
             const streamOut = event.data.streamOut;
             if (streamIn) {
-                this.streamedInEntities.add(streamIn.id);
+                this.streamedInEntities.add(streamIn);
                 proto.getProto().then((proto) => {
-                    websocket.sendEvent({streamIn: proto.EntityStreamInEvent.create({entityId: streamIn.id})})
+                    websocket.sendEvent({streamIn: proto.EntityStreamInEvent.create({entityId: streamIn})})
                 });
-
-                alt.emit("networkingEntityStreamIn", streamIn);
+                if(!this.entities.has(streamIn)) return;
+                let streamInEntity = this.entities.get(streamIn);
+                alt.emit("networkingEntityStreamIn", streamInEntity);
             } else if (streamOut) {
-                this.streamedInEntities.delete(streamOut.id);
+                this.streamedInEntities.delete(streamOut);
                 proto.getProto().then((proto) => {
-                    websocket.sendEvent({streamOut: proto.EntityStreamOutEvent.create({entityId: streamOut.id})})
+                    websocket.sendEvent({streamOut: proto.EntityStreamOutEvent.create({entityId: streamOut})})
                 });
-                alt.emit("networkingEntityStreamOut", streamOut);
+                if(!this.entities.has(streamOut)) return;
+                let streamOutEntity = this.entities.get(streamOut);
+                alt.emit("networkingEntityStreamOut", streamOutEntity);
             }
         };
     }
@@ -55,8 +58,25 @@ export default class EntityRepository {
         this.entities.set(entity.id, entity);
         this.streamingWorker.postMessage({
             position: playerPosition.getPosition(),
-            entityToAdd: entity
+            entityToAdd: EntityRepository.copyEntityWithoutData(entity)
         });
+    }
+
+    static copyEntityWithoutData(entity) {
+        return {
+            id: entity.id,
+            range: entity.range,
+            dimension: entity.dimension,
+            position: {x: entity.position.x, y: entity.position.y, z: entity.position.z}
+        }
+    }
+
+    static copyEntitiesWithoutData(entities) {
+        let copiedEntities = new Array(entities);
+        for(const entity of entities) {
+            copiedEntities.push(EntityRepository.copyEntityWithoutData(entity));
+        }
+        return copiedEntities;
     }
 
     removeEntity(id) {
@@ -68,14 +88,14 @@ export default class EntityRepository {
         this.entities.delete(id);
         this.streamingWorker.postMessage({
             position: playerPosition.getPosition(),
-            entityToRemove: entity
+            entityToRemove: EntityRepository.copyEntityWithoutData(entity)
         });
     }
 
     updateWorker() {
         this.streamingWorker.postMessage({
             position: playerPosition.getPosition(),
-            entities: this.entities
+            entities: EntityRepository.copyEntitiesWithoutData(this.entities)
         })
     }
 }
