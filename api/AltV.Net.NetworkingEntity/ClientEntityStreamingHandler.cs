@@ -71,7 +71,7 @@ namespace AltV.Net.NetworkingEntity
                         var changedKeys = entity.Snapshot.CompareWithClient(client);
                         if (changedKeys != null)
                         {
-                            var multipleDataChangeEvent = new EntityMultipleDataChangeEvent();
+                            var multipleDataChangeEvent = new EntityMultipleDataChangeEvent {Id = entityId};
                             foreach (var changedKey in changedKeys)
                             {
                                 if (entity.StreamedEntity.Data.TryGetValue(changedKey, out var mValue))
