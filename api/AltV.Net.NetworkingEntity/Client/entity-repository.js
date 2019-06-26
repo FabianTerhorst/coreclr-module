@@ -19,6 +19,7 @@ export default class EntityRepository {
             const streamIns = event.data.streamIn;
             const streamOuts = event.data.streamOut;
             if (streamIns !== undefined) {
+                const entities = [];
                 for (const streamIn of streamIns) {
                     this.streamedInEntities.add(streamIn);
                     websocket.sendEvent({streamIn: proto.EntityStreamInEvent.create({entityId: streamIn})});
@@ -27,9 +28,11 @@ export default class EntityRepository {
                         return;
                     }
                     const entity = this.entities.get(streamIn);
-                    alt.emit("networkingEntityStreamIn", JSON.stringify(entity));
+                    entities.push(entity);
                 }
+                alt.emit("streamIn", JSON.stringify(entities));
             } else if (streamOuts !== undefined) {
+                const entities = [];
                 for (const streamOut of streamOuts) {
                     this.streamedInEntities.delete(streamOut);
                     websocket.sendEvent({streamOut: proto.EntityStreamOutEvent.create({entityId: streamOut})});
@@ -37,8 +40,10 @@ export default class EntityRepository {
                         console.log("entity " + streamOut + " not found");
                         return;
                     }
-                    alt.emit("networkingEntityStreamOut", JSON.stringify(this.entities.get(streamOut)));
+                    const entity = this.entities.get(streamOut);
+                    entities.push(entity);
                 }
+                alt.emit("streamOut", JSON.stringify(entities));
             }
         };
     }

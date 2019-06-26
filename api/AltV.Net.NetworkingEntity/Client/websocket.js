@@ -40,7 +40,7 @@ export default class WebSocket {
                     //console.log("data changed", newEntity.id, newEntity.data);
                     if (this.entityRepository.isStreamedIn(dataChange.id)) {
                         delete dataChange.id;
-                        alt.emit("networkingEntityDataChange", JSON.stringify({
+                        alt.emit("dataChange", JSON.stringify({
                             entity: newEntity,
                             data: dataChange
                         }));
@@ -90,7 +90,7 @@ export default class WebSocket {
                     const newEntity = this.entityRepository.entities.get(multipleDataChange.id);
                     //console.log("multiple data change", newEntity.id, newEntity.data);
                     if (this.entityRepository.isStreamedIn(multipleDataChange.id)) {
-                        alt.emit("networkingEntityDataChange", JSON.stringify({
+                        alt.emit("dataChange", JSON.stringify({
                             entity: newEntity,
                             data: multipleDataChange.data
                         }));

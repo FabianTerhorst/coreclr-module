@@ -12,18 +12,23 @@ class NetworkingEntityClient {
         };
         this.onDataChange = () => {
         };
-        webview.on("networkingEntityStreamIn", (entity) => {
-            this.onStreamIn(JSON.parse(entity));
+        webview.on("streamIn", (entities) => {
+            for (const entity of JSON.parse(entities)) {
+                this.onStreamIn(entity);
+            }
         });
         webview.on("streamInBuffer", (entityBuffer) => {
             alt.log("client:" + JSON.stringify(entityBuffer));
             alt.log("onbuffer");
         });
-        webview.on("networkingEntityStreamOut", (entity) => {
-            this.onStreamOut(JSON.parse(entity));
+        webview.on("streamOut", (entities) => {
+            for (const entity of JSON.parse(entities)) {
+                this.onStreamOut(entity);
+            }
         });
-        webview.on("networkingEntityDataChange", (entity, newData) => {
-            this.onDataChange(JSON.parse(entity), JSON.parse(newData));
+        webview.on("dataChange", (entityAndNewData) => {
+            const entityAndNewDataParsed = JSON.parse(entityAndNewData);
+            this.onDataChange(entityAndNewDataParsed.entity, entityAndNewDataParsed.data);
         });
         if (defaultToken) {
             alt.onServer("streamingToken", (url, token) => {
@@ -33,7 +38,7 @@ class NetworkingEntityClient {
     }
 
     init(url, token) {
-        this.webview.emit("networkingEntitySetup", url, token);
+        this.webview.emit("entitySetup", url, token);
         const localPlayer = alt.getLocalPlayer();
         let pos;
         alt.setInterval(() => {
