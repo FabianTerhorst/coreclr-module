@@ -19,33 +19,26 @@ export default class EntityRepository {
             const streamIns = event.data.streamIn;
             const streamOuts = event.data.streamOut;
             if (streamIns !== undefined) {
-                const entities = [];
                 for (const streamIn of streamIns) {
                     this.streamedInEntities.add(streamIn);
-                    proto.getProto().then((proto) => {
-                        websocket.sendEvent({streamIn: proto.EntityStreamInEvent.create({entityId: streamIn})})
-                    });
+                    websocket.sendEvent({streamIn: proto.EntityStreamInEvent.create({entityId: streamIn})});
                     if (!this.entities.has(streamIn)) {
                         console.log("entity " + streamIn + " not found");
                         return;
                     }
-                    entities.push(this.entities.get(streamIn));
+                    const entity = this.entities.get(streamIn);
+                    alt.emit("networkingEntityStreamIn", JSON.stringify(entity));
                 }
-                alt.emit("networkingEntityStreamIn", entities);
             } else if (streamOuts !== undefined) {
-                const entities = [];
                 for (const streamOut of streamOuts) {
                     this.streamedInEntities.delete(streamOut);
-                    proto.getProto().then((proto) => {
-                        websocket.sendEvent({streamOut: proto.EntityStreamOutEvent.create({entityId: streamOut})})
-                    });
+                    websocket.sendEvent({streamOut: proto.EntityStreamOutEvent.create({entityId: streamOut})});
                     if (!this.entities.has(streamOut)) {
                         console.log("entity " + streamOut + " not found");
                         return;
                     }
-                    entities.push(this.entities.get(streamOut));
+                    alt.emit("networkingEntityStreamOut", JSON.stringify(this.entities.get(streamOut)));
                 }
-                alt.emit("networkingEntityStreamOut", entities);
             }
         };
     }

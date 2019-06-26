@@ -16,8 +16,11 @@ onmessage = function (e) {
     if (!this.streamedIn) {
         this.streamedIn = new Map();
     }
-    if (!this.newStream) {
-        this.newStream = new Set();
+    if (!this.newStreamIn) {
+        this.newStreamIn = new Set();
+    }
+    if (!this.newStreamOut) {
+        this.newStreamOut = new Set();
     }
     if (data.position) {
         this.position = data.position;
@@ -100,17 +103,17 @@ function offsetPosition(value) {
 function start(position) {
     for (const [id, entity] of this.streamedIn) {
         if (distance(entity.position, position) > entity.range) {
-            this.newStream.add(entity.id);
+            this.newStreamOut.add(entity.id);
         }
     }
 
-    for (let key of this.newStream) {
+    for (let key of this.newStreamOut) {
         this.streamedIn.delete(key);
     }
 
-    if (this.newStream.size > 0) {
-        postMessage({streamOut: [...this.newStream]});
-        this.newStream.clear();
+    if (this.newStreamOut.size > 0) {
+        postMessage({streamOut: [...this.newStreamOut]});
+        this.newStreamOut.clear();
     }
 
     let posX = offsetPosition(position.x);
@@ -126,14 +129,14 @@ function start(position) {
     for (let entity of entitiesInArea) {
         if (!this.streamedIn.has(entity.id)) {
             if (distance(entity.position, position) <= entity.range) {
-                this.newStream.add(entity.id);
+                this.newStreamIn.add(entity.id);
                 this.streamedIn.set(entity.id, entity)
             }
         }
     }
 
-    if (this.newStream.size > 0) {
-        postMessage({streamIn: [...this.newStream]});
-        this.newStream.clear();
+    if (this.newStreamIn.size > 0) {
+        postMessage({streamIn: [...this.newStreamIn]});
+        this.newStreamIn.clear();
     }
 }

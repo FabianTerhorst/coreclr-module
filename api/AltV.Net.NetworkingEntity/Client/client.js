@@ -12,18 +12,18 @@ class NetworkingEntityClient {
         };
         this.onDataChange = () => {
         };
-        webview.on("networkingEntityStreamIn", (entities) => {
-            for (const entity of entities) {
-                this.onStreamIn(entity);
-            }
+        webview.on("networkingEntityStreamIn", (entity) => {
+            this.onStreamIn(JSON.parse(entity));
         });
-        webview.on("networkingEntityStreamOut", (entities) => {
-            for (const entity of entities) {
-                this.onStreamOut(entity);
-            }
+        webview.on("streamInBuffer", (entityBuffer) => {
+            alt.log("client:" + JSON.stringify(entityBuffer));
+            alt.log("onbuffer");
+        });
+        webview.on("networkingEntityStreamOut", (entity) => {
+            this.onStreamOut(JSON.parse(entity));
         });
         webview.on("networkingEntityDataChange", (entity, newData) => {
-            this.onDataChange(entity, newData);
+            this.onDataChange(JSON.parse(entity), JSON.parse(newData));
         });
         if (defaultToken) {
             alt.onServer("streamingToken", (url, token) => {
@@ -39,9 +39,12 @@ class NetworkingEntityClient {
         alt.setInterval(() => {
             pos = localPlayer.pos;
             this.webview.emit("playerPosition",
-                NetworkingEntityClient.roundDecimal(pos.x, 3),
-                NetworkingEntityClient.roundDecimal(pos.y, 3),
-                NetworkingEntityClient.roundDecimal(pos.z, 3));
+                pos.x,
+                pos.y,
+                pos.z)
+                //NetworkingEntityClient.roundDecimal(pos.x, 3),
+                //NetworkingEntityClient.roundDecimal(pos.y, 3),
+                //NetworkingEntityClient.roundDecimal(pos.z, 3));
         }, 100);
     }
 
@@ -53,11 +56,22 @@ class NetworkingEntityClient {
 
 let networkingEntityClient = null;
 
-export function create(webview) {
+export function create() {
+    networkingEntityClient = new NetworkingEntityClient(new alt.WebView("http://resources/networking-entity/index.html"), true);
+}
+
+export function createWithWebView(webview) {
     networkingEntityClient = new NetworkingEntityClient(webview, true);
 }
 
-export function createNoneDefault(webview) {
+export function createNoneDefault() {
+    networkingEntityClient = new NetworkingEntityClient(new alt.WebView("http://resources/networking-entity/index.html"), false);
+}
+
+export function createNoneDefaultWithWebView(webview) {
+    if (!webview) {
+        webview = new alt.WebView("http://resources/networking-entity/index.html");
+    }
     networkingEntityClient = new NetworkingEntityClient(webview, false);
 }
 
@@ -99,4 +113,13 @@ export function onDataChange(callback) {
     };
 }
 
-export default {create, createNoneDefault, init, onStreamIn, onStreamOut, onDataChange};
+export default {
+    create,
+    createWithWebView,
+    createNoneDefault,
+    createNoneDefaultWithWebView,
+    init,
+    onStreamIn,
+    onStreamOut,
+    onDataChange
+};

@@ -6,17 +6,18 @@
     "rollup": "^1.1.0",
     "rollup-plugin-babel": "^4.3.0",
     "rollup-plugin-babel-minify": "^8.0.0",
+    "rollup-plugin-copy": "^3.0.0",
+    "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^4.2.3",
     "rollup-plugin-string": "^3.0.0"
   },
   "scripts": {
     "createEmptyServerMain": "cd build && echo '' > empty.mjs",
-    "cpyCfg": "cp resource.cfg build",
-    "cpyClient": "cp client.js build",
-    "cpyProto": "cp entity.proto build",
-    "cpyIndex": "cp index.html build",
-    "build": "rm -rf build && mkdir build && npm run createEmptyServerMain && npm run cpyCfg && npm run cpyClient && npm run cpyIndex && npm run cpyProto && rollup -c"
+    "build": "rm -rf build && mkdir build && sh gen-proto-bundle.sh && npm run createEmptyServerMain && rollup -c"
   },
   "author": "Fabian Terhorst",
-  "license": "Apache 2.0"
+  "license": "Apache 2.0",
+  "dependencies": {
+    "protobufjs": "^6.8.8"
+  }
 }
