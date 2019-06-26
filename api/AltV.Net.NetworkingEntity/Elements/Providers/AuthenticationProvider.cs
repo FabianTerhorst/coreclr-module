@@ -5,6 +5,7 @@ using System.Net.WebSockets;
 using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
 using AltV.Net.NetworkingEntity.Elements.Entities;
+using AltV.Net.NetworkingEntity.Elements.Pools;
 using net.vieapps.Components.WebSockets;
 using WebSocket = net.vieapps.Components.WebSockets.WebSocket;
 
@@ -42,7 +43,13 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
                             playerTokens[client.Token] = player;
                             playerTokenAccess[player] = client.Token;
 
-                            player.Emit("streamingToken", url, client.Token);
+                            lock (player)
+                            {
+                                if (player.Exists)
+                                {
+                                    player.Emit("streamingToken", url, client.Token);
+                                }
+                            }
                         }
                     }
                 });
@@ -77,9 +84,10 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
             };
         }
 
-        public Task<bool> Verify(ManagedWebSocket webSocket, string token, out INetworkingClient client)
+        public Task<bool> Verify(INetworkingClientPool networkingClientPool, ManagedWebSocket webSocket, string token,
+            out INetworkingClient client)
         {
-            if (!AltNetworking.Module.ClientPool.TryGet(token, out client)) return Task.FromResult(false);
+            if (networkingClientPool.TryGet(token, out client)) return Task.FromResult(false);
             client.WebSocket = webSocket; //TODO: check if already has websocket ect.
             webSocket.Extra[ClientExtra] = client;
             return Task.FromResult(true);

@@ -11,6 +11,9 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
 
         public EntityDataSnapshot Snapshot { get; }
 
+
+        public StreamingType StreamingType { get; }
+
         public HashSet<INetworkingClient> StreamedInClients { get; } = new HashSet<INetworkingClient>();
 
         public ulong Id => StreamedEntity.Id;
@@ -47,10 +50,11 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
 
         public bool Exists { get; set; }
 
-        public NetworkingEntity(IEntityStreamer entityStreamer, Entity.Entity streamedEntity)
+        public NetworkingEntity(IEntityStreamer entityStreamer, Entity.Entity streamedEntity, StreamingType streamingType = StreamingType.Default)
         {
             this.entityStreamer = entityStreamer;
             StreamedEntity = streamedEntity;
+            StreamingType = streamingType;
             Exists = true;
             Snapshot = new EntityDataSnapshot(Id);
         }
@@ -107,6 +111,11 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
 
             var mValue = new MValue {ListValue = listMValue};
             UpdateData(key, mValue);
+        }
+
+        public void SetData(string key, object value)
+        {
+            UpdateData(key,  MValueUtils.ToMValue(value));
         }
 
         public bool GetData(string key, out bool value)

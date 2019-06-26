@@ -7,7 +7,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
         //TODO: make dimension functional
         
         //TODO: maybe move token out of the spec
-        public string Token { get; set; }
+        public string Token { get; }
 
         public bool Exists { get; set; }
 

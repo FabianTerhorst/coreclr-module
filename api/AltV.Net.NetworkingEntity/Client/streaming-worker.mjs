@@ -22,6 +22,13 @@ onmessage = function (e) {
     if (!this.newStreamOut) {
         this.newStreamOut = new Set();
     }
+
+    if (data.reset) {
+        this.streamedIn.clear();
+        this.newStreamIn.clear();
+        this.newStreamOut.clear();
+    }
+
     if (data.position) {
         this.position = data.position;
     }
@@ -46,7 +53,9 @@ onmessage = function (e) {
         }
         removeEntityFromArea(data.entityToRemove);
     }
-    start(this.position);
+    if (this.position) {
+        start(this.position);
+    }
 };
 
 function addEntityToArea(entity) {

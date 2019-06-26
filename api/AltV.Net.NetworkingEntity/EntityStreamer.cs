@@ -1,6 +1,8 @@
+using System;
 using AltV.Net.NetworkingEntity.Elements.Entities;
 using Entity;
 using Google.Protobuf;
+using net.vieapps.Components.Utility;
 
 namespace AltV.Net.NetworkingEntity
 {
@@ -9,17 +11,40 @@ namespace AltV.Net.NetworkingEntity
     /// </summary>
     public class EntityStreamer : IEntityStreamer
     {
-        public void CreateEntity(Entity.Entity entity)
+        public void CreateEntity(INetworkingEntity networkingEntity)
         {
-            var entityCreateEvent = new EntityCreateEvent {Entity = entity};
-            var serverEvent = new ServerEvent {Create = entityCreateEvent};
-            var bytes = serverEvent.ToByteArray();
+            if (networkingEntity.StreamingType == StreamingType.EntityStreaming)
+            {
+                return;
+            }
+            byte[] bytes;
+            if (networkingEntity.StreamingType == StreamingType.DataStreaming)
+            {
+                // Remove data before sending it over the wire
+                var entityWithoutData = networkingEntity.StreamedEntity.Clone();
+                entityWithoutData.Data.Clear();
+                
+                var entityCreateEvent = new EntityCreateEvent {Entity = entityWithoutData};
+                var serverEvent = new ServerEvent {Create = entityCreateEvent};
+                bytes = serverEvent.ToByteArray();
+            }
+            else
+            {
+                var entityCreateEvent = new EntityCreateEvent {Entity = networkingEntity.StreamedEntity};
+                var serverEvent = new ServerEvent {Create = entityCreateEvent};
+                bytes = serverEvent.ToByteArray();
+            }
+
             AltNetworking.Module.ClientPool.SendToAll(bytes);
         }
 
-        public void RemoveEntity(Entity.Entity entity)
+        public void RemoveEntity(INetworkingEntity networkingEntity)
         {
-            var entityDeleteEvent = new EntityDeleteEvent {Id = entity.Id};
+            if (networkingEntity.StreamingType == StreamingType.EntityStreaming)
+            {
+                return;
+            }
+            var entityDeleteEvent = new EntityDeleteEvent {Id = networkingEntity.StreamedEntity.Id};
             var serverEvent = new ServerEvent {Delete = entityDeleteEvent};
             var bytes = serverEvent.ToByteArray();
             AltNetworking.Module.ClientPool.SendToAll(bytes);

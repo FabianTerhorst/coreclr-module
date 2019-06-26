@@ -24,10 +24,11 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
         public INetworkingEntity Create(IEntityStreamer entityStreamer, Entity.Entity streamedEntity) =>
             Create(idProvider.GetNext(), entityStreamer, streamedEntity);
 
-        public INetworkingEntity Create(ulong id, IEntityStreamer entityStreamer, Entity.Entity streamedEntity)
+        public INetworkingEntity Create(ulong id, IEntityStreamer entityStreamer, Entity.Entity streamedEntity,
+            StreamingType streamingType = StreamingType.Default)
         {
             streamedEntity.Id = id;
-            var entity = factory.Create(entityStreamer, streamedEntity);
+            var entity = factory.Create(entityStreamer, streamedEntity, streamingType);
             Add(entity);
             return entity;
         }
@@ -81,12 +82,12 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
 
         public virtual void OnAdd(INetworkingEntity entity)
         {
-            AltNetworking.Module.Streamer.CreateEntity(entity.StreamedEntity);
+            AltNetworking.Module.Streamer.CreateEntity(entity);
         }
 
         public virtual void OnRemove(INetworkingEntity entity)
         {
-            AltNetworking.Module.Streamer.RemoveEntity(entity.StreamedEntity);
+            AltNetworking.Module.Streamer.RemoveEntity(entity);
         }
     }
 }

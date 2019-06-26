@@ -113,4 +113,10 @@ export default class EntityRepository {
             entities: this.copyEntitiesWithoutData()
         })
     }
+
+    resetWorker() {
+        this.streamingWorker.postMessage({
+            reset: true
+        })
+    }
 }
