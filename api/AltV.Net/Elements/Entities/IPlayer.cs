@@ -12,6 +12,8 @@ namespace AltV.Net.Elements.Entities
         string Name { get; set; }
 
         ushort Health { get; set; }
+        
+        ushort MaxHealth { get; set; }
 
         bool IsDead { get; }
 
@@ -26,6 +28,8 @@ namespace AltV.Net.Elements.Entities
         bool IsReloading { get; }
 
         ushort Armor { get; set; }
+        
+        ushort MaxArmor { get; set; }
 
         float MoveSpeed { get; }
 
@@ -40,6 +44,15 @@ namespace AltV.Net.Elements.Entities
         bool IsInVehicle { get; }
 
         IVehicle Vehicle { get; }
+        
+        uint CurrentWeapon { get; set; }
+        
+        IEntity EntityAimingAt { get; }
+        
+        Position EntityAimOffset { get; }
+        
+        bool IsFlashlightActive { get; }
+
 
         /**
          * The current vehicle seat
@@ -48,6 +61,8 @@ namespace AltV.Net.Elements.Entities
         byte Seat { get; }
 
         uint Ping { get; }
+        
+        string Ip { get; }
 
         /// <summary>
         /// Spawns a player at the designated position with a optional delay in milliseconds
@@ -73,6 +88,16 @@ namespace AltV.Net.Elements.Entities
         void Kick(string reason);
 
         void Emit(string eventName, params object[] args);
+
+        void AddWeaponComponent(uint weapon, uint weaponComponent);
+        
+        void RemoveWeaponComponent(uint weapon, uint weaponComponent);
+
+        void GetCurrentWeaponComponents(out uint[] weaponComponents);
+
+        void SetWeaponTintIndex(uint weapon, byte tintIndex);
+
+        byte GetCurrentWeaponTintIndex();
 
         ReadOnlyPlayer Copy();
     }

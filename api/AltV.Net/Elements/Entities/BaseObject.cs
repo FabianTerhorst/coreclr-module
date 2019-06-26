@@ -49,7 +49,7 @@ namespace AltV.Net.Elements.Entities
             result = (int) mValue.GetInt();
             return true;
         }
-        
+
         public bool GetMetaData(string key, out uint result)
         {
             CheckIfEntityExists();
@@ -64,7 +64,7 @@ namespace AltV.Net.Elements.Entities
             result = (uint) mValue.GetUint();
             return true;
         }
-        
+
         public bool GetMetaData(string key, out float result)
         {
             CheckIfEntityExists();
@@ -131,6 +131,11 @@ namespace AltV.Net.Elements.Entities
             }
 
             throw new BaseObjectRemovedException(this);
+        }
+
+        public override int GetHashCode()
+        {
+            return NativePointer.GetHashCode();
         }
     }
 }

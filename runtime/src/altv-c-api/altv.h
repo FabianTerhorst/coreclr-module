@@ -14,7 +14,9 @@
 extern "C"
 {
 #endif
-
+EXPORT void FreeUIntArray(alt::Array<uint16_t> *array);
+EXPORT void FreeStringViewArray(alt::Array<alt::StringView> *array);
+EXPORT void FreeMValueArray(alt::Array<alt::MValue> *array);
 #ifdef __cplusplus
 }
 #endif

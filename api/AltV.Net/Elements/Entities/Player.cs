@@ -79,6 +79,17 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public string Ip
+        {
+            get
+            {
+                CheckIfEntityExists();
+                var ptr = IntPtr.Zero;
+                AltNative.Player.Player_GetIP(NativePointer, ref ptr);
+                return Marshal.PtrToStringUTF8(ptr);
+            }
+        }
+
         public override void GetMetaData(string key, ref MValue value) =>
             AltNative.Player.Player_GetMetaData(NativePointer, key, ref value);
 
@@ -129,6 +140,20 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckIfEntityExists();
                 AltNative.Player.Player_SetHealth(NativePointer, value);
+            }
+        }
+
+        public ushort MaxHealth
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Player.Player_GetMaxHealth(NativePointer);
+            }
+            set
+            {
+                CheckIfEntityExists();
+                AltNative.Player.Player_SetMaxHealth(NativePointer, value);
             }
         }
 
@@ -197,6 +222,20 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckIfEntityExists();
                 AltNative.Player.Player_SetArmor(NativePointer, value);
+            }
+        }
+
+        public ushort MaxArmor
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Player.Player_GetMaxArmor(NativePointer);
+            }
+            set
+            {
+                CheckIfEntityExists();
+                AltNative.Player.Player_SetMaxArmor(NativePointer, value);
             }
         }
 
@@ -269,6 +308,52 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public uint CurrentWeapon
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Player.Player_GetCurrentWeapon(NativePointer);
+            }
+            set
+            {
+                CheckIfEntityExists();
+                AltNative.Player.Player_SetCurrentWeapon(NativePointer, value);
+            }
+        }
+
+        public IEntity EntityAimingAt
+        {
+            get
+            {
+                CheckIfEntityExists();
+                var type = BaseObjectType.Undefined;
+                var entityPointer = AltNative.Player.Player_GetEntityAimingAt(NativePointer, ref type);
+                if (entityPointer == IntPtr.Zero) return null;
+                return Alt.Module.BaseEntityPool.GetOrCreate(entityPointer, type, out var entity) ? entity : null;
+            }
+        }
+
+        public Position EntityAimOffset
+        {
+            get
+            {
+                CheckIfEntityExists();
+                var position = Position.Zero;
+                AltNative.Player.Player_GetEntityAimOffset(NativePointer, ref position);
+                return position;
+            }
+        }
+
+        public bool IsFlashlightActive
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Player.Player_IsFlashlightActive(NativePointer);
+            }
+        }
+
         public byte Seat
         {
             get
@@ -324,6 +409,38 @@ namespace AltV.Net.Elements.Entities
             AltNative.Player.Player_RemoveAllWeapons(NativePointer);
         }
 
+        public void AddWeaponComponent(uint weapon, uint weaponComponent)
+        {
+            CheckIfEntityExists();
+            AltNative.Player.Player_AddWeaponComponent(NativePointer, weapon, weaponComponent);
+        }
+
+        public void RemoveWeaponComponent(uint weapon, uint weaponComponent)
+        {
+            CheckIfEntityExists();
+            AltNative.Player.Player_RemoveWeaponComponent(NativePointer, weapon, weaponComponent);
+        }
+
+        public void GetCurrentWeaponComponents(out uint[] weaponComponents)
+        {
+            CheckIfEntityExists();
+            var array = UIntArray.Nil;
+            AltNative.Player.Player_GetCurrentWeaponComponents(NativePointer, ref array);
+            weaponComponents = array.ToArrayAndFree();
+        }
+
+        public void SetWeaponTintIndex(uint weapon, byte tintIndex)
+        {
+            CheckIfEntityExists();
+            AltNative.Player.Player_SetWeaponTintIndex(NativePointer, weapon, tintIndex);
+        }
+
+        public byte GetCurrentWeaponTintIndex()
+        {
+            CheckIfEntityExists();
+            return AltNative.Player.Player_GetCurrentWeaponTintIndex(NativePointer);
+        }
+        
         public void Kick(string reason)
         {
             CheckIfEntityExists();

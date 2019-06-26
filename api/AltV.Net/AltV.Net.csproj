@@ -13,7 +13,7 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.8.0-beta</PackageVersion>
+        <PackageVersion>1.8.1</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>Add Alt.CreateColShapeCylinder(Position pos, float radius, float height);
 Add Alt.CreateColShapeSphere(Position pos, float radius);
@@ -22,7 +22,8 @@ Add Alt.CreateColShapeCube(Position pos, Position pos2);
 Add Alt.CreateColShapeRectangle(Position pos, Position pos2);
 Add Alt.OnColShape += (shape, entity, state) { }
 Add Alt.GetAllColShapes();
-Add AltAsync.OnColShape += (shape, entity, state) { }</PackageReleaseNotes>
+Add AltAsync.OnColShape += (shape, entity, state) { }
+Improve MValueConvertible</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

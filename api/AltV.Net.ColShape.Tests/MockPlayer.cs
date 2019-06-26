@@ -10,6 +10,39 @@ namespace AltV.Net.ColShape.Tests
         public IntPtr NativePointer { get; }
         public bool Exists { get; }
         public BaseObjectType Type { get; }
+        public ushort MaxHealth { get; set; }
+        public ushort MaxArmor { get; set; }
+        public uint CurrentWeapon { get; set; }
+        public IEntity EntityAimingAt { get; }
+        public Position EntityAimOffset { get; }
+        public bool IsFlashlightActive { get; }
+        public string Ip { get; }
+        
+        public void AddWeaponComponent(uint weapon, uint weaponComponent)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveWeaponComponent(uint weapon, uint weaponComponent)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetCurrentWeaponComponents(out uint[] weaponComponents)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetWeaponTintIndex(uint weapon, byte tintIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte GetCurrentWeaponTintIndex()
+        {
+            throw new NotImplementedException();
+        }
+
         public void SetMetaData(string key, object value)
         {
             throw new NotImplementedException();

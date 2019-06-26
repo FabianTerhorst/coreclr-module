@@ -38,6 +38,14 @@ namespace AltV.Net.Data
         public bool Exists => false;
         public BaseObjectType Type => BaseObjectType.Player;
 
+        public ushort MaxHealth { get; set; }
+        public ushort MaxArmor { get; set; }
+        public uint CurrentWeapon { get; set; }
+        public IEntity EntityAimingAt { get; }
+        public Position EntityAimOffset { get; }
+        public bool IsFlashlightActive { get; }
+        public string Ip { get; }
+
         public void SetMetaData(string key, object value)
         {
             throw new NotImplementedException();
@@ -152,6 +160,7 @@ namespace AltV.Net.Data
         {
             get
             {
+                //TODO: this can only be executed on main thread because of vehicle pool maybe copy dictionary
                 if (vehiclePointer == IntPtr.Zero) return null;
                 return Alt.Module.VehiclePool.GetOrCreate(vehiclePointer, out var vehicle) ? vehicle : null;
             }
@@ -191,6 +200,31 @@ namespace AltV.Net.Data
         }
 
         public void RemoveAllWeapons()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddWeaponComponent(uint weapon, uint weaponComponent)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveWeaponComponent(uint weapon, uint weaponComponent)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetCurrentWeaponComponents(out uint[] weaponComponents)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetWeaponTintIndex(uint weapon, byte tintIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte GetCurrentWeaponTintIndex()
         {
             throw new NotImplementedException();
         }
