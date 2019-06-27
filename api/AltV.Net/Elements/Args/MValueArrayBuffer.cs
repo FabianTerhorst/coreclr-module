@@ -265,7 +265,7 @@ namespace AltV.Net.Elements.Args
             return false;
         }
 
-        public bool GetNext(out StringViewArray keys, out MValueArray values)
+        public bool GetNext(out StringArray keys, out MValueArray values)
         {
             if (size == 0)
             {
@@ -284,10 +284,10 @@ namespace AltV.Net.Elements.Args
                 return false;
             }
 
-            var stringViewArray = StringViewArray.Nil;
+            var stringArray = StringArray.Nil;
             var valueArrayRef = MValueArray.Nil;
-            AltNative.MValueGet.MValue_GetDict(ref mValue, ref stringViewArray, ref valueArrayRef);
-            keys = stringViewArray;
+            AltNative.MValueGet.MValue_GetDict(ref mValue, ref stringArray, ref valueArrayRef);
+            keys = stringArray;
             values = valueArrayRef;
             return true;
         }

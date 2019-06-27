@@ -19,6 +19,9 @@ namespace AltV.Net.Native
         internal static extern void FreeStringViewArray(ref StringViewArray array);
         
         [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+        internal static extern void FreeStringArray(ref StringArray array);
+        
+        [DllImport(DllName, CallingConvention = NativeCallingConvention)]
         internal static extern void FreeMValueArray(ref MValueArray array);
     }
 }

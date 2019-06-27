@@ -5,7 +5,7 @@ using AltV.Net.Elements.Args;
 namespace AltV.Net.Native
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct MValueArray
+    public struct MValueArray : IDisposable
     {
         internal IntPtr data; // Array of MValue's
         public ulong Size;
@@ -30,22 +30,23 @@ namespace AltV.Net.Native
 
             return values;
         }
-        
-        public MValue[] ToArrayAndFree()
+
+        /// <summary>
+        /// Consumes and returns next string in the array
+        /// </summary>
+        /// <returns></returns>
+        public MValue GetNextWithOffset(ref IntPtr offset)
         {
-            var value = data;
-            var values = new MValue[Size];
-            for (var i = 0; i < values.Length; i++)
-            {
-                values[i] = Marshal.PtrToStructure<MValue>(value);
-                value += MValue.Size;
-            }
-            
+            if (Size == 0) return MValue.Nil;
+            var value = Marshal.PtrToStructure<MValue>(offset);
+            Size--;
+            offset += StringView.Size;
+            return value;
+        }
+
+        public void Dispose()
+        {
             AltNative.FreeMValueArray(ref this);
-
-            Size = 0;
-
-            return values;
         }
 
         public MValueArrayBuffer Reader()
@@ -55,7 +56,7 @@ namespace AltV.Net.Native
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct StringViewArray
+    public struct StringViewArray : IDisposable
     {
         public IntPtr data; // Array of StringView's
         public ulong size;
@@ -67,7 +68,7 @@ namespace AltV.Net.Native
             size = 0,
             capacity = 0
         };
-
+        
         public string[] ToArray()
         {
             var value = data;
@@ -80,8 +81,41 @@ namespace AltV.Net.Native
 
             return values;
         }
+
+        /// <summary>
+        /// Consumes and returns next string in the array
+        /// </summary>
+        /// <returns></returns>
+        public string GetNextWithOffset(ref IntPtr offset)
+        {
+            if (size == 0) return null;
+            var value = Marshal.PtrToStructure<StringView>(offset).Text;
+            size--;
+            offset += StringView.Size;
+            return value;
+        }
+
+        public void Dispose()
+        {
+            AltNative.FreeStringViewArray(ref this);
+        }
+    }
+    
+    [StructLayout(LayoutKind.Sequential)]
+    public struct StringArray : IDisposable
+    {
+        public IntPtr data; // Array of StringView's
+        public ulong size;
+        public ulong capacity;
+
+        public static StringArray Nil = new StringArray
+        {
+            data = IntPtr.Zero,
+            size = 0,
+            capacity = 0
+        };
         
-        public string[] ToArrayAndFree()
+        public string[] ToArray()
         {
             var value = data;
             var values = new string[size];
@@ -90,10 +124,6 @@ namespace AltV.Net.Native
                 values[i] = Marshal.PtrToStructure<StringView>(value).Text;
                 value += StringView.Size;
             }
-            
-            AltNative.FreeStringViewArray(ref this);
-            
-            size = 0;
 
             return values;
         }
@@ -102,25 +132,30 @@ namespace AltV.Net.Native
         /// Consumes and returns next string in the array
         /// </summary>
         /// <returns></returns>
-        public string GetNext()
+        public string GetNextWithOffset(ref IntPtr offset)
         {
             if (size == 0) return null;
-            var value = Marshal.PtrToStructure<StringView>(data).Text;
+            var value = Marshal.PtrToStructure<StringView>(offset).Text;
             size--;
-            data += StringView.Size;
+            offset += StringView.Size;
             return value;
         }
-
-        public void SkipValue()
+        
+        public void SkipValueWithOffset(ref IntPtr offset)
         {
             if (size == 0) return;
             size--;
-            data += StringView.Size;
+            offset += StringView.Size;
+        }
+
+        public void Dispose()
+        {
+            AltNative.FreeStringArray(ref this);
         }
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct UIntArray
+    public struct UIntArray : IDisposable
     {
         public IntPtr data; // Array of uint's
         public ulong size;
@@ -147,7 +182,7 @@ namespace AltV.Net.Native
                 value += UInt32Size;
             }
 
-            AltNative.FreeUIntArray(ref this);
+            Dispose();
             
             size = 0;
 
@@ -166,6 +201,11 @@ namespace AltV.Net.Native
         {
             Marshal.Copy(new IntPtr(ptr.ToInt32() + ofs), buffer, 0, 4);
             return BitConverter.ToUInt32(buffer, 0);
+        }
+
+        public void Dispose()
+        {
+            AltNative.FreeUIntArray(ref this);
         }
     }
 }

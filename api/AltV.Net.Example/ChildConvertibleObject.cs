@@ -33,7 +33,7 @@ namespace AltV.Net.Example
             {
                 writer.BeginObject();
                 writer.Name("test");
-                writer.Value(value.test);
+                writer.Value(value.Test);
                 writer.EndObject();
             }
 
@@ -53,16 +53,16 @@ namespace AltV.Net.Example
 
         public static readonly IMValueAdapter<ChildConvertibleObject> Adapter = new ChildConvertibleObjectAdapter();
 
-        private readonly string test;
+        public readonly string Test;
 
         public ChildConvertibleObject()
         {
-            test = "123";
+            Test = "123";
         }
 
         private ChildConvertibleObject(string test)
         {
-            this.test = test;
+            this.Test = test;
         }
 
         public IMValueBaseAdapter GetAdapter()

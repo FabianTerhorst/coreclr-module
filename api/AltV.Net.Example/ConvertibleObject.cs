@@ -5,7 +5,7 @@ namespace AltV.Net.Example
 {
     public class ConvertibleObject : IMValueConvertible
     {
-        private class ConvertibleObjectAdapter : IMValueAdapter<ConvertibleObject>
+        public class ConvertibleObjectAdapter : IMValueAdapter<ConvertibleObject>
         {
             private readonly IMValueAdapter<List<ChildConvertibleObject>> listAdapter;
 
@@ -43,9 +43,9 @@ namespace AltV.Net.Example
             {
                 writer.BeginObject();
                 writer.Name("test");
-                writer.Value(value.test);
+                writer.Value(value.Test);
                 writer.Name("list");
-                listAdapter.ToMValue(value.list, writer);
+                listAdapter.ToMValue(value.List, writer);
                 writer.EndObject();
             }
 
@@ -65,23 +65,23 @@ namespace AltV.Net.Example
 
         private static readonly IMValueBaseAdapter MyAdapter = new ConvertibleObjectAdapter();
 
-        private readonly string test;
+        public readonly string Test;
 
-        private readonly List<ChildConvertibleObject> list;
+        public readonly List<ChildConvertibleObject> List;
 
         public ConvertibleObject()
         {
-            test = "123";
-            list = new List<ChildConvertibleObject>();
-            list.Add(new ChildConvertibleObject());
-            list.Add(new ChildConvertibleObject());
-            list.Add(new ChildConvertibleObject());
+            Test = "123";
+            List = new List<ChildConvertibleObject>
+            {
+                new ChildConvertibleObject(), new ChildConvertibleObject(), new ChildConvertibleObject()
+            };
         }
 
         private ConvertibleObject(string test, List<ChildConvertibleObject> list)
         {
-            this.test = test;
-            this.list = list;
+            this.Test = test;
+            this.List = list;
         }
 
         public IMValueBaseAdapter GetAdapter()

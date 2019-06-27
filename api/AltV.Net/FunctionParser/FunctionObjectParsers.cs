@@ -14,6 +14,7 @@ namespace AltV.Net.FunctionParser
             {
                 return result;
             }
+
             if (!type.IsValueType || type == FunctionTypes.String) return value;
             var defaultValue = typeInfo?.DefaultValue;
             return defaultValue ?? Activator.CreateInstance(type);
@@ -165,7 +166,8 @@ namespace AltV.Net.FunctionParser
                 }
                 else
                 {
-                    if (MValueAdapters.FromObject(curr, elementType, out var result))
+                    if ((typeInfo?.Element?.IsMValueConvertible == true || typeInfo?.Element == null) &&
+                        MValueAdapters.FromObject(curr, elementType, out var result))
                     {
                         typedArray.SetValue(result, i);
                     }
@@ -228,7 +230,8 @@ namespace AltV.Net.FunctionParser
                 }
                 else
                 {
-                    if (MValueAdapters.FromObject(obj, valueType, out var result))
+                    if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
+                        MValueAdapters.FromObject(obj, valueType, out var result))
                     {
                         typedDictionary[key] = result;
                     }

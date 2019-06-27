@@ -21,6 +21,8 @@ namespace AltV.Net.FunctionParser
 
         public readonly bool IsList;
 
+        public readonly bool IsMValueConvertible;
+
         public readonly FunctionTypeInfo Element;
 
         public readonly Type ElementType;
@@ -83,6 +85,8 @@ namespace AltV.Net.FunctionParser
                 IsBlip = false;
                 IsCheckpoint = false;
             }
+
+            IsMValueConvertible = interfaces.Contains(FunctionTypes.MValueConvertible);
 
             var elementType = type.GetElementType();
             if (elementType != null)
