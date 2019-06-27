@@ -4,10 +4,10 @@ os:
 filter_secrets: false
 sudo: false
 language: cpp
-branches:
-  only:
-    - master
-    - dev
+#branches:
+#  only:
+#    - master
+#    - dev
 matrix:
   include:
   - os: linux
