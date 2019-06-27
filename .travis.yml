@@ -4,14 +4,14 @@ os:
 filter_secrets: false
 sudo: false
 language: cpp
+env:
+  - GITHUB_DEPLOY_PRERELEASE=$(if echo $VERSION | grep -q "\-" ; then true; else false; fi)
 #branches:
 #  only:
 #    - master
 #    - dev
 matrix:
   include:
-  - env:
-    - GITHUB_DEPLOY_PRERELEASE=$(if echo $VERSION | grep -q "\-" ; then true; else false; fi)
   - os: linux
     dist: xenial
     addons:
