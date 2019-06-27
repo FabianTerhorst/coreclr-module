@@ -83,7 +83,7 @@ deploy:
     script: cd .. && cd .. && cd .. && cd .. && scs3-win.exe upload .\runtime\build\src\Release\csharp-module.dll coreclr-module/stable/x64_win32/csharp-module.dll
     on:
       repo: FabianTerhorst/coreclr-module
-      condition:  "$WINDOWS_STABLE" = true
+      condition: "$WINDOWS_STABLE" = true
       tags: true
   - provider: script
     skip_cleanup: true
