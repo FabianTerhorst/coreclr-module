@@ -2,9 +2,9 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
-        <PackageVersion>1.2.0-dev-preview</PackageVersion>
+        <PackageVersion>1.2.1-dev-preview</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>update dependencies</PackageReleaseNotes>
+        <PackageReleaseNotes>Add StreamingType</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
