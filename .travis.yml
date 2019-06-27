@@ -105,6 +105,7 @@ deploy:
         - master
   - provider: script
     skip_cleanup: true
+    prerelease: true
     script: cd .. && cd .. && cd .. && cd .. && scs3-win.exe upload .\runtime\build\src\Release\csharp-module.dll coreclr-module/beta/x64_win32/csharp-module.dll
     on:
       repo: FabianTerhorst/coreclr-module
@@ -115,6 +116,7 @@ deploy:
         - dev
   - provider: script
     skip_cleanup: true
+    prerelease: true
     script: cd .. && cd .. && cd .. && chmod +x ./scs3-linux && ./scs3-linux upload ./runtime/build/src/libcsharp-module.so coreclr-module/beta/x64_linux/libcsharp-module.so
     on:
       repo: FabianTerhorst/coreclr-module
