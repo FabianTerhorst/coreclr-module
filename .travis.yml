@@ -42,7 +42,7 @@ deploy:
     file: libcsharp-module.so
     on:
       repo: FabianTerhorst/coreclr-module
-      condition: "$TRAVIS_OS_NAME = linux"
+      condition: "$TRAVIS_OS_NAME = linux" && GITHUB_DEPLOY_PRERELEASE = true
       tags: true
       branches:
         only:
