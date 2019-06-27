@@ -6,10 +6,10 @@ sudo: false
 language: cpp
 env:
   - GITHUB_DEPLOY_PRERELEASE=$(if echo $VERSION | grep -q "\-" ; then echo true; else echo false; fi)
-  - WINDOWS_BETA=$(if ["$GITHUB_DEPLOY_PRERELEASE" = true] && ["$TRAVIS_OS_NAME" = "windows"] ; then echo true; else echo false; fi)
-  - LINUX_BETA=$(if ["$GITHUB_DEPLOY_PRERELEASE" = true] && ["$TRAVIS_OS_NAME" = "linux"] ; then echo true; else echo false; fi)
-  - WINDOWS_STABLE=$(if ["$GITHUB_DEPLOY_PRERELEASE" = false] && ["$TRAVIS_OS_NAME" = "windows"] ; then echo true; else echo false; fi)
-  - LINUX_STABLE=$(if ["$GITHUB_DEPLOY_PRERELEASE" = false] && ["$TRAVIS_OS_NAME" = "linux"] ; then echo true; else echo false; fi)
+  - WINDOWS_BETA=$(if [ "$GITHUB_DEPLOY_PRERELEASE" = true ] && [ "$TRAVIS_OS_NAME" = "windows" ] ; then echo true; else echo false; fi)
+  - LINUX_BETA=$(if [ "$GITHUB_DEPLOY_PRERELEASE" = true ] && [ "$TRAVIS_OS_NAME" = "linux" ] ; then echo true; else echo false; fi)
+  - WINDOWS_STABLE=$(if [ "$GITHUB_DEPLOY_PRERELEASE" = false ] && [ "$TRAVIS_OS_NAME" = "windows" ] ; then echo true; else echo false; fi)
+  - LINUX_STABLE=$(if [ "$GITHUB_DEPLOY_PRERELEASE" = false ] && [ "$TRAVIS_OS_NAME" = "linux" ] ; then echo true; else echo false; fi)
 #branches:
 #  only:
 #    - master
