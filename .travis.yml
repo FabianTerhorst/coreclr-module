@@ -10,6 +10,8 @@ language: cpp
 #    - dev
 matrix:
   include:
+  - env:
+    - GITHUB_DEPLOY_PRERELEASE=$(if echo $VERSION | grep -q "\-" ; then true; else false; fi)
   - os: linux
     dist: xenial
     addons:
@@ -32,10 +34,6 @@ script:
 - cmake --build . --config Release
 - cd src
 - if [ "$TRAVIS_OS_NAME" = "windows" ]; then cd Release ; fi
-- if echo $VERSION | grep -q "\-" ;
-    then export GITHUB_DEPLOY_PRERELEASE=true;
-    else export GITHUB_DEPLOY_PRERELEASE=false;
-  fi
 deploy:
   - provider: releases
     skip_cleanup: true
