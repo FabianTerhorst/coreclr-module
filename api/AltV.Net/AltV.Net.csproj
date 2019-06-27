@@ -13,17 +13,21 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.8.1</PackageVersion>
+        <PackageVersion>1.9.0-beta</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Add Alt.CreateColShapeCylinder(Position pos, float radius, float height);
-Add Alt.CreateColShapeSphere(Position pos, float radius);
-Add Alt.CreateColShapeCircle(Position pos, float radius);
-Add Alt.CreateColShapeCube(Position pos, Position pos2);
-Add Alt.CreateColShapeRectangle(Position pos, Position pos2);
-Add Alt.OnColShape += (shape, entity, state) { }
-Add Alt.GetAllColShapes();
-Add AltAsync.OnColShape += (shape, entity, state) { }
-Improve MValueConvertible</PackageReleaseNotes>
+        <PackageReleaseNotes>ushort MaxHealth { get; set; }
+ushort MaxArmor { get; set; }
+uint CurrentWeapon { get; set; }
+IEntity EntityAimingAt { get; }
+Position EntityAimOffset { get; }
+bool IsFlashlightActive { get; }
+string Ip { get; }
+void AddWeaponComponent(uint weapon, uint weaponComponent);
+void RemoveWeaponComponent(uint weapon, uint weaponComponent);
+void GetCurrentWeaponComponents(out uint[] weaponComponents);
+void SetWeaponTintIndex(uint weapon, byte tintIndex);
+byte GetCurrentWeaponTintIndex();
+Optimize performance of events</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
