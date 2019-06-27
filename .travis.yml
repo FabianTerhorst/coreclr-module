@@ -44,7 +44,7 @@ deploy:
     file: libcsharp-module.so
     on:
       repo: FabianTerhorst/coreclr-module
-      condition: "$TRAVIS_OS_NAME = linux" && GITHUB_DEPLOY_PRERELEASE = false
+      condition: "$TRAVIS_OS_NAME = linux" && "$GITHUB_DEPLOY_PRERELEASE" = false
       tags: true
       branches:
         only:
@@ -56,7 +56,7 @@ deploy:
     file: csharp-module.dll
     on:
       repo: FabianTerhorst/coreclr-module
-      condition: "$TRAVIS_OS_NAME = windows" && GITHUB_DEPLOY_PRERELEASE = false
+      condition: "$TRAVIS_OS_NAME = windows" && "$GITHUB_DEPLOY_PRERELEASE" = false
       tags: true
       branches:
         only:
@@ -69,7 +69,7 @@ deploy:
     file: libcsharp-module.so
     on:
       repo: FabianTerhorst/coreclr-module
-      condition: "$TRAVIS_OS_NAME = linux" && GITHUB_DEPLOY_PRERELEASE = true
+      condition: "$TRAVIS_OS_NAME = linux" && $"GITHUB_DEPLOY_PRERELEASE" = true
       tags: true
       branches:
         only:
@@ -82,7 +82,7 @@ deploy:
     file: csharp-module.dll
     on:
       repo: FabianTerhorst/coreclr-module
-      condition: "$TRAVIS_OS_NAME = windows" && GITHUB_DEPLOY_PRERELEASE = true
+      condition: "$TRAVIS_OS_NAME = windows" && "$GITHUB_DEPLOY_PRERELEASE" = true
       tags: true
       branches:
         only:
@@ -92,7 +92,7 @@ deploy:
     script: cd .. && cd .. && cd .. && cd .. && scs3-win.exe upload .\runtime\build\src\Release\csharp-module.dll coreclr-module/stable/x64_win32/csharp-module.dll
     on:
       repo: FabianTerhorst/coreclr-module
-      condition: "$TRAVIS_OS_NAME = windows" && GITHUB_DEPLOY_PRERELEASE = false
+      condition: "$TRAVIS_OS_NAME = windows" && "$GITHUB_DEPLOY_PRERELEASE" = false
       tags: true
       branches:
         only:
@@ -102,7 +102,7 @@ deploy:
     script: cd .. && cd .. && cd .. && chmod +x ./scs3-linux && ./scs3-linux upload ./runtime/build/src/libcsharp-module.so coreclr-module/stable/x64_linux/libcsharp-module.so
     on:
       repo: FabianTerhorst/coreclr-module
-      condition: "$TRAVIS_OS_NAME = linux" && GITHUB_DEPLOY_PRERELEASE = false
+      condition: "$TRAVIS_OS_NAME = linux" && "$GITHUB_DEPLOY_PRERELEASE" = false
       tags: true
       branches:
         only:
@@ -113,7 +113,7 @@ deploy:
     script: cd .. && cd .. && cd .. && cd .. && scs3-win.exe upload .\runtime\build\src\Release\csharp-module.dll coreclr-module/beta/x64_win32/csharp-module.dll
     on:
       repo: FabianTerhorst/coreclr-module
-      condition: "$TRAVIS_OS_NAME = windows" && GITHUB_DEPLOY_PRERELEASE = true
+      condition: "$TRAVIS_OS_NAME = windows" && "$GITHUB_DEPLOY_PRERELEASE" = true
       tags: true
       branches:
         only:
@@ -124,7 +124,7 @@ deploy:
     script: cd .. && cd .. && cd .. && chmod +x ./scs3-linux && ./scs3-linux upload ./runtime/build/src/libcsharp-module.so coreclr-module/beta/x64_linux/libcsharp-module.so
     on:
       repo: FabianTerhorst/coreclr-module
-      condition: "$TRAVIS_OS_NAME = linux" && GITHUB_DEPLOY_PRERELEASE = true
+      condition: "$TRAVIS_OS_NAME = linux" && "$GITHUB_DEPLOY_PRERELEASE" = true
       tags: true
       branches:
         only:
