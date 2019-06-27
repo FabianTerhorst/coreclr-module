@@ -6,6 +6,10 @@ sudo: false
 language: cpp
 env:
   - GITHUB_DEPLOY_PRERELEASE=$(if echo $VERSION | grep -q "\-" ; then echo true; else echo false; fi)
+  - WINDOWS_BETA=$(if [ "$GITHUB_DEPLOY_PRERELEASE" = true ] && [ "$TRAVIS_OS_NAME" = "windows" ] ; then echo true; else echo false; fi)
+  - LINUX_BETA=$(if [ "$GITHUB_DEPLOY_PRERELEASE" = true ] && [ "$TRAVIS_OS_NAME" = "linux" ] ; then echo true; else echo false; fi)
+  - WINDOWS_STABLE=$(if [ "$GITHUB_DEPLOY_PRERELEASE" = false ] && [ "$TRAVIS_OS_NAME" = "windows" ] ; then echo true; else echo false; fi)
+  - LINUX_STABLE=$(if [ "$GITHUB_DEPLOY_PRERELEASE" = false ] && [ "$TRAVIS_OS_NAME" = "linux" ] ; then echo true; else echo false; fi)
 #branches:
 #  only:
 #    - master
@@ -43,7 +47,7 @@ deploy:
     file: libcsharp-module.so
     on:
       repo: FabianTerhorst/coreclr-module
-      condition: os = linux AND env(GITHUB_DEPLOY_PRERELEASE) IS false
+      condition: "$LINUX_STABLE = true"
       tags: true
   - provider: releases
     skip_cleanup: true
@@ -52,7 +56,7 @@ deploy:
     file: csharp-module.dll
     on:
       repo: FabianTerhorst/coreclr-module
-      condition: os = windows AND env(GITHUB_DEPLOY_PRERELEASE) IS false
+      condition: "$WINDOWS_STABLE = true"
       tags: true
   - provider: releases
     skip_cleanup: true
@@ -62,7 +66,7 @@ deploy:
     file: libcsharp-module.so
     on:
       repo: FabianTerhorst/coreclr-module
-      condition: os = linux AND env(GITHUB_DEPLOY_PRERELEASE) IS true
+      condition: "$LINUX_BETA = true"
       tags: true
   - provider: releases
     skip_cleanup: true
@@ -72,21 +76,21 @@ deploy:
     file: csharp-module.dll
     on:
       repo: FabianTerhorst/coreclr-module
-      condition: os = windows AND env(GITHUB_DEPLOY_PRERELEASE) IS true
+      condition: "$WINDOWS_BETA = true"
       tags: true
   - provider: script
     skip_cleanup: true
     script: cd .. && cd .. && cd .. && cd .. && scs3-win.exe upload .\runtime\build\src\Release\csharp-module.dll coreclr-module/stable/x64_win32/csharp-module.dll
     on:
       repo: FabianTerhorst/coreclr-module
-      condition: os = windows AND env(GITHUB_DEPLOY_PRERELEASE) IS false
+      condition: "$WINDOWS_STABLE = true"
       tags: true
   - provider: script
     skip_cleanup: true
     script: cd .. && cd .. && cd .. && chmod +x ./scs3-linux && ./scs3-linux upload ./runtime/build/src/libcsharp-module.so coreclr-module/stable/x64_linux/libcsharp-module.so
     on:
       repo: FabianTerhorst/coreclr-module
-      condition: os = linux AND env(GITHUB_DEPLOY_PRERELEASE) IS false
+      condition: "$LINUX_STABLE = true"
       tags: true
   - provider: script
     skip_cleanup: true
@@ -94,7 +98,7 @@ deploy:
     script: cd .. && cd .. && cd .. && cd .. && scs3-win.exe upload .\runtime\build\src\Release\csharp-module.dll coreclr-module/beta/x64_win32/csharp-module.dll
     on:
       repo: FabianTerhorst/coreclr-module
-      condition: os = windows AND env(GITHUB_DEPLOY_PRERELEASE) IS true
+      condition: "$WINDOWS_BETA = true"
       tags: true
   - provider: script
     skip_cleanup: true
@@ -102,5 +106,5 @@ deploy:
     script: cd .. && cd .. && cd .. && chmod +x ./scs3-linux && ./scs3-linux upload ./runtime/build/src/libcsharp-module.so coreclr-module/beta/x64_linux/libcsharp-module.so
     on:
       repo: FabianTerhorst/coreclr-module
-      condition: os = linux AND env(GITHUB_DEPLOY_PRERELEASE) IS true
+      condition: "$LINUX_BETA = true"
       tags: true
