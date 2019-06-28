@@ -1,10 +1,10 @@
 # corecrl-module
 CoreClr (.NET Core Common Language Runtime) module
 
-### Download and select csharp module
-
 ## Beta
 Only use the beta versions when you use the beta server from https://altv.mp/#/downloads
+
+### Download
 
 Download from https://altv.mp/#/downloads, you can select stable or beta and windows or linux.
 
