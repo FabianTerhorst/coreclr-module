@@ -207,6 +207,19 @@ namespace AltV.Net.Example
 
             Alt.Export("GetBla", () => { Alt.Log("GetBla called"); });
 
+            Action action;
+
+            Alt.Import("example", "GetBla", out action);
+
+            action();
+
+            Alt.Export("functionExport", delegate(string name) { Alt.Log("called with:" + name); });
+
+            Action<string> action2;
+
+            Alt.Import("example", "functionExport", out action2);
+
+            action2("123");
             /*if (Alt.Import("Bla", "GetBla", out Action value))
             {
                 value();
