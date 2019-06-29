@@ -336,7 +336,7 @@ namespace AltV.Net.Enums
         Comet3 = 2272483501,
         PBus = 2287941233,
         Feltzer2 = 2299640309,
-        Terabyte = 2306538597,
+        Terbyte = 2306538597,
         Boxville = 2307837162,
         Havok = 2310691317,
         Police4 = 2321795001,
