@@ -57,18 +57,20 @@ namespace AltV.Net.NetworkingEntity
             StreamingType streamingType = StreamingType.Default)
         {
             var entity = new Entity.Entity {Position = position, Dimension = dimension, Range = range};
-
-            var networkingEntity = Module.EntityPool.Create(id, Module.Streamer, entity, streamingType);
-            foreach (var (key, value) in data)
+            if (streamingType != StreamingType.DataStreaming)
             {
-                if (streamingType == StreamingType.DataStreaming)
-                {
-                    networkingEntity.SetData(key, value);
-                }
-                else
+                foreach (var (key, value) in data)
                 {
                     entity.Data[key] = MValueUtils.ToMValue(value);
                 }
+            }
+
+            var networkingEntity = Module.EntityPool.Create(id, Module.Streamer, entity, streamingType);
+
+            if (streamingType != StreamingType.DataStreaming) return networkingEntity;
+            foreach (var (key, value) in data)
+            {
+                networkingEntity.SetData(key, value);
             }
 
             return networkingEntity;
