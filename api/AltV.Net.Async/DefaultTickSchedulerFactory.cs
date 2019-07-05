@@ -6,7 +6,7 @@ namespace AltV.Net.Async
     {
         public TickScheduler Create(Thread mainThread)
         {
-            return new ChannelTickScheduler(mainThread);
+            return new QueueTickScheduler(mainThread);
         }
     }
 }
