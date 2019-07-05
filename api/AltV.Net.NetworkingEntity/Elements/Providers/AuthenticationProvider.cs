@@ -87,7 +87,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
         public Task<bool> Verify(INetworkingClientPool networkingClientPool, ManagedWebSocket webSocket, string token,
             out INetworkingClient client)
         {
-            if (networkingClientPool.TryGet(token, out client)) return Task.FromResult(false);
+            if (!networkingClientPool.TryGet(token, out client)) return Task.FromResult(false);
             client.WebSocket = webSocket; //TODO: check if already has websocket ect.
             webSocket.Extra[ClientExtra] = client;
             return Task.FromResult(true);
