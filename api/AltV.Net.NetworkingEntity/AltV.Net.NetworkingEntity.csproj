@@ -28,6 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="System.Threading.Channels" Version="4.6.0-preview6.19303.8" />
       <PackageReference Include="VIEApps.Components.WebSockets" Version="10.2.1906.1" />
       <PackageReference Include="Google.Protobuf" Version="3.8.0" />
       <PackageReference Include="Grpc" Version="1.21.0" />

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.WebSockets;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
 using AltV.Net.NetworkingEntity.Elements.Entities;
@@ -11,76 +12,105 @@ using WebSocket = net.vieapps.Components.WebSockets.WebSocket;
 
 namespace AltV.Net.NetworkingEntity.Elements.Providers
 {
+    //TODO: synchronize connect, disconnect via channel as coroutine e.g. for concurrent free token access
+    //TODO: and preventing problems when player connects and disconnects soon after and tasks executes in wrong order
     /// <summary>
     /// Default authentication provider to handle authentication based on player connect, disconnect and sends the player the url to connect the websocket to
     /// </summary>
     public class AuthenticationProvider : IAuthenticationProvider
     {
+        private struct PlayerEvent
+        {
+            public IPlayer Player { get; }
+            public bool Connected { get; }
+
+            public PlayerEvent(IPlayer player, bool connected)
+            {
+                Player = player;
+                Connected = connected;
+            }
+        }
+
         private const string ClientExtra = "CLIENT";
 
         private readonly Dictionary<string, IPlayer> playerTokens = new Dictionary<string, IPlayer>();
 
         private readonly Dictionary<IPlayer, string> playerTokenAccess = new Dictionary<IPlayer, string>();
 
+        private readonly Channel<PlayerEvent> playerEvents = Channel.CreateUnbounded<PlayerEvent>(
+            new UnboundedChannelOptions
+            {
+                SingleReader = true
+            });
+
+        private readonly ChannelReader<PlayerEvent> playerEventsReader;
+
+        private readonly ChannelWriter<PlayerEvent> playerEventsWriter;
+
         public AuthenticationProvider(string ip, int port, WebSocket webSocket) : this(
             "ws://" + (ip ?? GetIpAddress()) + $":{port}/",
             webSocket)
         {
+            playerEventsReader = playerEvents.Reader;
+            playerEventsWriter = playerEvents.Writer;
         }
 
         public AuthenticationProvider(string url, WebSocket webSocket)
         {
-            Alt.OnPlayerConnect += (player, reason) =>
+            Task.Run(async () =>
             {
-                Task.Run(() =>
+                while (await playerEventsReader.WaitToReadAsync())
                 {
-                    var client = AltNetworking.CreateClient();
-                    lock (client)
+                    while (playerEventsReader.TryRead(out var playerEvent))
                     {
-                        if (!client.Exists) return;
-                        lock (playerTokens)
+                        var player = playerEvent.Player;
+                        if (playerEvent.Connected)
                         {
-                            playerTokens[client.Token] = player;
-                            playerTokenAccess[player] = client.Token;
-
-                            lock (player)
+                            var client = AltNetworking.CreateClient();
+                            lock (client)
                             {
-                                if (player.Exists)
+                                if (!client.Exists) continue;
+                                playerTokens[client.Token] = player;
+                                playerTokenAccess[player] = client.Token;
+
+                                lock (player)
                                 {
-                                    player.Emit("streamingToken", url, client.Token);
+                                    if (player.Exists)
+                                    {
+                                        player.Emit("streamingToken", url, client.Token);
+                                    }
                                 }
                             }
                         }
+                        else
+                        {
+                            if (playerTokenAccess.Remove(player, out var token))
+                            {
+                                playerTokens.Remove(token);
+                            }
+                            else
+                            {
+                                continue;
+                            }
+
+                            if (!AltNetworking.Module.ClientPool.Remove(token, out var client)) continue;
+                            var clientWebSocket = client.WebSocket;
+                            if (clientWebSocket != null)
+                            {
+                                await webSocket.CloseWebSocketAsync(clientWebSocket, WebSocketCloseStatus.NormalClosure,
+                                    "disconnected");
+                            }
+                        }
                     }
-                });
+                }
+            });
+            Alt.OnPlayerConnect += (player, reason) =>
+            {
+                playerEventsWriter.WriteAsync(new PlayerEvent(player, true));
             };
             Alt.OnPlayerDisconnect += (player, reason) =>
             {
-                Task.Run(async () =>
-                {
-                    string token;
-                    lock (playerTokens)
-                    {
-                        if (playerTokenAccess.Remove(player, out token))
-                        {
-                            playerTokens.Remove(token);
-                        }
-                        else
-                        {
-                            return;
-                        }
-                    }
-
-                    if (AltNetworking.Module.ClientPool.Remove(token, out var client))
-                    {
-                        var clientWebSocket = client.WebSocket;
-                        if (clientWebSocket != null)
-                        {
-                            await webSocket.CloseWebSocketAsync(clientWebSocket, WebSocketCloseStatus.NormalClosure,
-                                "disconnected");
-                        }
-                    }
-                });
+                playerEventsWriter.WriteAsync(new PlayerEvent(player, false));
             };
         }
 
