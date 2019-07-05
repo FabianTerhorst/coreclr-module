@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Pools;
 using AltV.Net.Native;
 
 namespace AltV.Net.Data
@@ -41,10 +42,21 @@ namespace AltV.Net.Data
         public ushort MaxHealth { get; set; }
         public ushort MaxArmor { get; set; }
         public uint CurrentWeapon { get; set; }
-        public IEntity EntityAimingAt { get; }
+        public IntPtr entityAimingAt;
+        public byte entityAimingAtEntityType;
         public Position EntityAimOffset { get; }
         public bool IsFlashlightActive { get; }
         public string Ip { get; }
+
+        public IEntity EntityAimingAt
+        {
+            get
+            {
+                Alt.Module.BaseEntityPool.GetOrCreate(entityAimingAt, (BaseObjectType) entityAimingAtEntityType,
+                    out var entity);
+                return entity;
+            }
+        }
 
         public void SetMetaData(string key, object value)
         {
