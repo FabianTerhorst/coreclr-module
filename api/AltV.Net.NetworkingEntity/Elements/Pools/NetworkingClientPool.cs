@@ -103,7 +103,6 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
             {
                 foreach (var (_, value) in entities)
                 {
-                    Console.WriteLine(value.Exists + " " + value.WebSocket.ID);
                     if (value.Exists)
                     {
                         value.WebSocket?.SendAsync(bytes, true);
