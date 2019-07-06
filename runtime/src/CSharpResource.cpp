@@ -300,8 +300,14 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
             auto disconnectPlayer = disconnectEvent->GetTarget();
             auto reason = disconnectEvent->GetReason();
             if (reason != nullptr) {
-                OnPlayerDisconnectDelegate(disconnectPlayer,
-                                           reason.CStr());
+                auto reasonCStr = reason.CStr();
+                if (reasonCStr != nullptr) {
+                    OnPlayerDisconnectDelegate(disconnectPlayer,
+                                               reasonCStr);
+                } else {
+                    OnPlayerDisconnectDelegate(disconnectPlayer,
+                                               "");
+                }
             } else {
                 OnPlayerDisconnectDelegate(disconnectPlayer,
                                            "");
