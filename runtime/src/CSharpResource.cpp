@@ -299,7 +299,7 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
             auto disconnectEvent = reinterpret_cast<const alt::CPlayerDisconnectEvent*>(ev);
             auto disconnectPlayer = disconnectEvent->GetTarget();
             auto reason = disconnectEvent->GetReason();
-            if (reason != nullptr) {
+            if (reason != nullptr && reason.GetSize() > 0) {
                 auto reasonCStr = reason.CStr();
                 if (reasonCStr != nullptr) {
                     OnPlayerDisconnectDelegate(disconnectPlayer,
