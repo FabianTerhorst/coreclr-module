@@ -298,7 +298,7 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
         case alt::CEvent::Type::PLAYER_DISCONNECT: {
             auto disconnectEvent = reinterpret_cast<const alt::CPlayerDisconnectEvent*>(ev);
             auto disconnectPlayer = disconnectEvent->GetTarget();
-            auto reason = disconnectEvent->GetReason();
+            /*auto reason = disconnectEvent->GetReason();
             if (reason != nullptr && reason.GetSize() > 0) {
                 auto reasonCStr = reason.CStr();
                 if (reasonCStr != nullptr) {
@@ -307,11 +307,11 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
                 } else {
                     OnPlayerDisconnectDelegate(disconnectPlayer,
                                                "");
-                }
-            } else {
+                }*/
+            //} else {
                 OnPlayerDisconnectDelegate(disconnectPlayer,
                                            "");
-            }
+            //}
             break;
         }
         case alt::CEvent::Type::REMOVE_ENTITY_EVENT: {
