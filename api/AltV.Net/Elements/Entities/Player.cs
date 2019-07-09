@@ -120,12 +120,50 @@ namespace AltV.Net.Elements.Entities
                 AltNative.Player.Player_GetName(NativePointer, ref ptr);
                 return Marshal.PtrToStringUTF8(ptr);
             }
-            set
+            /*set
             {
                 CheckIfEntityExists();
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
                 AltNative.Player.Player_SetName(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
+            }*/
+        }
+
+        public ulong SocialClubId
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Player.Player_GetSocialID(NativePointer);
+            }
+        }
+
+        public ulong HardwareIdHash
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Player.Player_GetHwidHash(NativePointer);
+            }
+        }
+
+        public ulong HardwareIdExHash
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Player.Player_GetHwidExHash(NativePointer);
+            }
+        }
+
+        public string AuthToken
+        {
+            get
+            {
+                CheckIfEntityExists();
+                var ptr = IntPtr.Zero;
+                AltNative.Player.Player_GetName(NativePointer, ref ptr);
+                return Marshal.PtrToStringUTF8(ptr);
             }
         }
 

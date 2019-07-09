@@ -20,8 +20,8 @@ namespace AltV.Net.Networking.Example
             var data2 = new Dictionary<string, object>();
             data["bla"] = "123";
             data["bla2"] = 1235;
-            var entityToUpdate = AltNetworking.CreateEntity(new Position {X = 0, Y = 0, Z = 0}, 1, 50, data);
-            AltNetworking.CreateEntity(new Position {X = 1, Y = 1, Z = 1}, 1, 50, data2);
+            var entityToUpdate = AltNetworking.CreateEntity(new Position {X = 0, Y = 0, Z = 0}, 1, 50, data, StreamingType.DataStreaming);
+            AltNetworking.CreateEntity(new Position {X = 1, Y = 1, Z = 1}, 1, 50, data2, StreamingType.DataStreaming);
             AltNetworking.OnEntityStreamIn = (entity, client) =>
             {
                 Console.WriteLine("streamed in " + entity.Id + " in client " + client.Token);

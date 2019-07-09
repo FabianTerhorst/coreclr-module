@@ -71,6 +71,18 @@ namespace AltV.Net.Native
             internal static extern void Player_SetName(IntPtr playerPointer, IntPtr name);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern ulong Player_GetSocialID(IntPtr playerPointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern ulong Player_GetHwidHash(IntPtr playerPointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern ulong Player_GetHwidExHash(IntPtr playerPointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_GetAuthToken(IntPtr playerPointer, IntPtr name);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern ushort Player_GetHealth(IntPtr playerPointer);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]

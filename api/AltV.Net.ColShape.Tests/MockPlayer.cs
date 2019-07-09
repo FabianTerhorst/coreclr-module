@@ -128,6 +128,11 @@ namespace AltV.Net.ColShape.Tests
         public IVehicle Vehicle { get; }
         public byte Seat { get; }
         public uint Ping { get; }
+        public ulong SocialClubId { get; }
+        public ulong HardwareIdHash { get; }
+        public ulong HardwareIdExHash { get; }
+        public string AuthToken { get; }
+
         public void Spawn(Position position, uint delayMs = 0)
         {
             throw new NotImplementedException();

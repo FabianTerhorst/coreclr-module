@@ -79,7 +79,23 @@ void Player_GetName(alt::IPlayer* player, const char*&name) {
 }
 
 void Player_SetName(alt::IPlayer* player, const char* name) {
-    player->SetName(name);
+    //player->SetName(name);
+}
+
+uint64_t Player_GetSocialID(alt::IPlayer* player) {
+    return player->GetSocialID();
+}
+
+uint64_t Player_GetHwidHash(alt::IPlayer* player) {
+    return player->GetHwidHash();
+}
+
+uint64_t Player_GetHwidExHash(alt::IPlayer* player) {
+    return player->GetHwidExHash();
+}
+
+void Player_GetAuthToken(alt::IPlayer* player, const char*&name) {
+    name = player->GetAuthToken().CStr();
 }
 
 uint16_t Player_GetHealth(alt::IPlayer* player) {

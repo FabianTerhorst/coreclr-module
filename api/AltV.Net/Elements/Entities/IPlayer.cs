@@ -9,7 +9,15 @@ namespace AltV.Net.Elements.Entities
 
         bool IsConnected { get; }
 
-        string Name { get; set; }
+        string Name { get; }
+        
+        ulong SocialClubId { get; }
+        
+        ulong HardwareIdHash { get; }
+        
+        ulong HardwareIdExHash { get; }
+        
+        string AuthToken { get; }
 
         ushort Health { get; set; }
         

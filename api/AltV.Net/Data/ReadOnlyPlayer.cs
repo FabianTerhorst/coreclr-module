@@ -39,14 +39,29 @@ namespace AltV.Net.Data
         public bool Exists => false;
         public BaseObjectType Type => BaseObjectType.Player;
 
-        public ushort MaxHealth { get; set; }
-        public ushort MaxArmor { get; set; }
-        public uint CurrentWeapon { get; set; }
-        public IntPtr entityAimingAt;
-        public byte entityAimingAtEntityType;
-        public Position EntityAimOffset { get; }
-        public bool IsFlashlightActive { get; }
-        public string Ip { get; }
+        //TODO: implement in struct
+        public ushort MaxHealth
+        {
+            get => 0;
+            set { }
+        }
+
+        public ushort MaxArmor
+        {
+            get => 0;
+            set { }
+        }
+
+        public uint CurrentWeapon
+        {
+            get => 0;
+            set { }
+        }
+        public IntPtr entityAimingAt => IntPtr.Zero;
+        public byte entityAimingAtEntityType => 0;
+        public Position EntityAimOffset => new Position();
+        public bool IsFlashlightActive => false;
+        public string Ip => "0.0.0.0";
 
         public IEntity EntityAimingAt
         {
@@ -57,6 +72,11 @@ namespace AltV.Net.Data
                 return entity;
             }
         }
+
+        public ulong SocialClubId { get; }
+        public ulong HardwareIdHash { get; }
+        public ulong HardwareIdExHash { get; }
+        public string AuthToken { get; }
 
         public void SetMetaData(string key, object value)
         {

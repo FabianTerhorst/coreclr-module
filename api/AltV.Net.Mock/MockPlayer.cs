@@ -36,6 +36,11 @@ namespace AltV.Net.Mock
         public Position EntityAimOffset { get; }
         public bool IsFlashlightActive { get; }
         public string Ip { get; }
+        public ulong SocialClubId { get; }
+        public ulong HardwareIdHash { get; }
+        public ulong HardwareIdExHash { get; }
+        public string AuthToken { get; }
+
         public void AddWeaponComponent(uint weapon, uint weaponComponent)
         {
             throw new NotImplementedException();

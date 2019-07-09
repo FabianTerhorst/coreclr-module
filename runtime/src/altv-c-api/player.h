@@ -65,6 +65,11 @@ EXPORT void Player_Despawn(alt::IPlayer* player);
 EXPORT void Player_GetName(alt::IPlayer* player, const char*&name);
 EXPORT void Player_SetName(alt::IPlayer* player, const char* name);
 
+EXPORT uint64_t Player_GetSocialID(alt::IPlayer* player);
+EXPORT uint64_t Player_GetHwidHash(alt::IPlayer* player);
+EXPORT uint64_t Player_GetHwidExHash(alt::IPlayer* player);
+EXPORT void Player_GetAuthToken(alt::IPlayer* player, const char*& name);
+
 EXPORT uint16_t Player_GetHealth(alt::IPlayer* player);
 EXPORT void Player_SetHealth(alt::IPlayer* player, uint16_t health);
 
