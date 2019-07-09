@@ -13,21 +13,15 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.9.1-beta</PackageVersion>
+        <PackageVersion>1.10.0-beta</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>ushort MaxHealth { get; set; }
-ushort MaxArmor { get; set; }
-uint CurrentWeapon { get; set; }
-IEntity EntityAimingAt { get; }
-Position EntityAimOffset { get; }
-bool IsFlashlightActive { get; }
-string Ip { get; }
-void AddWeaponComponent(uint weapon, uint weaponComponent);
-void RemoveWeaponComponent(uint weapon, uint weaponComponent);
-void GetCurrentWeaponComponents(out uint[] weaponComponents);
-void SetWeaponTintIndex(uint weapon, byte tintIndex);
-byte GetCurrentWeaponTintIndex();
-Optimize performance of events</PackageReleaseNotes>
+        <PackageReleaseNotes>Added to player:
+
+ulong SocialClubId { get; }
+ulong HardwareIdHash { get; }
+ulong HardwareIdExHash { get; }  
+string AuthToken { get; }
+Removed name setter.</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
