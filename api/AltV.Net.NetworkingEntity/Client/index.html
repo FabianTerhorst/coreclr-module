@@ -1,19 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script>
-        window.callbacks = new Map();
-        window.alt = {
-            emit: (eventname, ...args) => {
-                const func = window.callbacks.get(eventname);
-                func( ...args);
-            },
-            on: (eventname, callback) => {
-                window.callbacks.set(eventname, callback);
-            }
-        }
-    </script>
-    <script type="module" src="build/networking-entity.js"></script>
+    <script type="module" src="networking-entity.js"></script>
     <meta charset="UTF-8">
     <title>networking-entity</title>
 </head>

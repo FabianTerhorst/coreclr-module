@@ -4,6 +4,6 @@ namespace AltV.Net.NetworkingEntity.Elements.Factories
 {
     public interface INetworkingEntityFactory
     {
-        INetworkingEntity Create(IEntityStreamer entityStreamer, Entity.Entity streamedEntity);
+        INetworkingEntity Create(IEntityStreamer entityStreamer, Entity.Entity streamedEntity, StreamingType streamingType);
     }
 }

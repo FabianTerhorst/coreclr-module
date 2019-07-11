@@ -3,7 +3,7 @@ import "./deps/reconnecting-websocket.min.js";
 
 class NetworkingEntity {
     constructor() {
-        alt.on("networkingEntitySetup", (url, token) => {
+        alt.on("entitySetup", (url, token) => {
             new WebSocket(url, token);
         });
     }

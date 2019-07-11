@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using AltV.Net.Native;
@@ -11,37 +12,67 @@ namespace AltV.Net.Elements.Args
             MValueArrayBuffer MValueArrayBuffer { get; }
 
             MValue GetNext();
+
+            void Dispose();
         }
 
         private struct MValueArrayReader : IReadableMValue
         {
+            public MValueArray MValueArray { get; }
+            
             public MValueArrayBuffer MValueArrayBuffer { get; }
 
-            public MValueArrayReader(MValueArrayBuffer mValueArrayBuffer)
+            public MValueArrayReader(MValueArray mValueArray)
             {
-                MValueArrayBuffer = mValueArrayBuffer;
+                MValueArray = mValueArray;
+                MValueArrayBuffer = mValueArray.Reader();
             }
 
             public MValue GetNext()
             {
                 return MValueArrayBuffer.GetNext();
+            }
+
+            public void Dispose()
+            {
+                MValueArray.Dispose();
             }
         }
 
         private struct MValueObjectReader : IReadableMValue
         {
-            public StringViewArray StringViewArray;
+            public StringArray StringArray { get; }
+            public MValueArray MValueArray { get; }
             public MValueArrayBuffer MValueArrayBuffer { get; }
+            public IntPtr StringArrayOffset;
 
-            public MValueObjectReader(StringViewArray stringViewArray, MValueArrayBuffer mValueArrayBuffer)
+            public MValueObjectReader(StringArray stringArray, MValueArray mValueArray)
             {
-                StringViewArray = stringViewArray;
-                MValueArrayBuffer = mValueArrayBuffer;
+                StringArray = stringArray;
+                MValueArray = mValueArray;
+                MValueArrayBuffer = mValueArray.Reader();
+                StringArrayOffset = StringArray.data;
             }
 
             public MValue GetNext()
             {
                 return MValueArrayBuffer.GetNext();
+            }
+
+            public string GetNextName()
+            {
+                return StringArray.GetNextWithOffset(ref StringArrayOffset);
+            }
+            
+            public void SkipNextName()
+            {
+                StringArray.SkipValueWithOffset(ref StringArrayOffset);
+            }
+
+            public void Dispose()
+            {
+                StringArray.Dispose();
+                MValueArray.Dispose();
             }
         }
 
@@ -60,6 +91,10 @@ namespace AltV.Net.Elements.Args
             public MValue GetNext()
             {
                 return mValue;
+            }
+
+            public void Dispose()
+            {
             }
         }
 
@@ -86,10 +121,10 @@ namespace AltV.Net.Elements.Args
                 return;
             }
 
-            var stringViewArray = StringViewArray.Nil;
+            var stringArray = StringArray.Nil;
             var valueArrayRef = MValueArray.Nil;
-            AltNative.MValueGet.MValue_GetDict(ref mValue, ref stringViewArray, ref valueArrayRef);
-            readableMValue = new MValueObjectReader(stringViewArray, valueArrayRef.Reader());
+            AltNative.MValueGet.MValue_GetDict(ref mValue, ref stringArray, ref valueArrayRef);
+            readableMValue = new MValueObjectReader(stringArray, valueArrayRef);
             currents.Push(readableMValue);
             insideObject = true;
         }
@@ -97,7 +132,7 @@ namespace AltV.Net.Elements.Args
         public void EndObject()
         {
             CheckObject();
-            currents.Pop(); // Pop mValueObject we already have
+            currents.Pop().Dispose(); // Pop mValueObject we already have
             insideObject = currents.TryPop(out readableMValue);
         }
 
@@ -113,7 +148,7 @@ namespace AltV.Net.Elements.Args
 
             var valueArrayRef = MValueArray.Nil;
             AltNative.MValueGet.MValue_GetList(ref mValue, ref valueArrayRef);
-            readableMValue = new MValueArrayReader(valueArrayRef.Reader());
+            readableMValue = new MValueArrayReader(valueArrayRef);
             currents.Push(readableMValue);
             insideObject = true;
         }
@@ -121,7 +156,7 @@ namespace AltV.Net.Elements.Args
         public void EndArray()
         {
             CheckObject();
-            currents.Pop(); // Pop mValueObject we already have
+            currents.Pop().Dispose(); // Pop mValueObject we already have
             insideObject = currents.TryPop(out readableMValue);
         }
 
@@ -136,7 +171,7 @@ namespace AltV.Net.Elements.Args
         private void CheckName()
         {
             // Check if we have more values then names
-            if (readableMValue.MValueArrayBuffer.size > ((MValueObjectReader) readableMValue).StringViewArray.size)
+            if (readableMValue.MValueArrayBuffer.size > ((MValueObjectReader) readableMValue).StringArray.size)
             {
                 throw new InvalidDataException("Expect a NextValue call, but tried to read a name instead");
             }
@@ -146,7 +181,7 @@ namespace AltV.Net.Elements.Args
         {
             if (!(readableMValue is MValueObjectReader mValueObjectReader)) return;
             // Check if we have more names then values
-            if (readableMValue.MValueArrayBuffer.size < mValueObjectReader.StringViewArray.size)
+            if (readableMValue.MValueArrayBuffer.size < mValueObjectReader.StringArray.size)
             {
                 throw new InvalidDataException("Expect a NextName() call, but tried to read a value instead");
             }
@@ -158,7 +193,7 @@ namespace AltV.Net.Elements.Args
             switch (readableMValue)
             {
                 case MValueObjectReader mValueObjectReader:
-                    return mValueObjectReader.StringViewArray.size > 0 &&
+                    return mValueObjectReader.StringArray.size > 0 &&
                            mValueObjectReader.MValueArrayBuffer.HasNext();
                 default:
                     return readableMValue.MValueArrayBuffer.HasNext();
@@ -175,7 +210,7 @@ namespace AltV.Net.Elements.Args
 
             CheckName();
 
-            return ((MValueObjectReader) readableMValue).StringViewArray.GetNext();
+            return ((MValueObjectReader) readableMValue).GetNextName();
         }
 
         public void SkipName()
@@ -188,7 +223,7 @@ namespace AltV.Net.Elements.Args
 
             CheckName();
 
-            ((MValueObjectReader) readableMValue).StringViewArray.SkipValue();
+            ((MValueObjectReader) readableMValue).SkipNextName();
         }
 
         public bool NextBool()

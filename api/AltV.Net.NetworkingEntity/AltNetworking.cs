@@ -47,21 +47,33 @@ namespace AltV.Net.NetworkingEntity
         }
 
         public static INetworkingEntity CreateEntity(Position position, int dimension, float range,
-            IDictionary<string, object> data)
+            IDictionary<string, object> data, StreamingType streamingType = StreamingType.Default)
         {
-            return CreateEntity(Module.IdProvider.GetNext(), position, dimension, range, data);
+            return CreateEntity(Module.IdProvider.GetNext(), position, dimension, range, data, streamingType);
         }
 
         public static INetworkingEntity CreateEntity(ulong id, Position position, int dimension, float range,
-            IDictionary<string, object> data)
+            IDictionary<string, object> data,
+            StreamingType streamingType = StreamingType.Default)
         {
             var entity = new Entity.Entity {Position = position, Dimension = dimension, Range = range};
-            foreach (var (key, value) in data)
+            if (streamingType != StreamingType.DataStreaming)
             {
-                entity.Data[key] = MValueUtils.ToMValue(value);
+                foreach (var (key, value) in data)
+                {
+                    entity.Data[key] = MValueUtils.ToMValue(value);
+                }
             }
 
-            return Module.EntityPool.Create(id, Module.Streamer, entity);
+            var networkingEntity = Module.EntityPool.Create(id, Module.Streamer, entity, streamingType);
+
+            if (streamingType != StreamingType.DataStreaming) return networkingEntity;
+            foreach (var (key, value) in data)
+            {
+                networkingEntity.SetData(key, value);
+            }
+
+            return networkingEntity;
         }
 
         public static void RemoveEntity(INetworkingEntity entity)

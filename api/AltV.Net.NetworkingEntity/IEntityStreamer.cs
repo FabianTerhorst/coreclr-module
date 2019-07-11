@@ -5,9 +5,9 @@ namespace AltV.Net.NetworkingEntity
 {
     public interface IEntityStreamer
     {
-        void CreateEntity(Entity.Entity entity);
+        void CreateEntity(INetworkingEntity networkingEntity);
 
-        void RemoveEntity(Entity.Entity entity);
+        void RemoveEntity(INetworkingEntity networkingEntity);
 
         void UpdateEntityData(INetworkingEntity entity, string key, MValue value);
 

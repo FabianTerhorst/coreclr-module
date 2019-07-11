@@ -301,7 +301,8 @@ namespace AltV.Net.FunctionParser
                 case MValue.Type.STRING:
                     return ParseString(ref mValue, type, baseBaseObjectPool, typeInfo);
                 case MValue.Type.LIST:
-                    if (MValueAdapters.FromMValue(ref mValue, type, out obj))
+                    if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
+                        MValueAdapters.FromMValue(ref mValue, type, out obj))
                     {
                         return obj;
                     }
@@ -310,7 +311,8 @@ namespace AltV.Net.FunctionParser
                 case MValue.Type.ENTITY:
                     return ParseEntity(ref mValue, type, baseBaseObjectPool, typeInfo);
                 case MValue.Type.DICT:
-                    if (MValueAdapters.FromMValue(ref mValue, type, out obj))
+                    if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
+                        MValueAdapters.FromMValue(ref mValue, type, out obj))
                     {
                         return obj;
                     }
@@ -342,6 +344,7 @@ namespace AltV.Net.FunctionParser
                         obj = GetDefault(type, typeInfo);
                         return false;
                     }
+
                 case MValue.Type.INT:
                     if (type == FunctionTypes.Int)
                     {
@@ -358,6 +361,7 @@ namespace AltV.Net.FunctionParser
                         obj = GetDefault(type, typeInfo);
                         return false;
                     }
+
                 case MValue.Type.UINT:
                     if (type == FunctionTypes.UInt)
                     {
@@ -374,6 +378,7 @@ namespace AltV.Net.FunctionParser
                         obj = mValue.GetDouble();
                         return false;
                     }
+
                 case MValue.Type.DOUBLE:
                     if (type == FunctionTypes.Float)
                     {
@@ -390,6 +395,7 @@ namespace AltV.Net.FunctionParser
                         obj = GetDefault(type, typeInfo);
                         return false;
                     }
+
                 case MValue.Type.STRING:
                     if (type == FunctionTypes.Obj || type == FunctionTypes.String)
                     {
@@ -402,7 +408,8 @@ namespace AltV.Net.FunctionParser
                 case MValue.Type.LIST:
                     if (type == FunctionTypes.Obj || (typeInfo?.IsList ?? type.BaseType == FunctionTypes.Array))
                     {
-                        if (MValueAdapters.FromMValue(ref mValue, type, out obj))
+                        if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
+                            MValueAdapters.FromMValue(ref mValue, type, out obj))
                         {
                             return true;
                         }
@@ -425,10 +432,12 @@ namespace AltV.Net.FunctionParser
                         obj = GetDefault(type, typeInfo);
                         return false;
                     }
+
                 case MValue.Type.DICT:
                     if (type == FunctionTypes.Obj || (typeInfo?.IsDict ?? type.Name.StartsWith("Dictionary")))
                     {
-                        if (MValueAdapters.FromMValue(ref mValue, type, out obj))
+                        if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
+                            MValueAdapters.FromMValue(ref mValue, type, out obj))
                         {
                             return true;
                         }
@@ -494,11 +503,13 @@ namespace AltV.Net.FunctionParser
             var keyType = args[0];
             if (keyType != FunctionTypes.String) return null;
             var valueType = args[1];
-            var stringViewArrayRef = StringViewArray.Nil;
+            var stringArrayRef = StringArray.Nil;
             var valueArrayRef = MValueArray.Nil;
-            AltNative.MValueGet.MValue_GetDict(ref mValue, ref stringViewArrayRef, ref valueArrayRef);
-            var strings = stringViewArrayRef.ToArray();
+            AltNative.MValueGet.MValue_GetDict(ref mValue, ref stringArrayRef, ref valueArrayRef);
+            var strings = stringArrayRef.ToArray();
+            stringArrayRef.Dispose();
             var valueArray = valueArrayRef.ToArray();
+            valueArrayRef.Dispose();
             var length = strings.Length;
             if (valueArrayRef.Size != (ulong) length) // Value size != key size should never happen
             {

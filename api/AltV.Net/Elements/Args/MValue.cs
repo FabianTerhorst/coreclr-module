@@ -350,18 +350,20 @@ namespace AltV.Net.Elements.Args
         {
             var mValueArray = MValueArray.Nil;
             AltNative.MValueGet.MValue_GetList(ref this, ref mValueArray);
-            return mValueArray.ToArray();
+            var values = mValueArray.ToArray();
+            mValueArray.Dispose();
+            return values;
         }
 
         public Dictionary<string, MValue> GetDictionary()
         {
-            var stringViewArray = StringViewArray.Nil;
-            var valueArrayRef = MValueArray.Nil;
-            AltNative.MValueGet.MValue_GetDict(ref this, ref stringViewArray, ref valueArrayRef);
-            var valueArrayPtr = valueArrayRef.data;
+            var stringViewArray = StringArray.Nil;
+            var valueArray = MValueArray.Nil;
+            AltNative.MValueGet.MValue_GetDict(ref this, ref stringViewArray, ref valueArray);
+            var valueArrayPtr = valueArray.data;
             var stringViewArrayPtr = stringViewArray.data;
             var size = (int) stringViewArray.size;
-            if (valueArrayRef.Size != (ulong) size) // Value size != key size should never happen
+            if (valueArray.Size != (ulong) size) // Value size != key size should never happen
             {
                 return null;
             }
@@ -369,11 +371,16 @@ namespace AltV.Net.Elements.Args
             var dictionary = new Dictionary<string, MValue>();
             for (var i = 0; i < size; i++)
             {
-                dictionary[Marshal.PtrToStructure<StringView>(stringViewArrayPtr).Text] =
-                    Marshal.PtrToStructure<MValue>(valueArrayPtr);
-                valueArrayPtr += Size;
-                stringViewArrayPtr += StringView.Size;
+                var key = stringViewArray.GetNextWithOffset(ref stringViewArrayPtr);
+                var value = valueArray.GetNextWithOffset(ref valueArrayPtr);
+                if (key != null)
+                {
+                    dictionary[key] = value;
+                }
             }
+            
+            stringViewArray.Dispose();
+            valueArray.Dispose();
 
             return dictionary;
         }
@@ -464,19 +471,20 @@ namespace AltV.Net.Elements.Args
                     var arrayValues = new object[mValueArray.Size];
                     for (var i = 0; i < arrayValues.Length; i++)
                     {
-                        arrayValues[i] = Marshal.PtrToStructure<MValue>(arrayValue).ToObject(baseBaseObjectPool);
-                        arrayValue += Size;
+                        arrayValues[i] = mValueArray.GetNextWithOffset(ref arrayValue).ToObject(baseBaseObjectPool);
                     }
+                    
+                    mValueArray.Dispose();
 
                     return arrayValues;
                 case Type.DICT:
-                    var stringViewArray = StringViewArray.Nil;
-                    var valueArrayRef = MValueArray.Nil;
-                    AltNative.MValueGet.MValue_GetDict(ref this, ref stringViewArray, ref valueArrayRef);
-                    var valueArrayPtr = valueArrayRef.data;
-                    var stringViewArrayPtr = stringViewArray.data;
-                    var size = (int) stringViewArray.size;
-                    if (valueArrayRef.Size != (ulong) size) // Value size != key size should never happen
+                    var stringArray = StringArray.Nil;
+                    var valueArray = MValueArray.Nil;
+                    AltNative.MValueGet.MValue_GetDict(ref this, ref stringArray, ref valueArray);
+                    var valueArrayPtr = valueArray.data;
+                    var stringViewArrayPtr = stringArray.data;
+                    var size = (int) stringArray.size;
+                    if (valueArray.Size != (ulong) size) // Value size != key size should never happen
                     {
                         return null;
                     }
@@ -484,11 +492,16 @@ namespace AltV.Net.Elements.Args
                     var dictionary = new Dictionary<string, object>();
                     for (var i = 0; i < size; i++)
                     {
-                        dictionary[Marshal.PtrToStructure<StringView>(stringViewArrayPtr).Text] =
-                            Marshal.PtrToStructure<MValue>(valueArrayPtr).ToObject(baseBaseObjectPool);
-                        valueArrayPtr += Size;
-                        stringViewArrayPtr += StringView.Size;
+                        var key = stringArray.GetNextWithOffset(ref stringViewArrayPtr);
+                        var value = valueArray.GetNextWithOffset(ref valueArrayPtr);
+                        if (key != null)
+                        {
+                            dictionary[key] = value.ToObject(baseBaseObjectPool);
+                        }
                     }
+                    
+                    stringArray.Dispose();
+                    valueArray.Dispose();
 
                     return dictionary;
                 case Type.ENTITY:

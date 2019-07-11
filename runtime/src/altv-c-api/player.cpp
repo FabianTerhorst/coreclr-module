@@ -79,7 +79,23 @@ void Player_GetName(alt::IPlayer* player, const char*&name) {
 }
 
 void Player_SetName(alt::IPlayer* player, const char* name) {
-    player->SetName(name);
+    //player->SetName(name);
+}
+
+uint64_t Player_GetSocialID(alt::IPlayer* player) {
+    return player->GetSocialID();
+}
+
+uint64_t Player_GetHwidHash(alt::IPlayer* player) {
+    return player->GetHwidHash();
+}
+
+uint64_t Player_GetHwidExHash(alt::IPlayer* player) {
+    return player->GetHwidExHash();
+}
+
+void Player_GetAuthToken(alt::IPlayer* player, const char*&name) {
+    name = player->GetAuthToken().CStr();
 }
 
 uint16_t Player_GetHealth(alt::IPlayer* player) {
@@ -88,6 +104,18 @@ uint16_t Player_GetHealth(alt::IPlayer* player) {
 
 void Player_SetHealth(alt::IPlayer* player, uint16_t health) {
     player->SetHealth(health);
+}
+
+uint16_t Player_GetMaxHealth(alt::IPlayer* player) {
+    return player->GetMaxHealth();
+}
+
+void Player_SetMaxHealth(alt::IPlayer* player, uint16_t maxHealth) {
+    player->SetMaxHealth(maxHealth);
+}
+
+void Player_GetIP(alt::IPlayer* player, const char* ip) {
+    ip = player->GetIP().CStr();
 }
 
 void Player_SetDateTime(alt::IPlayer* player, int day, int month, int year, int hour, int minute, int second) {
@@ -108,6 +136,39 @@ void Player_RemoveWeapon(alt::IPlayer* player, uint32_t weapon) {
 
 void Player_RemoveAllWeapons(alt::IPlayer* player) {
     player->RemoveAllWeapons();
+}
+
+void Player_AddWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_t component) {
+    player->AddWeaponComponent(weapon, component);
+}
+
+void Player_RemoveWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_t component) {
+    player->RemoveWeaponComponent(weapon, component);
+}
+
+void Player_GetCurrentWeaponComponents(alt::IPlayer* player, alt::Array<uint32_t> &weaponComponents) {
+    auto currWeaponComponents = player->GetCurrentWeaponComponents();
+    alt::Array<uint32_t> values;
+    for (auto currWeaponComponent : currWeaponComponents) {
+        values.Push(currWeaponComponent);
+    }
+    weaponComponents = values;
+}
+
+void Player_SetWeaponTintIndex(alt::IPlayer* player, uint32_t weapon, uint8_t tintIndex) {
+    player->SetWeaponTintIndex(weapon, tintIndex);
+}
+
+uint8_t Player_GetCurrentWeaponTintIndex(alt::IPlayer* player) {
+    return player->GetCurrentWeaponTintIndex();
+}
+
+uint32_t Player_GetCurrentWeapon(alt::IPlayer* player) {
+    return player->GetCurrentWeapon();
+}
+
+void Player_SetCurrentWeapon(alt::IPlayer* player, uint32_t weapon) {
+    player->SetCurrentWeapon(weapon);
 }
 
 bool Player_IsDead(alt::IPlayer* player) {
@@ -135,11 +196,19 @@ bool Player_IsReloading(alt::IPlayer* player) {
 }
 
 uint16_t Player_GetArmor(alt::IPlayer* player) {
-    return player->GetArmor();
+    return player->GetArmour();
 }
 
 void Player_SetArmor(alt::IPlayer* player, uint16_t armor) {
-    player->SetArmor(armor);
+    player->SetArmour(armor);
+}
+
+uint16_t Player_GetMaxArmor(alt::IPlayer* player) {
+    return player->GetMaxArmour();
+}
+
+void Player_SetMaxArmor(alt::IPlayer* player, uint16_t armor) {
+    player->SetMaxArmour(armor);
 }
 
 float Player_GetMoveSpeed(alt::IPlayer* player) {
@@ -180,6 +249,33 @@ uint8_t Player_GetSeat(alt::IPlayer* player) {
     return player->GetSeat();
 }
 
+alt::IEntity* Player_GetEntityAimingAt(alt::IPlayer* player, alt::IBaseObject::Type &type) {
+    auto entity = player->GetEntityAimingAt();
+    if (entity != nullptr) {
+        type = entity->GetType();
+        switch (type) {
+            case alt::IBaseObject::Type::PLAYER:
+                return dynamic_cast<alt::IPlayer*>(entity);
+            case alt::IBaseObject::Type::VEHICLE:
+                return dynamic_cast<alt::IVehicle*>(entity);
+            default:
+                return nullptr;
+        }
+    }
+    return nullptr;
+}
+
+void Player_GetEntityAimOffset(alt::IPlayer* player, position_t &position) {
+    auto offset = player->GetEntityAimOffset();
+    position.x = offset.x;
+    position.y = offset.y;
+    position.z = offset.z;
+}
+
+bool Player_IsFlashlightActive(alt::IPlayer* player) {
+    return player->IsFlashlightActive();
+}
+
 void Player_Kick(alt::IPlayer* player, const char* reason) {
     player->Kick(reason);
 }
@@ -210,7 +306,7 @@ void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
     player_struct->head_rotation.roll = headRotation.roll;
     player_struct->head_rotation.pitch = headRotation.pitch;
     player_struct->head_rotation.yaw = headRotation.yaw;
-    player_struct->armor = player->GetArmor();
+    player_struct->armor = player->GetArmour();
     player_struct->move_speed = player->GetMoveSpeed();
     auto name = player->GetName();
     // Free in c# after async method ends

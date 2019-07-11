@@ -16,6 +16,19 @@ onmessage = function (e) {
     if (!this.streamedIn) {
         this.streamedIn = new Map();
     }
+    if (!this.newStreamIn) {
+        this.newStreamIn = new Set();
+    }
+    if (!this.newStreamOut) {
+        this.newStreamOut = new Set();
+    }
+
+    if (data.reset) {
+        this.streamedIn.clear();
+        this.newStreamIn.clear();
+        this.newStreamOut.clear();
+    }
+
     if (data.position) {
         this.position = data.position;
     }
@@ -26,7 +39,7 @@ onmessage = function (e) {
                 this.areas[i][j] = [];
             }
         }
-        for (const [id, entity] of data.entities) {
+        for (const entity of data.entities) {
             addEntityToArea(entity);
         }
     }
@@ -40,7 +53,9 @@ onmessage = function (e) {
         }
         removeEntityFromArea(data.entityToRemove);
     }
-    start(this.position);
+    if (this.position) {
+        start(this.position);
+    }
 };
 
 function addEntityToArea(entity) {
@@ -48,7 +63,7 @@ function addEntityToArea(entity) {
     if (startingYIndex == null || startingXIndex == null || stoppingYIndex == null || stoppingXIndex == null) return;
     for (let i = startingYIndex; i <= stoppingYIndex; i++) {
         for (let j = startingXIndex; j <= stoppingXIndex; j++) {
-            this.areas[i][j].push(entity);
+            this.areas[j][i].push(entity);
         }
     }
 }
@@ -77,7 +92,7 @@ function removeEntityFromArea(entity) {
     if (startingYIndex == null || startingXIndex == null || stoppingYIndex == null || stoppingXIndex == null) return;
     for (let i = startingYIndex; i <= stoppingYIndex; i++) {
         for (let j = startingXIndex; j <= stoppingXIndex; j++) {
-            this.areas[i][j].filter((arrEntity) => arrEntity.id !== entity.id)
+            this.areas[j][i].filter((arrEntity) => arrEntity.id !== entity.id)
         }
     }
 }
@@ -95,15 +110,19 @@ function offsetPosition(value) {
 }
 
 function start(position) {
-    let keysToDeleteFromStreamedIn = [];
     for (const [id, entity] of this.streamedIn) {
         if (distance(entity.position, position) > entity.range) {
-            postMessage({streamOut: entity});
-            keysToDeleteFromStreamedIn.push(id);
+            this.newStreamOut.add(entity.id);
         }
     }
-    for (let key of keysToDeleteFromStreamedIn) {
+
+    for (let key of this.newStreamOut) {
         this.streamedIn.delete(key);
+    }
+
+    if (this.newStreamOut.size > 0) {
+        postMessage({streamOut: [...this.newStreamOut]});
+        this.newStreamOut.clear();
     }
 
     let posX = offsetPosition(position.x);
@@ -119,9 +138,14 @@ function start(position) {
     for (let entity of entitiesInArea) {
         if (!this.streamedIn.has(entity.id)) {
             if (distance(entity.position, position) <= entity.range) {
-                postMessage({streamIn: entity});
+                this.newStreamIn.add(entity.id);
                 this.streamedIn.set(entity.id, entity)
             }
         }
+    }
+
+    if (this.newStreamIn.size > 0) {
+        postMessage({streamIn: [...this.newStreamIn]});
+        this.newStreamIn.clear();
     }
 }

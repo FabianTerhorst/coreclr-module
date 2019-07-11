@@ -36,7 +36,7 @@ namespace AltV.Net.Async
 
         public override void Tick()
         {
-            if (reader.TryRead(out currentTask))
+            while (reader.TryRead(out currentTask))
             {
                 TryExecuteTask(currentTask);
             }

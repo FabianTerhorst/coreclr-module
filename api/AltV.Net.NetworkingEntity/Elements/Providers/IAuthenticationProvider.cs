@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using AltV.Net.NetworkingEntity.Elements.Entities;
+using AltV.Net.NetworkingEntity.Elements.Pools;
 using net.vieapps.Components.WebSockets;
 
 namespace AltV.Net.NetworkingEntity.Elements.Providers
@@ -13,11 +14,12 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
         /// <summary>
         /// Verify if the token is valid and associate the websocket with a client (player)
         /// </summary>
+        /// <param name="networkingClientPool">Pool of already connected clients, to verify client did not timeout</param>
         /// <param name="webSocket">Websocket that received the auth event</param>
         /// <param name="token">Token received via AuthEvent</param>
         /// <param name="client">The client that matches the authentication</param>
         /// <returns></returns>
-        Task<bool> Verify(ManagedWebSocket webSocket, string token, out INetworkingClient client);
+        Task<bool> Verify(INetworkingClientPool networkingClientPool, ManagedWebSocket webSocket, string token, out INetworkingClient client);
 
         /// <summary>
         /// Returns the client that is designated to a given websocket

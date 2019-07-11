@@ -4,7 +4,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
 {
     public interface INetworkingClient
     {
-        string Token { get; set; }
+        string Token { get; }
         
         bool Exists { get; }
 

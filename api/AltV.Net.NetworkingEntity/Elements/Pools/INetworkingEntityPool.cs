@@ -7,7 +7,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
     {
         IDictionary<ulong, INetworkingEntity> Entities { get; }
 
-        INetworkingEntity Create(ulong id, IEntityStreamer entityStreamer, Entity.Entity streamedEntity);
+        INetworkingEntity Create(ulong id, IEntityStreamer entityStreamer, Entity.Entity streamedEntity, StreamingType streamingType);
 
         INetworkingEntity Create(IEntityStreamer entityStreamer, Entity.Entity streamedEntity);
 

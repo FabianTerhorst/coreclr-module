@@ -38,5 +38,7 @@ namespace AltV.Net.FunctionParser
         public static readonly Type Obj = typeof(object);
 
         public static readonly Type FunctionType = typeof(Function.Func);
+        
+        public static readonly Type MValueConvertible = typeof(IMValueConvertible);
     }
 }

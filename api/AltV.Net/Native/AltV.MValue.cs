@@ -80,7 +80,7 @@ namespace AltV.Net.Native
             internal static extern void MValue_GetList(ref MValue mValue, ref MValueArray value);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void MValue_GetDict(ref MValue mValue, ref StringViewArray keys,
+            internal static extern void MValue_GetDict(ref MValue mValue, ref StringArray keys,
                 ref MValueArray values);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]

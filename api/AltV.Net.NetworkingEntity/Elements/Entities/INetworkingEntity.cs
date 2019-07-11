@@ -35,6 +35,12 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
         /// Clients that are in streaming range of entity
         /// </summary>
         HashSet<INetworkingClient> StreamedInClients { get; }
+        
+        /// <summary>
+        /// The way the entity gets streamed
+        /// </summary>
+        StreamingType StreamingType { get; }
+        
 
         /// <summary>
         /// This method is required to call to change entity data after creation to update data snapshot
@@ -85,6 +91,13 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
         /// <param name="key"></param>
         /// <param name="value"></param>
         void SetData(string key, IDictionary<string, object> value);
+        
+        /// <summary>
+        /// This method is required to call to change entity data after creation to update data snapshot
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        void SetData(string key, object value);
 
         /// <summary>
         /// This method is required to call to change entity data after creation to update data snapshot

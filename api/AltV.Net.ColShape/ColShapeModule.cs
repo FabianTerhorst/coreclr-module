@@ -264,7 +264,7 @@ namespace AltV.Net.ColShape
                     {
                         var length = colShapeAreas[i][j].Length;
                         Array.Resize(ref colShapeAreas[i][j], length + 1);
-                        colShapeAreas[i][j][length] = colShape;
+                        colShapeAreas[j][i][length] = colShape;
                     }
                 }
             }

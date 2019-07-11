@@ -2,6 +2,7 @@ using System;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 using AltV.Net.NetworkingEntity.Elements.Entities;
+using AltV.Net.NetworkingEntity.Elements.Pools;
 using AltV.Net.NetworkingEntity.Elements.Providers;
 using Entity;
 using Google.Protobuf;
@@ -15,14 +16,17 @@ namespace AltV.Net.NetworkingEntity
     /// </summary>
     public class ClientEntityStreamingHandler : IStreamingHandler
     {
+        private readonly INetworkingClientPool networkingClientPool;
+        
         private readonly IAuthenticationProvider authenticationProvider;
 
         public event Action<INetworkingEntity, INetworkingClient> EntityStreamInHandler;
 
         public event Action<INetworkingEntity, INetworkingClient> EntityStreamOutHandler;
 
-        public ClientEntityStreamingHandler(IAuthenticationProvider authenticationProvider)
+        public ClientEntityStreamingHandler(INetworkingClientPool networkingClientPool, IAuthenticationProvider authenticationProvider)
         {
+            this.networkingClientPool = networkingClientPool;
             this.authenticationProvider = authenticationProvider;
         }
 
@@ -39,7 +43,7 @@ namespace AltV.Net.NetworkingEntity
                 {
                     var token = authEvent.Token;
                     if (token == null) return;
-                    var verified = await authenticationProvider.Verify(managedWebSocket, token, out var client);
+                    var verified = await authenticationProvider.Verify(networkingClientPool, managedWebSocket, token, out var client);
                     if (!verified)
                     {
                         return;
@@ -51,7 +55,16 @@ namespace AltV.Net.NetworkingEntity
                     {
                         foreach (var entity in AltNetworking.Module.EntityPool.Entities)
                         {
-                            currSendEvent.Entities.Add(entity.Value.StreamedEntity);
+                            if (entity.Value.StreamingType == StreamingType.DataStreaming)
+                            {
+                                var streamedEntity = entity.Value.StreamedEntity.Clone();
+                                streamedEntity.Data.Clear();
+                                currSendEvent.Entities.Add(streamedEntity);
+                            }
+                            else
+                            {
+                                currSendEvent.Entities.Add(entity.Value.StreamedEntity);
+                            }
                         }
                     }
 
@@ -71,7 +84,7 @@ namespace AltV.Net.NetworkingEntity
                         var changedKeys = entity.Snapshot.CompareWithClient(client);
                         if (changedKeys != null)
                         {
-                            var multipleDataChangeEvent = new EntityMultipleDataChangeEvent();
+                            var multipleDataChangeEvent = new EntityMultipleDataChangeEvent {Id = entityId};
                             foreach (var changedKey in changedKeys)
                             {
                                 if (entity.StreamedEntity.Data.TryGetValue(changedKey, out var mValue))

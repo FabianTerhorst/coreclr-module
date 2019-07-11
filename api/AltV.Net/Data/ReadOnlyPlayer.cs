@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Pools;
 using AltV.Net.Native;
 
 namespace AltV.Net.Data
@@ -37,6 +38,45 @@ namespace AltV.Net.Data
         public IntPtr NativePointer => IntPtr.Zero;
         public bool Exists => false;
         public BaseObjectType Type => BaseObjectType.Player;
+
+        //TODO: implement in struct
+        public ushort MaxHealth
+        {
+            get => 0;
+            set { }
+        }
+
+        public ushort MaxArmor
+        {
+            get => 0;
+            set { }
+        }
+
+        public uint CurrentWeapon
+        {
+            get => 0;
+            set { }
+        }
+        public IntPtr entityAimingAt => IntPtr.Zero;
+        public byte entityAimingAtEntityType => 0;
+        public Position EntityAimOffset => new Position();
+        public bool IsFlashlightActive => false;
+        public string Ip => "0.0.0.0";
+
+        public IEntity EntityAimingAt
+        {
+            get
+            {
+                Alt.Module.BaseEntityPool.GetOrCreate(entityAimingAt, (BaseObjectType) entityAimingAtEntityType,
+                    out var entity);
+                return entity;
+            }
+        }
+
+        public ulong SocialClubId { get; }
+        public ulong HardwareIdHash { get; }
+        public ulong HardwareIdExHash { get; }
+        public string AuthToken { get; }
 
         public void SetMetaData(string key, object value)
         {
@@ -152,6 +192,7 @@ namespace AltV.Net.Data
         {
             get
             {
+                //TODO: this can only be executed on main thread because of vehicle pool maybe copy dictionary
                 if (vehiclePointer == IntPtr.Zero) return null;
                 return Alt.Module.VehiclePool.GetOrCreate(vehiclePointer, out var vehicle) ? vehicle : null;
             }
@@ -191,6 +232,31 @@ namespace AltV.Net.Data
         }
 
         public void RemoveAllWeapons()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddWeaponComponent(uint weapon, uint weaponComponent)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveWeaponComponent(uint weapon, uint weaponComponent)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetCurrentWeaponComponents(out uint[] weaponComponents)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetWeaponTintIndex(uint weapon, byte tintIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte GetCurrentWeaponTintIndex()
         {
             throw new NotImplementedException();
         }

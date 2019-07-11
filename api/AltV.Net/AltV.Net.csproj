@@ -13,16 +13,15 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.8.0-beta</PackageVersion>
+        <PackageVersion>1.10.0-beta</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Add Alt.CreateColShapeCylinder(Position pos, float radius, float height);
-Add Alt.CreateColShapeSphere(Position pos, float radius);
-Add Alt.CreateColShapeCircle(Position pos, float radius);
-Add Alt.CreateColShapeCube(Position pos, Position pos2);
-Add Alt.CreateColShapeRectangle(Position pos, Position pos2);
-Add Alt.OnColShape += (shape, entity, state) { }
-Add Alt.GetAllColShapes();
-Add AltAsync.OnColShape += (shape, entity, state) { }</PackageReleaseNotes>
+        <PackageReleaseNotes>Added to player:
+
+ulong SocialClubId { get; }
+ulong HardwareIdHash { get; }
+ulong HardwareIdExHash { get; }  
+string AuthToken { get; }
+Removed name setter.</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

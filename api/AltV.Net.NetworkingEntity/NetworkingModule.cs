@@ -36,7 +36,7 @@ namespace AltV.Net.NetworkingEntity
             EntityPool = new NetworkingEntityPool(idProvider, entityFactory);
             ClientPool = new NetworkingClientPool(tokenProvider, clientFactory);
             Streamer = new EntityStreamer();
-            Server = new Server(ip, port, authenticationProviderFactory, Streamer, streamingHandlerFactory);
+            Server = new Server(ip, port, ClientPool, authenticationProviderFactory, Streamer, streamingHandlerFactory);
         }
     }
 }
