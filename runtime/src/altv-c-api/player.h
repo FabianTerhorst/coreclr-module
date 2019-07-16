@@ -68,7 +68,7 @@ EXPORT void Player_SetName(alt::IPlayer* player, const char* name);
 EXPORT uint64_t Player_GetSocialID(alt::IPlayer* player);
 EXPORT uint64_t Player_GetHwidHash(alt::IPlayer* player);
 EXPORT uint64_t Player_GetHwidExHash(alt::IPlayer* player);
-EXPORT void Player_GetAuthToken(alt::IPlayer* player, const char*& name);
+EXPORT void Player_GetAuthToken(alt::IPlayer* player, const char*&name);
 
 EXPORT uint16_t Player_GetHealth(alt::IPlayer* player);
 EXPORT void Player_SetHealth(alt::IPlayer* player, uint16_t health);
@@ -127,7 +127,7 @@ EXPORT bool Player_IsFlashlightActive(alt::IPlayer* player);
 EXPORT void Player_Kick(alt::IPlayer* player, const char* reason);
 
 EXPORT uint32_t Player_GetPing(alt::IPlayer* player);
-EXPORT void Player_GetIP(alt::IPlayer* player, const char* ip);
+EXPORT void Player_GetIP(alt::IPlayer* player, const char*&ip);
 
 EXPORT void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct);
 EXPORT void Player_Copy_Dispose(player_struct_t* player_struct);
