@@ -114,7 +114,7 @@ void Player_SetMaxHealth(alt::IPlayer* player, uint16_t maxHealth) {
     player->SetMaxHealth(maxHealth);
 }
 
-void Player_GetIP(alt::IPlayer* player, const char*& ip) {
+void Player_GetIP(alt::IPlayer* player, const char*&ip) {
     ip = player->GetIP().CStr();
 }
 
