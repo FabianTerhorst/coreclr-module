@@ -2,23 +2,11 @@
 CoreClr (.NET Core Common Language Runtime) module
 
 ## Beta
-Only use the beta versions when you use the beta server from #server-updates channel on discord.
+Only use the beta versions when you use the beta server from https://altv.mp/#/downloads
 
-## Stable
-Latest stable version: https://github.com/FabianTerhorst/coreclr-module/releases/tag/1.8.5
+### Download
 
-## Download (windows / linux)
-- [Releases](https://github.com/FabianTerhorst/coreclr-module/releases)
-
-### Download altv server binary
-
-https://altv.mp/#/downloads
-
-## Download Windows
-- Download csharp-module.dll [Releases](https://github.com/FabianTerhorst/coreclr-module/releases)
-
-## Download Linux
-- Download libcsharp-module.so [Releases](https://github.com/FabianTerhorst/coreclr-module/releases)
+Download from https://altv.mp/#/downloads, you can select stable or beta and windows or linux.
 
 ### Server file structure
 
