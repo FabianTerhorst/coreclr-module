@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Threading.Tasks;
 using AltV.Net.Async;
 using AltV.Net.Data;
@@ -9,7 +8,6 @@ using AltV.Net.Elements.Args;
 using AltV.Net.Enums;
 using AltV.Net.Native;
 using System.Drawing;
-using AltV.Net.ColShape;
 
 namespace AltV.Net.Example
 {
@@ -17,6 +15,16 @@ namespace AltV.Net.Example
     {
         public override void OnStart()
         {
+            MValueAdapters.Register(new ConvertibleObject.ConvertibleObjectAdapter());
+            Alt.On("convertible_test", delegate(ConvertibleObject convertible)
+            {
+                Console.WriteLine("convertible_test received");
+                Console.WriteLine(convertible.Test);
+                foreach (var t in convertible.List)
+                {
+                    Console.WriteLine("-" + t.Test);
+                }
+            });
             var convertibleObject = new ConvertibleObject();
             Alt.Emit("convertible_test", convertibleObject);
 
