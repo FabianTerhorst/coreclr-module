@@ -72,7 +72,7 @@ namespace AltV.Net.ClientRuntime
 
         private static readonly RecyclableMemoryStreamManager MemoryStreamManager = new RecyclableMemoryStreamManager();
 
-        public static string Compile(string code)
+        public static string Execute(string code)
         {
             try
             {

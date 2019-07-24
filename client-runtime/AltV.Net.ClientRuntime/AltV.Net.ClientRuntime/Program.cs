@@ -31,11 +31,11 @@ namespace AltV.Net.ClientRuntime
 
         static void Main(string[] args)
         {
-            var result = Runtime.Compile(DefaultCode);
+            var result = Runtime.Execute(DefaultCode);
             Console.WriteLine("result:" + result);
 
             Console.WriteLine(UntrustedCode);
-            result = Runtime.Compile(UntrustedCode);
+            result = Runtime.Execute(UntrustedCode);
             Console.WriteLine("result2:" + result);
         }
     }
