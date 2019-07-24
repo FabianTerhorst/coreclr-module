@@ -8,7 +8,9 @@ using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using System.Runtime.Loader;
+using System.Security.Permissions;
 using System.Text.RegularExpressions;
+using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.IO;
@@ -45,6 +47,7 @@ namespace AltV.Net.ClientRuntime
                 {
                     return Assembly.Load("Unbreakable.Runtime");
                 }
+
                 if (assemblyName.Name == "netstandard" || assemblyName.Name == "mscorlib" ||
                     assemblyName.Name.StartsWith("System.") || _shouldShareAssembly(assemblyName))
                     return Assembly.Load(assemblyName);
@@ -89,11 +92,7 @@ namespace AltV.Net.ClientRuntime
                 var guardToken = Rewrite(assemblyStream, rewrittenStream);
                 rewrittenStream.Seek(0, SeekOrigin.Begin);
 
-                var currentSetup = AppDomain.CurrentDomain.SetupInformation;
-
-                //var appDomain = AppDomain.CreateDomain("Clientside");
-
-                /*var appDomain = AppDomain.CurrentDomain;
+                var appDomain = AppDomain.CurrentDomain;
                 appDomain.PermissionSet.RemovePermission(typeof(FileIOPermission));
                 appDomain.PermissionSet.RemovePermission(typeof(SecurityPermission));
                 appDomain.PermissionSet.RemovePermission(typeof(ReflectionPermission));
@@ -101,7 +100,7 @@ namespace AltV.Net.ClientRuntime
                     new string[0]));
                 appDomain.PermissionSet.SetPermission(new SecurityPermission(SecurityPermissionFlag.Execution));
                 appDomain.PermissionSet.SetPermission(
-                    new ReflectionPermission(ReflectionPermissionFlag.RestrictedMemberAccess));*/
+                    new ReflectionPermission(ReflectionPermissionFlag.RestrictedMemberAccess));
 
                 using var context = new IsolatedAssemblyLoadContext();
                 var assembly = context.LoadFromStream(rewrittenStream);
@@ -144,6 +143,7 @@ namespace AltV.Net.ClientRuntime
 
         public static ApiPolicy CreatePolicy() => ApiPolicy.SafeDefault()
             .Namespace("System", Neutral, SetupSystem)
+            .Namespace("System.Threading", Neutral, SetupThreading)
             .Namespace("System.Collections.Concurrent", Neutral, SetupSystemCollectionsConcurrent)
             .Namespace("System.Collections.Specialized", Neutral, SetupSystemCollectionsSpecialized)
             .Namespace("System.Globalization", Neutral, SetupSystemGlobalization)
@@ -162,6 +162,35 @@ namespace AltV.Net.ClientRuntime
                 )
                 .Type(typeof(NotImplementedException), Neutral, t => t.Constructor(Allowed))
                 .Type(typeof(Type), Neutral, SetupSystemType);
+        }
+
+        private static void SetupThreading(NamespacePolicy namespacePolicy)
+        {
+            namespacePolicy
+                .Type(typeof(Thread), Neutral, t =>
+                    t
+                        .Member("get_Name", Allowed)
+                        .Member(nameof(Thread.Priority), Allowed)
+                        //.Member(nameof(Thread.CurrentCulture), Allowed)
+                        //.Member(nameof(Thread.CurrentPrincipal), Allowed)
+                        .Member("get_CurrentThread", Allowed)//TODO: not sure
+                        //.Member(nameof(Thread.ExecutionContext), Allowed)
+                        .Member(nameof(Thread.IsAlive), Allowed)
+                        .Member(nameof(Thread.IsBackground), Allowed)
+                        .Member(nameof(Thread.ThreadState), Allowed)
+                        //.Member(nameof(Thread.ManagedThreadId), Allowed)
+                        //.Member(nameof(Thread.CurrentUICulture), Allowed)
+                        //.Member(nameof(Thread.IsThreadPoolThread), Allowed)
+                        .Member(nameof(Thread.Abort), Allowed)
+                        .Member(nameof(Thread.Equals), Allowed)
+                        .Member(nameof(Thread.Interrupt), Allowed)
+                        .Member(nameof(Thread.Join), Allowed)
+                        .Member(nameof(Thread.Sleep), Allowed)
+                        .Member(nameof(Thread.Start), Allowed)
+                        .Member(nameof(Thread.Yield), Allowed)
+                        //Some not accepted between
+                        .Member(nameof(Thread.SpinWait), Allowed)
+                );
         }
 
         private static void SetupSystemType(TypePolicy typePolicy)
