@@ -48,9 +48,8 @@ onmessage = function (e) {
     }
     if (data.entityToRemove) {
         if (this.streamedIn.has(data.entityToRemove.id)) {
-            const removedEntity = this.streamedIn.get(data.entityToRemove.id);
             this.streamedIn.delete(data.entityToRemove.id);
-            postMessage({streamOut: removedEntity});
+            postMessage({streamOut: [data.entityToRemove.id]});
         }
         removeEntityFromArea(data.entityToRemove);
     }
