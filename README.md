@@ -114,39 +114,62 @@ but require full path import like ```import * as auth from 'client/auth.mjs';```
 * Now select "Console Application (.NET Core)" and choose "Name", "Location" and the "Solution name".
 * To setup the correct NuGet Packages open the Manager under "Tools -> NuGet Package Manager -> Manage NuGet Packages for Solution..."
 * Select Browse and search for AltV.Net and install the packages "AltV.Net", ("AltV.Net.Async" when you need async thread save api access)
-* Now go to "Project -> {Your Project Name} Properties... -> Build", here you can select the Output path where the dll should be saved.
+* Now go to "Project -> {Your Project Name} Properties... -> Build", here you can select the Output path where the resource.cfg file is located.
+* Next go "Right Click on your project - > Edit Project File", your file should look like this:
+```
+<Project Sdk="Microsoft.NET.Sdk">
 
-To get the Resource running on the server, you have to create a "resource.cfg" file. Copy the resource.cfg, AltV.Net.dll and all other dependencied with your resource dll file to altv-server/resources/{YourResourceName}/.
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
 
-- (For now) create empty assembly.cfg in your resource.
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>Here comes your output path</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>Here comes your output path</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AltV.Net" Version="1.10.0" />
+    <PackageReference Include="AltV.Net.Async" Version="1.10.0" />
+    <PackageReference Include="AltV.Net.Mock" Version="1.10.0" />
+  </ItemGroup>
+
+</Project>
+```
+* Now just replace the PropertyGroup with the code below:
+```
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+```
+* It should be good to go. Now the DLL files will be just in the folder of the resource, so there will be no Copy-Paste all the times with the Release. 
+
 Boilerplate AltV.Net.Example.csproj:
 ```
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>netcoreapp2.2</TargetFramework>
-        <OutputType>Exe</OutputType>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
 
-    <ItemGroup>
-      <!--Use latest version from https://www.nuget.org/packages/AltV.Net-->
-      <PackageReference Include="AltV.Net" Version="1.8.1" />
-    </ItemGroup>
-    
-    <!--This copies the publish directory to the resource folder which is named "my-server"-->
-    
-    <ItemGroup>
-        <AllOutputFiles Include="$(OutputPath)\publish\*.*" />
-    </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>Here comes your output path</OutputPath>
+  </PropertyGroup>
 
-    <Target Name="CopyFiles" AfterTargets="publish">
-        <PropertyGroup>
-            <CopiedFiles>$(OutputPath)\publish\*.*</CopiedFiles>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>Here comes your output path</OutputPath>
+  </PropertyGroup>
 
-            <TargetLocation Condition=" '$(Configuration)' == 'Release' ">../../my-server/</TargetLocation>
-        </PropertyGroup>
-        <Copy Condition=" '$(TargetLocation)' != '' " SourceFiles="@(AllOutputFiles)" DestinationFolder="$(TargetLocation)" SkipUnchangedFiles="false" />
-    </Target>
+  <ItemGroup>
+    <PackageReference Include="AltV.Net" Version="1.10.0" />
+    <PackageReference Include="AltV.Net.Async" Version="1.10.0" />
+    <PackageReference Include="AltV.Net.Mock" Version="1.10.0" />
+  </ItemGroup>
 
 </Project>
 ```
