@@ -137,5 +137,9 @@ namespace AltV.Net.Elements.Entities
         {
             return NativePointer.GetHashCode();
         }
+
+        public virtual void OnRemove()
+        {
+        }
     }
 }

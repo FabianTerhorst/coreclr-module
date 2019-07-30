@@ -97,6 +97,7 @@ namespace AltV.Net.Async
         public bool Remove(IntPtr entityPointer)
         {
             if (!entities.TryRemove(entityPointer, out var entity) || !entity.Exists) return false;
+            entity.OnRemove();
             lock (entity)
             {
                 BaseObjectPool<TEntity>.SetEntityNoLongerExists(entity);
