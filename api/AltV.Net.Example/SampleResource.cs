@@ -248,6 +248,26 @@ namespace AltV.Net.Example
             catch (BaseObjectRemovedException baseObjectRemovedException)
             {
             }
+            
+            Alt.RegisterEvents(this);
+            
+            Alt.Emit("bla2", "bla");
+            
+            AltAsync.RegisterEvents(this);
+            
+            Alt.Emit("asyncBla3", "bla");
+        }
+        
+        [Event("bla2")]
+        public void MyServerEventHandler2(string myString)
+        {
+            Alt.Log(myString);
+        }
+        
+        [AsyncEvent]
+        public void asyncBla3(string myString)
+        {
+            AltAsync.Log(myString);
         }
 
         public void MyParser(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string> func)

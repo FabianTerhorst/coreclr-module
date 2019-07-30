@@ -6,11 +6,11 @@ services:
     ports:
       - "7788:7788/udp"
       - "7788:7788/tcp"
-    volumes:
-      - ./src/AltV.Net.Example/bin/Release/netcoreapp2.2/:/altv-server/resources/example
-  dev:
-    build: . 
-    security_opt:
-      - seccomp:unconfined
-    cap_add:
-      - SYS_PTRACE
+  #  volumes:
+  #    - ./src/AltV.Net.Example/bin/Release/netcoreapp2.2/:/altv-server/resources/example
+  #dev:
+  #  build: . 
+  #  security_opt:
+  #    - seccomp:unconfined
+  #  cap_add:
+  #    - SYS_PTRACE

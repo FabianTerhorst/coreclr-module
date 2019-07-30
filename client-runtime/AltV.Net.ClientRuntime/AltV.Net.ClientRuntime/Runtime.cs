@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
-using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
@@ -18,6 +17,7 @@ using Unbreakable;
 using Unbreakable.Policy;
 using Unbreakable.Policy.Rewriters;
 
+//TODO: move default api policies to this file as well instead of unknown use
 namespace AltV.Net.ClientRuntime
 {
     using static ApiAccess;
@@ -146,7 +146,7 @@ namespace AltV.Net.ClientRuntime
             .Namespace("System.Threading", Neutral, SetupThreading)
             .Namespace("System.Collections.Concurrent", Neutral, SetupSystemCollectionsConcurrent)
             .Namespace("System.Collections.Specialized", Neutral, SetupSystemCollectionsSpecialized)
-            .Namespace("System.Globalization", Neutral, SetupSystemGlobalization)
+            //.Namespace("System.Globalization", Neutral, SetupSystemGlobalization)
             //.Namespace("System.IO", Neutral, SetupSystemIO)
             //.Namespace("System.Linq.Expressions", Neutral, SetupSystemLinqExpressions)
             //.Namespace("System.Net", Neutral, SetupSystemNet)
@@ -230,7 +230,7 @@ namespace AltV.Net.ClientRuntime
             );
         }
 
-        private static void SetupSystemGlobalization(NamespacePolicy namespacePolicy)
+        /*private static void SetupSystemGlobalization(NamespacePolicy namespacePolicy)
         {
             namespacePolicy
                 .Type(typeof(CultureInfo), Neutral, typePolicy =>
@@ -243,7 +243,7 @@ namespace AltV.Net.ClientRuntime
                         typePolicy.Getter(property.Name, Allowed);
                     }
                 });
-        }
+        }*/
 
         /*private static void SetupSystemIO(NamespacePolicy namespacePolicy)
         {

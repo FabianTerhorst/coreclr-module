@@ -43,7 +43,7 @@ namespace AltV.Net.Mock
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
             Alt.Module.PlayerPool.Create(ptr, entityId, out var player);
-            player.Name = playerName;
+            //player.Name = playerName;
             intercept?.Invoke(player);
             Alt.Module.OnPlayerConnect(ptr, player.Id, reason);
             return player;
