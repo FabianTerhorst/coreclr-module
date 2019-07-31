@@ -2,7 +2,7 @@ using System;
 
 namespace AltV.Net
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Method)]
     public class Event : Attribute
     {
         public string Name { get; }

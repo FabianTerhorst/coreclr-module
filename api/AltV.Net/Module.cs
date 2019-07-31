@@ -26,9 +26,9 @@ namespace AltV.Net
         internal readonly IBaseObjectPool<IBlip> BlipPool;
 
         internal readonly IBaseObjectPool<ICheckpoint> CheckpointPool;
-        
+
         internal readonly IBaseObjectPool<IVoiceChannel> VoiceChannelPool;
-        
+
         internal readonly IBaseObjectPool<IColShape> ColShapePool;
 
         //For custom defined args event handlers
@@ -92,13 +92,13 @@ namespace AltV.Net
 
         internal readonly IEventHandler<ConsoleCommandDelegate> ConsoleCommandEventHandler =
             new HashSetEventHandler<ConsoleCommandDelegate>();
-        
+
         internal readonly IEventHandler<MetaDataChangeDelegate> MetaDataChangeEventHandler =
             new HashSetEventHandler<MetaDataChangeDelegate>();
-        
+
         internal readonly IEventHandler<MetaDataChangeDelegate> SyncedMetaDataChangeEventHandler =
             new HashSetEventHandler<MetaDataChangeDelegate>();
-        
+
         internal readonly IEventHandler<ColShapeDelegate> ColShapeEventHandler =
             new HashSetEventHandler<ColShapeDelegate>();
 
@@ -600,12 +600,12 @@ namespace AltV.Net
         {
             VehiclePool.Create(vehiclePointer, vehicleId);
         }
-        
+
         public void OnCreateVoiceChannel(IntPtr channelPointer)
         {
             VoiceChannelPool.Create(channelPointer);
         }
-        
+
         public void OnCreateColShape(IntPtr colShapePointer)
         {
             ColShapePool.Create(colShapePointer);
@@ -635,12 +635,12 @@ namespace AltV.Net
         {
             CheckpointPool.Remove(checkpointPointer);
         }
-        
+
         public void OnRemoveVoiceChannel(IntPtr channelPointer)
         {
             VoiceChannelPool.Remove(channelPointer);
         }
-        
+
         public void OnRemoveColShape(IntPtr colShapePointer)
         {
             ColShapePool.Remove(colShapePointer);
@@ -674,7 +674,7 @@ namespace AltV.Net
 
             OnMetaDataChangeEvent(entity, key, value.ToObject());
         }
-        
+
         public virtual void OnMetaDataChangeEvent(IEntity entity, string key, object value)
         {
             if (!MetaDataChangeEventHandler.HasEvents()) return;
@@ -683,7 +683,7 @@ namespace AltV.Net
                 eventHandler(entity, key, value);
             }
         }
-        
+
         public void OnSyncedMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key,
             ref MValue value)
         {
@@ -691,10 +691,10 @@ namespace AltV.Net
             {
                 return;
             }
-            
+
             OnSyncedMetaDataChangeEvent(entity, key, value.ToObject());
         }
-        
+
         public virtual void OnSyncedMetaDataChangeEvent(IEntity entity, string key, object value)
         {
             if (!SyncedMetaDataChangeEventHandler.HasEvents()) return;
@@ -703,8 +703,9 @@ namespace AltV.Net
                 eventHandler(entity, key, value);
             }
         }
-        
-        public void OnColShape(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType, bool state)
+
+        public void OnColShape(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType,
+            bool state)
         {
             if (!ColShapePool.GetOrCreate(colShapePointer, out var colShape))
             {
@@ -718,7 +719,7 @@ namespace AltV.Net
 
             OnColShapeEvent(colShape, entity, state);
         }
-        
+
         public virtual void OnColShapeEvent(IColShape colShape, IEntity entity, bool state)
         {
             if (!ColShapeEventHandler.HasEvents()) return;
@@ -726,6 +727,19 @@ namespace AltV.Net
             {
                 eventHandler(colShape, entity, state);
             }
+        }
+
+        public void OnScriptsLoaded(IScript[] scripts)
+        {
+            foreach (var script in scripts)
+            {
+                Alt.RegisterEvents(script);
+                OnScriptLoaded(script);
+            }
+        }
+
+        public virtual void OnScriptLoaded(IScript script)
+        {
         }
     }
 }

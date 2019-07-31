@@ -1,11 +1,12 @@
 using System;
+using AltV.Net.ResourceLoaders;
 
 namespace AltV.Net.Mock
 {
     internal class MockResourceLoader : ResourceLoader
     {
         internal MockResourceLoader(IntPtr serverPointer, string resourceName, string entryPoint) : base(serverPointer,
-            resourceName, entryPoint)
+            new MockAssemblyLoader(), resourceName, entryPoint)
         {
         }
 

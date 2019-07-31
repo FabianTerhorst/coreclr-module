@@ -1,27 +1,24 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using AltV.Net.Native;
 
-namespace AltV.Net
+namespace AltV.Net.ResourceLoaders
 {
     internal class ResourceLoader
     {
         private static readonly Type ResourceInterfaceType = typeof(IResource);
 
         private readonly IntPtr serverPointer;
+        private readonly AssemblyLoader assemblyLoader;
         private readonly string resourceName;
         private readonly string entryPoint;
 
-        private readonly Dictionary<string, Assembly> loadedAssemblies =
-            AppDomain.CurrentDomain.GetAssemblies().ToDictionary(x => x.GetName().FullName, x => x);
-
-        internal ResourceLoader(IntPtr serverPointer, string resourceName, string entryPoint)
+        internal ResourceLoader(IntPtr serverPointer, AssemblyLoader assemblyLoader, string resourceName,
+            string entryPoint)
         {
             this.serverPointer = serverPointer;
+            this.assemblyLoader = assemblyLoader;
             this.resourceName = resourceName;
             this.entryPoint = entryPoint;
         }
@@ -32,7 +29,7 @@ namespace AltV.Net
         public IResource Init()
         {
             var basePath = GetPath(resourceName, entryPoint);
-            var assembly = LoadAssembly(basePath);
+            var assembly = assemblyLoader.LoadAssembly(basePath);
             Type[] types;
             try
             {
@@ -96,27 +93,6 @@ namespace AltV.Net
             }
 
             return resource;
-        }
-
-        private Assembly LoadAssembly(string path)
-        {
-            var reflectionAssembly = AssemblyName.GetAssemblyName(path);
-
-            if (loadedAssemblies.TryGetValue(reflectionAssembly.FullName, out var element)) return element;
-
-            try
-            {
-                var loadedAssembly = Assembly.LoadFrom(path);
-
-                loadedAssemblies[loadedAssembly.GetName().FullName] = loadedAssembly;
-
-                return loadedAssembly;
-            }
-            catch (FileLoadException e)
-            {
-                Log($"Threw a exception while loading the assembly \"{path}\": {e}");
-                return null;
-            }
         }
 
         protected virtual void Log(string message)

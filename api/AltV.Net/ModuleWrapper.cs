@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
+using AltV.Net.ResourceLoaders;
 
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
 [assembly: InternalsVisibleTo("AltV.Net.Mock")]
@@ -15,10 +17,15 @@ namespace AltV.Net
 
         private static IResource _resource;
 
+        private static IScript[] _scripts;
+
         public static void Main(IntPtr serverPointer, IntPtr resourcePointer, string resourceName, string entryPoint)
         {
+            var assemblyLoader = new AssemblyLoader();
             MainWithResource(serverPointer, resourcePointer,
-                new ResourceLoader(serverPointer, resourceName, entryPoint).Init());
+                new ResourceLoader(serverPointer, assemblyLoader, resourceName, entryPoint).Init());
+            _scripts = new ScriptLoader(assemblyLoader).GetAllScripts();
+            _module.OnScriptsLoaded(_scripts);
             _resource.OnStart();
         }
 
@@ -44,7 +51,8 @@ namespace AltV.Net
             var colShapePool = _resource.GetColShapePool(colShapeFactory);
             var entityPool = _resource.GetBaseEntityPool(playerPool, vehiclePool);
             var baseObjectPool =
-                _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool);
+                _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool,
+                    colShapePool);
             var server = new Server(serverPointer, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool,
                 checkpointPool, voiceChannelPool, colShapePool);
             var csharpResource = new CSharpNativeResource(resourcePointer);
@@ -160,7 +168,7 @@ namespace AltV.Net
         {
             _module.OnCreateVoiceChannel(channelPointer);
         }
-        
+
         public static void OnCreateColShape(IntPtr colShapePointer)
         {
             _module.OnCreateColShape(colShapePointer);
@@ -185,7 +193,7 @@ namespace AltV.Net
         {
             _module.OnRemoveVoiceChannel(channelPointer);
         }
-        
+
         public static void OnRemoveColShape(IntPtr colShapePointer)
         {
             _module.OnRemoveColShape(colShapePointer);
@@ -205,18 +213,21 @@ namespace AltV.Net
         {
             _module.OnConsoleCommand(name, ref args);
         }
-        
-        public static void OnMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key, ref MValue value)
+
+        public static void OnMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key,
+            ref MValue value)
         {
             _module.OnMetaDataChange(entityPointer, entityType, key, ref value);
         }
-        
-        public static void OnSyncedMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key, ref MValue value)
+
+        public static void OnSyncedMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key,
+            ref MValue value)
         {
             _module.OnSyncedMetaDataChange(entityPointer, entityType, key, ref value);
         }
 
-        public static void OnColShape(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType, bool state)
+        public static void OnColShape(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType,
+            bool state)
         {
             _module.OnColShape(colShapePointer, targetEntityPointer, entityType, state);
         }

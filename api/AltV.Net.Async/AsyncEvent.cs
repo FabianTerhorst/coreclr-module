@@ -1,12 +1,16 @@
 using System;
+using AltV.Net.FunctionParser;
 
 namespace AltV.Net.Async
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    public class AsyncEvent : Event
+    [AttributeUsage(AttributeTargets.Method)]
+    public class AsyncEvent : Attribute
     {
-        public AsyncEvent(string name = null) : base(name)
+        public string Name { get; }
+
+        public AsyncEvent(string name = null)
         {
+            Name = name;
         }
     }
 }

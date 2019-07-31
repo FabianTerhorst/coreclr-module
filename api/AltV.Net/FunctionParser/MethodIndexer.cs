@@ -1,24 +1,36 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("AltV.Net.Async")]
+
 namespace AltV.Net.FunctionParser
 {
     internal static class MethodIndexer
     {
-        internal static void Index<T>(object target, Action<string, Function> found) where T : Event
+        internal static void Index(object target, Type[] customAttributes, Action<object, MethodInfo, Delegate> found)
         {
-            var eventMethods = target.GetType().GetMethods()
-                .Where(m => m.GetCustomAttributes(typeof(T), false).Length > 0).ToArray();
-            foreach (var eventMethod in eventMethods)
+            var eventMethods = target.GetType().GetMethods();
+            var attributeMethods = new LinkedList<(MethodInfo, object[])>();
+            for (int i = 0, length = eventMethods.Length; i < length; i++)
             {
-                var eventAttributes = eventMethod.GetCustomAttributes(typeof(T), false);
-                if (eventAttributes.Length <= 0) continue;
-                var eventAttributeObj = eventAttributes[0];
-                if (!(eventAttributeObj is T eventAttribute)) continue;
-                var eventName = eventAttribute.Name ?? eventMethod.Name;
-                found(eventName, Function.Create(eventMethod.CreateDelegate(target)));
+                var m = eventMethods[i];
+                for (int j = 0, attributesLength = customAttributes.Length; j < attributesLength; j++)
+                {
+                    var customAttribute = customAttributes[j];
+                    var methodCustomAttributes = m.GetCustomAttributes(customAttribute, false);
+                    if (methodCustomAttributes.Length <= 0) continue;
+                    attributeMethods.AddFirst((m, methodCustomAttributes));
+                }
+            }
+
+            foreach (var (eventMethod, eventAttributes) in attributeMethods)
+            {
+                foreach (var eventAttribute in eventAttributes)
+                {
+                    found(eventAttribute, eventMethod, eventMethod.CreateDelegate(target));
+                }
             }
         }
     }

@@ -436,5 +436,10 @@ namespace AltV.Net.Async
                 AsyncEventHandlers[eventName] = eventHandlersForEvent;
             }
         }
+
+        public override void OnScriptLoaded(IScript script)
+        {
+            AltAsync.RegisterEvents(script);
+        }
     }
 }
