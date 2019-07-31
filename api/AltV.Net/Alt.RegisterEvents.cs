@@ -1,3 +1,4 @@
+using AltV.Net.Elements.Entities;
 using AltV.Net.FunctionParser;
 
 namespace AltV.Net
@@ -17,20 +18,34 @@ namespace AltV.Net
                             switch (scriptEventType)
                             {
                                 case ScriptEventType.PlayerConnect:
-                                    scriptFunction = ScriptFunction.Create(2, eventMethodDelegate);
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[] {typeof(IPlayer), typeof(string)});
+                                    if (scriptFunction == null) return;
                                     Alt.OnPlayerConnect += (player, reason) =>
                                     {
-                                        scriptFunction.Args[0] = player;
-                                        scriptFunction.Args[1] = reason;
+                                        scriptFunction.Set(player);
+                                        scriptFunction.Set(reason);
                                         scriptFunction.Call();
                                     };
                                     break;
                                 case ScriptEventType.ServerEvent:
-                                    scriptFunction = ScriptFunction.Create(2, eventMethodDelegate);
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[] {typeof(string), typeof(object[])});
+                                    if (scriptFunction == null) return;
                                     Alt.OnServerEvent += (serverEventName, serverEventArgs) =>
                                     {
-                                        scriptFunction.Args[0] = serverEventName;
-                                        scriptFunction.Args[1] = serverEventArgs;
+                                        scriptFunction.Set(serverEventName);
+                                        scriptFunction.Set(serverEventArgs);
+                                        scriptFunction.Call();
+                                    };
+                                    break;
+                                case ScriptEventType.VehicleRemove:
+                                    scriptFunction =
+                                        ScriptFunction.Create(eventMethodDelegate, new[] {typeof(IVehicle)});
+                                    if (scriptFunction == null) return;
+                                    Alt.OnVehicleRemove += vehicle =>
+                                    {
+                                        scriptFunction.Set(vehicle);
                                         scriptFunction.Call();
                                     };
                                     break;

@@ -22,6 +22,12 @@ namespace AltV.Net.Example
             Console.WriteLine(message);
         }
 
+        [Event("MyEventName")]
+        public static void MyEventName2(string message)
+        {
+            Console.WriteLine(message);
+        }
+
         [ScriptEvent(ScriptEventType.PlayerConnect)]
         public void MyPlayerConnect(IPlayer player, string reason)
         {
@@ -34,6 +40,36 @@ namespace AltV.Net.Example
         public void MyServerEvent(string eventName, object[] args)
         {
             Console.WriteLine(eventName + ": " + string.Join(",", args));
+        }
+
+        [ScriptEvent(ScriptEventType.VehicleRemove)]
+        public void VehicleRemove(IVehicle vehicle)
+        {
+            Console.WriteLine("vehicle removed: " + vehicle);
+        }
+
+        [ScriptEvent(ScriptEventType.VehicleRemove)]
+        public void VehicleRemove2(IMyVehicle vehicle)
+        {
+            Console.WriteLine("vehicle removed2: " + vehicle);
+        }
+
+        [ScriptEvent(ScriptEventType.VehicleRemove)]
+        public void VehicleRemove3(MyVehicle vehicle)
+        {
+            Console.WriteLine("vehicle removed3: " + vehicle);
+        }
+        
+        [ScriptEvent(ScriptEventType.VehicleRemove)]
+        public void VehicleRemoveInvalid(MyPlayer player)
+        {
+            Console.WriteLine("vehicle removed invalid: " + player);
+        }
+        
+        [ScriptEvent(ScriptEventType.VehicleRemove)]
+        public void VehicleRemoveInvalid2(IMyInvalidVehicle vehicle)
+        {
+            Console.WriteLine("vehicle removed invalid2: " + vehicle);
         }
     }
 }

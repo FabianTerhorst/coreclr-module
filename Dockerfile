@@ -26,7 +26,7 @@ COPY api/ .
 RUN cd AltV.Net.Example && dotnet publish -c Release
 
 #FROM debian:stable
-FROM ubuntu:18.10
+FROM ubuntu:18.04
 
 RUN apt-get update
 RUN apt-get install -y apt-utils
