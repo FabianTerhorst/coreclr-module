@@ -66,6 +66,9 @@ public:
     void CreateAppDomain(alt::IServer* server, alt::IResource* resource, const char* appPath, void** runtimeHost,
                          unsigned int* domainId, bool executable, uint64_t resourceIndex, const char* domainName);
 
+    int Execute(alt::IServer* server, alt::IResource* resource, const char* appPath, uint64_t resourceIndex, void** runtimeHost,
+                         const unsigned int* domainId);
+
     void Shutdown(alt::IServer* server, void* runtimeHost,
                   unsigned int domainId);
 

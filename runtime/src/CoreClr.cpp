@@ -307,6 +307,37 @@ void CoreClr::CreateAppDomain(alt::IServer* server, alt::IResource* resource, co
     }
 }
 
+int CoreClr::Execute(alt::IServer* server, alt::IResource* resource, const char* appPath, uint64_t resourceIndex,
+                     void** runtimeHost,
+                     const unsigned int* domainId) {
+    auto executablePath = alt::String(appPath) + PATH_SEPARATOR + resource->GetMain();
+    server->LogInfo(alt::String("coreclr-module: Prepare for executing assembly:") + executablePath);
+    int exitCode = -1;
+    const char* args[1];
+    char resourceIndexChar = resourceIndex + '0';
+    char resourceIndexString[1];
+    resourceIndexString[0] = resourceIndexChar;
+    args[0] = resourceIndexString;
+    int result = _executeAssembly(
+            *runtimeHost,
+            *domainId,
+            1,
+            args,
+            executablePath.CStr(),
+            (unsigned int*) &exitCode
+    );
+
+    if (result < 0) {
+        exitCode = -1;
+        server->LogInfo(
+                alt::String("coreclr-module: Unable to execute assembly in app path:") + executablePath);
+        this->PrintError(server, result);
+    } else {
+        server->LogInfo(alt::String("coreclr-module: Assembly executed"));
+    }
+    return result;
+}
+
 void CoreClr::Shutdown(alt::IServer* server, void* runtimeHost,
                        unsigned int domainId) {
     int latchedExitCode = 0;
