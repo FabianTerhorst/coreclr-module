@@ -208,7 +208,6 @@ bool CSharpResource::Start() {
 
 bool CSharpResource::Stop() {
     alt::IResource::Stop();
-    this->server->LogInfo("resource stopping");
     for (int i = 0, length = invokers->GetSize(); i < length; i++) {
         delete invokers->operator[](i);
     }
