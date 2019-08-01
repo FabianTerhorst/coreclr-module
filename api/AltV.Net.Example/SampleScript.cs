@@ -6,11 +6,6 @@ namespace AltV.Net.Example
 {
     public class SampleScript : IScript
     {
-        public SampleScript()
-        {
-            Alt.OnPlayerConnect += MyPlayerConnect;
-        }
-
         [Event("eventName")]
         public void MyEvent(IPlayer player)
         {
