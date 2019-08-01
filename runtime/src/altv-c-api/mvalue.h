@@ -7,37 +7,18 @@
 #endif
 
 #include <altv-cpp-api/SDK.h>
+#include <CSharpResource.h>
 
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
 
-typedef void (* MValueFunctionCallback)(alt::MValueList*, alt::MValue*);
-
-class CustomInvoker : public alt::MValueFunction::Invoker {
-public:
-    MValueFunctionCallback mValueFunctionCallback;
-
-    explicit CustomInvoker(MValueFunctionCallback mValueFunctionCallback) {
-        this->mValueFunctionCallback = mValueFunctionCallback;
-    }
-
-    alt::MValue Invoke(alt::MValueList args) override {
-        //auto list = args.Get<alt::MValue::List>();
-        alt::MValue result;
-        mValueFunctionCallback(&args, &result);
-        return result;
-    }
-};
-
-extern alt::Array<CustomInvoker*> invokers;
-
 #ifdef __cplusplus
 extern "C"
 {
 #endif
-EXPORT CustomInvoker* Invoker_Create(MValueFunctionCallback val);
-EXPORT void Invoker_Destroy(CustomInvoker* val);
+EXPORT CustomInvoker* Invoker_Create(CSharpResource* resource, MValueFunctionCallback val);
+EXPORT void Invoker_Destroy(CSharpResource* resource, CustomInvoker* val);
 
 EXPORT void MValue_CreateNil(alt::MValue &mValue);
 EXPORT void MValue_CreateBool(bool val, alt::MValue &mValue);

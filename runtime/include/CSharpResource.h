@@ -62,6 +62,24 @@
 #pragma clang diagnostic pop
 #endif
 
+typedef void (* MValueFunctionCallback)(alt::MValueList*, alt::MValue*);
+
+class CustomInvoker : public alt::MValueFunction::Invoker {
+public:
+    MValueFunctionCallback mValueFunctionCallback;
+
+    explicit CustomInvoker(MValueFunctionCallback mValueFunctionCallback) {
+        this->mValueFunctionCallback = mValueFunctionCallback;
+    }
+
+    alt::MValue Invoke(alt::MValueList args) override {
+        //auto list = args.Get<alt::MValue::List>();
+        alt::MValue result;
+        mValueFunctionCallback(&args, &result);
+        return result;
+    }
+};
+
 typedef void (* MainDelegate_t)(alt::IServer* server, alt::IResource* resource, const char* resourceName,
                               const char* entryPoint);
 typedef void (* TickDelegate_t)();
@@ -194,6 +212,8 @@ public:
 
     void* runtimeHost;
     unsigned int domainId;
+
+    alt::Array<CustomInvoker*>* invokers;
 };
 
 EXPORT void CSharpResource_SetExport(CSharpResource* resource, const char* key, const alt::MValue &val);

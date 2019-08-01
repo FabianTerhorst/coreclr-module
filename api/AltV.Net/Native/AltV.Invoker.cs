@@ -8,7 +8,8 @@ namespace AltV.Net.Native
     {
         public static Invoker Create(MValue.Function function)
         {
-            return new Invoker(AltNative.MValueCreate.Invoker_Create(function));
+            return new Invoker(
+                AltNative.MValueCreate.Invoker_Create(Alt.Module.CSharpNativeResource.NativePointer, function));
         }
 
         internal IntPtr NativePointer { get; }
@@ -20,7 +21,7 @@ namespace AltV.Net.Native
 
         public void Destroy()
         {
-            AltNative.MValueCreate.Invoker_Destroy(NativePointer);
+            AltNative.MValueCreate.Invoker_Destroy(Alt.Module.CSharpNativeResource.NativePointer, NativePointer);
         }
 
         public void Dispose()

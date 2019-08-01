@@ -7,6 +7,7 @@ auto resourcesCache = new alt::Array<CSharpResource*>;
 CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IResource::CreationInfo* info)
         : alt::IResource(info) {
     this->server = server;
+    this->invokers = new alt::Array<CustomInvoker*>();
     resourcesCache->Push(this);
 
     auto isDll = true;
@@ -207,8 +208,9 @@ bool CSharpResource::Start() {
 
 bool CSharpResource::Stop() {
     alt::IResource::Stop();
-    for (int i = 0; i < invokers.GetSize(); i++) {
-        delete invokers[i];
+    this->server->LogInfo("resource stopping");
+    for (int i = 0, length = invokers->GetSize(); i < length; i++) {
+        delete invokers->operator[](i);
     }
     if (OnStopDelegate == nullptr) return false;
     OnStopDelegate();
