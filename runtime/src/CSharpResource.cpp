@@ -358,19 +358,12 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
         case alt::CEvent::Type::COLSHAPE_EVENT: {
             auto entity = ((alt::CColShapeEvent*) (ev))->GetEntity();
             if (entity != nullptr) {
-                switch (entity->GetType()) {
-                    case alt::IBaseObject::Type::PLAYER:
-                        ColShapeDelegate(((alt::CColShapeEvent*) (ev))->GetTarget(),
-                                         dynamic_cast<alt::IPlayer*>(entity),
-                                         entity->GetType(),
-                                         ((alt::CColShapeEvent*) (ev))->GetState());
-                        break;
-                    case alt::IBaseObject::Type::VEHICLE:
-                        ColShapeDelegate(((alt::CColShapeEvent*) (ev))->GetTarget(),
-                                         dynamic_cast<alt::IVehicle*>(entity),
-                                         entity->GetType(),
-                                         ((alt::CColShapeEvent*) (ev))->GetState());
-                        break;
+                auto entityPointer = GetEntityPointer(entity);
+                if (entityPointer != nullptr) {
+                    ColShapeDelegate(((alt::CColShapeEvent*) (ev))->GetTarget(),
+                                     entityPointer,
+                                     entity->GetType(),
+                                     ((alt::CColShapeEvent*) (ev))->GetState());
                 }
             }
             break;

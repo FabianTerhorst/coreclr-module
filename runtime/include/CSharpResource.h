@@ -97,7 +97,7 @@ typedef void (* OnCreateColShapeDelegate_t)(alt::IColShape* colShape);
 typedef void (* OnRemoveColShapeDelegate_t)(alt::IColShape* colShape);
 typedef void (* OnConsoleCommandDelegate_t)(const char* name, alt::Array<alt::StringView>* args);
 typedef void (* MetaChangeDelegate_t)(void* entity, alt::IBaseObject::Type type, alt::StringView key, alt::MValue* value);
-typedef void (* ColShapeDelegate_t)(alt::IColShape* colShape, alt::IEntity* entity, alt::IBaseObject::Type baseObjectType, bool state);
+typedef void (* ColShapeDelegate_t)(alt::IColShape* colShape, void* entity, alt::IBaseObject::Type baseObjectType, bool state);
 
 class CSharpResource : public alt::IResource {
     bool OnEvent(const alt::CEvent* ev) override;
