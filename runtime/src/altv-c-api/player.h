@@ -119,7 +119,7 @@ EXPORT bool Player_IsInVehicle(alt::IPlayer* player);
 EXPORT alt::IVehicle* Player_GetVehicle(alt::IPlayer* player);
 EXPORT uint8_t Player_GetSeat(alt::IPlayer* player);
 
-EXPORT alt::IEntity* Player_GetEntityAimingAt(alt::IPlayer* player, alt::IBaseObject::Type &type);
+EXPORT void* Player_GetEntityAimingAt(alt::IPlayer* player, alt::IBaseObject::Type &type);
 EXPORT void Player_GetEntityAimOffset(alt::IPlayer* player, position_t &position);
 
 EXPORT bool Player_IsFlashlightActive(alt::IPlayer* player);

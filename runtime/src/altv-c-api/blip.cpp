@@ -39,9 +39,20 @@ bool Blip_IsAttached(alt::IBlip* blip) {
     return blip->IsAttached();
 }
 
-alt::IEntity* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type) {
-    type = blip->AttachedTo()->GetType();
-    return blip->AttachedTo();
+void* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type) {
+    auto entity = blip->AttachedTo();
+    if (entity != nullptr) {
+        type = entity->GetType();
+        switch (type) {
+            case alt::IBaseObject::Type::PLAYER:
+                return dynamic_cast<alt::IPlayer*>(entity);
+            case alt::IBaseObject::Type::VEHICLE:
+                return dynamic_cast<alt::IVehicle*>(entity);
+            default:
+                return nullptr;
+        }
+    }
+    return nullptr;
 }
 
 uint8_t Blip_GetType(alt::IBlip* blip) {

@@ -249,7 +249,7 @@ uint8_t Player_GetSeat(alt::IPlayer* player) {
     return player->GetSeat();
 }
 
-alt::IEntity* Player_GetEntityAimingAt(alt::IPlayer* player, alt::IBaseObject::Type &type) {
+void* Player_GetEntityAimingAt(alt::IPlayer* player, alt::IBaseObject::Type &type) {
     auto entity = player->GetEntityAimingAt();
     if (entity != nullptr) {
         type = entity->GetType();
