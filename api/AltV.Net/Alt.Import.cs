@@ -125,7 +125,7 @@ namespace AltV.Net
         {
             //var mValueArgs = MValue.CreateFromObject(args);
             var result = MValue.Nil;
-            var length = (ulong) args.Length;
+            var length = args.Length;
             var mValueArgs = new MValue[length];
             for (uint i = 0; i < length; i++)
             {
