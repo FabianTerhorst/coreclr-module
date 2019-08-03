@@ -94,7 +94,7 @@ namespace AltV.Net.Native
         internal static class MValueCall
         {
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void MValue_CallFunction(ref MValue mValue, MValue[] args, ulong size,
+            internal static extern void MValue_CallFunction(ref MValue mValue, MValue[] args, int size,
                 ref MValue result);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
