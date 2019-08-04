@@ -84,6 +84,11 @@ EXPORT void Vehicle_SetNeonActive(alt::IVehicle* vehicle, bool left, bool right,
 EXPORT void Vehicle_GetNeonColor(alt::IVehicle* vehicle, rgba_t &neonColor);
 EXPORT void Vehicle_SetNeonColor(alt::IVehicle* vehicle, alt::RGBA color);
 
+EXPORT uint8_t Vehicle_GetLivery(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetLivery(alt::IVehicle* vehicle, uint8_t livery);
+EXPORT uint8_t Vehicle_GetRoofLivery(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetRoofLivery(alt::IVehicle* vehicle, uint8_t roofLivery);
+
 EXPORT void Vehicle_GetAppearanceDataBase64(alt::IVehicle* vehicle, const char*&base64);
 EXPORT void Vehicle_LoadAppearanceDataFromBase64(alt::IVehicle* vehicle, const char* base64);
 
@@ -119,6 +124,9 @@ EXPORT bool Vehicle_IsRoofOpened(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetRoofOpened(alt::IVehicle* vehicle, bool state);
 
 EXPORT bool Vehicle_IsFlamethrowerActive(alt::IVehicle* vehicle);
+
+EXPORT float Vehicle_GetLightsMultiplier(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetLightsMultiplier(alt::IVehicle* vehicle, float multiplier);
 
 EXPORT void Vehicle_GetGameStateBase64(alt::IVehicle* vehicle, const char*&text);
 EXPORT void Vehicle_LoadGameStateFromBase64(alt::IVehicle* vehicle, const char* base64);

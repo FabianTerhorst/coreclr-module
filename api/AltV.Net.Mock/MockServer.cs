@@ -25,6 +25,8 @@ namespace AltV.Net.Mock
 
         private readonly IBaseObjectPool<IVoiceChannel> voiceChannelPool;
 
+        public int NetTime => 0;
+
         internal MockServer(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,

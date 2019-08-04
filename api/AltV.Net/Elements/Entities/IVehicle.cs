@@ -73,6 +73,10 @@ namespace AltV.Net.Elements.Entities
 
         Rgba NeonColor { get; set; }
         
+        byte Livery { get; set; }
+        
+        byte RoofLivery { get; set; }
+
         string AppearanceData { get; set; }
 
         byte GetMod(byte category);
@@ -120,6 +124,8 @@ namespace AltV.Net.Elements.Entities
         bool RoofOpened { get; set; }
 
         bool IsFlamethrowerActive { get; }
+        
+        float LightsMultiplier { get; set; }
 
         string State { get; set; }
 

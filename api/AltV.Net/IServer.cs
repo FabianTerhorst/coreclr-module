@@ -7,6 +7,8 @@ namespace AltV.Net
 {
     public interface IServer
     {
+        int NetTime { get; }
+        
         void LogInfo(string message);
 
         /// <summary>

@@ -121,3 +121,7 @@ void Server_DestroyVoiceChannel(alt::IServer* server, alt::IVoiceChannel* baseOb
 void Server_DestroyColShape(alt::IServer* server, alt::IColShape* baseObject) {
     return server->DestroyBaseObject(baseObject);
 }
+
+int32_t Server_GetNetTime(alt::IServer* server) {
+    return server->GetNetTime();
+}

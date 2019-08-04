@@ -94,6 +94,9 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_DestroyColShape(IntPtr serverPointer, IntPtr baseObjectPointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern int Server_GetNetTime(IntPtr serverPointer);
         }
     }
 }

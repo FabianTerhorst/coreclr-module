@@ -28,6 +28,8 @@ namespace AltV.Net
 
         private readonly IBaseObjectPool<IColShape> colShapePool;
 
+        public int NetTime => AltNative.Server.Server_GetNetTime(NativePointer);
+
         public Server(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
