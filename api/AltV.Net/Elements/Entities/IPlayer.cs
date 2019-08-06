@@ -286,5 +286,14 @@ namespace AltV.Net.Elements.Entities
         /// <param name="weaponComponent">The component to be removed</param>
         public static void RemoveWeaponComponent(this IPlayer player, WeaponModel weaponModel, uint weaponComponent) =>
             player.RemoveWeaponComponent((uint)weaponModel, weaponComponent);
+
+        /// <summary>
+        /// Sets the weapon tint to a weapon
+        /// </summary>
+        /// <param name="player">The player</param>
+        /// <param name="weaponModel">The weapon</param>
+        /// <param name="tintIndex">The tint index</param>
+        public static void SetWeaponTintIndex(this IPlayer player, WeaponModel weaponModel, byte tintIndex) =>
+            player.SetWeaponTintIndex((uint)weaponModel, tintIndex);
     }
 }
