@@ -1,4 +1,5 @@
 using AltV.Net.Data;
+using AltV.Net.Enums;
 using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Entities
@@ -40,7 +41,7 @@ namespace AltV.Net.Elements.Entities
         IVehicle Vehicle { get; }
 
         byte Seat { get; }
-        
+
         uint Ping { get; }
 
         void Spawn(Position position);
@@ -51,6 +52,8 @@ namespace AltV.Net.Elements.Entities
             int minute, int second);
 
         void SetWeather(uint weather);
+
+        void SetWeather(WeatherType weatherType);
 
         void Kick(string reason);
 

@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
+using AltV.Net.Enums;
 using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Entities
@@ -329,6 +330,13 @@ namespace AltV.Net.Elements.Entities
         {
             CheckExistence();
             AltVNative.Player.Player_SetWeather(NativePointer, weather);
+        }
+
+        public void SetWeather(WeatherType weatherType)
+        {
+            CheckExistence();
+
+            AltVNative.Player.Player_SetWeather(NativePointer, (uint)weatherType);
         }
 
         public void Kick(string reason)
