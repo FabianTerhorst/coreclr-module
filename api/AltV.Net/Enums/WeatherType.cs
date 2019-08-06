@@ -1,6 +1,6 @@
 ﻿namespace AltV.Net.Enums
 {
-    public enum WeatherType
+    public enum WeatherType : uint
     {
         ExtraSunny,
         Clear,
