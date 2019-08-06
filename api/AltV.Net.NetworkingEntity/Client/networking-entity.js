@@ -4,7 +4,21 @@ import "./deps/reconnecting-websocket.min.js";
 class NetworkingEntity {
     constructor() {
         alt.on("entitySetup", (url, token) => {
-            this.websocket = new WebSocket(url, token);
+            const protocolSplit = url.split("//");
+            const protocol = protocolSplit[0] + "//";
+            const splitUrl = protocolSplit[1].split(":");
+            if (splitUrl.length > 2) {
+                let address = "";
+                for (let i = 0; i < splitUrl.length - 1; i++) {
+                    address += splitUrl[i];
+                    if (i < splitUrl.length - 2) {
+                        address += ":";
+                    }
+                }
+                this.websocket = new WebSocket(protocol + "[" + address + "]:" + splitUrl[splitUrl.length - 1], token);
+            } else {
+                this.websocket = new WebSocket(url, token);
+            }
         });
 
         alt.on("entityDestroy", () => {
