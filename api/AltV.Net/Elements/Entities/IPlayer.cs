@@ -1,5 +1,6 @@
 using System;
 using AltV.Net.Data;
+using AltV.Net.Enums;
 
 namespace AltV.Net.Elements.Entities
 {
@@ -10,17 +11,17 @@ namespace AltV.Net.Elements.Entities
         bool IsConnected { get; }
 
         string Name { get; }
-        
+
         ulong SocialClubId { get; }
-        
+
         ulong HardwareIdHash { get; }
-        
+
         ulong HardwareIdExHash { get; }
-        
+
         string AuthToken { get; }
 
         ushort Health { get; set; }
-        
+
         ushort MaxHealth { get; set; }
 
         bool IsDead { get; }
@@ -36,7 +37,7 @@ namespace AltV.Net.Elements.Entities
         bool IsReloading { get; }
 
         ushort Armor { get; set; }
-        
+
         ushort MaxArmor { get; set; }
 
         float MoveSpeed { get; }
@@ -52,15 +53,14 @@ namespace AltV.Net.Elements.Entities
         bool IsInVehicle { get; }
 
         IVehicle Vehicle { get; }
-        
-        uint CurrentWeapon { get; set; }
-        
-        IEntity EntityAimingAt { get; }
-        
-        Position EntityAimOffset { get; }
-        
-        bool IsFlashlightActive { get; }
 
+        uint CurrentWeapon { get; set; }
+
+        IEntity EntityAimingAt { get; }
+
+        Position EntityAimOffset { get; }
+
+        bool IsFlashlightActive { get; }
 
         /**
          * The current vehicle seat
@@ -69,7 +69,7 @@ namespace AltV.Net.Elements.Entities
         byte Seat { get; }
 
         uint Ping { get; }
-        
+
         string Ip { get; }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace AltV.Net.Elements.Entities
         void Emit(string eventName, params object[] args);
 
         void AddWeaponComponent(uint weapon, uint weaponComponent);
-        
+
         void RemoveWeaponComponent(uint weapon, uint weaponComponent);
 
         void GetCurrentWeaponComponents(out uint[] weaponComponents);
@@ -114,5 +114,8 @@ namespace AltV.Net.Elements.Entities
     {
         public static void SetDateTime(this IPlayer player, DateTime dateTime) => player.SetDateTime(dateTime.Day,
             dateTime.Month, dateTime.Year, dateTime.Hour, dateTime.Minute, dateTime.Second);
+
+        public static void SetWeather(this IPlayer player, WeatherType weatherType) =>
+            player.SetWeather((uint)weatherType);
     }
 }
