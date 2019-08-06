@@ -116,6 +116,6 @@ namespace AltV.Net.Elements.Entities
             dateTime.Month, dateTime.Year, dateTime.Hour, dateTime.Minute, dateTime.Second);
 
         public static void SetWeather(this IPlayer player, WeatherType weatherType) =>
-            player.SetWeather((uint)weatherType);
+            player.SetWeather((uint) weatherType);
     }
 }
