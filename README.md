@@ -421,6 +421,7 @@ networkingEntity.create();
 Now you can write a own streamer to receive the entities and convert them into game objects ect. 
 Tip: You can also call the `networkingEntity.create();` in the constructor of the streamer.
 ```js
+//File: my-streamer.js
 import networkingEntity from "networking-entity";
 
 class EntityStreamer {
