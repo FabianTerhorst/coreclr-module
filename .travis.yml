@@ -35,6 +35,7 @@ script:
 - cmake --build . --config Release
 - cd src
 - if [ "$TRAVIS_OS_NAME" = "windows" ]; then cd Release ; fi
+- echo "${TRAVIS_BUILD_NUMBER}"
 deploy:
   - provider: releases
     skip_cleanup: true
