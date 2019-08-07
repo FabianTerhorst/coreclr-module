@@ -393,62 +393,60 @@ AltColShape.OnEntityEnterColShape = (entity, shape) => {
  
  ### Experimental entity streaming
  
- https://github.com/FabianTerhorst/coreclr-module/releases/download/1.7.6-beta6/networking-entity.zip
- 
- Include the js file in your index.html 
-```html
-<script type="module" src="networking-entity.js"></script>
-```
-Add the networking-entity.js and entity.proto file to your client config and save the entity.proto in top level of client files
-Add the https://www.nuget.org/packages/AltV.Net.NetworkingEntity/ to your project where you want to run the server
+https://github.com/FabianTerhorst/coreclr-module/releases/download/cdntest1.12.0-beta/networking-entity.zip
+Extract the files from the zip and put them into resources/networking-entity.
+Add the https://www.nuget.org/packages/AltV.Net.NetworkingEntity/ dependency to your server.
 ```csharp
 AltNetworking.Init();
 AltNetworking.CreateEntity(new Position {X = 0, Y = 0, Z = 73}, 1, 50,  new Dictionary<string, object>());
 ```
-Add the client.js to your client and maybe rename the file
-Use it like this
+Add the networking-entity as a dependency to your client resource.
+```
+deps: [
+   networking-entity
+]
+```
+Import the networking-entity resource in your client script and setup it.
 ```js
-import { create, onStreamIn, onStreamOut, onDataChange } from "client/streaming/client.js";
-import game from "natives";
-import hudWebView from "client/hud-webview.js";
+import networkingEntity from "networking-entity";
+networkingEntity.create();
+```
+Now you can write a own streamer to receive the entities and convert them into game objects ect. 
+Tip: You can also call the `networkingEntity.create();` in the constructor of the streamer.
+```js
+import networkingEntity from "networking-entity";
 
 class EntityStreamer {
     constructor() {
-        create(hudWebView);
-        this.peds = new Map();
         this.onStreamIn = this.onStreamIn.bind(this);
         this.onStreamOut = this.onStreamOut.bind(this);
         this.onDataChange = this.onDataChange.bind(this);
-        onStreamIn(this.onStreamIn);
-        onStreamOut(this.onStreamOut);
-        onDataChange(this.onDataChange);
+        networkingEntity.onStreamIn(this.onStreamIn);
+        networkingEntity.onStreamOut(this.onStreamOut);
+        networkingEntity.onDataChange(this.onDataChange);
     }
 
     onStreamIn(entity) {
-        const ped = game.createPed(2, 1885233650, entity.position.x, entity.position.y, entity.position.z, 61, false, true);
-        this.peds.set(entity.id, ped);
 
     }
 
     onStreamOut(entity) {
-        if (this.peds.has(entity.id)) {
-            game.deleteEntity(this.peds.get(entity.id));
-        }
+
     }
 
     onDataChange(entity, data) {
-        //TODO: when model changes ect.
+    
     }
-
 }
 
 export default new EntityStreamer();
 ```
-Import the streamer in your main client file
+Now you just need to import the streamer from your client code.
 ```js
-import "client/entity-streamer.js";
+import 'client/my-streamer.js';
 ```
-When running on server don't forget to open the websocket port 46429 or change it to a own port with
+
+When running on server don't forget to open the websocket port 46429 or change it to a own port with.
 ```csharp
 AltNetworking.Init(new NetworkingModule(myPort))
 ```
