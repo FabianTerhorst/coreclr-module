@@ -403,7 +403,9 @@ AltNetworking.Configure(options =>
             {
                 options.Port = 46429;
             });
-AltNetworking.CreateEntity(new Position {X = 0, Y = 0, Z = 73}, 1, 50,  new Dictionary<string, object>());
+var data = new Dictionary<string, object>(); // This is the entity data, the streamer on clientside will receive it with entity.data
+data["model"] = "a_c_deer";
+AltNetworking.CreateEntity(new Position {X = 0, Y = 0, Z = 73}, 1, 50, data);
 ```
 Add the networking-entity as a dependency to your client resource.
 ```
