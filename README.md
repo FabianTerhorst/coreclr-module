@@ -396,8 +396,13 @@ AltColShape.OnEntityEnterColShape = (entity, shape) => {
 https://github.com/FabianTerhorst/coreclr-module/releases/download/cdntest1.12.0-beta/networking-entity.zip
 Extract the files from the zip and put them into resources/networking-entity.
 Add the https://www.nuget.org/packages/AltV.Net.NetworkingEntity/ dependency to your server.
+When running on server don't forget to open the websocket port 46429 or change it to a own port.
+You need to call ``AltNetworking.Configure`` even when you don't want to modify the default port.
 ```csharp
-AltNetworking.Init();
+AltNetworking.Configure(options =>
+            {
+                options.Port = 46429;
+            });
 AltNetworking.CreateEntity(new Position {X = 0, Y = 0, Z = 73}, 1, 50,  new Dictionary<string, object>());
 ```
 Add the networking-entity as a dependency to your client resource.
@@ -445,9 +450,3 @@ Now you just need to import the streamer from your client code.
 ```js
 import 'client/my-streamer.js';
 ```
-
-When running on server don't forget to open the websocket port 46429 or change it to a own port with.
-```csharp
-AltNetworking.Init(new NetworkingModule(myPort))
-```
-
