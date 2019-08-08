@@ -310,8 +310,8 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
                                                "");
                 }*/
             //} else {
-                OnPlayerDisconnectDelegate(disconnectPlayer,
-                                           "");
+            OnPlayerDisconnectDelegate(disconnectPlayer,
+                                       "");
             //}
             break;
         }
@@ -358,14 +358,12 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
         }
         case alt::CEvent::Type::COLSHAPE_EVENT: {
             auto entity = ((alt::CColShapeEvent*) (ev))->GetEntity();
-            if (entity != nullptr) {
-                auto entityPointer = GetEntityPointer(entity);
-                if (entityPointer != nullptr) {
-                    ColShapeDelegate(((alt::CColShapeEvent*) (ev))->GetTarget(),
-                                     entityPointer,
-                                     entity->GetType(),
-                                     ((alt::CColShapeEvent*) (ev))->GetState());
-                }
+            auto entityPointer = GetEntityPointer(entity);
+            if (entityPointer != nullptr) {
+                ColShapeDelegate(((alt::CColShapeEvent*) (ev))->GetTarget(),
+                                 entityPointer,
+                                 entity->GetType(),
+                                 ((alt::CColShapeEvent*) (ev))->GetState());
             }
             break;
         }
