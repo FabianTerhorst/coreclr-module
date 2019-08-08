@@ -49,7 +49,7 @@ namespace AltV.Net.Elements.Entities
         }
 
         public override void GetMetaData(string key, ref MValue value) =>
-            AltNative.Checkpoint.Checkpoint_SetMetaData(NativePointer, key, ref value);
+            AltNative.Checkpoint.Checkpoint_GetMetaData(NativePointer, key, ref value);
 
         public override void SetMetaData(string key, ref MValue value) =>
             AltNative.Checkpoint.Checkpoint_SetMetaData(NativePointer, key, ref value);

@@ -38,7 +38,7 @@ namespace AltV.Net.Elements.Entities
         }
 
         public override void GetMetaData(string key, ref MValue value) =>
-            AltNative.ColShape.ColShape_SetMetaData(NativePointer, key, ref value);
+            AltNative.ColShape.ColShape_GetMetaData(NativePointer, key, ref value);
 
         public override void SetMetaData(string key, ref MValue value) =>
             AltNative.ColShape.ColShape_SetMetaData(NativePointer, key, ref value);
