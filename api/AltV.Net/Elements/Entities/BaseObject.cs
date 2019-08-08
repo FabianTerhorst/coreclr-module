@@ -138,6 +138,14 @@ namespace AltV.Net.Elements.Entities
             return NativePointer.GetHashCode();
         }
 
+        public override bool Equals(object obj)
+        {
+            if (!(obj is IBaseObject baseObject)) return false;
+            if (baseObject.Type != Type) return false;
+            if (baseObject.NativePointer != NativePointer) return false;
+            return true;
+        }
+
         public virtual void OnRemove()
         {
         }
