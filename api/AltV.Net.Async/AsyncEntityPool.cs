@@ -78,8 +78,7 @@ namespace AltV.Net.Async
         {
             Create(entityPointer, GetId(entityPointer), out entity);
         }
-
-        //TODO: what should happen on failure
+        
         public void Add(TEntity entity)
         {
             entities[entity.NativePointer] = entity;

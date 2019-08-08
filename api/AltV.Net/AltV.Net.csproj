@@ -13,7 +13,7 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.12.1-beta</PackageVersion>
+        <PackageVersion>1.12.2-beta</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>Add to IVehicle
 ```csharp
@@ -25,7 +25,8 @@ Add to IServer
 ```csharp
 int NetTime { get; }
 ```
-Improve meta data's</PackageReleaseNotes>
+Improve meta data's
+Rewrite entity handling</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

@@ -29,8 +29,7 @@ namespace AltV.Net.Async
             entity = entityFactory.Create(entityPointer);
             Add(entity);
         }
-
-        //TODO: what should happen on failure
+        
         public void Add(TBaseObject entity)
         {
             entities[entity.NativePointer] = entity;
