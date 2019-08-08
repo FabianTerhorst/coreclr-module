@@ -221,74 +221,69 @@ namespace AltV.Net
         public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
             ushort id = default;
-            vehiclePool.Create(AltNative.Server.Server_CreateVehicle(NativePointer, model, pos, rotation, ref id), id,
-                out var vehicle);
-            return vehicle;
+            var ptr = AltNative.Server.Server_CreateVehicle(NativePointer, model, pos, rotation, ref id);
+            return vehiclePool.Get(ptr, out var vehicle) ? vehicle : null;
         }
 
         public ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height,
             Rgba color)
         {
-            checkpointPool.Create(AltNative.Server.Server_CreateCheckpoint(NativePointer,
+            var ptr = AltNative.Server.Server_CreateCheckpoint(NativePointer,
                 player?.NativePointer ?? IntPtr.Zero,
-                type, pos, radius, height, color), out var checkpoint);
-            return checkpoint;
+                type, pos, radius, height, color);
+            return checkpointPool.Get(ptr, out var checkpoint) ? checkpoint : null;
         }
 
         public IBlip CreateBlip(IPlayer player, byte type, Position pos)
         {
-            blipPool.Create(AltNative.Server.Server_CreateBlip(NativePointer, player?.NativePointer ?? IntPtr.Zero,
-                type, pos), out var blip);
-            return blip;
+            var ptr = AltNative.Server.Server_CreateBlip(NativePointer, player?.NativePointer ?? IntPtr.Zero,
+                type, pos);
+            return blipPool.Get(ptr, out var blip) ? blip : null;
         }
 
         public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
         {
-            blipPool.Create(AltNative.Server.Server_CreateBlipAttached(NativePointer,
+            var ptr = AltNative.Server.Server_CreateBlipAttached(NativePointer,
                 player?.NativePointer ?? IntPtr.Zero,
-                type, entityAttach.NativePointer), out var blip);
-            return blip;
+                type, entityAttach.NativePointer);
+            return blipPool.Get(ptr, out var blip) ? blip : null;
         }
 
         public IVoiceChannel CreateVoiceChannel(bool spatial, float maxDistance)
         {
-            voiceChannelPool.Create(AltNative.Server.Server_CreateVoiceChannel(NativePointer,
-                spatial, maxDistance), out var voiceChannel);
-            return voiceChannel;
+            var ptr = AltNative.Server.Server_CreateVoiceChannel(NativePointer,
+                spatial, maxDistance);
+            return voiceChannelPool.Get(ptr, out var voiceChannel) ? voiceChannel : null;
         }
 
         public IColShape CreateColShapeCylinder(Position pos, float radius, float height)
         {
-            colShapePool.Create(AltNative.Server.Server_CreateColShapeCylinder(NativePointer, pos, radius, height),
-                out var colShape);
-            return colShape;
+            var ptr = AltNative.Server.Server_CreateColShapeCylinder(NativePointer, pos, radius, height);
+            return colShapePool.Get(ptr, out var colShape) ? colShape : null;
         }
 
         public IColShape CreateColShapeSphere(Position pos, float radius)
         {
-            colShapePool.Create(AltNative.Server.Server_CreateColShapeSphere(NativePointer, pos, radius),
-                out var colShape);
-            return colShape;
+            var ptr = AltNative.Server.Server_CreateColShapeSphere(NativePointer, pos, radius);
+            return colShapePool.Get(ptr, out var colShape) ? colShape : null;
         }
 
         public IColShape CreateColShapeCircle(Position pos, float radius)
         {
-            colShapePool.Create(AltNative.Server.Server_CreateColShapeCircle(NativePointer, pos, radius),
-                out var colShape);
-            return colShape;
+            var ptr = AltNative.Server.Server_CreateColShapeCircle(NativePointer, pos, radius);
+            return colShapePool.Get(ptr, out var colShape) ? colShape : null;
         }
 
         public IColShape CreateColShapeCube(Position pos, Position pos2)
         {
-            colShapePool.Create(AltNative.Server.Server_CreateColShapeCube(NativePointer, pos, pos2), out var colShape);
-            return colShape;
+            var ptr = AltNative.Server.Server_CreateColShapeCube(NativePointer, pos, pos2);
+            return colShapePool.Get(ptr, out var colShape) ? colShape : null;
         }
 
         public IColShape CreateColShapeRectangle(Position pos, Position pos2)
         {
-            colShapePool.Create(AltNative.Server.Server_CreateColShapeRectangle(NativePointer, pos, pos2),
-                out var colShape);
-            return colShape;
+            var ptr = AltNative.Server.Server_CreateColShapeRectangle(NativePointer, pos, pos2);
+            return colShapePool.Get(ptr, out var colShape) ? colShape : null;
         }
 
         public void RemoveBlip(IBlip blip)

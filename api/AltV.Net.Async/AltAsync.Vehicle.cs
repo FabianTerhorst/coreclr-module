@@ -11,15 +11,8 @@ namespace AltV.Net.Async
 {
     public static partial class AltAsync
     {
-        public static async Task<IVehicle> CreateVehicle(uint model, Position pos, Rotation rot)
-        {
-            ushort id = default;
-            var vehiclePtr = await AltVAsync.Schedule(() =>
-                AltNative.Server.Server_CreateVehicle(((Server) Alt.Server).NativePointer, model, pos, rot,
-                    ref id));
-            Alt.Module.VehiclePool.Create(vehiclePtr, id, out var vehicle);
-            return vehicle;
-        }
+        public static Task<IVehicle> CreateVehicle(uint model, Position pos, Rotation rot) => AltVAsync.Schedule(() =>
+            Alt.Module.Server.CreateVehicle(model, pos, rot));
 
         public static Task<IVehicle> CreateVehicle(VehicleModel model, Position pos, Rotation rot) =>
             CreateVehicle((uint) model, pos, rot);
@@ -36,14 +29,8 @@ namespace AltV.Net.Async
         public static IVehicleBuilder CreateVehicleBuilder(string model, Position pos, Rotation rot) =>
             new VehicleBuilder(Alt.Hash(model), pos, rot);
 
-        public static async Task<IPlayer> GetDriverAsync(this IVehicle vehicle)
-        {
-            var entityPointer =
-                await AltVAsync.Schedule(() =>
-                    !vehicle.Exists ? IntPtr.Zero : AltNative.Vehicle.Vehicle_GetDriver(vehicle.NativePointer));
-            if (entityPointer == IntPtr.Zero) return null;
-            return Alt.Module.PlayerPool.GetOrCreate(entityPointer, out var player) ? player : null;
-        }
+        public static Task<IPlayer> GetDriverAsync(this IVehicle vehicle) => AltVAsync.Schedule(() =>
+            !vehicle.Exists ? null : vehicle.Driver);
 
         public static Task<byte> GetModKitAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.ModKit);
@@ -235,22 +222,22 @@ namespace AltV.Net.Async
 
         public static Task SetRoofOpenAsync(this IVehicle vehicle, bool roofOpen) =>
             AltVAsync.Schedule(() => vehicle.RoofOpened = roofOpen);
-        
+
         public static Task<byte> GetDoorStateAsync(this IVehicle vehicle, byte doorId) =>
             AltVAsync.Schedule(() => vehicle.GetDoorState(doorId));
-        
+
         public static Task SetDoorStateAsync(this IVehicle vehicle, byte doorId, byte state) =>
             AltVAsync.Schedule(() => vehicle.SetDoorState(doorId, state));
-        
+
         public static Task<VehicleDoorState> GetDoorStateAsync(this IVehicle vehicle, VehicleDoor door) =>
             AltVAsync.Schedule(() => vehicle.GetDoorState(door));
-        
+
         public static Task SetDoorStateAsync(this IVehicle vehicle, VehicleDoor door, VehicleDoorState state) =>
             AltVAsync.Schedule(() => vehicle.SetDoorState(door, state));
-        
+
         public static Task<bool> IsWindowOpenedAsync(this IVehicle vehicle, byte windowId) =>
             AltVAsync.Schedule(() => vehicle.IsWindowOpened(windowId));
-        
+
         public static Task SetWindowOpenedAsync(this IVehicle vehicle, byte windowId, bool state) =>
             AltVAsync.Schedule(() => vehicle.SetWindowOpened(windowId, state));
 
@@ -286,19 +273,19 @@ namespace AltV.Net.Async
 
         public static Task<bool> HasArmoredWindowsAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.HasArmoredWindows);
-        
+
         public static Task SetSpecialLightDamaged(this IVehicle vehicle, byte specialLightId, bool isDamaged) =>
             AltVAsync.Schedule(() => vehicle.SetSpecialLightDamaged(specialLightId, isDamaged));
-        
+
         public static Task<bool> IsSpecialLightDamaged(this IVehicle vehicle, byte specialLightId) =>
             AltVAsync.Schedule(() => vehicle.IsSpecialLightDamaged(specialLightId));
-        
+
         public static Task SetWindowDamaged(this IVehicle vehicle, byte windowId, bool isDamaged) =>
             AltVAsync.Schedule(() => vehicle.SetWindowDamaged(windowId, isDamaged));
-        
+
         public static Task<bool> IsWindowDamaged(this IVehicle vehicle, byte windowId) =>
             AltVAsync.Schedule(() => vehicle.IsWindowDamaged(windowId));
-        
+
         // TODO: Add: SetLightDamaged, IsLightDamaged, SetPartBulletHoles, GetPartBulletHoles, SetPartDamageLevel, GetPartDamageLevel
         // TODO: GetArmoredWindowHealth, SetArmoredWindowHealth, GetArmoredWindowShootCount, SetArmoredWindowShootCount
         // TODO: GetBumperDamageLevel, SetBumperDamageLevel
@@ -341,31 +328,31 @@ namespace AltV.Net.Async
         public static Task
             SetNeonActiveAsync(this IVehicle vehicle, bool left, bool right, bool front, bool back) =>
             AltVAsync.Schedule(() => vehicle.SetNeonActive(left, right, front, back));
-        
+
         public static Task<string> GetAppearanceDataAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.AppearanceData);
 
         public static Task SetAppearanceDataAsync(this IVehicle vehicle, string text) =>
             AltVAsync.Schedule(() => vehicle.AppearanceData = text);
-        
+
         public static Task<uint> GetRadioStationAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.RadioStation);
 
         public static Task SetRadioStationAsync(this IVehicle vehicle, uint radioStation) =>
             AltVAsync.Schedule(() => vehicle.RadioStation = radioStation);
-        
+
         public static Task<bool> GetManualEngineControlAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.ManualEngineControl);
 
         public static Task SetManualEngineControlAsync(this IVehicle vehicle, bool state) =>
             AltVAsync.Schedule(() => vehicle.ManualEngineControl = state);
-        
+
         public static Task<string> GetScriptDataAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.ScriptData);
 
         public static Task SetScriptDataAsync(this IVehicle vehicle, string text) =>
             AltVAsync.Schedule(() => vehicle.ScriptData = text);
-        
+
         public static Task RemoveAsync(this IVehicle vehicle) => AltVAsync.Schedule(vehicle.Remove);
     }
 }
