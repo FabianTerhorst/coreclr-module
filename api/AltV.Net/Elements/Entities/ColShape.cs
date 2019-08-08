@@ -52,7 +52,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public ColShape(IntPtr nativePointer) : base(nativePointer, BaseObjectType.Checkpoint)
+        public ColShape(IntPtr nativePointer) : base(nativePointer, BaseObjectType.ColShape)
         {
         }
 
