@@ -82,10 +82,8 @@ namespace AltV.Net.Async
         //TODO: what should happen on failure
         public void Add(TEntity entity)
         {
-            if (entities.TryAdd(entity.NativePointer, entity))
-            {
-                OnAdd(entity);
-            }
+            entities[entity.NativePointer] = entity;
+            OnAdd(entity);
         }
 
         public bool Remove(TEntity entity)
