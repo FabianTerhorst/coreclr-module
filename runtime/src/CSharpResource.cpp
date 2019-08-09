@@ -259,10 +259,13 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
         }
         case alt::CEvent::Type::CHECKPOINT_EVENT: {
             auto entity = ((alt::CCheckpointEvent*) (ev))->GetEntity();
-            OnCheckpointDelegate(((alt::CCheckpointEvent*) (ev))->GetTarget(),
-                                 GetEntityPointer(entity),
-                                 entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT,
-                                 ((alt::CCheckpointEvent*) (ev))->GetState());
+            auto entityPtr = GetEntityPointer(entity);
+            if (entity != nullptr && entityPtr != nullptr) {
+                OnCheckpointDelegate(((alt::CCheckpointEvent*) (ev))->GetTarget(),
+                                     entityPtr,
+                                     entity->GetType(),
+                                     ((alt::CCheckpointEvent*) (ev))->GetState());
+            }
             break;
         }
         case alt::CEvent::Type::CLIENT_SCRIPT_EVENT: {
@@ -280,20 +283,38 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
         }
         case alt::CEvent::Type::PLAYER_DAMAGE: {
             auto entity = ((alt::CPlayerDamageEvent*) (ev))->GetAttacker();
-            OnPlayerDamageDelegate(((alt::CPlayerDamageEvent*) (ev))->GetTarget(),
-                                   GetEntityPointer(entity),
-                                   entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT,
-                                   entity != nullptr ? entity->GetID() : (uint16_t) 0,
-                                   ((alt::CPlayerDamageEvent*) (ev))->GetWeapon(),
-                                   ((alt::CPlayerDamageEvent*) (ev))->GetDamage());
+            auto entityPtr = GetEntityPointer(entity);
+            if (entity != nullptr && entityPtr != nullptr) {
+                OnPlayerDamageDelegate(((alt::CPlayerDamageEvent*) (ev))->GetTarget(),
+                                       entityPtr,
+                                       entity->GetType(),
+                                       entity->GetID(),
+                                       ((alt::CPlayerDamageEvent*) (ev))->GetWeapon(),
+                                       ((alt::CPlayerDamageEvent*) (ev))->GetDamage());
+            } else {
+                OnPlayerDamageDelegate(((alt::CPlayerDamageEvent*) (ev))->GetTarget(),
+                                       nullptr,
+                                       alt::IBaseObject::Type::BLIP,// These are placeholders for none ptr type and are ignored on c# side
+                                       0,
+                                       ((alt::CPlayerDamageEvent*) (ev))->GetWeapon(),
+                                       ((alt::CPlayerDamageEvent*) (ev))->GetDamage());
+            }
             break;
         }
         case alt::CEvent::Type::PLAYER_DEATH: {
             auto entity = ((alt::CPlayerDeathEvent*) (ev))->GetKiller();
-            OnPlayerDeathDelegate(((alt::CPlayerDeathEvent*) (ev))->GetTarget(),
-                                  GetEntityPointer(entity),
-                                  entity != nullptr ? entity->GetType() : alt::IBaseObject::Type::CHECKPOINT,
-                                  ((alt::CPlayerDeathEvent*) (ev))->GetWeapon());
+            auto entityPtr = GetEntityPointer(entity);
+            if (entity != nullptr && entityPtr != nullptr) {
+                OnPlayerDeathDelegate(((alt::CPlayerDeathEvent*) (ev))->GetTarget(),
+                                      entityPtr,
+                                      entity->GetType(),
+                                      ((alt::CPlayerDeathEvent*) (ev))->GetWeapon());
+            } else {
+                OnPlayerDeathDelegate(((alt::CPlayerDeathEvent*) (ev))->GetTarget(),
+                                      nullptr,
+                                      alt::IBaseObject::Type::BLIP,
+                                      ((alt::CPlayerDeathEvent*) (ev))->GetWeapon());
+            }
             break;
         }
         case alt::CEvent::Type::PLAYER_DISCONNECT: {
@@ -359,7 +380,7 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
         case alt::CEvent::Type::COLSHAPE_EVENT: {
             auto entity = ((alt::CColShapeEvent*) (ev))->GetEntity();
             auto entityPointer = GetEntityPointer(entity);
-            if (entityPointer != nullptr) {
+            if (entity != nullptr && entityPointer != nullptr) {
                 ColShapeDelegate(((alt::CColShapeEvent*) (ev))->GetTarget(),
                                  entityPointer,
                                  entity->GetType(),
