@@ -153,6 +153,10 @@ export function onDataChange(callback) {
     };
 }
 
+export function getStreamedInEntities() {
+    return networkingEntityClient.streamedInEntities;
+}
+
 export default {
     create,
     createWebView,
@@ -163,5 +167,6 @@ export default {
     destroy,
     onStreamIn,
     onStreamOut,
-    onDataChange
+    onDataChange,
+    getStreamedInEntities
 };
