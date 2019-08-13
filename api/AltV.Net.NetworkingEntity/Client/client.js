@@ -1,13 +1,15 @@
-import alt from 'alt';
+import { log, onServer, offServer, Player, WebView, clearInterval, setInterval } from 'alt';
 
 // This is the client class to communicate with the webview
 // e.g. const client = new NetworkingEntityClient(webview);
+
 class NetworkingEntityClient {
     // create position submit interval
     constructor(webview, defaultToken, defaultWebView) {
         this.webview = webview;
         this.defaultToken = defaultToken;
         this.defaultWebView = defaultWebView;
+        this.streamedInEntities = {};
         this.onStreamIn = () => {
         };
         this.onStreamOut = () => {
@@ -16,35 +18,48 @@ class NetworkingEntityClient {
         };
         webview.on("streamIn", (entities) => {
             for (const entity of JSON.parse(entities)) {
+                this.streamedInEntities[entity.id] = entity;
                 this.onStreamIn(entity);
             }
         });
         webview.on("streamInBuffer", (entityBuffer) => {
-            alt.log("client:" + JSON.stringify(entityBuffer));
-            alt.log("onbuffer");
+            log("client:" + JSON.stringify(entityBuffer));
+            log("onbuffer");
         });
         webview.on("streamOut", (entities) => {
             for (const entity of JSON.parse(entities)) {
-                this.onStreamOut(entity);
+                const currEntity = this.streamedInEntities[entity.id];
+                if (currEntity) {
+                    this.onStreamOut(currEntity);
+                    delete this.streamedInEntities[entity.id];
+                } else {
+                    this.onStreamOut(entity);
+                }
             }
         });
         webview.on("dataChange", (entityAndNewData) => {
             const entityAndNewDataParsed = JSON.parse(entityAndNewData);
-            this.onDataChange(entityAndNewDataParsed.entity, entityAndNewDataParsed.data);
+            const currEntity = this.streamedInEntities[entityAndNewDataParsed.entity.id];
+            if (currEntity) {
+                currEntity.data = entityAndNewDataParsed.entity.data;
+                this.onDataChange(currEntity, entityAndNewDataParsed.data);
+            } else {
+                this.onDataChange(entityAndNewDataParsed.entity, entityAndNewDataParsed.data);
+            }
         });
         if (defaultToken) {
             this.tokenCallback = (url, token) => {
                 this.init(url, token);
             };
-            alt.onServer("streamingToken", this.tokenCallback);
+            onServer("streamingToken", this.tokenCallback);
         }
     }
 
     init(url, token) {
         this.webview.emit("entitySetup", url, token);
-        const localPlayer = alt.getLocalPlayer();
+        const localPlayer = Player.local;
         let pos;
-        this.interval = alt.setInterval(() => {
+        this.interval = setInterval(() => {
             pos = localPlayer.pos;
             this.webview.emit("playerPosition",
                 pos.x,
@@ -58,9 +73,9 @@ class NetworkingEntityClient {
 
     destroy() {
         this.webview.emit("entityDestroy");
-        alt.clearInterval(this.interval);
+        clearInterval(this.interval);
         if (this.defaultToken) {
-            alt.offServer("streamingToken", this.tokenCallback);
+            offServer("streamingToken", this.tokenCallback);
         }
     }
 
@@ -89,12 +104,12 @@ export function createNoneDefaultWithWebView(webview) {
 }
 
 export function createWebView() {
-    return new alt.WebView("http://resources/networking-entity/index.html");
+    return new WebView("http://resources/networking-entity/index.html");
 }
 
 export function init(url, token) {
     if (networkingEntityClient == null) {
-        alt.log("call create(webview) first");
+        log("call create(webview) first");
         return;
     }
     networkingEntityClient.init(url, token)
@@ -102,7 +117,7 @@ export function init(url, token) {
 
 export function destroy() {
     if (networkingEntityClient == null) {
-        alt.log("call create(webview) first");
+        log("call create(webview) first");
         return;
     }
     networkingEntityClient.destroy()
@@ -110,7 +125,7 @@ export function destroy() {
 
 export function onStreamIn(callback) {
     if (networkingEntityClient == null) {
-        alt.log("call create(webview) first");
+        log("call create(webview) first");
         return;
     }
     networkingEntityClient.onStreamIn = (entity) => {
@@ -120,7 +135,7 @@ export function onStreamIn(callback) {
 
 export function onStreamOut(callback) {
     if (networkingEntityClient == null) {
-        alt.log("call create(webview) first");
+        log("call create(webview) first");
         return;
     }
     networkingEntityClient.onStreamOut = (entity) => {
@@ -130,7 +145,7 @@ export function onStreamOut(callback) {
 
 export function onDataChange(callback) {
     if (networkingEntityClient == null) {
-        alt.log("call create(webview) first");
+        log("call create(webview) first");
         return;
     }
     networkingEntityClient.onDataChange = (entity, newData) => {
