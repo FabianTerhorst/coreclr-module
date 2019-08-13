@@ -221,7 +221,7 @@ namespace AltV.Net.Elements.Entities
         byte HeadlightColor { get; set; }
 
         /// <summary>
-        /// The current radio station
+        /// Sets or Gets the current radio station
         /// </summary>
         uint RadioStation { get; set; }
 
@@ -542,7 +542,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="vehicle">The current vehicle</param>
         /// <param name="category">Mod category</param>
         /// <returns></returns>
-        public static byte GetMod(this IVehicle vehicle, VehicleModType category) => vehicle.GetMod((byte)category);
+        public static byte GetMod(this IVehicle vehicle, VehicleModType category) => vehicle.GetMod((byte) category);
 
         /// <summary>
         /// Returns the amount of mods available in a category
@@ -551,7 +551,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="category">The mod type</param>
         /// <returns></returns>
         public static byte GetModsCount(this IVehicle vehicle, VehicleModType category) =>
-            vehicle.GetModsCount((byte)category);
+            vehicle.GetModsCount((byte) category);
 
         /// <summary>
         /// Sets a vehicles mod into a category
@@ -561,7 +561,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="id">The mod id</param>
         /// <returns></returns>
         public static bool SetMod(this IVehicle vehicle, VehicleModType category, byte id) =>
-            vehicle.SetMod((byte)category, id);
+            vehicle.SetMod((byte) category, id);
 
         /// <summary>
         /// Sets a vehicles part damage
@@ -570,7 +570,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="part">The vehicle part</param>
         /// <param name="damage">The damage</param>
         public static void SetPartDamageLevel(this IVehicle vehicle, VehiclePart part, byte damage) =>
-            vehicle.SetPartDamageLevel((byte)part, damage);
+            vehicle.SetPartDamageLevel((byte) part, damage);
 
         /// <summary>
         /// Get the amount of bullet holes in a part
@@ -579,7 +579,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="part">The vehicle part</param>
         /// <returns>Amount of bullet holes</returns>
         public static byte GetPartBulletHoles(this IVehicle vehicle, VehiclePart part) =>
-            vehicle.GetPartBulletHoles((byte)part);
+            vehicle.GetPartBulletHoles((byte) part);
 
         /// <summary>
         /// Sets the amount of bullet holes in a vehicles part
@@ -588,7 +588,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="part">The part</param>
         /// <param name="shootsCount">The amount of bullets</param>
         public static void SetPartBulletHoles(this IVehicle vehicle, VehiclePart part, byte shootsCount) =>
-            vehicle.SetPartBulletHoles((byte)part, shootsCount);
+            vehicle.SetPartBulletHoles((byte) part, shootsCount);
 
         /// <summary>
         /// Gets the vehicles bumper damage level
@@ -597,7 +597,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="bumper">The bumper</param>
         /// <returns>Enum of VehicleBumperDamage</returns>
         public static VehicleBumperDamage GetBumperDamageLevel(this IVehicle vehicle, VehicleBumper bumper) =>
-            (VehicleBumperDamage)vehicle.GetBumperDamageLevel((byte)bumper);
+            (VehicleBumperDamage) vehicle.GetBumperDamageLevel((byte) bumper);
 
         /// <summary>
         /// Sets the vehicles bumper damage level
@@ -606,7 +606,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="bumper">The bumper (Front/Rear)</param>
         /// <param name="damageLevel">The Bumper damage level</param>
         public static void SetBumperDamageLevel(this IVehicle vehicle, VehicleBumper bumper,
-            VehicleBumperDamage damageLevel) => vehicle.SetBumperDamageLevel((byte)bumper, (byte)damageLevel);
+            VehicleBumperDamage damageLevel) => vehicle.SetBumperDamageLevel((byte) bumper, (byte) damageLevel);
 
         /// <summary>
         /// Gets the damage level of a vehicle part
@@ -615,7 +615,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="part">The part</param>
         /// <returns>The VehiclePart damage level</returns>
         public static VehiclePartDamage GetPartDamageLevel(this IVehicle vehicle, VehiclePart part) =>
-            (VehiclePartDamage)vehicle.GetPartDamageLevel((byte)part);
+            (VehiclePartDamage) vehicle.GetPartDamageLevel((byte) part);
 
         /// <summary>
         /// Sets the damage level of a vehicle part
@@ -624,7 +624,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="part">The vehicle part</param>
         /// <param name="damage">The damage level</param>
         public static void SetPartDamageLevel(this IVehicle vehicle, VehiclePart part, VehiclePartDamage damage) =>
-            vehicle.SetPartDamageLevel((byte)part, (byte)damage);
+            vehicle.SetPartDamageLevel((byte) part, (byte) damage);
 
         /// <summary>
         /// Returns the current door state of a vehicles door
@@ -633,7 +633,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="door">The door</param>
         /// <returns>The door state</returns>
         public static VehicleDoorState GetDoorState(this IVehicle vehicle, VehicleDoor door) =>
-            (VehicleDoorState)vehicle.GetDoorState((byte)door);
+            (VehicleDoorState) vehicle.GetDoorState((byte) door);
 
         /// <summary>
         /// Sets a vehicles door to a state
@@ -642,6 +642,21 @@ namespace AltV.Net.Elements.Entities
         /// <param name="door">The door</param>
         /// <param name="state">The state</param>
         public static void SetDoorState(this IVehicle vehicle, VehicleDoor door, VehicleDoorState state) =>
-            vehicle.SetDoorState((byte)door, (byte)state);
+            vehicle.SetDoorState((byte) door, (byte) state);
+
+        /// <summary>
+        /// Sets the current radio station
+        /// </summary>
+        /// <param name="vehicle">The vehicle</param>
+        /// <param name="radioStation">The radio station</param>
+        public static void SetRadioStation(this IVehicle vehicle, RadioStation radioStation) =>
+            vehicle.RadioStation = (uint) radioStation;
+
+        /// <summary>
+        /// Gets the current radio station
+        /// </summary>
+        /// <param name="vehicle">The vehicle</param>
+        /// <returns>The radio station</returns>
+        public static RadioStation GetRadioStation(this IVehicle vehicle) => (RadioStation) vehicle.RadioStation;
     }
 }

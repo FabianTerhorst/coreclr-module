@@ -13,7 +13,7 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.12.2-beta</PackageVersion>
+        <PackageVersion>1.12.3-beta</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>Add to IVehicle
 ```csharp
@@ -26,7 +26,8 @@ Add to IServer
 int NetTime { get; }
 ```
 Improve meta data's
-Rewrite entity handling</PackageReleaseNotes>
+Rewrite entity handling
+Add DegreeRotation and optimize position distance calculation</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
