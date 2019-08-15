@@ -658,5 +658,36 @@ namespace AltV.Net.Elements.Entities
         /// <param name="vehicle">The vehicle</param>
         /// <returns>The radio station</returns>
         public static RadioStation GetRadioStation(this IVehicle vehicle) => (RadioStation) vehicle.RadioStation;
+
+        /// <summary>
+        /// Sets the current window tint
+        /// </summary>
+        /// <param name="vehicle">The vehicle</param>
+        /// <param name="windowTint">The window tint</param>
+        public static void SetWindowTint(this IVehicle vehicle, WindowTint windowTint) =>
+            vehicle.WindowTint = (byte) windowTint;
+
+        /// <summary>
+        /// Gets the current window tint
+        /// </summary>
+        /// <param name="vehicle">The vehicle</param>
+        /// <returns>The window tint</returns>
+        public static WindowTint GetWindowTint(this IVehicle vehicle) => (WindowTint) vehicle.WindowTint;
+
+        /// <summary>
+        /// Sets the current number plate style
+        /// </summary>
+        /// <param name="vehicle">The vehicle</param>
+        /// <param name="numberPlateStyle">The number plate style</param>
+        public static void SetNumberPlateStyle(this IVehicle vehicle, NumberPlateStyle numberPlateStyle) =>
+            vehicle.NumberplateIndex = (uint) numberPlateStyle;
+
+        /// <summary>
+        /// Gets the current number plate style
+        /// </summary>
+        /// <param name="vehicle">The vehicle</param>
+        /// <returns>The number plate style</returns>
+        public static NumberPlateStyle GetNumberPlateStyle(this IVehicle vehicle) =>
+            (NumberPlateStyle) vehicle.NumberplateIndex;
     }
 }
