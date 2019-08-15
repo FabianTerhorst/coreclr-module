@@ -29,6 +29,13 @@ namespace AltV.Net.Elements.Args
             data += MValue.Size;
             return value;
         }
+        
+        public MValue Peek()
+        {
+            if (size == 0) return MValue.Nil;
+            var value = Marshal.PtrToStructure<MValue>(data);
+            return value;
+        }
 
         public bool GetNext(out bool value)
         {
@@ -132,6 +139,27 @@ namespace AltV.Net.Elements.Args
             }
 
             value = mValue.GetUint();
+            return true;
+        }
+        
+        public bool GetNext(out float value)
+        {
+            if (size == 0)
+            {
+                value = default;
+                return false;
+            }
+
+            var mValue = Marshal.PtrToStructure<MValue>(data);
+            data += MValue.Size;
+            size--;
+            if (mValue.type != MValue.Type.DOUBLE)
+            {
+                value = default;
+                return false;
+            }
+
+            value = (float) mValue.GetDouble();
             return true;
         }
 
@@ -317,10 +345,10 @@ namespace AltV.Net.Elements.Args
 
         public bool HasNext()
         {
-            return size != 0;
+            return size > 0;
         }
 
-        public MValue.Type GePreviousType()
+        public MValue.Type GetPreviousType()
         {
             var mValue = Marshal.PtrToStructure<MValue>(data - MValue.Size);
             return mValue.type;

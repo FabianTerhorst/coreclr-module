@@ -135,8 +135,8 @@ namespace AltV.Net.Native
         public string GetNextWithOffset(ref IntPtr offset)
         {
             if (size == 0) return null;
-            var value = Marshal.PtrToStructure<StringView>(offset).Text;
             size--;
+            var value = Marshal.PtrToStructure<StringView>(offset).Text;
             offset += StringView.Size;
             return value;
         }

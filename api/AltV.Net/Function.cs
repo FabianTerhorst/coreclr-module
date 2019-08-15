@@ -112,6 +112,11 @@ namespace AltV.Net
                     parsers[i] = FunctionMValueParsers.ParseDictionary;
                     objectParsers[i] = FunctionObjectParsers.ParseDictionary;
                 }
+                else if (typeInfo.IsMValueConvertible)
+                {
+                    parsers[i] = FunctionMValueParsers.ParseConvertible;
+                    objectParsers[i] = FunctionObjectParsers.ParseConvertible;
+                }
                 else if (arg == FunctionTypes.FunctionType)
                 {
                     parsers[i] = FunctionMValueParsers.ParseFunction;

@@ -14,6 +14,8 @@ namespace AltV.Net.Elements.Args
             int GetValueSize();
 
             void SkipValue();
+
+            object Peek();
         }
 
         private struct MValueArrayReader : IReadableMValue
@@ -42,6 +44,11 @@ namespace AltV.Net.Elements.Args
             public void SkipValue()
             {
                 index++;
+            }
+
+            public object Peek()
+            {
+                return values[index];
             }
         }
 
@@ -94,12 +101,17 @@ namespace AltV.Net.Elements.Args
             {
                 return names.Length - nameIndex;
             }
+            
+            public object Peek()
+            {
+                return values[index];
+            }
         }
 
         private struct MValueStartReader : IReadableMValue
         {
             private object obj;
-            
+
             private int size;
 
             public MValueStartReader(object obj)
@@ -123,6 +135,11 @@ namespace AltV.Net.Elements.Args
                 obj = null;
                 size = 0;
             }
+            
+            public object Peek()
+            {
+                return obj;
+            }
         }
 
         private bool insideObject = false;
@@ -140,7 +157,7 @@ namespace AltV.Net.Elements.Args
 
         public void BeginObject()
         {
-            CheckObject();
+            //CheckObjectOrArray();
             var obj = readableMValue.GetNext();
 
             if (!(obj is IDictionary dictionary))
@@ -162,7 +179,7 @@ namespace AltV.Net.Elements.Args
 
         public void BeginArray()
         {
-            CheckObject();
+            //CheckObjectOrArray();
             var obj = readableMValue.GetNext();
 
             if (!(obj is ICollection collection))
@@ -177,14 +194,30 @@ namespace AltV.Net.Elements.Args
 
         public void EndArray()
         {
-            CheckObject();
+            CheckArray();
             currents.Pop(); // Pop mValueObject we already have
             insideObject = currents.TryPop(out readableMValue);
         }
 
         private void CheckObject()
         {
-            if (!insideObject)
+            if (!insideObject && readableMValue.Peek().GetType() != typeof(IDictionary))
+            {
+                throw new InvalidDataException("Not inside a object or array");
+            }
+        }
+        
+        private void CheckArray()
+        {
+            if (!insideObject && readableMValue.Peek().GetType() != typeof(object[]))
+            {
+                throw new InvalidDataException("Not inside a object or array");
+            }
+        }
+
+        private void CheckObjectOrArray()
+        {
+            if (!insideObject && readableMValue.Peek().GetType() != typeof(IDictionary) && (readableMValue.Peek().GetType() != typeof(object[])))
             {
                 throw new InvalidDataException("Not inside a object or array");
             }
@@ -212,7 +245,7 @@ namespace AltV.Net.Elements.Args
 
         public bool HasNext()
         {
-            CheckObject();
+            CheckObjectOrArray();
             switch (readableMValue)
             {
                 case MValueDictionaryReader mValueDictionaryReader:
@@ -251,7 +284,7 @@ namespace AltV.Net.Elements.Args
 
         public bool NextBool()
         {
-            CheckObject();
+            CheckObjectOrArray();
             CheckValue();
             var next = readableMValue.GetNext();
             if (!(next is bool value))
@@ -265,7 +298,7 @@ namespace AltV.Net.Elements.Args
 
         public int NextInt()
         {
-            CheckObject();
+            CheckObjectOrArray();
             CheckValue();
             var next = readableMValue.GetNext();
             if (!(next is int value))
@@ -279,7 +312,7 @@ namespace AltV.Net.Elements.Args
 
         public long NextLong()
         {
-            CheckObject();
+            CheckObjectOrArray();
             CheckValue();
             var next = readableMValue.GetNext();
             if (!(next is long value))
@@ -293,7 +326,7 @@ namespace AltV.Net.Elements.Args
 
         public uint NextUInt()
         {
-            CheckObject();
+            CheckObjectOrArray();
             CheckValue();
             var next = readableMValue.GetNext();
             if (!(next is uint value))
@@ -307,7 +340,7 @@ namespace AltV.Net.Elements.Args
 
         public ulong NextULong()
         {
-            CheckObject();
+            CheckObjectOrArray();
             CheckValue();
             var next = readableMValue.GetNext();
             if (!(next is ulong value))
@@ -321,7 +354,7 @@ namespace AltV.Net.Elements.Args
 
         public double NextDouble()
         {
-            CheckObject();
+            CheckObjectOrArray();
             CheckValue();
             var next = readableMValue.GetNext();
             if (!(next is double value))
@@ -335,7 +368,7 @@ namespace AltV.Net.Elements.Args
 
         public string NextString()
         {
-            CheckObject();
+            CheckObjectOrArray();
             CheckValue();
             var next = readableMValue.GetNext();
             if (!(next is string value))
@@ -349,9 +382,24 @@ namespace AltV.Net.Elements.Args
 
         public void SkipValue()
         {
-            CheckObject();
+            CheckObjectOrArray();
             CheckValue();
             readableMValue.SkipValue();
+        }
+
+        public MValueReaderToken Peek()
+        {
+            if (insideObject) return MValueReaderToken.Object;
+            if (readableMValue is MValueDictionaryReader mValueObjectReader &&
+                mValueObjectReader.GetValueSize() >= mValueObjectReader.GetNameSize())
+            {
+                return MValueReaderToken.Value;
+            }
+
+            return ((MValueDictionaryReader) readableMValue).GetValueSize() <=
+                   ((MValueDictionaryReader) readableMValue).GetNameSize()
+                ? MValueReaderToken.Name
+                : MValueReaderToken.Unknown;
         }
     }
 }
