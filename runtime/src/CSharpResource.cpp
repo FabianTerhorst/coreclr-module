@@ -54,6 +54,8 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     currServer = server;
 
     if (isDll) {
+        coreClr->ExecuteManagedResource(server, this->GetPath().CStr(), this->name.CStr(), this->GetMain().CStr(), resourcesCache->GetSize() - 1, this);
+        if (true) return;
         struct stat buf;
         char* assemblyPath = new char[this->GetPath().GetSize() + strlen(ASSEMBLY_PATH) + 1];
         memcpy(assemblyPath, this->GetPath().CStr(), this->GetPath().GetSize());

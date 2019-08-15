@@ -5,64 +5,6 @@
 #include "CoreClr.h"
 #include <semver.h>
 
-/*int tail_cmp(char* lhs, char* rhs) {
-    if (!strcmp(lhs, rhs)) return TAIL_CMP_EQ;
-
-    char* dot = ".";
-    char* l_last, * r_last;
-
-    char* l_token = strtok_r(lhs, dot, &l_last);
-    char* r_token = strtok_r(rhs, dot, &r_last);
-
-    if (l_token && !r_token) return TAIL_CMP_LT;
-    if (!l_token && r_token) return TAIL_CMP_GT;
-
-    while (l_token || r_token) {
-        if (l_token && r_token) {
-            int l_numeric = isdigit(l_token[0]);
-            int r_numeric = isdigit(r_token[0]);
-
-            if (l_numeric && r_numeric) {
-                int l_int = atoi(l_token);
-                int r_int = atoi(r_token);
-
-                if (l_int < r_int) return TAIL_CMP_LT;
-                if (l_int > r_int) return TAIL_CMP_GT;
-            } else if (l_numeric) {
-                return TAIL_CMP_LT;
-            } else if (r_numeric) {
-                return TAIL_CMP_GT;
-            } else {
-                int cmp = strcmp(l_token, r_token);
-
-                if (cmp) return cmp > 0 ? TAIL_CMP_GT : TAIL_CMP_LT;
-            }
-        } else if (l_token) {
-            return TAIL_CMP_GT;
-        } else if (r_token) {
-            return TAIL_CMP_LT;
-        }
-
-        l_token = strtok_r(NULL, dot, &l_last);
-        r_token = strtok_r(NULL, dot, &r_last);
-    }
-
-    return TAIL_CMP_KO;
-}
-
-int tail_lt(char* lhs, char* rhs) {
-    return tail_cmp(lhs, rhs) == TAIL_CMP_LT;
-}
-
-int tail_eq(char* lhs, char* rhs) {
-    return tail_cmp(lhs, rhs) == TAIL_CMP_EQ;
-}
-
-int tail_gt(char* lhs, char* rhs) {
-    return tail_cmp(lhs, rhs) == TAIL_CMP_GT;
-}*/
-
-
 CoreClr::CoreClr(alt::IServer* server) {
     _initializeCoreCLR = nullptr;
     _shutdownCoreCLR = nullptr;
@@ -76,17 +18,17 @@ CoreClr::CoreClr(alt::IServer* server) {
             CSIDL_PROGRAM_FILES,
             FALSE);
 
-    const char *windowsProgramFilesPath = "/dotnet/shared/Microsoft.NETCore.App/";
+    const char *windowsProgramFilesPath = "/dotnet/host/fxr/";
     auto defaultPath = new char[strlen(windowsProgramFilesPath) + strlen(pf) + 1];
     strcpy(defaultPath, pf);
     strcat(defaultPath, windowsProgramFilesPath);
     GetPath(server, defaultPath);
     delete[] defaultPath;
 #else
-    GetPath(server, "/usr/share/dotnet/shared/Microsoft.NETCore.App/");
+    GetPath(server, "/usr/share/dotnet/host/fxr/");
 #endif
 #ifdef _WIN32
-    const char *fileName = "/coreclr.dll";
+    const char *fileName = "/hostfxr.dll";
 
     auto fullPath = new char[strlen(fileName) + strlen(runtimeDirectory) + 1];
     strcpy(fullPath, runtimeDirectory);
@@ -99,12 +41,11 @@ CoreClr::CoreClr(alt::IServer* server) {
         return;
     }
 
-    _initializeCoreCLR = (coreclr_initialize_ptr) GetProcAddress(_coreClrLib, "coreclr_initialize");
-    _shutdownCoreCLR = (coreclr_shutdown_2_ptr) GetProcAddress(_coreClrLib, "coreclr_shutdown_2");
-    _createDelegate = (coreclr_create_delegate_ptr) GetProcAddress(_coreClrLib, "coreclr_create_delegate");
-    _executeAssembly = (coreclr_execute_assembly_ptr) GetProcAddress(_coreClrLib, "coreclr_execute_assembly");
+    _initializeFxr = (hostfxr_initialize_for_runtime_config_fn) GetProcAddress(_coreClrLib, "hostfxr_initialize_for_runtime_config");
+    _getDelegate = (hostfxr_get_runtime_delegate_fn) GetProcAddress(_coreClrLib, "hostfxr_get_runtime_delegate");
+    _closeFxr = (hostfxr_close_fn) GetProcAddress(_coreClrLib, "hostfxr_close");
 #else
-    const char* fileName = "/libcoreclr.so";
+    const char* fileName = "/libhostfxr.so";
     char fullPath[strlen(fileName) + strlen(runtimeDirectory) + 1];
     strcpy(fullPath, runtimeDirectory);
     strcat(fullPath, fileName);
@@ -113,17 +54,15 @@ CoreClr::CoreClr(alt::IServer* server) {
         server->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll [") + fullPath + "]: " + dlerror());
         return;
     }
-    _initializeCoreCLR = (coreclr_initialize_ptr) dlsym(_coreClrLib, "coreclr_initialize");
-    _shutdownCoreCLR = (coreclr_shutdown_2_ptr) dlsym(_coreClrLib, "coreclr_shutdown_2");
-    _createDelegate = (coreclr_create_delegate_ptr) dlsym(_coreClrLib, "coreclr_create_delegate");
-    _executeAssembly = (coreclr_execute_assembly_ptr) dlsym(_coreClrLib, "coreclr_execute_assembly");
+    _initializeFxr = (hostfxr_initialize_for_runtime_config_fn) dlsym(_coreClrLib, "hostfxr_initialize_for_runtime_config");
+    _getDelegate = (hostfxr_get_runtime_delegate_fn) dlsym(_coreClrLib, "hostfxr_get_runtime_delegate");
+    _closeFxr = (hostfxr_close_fn) dlsym(_coreClrLib, "hostfxr_close");
 #endif
-    if (_initializeCoreCLR == nullptr || _shutdownCoreCLR == nullptr || _createDelegate == nullptr ||
-        _executeAssembly == nullptr) {
+    if (_initializeFxr == nullptr || _getDelegate == nullptr || _closeFxr == nullptr) {
         server->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll methods"));
         return;
     }
-    server->LogInfo(alt::String("coreclr-module: libcoreclr successfully loaded"));
+    server->LogInfo(alt::String("coreclr-module: libhostfxr successfully loaded"));
 }
 
 CoreClr::~CoreClr() {
@@ -228,6 +167,7 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::IServer* server, cons
     return assemblies;
 }
 
+//TODO: use APP_PATHS via path from main assembly because all assemblies are most likely in same path
 void CoreClr::CreateAppDomain(alt::IServer* server, alt::IResource* resource, const char* appPath, void** runtimeHost,
                               unsigned int* domainId, bool executable, uint64_t resourceIndex, const char* domainName) {
     alt::String tpaList = "";
@@ -340,6 +280,7 @@ int CoreClr::Execute(alt::IServer* server, alt::IResource* resource, const char*
 
 void CoreClr::Shutdown(alt::IServer* server, void* runtimeHost,
                        unsigned int domainId) {
+    if (_shutdownCoreCLR == nullptr) return;
     int latchedExitCode = 0;
     int result = _shutdownCoreCLR(runtimeHost, domainId, &latchedExitCode);
     if (result < 0) {
@@ -429,93 +370,79 @@ bool CoreClr::PrintError(alt::IServer* server, int errorCode) {
 }
 
 void CoreClr::CreateManagedHost(alt::IServer* server) {
-    char wd[PATH_MAX];
-    if (!GetCurrentDir(wd, PATH_MAX)) {
-        server->LogInfo(alt::String("coreclr-module: Unable to find the working directory"));
-        return;
-    }
-
+    auto wd = server->GetRootDirectory().CStr();
+    auto hostCfgPath = alt::String(wd) + HostCfg;
     auto hostDllPath = alt::String(wd) + HostDll;
+    auto load_assembly_and_get_function_pointer = get_dotnet_load_assembly(hostCfgPath.CStr());
+    server->LogInfo(alt::String("coreclr-module: Prepare for executing host:") + hostDllPath);
 
-    alt::String tpaList = "";
-
-    //TODO: check if useless list separator at the end is fine
-    for (auto &tpa : getTrustedAssemblies(server, wd)) {
-        tpaList = tpaList + tpa;
-        tpaList = tpaList + LIST_SEPARATOR;
-    }
-
-    auto nativeDllPaths = alt::String(wd) + LIST_SEPARATOR + runtimeDirectory;
-
-    const char* propertyKeys[] = {
-            "TRUSTED_PLATFORM_ASSEMBLIES",
-            "APP_PATHS",
-            "APP_NI_PATHS",
-            "NATIVE_DLL_SEARCH_DIRECTORIES",
-            "System.GC.Server",
-            "System.Globalization.Invariant"};
-
-    const char* propertyValues[] = {
-            tpaList.CStr(),
-            wd,
-            wd,
-            nativeDllPaths.CStr(),
-            "true",
-            "true"};
-
-    int result = _initializeCoreCLR(
-            wd,
-            "AltV.Net.Host",
-            sizeof(propertyKeys) / sizeof(char*),
-            propertyKeys,
-            propertyValues,
-            &managedRuntimeHost,
-            &managedDomainId);
-
-    if (result < 0) {
-        server->LogInfo(alt::String("coreclr-module: Unable to create app domain: 0x"));
-        this->PrintError(server, result);
-    } else {
-        server->LogInfo(alt::String("coreclr-module: Created app domain: 0x") + wd);
-    }
-
-    auto executablePath = alt::String(wd) + HostDll;
-
-    server->LogInfo(alt::String("coreclr-module: Prepare for executing assembly:") + executablePath);
-    int exitCode = -1;
-    result = _executeAssembly(
-            managedRuntimeHost,
-            managedDomainId,
-            0,
+    int rc = load_assembly_and_get_function_pointer(
+            hostDllPath.CStr(),
+            "AltV.Net.Host.Host, AltV.Net.Host",
+            "ExecuteResource",
+            nullptr /*delegate_type_name*/,
             nullptr,
-            executablePath.CStr(),
-            (unsigned int*) &exitCode
-    );
+            (void**)&ExecuteResourceDelegate);
 
-    if (result < 0) {
-        exitCode = -1;
-        server->LogInfo(
-                alt::String("coreclr-module: Unable to execute assembly in app path:") + executablePath);
-        this->PrintError(server, result);
-    } else {
-        server->LogInfo(alt::String("coreclr-module: Assembly executed"));
-    }
-
-    result = _createDelegate(managedRuntimeHost, managedDomainId, "AltV.Net.Host", "AltV.Net.Host.Host", "ExecuteResource", reinterpret_cast<void**>(&ExecuteResourceDelegate));
-    if (result < 0) {
-        if (this->PrintError(server, result)) {
-            return;
-        }
-        server->LogInfo(
-                alt::String("coreclr-module: Unable to get host"));
+    if (ExecuteResourceDelegate == nullptr || rc != 0) {
+        server->LogInfo("error");
+        PrintError(server, rc);
         return;
     }
 }
 
-void CoreClr::ExecuteManagedResource(alt::IServer* server, const char* resourceName, const char* resourceMain, int resourceIndex) {
+void CoreClr::ExecuteManagedResource(alt::IServer* server, const char* resourcePath, const char* resourceName, const char* resourceMain, int resourceIndex, alt::IResource* resource) {
     if (ExecuteResourceDelegate == nullptr) {
         server->LogInfo(alt::String("coreclr-module: Core CLR host not loaded"));
         return;
     }
-    ExecuteResourceDelegate(resourceName, resourceMain, resourceIndex);
+
+    // Run managed code
+
+    struct lib_args
+    {
+        //string resourcePath, string resourceName, string resourceMain, int resourceIndex
+        const char_t *resourcePath;
+        const char_t *resourceName;
+        const char_t *resourceMain;
+        int resourceIndex;
+        alt::IServer* serverPointer;
+        alt::IResource* resourcePointer;
+    };
+    lib_args args
+            {
+                    resourcePath,
+                    resourceName,
+                    resourceMain,
+                    resourceIndex,
+                    server,
+                    resource
+            };
+
+    ExecuteResourceDelegate(&args, sizeof(args));
+}
+
+load_assembly_and_get_function_pointer_fn CoreClr::get_dotnet_load_assembly(const char_t *config_path)
+{
+    // Load .NET Core
+    void *load_assembly_and_get_function_pointer = nullptr;
+    hostfxr_handle cxt = nullptr;
+    int rc = _initializeFxr(config_path, nullptr, &cxt);
+    if (rc != 0 || cxt == nullptr)
+    {
+        std::cerr << "Init failed: " << std::hex << std::showbase << rc << std::endl;
+        _closeFxr(cxt);
+        return nullptr;
+    }
+
+    // Get the load assembly function pointer
+    rc = _getDelegate(
+            cxt,
+            hdt_load_assembly_and_get_function_pointer,
+            &load_assembly_and_get_function_pointer);
+    if (rc != 0 || load_assembly_and_get_function_pointer == nullptr)
+        std::cerr << "Get delegate failed: " << std::hex << std::showbase << rc << std::endl;
+
+    _closeFxr(cxt);
+    return (load_assembly_and_get_function_pointer_fn)load_assembly_and_get_function_pointer;
 }

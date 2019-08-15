@@ -94,5 +94,136 @@ namespace AltV.Net.ResourceLoaders
 
             return typesFound.ToArray();
         }
+        
+        public static T[] FindAllTypes<T>(IEnumerable<Assembly> assemblies)
+        {
+            var typeToFind = typeof(T);
+            var typesFound = new LinkedList<T>();
+            foreach (var assembly in assemblies)
+            {
+                Type[] types;
+                try
+                {
+                    types = assembly.GetTypes();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(
+                        $"{assembly.Location}: Threw a exception while looking in assembly '{assembly.FullName}': {e}");
+
+                    if (!(e is ReflectionTypeLoadException reflectionException)) continue;
+                    Console.WriteLine("---");
+
+                    foreach (var exception in reflectionException.LoaderExceptions)
+                    {
+                        Console.WriteLine($"Exception: {exception}");
+                    }
+
+                    Console.WriteLine("---");
+
+                    continue;
+                }
+
+                foreach (var type in types)
+                {
+                    if (type.IsClass == false || type.IsAbstract ||
+                        typeToFind.IsAssignableFrom(type) == false)
+                    {
+                        continue;
+                    }
+
+                    var constructor =
+                        type.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public, null,
+                            Type.EmptyTypes, null);
+
+                    if (constructor == null)
+                    {
+                        Console.WriteLine(
+                            $"Possible {typeToFind} \"{type}\" found, but no constructor without parameters available");
+
+                        continue;
+                    }
+
+                    try
+                    {
+                        typesFound.AddFirst((T) constructor.Invoke(null));
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Threw a exception while executing constructor: + {e}");
+                    }
+                }
+            }
+
+            return typesFound.ToArray();
+        }
+
+        public static bool FindType<T>(IEnumerable<Assembly> assemblies, out T t)
+        {
+            foreach (var assembly in assemblies)
+            {
+                var typeToFind = typeof(T);
+                Type[] types;
+                try
+                {
+                    types = assembly.GetTypes();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(
+                        $"{assembly.Location}: Threw a exception while looking in assembly '{assembly.FullName}': {e}");
+
+                    if (!(e is ReflectionTypeLoadException reflectionException))
+                    {
+                        continue;
+                    }
+
+                    Console.WriteLine("---");
+
+                    foreach (var exception in reflectionException.LoaderExceptions)
+                    {
+                        Console.WriteLine($"Exception: {exception}");
+                    }
+
+                    Console.WriteLine("---");
+
+                    continue;
+                }
+
+                foreach (var type in types)
+                {
+                    if (type.IsClass == false || type.IsAbstract ||
+                        typeToFind.IsAssignableFrom(type) == false)
+                    {
+                        continue;
+                    }
+
+                    var constructor =
+                        type.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public, null,
+                            Type.EmptyTypes, null);
+
+                    if (constructor == null)
+                    {
+                        Console.WriteLine(
+                            $"Possible {typeToFind} \"{type}\" found, but no constructor without parameters available");
+
+                        continue;
+                    }
+
+                    try
+                    {
+                        t = (T) constructor.Invoke(null);
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Threw a exception while executing constructor: + {e}");
+                    }
+                }
+            }
+
+            t = default;
+            return false;
+        }
     }
 }

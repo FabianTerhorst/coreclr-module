@@ -16,16 +16,9 @@ namespace AltV.Net
             this.resource = resource;
         }
 
-        public void Start()
+        public static void SetDelegates(IResource resource, IntPtr resourcePointer)
         {
-            var indexChar = args[0].ToCharArray()[0];
-            var resourceIndex = indexChar - '0';
-            var serverPointer = AltNative.Resource.CSharpResource_GetServerPointer();
-            var resourcePointer = AltNative.Resource.CSharpResource_GetResourcePointer(resourceIndex);
-
-            ModuleWrapper.MainWithResource(serverPointer, resourcePointer, resource);
-
-            AltNative.Resource.MainDelegate onStart = OnStart;
+            AltNative.Resource.MainDelegate onStart = delegate { resource.OnStart(); };
 
             GCHandle.Alloc(onStart);
 
@@ -156,9 +149,16 @@ namespace AltV.Net
                 onRemoveColShape, onColShape);
         }
 
-        private void OnStart(IntPtr pointer, IntPtr ptr, string name, string point)
+        public void Start()
         {
-            resource.OnStart();
+            var indexChar = args[0].ToCharArray()[0];
+            var resourceIndex = indexChar - '0';
+            var serverPointer = AltNative.Resource.CSharpResource_GetServerPointer();
+            var resourcePointer = AltNative.Resource.CSharpResource_GetResourcePointer(resourceIndex);
+
+            ModuleWrapper.MainWithResource(serverPointer, resourcePointer, resource);
+
+            SetDelegates(resource, resourcePointer);
         }
     }
 }

@@ -17,13 +17,16 @@ RUN mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && cma
 
 WORKDIR /runtime/build/src
 
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2 as dotnet
+#FROM mcr.microsoft.com/dotnet/core/sdk:2.2 as dotnet
+FROM mcr.microsoft.com/dotnet/core-nightly/sdk:3.0.100-preview9 as dotnet
 
 # build example resource
 WORKDIR /altv-example/
 COPY api/ .
 
 RUN cd AltV.Net.Example && dotnet publish -c Release
+
+RUN cd AltV.Net.Host && dotnet publish -c Release
 
 #FROM debian:stable
 FROM ubuntu:18.04
@@ -42,16 +45,21 @@ WORKDIR /altv-server
 COPY altv-server .
 COPY server.cfg .
 COPY start.sh .
+COPY startgdb.sh .
+COPY libnode.so.64 .
+COPY libnode-module.so modules/
 COPY resource.cfg resources/example/
 COPY data/ ./data
+COPY chat/ resources/chat
 COPY --from=clang /runtime/build/src/libcsharp-module.so modules/
-COPY --from=dotnet /altv-example/AltV.Net.Example/bin/Release/netcoreapp2.2/publish resources/example/
-COPY --from=dotnet /usr/share/dotnet/shared/Microsoft.NETCore.App /usr/share/dotnet/shared/Microsoft.NETCore.App
-
+COPY --from=dotnet /altv-example/AltV.Net.Example/bin/Release/netcoreapp3.0/publish resources/example/
+COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.0/publish .
+COPY --from=dotnet /usr/share/dotnet /usr/share/dotnet
+RUN ls -l
 RUN chmod +x ./altv-server
 
 EXPOSE 7788/udp
 EXPOSE 7788/tcp
 
 #ENTRYPOINT ["tail", "-f", "/dev/null"]
-CMD sh start.sh
+CMD sh startgdb.sh

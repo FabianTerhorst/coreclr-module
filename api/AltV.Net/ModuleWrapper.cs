@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.Loader;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
@@ -27,6 +29,21 @@ namespace AltV.Net
             _scripts = new ScriptLoader(assemblyLoader).GetAllScripts();
             _module.OnScriptsLoaded(_scripts);
             _resource.OnStart();
+        }
+
+        public static void MainWithAssembly(IntPtr serverPointer, IntPtr resourcePointer,
+            AssemblyLoadContext assemblyLoadContext)
+        {
+            if (!AssemblyLoader.FindType(assemblyLoadContext.Assemblies, out IResource resource))
+            {
+                return;
+            }
+
+            MainWithResource(serverPointer, resourcePointer, resource);
+            //TODO: set delegates here
+            _scripts = AssemblyLoader.FindAllTypes<IScript>(assemblyLoadContext.Assemblies);
+            _module.OnScriptsLoaded(_scripts);
+            ResourceBuilder.SetDelegates(resource, resourcePointer);
         }
 
         public static void MainWithResource(IntPtr serverPointer, IntPtr resourcePointer, IResource resource)

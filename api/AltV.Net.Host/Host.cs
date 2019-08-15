@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace AltV.Net.Host
 {
-    class Host
+    public class Host
     {
         /// <summary>
         /// Main is present to execute the dll as a assembly
@@ -10,33 +12,56 @@ namespace AltV.Net.Host
         static void Main()
         {
             //TODO: init stuff we need
+            Console.WriteLine("Init host");
         }
 
-        private static string GetPath(string resourceName, string resourceMain) =>
-            $"resources/{resourceName}/{resourceMain}";
+        private static string GetPath(string resourcePath, string resourceMain) =>
+            $"{resourcePath}/{resourceMain}";
 
-        /// <summary>
-        /// This is called when a resource should get executed
-        /// </summary>
-        /// <param name="resourceName"></param>
-        /// <param name="resourceMain"></param>
-        /// <param name="resourceIndex"></param>
-        static void ExecuteResource(string resourceName, string resourceMain, int resourceIndex)
+        [StructLayout(LayoutKind.Sequential)]
+        public struct LibArgs
         {
-            var assemblyLoader = new AssemblyLoader();
-            var resourceAssemblyLoadContext = new ResourceAssemblyLoadContext();
-            assemblyLoader.LoadAssembly(resourceAssemblyLoadContext, GetPath(resourceName, resourceMain));
-            var mainEntryPoint = assemblyLoader.FindMainEntryPoint();
-            if (mainEntryPoint == null)
+            public IntPtr ResourcePath;
+            public IntPtr ResourceName;
+            public IntPtr ResourceMain;
+            public int ResourceIndex;
+            public IntPtr ServerPointer;
+            public IntPtr ResourcePointer;
+        }
+
+        public static int ExecuteResource(IntPtr arg, int argLength)
+        {
+            if (argLength < Marshal.SizeOf(typeof(LibArgs)))
             {
-                //TODO: when this happens try to find AltV.Net.dll in resource directory and execute the ModuleWrapper static main instead
-                Console.WriteLine("No main entry point found");
-                return;
+                return 1;
             }
 
-            var args = new object[1];
-            args[0] = resourceIndex.ToString();
-            mainEntryPoint.Invoke(null, args);
+            var libArgs = Marshal.PtrToStructure<LibArgs>(arg);
+            var resourcePath = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                ? Marshal.PtrToStringUni(libArgs.ResourcePath)
+                : Marshal.PtrToStringUTF8(libArgs.ResourcePath);
+            var resourceName = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                ? Marshal.PtrToStringUni(libArgs.ResourceName)
+                : Marshal.PtrToStringUTF8(libArgs.ResourceName);
+            var resourceMain = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                ? Marshal.PtrToStringUni(libArgs.ResourceMain)
+                : Marshal.PtrToStringUTF8(libArgs.ResourceMain);
+
+            var assemblyLoader = new AssemblyLoader();
+            var resourceDllPath = GetPath(resourcePath, resourceMain);
+            var resourceAssemblyLoadContext = new ResourceAssemblyLoadContext(resourceDllPath);
+            var resourceAssembly = assemblyLoader.LoadAssembly(resourceAssemblyLoadContext, resourceDllPath);
+            var altVNetAssembly = resourceAssemblyLoadContext.LoadFromAssemblyName(new AssemblyName("AltV.Net"));
+            foreach (var type in altVNetAssembly.GetTypes())
+            {
+                if (type.Name == "ModuleWrapper")
+                {
+                    type.GetMethod("MainWithAssembly", BindingFlags.Public | BindingFlags.Static)?.Invoke(null,
+                        new object[] {libArgs.ServerPointer, libArgs.ResourcePointer, resourceAssemblyLoadContext});
+                }
+            }
+            
+            return 0;
         }
     }
 }

@@ -14,6 +14,9 @@
 
 #endif
 
+#include <coreclr/hostfxr.h>
+#include <coreclr/coreclr_delegates.h>
+
 // GetCurrentDir
 #ifdef _WIN32
 #include <direct.h>
@@ -30,8 +33,10 @@
 // Host name
 #ifdef _WIN32
 #define HostDll "\AltV.Net.Host.dll"
+#define HostCfg "\AltV.Net.Host.runtimeconfig.json"
 #else
 #define HostDll "/AltV.Net.Host.dll"
+#define HostCfg "/AltV.Net.Host.runtimeconfig.json"
 #endif
 
 #ifdef __clang__
@@ -72,7 +77,7 @@ int tail_eq(char* lhs, char* rhs);
 
 int tail_gt(char* lhs, char* rhs);
 
-typedef void (* ExecuteResourceDelegate_t)(const char* resourceName, const char* resourceMain, int resourceIndex);
+typedef void (* ExecuteResourceDelegate_t)(const char* resourcePath, const char* resourceName, const char* resourceMain, int resourceIndex);
 
 class CoreClr {
 public:
@@ -106,7 +111,9 @@ public:
 
     void CreateManagedHost(alt::IServer* server);
 
-    void ExecuteManagedResource(alt::IServer* server, const char* resourceName, const char* resourceMain, int resourceIndex);
+    void ExecuteManagedResource(alt::IServer* server, const char* resourcePath, const char* resourceName, const char* resourceMain, int resourceIndex, alt::IResource* resource);
+
+    load_assembly_and_get_function_pointer_fn get_dotnet_load_assembly(const char_t *config_path);
 
 private:
 #ifdef _WIN32
@@ -121,5 +128,9 @@ private:
     coreclr_execute_assembly_ptr _executeAssembly;
     void* managedRuntimeHost;
     unsigned int managedDomainId;
-    ExecuteResourceDelegate_t ExecuteResourceDelegate;
+    component_entry_point_fn ExecuteResourceDelegate;
+
+    hostfxr_initialize_for_runtime_config_fn _initializeFxr;
+    hostfxr_get_runtime_delegate_fn _getDelegate;
+    hostfxr_close_fn _closeFxr;
 };
