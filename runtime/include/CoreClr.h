@@ -14,6 +14,26 @@
 
 #endif
 
+// GetCurrentDir
+#ifdef _WIN32
+#include <direct.h>
+#define GetCurrentDir _getcwd
+#else
+#include <unistd.h>
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#define GetCurrentDir getcwd
+#endif
+
+// Host name
+#ifdef _WIN32
+#define HostDll "\AltV.Net.Host.dll"
+#else
+#define HostDll "/AltV.Net.Host.dll"
+#endif
+
 #ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wempty-body"
@@ -52,6 +72,8 @@ int tail_eq(char* lhs, char* rhs);
 
 int tail_gt(char* lhs, char* rhs);
 
+typedef void (* ExecuteResourceDelegate_t)(const char* resourceName, const char* resourceMain, int resourceIndex);
+
 class CoreClr {
 public:
     CoreClr(alt::IServer* server);
@@ -82,6 +104,10 @@ public:
      */
     bool PrintError(alt::IServer* server, int errorCode);
 
+    void CreateManagedHost(alt::IServer* server);
+
+    void ExecuteManagedResource(alt::IServer* server, const char* resourceName, const char* resourceMain, int resourceIndex);
+
 private:
 #ifdef _WIN32
     HMODULE _coreClrLib;
@@ -93,4 +119,7 @@ private:
     coreclr_shutdown_2_ptr _shutdownCoreCLR;
     coreclr_create_delegate_ptr _createDelegate;
     coreclr_execute_assembly_ptr _executeAssembly;
+    void* managedRuntimeHost;
+    unsigned int managedDomainId;
+    ExecuteResourceDelegate_t ExecuteResourceDelegate;
 };

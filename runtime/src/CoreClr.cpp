@@ -427,3 +427,95 @@ bool CoreClr::PrintError(alt::IServer* server, int errorCode) {
     delete[] x_str;
     return false;
 }
+
+void CoreClr::CreateManagedHost(alt::IServer* server) {
+    char wd[PATH_MAX];
+    if (!GetCurrentDir(wd, PATH_MAX)) {
+        server->LogInfo(alt::String("coreclr-module: Unable to find the working directory"));
+        return;
+    }
+
+    auto hostDllPath = alt::String(wd) + HostDll;
+
+    alt::String tpaList = "";
+
+    //TODO: check if useless list separator at the end is fine
+    for (auto &tpa : getTrustedAssemblies(server, wd)) {
+        tpaList = tpaList + tpa;
+        tpaList = tpaList + LIST_SEPARATOR;
+    }
+
+    auto nativeDllPaths = alt::String(wd) + LIST_SEPARATOR + runtimeDirectory;
+
+    const char* propertyKeys[] = {
+            "TRUSTED_PLATFORM_ASSEMBLIES",
+            "APP_PATHS",
+            "APP_NI_PATHS",
+            "NATIVE_DLL_SEARCH_DIRECTORIES",
+            "System.GC.Server",
+            "System.Globalization.Invariant"};
+
+    const char* propertyValues[] = {
+            tpaList.CStr(),
+            wd,
+            wd,
+            nativeDllPaths.CStr(),
+            "true",
+            "true"};
+
+    int result = _initializeCoreCLR(
+            wd,
+            "AltV.Net.Host",
+            sizeof(propertyKeys) / sizeof(char*),
+            propertyKeys,
+            propertyValues,
+            &managedRuntimeHost,
+            &managedDomainId);
+
+    if (result < 0) {
+        server->LogInfo(alt::String("coreclr-module: Unable to create app domain: 0x"));
+        this->PrintError(server, result);
+    } else {
+        server->LogInfo(alt::String("coreclr-module: Created app domain: 0x") + wd);
+    }
+
+    auto executablePath = alt::String(wd) + HostDll;
+
+    server->LogInfo(alt::String("coreclr-module: Prepare for executing assembly:") + executablePath);
+    int exitCode = -1;
+    result = _executeAssembly(
+            managedRuntimeHost,
+            managedDomainId,
+            0,
+            nullptr,
+            executablePath.CStr(),
+            (unsigned int*) &exitCode
+    );
+
+    if (result < 0) {
+        exitCode = -1;
+        server->LogInfo(
+                alt::String("coreclr-module: Unable to execute assembly in app path:") + executablePath);
+        this->PrintError(server, result);
+    } else {
+        server->LogInfo(alt::String("coreclr-module: Assembly executed"));
+    }
+
+    result = _createDelegate(managedRuntimeHost, managedDomainId, "AltV.Net.Host", "AltV.Net.Host.Host", "ExecuteResource", reinterpret_cast<void**>(&ExecuteResourceDelegate));
+    if (result < 0) {
+        if (this->PrintError(server, result)) {
+            return;
+        }
+        server->LogInfo(
+                alt::String("coreclr-module: Unable to get host"));
+        return;
+    }
+}
+
+void CoreClr::ExecuteManagedResource(alt::IServer* server, const char* resourceName, const char* resourceMain, int resourceIndex) {
+    if (ExecuteResourceDelegate == nullptr) {
+        server->LogInfo(alt::String("coreclr-module: Core CLR host not loaded"));
+        return;
+    }
+    ExecuteResourceDelegate(resourceName, resourceMain, resourceIndex);
+}
