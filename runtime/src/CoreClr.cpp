@@ -54,7 +54,8 @@ CoreClr::CoreClr(alt::IServer* server) {
         server->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll [") + fullPath + "]: " + dlerror());
         return;
     }
-    _initializeFxr = (hostfxr_initialize_for_runtime_config_fn) dlsym(_coreClrLib, "hostfxr_initialize_for_runtime_config");
+    _initializeFxr = (hostfxr_initialize_for_runtime_config_fn) dlsym(_coreClrLib,
+                                                                      "hostfxr_initialize_for_runtime_config");
     _getDelegate = (hostfxr_get_runtime_delegate_fn) dlsym(_coreClrLib, "hostfxr_get_runtime_delegate");
     _closeFxr = (hostfxr_close_fn) dlsym(_coreClrLib, "hostfxr_close");
 #endif
@@ -382,7 +383,7 @@ void CoreClr::CreateManagedHost(alt::IServer* server) {
             "ExecuteResource",
             nullptr /*delegate_type_name*/,
             nullptr,
-            (void**)&ExecuteResourceDelegate);
+            (void**) &ExecuteResourceDelegate);
 
     if (ExecuteResourceDelegate == nullptr || rc != 0) {
         server->LogInfo("error");
@@ -391,7 +392,8 @@ void CoreClr::CreateManagedHost(alt::IServer* server) {
     }
 }
 
-void CoreClr::ExecuteManagedResource(alt::IServer* server, const char* resourcePath, const char* resourceName, const char* resourceMain, alt::IResource* resource) {
+void CoreClr::ExecuteManagedResource(alt::IServer* server, const char* resourcePath, const char* resourceName,
+                                     const char* resourceMain, alt::IResource* resource) {
     if (ExecuteResourceDelegate == nullptr) {
         server->LogInfo(alt::String("coreclr-module: Core CLR host not loaded"));
         return;
@@ -399,12 +401,11 @@ void CoreClr::ExecuteManagedResource(alt::IServer* server, const char* resourceP
 
     // Run managed code
 
-    struct lib_args
-    {
+    struct lib_args {
         //string resourcePath, string resourceName, string resourceMain, int resourceIndex
-        const char_t *resourcePath;
-        const char_t *resourceName;
-        const char_t *resourceMain;
+        const char* resourcePath;
+        const char* resourceName;
+        const char* resourceMain;
         alt::IServer* serverPointer;
         alt::IResource* resourcePointer;
     };
@@ -420,14 +421,12 @@ void CoreClr::ExecuteManagedResource(alt::IServer* server, const char* resourceP
     ExecuteResourceDelegate(&args, sizeof(args));
 }
 
-load_assembly_and_get_function_pointer_fn CoreClr::get_dotnet_load_assembly(const char_t *config_path)
-{
+load_assembly_and_get_function_pointer_fn CoreClr::get_dotnet_load_assembly(const char_t* config_path) {
     // Load .NET Core
-    void *load_assembly_and_get_function_pointer = nullptr;
+    void* load_assembly_and_get_function_pointer = nullptr;
     hostfxr_handle cxt = nullptr;
     int rc = _initializeFxr(config_path, nullptr, &cxt);
-    if (rc != 0 || cxt == nullptr)
-    {
+    if (rc != 0 || cxt == nullptr) {
         std::cerr << "Init failed: " << std::hex << std::showbase << rc << std::endl;
         _closeFxr(cxt);
         return nullptr;
@@ -442,5 +441,5 @@ load_assembly_and_get_function_pointer_fn CoreClr::get_dotnet_load_assembly(cons
         std::cerr << "Get delegate failed: " << std::hex << std::showbase << rc << std::endl;
 
     _closeFxr(cxt);
-    return (load_assembly_and_get_function_pointer_fn)load_assembly_and_get_function_pointer;
+    return (load_assembly_and_get_function_pointer_fn) load_assembly_and_get_function_pointer;
 }
