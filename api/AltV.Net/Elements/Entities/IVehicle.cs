@@ -506,32 +506,6 @@ namespace AltV.Net.Elements.Entities
         /// Removes the vehicle entity
         /// </summary>
         void Remove();
-
-#if NETCOREAPP3_0
-        byte GetMod(VehicleModType category) => GetMod((byte) category);
-
-        byte GetModsCount(VehicleModType category) => GetModsCount((byte) category);
-
-        bool SetMod(VehicleModType category, byte id) => SetMod((byte) category, id);
-
-        void SetPartDamageLevel(VehiclePart part, byte damage) => SetPartDamageLevel((byte) part, byte damage);
-
-        byte GetPartBulletHoles(VehiclePart part) => GetPartBulletHoles((byte) part);
-
-        void SetPartBulletHoles(VehiclePart part, byte shootsCount) => SetPartBulletHoles((byte) part, byte shootsCount);
-
-        VehicleBumperDamage GetBumperDamageLevel(VehicleBumper bumper) => (VehicleBumperDamage) GetBumperDamageLevel((byte) bumper);
-
-        void SetBumperDamageLevel(VehicleBumper bumper, VehicleBumperDamage damageLevel) => SetBumperDamageLevel((byte) bumper, (byte) damageLevel);
-
-        VehiclePartDamage GetPartDamageLevel(VehiclePart part) => (VehiclePartDamage) GetPartDamageLevel((byte) part);
-
-        void SetPartDamageLevel(VehiclePart part, VehiclePartDamage damage) =>  SetPartDamageLevel((byte) part, (byte) damage);
-
-        VehicleDoorState GetDoorState(VehicleDoor door) => (VehicleDoorState) GetDoorState((byte)door);
-
-        void SetDoorState(VehicleDoor door, VehicleDoorState state) => SetDoorState((byte) door, (byte) state);
-#endif
     }
 
     public static class VehicleEnumExtensions

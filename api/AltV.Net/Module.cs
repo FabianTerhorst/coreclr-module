@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -137,6 +138,15 @@ namespace AltV.Net
             }
         }
 
+        public void Off(string eventName, Function function)
+        {
+            if (function == null) return;
+            if (eventHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            {
+                eventHandlersForEvent.Remove(function);
+            }
+        }
+
         public void OnServer(string eventName, ServerEventDelegate serverEventDelegate)
         {
             if (serverEventDelegate == null) return;
@@ -151,6 +161,15 @@ namespace AltV.Net
             }
         }
 
+        public void OffServer(string eventName, ServerEventDelegate serverEventDelegate)
+        {
+            if (serverEventDelegate == null) return;
+            if (eventDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            {
+                eventHandlersForEvent.Remove(serverEventDelegate);
+            }
+        }
+
         public void OnClient(string eventName, ClientEventDelegate eventDelegate)
         {
             if (eventDelegate == null) return;
@@ -162,6 +181,15 @@ namespace AltV.Net
             {
                 eventHandlersForEvent = new HashSet<ClientEventDelegate> {eventDelegate};
                 clientEventDelegateHandlers[eventName] = eventHandlersForEvent;
+            }
+        }
+
+        public void OffClient(string eventName, ClientEventDelegate eventDelegate)
+        {
+            if (eventDelegate == null) return;
+            if (clientEventDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            {
+                eventHandlersForEvent.Remove(eventDelegate);
             }
         }
 
@@ -180,6 +208,24 @@ namespace AltV.Net
             }
         }
 
+        public void Off<TFunc>(string eventName, TFunc func, ClientEventParser<TFunc> parser) where TFunc : Delegate
+        {
+            if (func == null || parser == null) return;
+            if (!parserClientEventHandlers.TryGetValue(eventName, out var eventHandlersForEvent)) return;
+            var parsersToDelete = new LinkedList<IParserClientEventHandler>();
+            var eventHandlerToFind = new ParserClientEventHandler<TFunc>(func, parser);
+            foreach (var eventHandler in eventHandlersForEvent.Where(eventHandler =>
+                eventHandler.Equals(eventHandlerToFind)))
+            {
+                parsersToDelete.AddFirst(eventHandler);
+            }
+
+            foreach (var parserToDelete in parsersToDelete)
+            {
+                eventHandlersForEvent.Remove(parserToDelete);
+            }
+        }
+
         public void On<TFunc>(string eventName, TFunc func, ServerEventParser<TFunc> parser) where TFunc : Delegate
         {
             if (func == null || parser == null) return;
@@ -192,6 +238,24 @@ namespace AltV.Net
                 eventHandlersForEvent = new HashSet<IParserServerEventHandler>
                     {new ParserServerEventHandler<TFunc>(func, parser)};
                 parserServerEventHandlers[eventName] = eventHandlersForEvent;
+            }
+        }
+        
+        public void Off<TFunc>(string eventName, TFunc func, ServerEventParser<TFunc> parser) where TFunc : Delegate
+        {
+            if (func == null || parser == null) return;
+            if (!parserServerEventHandlers.TryGetValue(eventName, out var eventHandlersForEvent)) return;
+            var parsersToDelete = new LinkedList<IParserServerEventHandler>();
+            var eventHandlerToFind = new ParserServerEventHandler<TFunc>(func, parser);
+            foreach (var eventHandler in eventHandlersForEvent.Where(eventHandler =>
+                eventHandler.Equals(eventHandlerToFind)))
+            {
+                parsersToDelete.AddFirst(eventHandler);
+            }
+
+            foreach (var parserToDelete in parsersToDelete)
+            {
+                eventHandlersForEvent.Remove(parserToDelete);
             }
         }
 
