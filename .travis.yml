@@ -65,7 +65,6 @@ matrix:
       - WINDOWS_STABLE=false
       - LINUX_BETA=false
       - WINDOWS_BETA=false
-
 deploy:
   - provider: releases
     skip_cleanup: true
@@ -144,6 +143,13 @@ deploy:
       tags: true
   - provider: script
     skip_cleanup: true
+    script: cd ../../../../../.. && chmod +x ./cdn-linux && mkdir upload && mv ./api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.dll ./upload/AltV.Net.Host.dll && mv ./api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.runtimeconfig.json ./upload/AltV.Net.Host.runtimeconfig.json && ./cdn-linux ./upload coreclr-module/stable/x64_linux "${TRAVIS_BUILD_NUMBER}" && ./cdn-linux ./upload coreclr-module/stable/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    on:
+      repo: FabianTerhorst/coreclr-module
+      condition: "$DOTNET_STABLE = true"
+      tags: true
+  - provider: script
+    skip_cleanup: true
     prerelease: true
     script: cd .. && cd .. && cd .. && cd .. && mkdir upload && move .\runtime\build\src\Release\csharp-module.dll .\upload && cdn-win.exe .\upload coreclr-module/beta/x64_win32 "${TRAVIS_BUILD_NUMBER}"
     on:
@@ -157,4 +163,11 @@ deploy:
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$LINUX_BETA = true"
+      tags: true
+  - provider: script
+    skip_cleanup: true
+    script: cd ../../../../../.. && chmod +x ./cdn-linux && mkdir upload && mv ./api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.dll ./upload/AltV.Net.Host.dll && mv ./api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.runtimeconfig.json ./upload/AltV.Net.Host.runtimeconfig.json && ./cdn-linux ./upload coreclr-module/beta/x64_linux "${TRAVIS_BUILD_NUMBER}" && ./cdn-linux ./upload coreclr-module/beta/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    on:
+      repo: FabianTerhorst/coreclr-module
+      condition: "$DOTNET_BETA = true"
       tags: true
