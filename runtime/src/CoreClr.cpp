@@ -378,9 +378,9 @@ void CoreClr::CreateManagedHost(alt::IServer* server) {
     server->LogInfo(alt::String("coreclr-module: Prepare for executing host:") + hostDllPath);
 
     int rc = load_assembly_and_get_function_pointer(
-            hostDllPath.CStr(),
-            "AltV.Net.Host.Host, AltV.Net.Host",
-            "ExecuteResource",
+            (const char_t*) hostDllPath.CStr(),
+            (const char_t*) "AltV.Net.Host.Host, AltV.Net.Host",
+            (const char_t*) "ExecuteResource",
             nullptr /*delegate_type_name*/,
             nullptr,
             (void**) &ExecuteResourceDelegate);
