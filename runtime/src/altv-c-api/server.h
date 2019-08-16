@@ -52,6 +52,7 @@ EXPORT void Server_DestroyCheckpoint(alt::IServer* server, alt::ICheckpoint* bas
 EXPORT void Server_DestroyVoiceChannel(alt::IServer* server, alt::IVoiceChannel* baseObject);
 EXPORT void Server_DestroyColShape(alt::IServer* server, alt::IColShape* baseObject);
 EXPORT int32_t Server_GetNetTime(alt::IServer* server);
+EXPORT void Server_GetRootDirectory(alt::IServer* server, const char*&text);
 #ifdef __cplusplus
 }
 #endif

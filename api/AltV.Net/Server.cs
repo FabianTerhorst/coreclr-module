@@ -30,6 +30,8 @@ namespace AltV.Net
 
         public int NetTime => AltNative.Server.Server_GetNetTime(NativePointer);
 
+        public string RootDirectory { get; }
+
         public Server(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
@@ -38,7 +40,7 @@ namespace AltV.Net
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool)
         {
-            this.NativePointer = nativePointer;
+            NativePointer = nativePointer;
             this.baseBaseObjectPool = baseBaseObjectPool;
             this.baseEntityPool = baseEntityPool;
             this.playerPool = playerPool;
@@ -47,6 +49,9 @@ namespace AltV.Net
             this.checkpointPool = checkpointPool;
             this.voiceChannelPool = voiceChannelPool;
             this.colShapePool = colShapePool;
+            var ptr = IntPtr.Zero;
+            AltNative.Server.Server_GetRootDirectory(nativePointer, ref ptr);
+            RootDirectory = Marshal.PtrToStringUTF8(ptr);
         }
 
         public void LogInfo(IntPtr messagePtr)

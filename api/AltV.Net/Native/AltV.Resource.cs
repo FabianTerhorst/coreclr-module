@@ -18,15 +18,25 @@ namespace AltV.Net.Native
                 ref MValueArray values);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Resource_GetExport(IntPtr resourcePointer, string key, ref MValue mvalue);
-
-            //Todo: define function pointers for standalone resource here
-
+            internal static extern bool Resource_GetExport(IntPtr resourcePointer, string key, ref MValue mValue);
+            
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr CSharpResource_GetResourcePointer(int resourceIndex);
-
+            internal static extern void Resource_SetExport(IntPtr resourcePointer, IntPtr text, ref MValue mValue);
+            
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr CSharpResource_GetServerPointer();
+            internal static extern void Resource_GetPath(IntPtr resourcePointer, ref IntPtr text);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Resource_GetName(IntPtr resourcePointer, ref IntPtr text);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Resource_GetMain(IntPtr resourcePointer, ref IntPtr text);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Resource_GetType(IntPtr resourcePointer, ref IntPtr text);
+                
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern ResourceState Resource_GetState(IntPtr resourcePointer);
 
             internal delegate void MainDelegate(IntPtr serverPointer, IntPtr resourcePointer, string resourceName,
                 string entryPoint);

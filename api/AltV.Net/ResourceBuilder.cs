@@ -6,16 +6,6 @@ namespace AltV.Net
 {
     public class ResourceBuilder
     {
-        private readonly string[] args;
-
-        private readonly IResource resource;
-
-        public ResourceBuilder(string[] args, IResource resource)
-        {
-            this.args = args;
-            this.resource = resource;
-        }
-
         public static void SetDelegates(IResource resource, IntPtr resourcePointer)
         {
             AltNative.Resource.MainDelegate onStart = delegate { resource.OnStart(); };
@@ -147,18 +137,6 @@ namespace AltV.Net
                 onCreateBlip, onRemoveBlip, onCreateCheckpoint, onRemoveCheckpoint, onCreateVoiceChannel,
                 onRemoveVoiceChannel, onConsoleCommand, onMetaDataChange, onSyncedMetaDataChange, onCreateColShape,
                 onRemoveColShape, onColShape);
-        }
-
-        public void Start()
-        {
-            var indexChar = args[0].ToCharArray()[0];
-            var resourceIndex = indexChar - '0';
-            var serverPointer = AltNative.Resource.CSharpResource_GetServerPointer();
-            var resourcePointer = AltNative.Resource.CSharpResource_GetResourcePointer(resourceIndex);
-
-            ModuleWrapper.MainWithResource(serverPointer, resourcePointer, resource);
-
-            SetDelegates(resource, resourcePointer);
         }
     }
 }

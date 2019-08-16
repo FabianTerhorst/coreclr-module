@@ -9,6 +9,8 @@ namespace AltV.Net
     {
         int NetTime { get; }
         
+        string RootDirectory { get; }
+        
         void LogInfo(string message);
 
         /// <summary>

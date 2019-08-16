@@ -43,10 +43,4 @@ namespace AltV.Net
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool);
     }
-
-    public static class ResourceExtensions
-    {
-        public static void Start(this IResource resource, string[] args) =>
-            new ResourceBuilder(args, resource).Start();
-    }
 }

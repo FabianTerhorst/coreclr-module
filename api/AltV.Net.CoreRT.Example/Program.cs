@@ -25,7 +25,7 @@ namespace AltV.Net.CoreRT.Example
             
             Console.WriteLine("Hello World!");
 
-            new ResourceBuilder(args, new MyResource()).Start();
+            //new ResourceBuilder(args, new MyResource()).Start();
         }
     }
 }

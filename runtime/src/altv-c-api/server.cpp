@@ -125,3 +125,7 @@ void Server_DestroyColShape(alt::IServer* server, alt::IColShape* baseObject) {
 int32_t Server_GetNetTime(alt::IServer* server) {
     return server->GetNetTime();
 }
+
+void Server_GetRootDirectory(alt::IServer* server, const char*&text) {
+    text = server->GetRootDirectory().CStr();
+}

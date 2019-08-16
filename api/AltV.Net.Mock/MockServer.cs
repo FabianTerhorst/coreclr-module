@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
@@ -26,6 +27,8 @@ namespace AltV.Net.Mock
         private readonly IBaseObjectPool<IVoiceChannel> voiceChannelPool;
 
         public int NetTime => 0;
+
+        public string RootDirectory => "";
 
         internal MockServer(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
