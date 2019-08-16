@@ -54,7 +54,10 @@ matrix:
       - dotnet publish -c Release
       - dotnet pack -c Release
       - cd AltV.Net.Host
-      - cd bin/Release/dotnetcore3.0/publish
+      - cd bin
+      - cd Release
+      - cd netcoreapp3.0
+      - cd publish
       - ls -l
 deploy:
   - provider: releases
