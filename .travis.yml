@@ -50,6 +50,12 @@ matrix:
     script:
       - sudo snap alias dotnet-sdk.dotnet dotnet
       - dotnet --version
+      - cd api
+      - dotnet publish -c Release
+      - dotnet pack -c Release
+      - cd AltV.Net.Host
+      - cd bin/Release/dotnetcore3.0/publish
+      - ls -l
 deploy:
   - provider: releases
     skip_cleanup: true
