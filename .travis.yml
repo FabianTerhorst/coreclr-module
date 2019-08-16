@@ -151,7 +151,7 @@ deploy:
   - provider: script
     skip_cleanup: true
     prerelease: true
-    script: cd .. && cd .. && cd .. && cd .. && mkdir upload && move .\runtime\build\src\Release\csharp-module.dll .\upload\modules && cdn-win.exe .\upload coreclr-module/alpha/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    script: cd .. && cd .. && cd .. && cd .. && mkdir upload && move .\runtime\build\src\Release\csharp-module.dll .\upload\modules && cdn-win.exe .\upload coreclr-module/beta/x64_win32 "${TRAVIS_BUILD_NUMBER}"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$WINDOWS_BETA = true"
@@ -159,14 +159,14 @@ deploy:
   - provider: script
     skip_cleanup: true
     prerelease: true
-    script: cd .. && cd .. && cd .. && chmod +x ./cdn-linux && mkdir upload && mv ./runtime/build/src/libcsharp-module.so ./upload/modules/libcsharp-module.so && ./cdn-linux ./upload coreclr-module/alpha/x64_linux "${TRAVIS_BUILD_NUMBER}"
+    script: cd .. && cd .. && cd .. && chmod +x ./cdn-linux && mkdir upload && mv ./runtime/build/src/libcsharp-module.so ./upload/modules/libcsharp-module.so && ./cdn-linux ./upload coreclr-module/beta/x64_linux "${TRAVIS_BUILD_NUMBER}"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$LINUX_BETA = true"
       tags: true
   - provider: script
     skip_cleanup: true
-    script: cd ../../../../../.. && chmod +x ./cdn-linux && mkdir upload && mv ./api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.dll ./upload/AltV.Net.Host.dll && mv ./api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.runtimeconfig.json ./upload/AltV.Net.Host.runtimeconfig.json && ./cdn-linux ./upload coreclr-module/alpha/x64_linux "${TRAVIS_BUILD_NUMBER}" && ./cdn-linux ./upload coreclr-module/alpha/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    script: cd ../../../../../.. && chmod +x ./cdn-linux && mkdir upload && mv ./api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.dll ./upload/AltV.Net.Host.dll && mv ./api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.runtimeconfig.json ./upload/AltV.Net.Host.runtimeconfig.json && ./cdn-linux ./upload coreclr-module/beta/x64_linux "${TRAVIS_BUILD_NUMBER}" && ./cdn-linux ./upload coreclr-module/beta/x64_win32 "${TRAVIS_BUILD_NUMBER}"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$DOTNET_BETA = true"
