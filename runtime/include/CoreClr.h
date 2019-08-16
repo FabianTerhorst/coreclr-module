@@ -22,13 +22,11 @@
 #include <direct.h>
 #define GetCurrentDir _getcwd
 #else
-
 #include <unistd.h>
 
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-
 #define GetCurrentDir getcwd
 #endif
 
@@ -79,8 +77,7 @@ int tail_eq(char* lhs, char* rhs);
 
 int tail_gt(char* lhs, char* rhs);
 
-typedef void (* ExecuteResourceDelegate_t)(const char* resourcePath, const char* resourceName, const char* resourceMain,
-                                           int resourceIndex);
+typedef void (* ExecuteResourceDelegate_t)(const char* resourcePath, const char* resourceName, const char* resourceMain, int resourceIndex);
 
 class CoreClr {
 public:
@@ -96,9 +93,8 @@ public:
     void CreateAppDomain(alt::IServer* server, alt::IResource* resource, const char* appPath, void** runtimeHost,
                          unsigned int* domainId, bool executable, uint64_t resourceIndex, const char* domainName);
 
-    int Execute(alt::IServer* server, alt::IResource* resource, const char* appPath, uint64_t resourceIndex,
-                void** runtimeHost,
-                const unsigned int* domainId);
+    int Execute(alt::IServer* server, alt::IResource* resource, const char* appPath, uint64_t resourceIndex, void** runtimeHost,
+                         const unsigned int* domainId);
 
     void Shutdown(alt::IServer* server, void* runtimeHost,
                   unsigned int domainId);
@@ -115,10 +111,9 @@ public:
 
     void CreateManagedHost(alt::IServer* server);
 
-    void ExecuteManagedResource(alt::IServer* server, const char* resourcePath, const char* resourceName,
-                                const char* resourceMain, alt::IResource* resource);
+    void ExecuteManagedResource(alt::IServer* server, const char* resourcePath, const char* resourceName, const char* resourceMain, alt::IResource* resource);
 
-    load_assembly_and_get_function_pointer_fn get_dotnet_load_assembly(const char* config_path);
+    load_assembly_and_get_function_pointer_fn get_dotnet_load_assembly(const char_t *config_path);
 
 private:
 #ifdef _WIN32

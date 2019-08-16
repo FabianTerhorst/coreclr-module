@@ -374,7 +374,7 @@ void CoreClr::CreateManagedHost(alt::IServer* server) {
     auto wd = server->GetRootDirectory().CStr();
     auto hostCfgPath = alt::String(wd) + HostCfg;
     auto hostDllPath = alt::String(wd) + HostDll;
-    auto load_assembly_and_get_function_pointer = get_dotnet_load_assembly(hostCfgPath.CStr());
+    auto load_assembly_and_get_function_pointer = get_dotnet_load_assembly((const char_t*) hostCfgPath.CStr());
     server->LogInfo(alt::String("coreclr-module: Prepare for executing host:") + hostDllPath);
 
     int rc = load_assembly_and_get_function_pointer(
@@ -421,7 +421,7 @@ void CoreClr::ExecuteManagedResource(alt::IServer* server, const char* resourceP
     ExecuteResourceDelegate(&args, sizeof(args));
 }
 
-load_assembly_and_get_function_pointer_fn CoreClr::get_dotnet_load_assembly(const char* config_path) {
+load_assembly_and_get_function_pointer_fn CoreClr::get_dotnet_load_assembly(const char_t* config_path) {
     // Load .NET Core
     void* load_assembly_and_get_function_pointer = nullptr;
     hostfxr_handle cxt = nullptr;
