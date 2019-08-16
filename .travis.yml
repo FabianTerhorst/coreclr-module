@@ -22,7 +22,7 @@ matrix:
         - gcc-8
         - g++-8
   - os: windows
-  - filter_secrets: false
+    filter_secrets: false
 before_script: cd runtime
 script:
 - echo "$GITHUB_DEPLOY_PRERELEASE"
