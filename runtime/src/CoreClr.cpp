@@ -421,7 +421,7 @@ void CoreClr::ExecuteManagedResource(alt::IServer* server, const char* resourceP
     ExecuteResourceDelegate(&args, sizeof(args));
 }
 
-load_assembly_and_get_function_pointer_fn CoreClr::get_dotnet_load_assembly(const char_t* config_path) {
+load_assembly_and_get_function_pointer_fn CoreClr::get_dotnet_load_assembly(const char* config_path) {
     // Load .NET Core
     void* load_assembly_and_get_function_pointer = nullptr;
     hostfxr_handle cxt = nullptr;
