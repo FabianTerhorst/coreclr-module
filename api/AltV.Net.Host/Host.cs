@@ -24,7 +24,6 @@ namespace AltV.Net.Host
             public IntPtr ResourcePath;
             public IntPtr ResourceName;
             public IntPtr ResourceMain;
-            public int ResourceIndex;
             public IntPtr ServerPointer;
             public IntPtr ResourcePointer;
         }

@@ -249,7 +249,3 @@ EXPORT void CSharpResource_SetMain(CSharpResource* resource,
                                    OnCreateColShapeDelegate_t createColShapeDelegate,
                                    OnRemoveColShapeDelegate_t removeColShapeDelegate,
                                    ColShapeDelegate_t colShapeDelegate);
-
-EXPORT alt::IServer* CSharpResource_GetServerPointer();
-
-EXPORT CSharpResource* CSharpResource_GetResourcePointer(int32_t resourceIndex);

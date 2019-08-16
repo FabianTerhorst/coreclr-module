@@ -1,21 +1,16 @@
 #include "CSharpResource.h"
-#include "altv-c-api/mvalue.h"
-
-alt::IServer* currServer = nullptr;
-auto resourcesCache = new alt::Array<CSharpResource*>;
 
 CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IResource::CreationInfo* info)
         : alt::IResource(info) {
     this->server = server;
     this->invokers = new alt::Array<CustomInvoker*>();
-    resourcesCache->Push(this);
 
-    auto isDll = true;
+    //auto isDll = true;
 
-    auto mainSize = main.GetSize();
+    /*auto mainSize = main.GetSize();
     if (mainSize < 5 || memcmp(main.CStr() + mainSize - 4, ".dll", 4) != 0) {
         isDll = false;
-    }
+    }*/
 
     runtimeHost = nullptr;
     domainId = 0;
@@ -51,11 +46,9 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     OnRemoveColShapeDelegate = nullptr;
     ColShapeDelegate = nullptr;
 
-    currServer = server;
-
-    if (isDll) {
-        coreClr->ExecuteManagedResource(server, this->GetPath().CStr(), this->name.CStr(), this->GetMain().CStr(), resourcesCache->GetSize() - 1, this);
-        if (true) return;
+    //if (isDll) {
+        coreClr->ExecuteManagedResource(server, this->GetPath().CStr(), this->name.CStr(), this->GetMain().CStr(), this);
+        /*
         struct stat buf;
         char* assemblyPath = new char[this->GetPath().GetSize() + strlen(ASSEMBLY_PATH) + 1];
         memcpy(assemblyPath, this->GetPath().CStr(), this->GetPath().GetSize());
@@ -145,8 +138,8 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
             coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
                                  "OnColShape",
                                  reinterpret_cast<void**>(&ColShapeDelegate));
-        }
-    } else {
+        }*/
+    /*} else {
 #ifdef _WIN32
         server->LogInfo("Executable found, but not supported on windows");
 #else
@@ -177,14 +170,14 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
             char resourceIndexString[1];
             resourceIndexString[0] = resourceIndexChar;
             //TODO: fix / for windows
-            /*char* argv[4];
+            ***char* argv[4];
             argv[0] = currFullPath;
             argv[1] = "start";
             argv[2] = resourceIndexString;
             argv[3] = NULL;
 
             printf("Executing resource with index %lld at path: %s\n", index, currFullPath);
-            auto result = execvp(argv[0], &argv[1]);*/
+            auto result = execvp(argv[0], &argv[1]);**
             auto result = execl(currFullPath, main.CStr(), resourceIndexString, NULL);
             if (result == -1) {
                 printf("execvp-error: %s\n", strerror(errno));
@@ -198,7 +191,7 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
             printf("Executed resource in pid: %d\n", pid);
         }
 #endif
-    }
+    }*/
 }
 
 bool CSharpResource::Start() {
@@ -219,7 +212,7 @@ bool CSharpResource::Stop() {
 }
 
 CSharpResource::~CSharpResource() {
-    int i = 0;
+    /*int i = 0;
     for (auto resource : *resourcesCache) {
         if (resource == this) {
             auto newResourcesCache = new alt::Array<CSharpResource*>;
@@ -233,7 +226,7 @@ CSharpResource::~CSharpResource() {
             break;
         }
         i++;
-    }
+    }*/
 }
 
 //TODO: needs entity type enum value for undefined
@@ -513,14 +506,6 @@ void CSharpResource_SetMain(CSharpResource* resource, MainDelegate_t mainDelegat
     resource->OnCreateColShapeDelegate = createColShapeDelegate;
     resource->OnRemoveColShapeDelegate = removeColShapeDelegate;
     resource->ColShapeDelegate = colShapeDelegate;
-}
-
-alt::IServer* CSharpResource_GetServerPointer() {
-    return currServer;
-}
-
-CSharpResource* CSharpResource_GetResourcePointer(int32_t resourceIndex) {
-    return (*resourcesCache)[resourceIndex];
 }
 
 void CSharpResource::MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files) {

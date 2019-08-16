@@ -391,7 +391,7 @@ void CoreClr::CreateManagedHost(alt::IServer* server) {
     }
 }
 
-void CoreClr::ExecuteManagedResource(alt::IServer* server, const char* resourcePath, const char* resourceName, const char* resourceMain, int resourceIndex, alt::IResource* resource) {
+void CoreClr::ExecuteManagedResource(alt::IServer* server, const char* resourcePath, const char* resourceName, const char* resourceMain, alt::IResource* resource) {
     if (ExecuteResourceDelegate == nullptr) {
         server->LogInfo(alt::String("coreclr-module: Core CLR host not loaded"));
         return;
@@ -405,7 +405,6 @@ void CoreClr::ExecuteManagedResource(alt::IServer* server, const char* resourceP
         const char_t *resourcePath;
         const char_t *resourceName;
         const char_t *resourceMain;
-        int resourceIndex;
         alt::IServer* serverPointer;
         alt::IResource* resourcePointer;
     };
@@ -414,7 +413,6 @@ void CoreClr::ExecuteManagedResource(alt::IServer* server, const char* resourceP
                     resourcePath,
                     resourceName,
                     resourceMain,
-                    resourceIndex,
                     server,
                     resource
             };
