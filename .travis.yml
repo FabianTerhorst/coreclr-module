@@ -58,7 +58,7 @@ matrix:
       - cd ..
       - cd upload
       - cd modules
-      - move runtime\build\src\Release\csharp-module.dll upload\modules\csharp-module.dll
+      - xcopy runtime\build\src\Release\csharp-module.dll upload\modules\csharp-module.dll
       - echo "${TRAVIS_BUILD_NUMBER}"
   - dist: xenial
     addons:
