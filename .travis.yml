@@ -54,6 +54,8 @@ matrix:
       - ls -l
       - cd ..
       - cd ..
+      - cd ..
+      - cd ..
       - cd upload
       - cd modules
       - move .\runtime\build\src\Release\csharp-module.dll .\upload\modules\csharp-module.dll
