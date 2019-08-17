@@ -31,6 +31,7 @@ matrix:
       - cmake --build . --config Release
       - cd ..
       - cd ..
+      - mv ./runtime/build/src/libcsharp-module.so ./upload/modules/libcsharp-module.so
       - echo "${TRAVIS_BUILD_NUMBER}"
   - os: windows
     filter_secrets: false
@@ -47,6 +48,7 @@ matrix:
       - cmake --build . --config Release
       - cd ..
       - cd ..
+      - move .\runtime\build\src\Release\csharp-module.dll .\upload\modules\csharp-module.dll
       - echo "${TRAVIS_BUILD_NUMBER}"
   - dist: xenial
     addons:
@@ -66,6 +68,8 @@ matrix:
       - dotnet publish -c Release
       - dotnet pack -c Release
       - cd ..
+      - mv ./api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.dll ./upload/AltV.Net.Host.dll
+      - mv ./api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.runtimeconfig.json ./upload/AltV.Net.Host.runtimeconfig.json
       - if [ "$LINUX_STABLE" = true ]; then DOTNET_STABLE=true ; fi
       - if [ "$LINUX_BETA" = true ]; then DOTNET_BETA=true ; fi
       - LINUX_STABLE=false
@@ -77,7 +81,7 @@ deploy:
     skip_cleanup: true
     api_key:
       secure: SHN0O0J2NFHAXP5bIRKufF3u8RqHDSKSNbVNXKnDS5FXJkhwDlHYfL1mF9xIlkAUSNvYvrKaReDAxWwRulKWisZi4JXA4OL96j2Pqiovw7npomDmEQpXLC8TgiH9TvkIFFXr4L5Cm6zzXTVjrI2FA1WiHR2rga1A367dCVX0wdSjsH4qwC3CsNFBhStsbPMQl49U2hHGe+Nl02LkzSqS0QBZ6RZsChF+fzs35512Xvfiz0qXExCIIQpIYbnPAKbNA4vd6/zTkj72xYYsK8pKGKu56ENCPf2uvzfacUDQKrTKLTVVVWlJ8865VfIwjPixfD/dvnD4XZ/mC3SQbAwEE5WjSApOXCs/eL/zKq4Wa3oaJTc0mFf31wCySAQfL3vD51Wu/pjPuixsH1o6JPxWZuGA5KbL7Bi0D3I8T3mD4CJoPwIYbmu/6kwUHbOi/Nd9fb0YraL9k1uX4WzROIpGLbADccr1L7itGVdnhD5vlrp07ETluOxyJZlsB4gNVaSk4MUAppNVlXAi/4UOmEmQYIZRg1akO+4nDN0+nfwzNRSM4chSDBFwDBthqsADErFf5yFGy9JmLHLD2qkeSjqEm/rc1a2zV66nucVmwKHZyPL92GhGkguxsYKFNu/42382W1wHJ47nDCpEQWOVgFgix7xdgSKeZiYvoEs0JgWSjLU=
-    file: runtime/build/src/libcsharp-module.so
+    file: upload/modules/libcsharp-module.so
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$LINUX_STABLE = true"
@@ -86,7 +90,7 @@ deploy:
     skip_cleanup: true
     api_key:
       secure: SHN0O0J2NFHAXP5bIRKufF3u8RqHDSKSNbVNXKnDS5FXJkhwDlHYfL1mF9xIlkAUSNvYvrKaReDAxWwRulKWisZi4JXA4OL96j2Pqiovw7npomDmEQpXLC8TgiH9TvkIFFXr4L5Cm6zzXTVjrI2FA1WiHR2rga1A367dCVX0wdSjsH4qwC3CsNFBhStsbPMQl49U2hHGe+Nl02LkzSqS0QBZ6RZsChF+fzs35512Xvfiz0qXExCIIQpIYbnPAKbNA4vd6/zTkj72xYYsK8pKGKu56ENCPf2uvzfacUDQKrTKLTVVVWlJ8865VfIwjPixfD/dvnD4XZ/mC3SQbAwEE5WjSApOXCs/eL/zKq4Wa3oaJTc0mFf31wCySAQfL3vD51Wu/pjPuixsH1o6JPxWZuGA5KbL7Bi0D3I8T3mD4CJoPwIYbmu/6kwUHbOi/Nd9fb0YraL9k1uX4WzROIpGLbADccr1L7itGVdnhD5vlrp07ETluOxyJZlsB4gNVaSk4MUAppNVlXAi/4UOmEmQYIZRg1akO+4nDN0+nfwzNRSM4chSDBFwDBthqsADErFf5yFGy9JmLHLD2qkeSjqEm/rc1a2zV66nucVmwKHZyPL92GhGkguxsYKFNu/42382W1wHJ47nDCpEQWOVgFgix7xdgSKeZiYvoEs0JgWSjLU=
-    file: runtime/build/src/Release/csharp-module.dll
+    file: upload/modules/csharp-module.dll
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$WINDOWS_STABLE = true"
@@ -96,8 +100,8 @@ deploy:
     api_key:
       secure: SHN0O0J2NFHAXP5bIRKufF3u8RqHDSKSNbVNXKnDS5FXJkhwDlHYfL1mF9xIlkAUSNvYvrKaReDAxWwRulKWisZi4JXA4OL96j2Pqiovw7npomDmEQpXLC8TgiH9TvkIFFXr4L5Cm6zzXTVjrI2FA1WiHR2rga1A367dCVX0wdSjsH4qwC3CsNFBhStsbPMQl49U2hHGe+Nl02LkzSqS0QBZ6RZsChF+fzs35512Xvfiz0qXExCIIQpIYbnPAKbNA4vd6/zTkj72xYYsK8pKGKu56ENCPf2uvzfacUDQKrTKLTVVVWlJ8865VfIwjPixfD/dvnD4XZ/mC3SQbAwEE5WjSApOXCs/eL/zKq4Wa3oaJTc0mFf31wCySAQfL3vD51Wu/pjPuixsH1o6JPxWZuGA5KbL7Bi0D3I8T3mD4CJoPwIYbmu/6kwUHbOi/Nd9fb0YraL9k1uX4WzROIpGLbADccr1L7itGVdnhD5vlrp07ETluOxyJZlsB4gNVaSk4MUAppNVlXAi/4UOmEmQYIZRg1akO+4nDN0+nfwzNRSM4chSDBFwDBthqsADErFf5yFGy9JmLHLD2qkeSjqEm/rc1a2zV66nucVmwKHZyPL92GhGkguxsYKFNu/42382W1wHJ47nDCpEQWOVgFgix7xdgSKeZiYvoEs0JgWSjLU=
     file: 
-      - api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.dll
-      - api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.runtimeconfig.json
+      - upload/AltV.Net.Host.dll
+      - upload/AltV.Net.Host.runtimeconfig.json
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$DOTNET_STABLE = true"
@@ -107,7 +111,7 @@ deploy:
     prerelease: true
     api_key:
       secure: SHN0O0J2NFHAXP5bIRKufF3u8RqHDSKSNbVNXKnDS5FXJkhwDlHYfL1mF9xIlkAUSNvYvrKaReDAxWwRulKWisZi4JXA4OL96j2Pqiovw7npomDmEQpXLC8TgiH9TvkIFFXr4L5Cm6zzXTVjrI2FA1WiHR2rga1A367dCVX0wdSjsH4qwC3CsNFBhStsbPMQl49U2hHGe+Nl02LkzSqS0QBZ6RZsChF+fzs35512Xvfiz0qXExCIIQpIYbnPAKbNA4vd6/zTkj72xYYsK8pKGKu56ENCPf2uvzfacUDQKrTKLTVVVWlJ8865VfIwjPixfD/dvnD4XZ/mC3SQbAwEE5WjSApOXCs/eL/zKq4Wa3oaJTc0mFf31wCySAQfL3vD51Wu/pjPuixsH1o6JPxWZuGA5KbL7Bi0D3I8T3mD4CJoPwIYbmu/6kwUHbOi/Nd9fb0YraL9k1uX4WzROIpGLbADccr1L7itGVdnhD5vlrp07ETluOxyJZlsB4gNVaSk4MUAppNVlXAi/4UOmEmQYIZRg1akO+4nDN0+nfwzNRSM4chSDBFwDBthqsADErFf5yFGy9JmLHLD2qkeSjqEm/rc1a2zV66nucVmwKHZyPL92GhGkguxsYKFNu/42382W1wHJ47nDCpEQWOVgFgix7xdgSKeZiYvoEs0JgWSjLU=
-    file: runtime/build/src/libcsharp-module.so
+    file: upload/modules/libcsharp-module.so
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$LINUX_BETA = true"
@@ -117,7 +121,7 @@ deploy:
     prerelease: true
     api_key:
       secure: SHN0O0J2NFHAXP5bIRKufF3u8RqHDSKSNbVNXKnDS5FXJkhwDlHYfL1mF9xIlkAUSNvYvrKaReDAxWwRulKWisZi4JXA4OL96j2Pqiovw7npomDmEQpXLC8TgiH9TvkIFFXr4L5Cm6zzXTVjrI2FA1WiHR2rga1A367dCVX0wdSjsH4qwC3CsNFBhStsbPMQl49U2hHGe+Nl02LkzSqS0QBZ6RZsChF+fzs35512Xvfiz0qXExCIIQpIYbnPAKbNA4vd6/zTkj72xYYsK8pKGKu56ENCPf2uvzfacUDQKrTKLTVVVWlJ8865VfIwjPixfD/dvnD4XZ/mC3SQbAwEE5WjSApOXCs/eL/zKq4Wa3oaJTc0mFf31wCySAQfL3vD51Wu/pjPuixsH1o6JPxWZuGA5KbL7Bi0D3I8T3mD4CJoPwIYbmu/6kwUHbOi/Nd9fb0YraL9k1uX4WzROIpGLbADccr1L7itGVdnhD5vlrp07ETluOxyJZlsB4gNVaSk4MUAppNVlXAi/4UOmEmQYIZRg1akO+4nDN0+nfwzNRSM4chSDBFwDBthqsADErFf5yFGy9JmLHLD2qkeSjqEm/rc1a2zV66nucVmwKHZyPL92GhGkguxsYKFNu/42382W1wHJ47nDCpEQWOVgFgix7xdgSKeZiYvoEs0JgWSjLU=
-    file: runtime/build/src/Release/csharp-module.dll
+    file: upload/modules/csharp-module.dll
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$WINDOWS_BETA = true"
@@ -128,29 +132,29 @@ deploy:
     api_key:
       secure: SHN0O0J2NFHAXP5bIRKufF3u8RqHDSKSNbVNXKnDS5FXJkhwDlHYfL1mF9xIlkAUSNvYvrKaReDAxWwRulKWisZi4JXA4OL96j2Pqiovw7npomDmEQpXLC8TgiH9TvkIFFXr4L5Cm6zzXTVjrI2FA1WiHR2rga1A367dCVX0wdSjsH4qwC3CsNFBhStsbPMQl49U2hHGe+Nl02LkzSqS0QBZ6RZsChF+fzs35512Xvfiz0qXExCIIQpIYbnPAKbNA4vd6/zTkj72xYYsK8pKGKu56ENCPf2uvzfacUDQKrTKLTVVVWlJ8865VfIwjPixfD/dvnD4XZ/mC3SQbAwEE5WjSApOXCs/eL/zKq4Wa3oaJTc0mFf31wCySAQfL3vD51Wu/pjPuixsH1o6JPxWZuGA5KbL7Bi0D3I8T3mD4CJoPwIYbmu/6kwUHbOi/Nd9fb0YraL9k1uX4WzROIpGLbADccr1L7itGVdnhD5vlrp07ETluOxyJZlsB4gNVaSk4MUAppNVlXAi/4UOmEmQYIZRg1akO+4nDN0+nfwzNRSM4chSDBFwDBthqsADErFf5yFGy9JmLHLD2qkeSjqEm/rc1a2zV66nucVmwKHZyPL92GhGkguxsYKFNu/42382W1wHJ47nDCpEQWOVgFgix7xdgSKeZiYvoEs0JgWSjLU=
     file: 
-      - api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.dll
-      - api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.runtimeconfig.json
+      - upload/AltV.Net.Host.dll
+      - upload/AltV.Net.Host.runtimeconfig.json
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$DOTNET_BETA = true"
       tags: true
   - provider: script
     skip_cleanup: true
-    script: move .\runtime\build\src\Release\csharp-module.dll .\upload\modules\csharp-module.dll && cdn-win.exe .\upload coreclr-module/stable/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    script: cdn-win.exe .\upload coreclr-module/stable/x64_win32 "${TRAVIS_BUILD_NUMBER}"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$WINDOWS_STABLE = true"
       tags: true
   - provider: script
     skip_cleanup: true
-    script: mv ./runtime/build/src/libcsharp-module.so ./upload/modules/libcsharp-module.so && ./cdn-linux ./upload coreclr-module/stable/x64_linux "${TRAVIS_BUILD_NUMBER}"
+    script: ./cdn-linux ./upload coreclr-module/stable/x64_linux "${TRAVIS_BUILD_NUMBER}"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$LINUX_STABLE = true"
       tags: true
   - provider: script
     skip_cleanup: true
-    script: mv ./api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.dll ./upload/AltV.Net.Host.dll && mv ./api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.runtimeconfig.json ./upload/AltV.Net.Host.runtimeconfig.json && ./cdn-linux ./upload coreclr-module/stable/x64_linux "${TRAVIS_BUILD_NUMBER}" && ./cdn-linux ./upload coreclr-module/stable/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    script: ./cdn-linux ./upload coreclr-module/stable/x64_linux "${TRAVIS_BUILD_NUMBER}" && ./cdn-linux ./upload coreclr-module/stable/x64_win32 "${TRAVIS_BUILD_NUMBER}"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$DOTNET_STABLE = true"
@@ -158,7 +162,7 @@ deploy:
   - provider: script
     skip_cleanup: true
     prerelease: true
-    script: move .\runtime\build\src\Release\csharp-module.dll .\upload\modules\csharp-module.dll && cdn-win.exe .\upload coreclr-module/alpha/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    script: cdn-win.exe .\upload coreclr-module/alpha/x64_win32 "${TRAVIS_BUILD_NUMBER}"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$WINDOWS_BETA = true"
@@ -166,14 +170,14 @@ deploy:
   - provider: script
     skip_cleanup: true
     prerelease: true
-    script: mv ./runtime/build/src/libcsharp-module.so ./upload/modules/libcsharp-module.so && ./cdn-linux ./upload coreclr-module/alpha/x64_linux "${TRAVIS_BUILD_NUMBER}"
+    script: ./cdn-linux ./upload coreclr-module/alpha/x64_linux "${TRAVIS_BUILD_NUMBER}"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$LINUX_BETA = true"
       tags: true
   - provider: script
     skip_cleanup: true
-    script: mv ./api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.dll ./upload/AltV.Net.Host.dll && mv ./api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.runtimeconfig.json ./upload/AltV.Net.Host.runtimeconfig.json && ./cdn-linux ./upload coreclr-module/alpha/x64_linux "${TRAVIS_BUILD_NUMBER}" && ./cdn-linux ./upload coreclr-module/alpha/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    script: ./cdn-linux ./upload coreclr-module/alpha/x64_linux "${TRAVIS_BUILD_NUMBER}" && ./cdn-linux ./upload coreclr-module/alpha/x64_win32 "${TRAVIS_BUILD_NUMBER}"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$DOTNET_BETA = true"
