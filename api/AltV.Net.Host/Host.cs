@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -46,10 +47,21 @@ namespace AltV.Net.Host
                 ? Marshal.PtrToStringUni(libArgs.ResourceMain)
                 : Marshal.PtrToStringUTF8(libArgs.ResourceMain);
 
-            var assemblyLoader = new AssemblyLoader();
             var resourceDllPath = GetPath(resourcePath, resourceMain);
             var resourceAssemblyLoadContext = new ResourceAssemblyLoadContext(resourceDllPath);
-            var resourceAssembly = assemblyLoader.LoadAssembly(resourceAssemblyLoadContext, resourceDllPath);
+
+            Assembly resourceAssembly;
+
+            try
+            {
+                resourceAssembly = resourceAssemblyLoadContext.LoadFromAssemblyPath(resourceDllPath);
+            }
+            catch (FileLoadException e)
+            {
+                Console.WriteLine($"Threw a exception while loading the assembly \"{resourceDllPath}\": {e}");
+                resourceAssembly = null;
+            }
+
             var altVNetAssembly = resourceAssemblyLoadContext.LoadFromAssemblyName(new AssemblyName("AltV.Net"));
             foreach (var type in altVNetAssembly.GetTypes())
             {
@@ -59,7 +71,7 @@ namespace AltV.Net.Host
                         new object[] {libArgs.ServerPointer, libArgs.ResourcePointer, resourceAssemblyLoadContext});
                 }
             }
-            
+
             return 0;
         }
     }
