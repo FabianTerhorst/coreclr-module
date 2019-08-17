@@ -129,7 +129,7 @@ deploy:
       tags: true
   - provider: script
     skip_cleanup: true
-    script: cd .. && cd .. && cd .. && cd .. && mkdir upload && mkdir upload\modules && move .\runtime\build\src\Release\csharp-module.dll .\upload\modules && cdn-win.exe .\upload coreclr-module/stable/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    script: cd .. && cd .. && cd .. && cd .. && mkdir upload && mkdir upload\modules && move .\runtime\build\src\Release\csharp-module.dll .\upload\modules\csharp-module.dll && cdn-win.exe .\upload coreclr-module/stable/x64_win32 "${TRAVIS_BUILD_NUMBER}"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$WINDOWS_STABLE = true"
@@ -151,7 +151,7 @@ deploy:
   - provider: script
     skip_cleanup: true
     prerelease: true
-    script: cd .. && cd .. && cd .. && cd .. && mkdir upload && mkdir upload\modules && move .\runtime\build\src\Release\csharp-module.dll .\upload\modules && cdn-win.exe .\upload coreclr-module/alpha/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    script: cd .. && cd .. && cd .. && cd .. && mkdir upload && mkdir upload\modules && move .\runtime\build\src\Release\csharp-module.dll .\upload\modules\csharp-module.dll && cdn-win.exe .\upload coreclr-module/alpha/x64_win32 "${TRAVIS_BUILD_NUMBER}"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$WINDOWS_BETA = true"
