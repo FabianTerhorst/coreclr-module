@@ -60,7 +60,7 @@ matrix:
       - cd modules
       - SRC=runtime/build/src/Release/csharp-module.dll
       - DST=upload/modules/csharp-module.dll
-      - xcopy "${SRC}" "${DST}" \i
+      - xcopy "${SRC}" "${DST}" \s \y
       - echo "${TRAVIS_BUILD_NUMBER}"
   - dist: xenial
     addons:
