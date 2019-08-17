@@ -59,7 +59,7 @@ matrix:
       - cd upload
       - cd modules
       - echo "${TRAVIS_BUILD_NUMBER}"
-      - copy /Y "runtime\build\src\Release\csharp-module.dll" "upload\modules"
+      - copy /Y "runtime\\build\\src\\Release\\csharp-module.dll" "upload\\modules\\"
   - dist: xenial
     addons:
       snaps:
