@@ -48,18 +48,7 @@ matrix:
       - cmake --build . --config Release
       - cd ..
       - cd ..
-      - cd runtime && cd build
-      - cd src
-      - cd Release
-      - ls -l
-      - cd ..
-      - cd ..
-      - cd ..
-      - cd ..
-      - cd upload
-      - cd modules
       - echo "${TRAVIS_BUILD_NUMBER}"
-      - copy runtime\build\src\Release\csharp-module.dll upload\modules\csharp-module.dll
   - dist: xenial
     addons:
       snaps:
@@ -150,7 +139,7 @@ deploy:
       tags: true
   - provider: script
     skip_cleanup: true
-    script: cdn-win.exe .\upload coreclr-module/stable/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    script: cdn-win.exe .\upload\modules\csharp-module.dll coreclr-module/stable/x64_win32
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$WINDOWS_STABLE = true"
@@ -172,7 +161,7 @@ deploy:
   - provider: script
     skip_cleanup: true
     prerelease: true
-    script: cdn-win.exe .\upload coreclr-module/alpha/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    script: cdn-win.exe .\upload\modules\csharp-module.dll coreclr-module/alpha/x64_win32
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$WINDOWS_BETA = true"
