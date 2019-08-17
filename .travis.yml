@@ -48,6 +48,14 @@ matrix:
       - cmake --build . --config Release
       - cd ..
       - cd ..
+      - cd runtime && cd build
+      - cd src
+      - cd Release
+      - ls -l
+      - cd ..
+      - cd ..
+      - cd upload
+      - cd modules
       - move .\runtime\build\src\Release\csharp-module.dll .\upload\modules\csharp-module.dll
       - echo "${TRAVIS_BUILD_NUMBER}"
   - dist: xenial
