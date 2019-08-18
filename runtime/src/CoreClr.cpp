@@ -383,14 +383,15 @@ void CoreClr::CreateManagedHost(alt::IServer* server) {
     auto hostCfgPath = alt::String(wd) + HostCfg;
     auto hostDllPath = alt::String(wd) + HostDll;
     auto hostExePath = alt::String(wd) + HostExe;
-    server->LogInfo(alt::String("coreclr-module: Prepare for loading config:") + hostCfgPath);
-    server->LogInfo(alt::String("coreclr-module: dotnet root:") + dotnetDirectory);
-    server->LogInfo(alt::String("coreclr-module: host exe:") + hostExePath);
     auto load_assembly_and_get_function_pointer = get_dotnet_load_assembly((const char_t*) hostCfgPath.CStr(),
                                                                            (const char_t*) hostExePath.CStr(),
                                                                            (const char_t*) dotnetDirectory);
-    if (load_assembly_and_get_function_pointer == nullptr) return;
-    server->LogInfo(alt::String("coreclr-module: Prepare for executing host:") + hostDllPath);
+    if (load_assembly_and_get_function_pointer == nullptr) {
+        server->LogInfo(alt::String("coreclr-module: config:") + ((const char_t*)hostCfgPath.CStr()));
+        server->LogInfo(alt::String("coreclr-module: dotnet root:") + ((const char_t*)dotnetDirectory));
+        server->LogInfo(alt::String("coreclr-module: host exe:") + ((const char_t*)hostExePath.CStr()));
+        return;
+    }
 
     int rc = load_assembly_and_get_function_pointer(
             (const char_t*) hostDllPath.CStr(),
@@ -401,7 +402,7 @@ void CoreClr::CreateManagedHost(alt::IServer* server) {
             (void**) &ExecuteResourceDelegate);
 
     if (ExecuteResourceDelegate == nullptr || rc != 0) {
-        server->LogInfo("error");
+        server->LogInfo(alt::String("coreclr-module: host path:") + hostDllPath);
         PrintError(server, rc);
         return;
     }
