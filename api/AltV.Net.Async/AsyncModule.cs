@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Loader;
 using System.Threading.Tasks;
 using AltV.Net.Async.Events;
 using AltV.Net.Elements.Entities;
@@ -67,13 +68,13 @@ namespace AltV.Net.Async
             =
             new Dictionary<string, HashSet<ServerEventAsyncDelegate>>();
 
-        public AsyncModule(IServer server, CSharpNativeResource cSharpNativeResource,
+        public AsyncModule(IServer server, AssemblyLoadContext assemblyLoadContext, CSharpNativeResource cSharpNativeResource,
             IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
-            IBaseObjectPool<IColShape> colShapePool) : base(server, cSharpNativeResource, baseBaseObjectPool,
+            IBaseObjectPool<IColShape> colShapePool) : base(server, assemblyLoadContext, cSharpNativeResource, baseBaseObjectPool,
             baseEntityPool, playerPool, vehiclePool, blipPool,
             checkpointPool, voiceChannelPool, colShapePool)
         {
@@ -174,7 +175,9 @@ namespace AltV.Net.Async
                     @delegate(vehicle)));
         }
 
-        //TODO: we could write mvalues to own onion struct in cpp to better share it but we would need to execute at least getorcreate entity when it contains a entity type in main thread
+        //TODO: we could write mvalue's to own onion struct in cpp to better share it but we would need to execute at least getorcreate entity when it contains a entity type in main thread
+        //TODO: or lock entities dictionary so entity can't get removed until thread got it from dictionary
+        //TODO: lock dictionary for async maybe as well for use cases like this
         public override void OnClientEventEvent(IPlayer player, string name, ref MValueArray args, MValue[] mValues,
             object[] objects)
         {
