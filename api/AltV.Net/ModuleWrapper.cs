@@ -81,11 +81,6 @@ namespace AltV.Net
             _module = _resource.GetModule(server, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool,
                 blipPool, checkpointPool, voiceChannelPool, colShapePool);
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            foreach (var assembly in assemblies)
-            {
-                Alt.Log("Loaded:" + assembly.GetName());
-            }
         }
 
         private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
