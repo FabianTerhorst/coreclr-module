@@ -375,6 +375,7 @@ void CoreClr::CreateManagedHost(alt::IServer* server) {
     auto hostCfgPath = alt::String(wd) + HostCfg;
     auto hostDllPath = alt::String(wd) + HostDll;
     auto load_assembly_and_get_function_pointer = get_dotnet_load_assembly((const char_t*) hostCfgPath.CStr());
+    if (load_assembly_and_get_function_pointer == nullptr) return;
     server->LogInfo(alt::String("coreclr-module: Prepare for executing host:") + hostDllPath);
 
     int rc = load_assembly_and_get_function_pointer(

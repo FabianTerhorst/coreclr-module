@@ -19,34 +19,6 @@
 #endif
 
 #ifdef _WIN32
-#include <direct.h>
-#define GetCurrentDir _getcwd
-#else
-
-#include <unistd.h>
-
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-
-#define GetCurrentDir getcwd
-#endif
-
-//#include "clrHost.h"
-
-/*#include <iostream>
-
-#ifdef _WIN32
-#include <windows.h>
-#else
-#include <stdlib.h>
-#include <dlfcn.h>
-#include <dirent.h>
-#include <sys/stat.h>
-#endif*/
-
-
-#ifdef _WIN32
 #include <iostream>
 #include <stdio.h>
 #include <direct.h>

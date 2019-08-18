@@ -17,19 +17,6 @@
 #include <coreclr/hostfxr.h>
 #include <coreclr/coreclr_delegates.h>
 
-// GetCurrentDir
-#ifdef _WIN32
-#include <direct.h>
-#define GetCurrentDir _getcwd
-#else
-#include <unistd.h>
-
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#define GetCurrentDir getcwd
-#endif
-
 // Host name
 #ifdef _WIN32
 #define HostDll "\\AltV.Net.Host.dll"
