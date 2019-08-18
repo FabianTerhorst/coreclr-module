@@ -32,8 +32,8 @@
 
 // Host name
 #ifdef _WIN32
-#define HostDll "\AltV.Net.Host.dll"
-#define HostCfg "\AltV.Net.Host.runtimeconfig.json"
+#define HostDll "\\AltV.Net.Host.dll"
+#define HostCfg "\\AltV.Net.Host.runtimeconfig.json"
 #else
 #define HostDll "/AltV.Net.Host.dll"
 #define HostCfg "/AltV.Net.Host.runtimeconfig.json"
