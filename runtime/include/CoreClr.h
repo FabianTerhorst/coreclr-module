@@ -28,7 +28,7 @@
 #define HostExe "/altv-server"
 #endif
 
-#ifdef WINDOWS
+#ifdef _WIN32
 #include <Windows.h>
 
 #define STR(s) L ## s
@@ -36,7 +36,6 @@
 #define DIR_SEPARATOR L'\\'
 
 #else
-#include <dlfcn.h>
 #include <limits.h>
 
 #define STR(s) s
