@@ -400,7 +400,7 @@ void CoreClr::CreateManagedHost(alt::IServer* server) {
     auto hostExePath = alt::String(wd) + HostExe;
     auto load_assembly_and_get_function_pointer = get_dotnet_load_assembly(hostCfgPathCStr);
     if (load_assembly_and_get_function_pointer == nullptr) {
-        server->LogInfo(alt::String("coreclr-module: config:") + hostCfgPathCStr);
+        server->LogInfo(alt::String("coreclr-module: config:") + hostCfgPath.CStr());
         server->LogInfo(alt::String("coreclr-module: host exe:") + hostExePath.CStr());
         return;
     }
@@ -414,7 +414,7 @@ void CoreClr::CreateManagedHost(alt::IServer* server) {
             (void**) &ExecuteResourceDelegate);
 
     if (ExecuteResourceDelegate == nullptr || rc != 0) {
-        server->LogInfo(alt::String("coreclr-module: host path:") + hostDllPathCStr);
+        server->LogInfo(alt::String("coreclr-module: host path:") + hostDllPath.CStr());
         PrintError(server, rc);
         return;
     }
