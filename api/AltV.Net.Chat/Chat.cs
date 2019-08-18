@@ -7,18 +7,15 @@ namespace AltV.Net.Chat
 {
     public class Chat : Resource
     {
-        private static Action<string, Action<IPlayer, string, string[]>> registerCmd;
-
         public override void OnStart()
         {
             Alt.On<IPlayer, string>("chatmessage", OnChatMessage, OnChatMessageParser);
-
-            registerCmd = delegate(string s, Action<IPlayer, string, string[]> action)
-            {
-                CommandHandlers.Add(s, action);
-            };
-
-            Alt.Export<string, Action<IPlayer, string, string[]>>("registerCmd", CommandHandlers.Add);
+            Alt.Export<string, Function.Func>("registerCmd",
+                (commandName, handler) =>
+                {
+                    CommandHandlers.Add(commandName,
+                        (player, command, args) => { handler.Invoke(new object[] {player, command, args}); });
+                });
             Alt.Export("broadcast", delegate(string message) { ChatUtils.SendBroadcastChatMessage(message); });
             Alt.Export("send", delegate(IPlayer player, string message) { player.SendChatMessage(message); });
         }
