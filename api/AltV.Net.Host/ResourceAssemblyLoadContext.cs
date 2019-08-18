@@ -25,7 +25,6 @@ namespace AltV.Net.Host
 
         protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
         {
-            Console.WriteLine("unmanaged:" + unmanagedDllName);
             var libraryPath = resolver.ResolveUnmanagedDllToPath(unmanagedDllName) ??
                               resolver.ResolveUnmanagedDllToPath(
                                   resourceName + Path.DirectorySeparatorChar + unmanagedDllName);
