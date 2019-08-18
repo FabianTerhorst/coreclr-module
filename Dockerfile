@@ -33,6 +33,8 @@ RUN cd AltV.Net.Chat && dotnet publish -c Release
 #FROM debian:stable
 FROM ubuntu:18.04
 
+COPY --from=dotnet /usr/share/dotnet /usr/share/dotnet
+
 RUN apt-get update
 RUN apt-get install -y apt-utils
 RUN apt-get install -y libc6-i386
@@ -50,6 +52,9 @@ COPY start.sh .
 COPY startgdb.sh .
 COPY libnode.so.64 .
 COPY libnode-module.so modules/
+
+COPY csharp-module.dll resources/example/2csharp-module.dll
+
 COPY resource.cfg resources/example/
 COPY --from=dotnet /altv-example/AltV.Net.Chat/resource.cfg resources/chat/
 COPY data/ ./data
@@ -58,7 +63,6 @@ COPY --from=clang /runtime/build/src/libcsharp-module.so modules/
 COPY --from=dotnet /altv-example/AltV.Net.Example/bin/Release/netcoreapp3.0/publish resources/example/
 COPY --from=dotnet /altv-example/AltV.Net.Chat/bin/Release/netcoreapp3.0/publish resources/chat/
 COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.0/publish .
-COPY --from=dotnet /usr/share/dotnet /usr/share/dotnet
 RUN ls -l
 RUN chmod +x ./altv-server
 

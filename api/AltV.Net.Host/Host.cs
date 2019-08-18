@@ -46,7 +46,7 @@ namespace AltV.Net.Host
             var resourceMain = Marshal.PtrToStringUTF8(libArgs.ResourceMain);
 
             var resourceDllPath = GetPath(resourcePath, resourceMain);
-            var resourceAssemblyLoadContext = new ResourceAssemblyLoadContext(resourceDllPath, resourceName);
+            var resourceAssemblyLoadContext = new ResourceAssemblyLoadContext(resourceDllPath, resourcePath, resourceName);
 
             Assembly resourceAssembly;
 

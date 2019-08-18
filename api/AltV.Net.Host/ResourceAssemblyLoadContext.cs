@@ -11,10 +11,14 @@ namespace AltV.Net.Host
 
         private readonly string resourceName;
 
-        public ResourceAssemblyLoadContext(string resourcePath, string resourceName) : base(resourceName)
+        private readonly string resourcePath;
+
+        public ResourceAssemblyLoadContext(string resourceDllPath, string resourcePath, string resourceName) : base(resourceName,
+            true)
         {
-            resolver = new AssemblyDependencyResolver(resourcePath);
+            resolver = new AssemblyDependencyResolver(resourceDllPath);
             this.resourceName = resourceName;
+            this.resourcePath = resourcePath;
         }
 
         protected override Assembly Load(AssemblyName assemblyName)
@@ -25,10 +29,23 @@ namespace AltV.Net.Host
 
         protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
         {
-            var libraryPath = resolver.ResolveUnmanagedDllToPath(unmanagedDllName) ??
-                              resolver.ResolveUnmanagedDllToPath(
-                                  "resources" + Path.DirectorySeparatorChar + resourceName +
-                                  Path.DirectorySeparatorChar + unmanagedDllName);
+            var libraryPath = resolver.ResolveUnmanagedDllToPath(unmanagedDllName);
+
+            if (libraryPath == null)
+            {
+                var dllPath = resourcePath + Path.DirectorySeparatorChar + unmanagedDllName;
+                if (File.Exists(dllPath))
+                {
+                    try
+                    {
+                        return LoadUnmanagedDllFromPath(dllPath);
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine(exception);
+                    }
+                }
+            }
 
             return libraryPath != null ? LoadUnmanagedDllFromPath(libraryPath) : IntPtr.Zero;
         }
