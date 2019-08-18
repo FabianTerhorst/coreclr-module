@@ -28,6 +28,14 @@
 #define HostExe "/altv-server"
 #endif
 
+// Standard headers
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
+#include <assert.h>
+#include <iostream>
+
 #ifdef _WIN32
 #include <Windows.h>
 
