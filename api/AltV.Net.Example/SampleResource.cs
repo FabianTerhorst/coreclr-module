@@ -261,6 +261,9 @@ namespace AltV.Net.Example
             AltAsync.RegisterEvents(this);
 
             Alt.Emit("asyncBla3", "bla");
+            var chat = new Chat();
+
+            chat.RegisterCommand("bla", (player, command, args) => { });
             Alt.OnColShape += (shape, entity, state) =>
             {
                 Console.WriteLine("collision shape test:" + shape + " " + shape.GetData("bla", out int id1) + " " + id1);

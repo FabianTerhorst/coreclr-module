@@ -28,7 +28,7 @@ namespace AltV.Net.Example
             send?.Invoke(player, message);
         }
 
-        public void RegisterCommand(string command, Action<IPlayer, string[]> callback)
+        public void RegisterCommand(string command, Action<IPlayer, string, string[]> callback)
         {
             registerCmd?.Invoke(command, Function.Create(callback));
         }
