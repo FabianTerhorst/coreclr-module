@@ -25,7 +25,7 @@ CoreClr::CoreClr(alt::IServer* server) {
     GetPath(server, defaultPath);
     delete[] defaultPath;
 
-    const char *dotnetProgramFilesPath = "/dotnet/";
+    const char *dotnetProgramFilesPath = "\\dotnet\\";
     dotnetDirectory = new char[strlen(dotnetProgramFilesPath) + strlen(pf) + 1];
     strcpy(dotnetDirectory, pf);
     strcat(dotnetDirectory, dotnetProgramFilesPath);
