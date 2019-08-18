@@ -369,20 +369,44 @@ bool CoreClr::PrintError(alt::IServer* server, int errorCode) {
     return false;
 }
 
+#ifdef _WIN32
+const char_t *GetWC(const char *c)
+{
+    const size_t cSize = strlen(c)+1;
+    char_t* wc = new wchar_t[cSize];
+    mbstowcs (wc, c, cSize);
+
+    return wc;
+}
+#endif
+
 void CoreClr::CreateManagedHost(alt::IServer* server) {
     auto wd = server->GetRootDirectory().CStr();
     auto hostCfgPath = alt::String(wd) + HostCfg;
+    const char_t* hostCfgPathCStr;
+#ifdef _WIN32
+    hostCfgPathCStr = GetWC(hostCfgPath.CStr());
+#else
+    hostCfgPathCStr = hostCfgPath.CStr();
+#endif
     auto hostDllPath = alt::String(wd) + HostDll;
+    const char_t* hostDllPathCStr;
+#ifdef _WIN32
+    hostDllPathCStr = GetWC(hostCfgPath.CStr());
+#else
+    hostDllPathCStr = hostDllPath.CStr();
+#endif
+
     auto hostExePath = alt::String(wd) + HostExe;
-    auto load_assembly_and_get_function_pointer = get_dotnet_load_assembly(STR(hostCfgPath.CStr()));
+    auto load_assembly_and_get_function_pointer = get_dotnet_load_assembly(hostCfgPathCStr);
     if (load_assembly_and_get_function_pointer == nullptr) {
-        server->LogInfo(alt::String("coreclr-module: config:") + hostCfgPath.CStr());
+        server->LogInfo(alt::String("coreclr-module: config:") + hostCfgPathCStr);
         server->LogInfo(alt::String("coreclr-module: host exe:") + hostExePath.CStr());
         return;
     }
 
     int rc = load_assembly_and_get_function_pointer(
-            STR(hostDllPath.CStr()),
+            hostDllPathCStr,
             STR("AltV.Net.Host.Host, AltV.Net.Host"),
             STR("ExecuteResource"),
             nullptr /*delegate_type_name*/,
@@ -390,10 +414,15 @@ void CoreClr::CreateManagedHost(alt::IServer* server) {
             (void**) &ExecuteResourceDelegate);
 
     if (ExecuteResourceDelegate == nullptr || rc != 0) {
-        server->LogInfo(alt::String("coreclr-module: host path:") + hostDllPath);
+        server->LogInfo(alt::String("coreclr-module: host path:") + hostDllPathCStr);
         PrintError(server, rc);
         return;
     }
+
+#ifdef _WIN32
+    delete[] hostCfgPathCStr;
+    delete[] hostDllPathCStr;
+#endif
 }
 
 void CoreClr::ExecuteManagedResource(alt::IServer* server, const char* resourcePath, const char* resourceName,
