@@ -63,7 +63,6 @@ CoreClr::CoreClr(alt::IServer* server) {
         server->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll methods"));
         return;
     }
-    server->LogInfo(alt::String("coreclr-module: libhostfxr successfully loaded"));
 }
 
 CoreClr::~CoreClr() {
