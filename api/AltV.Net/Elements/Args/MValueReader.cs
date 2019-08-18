@@ -5,6 +5,7 @@ using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Args
 {
+    //TODO: look into freeing mvaluearray
     internal class MValueReader : IMValueReader
     {
         private interface IReadableMValue
@@ -527,7 +528,6 @@ namespace AltV.Net.Elements.Args
             switch (readableMValue)
             {
                 case MValueObjectReader mValueObjectReader:
-                    Console.WriteLine("next:" + mValueObjectReader.GetSize());
                     return mValueObjectReader.GetSize() > 0 &&
                            mValueObjectReader.HasNext();
                 default:
