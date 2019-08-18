@@ -102,6 +102,8 @@ namespace AltV.Net
 
         internal readonly IEventHandler<ColShapeDelegate> ColShapeEventHandler =
             new HashSetEventHandler<ColShapeDelegate>();
+        
+        internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
 
         public Module(IServer server, CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
@@ -804,6 +806,12 @@ namespace AltV.Net
 
         public virtual void OnScriptLoaded(IScript script)
         {
+        }
+
+        public void SetExport(string key, Function function)
+        {
+            functionExports[key] = function;
+            CSharpNativeResource.SetExport(key, MValue.Create(function.call));
         }
     }
 }

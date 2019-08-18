@@ -49,7 +49,7 @@ matrix:
       - cd ..
       - cd ..
       - echo "${TRAVIS_BUILD_NUMBER}"
-      - powershell move runtime/build/src/Release/csharp-module.dll upload/modules/csharp-module.dll
+      - powershell move runtime/build/src/Release/csharp-module.dll upload/modules
       - cd upload && cd modules && ls
       - cd .. && cd ..
   - dist: xenial

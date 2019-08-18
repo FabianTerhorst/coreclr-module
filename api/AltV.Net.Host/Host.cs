@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -7,6 +8,8 @@ namespace AltV.Net.Host
 {
     public class Host
     {
+        private static IDictionary<string, ResourceAssemblyLoadContext> _loadContexts = new Dictionary<string, ResourceAssemblyLoadContext>();
+        
         /// <summary>
         /// Main is present to execute the dll as a assembly
         /// </summary>
@@ -71,6 +74,8 @@ namespace AltV.Net.Host
                         new object[] {libArgs.ServerPointer, libArgs.ResourcePointer, resourceAssemblyLoadContext});
                 }
             }
+
+            _loadContexts[resourceDllPath] = resourceAssemblyLoadContext;
 
             return 0;
         }

@@ -1,11 +1,14 @@
+using System;
 using AltV.Net.Elements.Entities;
-using AltV.Net.Native;
 
 namespace AltV.Net
 {
     //TODO: add SubResource module maybe to load sub resources dependency dlls or just for own server architecture
     public interface IResource
     {
+        void OnStart(IntPtr serverPointer, IntPtr resourcePointer, string resourceName,
+            string entryPoint);
+
         void OnStart();
 
         void OnStop();

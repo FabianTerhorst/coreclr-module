@@ -4,11 +4,11 @@ using AltV.Net.Native;
 
 namespace AltV.Net
 {
-    public class ResourceBuilder
+    internal class ResourceBuilder
     {
-        public static void SetDelegates(IResource resource, IntPtr resourcePointer)
+        public static void SetDelegates(IntPtr resourcePointer, AltNative.Resource.MainDelegate start)
         {
-            AltNative.Resource.MainDelegate onStart = delegate { resource.OnStart(); };
+            AltNative.Resource.MainDelegate onStart = start;
 
             GCHandle.Alloc(onStart);
 
