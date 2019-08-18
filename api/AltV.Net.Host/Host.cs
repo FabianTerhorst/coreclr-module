@@ -40,15 +40,9 @@ namespace AltV.Net.Host
             }
 
             var libArgs = Marshal.PtrToStructure<LibArgs>(arg);
-            var resourcePath = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                ? Marshal.PtrToStringUni(libArgs.ResourcePath)
-                : Marshal.PtrToStringUTF8(libArgs.ResourcePath);
-            var resourceName = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                ? Marshal.PtrToStringUni(libArgs.ResourceName)
-                : Marshal.PtrToStringUTF8(libArgs.ResourceName);
-            var resourceMain = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                ? Marshal.PtrToStringUni(libArgs.ResourceMain)
-                : Marshal.PtrToStringUTF8(libArgs.ResourceMain);
+            var resourcePath = Marshal.PtrToStringUTF8(libArgs.ResourcePath);
+            var resourceName = Marshal.PtrToStringUTF8(libArgs.ResourceName);
+            var resourceMain = Marshal.PtrToStringUTF8(libArgs.ResourceMain);
 
             var resourceDllPath = GetPath(resourcePath, resourceMain);
             var resourceAssemblyLoadContext = new ResourceAssemblyLoadContext(resourceDllPath);
