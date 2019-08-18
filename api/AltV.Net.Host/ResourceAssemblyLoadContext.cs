@@ -27,7 +27,8 @@ namespace AltV.Net.Host
         {
             var libraryPath = resolver.ResolveUnmanagedDllToPath(unmanagedDllName) ??
                               resolver.ResolveUnmanagedDllToPath(
-                                  resourceName + Path.DirectorySeparatorChar + unmanagedDllName);
+                                  "resources" + Path.DirectorySeparatorChar + resourceName +
+                                  Path.DirectorySeparatorChar + unmanagedDllName);
 
             return libraryPath != null ? LoadUnmanagedDllFromPath(libraryPath) : IntPtr.Zero;
         }
