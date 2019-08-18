@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Events;
@@ -810,8 +811,11 @@ namespace AltV.Net
 
         public void SetExport(string key, Function function)
         {
+            if (function == null) return;
             functionExports[key] = function;
-            CSharpNativeResource.SetExport(key, MValue.Create(function.call));
+            MValue.Function callDelegate = function.call;
+            GCHandle.Alloc(callDelegate);
+            CSharpNativeResource.SetExport(key, MValue.Create(callDelegate));
         }
     }
 }
