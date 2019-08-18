@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Runtime.Loader;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Events;
@@ -15,6 +16,8 @@ namespace AltV.Net
     {
         internal readonly IServer Server;
 
+        internal readonly AssemblyLoadContext AssemblyLoadContext;
+        
         internal readonly CSharpNativeResource CSharpNativeResource;
 
         internal readonly IBaseBaseObjectPool BaseBaseObjectPool;
@@ -106,7 +109,7 @@ namespace AltV.Net
         
         internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
 
-        public Module(IServer server, CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool,
+        public Module(IServer server, AssemblyLoadContext assemblyLoadContext, CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
@@ -116,6 +119,7 @@ namespace AltV.Net
         {
             Alt.Init(this);
             Server = server;
+            AssemblyLoadContext = assemblyLoadContext;
             CSharpNativeResource = cSharpNativeResource;
             BaseBaseObjectPool = baseBaseObjectPool;
             BaseEntityPool = baseEntityPool;

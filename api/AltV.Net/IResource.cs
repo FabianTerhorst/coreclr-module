@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Loader;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net
@@ -36,7 +37,9 @@ namespace AltV.Net
         IBaseObjectFactory<IVoiceChannel> GetVoiceChannelFactory();
         IBaseObjectFactory<IColShape> GetColShapeFactory();
 
-        Module GetModule(IServer server, CSharpNativeResource cSharpNativeResource,
+        Module GetModule(IServer server,
+            AssemblyLoadContext assemblyLoadContext,
+            CSharpNativeResource cSharpNativeResource,
             IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,

@@ -23,7 +23,8 @@ namespace AltV.Net
         {
             var assemblyLoader = new AssemblyLoader();
             MainWithResource(serverPointer, resourcePointer,
-                new ResourceLoader(serverPointer, assemblyLoader, resourceName, entryPoint).Init());
+                new ResourceLoader(serverPointer, assemblyLoader, resourceName, entryPoint).Init(),
+                AssemblyLoadContext.Default);
             _scripts = new ScriptLoader(assemblyLoader).GetAllScripts();
             _module.OnScriptsLoaded(_scripts);
             _resource.OnStart();
@@ -43,14 +44,15 @@ namespace AltV.Net
                 return;
             }
 
-            MainWithResource(serverPointer, resourcePointer, resource);
+            MainWithResource(serverPointer, resourcePointer, resource, assemblyLoadContext);
             //TODO: set delegates here
             _scripts = AssemblyLoader.FindAllTypes<IScript>(assemblyLoadContext.Assemblies);
             _module.OnScriptsLoaded(_scripts);
             ResourceBuilder.SetDelegates(resourcePointer, OnStartResource);
         }
 
-        public static void MainWithResource(IntPtr serverPointer, IntPtr resourcePointer, IResource resource)
+        public static void MainWithResource(IntPtr serverPointer, IntPtr resourcePointer, IResource resource,
+            AssemblyLoadContext assemblyLoadContext)
         {
             Console.WriteLine("before resource:" + (_resource == null));
             _resource = resource;
@@ -78,7 +80,7 @@ namespace AltV.Net
             var server = new Server(serverPointer, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool,
                 checkpointPool, voiceChannelPool, colShapePool);
             var csharpResource = new CSharpNativeResource(resourcePointer);
-            _module = _resource.GetModule(server, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool,
+            _module = _resource.GetModule(server, assemblyLoadContext, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool,
                 blipPool, checkpointPool, voiceChannelPool, colShapePool);
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
         }

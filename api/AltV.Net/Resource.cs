@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Loader;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Factories;
 using AltV.Net.Elements.Pools;
@@ -96,14 +97,16 @@ namespace AltV.Net
             return new ColShapeFactory();
         }
 
-        public virtual Module GetModule(IServer server, CSharpNativeResource cSharpNativeResource,
+        public virtual Module GetModule(IServer server, 
+            AssemblyLoadContext assemblyLoadContext,
+            CSharpNativeResource cSharpNativeResource,
             IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool)
         {
-            return new Module(server, cSharpNativeResource, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool,
+            return new Module(server, assemblyLoadContext, cSharpNativeResource, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool,
                 blipPool, checkpointPool, voiceChannelPool, colShapePool);
         }
     }

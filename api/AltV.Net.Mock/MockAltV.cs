@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Loader;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Mock
@@ -34,7 +35,7 @@ namespace AltV.Net.Mock
             var server = new MockServer(IntPtr.Zero, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool,
                 checkpointPool, voiceChannelPool);
             var cSharpNativeResource = new CSharpNativeResource(IntPtr.Zero);
-            var module = resource.GetModule(server, cSharpNativeResource, baseObjectPool, entityPool, playerPool,
+            var module = resource.GetModule(server, AssemblyLoadContext.Default, cSharpNativeResource, baseObjectPool, entityPool, playerPool,
                 vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool);
             resource.OnStart();
         }

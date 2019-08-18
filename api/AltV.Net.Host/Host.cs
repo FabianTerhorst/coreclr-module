@@ -8,8 +8,9 @@ namespace AltV.Net.Host
 {
     public class Host
     {
-        private static IDictionary<string, ResourceAssemblyLoadContext> _loadContexts = new Dictionary<string, ResourceAssemblyLoadContext>();
-        
+        private static IDictionary<string, ResourceAssemblyLoadContext> _loadContexts =
+            new Dictionary<string, ResourceAssemblyLoadContext>();
+
         /// <summary>
         /// Main is present to execute the dll as a assembly
         /// </summary>
@@ -45,7 +46,7 @@ namespace AltV.Net.Host
             var resourceMain = Marshal.PtrToStringUTF8(libArgs.ResourceMain);
 
             var resourceDllPath = GetPath(resourcePath, resourceMain);
-            var resourceAssemblyLoadContext = new ResourceAssemblyLoadContext(resourceDllPath);
+            var resourceAssemblyLoadContext = new ResourceAssemblyLoadContext(resourceDllPath, resourceName);
 
             Assembly resourceAssembly;
 
