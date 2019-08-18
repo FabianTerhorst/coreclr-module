@@ -28,6 +28,24 @@
 #define HostExe "/altv-server"
 #endif
 
+#ifdef WINDOWS
+#include <Windows.h>
+
+#define STR(s) L ## s
+#define CH(c) L ## c
+#define DIR_SEPARATOR L'\\'
+
+#else
+#include <dlfcn.h>
+#include <limits.h>
+
+#define STR(s) s
+#define CH(c) c
+#define DIR_SEPARATOR '/'
+#define MAX_PATH PATH_MAX
+
+#endif
+
 #ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wempty-body"
@@ -105,8 +123,7 @@ public:
     void ExecuteManagedResource(alt::IServer* server, const char* resourcePath, const char* resourceName,
                                 const char* resourceMain, alt::IResource* resource);
 
-    load_assembly_and_get_function_pointer_fn
-    get_dotnet_load_assembly(const char_t* config_path, const char_t* hostExe, const char_t* dotnetRoot);
+    load_assembly_and_get_function_pointer_fn get_dotnet_load_assembly(const char_t* config_path);
 
 private:
 #ifdef _WIN32
@@ -115,7 +132,6 @@ private:
     void* _coreClrLib;
 #endif
     char* runtimeDirectory;
-    char* dotnetDirectory;
     coreclr_initialize_ptr _initializeCoreCLR;
     coreclr_shutdown_2_ptr _shutdownCoreCLR;
     coreclr_create_delegate_ptr _createDelegate;

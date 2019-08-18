@@ -24,15 +24,8 @@ CoreClr::CoreClr(alt::IServer* server) {
     strcat(defaultPath, windowsProgramFilesPath);
     GetPath(server, defaultPath);
     delete[] defaultPath;
-
-    const char *dotnetProgramFilesPath = "\\dotnet\\";
-    dotnetDirectory = new char[strlen(dotnetProgramFilesPath) + strlen(pf) + 1];
-    strcpy(dotnetDirectory, pf);
-    strcat(dotnetDirectory, dotnetProgramFilesPath);
 #else
     GetPath(server, "/usr/share/dotnet/host/fxr/");
-    dotnetDirectory = new char[strlen("/usr/share/dotnet/") + 1];
-    strcpy(dotnetDirectory, "/usr/share/dotnet/");
 #endif
 #ifdef _WIN32
     const char *fileName = "/hostfxr.dll";
@@ -75,7 +68,6 @@ CoreClr::CoreClr(alt::IServer* server) {
 
 CoreClr::~CoreClr() {
     delete[] runtimeDirectory;
-    delete[] dotnetDirectory;
 }
 
 bool CoreClr::GetDelegate(alt::IServer* server, void* runtimeHost, unsigned int domainId, const char* moduleName,
@@ -383,20 +375,17 @@ void CoreClr::CreateManagedHost(alt::IServer* server) {
     auto hostCfgPath = alt::String(wd) + HostCfg;
     auto hostDllPath = alt::String(wd) + HostDll;
     auto hostExePath = alt::String(wd) + HostExe;
-    auto load_assembly_and_get_function_pointer = get_dotnet_load_assembly((const char_t*) hostCfgPath.CStr(),
-                                                                           (const char_t*) hostExePath.CStr(),
-                                                                           (const char_t*) dotnetDirectory);
+    auto load_assembly_and_get_function_pointer = get_dotnet_load_assembly(STR(hostCfgPath.CStr()));
     if (load_assembly_and_get_function_pointer == nullptr) {
-        server->LogInfo(alt::String("coreclr-module: config:") + ((const char_t*)hostCfgPath.CStr()));
-        server->LogInfo(alt::String("coreclr-module: dotnet root:") + ((const char_t*)dotnetDirectory));
-        server->LogInfo(alt::String("coreclr-module: host exe:") + ((const char_t*)hostExePath.CStr()));
+        server->LogInfo(alt::String("coreclr-module: config:") + hostCfgPath.CStr());
+        server->LogInfo(alt::String("coreclr-module: host exe:") + hostExePath.CStr());
         return;
     }
 
     int rc = load_assembly_and_get_function_pointer(
-            (const char_t*) hostDllPath.CStr(),
-            (const char_t*) "AltV.Net.Host.Host, AltV.Net.Host",
-            (const char_t*) "ExecuteResource",
+            STR(hostDllPath.CStr()),
+            STR("AltV.Net.Host.Host, AltV.Net.Host"),
+            STR("ExecuteResource"),
             nullptr /*delegate_type_name*/,
             nullptr,
             (void**) &ExecuteResourceDelegate);
@@ -437,16 +426,11 @@ void CoreClr::ExecuteManagedResource(alt::IServer* server, const char* resourceP
     ExecuteResourceDelegate(&args, sizeof(args));
 }
 
-load_assembly_and_get_function_pointer_fn
-CoreClr::get_dotnet_load_assembly(const char_t* config_path, const char_t* hostExe, const char_t* dotnetRoot) {
+load_assembly_and_get_function_pointer_fn CoreClr::get_dotnet_load_assembly(const char_t* config_path) {
     // Load .NET Core
     void* load_assembly_and_get_function_pointer = nullptr;
     hostfxr_handle cxt = nullptr;
-    hostfxr_initialize_parameters initializeParameters{};
-    initializeParameters.size = sizeof(hostfxr_initialize_parameters);
-    initializeParameters.host_path = hostExe;
-    initializeParameters.dotnet_root = dotnetRoot;
-    int rc = _initializeFxr(config_path, &initializeParameters, &cxt);
+    int rc = _initializeFxr(config_path, nullptr, &cxt);
     if (rc != 0 || cxt == nullptr) {
         std::cerr << "Init failed: " << std::hex << std::showbase << rc << std::endl;
         _closeFxr(cxt);
