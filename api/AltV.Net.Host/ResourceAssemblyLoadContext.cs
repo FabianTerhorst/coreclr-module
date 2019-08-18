@@ -9,15 +9,12 @@ namespace AltV.Net.Host
     {
         private readonly AssemblyDependencyResolver resolver;
 
-        private readonly string resourceName;
-
         private readonly string resourcePath;
 
         public ResourceAssemblyLoadContext(string resourceDllPath, string resourcePath, string resourceName) : base(resourceName,
             true)
         {
             resolver = new AssemblyDependencyResolver(resourceDllPath);
-            this.resourceName = resourceName;
             this.resourcePath = resourcePath;
         }
 
