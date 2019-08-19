@@ -16,7 +16,7 @@ namespace AltV.Net.Chat
                     CommandHandlers.Add(commandName,
                         (player, command, args) => { handler.Invoke(new object[] {player, command, args}); });
                 });
-            Alt.Export("broadcast", delegate(string message) { ChatUtils.SendBroadcastChatMessage(message); });
+            Alt.Export("broadcast", delegate(string message) { Alt.EmitAllClients("chatmessage", null, message); });
             Alt.Export("send", delegate(IPlayer player, string message) { player.SendChatMessage(message); });
         }
 
@@ -35,7 +35,7 @@ namespace AltV.Net.Chat
                     Alt.Log("[chat:cmd] " + player.Name + ": /" + message);
                     var args = message.Split(' ');
                     var cmd = args[0];
-                    CommandHandlers.InvokeCmd(player, cmd, args.Skip(1).ToArray());
+                    CommandHandlers.InvokeCommand(player, cmd, args.Skip(1).ToArray());
                 }
             }
             else
@@ -45,7 +45,7 @@ namespace AltV.Net.Chat
                 {
                     Alt.Log("[chat:msg] " + player.Name + ": " + message);
 
-                    player.Emit("chatmessage", player.Name, message);
+                    Alt.EmitAllClients("chatmessage", player.Name, message);
                 }
             }
         }
@@ -67,11 +67,6 @@ namespace AltV.Net.Chat
             }*/
 
             func(player, message);
-        }
-
-        ~Chat()
-        {
-            Console.WriteLine("chat deinit");
         }
     }
 }

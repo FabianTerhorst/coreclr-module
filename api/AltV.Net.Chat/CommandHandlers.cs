@@ -20,7 +20,7 @@ namespace AltV.Net.Chat
             handlers.Add(handler);
         }
         
-        public static void InvokeCmd(IPlayer player, string cmd, string[] args)
+        public static void InvokeCommand(IPlayer player, string cmd, string[] args)
         {
             if (!commandHandlers.TryGetValue(cmd, out var handlers))
             {

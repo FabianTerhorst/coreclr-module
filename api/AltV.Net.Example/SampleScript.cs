@@ -46,7 +46,7 @@ namespace AltV.Net.Example
         [ScriptEvent(ScriptEventType.VehicleRemove)]
         public void VehicleRemove2(IMyVehicle vehicle)
         {
-            Console.WriteLine("vehicle removed2: " + vehicle);
+            Console.WriteLine("vehicle removed2: " + vehicle?.MyData);
         }
 
         [ScriptEvent(ScriptEventType.VehicleRemove)]
@@ -56,13 +56,13 @@ namespace AltV.Net.Example
         }
         
         [ScriptEvent(ScriptEventType.VehicleRemove)]
-        public void VehicleRemoveInvalid(MyPlayer player)
+        public void VehicleRemoveInvalidMethodSignature(MyPlayer player)
         {
             Console.WriteLine("vehicle removed invalid: " + player);
         }
         
         [ScriptEvent(ScriptEventType.VehicleRemove)]
-        public void VehicleRemoveInvalid2(IMyInvalidVehicle vehicle)
+        public void VehicleRemoveInvalidMethodSignature2(IMyInvalidVehicle vehicle)
         {
             Console.WriteLine("vehicle removed invalid2: " + vehicle);
         }
