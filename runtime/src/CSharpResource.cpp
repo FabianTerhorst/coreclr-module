@@ -453,7 +453,14 @@ void CSharpResource_SetExport(CSharpResource* resource, const char* key, const a
     resource->SetExport(key, val);
 }
 
-void CSharpResource_SetMain(CSharpResource* resource, MainDelegate_t mainDelegate, TickDelegate_t tickDelegate,
+void CSharpResource_Reload(CSharpResource* resource) {
+    resource->OnStopDelegate();
+    resource->coreClr->ExecuteManagedResourceUnload(resource->server, resource->GetPath().CStr(), resource->GetMain().CStr());
+    resource->coreClr->ExecuteManagedResource(resource->server, resource->GetPath().CStr(), resource->GetName().CStr(), resource->GetMain().CStr(), resource);
+    resource->MainDelegate(resource->server, resource, resource->GetName().CStr(), resource->GetMain().CStr());
+}
+
+void CSharpResource_SetMain(CSharpResource* resource, MainDelegate_t mainDelegate, StopDelegate_t stopDelegate, TickDelegate_t tickDelegate,
                             ServerEventDelegate_t serverEventDelegate,
                             CheckpointDelegate_t checkpointDelegate,
                             ClientEventDelegate_t clientEventDelegate,
@@ -483,6 +490,7 @@ void CSharpResource_SetMain(CSharpResource* resource, MainDelegate_t mainDelegat
                             OnRemoveColShapeDelegate_t removeColShapeDelegate,
                             ColShapeDelegate_t colShapeDelegate) {
     resource->MainDelegate = mainDelegate;
+    resource->OnStopDelegate = stopDelegate;
     resource->OnTickDelegate = tickDelegate;
     resource->OnServerEventDelegate = serverEventDelegate;
     resource->OnCheckpointDelegate = checkpointDelegate;
