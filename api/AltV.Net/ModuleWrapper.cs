@@ -81,8 +81,18 @@ namespace AltV.Net
             var server = new Server(serverPointer, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool,
                 checkpointPool, voiceChannelPool, colShapePool);
             var csharpResource = new CSharpNativeResource(resourcePointer);
-            _module = _resource.GetModule(server, assemblyLoadContext, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool,
+            _module = _resource.GetModule(server, assemblyLoadContext, csharpResource, baseObjectPool, entityPool,
+                playerPool, vehiclePool,
                 blipPool, checkpointPool, voiceChannelPool, colShapePool);
+
+            foreach (var unused in server.GetPlayers())
+            {
+            }
+
+            foreach (var unused in server.GetVehicles())
+            {
+            }
+
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
         }
 
