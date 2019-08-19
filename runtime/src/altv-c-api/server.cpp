@@ -1,3 +1,4 @@
+#include <CSharpResource.h>
 #include "server.h"
 
 void Server_LogInfo(alt::IServer* server, const char* str) {

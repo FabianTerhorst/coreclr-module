@@ -49,97 +49,97 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
 
     //if (isDll) {
 
-        /*
-        struct stat buf;
-        char* assemblyPath = new char[this->GetPath().GetSize() + strlen(ASSEMBLY_PATH) + 1];
-        memcpy(assemblyPath, this->GetPath().CStr(), this->GetPath().GetSize());
-        memcpy(assemblyPath + this->GetPath().GetSize(), ASSEMBLY_PATH, strlen(ASSEMBLY_PATH));
-        strcpy(assemblyPath + this->GetPath().GetSize() + strlen(ASSEMBLY_PATH), "\0");
+    /*
+    struct stat buf;
+    char* assemblyPath = new char[this->GetPath().GetSize() + strlen(ASSEMBLY_PATH) + 1];
+    memcpy(assemblyPath, this->GetPath().CStr(), this->GetPath().GetSize());
+    memcpy(assemblyPath + this->GetPath().GetSize(), ASSEMBLY_PATH, strlen(ASSEMBLY_PATH));
+    strcpy(assemblyPath + this->GetPath().GetSize() + strlen(ASSEMBLY_PATH), "\0");
 
-        auto executable = (stat(assemblyPath, &buf) ==
-                           0);//TODO: needs resource cfg "assembly"
-        delete[] assemblyPath;
+    auto executable = (stat(assemblyPath, &buf) ==
+                       0);//TODO: needs resource cfg "assembly"
+    delete[] assemblyPath;
 
-        coreClr->CreateAppDomain(server, this, this->GetPath().CStr(), &runtimeHost, &domainId, executable,
-                                 resourcesCache->GetSize() - 1, this->name.CStr());
+    coreClr->CreateAppDomain(server, this, this->GetPath().CStr(), &runtimeHost, &domainId, executable,
+                             resourcesCache->GetSize() - 1, this->name.CStr());
 
-        if (!executable) {
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "Main",
-                                 reinterpret_cast<void**>(&MainDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnCheckpoint", reinterpret_cast<void**>(&OnCheckpointDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnClientEvent", reinterpret_cast<void**>(&OnClientEventDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnPlayerConnect", reinterpret_cast<void**>(&OnPlayerConnectDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnPlayerDisconnect", reinterpret_cast<void**>(&OnPlayerDisconnectDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnPlayerDamage", reinterpret_cast<void**>(&OnPlayerDamageDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnPlayerDeath", reinterpret_cast<void**>(&OnPlayerDeathDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnPlayerRemove",
-                                 reinterpret_cast<void**>(&OnPlayerRemoveDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnVehicleRemove",
-                                 reinterpret_cast<void**>(&OnVehicleRemoveDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnServerEvent",
-                                 reinterpret_cast<void**>(&OnServerEventDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnPlayerChangeVehicleSeat",
-                                 reinterpret_cast<void**>(&OnPlayerChangeVehicleSeatDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnPlayerEnterVehicle",
-                                 reinterpret_cast<void**>(&OnPlayerEnterVehicleDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnPlayerLeaveVehicle",
-                                 reinterpret_cast<void**>(&OnPlayerLeaveVehicleDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnStop",
-                                 reinterpret_cast<void**>(&OnStopDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnTick",
-                                 reinterpret_cast<void**>(&OnTickDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnCreatePlayer",
-                                 reinterpret_cast<void**>(&OnCreatePlayerDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemovePlayer",
-                                 reinterpret_cast<void**>(&OnRemovePlayerDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnCreateVehicle",
-                                 reinterpret_cast<void**>(&OnCreateVehicleDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemoveVehicle",
-                                 reinterpret_cast<void**>(&OnRemoveVehicleDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnCreateBlip",
-                                 reinterpret_cast<void**>(&OnCreateBlipDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemoveBlip",
-                                 reinterpret_cast<void**>(&OnRemoveBlipDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnCreateCheckpoint",
-                                 reinterpret_cast<void**>(&OnCreateCheckpointDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnRemoveCheckpoint",
-                                 reinterpret_cast<void**>(&OnRemoveCheckpointDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnCreateVoiceChannel",
-                                 reinterpret_cast<void**>(&OnCreateVoiceChannelDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnRemoveVoiceChannel",
-                                 reinterpret_cast<void**>(&OnRemoveCheckpointDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnConsoleCommand",
-                                 reinterpret_cast<void**>(&OnConsoleCommandDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnMetaDataChange",
-                                 reinterpret_cast<void**>(&OnMetaChangeDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnSyncedMetaDataChange",
-                                 reinterpret_cast<void**>(&OnSyncedMetaChangeDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnCreateColShape",
-                                 reinterpret_cast<void**>(&OnCreateColShapeDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnRemoveColShape",
-                                 reinterpret_cast<void**>(&OnRemoveColShapeDelegate));
-            coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
-                                 "OnColShape",
-                                 reinterpret_cast<void**>(&ColShapeDelegate));
-        }*/
+    if (!executable) {
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "Main",
+                             reinterpret_cast<void**>(&MainDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                             "OnCheckpoint", reinterpret_cast<void**>(&OnCheckpointDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                             "OnClientEvent", reinterpret_cast<void**>(&OnClientEventDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                             "OnPlayerConnect", reinterpret_cast<void**>(&OnPlayerConnectDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                             "OnPlayerDisconnect", reinterpret_cast<void**>(&OnPlayerDisconnectDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                             "OnPlayerDamage", reinterpret_cast<void**>(&OnPlayerDamageDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                             "OnPlayerDeath", reinterpret_cast<void**>(&OnPlayerDeathDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnPlayerRemove",
+                             reinterpret_cast<void**>(&OnPlayerRemoveDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnVehicleRemove",
+                             reinterpret_cast<void**>(&OnVehicleRemoveDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnServerEvent",
+                             reinterpret_cast<void**>(&OnServerEventDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                             "OnPlayerChangeVehicleSeat",
+                             reinterpret_cast<void**>(&OnPlayerChangeVehicleSeatDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                             "OnPlayerEnterVehicle",
+                             reinterpret_cast<void**>(&OnPlayerEnterVehicleDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                             "OnPlayerLeaveVehicle",
+                             reinterpret_cast<void**>(&OnPlayerLeaveVehicleDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnStop",
+                             reinterpret_cast<void**>(&OnStopDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnTick",
+                             reinterpret_cast<void**>(&OnTickDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnCreatePlayer",
+                             reinterpret_cast<void**>(&OnCreatePlayerDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemovePlayer",
+                             reinterpret_cast<void**>(&OnRemovePlayerDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnCreateVehicle",
+                             reinterpret_cast<void**>(&OnCreateVehicleDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemoveVehicle",
+                             reinterpret_cast<void**>(&OnRemoveVehicleDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnCreateBlip",
+                             reinterpret_cast<void**>(&OnCreateBlipDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper", "OnRemoveBlip",
+                             reinterpret_cast<void**>(&OnRemoveBlipDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                             "OnCreateCheckpoint",
+                             reinterpret_cast<void**>(&OnCreateCheckpointDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                             "OnRemoveCheckpoint",
+                             reinterpret_cast<void**>(&OnRemoveCheckpointDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                             "OnCreateVoiceChannel",
+                             reinterpret_cast<void**>(&OnCreateVoiceChannelDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                             "OnRemoveVoiceChannel",
+                             reinterpret_cast<void**>(&OnRemoveCheckpointDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                             "OnConsoleCommand",
+                             reinterpret_cast<void**>(&OnConsoleCommandDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                             "OnMetaDataChange",
+                             reinterpret_cast<void**>(&OnMetaChangeDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                             "OnSyncedMetaDataChange",
+                             reinterpret_cast<void**>(&OnSyncedMetaChangeDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                             "OnCreateColShape",
+                             reinterpret_cast<void**>(&OnCreateColShapeDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                             "OnRemoveColShape",
+                             reinterpret_cast<void**>(&OnRemoveColShapeDelegate));
+        coreClr->GetDelegate(server, runtimeHost, domainId, "AltV.Net", "AltV.Net.ModuleWrapper",
+                             "OnColShape",
+                             reinterpret_cast<void**>(&ColShapeDelegate));
+    }*/
     /*} else {
 #ifdef _WIN32
         server->LogInfo("Executable found, but not supported on windows");
@@ -197,7 +197,8 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
 
 bool CSharpResource::Start() {
     alt::IResource::Start();
-    coreClr->ExecuteManagedResource(server, this->GetPath().CStr(), this->GetName().CStr(), this->GetMain().CStr(), this);
+    coreClr->ExecuteManagedResource(server, this->GetPath().CStr(), this->GetName().CStr(), this->GetMain().CStr(),
+                                    this);
     if (MainDelegate == nullptr) return false;
     MainDelegate(this->server, this, this->GetName().CStr(), GetMain().CStr());
     return true;
@@ -447,6 +448,12 @@ void CSharpResource::OnRemoveBaseObject(alt::IBaseObject* object) {
 
 void CSharpResource::OnTick() {
     OnTickDelegate();
+    //TODO: call here libuv uv_run(loop, UV_RUN_ONCE)
+    //TODO: generate via a macro async function for each exported function that gets executed on main thread via uv_async_send
+    //TODO: but we need to verify somehow that the entity didn't got deleted in the time, maybe create a set where we add valid entity pointers
+    //TODO: and remove the pointers when entity got removed
+    //TODO: and check in execute if the entity is still in set
+    //TODO: set doesnt needs to be threadsafe, but needs to be a hashset for O(1)
 }
 
 void CSharpResource_SetExport(CSharpResource* resource, const char* key, const alt::MValue &val) {
@@ -455,12 +462,19 @@ void CSharpResource_SetExport(CSharpResource* resource, const char* key, const a
 
 void CSharpResource_Reload(CSharpResource* resource) {
     resource->OnStopDelegate();
-    resource->coreClr->ExecuteManagedResourceUnload(resource->server, resource->GetPath().CStr(), resource->GetMain().CStr());
-    resource->coreClr->ExecuteManagedResource(resource->server, resource->GetPath().CStr(), resource->GetName().CStr(), resource->GetMain().CStr(), resource);
+    resource->coreClr->ExecuteManagedResourceUnload(resource->server, resource->GetPath().CStr(),
+                                                    resource->GetMain().CStr());
+    resource->coreClr->ExecuteManagedResource(resource->server, resource->GetPath().CStr(), resource->GetName().CStr(),
+                                              resource->GetMain().CStr(), resource);
     resource->MainDelegate(resource->server, resource, resource->GetName().CStr(), resource->GetMain().CStr());
 }
 
-void CSharpResource_SetMain(CSharpResource* resource, MainDelegate_t mainDelegate, StopDelegate_t stopDelegate, TickDelegate_t tickDelegate,
+void Server_GetCSharpResource(alt::IServer* server, const char* resourceName, CSharpResource*&resource) {
+    resource = (CSharpResource*) server->GetResource(resourceName);
+}
+
+void CSharpResource_SetMain(CSharpResource* resource, MainDelegate_t mainDelegate, StopDelegate_t stopDelegate,
+                            TickDelegate_t tickDelegate,
                             ServerEventDelegate_t serverEventDelegate,
                             CheckpointDelegate_t checkpointDelegate,
                             ClientEventDelegate_t clientEventDelegate,

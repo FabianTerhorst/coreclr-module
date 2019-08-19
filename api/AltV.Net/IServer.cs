@@ -98,6 +98,8 @@ namespace AltV.Net
 
         ServerNativeResource GetResource(string name);
 
+        CSharpNativeResource GetCSharpResource(string name);
+
         // Only for advanced use cases
 
         IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation);

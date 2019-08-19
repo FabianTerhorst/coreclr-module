@@ -341,6 +341,13 @@ namespace AltV.Net
             AltNative.Server.Server_GetResource(NativePointer, name, ref resourcePointer);
             return resourcePointer == IntPtr.Zero ? null : new ServerNativeResource(resourcePointer);
         }
+        
+        public CSharpNativeResource GetCSharpResource(string name)
+        {
+            var resourcePointer = IntPtr.Zero;
+            AltNative.Server.Server_GetCSharpResource(NativePointer, name, ref resourcePointer);
+            return resourcePointer == IntPtr.Zero ? null : new CSharpNativeResource(resourcePointer);
+        }
 
         public IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation)
         {

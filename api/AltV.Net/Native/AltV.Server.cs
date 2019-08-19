@@ -55,6 +55,10 @@ namespace AltV.Net.Native
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_GetResource(IntPtr serverPointer, string resourceName,
                 ref IntPtr resourcePointer);
+            
+            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_GetCSharpResource(IntPtr serverPointer, string resourceName,
+                ref IntPtr resourcePointer);
 
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr Server_CreateVoiceChannel(IntPtr serverPointer, bool spatial,

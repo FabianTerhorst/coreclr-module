@@ -325,6 +325,11 @@ namespace AltV.Net.Mock
             return new ServerNativeResource(IntPtr.Zero);
         }
 
+        public CSharpNativeResource GetCSharpResource(string name)
+        {
+            return new CSharpNativeResource(IntPtr.Zero);
+        }
+
         public IEnumerable<IPlayer> GetPlayers()
         {
             return new List<IPlayer>();

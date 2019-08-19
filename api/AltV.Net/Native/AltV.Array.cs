@@ -268,7 +268,7 @@ namespace AltV.Net.Native
             var values = new IntPtr[length];
             for (var i = 0; i < length; i++)
             {
-                values[i] = value;
+                values[i] = Marshal.ReadIntPtr(value);
                 value += IntPtr.Size;
             }
 

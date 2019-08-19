@@ -187,6 +187,7 @@ public:
     alt::IServer* server;
 };
 
+EXPORT void Server_GetCSharpResource(alt::IServer* server, const char* resourceName, CSharpResource*&resource);
 EXPORT void CSharpResource_Reload(CSharpResource* resource);
 
 EXPORT void CSharpResource_SetExport(CSharpResource* resource, const char* key, const alt::MValue &val);
