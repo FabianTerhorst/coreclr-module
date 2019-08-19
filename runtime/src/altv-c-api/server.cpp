@@ -129,3 +129,11 @@ int32_t Server_GetNetTime(alt::IServer* server) {
 void Server_GetRootDirectory(alt::IServer* server, const char*&text) {
     text = server->GetRootDirectory().CStr();
 }
+
+void Server_GetPlayers(alt::IServer* server, alt::Array<alt::IPlayer*> &players) {
+    players = server->GetPlayers();
+}
+
+void Server_GetVehicles(alt::IServer* server, alt::Array<alt::IVehicle*> &vehicles) {
+    vehicles = server->GetVehicles();
+}

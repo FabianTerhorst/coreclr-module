@@ -53,6 +53,8 @@ EXPORT void Server_DestroyVoiceChannel(alt::IServer* server, alt::IVoiceChannel*
 EXPORT void Server_DestroyColShape(alt::IServer* server, alt::IColShape* baseObject);
 EXPORT int32_t Server_GetNetTime(alt::IServer* server);
 EXPORT void Server_GetRootDirectory(alt::IServer* server, const char*&text);
+EXPORT void Server_GetPlayers(alt::IServer* server, alt::Array<alt::IPlayer*> &players);
+EXPORT void Server_GetVehicles(alt::IServer* server, alt::Array<alt::IVehicle*> &vehicles);
 #ifdef __cplusplus
 }
 #endif

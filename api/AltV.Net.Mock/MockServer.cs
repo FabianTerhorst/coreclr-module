@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
@@ -320,6 +321,16 @@ namespace AltV.Net.Mock
         public ServerNativeResource GetResource(string name)
         {
             return new ServerNativeResource(IntPtr.Zero);
+        }
+
+        public IEnumerable<IPlayer> GetPlayers()
+        {
+            return new List<IPlayer>();
+        }
+
+        public IEnumerable<IVehicle> GetVehicles()
+        {
+            return new List<IVehicle>();
         }
     }
 }

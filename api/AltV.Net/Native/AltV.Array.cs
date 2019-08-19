@@ -68,7 +68,7 @@ namespace AltV.Net.Native
             size = 0,
             capacity = 0
         };
-        
+
         public string[] ToArray()
         {
             var value = data;
@@ -100,7 +100,7 @@ namespace AltV.Net.Native
             AltNative.FreeStringViewArray(ref this);
         }
     }
-    
+
     [StructLayout(LayoutKind.Sequential)]
     public struct StringArray : IDisposable
     {
@@ -114,7 +114,7 @@ namespace AltV.Net.Native
             size = 0,
             capacity = 0
         };
-        
+
         public string[] ToArray()
         {
             var value = data;
@@ -140,7 +140,7 @@ namespace AltV.Net.Native
             offset += StringView.Size;
             return value;
         }
-        
+
         public void SkipValueWithOffset(ref IntPtr offset)
         {
             if (size == 0) return;
@@ -183,7 +183,7 @@ namespace AltV.Net.Native
             }
 
             Dispose();
-            
+
             size = 0;
 
             return values;
@@ -206,6 +206,82 @@ namespace AltV.Net.Native
         public void Dispose()
         {
             AltNative.FreeUIntArray(ref this);
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct PlayerPointerArray : IDisposable
+    {
+        public IntPtr data; // Array of player pointers
+        public ulong size;
+        public ulong capacity;
+
+        public static PlayerPointerArray Nil = new PlayerPointerArray
+        {
+            data = IntPtr.Zero,
+            size = 0,
+            capacity = 0
+        };
+
+        public IntPtr[] ToArrayAndFree()
+        {
+            var value = data;
+            var length = (int) size;
+            var values = new IntPtr[length];
+            for (var i = 0; i < length; i++)
+            {
+                values[i] = value;
+                value += IntPtr.Size;
+            }
+
+            Dispose();
+
+            size = 0;
+
+            return values;
+        }
+
+        public void Dispose()
+        {
+            AltNative.FreePlayerPointerArray(ref this);
+        }
+    }
+    
+    [StructLayout(LayoutKind.Sequential)]
+    public struct VehiclePointerArray : IDisposable
+    {
+        public IntPtr data; // Array of player pointers
+        public ulong size;
+        public ulong capacity;
+
+        public static VehiclePointerArray Nil = new VehiclePointerArray
+        {
+            data = IntPtr.Zero,
+            size = 0,
+            capacity = 0
+        };
+
+        public IntPtr[] ToArrayAndFree()
+        {
+            var value = data;
+            var length = (int) size;
+            var values = new IntPtr[length];
+            for (var i = 0; i < length; i++)
+            {
+                values[i] = value;
+                value += IntPtr.Size;
+            }
+
+            Dispose();
+
+            size = 0;
+
+            return values;
+        }
+
+        public void Dispose()
+        {
+            AltNative.FreeVehiclePointerArray(ref this);
         }
     }
 }

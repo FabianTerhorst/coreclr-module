@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
@@ -8,9 +9,9 @@ namespace AltV.Net
     public interface IServer
     {
         int NetTime { get; }
-        
+
         string RootDirectory { get; }
-        
+
         void LogInfo(string message);
 
         /// <summary>
@@ -98,5 +99,9 @@ namespace AltV.Net
         // Only for advanced use cases
 
         IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation);
+
+        IEnumerable<IPlayer> GetPlayers();
+
+        IEnumerable<IVehicle> GetVehicles();
     }
 }

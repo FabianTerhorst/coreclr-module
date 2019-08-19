@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using AltV.Net.Data;
@@ -342,6 +343,34 @@ namespace AltV.Net
         {
             id = default;
             return AltNative.Server.Server_CreateVehicle(NativePointer, model, pos, rotation, ref id);
+        }
+
+        public IEnumerable<IPlayer> GetPlayers()
+        {
+            var playerPointerArray = PlayerPointerArray.Nil;
+            AltNative.Server.Server_GetPlayers(NativePointer, ref playerPointerArray);
+            var playerPointers = playerPointerArray.ToArrayAndFree();
+            foreach (var playerPointer in playerPointers)
+            {
+                if (playerPool.GetOrCreate(playerPointer, out var vehicle))
+                {
+                    yield return vehicle;
+                }
+            }
+        }
+
+        public IEnumerable<IVehicle> GetVehicles()
+        {
+            var vehiclePointerArray = VehiclePointerArray.Nil;
+            AltNative.Server.Server_GetVehicles(NativePointer, ref vehiclePointerArray);
+            var vehiclePointers = vehiclePointerArray.ToArrayAndFree();
+            foreach (var vehiclePointer in vehiclePointers)
+            {
+                if (vehiclePool.GetOrCreate(vehiclePointer, out var vehicle))
+                {
+                    yield return vehicle;
+                }
+            }
         }
     }
 }
