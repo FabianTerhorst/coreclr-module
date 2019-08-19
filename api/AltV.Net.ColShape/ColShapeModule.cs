@@ -194,8 +194,6 @@ namespace AltV.Net.ColShape
 
             var yIndex = (int) Math.Floor(posY / areaSize);
 
-            Console.WriteLine("player: (" + xIndex + "," + yIndex + ")");
-
             lock (colShapeAreas)
             {
                 var areaColShapes = colShapeAreas[xIndex][yIndex];
@@ -254,8 +252,6 @@ namespace AltV.Net.ColShape
             var stoppingYIndex = (int) Math.Floor(maxY / areaSize); //TODO: Math.Ceiling when inconsistency happens
             var stoppingXIndex = (int) Math.Floor(maxX / areaSize); //TODO: Math.Ceiling when inconsistency happens
             // Now fill all areas from min {x, y} to max {x, y}
-            Console.WriteLine("ColShape X Areas (" + startingXIndex + "," + stoppingXIndex + ")");
-            Console.WriteLine("ColShape Y Areas (" + startingYIndex + "," + stoppingYIndex + ")");
             lock (colShapeAreas)
             {
                 for (var i = startingYIndex; i <= stoppingYIndex; i++)
