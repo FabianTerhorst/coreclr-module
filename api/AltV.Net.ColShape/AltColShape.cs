@@ -38,9 +38,11 @@ namespace AltV.Net.ColShape
             Module = module;
         }
 
-        public static void Create(ulong id, int dimension, Position position, uint radius)
+        public static IColShape Create(ulong id, int dimension, Position position, uint radius)
         {
-            Add(new ColShape(id, dimension, position, radius));
+            var colShape = new ColShape(id, dimension, position, radius);
+            Add(colShape);
+            return colShape;
         }
 
         public static void Add(IColShape colShape)

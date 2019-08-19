@@ -24,12 +24,55 @@ namespace AltV.Net.ColShape.Tests
         public void PlayerEnterExitTest()
         {
             var enter = false;
-            AltColShape.OnEntityEnterColShape = (o, shape) => { enter = true; };
+            AltColShape.OnEntityEnterColShape = (o, shape) =>
+            {
+                if (shape.Id != 0) return;
+                enter = true;
+            };
             AltColShape.Create(0, 0, new Position(1, 1, 1), 50);
             Thread.Sleep(1000);
             Assert.True(enter);
-            AltColShape.OnEntityExitColShape = (o, shape) => { enter = false; };
-            player.Position = new Position(52, 1, 1);
+            AltColShape.OnEntityExitColShape = (o, shape) =>
+            {
+                if (shape.Id != 0) return;
+                enter = false;
+            };
+            lock (player)
+            {
+                player.Position = new Position(52, 1, 1);
+            }
+
+            Thread.Sleep(1000);
+            Assert.False(enter);
+            Assert.Pass();
+        }
+        
+        [Test]
+        public void PlayerEnterExitTest2()
+        {
+            var enter = false;
+            AltColShape.OnEntityEnterColShape = (o, shape) =>
+            {
+                if (shape.Id != 1) return;
+                enter = true;
+            };
+            AltColShape.Create(1, 0, new Position(452, 157, 731), 50);
+            lock (player)
+            {
+                player.Position = new Position(452, 157, 731);
+            }
+            Thread.Sleep(1000);
+            Assert.True(enter);
+            AltColShape.OnEntityExitColShape = (o, shape) =>
+            {
+                if (shape.Id != 1) return;
+                enter = false;
+            };
+            lock (player)
+            {
+                player.Position = new Position(1000, 1000, 1000);
+            }
+
             Thread.Sleep(1000);
             Assert.False(enter);
             Assert.Pass();
