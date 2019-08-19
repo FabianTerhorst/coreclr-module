@@ -471,7 +471,6 @@ void CoreClr::ExecuteManagedResourceUnload(alt::IServer* server, const char* res
     // Run managed code
 
     struct lib_args {
-        //string resourcePath, string resourceName, string resourceMain, int resourceIndex
         const char* resourcePath;
         const char* resourceMain;
     };

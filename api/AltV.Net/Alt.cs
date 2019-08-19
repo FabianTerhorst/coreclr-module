@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime.Loader;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Events;
 
@@ -10,8 +9,6 @@ namespace AltV.Net
         internal static Module Module;
 
         public static IServer Server => Module.Server;
-
-        public static AssemblyLoadContext AssemblyLoadContext => Module.AssemblyLoadContext;
 
         public static event CheckpointDelegate OnCheckpoint
         {
