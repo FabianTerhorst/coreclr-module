@@ -18,8 +18,8 @@ namespace AltV.Net
     {
         internal readonly IServer Server;
 
-        private AssemblyLoadContext assemblyLoadContext;
-        
+        private readonly WeakReference<AssemblyLoadContext> assemblyLoadContext;
+
         internal readonly CSharpNativeResource CSharpNativeResource;
 
         internal readonly IBaseBaseObjectPool BaseBaseObjectPool;
@@ -38,7 +38,9 @@ namespace AltV.Net
 
         internal readonly IBaseObjectPool<IColShape> ColShapePool;
 
-        internal IEnumerable<Assembly> Assemblies => assemblyLoadContext.Assemblies ?? new List<Assembly>();
+        internal IEnumerable<Assembly> Assemblies => !assemblyLoadContext.TryGetTarget(out var target)
+            ? new List<Assembly>()
+            : target.Assemblies;
 
         //For custom defined args event handlers
         private readonly Dictionary<string, HashSet<Function>> eventHandlers =
@@ -110,10 +112,11 @@ namespace AltV.Net
 
         internal readonly IEventHandler<ColShapeDelegate> ColShapeEventHandler =
             new HashSetEventHandler<ColShapeDelegate>();
-        
+
         internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
 
-        public Module(IServer server, AssemblyLoadContext assemblyLoadContext, CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool,
+        public Module(IServer server, AssemblyLoadContext assemblyLoadContext,
+            CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
@@ -123,7 +126,7 @@ namespace AltV.Net
         {
             Alt.Init(this);
             Server = server;
-            this.assemblyLoadContext = assemblyLoadContext;
+            this.assemblyLoadContext = new WeakReference<AssemblyLoadContext>(assemblyLoadContext);
             CSharpNativeResource = cSharpNativeResource;
             BaseBaseObjectPool = baseBaseObjectPool;
             BaseEntityPool = baseEntityPool;
@@ -135,34 +138,34 @@ namespace AltV.Net
             ColShapePool = colShapePool;
         }
 
-        internal void RemoveAssemblyLoadContextReference()
-        {
-            assemblyLoadContext = null;
-        }
-
         public void LoadAssemblyFromName(AssemblyName assemblyName)
         {
-            assemblyLoadContext?.LoadFromAssemblyName(assemblyName);
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
+            target.LoadFromAssemblyName(assemblyName);
         }
 
         public void LoadAssemblyFromStream(Stream stream)
         {
-            assemblyLoadContext?.LoadFromStream(stream);
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
+            target.LoadFromStream(stream);
         }
-        
+
         public void LoadAssemblyFromStream(Stream stream, Stream assemblySymbols)
         {
-            assemblyLoadContext?.LoadFromStream(stream, assemblySymbols);
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
+            target.LoadFromStream(stream, assemblySymbols);
         }
 
         public void LoadAssemblyFromPath(string path)
         {
-            assemblyLoadContext?.LoadFromAssemblyPath(path);
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
+            target.LoadFromAssemblyPath(path);
         }
-        
+
         public void LoadAssemblyFromNativeImagePath(string nativeImagePath, string assemblyPath)
         {
-            assemblyLoadContext?.LoadFromNativeImagePath(nativeImagePath, assemblyPath);
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
+            target.LoadFromNativeImagePath(nativeImagePath, assemblyPath);
         }
 
         public void On(string eventName, Function function)
@@ -281,7 +284,7 @@ namespace AltV.Net
                 parserServerEventHandlers[eventName] = eventHandlersForEvent;
             }
         }
-        
+
         public void Off<TFunc>(string eventName, TFunc func, ServerEventParser<TFunc> parser) where TFunc : Delegate
         {
             if (func == null || parser == null) return;

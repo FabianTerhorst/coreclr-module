@@ -97,16 +97,6 @@ namespace AltV.Net.Host
             var resourceDllPath = GetPath(resourcePath, resourceMain);
 
             if (!_loadContexts.Remove(resourceDllPath, out var loadContext)) return 1;
-            var altVNetAssembly = loadContext.LoadFromAssemblyName(new AssemblyName("AltV.Net"));
-            foreach (var type in altVNetAssembly.GetTypes())
-            {
-                if (type.Name == "ModuleWrapper")
-                {
-                    type.GetMethod("AssemblyUnload", BindingFlags.Public | BindingFlags.Static)?.Invoke(null,
-                        new object[] { });
-                }
-            }
-
             loadContext.Unload();
             return 0;
         }

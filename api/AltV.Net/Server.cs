@@ -33,7 +33,9 @@ namespace AltV.Net
 
         public string RootDirectory { get; }
 
-        public Server(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool,
+        public CSharpNativeResource Resource { get; }
+
+        public Server(IntPtr nativePointer, CSharpNativeResource resource, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
@@ -53,6 +55,7 @@ namespace AltV.Net
             var ptr = IntPtr.Zero;
             AltNative.Server.Server_GetRootDirectory(nativePointer, ref ptr);
             RootDirectory = Marshal.PtrToStringUTF8(ptr);
+            Resource = resource;
         }
 
         public void LogInfo(IntPtr messagePtr)
