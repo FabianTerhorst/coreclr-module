@@ -21,6 +21,21 @@ namespace AltV.Net.Host
         protected override Assembly Load(AssemblyName assemblyName)
         {
             var assemblyPath = resolver.ResolveAssemblyToPath(assemblyName);
+            if (assemblyPath == null)
+            {
+                var dllPath = resourcePath + Path.DirectorySeparatorChar + assemblyName.Name;
+                if (File.Exists(dllPath))
+                {
+                    try
+                    {
+                        return LoadFromAssemblyPath(dllPath);
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine(exception);
+                    }
+                }
+            }
             return assemblyPath != null ? LoadFromAssemblyPath(assemblyPath) : null;
         }
 
