@@ -8,8 +8,6 @@ namespace AltV.Net
     {
         public static IEnumerable<Assembly> Assemblies => Module.Assemblies;
 
-        public static void UnloadAssemblyLoadContext() => Module.UnloadAssemblyLoadContext();
-
         public static void LoadAssemblyFromName(AssemblyName assemblyName) => Module.LoadAssemblyFromName(assemblyName);
 
         public static void LoadAssemblyFromStream(Stream stream) => Module.LoadAssemblyFromStream(stream);

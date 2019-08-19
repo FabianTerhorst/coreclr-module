@@ -106,6 +106,7 @@ namespace AltV.Net
         public static void OnStop()
         {
             _resource.OnStop();
+            _module.RemoveAssemblyLoadContextReference();
         }
 
         public static void OnTick()

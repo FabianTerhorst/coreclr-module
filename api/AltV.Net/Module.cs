@@ -135,9 +135,8 @@ namespace AltV.Net
             ColShapePool = colShapePool;
         }
 
-        public void UnloadAssemblyLoadContext()
+        internal void RemoveAssemblyLoadContextReference()
         {
-            assemblyLoadContext.Unload();
             assemblyLoadContext = null;
         }
 

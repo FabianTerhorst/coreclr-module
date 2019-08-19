@@ -33,6 +33,13 @@ namespace AltV.Net.Host
             public IntPtr ResourcePointer;
         }
 
+        [StructLayout(LayoutKind.Sequential)]
+        public struct UnloadArgs
+        {
+            public IntPtr ResourcePath;
+            public IntPtr ResourceMain;
+        }
+
         public static int ExecuteResource(IntPtr arg, int argLength)
         {
             if (argLength < Marshal.SizeOf(typeof(LibArgs)))
@@ -46,7 +53,8 @@ namespace AltV.Net.Host
             var resourceMain = Marshal.PtrToStringUTF8(libArgs.ResourceMain);
 
             var resourceDllPath = GetPath(resourcePath, resourceMain);
-            var resourceAssemblyLoadContext = new ResourceAssemblyLoadContext(resourceDllPath, resourcePath, resourceName);
+            var resourceAssemblyLoadContext =
+                new ResourceAssemblyLoadContext(resourceDllPath, resourcePath, resourceName);
 
             Assembly resourceAssembly;
 
@@ -72,6 +80,34 @@ namespace AltV.Net.Host
 
             _loadContexts[resourceDllPath] = resourceAssemblyLoadContext;
 
+            return 0;
+        }
+
+        public static int ExecuteResourceUnload(IntPtr arg, int argLength)
+        {
+            if (argLength < Marshal.SizeOf(typeof(UnloadArgs)))
+            {
+                return 1;
+            }
+
+            var libArgs = Marshal.PtrToStructure<UnloadArgs>(arg);
+            var resourcePath = Marshal.PtrToStringUTF8(libArgs.ResourcePath);
+            var resourceMain = Marshal.PtrToStringUTF8(libArgs.ResourceMain);
+
+            var resourceDllPath = GetPath(resourcePath, resourceMain);
+
+            if (!_loadContexts.Remove(resourceDllPath, out var loadContext)) return 1;
+            var altVNetAssembly = loadContext.LoadFromAssemblyName(new AssemblyName("AltV.Net"));
+            foreach (var type in altVNetAssembly.GetTypes())
+            {
+                if (type.Name == "ModuleWrapper")
+                {
+                    type.GetMethod("OnStop", BindingFlags.Public | BindingFlags.Static)?.Invoke(null,
+                        new object[] { });
+                }
+            }
+
+            loadContext.Unload();
             return 0;
         }
     }
