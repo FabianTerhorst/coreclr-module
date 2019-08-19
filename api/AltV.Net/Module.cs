@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using AltV.Net.Elements.Args;
@@ -16,7 +18,7 @@ namespace AltV.Net
     {
         internal readonly IServer Server;
 
-        internal readonly AssemblyLoadContext AssemblyLoadContext;
+        private AssemblyLoadContext assemblyLoadContext;
         
         internal readonly CSharpNativeResource CSharpNativeResource;
 
@@ -35,6 +37,8 @@ namespace AltV.Net
         internal readonly IBaseObjectPool<IVoiceChannel> VoiceChannelPool;
 
         internal readonly IBaseObjectPool<IColShape> ColShapePool;
+
+        internal IEnumerable<Assembly> Assemblies => assemblyLoadContext.Assemblies ?? new List<Assembly>();
 
         //For custom defined args event handlers
         private readonly Dictionary<string, HashSet<Function>> eventHandlers =
@@ -119,7 +123,7 @@ namespace AltV.Net
         {
             Alt.Init(this);
             Server = server;
-            AssemblyLoadContext = assemblyLoadContext;
+            this.assemblyLoadContext = assemblyLoadContext;
             CSharpNativeResource = cSharpNativeResource;
             BaseBaseObjectPool = baseBaseObjectPool;
             BaseEntityPool = baseEntityPool;
@@ -129,6 +133,37 @@ namespace AltV.Net
             CheckpointPool = checkpointPool;
             VoiceChannelPool = voiceChannelPool;
             ColShapePool = colShapePool;
+        }
+
+        public void UnloadAssemblyLoadContext()
+        {
+            assemblyLoadContext.Unload();
+            assemblyLoadContext = null;
+        }
+
+        public void LoadAssemblyFromName(AssemblyName assemblyName)
+        {
+            assemblyLoadContext?.LoadFromAssemblyName(assemblyName);
+        }
+
+        public void LoadAssemblyFromStream(Stream stream)
+        {
+            assemblyLoadContext?.LoadFromStream(stream);
+        }
+        
+        public void LoadAssemblyFromStream(Stream stream, Stream assemblySymbols)
+        {
+            assemblyLoadContext?.LoadFromStream(stream, assemblySymbols);
+        }
+
+        public void LoadAssemblyFromPath(string path)
+        {
+            assemblyLoadContext?.LoadFromAssemblyPath(path);
+        }
+        
+        public void LoadAssemblyFromNativeImagePath(string nativeImagePath, string assemblyPath)
+        {
+            assemblyLoadContext?.LoadFromNativeImagePath(nativeImagePath, assemblyPath);
         }
 
         public void On(string eventName, Function function)
