@@ -64,5 +64,15 @@ namespace AltV.Net
             Marshal.FreeHGlobal(stringPtr);
             mValue.Dispose();
         }
+
+        public void Start()
+        {
+            AltNative.Resource.Resource_Start(NativePointer);
+        }
+
+        public void Stop()
+        {
+            AltNative.Resource.Resource_Stop(NativePointer);
+        }
     }
 }

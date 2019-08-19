@@ -413,7 +413,15 @@ void CoreClr::CreateManagedHost(alt::IServer* server) {
             nullptr,
             (void**) &ExecuteResourceDelegate);
 
-    if (ExecuteResourceDelegate == nullptr || rc != 0) {
+    int rc2 = load_assembly_and_get_function_pointer(
+            hostDllPathCStr,
+            STR("AltV.Net.Host.Host, AltV.Net.Host"),
+            STR("ExecuteResourceUnload"),
+            nullptr /*delegate_type_name*/,
+            nullptr,
+            (void**) &ExecuteResourceUnloadDelegate);
+
+    if (ExecuteResourceDelegate == nullptr || rc != 0 || ExecuteResourceUnloadDelegate == nullptr || rc2 != 0) {
         server->LogInfo(alt::String("coreclr-module: host path:") + hostDllPath.CStr());
         PrintError(server, rc);
         return;
@@ -452,6 +460,28 @@ void CoreClr::ExecuteManagedResource(alt::IServer* server, const char* resourceP
             };
 
     ExecuteResourceDelegate(&args, sizeof(args));
+}
+
+void CoreClr::ExecuteManagedResourceUnload(alt::IServer* server, const char* resourcePath, const char* resourceMain) {
+    if (ExecuteResourceUnloadDelegate == nullptr) {
+        server->LogInfo(alt::String("coreclr-module: Core CLR host not loaded"));
+        return;
+    }
+
+    // Run managed code
+
+    struct lib_args {
+        //string resourcePath, string resourceName, string resourceMain, int resourceIndex
+        const char* resourcePath;
+        const char* resourceMain;
+    };
+    lib_args args
+            {
+                    resourcePath,
+                    resourceMain,
+            };
+
+    ExecuteResourceUnloadDelegate(&args, sizeof(args));
 }
 
 load_assembly_and_get_function_pointer_fn CoreClr::get_dotnet_load_assembly(const char_t* config_path) {

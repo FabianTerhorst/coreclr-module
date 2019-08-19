@@ -36,6 +36,7 @@
 #define DIR_SEPARATOR L'\\'
 
 #else
+
 #include <limits.h>
 
 #define STR(s) s
@@ -122,6 +123,8 @@ public:
     void ExecuteManagedResource(alt::IServer* server, const char* resourcePath, const char* resourceName,
                                 const char* resourceMain, alt::IResource* resource);
 
+    void ExecuteManagedResourceUnload(alt::IServer* server, const char* resourcePath, const char* resourceMain);
+
     load_assembly_and_get_function_pointer_fn get_dotnet_load_assembly(const char_t* config_path);
 
 private:
@@ -138,6 +141,7 @@ private:
     void* managedRuntimeHost;
     unsigned int managedDomainId;
     component_entry_point_fn ExecuteResourceDelegate;
+    component_entry_point_fn ExecuteResourceUnloadDelegate;
 
     hostfxr_initialize_for_runtime_config_fn _initializeFxr;
     hostfxr_get_runtime_delegate_fn _getDelegate;

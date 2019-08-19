@@ -4,6 +4,7 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
         : alt::IResource(info) {
     this->server = server;
     this->invokers = new alt::Array<CustomInvoker*>();
+    this->coreClr = coreClr;
 
     //auto isDll = true;
 
@@ -47,7 +48,7 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     ColShapeDelegate = nullptr;
 
     //if (isDll) {
-        coreClr->ExecuteManagedResource(server, this->GetPath().CStr(), this->name.CStr(), this->GetMain().CStr(), this);
+
         /*
         struct stat buf;
         char* assemblyPath = new char[this->GetPath().GetSize() + strlen(ASSEMBLY_PATH) + 1];
@@ -196,6 +197,7 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
 
 bool CSharpResource::Start() {
     alt::IResource::Start();
+    coreClr->ExecuteManagedResource(server, this->GetPath().CStr(), this->name.CStr(), this->GetMain().CStr(), this);
     if (MainDelegate == nullptr) return false;
     MainDelegate(this->server, this, this->name.CStr(), main.CStr());
     return true;
@@ -208,6 +210,7 @@ bool CSharpResource::Stop() {
     }
     if (OnStopDelegate == nullptr) return false;
     OnStopDelegate();
+    coreClr->ExecuteManagedResourceUnload(server, this->GetPath().CStr(), this->GetMain().CStr());
     return true;
 }
 

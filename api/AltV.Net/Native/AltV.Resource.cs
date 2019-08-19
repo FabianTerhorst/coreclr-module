@@ -37,6 +37,12 @@ namespace AltV.Net.Native
                 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern ResourceState Resource_GetState(IntPtr resourcePointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Resource_Start(IntPtr resourcePointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Resource_Stop(IntPtr resourcePointer);
 
             internal delegate void MainDelegate(IntPtr serverPointer, IntPtr resourcePointer, string resourceName,
                 string entryPoint);

@@ -49,3 +49,11 @@ void Resource_GetType(alt::IResource* resource, const char*&text) {
 alt::IResource::State Resource_GetState(alt::IResource* resource) {
     return resource->GetState();
 }
+
+void Resource_Start(alt::IResource* resource) {
+    resource->Start();
+}
+
+void Resource_Stop(alt::IResource* resource) {
+    resource->Stop();
+}

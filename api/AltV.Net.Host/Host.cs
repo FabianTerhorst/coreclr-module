@@ -102,7 +102,7 @@ namespace AltV.Net.Host
             {
                 if (type.Name == "ModuleWrapper")
                 {
-                    type.GetMethod("OnStop", BindingFlags.Public | BindingFlags.Static)?.Invoke(null,
+                    type.GetMethod("AssemblyUnload", BindingFlags.Public | BindingFlags.Static)?.Invoke(null,
                         new object[] { });
                 }
             }

@@ -52,6 +52,11 @@ namespace AltV.Net
             ResourceBuilder.SetDelegates(resourcePointer, OnStartResource);
         }
 
+        public static void AssemblyUnload()
+        {
+            _module.RemoveAssemblyLoadContextReference();
+        }
+
         public static void MainWithResource(IntPtr serverPointer, IntPtr resourcePointer, IResource resource,
             AssemblyLoadContext assemblyLoadContext)
         {
@@ -106,7 +111,6 @@ namespace AltV.Net
         public static void OnStop()
         {
             _resource.OnStop();
-            _module.RemoveAssemblyLoadContextReference();
         }
 
         public static void OnTick()

@@ -186,6 +186,7 @@ public:
     unsigned int domainId;
 
     alt::Array<CustomInvoker*>* invokers;
+    CoreClr* coreClr;
 };
 
 EXPORT void CSharpResource_SetExport(CSharpResource* resource, const char* key, const alt::MValue &val);

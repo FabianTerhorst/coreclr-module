@@ -2,8 +2,6 @@ namespace AltV.Net
 {
     public interface INativeResource
     {
-        void SetExport(string key, object value);
-
         string Path { get; }
         
         string Name { get; }
@@ -13,5 +11,11 @@ namespace AltV.Net
         string Type { get; }
         
         ResourceState State { get; }
+
+        void SetExport(string key, object value);
+        
+        void Start();
+
+        void Stop();
     }
 }
