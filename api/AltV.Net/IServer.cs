@@ -11,6 +11,8 @@ namespace AltV.Net
         int NetTime { get; }
 
         string RootDirectory { get; }
+        
+        CSharpNativeResource Resource { get; }
 
         void LogInfo(string message);
 

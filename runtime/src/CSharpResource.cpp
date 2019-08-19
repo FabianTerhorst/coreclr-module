@@ -197,9 +197,9 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
 
 bool CSharpResource::Start() {
     alt::IResource::Start();
-    coreClr->ExecuteManagedResource(server, this->GetPath().CStr(), this->name.CStr(), this->GetMain().CStr(), this);
+    coreClr->ExecuteManagedResource(server, this->GetPath().CStr(), this->GetName().CStr(), this->GetMain().CStr(), this);
     if (MainDelegate == nullptr) return false;
-    MainDelegate(this->server, this, this->name.CStr(), main.CStr());
+    MainDelegate(this->server, this, this->GetName().CStr(), GetMain().CStr());
     return true;
 }
 

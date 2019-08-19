@@ -31,6 +31,8 @@ namespace AltV.Net.Mock
 
         public string RootDirectory => "";
 
+        public CSharpNativeResource Resource => new CSharpNativeResource(IntPtr.Zero);
+
         internal MockServer(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,

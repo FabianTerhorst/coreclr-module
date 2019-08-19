@@ -12,6 +12,10 @@ namespace AltV.Net
 
             GCHandle.Alloc(onStart);
 
+            AltNative.Resource.StopDelegate onStop = ModuleWrapper.OnStop;
+
+            GCHandle.Alloc(onStop);
+
             AltNative.Resource.TickDelegate onTick = ModuleWrapper.OnTick;
 
             GCHandle.Alloc(onTick);
@@ -129,7 +133,8 @@ namespace AltV.Net
 
             GCHandle.Alloc(onColShape);
 
-            AltNative.Resource.CSharpResource_SetMain(resourcePointer, onStart, onTick, onServerEvent, onCheckpoint,
+            AltNative.Resource.CSharpResource_SetMain(resourcePointer, onStart, onStop, onTick, onServerEvent,
+                onCheckpoint,
                 onClientEvent, onPlayerDamage, onPlayerConnect, onPlayerDeath, onPlayerDisconnect, onPlayerRemove,
                 onVehicleRemove,
                 onPlayerChangeVehicleSeat, onPlayerEnterVehicle, onPlayerLeaveVehicle, onCreatePlayer, onRemovePlayer,

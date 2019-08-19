@@ -4,9 +4,13 @@ using AltV.Net.Native;
 
 namespace AltV.Net
 {
+    /// <summary>
+    /// A wrapper around none standard alt:V cpp apis
+    /// </summary>
+    //TODO: move SetDelegates to this thing
     public class CSharpNativeResource : NativeResource
     {
-        public CSharpNativeResource(IntPtr nativePointer) : base(nativePointer)
+        internal CSharpNativeResource(IntPtr nativePointer) : base(nativePointer)
         {
         }
 
@@ -14,6 +18,11 @@ namespace AltV.Net
         {
             //TODO: throw exception when not called in OnStart()
             AltNative.Resource.CSharpResource_SetExport(NativePointer, key, ref value);
+        }
+
+        public void Reload()
+        {
+            AltNative.Resource.CSharpResource_Reload(NativePointer);
         }
     }
 }

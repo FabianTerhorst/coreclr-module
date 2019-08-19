@@ -106,9 +106,6 @@ class CSharpResource : public alt::IResource {
 
     void* GetEntityPointer(alt::IEntity* entity);
 
-private:
-    alt::IServer* server;
-
 public:
     CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IResource::CreationInfo* info);
 
@@ -187,12 +184,16 @@ public:
 
     alt::Array<CustomInvoker*>* invokers;
     CoreClr* coreClr;
+    alt::IServer* server;
 };
+
+EXPORT void CSharpResource_Reload(CSharpResource* resource);
 
 EXPORT void CSharpResource_SetExport(CSharpResource* resource, const char* key, const alt::MValue &val);
 
 EXPORT void CSharpResource_SetMain(CSharpResource* resource,
                                    MainDelegate_t mainDelegate,
+                                   StopDelegate_t stopDelegate,
                                    TickDelegate_t tickDelegate,
                                    ServerEventDelegate_t serverEventDelegate,
                                    CheckpointDelegate_t checkpointDelegate,
