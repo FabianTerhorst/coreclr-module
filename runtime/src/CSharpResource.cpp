@@ -205,9 +205,12 @@ bool CSharpResource::Start() {
 
 bool CSharpResource::Stop() {
     alt::IResource::Stop();
-    for (int i = 0, length = invokers->GetSize(); i < length; i++) {
-        delete invokers->operator[](i);
+    for (alt::Size i = 0, length = invokers->GetSize(); i < length; i++) {
+        auto invoker = (*invokers)[i];
+        delete invoker;
     }
+    invokers->~Array<CustomInvoker*>();
+    delete invokers;
     if (OnStopDelegate == nullptr) return false;
     OnStopDelegate();
     coreClr->ExecuteManagedResourceUnload(server, this->GetPath().CStr(), this->GetMain().CStr());

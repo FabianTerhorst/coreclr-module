@@ -8,8 +8,8 @@ CustomInvoker* Invoker_Create(CSharpResource* resource, MValueFunctionCallback v
 
 void Invoker_Destroy(CSharpResource* resource, CustomInvoker* val) {
     auto newInvokers = new alt::Array<CustomInvoker*>();
-    for (int i = 0, length = resource->invokers->GetSize(); i < length; i++) {
-        auto invoker = resource->invokers->operator[](i);
+    for (alt::Size i = 0, length = resource->invokers->GetSize(); i < length; i++) {
+        auto invoker = (*resource->invokers)[i];
         if (invoker != val) {
             newInvokers->Push(invoker);
         }
