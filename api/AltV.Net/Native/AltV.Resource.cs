@@ -15,6 +15,12 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResource_Reload(IntPtr resourcePointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResource_Load(IntPtr resourcePointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResource_Unload(IntPtr resourcePointer);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern ushort Resource_GetExports(IntPtr resourcePointer, ref StringViewArray keys,

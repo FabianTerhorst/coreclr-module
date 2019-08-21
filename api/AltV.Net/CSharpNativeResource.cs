@@ -8,10 +8,13 @@ namespace AltV.Net
     /// A wrapper around none standard alt:V cpp apis
     /// </summary>
     //TODO: move SetDelegates to this thing
-    public class CSharpNativeResource : NativeResource
+    public class CSharpNativeResource
     {
-        internal CSharpNativeResource(IntPtr nativePointer) : base(nativePointer)
+        internal readonly IntPtr NativePointer;
+
+        internal CSharpNativeResource(IntPtr nativePointer)
         {
+            NativePointer = nativePointer;
         }
 
         public void SetExport(string key, MValue value)
@@ -23,6 +26,16 @@ namespace AltV.Net
         public void Reload()
         {
             AltNative.Resource.CSharpResource_Reload(NativePointer);
+        }
+
+        public void Load()
+        {
+            AltNative.Resource.CSharpResource_Load(NativePointer);
+        }
+
+        public void Unload()
+        {
+            AltNative.Resource.CSharpResource_Unload(NativePointer);
         }
     }
 }

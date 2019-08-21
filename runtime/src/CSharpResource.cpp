@@ -469,6 +469,18 @@ void CSharpResource_Reload(CSharpResource* resource) {
     resource->MainDelegate(resource->server, resource, resource->GetName().CStr(), resource->GetMain().CStr());
 }
 
+void CSharpResource_Load(CSharpResource* resource) {
+    resource->coreClr->ExecuteManagedResource(resource->server, resource->GetPath().CStr(), resource->GetName().CStr(),
+                                              resource->GetMain().CStr(), resource);
+    resource->MainDelegate(resource->server, resource, resource->GetName().CStr(), resource->GetMain().CStr());
+}
+
+void CSharpResource_Unload(CSharpResource* resource) {
+    resource->OnStopDelegate();
+    resource->coreClr->ExecuteManagedResourceUnload(resource->server, resource->GetPath().CStr(),
+                                                    resource->GetMain().CStr());
+}
+
 void Server_GetCSharpResource(alt::IServer* server, const char* resourceName, CSharpResource*&resource) {
     resource = (CSharpResource*) server->GetResource(resourceName);
 }

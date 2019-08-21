@@ -192,6 +192,10 @@ EXPORT void CSharpResource_Reload(CSharpResource* resource);
 
 EXPORT void CSharpResource_SetExport(CSharpResource* resource, const char* key, const alt::MValue &val);
 
+EXPORT void CSharpResource_Load(CSharpResource* resource);
+
+EXPORT void CSharpResource_Unload(CSharpResource* resource);
+
 EXPORT void CSharpResource_SetMain(CSharpResource* resource,
                                    MainDelegate_t mainDelegate,
                                    StopDelegate_t stopDelegate,
