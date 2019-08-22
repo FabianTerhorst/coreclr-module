@@ -274,6 +274,22 @@ void Vehicle_SetNeonColor(alt::IVehicle* vehicle, alt::RGBA color) {
     return vehicle->SetNeonColor(color);
 }
 
+uint8_t Vehicle_GetLivery(alt::IVehicle* vehicle) {
+    return vehicle->GetLivery();
+}
+
+void Vehicle_SetLivery(alt::IVehicle* vehicle, uint8_t livery) {
+    vehicle->SetLivery(livery);
+}
+
+uint8_t Vehicle_GetRoofLivery(alt::IVehicle* vehicle) {
+    return vehicle->GetRoofLivery();
+}
+
+void Vehicle_SetRoofLivery(alt::IVehicle* vehicle, uint8_t roofLivery) {
+    vehicle->SetRoofLivery(roofLivery);
+}
+
 void Vehicle_GetAppearanceDataBase64(alt::IVehicle* vehicle, const char*&base64) {
     base64 = vehicle->GetAppearanceDataBase64().CStr();
 }
@@ -360,6 +376,14 @@ void Vehicle_SetRoofOpened(alt::IVehicle* vehicle, bool state) {
 
 bool Vehicle_IsFlamethrowerActive(alt::IVehicle* vehicle) {
     return vehicle->IsFlamethrowerActive();
+}
+
+float Vehicle_GetLightsMultiplier(alt::IVehicle* vehicle) {
+    return vehicle->GetLightsMultiplier();
+}
+
+void Vehicle_SetLightsMultiplier(alt::IVehicle* vehicle, float multiplier) {
+    vehicle->SetLightsMultiplier(multiplier);
 }
 
 void Vehicle_GetGameStateBase64(alt::IVehicle* vehicle, const char*&text) {

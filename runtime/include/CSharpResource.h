@@ -19,34 +19,6 @@
 #endif
 
 #ifdef _WIN32
-#include <direct.h>
-#define GetCurrentDir _getcwd
-#else
-
-#include <unistd.h>
-
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-
-#define GetCurrentDir getcwd
-#endif
-
-//#include "clrHost.h"
-
-/*#include <iostream>
-
-#ifdef _WIN32
-#include <windows.h>
-#else
-#include <stdlib.h>
-#include <dlfcn.h>
-#include <dirent.h>
-#include <sys/stat.h>
-#endif*/
-
-
-#ifdef _WIN32
 #include <iostream>
 #include <stdio.h>
 #include <direct.h>
@@ -61,6 +33,24 @@
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
+
+typedef void (* MValueFunctionCallback)(alt::MValueList*, alt::MValue*);
+
+class CustomInvoker : public alt::MValueFunction::Invoker {
+public:
+    MValueFunctionCallback mValueFunctionCallback;
+
+    explicit CustomInvoker(MValueFunctionCallback mValueFunctionCallback) {
+        this->mValueFunctionCallback = mValueFunctionCallback;
+    }
+
+    alt::MValue Invoke(alt::MValueList args) override {
+        //auto list = args.Get<alt::MValue::List>();
+        alt::MValue result;
+        mValueFunctionCallback(&args, &result);
+        return result;
+    }
+};
 
 typedef void (* MainDelegate_t)(alt::IServer* server, alt::IResource* resource, const char* resourceName,
                               const char* entryPoint);
@@ -97,7 +87,7 @@ typedef void (* OnCreateColShapeDelegate_t)(alt::IColShape* colShape);
 typedef void (* OnRemoveColShapeDelegate_t)(alt::IColShape* colShape);
 typedef void (* OnConsoleCommandDelegate_t)(const char* name, alt::Array<alt::StringView>* args);
 typedef void (* MetaChangeDelegate_t)(void* entity, alt::IBaseObject::Type type, alt::StringView key, alt::MValue* value);
-typedef void (* ColShapeDelegate_t)(alt::IColShape* colShape, alt::IEntity* entity, alt::IBaseObject::Type baseObjectType, bool state);
+typedef void (* ColShapeDelegate_t)(alt::IColShape* colShape, void* entity, alt::IBaseObject::Type baseObjectType, bool state);
 
 class CSharpResource : public alt::IResource {
     bool OnEvent(const alt::CEvent* ev) override;
@@ -115,9 +105,6 @@ class CSharpResource : public alt::IResource {
     void* GetBaseObjectPointer(alt::IBaseObject* baseObject);
 
     void* GetEntityPointer(alt::IEntity* entity);
-
-private:
-    alt::IServer* server;
 
 public:
     CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IResource::CreationInfo* info);
@@ -194,12 +181,24 @@ public:
 
     void* runtimeHost;
     unsigned int domainId;
+
+    alt::Array<CustomInvoker*>* invokers;
+    CoreClr* coreClr;
+    alt::IServer* server;
 };
+
+EXPORT void Server_GetCSharpResource(alt::IServer* server, const char* resourceName, CSharpResource*&resource);
+EXPORT void CSharpResource_Reload(CSharpResource* resource);
 
 EXPORT void CSharpResource_SetExport(CSharpResource* resource, const char* key, const alt::MValue &val);
 
+EXPORT void CSharpResource_Load(CSharpResource* resource);
+
+EXPORT void CSharpResource_Unload(CSharpResource* resource);
+
 EXPORT void CSharpResource_SetMain(CSharpResource* resource,
                                    MainDelegate_t mainDelegate,
+                                   StopDelegate_t stopDelegate,
                                    TickDelegate_t tickDelegate,
                                    ServerEventDelegate_t serverEventDelegate,
                                    CheckpointDelegate_t checkpointDelegate,
@@ -229,7 +228,3 @@ EXPORT void CSharpResource_SetMain(CSharpResource* resource,
                                    OnCreateColShapeDelegate_t createColShapeDelegate,
                                    OnRemoveColShapeDelegate_t removeColShapeDelegate,
                                    ColShapeDelegate_t colShapeDelegate);
-
-EXPORT alt::IServer* CSharpResource_GetServerPointer();
-
-EXPORT CSharpResource* CSharpResource_GetResourcePointer(int32_t resourceIndex);

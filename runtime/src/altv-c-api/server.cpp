@@ -1,3 +1,4 @@
+#include <CSharpResource.h>
 #include "server.h"
 
 void Server_LogInfo(alt::IServer* server, const char* str) {
@@ -120,4 +121,20 @@ void Server_DestroyVoiceChannel(alt::IServer* server, alt::IVoiceChannel* baseOb
 
 void Server_DestroyColShape(alt::IServer* server, alt::IColShape* baseObject) {
     return server->DestroyBaseObject(baseObject);
+}
+
+int32_t Server_GetNetTime(alt::IServer* server) {
+    return server->GetNetTime();
+}
+
+void Server_GetRootDirectory(alt::IServer* server, const char*&text) {
+    text = server->GetRootDirectory().CStr();
+}
+
+void Server_GetPlayers(alt::IServer* server, alt::Array<alt::IPlayer*> &players) {
+    players = server->GetPlayers();
+}
+
+void Server_GetVehicles(alt::IServer* server, alt::Array<alt::IVehicle*> &vehicles) {
+    vehicles = server->GetVehicles();
 }

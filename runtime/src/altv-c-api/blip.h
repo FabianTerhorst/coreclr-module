@@ -29,7 +29,7 @@ EXPORT void Blip_SetMetaData(alt::IBlip* blip, const char* key, alt::MValue* val
 // Blip
 EXPORT bool Blip_IsGlobal(alt::IBlip* blip);
 EXPORT bool Blip_IsAttached(alt::IBlip* blip);
-EXPORT alt::IEntity* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type);
+EXPORT void* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type);
 EXPORT uint8_t Blip_GetType(alt::IBlip* blip);
 EXPORT void Blip_SetSprite(alt::IBlip* blip, uint16_t sprite);
 EXPORT void Blip_SetColor(alt::IBlip* blip, uint8_t color);

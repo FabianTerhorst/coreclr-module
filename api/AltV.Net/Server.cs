@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using AltV.Net.Data;
@@ -28,7 +29,13 @@ namespace AltV.Net
 
         private readonly IBaseObjectPool<IColShape> colShapePool;
 
-        public Server(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool,
+        public int NetTime => AltNative.Server.Server_GetNetTime(NativePointer);
+
+        public string RootDirectory { get; }
+
+        public CSharpNativeResource Resource { get; }
+
+        public Server(IntPtr nativePointer, CSharpNativeResource resource, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
@@ -36,7 +43,7 @@ namespace AltV.Net
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool)
         {
-            this.NativePointer = nativePointer;
+            NativePointer = nativePointer;
             this.baseBaseObjectPool = baseBaseObjectPool;
             this.baseEntityPool = baseEntityPool;
             this.playerPool = playerPool;
@@ -45,6 +52,10 @@ namespace AltV.Net
             this.checkpointPool = checkpointPool;
             this.voiceChannelPool = voiceChannelPool;
             this.colShapePool = colShapePool;
+            var ptr = IntPtr.Zero;
+            AltNative.Server.Server_GetRootDirectory(nativePointer, ref ptr);
+            RootDirectory = Marshal.PtrToStringUTF8(ptr);
+            Resource = resource;
         }
 
         public void LogInfo(IntPtr messagePtr)
@@ -219,74 +230,69 @@ namespace AltV.Net
         public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
             ushort id = default;
-            vehiclePool.Create(AltNative.Server.Server_CreateVehicle(NativePointer, model, pos, rotation, ref id), id,
-                out var vehicle);
-            return vehicle;
+            var ptr = AltNative.Server.Server_CreateVehicle(NativePointer, model, pos, rotation, ref id);
+            return vehiclePool.Get(ptr, out var vehicle) ? vehicle : null;
         }
 
         public ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height,
             Rgba color)
         {
-            checkpointPool.Create(AltNative.Server.Server_CreateCheckpoint(NativePointer,
+            var ptr = AltNative.Server.Server_CreateCheckpoint(NativePointer,
                 player?.NativePointer ?? IntPtr.Zero,
-                type, pos, radius, height, color), out var checkpoint);
-            return checkpoint;
+                type, pos, radius, height, color);
+            return checkpointPool.Get(ptr, out var checkpoint) ? checkpoint : null;
         }
 
         public IBlip CreateBlip(IPlayer player, byte type, Position pos)
         {
-            blipPool.Create(AltNative.Server.Server_CreateBlip(NativePointer, player?.NativePointer ?? IntPtr.Zero,
-                type, pos), out var blip);
-            return blip;
+            var ptr = AltNative.Server.Server_CreateBlip(NativePointer, player?.NativePointer ?? IntPtr.Zero,
+                type, pos);
+            return blipPool.Get(ptr, out var blip) ? blip : null;
         }
 
         public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
         {
-            blipPool.Create(AltNative.Server.Server_CreateBlipAttached(NativePointer,
+            var ptr = AltNative.Server.Server_CreateBlipAttached(NativePointer,
                 player?.NativePointer ?? IntPtr.Zero,
-                type, entityAttach.NativePointer), out var blip);
-            return blip;
+                type, entityAttach.NativePointer);
+            return blipPool.Get(ptr, out var blip) ? blip : null;
         }
 
         public IVoiceChannel CreateVoiceChannel(bool spatial, float maxDistance)
         {
-            voiceChannelPool.Create(AltNative.Server.Server_CreateVoiceChannel(NativePointer,
-                spatial, maxDistance), out var voiceChannel);
-            return voiceChannel;
+            var ptr = AltNative.Server.Server_CreateVoiceChannel(NativePointer,
+                spatial, maxDistance);
+            return voiceChannelPool.Get(ptr, out var voiceChannel) ? voiceChannel : null;
         }
 
         public IColShape CreateColShapeCylinder(Position pos, float radius, float height)
         {
-            colShapePool.Create(AltNative.Server.Server_CreateColShapeCylinder(NativePointer, pos, radius, height),
-                out var colShape);
-            return colShape;
+            var ptr = AltNative.Server.Server_CreateColShapeCylinder(NativePointer, pos, radius, height);
+            return colShapePool.Get(ptr, out var colShape) ? colShape : null;
         }
 
         public IColShape CreateColShapeSphere(Position pos, float radius)
         {
-            colShapePool.Create(AltNative.Server.Server_CreateColShapeSphere(NativePointer, pos, radius),
-                out var colShape);
-            return colShape;
+            var ptr = AltNative.Server.Server_CreateColShapeSphere(NativePointer, pos, radius);
+            return colShapePool.Get(ptr, out var colShape) ? colShape : null;
         }
 
         public IColShape CreateColShapeCircle(Position pos, float radius)
         {
-            colShapePool.Create(AltNative.Server.Server_CreateColShapeCircle(NativePointer, pos, radius),
-                out var colShape);
-            return colShape;
+            var ptr = AltNative.Server.Server_CreateColShapeCircle(NativePointer, pos, radius);
+            return colShapePool.Get(ptr, out var colShape) ? colShape : null;
         }
 
         public IColShape CreateColShapeCube(Position pos, Position pos2)
         {
-            colShapePool.Create(AltNative.Server.Server_CreateColShapeCube(NativePointer, pos, pos2), out var colShape);
-            return colShape;
+            var ptr = AltNative.Server.Server_CreateColShapeCube(NativePointer, pos, pos2);
+            return colShapePool.Get(ptr, out var colShape) ? colShape : null;
         }
 
         public IColShape CreateColShapeRectangle(Position pos, Position pos2)
         {
-            colShapePool.Create(AltNative.Server.Server_CreateColShapeRectangle(NativePointer, pos, pos2),
-                out var colShape);
-            return colShape;
+            var ptr = AltNative.Server.Server_CreateColShapeRectangle(NativePointer, pos, pos2);
+            return colShapePool.Get(ptr, out var colShape) ? colShape : null;
         }
 
         public void RemoveBlip(IBlip blip)
@@ -335,11 +341,46 @@ namespace AltV.Net
             AltNative.Server.Server_GetResource(NativePointer, name, ref resourcePointer);
             return resourcePointer == IntPtr.Zero ? null : new ServerNativeResource(resourcePointer);
         }
+        
+        public CSharpNativeResource GetCSharpResource(string name)
+        {
+            var resourcePointer = IntPtr.Zero;
+            AltNative.Server.Server_GetCSharpResource(NativePointer, name, ref resourcePointer);
+            return resourcePointer == IntPtr.Zero ? null : new CSharpNativeResource(resourcePointer);
+        }
 
         public IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation)
         {
             id = default;
             return AltNative.Server.Server_CreateVehicle(NativePointer, model, pos, rotation, ref id);
+        }
+
+        public IEnumerable<IPlayer> GetPlayers()
+        {
+            var playerPointerArray = PlayerPointerArray.Nil;
+            AltNative.Server.Server_GetPlayers(NativePointer, ref playerPointerArray);
+            var playerPointers = playerPointerArray.ToArrayAndFree();
+            foreach (var playerPointer in playerPointers)
+            {
+                if (playerPool.GetOrCreate(playerPointer, out var vehicle))
+                {
+                    yield return vehicle;
+                }
+            }
+        }
+
+        public IEnumerable<IVehicle> GetVehicles()
+        {
+            var vehiclePointerArray = VehiclePointerArray.Nil;
+            AltNative.Server.Server_GetVehicles(NativePointer, ref vehiclePointerArray);
+            var vehiclePointers = vehiclePointerArray.ToArrayAndFree();
+            foreach (var vehiclePointer in vehiclePointers)
+            {
+                if (vehiclePool.GetOrCreate(vehiclePointer, out var vehicle))
+                {
+                    yield return vehicle;
+                }
+            }
         }
     }
 }

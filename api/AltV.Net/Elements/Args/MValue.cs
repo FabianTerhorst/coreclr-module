@@ -268,7 +268,7 @@ namespace AltV.Net.Elements.Args
         public static MValue Create(Function function)
         {
             var mValue = Nil;
-            AltNative.MValueCreate.MValue_CreateFunction(AltNative.MValueCreate.Invoker_Create(function), ref mValue);
+            AltNative.MValueCreate.MValue_CreateFunction(AltNative.MValueCreate.Invoker_Create(Alt.Module.CSharpNativeResource.NativePointer, function), ref mValue);
             return mValue;
         }
 
@@ -393,14 +393,14 @@ namespace AltV.Net.Elements.Args
         public MValue CallFunction(MValue[] args)
         {
             var result = Nil;
-            AltNative.MValueCall.MValue_CallFunction(ref this, args, (ulong) args.Length, ref result);
+            AltNative.MValueCall.MValue_CallFunction(ref this, args, args.Length, ref result);
             return result;
         }
 
         public MValue CallFunction(params object[] args)
         {
             var result = Nil;
-            AltNative.MValueCall.MValue_CallFunction(ref this, CreateFromObjects(args), (ulong) args.Length,
+            AltNative.MValueCall.MValue_CallFunction(ref this, CreateFromObjects(args), args.Length,
                 ref result);
             return result;
         }

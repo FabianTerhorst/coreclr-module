@@ -40,6 +40,10 @@ namespace AltV.Net.Mock
         public bool IsTireSmokeColorCustom { get; }
         public bool IsNeonActive { get; }
 
+        public byte Livery { get; set; }
+        public byte RoofLivery { get; set; }
+        public float LightsMultiplier { get; set; }
+
         public byte GetMod(byte category)
         {
             return 0;

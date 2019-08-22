@@ -14,7 +14,6 @@ namespace AltV.Net
 
         //TODO: for high optimization add ParseBoolUnsafe ect. that doesn't contains the mValue type check for scenarios where we already had to check the mValue type
 
-
         //TODO: add support for own function arguments parser for significant performance improvements with all benefits
         // Returns null when function signature isn't supported
         public static Function Create<T>(T func) where T : Delegate
@@ -42,6 +41,8 @@ namespace AltV.Net
             }
 
             //TODO: check for unsupported types
+            //TODO: check if last type is a object[] and add all to it that didnt fit with length, like (string bla, object[] args) 
+            //TODO: add parameter type attribute to annotate object[] with 
             var parsers = new FunctionMValueParser[genericArguments.Length];
             var objectParsers = new FunctionObjectParser[genericArguments.Length];
             var typeInfos = new FunctionTypeInfo[genericArguments.Length];
@@ -110,6 +111,11 @@ namespace AltV.Net
                 {
                     parsers[i] = FunctionMValueParsers.ParseDictionary;
                     objectParsers[i] = FunctionObjectParsers.ParseDictionary;
+                }
+                else if (typeInfo.IsMValueConvertible)
+                {
+                    parsers[i] = FunctionMValueParsers.ParseConvertible;
+                    objectParsers[i] = FunctionObjectParsers.ParseConvertible;
                 }
                 else if (arg == FunctionTypes.FunctionType)
                 {
@@ -276,7 +282,7 @@ namespace AltV.Net
         {
             @delegate.DynamicInvoke(invokeValues);
         }
-        
+
         internal Task InvokeTaskOrNull(object[] invokeValues)
         {
             var result = @delegate.DynamicInvoke(invokeValues);

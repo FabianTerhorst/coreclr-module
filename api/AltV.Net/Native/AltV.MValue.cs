@@ -12,10 +12,10 @@ namespace AltV.Net.Native
         internal static class MValueCreate
         {
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Invoker_Create(MValue.Function function);
+            internal static extern IntPtr Invoker_Create(IntPtr csharpResourcePointer, MValue.Function function);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Invoker_Destroy(IntPtr invokerPointer);
+            internal static extern void Invoker_Destroy(IntPtr csharpResourcePointer, IntPtr invokerPointer);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void MValue_CreateNil(ref MValue mValue);
@@ -94,7 +94,7 @@ namespace AltV.Net.Native
         internal static class MValueCall
         {
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void MValue_CallFunction(ref MValue mValue, MValue[] args, ulong size,
+            internal static extern void MValue_CallFunction(ref MValue mValue, MValue[] args, int size,
                 ref MValue result);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]

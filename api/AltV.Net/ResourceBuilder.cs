@@ -4,30 +4,17 @@ using AltV.Net.Native;
 
 namespace AltV.Net
 {
-    public class ResourceBuilder
+    internal class ResourceBuilder
     {
-        private readonly string[] args;
-
-        private readonly IResource resource;
-
-        public ResourceBuilder(string[] args, IResource resource)
+        public static void SetDelegates(IntPtr resourcePointer, AltNative.Resource.MainDelegate start)
         {
-            this.args = args;
-            this.resource = resource;
-        }
-
-        public void Start()
-        {
-            var indexChar = args[0].ToCharArray()[0];
-            var resourceIndex = indexChar - '0';
-            var serverPointer = AltNative.Resource.CSharpResource_GetServerPointer();
-            var resourcePointer = AltNative.Resource.CSharpResource_GetResourcePointer(resourceIndex);
-
-            ModuleWrapper.MainWithResource(serverPointer, resourcePointer, resource);
-
-            AltNative.Resource.MainDelegate onStart = OnStart;
+            AltNative.Resource.MainDelegate onStart = start;
 
             GCHandle.Alloc(onStart);
+
+            AltNative.Resource.StopDelegate onStop = ModuleWrapper.OnStop;
+
+            GCHandle.Alloc(onStop);
 
             AltNative.Resource.TickDelegate onTick = ModuleWrapper.OnTick;
 
@@ -146,7 +133,8 @@ namespace AltV.Net
 
             GCHandle.Alloc(onColShape);
 
-            AltNative.Resource.CSharpResource_SetMain(resourcePointer, onStart, onTick, onServerEvent, onCheckpoint,
+            AltNative.Resource.CSharpResource_SetMain(resourcePointer, onStart, onStop, onTick, onServerEvent,
+                onCheckpoint,
                 onClientEvent, onPlayerDamage, onPlayerConnect, onPlayerDeath, onPlayerDisconnect, onPlayerRemove,
                 onVehicleRemove,
                 onPlayerChangeVehicleSeat, onPlayerEnterVehicle, onPlayerLeaveVehicle, onCreatePlayer, onRemovePlayer,
@@ -154,11 +142,6 @@ namespace AltV.Net
                 onCreateBlip, onRemoveBlip, onCreateCheckpoint, onRemoveCheckpoint, onCreateVoiceChannel,
                 onRemoveVoiceChannel, onConsoleCommand, onMetaDataChange, onSyncedMetaDataChange, onCreateColShape,
                 onRemoveColShape, onColShape);
-        }
-
-        private void OnStart(IntPtr pointer, IntPtr ptr, string name, string point)
-        {
-            resource.OnStart();
         }
     }
 }

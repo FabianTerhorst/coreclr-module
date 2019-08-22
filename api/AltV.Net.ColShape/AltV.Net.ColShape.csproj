@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Platforms>AnyCPU</Platforms>
         <Authors>AltMp</Authors>
@@ -10,7 +10,7 @@
         <PackageProjectUrl>https://github.com/fabianterhorst/coreclr-module</PackageProjectUrl>
         <RepositoryUrl>https://github.com/fabianterhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageVersion>1.2.0-dev-preview</PackageVersion>
+        <PackageVersion>1.3.2-dev-preview</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>update dependencies</PackageReleaseNotes>
     </PropertyGroup>

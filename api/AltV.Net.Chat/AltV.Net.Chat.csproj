@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <PackageVersion>1.0.0-dev-preview</PackageVersion>
+        <PackageLicenseFile>license.txt</PackageLicenseFile>
+        <PackageReleaseNotes>Initial commit</PackageReleaseNotes>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="license\license.txt" Pack="true" PackagePath="" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />
+    </ItemGroup>
+</Project>

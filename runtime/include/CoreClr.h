@@ -14,6 +14,38 @@
 
 #endif
 
+#include <coreclr/hostfxr.h>
+#include <coreclr/coreclr_delegates.h>
+
+// Host name
+#ifdef _WIN32
+#define HostDll "\\AltV.Net.Host.dll"
+#define HostCfg "\\AltV.Net.Host.runtimeconfig.json"
+#define HostExe "\\altv-server.exe"
+#else
+#define HostDll "/AltV.Net.Host.dll"
+#define HostCfg "/AltV.Net.Host.runtimeconfig.json"
+#define HostExe "/altv-server"
+#endif
+
+#ifdef _WIN32
+#include <Windows.h>
+
+#define STR(s) L ## s
+#define CH(c) L ## c
+#define DIR_SEPARATOR L'\\'
+
+#else
+
+#include <limits.h>
+
+#define STR(s) s
+#define CH(c) c
+#define DIR_SEPARATOR '/'
+#define MAX_PATH PATH_MAX
+
+#endif
+
 #ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wempty-body"
@@ -52,6 +84,9 @@ int tail_eq(char* lhs, char* rhs);
 
 int tail_gt(char* lhs, char* rhs);
 
+typedef void (* ExecuteResourceDelegate_t)(const char* resourcePath, const char* resourceName, const char* resourceMain,
+                                           int resourceIndex);
+
 class CoreClr {
 public:
     CoreClr(alt::IServer* server);
@@ -66,6 +101,10 @@ public:
     void CreateAppDomain(alt::IServer* server, alt::IResource* resource, const char* appPath, void** runtimeHost,
                          unsigned int* domainId, bool executable, uint64_t resourceIndex, const char* domainName);
 
+    int Execute(alt::IServer* server, alt::IResource* resource, const char* appPath, uint64_t resourceIndex,
+                void** runtimeHost,
+                const unsigned int* domainId);
+
     void Shutdown(alt::IServer* server, void* runtimeHost,
                   unsigned int domainId);
 
@@ -79,6 +118,15 @@ public:
      */
     bool PrintError(alt::IServer* server, int errorCode);
 
+    void CreateManagedHost(alt::IServer* server);
+
+    void ExecuteManagedResource(alt::IServer* server, const char* resourcePath, const char* resourceName,
+                                const char* resourceMain, alt::IResource* resource);
+
+    void ExecuteManagedResourceUnload(alt::IServer* server, const char* resourcePath, const char* resourceMain);
+
+    load_assembly_and_get_function_pointer_fn get_dotnet_load_assembly(const char_t* config_path);
+
 private:
 #ifdef _WIN32
     HMODULE _coreClrLib;
@@ -90,4 +138,12 @@ private:
     coreclr_shutdown_2_ptr _shutdownCoreCLR;
     coreclr_create_delegate_ptr _createDelegate;
     coreclr_execute_assembly_ptr _executeAssembly;
+    void* managedRuntimeHost;
+    unsigned int managedDomainId;
+    component_entry_point_fn ExecuteResourceDelegate;
+    component_entry_point_fn ExecuteResourceUnloadDelegate;
+
+    hostfxr_initialize_for_runtime_config_fn _initializeFxr;
+    hostfxr_get_runtime_delegate_fn _getDelegate;
+    hostfxr_close_fn _closeFxr;
 };

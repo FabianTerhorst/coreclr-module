@@ -1,6 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Runtime.Loader;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Events;
@@ -12,6 +17,8 @@ namespace AltV.Net
     public class Module
     {
         internal readonly IServer Server;
+
+        private readonly WeakReference<AssemblyLoadContext> assemblyLoadContext;
 
         internal readonly CSharpNativeResource CSharpNativeResource;
 
@@ -26,10 +33,14 @@ namespace AltV.Net
         internal readonly IBaseObjectPool<IBlip> BlipPool;
 
         internal readonly IBaseObjectPool<ICheckpoint> CheckpointPool;
-        
+
         internal readonly IBaseObjectPool<IVoiceChannel> VoiceChannelPool;
-        
+
         internal readonly IBaseObjectPool<IColShape> ColShapePool;
+
+        internal IEnumerable<Assembly> Assemblies => !assemblyLoadContext.TryGetTarget(out var target)
+            ? new List<Assembly>()
+            : target.Assemblies;
 
         //For custom defined args event handlers
         private readonly Dictionary<string, HashSet<Function>> eventHandlers =
@@ -92,17 +103,20 @@ namespace AltV.Net
 
         internal readonly IEventHandler<ConsoleCommandDelegate> ConsoleCommandEventHandler =
             new HashSetEventHandler<ConsoleCommandDelegate>();
-        
+
         internal readonly IEventHandler<MetaDataChangeDelegate> MetaDataChangeEventHandler =
             new HashSetEventHandler<MetaDataChangeDelegate>();
-        
+
         internal readonly IEventHandler<MetaDataChangeDelegate> SyncedMetaDataChangeEventHandler =
             new HashSetEventHandler<MetaDataChangeDelegate>();
-        
+
         internal readonly IEventHandler<ColShapeDelegate> ColShapeEventHandler =
             new HashSetEventHandler<ColShapeDelegate>();
 
-        public Module(IServer server, CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool,
+        internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
+
+        public Module(IServer server, AssemblyLoadContext assemblyLoadContext,
+            CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
@@ -112,6 +126,7 @@ namespace AltV.Net
         {
             Alt.Init(this);
             Server = server;
+            this.assemblyLoadContext = new WeakReference<AssemblyLoadContext>(assemblyLoadContext);
             CSharpNativeResource = cSharpNativeResource;
             BaseBaseObjectPool = baseBaseObjectPool;
             BaseEntityPool = baseEntityPool;
@@ -121,6 +136,36 @@ namespace AltV.Net
             CheckpointPool = checkpointPool;
             VoiceChannelPool = voiceChannelPool;
             ColShapePool = colShapePool;
+        }
+
+        public void LoadAssemblyFromName(AssemblyName assemblyName)
+        {
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
+            target.LoadFromAssemblyName(assemblyName);
+        }
+
+        public void LoadAssemblyFromStream(Stream stream)
+        {
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
+            target.LoadFromStream(stream);
+        }
+
+        public void LoadAssemblyFromStream(Stream stream, Stream assemblySymbols)
+        {
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
+            target.LoadFromStream(stream, assemblySymbols);
+        }
+
+        public void LoadAssemblyFromPath(string path)
+        {
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
+            target.LoadFromAssemblyPath(path);
+        }
+
+        public void LoadAssemblyFromNativeImagePath(string nativeImagePath, string assemblyPath)
+        {
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
+            target.LoadFromNativeImagePath(nativeImagePath, assemblyPath);
         }
 
         public void On(string eventName, Function function)
@@ -134,6 +179,15 @@ namespace AltV.Net
             {
                 eventHandlersForEvent = new HashSet<Function> {function};
                 eventHandlers[eventName] = eventHandlersForEvent;
+            }
+        }
+
+        public void Off(string eventName, Function function)
+        {
+            if (function == null) return;
+            if (eventHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            {
+                eventHandlersForEvent.Remove(function);
             }
         }
 
@@ -151,6 +205,15 @@ namespace AltV.Net
             }
         }
 
+        public void OffServer(string eventName, ServerEventDelegate serverEventDelegate)
+        {
+            if (serverEventDelegate == null) return;
+            if (eventDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            {
+                eventHandlersForEvent.Remove(serverEventDelegate);
+            }
+        }
+
         public void OnClient(string eventName, ClientEventDelegate eventDelegate)
         {
             if (eventDelegate == null) return;
@@ -162,6 +225,15 @@ namespace AltV.Net
             {
                 eventHandlersForEvent = new HashSet<ClientEventDelegate> {eventDelegate};
                 clientEventDelegateHandlers[eventName] = eventHandlersForEvent;
+            }
+        }
+
+        public void OffClient(string eventName, ClientEventDelegate eventDelegate)
+        {
+            if (eventDelegate == null) return;
+            if (clientEventDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            {
+                eventHandlersForEvent.Remove(eventDelegate);
             }
         }
 
@@ -180,6 +252,24 @@ namespace AltV.Net
             }
         }
 
+        public void Off<TFunc>(string eventName, TFunc func, ClientEventParser<TFunc> parser) where TFunc : Delegate
+        {
+            if (func == null || parser == null) return;
+            if (!parserClientEventHandlers.TryGetValue(eventName, out var eventHandlersForEvent)) return;
+            var parsersToDelete = new LinkedList<IParserClientEventHandler>();
+            var eventHandlerToFind = new ParserClientEventHandler<TFunc>(func, parser);
+            foreach (var eventHandler in eventHandlersForEvent.Where(eventHandler =>
+                eventHandler.Equals(eventHandlerToFind)))
+            {
+                parsersToDelete.AddFirst(eventHandler);
+            }
+
+            foreach (var parserToDelete in parsersToDelete)
+            {
+                eventHandlersForEvent.Remove(parserToDelete);
+            }
+        }
+
         public void On<TFunc>(string eventName, TFunc func, ServerEventParser<TFunc> parser) where TFunc : Delegate
         {
             if (func == null || parser == null) return;
@@ -192,6 +282,24 @@ namespace AltV.Net
                 eventHandlersForEvent = new HashSet<IParserServerEventHandler>
                     {new ParserServerEventHandler<TFunc>(func, parser)};
                 parserServerEventHandlers[eventName] = eventHandlersForEvent;
+            }
+        }
+
+        public void Off<TFunc>(string eventName, TFunc func, ServerEventParser<TFunc> parser) where TFunc : Delegate
+        {
+            if (func == null || parser == null) return;
+            if (!parserServerEventHandlers.TryGetValue(eventName, out var eventHandlersForEvent)) return;
+            var parsersToDelete = new LinkedList<IParserServerEventHandler>();
+            var eventHandlerToFind = new ParserServerEventHandler<TFunc>(func, parser);
+            foreach (var eventHandler in eventHandlersForEvent.Where(eventHandler =>
+                eventHandler.Equals(eventHandlerToFind)))
+            {
+                parsersToDelete.AddFirst(eventHandler);
+            }
+
+            foreach (var parserToDelete in parsersToDelete)
+            {
+                eventHandlersForEvent.Remove(parserToDelete);
             }
         }
 
@@ -600,12 +708,12 @@ namespace AltV.Net
         {
             VehiclePool.Create(vehiclePointer, vehicleId);
         }
-        
+
         public void OnCreateVoiceChannel(IntPtr channelPointer)
         {
             VoiceChannelPool.Create(channelPointer);
         }
-        
+
         public void OnCreateColShape(IntPtr colShapePointer)
         {
             ColShapePool.Create(colShapePointer);
@@ -635,12 +743,12 @@ namespace AltV.Net
         {
             CheckpointPool.Remove(checkpointPointer);
         }
-        
+
         public void OnRemoveVoiceChannel(IntPtr channelPointer)
         {
             VoiceChannelPool.Remove(channelPointer);
         }
-        
+
         public void OnRemoveColShape(IntPtr colShapePointer)
         {
             ColShapePool.Remove(colShapePointer);
@@ -674,7 +782,7 @@ namespace AltV.Net
 
             OnMetaDataChangeEvent(entity, key, value.ToObject());
         }
-        
+
         public virtual void OnMetaDataChangeEvent(IEntity entity, string key, object value)
         {
             if (!MetaDataChangeEventHandler.HasEvents()) return;
@@ -683,7 +791,7 @@ namespace AltV.Net
                 eventHandler(entity, key, value);
             }
         }
-        
+
         public void OnSyncedMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key,
             ref MValue value)
         {
@@ -691,10 +799,10 @@ namespace AltV.Net
             {
                 return;
             }
-            
+
             OnSyncedMetaDataChangeEvent(entity, key, value.ToObject());
         }
-        
+
         public virtual void OnSyncedMetaDataChangeEvent(IEntity entity, string key, object value)
         {
             if (!SyncedMetaDataChangeEventHandler.HasEvents()) return;
@@ -703,8 +811,9 @@ namespace AltV.Net
                 eventHandler(entity, key, value);
             }
         }
-        
-        public void OnColShape(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType, bool state)
+
+        public void OnColShape(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType,
+            bool state)
         {
             if (!ColShapePool.GetOrCreate(colShapePointer, out var colShape))
             {
@@ -718,7 +827,7 @@ namespace AltV.Net
 
             OnColShapeEvent(colShape, entity, state);
         }
-        
+
         public virtual void OnColShapeEvent(IColShape colShape, IEntity entity, bool state)
         {
             if (!ColShapeEventHandler.HasEvents()) return;
@@ -726,6 +835,28 @@ namespace AltV.Net
             {
                 eventHandler(colShape, entity, state);
             }
+        }
+
+        public void OnScriptsLoaded(IScript[] scripts)
+        {
+            foreach (var script in scripts)
+            {
+                Alt.RegisterEvents(script);
+                OnScriptLoaded(script);
+            }
+        }
+
+        public virtual void OnScriptLoaded(IScript script)
+        {
+        }
+
+        public void SetExport(string key, Function function)
+        {
+            if (function == null) return;
+            functionExports[key] = function;
+            MValue.Function callDelegate = function.call;
+            GCHandle.Alloc(callDelegate);
+            CSharpNativeResource.SetExport(key, MValue.Create(callDelegate));
         }
     }
 }

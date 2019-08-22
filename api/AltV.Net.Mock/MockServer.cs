@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
@@ -24,6 +26,12 @@ namespace AltV.Net.Mock
         private readonly IBaseObjectPool<ICheckpoint> checkpointPool;
 
         private readonly IBaseObjectPool<IVoiceChannel> voiceChannelPool;
+
+        public int NetTime => 0;
+
+        public string RootDirectory => "";
+
+        public CSharpNativeResource Resource => new CSharpNativeResource(IntPtr.Zero);
 
         internal MockServer(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
@@ -315,6 +323,21 @@ namespace AltV.Net.Mock
         public ServerNativeResource GetResource(string name)
         {
             return new ServerNativeResource(IntPtr.Zero);
+        }
+
+        public CSharpNativeResource GetCSharpResource(string name)
+        {
+            return new CSharpNativeResource(IntPtr.Zero);
+        }
+
+        public IEnumerable<IPlayer> GetPlayers()
+        {
+            return new List<IPlayer>();
+        }
+
+        public IEnumerable<IVehicle> GetVehicles()
+        {
+            return new List<IVehicle>();
         }
     }
 }

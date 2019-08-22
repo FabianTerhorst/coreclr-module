@@ -36,9 +36,9 @@ namespace AltV.Net.Elements.Entities
                 AltNative.ColShape.ColShape_SetDimension(NativePointer, value);
             }
         }
-        
+
         public override void GetMetaData(string key, ref MValue value) =>
-            AltNative.ColShape.ColShape_SetMetaData(NativePointer, key, ref value);
+            AltNative.ColShape.ColShape_GetMetaData(NativePointer, key, ref value);
 
         public override void SetMetaData(string key, ref MValue value) =>
             AltNative.ColShape.ColShape_SetMetaData(NativePointer, key, ref value);
@@ -52,17 +52,14 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public ColShape(IntPtr nativePointer) : base(nativePointer, BaseObjectType.Checkpoint)
+        public ColShape(IntPtr nativePointer) : base(nativePointer, BaseObjectType.ColShape)
         {
         }
 
         public bool IsEntityIn(IEntity entity)
         {
             CheckIfEntityExists();
-            if (!entity.Exists)
-            {
-                throw new EntityRemovedException(entity);
-            }
+            entity.CheckIfEntityExists();
 
             return AltNative.ColShape.ColShape_IsEntityIn(NativePointer, entity.NativePointer);
         }

@@ -7,37 +7,18 @@
 #endif
 
 #include <altv-cpp-api/SDK.h>
+#include <CSharpResource.h>
 
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
 
-typedef void (* MValueFunctionCallback)(alt::MValueList*, alt::MValue*);
-
-class CustomInvoker : public alt::MValueFunction::Invoker {
-public:
-    MValueFunctionCallback mValueFunctionCallback;
-
-    explicit CustomInvoker(MValueFunctionCallback mValueFunctionCallback) {
-        this->mValueFunctionCallback = mValueFunctionCallback;
-    }
-
-    alt::MValue Invoke(alt::MValueList args) override {
-        //auto list = args.Get<alt::MValue::List>();
-        alt::MValue result;
-        mValueFunctionCallback(&args, &result);
-        return result;
-    }
-};
-
-extern alt::Array<CustomInvoker*> invokers;
-
 #ifdef __cplusplus
 extern "C"
 {
 #endif
-EXPORT CustomInvoker* Invoker_Create(MValueFunctionCallback val);
-EXPORT void Invoker_Destroy(CustomInvoker* val);
+EXPORT CustomInvoker* Invoker_Create(CSharpResource* resource, MValueFunctionCallback val);
+EXPORT void Invoker_Destroy(CSharpResource* resource, CustomInvoker* val);
 
 EXPORT void MValue_CreateNil(alt::MValue &mValue);
 EXPORT void MValue_CreateBool(bool val, alt::MValue &mValue);
@@ -63,7 +44,7 @@ EXPORT void MValue_GetDict(alt::MValue &mValue, alt::Array<alt::String> &keys, a
 EXPORT void* MValue_GetEntity(alt::MValue &mValue, alt::IBaseObject::Type &type);
 EXPORT MValueFunctionCallback MValue_GetFunction(alt::MValueFunction &mValue);
 
-EXPORT void MValue_CallFunction(alt::MValueFunction &mValue, alt::MValue* args, uint64_t size, alt::MValue &result);
+EXPORT void MValue_CallFunction(alt::MValue* mValue, alt::MValue* args, int32_t size, alt::MValue &result);
 EXPORT void MValue_CallFunctionValue(alt::MValueFunction &mValue, alt::MValueList &value, alt::MValue &result);
 EXPORT void MValue_Dispose(alt::MValue* mValue);
 

@@ -29,14 +29,11 @@ namespace AltV.Net.Async
             entity = entityFactory.Create(entityPointer);
             Add(entity);
         }
-
-        //TODO: what should happen on failure
+        
         public void Add(TBaseObject entity)
         {
-            if (entities.TryAdd(entity.NativePointer, entity))
-            {
-                OnAdd(entity);
-            }
+            entities[entity.NativePointer] = entity;
+            OnAdd(entity);
         }
 
         public bool Remove(TBaseObject entity)
@@ -47,6 +44,7 @@ namespace AltV.Net.Async
         public bool Remove(IntPtr entityPointer)
         {
             if (!entities.TryRemove(entityPointer, out var entity) || !entity.Exists) return false;
+            entity.OnRemove();
             lock (entity)
             {
                 BaseObjectPool<TBaseObject>.SetEntityNoLongerExists(entity);

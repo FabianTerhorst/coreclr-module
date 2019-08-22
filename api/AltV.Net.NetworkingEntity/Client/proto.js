@@ -10,7 +10,7 @@ class Proto {
         this.ServerEvent = root.lookupType("Entity.ServerEvent");
         this.AuthEvent = root.lookupType("Entity.AuthEvent");
         this.EntityStreamInEvent = root.lookupType("Entity.EntityStreamInEvent");
-        this.EntityStreamOutEvent= root.lookupType("Entity.EntityStreamOutEvent");
+        this.EntityStreamOutEvent = root.lookupType("Entity.EntityStreamOutEvent");
     }
 }
 

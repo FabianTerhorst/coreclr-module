@@ -45,7 +45,7 @@ namespace AltV.Net
             add => Module.PlayerRemoveEventHandler.Add(value);
             remove => Module.PlayerRemoveEventHandler.Remove(value);
         }
-        
+
         public static event VehicleRemoveDelegate OnVehicleRemove
         {
             add => Module.VehicleRemoveEventHandler.Add(value);
@@ -93,25 +93,25 @@ namespace AltV.Net
             add => Module.ServerCustomEventEventHandler.Add(value);
             remove => Module.ServerCustomEventEventHandler.Remove(value);
         }
-        
+
         public static event ConsoleCommandDelegate OnConsoleCommand
         {
             add => Module.ConsoleCommandEventHandler.Add(value);
             remove => Module.ConsoleCommandEventHandler.Remove(value);
         }
-        
+
         public static event MetaDataChangeDelegate OnMetaDataChange
         {
             add => Module.MetaDataChangeEventHandler.Add(value);
             remove => Module.MetaDataChangeEventHandler.Remove(value);
         }
-        
+
         public static event MetaDataChangeDelegate OnSyncedMetaDataChange
         {
             add => Module.SyncedMetaDataChangeEventHandler.Add(value);
             remove => Module.SyncedMetaDataChangeEventHandler.Remove(value);
         }
-        
+
         public static event ColShapeDelegate OnColShape
         {
             add => Module.ColShapeEventHandler.Add(value);
@@ -134,10 +134,10 @@ namespace AltV.Net
 
         public static ICollection<ICheckpoint> GetAllCheckpoints() =>
             Module.CheckpointPool.GetAllObjects();
-            
+
         public static ICollection<IVoiceChannel> GetAllVoiceChannels() =>
             Module.VoiceChannelPool.GetAllObjects();
-        
+
         public static ICollection<IColShape> GetAllColShapes() =>
             Module.ColShapePool.GetAllObjects();
 

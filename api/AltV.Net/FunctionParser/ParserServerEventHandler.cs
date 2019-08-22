@@ -24,5 +24,13 @@ namespace AltV.Net.FunctionParser
         {
             serverEventParser(ref mValueArray, @delegate);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is ParserServerEventHandler<TFunc> parserServerEventHandler)) return false;
+            if (parserServerEventHandler.@delegate != @delegate) return false;
+            if (parserServerEventHandler.serverEventParser != serverEventParser) return false;
+            return true;
+        }
     }
 }

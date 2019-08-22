@@ -394,6 +394,34 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public byte Livery
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Vehicle.Vehicle_GetLivery(NativePointer);
+            }
+            set
+            {
+                CheckIfEntityExists();
+                AltNative.Vehicle.Vehicle_SetLivery(NativePointer, value);
+            }
+        }
+
+        public byte RoofLivery
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Vehicle.Vehicle_GetRoofLivery(NativePointer);
+            }
+            set
+            {
+                CheckIfEntityExists();
+                AltNative.Vehicle.Vehicle_SetRoofLivery(NativePointer, value);
+            }
+        }
+
         public string AppearanceData
         {
             get
@@ -551,6 +579,20 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckIfEntityExists();
                 return AltNative.Vehicle.Vehicle_IsFlamethrowerActive(NativePointer);
+            }
+        }
+
+        public float LightsMultiplier
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Vehicle.Vehicle_GetLightsMultiplier(NativePointer);
+            }
+            set
+            {
+                CheckIfEntityExists();
+                AltNative.Vehicle.Vehicle_SetLightsMultiplier(NativePointer, value);
             }
         }
 

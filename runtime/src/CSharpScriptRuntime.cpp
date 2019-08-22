@@ -4,6 +4,7 @@ CSharpScriptRuntime::CSharpScriptRuntime(alt::IServer* server)
 {
     this->server = server;
     this->coreClr = new CoreClr(server);
+    this->coreClr->CreateManagedHost(server);
 }
 
 alt::IResource *CSharpScriptRuntime::CreateResource(alt::IResource::CreationInfo* info)

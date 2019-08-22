@@ -286,10 +286,19 @@ namespace AltV.Net.ColShape.Tests
             throw new NotImplementedException();
         }
 
+        public byte Livery { get; set; }
+        public byte RoofLivery { get; set; }
+        public float LightsMultiplier { get; set; }
+
         public string DamageData { get; set; }
         public bool ManualEngineControl { get; set; }
         public string ScriptData { get; set; }
         public void Remove()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnRemove()
         {
             throw new NotImplementedException();
         }

@@ -25,3 +25,11 @@ void FreeStringArray(alt::Array<alt::String>* array) {
 void FreeMValueArray(alt::Array<alt::MValue>* array) {
     array->~Array<alt::MValue>();
 }
+
+void FreePlayerPointerArray(alt::Array<alt::IPlayer*>* array) {
+    array->~Array<alt::IPlayer*>();
+}
+
+void FreeVehiclePointerArray(alt::Array<alt::IVehicle*>* array) {
+    array->~Array<alt::IVehicle*>();
+}

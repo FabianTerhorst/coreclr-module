@@ -182,5 +182,10 @@ namespace AltV.Net.ColShape.Tests
         {
             throw new NotImplementedException();
         }
+
+        public void OnRemove()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

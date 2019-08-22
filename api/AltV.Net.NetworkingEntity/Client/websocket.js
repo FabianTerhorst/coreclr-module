@@ -113,4 +113,8 @@ export default class WebSocket {
         const buffer = proto.ClientEvent.encode(clientEvent).finish();
         this.connection.send(buffer);
     }
+
+    deinit() {
+        this.connection.close();
+    }
 }

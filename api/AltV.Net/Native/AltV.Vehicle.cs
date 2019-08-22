@@ -203,6 +203,18 @@ namespace AltV.Net.Native
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_SetNeonColor(IntPtr vehiclePointer, Rgba color);
             
+            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetLivery(IntPtr vehiclePointer);
+            
+            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetLivery(IntPtr vehiclePointer, byte livery);
+            
+            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetRoofLivery(IntPtr vehiclePointer);
+            
+            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetRoofLivery(IntPtr vehiclePointer, byte roofLivery);
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_GetAppearanceDataBase64(IntPtr vehiclePointer, ref IntPtr text);
             
@@ -268,6 +280,12 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern bool Vehicle_IsFlamethrowerActive(IntPtr vehiclePointer);
+            
+            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
+            internal static extern float Vehicle_GetLightsMultiplier(IntPtr vehiclePointer);
+            
+            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetLightsMultiplier(IntPtr vehiclePointer, float multiplier);
 
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_GetGameStateBase64(IntPtr vehiclePointer, ref IntPtr text);

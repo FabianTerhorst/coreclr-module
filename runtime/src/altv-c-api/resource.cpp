@@ -19,9 +19,41 @@ void Resource_GetExports(alt::IResource* resource, alt::Array<alt::String> &keys
 bool Resource_GetExport(alt::IResource* resource, const char* key, alt::MValue &value) {
     auto dict = resource->GetExports().Get<alt::MValue::Dict>();
     auto dictValue = dict.find(key);
-    if(dictValue == dict.end()) {
+    if (dictValue == dict.end()) {
         return false;
     }
     value = dictValue->second;
     return true;
+}
+
+void Resource_SetExport(alt::IResource* resource, const char* key, const alt::MValue* val) {
+    resource->GetExports()[key] = val;
+}
+
+void Resource_GetPath(alt::IResource* resource, const char*&text) {
+    text = resource->GetPath().CStr();
+}
+
+void Resource_GetName(alt::IResource* resource, const char*&text) {
+    text = resource->GetName().CStr();
+}
+
+void Resource_GetMain(alt::IResource* resource, const char*&text) {
+    text = resource->GetMain().CStr();
+}
+
+void Resource_GetType(alt::IResource* resource, const char*&text) {
+    text = resource->GetType().CStr();
+}
+
+alt::IResource::State Resource_GetState(alt::IResource* resource) {
+    return resource->GetState();
+}
+
+void Resource_Start(alt::IResource* resource) {
+    resource->Start();
+}
+
+void Resource_Stop(alt::IResource* resource) {
+    resource->Stop();
 }

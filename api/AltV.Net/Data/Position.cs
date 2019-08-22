@@ -76,8 +76,13 @@ namespace AltV.Net.Data
         // Returns this vector with a magnitude of 1.
         public Position Normalized => Normalize(this);
 
-        public float Distance(Position b) =>
-            MathF.Sqrt((X - b.X) * (X - b.X) + (Y - b.Y) * (Y - b.Y) + (Z - b.Z) * (Z - b.Z));
+        public float Distance(Position b)
+        {
+            var diffX = X - b.X;
+            var diffY = Y - b.Y;
+            var diffZ = Z - b.Z;
+            return MathF.Sqrt(diffX * diffX + diffY * diffY + diffZ * diffZ);
+        }
 
         public static Position operator +(Position a, Position b) => new Position(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
 

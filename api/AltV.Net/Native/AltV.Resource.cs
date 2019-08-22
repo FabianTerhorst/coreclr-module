@@ -14,22 +14,49 @@ namespace AltV.Net.Native
                 CSharpResource_SetExport(IntPtr resourcePointer, string key, ref MValue value);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResource_Reload(IntPtr resourcePointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResource_Load(IntPtr resourcePointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResource_Unload(IntPtr resourcePointer);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern ushort Resource_GetExports(IntPtr resourcePointer, ref StringViewArray keys,
                 ref MValueArray values);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Resource_GetExport(IntPtr resourcePointer, string key, ref MValue mvalue);
-
-            //Todo: define function pointers for standalone resource here
+            internal static extern bool Resource_GetExport(IntPtr resourcePointer, string key, ref MValue mValue);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr CSharpResource_GetResourcePointer(int resourceIndex);
+            internal static extern void Resource_SetExport(IntPtr resourcePointer, IntPtr text, ref MValue mValue);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr CSharpResource_GetServerPointer();
+            internal static extern void Resource_GetPath(IntPtr resourcePointer, ref IntPtr text);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Resource_GetName(IntPtr resourcePointer, ref IntPtr text);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Resource_GetMain(IntPtr resourcePointer, ref IntPtr text);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Resource_GetType(IntPtr resourcePointer, ref IntPtr text);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern ResourceState Resource_GetState(IntPtr resourcePointer);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Resource_Start(IntPtr resourcePointer);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Resource_Stop(IntPtr resourcePointer);
 
             internal delegate void MainDelegate(IntPtr serverPointer, IntPtr resourcePointer, string resourceName,
                 string entryPoint);
+
+            internal delegate void StopDelegate();
 
             internal delegate void TickDelegate();
 
@@ -83,12 +110,13 @@ namespace AltV.Net.Native
             internal delegate void PlayerRemoveDelegate(IntPtr playerPointer);
 
             internal delegate void VehicleRemoveDelegate(IntPtr vehiclePointer);
-            
+
             internal delegate void CreateColShapeDelegate(IntPtr colShapePointer);
 
             internal delegate void RemoveColShapeDelegate(IntPtr colShapePointer);
-            
-            internal delegate void ColShapeDelegate(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType, bool state);
+
+            internal delegate void ColShapeDelegate(IntPtr colShapePointer, IntPtr targetEntityPointer,
+                BaseObjectType entityType, bool state);
 
             internal delegate void ConsoleCommandDelegate(string name, ref StringViewArray args);
 
@@ -97,6 +125,7 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResource_SetMain(IntPtr resourcePointer, MainDelegate mainDelegate,
+                StopDelegate stopDelegate,
                 TickDelegate tickDelegate, ServerEventDelegate serverEventDelegate,
                 CheckpointDelegate checkpointDelegate,
                 ClientEventDelegate clientEventDelegate, PlayerDamageDelegate playerDamageDelegate,

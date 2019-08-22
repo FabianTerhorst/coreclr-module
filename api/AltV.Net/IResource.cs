@@ -1,11 +1,15 @@
+using System;
+using System.Runtime.Loader;
 using AltV.Net.Elements.Entities;
-using AltV.Net.Native;
 
 namespace AltV.Net
 {
     //TODO: add SubResource module maybe to load sub resources dependency dlls or just for own server architecture
     public interface IResource
     {
+        void OnStart(IntPtr serverPointer, IntPtr resourcePointer, string resourceName,
+            string entryPoint);
+
         void OnStart();
 
         void OnStop();
@@ -33,7 +37,9 @@ namespace AltV.Net
         IBaseObjectFactory<IVoiceChannel> GetVoiceChannelFactory();
         IBaseObjectFactory<IColShape> GetColShapeFactory();
 
-        Module GetModule(IServer server, CSharpNativeResource cSharpNativeResource,
+        Module GetModule(IServer server,
+            AssemblyLoadContext assemblyLoadContext,
+            CSharpNativeResource cSharpNativeResource,
             IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
@@ -42,11 +48,5 @@ namespace AltV.Net
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool);
-    }
-
-    public static class ResourceExtensions
-    {
-        public static void Start(this IResource resource, string[] args) =>
-            new ResourceBuilder(args, resource).Start();
     }
 }

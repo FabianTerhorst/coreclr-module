@@ -1,15 +1,22 @@
 #include "mvalue.h"
 
-alt::Array<CustomInvoker*> invokers;
-
-CustomInvoker* Invoker_Create(MValueFunctionCallback val) {
+CustomInvoker* Invoker_Create(CSharpResource* resource, MValueFunctionCallback val) {
     auto invoker = new CustomInvoker(val);
-    invokers.Push(invoker);
+    resource->invokers->Push(invoker);
     return invoker;
 }
 
-void Invoker_Destroy(CustomInvoker* val) {
+void Invoker_Destroy(CSharpResource* resource, CustomInvoker* val) {
+    auto newInvokers = new alt::Array<CustomInvoker*>();
+    for (alt::Size i = 0, length = resource->invokers->GetSize(); i < length; i++) {
+        auto invoker = (*resource->invokers)[i];
+        if (invoker != val) {
+            newInvokers->Push(invoker);
+        }
+    }
     delete val;
+    delete resource->invokers;
+    resource->invokers = newInvokers;
 }
 
 void MValue_CreateNil(alt::MValue &mValue) {
@@ -167,12 +174,12 @@ void MValue_CreateFunction(CustomInvoker* val, alt::MValue &mValue) {
     mValue = alt::MValueFunction(val);
 }
 
-void MValue_CallFunction(alt::MValueFunction &mValue, alt::MValue* args, uint64_t size, alt::MValue &result) {
+void MValue_CallFunction(alt::MValue* mValue, alt::MValue* args, int32_t size, alt::MValue &result) {
     alt::MValueList value;
     for (int i = 0; i < size; i++) {
         value.Push(args[i]);
     }
-    result = mValue.GetInvoker()->Invoke(value);
+    result = ((alt::MValueFunction*) mValue)->GetInvoker()->Invoke(value);
 }
 
 void MValue_CallFunctionValue(alt::MValueFunction &mValue, alt::MValueList &value, alt::MValue &result) {

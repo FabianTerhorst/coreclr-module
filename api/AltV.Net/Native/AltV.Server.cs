@@ -55,6 +55,10 @@ namespace AltV.Net.Native
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_GetResource(IntPtr serverPointer, string resourceName,
                 ref IntPtr resourcePointer);
+            
+            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_GetCSharpResource(IntPtr serverPointer, string resourceName,
+                ref IntPtr resourcePointer);
 
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr Server_CreateVoiceChannel(IntPtr serverPointer, bool spatial,
@@ -94,6 +98,18 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_DestroyColShape(IntPtr serverPointer, IntPtr baseObjectPointer);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern int Server_GetNetTime(IntPtr serverPointer);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_GetRootDirectory(IntPtr serverPointer, ref IntPtr text);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_GetPlayers(IntPtr serverPointer, ref PlayerPointerArray playerPointerArray);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_GetVehicles(IntPtr serverPointer, ref VehiclePointerArray vehiclePointerArray);
         }
     }
 }

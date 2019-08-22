@@ -1,3 +1,5 @@
+using System;
+using System.Runtime.Loader;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Factories;
 using AltV.Net.Elements.Pools;
@@ -14,12 +16,18 @@ namespace AltV.Net
         {
         }
 
+        public void OnStart(IntPtr serverPointer, IntPtr resourcePointer, string resourceName, string entryPoint)
+        {
+            OnStart();
+        }
+
         public virtual IBaseBaseObjectPool GetBaseBaseObjectPool(IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool, IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool)
         {
-            return new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool);
+            return new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool,
+                colShapePool);
         }
 
         public virtual IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool,
@@ -48,11 +56,12 @@ namespace AltV.Net
             return new CheckpointPool(checkpointFactory);
         }
 
-        public virtual IBaseObjectPool<IVoiceChannel> GetVoiceChannelPool(IBaseObjectFactory<IVoiceChannel> voiceChannelFactory)
+        public virtual IBaseObjectPool<IVoiceChannel> GetVoiceChannelPool(
+            IBaseObjectFactory<IVoiceChannel> voiceChannelFactory)
         {
             return new VoiceChannelPool(voiceChannelFactory);
         }
-        
+
         public virtual IBaseObjectPool<IColShape> GetColShapePool(IBaseObjectFactory<IColShape> colShapeFactory)
         {
             return new ColShapePool(colShapeFactory);
@@ -77,25 +86,27 @@ namespace AltV.Net
         {
             return new CheckpointFactory();
         }
-        
+
         public virtual IBaseObjectFactory<IVoiceChannel> GetVoiceChannelFactory()
         {
             return new VoiceChannelFactory();
         }
-        
+
         public virtual IBaseObjectFactory<IColShape> GetColShapeFactory()
         {
             return new ColShapeFactory();
         }
 
-        public virtual Module GetModule(IServer server, CSharpNativeResource cSharpNativeResource,
+        public virtual Module GetModule(IServer server, 
+            AssemblyLoadContext assemblyLoadContext,
+            CSharpNativeResource cSharpNativeResource,
             IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool)
         {
-            return new Module(server, cSharpNativeResource, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool,
+            return new Module(server, assemblyLoadContext, cSharpNativeResource, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool,
                 blipPool, checkpointPool, voiceChannelPool, colShapePool);
         }
     }

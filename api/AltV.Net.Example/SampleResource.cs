@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Threading.Tasks;
 using AltV.Net.Async;
 using AltV.Net.Data;
@@ -9,7 +8,6 @@ using AltV.Net.Elements.Args;
 using AltV.Net.Enums;
 using AltV.Net.Native;
 using System.Drawing;
-using AltV.Net.ColShape;
 
 namespace AltV.Net.Example
 {
@@ -17,12 +15,18 @@ namespace AltV.Net.Example
     {
         public override void OnStart()
         {
+            MValueAdapters.Register(new ConvertibleObject.ConvertibleObjectAdapter());
+            Alt.On("convertible_test", delegate(ConvertibleObject convertible)
+            {
+                Console.WriteLine("convertible_test received");
+                Console.WriteLine(convertible.Test);
+                foreach (var t in convertible.List)
+                {
+                    Console.WriteLine("-" + t.Test);
+                }
+            });
             var convertibleObject = new ConvertibleObject();
             Alt.Emit("convertible_test", convertibleObject);
-
-            Alt.CreateColShapeCircle(new Position(0, 0, 0), 1);
-
-            Alt.OnColShape += (shape, entity, state) => { };
 
             Alt.On<string>("test", s => { Alt.Log("test=" + s); });
             Alt.OnServer("test", args => { Alt.Log("args=" + args[0]); });
@@ -49,6 +53,15 @@ namespace AltV.Net.Example
             AltAsync.OnServer("bla",
                 async args => { await AltAsync.Do(() => Alt.Log("bla with no args:" + args.Length)); });
             Alt.Emit("bla");
+
+            var blip = Alt.CreateBlip(BlipType.Area, Position.Zero);
+            blip.Color = 1;
+
+            var checkpoint = Alt.CreateCheckpoint(CheckpointType.Cyclinder, Position.Zero, 1f, 1f, Rgba.Zero);
+            Alt.Log(checkpoint.Color.ToString());
+
+            var voiceChannel = Alt.CreateVoiceChannel(true, 10f);
+            Alt.Log(voiceChannel.MaxDistance.ToString());
 
             var vehicle = Alt.CreateVehicle(VehicleModel.Apc, new Position(1, 2, 3), new Rotation(1, 2, 3));
             Alt.Log(vehicle.Position.ToString());
@@ -240,6 +253,44 @@ namespace AltV.Net.Example
             catch (BaseObjectRemovedException baseObjectRemovedException)
             {
             }
+
+            Alt.RegisterEvents(this);
+
+            Alt.Emit("bla2", "bla");
+
+            AltAsync.RegisterEvents(this);
+
+            Alt.Emit("asyncBla3", "bla");
+            var chat = new Chat();
+
+            chat.RegisterCommand("bla", (player, command, args) => { });
+            Alt.OnColShape += (shape, entity, state) =>
+            {
+                Console.WriteLine("collision shape test:" + shape + " " + shape.GetData("bla", out int id1) + " " + id1);
+                Console.WriteLine(" " + shape + " " + shape.GetMetaData("bla", out long id2) + " " + id2 + " " + entity + " " + state);
+            };
+            
+            var colShapeCylinder = Alt.CreateColShapeCylinder(new Position(1337, 1337, 1337), 10, 10);
+            colShapeCylinder.SetMetaData("bla", 1);
+            colShapeCylinder.SetData("bla", (int) 2);
+            
+            var colShapeCircle = Alt.CreateColShapeCircle(new Position(1337, 1337, 1337), 10);
+            colShapeCircle.SetMetaData("bla", 3);
+            colShapeCircle.SetData("bla", (int) 4);
+
+            Alt.CreateVehicle(VehicleModel.Adder, new Position(1337, 1337, 1337), Rotation.Zero);
+        }
+
+        [Event("bla2")]
+        public void MyServerEventHandler2(string myString)
+        {
+            Alt.Log(myString);
+        }
+
+        [AsyncEvent]
+        public void asyncBla3(string myString)
+        {
+            AltAsync.Log(myString);
         }
 
         public void MyParser(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string> func)

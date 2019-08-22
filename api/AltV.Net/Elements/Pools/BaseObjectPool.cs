@@ -47,6 +47,7 @@ namespace AltV.Net.Elements.Pools
         public bool Remove(IntPtr entityPointer)
         {
             if (!entities.Remove(entityPointer, out var entity) || !entity.Exists) return false;
+            entity.OnRemove();
             SetEntityNoLongerExists(entity);
             OnRemove(entity);
             return true;

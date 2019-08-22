@@ -65,10 +65,10 @@ namespace AltV.Net.Elements.Entities
         }
 
         public override void GetMetaData(string key, ref MValue value) =>
-            AltNative.VoiceChannel.VoiceChannel_SetMetaData(NativePointer, key, ref value);
+            AltNative.VoiceChannel.VoiceChannel_GetMetaData(NativePointer, key, ref value);
 
         public override void SetMetaData(string key, ref MValue value) =>
-            AltNative.VoiceChannel.VoiceChannel_GetMetaData(NativePointer, key, ref value);
+            AltNative.VoiceChannel.VoiceChannel_SetMetaData(NativePointer, key, ref value);
 
         public void Remove()
         {

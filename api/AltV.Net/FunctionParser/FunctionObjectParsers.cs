@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AltV.Net.Elements.Entities;
@@ -250,6 +251,20 @@ namespace AltV.Net.FunctionParser
             }
 
             return typedDictionary;
+        }
+
+        public static object ParseConvertible(object value, Type type, FunctionTypeInfo typeInfo)
+        {
+            if (!(value is IDictionary dictionary)) return null;
+            var mValue = MValue.CreateFromObject(dictionary);
+            if (!MValueAdapters.FromMValue(ref mValue, type, out var obj))
+            {
+                mValue.Dispose();
+                return null;
+            }
+
+            mValue.Dispose();
+            return obj;
         }
     }
 
