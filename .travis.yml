@@ -7,7 +7,7 @@ env:
 matrix:
   include:
   - os: linux
-    dist: xenial
+    dist: bionic
     language: cpp
     addons:
       apt:
@@ -52,7 +52,7 @@ matrix:
       - powershell move runtime/build/src/Release/csharp-module.dll upload/modules
       - cd upload && cd modules && ls
       - cd .. && cd ..
-  - dist: xenial
+  - dist: bionic
     addons:
       snaps:
       - name: dotnet-sdk
