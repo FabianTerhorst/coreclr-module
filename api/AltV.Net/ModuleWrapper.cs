@@ -55,7 +55,6 @@ namespace AltV.Net
         public static void MainWithResource(IntPtr serverPointer, IntPtr resourcePointer, IResource resource,
             AssemblyLoadContext assemblyLoadContext)
         {
-            Console.WriteLine("before resource:" + (_resource == null));
             _resource = resource;
             if (_resource == null)
             {
