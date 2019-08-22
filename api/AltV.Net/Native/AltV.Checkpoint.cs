@@ -18,12 +18,6 @@ namespace AltV.Net.Native
             internal static extern void Checkpoint_SetPosition(IntPtr entityPointer, Position position);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Checkpoint_GetRotation(IntPtr entityPointer, ref Rotation rotation);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Checkpoint_SetRotation(IntPtr entityPointer, Rotation rotation);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern short Checkpoint_GetDimension(IntPtr entityPointer);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
