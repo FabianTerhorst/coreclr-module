@@ -67,7 +67,7 @@ matrix:
       - sudo snap alias dotnet-sdk.dotnet dotnet
       - dotnet --version
       - cd api
-      - cd AltV.Net.Host.dll
+      - cd AltV.Net.Host
       - dotnet publish -c Release
       - dotnet pack -c Release
       - cd ..
