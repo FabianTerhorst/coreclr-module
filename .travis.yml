@@ -67,8 +67,10 @@ matrix:
       - sudo snap alias dotnet-sdk.dotnet dotnet
       - dotnet --version
       - cd api
+      - cd AltV.Net.Host.dll
       - dotnet publish -c Release
       - dotnet pack -c Release
+      - cd ..
       - cd ..
       - mv ./api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.dll ./upload/AltV.Net.Host.dll
       - mv ./api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.runtimeconfig.json ./upload/AltV.Net.Host.runtimeconfig.json
