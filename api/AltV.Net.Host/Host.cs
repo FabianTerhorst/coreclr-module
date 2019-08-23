@@ -8,20 +8,48 @@ namespace AltV.Net.Host
 {
     public class Host
     {
-        private static IDictionary<string, ResourceAssemblyLoadContext> _loadContexts =
+        private static readonly IDictionary<string, ResourceAssemblyLoadContext> _loadContexts =
             new Dictionary<string, ResourceAssemblyLoadContext>();
+
+        private const string DllName = "csharp-module";
+        private const CallingConvention NativeCallingConvention = CallingConvention.Cdecl;
+
+        internal delegate int CoreClrDelegate(IntPtr args, int argsLength);
+
+        [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+        internal static extern void CoreClr_SetResourceLoadDelegates(CoreClrDelegate resourceExecute,
+            CoreClrDelegate resourceExecuteUnload);
+
+        private static CoreClrDelegate _executeResource;
+
+        private static CoreClrDelegate _executeResourceUnload;
 
         /// <summary>
         /// Main is present to execute the dll as a assembly
         /// </summary>
-        static void Main()
+        static int Main(string[] args)
         {
-            //TODO: init stuff we need
-            Console.WriteLine("Init host");
+            SetDelegates();
+            return 0;
+        }
+
+        public static int Main2(IntPtr arg, int argLength)
+        {
+            SetDelegates();
+            return 0;
+        }
+
+        private static void SetDelegates()
+        {
+            _executeResource = ExecuteResource;
+            GCHandle.Alloc(_executeResource);
+            _executeResourceUnload = ExecuteResourceUnload;
+            GCHandle.Alloc(_executeResourceUnload);
+            CoreClr_SetResourceLoadDelegates(_executeResource, _executeResourceUnload);
         }
 
         private static string GetPath(string resourcePath, string resourceMain) =>
-            $"{resourcePath}/{resourceMain}";
+            $"{resourcePath}{Path.DirectorySeparatorChar}{resourceMain}";
 
         [StructLayout(LayoutKind.Sequential)]
         public struct LibArgs
@@ -53,8 +81,9 @@ namespace AltV.Net.Host
             var resourceMain = Marshal.PtrToStringUTF8(libArgs.ResourceMain);
 
             var resourceDllPath = GetPath(resourcePath, resourceMain);
-            var resourceAssemblyLoadContext =
-                new ResourceAssemblyLoadContext(resourceDllPath, resourcePath, resourceName);
+            var resourceAssemblyLoadContext = new ResourceAssemblyLoadContext(resourceDllPath, resourcePath, resourceName);
+
+            _loadContexts[resourceDllPath] = resourceAssemblyLoadContext;
 
             Assembly resourceAssembly;
 
@@ -65,20 +94,17 @@ namespace AltV.Net.Host
             catch (FileLoadException e)
             {
                 Console.WriteLine($"Threw a exception while loading the assembly \"{resourceDllPath}\": {e}");
-                resourceAssembly = null;
+                return 1;
             }
 
             var altVNetAssembly = resourceAssemblyLoadContext.LoadFromAssemblyName(new AssemblyName("AltV.Net"));
             foreach (var type in altVNetAssembly.GetTypes())
             {
-                if (type.Name == "ModuleWrapper")
-                {
-                    type.GetMethod("MainWithAssembly", BindingFlags.Public | BindingFlags.Static)?.Invoke(null,
-                        new object[] {libArgs.ServerPointer, libArgs.ResourcePointer, resourceAssemblyLoadContext});
-                }
+                if (type.Name != "ModuleWrapper") continue;
+                type.GetMethod("MainWithAssembly", BindingFlags.Public | BindingFlags.Static)?.Invoke(null,
+                    new object[] {libArgs.ServerPointer, libArgs.ResourcePointer, resourceAssemblyLoadContext});
+                break;
             }
-
-            _loadContexts[resourceDllPath] = resourceAssemblyLoadContext;
 
             return 0;
         }

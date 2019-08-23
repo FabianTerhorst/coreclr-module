@@ -14,6 +14,18 @@
 
 #endif
 
+#ifdef _WIN32
+
+#define EXPORT EXTERN __declspec(dllexport)
+#define IMPORT EXTERN __declspec(dllimport)
+
+#else
+
+#define EXPORT EXTERN __attribute__ ((visibility ("default")))
+#define IMPORT
+
+#endif // _WIN32
+
 #include <coreclr/hostfxr.h>
 #include <coreclr/coreclr_delegates.h>
 
@@ -87,6 +99,8 @@ int tail_gt(char* lhs, char* rhs);
 typedef void (* ExecuteResourceDelegate_t)(const char* resourcePath, const char* resourceName, const char* resourceMain,
                                            int resourceIndex);
 
+typedef int (* CoreClrDelegate_t)(void* args, int argsLength);
+
 class CoreClr {
 public:
     CoreClr(alt::IServer* server);
@@ -134,6 +148,7 @@ private:
     void* _coreClrLib;
 #endif
     char* runtimeDirectory;
+    const char* dotnetDirectory;
     coreclr_initialize_ptr _initializeCoreCLR;
     coreclr_shutdown_2_ptr _shutdownCoreCLR;
     coreclr_create_delegate_ptr _createDelegate;
@@ -145,5 +160,10 @@ private:
 
     hostfxr_initialize_for_runtime_config_fn _initializeFxr;
     hostfxr_get_runtime_delegate_fn _getDelegate;
+    hostfxr_run_app_fn _runApp;
+    hostfxr_initialize_for_dotnet_command_line_fn _initForCmd;
     hostfxr_close_fn _closeFxr;
+    hostfxr_handle cxt;
 };
+
+EXPORT void CoreClr_SetResourceLoadDelegates(CoreClrDelegate_t resourceExecute, CoreClrDelegate_t resourceExecuteUnload);
