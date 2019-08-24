@@ -31,7 +31,7 @@ CoreClr::CoreClr(alt::IServer* server) {
     strcpy(defaultPath, pf);
     strcat(defaultPath, windowsProgramFilesPath);
 
-    const char *dotnetProgramFilesPath = "/dotnet/";
+    char *dotnetProgramFilesPath = "/dotnet/";
     dotnetDirectory = new char[strlen(dotnetProgramFilesPath) + strlen(pf) + 1];
     strcpy(dotnetDirectory, pf);
     strcat(dotnetDirectory, dotnetProgramFilesPath);
@@ -565,9 +565,9 @@ load_assembly_and_get_function_pointer_fn CoreClr::get_dotnet_load_assembly(cons
             hdt_load_assembly_and_get_function_pointer,
             &load_assembly_and_get_function_pointer);
     if (rc != 0 || load_assembly_and_get_function_pointer == nullptr)
-        std::cerr << "Get delegate failed: " << std::hex << std::showbase << rc << std::endl;
+        std::cerr << "Get delegate failed: " << std::hex << std::showbase << rc << std::endl;*/
 
     _closeFxr(cxt);
-    return (load_assembly_and_get_function_pointer_fn) load_assembly_and_get_function_pointer;*/
+    //return (load_assembly_and_get_function_pointer_fn) load_assembly_and_get_function_pointer;
     return nullptr;
 }
