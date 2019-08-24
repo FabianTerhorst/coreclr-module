@@ -39,7 +39,9 @@ CoreClr::CoreClr(alt::IServer* server) {
     GetPath(server, defaultPath);
     delete[] defaultPath;
 #else
-    dotnetDirectory = "/usr/share/dotnet/";
+    auto currDotnetDirectory = "/usr/share/dotnet/";
+    dotnetDirectory = new char[strlen(currDotnetDirectory) + 1];
+    strcpy(dotnetDirectory, currDotnetDirectory);
     GetPath(server, "/usr/share/dotnet/host/fxr/");
 #endif
 #ifdef _WIN32
@@ -88,6 +90,7 @@ CoreClr::CoreClr(alt::IServer* server) {
 
 CoreClr::~CoreClr() {
     delete[] runtimeDirectory;
+    delete[] dotnetDirectory;
 }
 
 bool CoreClr::GetDelegate(alt::IServer* server, void* runtimeHost, unsigned int domainId, const char* moduleName,
@@ -472,7 +475,6 @@ void CoreClr::CreateManagedHost(alt::IServer* server) {
 #ifdef _WIN32
     delete[] hostCfgPathCStr;
     delete[] hostDllPathCStr;
-    delete dotnetDirectory;
 #endif
 }
 

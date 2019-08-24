@@ -148,7 +148,7 @@ private:
     void* _coreClrLib;
 #endif
     char* runtimeDirectory;
-    const char* dotnetDirectory;
+    char* dotnetDirectory;
     coreclr_initialize_ptr _initializeCoreCLR;
     coreclr_shutdown_2_ptr _shutdownCoreCLR;
     coreclr_create_delegate_ptr _createDelegate;
