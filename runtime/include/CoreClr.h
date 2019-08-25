@@ -101,6 +101,8 @@ typedef void (* ExecuteResourceDelegate_t)(const char* resourcePath, const char*
 
 typedef int (* CoreClrDelegate_t)(void* args, int argsLength);
 
+#include <thread>
+
 class CoreClr {
 public:
     CoreClr(alt::IServer* server);
