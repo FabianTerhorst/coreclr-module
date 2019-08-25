@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace AltV.Net.Host
 {
@@ -29,7 +30,9 @@ namespace AltV.Net.Host
         /// </summary>
         static int Main(string[] args)
         {
+            var semaphore = new Semaphore(0, 1);
             SetDelegates();
+            semaphore.WaitOne();
             return 0;
         }
 

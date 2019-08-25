@@ -164,6 +164,7 @@ private:
     hostfxr_initialize_for_dotnet_command_line_fn _initForCmd;
     hostfxr_close_fn _closeFxr;
     hostfxr_handle cxt;
+    std::thread thread;
 };
 
 EXPORT void CoreClr_SetResourceLoadDelegates(CoreClrDelegate_t resourceExecute, CoreClrDelegate_t resourceExecuteUnload);
