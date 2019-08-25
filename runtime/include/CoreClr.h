@@ -14,6 +14,18 @@
 
 #endif
 
+#ifdef _WIN32
+
+#define EXPORT EXTERN __declspec(dllexport)
+#define IMPORT EXTERN __declspec(dllimport)
+
+#else
+
+#define EXPORT EXTERN __attribute__ ((visibility ("default")))
+#define IMPORT
+
+#endif // _WIN32
+
 #include <coreclr/hostfxr.h>
 #include <coreclr/coreclr_delegates.h>
 
@@ -87,6 +99,10 @@ int tail_gt(char* lhs, char* rhs);
 typedef void (* ExecuteResourceDelegate_t)(const char* resourcePath, const char* resourceName, const char* resourceMain,
                                            int resourceIndex);
 
+typedef int (* CoreClrDelegate_t)(void* args, int argsLength);
+
+#include <thread>
+
 class CoreClr {
 public:
     CoreClr(alt::IServer* server);
@@ -118,14 +134,12 @@ public:
      */
     bool PrintError(alt::IServer* server, int errorCode);
 
-    void CreateManagedHost(alt::IServer* server);
+    void CreateManagedHost();
 
     void ExecuteManagedResource(alt::IServer* server, const char* resourcePath, const char* resourceName,
                                 const char* resourceMain, alt::IResource* resource);
 
     void ExecuteManagedResourceUnload(alt::IServer* server, const char* resourcePath, const char* resourceMain);
-
-    load_assembly_and_get_function_pointer_fn get_dotnet_load_assembly(const char_t* config_path);
 
 private:
 #ifdef _WIN32
@@ -134,6 +148,7 @@ private:
     void* _coreClrLib;
 #endif
     char* runtimeDirectory;
+    char* dotnetDirectory;
     coreclr_initialize_ptr _initializeCoreCLR;
     coreclr_shutdown_2_ptr _shutdownCoreCLR;
     coreclr_create_delegate_ptr _createDelegate;
@@ -145,5 +160,11 @@ private:
 
     hostfxr_initialize_for_runtime_config_fn _initializeFxr;
     hostfxr_get_runtime_delegate_fn _getDelegate;
+    hostfxr_run_app_fn _runApp;
+    hostfxr_initialize_for_dotnet_command_line_fn _initForCmd;
     hostfxr_close_fn _closeFxr;
+    hostfxr_handle cxt;
+    std::thread thread;
 };
+
+EXPORT void CoreClr_SetResourceLoadDelegates(CoreClrDelegate_t resourceExecute, CoreClrDelegate_t resourceExecuteUnload);

@@ -4,6 +4,20 @@
 
 #include "CoreClr.h"
 #include <semver.h>
+#include <mutex>
+#include <condition_variable>
+
+std::mutex mtx;             // mutex for critical section
+std::condition_variable cv; // condition variable for critical section
+CoreClrDelegate_t hostResourceExecute;
+CoreClrDelegate_t hostResourceExecuteUnload;
+
+void CoreClr_SetResourceLoadDelegates(CoreClrDelegate_t resourceExecute, CoreClrDelegate_t resourceExecuteUnload) {
+    std::unique_lock<std::mutex> lck(mtx);
+    hostResourceExecute = resourceExecute;
+    hostResourceExecuteUnload = resourceExecuteUnload;
+    cv.notify_all();
+}
 
 CoreClr::CoreClr(alt::IServer* server) {
     _initializeCoreCLR = nullptr;
@@ -22,9 +36,18 @@ CoreClr::CoreClr(alt::IServer* server) {
     auto defaultPath = new char[strlen(windowsProgramFilesPath) + strlen(pf) + 1];
     strcpy(defaultPath, pf);
     strcat(defaultPath, windowsProgramFilesPath);
+
+    char *dotnetProgramFilesPath = "/dotnet/";
+    dotnetDirectory = new char[strlen(dotnetProgramFilesPath) + strlen(pf) + 1];
+    strcpy(dotnetDirectory, pf);
+    strcat(dotnetDirectory, dotnetProgramFilesPath);
+
     GetPath(server, defaultPath);
     delete[] defaultPath;
 #else
+    auto currDotnetDirectory = "/usr/share/dotnet/";
+    dotnetDirectory = new char[strlen(currDotnetDirectory) + 1];
+    strcpy(dotnetDirectory, currDotnetDirectory);
     GetPath(server, "/usr/share/dotnet/host/fxr/");
 #endif
 #ifdef _WIN32
@@ -43,6 +66,8 @@ CoreClr::CoreClr(alt::IServer* server) {
 
     _initializeFxr = (hostfxr_initialize_for_runtime_config_fn) GetProcAddress(_coreClrLib, "hostfxr_initialize_for_runtime_config");
     _getDelegate = (hostfxr_get_runtime_delegate_fn) GetProcAddress(_coreClrLib, "hostfxr_get_runtime_delegate");
+    _runApp = (hostfxr_run_app_fn) GetProcAddress(_coreClrLib, "hostfxr_run_app");
+    _initForCmd = (hostfxr_initialize_for_dotnet_command_line_fn)  GetProcAddress(_coreClrLib, "hostfxr_initialize_for_dotnet_command_line");
     _closeFxr = (hostfxr_close_fn) GetProcAddress(_coreClrLib, "hostfxr_close");
 #else
     const char* fileName = "/libhostfxr.so";
@@ -57,9 +82,13 @@ CoreClr::CoreClr(alt::IServer* server) {
     _initializeFxr = (hostfxr_initialize_for_runtime_config_fn) dlsym(_coreClrLib,
                                                                       "hostfxr_initialize_for_runtime_config");
     _getDelegate = (hostfxr_get_runtime_delegate_fn) dlsym(_coreClrLib, "hostfxr_get_runtime_delegate");
+    _runApp = (hostfxr_run_app_fn) dlsym(_coreClrLib, "hostfxr_run_app");
+    _initForCmd = (hostfxr_initialize_for_dotnet_command_line_fn) dlsym(_coreClrLib,
+                                                                        "hostfxr_initialize_for_dotnet_command_line");
     _closeFxr = (hostfxr_close_fn) dlsym(_coreClrLib, "hostfxr_close");
 #endif
-    if (_initializeFxr == nullptr || _getDelegate == nullptr || _closeFxr == nullptr) {
+    if (_initializeFxr == nullptr || _getDelegate == nullptr || _closeFxr == nullptr || _runApp == nullptr ||
+        _initForCmd == nullptr) {
         server->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll methods"));
         return;
     }
@@ -67,6 +96,7 @@ CoreClr::CoreClr(alt::IServer* server) {
 
 CoreClr::~CoreClr() {
     delete[] runtimeDirectory;
+    delete[] dotnetDirectory;
 }
 
 bool CoreClr::GetDelegate(alt::IServer* server, void* runtimeHost, unsigned int domainId, const char* moduleName,
@@ -280,6 +310,9 @@ int CoreClr::Execute(alt::IServer* server, alt::IResource* resource, const char*
 
 void CoreClr::Shutdown(alt::IServer* server, void* runtimeHost,
                        unsigned int domainId) {
+    if (cxt != nullptr) {
+        _closeFxr(cxt);
+    }
     if (_shutdownCoreCLR == nullptr) return;
     int latchedExitCode = 0;
     int result = _shutdownCoreCLR(runtimeHost, domainId, &latchedExitCode);
@@ -380,62 +413,50 @@ const char_t *GetWC(const char *c)
 }
 #endif
 
-void CoreClr::CreateManagedHost(alt::IServer* server) {
-    auto wd = server->GetRootDirectory().CStr();
-    auto hostCfgPath = alt::String(wd) + HostCfg;
-    const char_t* hostCfgPathCStr;
-#ifdef _WIN32
-    hostCfgPathCStr = GetWC(hostCfgPath.CStr());
-#else
-    hostCfgPathCStr = hostCfgPath.CStr();
-#endif
-    auto hostDllPath = alt::String(wd) + HostDll;
-    const char_t* hostDllPathCStr;
-#ifdef _WIN32
-    hostDllPathCStr = GetWC(hostCfgPath.CStr());
-#else
-    hostDllPathCStr = hostDllPath.CStr();
-#endif
+struct thread_user_data {
+    hostfxr_run_app_fn runApp;
+    hostfxr_close_fn closeFxr;
+    hostfxr_handle cxt;
+};
 
-    auto hostExePath = alt::String(wd) + HostExe;
-    auto load_assembly_and_get_function_pointer = get_dotnet_load_assembly(hostCfgPathCStr);
-    if (load_assembly_and_get_function_pointer == nullptr) {
-        server->LogInfo(alt::String("coreclr-module: config:") + hostCfgPath.CStr());
-        server->LogInfo(alt::String("coreclr-module: host exe:") + hostExePath.CStr());
+void thread_proc(struct thread_user_data* userData) {
+    int rc = userData->runApp(userData->cxt);
+    if (rc != 0) {
+        userData->closeFxr(userData->cxt);
+        std::cerr << "Run App failed: " << std::hex << std::showbase << rc << std::endl;
+    }
+    delete userData;
+}
+
+void CoreClr::CreateManagedHost() {
+    // Load .NET Core
+    /*void* load_assembly_and_get_function_pointer = nullptr;
+    hostfxr_initialize_parameters initializeParameters = {};
+    initializeParameters.host_path = "";
+    initializeParameters.dotnet_root = dotnetDirectory;
+    initializeParameters.size = sizeof(hostfxr_initialize_parameters);*/
+    int rc;
+    const char_t* args[1];
+    args[0] = STR("AltV.Net.Host.dll");
+    rc = _initForCmd(1, args, nullptr, &cxt);
+    if (rc != 0) {
+        std::cerr << "Init for cmd failed: " << std::hex << std::showbase << rc << std::endl;
+        _closeFxr(cxt);
         return;
     }
 
-    int rc = load_assembly_and_get_function_pointer(
-            hostDllPathCStr,
-            STR("AltV.Net.Host.Host, AltV.Net.Host"),
-            STR("ExecuteResource"),
-            nullptr /*delegate_type_name*/,
-            nullptr,
-            (void**) &ExecuteResourceDelegate);
-
-    int rc2 = load_assembly_and_get_function_pointer(
-            hostDllPathCStr,
-            STR("AltV.Net.Host.Host, AltV.Net.Host"),
-            STR("ExecuteResourceUnload"),
-            nullptr /*delegate_type_name*/,
-            nullptr,
-            (void**) &ExecuteResourceUnloadDelegate);
-
-    if (ExecuteResourceDelegate == nullptr || rc != 0 || ExecuteResourceUnloadDelegate == nullptr || rc2 != 0) {
-        server->LogInfo(alt::String("coreclr-module: host path:") + hostDllPath.CStr());
-        PrintError(server, rc);
-        return;
-    }
-
-#ifdef _WIN32
-    delete[] hostCfgPathCStr;
-    delete[] hostDllPathCStr;
-#endif
+    auto userData = new struct thread_user_data;
+    userData->runApp = _runApp;
+    userData->closeFxr = _closeFxr;
+    userData->cxt = cxt;
+    thread = std::thread(thread_proc, userData);
 }
 
 void CoreClr::ExecuteManagedResource(alt::IServer* server, const char* resourcePath, const char* resourceName,
                                      const char* resourceMain, alt::IResource* resource) {
-    if (ExecuteResourceDelegate == nullptr) {
+    std::unique_lock<std::mutex> lck(mtx);
+    while(hostResourceExecute == nullptr){ cv.wait(lck); }
+    if (hostResourceExecute == nullptr) {
         server->LogInfo(alt::String("coreclr-module: Core CLR host not loaded"));
         return;
     }
@@ -459,11 +480,13 @@ void CoreClr::ExecuteManagedResource(alt::IServer* server, const char* resourceP
                     resource
             };
 
-    ExecuteResourceDelegate(&args, sizeof(args));
+    hostResourceExecute(&args, sizeof(args));
 }
 
 void CoreClr::ExecuteManagedResourceUnload(alt::IServer* server, const char* resourcePath, const char* resourceMain) {
-    if (ExecuteResourceUnloadDelegate == nullptr) {
+    std::unique_lock<std::mutex> lck(mtx);
+    while(hostResourceExecuteUnload == nullptr){ cv.wait(lck); }
+    if (hostResourceExecuteUnload == nullptr) {
         server->LogInfo(alt::String("coreclr-module: Core CLR host not loaded"));
         return;
     }
@@ -480,28 +503,5 @@ void CoreClr::ExecuteManagedResourceUnload(alt::IServer* server, const char* res
                     resourceMain,
             };
 
-    ExecuteResourceUnloadDelegate(&args, sizeof(args));
-}
-
-load_assembly_and_get_function_pointer_fn CoreClr::get_dotnet_load_assembly(const char_t* config_path) {
-    // Load .NET Core
-    void* load_assembly_and_get_function_pointer = nullptr;
-    hostfxr_handle cxt = nullptr;
-    int rc = _initializeFxr(config_path, nullptr, &cxt);
-    if (rc != 0 || cxt == nullptr) {
-        std::cerr << "Init failed: " << std::hex << std::showbase << rc << std::endl;
-        _closeFxr(cxt);
-        return nullptr;
-    }
-
-    // Get the load assembly function pointer
-    rc = _getDelegate(
-            cxt,
-            hdt_load_assembly_and_get_function_pointer,
-            &load_assembly_and_get_function_pointer);
-    if (rc != 0 || load_assembly_and_get_function_pointer == nullptr)
-        std::cerr << "Get delegate failed: " << std::hex << std::showbase << rc << std::endl;
-
-    _closeFxr(cxt);
-    return (load_assembly_and_get_function_pointer_fn) load_assembly_and_get_function_pointer;
+    hostResourceExecuteUnload(&args, sizeof(args));
 }

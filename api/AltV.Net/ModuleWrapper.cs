@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
 using AltV.Net.Elements.Args;
@@ -46,7 +45,6 @@ namespace AltV.Net
             }
 
             MainWithResource(serverPointer, resourcePointer, resource, assemblyLoadContext);
-            //TODO: set delegates here
             _scripts = AssemblyLoader.FindAllTypes<IScript>(assemblyLoadContext.Assemblies);
             _module.OnScriptsLoaded(_scripts);
             ResourceBuilder.SetDelegates(resourcePointer, OnStartResource);
@@ -55,7 +53,6 @@ namespace AltV.Net
         public static void MainWithResource(IntPtr serverPointer, IntPtr resourcePointer, IResource resource,
             AssemblyLoadContext assemblyLoadContext)
         {
-            Console.WriteLine("before resource:" + (_resource == null));
             _resource = resource;
             if (_resource == null)
             {

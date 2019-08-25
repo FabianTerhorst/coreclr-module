@@ -13,7 +13,11 @@ namespace AltV.Net.Async
         public AltVAsync(ITickSchedulerFactory tickSchedulerFactory)
         {
             mainThread = Thread.CurrentThread;
-            mainThread.Name = "main";
+            if (mainThread.Name == "")
+            {
+                mainThread.Name = "main";
+            }
+
             scheduler = tickSchedulerFactory.Create(mainThread);
             taskFactory = new TaskFactory(
                 CancellationToken.None, TaskCreationOptions.DenyChildAttach,

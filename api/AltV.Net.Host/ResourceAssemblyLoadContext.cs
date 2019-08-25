@@ -9,56 +9,51 @@ namespace AltV.Net.Host
     {
         private readonly AssemblyDependencyResolver resolver;
 
-        private readonly string resourcePath;
-
         public ResourceAssemblyLoadContext(string resourceDllPath, string resourcePath, string resourceName) : base(resourceName,
             true)
         {
             resolver = new AssemblyDependencyResolver(resourceDllPath);
-            this.resourcePath = resourcePath;
+            Resolving += (context, assemblyName) =>
+            {
+                var dllPath = resourcePath + Path.DirectorySeparatorChar + assemblyName.Name;
+                if (!File.Exists(dllPath)) return null;
+                try
+                {
+                    return LoadFromAssemblyPath(dllPath);
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception);
+                }
+
+                return null;
+            };
+            ResolvingUnmanagedDll += (assembly, unmanagedDllName) =>
+            {
+                var dllPath = resourcePath + Path.DirectorySeparatorChar + unmanagedDllName;
+                if (!File.Exists(dllPath)) return IntPtr.Zero;
+                try
+                {
+                    return LoadUnmanagedDllFromPath(dllPath);
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception);
+                }
+
+                return IntPtr.Zero;
+            };
         }
 
         protected override Assembly Load(AssemblyName assemblyName)
         {
             var assemblyPath = resolver.ResolveAssemblyToPath(assemblyName);
-            if (assemblyPath == null)
-            {
-                var dllPath = resourcePath + Path.DirectorySeparatorChar + assemblyName.Name;
-                if (File.Exists(dllPath))
-                {
-                    try
-                    {
-                        return LoadFromAssemblyPath(dllPath);
-                    }
-                    catch (Exception exception)
-                    {
-                        Console.WriteLine(exception);
-                    }
-                }
-            }
             return assemblyPath != null ? LoadFromAssemblyPath(assemblyPath) : null;
         }
 
         protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
         {
             var libraryPath = resolver.ResolveUnmanagedDllToPath(unmanagedDllName);
-
-            if (libraryPath == null)
-            {
-                var dllPath = resourcePath + Path.DirectorySeparatorChar + unmanagedDllName;
-                if (File.Exists(dllPath))
-                {
-                    try
-                    {
-                        return LoadUnmanagedDllFromPath(dllPath);
-                    }
-                    catch (Exception exception)
-                    {
-                        Console.WriteLine(exception);
-                    }
-                }
-            }
-
             return libraryPath != null ? LoadUnmanagedDllFromPath(libraryPath) : IntPtr.Zero;
         }
     }
