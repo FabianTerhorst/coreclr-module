@@ -127,7 +127,14 @@ namespace AltV.Net.Host
             var resourceDllPath = GetPath(resourcePath, resourceMain);
 
             if (!_loadContexts.Remove(resourceDllPath, out var loadContext)) return 1;
+            var loadContextWeakReference = new WeakReference(loadContext);
             loadContext.Unload();
+            for (var i = 0; loadContextWeakReference.IsAlive && (i < 10); i++)
+            {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+
             return 0;
         }
     }
