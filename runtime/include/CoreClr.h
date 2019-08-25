@@ -14,6 +14,7 @@
 
 #endif
 
+#include <thread>
 #ifdef _WIN32
 
 #define EXPORT EXTERN __declspec(dllexport)
