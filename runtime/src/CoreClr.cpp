@@ -561,8 +561,8 @@ load_assembly_and_get_function_pointer_fn CoreClr::get_dotnet_load_assembly(cons
     initializeParameters.dotnet_root = dotnetDirectory;
     initializeParameters.size = sizeof(hostfxr_initialize_parameters);*/
     int rc;
-    const char* args[1];
-    args[0] = "AltV.Net.Host.dll";
+    const char_t* args[1];
+    args[0] = STR("AltV.Net.Host.dll");
     rc = _initForCmd(1, args, nullptr, &cxt);
     if (rc != 0) {
         std::cerr << "Init for cmd failed: " << std::hex << std::showbase << rc << std::endl;
