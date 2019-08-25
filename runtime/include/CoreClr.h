@@ -134,14 +134,12 @@ public:
      */
     bool PrintError(alt::IServer* server, int errorCode);
 
-    void CreateManagedHost(alt::IServer* server);
+    void CreateManagedHost();
 
     void ExecuteManagedResource(alt::IServer* server, const char* resourcePath, const char* resourceName,
                                 const char* resourceMain, alt::IResource* resource);
 
     void ExecuteManagedResourceUnload(alt::IServer* server, const char* resourcePath, const char* resourceMain);
-
-    load_assembly_and_get_function_pointer_fn get_dotnet_load_assembly(const char_t* config_path);
 
 private:
 #ifdef _WIN32

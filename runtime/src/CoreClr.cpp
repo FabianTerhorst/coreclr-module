@@ -413,75 +413,43 @@ const char_t *GetWC(const char *c)
 }
 #endif
 
-void CoreClr::CreateManagedHost(alt::IServer* server) {
-    auto wd = server->GetRootDirectory().CStr();
-    auto hostCfgPath = alt::String(wd) + HostCfg;
-    const char_t* hostCfgPathCStr;
-#ifdef _WIN32
-    hostCfgPathCStr = GetWC(hostCfgPath.CStr());
-#else
-    hostCfgPathCStr = hostCfgPath.CStr();
-#endif
-    auto hostDllPath = alt::String(wd) + HostDll;
-    const char_t* hostDllPathCStr;
-#ifdef _WIN32
-    hostDllPathCStr = GetWC(hostCfgPath.CStr());
-#else
-    hostDllPathCStr = hostDllPath.CStr();
-#endif
+struct thread_user_data {
+    hostfxr_run_app_fn runApp;
+    hostfxr_close_fn closeFxr;
+    hostfxr_handle cxt;
+};
 
-    auto hostExePath = alt::String(wd) + HostExe;
-    auto load_assembly_and_get_function_pointer = get_dotnet_load_assembly(hostCfgPathCStr);
-    /*if (load_assembly_and_get_function_pointer == nullptr) {
-        server->LogInfo(alt::String("coreclr-module: config:") + hostCfgPath.CStr());
-        server->LogInfo(alt::String("coreclr-module: host exe:") + hostExePath.CStr());
+void thread_proc(struct thread_user_data* userData) {
+    int rc = userData->runApp(userData->cxt);
+    if (rc != 0) {
+        userData->closeFxr(userData->cxt);
+        std::cerr << "Run App failed: " << std::hex << std::showbase << rc << std::endl;
+    }
+    delete userData;
+}
+
+void CoreClr::CreateManagedHost() {
+    // Load .NET Core
+    /*void* load_assembly_and_get_function_pointer = nullptr;
+    hostfxr_initialize_parameters initializeParameters = {};
+    initializeParameters.host_path = "";
+    initializeParameters.dotnet_root = dotnetDirectory;
+    initializeParameters.size = sizeof(hostfxr_initialize_parameters);*/
+    int rc;
+    const char_t* args[1];
+    args[0] = STR("AltV.Net.Host.dll");
+    rc = _initForCmd(1, args, nullptr, &cxt);
+    if (rc != 0) {
+        std::cerr << "Init for cmd failed: " << std::hex << std::showbase << rc << std::endl;
+        _closeFxr(cxt);
         return;
     }
 
-    component_entry_point_fn main2;
-
-    int rc = load_assembly_and_get_function_pointer(
-            hostDllPathCStr,
-            STR("AltV.Net.Host.Host, AltV.Net.Host"),
-            STR("Main2"),
-            nullptr,
-            nullptr,
-            (void**) &main2);
-
-    if (main2 == nullptr || rc != 0) {
-        server->LogInfo(alt::String("coreclr-module: host path:") + hostDllPath.CStr());
-        PrintError(server, rc);
-        return;
-    }
-
-    main2(nullptr, 0);*/
-
-    /*int rc = load_assembly_and_get_function_pointer(
-            hostDllPathCStr,
-            STR("AltV.Net.Host.Host, AltV.Net.Host"),
-            STR("ExecuteResource"),
-            nullptr,
-            nullptr,
-            (void**) &ExecuteResourceDelegate);
-
-    int rc2 = load_assembly_and_get_function_pointer(
-            hostDllPathCStr,
-            STR("AltV.Net.Host.Host, AltV.Net.Host"),
-            STR("ExecuteResourceUnload"),
-            nullptr,
-            nullptr,
-            (void**) &ExecuteResourceUnloadDelegate);
-
-    if (ExecuteResourceDelegate == nullptr || rc != 0 || ExecuteResourceUnloadDelegate == nullptr || rc2 != 0) {
-        server->LogInfo(alt::String("coreclr-module: host path:") + hostDllPath.CStr());
-        PrintError(server, rc);
-        return;
-    }*/
-
-#ifdef _WIN32
-    delete[] hostCfgPathCStr;
-    delete[] hostDllPathCStr;
-#endif
+    auto userData = new struct thread_user_data;
+    userData->runApp = _runApp;
+    userData->closeFxr = _closeFxr;
+    userData->cxt = cxt;
+    thread = std::thread(thread_proc, userData);
 }
 
 void CoreClr::ExecuteManagedResource(alt::IServer* server, const char* resourcePath, const char* resourceName,
@@ -536,44 +504,4 @@ void CoreClr::ExecuteManagedResourceUnload(alt::IServer* server, const char* res
             };
 
     hostResourceExecuteUnload(&args, sizeof(args));
-}
-
-struct thread_user_data {
-    hostfxr_run_app_fn runApp;
-    hostfxr_close_fn closeFxr;
-    hostfxr_handle cxt;
-};
-
-void thread_proc(struct thread_user_data* userData) {
-    int rc = userData->runApp(userData->cxt);
-    if (rc != 0) {
-        userData->closeFxr(userData->cxt);
-        std::cerr << "Run App failed: " << std::hex << std::showbase << rc << std::endl;
-    }
-    delete userData;
-}
-
-load_assembly_and_get_function_pointer_fn CoreClr::get_dotnet_load_assembly(const char_t* config_path) {
-    // Load .NET Core
-    /*void* load_assembly_and_get_function_pointer = nullptr;
-    hostfxr_initialize_parameters initializeParameters = {};
-    initializeParameters.host_path = "";
-    initializeParameters.dotnet_root = dotnetDirectory;
-    initializeParameters.size = sizeof(hostfxr_initialize_parameters);*/
-    int rc;
-    const char_t* args[1];
-    args[0] = STR("AltV.Net.Host.dll");
-    rc = _initForCmd(1, args, nullptr, &cxt);
-    if (rc != 0) {
-        std::cerr << "Init for cmd failed: " << std::hex << std::showbase << rc << std::endl;
-        _closeFxr(cxt);
-        return nullptr;
-    }
-
-    auto userData = new struct thread_user_data;
-    userData->runApp = _runApp;
-    userData->closeFxr = _closeFxr;
-    userData->cxt = cxt;
-    thread = std::thread(thread_proc, userData);
-    return nullptr;
 }
