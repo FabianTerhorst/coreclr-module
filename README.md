@@ -100,13 +100,13 @@ but require full path import like ```import * as auth from 'client/auth.mjs';```
 - https://www.nuget.org/packages/AltV.Net
 - optional async module https://www.nuget.org/packages/AltV.Net.Async
 
-### Installing .NET Core SDK >= 2.2
+### Installing .NET Core SDK >= 3.0
 
 .NET Core SDK can be found [here](https://dotnet.microsoft.com/download). You have to install the sdk, the runtime isn't needed.
 
 ## Setup
 
-### Create a project with Visual Studio 17 (Windows)
+### Create a project with Visual Studio 19 (Windows)
 
 * Go to "File -> New -> Project..." now the Project Wizard should appear.
 * In the left Column select "Installed -> Visual C# -> .NET Core".
