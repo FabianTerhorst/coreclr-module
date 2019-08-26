@@ -50,8 +50,6 @@ modules: [
 
 ### Create Resource
 
-Only one server c# resource is supported at the same time.
-
 resource.cfg:
 ```
 type: "csharp",
@@ -59,8 +57,7 @@ main: "AltV.Net.Example.dll"
 ```
 
 ### Create Client Resource
-Do not mix js and csharp resources. (empty index.mjs)
-
+(empty index.mjs)
 resource.cfg:
 ```
 type: "js",
