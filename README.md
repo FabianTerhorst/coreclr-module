@@ -171,9 +171,7 @@ namespace My.Package
 }
 ```
 
-### Events
-
-There is currently a single limitation that dictionaries aren't working in windows but on linux.
+## Events
 
 ### Defined events
 
