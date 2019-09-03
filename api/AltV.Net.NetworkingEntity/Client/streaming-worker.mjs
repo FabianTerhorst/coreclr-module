@@ -143,7 +143,7 @@ function offsetPosition(value) {
 
 function start(position) {
     for (const [id, entity] of this.streamedIn) {
-        if (distance(entity.position, position) > entity.range || entity.dimension !== this.dimension) {
+        if (distance(entity.position, position) > entity.range || !canSeeOtherDimension(this.dimension, entity.dimension)) {
             this.newStreamOut.add(entity.id);
         }
     }
@@ -169,7 +169,7 @@ function start(position) {
 
     for (let entity of entitiesInArea) {
         if (!this.streamedIn.has(entity.id)) {
-            if (distance(entity.position, position) <= entity.range && entity.dimension === this.dimension) {
+            if (canSeeOtherDimension(this.dimension, entity.dimension) && distance(entity.position, position) <= entity.range) {
                 this.newStreamIn.add(entity.id);
                 this.streamedIn.set(entity.id, entity)
             }
@@ -180,4 +180,16 @@ function start(position) {
         postMessage({streamIn: [...this.newStreamIn]});
         this.newStreamIn.clear();
     }
+}
+
+/*
+X can see only X
+-X can see 0 and -X
+0 can't see -X and X
+ */
+function canSeeOtherDimension(dimension, otherDimension) {
+    if (dimension > 0) return dimension === otherDimension;
+    if (dimension < 0) return otherDimension === 0 || dimension === otherDimension;
+    if (dimension === 0) return otherDimension === 0;
+    return false;
 }
