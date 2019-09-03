@@ -16,5 +16,10 @@ namespace AltV.Net.NetworkingEntity
         {
             player.SetData(ClientKey, client);
         }
+
+        internal static void RemoveNetworkingClient(this IPlayer player)
+        {
+            player.SetData(ClientKey, null);
+        }
     }
 }

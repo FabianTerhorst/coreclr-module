@@ -230,6 +230,14 @@
             }
           }
         },
+        "ClientDimensionChangeEvent": {
+          "fields": {
+            "dimension": {
+              "type": "int64",
+              "id": 1
+            }
+          }
+        },
         "ServerEvent": {
           "oneofs": {
             "Event": {
@@ -241,7 +249,8 @@
                 "delete",
                 "create",
                 "multipleDataChange",
-                "dimensionChange"
+                "dimensionChange",
+                "clientDimensionChange"
               ]
             }
           },
@@ -277,6 +286,10 @@
             "dimensionChange": {
               "type": "EntityDimensionChangeEvent",
               "id": 8
+            },
+            "clientDimensionChange": {
+              "type": "ClientDimensionChangeEvent",
+              "id": 9
             }
           }
         },

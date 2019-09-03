@@ -4,8 +4,6 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
 {
     public class NetworkingClient : INetworkingClient, IInternalNetworkingClient
     {
-        //TODO: make dimension functional
-
         //TODO: maybe move token out of the spec
         public string Token { get; }
 

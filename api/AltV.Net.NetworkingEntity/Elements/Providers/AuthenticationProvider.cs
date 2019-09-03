@@ -85,6 +85,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
                         }
                         else
                         {
+                            player.RemoveNetworkingClient();
                             if (playerTokenAccess.Remove(player, out var token))
                             {
                                 playerTokens.Remove(token);
