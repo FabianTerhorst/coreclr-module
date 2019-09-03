@@ -13,6 +13,9 @@ onmessage = function (e) {
             }
         }
     }
+    if (!this.dimension) {
+        this.dimension = 0;
+    }
     //if (!this.entityAreas) {
     //    this.entityAreas = new Map();
     //}
@@ -34,6 +37,9 @@ onmessage = function (e) {
 
     if (data.position) {
         this.position = data.position;
+    }
+    if (data.dimension) {
+        this.dimension = data.dimension;
     }
     if (data.entities) {
         // Fill entities in areas
@@ -137,7 +143,7 @@ function offsetPosition(value) {
 
 function start(position) {
     for (const [id, entity] of this.streamedIn) {
-        if (distance(entity.position, position) > entity.range) {
+        if (distance(entity.position, position) > entity.range || entity.dimension !== this.dimension) {
             this.newStreamOut.add(entity.id);
         }
     }
@@ -163,7 +169,7 @@ function start(position) {
 
     for (let entity of entitiesInArea) {
         if (!this.streamedIn.has(entity.id)) {
-            if (distance(entity.position, position) <= entity.range) {
+            if (distance(entity.position, position) <= entity.range && entity.dimension === this.dimension) {
                 this.newStreamIn.add(entity.id);
                 this.streamedIn.set(entity.id, entity)
             }

@@ -15,13 +15,14 @@ namespace AltV.Net.NetworkingEntity
             {
                 return;
             }
+
             byte[] bytes;
             if (networkingEntity.StreamingType == StreamingType.DataStreaming)
             {
                 // Remove data before sending it over the wire
                 var entityWithoutData = networkingEntity.StreamedEntity.Clone();
                 entityWithoutData.Data.Clear();
-                
+
                 var entityCreateEvent = new EntityCreateEvent {Entity = entityWithoutData};
                 var serverEvent = new ServerEvent {Create = entityCreateEvent};
                 bytes = serverEvent.ToByteArray();
@@ -42,6 +43,7 @@ namespace AltV.Net.NetworkingEntity
             {
                 return;
             }
+
             var entityDeleteEvent = new EntityDeleteEvent {Id = networkingEntity.StreamedEntity.Id};
             var serverEvent = new ServerEvent {Delete = entityDeleteEvent};
             var bytes = serverEvent.ToByteArray();
@@ -90,6 +92,14 @@ namespace AltV.Net.NetworkingEntity
             var serverEvent = new ServerEvent {DimensionChange = entityDimensionChangeEvent};
             var bytes = serverEvent.ToByteArray();
             AltNetworking.Module.ClientPool.SendToAll(bytes);
+        }
+
+        public void UpdateClientDimension(INetworkingClient networkingClient, int dimension)
+        {
+            var clientDimensionChangeEvent = new ClientDimensionChangeEvent {Dimension = dimension};
+            var serverEvent = new ServerEvent {ClientDimensionChange = clientDimensionChangeEvent};
+            var bytes = serverEvent.ToByteArray();
+            networkingClient.WebSocket.SendAsync(bytes, true);
         }
     }
 }

@@ -1,6 +1,7 @@
 import playerPosition from "./player-position.js"
 import proto from "./proto.js"
 import streamingWorker from "./streaming-worker.mjs";
+import clientRepository from "./client-repository.js";
 
 export default class EntityRepository {
     constructor(websocket) {
@@ -120,13 +121,14 @@ export default class EntityRepository {
     updateWorker() {
         this.streamingWorker.postMessage({
             position: playerPosition.getPosition(),
+            dimension: clientRepository.dimension,
             entities: this.copyEntitiesWithoutData()
-        })
+        });
     }
 
     resetWorker() {
         this.streamingWorker.postMessage({
             reset: true
-        })
+        });
     }
 }

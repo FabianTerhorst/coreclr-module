@@ -72,6 +72,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
                                 if (!client.Exists) continue;
                                 playerTokens[client.Token] = player;
                                 playerTokenAccess[player] = client.Token;
+                                player.SetNetworkingClient(client);
 
                                 lock (player)
                                 {
