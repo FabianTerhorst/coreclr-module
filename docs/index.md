@@ -1,4 +1,5 @@
-# This is the **HOMEPAGE**.
-Refer to [Markdown](http://daringfireball.net/projects/markdown/) for how to write markdown files.
-## Quick Start Notes:
-1. Add images to the *images* folder if the file is referencing an image.
+# AltV C# Module
+This is the documentation for the AltV .NET Core module to write server gamemodes in c#.
+
+# Getting started
+Look into [this guide](https://fabianterhorst.github.io/coreclr-module/articles/intro.html) how to create your first alt:V server gamemode in c#.
