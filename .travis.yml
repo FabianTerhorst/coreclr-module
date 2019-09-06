@@ -205,7 +205,7 @@ deploy:
   - provider: pages
     skip-cleanup: true
     github-token: $GITHUB_TOKEN
-    target-branch: master
+    target-branch: gh-pages
     local-dir: docs/_site
     keep-history: true
     on:
