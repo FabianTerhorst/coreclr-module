@@ -86,6 +86,10 @@ matrix:
     git:
       depth: false
     before_script:
+    - LINUX_STABLE=false
+    - WINDOWS_STABLE=false
+    - LINUX_BETA=false
+    - WINDOWS_BETA=false
     - DOCS=true
     - nuget install docfx.console -ExcludeVersion
     - export DOCFX_TOOL="mono docfx.console/tools/docfx.exe"
