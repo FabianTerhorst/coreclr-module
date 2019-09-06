@@ -80,6 +80,18 @@ matrix:
       - WINDOWS_STABLE=false
       - LINUX_BETA=false
       - WINDOWS_BETA=false
+  - language: csharp
+    dist: trusty
+    mono: latest
+    git:
+      depth: false
+    before_script:
+    - DOCS=true
+    - nuget install docfx.console -ExcludeVersion
+    - export DOCFX_TOOL="mono docfx.console/tools/docfx.exe"
+    script:
+    - $DOCFX_TOOL metadata docs/docfx.json
+    - $DOCFX_TOOL build docs/docfx.json
 deploy:
   - provider: releases
     skip_cleanup: true
@@ -186,3 +198,13 @@ deploy:
       repo: FabianTerhorst/coreclr-module
       condition: "$DOTNET_BETA = true"
       tags: true
+  - provider: pages
+    skip-cleanup: true
+    github-token: $GITHUB_TOKEN
+    repo: coreclr-module/fabianterhorst.github.io
+    target-branch: master
+    local-dir: docs/_site
+    keep-history: true
+    on:
+      condition: "$DOCS = true"
+      branch: master
