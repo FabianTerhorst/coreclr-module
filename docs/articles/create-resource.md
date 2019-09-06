@@ -67,9 +67,22 @@ namespace My.Package
 
 To compile the resource from the command line use ```dotnet publish -c Release```
 
-This will output the resource dll's in the yourresource/bin/Release/netcoreapp3.0/publish folder.
-Copy the dlls to the server resource folder.
+This will output the resource dll and all other dependencies including AltV.Net.dll in the yourresource/bin/Release/netcoreapp3.0/publish folder.
+Copy the dlls to the server resource folder ```altv-server/resources/{YourResourceName}/```.
 
-To get the Resource running on the server, you have to create a "resource.cfg" file. Copy the resource.cfg, AltV.Net.dll and all other dependencied with your resource dll file to altv-server/resources/{YourResourceName}/.
+To get the Resource running on the server, you have to create a "resource.cfg" file.
+
+```
+type: "csharp",
+main: "YourProject.dll"
+```
+
+Now the resource needs to be added to the server.cfg.
+
+```
+resources: [
+"{YourResourceName}"
+]
+```
 
 For creating scripts that can be created multiple times see: [Create script](https://fabianterhorst.github.io/coreclr-module/articles/create-script.html).
