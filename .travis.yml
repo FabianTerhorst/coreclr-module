@@ -205,7 +205,6 @@ deploy:
   - provider: pages
     skip-cleanup: true
     github-token: $GITHUB_TOKEN
-    repo: coreclr-module/fabianterhorst.github.io
     target-branch: master
     local-dir: docs/_site
     keep-history: true
