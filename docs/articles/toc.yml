@@ -5,6 +5,8 @@
       href: setup.md
     - name: Create your first Resource
       href: create-resource.md
+    - name: Create your first Script
+      href: create-script.md
     - name: Events
       href: events.md
       items:
