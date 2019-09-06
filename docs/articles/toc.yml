@@ -1,2 +1,26 @@
-- name: Introduction
+- name: Getting Started
   href: intro.md
+  items:
+    - name: Setup
+      href: setup.md
+    - name: Create your first Resource
+      href: create-resource.md
+    - name: Events
+      href: events.md
+      items:
+        - name: Build in events
+          href: build-in-events.md
+        - name: Custom events
+          href: custom-events.md
+    - name: Communication between resources
+      href: resource-communication.md
+    - name: Entity factories
+    - href: entity-factories.md
+    - name: Async
+      href: async.md
+    - name: ColShapes example
+      href: colshapes-example.md
+    - name: Networking entity
+      href: networking-entity.md
+    - name: Async ColShapes
+      href: async-colshapes.md
