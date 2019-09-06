@@ -85,4 +85,20 @@ resources: [
 ]
 ```
 
+Your server folder now look similar to this one
+
+```
+modules/
+└── csharp-module.dll
+resources/
+└── my-example-csharp-resource/
+    ├── Alt.Net.Example.dll
+    ├── resource.cfg
+    └── ... (any .dll dependency like "AltV.Net.dll", "mysql.dll", ...)
+AltV.Net.Host.dll
+AltV.Net.Host.runtimeconfig.json
+server.cfg
+altv-server.exe
+```
+
 For creating scripts that can be created multiple times see: [Create script](https://fabianterhorst.github.io/coreclr-module/articles/create-script.html).
