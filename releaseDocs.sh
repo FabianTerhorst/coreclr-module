@@ -10,7 +10,7 @@ rm -rf $TEMP_REPO_DIR
 mkdir $TEMP_REPO_DIR
 
 echo "Cloning the repo with the gh-pages branch"
-git clone https://github.com/fabianterhorst/coreclr-module.git --branch gh-pages $TEMP_REPO_DIR
+git clone https://github.com/fabianterhorst/coreclr-module.git --branch gh-pages --single-branch $TEMP_REPO_DIR
 
 echo "Clear repo directory"
 cd $TEMP_REPO_DIR
