@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <OutputType>Exe</OutputType>
+        <PackageVersion>1.0.0-dev-preview</PackageVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AltV.Net.NetworkingEntity\AltV.Net.NetworkingEntity.csproj" />
+    </ItemGroup>
+
+</Project>

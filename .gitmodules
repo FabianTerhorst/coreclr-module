@@ -1,0 +1,3 @@
+[submodule "runtime/thirdparty/altv-cpp-api"]
+	path = runtime/thirdparty/altv-cpp-api
+	url = https://github.com/altmp/cpp-sdk.git

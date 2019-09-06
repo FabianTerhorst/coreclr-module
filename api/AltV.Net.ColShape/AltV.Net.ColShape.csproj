@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <Platforms>AnyCPU</Platforms>
+        <Authors>AltMp</Authors>
+        <Description>AltV .NET Core ColShape Api</Description>
+        <Copyright>AltMp</Copyright>
+        <PackageProjectUrl>https://github.com/fabianterhorst/coreclr-module</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/fabianterhorst/coreclr-module</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageVersion>1.3.2-dev-preview</PackageVersion>
+        <PackageLicenseFile>license.txt</PackageLicenseFile>
+        <PackageReleaseNotes>update dependencies</PackageReleaseNotes>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="license\license.txt" Pack="true" PackagePath="" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />
+    </ItemGroup>
+
+</Project>

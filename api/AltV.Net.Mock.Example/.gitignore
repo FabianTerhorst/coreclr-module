@@ -1,0 +1,4 @@
+*.dylib
+*.dll
+*.so
+resource

@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <Platforms>AnyCPU</Platforms>
+        <RootNamespace>AltV.Net.Async</RootNamespace>
+        <Authors>AltMp</Authors>
+        <Description>AltV .NET Core Async Server Api</Description>
+        <Copyright>AltMp</Copyright>
+        <PackageProjectUrl>https://github.com/altmp-csharp/docs</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>altv gta bridge</PackageTags>
+        <PackageVersion>1.13.1</PackageVersion>
+        <PackageLicenseFile>license.txt</PackageLicenseFile>
+        <PackageReleaseNotes>Fix multi async resources</PackageReleaseNotes>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="license\license.txt" Pack="true" PackagePath="" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Threading.Channels" Version="4.5.0" />
+    </ItemGroup>
+
+</Project>

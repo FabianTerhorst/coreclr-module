@@ -1,0 +1,43 @@
+FROM 7hazard/node-clang-7 as clang
+
+# build coreclr-module
+WORKDIR /runtime
+COPY runtime/ .
+
+RUN sh linux-build.sh
+WORKDIR /runtime/cmake-build-linux/src
+
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2 as dotnet
+
+# install clang
+RUN apt-get update && apt-get install -y clang libcurl4-openssl-dev zlib1g-dev libkrb5-dev
+
+# build example resource
+WORKDIR /altv-example/
+COPY api/ .
+
+RUN export CppCompilerAndLinker=clang && cd AltV.Net.CoreRT.Example && dotnet publish -c Release -r linux-x64
+
+FROM ubuntu:18.04
+
+# install valgrind
+RUN apt-get update && apt-get install -y valgrind
+
+# construct server structure
+WORKDIR /altv-server
+COPY altv-server .
+COPY server.cfg .
+COPY resource-corert.cfg resources/example/resource.cfg
+COPY data/ ./data
+COPY --from=clang /runtime/cmake-build-linux/src/libcsharp-module.so modules/
+COPY --from=clang /runtime/cmake-build-linux/src/libcsharp-module.so resources/example/
+COPY --from=dotnet /altv-example/AltV.Net.CoreRT.Example/bin/Release/netcoreapp2.2/linux-x64/publish resources/example/
+COPY --from=dotnet /usr/share/dotnet/shared/Microsoft.NETCore.App /usr/share/dotnet/shared/Microsoft.NETCore.App
+
+RUN chmod +x ./altv-server
+
+EXPOSE 7788/udp
+EXPOSE 7788/tcp
+
+ENTRYPOINT ["tail", "-f", "/dev/null"]
+#CMD ./altv-server
