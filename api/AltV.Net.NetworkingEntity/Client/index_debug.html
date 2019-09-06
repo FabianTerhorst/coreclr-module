@@ -5,7 +5,7 @@
         window.callbacks = new Map();
         window.alt = {
             emit: (eventname, ...args) => {
-                console.log("emit:" + eventname + JSON.stringify(args));
+                console.log("emit:" + eventname + " " + args);
                 if (!window.callbacks.has(eventname)) {
                     return;
                 }

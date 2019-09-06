@@ -4,6 +4,6 @@ namespace AltV.Net.NetworkingEntity.Elements.Factories
 {
     public interface INetworkingClientFactory
     {
-        INetworkingClient Create(string token);
+        INetworkingClient Create(string token, IEntityStreamer entityStreamer);
     }
 }

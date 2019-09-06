@@ -16,5 +16,7 @@ namespace AltV.Net.NetworkingEntity
         void UpdateEntityRange(Entity.Entity entity, float range);
 
         void UpdateEntityDimension(Entity.Entity entity, int dimension);
+
+        void UpdateClientDimension(INetworkingClient networkingClient, int dimension);
     }
 }

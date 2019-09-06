@@ -1,14 +1,8 @@
-using System;
-using System.Runtime.InteropServices;
-using AltV.Net.Data;
-using AltV.Net.Elements.Entities;
-using AltV.Net.Elements.Args;
-
 namespace AltV.Net.Native
 {
     internal static partial class AltNative
     {
-        internal static class Entity
+        /*internal static class Entity
         {
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern BaseObjectType BaseObject_GetType(IntPtr baseObjectPointer);
@@ -65,6 +59,6 @@ namespace AltV.Net.Native
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
             internal static extern void
                 Entity_SetSyncedMetaData(IntPtr entityPointer, string key, ref MValue value);
-        }
+        }*/
     }
 }

@@ -5,6 +5,10 @@ class NetworkingEntity {
     constructor() {
         alt.on("entitySetup", (url, token) => {
             const protocolSplit = url.split("//");
+            if (protocolSplit.length < 2) {
+                console.log("Invalid websocket protocol:" +  url);
+                return;
+            }
             const protocol = protocolSplit[0] + "//";
             const splitUrl = protocolSplit[1].split(":");
             if (splitUrl.length > 2) {

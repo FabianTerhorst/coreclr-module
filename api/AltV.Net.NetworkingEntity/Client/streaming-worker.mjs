@@ -13,6 +13,9 @@ onmessage = function (e) {
             }
         }
     }
+    if (!this.dimension) {
+        this.dimension = 0;
+    }
     //if (!this.entityAreas) {
     //    this.entityAreas = new Map();
     //}
@@ -34,6 +37,9 @@ onmessage = function (e) {
 
     if (data.position) {
         this.position = data.position;
+    }
+    if (data.dimension) {
+        this.dimension = data.dimension;
     }
     if (data.entities) {
         // Fill entities in areas
@@ -137,7 +143,7 @@ function offsetPosition(value) {
 
 function start(position) {
     for (const [id, entity] of this.streamedIn) {
-        if (distance(entity.position, position) > entity.range) {
+        if (distance(entity.position, position) > entity.range || !canSeeOtherDimension(this.dimension, entity.dimension)) {
             this.newStreamOut.add(entity.id);
         }
     }
@@ -163,7 +169,7 @@ function start(position) {
 
     for (let entity of entitiesInArea) {
         if (!this.streamedIn.has(entity.id)) {
-            if (distance(entity.position, position) <= entity.range) {
+            if (canSeeOtherDimension(this.dimension, entity.dimension) && distance(entity.position, position) <= entity.range) {
                 this.newStreamIn.add(entity.id);
                 this.streamedIn.set(entity.id, entity)
             }
@@ -174,4 +180,16 @@ function start(position) {
         postMessage({streamIn: [...this.newStreamIn]});
         this.newStreamIn.clear();
     }
+}
+
+/*
+X can see only X
+-X can see 0 and -X
+0 can't see -X and X
+ */
+function canSeeOtherDimension(dimension, otherDimension) {
+    if (dimension > 0) return dimension === otherDimension;
+    if (dimension < 0) return otherDimension === 0 || dimension === otherDimension;
+    if (dimension === 0) return otherDimension === 0;
+    return false;
 }
