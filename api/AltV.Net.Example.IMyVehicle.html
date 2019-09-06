@@ -1,0 +1,839 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IMyVehicle
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IMyVehicle
+   ">
+    <meta name="generator" content="docfx 2.45.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="AltV.Net.Example.IMyVehicle">
+  
+  
+  <h1 id="AltV_Net_Example_IMyVehicle" data-uid="AltV.Net.Example.IMyVehicle" class="text-break">Interface IMyVehicle
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_Driver">IVehicle.Driver</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_ModKit">IVehicle.ModKit</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_ModKitsCount">IVehicle.ModKitsCount</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_IsPrimaryColorRgb">IVehicle.IsPrimaryColorRgb</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_PrimaryColor">IVehicle.PrimaryColor</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_PrimaryColorRgb">IVehicle.PrimaryColorRgb</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_IsSecondaryColorRgb">IVehicle.IsSecondaryColorRgb</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SecondaryColor">IVehicle.SecondaryColor</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SecondaryColorRgb">IVehicle.SecondaryColorRgb</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_PearlColor">IVehicle.PearlColor</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_WheelColor">IVehicle.WheelColor</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_InteriorColor">IVehicle.InteriorColor</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_DashboardColor">IVehicle.DashboardColor</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_IsTireSmokeColorCustom">IVehicle.IsTireSmokeColorCustom</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_TireSmokeColor">IVehicle.TireSmokeColor</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_WheelType">IVehicle.WheelType</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_WheelVariation">IVehicle.WheelVariation</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_CustomTires">IVehicle.CustomTires</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SpecialDarkness">IVehicle.SpecialDarkness</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_NumberplateIndex">IVehicle.NumberplateIndex</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_NumberplateText">IVehicle.NumberplateText</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_WindowTint">IVehicle.WindowTint</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_DirtLevel">IVehicle.DirtLevel</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_NeonColor">IVehicle.NeonColor</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_Livery">IVehicle.Livery</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_RoofLivery">IVehicle.RoofLivery</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_AppearanceData">IVehicle.AppearanceData</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_GetMod_System_Byte_">IVehicle.GetMod(Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_GetModsCount_System_Byte_">IVehicle.GetModsCount(Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SetMod_System_Byte_System_Byte_">IVehicle.SetMod(Byte, Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SetWheels_System_Byte_System_Byte_">IVehicle.SetWheels(Byte, Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_IsExtraOn_System_Byte_">IVehicle.IsExtraOn(Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_ToggleExtra_System_Byte_System_Boolean_">IVehicle.ToggleExtra(Byte, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_IsNeonActive">IVehicle.IsNeonActive</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_GetNeonActive_System_Boolean__System_Boolean__System_Boolean__System_Boolean__">IVehicle.GetNeonActive(Boolean, Boolean, Boolean, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SetNeonActive_System_Boolean_System_Boolean_System_Boolean_System_Boolean_">IVehicle.SetNeonActive(Boolean, Boolean, Boolean, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_EngineOn">IVehicle.EngineOn</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_IsHandbrakeActive">IVehicle.IsHandbrakeActive</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_HeadlightColor">IVehicle.HeadlightColor</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_RadioStation">IVehicle.RadioStation</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SirenActive">IVehicle.SirenActive</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_LockState">IVehicle.LockState</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_GetDoorState_System_Byte_">IVehicle.GetDoorState(Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SetDoorState_System_Byte_System_Byte_">IVehicle.SetDoorState(Byte, Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_IsWindowOpened_System_Byte_">IVehicle.IsWindowOpened(Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SetWindowOpened_System_Byte_System_Boolean_">IVehicle.SetWindowOpened(Byte, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_IsDaylightOn">IVehicle.IsDaylightOn</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_IsNightlightOn">IVehicle.IsNightlightOn</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_RoofOpened">IVehicle.RoofOpened</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_IsFlamethrowerActive">IVehicle.IsFlamethrowerActive</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_LightsMultiplier">IVehicle.LightsMultiplier</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_State">IVehicle.State</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_EngineHealth">IVehicle.EngineHealth</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_PetrolTankHealth">IVehicle.PetrolTankHealth</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_WheelsCount">IVehicle.WheelsCount</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_IsWheelBurst_System_Byte_">IVehicle.IsWheelBurst(Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SetWheelBurst_System_Byte_System_Boolean_">IVehicle.SetWheelBurst(Byte, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_DoesWheelHasTire_System_Byte_">IVehicle.DoesWheelHasTire(Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SetWheelHasTire_System_Byte_System_Boolean_">IVehicle.SetWheelHasTire(Byte, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_GetWheelHealth_System_Byte_">IVehicle.GetWheelHealth(Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SetWheelHealth_System_Byte_System_Single_">IVehicle.SetWheelHealth(Byte, Single)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_RepairsCount">IVehicle.RepairsCount</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_BodyHealth">IVehicle.BodyHealth</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_BodyAdditionalHealth">IVehicle.BodyAdditionalHealth</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_HealthData">IVehicle.HealthData</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_GetPartDamageLevel_System_Byte_">IVehicle.GetPartDamageLevel(Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SetPartDamageLevel_System_Byte_System_Byte_">IVehicle.SetPartDamageLevel(Byte, Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_GetPartBulletHoles_System_Byte_">IVehicle.GetPartBulletHoles(Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SetPartBulletHoles_System_Byte_System_Byte_">IVehicle.SetPartBulletHoles(Byte, Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_IsLightDamaged_System_Byte_">IVehicle.IsLightDamaged(Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SetLightDamaged_System_Byte_System_Boolean_">IVehicle.SetLightDamaged(Byte, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_IsWindowDamaged_System_Byte_">IVehicle.IsWindowDamaged(Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SetWindowDamaged_System_Byte_System_Boolean_">IVehicle.SetWindowDamaged(Byte, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_IsSpecialLightDamaged_System_Byte_">IVehicle.IsSpecialLightDamaged(Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SetSpecialLightDamaged_System_Byte_System_Boolean_">IVehicle.SetSpecialLightDamaged(Byte, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_HasArmoredWindows">IVehicle.HasArmoredWindows</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_GetArmoredWindowHealth_System_Byte_">IVehicle.GetArmoredWindowHealth(Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SetArmoredWindowHealth_System_Byte_System_Single_">IVehicle.SetArmoredWindowHealth(Byte, Single)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_GetArmoredWindowShootCount_System_Byte_">IVehicle.GetArmoredWindowShootCount(Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SetArmoredWindowShootCount_System_Byte_System_Byte_">IVehicle.SetArmoredWindowShootCount(Byte, Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_GetBumperDamageLevel_System_Byte_">IVehicle.GetBumperDamageLevel(Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_SetBumperDamageLevel_System_Byte_System_Byte_">IVehicle.SetBumperDamageLevel(Byte, Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_DamageData">IVehicle.DamageData</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_ManualEngineControl">IVehicle.ManualEngineControl</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_ScriptData">IVehicle.ScriptData</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html#AltV_Net_Elements_Entities_IVehicle_Remove">IVehicle.Remove()</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IEntity.html#AltV_Net_Elements_Entities_IEntity_Id">IEntity.Id</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IEntity.html#AltV_Net_Elements_Entities_IEntity_Rotation">IEntity.Rotation</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IEntity.html#AltV_Net_Elements_Entities_IEntity_Model">IEntity.Model</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IEntity.html#AltV_Net_Elements_Entities_IEntity_SetSyncedMetaData_System_String_System_Object_">IEntity.SetSyncedMetaData(String, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IEntity.html#AltV_Net_Elements_Entities_IEntity_GetSyncedMetaData__1_System_String___0__">IEntity.GetSyncedMetaData&lt;T&gt;(String, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IEntity.html#AltV_Net_Elements_Entities_IEntity_SetSyncedMetaData_System_String_AltV_Net_Elements_Args_MValue__">IEntity.SetSyncedMetaData(String, MValue)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IEntity.html#AltV_Net_Elements_Entities_IEntity_GetSyncedMetaData_System_String_AltV_Net_Elements_Args_MValue__">IEntity.GetSyncedMetaData(String, MValue)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IWorldObject.html#AltV_Net_Elements_Entities_IWorldObject_Position">IWorldObject.Position</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IWorldObject.html#AltV_Net_Elements_Entities_IWorldObject_Dimension">IWorldObject.Dimension</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_NativePointer">IBaseObject.NativePointer</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_Exists">IBaseObject.Exists</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_Type">IBaseObject.Type</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_SetMetaData_System_String_System_Object_">IBaseObject.SetMetaData(String, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_GetMetaData__1_System_String___0__">IBaseObject.GetMetaData&lt;T&gt;(String, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_SetMetaData_System_String_AltV_Net_Elements_Args_MValue__">IBaseObject.SetMetaData(String, MValue)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_GetMetaData_System_String_AltV_Net_Elements_Args_MValue__">IBaseObject.GetMetaData(String, MValue)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_SetData_System_String_System_Object_">IBaseObject.SetData(String, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_GetData__1_System_String___0__">IBaseObject.GetData&lt;T&gt;(String, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_CheckIfEntityExists">IBaseObject.CheckIfEntityExists()</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_OnRemove">IBaseObject.OnRemove()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="AltV.Net.Example.html">AltV.Net.Example</a></h6>
+  <h6><strong>Assembly</strong>: AltV.Net.Example.dll</h6>
+  <h5 id="AltV_Net_Example_IMyVehicle_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IMyVehicle : IVehicle, IEntity, IWorldObject, IBaseObject</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Example_IMyVehicle_MyData.md&amp;value=---%0Auid%3A%20AltV.Net.Example.IMyVehicle.MyData%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Example/IMyVehicle.cs/#L8">View Source</a>
+  </span>
+  <a id="AltV_Net_Example_IMyVehicle_MyData_" data-uid="AltV.Net.Example.IMyVehicle.MyData*"></a>
+  <h4 id="AltV_Net_Example_IMyVehicle_MyData" data-uid="AltV.Net.Example.IMyVehicle.MyData">MyData</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int MyData { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_ExistsAsync_AltV_Net_Elements_Entities_IBaseObject_">AltAsync.ExistsAsync(IBaseObject)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetTypeAsync_AltV_Net_Elements_Entities_IBaseObject_">AltAsync.GetTypeAsync(IBaseObject)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetMetaDataAsync_AltV_Net_Elements_Entities_IBaseObject_System_String_System_Object_">AltAsync.SetMetaDataAsync(IBaseObject, String, Object)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetMetaDataAsync__1_AltV_Net_Elements_Entities_IBaseObject_System_String_">AltAsync.GetMetaDataAsync&lt;T&gt;(IBaseObject, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetModelAsync_AltV_Net_Elements_Entities_IEntity_">AltAsync.GetModelAsync(IEntity)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetRotationAsync_AltV_Net_Elements_Entities_IEntity_AltV_Net_Data_Rotation_">AltAsync.SetRotationAsync(IEntity, Rotation)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetRotationAsync_AltV_Net_Elements_Entities_IEntity_">AltAsync.GetRotationAsync(IEntity)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetSyncedMetaDataAsync_AltV_Net_Elements_Entities_IEntity_System_String_System_Object_">AltAsync.SetSyncedMetaDataAsync(IEntity, String, Object)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetSyncedMetaDataAsync__1_AltV_Net_Elements_Entities_IEntity_System_String_">AltAsync.GetSyncedMetaDataAsync&lt;T&gt;(IEntity, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetDriverAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetDriverAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetModKitAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetModKitAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetModKitAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_">AltAsync.SetModKitAsync(IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsPrimaryColorRgbAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.IsPrimaryColorRgbAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetPrimaryColorAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetPrimaryColorAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetPrimaryColorAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_">AltAsync.SetPrimaryColorAsync(IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetPrimaryColorRgbAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetPrimaryColorRgbAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetPrimaryColorRgbAsync_AltV_Net_Elements_Entities_IVehicle_AltV_Net_Data_Rgba_">AltAsync.SetPrimaryColorRgbAsync(IVehicle, Rgba)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsSecondaryColorRgbAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.IsSecondaryColorRgbAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetSecondaryColorAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetSecondaryColorAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetSecondaryColorAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_">AltAsync.SetSecondaryColorAsync(IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetSecondaryColorRgbAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetSecondaryColorRgbAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetSecondaryColorRgbAsync_AltV_Net_Elements_Entities_IVehicle_AltV_Net_Data_Rgba_">AltAsync.SetSecondaryColorRgbAsync(IVehicle, Rgba)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsTireSmokeColorCustomAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.IsTireSmokeColorCustomAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetPearlColorAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetPearlColorAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetPearlColorAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_">AltAsync.SetPearlColorAsync(IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetWheelColorAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetWheelColorAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetWheelColorAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_">AltAsync.SetWheelColorAsync(IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetInteriorColorAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetInteriorColorAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetInteriorColorAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_">AltAsync.SetInteriorColorAsync(IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetDashboardColorAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetDashboardColorAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetDashboardColorAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_">AltAsync.SetDashboardColorAsync(IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetTireSmokeColorAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetTireSmokeColorAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetTireSmokeColorAsync_AltV_Net_Elements_Entities_IVehicle_AltV_Net_Data_Rgba_">AltAsync.SetTireSmokeColorAsync(IVehicle, Rgba)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetWheelTypeAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetWheelTypeAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetWheelVariationAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetWheelVariationAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_HasCustomTiresAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.HasCustomTiresAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetCustomTiresAsync_AltV_Net_Elements_Entities_IVehicle_System_Boolean_">AltAsync.SetCustomTiresAsync(IVehicle, Boolean)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetSpecialDarknessAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetSpecialDarknessAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetSpecialDarknessAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_">AltAsync.SetSpecialDarknessAsync(IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetNumberplateIndexAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetNumberplateIndexAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetNumberplateIndexAsync_AltV_Net_Elements_Entities_IVehicle_System_UInt32_">AltAsync.SetNumberplateIndexAsync(IVehicle, UInt32)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetNumberplateTextAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetNumberplateTextAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetNumberplateTextAsync_AltV_Net_Elements_Entities_IVehicle_System_String_">AltAsync.SetNumberplateTextAsync(IVehicle, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetWindowTintAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetWindowTintAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetWindowTintAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_">AltAsync.SetWindowTintAsync(IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetDirtLevelAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetDirtLevelAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetDirtLevelAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_">AltAsync.SetDirtLevelAsync(IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetNeonColorAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetNeonColorAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetNeonColorAsync_AltV_Net_Elements_Entities_IVehicle_AltV_Net_Data_Rgba_">AltAsync.SetNeonColorAsync(IVehicle, Rgba)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetHealthDataAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetHealthDataAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetHealthDataAsync_AltV_Net_Elements_Entities_IVehicle_System_String_">AltAsync.SetHealthDataAsync(IVehicle, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsEngineOnAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.IsEngineOnAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetEngineOnAsync_AltV_Net_Elements_Entities_IVehicle_System_Boolean_">AltAsync.SetEngineOnAsync(IVehicle, Boolean)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetBodyAdditionalHealthAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetBodyAdditionalHealthAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetBodyAdditionalHealthAsync_AltV_Net_Elements_Entities_IVehicle_System_UInt32_">AltAsync.SetBodyAdditionalHealthAsync(IVehicle, UInt32)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetBodyHealthAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetBodyHealthAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetBodyHealthAsync_AltV_Net_Elements_Entities_IVehicle_System_UInt32_">AltAsync.SetBodyHealthAsync(IVehicle, UInt32)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetRepairsCountAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetRepairsCountAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetWheelsCountAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetWheelsCountAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetPetrolTankHealthAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetPetrolTankHealthAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetPetrolTankHealthAsync_AltV_Net_Elements_Entities_IVehicle_System_Int32_">AltAsync.SetPetrolTankHealthAsync(IVehicle, Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetEngineHealthAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetEngineHealthAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetEngineHealthAsync_AltV_Net_Elements_Entities_IVehicle_System_Int32_">AltAsync.SetEngineHealthAsync(IVehicle, Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsNeonActiveAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.IsNeonActiveAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetStateAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetStateAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetStateAsync_AltV_Net_Elements_Entities_IVehicle_System_String_">AltAsync.SetStateAsync(IVehicle, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsRoofOpenAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.IsRoofOpenAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetRoofOpenAsync_AltV_Net_Elements_Entities_IVehicle_System_Boolean_">AltAsync.SetRoofOpenAsync(IVehicle, Boolean)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetDoorStateAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_">AltAsync.GetDoorStateAsync(IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetDoorStateAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_System_Byte_">AltAsync.SetDoorStateAsync(IVehicle, Byte, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetDoorStateAsync_AltV_Net_Elements_Entities_IVehicle_AltV_Net_Enums_VehicleDoor_">AltAsync.GetDoorStateAsync(IVehicle, VehicleDoor)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetDoorStateAsync_AltV_Net_Elements_Entities_IVehicle_AltV_Net_Enums_VehicleDoor_AltV_Net_Enums_VehicleDoorState_">AltAsync.SetDoorStateAsync(IVehicle, VehicleDoor, VehicleDoorState)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsWindowOpenedAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_">AltAsync.IsWindowOpenedAsync(IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetWindowOpenedAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_System_Boolean_">AltAsync.SetWindowOpenedAsync(IVehicle, Byte, Boolean)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsNightlightOnAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.IsNightlightOnAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsDaylightOnAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.IsDaylightOnAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetLockStateAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetLockStateAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetLockStateAsync_AltV_Net_Elements_Entities_IVehicle_AltV_Net_Enums_VehicleLockState_">AltAsync.SetLockStateAsync(IVehicle, VehicleLockState)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsSirenActiveAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.IsSirenActiveAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetSirenActiveAsync_AltV_Net_Elements_Entities_IVehicle_System_Boolean_">AltAsync.SetSirenActiveAsync(IVehicle, Boolean)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetHeadlightColorAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetHeadlightColorAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetHeadlightColorAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_">AltAsync.SetHeadlightColorAsync(IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsHandbrakeActiveAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.IsHandbrakeActiveAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsFlamethrowerActiveAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.IsFlamethrowerActiveAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_HasArmoredWindowsAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.HasArmoredWindowsAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetSpecialLightDamaged_AltV_Net_Elements_Entities_IVehicle_System_Byte_System_Boolean_">AltAsync.SetSpecialLightDamaged(IVehicle, Byte, Boolean)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsSpecialLightDamaged_AltV_Net_Elements_Entities_IVehicle_System_Byte_">AltAsync.IsSpecialLightDamaged(IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetWindowDamaged_AltV_Net_Elements_Entities_IVehicle_System_Byte_System_Boolean_">AltAsync.SetWindowDamaged(IVehicle, Byte, Boolean)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsWindowDamaged_AltV_Net_Elements_Entities_IVehicle_System_Byte_">AltAsync.IsWindowDamaged(IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetDamageDataAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetDamageDataAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetDamageDataAsync_AltV_Net_Elements_Entities_IVehicle_System_String_">AltAsync.SetDamageDataAsync(IVehicle, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetModAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_">AltAsync.GetModAsync(IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetModsCountAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_">AltAsync.GetModsCountAsync(IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetModAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_System_Byte_">AltAsync.SetModAsync(IVehicle, Byte, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetModKitsCountAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetModKitsCountAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetWheelsAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_System_Byte_">AltAsync.SetWheelsAsync(IVehicle, Byte, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsExtraOnAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_">AltAsync.IsExtraOnAsync(IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_ToggleExtraAsync_AltV_Net_Elements_Entities_IVehicle_System_Byte_System_Boolean_">AltAsync.ToggleExtraAsync(IVehicle, Byte, Boolean)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetNeonActiveAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetNeonActiveAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetNeonActiveAsync_AltV_Net_Elements_Entities_IVehicle_System_Boolean_System_Boolean_System_Boolean_System_Boolean_">AltAsync.SetNeonActiveAsync(IVehicle, Boolean, Boolean, Boolean, Boolean)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetAppearanceDataAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetAppearanceDataAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetAppearanceDataAsync_AltV_Net_Elements_Entities_IVehicle_System_String_">AltAsync.SetAppearanceDataAsync(IVehicle, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetRadioStationAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetRadioStationAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetRadioStationAsync_AltV_Net_Elements_Entities_IVehicle_System_UInt32_">AltAsync.SetRadioStationAsync(IVehicle, UInt32)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetManualEngineControlAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetManualEngineControlAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetManualEngineControlAsync_AltV_Net_Elements_Entities_IVehicle_System_Boolean_">AltAsync.SetManualEngineControlAsync(IVehicle, Boolean)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetScriptDataAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.GetScriptDataAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetScriptDataAsync_AltV_Net_Elements_Entities_IVehicle_System_String_">AltAsync.SetScriptDataAsync(IVehicle, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_RemoveAsync_AltV_Net_Elements_Entities_IVehicle_">AltAsync.RemoveAsync(IVehicle)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetPositionAsync_AltV_Net_Elements_Entities_IWorldObject_AltV_Net_Data_Position_">AltAsync.SetPositionAsync(IWorldObject, Position)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetPositionAsync_AltV_Net_Elements_Entities_IWorldObject_System_Single_System_Single_System_Single_">AltAsync.SetPositionAsync(IWorldObject, Single, Single, Single)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetPositionAsync_AltV_Net_Elements_Entities_IWorldObject_System_ValueTuple_System_Single_System_Single_System_Single__">AltAsync.SetPositionAsync(IWorldObject, (Single X, Single Y, Single Z))</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetPositionAsync_AltV_Net_Elements_Entities_IWorldObject_">AltAsync.GetPositionAsync(IWorldObject)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetPositionTupleAsync_AltV_Net_Elements_Entities_IWorldObject_">AltAsync.GetPositionTupleAsync(IWorldObject)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetDimensionAsync_AltV_Net_Elements_Entities_IWorldObject_System_Int16_">AltAsync.SetDimensionAsync(IWorldObject, Int16)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetDimensionAsync_AltV_Net_Elements_Entities_IWorldObject_">AltAsync.GetDimensionAsync(IWorldObject)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_ExecuteLocked_AltV_Net_Elements_Entities_IBaseObject_Action_">AltAsync.ExecuteLocked(IBaseObject, Action)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_ExecuteLocked__1_AltV_Net_Elements_Entities_IBaseObject_Action___0____0_">AltAsync.ExecuteLocked&lt;T&gt;(IBaseObject, Action&lt;T&gt;, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_ExecuteLocked__3_AltV_Net_Elements_Entities_IBaseObject_Action___0___1___2____0___1___2_">AltAsync.ExecuteLocked&lt;T1, T2, T3&gt;(IBaseObject, Action&lt;T1, T2, T3&gt;, T1, T2, T3)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_ExecuteLocked__4_AltV_Net_Elements_Entities_IBaseObject_Action___0___1___2___3____0___1___2___3_">AltAsync.ExecuteLocked&lt;T1, T2, T3, T4&gt;(IBaseObject, Action&lt;T1, T2, T3, T4&gt;, T1, T2, T3, T4)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Example_IMyVehicle.md&amp;value=---%0Auid%3A%20AltV.Net.Example.IMyVehicle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Example/IMyVehicle.cs/#L6" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

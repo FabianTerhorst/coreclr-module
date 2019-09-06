@@ -1,0 +1,1944 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IPlayer
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IPlayer
+   ">
+    <meta name="generator" content="docfx 2.45.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="AltV.Net.Elements.Entities.IPlayer">
+  
+  
+  <h1 id="AltV_Net_Elements_Entities_IPlayer" data-uid="AltV.Net.Elements.Entities.IPlayer" class="text-break">Interface IPlayer
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IEntity.html#AltV_Net_Elements_Entities_IEntity_Id">IEntity.Id</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IEntity.html#AltV_Net_Elements_Entities_IEntity_Rotation">IEntity.Rotation</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IEntity.html#AltV_Net_Elements_Entities_IEntity_SetSyncedMetaData_System_String_System_Object_">IEntity.SetSyncedMetaData(String, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IEntity.html#AltV_Net_Elements_Entities_IEntity_GetSyncedMetaData__1_System_String___0__">IEntity.GetSyncedMetaData&lt;T&gt;(String, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IEntity.html#AltV_Net_Elements_Entities_IEntity_SetSyncedMetaData_System_String_AltV_Net_Elements_Args_MValue__">IEntity.SetSyncedMetaData(String, MValue)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IEntity.html#AltV_Net_Elements_Entities_IEntity_GetSyncedMetaData_System_String_AltV_Net_Elements_Args_MValue__">IEntity.GetSyncedMetaData(String, MValue)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IWorldObject.html#AltV_Net_Elements_Entities_IWorldObject_Position">IWorldObject.Position</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IWorldObject.html#AltV_Net_Elements_Entities_IWorldObject_Dimension">IWorldObject.Dimension</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_NativePointer">IBaseObject.NativePointer</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_Exists">IBaseObject.Exists</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_Type">IBaseObject.Type</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_SetMetaData_System_String_System_Object_">IBaseObject.SetMetaData(String, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_GetMetaData__1_System_String___0__">IBaseObject.GetMetaData&lt;T&gt;(String, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_SetMetaData_System_String_AltV_Net_Elements_Args_MValue__">IBaseObject.SetMetaData(String, MValue)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_GetMetaData_System_String_AltV_Net_Elements_Args_MValue__">IBaseObject.GetMetaData(String, MValue)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_SetData_System_String_System_Object_">IBaseObject.SetData(String, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_GetData__1_System_String___0__">IBaseObject.GetData&lt;T&gt;(String, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_CheckIfEntityExists">IBaseObject.CheckIfEntityExists()</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html#AltV_Net_Elements_Entities_IBaseObject_OnRemove">IBaseObject.OnRemove()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="AltV.Net.Elements.Entities.html">AltV.Net.Elements.Entities</a></h6>
+  <h6><strong>Assembly</strong>: AltV.Net.dll</h6>
+  <h5 id="AltV_Net_Elements_Entities_IPlayer_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IPlayer : IEntity, IWorldObject, IBaseObject</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_AimPosition.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.AimPosition%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L106">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_AimPosition_" data-uid="AltV.Net.Elements.Entities.IPlayer.AimPosition*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_AimPosition" data-uid="AltV.Net.Elements.Entities.IPlayer.AimPosition">AimPosition</h4>
+  <div class="markdown level1 summary"><p>Returns the World Position of where the player is currently aiming</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Position AimPosition { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Position.html">Position</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_Ammo.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.Ammo%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L101">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_Ammo_" data-uid="AltV.Net.Elements.Entities.IPlayer.Ammo*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_Ammo" data-uid="AltV.Net.Elements.Entities.IPlayer.Ammo">Ammo</h4>
+  <div class="markdown level1 summary"><p>Returns the ammo in the current weapon the player is holding</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ushort Ammo { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_Armor.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.Armor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L81">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_Armor_" data-uid="AltV.Net.Elements.Entities.IPlayer.Armor*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_Armor" data-uid="AltV.Net.Elements.Entities.IPlayer.Armor">Armor</h4>
+  <div class="markdown level1 summary"><p>Sets and returns the players current armor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ushort Armor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_AuthToken.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.AuthToken%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L36">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_AuthToken_" data-uid="AltV.Net.Elements.Entities.IPlayer.AuthToken*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_AuthToken" data-uid="AltV.Net.Elements.Entities.IPlayer.AuthToken">AuthToken</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string AuthToken { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_CurrentWeapon.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.CurrentWeapon%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L126">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_CurrentWeapon_" data-uid="AltV.Net.Elements.Entities.IPlayer.CurrentWeapon*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_CurrentWeapon" data-uid="AltV.Net.Elements.Entities.IPlayer.CurrentWeapon">CurrentWeapon</h4>
+  <div class="markdown level1 summary"><p>Returns the current weapon the player has equipped</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">uint CurrentWeapon { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_EntityAimingAt.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.EntityAimingAt%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L131">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_EntityAimingAt_" data-uid="AltV.Net.Elements.Entities.IPlayer.EntityAimingAt*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_EntityAimingAt" data-uid="AltV.Net.Elements.Entities.IPlayer.EntityAimingAt">EntityAimingAt</h4>
+  <div class="markdown level1 summary"><p>Returns the IEntity object if the player is aiming at</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEntity EntityAimingAt { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Elements.Entities.IEntity.html">IEntity</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_EntityAimOffset.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.EntityAimOffset%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L133">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_EntityAimOffset_" data-uid="AltV.Net.Elements.Entities.IPlayer.EntityAimOffset*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_EntityAimOffset" data-uid="AltV.Net.Elements.Entities.IPlayer.EntityAimOffset">EntityAimOffset</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Position EntityAimOffset { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Position.html">Position</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_HardwareIdExHash.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.HardwareIdExHash%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L34">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_HardwareIdExHash_" data-uid="AltV.Net.Elements.Entities.IPlayer.HardwareIdExHash*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_HardwareIdExHash" data-uid="AltV.Net.Elements.Entities.IPlayer.HardwareIdExHash">HardwareIdExHash</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ulong HardwareIdExHash { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt64</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_HardwareIdHash.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.HardwareIdHash%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L32">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_HardwareIdHash_" data-uid="AltV.Net.Elements.Entities.IPlayer.HardwareIdHash*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_HardwareIdHash" data-uid="AltV.Net.Elements.Entities.IPlayer.HardwareIdHash">HardwareIdHash</h4>
+  <div class="markdown level1 summary"><p>Returns the players Hardware ID Hash</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ulong HardwareIdHash { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt64</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_HeadRotation.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.HeadRotation%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L111">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_HeadRotation_" data-uid="AltV.Net.Elements.Entities.IPlayer.HeadRotation*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_HeadRotation" data-uid="AltV.Net.Elements.Entities.IPlayer.HeadRotation">HeadRotation</h4>
+  <div class="markdown level1 summary"><p>The current rotation of the players head</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Rotation HeadRotation { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Rotation.html">Rotation</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_Health.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.Health%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L41">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_Health_" data-uid="AltV.Net.Elements.Entities.IPlayer.Health*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_Health" data-uid="AltV.Net.Elements.Entities.IPlayer.Health">Health</h4>
+  <div class="markdown level1 summary"><p>Gets and Sets the players health</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ushort Health { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_Ip.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.Ip%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L153">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_Ip_" data-uid="AltV.Net.Elements.Entities.IPlayer.Ip*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_Ip" data-uid="AltV.Net.Elements.Entities.IPlayer.Ip">Ip</h4>
+  <div class="markdown level1 summary"><p>Returns the IP of the player</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string Ip { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_IsAiming.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.IsAiming%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L66">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_IsAiming_" data-uid="AltV.Net.Elements.Entities.IPlayer.IsAiming*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_IsAiming" data-uid="AltV.Net.Elements.Entities.IPlayer.IsAiming">IsAiming</h4>
+  <div class="markdown level1 summary"><p>Returns if the player is aiming.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsAiming { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_IsConnected.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.IsConnected%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L17">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_IsConnected_" data-uid="AltV.Net.Elements.Entities.IPlayer.IsConnected*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_IsConnected" data-uid="AltV.Net.Elements.Entities.IPlayer.IsConnected">IsConnected</h4>
+  <div class="markdown level1 summary"><p>Returns true if player is connected - false if not connected</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsConnected { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_IsDead.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.IsDead%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L51">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_IsDead_" data-uid="AltV.Net.Elements.Entities.IPlayer.IsDead*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_IsDead" data-uid="AltV.Net.Elements.Entities.IPlayer.IsDead">IsDead</h4>
+  <div class="markdown level1 summary"><p>Returns if the player is dead. True = player is dead</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsDead { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_IsFlashlightActive.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.IsFlashlightActive%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L138">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_IsFlashlightActive_" data-uid="AltV.Net.Elements.Entities.IPlayer.IsFlashlightActive*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_IsFlashlightActive" data-uid="AltV.Net.Elements.Entities.IPlayer.IsFlashlightActive">IsFlashlightActive</h4>
+  <div class="markdown level1 summary"><p>Returns if the players weapon flashlight or weapon is active (Being aimed)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsFlashlightActive { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_IsInRagdoll.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.IsInRagdoll%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L61">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_IsInRagdoll_" data-uid="AltV.Net.Elements.Entities.IPlayer.IsInRagdoll*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_IsInRagdoll" data-uid="AltV.Net.Elements.Entities.IPlayer.IsInRagdoll">IsInRagdoll</h4>
+  <div class="markdown level1 summary"><p>Returns if the player is currently in RagDoll state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsInRagdoll { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_IsInVehicle.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.IsInVehicle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L116">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_IsInVehicle_" data-uid="AltV.Net.Elements.Entities.IPlayer.IsInVehicle*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_IsInVehicle" data-uid="AltV.Net.Elements.Entities.IPlayer.IsInVehicle">IsInVehicle</h4>
+  <div class="markdown level1 summary"><p>Returns if the player is in a vehicle</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsInVehicle { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_IsJumping.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.IsJumping%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L56">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_IsJumping_" data-uid="AltV.Net.Elements.Entities.IPlayer.IsJumping*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_IsJumping" data-uid="AltV.Net.Elements.Entities.IPlayer.IsJumping">IsJumping</h4>
+  <div class="markdown level1 summary"><p>Returns if the player is jumping. True = player jumping</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsJumping { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_IsReloading.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.IsReloading%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L76">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_IsReloading_" data-uid="AltV.Net.Elements.Entities.IPlayer.IsReloading*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_IsReloading" data-uid="AltV.Net.Elements.Entities.IPlayer.IsReloading">IsReloading</h4>
+  <div class="markdown level1 summary"><p>Returns if the player is reloading</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsReloading { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_IsShooting.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.IsShooting%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L71">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_IsShooting_" data-uid="AltV.Net.Elements.Entities.IPlayer.IsShooting*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_IsShooting" data-uid="AltV.Net.Elements.Entities.IPlayer.IsShooting">IsShooting</h4>
+  <div class="markdown level1 summary"><p>Returns if the player is firing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsShooting { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_MaxArmor.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.MaxArmor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L86">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_MaxArmor_" data-uid="AltV.Net.Elements.Entities.IPlayer.MaxArmor*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_MaxArmor" data-uid="AltV.Net.Elements.Entities.IPlayer.MaxArmor">MaxArmor</h4>
+  <div class="markdown level1 summary"><p>Sets and returns the max armor for the player</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ushort MaxArmor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_MaxHealth.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.MaxHealth%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L46">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_MaxHealth_" data-uid="AltV.Net.Elements.Entities.IPlayer.MaxHealth*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_MaxHealth" data-uid="AltV.Net.Elements.Entities.IPlayer.MaxHealth">MaxHealth</h4>
+  <div class="markdown level1 summary"><p>Gets and Sets the players max health</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ushort MaxHealth { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_Model.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.Model%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L12">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_Model_" data-uid="AltV.Net.Elements.Entities.IPlayer.Model*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_Model" data-uid="AltV.Net.Elements.Entities.IPlayer.Model">Model</h4>
+  <div class="markdown level1 summary"><p>The players model / skin</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">uint Model { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_MoveSpeed.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.MoveSpeed%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L91">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_MoveSpeed_" data-uid="AltV.Net.Elements.Entities.IPlayer.MoveSpeed*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_MoveSpeed" data-uid="AltV.Net.Elements.Entities.IPlayer.MoveSpeed">MoveSpeed</h4>
+  <div class="markdown level1 summary"><p>Gets the current movement speed of the player in m/s</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">float MoveSpeed { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_Name.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.Name%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L22">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_Name_" data-uid="AltV.Net.Elements.Entities.IPlayer.Name*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_Name" data-uid="AltV.Net.Elements.Entities.IPlayer.Name">Name</h4>
+  <div class="markdown level1 summary"><p>Returns the players alt:V username</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string Name { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_Ping.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.Ping%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L148">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_Ping_" data-uid="AltV.Net.Elements.Entities.IPlayer.Ping*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_Ping" data-uid="AltV.Net.Elements.Entities.IPlayer.Ping">Ping</h4>
+  <div class="markdown level1 summary"><p>Returns the current ping of the player</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">uint Ping { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_Seat.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.Seat%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L143">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_Seat_" data-uid="AltV.Net.Elements.Entities.IPlayer.Seat*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_Seat" data-uid="AltV.Net.Elements.Entities.IPlayer.Seat">Seat</h4>
+  <div class="markdown level1 summary"><p>Returns the current seat the player is in. Drivers = 1</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">byte Seat { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_SocialClubId.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.SocialClubId%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L27">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_SocialClubId_" data-uid="AltV.Net.Elements.Entities.IPlayer.SocialClubId*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_SocialClubId" data-uid="AltV.Net.Elements.Entities.IPlayer.SocialClubId">SocialClubId</h4>
+  <div class="markdown level1 summary"><p>Returns the players Social Club ID</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ulong SocialClubId { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt64</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_Vehicle.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.Vehicle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L121">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_Vehicle_" data-uid="AltV.Net.Elements.Entities.IPlayer.Vehicle*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_Vehicle" data-uid="AltV.Net.Elements.Entities.IPlayer.Vehicle">Vehicle</h4>
+  <div class="markdown level1 summary"><p>Returns the current vehicle. Null if not in a vehicle</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IVehicle Vehicle { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html">IVehicle</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_Weapon.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.Weapon%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L96">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_Weapon_" data-uid="AltV.Net.Elements.Entities.IPlayer.Weapon*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_Weapon" data-uid="AltV.Net.Elements.Entities.IPlayer.Weapon">Weapon</h4>
+  <div class="markdown level1 summary"><p>Returns the current weapon the player is holding</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">uint Weapon { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_AddWeaponComponent_System_UInt32_System_UInt32_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.AddWeaponComponent(System.UInt32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L223">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_AddWeaponComponent_" data-uid="AltV.Net.Elements.Entities.IPlayer.AddWeaponComponent*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_AddWeaponComponent_System_UInt32_System_UInt32_" data-uid="AltV.Net.Elements.Entities.IPlayer.AddWeaponComponent(System.UInt32,System.UInt32)">AddWeaponComponent(UInt32, UInt32)</h4>
+  <div class="markdown level1 summary"><p>Adds a weapon component to a weapon</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void AddWeaponComponent(uint weapon, uint weaponComponent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">weapon</span></td>
+        <td><p>Weapon hash</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">weaponComponent</span></td>
+        <td><p>Weapon Component hash</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_Copy.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.Copy%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L251">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_Copy_" data-uid="AltV.Net.Elements.Entities.IPlayer.Copy*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_Copy" data-uid="AltV.Net.Elements.Entities.IPlayer.Copy">Copy()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ReadOnlyPlayer Copy()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.ReadOnlyPlayer.html">ReadOnlyPlayer</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_Despawn.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.Despawn%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L166">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_Despawn_" data-uid="AltV.Net.Elements.Entities.IPlayer.Despawn*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_Despawn" data-uid="AltV.Net.Elements.Entities.IPlayer.Despawn">Despawn()</h4>
+  <div class="markdown level1 summary"><p>Despawns a player</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Despawn()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_Emit_System_String_System_Object___.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.Emit(System.String%2CSystem.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L216">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_Emit_" data-uid="AltV.Net.Elements.Entities.IPlayer.Emit*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_Emit_System_String_System_Object___" data-uid="AltV.Net.Elements.Entities.IPlayer.Emit(System.String,System.Object[])">Emit(String, Object[])</h4>
+  <div class="markdown level1 summary"><p>Triggers client side event for a player</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Emit(string eventName, params object[] args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">eventName</span></td>
+        <td><p>Event Trigger</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Object</span>[]</td>
+        <td><span class="parametername">args</span></td>
+        <td><p>Parameters</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_GetCurrentWeaponComponents_System_UInt32____.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.GetCurrentWeaponComponents(System.UInt32%5B%5D%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L236">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_GetCurrentWeaponComponents_" data-uid="AltV.Net.Elements.Entities.IPlayer.GetCurrentWeaponComponents*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_GetCurrentWeaponComponents_System_UInt32____" data-uid="AltV.Net.Elements.Entities.IPlayer.GetCurrentWeaponComponents(System.UInt32[]@)">GetCurrentWeaponComponents(out UInt32[])</h4>
+  <div class="markdown level1 summary"><p>Gets the current weapon components for the weapon in hand</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void GetCurrentWeaponComponents(out uint[] weaponComponents)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span>[]</td>
+        <td><span class="parametername">weaponComponents</span></td>
+        <td><p>Array of component hashes</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_GetCurrentWeaponTintIndex.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.GetCurrentWeaponTintIndex%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L249">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_GetCurrentWeaponTintIndex_" data-uid="AltV.Net.Elements.Entities.IPlayer.GetCurrentWeaponTintIndex*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_GetCurrentWeaponTintIndex" data-uid="AltV.Net.Elements.Entities.IPlayer.GetCurrentWeaponTintIndex">GetCurrentWeaponTintIndex()</h4>
+  <div class="markdown level1 summary"><p>Returns weapon tint of current weapon</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">byte GetCurrentWeaponTintIndex()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_GiveWeapon_System_UInt32_System_Int32_System_Boolean_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.GiveWeapon(System.UInt32%2CSystem.Int32%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L192">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_GiveWeapon_" data-uid="AltV.Net.Elements.Entities.IPlayer.GiveWeapon*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_GiveWeapon_System_UInt32_System_Int32_System_Boolean_" data-uid="AltV.Net.Elements.Entities.IPlayer.GiveWeapon(System.UInt32,System.Int32,System.Boolean)">GiveWeapon(UInt32, Int32, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Gives the player a weapon, ammo and if it is active</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void GiveWeapon(uint weapon, int ammo, bool selectWeapon)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">weapon</span></td>
+        <td><p>weapon hash</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">ammo</span></td>
+        <td><p>ammo count</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">selectWeapon</span></td>
+        <td><p>True - Places into hand</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_Kick_System_String_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.Kick(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L209">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_Kick_" data-uid="AltV.Net.Elements.Entities.IPlayer.Kick*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_Kick_System_String_" data-uid="AltV.Net.Elements.Entities.IPlayer.Kick(System.String)">Kick(String)</h4>
+  <div class="markdown level1 summary"><p>Kicks the player with reason</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Kick(string reason)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">reason</span></td>
+        <td><p>Reason why the player is kicked</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_RemoveAllWeapons.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.RemoveAllWeapons%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L203">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_RemoveAllWeapons_" data-uid="AltV.Net.Elements.Entities.IPlayer.RemoveAllWeapons*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_RemoveAllWeapons" data-uid="AltV.Net.Elements.Entities.IPlayer.RemoveAllWeapons">RemoveAllWeapons()</h4>
+  <div class="markdown level1 summary"><p>Removes all player weapons</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void RemoveAllWeapons()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_RemoveWeapon_System_UInt32_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.RemoveWeapon(System.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L198">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_RemoveWeapon_" data-uid="AltV.Net.Elements.Entities.IPlayer.RemoveWeapon*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_RemoveWeapon_System_UInt32_" data-uid="AltV.Net.Elements.Entities.IPlayer.RemoveWeapon(System.UInt32)">RemoveWeapon(UInt32)</h4>
+  <div class="markdown level1 summary"><p>Removes the weapon by hash</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void RemoveWeapon(uint weapon)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">weapon</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_RemoveWeaponComponent_System_UInt32_System_UInt32_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.RemoveWeaponComponent(System.UInt32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L230">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_RemoveWeaponComponent_" data-uid="AltV.Net.Elements.Entities.IPlayer.RemoveWeaponComponent*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_RemoveWeaponComponent_System_UInt32_System_UInt32_" data-uid="AltV.Net.Elements.Entities.IPlayer.RemoveWeaponComponent(System.UInt32,System.UInt32)">RemoveWeaponComponent(UInt32, UInt32)</h4>
+  <div class="markdown level1 summary"><p>Removes a weapon component from a weapon</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void RemoveWeaponComponent(uint weapon, uint weaponComponent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">weapon</span></td>
+        <td><p>Weapon hash</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">weaponComponent</span></td>
+        <td><p>Weapon Component hash</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_SetDateTime_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.SetDateTime(System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L177">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_SetDateTime_" data-uid="AltV.Net.Elements.Entities.IPlayer.SetDateTime*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_SetDateTime_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="AltV.Net.Elements.Entities.IPlayer.SetDateTime(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">SetDateTime(Int32, Int32, Int32, Int32, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Sets the current date and time for a player</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetDateTime(int day, int month, int year, int hour, int minute, int second)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">day</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">month</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">year</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">hour</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">minute</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">second</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_SetWeaponTintIndex_System_UInt32_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.SetWeaponTintIndex(System.UInt32%2CSystem.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L243">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_SetWeaponTintIndex_" data-uid="AltV.Net.Elements.Entities.IPlayer.SetWeaponTintIndex*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_SetWeaponTintIndex_System_UInt32_System_Byte_" data-uid="AltV.Net.Elements.Entities.IPlayer.SetWeaponTintIndex(System.UInt32,System.Byte)">SetWeaponTintIndex(UInt32, Byte)</h4>
+  <div class="markdown level1 summary"><p>Sets the weapon tint to a weapon</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetWeaponTintIndex(uint weapon, byte tintIndex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">weapon</span></td>
+        <td><p>Weapon hash</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">tintIndex</span></td>
+        <td><p>tintIndex</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_SetWeather_System_UInt32_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.SetWeather(System.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L184">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_SetWeather_" data-uid="AltV.Net.Elements.Entities.IPlayer.SetWeather*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_SetWeather_System_UInt32_" data-uid="AltV.Net.Elements.Entities.IPlayer.SetWeather(System.UInt32)">SetWeather(UInt32)</h4>
+  <div class="markdown level1 summary"><p>Sets the current weather for the player</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetWeather(uint weather)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">weather</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer_Spawn_AltV_Net_Data_Position_System_UInt32_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer.Spawn(AltV.Net.Data.Position%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L161">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_IPlayer_Spawn_" data-uid="AltV.Net.Elements.Entities.IPlayer.Spawn*"></a>
+  <h4 id="AltV_Net_Elements_Entities_IPlayer_Spawn_AltV_Net_Data_Position_System_UInt32_" data-uid="AltV.Net.Elements.Entities.IPlayer.Spawn(AltV.Net.Data.Position,System.UInt32)">Spawn(Position, UInt32)</h4>
+  <div class="markdown level1 summary"><p>Spawns a player at the designated position with a optional delay in milliseconds</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Spawn(Position position, uint delayMs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Position.html">Position</a></td>
+        <td><span class="parametername">position</span></td>
+        <td><p>position</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">delayMs</span></td>
+        <td><p>delay in milliseconds until player is spawned</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Elements.Entities.EntityRemovedException.html">EntityRemovedException</a></td>
+        <td><p>This entity was removed</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_ExistsAsync_AltV_Net_Elements_Entities_IBaseObject_">AltAsync.ExistsAsync(IBaseObject)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetTypeAsync_AltV_Net_Elements_Entities_IBaseObject_">AltAsync.GetTypeAsync(IBaseObject)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetMetaDataAsync_AltV_Net_Elements_Entities_IBaseObject_System_String_System_Object_">AltAsync.SetMetaDataAsync(IBaseObject, String, Object)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetMetaDataAsync__1_AltV_Net_Elements_Entities_IBaseObject_System_String_">AltAsync.GetMetaDataAsync&lt;T&gt;(IBaseObject, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetModelAsync_AltV_Net_Elements_Entities_IEntity_">AltAsync.GetModelAsync(IEntity)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetRotationAsync_AltV_Net_Elements_Entities_IEntity_AltV_Net_Data_Rotation_">AltAsync.SetRotationAsync(IEntity, Rotation)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetRotationAsync_AltV_Net_Elements_Entities_IEntity_">AltAsync.GetRotationAsync(IEntity)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetSyncedMetaDataAsync_AltV_Net_Elements_Entities_IEntity_System_String_System_Object_">AltAsync.SetSyncedMetaDataAsync(IEntity, String, Object)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetSyncedMetaDataAsync__1_AltV_Net_Elements_Entities_IEntity_System_String_">AltAsync.GetSyncedMetaDataAsync&lt;T&gt;(IEntity, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsConnectedAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.IsConnectedAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetModelAsync_AltV_Net_Elements_Entities_IPlayer_System_UInt32_">AltAsync.SetModelAsync(IPlayer, UInt32)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetNameAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.GetNameAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetNameAsync_AltV_Net_Elements_Entities_IPlayer_System_String_">AltAsync.SetNameAsync(IPlayer, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetHealthAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.GetHealthAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetHealthAsync_AltV_Net_Elements_Entities_IPlayer_System_UInt16_">AltAsync.SetHealthAsync(IPlayer, UInt16)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsDeadAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.IsDeadAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsJumpingAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.IsJumpingAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsInRagdollAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.IsInRagdollAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsAimingAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.IsAimingAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsShootingAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.IsShootingAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsReloadingAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.IsReloadingAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetArmorAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.GetArmorAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetArmorAsync_AltV_Net_Elements_Entities_IPlayer_System_UInt16_">AltAsync.SetArmorAsync(IPlayer, UInt16)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetMoveSpeedAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.GetMoveSpeedAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetWeaponAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.GetWeaponAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetAmmoAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.GetAmmoAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetAimPositionAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.GetAimPositionAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetHeadRotationAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.GetHeadRotationAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_IsInVehicleAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.IsInVehicleAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetVehicleAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.GetVehicleAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetSeatAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.GetSeatAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetPingAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.GetPingAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SpawnAsync_AltV_Net_Elements_Entities_IPlayer_AltV_Net_Data_Position_">AltAsync.SpawnAsync(IPlayer, Position)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_DespawnAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.DespawnAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetDateTimeAsync_AltV_Net_Elements_Entities_IPlayer_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_">AltAsync.SetDateTimeAsync(IPlayer, Int32, Int32, Int32, Int32, Int32, Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetDateTimeAsync_AltV_Net_Elements_Entities_IPlayer_DateTime_">AltAsync.SetDateTimeAsync(IPlayer, DateTime)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetWeatherAsync_AltV_Net_Elements_Entities_IPlayer_System_UInt32_">AltAsync.SetWeatherAsync(IPlayer, UInt32)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GiveWeaponAsync_AltV_Net_Elements_Entities_IPlayer_System_UInt32_System_Int32_System_Boolean_">AltAsync.GiveWeaponAsync(IPlayer, UInt32, Int32, Boolean)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_RemoveWeaponAsync_AltV_Net_Elements_Entities_IPlayer_System_UInt32_">AltAsync.RemoveWeaponAsync(IPlayer, UInt32)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_RemoveAllWeaponsAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.RemoveAllWeaponsAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_KickAsync_AltV_Net_Elements_Entities_IPlayer_System_String_">AltAsync.KickAsync(IPlayer, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_EmitAsync_AltV_Net_Elements_Entities_IPlayer_System_String_System_Object___">AltAsync.EmitAsync(IPlayer, String, Object[])</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_CopyAsync_AltV_Net_Elements_Entities_IPlayer_">AltAsync.CopyAsync(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetPositionAsync_AltV_Net_Elements_Entities_IWorldObject_AltV_Net_Data_Position_">AltAsync.SetPositionAsync(IWorldObject, Position)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetPositionAsync_AltV_Net_Elements_Entities_IWorldObject_System_Single_System_Single_System_Single_">AltAsync.SetPositionAsync(IWorldObject, Single, Single, Single)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetPositionAsync_AltV_Net_Elements_Entities_IWorldObject_System_ValueTuple_System_Single_System_Single_System_Single__">AltAsync.SetPositionAsync(IWorldObject, (Single X, Single Y, Single Z))</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetPositionAsync_AltV_Net_Elements_Entities_IWorldObject_">AltAsync.GetPositionAsync(IWorldObject)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetPositionTupleAsync_AltV_Net_Elements_Entities_IWorldObject_">AltAsync.GetPositionTupleAsync(IWorldObject)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetDimensionAsync_AltV_Net_Elements_Entities_IWorldObject_System_Int16_">AltAsync.SetDimensionAsync(IWorldObject, Int16)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetDimensionAsync_AltV_Net_Elements_Entities_IWorldObject_">AltAsync.GetDimensionAsync(IWorldObject)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_ExecuteLocked_AltV_Net_Elements_Entities_IBaseObject_Action_">AltAsync.ExecuteLocked(IBaseObject, Action)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_ExecuteLocked__1_AltV_Net_Elements_Entities_IBaseObject_Action___0____0_">AltAsync.ExecuteLocked&lt;T&gt;(IBaseObject, Action&lt;T&gt;, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_ExecuteLocked__3_AltV_Net_Elements_Entities_IBaseObject_Action___0___1___2____0___1___2_">AltAsync.ExecuteLocked&lt;T1, T2, T3&gt;(IBaseObject, Action&lt;T1, T2, T3&gt;, T1, T2, T3)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_ExecuteLocked__4_AltV_Net_Elements_Entities_IBaseObject_Action___0___1___2___3____0___1___2___3_">AltAsync.ExecuteLocked&lt;T1, T2, T3, T4&gt;(IBaseObject, Action&lt;T1, T2, T3, T4&gt;, T1, T2, T3, T4)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_SetPositionLocked_AltV_Net_Elements_Entities_IPlayer_AltV_Net_Data_Position_">AltAsync.SetPositionLocked(IPlayer, Position)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_GetPositionLocked_AltV_Net_Elements_Entities_IPlayer_AltV_Net_Data_Position__">AltAsync.GetPositionLocked(IPlayer, ref Position)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Async.AltAsync.html#AltV_Net_Async_AltAsync_EmitLocked_AltV_Net_Elements_Entities_IPlayer_System_String_System_Object___">AltAsync.EmitLocked(IPlayer, String, Object[])</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Mock.MockClientEvents.html#AltV_Net_Mock_MockClientEvents_DequeueEvent_AltV_Net_Elements_Entities_IPlayer_">MockClientEvents.DequeueEvent(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Mock.MockClientEvents.html#AltV_Net_Mock_MockClientEvents_On_AltV_Net_Elements_Entities_IPlayer_System_String_AltV_Net_Mock_MockClientEvents_ClientEventMockDelegate_">MockClientEvents.On(IPlayer, String, MockClientEvents.ClientEventMockDelegate)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Mock.MockClientEvents.html#AltV_Net_Mock_MockClientEvents_On_AltV_Net_Elements_Entities_IPlayer_AltV_Net_Mock_MockClientEvents_ClientAnyEventMockDelegate_">MockClientEvents.On(IPlayer, MockClientEvents.ClientAnyEventMockDelegate)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Mock.MockClientEvents.html#AltV_Net_Mock_MockClientEvents_CancelEvents_AltV_Net_Elements_Entities_IPlayer_">MockClientEvents.CancelEvents(IPlayer)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Mock.MockPlayerEvents.html#AltV_Net_Mock_MockPlayerEvents_Disconnect_AltV_Net_Elements_Entities_IPlayer_System_String_">MockPlayerEvents.Disconnect(IPlayer, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Mock.MockPlayerEvents.html#AltV_Net_Mock_MockPlayerEvents_Damage_AltV_Net_Elements_Entities_IPlayer_AltV_Net_Elements_Entities_IEntity_System_UInt32_System_Byte_">MockPlayerEvents.Damage(IPlayer, IEntity, UInt32, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Mock.MockPlayerEvents.html#AltV_Net_Mock_MockPlayerEvents_Death_AltV_Net_Elements_Entities_IPlayer_AltV_Net_Elements_Entities_IEntity_System_UInt32_">MockPlayerEvents.Death(IPlayer, IEntity, UInt32)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Mock.MockPlayerEvents.html#AltV_Net_Mock_MockPlayerEvents_EnterVehicle_AltV_Net_Elements_Entities_IPlayer_AltV_Net_Elements_Entities_IVehicle_System_Byte_">MockPlayerEvents.EnterVehicle(IPlayer, IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Mock.MockPlayerEvents.html#AltV_Net_Mock_MockPlayerEvents_LeaveVehicle_AltV_Net_Elements_Entities_IPlayer_AltV_Net_Elements_Entities_IVehicle_System_Byte_">MockPlayerEvents.LeaveVehicle(IPlayer, IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Mock.MockPlayerEvents.html#AltV_Net_Mock_MockPlayerEvents_ChangeSeat_AltV_Net_Elements_Entities_IPlayer_AltV_Net_Elements_Entities_IVehicle_System_Byte_">MockPlayerEvents.ChangeSeat(IPlayer, IVehicle, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Chat.PlayerChat.html#AltV_Net_Chat_PlayerChat_SendChatMessage_AltV_Net_Elements_Entities_IPlayer_System_String_">PlayerChat.SendChatMessage(IPlayer, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.NetworkingEntity.PlayerClientExtension.html#AltV_Net_NetworkingEntity_PlayerClientExtension_TryGetNetworkingClient_AltV_Net_Elements_Entities_IPlayer_AltV_Net_NetworkingEntity_Elements_Entities_INetworkingClient__">PlayerClientExtension.TryGetNetworkingClient(IPlayer, out INetworkingClient)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.BaseObjectExtensions.html#AltV_Net_Elements_Entities_BaseObjectExtensions_GetMetaData_AltV_Net_Elements_Entities_IBaseObject_System_String_System_Int32__">BaseObjectExtensions.GetMetaData(IBaseObject, String, out Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.BaseObjectExtensions.html#AltV_Net_Elements_Entities_BaseObjectExtensions_GetMetaData_AltV_Net_Elements_Entities_IBaseObject_System_String_System_UInt32__">BaseObjectExtensions.GetMetaData(IBaseObject, String, out UInt32)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.BaseObjectExtensions.html#AltV_Net_Elements_Entities_BaseObjectExtensions_GetMetaData_AltV_Net_Elements_Entities_IBaseObject_System_String_System_Single__">BaseObjectExtensions.GetMetaData(IBaseObject, String, out Single)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.EntityExtensions.html#AltV_Net_Elements_Entities_EntityExtensions_GetSyncedMetaData_AltV_Net_Elements_Entities_IEntity_System_String_System_Int32__">EntityExtensions.GetSyncedMetaData(IEntity, String, out Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.EntityExtensions.html#AltV_Net_Elements_Entities_EntityExtensions_GetSyncedMetaData_AltV_Net_Elements_Entities_IEntity_System_String_System_UInt32__">EntityExtensions.GetSyncedMetaData(IEntity, String, out UInt32)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.EntityExtensions.html#AltV_Net_Elements_Entities_EntityExtensions_GetSyncedMetaData_AltV_Net_Elements_Entities_IEntity_System_String_System_Single__">EntityExtensions.GetSyncedMetaData(IEntity, String, out Single)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.PlayerExtensions.html#AltV_Net_Elements_Entities_PlayerExtensions_SetDateTime_AltV_Net_Elements_Entities_IPlayer_DateTime_">PlayerExtensions.SetDateTime(IPlayer, DateTime)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.PlayerExtensions.html#AltV_Net_Elements_Entities_PlayerExtensions_SetWeather_AltV_Net_Elements_Entities_IPlayer_AltV_Net_Enums_WeatherType_">PlayerExtensions.SetWeather(IPlayer, WeatherType)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.PlayerExtensions.html#AltV_Net_Elements_Entities_PlayerExtensions_AddWeaponComponent_AltV_Net_Elements_Entities_IPlayer_AltV_Net_Enums_WeaponModel_System_UInt32_">PlayerExtensions.AddWeaponComponent(IPlayer, WeaponModel, UInt32)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.PlayerExtensions.html#AltV_Net_Elements_Entities_PlayerExtensions_RemoveWeaponComponent_AltV_Net_Elements_Entities_IPlayer_AltV_Net_Enums_WeaponModel_System_UInt32_">PlayerExtensions.RemoveWeaponComponent(IPlayer, WeaponModel, UInt32)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.PlayerExtensions.html#AltV_Net_Elements_Entities_PlayerExtensions_SetWeaponTintIndex_AltV_Net_Elements_Entities_IPlayer_AltV_Net_Enums_WeaponModel_System_Byte_">PlayerExtensions.SetWeaponTintIndex(IPlayer, WeaponModel, Byte)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.WorldObjectExtensions.html#AltV_Net_Elements_Entities_WorldObjectExtensions_SetPosition_AltV_Net_Elements_Entities_IWorldObject_System_ValueTuple_System_Single_System_Single_System_Single__">WorldObjectExtensions.SetPosition(IWorldObject, (Single X, Single Y, Single Z))</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.WorldObjectExtensions.html#AltV_Net_Elements_Entities_WorldObjectExtensions_SetPosition_AltV_Net_Elements_Entities_IWorldObject_System_Single_System_Single_System_Single_">WorldObjectExtensions.SetPosition(IWorldObject, Single, Single, Single)</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.WorldObjectExtensions.html#AltV_Net_Elements_Entities_WorldObjectExtensions_GetPosition_AltV_Net_Elements_Entities_IWorldObject_">WorldObjectExtensions.GetPosition(IWorldObject)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_IPlayer.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.IPlayer%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/IPlayer.cs/#L7" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

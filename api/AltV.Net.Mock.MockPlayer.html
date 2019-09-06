@@ -1,0 +1,1682 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class MockPlayer
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class MockPlayer
+   ">
+    <meta name="generator" content="docfx 2.45.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="AltV.Net.Mock.MockPlayer">
+  
+  
+  <h1 id="AltV_Net_Mock_MockPlayer" data-uid="AltV.Net.Mock.MockPlayer" class="text-break">Class MockPlayer
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="AltV.Net.Mock.MockEntity.html">MockEntity</a></div>
+    <div class="level2"><span class="xref">MockPlayer</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="AltV.Net.Elements.Entities.IPlayer.html">IPlayer</a></div>
+    <div><a class="xref" href="AltV.Net.Elements.Entities.IEntity.html">IEntity</a></div>
+    <div><a class="xref" href="AltV.Net.Elements.Entities.IWorldObject.html">IWorldObject</a></div>
+    <div><a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html">IBaseObject</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_NativePointer">MockEntity.NativePointer</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_Exists">MockEntity.Exists</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_Id">MockEntity.Id</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_Type">MockEntity.Type</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_Position">MockEntity.Position</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_Rotation">MockEntity.Rotation</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_Dimension">MockEntity.Dimension</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_Model">MockEntity.Model</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_SetPosition_System_Single_System_Single_System_Single_">MockEntity.SetPosition(Single, Single, Single)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_SetRotation_System_Single_System_Single_System_Single_">MockEntity.SetRotation(Single, Single, Single)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_SetMetaData_System_String_System_Object_">MockEntity.SetMetaData(String, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_GetMetaData__1_System_String___0__">MockEntity.GetMetaData&lt;T&gt;(String, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_SetData_System_String_System_Object_">MockEntity.SetData(String, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_GetData__1_System_String___0__">MockEntity.GetData&lt;T&gt;(String, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_SetSyncedMetaData_System_String_System_Object_">MockEntity.SetSyncedMetaData(String, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_GetSyncedMetaData__1_System_String___0__">MockEntity.GetSyncedMetaData&lt;T&gt;(String, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_SetMetaData_System_String_AltV_Net_Elements_Args_MValue__">MockEntity.SetMetaData(String, MValue)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_GetMetaData_System_String_AltV_Net_Elements_Args_MValue__">MockEntity.GetMetaData(String, MValue)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_SetSyncedMetaData_System_String_AltV_Net_Elements_Args_MValue__">MockEntity.SetSyncedMetaData(String, MValue)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_GetSyncedMetaData_System_String_AltV_Net_Elements_Args_MValue__">MockEntity.GetSyncedMetaData(String, MValue)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_CheckIfEntityExists">MockEntity.CheckIfEntityExists()</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_OnRemove">MockEntity.OnRemove()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="AltV.Net.Mock.html">AltV.Net.Mock</a></h6>
+  <h6><strong>Assembly</strong>: AltV.Net.Mock.dll</h6>
+  <h5 id="AltV_Net_Mock_MockPlayer_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class MockPlayer : MockEntity, IPlayer, IEntity, IWorldObject, IBaseObject</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer__ctor_IntPtr_System_UInt16_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.%23ctor(IntPtr%2CSystem.UInt16)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L9">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer__ctor_" data-uid="AltV.Net.Mock.MockPlayer.#ctor*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer__ctor_IntPtr_System_UInt16_" data-uid="AltV.Net.Mock.MockPlayer.#ctor(IntPtr,System.UInt16)">MockPlayer(IntPtr, UInt16)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MockPlayer(IntPtr nativePointer, ushort id)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IntPtr</span></td>
+        <td><span class="parametername">nativePointer</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td><span class="parametername">id</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_AimPosition.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.AimPosition%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L26">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_AimPosition_" data-uid="AltV.Net.Mock.MockPlayer.AimPosition*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_AimPosition" data-uid="AltV.Net.Mock.MockPlayer.AimPosition">AimPosition</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Position AimPosition { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Position.html">Position</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_Ammo.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.Ammo%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L25">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_Ammo_" data-uid="AltV.Net.Mock.MockPlayer.Ammo*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_Ammo" data-uid="AltV.Net.Mock.MockPlayer.Ammo">Ammo</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ushort Ammo { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_Armor.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.Armor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L22">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_Armor_" data-uid="AltV.Net.Mock.MockPlayer.Armor*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_Armor" data-uid="AltV.Net.Mock.MockPlayer.Armor">Armor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ushort Armor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_AuthToken.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.AuthToken%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L42">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_AuthToken_" data-uid="AltV.Net.Mock.MockPlayer.AuthToken*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_AuthToken" data-uid="AltV.Net.Mock.MockPlayer.AuthToken">AuthToken</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string AuthToken { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_CurrentWeapon.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.CurrentWeapon%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L34">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_CurrentWeapon_" data-uid="AltV.Net.Mock.MockPlayer.CurrentWeapon*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_CurrentWeapon" data-uid="AltV.Net.Mock.MockPlayer.CurrentWeapon">CurrentWeapon</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint CurrentWeapon { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_EntityAimingAt.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.EntityAimingAt%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L35">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_EntityAimingAt_" data-uid="AltV.Net.Mock.MockPlayer.EntityAimingAt*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_EntityAimingAt" data-uid="AltV.Net.Mock.MockPlayer.EntityAimingAt">EntityAimingAt</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEntity EntityAimingAt { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Elements.Entities.IEntity.html">IEntity</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_EntityAimOffset.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.EntityAimOffset%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L36">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_EntityAimOffset_" data-uid="AltV.Net.Mock.MockPlayer.EntityAimOffset*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_EntityAimOffset" data-uid="AltV.Net.Mock.MockPlayer.EntityAimOffset">EntityAimOffset</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Position EntityAimOffset { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Position.html">Position</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_HardwareIdExHash.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.HardwareIdExHash%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L41">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_HardwareIdExHash_" data-uid="AltV.Net.Mock.MockPlayer.HardwareIdExHash*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_HardwareIdExHash" data-uid="AltV.Net.Mock.MockPlayer.HardwareIdExHash">HardwareIdExHash</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ulong HardwareIdExHash { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt64</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_HardwareIdHash.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.HardwareIdHash%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L40">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_HardwareIdHash_" data-uid="AltV.Net.Mock.MockPlayer.HardwareIdHash*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_HardwareIdHash" data-uid="AltV.Net.Mock.MockPlayer.HardwareIdHash">HardwareIdHash</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ulong HardwareIdHash { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt64</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_HeadRotation.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.HeadRotation%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L27">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_HeadRotation_" data-uid="AltV.Net.Mock.MockPlayer.HeadRotation*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_HeadRotation" data-uid="AltV.Net.Mock.MockPlayer.HeadRotation">HeadRotation</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Rotation HeadRotation { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Rotation.html">Rotation</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_Health.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.Health%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L15">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_Health_" data-uid="AltV.Net.Mock.MockPlayer.Health*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_Health" data-uid="AltV.Net.Mock.MockPlayer.Health">Health</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ushort Health { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_Ip.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.Ip%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L38">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_Ip_" data-uid="AltV.Net.Mock.MockPlayer.Ip*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_Ip" data-uid="AltV.Net.Mock.MockPlayer.Ip">Ip</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Ip { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_IsAiming.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.IsAiming%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L19">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_IsAiming_" data-uid="AltV.Net.Mock.MockPlayer.IsAiming*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_IsAiming" data-uid="AltV.Net.Mock.MockPlayer.IsAiming">IsAiming</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsAiming { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_IsConnected.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.IsConnected%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L13">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_IsConnected_" data-uid="AltV.Net.Mock.MockPlayer.IsConnected*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_IsConnected" data-uid="AltV.Net.Mock.MockPlayer.IsConnected">IsConnected</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsConnected { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_IsDead.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.IsDead%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L16">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_IsDead_" data-uid="AltV.Net.Mock.MockPlayer.IsDead*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_IsDead" data-uid="AltV.Net.Mock.MockPlayer.IsDead">IsDead</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsDead { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_IsFlashlightActive.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.IsFlashlightActive%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L37">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_IsFlashlightActive_" data-uid="AltV.Net.Mock.MockPlayer.IsFlashlightActive*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_IsFlashlightActive" data-uid="AltV.Net.Mock.MockPlayer.IsFlashlightActive">IsFlashlightActive</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsFlashlightActive { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_IsInRagdoll.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.IsInRagdoll%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L18">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_IsInRagdoll_" data-uid="AltV.Net.Mock.MockPlayer.IsInRagdoll*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_IsInRagdoll" data-uid="AltV.Net.Mock.MockPlayer.IsInRagdoll">IsInRagdoll</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsInRagdoll { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_IsInVehicle.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.IsInVehicle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L28">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_IsInVehicle_" data-uid="AltV.Net.Mock.MockPlayer.IsInVehicle*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_IsInVehicle" data-uid="AltV.Net.Mock.MockPlayer.IsInVehicle">IsInVehicle</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsInVehicle { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_IsJumping.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.IsJumping%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L17">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_IsJumping_" data-uid="AltV.Net.Mock.MockPlayer.IsJumping*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_IsJumping" data-uid="AltV.Net.Mock.MockPlayer.IsJumping">IsJumping</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsJumping { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_IsReloading.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.IsReloading%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L21">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_IsReloading_" data-uid="AltV.Net.Mock.MockPlayer.IsReloading*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_IsReloading" data-uid="AltV.Net.Mock.MockPlayer.IsReloading">IsReloading</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsReloading { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_IsShooting.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.IsShooting%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L20">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_IsShooting_" data-uid="AltV.Net.Mock.MockPlayer.IsShooting*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_IsShooting" data-uid="AltV.Net.Mock.MockPlayer.IsShooting">IsShooting</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsShooting { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_MaxArmor.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.MaxArmor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L33">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_MaxArmor_" data-uid="AltV.Net.Mock.MockPlayer.MaxArmor*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_MaxArmor" data-uid="AltV.Net.Mock.MockPlayer.MaxArmor">MaxArmor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ushort MaxArmor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_MaxHealth.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.MaxHealth%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L32">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_MaxHealth_" data-uid="AltV.Net.Mock.MockPlayer.MaxHealth*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_MaxHealth" data-uid="AltV.Net.Mock.MockPlayer.MaxHealth">MaxHealth</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ushort MaxHealth { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_MoveSpeed.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.MoveSpeed%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L23">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_MoveSpeed_" data-uid="AltV.Net.Mock.MockPlayer.MoveSpeed*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_MoveSpeed" data-uid="AltV.Net.Mock.MockPlayer.MoveSpeed">MoveSpeed</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float MoveSpeed { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_Name.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.Name%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L14">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_Name_" data-uid="AltV.Net.Mock.MockPlayer.Name*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_Name" data-uid="AltV.Net.Mock.MockPlayer.Name">Name</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Name { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_Ping.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.Ping%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L31">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_Ping_" data-uid="AltV.Net.Mock.MockPlayer.Ping*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_Ping" data-uid="AltV.Net.Mock.MockPlayer.Ping">Ping</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint Ping { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_Seat.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.Seat%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L30">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_Seat_" data-uid="AltV.Net.Mock.MockPlayer.Seat*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_Seat" data-uid="AltV.Net.Mock.MockPlayer.Seat">Seat</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte Seat { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_SocialClubId.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.SocialClubId%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L39">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_SocialClubId_" data-uid="AltV.Net.Mock.MockPlayer.SocialClubId*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_SocialClubId" data-uid="AltV.Net.Mock.MockPlayer.SocialClubId">SocialClubId</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ulong SocialClubId { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt64</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_Vehicle.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.Vehicle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L29">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_Vehicle_" data-uid="AltV.Net.Mock.MockPlayer.Vehicle*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_Vehicle" data-uid="AltV.Net.Mock.MockPlayer.Vehicle">Vehicle</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IVehicle Vehicle { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html">IVehicle</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_Weapon.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.Weapon%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L24">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_Weapon_" data-uid="AltV.Net.Mock.MockPlayer.Weapon*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_Weapon" data-uid="AltV.Net.Mock.MockPlayer.Weapon">Weapon</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint Weapon { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_AddWeaponComponent_System_UInt32_System_UInt32_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.AddWeaponComponent(System.UInt32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L44">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_AddWeaponComponent_" data-uid="AltV.Net.Mock.MockPlayer.AddWeaponComponent*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_AddWeaponComponent_System_UInt32_System_UInt32_" data-uid="AltV.Net.Mock.MockPlayer.AddWeaponComponent(System.UInt32,System.UInt32)">AddWeaponComponent(UInt32, UInt32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddWeaponComponent(uint weapon, uint weaponComponent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">weapon</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">weaponComponent</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_Copy.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.Copy%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L113">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_Copy_" data-uid="AltV.Net.Mock.MockPlayer.Copy*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_Copy" data-uid="AltV.Net.Mock.MockPlayer.Copy">Copy()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ReadOnlyPlayer Copy()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.ReadOnlyPlayer.html">ReadOnlyPlayer</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_Despawn.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.Despawn%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L73">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_Despawn_" data-uid="AltV.Net.Mock.MockPlayer.Despawn*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_Despawn" data-uid="AltV.Net.Mock.MockPlayer.Despawn">Despawn()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Despawn()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_Emit_System_String_System_Object___.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.Emit(System.String%2CSystem.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L105">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_Emit_" data-uid="AltV.Net.Mock.MockPlayer.Emit*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_Emit_System_String_System_Object___" data-uid="AltV.Net.Mock.MockPlayer.Emit(System.String,System.Object[])">Emit(String, Object[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Emit(string eventName, params object[] args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">eventName</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Object</span>[]</td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_GetCurrentWeaponComponents_System_UInt32____.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.GetCurrentWeaponComponents(System.UInt32%5B%5D%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L54">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_GetCurrentWeaponComponents_" data-uid="AltV.Net.Mock.MockPlayer.GetCurrentWeaponComponents*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_GetCurrentWeaponComponents_System_UInt32____" data-uid="AltV.Net.Mock.MockPlayer.GetCurrentWeaponComponents(System.UInt32[]@)">GetCurrentWeaponComponents(out UInt32[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GetCurrentWeaponComponents(out uint[] weaponComponents)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span>[]</td>
+        <td><span class="parametername">weaponComponents</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_GetCurrentWeaponTintIndex.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.GetCurrentWeaponTintIndex%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L64">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_GetCurrentWeaponTintIndex_" data-uid="AltV.Net.Mock.MockPlayer.GetCurrentWeaponTintIndex*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_GetCurrentWeaponTintIndex" data-uid="AltV.Net.Mock.MockPlayer.GetCurrentWeaponTintIndex">GetCurrentWeaponTintIndex()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte GetCurrentWeaponTintIndex()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_GiveWeapon_System_UInt32_System_Int32_System_Boolean_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.GiveWeapon(System.UInt32%2CSystem.Int32%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L85">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_GiveWeapon_" data-uid="AltV.Net.Mock.MockPlayer.GiveWeapon*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_GiveWeapon_System_UInt32_System_Int32_System_Boolean_" data-uid="AltV.Net.Mock.MockPlayer.GiveWeapon(System.UInt32,System.Int32,System.Boolean)">GiveWeapon(UInt32, Int32, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GiveWeapon(uint weapon, int ammo, bool selectWeapon)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">weapon</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">ammo</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">selectWeapon</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_Kick_System_String_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.Kick(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L97">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_Kick_" data-uid="AltV.Net.Mock.MockPlayer.Kick*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_Kick_System_String_" data-uid="AltV.Net.Mock.MockPlayer.Kick(System.String)">Kick(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Kick(string reason)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">reason</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_Remove.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.Remove%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L118">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_Remove_" data-uid="AltV.Net.Mock.MockPlayer.Remove*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_Remove" data-uid="AltV.Net.Mock.MockPlayer.Remove">Remove()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Remove()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_Remove">MockEntity.Remove()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_RemoveAllWeapons.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.RemoveAllWeapons%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L93">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_RemoveAllWeapons_" data-uid="AltV.Net.Mock.MockPlayer.RemoveAllWeapons*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_RemoveAllWeapons" data-uid="AltV.Net.Mock.MockPlayer.RemoveAllWeapons">RemoveAllWeapons()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RemoveAllWeapons()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_RemoveWeapon_System_UInt32_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.RemoveWeapon(System.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L89">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_RemoveWeapon_" data-uid="AltV.Net.Mock.MockPlayer.RemoveWeapon*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_RemoveWeapon_System_UInt32_" data-uid="AltV.Net.Mock.MockPlayer.RemoveWeapon(System.UInt32)">RemoveWeapon(UInt32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RemoveWeapon(uint weapon)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">weapon</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_RemoveWeaponComponent_System_UInt32_System_UInt32_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.RemoveWeaponComponent(System.UInt32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L49">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_RemoveWeaponComponent_" data-uid="AltV.Net.Mock.MockPlayer.RemoveWeaponComponent*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_RemoveWeaponComponent_System_UInt32_System_UInt32_" data-uid="AltV.Net.Mock.MockPlayer.RemoveWeaponComponent(System.UInt32,System.UInt32)">RemoveWeaponComponent(UInt32, UInt32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RemoveWeaponComponent(uint weapon, uint weaponComponent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">weapon</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">weaponComponent</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_SetDateTime_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.SetDateTime(System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L77">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_SetDateTime_" data-uid="AltV.Net.Mock.MockPlayer.SetDateTime*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_SetDateTime_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="AltV.Net.Mock.MockPlayer.SetDateTime(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">SetDateTime(Int32, Int32, Int32, Int32, Int32, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetDateTime(int day, int month, int year, int hour, int minute, int second)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">day</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">month</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">year</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">hour</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">minute</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">second</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_SetWeaponTintIndex_System_UInt32_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.SetWeaponTintIndex(System.UInt32%2CSystem.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L59">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_SetWeaponTintIndex_" data-uid="AltV.Net.Mock.MockPlayer.SetWeaponTintIndex*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_SetWeaponTintIndex_System_UInt32_System_Byte_" data-uid="AltV.Net.Mock.MockPlayer.SetWeaponTintIndex(System.UInt32,System.Byte)">SetWeaponTintIndex(UInt32, Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetWeaponTintIndex(uint weapon, byte tintIndex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">weapon</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">tintIndex</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_SetWeather_System_UInt32_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.SetWeather(System.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L81">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_SetWeather_" data-uid="AltV.Net.Mock.MockPlayer.SetWeather*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_SetWeather_System_UInt32_" data-uid="AltV.Net.Mock.MockPlayer.SetWeather(System.UInt32)">SetWeather(UInt32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetWeather(uint weather)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">weather</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer_Spawn_AltV_Net_Data_Position_System_UInt32_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer.Spawn(AltV.Net.Data.Position%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L69">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockPlayer_Spawn_" data-uid="AltV.Net.Mock.MockPlayer.Spawn*"></a>
+  <h4 id="AltV_Net_Mock_MockPlayer_Spawn_AltV_Net_Data_Position_System_UInt32_" data-uid="AltV.Net.Mock.MockPlayer.Spawn(AltV.Net.Data.Position,System.UInt32)">Spawn(Position, UInt32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Spawn(Position position, uint delayMs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Position.html">Position</a></td>
+        <td><span class="parametername">position</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">delayMs</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IPlayer.html">IPlayer</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IEntity.html">IEntity</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IWorldObject.html">IWorldObject</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html">IBaseObject</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockPlayer.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockPlayer%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockPlayer.cs/#L7" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

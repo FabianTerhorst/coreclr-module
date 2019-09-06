@@ -1,0 +1,3263 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class MockVehicle
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class MockVehicle
+   ">
+    <meta name="generator" content="docfx 2.45.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="AltV.Net.Mock.MockVehicle">
+  
+  
+  <h1 id="AltV_Net_Mock_MockVehicle" data-uid="AltV.Net.Mock.MockVehicle" class="text-break">Class MockVehicle
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="AltV.Net.Mock.MockEntity.html">MockEntity</a></div>
+    <div class="level2"><span class="xref">MockVehicle</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html">IVehicle</a></div>
+    <div><a class="xref" href="AltV.Net.Elements.Entities.IEntity.html">IEntity</a></div>
+    <div><a class="xref" href="AltV.Net.Elements.Entities.IWorldObject.html">IWorldObject</a></div>
+    <div><a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html">IBaseObject</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_NativePointer">MockEntity.NativePointer</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_Exists">MockEntity.Exists</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_Id">MockEntity.Id</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_Type">MockEntity.Type</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_Position">MockEntity.Position</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_Rotation">MockEntity.Rotation</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_Dimension">MockEntity.Dimension</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_Model">MockEntity.Model</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_SetPosition_System_Single_System_Single_System_Single_">MockEntity.SetPosition(Single, Single, Single)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_SetRotation_System_Single_System_Single_System_Single_">MockEntity.SetRotation(Single, Single, Single)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_SetMetaData_System_String_System_Object_">MockEntity.SetMetaData(String, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_GetMetaData__1_System_String___0__">MockEntity.GetMetaData&lt;T&gt;(String, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_SetData_System_String_System_Object_">MockEntity.SetData(String, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_GetData__1_System_String___0__">MockEntity.GetData&lt;T&gt;(String, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_SetSyncedMetaData_System_String_System_Object_">MockEntity.SetSyncedMetaData(String, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_GetSyncedMetaData__1_System_String___0__">MockEntity.GetSyncedMetaData&lt;T&gt;(String, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_SetMetaData_System_String_AltV_Net_Elements_Args_MValue__">MockEntity.SetMetaData(String, MValue)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_GetMetaData_System_String_AltV_Net_Elements_Args_MValue__">MockEntity.GetMetaData(String, MValue)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_SetSyncedMetaData_System_String_AltV_Net_Elements_Args_MValue__">MockEntity.SetSyncedMetaData(String, MValue)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_GetSyncedMetaData_System_String_AltV_Net_Elements_Args_MValue__">MockEntity.GetSyncedMetaData(String, MValue)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_CheckIfEntityExists">MockEntity.CheckIfEntityExists()</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_OnRemove">MockEntity.OnRemove()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="AltV.Net.Mock.html">AltV.Net.Mock</a></h6>
+  <h6><strong>Assembly</strong>: AltV.Net.Mock.dll</h6>
+  <h5 id="AltV_Net_Mock_MockVehicle_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class MockVehicle : MockEntity, IVehicle, IEntity, IWorldObject, IBaseObject</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle__ctor_IntPtr_System_UInt16_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.%23ctor(IntPtr%2CSystem.UInt16)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L10">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle__ctor_" data-uid="AltV.Net.Mock.MockVehicle.#ctor*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle__ctor_IntPtr_System_UInt16_" data-uid="AltV.Net.Mock.MockVehicle.#ctor(IntPtr,System.UInt16)">MockVehicle(IntPtr, UInt16)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MockVehicle(IntPtr nativePointer, ushort id)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IntPtr</span></td>
+        <td><span class="parametername">nativePointer</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td><span class="parametername">id</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_AppearanceData.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.AppearanceData%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L239">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_AppearanceData_" data-uid="AltV.Net.Mock.MockVehicle.AppearanceData*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_AppearanceData" data-uid="AltV.Net.Mock.MockVehicle.AppearanceData">AppearanceData</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string AppearanceData { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_BodyAdditionalHealth.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.BodyAdditionalHealth%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L154">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_BodyAdditionalHealth_" data-uid="AltV.Net.Mock.MockVehicle.BodyAdditionalHealth*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_BodyAdditionalHealth" data-uid="AltV.Net.Mock.MockVehicle.BodyAdditionalHealth">BodyAdditionalHealth</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint BodyAdditionalHealth { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_BodyHealth.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.BodyHealth%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L153">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_BodyHealth_" data-uid="AltV.Net.Mock.MockVehicle.BodyHealth*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_BodyHealth" data-uid="AltV.Net.Mock.MockVehicle.BodyHealth">BodyHealth</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint BodyHealth { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_CustomTires.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.CustomTires%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L31">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_CustomTires_" data-uid="AltV.Net.Mock.MockVehicle.CustomTires*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_CustomTires" data-uid="AltV.Net.Mock.MockVehicle.CustomTires">CustomTires</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CustomTires { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_DamageData.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.DamageData%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L237">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_DamageData_" data-uid="AltV.Net.Mock.MockVehicle.DamageData*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_DamageData" data-uid="AltV.Net.Mock.MockVehicle.DamageData">DamageData</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string DamageData { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_DashboardColor.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.DashboardColor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L27">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_DashboardColor_" data-uid="AltV.Net.Mock.MockVehicle.DashboardColor*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_DashboardColor" data-uid="AltV.Net.Mock.MockVehicle.DashboardColor">DashboardColor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte DashboardColor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_DirtLevel.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.DirtLevel%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L36">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_DirtLevel_" data-uid="AltV.Net.Mock.MockVehicle.DirtLevel*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_DirtLevel" data-uid="AltV.Net.Mock.MockVehicle.DirtLevel">DirtLevel</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte DirtLevel { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_Driver.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.Driver%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L16">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_Driver_" data-uid="AltV.Net.Mock.MockVehicle.Driver*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_Driver" data-uid="AltV.Net.Mock.MockVehicle.Driver">Driver</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IPlayer Driver { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Elements.Entities.IPlayer.html">IPlayer</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_EngineHealth.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.EngineHealth%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L119">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_EngineHealth_" data-uid="AltV.Net.Mock.MockVehicle.EngineHealth*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_EngineHealth" data-uid="AltV.Net.Mock.MockVehicle.EngineHealth">EngineHealth</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int EngineHealth { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_EngineOn.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.EngineOn%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L89">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_EngineOn_" data-uid="AltV.Net.Mock.MockVehicle.EngineOn*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_EngineOn" data-uid="AltV.Net.Mock.MockVehicle.EngineOn">EngineOn</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool EngineOn { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_HasArmoredWindows.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.HasArmoredWindows%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L206">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_HasArmoredWindows_" data-uid="AltV.Net.Mock.MockVehicle.HasArmoredWindows*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_HasArmoredWindows" data-uid="AltV.Net.Mock.MockVehicle.HasArmoredWindows">HasArmoredWindows</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasArmoredWindows { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_HeadlightColor.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.HeadlightColor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L91">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_HeadlightColor_" data-uid="AltV.Net.Mock.MockVehicle.HeadlightColor*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_HeadlightColor" data-uid="AltV.Net.Mock.MockVehicle.HeadlightColor">HeadlightColor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte HeadlightColor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_HealthData.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.HealthData%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L155">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_HealthData_" data-uid="AltV.Net.Mock.MockVehicle.HealthData*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_HealthData" data-uid="AltV.Net.Mock.MockVehicle.HealthData">HealthData</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string HealthData { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_InteriorColor.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.InteriorColor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L26">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_InteriorColor_" data-uid="AltV.Net.Mock.MockVehicle.InteriorColor*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_InteriorColor" data-uid="AltV.Net.Mock.MockVehicle.InteriorColor">InteriorColor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte InteriorColor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_IsDaylightOn.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.IsDaylightOn%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L114">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_IsDaylightOn_" data-uid="AltV.Net.Mock.MockVehicle.IsDaylightOn*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_IsDaylightOn" data-uid="AltV.Net.Mock.MockVehicle.IsDaylightOn">IsDaylightOn</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsDaylightOn { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_IsFlamethrowerActive.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.IsFlamethrowerActive%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L117">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_IsFlamethrowerActive_" data-uid="AltV.Net.Mock.MockVehicle.IsFlamethrowerActive*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_IsFlamethrowerActive" data-uid="AltV.Net.Mock.MockVehicle.IsFlamethrowerActive">IsFlamethrowerActive</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsFlamethrowerActive { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_IsHandbrakeActive.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.IsHandbrakeActive%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L90">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_IsHandbrakeActive_" data-uid="AltV.Net.Mock.MockVehicle.IsHandbrakeActive*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_IsHandbrakeActive" data-uid="AltV.Net.Mock.MockVehicle.IsHandbrakeActive">IsHandbrakeActive</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsHandbrakeActive { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_IsNeonActive.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.IsNeonActive%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L41">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_IsNeonActive_" data-uid="AltV.Net.Mock.MockVehicle.IsNeonActive*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_IsNeonActive" data-uid="AltV.Net.Mock.MockVehicle.IsNeonActive">IsNeonActive</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsNeonActive { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_IsNightlightOn.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.IsNightlightOn%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L115">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_IsNightlightOn_" data-uid="AltV.Net.Mock.MockVehicle.IsNightlightOn*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_IsNightlightOn" data-uid="AltV.Net.Mock.MockVehicle.IsNightlightOn">IsNightlightOn</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsNightlightOn { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_IsPrimaryColorRgb.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.IsPrimaryColorRgb%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L18">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_IsPrimaryColorRgb_" data-uid="AltV.Net.Mock.MockVehicle.IsPrimaryColorRgb*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_IsPrimaryColorRgb" data-uid="AltV.Net.Mock.MockVehicle.IsPrimaryColorRgb">IsPrimaryColorRgb</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPrimaryColorRgb { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_IsSecondaryColorRgb.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.IsSecondaryColorRgb%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L21">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_IsSecondaryColorRgb_" data-uid="AltV.Net.Mock.MockVehicle.IsSecondaryColorRgb*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_IsSecondaryColorRgb" data-uid="AltV.Net.Mock.MockVehicle.IsSecondaryColorRgb">IsSecondaryColorRgb</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsSecondaryColorRgb { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_IsTireSmokeColorCustom.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.IsTireSmokeColorCustom%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L40">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_IsTireSmokeColorCustom_" data-uid="AltV.Net.Mock.MockVehicle.IsTireSmokeColorCustom*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_IsTireSmokeColorCustom" data-uid="AltV.Net.Mock.MockVehicle.IsTireSmokeColorCustom">IsTireSmokeColorCustom</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsTireSmokeColorCustom { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_LightsMultiplier.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.LightsMultiplier%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L45">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_LightsMultiplier_" data-uid="AltV.Net.Mock.MockVehicle.LightsMultiplier*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_LightsMultiplier" data-uid="AltV.Net.Mock.MockVehicle.LightsMultiplier">LightsMultiplier</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float LightsMultiplier { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_Livery.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.Livery%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L43">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_Livery_" data-uid="AltV.Net.Mock.MockVehicle.Livery*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_Livery" data-uid="AltV.Net.Mock.MockVehicle.Livery">Livery</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte Livery { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_LockState.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.LockState%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L93">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_LockState_" data-uid="AltV.Net.Mock.MockVehicle.LockState*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_LockState" data-uid="AltV.Net.Mock.MockVehicle.LockState">LockState</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public VehicleLockState LockState { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Enums.VehicleLockState.html">VehicleLockState</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_ManualEngineControl.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.ManualEngineControl%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L241">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_ManualEngineControl_" data-uid="AltV.Net.Mock.MockVehicle.ManualEngineControl*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_ManualEngineControl" data-uid="AltV.Net.Mock.MockVehicle.ManualEngineControl">ManualEngineControl</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ManualEngineControl { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_ModKit.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.ModKit%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L17">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_ModKit_" data-uid="AltV.Net.Mock.MockVehicle.ModKit*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_ModKit" data-uid="AltV.Net.Mock.MockVehicle.ModKit">ModKit</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte ModKit { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_ModKitsCount.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.ModKitsCount%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L38">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_ModKitsCount_" data-uid="AltV.Net.Mock.MockVehicle.ModKitsCount*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_ModKitsCount" data-uid="AltV.Net.Mock.MockVehicle.ModKitsCount">ModKitsCount</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte ModKitsCount { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_NeonColor.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.NeonColor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L37">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_NeonColor_" data-uid="AltV.Net.Mock.MockVehicle.NeonColor*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_NeonColor" data-uid="AltV.Net.Mock.MockVehicle.NeonColor">NeonColor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Rgba NeonColor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Rgba.html">Rgba</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_NumberplateIndex.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.NumberplateIndex%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L33">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_NumberplateIndex_" data-uid="AltV.Net.Mock.MockVehicle.NumberplateIndex*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_NumberplateIndex" data-uid="AltV.Net.Mock.MockVehicle.NumberplateIndex">NumberplateIndex</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint NumberplateIndex { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_NumberplateText.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.NumberplateText%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L34">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_NumberplateText_" data-uid="AltV.Net.Mock.MockVehicle.NumberplateText*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_NumberplateText" data-uid="AltV.Net.Mock.MockVehicle.NumberplateText">NumberplateText</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string NumberplateText { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_PearlColor.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.PearlColor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L24">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_PearlColor_" data-uid="AltV.Net.Mock.MockVehicle.PearlColor*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_PearlColor" data-uid="AltV.Net.Mock.MockVehicle.PearlColor">PearlColor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte PearlColor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_PetrolTankHealth.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.PetrolTankHealth%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L120">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_PetrolTankHealth_" data-uid="AltV.Net.Mock.MockVehicle.PetrolTankHealth*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_PetrolTankHealth" data-uid="AltV.Net.Mock.MockVehicle.PetrolTankHealth">PetrolTankHealth</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int PetrolTankHealth { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_PrimaryColor.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.PrimaryColor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L19">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_PrimaryColor_" data-uid="AltV.Net.Mock.MockVehicle.PrimaryColor*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_PrimaryColor" data-uid="AltV.Net.Mock.MockVehicle.PrimaryColor">PrimaryColor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte PrimaryColor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_PrimaryColorRgb.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.PrimaryColorRgb%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L20">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_PrimaryColorRgb_" data-uid="AltV.Net.Mock.MockVehicle.PrimaryColorRgb*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_PrimaryColorRgb" data-uid="AltV.Net.Mock.MockVehicle.PrimaryColorRgb">PrimaryColorRgb</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Rgba PrimaryColorRgb { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Rgba.html">Rgba</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_RadioStation.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.RadioStation%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L240">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_RadioStation_" data-uid="AltV.Net.Mock.MockVehicle.RadioStation*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_RadioStation" data-uid="AltV.Net.Mock.MockVehicle.RadioStation">RadioStation</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint RadioStation { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_RepairsCount.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.RepairsCount%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L152">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_RepairsCount_" data-uid="AltV.Net.Mock.MockVehicle.RepairsCount*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_RepairsCount" data-uid="AltV.Net.Mock.MockVehicle.RepairsCount">RepairsCount</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte RepairsCount { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_RoofLivery.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.RoofLivery%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L44">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_RoofLivery_" data-uid="AltV.Net.Mock.MockVehicle.RoofLivery*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_RoofLivery" data-uid="AltV.Net.Mock.MockVehicle.RoofLivery">RoofLivery</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte RoofLivery { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_RoofOpened.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.RoofOpened%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L116">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_RoofOpened_" data-uid="AltV.Net.Mock.MockVehicle.RoofOpened*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_RoofOpened" data-uid="AltV.Net.Mock.MockVehicle.RoofOpened">RoofOpened</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool RoofOpened { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_ScriptData.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.ScriptData%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L242">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_ScriptData_" data-uid="AltV.Net.Mock.MockVehicle.ScriptData*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_ScriptData" data-uid="AltV.Net.Mock.MockVehicle.ScriptData">ScriptData</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ScriptData { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SecondaryColor.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SecondaryColor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L22">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SecondaryColor_" data-uid="AltV.Net.Mock.MockVehicle.SecondaryColor*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SecondaryColor" data-uid="AltV.Net.Mock.MockVehicle.SecondaryColor">SecondaryColor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte SecondaryColor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SecondaryColorRgb.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SecondaryColorRgb%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L23">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SecondaryColorRgb_" data-uid="AltV.Net.Mock.MockVehicle.SecondaryColorRgb*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SecondaryColorRgb" data-uid="AltV.Net.Mock.MockVehicle.SecondaryColorRgb">SecondaryColorRgb</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Rgba SecondaryColorRgb { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Rgba.html">Rgba</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SirenActive.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SirenActive%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L92">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SirenActive_" data-uid="AltV.Net.Mock.MockVehicle.SirenActive*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SirenActive" data-uid="AltV.Net.Mock.MockVehicle.SirenActive">SirenActive</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool SirenActive { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SpecialDarkness.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SpecialDarkness%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L32">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SpecialDarkness_" data-uid="AltV.Net.Mock.MockVehicle.SpecialDarkness*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SpecialDarkness" data-uid="AltV.Net.Mock.MockVehicle.SpecialDarkness">SpecialDarkness</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte SpecialDarkness { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_State.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.State%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L118">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_State_" data-uid="AltV.Net.Mock.MockVehicle.State*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_State" data-uid="AltV.Net.Mock.MockVehicle.State">State</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string State { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_TireSmokeColor.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.TireSmokeColor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L28">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_TireSmokeColor_" data-uid="AltV.Net.Mock.MockVehicle.TireSmokeColor*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_TireSmokeColor" data-uid="AltV.Net.Mock.MockVehicle.TireSmokeColor">TireSmokeColor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Rgba TireSmokeColor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Rgba.html">Rgba</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_WheelColor.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.WheelColor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L25">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_WheelColor_" data-uid="AltV.Net.Mock.MockVehicle.WheelColor*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_WheelColor" data-uid="AltV.Net.Mock.MockVehicle.WheelColor">WheelColor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte WheelColor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_WheelsCount.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.WheelsCount%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L121">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_WheelsCount_" data-uid="AltV.Net.Mock.MockVehicle.WheelsCount*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_WheelsCount" data-uid="AltV.Net.Mock.MockVehicle.WheelsCount">WheelsCount</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte WheelsCount { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_WheelType.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.WheelType%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L29">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_WheelType_" data-uid="AltV.Net.Mock.MockVehicle.WheelType*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_WheelType" data-uid="AltV.Net.Mock.MockVehicle.WheelType">WheelType</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte WheelType { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_WheelVariation.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.WheelVariation%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L30">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_WheelVariation_" data-uid="AltV.Net.Mock.MockVehicle.WheelVariation*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_WheelVariation" data-uid="AltV.Net.Mock.MockVehicle.WheelVariation">WheelVariation</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte WheelVariation { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_WindowTint.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.WindowTint%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L35">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_WindowTint_" data-uid="AltV.Net.Mock.MockVehicle.WindowTint*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_WindowTint" data-uid="AltV.Net.Mock.MockVehicle.WindowTint">WindowTint</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte WindowTint { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_DoesWheelHasTire_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.DoesWheelHasTire(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L132">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_DoesWheelHasTire_" data-uid="AltV.Net.Mock.MockVehicle.DoesWheelHasTire*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_DoesWheelHasTire_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.DoesWheelHasTire(System.Byte)">DoesWheelHasTire(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool DoesWheelHasTire(byte wheelId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">wheelId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_GetArmoredWindowHealth_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.GetArmoredWindowHealth(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L207">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_GetArmoredWindowHealth_" data-uid="AltV.Net.Mock.MockVehicle.GetArmoredWindowHealth*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_GetArmoredWindowHealth_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.GetArmoredWindowHealth(System.Byte)">GetArmoredWindowHealth(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float GetArmoredWindowHealth(byte windowId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">windowId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_GetArmoredWindowShootCount_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.GetArmoredWindowShootCount(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L217">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_GetArmoredWindowShootCount_" data-uid="AltV.Net.Mock.MockVehicle.GetArmoredWindowShootCount*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_GetArmoredWindowShootCount_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.GetArmoredWindowShootCount(System.Byte)">GetArmoredWindowShootCount(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte GetArmoredWindowShootCount(byte windowId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">windowId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_GetBumperDamageLevel_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.GetBumperDamageLevel(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L227">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_GetBumperDamageLevel_" data-uid="AltV.Net.Mock.MockVehicle.GetBumperDamageLevel*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_GetBumperDamageLevel_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.GetBumperDamageLevel(System.Byte)">GetBumperDamageLevel(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte GetBumperDamageLevel(byte bumperId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">bumperId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_GetDoorState_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.GetDoorState(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L94">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_GetDoorState_" data-uid="AltV.Net.Mock.MockVehicle.GetDoorState*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_GetDoorState_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.GetDoorState(System.Byte)">GetDoorState(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte GetDoorState(byte doorId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">doorId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_GetMod_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.GetMod(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L47">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_GetMod_" data-uid="AltV.Net.Mock.MockVehicle.GetMod*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_GetMod_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.GetMod(System.Byte)">GetMod(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte GetMod(byte category)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">category</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_GetModsCount_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.GetModsCount(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L52">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_GetModsCount_" data-uid="AltV.Net.Mock.MockVehicle.GetModsCount*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_GetModsCount_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.GetModsCount(System.Byte)">GetModsCount(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte GetModsCount(byte category)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">category</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_GetNeonActive_System_Boolean__System_Boolean__System_Boolean__System_Boolean__.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.GetNeonActive(System.Boolean%40%2CSystem.Boolean%40%2CSystem.Boolean%40%2CSystem.Boolean%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L77">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_GetNeonActive_" data-uid="AltV.Net.Mock.MockVehicle.GetNeonActive*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_GetNeonActive_System_Boolean__System_Boolean__System_Boolean__System_Boolean__" data-uid="AltV.Net.Mock.MockVehicle.GetNeonActive(System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@)">GetNeonActive(ref Boolean, ref Boolean, ref Boolean, ref Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GetNeonActive(ref bool left, ref bool right, ref bool top, ref bool back)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">left</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">right</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">top</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">back</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_GetPartBulletHoles_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.GetPartBulletHoles(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L166">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_GetPartBulletHoles_" data-uid="AltV.Net.Mock.MockVehicle.GetPartBulletHoles*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_GetPartBulletHoles_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.GetPartBulletHoles(System.Byte)">GetPartBulletHoles(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte GetPartBulletHoles(byte partId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">partId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_GetPartDamageLevel_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.GetPartDamageLevel(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L156">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_GetPartDamageLevel_" data-uid="AltV.Net.Mock.MockVehicle.GetPartDamageLevel*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_GetPartDamageLevel_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.GetPartDamageLevel(System.Byte)">GetPartDamageLevel(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte GetPartDamageLevel(byte partId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">partId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_GetWheelHealth_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.GetWheelHealth(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L142">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_GetWheelHealth_" data-uid="AltV.Net.Mock.MockVehicle.GetWheelHealth*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_GetWheelHealth_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.GetWheelHealth(System.Byte)">GetWheelHealth(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float GetWheelHealth(byte wheelId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">wheelId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_IsExtraOn_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.IsExtraOn(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L67">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_IsExtraOn_" data-uid="AltV.Net.Mock.MockVehicle.IsExtraOn*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_IsExtraOn_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.IsExtraOn(System.Byte)">IsExtraOn(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsExtraOn(byte extraId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">extraId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_IsLightDamaged_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.IsLightDamaged(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L176">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_IsLightDamaged_" data-uid="AltV.Net.Mock.MockVehicle.IsLightDamaged*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_IsLightDamaged_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.IsLightDamaged(System.Byte)">IsLightDamaged(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsLightDamaged(byte lightId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">lightId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_IsSpecialLightDamaged_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.IsSpecialLightDamaged(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L196">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_IsSpecialLightDamaged_" data-uid="AltV.Net.Mock.MockVehicle.IsSpecialLightDamaged*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_IsSpecialLightDamaged_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.IsSpecialLightDamaged(System.Byte)">IsSpecialLightDamaged(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsSpecialLightDamaged(byte specialLightId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">specialLightId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_IsWheelBurst_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.IsWheelBurst(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L122">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_IsWheelBurst_" data-uid="AltV.Net.Mock.MockVehicle.IsWheelBurst*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_IsWheelBurst_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.IsWheelBurst(System.Byte)">IsWheelBurst(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsWheelBurst(byte wheelId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">wheelId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_IsWindowDamaged_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.IsWindowDamaged(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L186">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_IsWindowDamaged_" data-uid="AltV.Net.Mock.MockVehicle.IsWindowDamaged*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_IsWindowDamaged_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.IsWindowDamaged(System.Byte)">IsWindowDamaged(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsWindowDamaged(byte windowId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">windowId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_IsWindowOpened_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.IsWindowOpened(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L104">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_IsWindowOpened_" data-uid="AltV.Net.Mock.MockVehicle.IsWindowOpened*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_IsWindowOpened_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.IsWindowOpened(System.Byte)">IsWindowOpened(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsWindowOpened(byte windowId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">windowId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_Remove.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.Remove%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L244">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_Remove_" data-uid="AltV.Net.Mock.MockVehicle.Remove*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_Remove" data-uid="AltV.Net.Mock.MockVehicle.Remove">Remove()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Remove()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="AltV.Net.Mock.MockEntity.html#AltV_Net_Mock_MockEntity_Remove">MockEntity.Remove()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SetArmoredWindowHealth_System_Byte_System_Single_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SetArmoredWindowHealth(System.Byte%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L212">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SetArmoredWindowHealth_" data-uid="AltV.Net.Mock.MockVehicle.SetArmoredWindowHealth*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SetArmoredWindowHealth_System_Byte_System_Single_" data-uid="AltV.Net.Mock.MockVehicle.SetArmoredWindowHealth(System.Byte,System.Single)">SetArmoredWindowHealth(Byte, Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetArmoredWindowHealth(byte windowId, float health)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">windowId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">health</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SetArmoredWindowShootCount_System_Byte_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SetArmoredWindowShootCount(System.Byte%2CSystem.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L222">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SetArmoredWindowShootCount_" data-uid="AltV.Net.Mock.MockVehicle.SetArmoredWindowShootCount*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SetArmoredWindowShootCount_System_Byte_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.SetArmoredWindowShootCount(System.Byte,System.Byte)">SetArmoredWindowShootCount(Byte, Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetArmoredWindowShootCount(byte windowId, byte count)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">windowId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">count</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SetBumperDamageLevel_System_Byte_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SetBumperDamageLevel(System.Byte%2CSystem.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L232">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SetBumperDamageLevel_" data-uid="AltV.Net.Mock.MockVehicle.SetBumperDamageLevel*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SetBumperDamageLevel_System_Byte_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.SetBumperDamageLevel(System.Byte,System.Byte)">SetBumperDamageLevel(Byte, Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetBumperDamageLevel(byte bumperId, byte damageLevel)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">bumperId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">damageLevel</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SetDoorState_System_Byte_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SetDoorState(System.Byte%2CSystem.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L99">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SetDoorState_" data-uid="AltV.Net.Mock.MockVehicle.SetDoorState*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SetDoorState_System_Byte_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.SetDoorState(System.Byte,System.Byte)">SetDoorState(Byte, Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetDoorState(byte doorId, byte state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">doorId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">state</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SetLightDamaged_System_Byte_System_Boolean_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SetLightDamaged(System.Byte%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L181">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SetLightDamaged_" data-uid="AltV.Net.Mock.MockVehicle.SetLightDamaged*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SetLightDamaged_System_Byte_System_Boolean_" data-uid="AltV.Net.Mock.MockVehicle.SetLightDamaged(System.Byte,System.Boolean)">SetLightDamaged(Byte, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetLightDamaged(byte lightId, bool isDamaged)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">lightId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">isDamaged</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SetMod_System_Byte_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SetMod(System.Byte%2CSystem.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L57">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SetMod_" data-uid="AltV.Net.Mock.MockVehicle.SetMod*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SetMod_System_Byte_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.SetMod(System.Byte,System.Byte)">SetMod(Byte, Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool SetMod(byte category, byte id)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">category</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">id</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SetNeonActive_System_Boolean_System_Boolean_System_Boolean_System_Boolean_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SetNeonActive(System.Boolean%2CSystem.Boolean%2CSystem.Boolean%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L82">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SetNeonActive_" data-uid="AltV.Net.Mock.MockVehicle.SetNeonActive*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SetNeonActive_System_Boolean_System_Boolean_System_Boolean_System_Boolean_" data-uid="AltV.Net.Mock.MockVehicle.SetNeonActive(System.Boolean,System.Boolean,System.Boolean,System.Boolean)">SetNeonActive(Boolean, Boolean, Boolean, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetNeonActive(bool left, bool right, bool top, bool back)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">left</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">right</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">top</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">back</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SetPartBulletHoles_System_Byte_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SetPartBulletHoles(System.Byte%2CSystem.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L171">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SetPartBulletHoles_" data-uid="AltV.Net.Mock.MockVehicle.SetPartBulletHoles*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SetPartBulletHoles_System_Byte_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.SetPartBulletHoles(System.Byte,System.Byte)">SetPartBulletHoles(Byte, Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetPartBulletHoles(byte partId, byte shootsCount)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">partId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">shootsCount</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SetPartDamageLevel_System_Byte_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SetPartDamageLevel(System.Byte%2CSystem.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L161">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SetPartDamageLevel_" data-uid="AltV.Net.Mock.MockVehicle.SetPartDamageLevel*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SetPartDamageLevel_System_Byte_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.SetPartDamageLevel(System.Byte,System.Byte)">SetPartDamageLevel(Byte, Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetPartDamageLevel(byte partId, byte damage)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">partId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">damage</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SetSpecialLightDamaged_System_Byte_System_Boolean_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SetSpecialLightDamaged(System.Byte%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L201">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SetSpecialLightDamaged_" data-uid="AltV.Net.Mock.MockVehicle.SetSpecialLightDamaged*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SetSpecialLightDamaged_System_Byte_System_Boolean_" data-uid="AltV.Net.Mock.MockVehicle.SetSpecialLightDamaged(System.Byte,System.Boolean)">SetSpecialLightDamaged(Byte, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetSpecialLightDamaged(byte specialLightId, bool isDamaged)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">specialLightId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">isDamaged</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SetWheelBurst_System_Byte_System_Boolean_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SetWheelBurst(System.Byte%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L127">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SetWheelBurst_" data-uid="AltV.Net.Mock.MockVehicle.SetWheelBurst*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SetWheelBurst_System_Byte_System_Boolean_" data-uid="AltV.Net.Mock.MockVehicle.SetWheelBurst(System.Byte,System.Boolean)">SetWheelBurst(Byte, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetWheelBurst(byte wheelId, bool state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">wheelId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">state</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SetWheelHasTire_System_Byte_System_Boolean_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SetWheelHasTire(System.Byte%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L137">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SetWheelHasTire_" data-uid="AltV.Net.Mock.MockVehicle.SetWheelHasTire*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SetWheelHasTire_System_Byte_System_Boolean_" data-uid="AltV.Net.Mock.MockVehicle.SetWheelHasTire(System.Byte,System.Boolean)">SetWheelHasTire(Byte, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetWheelHasTire(byte wheelId, bool state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">wheelId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">state</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SetWheelHealth_System_Byte_System_Single_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SetWheelHealth(System.Byte%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L147">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SetWheelHealth_" data-uid="AltV.Net.Mock.MockVehicle.SetWheelHealth*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SetWheelHealth_System_Byte_System_Single_" data-uid="AltV.Net.Mock.MockVehicle.SetWheelHealth(System.Byte,System.Single)">SetWheelHealth(Byte, Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetWheelHealth(byte wheelId, float health)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">wheelId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">health</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SetWheels_System_Byte_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SetWheels(System.Byte%2CSystem.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L62">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SetWheels_" data-uid="AltV.Net.Mock.MockVehicle.SetWheels*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SetWheels_System_Byte_System_Byte_" data-uid="AltV.Net.Mock.MockVehicle.SetWheels(System.Byte,System.Byte)">SetWheels(Byte, Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetWheels(byte type, byte variation)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">type</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">variation</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SetWindowDamaged_System_Byte_System_Boolean_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SetWindowDamaged(System.Byte%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L191">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SetWindowDamaged_" data-uid="AltV.Net.Mock.MockVehicle.SetWindowDamaged*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SetWindowDamaged_System_Byte_System_Boolean_" data-uid="AltV.Net.Mock.MockVehicle.SetWindowDamaged(System.Byte,System.Boolean)">SetWindowDamaged(Byte, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetWindowDamaged(byte windowId, bool isDamaged)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">windowId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">isDamaged</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_SetWindowOpened_System_Byte_System_Boolean_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.SetWindowOpened(System.Byte%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L109">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_SetWindowOpened_" data-uid="AltV.Net.Mock.MockVehicle.SetWindowOpened*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_SetWindowOpened_System_Byte_System_Boolean_" data-uid="AltV.Net.Mock.MockVehicle.SetWindowOpened(System.Byte,System.Boolean)">SetWindowOpened(Byte, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetWindowOpened(byte windowId, bool state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">windowId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">state</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle_ToggleExtra_System_Byte_System_Boolean_.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle.ToggleExtra(System.Byte%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L72">View Source</a>
+  </span>
+  <a id="AltV_Net_Mock_MockVehicle_ToggleExtra_" data-uid="AltV.Net.Mock.MockVehicle.ToggleExtra*"></a>
+  <h4 id="AltV_Net_Mock_MockVehicle_ToggleExtra_System_Byte_System_Boolean_" data-uid="AltV.Net.Mock.MockVehicle.ToggleExtra(System.Byte,System.Boolean)">ToggleExtra(Byte, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ToggleExtra(byte extraId, bool state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">extraId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">state</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html">IVehicle</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IEntity.html">IEntity</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IWorldObject.html">IWorldObject</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html">IBaseObject</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Mock_MockVehicle.md&amp;value=---%0Auid%3A%20AltV.Net.Mock.MockVehicle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net.Mock/MockVehicle.cs/#L8" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

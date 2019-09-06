@@ -1,1 +1,0 @@
-docker build -t altv-server-executable -f DockerfileExecutable .

@@ -1,0 +1,3627 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Vehicle
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Vehicle
+   ">
+    <meta name="generator" content="docfx 2.45.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="AltV.Net.Elements.Entities.Vehicle">
+  
+  
+  <h1 id="AltV_Net_Elements_Entities_Vehicle" data-uid="AltV.Net.Elements.Entities.Vehicle" class="text-break">Class Vehicle
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="AltV.Net.Elements.Entities.BaseObject.html">BaseObject</a></div>
+    <div class="level2"><a class="xref" href="AltV.Net.Elements.Entities.WorldObject.html">WorldObject</a></div>
+    <div class="level3"><a class="xref" href="AltV.Net.Elements.Entities.Entity.html">Entity</a></div>
+    <div class="level4"><span class="xref">Vehicle</span></div>
+      <div class="level5"><a class="xref" href="AltV.Net.Example.MyVehicle.html">MyVehicle</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html">IVehicle</a></div>
+    <div><a class="xref" href="AltV.Net.Elements.Entities.IEntity.html">IEntity</a></div>
+    <div><a class="xref" href="AltV.Net.Elements.Entities.IWorldObject.html">IWorldObject</a></div>
+    <div><a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html">IBaseObject</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.Entity.html#AltV_Net_Elements_Entities_Entity_Id">Entity.Id</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.Entity.html#AltV_Net_Elements_Entities_Entity_SetSyncedMetaData_System_String_System_Object_">Entity.SetSyncedMetaData(String, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.Entity.html#AltV_Net_Elements_Entities_Entity_GetSyncedMetaData__1_System_String___0__">Entity.GetSyncedMetaData&lt;T&gt;(String, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.Entity.html#AltV_Net_Elements_Entities_Entity_CheckIfEntityExists">Entity.CheckIfEntityExists()</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.BaseObject.html#AltV_Net_Elements_Entities_BaseObject_NativePointer">BaseObject.NativePointer</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.BaseObject.html#AltV_Net_Elements_Entities_BaseObject_Exists">BaseObject.Exists</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.BaseObject.html#AltV_Net_Elements_Entities_BaseObject_Type">BaseObject.Type</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.BaseObject.html#AltV_Net_Elements_Entities_BaseObject_SetMetaData_System_String_System_Object_">BaseObject.SetMetaData(String, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.BaseObject.html#AltV_Net_Elements_Entities_BaseObject_GetMetaData_System_String_System_Int32__">BaseObject.GetMetaData(String, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.BaseObject.html#AltV_Net_Elements_Entities_BaseObject_GetMetaData_System_String_System_UInt32__">BaseObject.GetMetaData(String, UInt32)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.BaseObject.html#AltV_Net_Elements_Entities_BaseObject_GetMetaData_System_String_System_Single__">BaseObject.GetMetaData(String, Single)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.BaseObject.html#AltV_Net_Elements_Entities_BaseObject_GetMetaData__1_System_String___0__">BaseObject.GetMetaData&lt;T&gt;(String, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.BaseObject.html#AltV_Net_Elements_Entities_BaseObject_SetData_System_String_System_Object_">BaseObject.SetData(String, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.BaseObject.html#AltV_Net_Elements_Entities_BaseObject_GetData__1_System_String___0__">BaseObject.GetData&lt;T&gt;(String, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.BaseObject.html#AltV_Net_Elements_Entities_BaseObject_ClearData">BaseObject.ClearData()</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.BaseObject.html#AltV_Net_Elements_Entities_BaseObject_GetHashCode">BaseObject.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.BaseObject.html#AltV_Net_Elements_Entities_BaseObject_Equals_System_Object_">BaseObject.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.BaseObject.html#AltV_Net_Elements_Entities_BaseObject_OnRemove">BaseObject.OnRemove()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="AltV.Net.Elements.Entities.html">AltV.Net.Elements.Entities</a></h6>
+  <h6><strong>Assembly</strong>: AltV.Net.dll</h6>
+  <h5 id="AltV_Net_Elements_Entities_Vehicle_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class Vehicle : Entity, IInternalBaseObject, IVehicle, IEntity, IWorldObject, IBaseObject</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle__ctor_IntPtr_System_UInt16_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.%23ctor(IntPtr%2CSystem.UInt16)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L898">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle__ctor_" data-uid="AltV.Net.Elements.Entities.Vehicle.#ctor*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle__ctor_IntPtr_System_UInt16_" data-uid="AltV.Net.Elements.Entities.Vehicle.#ctor(IntPtr,System.UInt16)">Vehicle(IntPtr, UInt16)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vehicle(IntPtr nativePointer, ushort id)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IntPtr</span></td>
+        <td><span class="parametername">nativePointer</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td><span class="parametername">id</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle__ctor_System_UInt32_AltV_Net_Data_Position_AltV_Net_Data_Rotation_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.%23ctor(System.UInt32%2CAltV.Net.Data.Position%2CAltV.Net.Data.Rotation)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L892">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle__ctor_" data-uid="AltV.Net.Elements.Entities.Vehicle.#ctor*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle__ctor_System_UInt32_AltV_Net_Data_Position_AltV_Net_Data_Rotation_" data-uid="AltV.Net.Elements.Entities.Vehicle.#ctor(System.UInt32,AltV.Net.Data.Position,AltV.Net.Data.Rotation)">Vehicle(UInt32, Position, Rotation)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vehicle(uint model, Position position, Rotation rotation)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">model</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Position.html">Position</a></td>
+        <td><span class="parametername">position</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Rotation.html">Rotation</a></td>
+        <td><span class="parametername">rotation</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_AppearanceData.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.AppearanceData%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L425">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_AppearanceData_" data-uid="AltV.Net.Elements.Entities.Vehicle.AppearanceData*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_AppearanceData" data-uid="AltV.Net.Elements.Entities.Vehicle.AppearanceData">AppearanceData</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string AppearanceData { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_BodyAdditionalHealth.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.BodyAdditionalHealth%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L711">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_BodyAdditionalHealth_" data-uid="AltV.Net.Elements.Entities.Vehicle.BodyAdditionalHealth*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_BodyAdditionalHealth" data-uid="AltV.Net.Elements.Entities.Vehicle.BodyAdditionalHealth">BodyAdditionalHealth</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint BodyAdditionalHealth { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_BodyHealth.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.BodyHealth%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L697">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_BodyHealth_" data-uid="AltV.Net.Elements.Entities.Vehicle.BodyHealth*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_BodyHealth" data-uid="AltV.Net.Elements.Entities.Vehicle.BodyHealth">BodyHealth</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint BodyHealth { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_CustomTires.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.CustomTires%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L293">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_CustomTires_" data-uid="AltV.Net.Elements.Entities.Vehicle.CustomTires*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_CustomTires" data-uid="AltV.Net.Elements.Entities.Vehicle.CustomTires">CustomTires</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CustomTires { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_DamageData.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.DamageData%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L846">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_DamageData_" data-uid="AltV.Net.Elements.Entities.Vehicle.DamageData*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_DamageData" data-uid="AltV.Net.Elements.Entities.Vehicle.DamageData">DamageData</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string DamageData { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_DashboardColor.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.DashboardColor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L236">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_DashboardColor_" data-uid="AltV.Net.Elements.Entities.Vehicle.DashboardColor*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_DashboardColor" data-uid="AltV.Net.Elements.Entities.Vehicle.DashboardColor">DashboardColor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte DashboardColor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_Dimension.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.Dimension%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L56">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_Dimension_" data-uid="AltV.Net.Elements.Entities.Vehicle.Dimension*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_Dimension" data-uid="AltV.Net.Elements.Entities.Vehicle.Dimension">Dimension</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override short Dimension { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="AltV.Net.Elements.Entities.WorldObject.html#AltV_Net_Elements_Entities_WorldObject_Dimension">WorldObject.Dimension</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_DirtLevel.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.DirtLevel%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L367">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_DirtLevel_" data-uid="AltV.Net.Elements.Entities.Vehicle.DirtLevel*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_DirtLevel" data-uid="AltV.Net.Elements.Entities.Vehicle.DirtLevel">DirtLevel</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte DirtLevel { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_Driver.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.Driver%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L82">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_Driver_" data-uid="AltV.Net.Elements.Entities.Vehicle.Driver*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_Driver" data-uid="AltV.Net.Elements.Entities.Vehicle.Driver">Driver</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IPlayer Driver { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Elements.Entities.IPlayer.html">IPlayer</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_EngineHealth.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.EngineHealth%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L615">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_EngineHealth_" data-uid="AltV.Net.Elements.Entities.Vehicle.EngineHealth*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_EngineHealth" data-uid="AltV.Net.Elements.Entities.Vehicle.EngineHealth">EngineHealth</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int EngineHealth { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_EngineOn.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.EngineOn%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L441">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_EngineOn_" data-uid="AltV.Net.Elements.Entities.Vehicle.EngineOn*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_EngineOn" data-uid="AltV.Net.Elements.Entities.Vehicle.EngineOn">EngineOn</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool EngineOn { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_HasArmoredWindows.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.HasArmoredWindows%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L801">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_HasArmoredWindows_" data-uid="AltV.Net.Elements.Entities.Vehicle.HasArmoredWindows*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_HasArmoredWindows" data-uid="AltV.Net.Elements.Entities.Vehicle.HasArmoredWindows">HasArmoredWindows</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasArmoredWindows { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_HeadlightColor.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.HeadlightColor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L464">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_HeadlightColor_" data-uid="AltV.Net.Elements.Entities.Vehicle.HeadlightColor*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_HeadlightColor" data-uid="AltV.Net.Elements.Entities.Vehicle.HeadlightColor">HeadlightColor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte HeadlightColor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_HealthData.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.HealthData%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L725">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_HealthData_" data-uid="AltV.Net.Elements.Entities.Vehicle.HealthData*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_HealthData" data-uid="AltV.Net.Elements.Entities.Vehicle.HealthData">HealthData</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string HealthData { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_InteriorColor.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.InteriorColor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L222">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_InteriorColor_" data-uid="AltV.Net.Elements.Entities.Vehicle.InteriorColor*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_InteriorColor" data-uid="AltV.Net.Elements.Entities.Vehicle.InteriorColor">InteriorColor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte InteriorColor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_IsDaylightOn.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.IsDaylightOn%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L544">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_IsDaylightOn_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsDaylightOn*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_IsDaylightOn" data-uid="AltV.Net.Elements.Entities.Vehicle.IsDaylightOn">IsDaylightOn</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsDaylightOn { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_IsFlamethrowerActive.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.IsFlamethrowerActive%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L576">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_IsFlamethrowerActive_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsFlamethrowerActive*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_IsFlamethrowerActive" data-uid="AltV.Net.Elements.Entities.Vehicle.IsFlamethrowerActive">IsFlamethrowerActive</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsFlamethrowerActive { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_IsHandbrakeActive.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.IsHandbrakeActive%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L455">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_IsHandbrakeActive_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsHandbrakeActive*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_IsHandbrakeActive" data-uid="AltV.Net.Elements.Entities.Vehicle.IsHandbrakeActive">IsHandbrakeActive</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsHandbrakeActive { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_IsNeonActive.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.IsNeonActive%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L938">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_IsNeonActive_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsNeonActive*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_IsNeonActive" data-uid="AltV.Net.Elements.Entities.Vehicle.IsNeonActive">IsNeonActive</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsNeonActive { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_IsNightlightOn.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.IsNightlightOn%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L553">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_IsNightlightOn_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsNightlightOn*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_IsNightlightOn" data-uid="AltV.Net.Elements.Entities.Vehicle.IsNightlightOn">IsNightlightOn</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsNightlightOn { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_IsPrimaryColorRgb.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.IsPrimaryColorRgb%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L116">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_IsPrimaryColorRgb_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsPrimaryColorRgb*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_IsPrimaryColorRgb" data-uid="AltV.Net.Elements.Entities.Vehicle.IsPrimaryColorRgb">IsPrimaryColorRgb</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPrimaryColorRgb { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_IsSecondaryColorRgb.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.IsSecondaryColorRgb%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L155">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_IsSecondaryColorRgb_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsSecondaryColorRgb*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_IsSecondaryColorRgb" data-uid="AltV.Net.Elements.Entities.Vehicle.IsSecondaryColorRgb">IsSecondaryColorRgb</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsSecondaryColorRgb { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_IsTireSmokeColorCustom.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.IsTireSmokeColorCustom%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L250">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_IsTireSmokeColorCustom_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsTireSmokeColorCustom*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_IsTireSmokeColorCustom" data-uid="AltV.Net.Elements.Entities.Vehicle.IsTireSmokeColorCustom">IsTireSmokeColorCustom</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsTireSmokeColorCustom { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_LightsMultiplier.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.LightsMultiplier%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L585">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_LightsMultiplier_" data-uid="AltV.Net.Elements.Entities.Vehicle.LightsMultiplier*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_LightsMultiplier" data-uid="AltV.Net.Elements.Entities.Vehicle.LightsMultiplier">LightsMultiplier</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float LightsMultiplier { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_Livery.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.Livery%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L397">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_Livery_" data-uid="AltV.Net.Elements.Entities.Vehicle.Livery*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_Livery" data-uid="AltV.Net.Elements.Entities.Vehicle.Livery">Livery</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte Livery { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_LockState.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.LockState%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L506">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_LockState_" data-uid="AltV.Net.Elements.Entities.Vehicle.LockState*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_LockState" data-uid="AltV.Net.Elements.Entities.Vehicle.LockState">LockState</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public VehicleLockState LockState { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Enums.VehicleLockState.html">VehicleLockState</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_ManualEngineControl.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.ManualEngineControl%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L862">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_ManualEngineControl_" data-uid="AltV.Net.Elements.Entities.Vehicle.ManualEngineControl*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_ManualEngineControl" data-uid="AltV.Net.Elements.Entities.Vehicle.ManualEngineControl">ManualEngineControl</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ManualEngineControl { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_Model.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.Model%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L14">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_Model_" data-uid="AltV.Net.Elements.Entities.Vehicle.Model*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_Model" data-uid="AltV.Net.Elements.Entities.Vehicle.Model">Model</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override uint Model { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="AltV.Net.Elements.Entities.Entity.html#AltV_Net_Elements_Entities_Entity_Model">Entity.Model</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_ModKit.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.ModKit%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L93">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_ModKit_" data-uid="AltV.Net.Elements.Entities.Vehicle.ModKit*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_ModKit" data-uid="AltV.Net.Elements.Entities.Vehicle.ModKit">ModKit</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte ModKit { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_ModKitsCount.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.ModKitsCount%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L107">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_ModKitsCount_" data-uid="AltV.Net.Elements.Entities.Vehicle.ModKitsCount*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_ModKitsCount" data-uid="AltV.Net.Elements.Entities.Vehicle.ModKitsCount">ModKitsCount</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte ModKitsCount { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_NeonColor.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.NeonColor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L381">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_NeonColor_" data-uid="AltV.Net.Elements.Entities.Vehicle.NeonColor*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_NeonColor" data-uid="AltV.Net.Elements.Entities.Vehicle.NeonColor">NeonColor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Rgba NeonColor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Rgba.html">Rgba</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_NumberplateIndex.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.NumberplateIndex%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L321">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_NumberplateIndex_" data-uid="AltV.Net.Elements.Entities.Vehicle.NumberplateIndex*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_NumberplateIndex" data-uid="AltV.Net.Elements.Entities.Vehicle.NumberplateIndex">NumberplateIndex</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint NumberplateIndex { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_NumberplateText.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.NumberplateText%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L335">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_NumberplateText_" data-uid="AltV.Net.Elements.Entities.Vehicle.NumberplateText*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_NumberplateText" data-uid="AltV.Net.Elements.Entities.Vehicle.NumberplateText">NumberplateText</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string NumberplateText { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_PearlColor.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.PearlColor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L194">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_PearlColor_" data-uid="AltV.Net.Elements.Entities.Vehicle.PearlColor*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_PearlColor" data-uid="AltV.Net.Elements.Entities.Vehicle.PearlColor">PearlColor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte PearlColor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_PetrolTankHealth.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.PetrolTankHealth%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L629">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_PetrolTankHealth_" data-uid="AltV.Net.Elements.Entities.Vehicle.PetrolTankHealth*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_PetrolTankHealth" data-uid="AltV.Net.Elements.Entities.Vehicle.PetrolTankHealth">PetrolTankHealth</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int PetrolTankHealth { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_Position.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.Position%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L24">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_Position_" data-uid="AltV.Net.Elements.Entities.Vehicle.Position*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_Position" data-uid="AltV.Net.Elements.Entities.Vehicle.Position">Position</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Position Position { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Position.html">Position</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="AltV.Net.Elements.Entities.WorldObject.html#AltV_Net_Elements_Entities_WorldObject_Position">WorldObject.Position</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_PrimaryColor.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.PrimaryColor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L125">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_PrimaryColor_" data-uid="AltV.Net.Elements.Entities.Vehicle.PrimaryColor*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_PrimaryColor" data-uid="AltV.Net.Elements.Entities.Vehicle.PrimaryColor">PrimaryColor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte PrimaryColor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_PrimaryColorRgb.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.PrimaryColorRgb%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L139">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_PrimaryColorRgb_" data-uid="AltV.Net.Elements.Entities.Vehicle.PrimaryColorRgb*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_PrimaryColorRgb" data-uid="AltV.Net.Elements.Entities.Vehicle.PrimaryColorRgb">PrimaryColorRgb</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Rgba PrimaryColorRgb { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Rgba.html">Rgba</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_RadioStation.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.RadioStation%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L478">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_RadioStation_" data-uid="AltV.Net.Elements.Entities.Vehicle.RadioStation*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_RadioStation" data-uid="AltV.Net.Elements.Entities.Vehicle.RadioStation">RadioStation</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint RadioStation { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_RepairsCount.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.RepairsCount%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L688">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_RepairsCount_" data-uid="AltV.Net.Elements.Entities.Vehicle.RepairsCount*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_RepairsCount" data-uid="AltV.Net.Elements.Entities.Vehicle.RepairsCount">RepairsCount</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte RepairsCount { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_RoofLivery.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.RoofLivery%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L411">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_RoofLivery_" data-uid="AltV.Net.Elements.Entities.Vehicle.RoofLivery*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_RoofLivery" data-uid="AltV.Net.Elements.Entities.Vehicle.RoofLivery">RoofLivery</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte RoofLivery { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_RoofOpened.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.RoofOpened%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L562">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_RoofOpened_" data-uid="AltV.Net.Elements.Entities.Vehicle.RoofOpened*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_RoofOpened" data-uid="AltV.Net.Elements.Entities.Vehicle.RoofOpened">RoofOpened</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool RoofOpened { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_Rotation.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.Rotation%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L40">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_Rotation_" data-uid="AltV.Net.Elements.Entities.Vehicle.Rotation*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_Rotation" data-uid="AltV.Net.Elements.Entities.Vehicle.Rotation">Rotation</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Rotation Rotation { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Rotation.html">Rotation</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="AltV.Net.Elements.Entities.Entity.html#AltV_Net_Elements_Entities_Entity_Rotation">Entity.Rotation</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_ScriptData.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.ScriptData%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L876">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_ScriptData_" data-uid="AltV.Net.Elements.Entities.Vehicle.ScriptData*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_ScriptData" data-uid="AltV.Net.Elements.Entities.Vehicle.ScriptData">ScriptData</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ScriptData { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SecondaryColor.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SecondaryColor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L164">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SecondaryColor_" data-uid="AltV.Net.Elements.Entities.Vehicle.SecondaryColor*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SecondaryColor" data-uid="AltV.Net.Elements.Entities.Vehicle.SecondaryColor">SecondaryColor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte SecondaryColor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SecondaryColorRgb.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SecondaryColorRgb%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L178">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SecondaryColorRgb_" data-uid="AltV.Net.Elements.Entities.Vehicle.SecondaryColorRgb*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SecondaryColorRgb" data-uid="AltV.Net.Elements.Entities.Vehicle.SecondaryColorRgb">SecondaryColorRgb</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Rgba SecondaryColorRgb { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Rgba.html">Rgba</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SirenActive.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SirenActive%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L492">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SirenActive_" data-uid="AltV.Net.Elements.Entities.Vehicle.SirenActive*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SirenActive" data-uid="AltV.Net.Elements.Entities.Vehicle.SirenActive">SirenActive</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool SirenActive { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SpecialDarkness.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SpecialDarkness%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L307">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SpecialDarkness_" data-uid="AltV.Net.Elements.Entities.Vehicle.SpecialDarkness*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SpecialDarkness" data-uid="AltV.Net.Elements.Entities.Vehicle.SpecialDarkness">SpecialDarkness</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte SpecialDarkness { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_State.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.State%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L599">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_State_" data-uid="AltV.Net.Elements.Entities.Vehicle.State*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_State" data-uid="AltV.Net.Elements.Entities.Vehicle.State">State</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string State { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_TireSmokeColor.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.TireSmokeColor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L259">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_TireSmokeColor_" data-uid="AltV.Net.Elements.Entities.Vehicle.TireSmokeColor*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_TireSmokeColor" data-uid="AltV.Net.Elements.Entities.Vehicle.TireSmokeColor">TireSmokeColor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Rgba TireSmokeColor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Data.Rgba.html">Rgba</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_WheelColor.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.WheelColor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L208">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_WheelColor_" data-uid="AltV.Net.Elements.Entities.Vehicle.WheelColor*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_WheelColor" data-uid="AltV.Net.Elements.Entities.Vehicle.WheelColor">WheelColor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte WheelColor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_WheelsCount.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.WheelsCount%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L643">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_WheelsCount_" data-uid="AltV.Net.Elements.Entities.Vehicle.WheelsCount*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_WheelsCount" data-uid="AltV.Net.Elements.Entities.Vehicle.WheelsCount">WheelsCount</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte WheelsCount { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_WheelType.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.WheelType%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L275">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_WheelType_" data-uid="AltV.Net.Elements.Entities.Vehicle.WheelType*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_WheelType" data-uid="AltV.Net.Elements.Entities.Vehicle.WheelType">WheelType</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte WheelType { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_WheelVariation.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.WheelVariation%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L284">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_WheelVariation_" data-uid="AltV.Net.Elements.Entities.Vehicle.WheelVariation*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_WheelVariation" data-uid="AltV.Net.Elements.Entities.Vehicle.WheelVariation">WheelVariation</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte WheelVariation { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_WindowTint.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.WindowTint%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L353">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_WindowTint_" data-uid="AltV.Net.Elements.Entities.Vehicle.WindowTint*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_WindowTint" data-uid="AltV.Net.Elements.Entities.Vehicle.WindowTint">WindowTint</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte WindowTint { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_DoesWheelHasTire_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.DoesWheelHasTire(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L664">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_DoesWheelHasTire_" data-uid="AltV.Net.Elements.Entities.Vehicle.DoesWheelHasTire*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_DoesWheelHasTire_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.DoesWheelHasTire(System.Byte)">DoesWheelHasTire(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool DoesWheelHasTire(byte wheelId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">wheelId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_GetArmoredWindowHealth_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.GetArmoredWindowHealth(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L810">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_GetArmoredWindowHealth_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetArmoredWindowHealth*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_GetArmoredWindowHealth_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetArmoredWindowHealth(System.Byte)">GetArmoredWindowHealth(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float GetArmoredWindowHealth(byte windowId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">windowId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_GetArmoredWindowShootCount_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.GetArmoredWindowShootCount(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L822">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_GetArmoredWindowShootCount_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetArmoredWindowShootCount*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_GetArmoredWindowShootCount_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetArmoredWindowShootCount(System.Byte)">GetArmoredWindowShootCount(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte GetArmoredWindowShootCount(byte windowId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">windowId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_GetBumperDamageLevel_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.GetBumperDamageLevel(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L834">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_GetBumperDamageLevel_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetBumperDamageLevel*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_GetBumperDamageLevel_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetBumperDamageLevel(System.Byte)">GetBumperDamageLevel(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte GetBumperDamageLevel(byte bumperId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">bumperId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_GetDoorState_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.GetDoorState(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L520">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_GetDoorState_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetDoorState*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_GetDoorState_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetDoorState(System.Byte)">GetDoorState(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte GetDoorState(byte doorId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">doorId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_GetId_IntPtr_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.GetId(IntPtr)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L12">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_GetId_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetId*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_GetId_IntPtr_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetId(IntPtr)">GetId(IntPtr)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ushort GetId(IntPtr vehiclePointer)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IntPtr</span></td>
+        <td><span class="parametername">vehiclePointer</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_GetMetaData_System_String_AltV_Net_Elements_Args_MValue__.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.GetMetaData(System.String%2CAltV.Net.Elements.Args.MValue%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L70">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_GetMetaData_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetMetaData*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_GetMetaData_System_String_AltV_Net_Elements_Args_MValue__" data-uid="AltV.Net.Elements.Entities.Vehicle.GetMetaData(System.String,AltV.Net.Elements.Args.MValue@)">GetMetaData(String, ref MValue)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void GetMetaData(string key, ref MValue value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Elements.Args.MValue.html">MValue</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="AltV.Net.Elements.Entities.BaseObject.html#AltV_Net_Elements_Entities_BaseObject_GetMetaData_System_String_AltV_Net_Elements_Args_MValue__">BaseObject.GetMetaData(String, ref MValue)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_GetMod_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.GetMod(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L902">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_GetMod_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetMod*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_GetMod_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetMod(System.Byte)">GetMod(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte GetMod(byte category)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">category</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_GetModsCount_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.GetModsCount(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L908">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_GetModsCount_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetModsCount*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_GetModsCount_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetModsCount(System.Byte)">GetModsCount(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte GetModsCount(byte category)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">category</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_GetNeonActive_System_Boolean__System_Boolean__System_Boolean__System_Boolean__.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.GetNeonActive(System.Boolean%40%2CSystem.Boolean%40%2CSystem.Boolean%40%2CSystem.Boolean%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L953">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_GetNeonActive_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetNeonActive*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_GetNeonActive_System_Boolean__System_Boolean__System_Boolean__System_Boolean__" data-uid="AltV.Net.Elements.Entities.Vehicle.GetNeonActive(System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@)">GetNeonActive(ref Boolean, ref Boolean, ref Boolean, ref Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GetNeonActive(ref bool left, ref bool right, ref bool front, ref bool back)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">left</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">right</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">front</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">back</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_GetPartBulletHoles_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.GetPartBulletHoles(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L753">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_GetPartBulletHoles_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetPartBulletHoles*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_GetPartBulletHoles_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetPartBulletHoles(System.Byte)">GetPartBulletHoles(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte GetPartBulletHoles(byte partId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">partId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_GetPartDamageLevel_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.GetPartDamageLevel(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L741">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_GetPartDamageLevel_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetPartDamageLevel*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_GetPartDamageLevel_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetPartDamageLevel(System.Byte)">GetPartDamageLevel(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte GetPartDamageLevel(byte partId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">partId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_GetSyncedMetaData_System_String_AltV_Net_Elements_Args_MValue__.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.GetSyncedMetaData(System.String%2CAltV.Net.Elements.Args.MValue%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L79">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_GetSyncedMetaData_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetSyncedMetaData*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_GetSyncedMetaData_System_String_AltV_Net_Elements_Args_MValue__" data-uid="AltV.Net.Elements.Entities.Vehicle.GetSyncedMetaData(System.String,AltV.Net.Elements.Args.MValue@)">GetSyncedMetaData(String, ref MValue)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void GetSyncedMetaData(string key, ref MValue value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Elements.Args.MValue.html">MValue</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="AltV.Net.Elements.Entities.Entity.html#AltV_Net_Elements_Entities_Entity_GetSyncedMetaData_System_String_AltV_Net_Elements_Args_MValue__">Entity.GetSyncedMetaData(String, ref MValue)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_GetWheelHealth_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.GetWheelHealth(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L676">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_GetWheelHealth_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetWheelHealth*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_GetWheelHealth_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.GetWheelHealth(System.Byte)">GetWheelHealth(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float GetWheelHealth(byte wheelId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">wheelId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_IsExtraOn_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.IsExtraOn(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L926">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_IsExtraOn_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsExtraOn*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_IsExtraOn_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsExtraOn(System.Byte)">IsExtraOn(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsExtraOn(byte extraId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">extraId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_IsLightDamaged_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.IsLightDamaged(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L765">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_IsLightDamaged_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsLightDamaged*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_IsLightDamaged_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsLightDamaged(System.Byte)">IsLightDamaged(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsLightDamaged(byte lightId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">lightId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_IsSpecialLightDamaged_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.IsSpecialLightDamaged(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L789">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_IsSpecialLightDamaged_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsSpecialLightDamaged*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_IsSpecialLightDamaged_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsSpecialLightDamaged(System.Byte)">IsSpecialLightDamaged(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsSpecialLightDamaged(byte specialLightId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">specialLightId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_IsWheelBurst_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.IsWheelBurst(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L652">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_IsWheelBurst_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsWheelBurst*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_IsWheelBurst_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsWheelBurst(System.Byte)">IsWheelBurst(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsWheelBurst(byte wheelId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">wheelId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_IsWindowDamaged_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.IsWindowDamaged(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L777">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_IsWindowDamaged_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsWindowDamaged*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_IsWindowDamaged_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsWindowDamaged(System.Byte)">IsWindowDamaged(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsWindowDamaged(byte windowId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">windowId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_IsWindowOpened_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.IsWindowOpened(System.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L532">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_IsWindowOpened_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsWindowOpened*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_IsWindowOpened_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.IsWindowOpened(System.Byte)">IsWindowOpened(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsWindowOpened(byte windowId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">windowId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_Remove.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.Remove%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L959">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_Remove_" data-uid="AltV.Net.Elements.Entities.Vehicle.Remove*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_Remove" data-uid="AltV.Net.Elements.Entities.Vehicle.Remove">Remove()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Remove()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SetArmoredWindowHealth_System_Byte_System_Single_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SetArmoredWindowHealth(System.Byte%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L816">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SetArmoredWindowHealth_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetArmoredWindowHealth*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SetArmoredWindowHealth_System_Byte_System_Single_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetArmoredWindowHealth(System.Byte,System.Single)">SetArmoredWindowHealth(Byte, Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetArmoredWindowHealth(byte windowId, float health)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">windowId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">health</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SetArmoredWindowShootCount_System_Byte_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SetArmoredWindowShootCount(System.Byte%2CSystem.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L828">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SetArmoredWindowShootCount_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetArmoredWindowShootCount*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SetArmoredWindowShootCount_System_Byte_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetArmoredWindowShootCount(System.Byte,System.Byte)">SetArmoredWindowShootCount(Byte, Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetArmoredWindowShootCount(byte windowId, byte count)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">windowId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">count</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SetBumperDamageLevel_System_Byte_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SetBumperDamageLevel(System.Byte%2CSystem.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L840">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SetBumperDamageLevel_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetBumperDamageLevel*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SetBumperDamageLevel_System_Byte_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetBumperDamageLevel(System.Byte,System.Byte)">SetBumperDamageLevel(Byte, Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetBumperDamageLevel(byte bumperId, byte damageLevel)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">bumperId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">damageLevel</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SetDoorState_System_Byte_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SetDoorState(System.Byte%2CSystem.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L526">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SetDoorState_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetDoorState*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SetDoorState_System_Byte_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetDoorState(System.Byte,System.Byte)">SetDoorState(Byte, Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetDoorState(byte doorId, byte state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">doorId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">state</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SetLightDamaged_System_Byte_System_Boolean_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SetLightDamaged(System.Byte%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L771">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SetLightDamaged_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetLightDamaged*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SetLightDamaged_System_Byte_System_Boolean_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetLightDamaged(System.Byte,System.Boolean)">SetLightDamaged(Byte, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetLightDamaged(byte lightId, bool isDamaged)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">lightId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">isDamaged</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SetMetaData_System_String_AltV_Net_Elements_Args_MValue__.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SetMetaData(System.String%2CAltV.Net.Elements.Args.MValue%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L73">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SetMetaData_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetMetaData*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SetMetaData_System_String_AltV_Net_Elements_Args_MValue__" data-uid="AltV.Net.Elements.Entities.Vehicle.SetMetaData(System.String,AltV.Net.Elements.Args.MValue@)">SetMetaData(String, ref MValue)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void SetMetaData(string key, ref MValue value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Elements.Args.MValue.html">MValue</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="AltV.Net.Elements.Entities.BaseObject.html#AltV_Net_Elements_Entities_BaseObject_SetMetaData_System_String_AltV_Net_Elements_Args_MValue__">BaseObject.SetMetaData(String, ref MValue)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SetMod_System_Byte_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SetMod(System.Byte%2CSystem.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L914">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SetMod_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetMod*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SetMod_System_Byte_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetMod(System.Byte,System.Byte)">SetMod(Byte, Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool SetMod(byte category, byte id)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">category</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">id</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SetNeonActive_System_Boolean_System_Boolean_System_Boolean_System_Boolean_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SetNeonActive(System.Boolean%2CSystem.Boolean%2CSystem.Boolean%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L947">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SetNeonActive_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetNeonActive*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SetNeonActive_System_Boolean_System_Boolean_System_Boolean_System_Boolean_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetNeonActive(System.Boolean,System.Boolean,System.Boolean,System.Boolean)">SetNeonActive(Boolean, Boolean, Boolean, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetNeonActive(bool left, bool right, bool front, bool back)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">left</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">right</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">front</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">back</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SetPartBulletHoles_System_Byte_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SetPartBulletHoles(System.Byte%2CSystem.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L759">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SetPartBulletHoles_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetPartBulletHoles*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SetPartBulletHoles_System_Byte_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetPartBulletHoles(System.Byte,System.Byte)">SetPartBulletHoles(Byte, Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetPartBulletHoles(byte partId, byte shootsCount)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">partId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">shootsCount</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SetPartDamageLevel_System_Byte_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SetPartDamageLevel(System.Byte%2CSystem.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L747">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SetPartDamageLevel_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetPartDamageLevel*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SetPartDamageLevel_System_Byte_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetPartDamageLevel(System.Byte,System.Byte)">SetPartDamageLevel(Byte, Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetPartDamageLevel(byte partId, byte damage)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">partId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">damage</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SetSyncedMetaData_System_String_AltV_Net_Elements_Args_MValue__.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SetSyncedMetaData(System.String%2CAltV.Net.Elements.Args.MValue%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L76">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SetSyncedMetaData_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetSyncedMetaData*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SetSyncedMetaData_System_String_AltV_Net_Elements_Args_MValue__" data-uid="AltV.Net.Elements.Entities.Vehicle.SetSyncedMetaData(System.String,AltV.Net.Elements.Args.MValue@)">SetSyncedMetaData(String, ref MValue)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void SetSyncedMetaData(string key, ref MValue value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="AltV.Net.Elements.Args.MValue.html">MValue</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="AltV.Net.Elements.Entities.Entity.html#AltV_Net_Elements_Entities_Entity_SetSyncedMetaData_System_String_AltV_Net_Elements_Args_MValue__">Entity.SetSyncedMetaData(String, ref MValue)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SetWheelBurst_System_Byte_System_Boolean_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SetWheelBurst(System.Byte%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L658">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SetWheelBurst_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetWheelBurst*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SetWheelBurst_System_Byte_System_Boolean_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetWheelBurst(System.Byte,System.Boolean)">SetWheelBurst(Byte, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetWheelBurst(byte wheelId, bool state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">wheelId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">state</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SetWheelHasTire_System_Byte_System_Boolean_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SetWheelHasTire(System.Byte%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L670">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SetWheelHasTire_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetWheelHasTire*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SetWheelHasTire_System_Byte_System_Boolean_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetWheelHasTire(System.Byte,System.Boolean)">SetWheelHasTire(Byte, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetWheelHasTire(byte wheelId, bool state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">wheelId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">state</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SetWheelHealth_System_Byte_System_Single_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SetWheelHealth(System.Byte%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L682">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SetWheelHealth_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetWheelHealth*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SetWheelHealth_System_Byte_System_Single_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetWheelHealth(System.Byte,System.Single)">SetWheelHealth(Byte, Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetWheelHealth(byte wheelId, float health)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">wheelId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">health</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SetWheels_System_Byte_System_Byte_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SetWheels(System.Byte%2CSystem.Byte)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L920">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SetWheels_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetWheels*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SetWheels_System_Byte_System_Byte_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetWheels(System.Byte,System.Byte)">SetWheels(Byte, Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetWheels(byte type, byte variation)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">type</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">variation</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SetWindowDamaged_System_Byte_System_Boolean_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SetWindowDamaged(System.Byte%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L783">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SetWindowDamaged_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetWindowDamaged*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SetWindowDamaged_System_Byte_System_Boolean_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetWindowDamaged(System.Byte,System.Boolean)">SetWindowDamaged(Byte, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetWindowDamaged(byte windowId, bool isDamaged)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">windowId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">isDamaged</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_SetWindowOpened_System_Byte_System_Boolean_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.SetWindowOpened(System.Byte%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L538">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_SetWindowOpened_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetWindowOpened*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_SetWindowOpened_System_Byte_System_Boolean_" data-uid="AltV.Net.Elements.Entities.Vehicle.SetWindowOpened(System.Byte,System.Boolean)">SetWindowOpened(Byte, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetWindowOpened(byte windowId, bool state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">windowId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">state</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_ToggleExtra_System_Byte_System_Boolean_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.ToggleExtra(System.Byte%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L932">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_ToggleExtra_" data-uid="AltV.Net.Elements.Entities.Vehicle.ToggleExtra*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_ToggleExtra_System_Byte_System_Boolean_" data-uid="AltV.Net.Elements.Entities.Vehicle.ToggleExtra(System.Byte,System.Boolean)">ToggleExtra(Byte, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ToggleExtra(byte extraId, bool state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">extraId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">state</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle_AltV_Net_Elements_Entities_IVehicle_SetSpecialLightDamaged_System_Byte_System_Boolean_.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle.AltV%23Net%23Elements%23Entities%23IVehicle%23SetSpecialLightDamaged(System.Byte%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L795">View Source</a>
+  </span>
+  <a id="AltV_Net_Elements_Entities_Vehicle_AltV_Net_Elements_Entities_IVehicle_SetSpecialLightDamaged_" data-uid="AltV.Net.Elements.Entities.Vehicle.AltV#Net#Elements#Entities#IVehicle#SetSpecialLightDamaged*"></a>
+  <h4 id="AltV_Net_Elements_Entities_Vehicle_AltV_Net_Elements_Entities_IVehicle_SetSpecialLightDamaged_System_Byte_System_Boolean_" data-uid="AltV.Net.Elements.Entities.Vehicle.AltV#Net#Elements#Entities#IVehicle#SetSpecialLightDamaged(System.Byte,System.Boolean)">IVehicle.SetSpecialLightDamaged(Byte, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void IVehicle.SetSpecialLightDamaged(byte specialLightId, bool isDamaged)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">specialLightId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">isDamaged</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IVehicle.html">IVehicle</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IEntity.html">IEntity</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IWorldObject.html">IWorldObject</a>
+  </div>
+  <div>
+      <a class="xref" href="AltV.Net.Elements.Entities.IBaseObject.html">IBaseObject</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/FabianTerhorst/coreclr-module/new/c685b14e9d60da8396b33daf0d9dca2781cd0d69/apiSpec/new?filename=AltV_Net_Elements_Entities_Vehicle.md&amp;value=---%0Auid%3A%20AltV.Net.Elements.Entities.Vehicle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/FabianTerhorst/coreclr-module/blob/c685b14e9d60da8396b33daf0d9dca2781cd0d69/api/AltV.Net/Elements/Entities/Vehicle.cs/#L10" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
