@@ -53,8 +53,6 @@ COPY startgdb.sh .
 COPY libnode.so.64 .
 COPY libnode-module.so modules/
 
-COPY csharp-module.dll resources/example/2csharp-module.dll
-
 COPY resource.cfg resources/example/
 COPY --from=dotnet /altv-example/AltV.Net.Chat/resource.cfg resources/chat/
 COPY data/ ./data

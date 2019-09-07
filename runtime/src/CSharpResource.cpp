@@ -210,7 +210,6 @@ bool CSharpResource::Stop() {
         auto invoker = (*invokers)[i];
         delete invoker;
     }
-    invokers->~Array<CustomInvoker*>();
     delete invokers;
     if (OnStopDelegate == nullptr) return false;
     OnStopDelegate();
