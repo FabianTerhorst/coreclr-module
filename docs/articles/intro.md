@@ -11,3 +11,5 @@ Read [Create Script](https://fabianterhorst.github.io/coreclr-module/articles/cr
 Read [Events](https://fabianterhorst.github.io/coreclr-module/articles/events.html) for events.
 
 Read [Custom Events](https://fabianterhorst.github.io/coreclr-module/articles/custom-events.html) for custom events.
+
+Read [Entity factories](https://fabianterhorst.github.io/coreclr-module/articles/entity-factories.html).
