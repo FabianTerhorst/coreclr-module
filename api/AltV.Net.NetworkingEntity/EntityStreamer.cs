@@ -60,9 +60,12 @@ namespace AltV.Net.NetworkingEntity
                 var bytes = serverEvent.ToByteArray();
                 foreach (var streamedInClient in entity.StreamedInClients)
                 {
-                    if (streamedInClient.Exists)
+                    lock (streamedInClient)
                     {
-                        streamedInClient.WebSocket?.SendAsync(bytes, true);
+                        if (streamedInClient.Exists)
+                        {
+                            streamedInClient.WebSocket?.SendAsync(bytes, true);
+                        }
                     }
                 }
             }
@@ -99,7 +102,13 @@ namespace AltV.Net.NetworkingEntity
             var clientDimensionChangeEvent = new ClientDimensionChangeEvent {Dimension = dimension};
             var serverEvent = new ServerEvent {ClientDimensionChange = clientDimensionChangeEvent};
             var bytes = serverEvent.ToByteArray();
-            networkingClient.WebSocket.SendAsync(bytes, true);
+            lock (networkingClient)
+            {
+                if (networkingClient.Exists)
+                {
+                    networkingClient.WebSocket?.SendAsync(bytes, true);
+                }
+            }
         }
     }
 }

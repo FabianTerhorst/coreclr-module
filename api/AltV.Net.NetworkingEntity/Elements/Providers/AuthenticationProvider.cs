@@ -120,7 +120,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
             out INetworkingClient client)
         {
             if (!networkingClientPool.TryGet(token, out client)) return Task.FromResult(false);
-            client.WebSocket = webSocket; //TODO: check if already has websocket ect.
+            //TODO: check if already has websocket ect. client.WebSocket
             webSocket.Extra[ClientExtra] = client;
             return Task.FromResult(true);
         }

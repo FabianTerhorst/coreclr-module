@@ -51,7 +51,7 @@ namespace AltV.Net.NetworkingEntity
                         return;
                     }
 
-                    client.OnConnect();
+                    client.OnConnect(managedWebSocket);
 
                     var sendEvent = new ServerEvent();
                     var currSendEvent = new EntitySendEvent();

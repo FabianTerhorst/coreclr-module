@@ -102,9 +102,12 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
             {
                 foreach (var (_, value) in entities)
                 {
-                    if (value.Exists)
+                    lock (value)
                     {
-                        value.WebSocket?.SendAsync(bytes, true);
+                        if (value.Exists)
+                        {
+                            value.WebSocket?.SendAsync(bytes, true);
+                        }
                     }
                 }
             }

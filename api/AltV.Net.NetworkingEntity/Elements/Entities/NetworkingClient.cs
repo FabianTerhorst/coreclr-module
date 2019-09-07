@@ -44,10 +44,11 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
             this.entityStreamer = entityStreamer;
         }
 
-        public void OnConnect()
+        public void OnConnect(ManagedWebSocket managedWebSocket)
         {
             lock (this)
             {
+                WebSocket = managedWebSocket;
                 if (dimension != 0)
                 {
                     entityStreamer.UpdateClientDimension(this, dimension);
