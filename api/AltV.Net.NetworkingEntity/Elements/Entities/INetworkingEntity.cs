@@ -41,6 +41,11 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
         /// </summary>
         StreamingType StreamingType { get; }
         
+        /// <summary>
+        /// The main entity streamer, not in use currently
+        /// </summary>
+        INetworkingClient MainStreamer { get; }
+        
 
         /// <summary>
         /// This method is required to call to change entity data after creation to update data snapshot

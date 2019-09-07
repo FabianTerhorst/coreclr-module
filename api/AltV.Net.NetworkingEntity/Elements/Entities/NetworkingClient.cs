@@ -19,12 +19,21 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
 
         public int Dimension
         {
-            get => dimension;
+            get
+            {
+                lock (this)
+                {
+                    return dimension;
+                }
+            }
             set
             {
-                if (dimension == value) return;
-                entityStreamer.UpdateClientDimension(this, value);
-                dimension = value;
+                lock (this)
+                {
+                    if (dimension == value) return;
+                    entityStreamer.UpdateClientDimension(this, value);
+                    dimension = value;
+                }
             }
         }
 
@@ -33,6 +42,17 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
             Token = token;
             Exists = true;
             this.entityStreamer = entityStreamer;
+        }
+
+        public void OnConnect()
+        {
+            lock (this)
+            {
+                if (dimension != 0)
+                {
+                    entityStreamer.UpdateClientDimension(this, dimension);
+                }
+            }
         }
     }
 }

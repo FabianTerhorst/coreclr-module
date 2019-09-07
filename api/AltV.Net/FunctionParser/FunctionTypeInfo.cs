@@ -40,7 +40,7 @@ namespace AltV.Net.FunctionParser
         public FunctionTypeInfo(Type type)
         {
             IsList = type.BaseType == FunctionTypes.Array;
-            IsDict = type.Name.StartsWith("Dictionary");
+            IsDict = type.Name.StartsWith("Dictionary") || type.Name.StartsWith("IDictionary");
             if (IsDict)
             {
                 GenericArguments = type.GetGenericArguments();
