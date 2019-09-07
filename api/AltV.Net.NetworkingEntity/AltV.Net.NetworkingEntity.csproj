@@ -2,9 +2,9 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
-        <PackageVersion>1.4.0-dev-preview</PackageVersion>
+        <PackageVersion>1.4.1-dev-preview</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Add dimensions</PackageReleaseNotes>
+        <PackageReleaseNotes>Improve client dimensions</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
@@ -28,11 +28,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="System.Threading.Channels" Version="4.6.0-preview6.19303.8" />
+      <PackageReference Include="System.Threading.Channels" Version="4.6.0-preview9.19421.4" />
       <PackageReference Include="VIEApps.Components.WebSockets" Version="10.2.1906.1" />
       <PackageReference Include="Google.Protobuf" Version="3.9.1" />
-      <PackageReference Include="Grpc" Version="1.21.0" />
-      <PackageReference Include="Grpc.Tools" Version="1.21.0" PrivateAssets="All" />
+      <PackageReference Include="Grpc" Version="2.23.0" />
+      <PackageReference Include="Grpc.Tools" Version="2.23.0" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup>
