@@ -54,4 +54,27 @@ public class SampleResource : Resource {
 
 This also works when you extend ```AsyncResource``` ect.
 
-It works exactly the same for vehicles.
+## Vehicle class
+
+It works the same for vehicles, but with a small difference, because you can create vehicles via the constructor by defining the vehicle model, position and rotation.
+
+Thats why you most likely will add a second constructor to the vehicle that looks like this.
+
+```csharp
+public class MyVehicle : Vehicle
+    {
+        public int MyData { get; set; }
+
+        // This constructor is used for creation via constructor
+        public MyVehicle(uint model, Position position, Rotation rotation) : base(model, position, rotation)
+        {
+            MyData = 7;
+        }
+
+        // This constructor is used for creation via entity factory
+        public MyVehicle(IntPtr nativePointer, ushort id) : base(nativePointer, id)
+        {
+            MyData = 6;
+        }
+}
+```
