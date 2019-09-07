@@ -10,6 +10,16 @@ namespace AltV.Net
             remove => Module.CheckpointEventHandler.Remove(value);
         }
 
+        /// <summary>
+        /// Player connect event handler
+        /// <example>
+        /// <code>
+        /// Alt.OnPlayerConnect += (player, reason) => {
+        ///   Console.WriteLine($"{player.Name} connected.");
+        /// };
+        /// </code>
+        /// </example>
+        /// </summary>
         public static event PlayerConnectDelegate OnPlayerConnect
         {
             add => Module.PlayerConnectEventHandler.Add(value);
