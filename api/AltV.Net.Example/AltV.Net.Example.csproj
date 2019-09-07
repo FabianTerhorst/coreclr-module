@@ -30,11 +30,6 @@
       <ProjectReference Include="..\AltV.Net.Async\AltV.Net.Async.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="MySql.Data" Version="8.0.17" />
-      <PackageReference Include="System.Data.SqlClient" Version="4.7.0-preview8.19405.3" />
-    </ItemGroup>
-
     <Target Name="CopyFiles" AfterTargets="build">
         <PropertyGroup>
             <CopiedFiles>$(OutputPath)\AltV.Net.Example.dll;$(OutputPath)\AltV.Net.Example.pdb</CopiedFiles>
