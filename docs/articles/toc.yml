@@ -17,7 +17,7 @@
     - name: Communication between resources
       href: resource-communication.md
     - name: Entity factories
-    - href: entity-factories.md
+      href: entity-factories.md
     - name: Async
       href: async.md
     - name: ColShapes example
