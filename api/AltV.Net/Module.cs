@@ -138,34 +138,34 @@ namespace AltV.Net
             ColShapePool = colShapePool;
         }
 
-        public void LoadAssemblyFromName(AssemblyName assemblyName)
+        public Assembly LoadAssemblyFromName(AssemblyName assemblyName)
         {
-            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
-            target.LoadFromAssemblyName(assemblyName);
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return null;
+            return target.LoadFromAssemblyName(assemblyName);
         }
 
-        public void LoadAssemblyFromStream(Stream stream)
+        public Assembly LoadAssemblyFromStream(Stream stream)
         {
-            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
-            target.LoadFromStream(stream);
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return null;
+            return target.LoadFromStream(stream);
         }
 
-        public void LoadAssemblyFromStream(Stream stream, Stream assemblySymbols)
+        public Assembly LoadAssemblyFromStream(Stream stream, Stream assemblySymbols)
         {
-            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
-            target.LoadFromStream(stream, assemblySymbols);
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return null;
+            return target.LoadFromStream(stream, assemblySymbols);
         }
 
-        public void LoadAssemblyFromPath(string path)
+        public Assembly LoadAssemblyFromPath(string path)
         {
-            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
-            target.LoadFromAssemblyPath(path);
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return null;
+            return target.LoadFromAssemblyPath(path);
         }
 
-        public void LoadAssemblyFromNativeImagePath(string nativeImagePath, string assemblyPath)
+        public Assembly LoadAssemblyFromNativeImagePath(string nativeImagePath, string assemblyPath)
         {
-            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
-            target.LoadFromNativeImagePath(nativeImagePath, assemblyPath);
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return null;
+            return target.LoadFromNativeImagePath(nativeImagePath, assemblyPath);
         }
 
         public void On(string eventName, Function function)
