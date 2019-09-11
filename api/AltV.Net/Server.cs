@@ -31,11 +31,25 @@ namespace AltV.Net
 
         public int NetTime => AltNative.Server.Server_GetNetTime(NativePointer);
 
-        public string RootDirectory { get; }
+        private string rootDirectory;
+
+        public string RootDirectory
+        {
+            get
+            {
+                if (rootDirectory != null) return rootDirectory;
+                var ptr = IntPtr.Zero;
+                AltNative.Server.Server_GetRootDirectory(NativePointer, ref ptr);
+                rootDirectory = Marshal.PtrToStringUTF8(ptr);
+
+                return rootDirectory;
+            }
+        }
 
         public NativeResource Resource { get; }
 
-        public Server(IntPtr nativePointer, NativeResource resource, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool,
+        public Server(IntPtr nativePointer, NativeResource resource, IBaseBaseObjectPool baseBaseObjectPool,
+            IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
@@ -52,9 +66,6 @@ namespace AltV.Net
             this.checkpointPool = checkpointPool;
             this.voiceChannelPool = voiceChannelPool;
             this.colShapePool = colShapePool;
-            var ptr = IntPtr.Zero;
-            AltNative.Server.Server_GetRootDirectory(nativePointer, ref ptr);
-            RootDirectory = Marshal.PtrToStringUTF8(ptr);
             Resource = resource;
         }
 

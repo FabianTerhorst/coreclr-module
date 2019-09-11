@@ -9,7 +9,7 @@ namespace AltV.Net
     {
         internal readonly IntPtr NativePointer;
 
-        public IntPtr ResourceImpl => AltNative.Resource.Resource_GetImpl(NativePointer);
+        public IntPtr ResourceImplPtr => AltNative.Resource.Resource_GetImpl(NativePointer);
 
         private CSharpResourceImpl cSharpResourceImpl;
 

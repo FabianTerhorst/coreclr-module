@@ -5,7 +5,7 @@ namespace AltV.Net
 {
     public interface INativeResource
     {
-        IntPtr ResourceImpl { get; }
+        IntPtr ResourceImplPtr { get; }
 
         CSharpResourceImpl CSharpResourceImpl { get; }
 
