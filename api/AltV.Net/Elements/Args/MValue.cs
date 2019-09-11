@@ -268,7 +268,7 @@ namespace AltV.Net.Elements.Args
         public static MValue Create(Function function)
         {
             var mValue = Nil;
-            AltNative.MValueCreate.MValue_CreateFunction(AltNative.MValueCreate.Invoker_Create(Alt.Module.CSharpNativeResource.NativePointer, function), ref mValue);
+            AltNative.MValueCreate.MValue_CreateFunction(AltNative.MValueCreate.Invoker_Create(Alt.Module.ModuleResource.NativePointer, function), ref mValue);
             return mValue;
         }
 

@@ -99,7 +99,7 @@ namespace AltV.Net
 
         public virtual Module GetModule(IServer server, 
             AssemblyLoadContext assemblyLoadContext,
-            CSharpNativeResource cSharpNativeResource,
+            NativeResource cSharpNativeResource,
             IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,

@@ -1,7 +1,8 @@
-#include "CSharpResource.h"
+#include "CSharpResourceImpl.h"
 
-CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IResource::CreationInfo* info)
-        : alt::IResource(info) {
+CSharpResourceImpl::CSharpResourceImpl(alt::ICore* server, CoreClr* coreClr, alt::IResource* resource)
+        : alt::IResource::Impl() {
+    this->resource = resource;
     this->server = server;
     this->invokers = new alt::Array<CustomInvoker*>();
     this->coreClr = coreClr;
@@ -195,17 +196,17 @@ CSharpResource::CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IRes
     }*/
 }
 
-bool CSharpResource::Start() {
-    alt::IResource::Start();
-    coreClr->ExecuteManagedResource(server, this->GetPath().CStr(), this->GetName().CStr(), this->GetMain().CStr(),
-                                    this);
+bool CSharpResourceImpl::Start() {
+    alt::IResource::Impl::Start();
+    coreClr->ExecuteManagedResource(server, this->resource->GetPath().CStr(), this->resource->GetName().CStr(), this->resource->GetMain().CStr(),
+                                    this->resource);
     if (MainDelegate == nullptr) return false;
-    MainDelegate(this->server, this, this->GetName().CStr(), GetMain().CStr());
+    MainDelegate(this->server, this->resource, this->resource->GetName().CStr(), resource->GetMain().CStr());
     return true;
 }
 
-bool CSharpResource::Stop() {
-    alt::IResource::Stop();
+bool CSharpResourceImpl::Stop() {
+    alt::IResource::Impl::Stop();
     for (alt::Size i = 0, length = invokers->GetSize(); i < length; i++) {
         auto invoker = (*invokers)[i];
         delete invoker;
@@ -213,15 +214,15 @@ bool CSharpResource::Stop() {
     delete invokers;
     if (OnStopDelegate == nullptr) return false;
     OnStopDelegate();
-    coreClr->ExecuteManagedResourceUnload(server, this->GetPath().CStr(), this->GetMain().CStr());
+    coreClr->ExecuteManagedResourceUnload(server, this->resource->GetPath().CStr(), this->resource->GetMain().CStr());
     return true;
 }
 
-CSharpResource::~CSharpResource() {
+CSharpResourceImpl::~CSharpResourceImpl() {
     /*int i = 0;
     for (auto resource : *resourcesCache) {
         if (resource == this) {
-            auto newResourcesCache = new alt::Array<CSharpResource*>;
+            auto newResourcesCache = new alt::Array<CSharpResourceImpl*>;
             for (auto cloneResource : *resourcesCache) {
                 if (cloneResource != this) {
                     newResourcesCache->Push(cloneResource);
@@ -236,7 +237,7 @@ CSharpResource::~CSharpResource() {
 }
 
 //TODO: needs entity type enum value for undefined
-bool CSharpResource::OnEvent(const alt::CEvent* ev) {
+bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
     if (ev == nullptr) return true;
     switch (ev->GetType()) {
         case alt::CEvent::Type::META_CHANGE: {
@@ -393,7 +394,7 @@ bool CSharpResource::OnEvent(const alt::CEvent* ev) {
     return true;
 }
 
-void CSharpResource::OnCreateBaseObject(alt::IBaseObject* object) {
+void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object) {
     if (object != nullptr) {
         switch (object->GetType()) {
             case alt::IBaseObject::Type::PLAYER:
@@ -420,7 +421,7 @@ void CSharpResource::OnCreateBaseObject(alt::IBaseObject* object) {
     }
 }
 
-void CSharpResource::OnRemoveBaseObject(alt::IBaseObject* object) {
+void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object) {
     if (object != nullptr) {
         switch (object->GetType()) {
             case alt::IBaseObject::Type::PLAYER:
@@ -445,7 +446,7 @@ void CSharpResource::OnRemoveBaseObject(alt::IBaseObject* object) {
     }
 }
 
-void CSharpResource::OnTick() {
+void CSharpResourceImpl::OnTick() {
     OnTickDelegate();
     //TODO: call here libuv uv_run(loop, UV_RUN_ONCE)
     //TODO: generate via a macro async function for each exported function that gets executed on main thread via uv_async_send
@@ -455,36 +456,32 @@ void CSharpResource::OnTick() {
     //TODO: set doesnt needs to be threadsafe, but needs to be a hashset for O(1)
 }
 
-void CSharpResource_SetExport(CSharpResource* resource, const char* key, const alt::MValue &val) {
-    resource->SetExport(key, val);
-}
-
-void CSharpResource_Reload(CSharpResource* resource) {
+void CSharpResource_Reload(CSharpResourceImpl* resource) {
     resource->OnStopDelegate();
-    resource->coreClr->ExecuteManagedResourceUnload(resource->server, resource->GetPath().CStr(),
-                                                    resource->GetMain().CStr());
-    resource->coreClr->ExecuteManagedResource(resource->server, resource->GetPath().CStr(), resource->GetName().CStr(),
-                                              resource->GetMain().CStr(), resource);
-    resource->MainDelegate(resource->server, resource, resource->GetName().CStr(), resource->GetMain().CStr());
+    resource->coreClr->ExecuteManagedResourceUnload(resource->server, resource->resource->GetPath().CStr(),
+                                                    resource->resource->GetMain().CStr());
+    resource->coreClr->ExecuteManagedResource(resource->server, resource->resource->GetPath().CStr(), resource->resource->GetName().CStr(),
+                                              resource->resource->GetMain().CStr(), resource->resource);
+    resource->MainDelegate(resource->server, resource->resource, resource->resource->GetName().CStr(), resource->resource->GetMain().CStr());
 }
 
-void CSharpResource_Load(CSharpResource* resource) {
-    resource->coreClr->ExecuteManagedResource(resource->server, resource->GetPath().CStr(), resource->GetName().CStr(),
-                                              resource->GetMain().CStr(), resource);
-    resource->MainDelegate(resource->server, resource, resource->GetName().CStr(), resource->GetMain().CStr());
+void CSharpResource_Load(CSharpResourceImpl* resource) {
+    resource->coreClr->ExecuteManagedResource(resource->server, resource->resource->GetPath().CStr(), resource->resource->GetName().CStr(),
+                                              resource->resource->GetMain().CStr(), resource->resource);
+    resource->MainDelegate(resource->server, resource->resource, resource->resource->GetName().CStr(), resource->resource->GetMain().CStr());
 }
 
-void CSharpResource_Unload(CSharpResource* resource) {
+void CSharpResource_Unload(CSharpResourceImpl* resource) {
     resource->OnStopDelegate();
-    resource->coreClr->ExecuteManagedResourceUnload(resource->server, resource->GetPath().CStr(),
-                                                    resource->GetMain().CStr());
+    resource->coreClr->ExecuteManagedResourceUnload(resource->server, resource->resource->GetPath().CStr(),
+                                                    resource->resource->GetMain().CStr());
 }
 
-void Server_GetCSharpResource(alt::IServer* server, const char* resourceName, CSharpResource*&resource) {
-    resource = (CSharpResource*) server->GetResource(resourceName);
+void Server_GetCSharpResource(alt::ICore* server, const char* resourceName, CSharpResourceImpl*&resource) {
+    resource = (CSharpResourceImpl*) server->GetResource(resourceName);
 }
 
-void CSharpResource_SetMain(CSharpResource* resource, MainDelegate_t mainDelegate, StopDelegate_t stopDelegate,
+void CSharpResource_SetMain(CSharpResourceImpl* resource, MainDelegate_t mainDelegate, StopDelegate_t stopDelegate,
                             TickDelegate_t tickDelegate,
                             ServerEventDelegate_t serverEventDelegate,
                             CheckpointDelegate_t checkpointDelegate,
@@ -547,11 +544,12 @@ void CSharpResource_SetMain(CSharpResource* resource, MainDelegate_t mainDelegat
     resource->ColShapeDelegate = colShapeDelegate;
 }
 
-void CSharpResource::MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files) {
+bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files) {
     info->type = "js";
+    return true;
 }
 
-void* CSharpResource::GetBaseObjectPointer(alt::IBaseObject* baseObject) {
+void* CSharpResourceImpl::GetBaseObjectPointer(alt::IBaseObject* baseObject) {
     if (baseObject != nullptr) {
         switch (baseObject->GetType()) {
             case alt::IBaseObject::Type::PLAYER:
@@ -571,7 +569,7 @@ void* CSharpResource::GetBaseObjectPointer(alt::IBaseObject* baseObject) {
     return nullptr;
 }
 
-void* CSharpResource::GetEntityPointer(alt::IEntity* entity) {
+void* CSharpResourceImpl::GetEntityPointer(alt::IEntity* entity) {
     if (entity != nullptr) {
         switch (entity->GetType()) {
             case alt::IBaseObject::Type::PLAYER:

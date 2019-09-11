@@ -7,7 +7,7 @@
 #endif
 
 #include <altv-cpp-api/SDK.h>
-#include <CSharpResource.h>
+#include <CSharpResourceImpl.h>
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -17,8 +17,8 @@
 extern "C"
 {
 #endif
-EXPORT CustomInvoker* Invoker_Create(CSharpResource* resource, MValueFunctionCallback val);
-EXPORT void Invoker_Destroy(CSharpResource* resource, CustomInvoker* val);
+EXPORT CustomInvoker* Invoker_Create(CSharpResourceImpl* resource, MValueFunctionCallback val);
+EXPORT void Invoker_Destroy(CSharpResourceImpl* resource, CustomInvoker* val);
 
 EXPORT void MValue_CreateNil(alt::MValue &mValue);
 EXPORT void MValue_CreateBool(bool val, alt::MValue &mValue);

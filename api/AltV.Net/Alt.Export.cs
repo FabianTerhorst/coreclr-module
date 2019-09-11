@@ -7,28 +7,28 @@ namespace AltV.Net
     public partial class Alt
     {
         public static void Export(string key, object value) =>
-            Module.CSharpNativeResource.SetExport(key, MValue.CreateFromObject(value));
+            Module.Server.Resource.SetExport(key, MValue.CreateFromObject(value));
 
         public static void Export(string key, bool value) =>
-            Module.CSharpNativeResource.SetExport(key, MValue.Create(value));
+            Module.ModuleResource.SetExport(key, MValue.Create(value));
 
         public static void Export(string key, int value) =>
-            Module.CSharpNativeResource.SetExport(key, MValue.Create(value));
+            Module.ModuleResource.SetExport(key, MValue.Create(value));
 
         public static void Export(string key, long value) =>
-            Module.CSharpNativeResource.SetExport(key, MValue.Create(value));
+            Module.ModuleResource.SetExport(key, MValue.Create(value));
 
         public static void Export(string key, uint value) =>
-            Module.CSharpNativeResource.SetExport(key, MValue.Create(value));
+            Module.ModuleResource.SetExport(key, MValue.Create(value));
 
         public static void Export(string key, ulong value) =>
-            Module.CSharpNativeResource.SetExport(key, MValue.Create(value));
+            Module.ModuleResource.SetExport(key, MValue.Create(value));
 
         public static void Export(string key, double value) =>
-            Module.CSharpNativeResource.SetExport(key, MValue.Create(value));
+            Module.ModuleResource.SetExport(key, MValue.Create(value));
 
         public static void Export(string key, string value) =>
-            Module.CSharpNativeResource.SetExport(key, MValue.Create(value));
+            Module.ModuleResource.SetExport(key, MValue.Create(value));
 
         public static void Export(string key, Action value) => Module.SetExport(key, Function.Create(value));
 

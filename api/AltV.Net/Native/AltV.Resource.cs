@@ -45,13 +45,19 @@ namespace AltV.Net.Native
             internal static extern void Resource_GetType(IntPtr resourcePointer, ref IntPtr text);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern ResourceState Resource_GetState(IntPtr resourcePointer);
+            internal static extern bool Resource_IsStarted(IntPtr resourcePointer);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Resource_Start(IntPtr resourcePointer);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Resource_Stop(IntPtr resourcePointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Resource_GetImpl(IntPtr resourcePointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Resource_GetCSharpImpl(IntPtr resourcePointer);
 
             internal delegate void MainDelegate(IntPtr serverPointer, IntPtr resourcePointer, string resourceName,
                 string entryPoint);

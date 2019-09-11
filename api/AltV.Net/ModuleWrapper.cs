@@ -47,7 +47,7 @@ namespace AltV.Net
             MainWithResource(serverPointer, resourcePointer, resource, assemblyLoadContext);
             _scripts = AssemblyLoader.FindAllTypes<IScript>(assemblyLoadContext.Assemblies);
             _module.OnScriptsLoaded(_scripts);
-            ResourceBuilder.SetDelegates(resourcePointer, OnStartResource);
+            Alt.Server.Resource.CSharpResourceImpl.SetDelegates(OnStartResource);
         }
 
         public static void MainWithResource(IntPtr serverPointer, IntPtr resourcePointer, IResource resource,
@@ -75,8 +75,9 @@ namespace AltV.Net
             var baseObjectPool =
                 _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool,
                     colShapePool);
-            var csharpResource = new CSharpNativeResource(resourcePointer);
-            var server = new Server(serverPointer, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool,
+            var csharpResource = new NativeResource(resourcePointer);
+            var server = new Server(serverPointer, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool,
+                blipPool,
                 checkpointPool, voiceChannelPool, colShapePool);
             _module = _resource.GetModule(server, assemblyLoadContext, csharpResource, baseObjectPool, entityPool,
                 playerPool, vehiclePool,

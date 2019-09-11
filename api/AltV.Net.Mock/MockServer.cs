@@ -31,7 +31,7 @@ namespace AltV.Net.Mock
 
         public string RootDirectory => "";
 
-        public CSharpNativeResource Resource => new CSharpNativeResource(IntPtr.Zero);
+        public NativeResource Resource => new NativeResource(IntPtr.Zero);
 
         internal MockServer(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
@@ -320,14 +320,9 @@ namespace AltV.Net.Mock
             Alt.Module.OnRemoveVoiceChannel(channel.NativePointer);
         }
 
-        public ServerNativeResource GetResource(string name)
+        public NativeResource GetResource(string name)
         {
-            return new ServerNativeResource(IntPtr.Zero);
-        }
-
-        public CSharpNativeResource GetCSharpResource(string name)
-        {
-            return new CSharpNativeResource(IntPtr.Zero);
+            return new NativeResource(IntPtr.Zero);
         }
 
         public IEnumerable<IPlayer> GetPlayers()

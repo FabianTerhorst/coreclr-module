@@ -105,26 +105,26 @@ typedef int (* CoreClrDelegate_t)(void* args, int argsLength);
 
 class CoreClr {
 public:
-    CoreClr(alt::IServer* server);
+    CoreClr(alt::ICore* server);
 
     ~CoreClr();
 
-    bool GetDelegate(alt::IServer* server, void* runtimeHost, unsigned int domainId, const char* moduleName,
-                     const char* classPath, const char* methodName, void** callback);
+    /*bool GetDelegate(alt::ICore* server, void* runtimeHost, unsigned int domainId, const char* moduleName,
+                     const char* classPath, const char* methodName, void** callback);*/
 
-    alt::Array<alt::String> getTrustedAssemblies(alt::IServer* server, const char* appPath);
+    alt::Array<alt::String> getTrustedAssemblies(alt::ICore* server, const char* appPath);
 
-    void CreateAppDomain(alt::IServer* server, alt::IResource* resource, const char* appPath, void** runtimeHost,
-                         unsigned int* domainId, bool executable, uint64_t resourceIndex, const char* domainName);
+    /*void CreateAppDomain(alt::ICore* server, alt::IResource* resource, const char* appPath, void** runtimeHost,
+                         unsigned int* domainId, bool executable, uint64_t resourceIndex, const char* domainName);*/
 
-    int Execute(alt::IServer* server, alt::IResource* resource, const char* appPath, uint64_t resourceIndex,
+    int Execute(alt::ICore* server, alt::IResource* resource, const char* appPath, uint64_t resourceIndex,
                 void** runtimeHost,
                 const unsigned int* domainId);
 
-    void Shutdown(alt::IServer* server, void* runtimeHost,
+    void Shutdown(alt::ICore* server, void* runtimeHost,
                   unsigned int domainId);
 
-    void GetPath(alt::IServer* server, const char* defaultPath);
+    void GetPath(alt::ICore* server, const char* defaultPath);
 
     /**
      * prints out error when error code in known
@@ -132,14 +132,14 @@ public:
      * @param errorCode
      * @return true when error code is known
      */
-    bool PrintError(alt::IServer* server, int errorCode);
+    bool PrintError(alt::ICore* server, int errorCode);
 
     void CreateManagedHost();
 
-    void ExecuteManagedResource(alt::IServer* server, const char* resourcePath, const char* resourceName,
+    void ExecuteManagedResource(alt::ICore* server, const char* resourcePath, const char* resourceName,
                                 const char* resourceMain, alt::IResource* resource);
 
-    void ExecuteManagedResourceUnload(alt::IServer* server, const char* resourcePath, const char* resourceMain);
+    void ExecuteManagedResourceUnload(alt::ICore* server, const char* resourcePath, const char* resourceMain);
 
 private:
 #ifdef _WIN32

@@ -52,44 +52,75 @@ public:
     }
 };
 
-typedef void (* MainDelegate_t)(alt::IServer* server, alt::IResource* resource, const char* resourceName,
-                              const char* entryPoint);
+typedef void (* MainDelegate_t)(alt::ICore* server, alt::IResource* resource, const char* resourceName,
+                                const char* entryPoint);
+
 typedef void (* TickDelegate_t)();
+
 typedef void (* ServerEventDelegate_t)(const char* name, alt::Array<alt::MValue>* args);
+
 typedef void (* CheckpointDelegate_t)(alt::ICheckpoint* checkpoint, void* entity, alt::IBaseObject::Type type,
-                                    bool state);
+                                      bool state);
+
 typedef void (* ClientEventDelegate_t)(alt::IPlayer* player, const char* name, alt::Array<alt::MValue>* args);
+
 typedef void (* PlayerConnectDelegate_t)(alt::IPlayer* player, uint16_t playerId, const char* reason);
+
 typedef void (* PlayerDamageDelegate_t)(alt::IPlayer* player, void* attacker,
                                         alt::IBaseObject::Type attackerType, uint16_t attackerId, uint32_t weapon,
                                         uint16_t damage);
+
 typedef void (* PlayerDeathDelegate_t)(alt::IPlayer* player, void* killer, alt::IBaseObject::Type killerType,
                                        uint32_t weapon);
+
 typedef void (* PlayerDisconnectDelegate_t)(alt::IPlayer* player, const char* reason);
+
 typedef void (* PlayerRemoveDelegate_t)(alt::IPlayer* player);
+
 typedef void (* VehicleRemoveDelegate_t)(alt::IVehicle* vehicle);
+
 typedef void (* PlayerChangeVehicleSeatDelegate_t)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t oldSeat,
                                                    uint8_t newSeat);
-typedef void (* PlayerEnterVehicleDelegate_t)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t seat);
-typedef void (* PlayerLeaveVehicleDelegate_t)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t seat);
-typedef void (* StopDelegate_t)();
-typedef void (* CreatePlayerDelegate_t)(alt::IPlayer* player, uint16_t id);
-typedef void (* RemovePlayerDelegate_t)(alt::IPlayer* player);
-typedef void (* CreateVehicleDelegate_t)(alt::IVehicle* vehicle, uint16_t id);
-typedef void (* RemoveVehicleDelegate_t)(alt::IVehicle* vehicle);
-typedef void (* CreateBlipDelegate_t)(alt::IBlip* blip);
-typedef void (* RemoveBlipDelegate_t)(alt::IBlip* blip);
-typedef void (* CreateCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
-typedef void (* RemoveCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
-typedef void (* OnCreateVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
-typedef void (* OnRemoveVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
-typedef void (* OnCreateColShapeDelegate_t)(alt::IColShape* colShape);
-typedef void (* OnRemoveColShapeDelegate_t)(alt::IColShape* colShape);
-typedef void (* OnConsoleCommandDelegate_t)(const char* name, alt::Array<alt::StringView>* args);
-typedef void (* MetaChangeDelegate_t)(void* entity, alt::IBaseObject::Type type, alt::StringView key, alt::MValue* value);
-typedef void (* ColShapeDelegate_t)(alt::IColShape* colShape, void* entity, alt::IBaseObject::Type baseObjectType, bool state);
 
-class CSharpResource : public alt::IResource {
+typedef void (* PlayerEnterVehicleDelegate_t)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t seat);
+
+typedef void (* PlayerLeaveVehicleDelegate_t)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t seat);
+
+typedef void (* StopDelegate_t)();
+
+typedef void (* CreatePlayerDelegate_t)(alt::IPlayer* player, uint16_t id);
+
+typedef void (* RemovePlayerDelegate_t)(alt::IPlayer* player);
+
+typedef void (* CreateVehicleDelegate_t)(alt::IVehicle* vehicle, uint16_t id);
+
+typedef void (* RemoveVehicleDelegate_t)(alt::IVehicle* vehicle);
+
+typedef void (* CreateBlipDelegate_t)(alt::IBlip* blip);
+
+typedef void (* RemoveBlipDelegate_t)(alt::IBlip* blip);
+
+typedef void (* CreateCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
+
+typedef void (* RemoveCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
+
+typedef void (* OnCreateVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
+
+typedef void (* OnRemoveVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
+
+typedef void (* OnCreateColShapeDelegate_t)(alt::IColShape* colShape);
+
+typedef void (* OnRemoveColShapeDelegate_t)(alt::IColShape* colShape);
+
+typedef void (* OnConsoleCommandDelegate_t)(const char* name, alt::Array<alt::StringView>* args);
+
+typedef void (* MetaChangeDelegate_t)(void* entity, alt::IBaseObject::Type type, alt::StringView key,
+                                      alt::MValue* value);
+
+typedef void (* ColShapeDelegate_t)(alt::IColShape* colShape, void* entity, alt::IBaseObject::Type baseObjectType,
+                                    bool state);
+
+class CSharpResourceImpl : public alt::IResource::Impl {
     bool OnEvent(const alt::CEvent* ev) override;
 
     void OnTick() override;
@@ -107,15 +138,11 @@ class CSharpResource : public alt::IResource {
     void* GetEntityPointer(alt::IEntity* entity);
 
 public:
-    CSharpResource(alt::IServer* server, CoreClr* coreClr, alt::IResource::CreationInfo* info);
+    CSharpResourceImpl(alt::ICore* server, CoreClr* coreClr, alt::IResource* resource);
 
-    ~CSharpResource() override;
+    ~CSharpResourceImpl() override;
 
-    void SetExport(const char* key, const alt::MValue &mValue) {
-        this->exports[key] = mValue;
-    }
-
-    void MakeClient(CreationInfo* info, alt::Array<alt::String> files) override;
+    bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files) override;
 
     CheckpointDelegate_t OnCheckpointDelegate;
 
@@ -184,19 +211,18 @@ public:
 
     alt::Array<CustomInvoker*>* invokers;
     CoreClr* coreClr;
-    alt::IServer* server;
+    alt::ICore* server;
+    alt::IResource* resource;
 };
 
-EXPORT void Server_GetCSharpResource(alt::IServer* server, const char* resourceName, CSharpResource*&resource);
-EXPORT void CSharpResource_Reload(CSharpResource* resource);
+EXPORT void Server_GetCSharpResource(alt::ICore* server, const char* resourceName, CSharpResourceImpl*&resource);
+EXPORT void CSharpResource_Reload(CSharpResourceImpl* resource);
 
-EXPORT void CSharpResource_SetExport(CSharpResource* resource, const char* key, const alt::MValue &val);
+EXPORT void CSharpResource_Load(CSharpResourceImpl* resource);
 
-EXPORT void CSharpResource_Load(CSharpResource* resource);
+EXPORT void CSharpResource_Unload(CSharpResourceImpl* resource);
 
-EXPORT void CSharpResource_Unload(CSharpResource* resource);
-
-EXPORT void CSharpResource_SetMain(CSharpResource* resource,
+EXPORT void CSharpResource_SetMain(CSharpResourceImpl* resource,
                                    MainDelegate_t mainDelegate,
                                    StopDelegate_t stopDelegate,
                                    TickDelegate_t tickDelegate,

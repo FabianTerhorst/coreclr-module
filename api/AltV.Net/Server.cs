@@ -33,9 +33,9 @@ namespace AltV.Net
 
         public string RootDirectory { get; }
 
-        public CSharpNativeResource Resource { get; }
+        public NativeResource Resource { get; }
 
-        public Server(IntPtr nativePointer, CSharpNativeResource resource, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool,
+        public Server(IntPtr nativePointer, NativeResource resource, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
@@ -335,18 +335,10 @@ namespace AltV.Net
             }
         }
 
-        public ServerNativeResource GetResource(string name)
+        public NativeResource GetResource(string name)
         {
-            var resourcePointer = IntPtr.Zero;
-            AltNative.Server.Server_GetResource(NativePointer, name, ref resourcePointer);
-            return resourcePointer == IntPtr.Zero ? null : new ServerNativeResource(resourcePointer);
-        }
-        
-        public CSharpNativeResource GetCSharpResource(string name)
-        {
-            var resourcePointer = IntPtr.Zero;
-            AltNative.Server.Server_GetCSharpResource(NativePointer, name, ref resourcePointer);
-            return resourcePointer == IntPtr.Zero ? null : new CSharpNativeResource(resourcePointer);
+            var resourcePointer = AltNative.Server.Server_GetResource(NativePointer, name);
+            return resourcePointer == IntPtr.Zero ? null : new NativeResource(resourcePointer);
         }
 
         public IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation)

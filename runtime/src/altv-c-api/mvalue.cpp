@@ -1,12 +1,12 @@
 #include "mvalue.h"
 
-CustomInvoker* Invoker_Create(CSharpResource* resource, MValueFunctionCallback val) {
+CustomInvoker* Invoker_Create(CSharpResourceImpl* resource, MValueFunctionCallback val) {
     auto invoker = new CustomInvoker(val);
     resource->invokers->Push(invoker);
     return invoker;
 }
 
-void Invoker_Destroy(CSharpResource* resource, CustomInvoker* val) {
+void Invoker_Destroy(CSharpResourceImpl* resource, CustomInvoker* val) {
     auto newInvokers = new alt::Array<CustomInvoker*>();
     for (alt::Size i = 0, length = resource->invokers->GetSize(); i < length; i++) {
         auto invoker = (*resource->invokers)[i];

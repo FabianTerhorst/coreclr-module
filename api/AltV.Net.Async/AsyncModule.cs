@@ -68,13 +68,13 @@ namespace AltV.Net.Async
             =
             new Dictionary<string, HashSet<ServerEventAsyncDelegate>>();
 
-        public AsyncModule(IServer server, AssemblyLoadContext assemblyLoadContext, CSharpNativeResource cSharpNativeResource,
+        public AsyncModule(IServer server, AssemblyLoadContext assemblyLoadContext, NativeResource moduleResource,
             IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
-            IBaseObjectPool<IColShape> colShapePool) : base(server, assemblyLoadContext, cSharpNativeResource, baseBaseObjectPool,
+            IBaseObjectPool<IColShape> colShapePool) : base(server, assemblyLoadContext, moduleResource, baseBaseObjectPool,
             baseEntityPool, playerPool, vehiclePool, blipPool,
             checkpointPool, voiceChannelPool, colShapePool)
         {

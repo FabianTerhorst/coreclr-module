@@ -8,7 +8,15 @@ namespace AltV.Net
     public class NativeResource : INativeResource
     {
         internal readonly IntPtr NativePointer;
-        
+
+        public IntPtr ResourceImpl => AltNative.Resource.Resource_GetImpl(NativePointer);
+
+        private CSharpResourceImpl cSharpResourceImpl;
+
+        public CSharpResourceImpl CSharpResourceImpl =>
+            cSharpResourceImpl ?? (cSharpResourceImpl =
+                new CSharpResourceImpl(AltNative.Resource.Resource_GetCSharpImpl(NativePointer)));
+
         public string Path
         {
             get
@@ -49,7 +57,7 @@ namespace AltV.Net
             }
         }
 
-        public ResourceState State => AltNative.Resource.Resource_GetState(NativePointer);
+        public bool IsStarted => AltNative.Resource.Resource_IsStarted(NativePointer);
 
         internal NativeResource(IntPtr nativePointer)
         {
@@ -63,6 +71,11 @@ namespace AltV.Net
             AltNative.Resource.Resource_SetExport(NativePointer, stringPtr, ref mValue);
             Marshal.FreeHGlobal(stringPtr);
             mValue.Dispose();
+        }
+
+        public bool GetExport(string key, ref MValue value)
+        {
+            return AltNative.Resource.Resource_GetExport(NativePointer, key, ref value);
         }
 
         public void Start()

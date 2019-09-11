@@ -20,7 +20,7 @@ namespace AltV.Net
 
         private readonly WeakReference<AssemblyLoadContext> assemblyLoadContext;
 
-        internal readonly CSharpNativeResource CSharpNativeResource;
+        internal readonly NativeResource ModuleResource;
 
         internal readonly IBaseBaseObjectPool BaseBaseObjectPool;
 
@@ -116,7 +116,7 @@ namespace AltV.Net
         internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
 
         public Module(IServer server, AssemblyLoadContext assemblyLoadContext,
-            CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool,
+            NativeResource moduleResource, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
@@ -127,7 +127,7 @@ namespace AltV.Net
             Alt.Init(this);
             Server = server;
             this.assemblyLoadContext = new WeakReference<AssemblyLoadContext>(assemblyLoadContext);
-            CSharpNativeResource = cSharpNativeResource;
+            ModuleResource = moduleResource;
             BaseBaseObjectPool = baseBaseObjectPool;
             BaseEntityPool = baseEntityPool;
             PlayerPool = playerPool;
@@ -856,7 +856,7 @@ namespace AltV.Net
             functionExports[key] = function;
             MValue.Function callDelegate = function.call;
             GCHandle.Alloc(callDelegate);
-            CSharpNativeResource.SetExport(key, MValue.Create(callDelegate));
+            ModuleResource.SetExport(key, MValue.Create(callDelegate));
         }
     }
 }

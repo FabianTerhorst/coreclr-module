@@ -46,14 +46,22 @@ void Resource_GetType(alt::IResource* resource, const char*&text) {
     text = resource->GetType().CStr();
 }
 
-alt::IResource::State Resource_GetState(alt::IResource* resource) {
-    return resource->GetState();
+bool Resource_IsStarted(alt::IResource* resource) {
+    return resource->IsStarted();
 }
 
 void Resource_Start(alt::IResource* resource) {
-    resource->Start();
+    resource->GetImpl()->Start();
 }
 
 void Resource_Stop(alt::IResource* resource) {
-    resource->Stop();
+    resource->GetImpl()->Stop();
+}
+
+alt::IResource::Impl* Resource_GetImpl(alt::IResource* resource) {
+    return resource->GetImpl();
+}
+
+CSharpResourceImpl* Resource_GetCSharpImpl(alt::IResource* resource) {
+    return (CSharpResourceImpl*) resource->GetImpl();
 }
