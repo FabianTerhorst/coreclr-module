@@ -7,13 +7,6 @@ CSharpResourceImpl::CSharpResourceImpl(alt::ICore* server, CoreClr* coreClr, alt
     this->invokers = new alt::Array<CustomInvoker*>();
     this->coreClr = coreClr;
 
-    //auto isDll = true;
-
-    /*auto mainSize = main.GetSize();
-    if (mainSize < 5 || memcmp(main.CStr() + mainSize - 4, ".dll", 4) != 0) {
-        isDll = false;
-    }*/
-
     runtimeHost = nullptr;
     domainId = 0;
     MainDelegate = nullptr;
@@ -50,7 +43,7 @@ CSharpResourceImpl::CSharpResourceImpl(alt::ICore* server, CoreClr* coreClr, alt
 }
 
 bool CSharpResourceImpl::Start() {
-    coreClr->ExecuteManagedResource(server, this->resource->GetPath().CStr(), this->resource->GetName().CStr(), this->resource->GetMain().CStr(),
+    coreClr->ExecuteManagedResource(this->resource->GetPath().CStr(), this->resource->GetName().CStr(), this->resource->GetMain().CStr(),
                                     this->resource);
     if (MainDelegate == nullptr) return false;
     MainDelegate(this->server, this->resource, this->resource->GetName().CStr(), resource->GetMain().CStr());
@@ -65,7 +58,7 @@ bool CSharpResourceImpl::Stop() {
     delete invokers;
     if (OnStopDelegate == nullptr) return false;
     OnStopDelegate();
-    coreClr->ExecuteManagedResourceUnload(server, this->resource->GetPath().CStr(), this->resource->GetMain().CStr());
+    coreClr->ExecuteManagedResourceUnload(this->resource->GetPath().CStr(), this->resource->GetMain().CStr());
     return true;
 }
 
@@ -310,22 +303,22 @@ void CSharpResourceImpl::OnTick() {
 
 void CSharpResource_Reload(CSharpResourceImpl* resource) {
     resource->OnStopDelegate();
-    resource->coreClr->ExecuteManagedResourceUnload(resource->server, resource->resource->GetPath().CStr(),
+    resource->coreClr->ExecuteManagedResourceUnload(resource->resource->GetPath().CStr(),
                                                     resource->resource->GetMain().CStr());
-    resource->coreClr->ExecuteManagedResource(resource->server, resource->resource->GetPath().CStr(), resource->resource->GetName().CStr(),
+    resource->coreClr->ExecuteManagedResource(resource->resource->GetPath().CStr(), resource->resource->GetName().CStr(),
                                               resource->resource->GetMain().CStr(), resource->resource);
     resource->MainDelegate(resource->server, resource->resource, resource->resource->GetName().CStr(), resource->resource->GetMain().CStr());
 }
 
 void CSharpResource_Load(CSharpResourceImpl* resource) {
-    resource->coreClr->ExecuteManagedResource(resource->server, resource->resource->GetPath().CStr(), resource->resource->GetName().CStr(),
+    resource->coreClr->ExecuteManagedResource(resource->resource->GetPath().CStr(), resource->resource->GetName().CStr(),
                                               resource->resource->GetMain().CStr(), resource->resource);
     resource->MainDelegate(resource->server, resource->resource, resource->resource->GetName().CStr(), resource->resource->GetMain().CStr());
 }
 
 void CSharpResource_Unload(CSharpResourceImpl* resource) {
     resource->OnStopDelegate();
-    resource->coreClr->ExecuteManagedResourceUnload(resource->server, resource->resource->GetPath().CStr(),
+    resource->coreClr->ExecuteManagedResourceUnload(resource->resource->GetPath().CStr(),
                                                     resource->resource->GetMain().CStr());
 }
 

@@ -19,7 +19,8 @@ void CoreClr_SetResourceLoadDelegates(CoreClrDelegate_t resourceExecute, CoreClr
     cv.notify_all();
 }
 
-CoreClr::CoreClr(alt::ICore* server) {
+CoreClr::CoreClr(alt::ICore* core) {
+    this->core = core;
     _initializeCoreCLR = nullptr;
     _shutdownCoreCLR = nullptr;
     _createDelegate = nullptr;
@@ -48,7 +49,7 @@ CoreClr::CoreClr(alt::ICore* server) {
     auto currDotnetDirectory = "/usr/share/dotnet/";
     dotnetDirectory = new char[strlen(currDotnetDirectory) + 1];
     strcpy(dotnetDirectory, currDotnetDirectory);
-    GetPath(server, "/usr/share/dotnet/host/fxr/");
+    GetPath(core, "/usr/share/dotnet/host/fxr/");
 #endif
 #ifdef _WIN32
     const char *fileName = "/hostfxr.dll";
@@ -76,7 +77,7 @@ CoreClr::CoreClr(alt::ICore* server) {
     strcat(fullPath, fileName);
     _coreClrLib = dlopen(fullPath, RTLD_NOW | RTLD_LOCAL);
     if (_coreClrLib == nullptr) {
-        server->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll [") + fullPath + "]: " + dlerror());
+        core->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll [") + fullPath + "]: " + dlerror());
         return;
     }
     _initializeFxr = (hostfxr_initialize_for_runtime_config_fn) dlsym(_coreClrLib,
@@ -89,7 +90,7 @@ CoreClr::CoreClr(alt::ICore* server) {
 #endif
     if (_initializeFxr == nullptr || _getDelegate == nullptr || _closeFxr == nullptr || _runApp == nullptr ||
         _initForCmd == nullptr) {
-        server->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll methods"));
+        core->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll methods"));
         return;
     }
 }
@@ -124,11 +125,11 @@ CoreClr::~CoreClr() {
 }*/
 
 //TODO: don't include own dll or exe ect that is in the directory
-alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::ICore* server, const char* appPath) {
+/*alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::ICore* server, const char* appPath) {
     alt::Array<alt::String> assemblies;
     const char* const tpaExtensions[] = {".ni.dll", ".dll", ".ni.exe", ".exe", ".winmd"};
 
-    const char* directories[] = {runtimeDirectory/*, appPath*/ };
+    const char* directories[] = {runtimeDirectory//, appPath// };
 
     for (auto path : directories) {
         auto directory = opendir(path);
@@ -181,9 +182,9 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::ICore* server, const 
                 //std::string filenameWithoutExt(filename.substr(0, extPos));
 
                 // Ensure assemblies are unique in the list
-                /*if (assemblies.find(filenameWithoutExt) != assemblies.end()) {//TODO: use alt::Set which doesnt exists
-                    continue;
-                }*/
+                //if (assemblies.find(filenameWithoutExt) != assemblies.end()) {//TODO: use alt::Set which doesnt exists
+                //    continue;
+                //}
 
                 if (strcmp(entry->d_name, "AltV.Net.dll") == 0) {
                     continue;
@@ -199,7 +200,7 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::ICore* server, const 
 #endif
     }
     return assemblies;
-}
+}*/
 
 //TODO: use APP_PATHS via path from main assembly because all assemblies are most likely in same path
 /*void CoreClr::CreateAppDomain(alt::ICore* server, alt::IResource* resource, const char* appPath, void** runtimeHost,
@@ -276,7 +277,7 @@ alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::ICore* server, const 
     }
 }*/
 
-int CoreClr::Execute(alt::ICore* server, alt::IResource* resource, const char* appPath, uint64_t resourceIndex,
+/*int CoreClr::Execute(alt::ICore* server, alt::IResource* resource, const char* appPath, uint64_t resourceIndex,
                      void** runtimeHost,
                      const unsigned int* domainId) {
     auto executablePath = alt::String(appPath) + PATH_SEPARATOR + resource->GetMain();
@@ -305,7 +306,7 @@ int CoreClr::Execute(alt::ICore* server, alt::IResource* resource, const char* a
         server->LogInfo(alt::String("coreclr-module: Assembly executed"));
     }
     return result;
-}
+}*/
 
 /*void CoreClr::Shutdown(alt::ICore* server, void* runtimeHost,
                        unsigned int domainId) {
@@ -451,12 +452,12 @@ void CoreClr::CreateManagedHost() {
     thread = std::thread(thread_proc, userData);
 }
 
-void CoreClr::ExecuteManagedResource(alt::ICore* server, const char* resourcePath, const char* resourceName,
+void CoreClr::ExecuteManagedResource(const char* resourcePath, const char* resourceName,
                                      const char* resourceMain, alt::IResource* resource) {
     std::unique_lock<std::mutex> lck(mtx);
     while(hostResourceExecute == nullptr){ cv.wait(lck); }
     if (hostResourceExecute == nullptr) {
-        server->LogInfo(alt::String("coreclr-module: Core CLR host not loaded"));
+        core->LogInfo(alt::String("coreclr-module: Core CLR host not loaded"));
         return;
     }
 
@@ -475,18 +476,18 @@ void CoreClr::ExecuteManagedResource(alt::ICore* server, const char* resourcePat
                     resourcePath,
                     resourceName,
                     resourceMain,
-                    server,
+                    core,
                     resource
             };
 
     hostResourceExecute(&args, sizeof(args));
 }
 
-void CoreClr::ExecuteManagedResourceUnload(alt::ICore* server, const char* resourcePath, const char* resourceMain) {
+void CoreClr::ExecuteManagedResourceUnload(const char* resourcePath, const char* resourceMain) {
     std::unique_lock<std::mutex> lck(mtx);
     while(hostResourceExecuteUnload == nullptr){ cv.wait(lck); }
     if (hostResourceExecuteUnload == nullptr) {
-        server->LogInfo(alt::String("coreclr-module: Core CLR host not loaded"));
+        core->LogInfo(alt::String("coreclr-module: Core CLR host not loaded"));
         return;
     }
 

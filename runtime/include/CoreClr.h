@@ -112,14 +112,14 @@ public:
     /*bool GetDelegate(alt::ICore* server, void* runtimeHost, unsigned int domainId, const char* moduleName,
                      const char* classPath, const char* methodName, void** callback);*/
 
-    alt::Array<alt::String> getTrustedAssemblies(alt::ICore* server, const char* appPath);
+    //alt::Array<alt::String> getTrustedAssemblies(alt::ICore* server, const char* appPath);
 
     /*void CreateAppDomain(alt::ICore* server, alt::IResource* resource, const char* appPath, void** runtimeHost,
                          unsigned int* domainId, bool executable, uint64_t resourceIndex, const char* domainName);*/
 
-    int Execute(alt::ICore* server, alt::IResource* resource, const char* appPath, uint64_t resourceIndex,
+    /*int Execute(alt::ICore* server, alt::IResource* resource, const char* appPath, uint64_t resourceIndex,
                 void** runtimeHost,
-                const unsigned int* domainId);
+                const unsigned int* domainId);*/
 
     /*void Shutdown(alt::ICore* server, void* runtimeHost,
                   unsigned int domainId);*/
@@ -136,10 +136,10 @@ public:
 
     void CreateManagedHost();
 
-    void ExecuteManagedResource(alt::ICore* server, const char* resourcePath, const char* resourceName,
+    void ExecuteManagedResource(const char* resourcePath, const char* resourceName,
                                 const char* resourceMain, alt::IResource* resource);
 
-    void ExecuteManagedResourceUnload(alt::ICore* server, const char* resourcePath, const char* resourceMain);
+    void ExecuteManagedResourceUnload(const char* resourcePath, const char* resourceMain);
 
 private:
 #ifdef _WIN32
@@ -165,6 +165,7 @@ private:
     hostfxr_close_fn _closeFxr;
     hostfxr_handle cxt;
     std::thread thread;
+    alt::ICore* core;
 };
 
 EXPORT void CoreClr_SetResourceLoadDelegates(CoreClrDelegate_t resourceExecute, CoreClrDelegate_t resourceExecuteUnload);
