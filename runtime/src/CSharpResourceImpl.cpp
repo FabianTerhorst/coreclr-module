@@ -293,12 +293,6 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object) {
 
 void CSharpResourceImpl::OnTick() {
     OnTickDelegate();
-    //TODO: call here libuv uv_run(loop, UV_RUN_ONCE)
-    //TODO: generate via a macro async function for each exported function that gets executed on main thread via uv_async_send
-    //TODO: but we need to verify somehow that the entity didn't got deleted in the time, maybe create a set where we add valid entity pointers
-    //TODO: and remove the pointers when entity got removed
-    //TODO: and check in execute if the entity is still in set
-    //TODO: set doesnt needs to be threadsafe, but needs to be a hashset for O(1)
 }
 
 void CSharpResource_Reload(CSharpResourceImpl* resource) {
