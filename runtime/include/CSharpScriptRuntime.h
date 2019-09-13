@@ -23,7 +23,9 @@ class CSharpScriptRuntime : public alt::IScriptRuntime
   public:
     CSharpScriptRuntime(alt::ICore* server);
 
-  private:
+    virtual ~CSharpScriptRuntime();
+
+private:
     alt::ICore *core;
     CoreClr* coreClr;
 };

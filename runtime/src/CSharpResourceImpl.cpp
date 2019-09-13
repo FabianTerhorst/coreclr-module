@@ -197,7 +197,6 @@ CSharpResourceImpl::CSharpResourceImpl(alt::ICore* server, CoreClr* coreClr, alt
 }
 
 bool CSharpResourceImpl::Start() {
-    alt::IResource::Impl::Start();
     coreClr->ExecuteManagedResource(server, this->resource->GetPath().CStr(), this->resource->GetName().CStr(), this->resource->GetMain().CStr(),
                                     this->resource);
     if (MainDelegate == nullptr) return false;
@@ -206,7 +205,6 @@ bool CSharpResourceImpl::Start() {
 }
 
 bool CSharpResourceImpl::Stop() {
-    alt::IResource::Impl::Stop();
     for (alt::Size i = 0, length = invokers->GetSize(); i < length; i++) {
         auto invoker = (*invokers)[i];
         delete invoker;

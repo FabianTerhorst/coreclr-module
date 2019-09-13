@@ -11,10 +11,12 @@ alt::IResource::Impl* CSharpScriptRuntime::CreateImpl(alt::IResource* resource) 
 }
 
 void CSharpScriptRuntime::DestroyImpl(alt::IResource::Impl* impl) {
-    this->coreClr->Shutdown(this->core, ((CSharpResourceImpl*) impl)->runtimeHost,
-                            ((CSharpResourceImpl*) impl)->domainId);
     delete impl;
 }
 
 void CSharpScriptRuntime::OnTick() {
+}
+
+CSharpScriptRuntime::~CSharpScriptRuntime() {
+    delete this->coreClr;
 }

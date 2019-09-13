@@ -95,8 +95,12 @@ CoreClr::CoreClr(alt::ICore* server) {
 }
 
 CoreClr::~CoreClr() {
+    //TODO: close thread
     delete[] runtimeDirectory;
     delete[] dotnetDirectory;
+    if (cxt != nullptr) {
+        _closeFxr(cxt);
+    }
 }
 
 /*bool CoreClr::GetDelegate(alt::ICore* server, void* runtimeHost, unsigned int domainId, const char* moduleName,
@@ -303,7 +307,7 @@ int CoreClr::Execute(alt::ICore* server, alt::IResource* resource, const char* a
     return result;
 }
 
-void CoreClr::Shutdown(alt::ICore* server, void* runtimeHost,
+/*void CoreClr::Shutdown(alt::ICore* server, void* runtimeHost,
                        unsigned int domainId) {
     if (cxt != nullptr) {
         _closeFxr(cxt);
@@ -316,7 +320,7 @@ void CoreClr::Shutdown(alt::ICore* server, void* runtimeHost,
     } else {
         server->LogInfo(alt::String("coreclr-module: Host successfully shotted down"));
     }
-}
+}*/
 
 void CoreClr::GetPath(alt::ICore* server, const char* defaultPath) {
     auto directory = opendir(defaultPath);

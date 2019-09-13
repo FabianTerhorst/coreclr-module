@@ -121,8 +121,8 @@ public:
                 void** runtimeHost,
                 const unsigned int* domainId);
 
-    void Shutdown(alt::ICore* server, void* runtimeHost,
-                  unsigned int domainId);
+    /*void Shutdown(alt::ICore* server, void* runtimeHost,
+                  unsigned int domainId);*/
 
     void GetPath(alt::ICore* server, const char* defaultPath);
 
