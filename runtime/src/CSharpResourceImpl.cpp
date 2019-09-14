@@ -6,43 +6,44 @@ CSharpResourceImpl::CSharpResourceImpl(alt::ICore* server, CoreClr* coreClr, alt
     this->server = server;
     this->invokers = new alt::Array<CustomInvoker*>();
     this->coreClr = coreClr;
+}
 
-    runtimeHost = nullptr;
-    domainId = 0;
-    MainDelegate = nullptr;
-    OnCheckpointDelegate = nullptr;
-    OnClientEventDelegate = nullptr;
-    OnPlayerConnectDelegate = nullptr;
-    OnPlayerDamageDelegate = nullptr;
-    OnPlayerDeathDelegate = nullptr;
-    OnPlayerDisconnectDelegate = nullptr;
-    OnPlayerRemoveDelegate = nullptr;
-    OnVehicleRemoveDelegate = nullptr;
-    OnServerEventDelegate = nullptr;
-    OnPlayerChangeVehicleSeatDelegate = nullptr;
-    OnPlayerEnterVehicleDelegate = nullptr;
-    OnPlayerLeaveVehicleDelegate = nullptr;
-    OnStopDelegate = nullptr;
-    OnTickDelegate = nullptr;
-    OnCreatePlayerDelegate = nullptr;
-    OnRemovePlayerDelegate = nullptr;
-    OnCreateVehicleDelegate = nullptr;
-    OnRemoveVehicleDelegate = nullptr;
-    OnCreateBlipDelegate = nullptr;
-    OnRemoveBlipDelegate = nullptr;
-    OnCreateCheckpointDelegate = nullptr;
-    OnRemoveCheckpointDelegate = nullptr;
-    OnCreateVoiceChannelDelegate = nullptr;
-    OnRemoveVoiceChannelDelegate = nullptr;
-    OnConsoleCommandDelegate = nullptr;
-    OnMetaChangeDelegate = nullptr;
-    OnSyncedMetaChangeDelegate = nullptr;
-    OnCreateColShapeDelegate = nullptr;
-    OnRemoveColShapeDelegate = nullptr;
-    ColShapeDelegate = nullptr;
+void CSharpResourceImpl::ResetDelegates() {
+    MainDelegate = [](auto var, auto var2, auto var3, auto var4){ };
+    OnCheckpointDelegate = [](auto var, auto var2, auto var3, auto var4){ };
+    OnClientEventDelegate = [](auto var, auto var2, auto var3){ };
+    OnPlayerConnectDelegate = [](auto var, auto var2, auto var3){ };
+    OnPlayerDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6){ };
+    OnPlayerDeathDelegate = [](auto var, auto var2, auto var3, auto var4){ };
+    OnPlayerDisconnectDelegate = [](auto var, auto var2){ };
+    OnPlayerRemoveDelegate = [](auto var){ };
+    OnVehicleRemoveDelegate = [](auto var){ };
+    OnServerEventDelegate = [](auto var, auto var2){ };
+    OnPlayerChangeVehicleSeatDelegate = [](auto var, auto var2, auto var3, auto var4){ };
+    OnPlayerEnterVehicleDelegate = [](auto var, auto var2, auto var3){ };
+    OnPlayerLeaveVehicleDelegate = [](auto var, auto var2, auto var3){ };
+    OnStopDelegate = [](){ };
+    OnTickDelegate = [](){ };
+    OnCreatePlayerDelegate = [](auto var, auto var2){ };
+    OnRemovePlayerDelegate = [](auto var){ };
+    OnCreateVehicleDelegate = [](auto var, auto var2){ };
+    OnRemoveVehicleDelegate = [](auto var){ };
+    OnCreateBlipDelegate = [](auto var){ };
+    OnRemoveBlipDelegate = [](auto var){ };
+    OnCreateCheckpointDelegate = [](auto var){ };
+    OnRemoveCheckpointDelegate = [](auto var){ };
+    OnCreateVoiceChannelDelegate = [](auto var){ };
+    OnRemoveVoiceChannelDelegate = [](auto var){ };
+    OnConsoleCommandDelegate = [](auto var, auto var2){ };
+    OnMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4){ };
+    OnSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4){ };
+    OnCreateColShapeDelegate = [](auto var){ };
+    OnRemoveColShapeDelegate = [](auto var){ };
+    ColShapeDelegate = [](auto var, auto var2, auto var3, auto var4){ };
 }
 
 bool CSharpResourceImpl::Start() {
+    ResetDelegates();
     coreClr->ExecuteManagedResource(this->resource->GetPath().CStr(), this->resource->GetName().CStr(), this->resource->GetMain().CStr(),
                                     this->resource);
     if (MainDelegate == nullptr) return false;
@@ -51,36 +52,21 @@ bool CSharpResourceImpl::Start() {
 }
 
 bool CSharpResourceImpl::Stop() {
+    if (OnStopDelegate == nullptr) return false;
+    OnStopDelegate();
+    coreClr->ExecuteManagedResourceUnload(this->resource->GetPath().CStr(), this->resource->GetMain().CStr());
+    ResetDelegates();
+    return true;
+}
+
+CSharpResourceImpl::~CSharpResourceImpl() {
     for (alt::Size i = 0, length = invokers->GetSize(); i < length; i++) {
         auto invoker = (*invokers)[i];
         delete invoker;
     }
     delete invokers;
-    if (OnStopDelegate == nullptr) return false;
-    OnStopDelegate();
-    coreClr->ExecuteManagedResourceUnload(this->resource->GetPath().CStr(), this->resource->GetMain().CStr());
-    return true;
 }
 
-CSharpResourceImpl::~CSharpResourceImpl() {
-    /*int i = 0;
-    for (auto resource : *resourcesCache) {
-        if (resource == this) {
-            auto newResourcesCache = new alt::Array<CSharpResourceImpl*>;
-            for (auto cloneResource : *resourcesCache) {
-                if (cloneResource != this) {
-                    newResourcesCache->Push(cloneResource);
-                }
-            }
-            free(resourcesCache);
-            resourcesCache = newResourcesCache;
-            break;
-        }
-        i++;
-    }*/
-}
-
-//TODO: needs entity type enum value for undefined
 bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
     if (ev == nullptr) return true;
     switch (ev->GetType()) {

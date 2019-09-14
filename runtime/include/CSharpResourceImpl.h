@@ -137,6 +137,8 @@ class CSharpResourceImpl : public alt::IResource::Impl {
 
     void* GetEntityPointer(alt::IEntity* entity);
 
+    void ResetDelegates();
+
 public:
     CSharpResourceImpl(alt::ICore* server, CoreClr* coreClr, alt::IResource* resource);
 
@@ -144,70 +146,67 @@ public:
 
     bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files) override;
 
-    CheckpointDelegate_t OnCheckpointDelegate;
+    CheckpointDelegate_t OnCheckpointDelegate = nullptr;
 
-    ClientEventDelegate_t OnClientEventDelegate;
+    ClientEventDelegate_t OnClientEventDelegate = nullptr;
 
-    PlayerConnectDelegate_t OnPlayerConnectDelegate;
+    PlayerConnectDelegate_t OnPlayerConnectDelegate = nullptr;
 
-    PlayerDamageDelegate_t OnPlayerDamageDelegate;
+    PlayerDamageDelegate_t OnPlayerDamageDelegate = nullptr;
 
-    PlayerDeathDelegate_t OnPlayerDeathDelegate;
+    PlayerDeathDelegate_t OnPlayerDeathDelegate = nullptr;
 
-    PlayerDisconnectDelegate_t OnPlayerDisconnectDelegate;
+    PlayerDisconnectDelegate_t OnPlayerDisconnectDelegate = nullptr;
 
-    PlayerRemoveDelegate_t OnPlayerRemoveDelegate;
+    PlayerRemoveDelegate_t OnPlayerRemoveDelegate = nullptr;
 
-    VehicleRemoveDelegate_t OnVehicleRemoveDelegate;
+    VehicleRemoveDelegate_t OnVehicleRemoveDelegate = nullptr;
 
-    ServerEventDelegate_t OnServerEventDelegate;
+    ServerEventDelegate_t OnServerEventDelegate = nullptr;
 
-    PlayerChangeVehicleSeatDelegate_t OnPlayerChangeVehicleSeatDelegate;
+    PlayerChangeVehicleSeatDelegate_t OnPlayerChangeVehicleSeatDelegate = nullptr;
 
-    PlayerEnterVehicleDelegate_t OnPlayerEnterVehicleDelegate;
+    PlayerEnterVehicleDelegate_t OnPlayerEnterVehicleDelegate = nullptr;
 
-    PlayerLeaveVehicleDelegate_t OnPlayerLeaveVehicleDelegate;
+    PlayerLeaveVehicleDelegate_t OnPlayerLeaveVehicleDelegate = nullptr;
 
-    StopDelegate_t OnStopDelegate;
+    StopDelegate_t OnStopDelegate = nullptr;
 
-    MainDelegate_t MainDelegate;
+    MainDelegate_t MainDelegate = nullptr;
 
-    TickDelegate_t OnTickDelegate;
+    TickDelegate_t OnTickDelegate = nullptr;
 
-    CreatePlayerDelegate_t OnCreatePlayerDelegate;
+    CreatePlayerDelegate_t OnCreatePlayerDelegate = nullptr;
 
-    RemovePlayerDelegate_t OnRemovePlayerDelegate;
+    RemovePlayerDelegate_t OnRemovePlayerDelegate = nullptr;
 
-    CreateVehicleDelegate_t OnCreateVehicleDelegate;
+    CreateVehicleDelegate_t OnCreateVehicleDelegate = nullptr;
 
-    RemoveVehicleDelegate_t OnRemoveVehicleDelegate;
+    RemoveVehicleDelegate_t OnRemoveVehicleDelegate = nullptr;
 
-    CreateBlipDelegate_t OnCreateBlipDelegate;
+    CreateBlipDelegate_t OnCreateBlipDelegate = nullptr;
 
-    RemoveBlipDelegate_t OnRemoveBlipDelegate;
+    RemoveBlipDelegate_t OnRemoveBlipDelegate = nullptr;
 
-    CreateCheckpointDelegate_t OnCreateCheckpointDelegate;
+    CreateCheckpointDelegate_t OnCreateCheckpointDelegate = nullptr;
 
-    RemoveCheckpointDelegate_t OnRemoveCheckpointDelegate;
+    RemoveCheckpointDelegate_t OnRemoveCheckpointDelegate = nullptr;
 
-    OnCreateVoiceChannelDelegate_t OnCreateVoiceChannelDelegate;
+    OnCreateVoiceChannelDelegate_t OnCreateVoiceChannelDelegate = nullptr;
 
-    OnRemoveVoiceChannelDelegate_t OnRemoveVoiceChannelDelegate;
+    OnRemoveVoiceChannelDelegate_t OnRemoveVoiceChannelDelegate = nullptr;
 
-    OnConsoleCommandDelegate_t OnConsoleCommandDelegate;
+    OnConsoleCommandDelegate_t OnConsoleCommandDelegate = nullptr;
 
-    MetaChangeDelegate_t OnMetaChangeDelegate;
+    MetaChangeDelegate_t OnMetaChangeDelegate = nullptr;
 
-    MetaChangeDelegate_t OnSyncedMetaChangeDelegate;
+    MetaChangeDelegate_t OnSyncedMetaChangeDelegate = nullptr;
 
-    OnCreateColShapeDelegate_t OnCreateColShapeDelegate;
+    OnCreateColShapeDelegate_t OnCreateColShapeDelegate = nullptr;
 
-    OnRemoveColShapeDelegate_t OnRemoveColShapeDelegate;
+    OnRemoveColShapeDelegate_t OnRemoveColShapeDelegate = nullptr;
 
-    ColShapeDelegate_t ColShapeDelegate;
-
-    void* runtimeHost;
-    unsigned int domainId;
+    ColShapeDelegate_t ColShapeDelegate = nullptr;
 
     alt::Array<CustomInvoker*>* invokers;
     CoreClr* coreClr;
