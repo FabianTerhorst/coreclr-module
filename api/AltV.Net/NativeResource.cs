@@ -75,7 +75,10 @@ namespace AltV.Net
 
         public bool GetExport(string key, ref MValue value)
         {
-            return AltNative.Resource.Resource_GetExport(NativePointer, key, ref value);
+            var result =  AltNative.Resource.Resource_GetExport(NativePointer, key, ref value);
+            if (!result) return false;
+            value.Dispose();
+            return true;
         }
 
         public void Start()
