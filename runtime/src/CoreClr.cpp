@@ -21,10 +21,10 @@ void CoreClr_SetResourceLoadDelegates(CoreClrDelegate_t resourceExecute, CoreClr
 
 CoreClr::CoreClr(alt::ICore* core) {
     this->core = core;
-    _initializeCoreCLR = nullptr;
+    /*_initializeCoreCLR = nullptr;
     _shutdownCoreCLR = nullptr;
     _createDelegate = nullptr;
-    _executeAssembly = nullptr;
+    _executeAssembly = nullptr;*/
 #ifdef _WIN32
     char pf[MAX_PATH];
     SHGetSpecialFolderPath(
@@ -452,13 +452,13 @@ void CoreClr::CreateManagedHost() {
     thread = std::thread(thread_proc, userData);
 }
 
-void CoreClr::ExecuteManagedResource(const char* resourcePath, const char* resourceName,
+bool CoreClr::ExecuteManagedResource(const char* resourcePath, const char* resourceName,
                                      const char* resourceMain, alt::IResource* resource) {
     std::unique_lock<std::mutex> lck(mtx);
     while(hostResourceExecute == nullptr){ cv.wait(lck); }
     if (hostResourceExecute == nullptr) {
         core->LogInfo(alt::String("coreclr-module: Core CLR host not loaded"));
-        return;
+        return false;
     }
 
     // Run managed code
@@ -481,9 +481,10 @@ void CoreClr::ExecuteManagedResource(const char* resourcePath, const char* resou
             };
 
     hostResourceExecute(&args, sizeof(args));
+    return true;
 }
 
-void CoreClr::ExecuteManagedResourceUnload(const char* resourcePath, const char* resourceMain) {
+bool CoreClr::ExecuteManagedResourceUnload(const char* resourcePath, const char* resourceMain) {
     std::unique_lock<std::mutex> lck(mtx);
     while(hostResourceExecuteUnload == nullptr){ cv.wait(lck); }
     if (hostResourceExecuteUnload == nullptr) {

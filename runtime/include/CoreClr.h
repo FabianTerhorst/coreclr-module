@@ -136,10 +136,10 @@ public:
 
     void CreateManagedHost();
 
-    void ExecuteManagedResource(const char* resourcePath, const char* resourceName,
+    bool ExecuteManagedResource(const char* resourcePath, const char* resourceName,
                                 const char* resourceMain, alt::IResource* resource);
 
-    void ExecuteManagedResourceUnload(const char* resourcePath, const char* resourceMain);
+    bool ExecuteManagedResourceUnload(const char* resourcePath, const char* resourceMain);
 
 private:
 #ifdef _WIN32
@@ -147,25 +147,25 @@ private:
 #else
     void* _coreClrLib;
 #endif
-    char* runtimeDirectory;
-    char* dotnetDirectory;
-    coreclr_initialize_ptr _initializeCoreCLR;
+    char* runtimeDirectory = nullptr;
+    char* dotnetDirectory = nullptr;
+    /*coreclr_initialize_ptr _initializeCoreCLR;
     coreclr_shutdown_2_ptr _shutdownCoreCLR;
     coreclr_create_delegate_ptr _createDelegate;
     coreclr_execute_assembly_ptr _executeAssembly;
     void* managedRuntimeHost;
     unsigned int managedDomainId;
     component_entry_point_fn ExecuteResourceDelegate;
-    component_entry_point_fn ExecuteResourceUnloadDelegate;
+    component_entry_point_fn ExecuteResourceUnloadDelegate;*/
 
-    hostfxr_initialize_for_runtime_config_fn _initializeFxr;
-    hostfxr_get_runtime_delegate_fn _getDelegate;
-    hostfxr_run_app_fn _runApp;
-    hostfxr_initialize_for_dotnet_command_line_fn _initForCmd;
-    hostfxr_close_fn _closeFxr;
-    hostfxr_handle cxt;
+    hostfxr_initialize_for_runtime_config_fn _initializeFxr = nullptr;
+    hostfxr_get_runtime_delegate_fn _getDelegate = nullptr;
+    hostfxr_run_app_fn _runApp = nullptr;
+    hostfxr_initialize_for_dotnet_command_line_fn _initForCmd = nullptr;
+    hostfxr_close_fn _closeFxr = nullptr;
+    hostfxr_handle cxt = nullptr;
     std::thread thread;
-    alt::ICore* core;
+    alt::ICore* core = nullptr;
 };
 
 EXPORT void CoreClr_SetResourceLoadDelegates(CoreClrDelegate_t resourceExecute, CoreClrDelegate_t resourceExecuteUnload);

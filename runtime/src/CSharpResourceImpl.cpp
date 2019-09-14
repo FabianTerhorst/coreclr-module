@@ -9,43 +9,46 @@ CSharpResourceImpl::CSharpResourceImpl(alt::ICore* server, CoreClr* coreClr, alt
 }
 
 void CSharpResourceImpl::ResetDelegates() {
-    MainDelegate = [](auto var, auto var2, auto var3, auto var4){ };
-    OnCheckpointDelegate = [](auto var, auto var2, auto var3, auto var4){ };
-    OnClientEventDelegate = [](auto var, auto var2, auto var3){ };
-    OnPlayerConnectDelegate = [](auto var, auto var2, auto var3){ };
-    OnPlayerDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6){ };
-    OnPlayerDeathDelegate = [](auto var, auto var2, auto var3, auto var4){ };
-    OnPlayerDisconnectDelegate = [](auto var, auto var2){ };
-    OnPlayerRemoveDelegate = [](auto var){ };
-    OnVehicleRemoveDelegate = [](auto var){ };
-    OnServerEventDelegate = [](auto var, auto var2){ };
-    OnPlayerChangeVehicleSeatDelegate = [](auto var, auto var2, auto var3, auto var4){ };
-    OnPlayerEnterVehicleDelegate = [](auto var, auto var2, auto var3){ };
-    OnPlayerLeaveVehicleDelegate = [](auto var, auto var2, auto var3){ };
-    OnStopDelegate = [](){ };
-    OnTickDelegate = [](){ };
-    OnCreatePlayerDelegate = [](auto var, auto var2){ };
-    OnRemovePlayerDelegate = [](auto var){ };
-    OnCreateVehicleDelegate = [](auto var, auto var2){ };
-    OnRemoveVehicleDelegate = [](auto var){ };
-    OnCreateBlipDelegate = [](auto var){ };
-    OnRemoveBlipDelegate = [](auto var){ };
-    OnCreateCheckpointDelegate = [](auto var){ };
-    OnRemoveCheckpointDelegate = [](auto var){ };
-    OnCreateVoiceChannelDelegate = [](auto var){ };
-    OnRemoveVoiceChannelDelegate = [](auto var){ };
-    OnConsoleCommandDelegate = [](auto var, auto var2){ };
-    OnMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4){ };
-    OnSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4){ };
-    OnCreateColShapeDelegate = [](auto var){ };
-    OnRemoveColShapeDelegate = [](auto var){ };
-    ColShapeDelegate = [](auto var, auto var2, auto var3, auto var4){ };
+    MainDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnCheckpointDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnClientEventDelegate = [](auto var, auto var2, auto var3) {};
+    OnPlayerConnectDelegate = [](auto var, auto var2, auto var3) {};
+    OnPlayerDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
+    OnPlayerDeathDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnPlayerDisconnectDelegate = [](auto var, auto var2) {};
+    OnPlayerRemoveDelegate = [](auto var) {};
+    OnVehicleRemoveDelegate = [](auto var) {};
+    OnServerEventDelegate = [](auto var, auto var2) {};
+    OnPlayerChangeVehicleSeatDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnPlayerEnterVehicleDelegate = [](auto var, auto var2, auto var3) {};
+    OnPlayerLeaveVehicleDelegate = [](auto var, auto var2, auto var3) {};
+    OnStopDelegate = []() {};
+    OnTickDelegate = []() {};
+    OnCreatePlayerDelegate = [](auto var, auto var2) {};
+    OnRemovePlayerDelegate = [](auto var) {};
+    OnCreateVehicleDelegate = [](auto var, auto var2) {};
+    OnRemoveVehicleDelegate = [](auto var) {};
+    OnCreateBlipDelegate = [](auto var) {};
+    OnRemoveBlipDelegate = [](auto var) {};
+    OnCreateCheckpointDelegate = [](auto var) {};
+    OnRemoveCheckpointDelegate = [](auto var) {};
+    OnCreateVoiceChannelDelegate = [](auto var) {};
+    OnRemoveVoiceChannelDelegate = [](auto var) {};
+    OnConsoleCommandDelegate = [](auto var, auto var2) {};
+    OnMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnCreateColShapeDelegate = [](auto var) {};
+    OnRemoveColShapeDelegate = [](auto var) {};
+    ColShapeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
 }
 
 bool CSharpResourceImpl::Start() {
     ResetDelegates();
-    coreClr->ExecuteManagedResource(this->resource->GetPath().CStr(), this->resource->GetName().CStr(), this->resource->GetMain().CStr(),
-                                    this->resource);
+    if (!coreClr->ExecuteManagedResource(this->resource->GetPath().CStr(), this->resource->GetName().CStr(),
+                                         this->resource->GetMain().CStr(),
+                                         this->resource)) {
+        return false;
+    }
     if (MainDelegate == nullptr) return false;
     MainDelegate(this->server, this->resource, this->resource->GetName().CStr(), resource->GetMain().CStr());
     return true;
@@ -54,7 +57,9 @@ bool CSharpResourceImpl::Start() {
 bool CSharpResourceImpl::Stop() {
     if (OnStopDelegate == nullptr) return false;
     OnStopDelegate();
-    coreClr->ExecuteManagedResourceUnload(this->resource->GetPath().CStr(), this->resource->GetMain().CStr());
+    if (!coreClr->ExecuteManagedResourceUnload(this->resource->GetPath().CStr(), this->resource->GetMain().CStr())) {
+        return false;
+    }
     ResetDelegates();
     return true;
 }
@@ -285,15 +290,19 @@ void CSharpResource_Reload(CSharpResourceImpl* resource) {
     resource->OnStopDelegate();
     resource->coreClr->ExecuteManagedResourceUnload(resource->resource->GetPath().CStr(),
                                                     resource->resource->GetMain().CStr());
-    resource->coreClr->ExecuteManagedResource(resource->resource->GetPath().CStr(), resource->resource->GetName().CStr(),
+    resource->coreClr->ExecuteManagedResource(resource->resource->GetPath().CStr(),
+                                              resource->resource->GetName().CStr(),
                                               resource->resource->GetMain().CStr(), resource->resource);
-    resource->MainDelegate(resource->server, resource->resource, resource->resource->GetName().CStr(), resource->resource->GetMain().CStr());
+    resource->MainDelegate(resource->server, resource->resource, resource->resource->GetName().CStr(),
+                           resource->resource->GetMain().CStr());
 }
 
 void CSharpResource_Load(CSharpResourceImpl* resource) {
-    resource->coreClr->ExecuteManagedResource(resource->resource->GetPath().CStr(), resource->resource->GetName().CStr(),
+    resource->coreClr->ExecuteManagedResource(resource->resource->GetPath().CStr(),
+                                              resource->resource->GetName().CStr(),
                                               resource->resource->GetMain().CStr(), resource->resource);
-    resource->MainDelegate(resource->server, resource->resource, resource->resource->GetName().CStr(), resource->resource->GetMain().CStr());
+    resource->MainDelegate(resource->server, resource->resource, resource->resource->GetName().CStr(),
+                           resource->resource->GetMain().CStr());
 }
 
 void CSharpResource_Unload(CSharpResourceImpl* resource) {
