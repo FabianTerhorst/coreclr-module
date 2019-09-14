@@ -27,7 +27,15 @@ bool Resource_GetExport(alt::IResource* resource, const char* key, alt::MValue &
 }
 
 void Resource_SetExport(alt::IResource* resource, const char* key, const alt::MValue* val) {
-    resource->GetExports()[key] = val;
+    resource->GetExports()[key] = *val;
+}
+
+void Resource_SetExports(alt::IResource* resource, alt::MValue* val, const char** keys, int size) {
+    alt::MValueDict dict;
+    for (int i = 0; i < size; i++) {
+        dict[keys[i]] = val[i];
+    }
+    resource->SetExports(dict);
 }
 
 void Resource_GetPath(alt::IResource* resource, const char*&text) {

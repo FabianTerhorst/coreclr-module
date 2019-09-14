@@ -489,7 +489,7 @@ bool CoreClr::ExecuteManagedResourceUnload(const char* resourcePath, const char*
     while(hostResourceExecuteUnload == nullptr){ cv.wait(lck); }
     if (hostResourceExecuteUnload == nullptr) {
         core->LogInfo(alt::String("coreclr-module: Core CLR host not loaded"));
-        return;
+        return false;
     }
 
     // Run managed code
@@ -505,4 +505,5 @@ bool CoreClr::ExecuteManagedResourceUnload(const char* resourcePath, const char*
             };
 
     hostResourceExecuteUnload(&args, sizeof(args));
+    return true;
 }
