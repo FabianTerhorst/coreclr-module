@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
+using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
@@ -134,6 +135,18 @@ namespace AltV.Net
             BaseObjectType killerBaseObjectType, uint weapon)
         {
             _module.OnPlayerDeath(playerPointer, killerEntityPointer, killerBaseObjectType, weapon);
+        }
+
+        public static void OnExplosion(IntPtr playerPointer, ExplosionType explosionType,
+            Position position, uint explosionFx)
+        {
+            _module.OnExplosion(playerPointer, explosionType, position, explosionFx);
+        }
+
+        public static void OnWeaponDamage(IntPtr playerPointer, IntPtr entityPointer,
+            BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart)
+        {
+            _module.OnWeaponDamage(playerPointer, entityPointer, entityType, weapon, damage, shotOffset, bodyPart);
         }
 
         public static void OnPlayerChangeVehicleSeat(IntPtr vehiclePointer, IntPtr playerPointer, byte oldSeat,

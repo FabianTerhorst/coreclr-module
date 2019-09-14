@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
+using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Events;
@@ -70,6 +70,12 @@ namespace AltV.Net
 
         internal readonly IEventHandler<PlayerDeadDelegate> PlayerDeadEventHandler =
             new HashSetEventHandler<PlayerDeadDelegate>();
+        
+        internal readonly IEventHandler<ExplosionDelegate> ExplosionEventHandler =
+            new HashSetEventHandler<ExplosionDelegate>();
+        
+        internal readonly IEventHandler<WeaponDamageDelegate> WeaponDamageEventHandler =
+            new HashSetEventHandler<WeaponDamageDelegate>();
 
         internal readonly IEventHandler<PlayerChangeVehicleSeatDelegate> PlayerChangeVehicleSeatEventHandler =
             new HashSetEventHandler<PlayerChangeVehicleSeatDelegate>();
@@ -387,6 +393,44 @@ namespace AltV.Net
             foreach (var @delegate in PlayerDeadEventHandler.GetEvents())
             {
                 @delegate(player, killer, weapon);
+            }
+        }
+        
+        public void OnExplosion(IntPtr playerPointer, ExplosionType explosionType, Position position, uint explosionFx)
+        {
+            if (!PlayerPool.GetOrCreate(playerPointer, out var sourcePlayer))
+            {
+                return;
+            }
+            
+            OnExplosionEvent(sourcePlayer, explosionType, position, explosionFx);
+        }
+
+        public virtual void OnExplosionEvent(IPlayer sourcePlayer, ExplosionType explosionType, Position position, uint explosionFx)
+        {
+            foreach (var @delegate in ExplosionEventHandler.GetEvents())
+            {
+                @delegate(sourcePlayer, explosionType, position, explosionFx);
+            }
+        }
+
+        public void OnWeaponDamage(IntPtr playerPointer, IntPtr entityPointer, BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart)
+        {
+            if (!PlayerPool.GetOrCreate(playerPointer, out var sourcePlayer))
+            {
+                return;
+            }
+            
+            BaseEntityPool.GetOrCreate(entityPointer, entityType, out var targetEntity);
+            
+            OnWeaponDamageEvent(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
+        }
+
+        public virtual void OnWeaponDamageEvent(IPlayer sourcePlayer, IEntity targetEntity, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart)
+        {
+            foreach (var @delegate in WeaponDamageEventHandler.GetEvents())
+            {
+                @delegate(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
             }
         }
 

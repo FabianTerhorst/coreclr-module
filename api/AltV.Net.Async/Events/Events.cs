@@ -37,4 +37,10 @@ namespace AltV.Net.Async.Events
     public delegate Task MetaDataChangeAsyncDelegate(IEntity entity, string key, object value);
 
     public delegate Task ColShapeAsyncDelegate(IColShape colShape, IEntity targetEntity, bool state);
+    
+    public delegate Task ExplosionAsyncDelegate(IPlayer player, ExplosionType explosionType, Position position,
+        uint explosionFx);
+
+    public delegate Task WeaponDamageAsyncDelegate(IPlayer player, IEntity target, uint weapon, ushort damage,
+        Position shotOffset, BodyPart bodyPart);
 }

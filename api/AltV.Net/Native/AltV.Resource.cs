@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 
@@ -15,10 +16,10 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResource_Reload(IntPtr resourcePointer);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResource_Load(IntPtr resourcePointer);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResource_Unload(IntPtr resourcePointer);
 
@@ -52,10 +53,10 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Resource_Stop(IntPtr resourcePointer);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr Resource_GetImpl(IntPtr resourcePointer);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr Resource_GetCSharpImpl(IntPtr resourcePointer);
 
@@ -129,6 +130,12 @@ namespace AltV.Net.Native
             internal delegate void MetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key,
                 ref MValue value);
 
+            internal delegate void ExplosionDelegate(IntPtr playerPointer, ExplosionType explosionType,
+                Position position, uint explosionFx);
+
+            internal delegate void WeaponDamageDelegate(IntPtr playerPointer, IntPtr entityPointer,
+                BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart);
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResource_SetMain(IntPtr resourcePointer, MainDelegate mainDelegate,
                 StopDelegate stopDelegate,
@@ -136,6 +143,7 @@ namespace AltV.Net.Native
                 CheckpointDelegate checkpointDelegate,
                 ClientEventDelegate clientEventDelegate, PlayerDamageDelegate playerDamageDelegate,
                 PlayerConnectDelegate playerConnectDelegate, PlayerDeathDelegate playerDeathDelegate,
+                ExplosionDelegate explosionDelegate, WeaponDamageDelegate weaponDamageDelegate,
                 PlayerDisconnectDelegate playerDisconnectDelegate, PlayerRemoveDelegate playerRemoveDelegate,
                 VehicleRemoveDelegate vehicleRemoveDelegate,
                 PlayerChangeVehicleSeatDelegate playerChangeVehicleSeatDelegate,

@@ -15,6 +15,8 @@ void CSharpResourceImpl::ResetDelegates() {
     OnPlayerConnectDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
     OnPlayerDeathDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    ExplosionDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    WeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7) {};;
     OnPlayerDisconnectDelegate = [](auto var, auto var2) {};
     OnPlayerRemoveDelegate = [](auto var) {};
     OnVehicleRemoveDelegate = [](auto var) {};
@@ -128,13 +130,6 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                                        entity->GetID(),
                                        ((alt::CPlayerDamageEvent*) (ev))->GetWeapon(),
                                        ((alt::CPlayerDamageEvent*) (ev))->GetDamage());
-            } else {
-                OnPlayerDamageDelegate(((alt::CPlayerDamageEvent*) (ev))->GetTarget(),
-                                       nullptr,
-                                       alt::IBaseObject::Type::BLIP,// These are placeholders for none ptr type and are ignored on c# side
-                                       0,
-                                       ((alt::CPlayerDamageEvent*) (ev))->GetWeapon(),
-                                       ((alt::CPlayerDamageEvent*) (ev))->GetDamage());
             }
             break;
         }
@@ -146,12 +141,37 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                                       entityPtr,
                                       entity->GetType(),
                                       ((alt::CPlayerDeathEvent*) (ev))->GetWeapon());
-            } else {
-                OnPlayerDeathDelegate(((alt::CPlayerDeathEvent*) (ev))->GetTarget(),
-                                      nullptr,
-                                      alt::IBaseObject::Type::BLIP,
-                                      ((alt::CPlayerDeathEvent*) (ev))->GetWeapon());
             }
+            break;
+        }
+        case alt::CEvent::Type::FIRE_EVENT: {
+            //auto fireEvent = ((alt::CFireEvent*) (ev));
+            //TODO: implement when implemented in cpp sdk
+            break;
+        }
+        case alt::CEvent::Type::EXPLOSION_EVENT: {
+            auto explosionEvent = ((alt::CExplosionEvent*) (ev));
+            auto eventPosition = explosionEvent->GetPosition();
+            position_t position = {};
+            position.x = eventPosition.x;
+            position.y = eventPosition.y;
+            position.z = eventPosition.z;
+            ExplosionDelegate(explosionEvent->GetSource(), explosionEvent->GetExplosionType(), position,
+                              explosionEvent->GetExplosionFX());
+            break;
+        }
+        case alt::CEvent::Type::WEAPON_DAMAGE_EVENT: {
+            auto weaponDamageEvent = ((alt::CWeaponDamageEvent*) (ev));
+            auto targetEntity = weaponDamageEvent->GetTarget();
+            if (targetEntity == nullptr) return true;
+            auto eventShotOffset = weaponDamageEvent->GetShotOffset();
+            position_t shotOffset = {};
+            shotOffset.x = eventShotOffset[0];
+            shotOffset.y = eventShotOffset[1];
+            shotOffset.z = eventShotOffset[2];
+            WeaponDamageDelegate(weaponDamageEvent->GetSource(), GetEntityPointer(targetEntity),
+                                 targetEntity->GetType(), weaponDamageEvent->GetWeaponHash(),
+                                 weaponDamageEvent->GetDamageValue(), shotOffset, weaponDamageEvent->GetBodyPart());
             break;
         }
         case alt::CEvent::Type::PLAYER_DISCONNECT: {
@@ -323,6 +343,8 @@ void CSharpResource_SetMain(CSharpResourceImpl* resource, MainDelegate_t mainDel
                             PlayerDamageDelegate_t playerDamageDelegate,
                             PlayerConnectDelegate_t playerConnectDelegate,
                             PlayerDeathDelegate_t playerDeathDelegate,
+                            ExplosionDelegate_t explosionDelegate,
+                            WeaponDamageDelegate_t weaponDamageDelegate,
                             PlayerDisconnectDelegate_t playerDisconnectDelegate,
                             PlayerRemoveDelegate_t playerRemoveDelegate,
                             VehicleRemoveDelegate_t vehicleRemoveDelegate,
@@ -354,6 +376,8 @@ void CSharpResource_SetMain(CSharpResourceImpl* resource, MainDelegate_t mainDel
     resource->OnPlayerDamageDelegate = playerDamageDelegate;
     resource->OnPlayerConnectDelegate = playerConnectDelegate;
     resource->OnPlayerDeathDelegate = playerDeathDelegate;
+    resource->ExplosionDelegate = explosionDelegate;
+    resource->WeaponDamageDelegate = weaponDamageDelegate;
     resource->OnPlayerDisconnectDelegate = playerDisconnectDelegate;
     resource->OnPlayerRemoveDelegate = playerRemoveDelegate;
     resource->OnVehicleRemoveDelegate = vehicleRemoveDelegate;

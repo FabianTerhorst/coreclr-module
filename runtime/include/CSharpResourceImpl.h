@@ -29,6 +29,7 @@
 #endif
 
 #include "CoreClr.h"
+#include "../src/altv-c-api/position.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -120,6 +121,11 @@ typedef void (* MetaChangeDelegate_t)(void* entity, alt::IBaseObject::Type type,
 typedef void (* ColShapeDelegate_t)(alt::IColShape* colShape, void* entity, alt::IBaseObject::Type baseObjectType,
                                     bool state);
 
+typedef void (* WeaponDamageDelegate_t)(alt::IPlayer* source, void* target, alt::IBaseObject::Type targetBaseObjectType,
+                                     uint32_t weaponHash, uint16_t damageValue, position_t shotOffset, alt::CWeaponDamageEvent::BodyPart bodyPart);
+
+typedef void (* ExplosionDelegate_t)(alt::IPlayer* source, alt::CExplosionEvent::ExplosionType explosionType, position_t position, uint32_t explosionFX);
+
 class CSharpResourceImpl : public alt::IResource::Impl {
     bool OnEvent(const alt::CEvent* ev) override;
 
@@ -155,6 +161,10 @@ public:
     PlayerDamageDelegate_t OnPlayerDamageDelegate = nullptr;
 
     PlayerDeathDelegate_t OnPlayerDeathDelegate = nullptr;
+
+    ExplosionDelegate_t ExplosionDelegate = nullptr;
+
+    WeaponDamageDelegate_t WeaponDamageDelegate = nullptr;
 
     PlayerDisconnectDelegate_t OnPlayerDisconnectDelegate = nullptr;
 
@@ -231,6 +241,8 @@ EXPORT void CSharpResource_SetMain(CSharpResourceImpl* resource,
                                    PlayerDamageDelegate_t playerDamageDelegate,
                                    PlayerConnectDelegate_t playerConnectDelegate,
                                    PlayerDeathDelegate_t playerDeathDelegate,
+                                   ExplosionDelegate_t explosionDelegate,
+                                   WeaponDamageDelegate_t weaponDamageDelegate,
                                    PlayerDisconnectDelegate_t playerDisconnectDelegate,
                                    PlayerRemoveDelegate_t playerRemoveDelegate,
                                    VehicleRemoveDelegate_t vehicleRemoveDelegate,

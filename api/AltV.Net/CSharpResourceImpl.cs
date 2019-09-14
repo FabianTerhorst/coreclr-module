@@ -69,6 +69,14 @@ namespace AltV.Net
 
             GCHandle.Alloc(onPlayerDeath);
 
+            AltNative.Resource.ExplosionDelegate explosionDelegate = ModuleWrapper.OnExplosion;
+
+            GCHandle.Alloc(explosionDelegate);
+
+            AltNative.Resource.WeaponDamageDelegate weaponDamageDelegate = ModuleWrapper.OnWeaponDamage;
+
+            GCHandle.Alloc(weaponDamageDelegate);
+
             AltNative.Resource.PlayerDisconnectDelegate onPlayerDisconnect = ModuleWrapper.OnPlayerDisconnect;
 
             GCHandle.Alloc(onPlayerDisconnect);
@@ -160,7 +168,8 @@ namespace AltV.Net
 
             AltNative.Resource.CSharpResource_SetMain(NativePointer, onStart, onStop, onTick, onServerEvent,
                 onCheckpoint,
-                onClientEvent, onPlayerDamage, onPlayerConnect, onPlayerDeath, onPlayerDisconnect, onPlayerRemove,
+                onClientEvent, onPlayerDamage, onPlayerConnect, onPlayerDeath, explosionDelegate, weaponDamageDelegate,
+                onPlayerDisconnect, onPlayerRemove,
                 onVehicleRemove,
                 onPlayerChangeVehicleSeat, onPlayerEnterVehicle, onPlayerLeaveVehicle, onCreatePlayer, onRemovePlayer,
                 onCreateVehicle, onRemoveVehicle,

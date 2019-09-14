@@ -1,3 +1,4 @@
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
@@ -36,8 +37,14 @@ namespace AltV.Net.Events
     public delegate void ServerCustomEventEventDelegate(string eventName, ref MValueArray mValueArray);
 
     public delegate void ConsoleCommandDelegate(string name, string[] args);
-    
+
     public delegate void MetaDataChangeDelegate(IEntity entity, string key, object value);
-    
+
     public delegate void ColShapeDelegate(IColShape colShape, IEntity targetEntity, bool state);
+
+    public delegate void ExplosionDelegate(IPlayer player, ExplosionType explosionType, Position position,
+        uint explosionFx);
+
+    public delegate void WeaponDamageDelegate(IPlayer player, IEntity target, uint weapon, ushort damage,
+        Position shotOffset, BodyPart bodyPart);
 }

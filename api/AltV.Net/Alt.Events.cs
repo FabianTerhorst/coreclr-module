@@ -38,6 +38,18 @@ namespace AltV.Net
             remove => Module.PlayerDeadEventHandler.Remove(value);
         }
 
+        public static event ExplosionDelegate OnExplosion
+        {
+            add => Module.ExplosionEventHandler.Add(value);
+            remove => Module.ExplosionEventHandler.Remove(value);
+        }
+
+        public static event WeaponDamageDelegate OnWeaponDamage
+        {
+            add => Module.WeaponDamageEventHandler.Add(value);
+            remove => Module.WeaponDamageEventHandler.Remove(value);
+        }
+
         public static event PlayerDisconnectDelegate OnPlayerDisconnect
         {
             add => Module.PlayerDisconnectEventHandler.Add(value);

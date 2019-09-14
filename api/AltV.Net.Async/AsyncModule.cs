@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Loader;
 using System.Threading.Tasks;
 using AltV.Net.Async.Events;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
 using AltV.Net.Native;
@@ -25,6 +26,12 @@ namespace AltV.Net.Async
 
         internal readonly AsyncEventHandler<PlayerDeadAsyncDelegate> PlayerDeadAsyncEventHandler =
             new AsyncEventHandler<PlayerDeadAsyncDelegate>();
+
+        internal readonly AsyncEventHandler<ExplosionAsyncDelegate> ExplosionAsyncEventHandler =
+            new AsyncEventHandler<ExplosionAsyncDelegate>();
+
+        internal readonly AsyncEventHandler<WeaponDamageAsyncDelegate> WeaponDamageAsyncEventHandler =
+            new AsyncEventHandler<WeaponDamageAsyncDelegate>();
 
         internal readonly AsyncEventHandler<PlayerChangeVehicleSeatAsyncDelegate>
             PlayerChangeVehicleSeatAsyncEventHandler =
@@ -74,7 +81,8 @@ namespace AltV.Net.Async
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
-            IBaseObjectPool<IColShape> colShapePool) : base(server, assemblyLoadContext, moduleResource, baseBaseObjectPool,
+            IBaseObjectPool<IColShape> colShapePool) : base(server, assemblyLoadContext, moduleResource,
+            baseBaseObjectPool,
             baseEntityPool, playerPool, vehiclePool, blipPool,
             checkpointPool, voiceChannelPool, colShapePool)
         {
@@ -96,23 +104,23 @@ namespace AltV.Net.Async
             Task.Run(() => PlayerConnectAsyncEventHandler.CallAsyncWithoutTask(@delegate => @delegate(player, reason)));
         }
 
-        public override void OnPlayerDamageEvent(IPlayer player, IEntity attacker, uint weapon, ushort damage)
+        public override void OnExplosionEvent(IPlayer sourcePlayer, ExplosionType explosionType, Position position,
+            uint explosionFx)
         {
-            base.OnPlayerDamageEvent(player, attacker, weapon, damage);
-            if (!PlayerDamageAsyncEventHandler.HasEvents()) return;
-            var oldHealth = player.Health;
-            var oldArmor = player.Armor;
+            base.OnExplosionEvent(sourcePlayer, explosionType, position, explosionFx);
+            if (!ExplosionAsyncEventHandler.HasEvents()) return;
             Task.Run(() =>
-                PlayerDamageAsyncEventHandler.CallAsyncWithoutTask(@delegate =>
-                    @delegate(player, attacker, oldHealth, oldArmor, weapon, damage)));
+                ExplosionAsyncEventHandler.CallAsyncWithoutTask(@delegate =>
+                    @delegate(sourcePlayer, explosionType, position, explosionFx)));
         }
 
-        public override void OnPlayerDeathEvent(IPlayer player, IEntity killer, uint weapon)
+        public override void OnWeaponDamageEvent(IPlayer sourcePlayer, IEntity targetEntity, uint weapon, ushort damage,
+            Position shotOffset, BodyPart bodyPart)
         {
-            base.OnPlayerDeathEvent(player, killer, weapon);
-            if (!PlayerDeadAsyncEventHandler.HasEvents()) return;
-            Task.Run(() =>
-                PlayerDeadAsyncEventHandler.CallAsyncWithoutTask(@delegate => @delegate(player, killer, weapon)));
+            base.OnWeaponDamageEvent(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
+            if (!WeaponDamageAsyncEventHandler.HasEvents()) return;
+            Task.Run(() => WeaponDamageAsyncEventHandler.CallAsyncWithoutTask(@delegate =>
+                @delegate(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart)));
         }
 
         public override void OnPlayerChangeVehicleSeatEvent(IVehicle vehicle, IPlayer player, byte oldSeat,
