@@ -43,7 +43,7 @@ CoreClr::CoreClr(alt::ICore* core) {
     strcpy(dotnetDirectory, pf);
     strcat(dotnetDirectory, dotnetProgramFilesPath);
 
-    GetPath(server, defaultPath);
+    GetPath(core, defaultPath);
     delete[] defaultPath;
 #else
     auto currDotnetDirectory = "/usr/share/dotnet/";
@@ -61,7 +61,7 @@ CoreClr::CoreClr(alt::ICore* core) {
     _coreClrLib = LoadLibraryEx(fullPath, nullptr, 0);
     delete[] fullPath;
     if (_coreClrLib == nullptr) {
-        server->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll"));
+        core->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll"));
         return;
     }
 
