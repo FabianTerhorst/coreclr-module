@@ -13,9 +13,10 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.13.0</PackageVersion>
+        <PackageVersion>1.15.0-beta</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes></PackageReleaseNotes>
+        <PackageReleaseNotes>Add Alt.OnWeaponDamage
+Add Alt.OnExplosion</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

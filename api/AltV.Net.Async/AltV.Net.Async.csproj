@@ -12,9 +12,10 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.13.1</PackageVersion>
+        <PackageVersion>1.15.0-beta</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Fix multi async resources</PackageReleaseNotes>
+        <PackageReleaseNotes>Add Alt.OnWeaponDamage
+Add Alt.OnExplosion</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
@@ -26,7 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="System.Threading.Channels" Version="4.5.0" />
+      <PackageReference Include="System.Threading.Channels" Version="4.6.0-preview9.19421.4" />
     </ItemGroup>
 
 </Project>
