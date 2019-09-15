@@ -259,8 +259,6 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
 
 void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object) {
     if (object != nullptr) {
-        server->LogInfo(alt::String("create: ") + std::to_string((uint8_t) object->GetType()));
-        server->LogInfo(alt::String("vehicle: ") + std::to_string((uint8_t) alt::IBaseObject::Type::VEHICLE));
         switch (object->GetType()) {
             case alt::IBaseObject::Type::PLAYER: {
                 auto player = dynamic_cast<alt::IPlayer*>(object);
@@ -269,7 +267,6 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object) {
                 break;
             case alt::IBaseObject::Type::VEHICLE: {
                 auto vehicle = dynamic_cast<alt::IVehicle*>(object);
-                server->LogInfo(alt::String("vehicle-id: ") + std::to_string(vehicle->GetID()));
                 OnCreateVehicleDelegate(vehicle, vehicle->GetID());
             }
                 break;
