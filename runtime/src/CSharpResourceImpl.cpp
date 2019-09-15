@@ -15,8 +15,8 @@ void CSharpResourceImpl::ResetDelegates() {
     OnPlayerConnectDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
     OnPlayerDeathDelegate = [](auto var, auto var2, auto var3, auto var4) {};
-    ExplosionDelegate = [](auto var, auto var2, auto var3, auto var4) {};
-    WeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7) {};;
+    OnExplosionDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnWeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7) {};;
     OnPlayerDisconnectDelegate = [](auto var, auto var2) {};
     OnPlayerRemoveDelegate = [](auto var) {};
     OnVehicleRemoveDelegate = [](auto var) {};
@@ -41,7 +41,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnCreateColShapeDelegate = [](auto var) {};
     OnRemoveColShapeDelegate = [](auto var) {};
-    ColShapeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnColShapeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
 }
 
 bool CSharpResourceImpl::Start() {
@@ -157,8 +157,8 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             position.x = eventPosition.x;
             position.y = eventPosition.y;
             position.z = eventPosition.z;
-            ExplosionDelegate(explosionEvent->GetSource(), explosionEvent->GetExplosionType(), position,
-                              explosionEvent->GetExplosionFX());
+            OnExplosionDelegate(explosionEvent->GetSource(), explosionEvent->GetExplosionType(), position,
+                                explosionEvent->GetExplosionFX());
         }
             break;
         case alt::CEvent::Type::WEAPON_DAMAGE_EVENT: {
@@ -170,9 +170,9 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             shotOffset.x = eventShotOffset[0];
             shotOffset.y = eventShotOffset[1];
             shotOffset.z = eventShotOffset[2];
-            WeaponDamageDelegate(weaponDamageEvent->GetSource(), GetEntityPointer(targetEntity),
-                                 targetEntity->GetType(), weaponDamageEvent->GetWeaponHash(),
-                                 weaponDamageEvent->GetDamageValue(), shotOffset, weaponDamageEvent->GetBodyPart());
+            OnWeaponDamageDelegate(weaponDamageEvent->GetSource(), GetEntityPointer(targetEntity),
+                                   targetEntity->GetType(), weaponDamageEvent->GetWeaponHash(),
+                                   weaponDamageEvent->GetDamageValue(), shotOffset, weaponDamageEvent->GetBodyPart());
         }
             break;
         case alt::CEvent::Type::PLAYER_DISCONNECT: {
@@ -246,10 +246,10 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             auto entity = ((alt::CColShapeEvent*) (ev))->GetEntity();
             auto entityPointer = GetEntityPointer(entity);
             if (entity != nullptr && entityPointer != nullptr) {
-                ColShapeDelegate(((alt::CColShapeEvent*) (ev))->GetTarget(),
-                                 entityPointer,
-                                 entity->GetType(),
-                                 ((alt::CColShapeEvent*) (ev))->GetState());
+                OnColShapeDelegate(((alt::CColShapeEvent*) (ev))->GetTarget(),
+                                   entityPointer,
+                                   entity->GetType(),
+                                   ((alt::CColShapeEvent*) (ev))->GetState());
             }
         }
             break;
@@ -315,7 +315,7 @@ void CSharpResourceImpl::OnTick() {
     OnTickDelegate();
 }
 
-void CSharpResource_Reload(CSharpResourceImpl* resource) {
+void CSharpResourceImpl_Reload(CSharpResourceImpl* resource) {
     resource->OnStopDelegate();
     resource->coreClr->ExecuteManagedResourceUnload(resource->resource->GetPath().CStr(),
                                                     resource->resource->GetMain().CStr());
@@ -326,7 +326,7 @@ void CSharpResource_Reload(CSharpResourceImpl* resource) {
                            resource->resource->GetMain().CStr());
 }
 
-void CSharpResource_Load(CSharpResourceImpl* resource) {
+void CSharpResourceImpl_Load(CSharpResourceImpl* resource) {
     resource->coreClr->ExecuteManagedResource(resource->resource->GetPath().CStr(),
                                               resource->resource->GetName().CStr(),
                                               resource->resource->GetMain().CStr(), resource->resource);
@@ -334,79 +334,175 @@ void CSharpResource_Load(CSharpResourceImpl* resource) {
                            resource->resource->GetMain().CStr());
 }
 
-void CSharpResource_Unload(CSharpResourceImpl* resource) {
+void CSharpResourceImpl_Unload(CSharpResourceImpl* resource) {
     resource->OnStopDelegate();
     resource->coreClr->ExecuteManagedResourceUnload(resource->resource->GetPath().CStr(),
                                                     resource->resource->GetMain().CStr());
 }
 
-void CSharpResource_SetMain(CSharpResourceImpl* resource,
-                            MainDelegate_t mainDelegate,
-                            StopDelegate_t stopDelegate,
-                            TickDelegate_t tickDelegate,
-                            ServerEventDelegate_t serverEventDelegate,
-                            CheckpointDelegate_t checkpointDelegate,
-                            ClientEventDelegate_t clientEventDelegate,
-                            PlayerDamageDelegate_t playerDamageDelegate,
-                            PlayerConnectDelegate_t playerConnectDelegate,
-                            PlayerDeathDelegate_t playerDeathDelegate,
-                            ExplosionDelegate_t explosionDelegate,
-                            WeaponDamageDelegate_t weaponDamageDelegate,
-                            PlayerDisconnectDelegate_t playerDisconnectDelegate,
-                            PlayerRemoveDelegate_t playerRemoveDelegate,
-                            VehicleRemoveDelegate_t vehicleRemoveDelegate,
-                            PlayerChangeVehicleSeatDelegate_t playerChangeVehicleSeatDelegate,
-                            PlayerEnterVehicleDelegate_t playerEnterVehicleDelegate,
-                            PlayerLeaveVehicleDelegate_t playerLeaveVehicleDelegate,
-                            CreatePlayerDelegate_t createPlayerDelegate,
-                            RemovePlayerDelegate_t removePlayerDelegate,
-                            CreateVehicleDelegate_t createVehicleDelegate,
-                            RemoveVehicleDelegate_t removeVehicleDelegate,
-                            CreateBlipDelegate_t createBlipDelegate,
-                            RemoveBlipDelegate_t removeBlipDelegate,
-                            CreateCheckpointDelegate_t createCheckpointDelegate,
-                            RemoveCheckpointDelegate_t removeCheckpointDelegate,
-                            OnCreateVoiceChannelDelegate_t createVoiceChannelDelegate,
-                            OnRemoveVoiceChannelDelegate_t removeVoiceChannelDelegate,
-                            OnConsoleCommandDelegate_t consoleCommandDelegate,
-                            MetaChangeDelegate_t metaChangeDelegate,
-                            MetaChangeDelegate_t syncedMetaChangeDelegate,
-                            OnCreateColShapeDelegate_t createColShapeDelegate,
-                            OnRemoveColShapeDelegate_t removeColShapeDelegate,
-                            ColShapeDelegate_t colShapeDelegate) {
-    resource->MainDelegate = mainDelegate;
-    resource->OnStopDelegate = stopDelegate;
-    resource->OnTickDelegate = tickDelegate;
-    resource->OnServerEventDelegate = serverEventDelegate;
-    resource->OnCheckpointDelegate = checkpointDelegate;
-    resource->OnClientEventDelegate = clientEventDelegate;
-    resource->OnPlayerDamageDelegate = playerDamageDelegate;
-    resource->OnPlayerConnectDelegate = playerConnectDelegate;
-    resource->OnPlayerDeathDelegate = playerDeathDelegate;
-    resource->ExplosionDelegate = explosionDelegate;
-    resource->WeaponDamageDelegate = weaponDamageDelegate;
-    resource->OnPlayerDisconnectDelegate = playerDisconnectDelegate;
-    resource->OnPlayerRemoveDelegate = playerRemoveDelegate;
-    resource->OnVehicleRemoveDelegate = vehicleRemoveDelegate;
-    resource->OnPlayerChangeVehicleSeatDelegate = playerChangeVehicleSeatDelegate;
-    resource->OnPlayerEnterVehicleDelegate = playerEnterVehicleDelegate;
-    resource->OnPlayerLeaveVehicleDelegate = playerLeaveVehicleDelegate;
-    resource->OnCreatePlayerDelegate = createPlayerDelegate;
-    resource->OnRemovePlayerDelegate = removePlayerDelegate;
-    resource->OnCreateVehicleDelegate = createVehicleDelegate;
-    resource->OnRemoveVehicleDelegate = removeVehicleDelegate;
-    resource->OnCreateBlipDelegate = createBlipDelegate;
-    resource->OnRemoveBlipDelegate = removeBlipDelegate;
-    resource->OnCreateCheckpointDelegate = createCheckpointDelegate;
-    resource->OnRemoveCheckpointDelegate = removeCheckpointDelegate;
-    resource->OnCreateVoiceChannelDelegate = createVoiceChannelDelegate;
-    resource->OnRemoveVoiceChannelDelegate = removeVoiceChannelDelegate;
-    resource->OnConsoleCommandDelegate = consoleCommandDelegate;
-    resource->OnMetaChangeDelegate = metaChangeDelegate;
-    resource->OnSyncedMetaChangeDelegate = syncedMetaChangeDelegate;
-    resource->OnCreateColShapeDelegate = createColShapeDelegate;
-    resource->OnRemoveColShapeDelegate = removeColShapeDelegate;
-    resource->ColShapeDelegate = colShapeDelegate;
+void CSharpResourceImpl_SetMainDelegate(CSharpResourceImpl* resource,
+                                        MainDelegate_t delegate) {
+    resource->MainDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetStopDelegate(CSharpResourceImpl* resource,
+                                        StopDelegate_t delegate) {
+    resource->OnStopDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetTickDelegate(CSharpResourceImpl* resource,
+                                        TickDelegate_t delegate) {
+    resource->OnTickDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetServerEventDelegate(CSharpResourceImpl* resource,
+                                               ServerEventDelegate_t delegate) {
+    resource->OnServerEventDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetCheckpointDelegate(CSharpResourceImpl* resource,
+                                              CheckpointDelegate_t delegate) {
+    resource->OnCheckpointDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetClientEventDelegate(CSharpResourceImpl* resource,
+                                               ClientEventDelegate_t delegate) {
+    resource->OnClientEventDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerDamageDelegate(CSharpResourceImpl* resource,
+                                                PlayerDamageDelegate_t delegate) {
+    resource->OnPlayerDamageDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerConnectDelegate(CSharpResourceImpl* resource,
+                                                 PlayerConnectDelegate_t delegate) {
+    resource->OnPlayerConnectDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerDeathDelegate(CSharpResourceImpl* resource,
+                                               PlayerDeathDelegate_t delegate) {
+    resource->OnPlayerDeathDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetExplosionDelegate(CSharpResourceImpl* resource,
+                                             ExplosionDelegate_t delegate) {
+    resource->OnExplosionDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetWeaponDamageDelegate(CSharpResourceImpl* resource,
+                                                WeaponDamageDelegate_t delegate) {
+    resource->OnWeaponDamageDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerDisconnectDelegate(CSharpResourceImpl* resource,
+                                                    PlayerDisconnectDelegate_t delegate) {
+    resource->OnPlayerDisconnectDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerRemoveDelegate(CSharpResourceImpl* resource,
+                                                PlayerRemoveDelegate_t delegate) {
+    resource->OnPlayerRemoveDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetVehicleRemoveDelegate(CSharpResourceImpl* resource,
+                                                 VehicleRemoveDelegate_t delegate) {
+    resource->OnVehicleRemoveDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerChangeVehicleSeatDelegate(CSharpResourceImpl* resource,
+                                                           PlayerChangeVehicleSeatDelegate_t delegate) {
+    resource->OnPlayerChangeVehicleSeatDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerEnterVehicleDelegate(CSharpResourceImpl* resource,
+                                                      PlayerEnterVehicleDelegate_t delegate) {
+    resource->OnPlayerEnterVehicleDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerLeaveVehicleDelegate(CSharpResourceImpl* resource,
+                                                      PlayerLeaveVehicleDelegate_t delegate) {
+    resource->OnPlayerLeaveVehicleDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetCreatePlayerDelegate(CSharpResourceImpl* resource,
+                                                CreatePlayerDelegate_t delegate) {
+    resource->OnCreatePlayerDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetRemovePlayerDelegate(CSharpResourceImpl* resource,
+                                                RemovePlayerDelegate_t delegate) {
+    resource->OnRemovePlayerDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetCreateVehicleDelegate(CSharpResourceImpl* resource,
+                                                 CreateVehicleDelegate_t delegate) {
+    resource->OnCreateVehicleDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetRemoveVehicleDelegate(CSharpResourceImpl* resource,
+                                                 RemoveVehicleDelegate_t delegate) {
+    resource->OnRemoveVehicleDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetCreateBlipDelegate(CSharpResourceImpl* resource,
+                                              CreateBlipDelegate_t delegate) {
+    resource->OnCreateBlipDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetRemoveBlipDelegate(CSharpResourceImpl* resource,
+                                              RemoveBlipDelegate_t delegate) {
+    resource->OnRemoveBlipDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetCreateCheckpointDelegate(CSharpResourceImpl* resource,
+                                                    CreateCheckpointDelegate_t delegate) {
+    resource->OnCreateCheckpointDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetRemoveCheckpointDelegate(CSharpResourceImpl* resource,
+                                                    RemoveCheckpointDelegate_t delegate) {
+    resource->OnRemoveCheckpointDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetCreateVoiceChannelDelegate(CSharpResourceImpl* resource,
+                                                      CreateVoiceChannelDelegate_t delegate) {
+    resource->OnCreateVoiceChannelDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetRemoveVoiceChannelDelegate(CSharpResourceImpl* resource,
+                                                      RemoveVoiceChannelDelegate_t delegate) {
+    resource->OnRemoveVoiceChannelDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetConsoleCommandDelegate(CSharpResourceImpl* resource,
+                                                  ConsoleCommandDelegate_t delegate) {
+    resource->OnConsoleCommandDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetMetaChangeDelegate(CSharpResourceImpl* resource,
+                                              MetaChangeDelegate_t delegate) {
+    resource->OnMetaChangeDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetSyncedMetaChangeDelegate(CSharpResourceImpl* resource,
+                                                    MetaChangeDelegate_t delegate) {
+    resource->OnSyncedMetaChangeDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetCreateColShapeDelegate(CSharpResourceImpl* resource,
+                                                  CreateColShapeDelegate_t delegate) {
+    resource->OnCreateColShapeDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetRemoveColShapeDelegate(CSharpResourceImpl* resource,
+                                                  RemoveColShapeDelegate_t delegate) {
+    resource->OnRemoveColShapeDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetColShapeDelegate(CSharpResourceImpl* resource,
+                                            ColShapeDelegate_t delegate) {
+    resource->OnColShapeDelegate = delegate;
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files) {

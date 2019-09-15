@@ -105,15 +105,15 @@ typedef void (* CreateCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
 
 typedef void (* RemoveCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
 
-typedef void (* OnCreateVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
+typedef void (* CreateVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
 
-typedef void (* OnRemoveVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
+typedef void (* RemoveVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
 
-typedef void (* OnCreateColShapeDelegate_t)(alt::IColShape* colShape);
+typedef void (* CreateColShapeDelegate_t)(alt::IColShape* colShape);
 
-typedef void (* OnRemoveColShapeDelegate_t)(alt::IColShape* colShape);
+typedef void (* RemoveColShapeDelegate_t)(alt::IColShape* colShape);
 
-typedef void (* OnConsoleCommandDelegate_t)(const char* name, alt::Array<alt::StringView>* args);
+typedef void (* ConsoleCommandDelegate_t)(const char* name, alt::Array<alt::StringView>* args);
 
 typedef void (* MetaChangeDelegate_t)(void* entity, alt::IBaseObject::Type type, alt::StringView key,
                                       alt::MValue* value);
@@ -122,9 +122,11 @@ typedef void (* ColShapeDelegate_t)(alt::IColShape* colShape, void* entity, alt:
                                     bool state);
 
 typedef void (* WeaponDamageDelegate_t)(alt::IPlayer* source, void* target, alt::IBaseObject::Type targetBaseObjectType,
-                                     uint32_t weaponHash, uint16_t damageValue, position_t shotOffset, alt::CWeaponDamageEvent::BodyPart bodyPart);
+                                        uint32_t weaponHash, uint16_t damageValue, position_t shotOffset,
+                                        alt::CWeaponDamageEvent::BodyPart bodyPart);
 
-typedef void (* ExplosionDelegate_t)(alt::IPlayer* source, alt::CExplosionEvent::ExplosionType explosionType, position_t position, uint32_t explosionFX);
+typedef void (* ExplosionDelegate_t)(alt::IPlayer* source, alt::CExplosionEvent::ExplosionType explosionType,
+                                     position_t position, uint32_t explosionFX);
 
 class CSharpResourceImpl : public alt::IResource::Impl {
     bool OnEvent(const alt::CEvent* ev) override;
@@ -162,9 +164,9 @@ public:
 
     PlayerDeathDelegate_t OnPlayerDeathDelegate = nullptr;
 
-    ExplosionDelegate_t ExplosionDelegate = nullptr;
+    ExplosionDelegate_t OnExplosionDelegate = nullptr;
 
-    WeaponDamageDelegate_t WeaponDamageDelegate = nullptr;
+    WeaponDamageDelegate_t OnWeaponDamageDelegate = nullptr;
 
     PlayerDisconnectDelegate_t OnPlayerDisconnectDelegate = nullptr;
 
@@ -202,21 +204,21 @@ public:
 
     RemoveCheckpointDelegate_t OnRemoveCheckpointDelegate = nullptr;
 
-    OnCreateVoiceChannelDelegate_t OnCreateVoiceChannelDelegate = nullptr;
+    CreateVoiceChannelDelegate_t OnCreateVoiceChannelDelegate = nullptr;
 
-    OnRemoveVoiceChannelDelegate_t OnRemoveVoiceChannelDelegate = nullptr;
+    RemoveVoiceChannelDelegate_t OnRemoveVoiceChannelDelegate = nullptr;
 
-    OnConsoleCommandDelegate_t OnConsoleCommandDelegate = nullptr;
+    ConsoleCommandDelegate_t OnConsoleCommandDelegate = nullptr;
 
     MetaChangeDelegate_t OnMetaChangeDelegate = nullptr;
 
     MetaChangeDelegate_t OnSyncedMetaChangeDelegate = nullptr;
 
-    OnCreateColShapeDelegate_t OnCreateColShapeDelegate = nullptr;
+    CreateColShapeDelegate_t OnCreateColShapeDelegate = nullptr;
 
-    OnRemoveColShapeDelegate_t OnRemoveColShapeDelegate = nullptr;
+    RemoveColShapeDelegate_t OnRemoveColShapeDelegate = nullptr;
 
-    ColShapeDelegate_t ColShapeDelegate = nullptr;
+    ColShapeDelegate_t OnColShapeDelegate = nullptr;
 
     alt::Array<CustomInvoker*>* invokers;
     CoreClr* coreClr;
@@ -224,43 +226,107 @@ public:
     alt::IResource* resource;
 };
 
-EXPORT void CSharpResource_Reload(CSharpResourceImpl* resource);
+EXPORT void CSharpResourceImpl_Reload(CSharpResourceImpl* resource);
 
-EXPORT void CSharpResource_Load(CSharpResourceImpl* resource);
+EXPORT void CSharpResourceImpl_Load(CSharpResourceImpl* resource);
 
-EXPORT void CSharpResource_Unload(CSharpResourceImpl* resource);
+EXPORT void CSharpResourceImpl_Unload(CSharpResourceImpl* resource);
 
-EXPORT void CSharpResource_SetMain(CSharpResourceImpl* resource,
-                                   MainDelegate_t mainDelegate,
-                                   StopDelegate_t stopDelegate,
-                                   TickDelegate_t tickDelegate,
-                                   ServerEventDelegate_t serverEventDelegate,
-                                   CheckpointDelegate_t checkpointDelegate,
-                                   ClientEventDelegate_t clientEventDelegate,
-                                   PlayerDamageDelegate_t playerDamageDelegate,
-                                   PlayerConnectDelegate_t playerConnectDelegate,
-                                   PlayerDeathDelegate_t playerDeathDelegate,
-                                   ExplosionDelegate_t explosionDelegate,
-                                   WeaponDamageDelegate_t weaponDamageDelegate,
-                                   PlayerDisconnectDelegate_t playerDisconnectDelegate,
-                                   PlayerRemoveDelegate_t playerRemoveDelegate,
-                                   VehicleRemoveDelegate_t vehicleRemoveDelegate,
-                                   PlayerChangeVehicleSeatDelegate_t playerChangeVehicleSeatDelegate,
-                                   PlayerEnterVehicleDelegate_t playerEnterVehicleDelegate,
-                                   PlayerLeaveVehicleDelegate_t playerLeaveVehicleDelegate,
-                                   CreatePlayerDelegate_t createPlayerDelegate,
-                                   RemovePlayerDelegate_t removePlayerDelegate,
-                                   CreateVehicleDelegate_t createVehicleDelegate,
-                                   RemoveVehicleDelegate_t removeVehicleDelegate,
-                                   CreateBlipDelegate_t createBlipDelegate,
-                                   RemoveBlipDelegate_t removeBlipDelegate,
-                                   CreateCheckpointDelegate_t createCheckpointDelegate,
-                                   RemoveCheckpointDelegate_t removeCheckpointDelegate,
-                                   OnCreateVoiceChannelDelegate_t createVoiceChannelDelegate,
-                                   OnRemoveVoiceChannelDelegate_t removeVoiceChannelDelegate,
-                                   OnConsoleCommandDelegate_t consoleCommandDelegate,
-                                   MetaChangeDelegate_t metaChangeDelegate,
-                                   MetaChangeDelegate_t syncedMetaChangeDelegate,
-                                   OnCreateColShapeDelegate_t createColShapeDelegate,
-                                   OnRemoveColShapeDelegate_t removeColShapeDelegate,
-                                   ColShapeDelegate_t colShapeDelegate);
+EXPORT void CSharpResourceImpl_SetMainDelegate(CSharpResourceImpl* resource,
+                                               MainDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetStopDelegate(CSharpResourceImpl* resource,
+                                               StopDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetTickDelegate(CSharpResourceImpl* resource,
+                                               TickDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetServerEventDelegate(CSharpResourceImpl* resource,
+                                                      ServerEventDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetCheckpointDelegate(CSharpResourceImpl* resource,
+                                                     CheckpointDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetClientEventDelegate(CSharpResourceImpl* resource,
+                                                      ClientEventDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPlayerDamageDelegate(CSharpResourceImpl* resource,
+                                                       PlayerDamageDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPlayerConnectDelegate(CSharpResourceImpl* resource,
+                                                        PlayerConnectDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPlayerDeathDelegate(CSharpResourceImpl* resource,
+                                                      PlayerDeathDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetExplosionDelegate(CSharpResourceImpl* resource,
+                                                    ExplosionDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetWeaponDamageDelegate(CSharpResourceImpl* resource,
+                                                       WeaponDamageDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPlayerDisconnectDelegate(CSharpResourceImpl* resource,
+                                                           PlayerDisconnectDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPlayerRemoveDelegate(CSharpResourceImpl* resource,
+                                                       PlayerRemoveDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetVehicleRemoveDelegate(CSharpResourceImpl* resource,
+                                                        VehicleRemoveDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPlayerChangeVehicleSeatDelegate(CSharpResourceImpl* resource,
+                                                                  PlayerChangeVehicleSeatDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPlayerEnterVehicleDelegate(CSharpResourceImpl* resource,
+                                                             PlayerEnterVehicleDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPlayerLeaveVehicleDelegate(CSharpResourceImpl* resource,
+                                                             PlayerLeaveVehicleDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetCreatePlayerDelegate(CSharpResourceImpl* resource,
+                                                       CreatePlayerDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetRemovePlayerDelegate(CSharpResourceImpl* resource,
+                                                       RemovePlayerDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetCreateVehicleDelegate(CSharpResourceImpl* resource,
+                                                        CreateVehicleDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetRemoveVehicleDelegate(CSharpResourceImpl* resource,
+                                                        RemoveVehicleDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetCreateBlipDelegate(CSharpResourceImpl* resource,
+                                                     CreateBlipDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetRemoveBlipDelegate(CSharpResourceImpl* resource,
+                                                     RemoveBlipDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetCreateCheckpointDelegate(CSharpResourceImpl* resource,
+                                                           CreateCheckpointDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetRemoveCheckpointDelegate(CSharpResourceImpl* resource,
+                                                           RemoveCheckpointDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetCreateVoiceChannelDelegate(CSharpResourceImpl* resource,
+                                                             CreateVoiceChannelDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetRemoveVoiceChannelDelegate(CSharpResourceImpl* resource,
+                                                             RemoveVoiceChannelDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetConsoleCommandDelegate(CSharpResourceImpl* resource,
+                                                         ConsoleCommandDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetMetaChangeDelegate(CSharpResourceImpl* resource,
+                                                     MetaChangeDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetSyncedMetaChangeDelegate(CSharpResourceImpl* resource,
+                                                           MetaChangeDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetCreateColShapeDelegate(CSharpResourceImpl* resource,
+                                                         CreateColShapeDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetRemoveColShapeDelegate(CSharpResourceImpl* resource,
+                                                         RemoveColShapeDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetColShapeDelegate(CSharpResourceImpl* resource,
+                                                   ColShapeDelegate_t delegate);
