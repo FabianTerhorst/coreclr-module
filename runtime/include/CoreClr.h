@@ -105,7 +105,7 @@ typedef int (* CoreClrDelegate_t)(void* args, int argsLength);
 
 class CoreClr {
 public:
-    CoreClr(alt::ICore* server);
+    explicit CoreClr(alt::ICore* server);
 
     ~CoreClr();
 
@@ -132,7 +132,7 @@ public:
      * @param errorCode
      * @return true when error code is known
      */
-    bool PrintError(alt::ICore* server, int errorCode);
+    //bool PrintError(alt::ICore* server, int errorCode);
 
     void CreateManagedHost();
 

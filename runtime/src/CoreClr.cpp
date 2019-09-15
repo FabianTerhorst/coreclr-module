@@ -381,7 +381,7 @@ void CoreClr::GetPath(alt::ICore* server, const char* defaultPath) {
 }
 
 //TODO: https://github.com/rashiph/DecompliedDotNetLibraries/blob/6056fc6ff7ae8fb3057c936d9ebf36da73f990a6/mscorlib/System/__HResults.cs
-bool CoreClr::PrintError(alt::ICore* server, int errorCode) {
+/*bool CoreClr::PrintError(alt::ICore* server, int errorCode) {
     if (errorCode == -2146234304) {
         server->LogInfo(
                 alt::String(
@@ -400,9 +400,9 @@ bool CoreClr::PrintError(alt::ICore* server, int errorCode) {
             alt::String(x_str));
     delete[] x_str;
     return false;
-}
+}*/
 
-#ifdef _WIN32
+/*#ifdef _WIN32
 const char_t *GetWC(const char *c)
 {
     const size_t cSize = strlen(c)+1;
@@ -411,7 +411,7 @@ const char_t *GetWC(const char *c)
 
     return wc;
 }
-#endif
+#endif*/
 
 struct thread_user_data {
     hostfxr_run_app_fn runApp;

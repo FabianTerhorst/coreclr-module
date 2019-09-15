@@ -224,7 +224,6 @@ public:
     alt::IResource* resource;
 };
 
-EXPORT void Server_GetCSharpResource(alt::ICore* server, const char* resourceName, CSharpResourceImpl*&resource);
 EXPORT void CSharpResource_Reload(CSharpResourceImpl* resource);
 
 EXPORT void CSharpResource_Load(CSharpResourceImpl* resource);
