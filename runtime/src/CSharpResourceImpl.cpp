@@ -84,8 +84,8 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             auto key = event->GetKey();
             auto value = event->GetVal();
             OnMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), key == nullptr ? "" : key.CStr(), &value);
-            break;
         }
+            break;
         case alt::CEvent::Type::SYNCED_META_CHANGE: {
             auto event = ((alt::CSyncedMetaDataChangeEvent*) (ev));
             auto entity = event->GetTarget();
@@ -94,8 +94,8 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             auto value = event->GetVal();
             OnSyncedMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), key == nullptr ? "" : key.CStr(),
                                        &value);
-            break;
         }
+            break;
         case alt::CEvent::Type::CHECKPOINT_EVENT: {
             auto entity = ((alt::CCheckpointEvent*) (ev))->GetEntity();
             auto entityPtr = GetEntityPointer(entity);
@@ -105,21 +105,21 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                                      entity->GetType(),
                                      ((alt::CCheckpointEvent*) (ev))->GetState());
             }
-            break;
         }
+            break;
         case alt::CEvent::Type::CLIENT_SCRIPT_EVENT: {
             alt::Array<alt::MValue> clientArgs = (((alt::CClientScriptEvent*) (ev))->GetArgs());
             OnClientEventDelegate(((alt::CClientScriptEvent*) (ev))->GetTarget(),
                                   ((alt::CClientScriptEvent*) (ev))->GetName().CStr(),
                                   &clientArgs);
-            break;
         }
+            break;
         case alt::CEvent::Type::PLAYER_CONNECT: {
             auto connectPlayer = reinterpret_cast<const alt::CPlayerConnectEvent*>(ev)->GetTarget();
             OnPlayerConnectDelegate(connectPlayer, connectPlayer->GetID(),
                                     "");//TODO: maybe better solution
-            break;
         }
+            break;
         case alt::CEvent::Type::PLAYER_DAMAGE: {
             auto damageEvent = (alt::CPlayerDamageEvent*) ev;
             auto entity = damageEvent->GetAttacker();
@@ -132,8 +132,8 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                                        damageEvent->GetWeapon(),
                                        damageEvent->GetDamage());
             }
-            break;
         }
+            break;
         case alt::CEvent::Type::PLAYER_DEATH: {
             auto entity = ((alt::CPlayerDeathEvent*) (ev))->GetKiller();
             auto entityPtr = GetEntityPointer(entity);
@@ -143,13 +143,13 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                                       entity->GetType(),
                                       ((alt::CPlayerDeathEvent*) (ev))->GetWeapon());
             }
-            break;
         }
+            break;
         case alt::CEvent::Type::FIRE_EVENT: {
             //auto fireEvent = ((alt::CFireEvent*) (ev));
             //TODO: implement when implemented in cpp sdk
-            break;
         }
+            break;
         case alt::CEvent::Type::EXPLOSION_EVENT: {
             auto explosionEvent = ((alt::CExplosionEvent*) (ev));
             auto eventPosition = explosionEvent->GetPosition();
@@ -159,8 +159,8 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             position.z = eventPosition.z;
             ExplosionDelegate(explosionEvent->GetSource(), explosionEvent->GetExplosionType(), position,
                               explosionEvent->GetExplosionFX());
-            break;
         }
+            break;
         case alt::CEvent::Type::WEAPON_DAMAGE_EVENT: {
             auto weaponDamageEvent = ((alt::CWeaponDamageEvent*) (ev));
             auto targetEntity = weaponDamageEvent->GetTarget();
@@ -173,8 +173,8 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             WeaponDamageDelegate(weaponDamageEvent->GetSource(), GetEntityPointer(targetEntity),
                                  targetEntity->GetType(), weaponDamageEvent->GetWeaponHash(),
                                  weaponDamageEvent->GetDamageValue(), shotOffset, weaponDamageEvent->GetBodyPart());
-            break;
         }
+            break;
         case alt::CEvent::Type::PLAYER_DISCONNECT: {
             auto disconnectEvent = reinterpret_cast<const alt::CPlayerDisconnectEvent*>(ev);
             auto disconnectPlayer = disconnectEvent->GetTarget();
@@ -192,8 +192,8 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             OnPlayerDisconnectDelegate(disconnectPlayer,
                                        "");
             //}
-            break;
         }
+            break;
         case alt::CEvent::Type::REMOVE_ENTITY_EVENT: {
             auto removeEntityEntity = ((alt::CRemoveEntityEvent*) (ev))->GetEntity();
             if (removeEntityEntity != nullptr) {
@@ -206,42 +206,42 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                         break;
                 }
             }
-            break;
         }
+            break;
         case alt::CEvent::Type::SERVER_SCRIPT_EVENT: {
             auto serverScriptEvent = (alt::CServerScriptEvent*) ev;
             alt::Array<alt::MValue> serverArgs = serverScriptEvent->GetArgs();
             server->LogInfo(serverScriptEvent->GetName());
             OnServerEventDelegate(serverScriptEvent->GetName().CStr(), &serverArgs);
-            break;
         }
+            break;
         case alt::CEvent::Type::PLAYER_CHANGE_VEHICLE_SEAT: {
             auto changeSeatEvent = (alt::CPlayerChangeVehicleSeatEvent*) ev;
             OnPlayerChangeVehicleSeatDelegate(changeSeatEvent->GetTarget(),
                                               changeSeatEvent->GetPlayer(),
                                               changeSeatEvent->GetOldSeat(),
                                               changeSeatEvent->GetNewSeat());
-            break;
         }
+            break;
         case alt::CEvent::Type::PLAYER_ENTER_VEHICLE: {
             auto enterEvent = (alt::CPlayerEnterVehicleEvent*) ev;
             OnPlayerEnterVehicleDelegate(enterEvent->GetTarget(),
                                          enterEvent->GetPlayer(),
                                          enterEvent->GetSeat());
-            break;
         }
+            break;
         case alt::CEvent::Type::PLAYER_LEAVE_VEHICLE: {
             auto leaveEvent = (alt::CPlayerLeaveVehicleEvent*) ev;
             OnPlayerLeaveVehicleDelegate(leaveEvent->GetTarget(),
                                          leaveEvent->GetPlayer(),
                                          leaveEvent->GetSeat());
-            break;
         }
+            break;
         case alt::CEvent::Type::CONSOLE_COMMAND_EVENT: {
             alt::Array<alt::StringView> args = ((alt::CConsoleCommandEvent*) (ev))->GetArgs();
             OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(), &args);
-            break;
         }
+            break;
         case alt::CEvent::Type::COLSHAPE_EVENT: {
             auto entity = ((alt::CColShapeEvent*) (ev))->GetEntity();
             auto entityPointer = GetEntityPointer(entity);
@@ -251,26 +251,28 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                                  entity->GetType(),
                                  ((alt::CColShapeEvent*) (ev))->GetState());
             }
-            break;
         }
+            break;
     }
     return true;
 }
 
 void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object) {
     if (object != nullptr) {
-        server->LogInfo(alt::String("create: ") + std::to_string((uint8_t)object->GetType()));
+        server->LogInfo(alt::String("create: ") + std::to_string((uint8_t) object->GetType()));
+        server->LogInfo(alt::String("vehicle: ") + std::to_string((uint8_t) alt::IBaseObject::Type::VEHICLE));
         switch (object->GetType()) {
             case alt::IBaseObject::Type::PLAYER: {
                 auto player = dynamic_cast<alt::IPlayer*>(object);
                 OnCreatePlayerDelegate(player, player->GetID());
-                break;
             }
+                break;
             case alt::IBaseObject::Type::VEHICLE: {
                 auto vehicle = dynamic_cast<alt::IVehicle*>(object);
+                server->LogInfo(alt::String("vehicle-id: ") + std::to_string(vehicle->GetID()));
                 OnCreateVehicleDelegate(vehicle, vehicle->GetID());
-                break;
             }
+                break;
             case alt::IBaseObject::Type::BLIP:
                 OnCreateBlipDelegate(dynamic_cast<alt::IBlip*>(object));
                 break;
