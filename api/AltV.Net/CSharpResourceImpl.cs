@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
 using AltV.Net.Native;
 
 namespace AltV.Net
@@ -33,149 +32,40 @@ namespace AltV.Net
 
         internal void SetDelegates(AltNative.Resource.MainDelegate onStartResource)
         {
-            AltNative.Resource.MainDelegate onStart = onStartResource;
-
-            GCHandle.Alloc(onStart);
-
-            AltNative.Resource.StopDelegate onStop = ModuleWrapper.OnStop;
-
-            GCHandle.Alloc(onStop);
-
-            AltNative.Resource.TickDelegate onTick = ModuleWrapper.OnTick;
-
-            GCHandle.Alloc(onTick);
-
-            AltNative.Resource.ServerEventDelegate onServerEvent = ModuleWrapper.OnServerEvent;
-
-            GCHandle.Alloc(onServerEvent);
-
-            AltNative.Resource.CheckpointDelegate onCheckpoint = ModuleWrapper.OnCheckpoint;
-
-            GCHandle.Alloc(onCheckpoint);
-
-            AltNative.Resource.ClientEventDelegate onClientEvent = ModuleWrapper.OnClientEvent;
-
-            GCHandle.Alloc(onClientEvent);
-
-            AltNative.Resource.PlayerDamageDelegate onPlayerDamage = ModuleWrapper.OnPlayerDamage;
-
-            GCHandle.Alloc(onPlayerDamage);
-
-            AltNative.Resource.PlayerConnectDelegate onPlayerConnect = ModuleWrapper.OnPlayerConnect;
-
-            GCHandle.Alloc(onPlayerConnect);
-
-            AltNative.Resource.PlayerDeathDelegate onPlayerDeath = ModuleWrapper.OnPlayerDeath;
-
-            GCHandle.Alloc(onPlayerDeath);
-
-            AltNative.Resource.ExplosionDelegate explosionDelegate = ModuleWrapper.OnExplosion;
-
-            GCHandle.Alloc(explosionDelegate);
-
-            AltNative.Resource.WeaponDamageDelegate weaponDamageDelegate = ModuleWrapper.OnWeaponDamage;
-
-            GCHandle.Alloc(weaponDamageDelegate);
-
-            AltNative.Resource.PlayerDisconnectDelegate onPlayerDisconnect = ModuleWrapper.OnPlayerDisconnect;
-
-            GCHandle.Alloc(onPlayerDisconnect);
-
-            AltNative.Resource.PlayerRemoveDelegate onPlayerRemove = ModuleWrapper.OnPlayerRemove;
-
-            GCHandle.Alloc(onPlayerRemove);
-
-            AltNative.Resource.VehicleRemoveDelegate onVehicleRemove = ModuleWrapper.OnVehicleRemove;
-
-            GCHandle.Alloc(onVehicleRemove);
-
-            AltNative.Resource.PlayerChangeVehicleSeatDelegate onPlayerChangeVehicleSeat =
-                ModuleWrapper.OnPlayerChangeVehicleSeat;
-
-            GCHandle.Alloc(onPlayerChangeVehicleSeat);
-
-            AltNative.Resource.PlayerEnterVehicleDelegate onPlayerEnterVehicle = ModuleWrapper.OnPlayerEnterVehicle;
-
-            GCHandle.Alloc(onPlayerEnterVehicle);
-
-            AltNative.Resource.PlayerLeaveVehicleDelegate onPlayerLeaveVehicle = ModuleWrapper.OnPlayerLeaveVehicle;
-
-            GCHandle.Alloc(onPlayerLeaveVehicle);
-
-            AltNative.Resource.CreatePlayerDelegate onCreatePlayer = ModuleWrapper.OnCreatePlayer;
-
-            GCHandle.Alloc(onCreatePlayer);
-
-            AltNative.Resource.RemovePlayerDelegate onRemovePlayer = ModuleWrapper.OnRemovePlayer;
-
-            GCHandle.Alloc(onRemovePlayer);
-
-            AltNative.Resource.CreateVehicleDelegate onCreateVehicle = ModuleWrapper.OnCreateVehicle;
-
-            GCHandle.Alloc(onCreateVehicle);
-
-            AltNative.Resource.RemoveVehicleDelegate onRemoveVehicle = ModuleWrapper.OnRemoveVehicle;
-
-            GCHandle.Alloc(onRemoveVehicle);
-
-            AltNative.Resource.CreateBlipDelegate onCreateBlip = ModuleWrapper.OnCreateBlip;
-
-            GCHandle.Alloc(onCreateBlip);
-
-            AltNative.Resource.RemoveBlipDelegate onRemoveBlip = ModuleWrapper.OnRemoveBlip;
-
-            GCHandle.Alloc(onRemoveBlip);
-
-            AltNative.Resource.CreateCheckpointDelegate onCreateCheckpoint = ModuleWrapper.OnCreateCheckpoint;
-
-            GCHandle.Alloc(onCreateCheckpoint);
-
-            AltNative.Resource.RemoveCheckpointDelegate onRemoveCheckpoint = ModuleWrapper.OnRemoveCheckpoint;
-
-            GCHandle.Alloc(onRemoveCheckpoint);
-
-            AltNative.Resource.CreateVoiceChannelDelegate onCreateVoiceChannel = ModuleWrapper.OnCreateVoiceChannel;
-
-            GCHandle.Alloc(onCreateVoiceChannel);
-
-            AltNative.Resource.RemoveVoiceChannelDelegate onRemoveVoiceChannel = ModuleWrapper.OnRemoveVoiceChannel;
-
-            GCHandle.Alloc(onRemoveVoiceChannel);
-
-            AltNative.Resource.ConsoleCommandDelegate onConsoleCommand = ModuleWrapper.OnConsoleCommand;
-
-            GCHandle.Alloc(onConsoleCommand);
-
-            AltNative.Resource.MetaDataChange onMetaDataChange = ModuleWrapper.OnMetaDataChange;
-
-            GCHandle.Alloc(onMetaDataChange);
-
-            AltNative.Resource.MetaDataChange onSyncedMetaDataChange = ModuleWrapper.OnSyncedMetaDataChange;
-
-            GCHandle.Alloc(onSyncedMetaDataChange);
-
-            AltNative.Resource.CreateColShapeDelegate onCreateColShape = ModuleWrapper.OnCreateColShape;
-
-            GCHandle.Alloc(onCreateColShape);
-
-            AltNative.Resource.RemoveColShapeDelegate onRemoveColShape = ModuleWrapper.OnRemoveColShape;
-
-            GCHandle.Alloc(onRemoveColShape);
-
-            AltNative.Resource.ColShapeDelegate onColShape = ModuleWrapper.OnColShape;
-
-            GCHandle.Alloc(onColShape);
-
-            AltNative.Resource.CSharpResource_SetMain(NativePointer, onStart, onStop, onTick, onServerEvent,
-                onCheckpoint,
-                onClientEvent, onPlayerDamage, onPlayerConnect, onPlayerDeath, explosionDelegate, weaponDamageDelegate,
-                onPlayerDisconnect, onPlayerRemove,
-                onVehicleRemove,
-                onPlayerChangeVehicleSeat, onPlayerEnterVehicle, onPlayerLeaveVehicle, onCreatePlayer, onRemovePlayer,
-                onCreateVehicle, onRemoveVehicle,
-                onCreateBlip, onRemoveBlip, onCreateCheckpoint, onRemoveCheckpoint, onCreateVoiceChannel,
-                onRemoveVoiceChannel, onConsoleCommand, onMetaDataChange, onSyncedMetaDataChange, onCreateColShape,
-                onRemoveColShape, onColShape);
+            AltNative.Resource.CSharpResource_SetMain(NativePointer,
+                onStartResource,
+                ModuleWrapper.OnStop,
+                ModuleWrapper.OnTick,
+                ModuleWrapper.OnServerEvent,
+                ModuleWrapper.OnCheckpoint,
+                ModuleWrapper.OnClientEvent,
+                ModuleWrapper.OnPlayerDamage,
+                ModuleWrapper.OnPlayerConnect,
+                ModuleWrapper.OnPlayerDeath,
+                ModuleWrapper.OnExplosion,
+                ModuleWrapper.OnWeaponDamage,
+                ModuleWrapper.OnPlayerDisconnect,
+                ModuleWrapper.OnPlayerRemove,
+                ModuleWrapper.OnVehicleRemove,
+                ModuleWrapper.OnPlayerChangeVehicleSeat,
+                ModuleWrapper.OnPlayerEnterVehicle,
+                ModuleWrapper.OnPlayerLeaveVehicle,
+                ModuleWrapper.OnCreatePlayer,
+                ModuleWrapper.OnRemovePlayer,
+                ModuleWrapper.OnCreateVehicle,
+                ModuleWrapper.OnRemoveVehicle,
+                ModuleWrapper.OnCreateBlip,
+                ModuleWrapper.OnRemoveBlip,
+                ModuleWrapper.OnCreateCheckpoint,
+                ModuleWrapper.OnRemoveCheckpoint,
+                ModuleWrapper.OnCreateVoiceChannel,
+                ModuleWrapper.OnRemoveVoiceChannel,
+                ModuleWrapper.OnConsoleCommand,
+                ModuleWrapper.OnMetaDataChange,
+                ModuleWrapper.OnSyncedMetaDataChange,
+                ModuleWrapper.OnCreateColShape,
+                ModuleWrapper.OnRemoveColShape,
+                ModuleWrapper.OnColShape);
         }
     }
 }
