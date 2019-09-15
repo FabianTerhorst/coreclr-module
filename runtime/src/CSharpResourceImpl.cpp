@@ -259,6 +259,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
 
 void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object) {
     if (object != nullptr) {
+        server->LogInfo(alt::String("create: ") + std::to_string((uint8_t)object->GetType()));
         switch (object->GetType()) {
             case alt::IBaseObject::Type::PLAYER: {
                 auto player = dynamic_cast<alt::IPlayer*>(object);
