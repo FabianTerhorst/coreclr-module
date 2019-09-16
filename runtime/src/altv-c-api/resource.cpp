@@ -19,9 +19,7 @@ void Resource_GetExports(alt::IResource* resource, alt::Array<alt::String> &keys
 bool Resource_GetExport(alt::IResource* resource, const char* key, alt::MValue &value) {
     auto dict = resource->GetExports().Get<alt::MValue::Dict>();
     auto dictValue = dict.find(key);
-    std::cout << "try find in size " << std::to_string(dict.size()) << std::endl;
     if (dictValue == dict.end()) {
-        std::cout << "not found key" << std::endl;
         return false;
     }
     value = dictValue->second;
