@@ -22,12 +22,12 @@ bool Resource_GetExport(alt::IResource* resource, const char* key, alt::MValue &
     if (dictValue == dict.end()) {
         return false;
     }
-    value = dictValue->second;
+    value = resource->GetExports()[key];//dictValue->second
     return true;
 }
 
-void Resource_SetExport(alt::IResource* resource, const char* key, const alt::MValue* val) {
-    resource->GetExports()[key] = *val;
+void Resource_SetExport(alt::IResource* resource, const char* key, const alt::MValue& val) {
+    resource->GetExports()[key] = val;
 }
 
 void Resource_SetExports(alt::IResource* resource, alt::MValue* val, const char** keys, int size) {
