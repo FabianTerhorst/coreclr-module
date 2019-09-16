@@ -24,7 +24,7 @@ bool Resource_GetExport(alt::IResource* resource, const char* key, alt::MValue &
         std::cout << "not found key" << std::endl;
         return false;
     }
-    value = resource->GetExports()[key];//dictValue->second
+    value = dictValue->second;
     return true;
 }
 

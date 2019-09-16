@@ -42,7 +42,7 @@ EXPORT void MValue_GetString(alt::MValue &mValue, const char*&value, uint64_t &s
 EXPORT void MValue_GetList(alt::MValue &mValue, alt::MValue::List &value);
 EXPORT void MValue_GetDict(alt::MValue &mValue, alt::Array<alt::String> &keys, alt::MValue::List &values);
 EXPORT void* MValue_GetEntity(alt::MValue &mValue, alt::IBaseObject::Type &type);
-EXPORT MValueFunctionCallback MValue_GetFunction(alt::MValueFunction &mValue);
+EXPORT MValueFunctionCallback MValue_GetFunction(alt::MValue &mValue);
 
 EXPORT void MValue_CallFunction(alt::MValue* mValue, alt::MValue* args, int32_t size, alt::MValue &result);
 EXPORT void MValue_CallFunctionValue(alt::MValueFunction &mValue, alt::MValueList &value, alt::MValue &result);

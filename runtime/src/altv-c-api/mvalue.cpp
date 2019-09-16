@@ -116,9 +116,9 @@ void* MValue_GetEntity(alt::MValue &mValue, alt::IBaseObject::Type &type) {
     return nullptr;
 }
 
-MValueFunctionCallback MValue_GetFunction(alt::MValueFunction &mValue) {
-    //TODO: find better way, this only works for c# module invokers
-    return ((CustomInvoker*) mValue.GetInvoker())->mValueFunctionCallback;
+MValueFunctionCallback MValue_GetFunction(alt::MValue &mValue) {
+    auto fn = mValue.Get<alt::MValue::Function>();
+    return ((CustomInvoker*) static_cast<alt::MValueFunction::Invoker*>(fn.invoker))->mValueFunctionCallback;
 }
 
 /*alt::MValueFunction::Invoker* MValue_GetInvoker(alt::MValueFunction &mValue) {
