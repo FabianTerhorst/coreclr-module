@@ -211,7 +211,6 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
         case alt::CEvent::Type::SERVER_SCRIPT_EVENT: {
             auto serverScriptEvent = (alt::CServerScriptEvent*) ev;
             alt::Array<alt::MValue> serverArgs = serverScriptEvent->GetArgs();
-            server->LogInfo(serverScriptEvent->GetName());
             OnServerEventDelegate(serverScriptEvent->GetName().CStr(), &serverArgs);
         }
             break;
