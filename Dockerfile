@@ -18,7 +18,7 @@ RUN mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && cma
 WORKDIR /runtime/build/src
 
 #FROM mcr.microsoft.com/dotnet/core/sdk:2.2 as dotnet
-FROM mcr.microsoft.com/dotnet/core-nightly/sdk:3.0.100-preview9 as dotnet
+FROM mcr.microsoft.com/dotnet/core-nightly/sdk:3.0.100-rc1 as dotnet
 
 # build example resource
 WORKDIR /altv-example/
@@ -34,6 +34,7 @@ RUN cd AltV.Net.Chat && dotnet publish -c Release
 FROM ubuntu:18.04
 
 COPY --from=dotnet /usr/share/dotnet /usr/share/dotnet
+RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
 
 RUN apt-get update
 RUN apt-get install -y apt-utils
