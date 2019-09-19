@@ -10,7 +10,7 @@ namespace AltV.Net.Host
 {
     public class Host
     {
-        private delegate void ImportDelegate(string resourceName, string key, out object value);
+        private delegate bool ImportDelegate(string resourceName, string key, out object value);
 
         private static readonly IDictionary<string, WeakReference> _loadContexts =
             new Dictionary<string, WeakReference>();
@@ -180,25 +180,21 @@ namespace AltV.Net.Host
 
         public static void Import(string resourceName, string key, out object value)
         {
-            /*if (!_exports.TryGetValue(resourceName, out var resourceExports))
-            {
-                value = null;
-                return;
-            }
-
-            resourceExports.TryGetValue(key, out value);*/
-            value = default;
+            if (_exports.TryGetValue(resourceName, out var resourceExports))
+                return resourceExports.TryGetValue(key, out value);
+            value = null;
+            return false;
         }
 
         public static void Export(string resourceName, string key, object value)
         {
-            /*if (!_exports.TryGetValue(resourceName, out var resourceExports))
+            if (!_exports.TryGetValue(resourceName, out var resourceExports))
             {
                 resourceExports = new Dictionary<string, object>();
                 _exports[resourceName] = resourceExports;
             }
 
-            resourceExports[key] = value;*/
+            resourceExports[key] = value;
         }
     }
 }
