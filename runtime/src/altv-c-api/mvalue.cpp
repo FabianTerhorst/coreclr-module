@@ -117,6 +117,7 @@ void* MValue_GetEntity(alt::MValue &mValue, alt::IBaseObject::Type &type) {
 }
 
 MValueFunctionCallback MValue_GetFunction(alt::MValue &mValue) {
+    std::cout << "getfunction type:" + std::to_string((uint8_t)mValue.GetType()) << std::endl;
     auto fn = mValue.Get<alt::MValue::Function>();
     return ((CustomInvoker*) static_cast<alt::MValueFunction::Invoker*>(fn.invoker))->mValueFunctionCallback;
 }
