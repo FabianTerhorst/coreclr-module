@@ -14,7 +14,7 @@ using AltV.Net.Native;
 
 namespace AltV.Net
 {
-    public class Module
+    public class Module : IDisposable
     {
         internal readonly IServer Server;
 
@@ -120,6 +120,8 @@ namespace AltV.Net
             new HashSetEventHandler<ColShapeDelegate>();
 
         internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
+        
+        internal readonly LinkedList<GCHandle> functionExportHandles = new LinkedList<GCHandle>();
 
         public Module(IServer server, AssemblyLoadContext assemblyLoadContext,
             NativeResource moduleResource, IBaseBaseObjectPool baseBaseObjectPool,
@@ -899,8 +901,17 @@ namespace AltV.Net
             if (function == null) return;
             functionExports[key] = function;
             MValue.Function callDelegate = function.call;
-            GCHandle.Alloc(callDelegate);
+            functionExportHandles.AddFirst(GCHandle.Alloc(callDelegate));
             ModuleResource.SetExport(key, MValue.Create(callDelegate));
+        }
+
+        public void Dispose()
+        {
+            foreach (var handle in functionExportHandles)
+            {
+                handle.Free();
+            }
+            functionExportHandles.Clear();
         }
     }
 }

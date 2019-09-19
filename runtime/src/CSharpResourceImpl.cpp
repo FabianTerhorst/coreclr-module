@@ -59,11 +59,8 @@ bool CSharpResourceImpl::Start() {
 bool CSharpResourceImpl::Stop() {
     if (OnStopDelegate == nullptr) return false;
     OnStopDelegate();
-    if (!coreClr->ExecuteManagedResourceUnload(this->resource->GetPath().CStr(), this->resource->GetMain().CStr())) {
-        return false;
-    }
     ResetDelegates();
-    return true;
+    return coreClr->ExecuteManagedResourceUnload(this->resource->GetPath().CStr(), this->resource->GetMain().CStr());
 }
 
 CSharpResourceImpl::~CSharpResourceImpl() {

@@ -20,46 +20,20 @@ namespace AltV.Net
 
         private static IScript[] _scripts;
 
-        public static void Main(IntPtr serverPointer, IntPtr resourcePointer, string resourceName, string entryPoint)
-        {
-            var assemblyLoader = new AssemblyLoader();
-            MainWithResource(serverPointer, resourcePointer,
-                new ResourceLoader(serverPointer, assemblyLoader, resourceName, entryPoint).Init(),
-                AssemblyLoadContext.Default);
-            _scripts = new ScriptLoader(assemblyLoader).GetAllScripts();
-            _module.OnScriptsLoaded(_scripts);
-            _resource.OnStart();
-        }
-
         private static void OnStartResource(IntPtr serverPointer, IntPtr resourcePointer, string resourceName,
             string entryPoint)
         {
-            _resource.OnStart();
+           _resource.OnStart();
         }
 
         public static void MainWithAssembly(IntPtr serverPointer, IntPtr resourcePointer,
             AssemblyLoadContext assemblyLoadContext)
         {
-            if (!AssemblyLoader.FindType(assemblyLoadContext.Assemblies, out IResource resource))
+            if (!AssemblyLoader.FindType(assemblyLoadContext.Assemblies, out _resource))
             {
                 return;
             }
-
-            MainWithResource(serverPointer, resourcePointer, resource, assemblyLoadContext);
-            _scripts = AssemblyLoader.FindAllTypes<IScript>(assemblyLoadContext.Assemblies);
-            _module.OnScriptsLoaded(_scripts);
-            Alt.Server.Resource.CSharpResourceImpl.SetDelegates(OnStartResource);
-        }
-
-        public static void MainWithResource(IntPtr serverPointer, IntPtr resourcePointer, IResource resource,
-            AssemblyLoadContext assemblyLoadContext)
-        {
-            _resource = resource;
-            if (_resource == null)
-            {
-                return;
-            }
-
+            
             var playerFactory = _resource.GetPlayerFactory();
             var vehicleFactory = _resource.GetVehicleFactory();
             var blipFactory = _resource.GetBlipFactory();
@@ -91,6 +65,11 @@ namespace AltV.Net
             foreach (var unused in server.GetVehicles())
             {
             }
+            
+            csharpResource.CSharpResourceImpl.SetDelegates(OnStartResource);
+            
+            _scripts = AssemblyLoader.FindAllTypes<IScript>(assemblyLoadContext.Assemblies);
+            _module.OnScriptsLoaded(_scripts);
 
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
         }
@@ -105,6 +84,9 @@ namespace AltV.Net
         public static void OnStop()
         {
             _resource.OnStop();
+            Alt.Server.Resource.CSharpResourceImpl.Dispose();
+            _module.Dispose();
+            AppDomain.CurrentDomain.UnhandledException -= OnUnhandledException;
         }
 
         public static void OnTick()
