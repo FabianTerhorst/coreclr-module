@@ -171,7 +171,8 @@ void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::
 }
 
 void MValue_CreateFunction(alt::MValueFunction::Invoker* val, alt::MValue &mValue) {
-    mValue = alt::MValue(alt::MValue::Function{ val });
+    mValue = alt::MValueFunction(val);
+    std::cout << "type:" + std::to_string((uint8_t)mValue.GetType()) << std::endl;
 }
 
 void MValue_CallFunction(alt::MValue* mValue, alt::MValue* args, int32_t size, alt::MValue &result) {
