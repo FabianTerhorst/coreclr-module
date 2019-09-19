@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using AltV.Net.Native;
 using System.Runtime.InteropServices;
+using AltV.Net.Elements.Args;
 
 namespace AltV.Net
 {
@@ -168,6 +169,16 @@ namespace AltV.Net
             AltNative.Resource.ColShapeDelegate onColShape = ModuleWrapper.OnColShape;
             handles.AddFirst(GCHandle.Alloc(onColShape));
             AltNative.Resource.CSharpResourceImpl_SetColShapeDelegate(NativePointer, onColShape);
+        }
+
+        public IntPtr CreateInvoker(MValue.Function function)
+        {
+            return AltNative.MValueCreate.Invoker_Create(NativePointer, function);
+        }
+
+        public void DestroyInvoker(IntPtr invoker)
+        {
+            AltNative.MValueCreate.Invoker_Destroy(NativePointer, invoker);
         }
 
         public void Dispose()
