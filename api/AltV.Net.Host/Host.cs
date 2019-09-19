@@ -178,7 +178,7 @@ namespace AltV.Net.Host
         {
         }
 
-        public static void Import(string resourceName, string key, out object value)
+        public static bool Import(string resourceName, string key, out object value)
         {
             if (_exports.TryGetValue(resourceName, out var resourceExports))
                 return resourceExports.TryGetValue(key, out value);
