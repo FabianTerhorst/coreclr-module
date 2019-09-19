@@ -45,7 +45,7 @@ EXPORT void* MValue_GetEntity(alt::MValue &mValue, alt::IBaseObject::Type &type)
 EXPORT MValueFunctionCallback MValue_GetFunction(alt::MValue &mValue);
 
 EXPORT void MValue_CallFunction(alt::MValue* mValue, alt::MValue* args, int32_t size, alt::MValue &result);
-EXPORT void MValue_CallFunctionValue(alt::MValueFunction &mValue, alt::MValueList &value, alt::MValue &result);
+EXPORT void MValue_CallFunctionValue(alt::MValue *mValue, alt::MValueList &value, alt::MValue &result);
 EXPORT void MValue_Dispose(alt::MValue* mValue);
 
 //EXPORT alt::MValueFunction::Invoker* MValue_GetInvoker(alt::MValueFunction &mValue);

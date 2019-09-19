@@ -182,8 +182,8 @@ void MValue_CallFunction(alt::MValue* mValue, alt::MValue* args, int32_t size, a
     result = ((alt::MValueFunction*) mValue)->GetInvoker()->Invoke(value);
 }
 
-void MValue_CallFunctionValue(alt::MValueFunction &mValue, alt::MValueList &value, alt::MValue &result) {
-    result = mValue.GetInvoker()->Invoke(value);
+void MValue_CallFunctionValue(alt::MValue *mValue, alt::MValueList &value, alt::MValue &result) {
+    result = ((alt::MValueFunction*) mValue)->GetInvoker()->Invoke(value);
 }
 
 void MValue_Dispose(alt::MValue* mValue) {
