@@ -1,6 +1,6 @@
 #include "mvalue.h"
 
-CustomInvoker* Invoker_Create(CSharpResourceImpl* resource, MValueFunctionCallback val) {
+alt::MValueFunction::Invoker* Invoker_Create(CSharpResourceImpl* resource, MValueFunctionCallback val) {
     auto invoker = new CustomInvoker(val);
     resource->invokers->Push(invoker);
     return invoker;
@@ -170,7 +170,7 @@ void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::
     mValue = dict;
 }
 
-void MValue_CreateFunction(CustomInvoker* val, alt::MValue &mValue) {
+void MValue_CreateFunction(alt::MValueFunction::Invoker* val, alt::MValue &mValue) {
     mValue = alt::MValueFunction(val);
 }
 
@@ -182,7 +182,7 @@ void MValue_CallFunction(alt::MValue* mValue, alt::MValue* args, int32_t size, a
     result = ((alt::MValueFunction*) mValue)->GetInvoker()->Invoke(value);
 }
 
-void MValue_CallFunctionValue(alt::MValue *mValue, alt::MValueList &value, alt::MValue &result) {
+void MValue_CallFunctionValue(alt::MValue* mValue, alt::MValueList &value, alt::MValue &result) {
     result = ((alt::MValueFunction*) mValue)->GetInvoker()->Invoke(value);
 }
 

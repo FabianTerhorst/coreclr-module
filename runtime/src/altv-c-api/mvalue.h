@@ -17,7 +17,7 @@
 extern "C"
 {
 #endif
-EXPORT CustomInvoker* Invoker_Create(CSharpResourceImpl* resource, MValueFunctionCallback val);
+EXPORT alt::MValueFunction::Invoker* Invoker_Create(CSharpResourceImpl* resource, MValueFunctionCallback val);
 EXPORT void Invoker_Destroy(CSharpResourceImpl* resource, CustomInvoker* val);
 
 EXPORT void MValue_CreateNil(alt::MValue &mValue);
@@ -32,7 +32,7 @@ EXPORT void MValue_CreatePlayer(alt::IPlayer* val, alt::MValue &mValue);
 EXPORT void MValue_CreateVehicle(alt::IVehicle* val, alt::MValue &mValue);
 EXPORT void MValue_CreateBlip(alt::IVehicle* val, alt::MValue &mValue);
 EXPORT void MValue_CreateCheckpoint(alt::ICheckpoint* val, alt::MValue &mValue);
-EXPORT void MValue_CreateFunction(CustomInvoker* val, alt::MValue &mValue);
+EXPORT void MValue_CreateFunction(alt::MValueFunction::Invoker* val, alt::MValue &mValue);
 
 EXPORT bool MValue_GetBool(alt::MValue &mValue);
 EXPORT int64_t MValue_GetInt(alt::MValue &mValue);
@@ -45,7 +45,7 @@ EXPORT void* MValue_GetEntity(alt::MValue &mValue, alt::IBaseObject::Type &type)
 EXPORT MValueFunctionCallback MValue_GetFunction(alt::MValue &mValue);
 
 EXPORT void MValue_CallFunction(alt::MValue* mValue, alt::MValue* args, int32_t size, alt::MValue &result);
-EXPORT void MValue_CallFunctionValue(alt::MValue *mValue, alt::MValueList &value, alt::MValue &result);
+EXPORT void MValue_CallFunctionValue(alt::MValue* mValue, alt::MValueList &value, alt::MValue &result);
 EXPORT void MValue_Dispose(alt::MValue* mValue);
 
 //EXPORT alt::MValueFunction::Invoker* MValue_GetInvoker(alt::MValueFunction &mValue);
