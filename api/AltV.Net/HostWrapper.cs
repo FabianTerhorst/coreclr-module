@@ -7,7 +7,7 @@ namespace AltV.Net
     /// </summary>
     internal static class HostWrapper
     {
-        public delegate void ImportDelegate(string resourceName, string key, out object value);
+        public delegate bool ImportDelegate(string resourceName, string key, out object value);
 
         private static Action _startTracing;
 
@@ -32,8 +32,9 @@ namespace AltV.Net
             _import = new ImportDelegate((string name, string key, out object value) =>
             {
                 var parameters = new object[] {name, key, null};
-                import.DynamicInvoke(parameters);
+                var result = (bool) import.DynamicInvoke(parameters);
                 value = parameters[2];
+                return result;
             });
         }
 
@@ -52,15 +53,16 @@ namespace AltV.Net
             _stopTracing?.Invoke();
         }
 
-        public static void Import(string resourceName, string key, out object value)
+        public static bool Import(string resourceName, string key, out object value)
         {
             if (_import != null)
             {
-                _import.Invoke(resourceName, key, out value);
+                return _import.Invoke(resourceName, key, out value);
             }
             else
             {
                 value = default;
+                return false;
             }
         }
 
