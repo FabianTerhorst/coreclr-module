@@ -55,7 +55,7 @@ namespace AltV.Net.Native
             internal static extern void MValue_CreateCheckpoint(IntPtr checkpointPointer, ref MValue mValue);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern MValue MValue_CreateFunction(IntPtr invoker, ref MValue mValue);
+            internal static extern void MValue_CreateFunction(IntPtr invoker, ref MValue mValue);
         }
 
         [SuppressUnmanagedCodeSecurity]

@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Security;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -8,6 +9,7 @@ namespace AltV.Net.Native
 {
     internal static partial class AltNative
     {
+        [SuppressUnmanagedCodeSecurity]
         internal static class Player
         {
             // Entity

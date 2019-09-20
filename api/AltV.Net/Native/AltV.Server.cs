@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Security;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 
@@ -7,6 +8,7 @@ namespace AltV.Net.Native
 {
     internal static partial class AltNative
     {
+        [SuppressUnmanagedCodeSecurity]
         internal static class Server
         {
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
