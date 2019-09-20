@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using AltV.Net.Elements.Entities;
 using Entity;
 
 namespace AltV.Net.NetworkingEntity.Elements.Entities

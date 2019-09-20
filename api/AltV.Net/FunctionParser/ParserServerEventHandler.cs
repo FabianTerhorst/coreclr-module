@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using AltV.Net.Native;
 
 namespace AltV.Net.FunctionParser
@@ -29,8 +30,15 @@ namespace AltV.Net.FunctionParser
         {
             if (!(obj is ParserServerEventHandler<TFunc> parserServerEventHandler)) return false;
             if (parserServerEventHandler.@delegate != @delegate) return false;
-            if (parserServerEventHandler.serverEventParser != serverEventParser) return false;
-            return true;
+            return parserServerEventHandler.serverEventParser == serverEventParser;
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (EqualityComparer<TFunc>.Default.GetHashCode(@delegate) * 397) ^ (serverEventParser != null ? serverEventParser.GetHashCode() : 0);
+            }
         }
     }
 }

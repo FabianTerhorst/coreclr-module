@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 namespace AltV.Net.Data
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct Position
+    public struct Position : IEquatable<Position>
     {
         //TODO: migrate to System.Numerics.Vector3
 
@@ -145,9 +145,18 @@ namespace AltV.Net.Data
             return false;
         }
 
-        public override int GetHashCode()
-        {
-            return X.GetHashCode() ^ (Y.GetHashCode() << 2) ^ (Z.GetHashCode() >> 2);
+        public bool Equals(Position other) {
+            return X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z);
+        }
+
+        public override int GetHashCode() {
+            unchecked
+            {
+                var hashCode = X.GetHashCode();
+                hashCode = (hashCode * 397) ^ Y.GetHashCode();
+                hashCode = (hashCode * 397) ^ Z.GetHashCode();
+                return hashCode;
+            }
         }
     }
 }

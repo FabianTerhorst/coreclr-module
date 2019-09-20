@@ -183,10 +183,10 @@ namespace AltV.Net.Native
             internal static extern void Vehicle_SetDirtLevel(IntPtr vehiclePointer, byte level);
 
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_IsExtraOn(IntPtr vehiclePointer, byte extraID);
+            internal static extern bool Vehicle_IsExtraOn(IntPtr vehiclePointer, byte extraId);
 
             [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_ToggleExtra(IntPtr vehiclePointer, byte extraID, bool state);
+            internal static extern void Vehicle_ToggleExtra(IntPtr vehiclePointer, byte extraId, bool state);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool Vehicle_IsNeonActive(IntPtr vehiclePointer);

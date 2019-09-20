@@ -1,10 +1,11 @@
+using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
 
 namespace AltV.Net.Data
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct Rotation
+    public struct Rotation : IEquatable<Rotation>
     {
         public static Rotation Zero = new Rotation
         {
@@ -47,6 +48,27 @@ namespace AltV.Net.Data
                 Pitch = vector3.Y,
                 Yaw = vector3.Z
             };
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Rotation other && Equals(other);
+        }
+
+        public bool Equals(Rotation other)
+        {
+            return Roll.Equals(other.Roll) && Pitch.Equals(other.Pitch) && Yaw.Equals(other.Yaw);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = Roll.GetHashCode();
+                hashCode = (hashCode * 397) ^ Pitch.GetHashCode();
+                hashCode = (hashCode * 397) ^ Yaw.GetHashCode();
+                return hashCode;
+            }
         }
     }
 }
