@@ -139,17 +139,17 @@ namespace AltV.Net.Data
 
         public override bool Equals(object obj)
         {
-            if (obj is Position position)
-                return Math.Abs(position.X - X) < TOLERANCE && Math.Abs(position.Y - Y) < TOLERANCE &&
+            return obj is Position position && Math.Abs(position.X - X) < TOLERANCE && Math.Abs(position.Y - Y) < TOLERANCE &&
                        Math.Abs(position.Z - Z) < TOLERANCE;
-            return false;
         }
 
-        public bool Equals(Position other) {
+        public bool Equals(Position other)
+        {
             return X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z);
         }
 
-        public override int GetHashCode() {
+        public override int GetHashCode()
+        {
             unchecked
             {
                 var hashCode = X.GetHashCode();
