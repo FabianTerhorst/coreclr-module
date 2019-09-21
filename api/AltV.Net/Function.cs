@@ -59,14 +59,6 @@ namespace AltV.Net
                 var arg = genericArguments[i];
                 var typeInfo = new FunctionTypeInfo(arg);
                 typeInfos[i] = typeInfo;
-                if (typeInfo.IsNullable && i > 0)
-                {
-                    if (!typeInfos[i - 1].IsNullable && !typeInfos[i - 1].IsEventParams)
-                    {
-                        throw new ArgumentException(
-                            "Method nullable needs to be at the end of the method. E.g. (int p1, int? p2, int p3?).");
-                    }
-                }
 
                 if (!typeInfo.IsNullable && !typeInfo.IsEventParams)
                 {
@@ -148,6 +140,16 @@ namespace AltV.Net
                 {
                     // Unsupported type
                     return null;
+                }
+            }
+
+            for (int i = 0, length = typeInfos.Length; i < length; i++)
+            {
+                if (!typeInfos[i].IsNullable || i - 1 >= length) continue;
+                if (!typeInfos[i + 1].IsNullable && !typeInfos[i + 1].IsEventParams)
+                {
+                    throw new ArgumentException(
+                        "Method nullable needs to be at the end of the method. E.g. (int p1, int? p2, int p3?).");
                 }
             }
 
