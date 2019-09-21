@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace AltV.Net.FunctionParser
 {
@@ -36,6 +37,8 @@ namespace AltV.Net.FunctionParser
         public readonly Func<System.Collections.IDictionary> CreateDictionary;
 
         public readonly object DefaultValue;
+
+        public readonly bool IsEventParams;
 
         public FunctionTypeInfo(Type type)
         {
@@ -94,6 +97,8 @@ namespace AltV.Net.FunctionParser
                 ElementType = elementType;
                 Element = new FunctionTypeInfo(elementType);
             }
+
+            IsEventParams = type.GetCustomAttribute<EventParams>() != null;
         }
     }
 }

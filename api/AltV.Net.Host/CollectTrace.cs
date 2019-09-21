@@ -300,13 +300,12 @@ namespace AltV.Net.Host
         private static string GetSize(long length)
         {
             if (length > 1e9)
-                return String.Format("{0,-8} (GB)", $"{length / 1e9:0.00##}");
-            else if (length > 1e6)
-                return String.Format("{0,-8} (MB)", $"{length / 1e6:0.00##}");
-            else if (length > 1e3)
-                return String.Format("{0,-8} (KB)", $"{length / 1e3:0.00##}");
-            else
-                return String.Format("{0,-8} (B)", $"{length / 1.0:0.00##}");
+                return $"{$"{length / 1e9:0.00##}",-8} (GB)";
+            if (length > 1e6)
+                return $"{$"{length / 1e6:0.00##}",-8} (MB)";
+            if (length > 1e3)
+                return $"{$"{length / 1e3:0.00##}",-8} (KB)";
+            return $"{$"{length / 1.0:0.00##}",-8} (B)";
         }
     }
 }
