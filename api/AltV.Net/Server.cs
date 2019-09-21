@@ -181,6 +181,7 @@ namespace AltV.Net
 
         public void TriggerServerEvent(IntPtr eventNamePtr, params object[] args)
         {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
             var mValues = MValue.CreateFromObjects(args);
             TriggerServerEvent(eventNamePtr, mValues);
             MValue.Dispose(mValues);
@@ -188,6 +189,7 @@ namespace AltV.Net
 
         public void TriggerServerEvent(string eventName, params object[] args)
         {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
             var mValues = MValue.CreateFromObjects(args);
             TriggerServerEvent(eventName, mValues);
             MValue.Dispose(mValues);
@@ -226,6 +228,7 @@ namespace AltV.Net
 
         public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params object[] args)
         {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
             var mValues = MValue.CreateFromObjects(args);
             TriggerClientEvent(player, eventNamePtr, mValues);
             MValue.Dispose(mValues);
@@ -233,6 +236,7 @@ namespace AltV.Net
 
         public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)
         {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
             var mValues = MValue.CreateFromObjects(args);
             TriggerClientEvent(player, eventName, mValues);
             MValue.Dispose(mValues);
