@@ -124,19 +124,32 @@ namespace AltV.Net.Host
                             new object[] {libArgs.ServerPointer, libArgs.ResourcePointer, resourceAssemblyLoadContext});
                         break;
                     case "HostWrapper":
-                        type.GetMethod("SetStartTracingDelegate", BindingFlags.Public | BindingFlags.Static)?.Invoke(
-                            null,
-                            new object[] {new Action<string>(StartTracing)});
-                        type.GetMethod("SetStopTracingDelegate", BindingFlags.Public | BindingFlags.Static)?.Invoke(
-                            null,
-                            new object[] {new Action(StopTracing)});
-                        type.GetMethod("SetImportDelegate", BindingFlags.Public | BindingFlags.Static)?.Invoke(
-                            null,
-                            new object[] {new ImportDelegate(Import)});
-                        type.GetMethod("SetExportDelegate", BindingFlags.Public | BindingFlags.Static)?.Invoke(
-                            null,
-                            new object[]
-                                {new Action<string, object>((key, value) => { Export(resourceName, key, value); })});
+                        try
+                        {
+                            type.GetMethod("SetStartTracingDelegate", BindingFlags.Public | BindingFlags.Static)
+                                ?.Invoke(
+                                    null,
+                                    new object[] {new Action<string>(StartTracing)});
+                            type.GetMethod("SetStopTracingDelegate", BindingFlags.Public | BindingFlags.Static)?.Invoke(
+                                null,
+                                new object[] {new Action(StopTracing)});
+                            type.GetMethod("SetImportDelegate", BindingFlags.Public | BindingFlags.Static)?.Invoke(
+                                null,
+                                new object[] {new ImportDelegate(Import)});
+                            type.GetMethod("SetExportDelegate", BindingFlags.Public | BindingFlags.Static)?.Invoke(
+                                null,
+                                new object[]
+                                {
+                                    new Action<string, object>((key, value) => { Export(resourceName, key, value); })
+                                });
+                        }
+                        catch (Exception exception)
+                        {
+                            Console.WriteLine(
+                                "Consider updating the AltV.Net nuget package and AltV.Net.Host.dll to be able to access all csharp-module features.");
+                            Console.WriteLine(exception);
+                        }
+
                         break;
                 }
             }
