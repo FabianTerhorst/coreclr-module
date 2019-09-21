@@ -55,15 +55,6 @@ namespace AltV.Net.Data
             return Roll.Equals(other.Roll) && Pitch.Equals(other.Pitch) && Yaw.Equals(other.Yaw);
         }
 
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var hashCode = Roll.GetHashCode();
-                hashCode = (hashCode * 397) ^ Pitch.GetHashCode();
-                hashCode = (hashCode * 397) ^ Yaw.GetHashCode();
-                return hashCode;
-            }
-        }
+        public override int GetHashCode() => HashCode.Combine(Roll.GetHashCode(), Pitch.GetHashCode(), Yaw.GetHashCode());
     }
 }

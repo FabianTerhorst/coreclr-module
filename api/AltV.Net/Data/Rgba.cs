@@ -69,16 +69,6 @@ namespace AltV.Net.Data
             return R == other.R && G == other.G && B == other.B && A == other.A;
         }
 
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var hashCode = R.GetHashCode();
-                hashCode = (hashCode * 397) ^ G.GetHashCode();
-                hashCode = (hashCode * 397) ^ B.GetHashCode();
-                hashCode = (hashCode * 397) ^ A.GetHashCode();
-                return hashCode;
-            }
-        }
+        public override int GetHashCode() => HashCode.Combine(R.GetHashCode(), G.GetHashCode(), B.GetHashCode(), A.GetHashCode());
     }
 }
