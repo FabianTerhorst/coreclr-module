@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -34,7 +35,7 @@ namespace AltV.Net.FunctionParser
 
         public readonly Type DictType;
 
-        public readonly Func<System.Collections.IDictionary> CreateDictionary;
+        public readonly Func<IDictionary> CreateDictionary;
 
         public readonly object DefaultValue;
 
@@ -54,7 +55,7 @@ namespace AltV.Net.FunctionParser
                 //TODO: dont create this for primitive type dictionaries
                 DictType = typeof(Dictionary<,>).MakeGenericType(GenericArguments[0], GenericArguments[1]);
                 DictionaryValue = GenericArguments.Length == 2 ? new FunctionTypeInfo(GenericArguments[1]) : null;
-                CreateDictionary = Expression.Lambda<Func<System.Collections.IDictionary>>(
+                CreateDictionary = Expression.Lambda<Func<IDictionary>>(
                     Expression.New(DictType)
                 ).Compile();
             }

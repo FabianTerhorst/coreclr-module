@@ -78,7 +78,7 @@ namespace AltV.Net.FunctionParser
 
         private bool valid = true;
 
-        private int currentIndex = 0;
+        private int currentIndex;
 
         private ScriptFunction(Delegate @delegate, ScriptFunctionParameter[] scriptFunctionParameters)
         {

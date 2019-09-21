@@ -1,6 +1,5 @@
 using System;
 using AltV.Net.Async.Events;
-using AltV.Net.Events;
 
 namespace AltV.Net.Async
 {
