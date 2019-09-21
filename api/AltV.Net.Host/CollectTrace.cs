@@ -59,20 +59,20 @@ namespace AltV.Net.Host
         {
             private readonly Semaphore semaphore;
 
-            private readonly Semaphore semaphoreResult;
+            //private readonly Semaphore semaphoreResult;
 
-            public bool Result { get; private set; }
+            //public bool Result { get; private set; }
 
             public Tracing()
             {
                 this.semaphore = new Semaphore(0, 1);
-                this.semaphoreResult = new Semaphore(0, 1);
+                //this.semaphoreResult = new Semaphore(0, 1);
             }
 
             public void Stop()
             {
                 semaphore.Release();
-                semaphore.WaitOne();
+                //semaphoreResult.WaitOne();
             }
 
             internal void Wait()
@@ -80,11 +80,11 @@ namespace AltV.Net.Host
                 semaphore.WaitOne();
             }
 
-            internal void SignalFinish(bool result)
+            /*internal void SignalFinish(bool result)
             {
                 Result = result;
-                semaphore.Release();
-            }
+                semaphoreResult.Release();
+            }*/
         }
 
         public sealed class Profile
@@ -286,13 +286,13 @@ namespace AltV.Net.Host
                     await collectingTask;
                 }
 
-                tracing.SignalFinish(!failed);
+                //tracing.SignalFinish(!failed);
                 return failed ? ErrorCodes.TracingError : 0;
             }
             catch (Exception ex)
             {
                 Console.Error.WriteLine($"[ERROR] {ex.ToString()}");
-                tracing.SignalFinish(false);
+                //tracing.SignalFinish(false);
                 return ErrorCodes.UnknownError;
             }
         }
