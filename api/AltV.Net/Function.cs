@@ -12,6 +12,13 @@ namespace AltV.Net
     {
         public delegate object Func(params object[] args);
 
+        private delegate bool CallArgsLengthCheck(Type[] args, int requiredArgsCount, FunctionTypeInfo[] typeInfos,
+            MValue[] values);
+
+        private delegate bool CallArgsLengthCheckPlayer(Type[] args, int requiredArgsCount,
+            FunctionTypeInfo[] typeInfos, IPlayer player,
+            MValue[] values);
+
         //TODO: for high optimization add ParseBoolUnsafe ect. that doesn't contains the mValue type check for scenarios where we already had to check the mValue type
 
         //TODO: add support for own function arguments parser for significant performance improvements with all benefits
@@ -46,11 +53,26 @@ namespace AltV.Net
             var parsers = new FunctionMValueParser[genericArguments.Length];
             var objectParsers = new FunctionObjectParser[genericArguments.Length];
             var typeInfos = new FunctionTypeInfo[genericArguments.Length];
+            var requiredArgsCount = 0;
             for (int i = 0, length = genericArguments.Length; i < length; i++)
             {
                 var arg = genericArguments[i];
                 var typeInfo = new FunctionTypeInfo(arg);
                 typeInfos[i] = typeInfo;
+                if (typeInfo.IsNullable && i > 0)
+                {
+                    if (!typeInfos[i - 1].IsNullable && !typeInfos[i - 1].IsEventParams)
+                    {
+                        throw new ArgumentException(
+                            "Method nullable needs to be at the end of the method. E.g. (int p1, int? p2, int p3?).");
+                    }
+                }
+
+                if (!typeInfo.IsNullable && !typeInfo.IsEventParams)
+                {
+                    requiredArgsCount++;
+                }
+
                 if (arg == FunctionTypes.Obj)
                 {
                     //TODO: use MValue.ToObject here 
@@ -129,7 +151,53 @@ namespace AltV.Net
                 }
             }
 
-            return new Function(func, returnType, genericArguments, parsers, objectParsers, typeInfos);
+            CallArgsLengthCheck callArgsLengthCheck = CheckArgsLength;
+            CallArgsLengthCheckPlayer callArgsLengthCheckPlayer = CheckArgsLengthWithPlayer;
+
+            if (typeInfos.Length > 0)
+            {
+                var lastTypeInfo = typeInfos[typeInfos.Length - 1];
+                if (lastTypeInfo.IsEventParams)
+                {
+                    if (lastTypeInfo.IsList)
+                    {
+                        throw new ArgumentException("EventParams needs to be a array.");
+                    }
+
+                    callArgsLengthCheck = CheckArgsLengthWithEventParams;
+                    callArgsLengthCheckPlayer = CheckArgsLengthWithPlayerWithEventParams;
+                }
+            }
+
+            return new Function(func, returnType, genericArguments, parsers, objectParsers, typeInfos,
+                callArgsLengthCheck, callArgsLengthCheckPlayer, requiredArgsCount);
+        }
+
+        private static bool CheckArgsLength(Type[] args, int requiredArgsCount, FunctionTypeInfo[] typeInfos,
+            MValue[] values)
+        {
+            return values.Length >= requiredArgsCount;
+        }
+
+        private static bool CheckArgsLengthWithPlayer(Type[] args, int requiredArgsCount, FunctionTypeInfo[] typeInfos,
+            IPlayer player,
+            MValue[] values)
+        {
+            return values.Length + 1 >= requiredArgsCount && typeInfos[0].IsPlayer;
+        }
+
+        private static bool CheckArgsLengthWithEventParams(Type[] args, int requiredArgsCount,
+            FunctionTypeInfo[] typeInfos, MValue[] values)
+        {
+            return values.Length >= requiredArgsCount;
+        }
+
+        private static bool CheckArgsLengthWithPlayerWithEventParams(Type[] args, int requiredArgsCount,
+            FunctionTypeInfo[] typeInfos,
+            IPlayer player,
+            MValue[] values)
+        {
+            return values.Length + 1 >= requiredArgsCount && typeInfos[0].IsPlayer;
         }
 
         private readonly Delegate @delegate;
@@ -144,8 +212,15 @@ namespace AltV.Net
 
         private readonly FunctionTypeInfo[] typeInfos;
 
+        private readonly CallArgsLengthCheck callArgsLengthCheck;
+
+        private readonly CallArgsLengthCheckPlayer callArgsLengthCheckPlayer;
+
+        private readonly int requiredArgsCount;
+
         private Function(Delegate @delegate, Type returnType, Type[] args, FunctionMValueParser[] parsers,
-            FunctionObjectParser[] objectParsers, FunctionTypeInfo[] typeInfos)
+            FunctionObjectParser[] objectParsers, FunctionTypeInfo[] typeInfos, CallArgsLengthCheck callArgsLengthCheck,
+            CallArgsLengthCheckPlayer callArgsLengthCheckPlayer, int requiredArgsCount)
         {
             this.@delegate = @delegate;
             this.returnType = returnType;
@@ -153,6 +228,9 @@ namespace AltV.Net
             this.parsers = parsers;
             this.objectParsers = objectParsers;
             this.typeInfos = typeInfos;
+            this.callArgsLengthCheck = callArgsLengthCheck;
+            this.callArgsLengthCheckPlayer = callArgsLengthCheckPlayer;
+            this.requiredArgsCount = requiredArgsCount;
         }
 
         //TODO: make call async because it doesnt matter there is no concurrent problems inside
@@ -161,20 +239,24 @@ namespace AltV.Net
         //TODO: register event callbacks to cpp as dynamic function pointers with void** so cpp knows the types it needs to check
 
         //TODO: add support for nullable args, these are reducing the required length, add support for default values as well
+
+        //TODO: maybe cache var invokeValues = new object[length];
         internal MValue Call(IBaseBaseObjectPool baseBaseObjectPool, MValue[] values)
         {
             var length = values.Length;
-            if (length != args.Length) return MValue.Nil;
-            //var watch = System.Diagnostics.Stopwatch.StartNew();
-            var invokeValues = new object[length];
-            for (var i = 0; i < length; i++)
+            if (length < requiredArgsCount) return MValue.Nil;
+            var argsLength = args.Length;
+            var invokeValues = new object[argsLength];
+            var parserValuesLength = Math.Min(argsLength, length);
+            for (var i = 0; i < parserValuesLength; i++)
             {
                 invokeValues[i] = parsers[i](ref values[i], args[i], baseBaseObjectPool, typeInfos[i]);
             }
 
-            //watch.Stop();
-            //var elapsedMs = watch.ElapsedMilliseconds;
-            //Alt.Log("ms:" + elapsedMs);
+            for (var i = parserValuesLength; i < argsLength; i++)
+            {
+                invokeValues[i] = typeInfos[i].DefaultValue;
+            }
 
             var result = @delegate.DynamicInvoke(invokeValues);
             if (returnType == FunctionTypes.Void) return MValue.Nil;
