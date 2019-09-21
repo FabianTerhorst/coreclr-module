@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
-        <PackageVersion>1.4.1-dev-preview</PackageVersion>
+        <PackageVersion>1.4.2-dev-preview</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>Improve client dimensions</PackageReleaseNotes>
     </PropertyGroup>

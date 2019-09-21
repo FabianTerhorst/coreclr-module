@@ -7,7 +7,7 @@ using AltV.Net.Elements.Args;
 namespace AltV.Net
 {
     /// <summary>
-    /// A wrapper around none standard alt:V cpp apis
+    /// A wrapper around none standard csharp-module alt:V cpp apis
     /// </summary>
     public class CSharpResourceImpl : IDisposable
     {

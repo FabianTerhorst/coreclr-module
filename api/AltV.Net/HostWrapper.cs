@@ -9,7 +9,7 @@ namespace AltV.Net
     {
         public delegate bool ImportDelegate(string resourceName, string key, out object value);
 
-        private static Action _startTracing;
+        private static Action<string> _startTracing;
 
         private static Action _stopTracing;
 
@@ -17,7 +17,7 @@ namespace AltV.Net
 
         private static Action<string, object> _export;
 
-        public static void SetStartTracingDelegate(Action startTracing)
+        public static void SetStartTracingDelegate(Action<string> startTracing)
         {
             _startTracing = startTracing;
         }
@@ -43,9 +43,9 @@ namespace AltV.Net
             _export = export;
         }
 
-        public static void StartTracing()
+        public static void StartTracing(string traceFileName)
         {
-            _startTracing?.Invoke();
+            _startTracing?.Invoke(traceFileName);
         }
 
         public static void StopTracing()

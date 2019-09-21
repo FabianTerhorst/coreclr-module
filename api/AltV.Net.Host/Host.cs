@@ -5,6 +5,11 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using System.Threading;
+using System.Threading.Tasks;
+
+//using Buildalyzer;
+//using Buildalyzer.Workspaces;
+//using Microsoft.CodeAnalysis;
 
 namespace AltV.Net.Host
 {
@@ -121,7 +126,7 @@ namespace AltV.Net.Host
                     case "HostWrapper":
                         type.GetMethod("SetStartTracingDelegate", BindingFlags.Public | BindingFlags.Static)?.Invoke(
                             null,
-                            new object[] {new Action(StartTracing)});
+                            new object[] {new Action<string>(StartTracing)});
                         type.GetMethod("SetStopTracingDelegate", BindingFlags.Public | BindingFlags.Static)?.Invoke(
                             null,
                             new object[] {new Action(StopTracing)});
@@ -170,12 +175,58 @@ namespace AltV.Net.Host
 
             return 0;
         }
-        public static void StartTracing()
+
+        /*public static async void CompileResource()
         {
+            var resourceProjPath = GetPath(resourcePath, resourceMain);
+            var manager = new AnalyzerManager();
+            var analyzer = manager.GetProject(resourceProjPath);
+            var workspace = analyzer.GetWorkspace();
+            var solution = workspace.CurrentSolution;
+            //var dependencyGraph = solution.GetProjectDependencyGraph();
+            //GetTopologicallySortedProjects
+            foreach (var proj in solution.Projects)
+            {
+                var c = await proj.GetCompilationAsync(); .WithOptions(proj.CompilationOptions)
+                    .AddReferences(proj.MetadataReferences);
+
+                var result = c.Emit(proj.Name + ".dll");
+
+                Console.WriteLine(result.Success);
+            }
+        }*/
+
+        private static readonly object TracingMutex = new object();
+
+        private static CollectTrace.Tracing _tracing;
+
+        private static byte _tracingState = 0;
+
+        public static void StartTracing(string traceFileName)
+        {
+            lock (TracingMutex)
+            {
+                if (_tracing != null || _tracingState == 1) return;
+                _tracing = new CollectTrace.Tracing();
+            }
+
+            Task.Run(async () => await CollectTrace.Collect(_tracing, new FileInfo(traceFileName + ".nettrace")));
+
+            lock (TracingMutex)
+            {
+                _tracingState = 1;
+            }
         }
 
         public static void StopTracing()
         {
+            lock (TracingMutex)
+            {
+                if (_tracing == null || _tracingState == 0) return;
+                _tracing.Stop();
+                _tracing = null;
+                _tracingState = 0;
+            }
         }
 
         public static bool Import(string resourceName, string key, out object value)
