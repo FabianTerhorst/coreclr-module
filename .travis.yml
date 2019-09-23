@@ -53,13 +53,14 @@ matrix:
       - cd upload && cd modules && ls
       - cd .. && cd ..
   - dist: bionic
-    addons:
-      snaps:
-      - name: dotnet-sdk
-        classic: true
-        channel: latest/beta
+    #addons:
+    #  snaps:
+    #  - name: dotnet-sdk
+    #    classic: true
+    #    channel: latest/beta
     sudo: required
     language: csharp
+    dotnet: 3.0
     mono: none
     script:
       - mkdir upload
