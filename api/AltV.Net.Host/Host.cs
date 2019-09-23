@@ -17,8 +17,8 @@ namespace AltV.Net.Host
     {
         private delegate bool ImportDelegate(string resourceName, string key, out object value);
 
-        private static readonly IDictionary<string, WeakReference> _loadContexts =
-            new Dictionary<string, WeakReference>();
+        private static readonly IDictionary<string, AssemblyLoadContext> _loadContexts =
+            new Dictionary<string, AssemblyLoadContext>();
 
         private static readonly IDictionary<string, IDictionary<string, object>> _exports =
             new Dictionary<string, IDictionary<string, object>>();
@@ -100,7 +100,7 @@ namespace AltV.Net.Host
             var resourceAssemblyLoadContext =
                 new ResourceAssemblyLoadContext(resourceDllPath, resourcePath, resourceName, isCollectible);
 
-            _loadContexts[resourceDllPath] = new WeakReference(resourceAssemblyLoadContext);
+            _loadContexts[resourceDllPath] = resourceAssemblyLoadContext;
 
             Assembly resourceAssembly;
 
@@ -167,21 +167,27 @@ namespace AltV.Net.Host
             var libArgs = Marshal.PtrToStructure<UnloadArgs>(arg);
             var resourcePath = Marshal.PtrToStringUTF8(libArgs.ResourcePath);
             var resourceMain = Marshal.PtrToStringUTF8(libArgs.ResourceMain);
-            WeakReference loadContext;
+            AssemblyLoadContext loadContext;
             {
                 var resourceDllPath = GetPath(resourcePath, resourceMain);
                 if (!_loadContexts.Remove(resourceDllPath, out loadContext)) return 1;
-                if (!(loadContext.Target is AssemblyLoadContext)) return 1;
-                _exports.Remove(((AssemblyLoadContext) loadContext.Target).Name);
-                ((AssemblyLoadContext) loadContext.Target).Unload();
+                _exports.Remove(loadContext.Name);
+                loadContext.Unload();
             }
-            for (var i = 0; loadContext.IsAlive && (i < 10); i++)
+
+            var weakLoadContext = new WeakReference(loadContext);
+            loadContext = null;
+
+            if (weakLoadContext.IsAlive)
             {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
             }
 
-            if (loadContext.IsAlive)
+            if (weakLoadContext.IsAlive)
             {
                 Console.WriteLine("Resource " + resourcePath + " leaked!");
             }
