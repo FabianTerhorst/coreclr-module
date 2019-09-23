@@ -63,45 +63,63 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
                 {
                     while (playerEventsReader.TryRead(out var playerEvent))
                     {
-                        var player = playerEvent.Player;
-                        if (playerEvent.Connected)
+                        try
                         {
-                            var client = AltNetworking.CreateClient();
-                            lock (client)
+                            var player = playerEvent.Player;
+                            if (playerEvent.Connected)
                             {
-                                if (!client.Exists) continue;
-                                playerTokens[client.Token] = player;
-                                playerTokenAccess[player] = client.Token;
-                                player.SetNetworkingClient(client);
-
-                                lock (player)
+                                var client = AltNetworking.CreateClient();
+                                lock (client)
                                 {
-                                    if (player.Exists)
+                                    if (!client.Exists)
                                     {
-                                        player.Emit("streamingToken", url, client.Token);
+                                        AltNetworking.Module.ClientPool.Remove(client.Token);
+                                        continue;
+                                    }
+
+                                    playerTokens[client.Token] = player;
+                                    playerTokenAccess[player] = client.Token;
+                                    player.SetNetworkingClient(client);
+
+                                    lock (player)
+                                    {
+                                        if (player.Exists)
+                                        {
+                                            player.Emit("streamingToken", url, client.Token);
+                                        }
                                     }
                                 }
                             }
-                        }
-                        else
-                        {
-                            player.RemoveNetworkingClient();
-                            if (playerTokenAccess.Remove(player, out var token))
-                            {
-                                playerTokens.Remove(token);
-                            }
                             else
                             {
-                                continue;
-                            }
+                                player.RemoveNetworkingClient();
+                                if (playerTokenAccess.Remove(player, out var token))
+                                {
+                                    playerTokens.Remove(token);
+                                }
+                                else
+                                {
+                                    continue;
+                                }
 
-                            if (!AltNetworking.Module.ClientPool.Remove(token, out var client)) continue;
-                            var clientWebSocket = client.WebSocket;
-                            if (clientWebSocket != null)
-                            {
-                                await webSocket.CloseWebSocketAsync(clientWebSocket, WebSocketCloseStatus.NormalClosure,
-                                    "disconnected");
+                                if (!AltNetworking.Module.ClientPool.Remove(token, out var client)) continue;
+                                var clientWebSocket = client.WebSocket;
+                                if (clientWebSocket == null) continue;
+                                try
+                                {
+                                    await webSocket.CloseWebSocketAsync(clientWebSocket,
+                                        WebSocketCloseStatus.NormalClosure,
+                                        "disconnected");
+                                }
+                                catch (Exception exception)
+                                {
+                                    Console.WriteLine(exception);
+                                }
                             }
+                        }
+                        catch (Exception exception)
+                        {
+                            Console.WriteLine(exception);
                         }
                     }
                 }
