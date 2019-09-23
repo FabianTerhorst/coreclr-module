@@ -11,7 +11,7 @@ namespace AltV.Net.Async.Events
     public delegate Task PlayerConnectAsyncDelegate(IPlayer player, string reason);
 
     public delegate Task PlayerDamageAsyncDelegate(IPlayer player, IEntity attacker, ushort oldHealth, ushort oldArmor,
-        uint weapon, ushort damage);
+        ushort oldMaxHealth, ushort oldMaxArmor,  uint weapon, ushort damage);
 
     public delegate Task PlayerDeadAsyncDelegate(IPlayer player, IEntity killer, uint weapon);
 

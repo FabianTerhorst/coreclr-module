@@ -97,11 +97,35 @@ namespace AltV.Net.Async
                 CheckpointAsyncEventHandler.CallAsyncWithoutTask(@delegate => @delegate(checkpoint, entity, state)));
         }
 
+        public override void OnPlayerDeathEvent(IPlayer player, IEntity killer, uint weapon)
+        {
+            base.OnPlayerDeathEvent(player, killer, weapon);
+            if (!PlayerDeadAsyncEventHandler.HasEvents()) return;
+            Task.Run(() =>
+                PlayerDeadAsyncEventHandler.CallAsyncWithoutTask(@delegate =>
+                    @delegate(player, killer, weapon)));
+        }
+
         public override void OnPlayerConnectEvent(IPlayer player, string reason)
         {
             base.OnPlayerConnectEvent(player, reason);
             if (!PlayerConnectAsyncEventHandler.HasEvents()) return;
-            Task.Run(() => PlayerConnectAsyncEventHandler.CallAsyncWithoutTask(@delegate => @delegate(player, reason)));
+            Task.Run(() =>
+                PlayerConnectAsyncEventHandler.CallAsyncWithoutTask(@delegate =>
+                    @delegate(player, reason)));
+        }
+
+        public override void OnPlayerDamageEvent(IPlayer player, IEntity entity, uint weapon, ushort damage)
+        {
+            base.OnPlayerDamageEvent(player, entity, weapon, damage);
+            if (!PlayerDamageAsyncEventHandler.HasEvents()) return;
+            var oldHealth = player.Health;
+            var oldArmor = player.Armor;
+            var oldMaxHealth = player.MaxHealth;
+            var oldMaxArmor = player.MaxArmor;
+            Task.Run(() =>
+                PlayerDamageAsyncEventHandler.CallAsyncWithoutTask(@delegate =>
+                    @delegate(player, entity, oldHealth, oldArmor, oldMaxHealth, oldMaxArmor, weapon, damage)));
         }
 
         public override void OnExplosionEvent(IPlayer sourcePlayer, ExplosionType explosionType, Position position,
