@@ -65,7 +65,7 @@ matrix:
     script:
       - mkdir upload
       - chmod +x ./cdn-linux
-      - sudo snap alias dotnet-sdk.dotnet dotnet
+      #- sudo snap alias dotnet-sdk.dotnet dotnet
       - dotnet --version
       - cd api
       - cd AltV.Net.Host
