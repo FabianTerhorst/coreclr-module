@@ -152,6 +152,7 @@ namespace AltV.Net.Host
         /// <summary>
         /// Collects a diagnostic trace from a currently running process.
         /// </summary>
+        /// <param name="sizeChangeCallbacks">size change callbacks</param>
         /// <param name="tracing">To start / stop the tracing</param>
         /// <param name="processId">The process to collect the trace from.</param>
         /// <param name="output">The output path for the collected trace data.</param>
@@ -160,7 +161,8 @@ namespace AltV.Net.Host
         /// <param name="profile">A named pre-defined set of provider configurations that allows common tracing scenarios to be specified succinctly.</param>
         /// <param name="format">The desired format of the created trace file.</param>
         /// <returns></returns>
-        public static async Task<int> Collect(Tracing tracing, FileInfo output, int processId = 0,
+        public static async Task<int> Collect(ICollection<Action<long>> sizeChangeCallbacks, Tracing tracing,
+            FileInfo output, int processId = 0,
             uint buffersize = 256,
             string providers = "", Profile profile = null, TraceFileFormat format = TraceFileFormat.NetTrace)
         {
@@ -257,8 +259,13 @@ namespace AltV.Net.Host
                                     if (nBytesRead <= 0)
                                         break;
                                     fs.Write(buffer, 0, nBytesRead);
-                                    Console.Out.WriteLine(
-                                        $"[{stopwatch.Elapsed.ToString(@"dd\:hh\:mm\:ss")}]\tRecording trace {GetSize(fs.Length)}");
+                                    foreach (var sizeChangeCallback in sizeChangeCallbacks)
+                                    {
+                                        sizeChangeCallback(fs.Length);
+                                    }
+
+                                    /*Console.Out.WriteLine(
+                                        $"[{stopwatch.Elapsed.ToString(@"dd\:hh\:mm\:ss")}]\tRecording trace {GetSize(fs.Length)}");*/
                                     /*Debug.WriteLine(
                                         $"PACKET: {Convert.ToBase64String(buffer, 0, nBytesRead)} (bytes {nBytesRead})");*/
                                 }

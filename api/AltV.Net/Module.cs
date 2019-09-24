@@ -376,7 +376,6 @@ namespace AltV.Net
             }
         }
 
-
         public void OnPlayerDeath(IntPtr playerPointer, IntPtr killerEntityPointer, BaseObjectType killerBaseObjectType,
             uint weapon)
         {

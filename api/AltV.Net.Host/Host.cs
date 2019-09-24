@@ -23,6 +23,9 @@ namespace AltV.Net.Host
         private static readonly IDictionary<string, IDictionary<string, object>> _exports =
             new Dictionary<string, IDictionary<string, object>>();
 
+        private static readonly IDictionary<string, Action<long>> _traceSizeChangeDelegates =
+            new Dictionary<string, Action<long>>();
+
         private const string DllName = "csharp-module";
         private const CallingConvention NativeCallingConvention = CallingConvention.Cdecl;
 
@@ -142,6 +145,13 @@ namespace AltV.Net.Host
                                 {
                                     new Action<string, object>((key, value) => { Export(resourceName, key, value); })
                                 });
+                            var traceSizeChangeDelegate = (Action<long>) type.GetMethod("GetTraceSizeChangeDelegate",
+                                BindingFlags.Public | BindingFlags.Static)?.Invoke(
+                                null,
+                                new object[]
+                                {
+                                });
+                            _traceSizeChangeDelegates[resourceName] = traceSizeChangeDelegate;
                         }
                         catch (Exception exception)
                         {
@@ -171,6 +181,7 @@ namespace AltV.Net.Host
             {
                 var resourceDllPath = GetPath(resourcePath, resourceMain);
                 if (!_loadContexts.Remove(resourceDllPath, out loadContext)) return 1;
+                _traceSizeChangeDelegates.Remove(loadContext.Name);
                 _exports.Remove(loadContext.Name);
                 loadContext.Unload();
             }
@@ -182,7 +193,7 @@ namespace AltV.Net.Host
             {
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
-                
+
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
             }
@@ -229,7 +240,7 @@ namespace AltV.Net.Host
                 _tracing = new CollectTrace.Tracing();
             }
 
-            Task.Run(async () => await CollectTrace.Collect(_tracing, new FileInfo(traceFileName + ".nettrace")));
+            Task.Run(async () => await CollectTrace.Collect(_traceSizeChangeDelegates.Values, _tracing, new FileInfo(traceFileName + ".nettrace")));
 
             lock (TracingMutex)
             {

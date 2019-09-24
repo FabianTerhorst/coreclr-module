@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace AltV.Net
 {
@@ -16,6 +17,26 @@ namespace AltV.Net
         private static ImportDelegate _import;
 
         private static Action<string, object> _export;
+
+        private static readonly Action<long> OnTraceSizeChange = OnTraceSizeChangeDelegate;
+        
+        internal static readonly HashSet<Action<long>> OnTraceFileSizeChangeEventHandlers = new HashSet<Action<long>>();
+
+        private static void OnTraceSizeChangeDelegate(long size)
+        {
+            lock (OnTraceFileSizeChangeEventHandlers)
+            {
+                foreach (var onTraceFileSizeChange in OnTraceFileSizeChangeEventHandlers)
+                {
+                    onTraceFileSizeChange(size);
+                }
+            }
+        }
+
+        public static Action<long> GetTraceSizeChangeDelegate()
+        {
+            return OnTraceSizeChange;
+        }
 
         public static void SetStartTracingDelegate(Action<string> startTracing)
         {
