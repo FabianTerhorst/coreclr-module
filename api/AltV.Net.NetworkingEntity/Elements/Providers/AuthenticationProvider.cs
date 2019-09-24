@@ -152,7 +152,9 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
 
         public void OnConnectionBroken(ManagedWebSocket webSocket)
         {
-            webSocket.Extra.Remove(ClientExtra);
+            if (!webSocket.Extra.Remove(ClientExtra, out var playerObject) ||
+                !(playerObject is INetworkingClient client)) return;
+            client.WebSocket = null;
         }
 
         public void OnConnectionEstablished(ManagedWebSocket webSocket)
