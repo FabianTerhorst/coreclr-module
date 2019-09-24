@@ -104,6 +104,21 @@ namespace AltV.Net
         {
             _module.OnPlayerConnect(playerPointer, playerId, reason);
         }
+        
+        public static void OnResourceStart(IntPtr resourcePointer)
+        {
+            _module.OnResourceStart(resourcePointer);
+        }
+        
+        public static void OnResourceStop(IntPtr resourcePointer)
+        {
+            _module.OnResourceStop(resourcePointer);
+        }
+        
+        public static void OnResourceError(IntPtr resourcePointer)
+        {
+            _module.OnResourceError(resourcePointer);
+        }
 
         public static void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer,
             BaseObjectType attackerBaseObjectType,

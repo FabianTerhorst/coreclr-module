@@ -67,6 +67,8 @@ typedef void (* ClientEventDelegate_t)(alt::IPlayer* player, const char* name, a
 
 typedef void (* PlayerConnectDelegate_t)(alt::IPlayer* player, uint16_t playerId, const char* reason);
 
+typedef void (* ResourceEventDelegate_t)(alt::IResource* resource);
+
 typedef void (* PlayerDamageDelegate_t)(alt::IPlayer* player, void* attacker,
                                         alt::IBaseObject::Type attackerType, uint16_t attackerId, uint32_t weapon,
                                         uint16_t damage);
@@ -159,6 +161,12 @@ public:
     ClientEventDelegate_t OnClientEventDelegate = nullptr;
 
     PlayerConnectDelegate_t OnPlayerConnectDelegate = nullptr;
+
+    ResourceEventDelegate_t OnResourceStartDelegate = nullptr;
+
+    ResourceEventDelegate_t OnResourceStopDelegate = nullptr;
+
+    ResourceEventDelegate_t OnResourceErrorDelegate = nullptr;
 
     PlayerDamageDelegate_t OnPlayerDamageDelegate = nullptr;
 
@@ -255,6 +263,15 @@ EXPORT void CSharpResourceImpl_SetPlayerDamageDelegate(CSharpResourceImpl* resou
 
 EXPORT void CSharpResourceImpl_SetPlayerConnectDelegate(CSharpResourceImpl* resource,
                                                         PlayerConnectDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetResourceStartDelegate(CSharpResourceImpl* resource,
+                                                        ResourceEventDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetResourceStopDelegate(CSharpResourceImpl* resource,
+                                                       ResourceEventDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetResourceErrorDelegate(CSharpResourceImpl* resource,
+                                                        ResourceEventDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetPlayerDeathDelegate(CSharpResourceImpl* resource,
                                                       PlayerDeathDelegate_t delegate);

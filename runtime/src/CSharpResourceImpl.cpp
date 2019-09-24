@@ -13,6 +13,9 @@ void CSharpResourceImpl::ResetDelegates() {
     OnCheckpointDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnClientEventDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerConnectDelegate = [](auto var, auto var2, auto var3) {};
+    OnResourceStartDelegate = [](auto var) {};
+    OnResourceStopDelegate = [](auto var) {};
+    OnResourceErrorDelegate = [](auto var) {};
     OnPlayerDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
     OnPlayerDeathDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnExplosionDelegate = [](auto var, auto var2, auto var3, auto var4) {};
@@ -374,6 +377,18 @@ void CSharpResourceImpl_SetPlayerDamageDelegate(CSharpResourceImpl* resource,
 void CSharpResourceImpl_SetPlayerConnectDelegate(CSharpResourceImpl* resource,
                                                  PlayerConnectDelegate_t delegate) {
     resource->OnPlayerConnectDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetResourceStartDelegate(CSharpResourceImpl* resource, ResourceEventDelegate_t delegate) {
+    resource->OnResourceStartDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetResourceStopDelegate(CSharpResourceImpl* resource, ResourceEventDelegate_t delegate) {
+    resource->OnResourceStopDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetResourceErrorDelegate(CSharpResourceImpl* resource, ResourceEventDelegate_t delegate) {
+    resource->OnResourceErrorDelegate = delegate;
 }
 
 void CSharpResourceImpl_SetPlayerDeathDelegate(CSharpResourceImpl* resource,

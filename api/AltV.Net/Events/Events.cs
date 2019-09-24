@@ -9,6 +9,8 @@ namespace AltV.Net.Events
     public delegate void ClientEventDelegate(IPlayer player, object[] args);
 
     public delegate void PlayerConnectDelegate(IPlayer player, string reason);
+    
+    public delegate void ResourceEventDelegate(INativeResource resource);
 
     public delegate void PlayerDamageDelegate(IPlayer player, IEntity attacker, uint weapon, ushort damage);
 

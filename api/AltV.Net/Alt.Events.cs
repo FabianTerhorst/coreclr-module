@@ -26,6 +26,24 @@ namespace AltV.Net
             remove => Module.PlayerConnectEventHandler.Remove(value);
         }
 
+        public static event ResourceEventDelegate OnResourceStart
+        {
+            add => Module.ResourceStartEventHandler.Add(value);
+            remove => Module.ResourceStartEventHandler.Remove(value);
+        }
+
+        public static event ResourceEventDelegate OnResourceStop
+        {
+            add => Module.ResourceStopEventHandler.Add(value);
+            remove => Module.ResourceStopEventHandler.Remove(value);
+        }
+
+        public static event ResourceEventDelegate OnResourceError
+        {
+            add => Module.ResourceErrorEventHandler.Add(value);
+            remove => Module.ResourceErrorEventHandler.Remove(value);
+        }
+
         public static event PlayerDamageDelegate OnPlayerDamage
         {
             add => Module.PlayerDamageEventHandler.Add(value);

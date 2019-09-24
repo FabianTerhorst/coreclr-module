@@ -65,15 +65,24 @@ namespace AltV.Net
         internal readonly IEventHandler<PlayerConnectDelegate> PlayerConnectEventHandler =
             new HashSetEventHandler<PlayerConnectDelegate>();
 
+        internal readonly IEventHandler<ResourceEventDelegate> ResourceStartEventHandler =
+            new HashSetEventHandler<ResourceEventDelegate>();
+
+        internal readonly IEventHandler<ResourceEventDelegate> ResourceStopEventHandler =
+            new HashSetEventHandler<ResourceEventDelegate>();
+
+        internal readonly IEventHandler<ResourceEventDelegate> ResourceErrorEventHandler =
+            new HashSetEventHandler<ResourceEventDelegate>();
+
         internal readonly IEventHandler<PlayerDamageDelegate> PlayerDamageEventHandler =
             new HashSetEventHandler<PlayerDamageDelegate>();
 
         internal readonly IEventHandler<PlayerDeadDelegate> PlayerDeadEventHandler =
             new HashSetEventHandler<PlayerDeadDelegate>();
-        
+
         internal readonly IEventHandler<ExplosionDelegate> ExplosionEventHandler =
             new HashSetEventHandler<ExplosionDelegate>();
-        
+
         internal readonly IEventHandler<WeaponDamageDelegate> WeaponDamageEventHandler =
             new HashSetEventHandler<WeaponDamageDelegate>();
 
@@ -120,7 +129,7 @@ namespace AltV.Net
             new HashSetEventHandler<ColShapeDelegate>();
 
         internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
-        
+
         internal readonly LinkedList<GCHandle> functionExportHandles = new LinkedList<GCHandle>();
 
         public Module(IServer server, AssemblyLoadContext assemblyLoadContext,
@@ -345,6 +354,45 @@ namespace AltV.Net
             OnPlayerConnectEvent(player, reason);
         }
 
+        public void OnResourceStart(IntPtr resourcePointer)
+        {
+            OnResourceStartEvent(new NativeResource(resourcePointer));
+        }
+
+        public virtual void OnResourceStartEvent(INativeResource resource)
+        {
+            foreach (var @delegate in ResourceStartEventHandler.GetEvents())
+            {
+                @delegate(resource);
+            }
+        }
+
+        public void OnResourceStop(IntPtr resourcePointer)
+        {
+            OnResourceStopEvent(new NativeResource(resourcePointer));
+        }
+
+        public virtual void OnResourceStopEvent(INativeResource resource)
+        {
+            foreach (var @delegate in ResourceStopEventHandler.GetEvents())
+            {
+                @delegate(resource);
+            }
+        }
+
+        public void OnResourceError(IntPtr resourcePointer)
+        {
+            OnResourceErrorEvent(new NativeResource(resourcePointer));
+        }
+
+        public virtual void OnResourceErrorEvent(INativeResource resource)
+        {
+            foreach (var @delegate in ResourceErrorEventHandler.GetEvents())
+            {
+                @delegate(resource);
+            }
+        }
+
         public virtual void OnPlayerConnectEvent(IPlayer player, string reason)
         {
             foreach (var @delegate in PlayerConnectEventHandler.GetEvents())
@@ -396,18 +444,19 @@ namespace AltV.Net
                 @delegate(player, killer, weapon);
             }
         }
-        
+
         public void OnExplosion(IntPtr playerPointer, ExplosionType explosionType, Position position, uint explosionFx)
         {
             if (!PlayerPool.GetOrCreate(playerPointer, out var sourcePlayer))
             {
                 return;
             }
-            
+
             OnExplosionEvent(sourcePlayer, explosionType, position, explosionFx);
         }
 
-        public virtual void OnExplosionEvent(IPlayer sourcePlayer, ExplosionType explosionType, Position position, uint explosionFx)
+        public virtual void OnExplosionEvent(IPlayer sourcePlayer, ExplosionType explosionType, Position position,
+            uint explosionFx)
         {
             foreach (var @delegate in ExplosionEventHandler.GetEvents())
             {
@@ -415,19 +464,21 @@ namespace AltV.Net
             }
         }
 
-        public void OnWeaponDamage(IntPtr playerPointer, IntPtr entityPointer, BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart)
+        public void OnWeaponDamage(IntPtr playerPointer, IntPtr entityPointer, BaseObjectType entityType, uint weapon,
+            ushort damage, Position shotOffset, BodyPart bodyPart)
         {
             if (!PlayerPool.GetOrCreate(playerPointer, out var sourcePlayer))
             {
                 return;
             }
-            
+
             BaseEntityPool.GetOrCreate(entityPointer, entityType, out var targetEntity);
-            
+
             OnWeaponDamageEvent(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
         }
 
-        public virtual void OnWeaponDamageEvent(IPlayer sourcePlayer, IEntity targetEntity, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart)
+        public virtual void OnWeaponDamageEvent(IPlayer sourcePlayer, IEntity targetEntity, uint weapon, ushort damage,
+            Position shotOffset, BodyPart bodyPart)
         {
             foreach (var @delegate in WeaponDamageEventHandler.GetEvents())
             {
@@ -910,6 +961,7 @@ namespace AltV.Net
             {
                 handle.Free();
             }
+
             functionExportHandles.Clear();
         }
     }

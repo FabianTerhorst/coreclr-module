@@ -71,6 +71,8 @@ namespace AltV.Net.Native
 
             internal delegate void PlayerConnectDelegate(IntPtr playerPointer, ushort playerId, string reason);
 
+            internal delegate void ResourceEventDelegate(IntPtr resourcePointer);
+
             internal delegate void PlayerDamageDelegate(IntPtr playerPointer, IntPtr attackerEntityPointer,
                 BaseObjectType attackerBaseObjectType,
                 ushort attackerEntityId, uint weapon, ushort damage);
@@ -165,6 +167,18 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerConnectDelegate(IntPtr resource,
                 PlayerConnectDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetResourceStartDelegate(IntPtr resource,
+                ResourceEventDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetResourceStopDelegate(IntPtr resource,
+                ResourceEventDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetResourceErrorDelegate(IntPtr resource,
+                ResourceEventDelegate @delegate);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerDeathDelegate(IntPtr resource,
