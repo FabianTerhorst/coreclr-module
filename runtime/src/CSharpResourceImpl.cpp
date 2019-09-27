@@ -120,6 +120,18 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                                     "");//TODO: maybe better solution
         }
             break;
+        case alt::CEvent::Type::RESOURCE_START: {
+            OnResourceStartDelegate(reinterpret_cast<const alt::CResourceStartEvent*>(ev)->GetResource());
+            break;
+        }
+        case alt::CEvent::Type::RESOURCE_STOP: {
+            OnResourceStopDelegate(reinterpret_cast<const alt::CResourceStopEvent*>(ev)->GetResource());
+            break;
+        }
+        case alt::CEvent::Type::RESOURCE_ERROR: {
+            OnResourceErrorDelegate(reinterpret_cast<const alt::CResourceErrorEvent*>(ev)->GetResource());
+            break;
+        }
         case alt::CEvent::Type::PLAYER_DAMAGE: {
             auto damageEvent = (alt::CPlayerDamageEvent*) ev;
             auto entity = damageEvent->GetAttacker();

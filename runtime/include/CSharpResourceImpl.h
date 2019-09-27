@@ -9,6 +9,9 @@
 #include <altv-cpp-api/SDK.h>
 #include <altv-cpp-api/events/CMetaDataChangeEvent.h>
 #include <altv-cpp-api/events/CSyncedMetaDataChangeEvent.h>
+#include <altv-cpp-api/events/CResourceStartEvent.h>
+#include <altv-cpp-api/events/CResourceStopEvent.h>
+#include <altv-cpp-api/events/CResourceErrorEvent.h>
 
 #ifdef _WIN32
 #define RESOURCES_PATH "\\resources\\"
