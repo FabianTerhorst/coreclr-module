@@ -20,9 +20,9 @@ Add Alt.OnExplosion
 Fix AssemblyLoadContext.Unload()
 Improve performance
 Add AltTrace
-Add Alt.OnResourceStart
-Add Alt.OnResourceStop
-Add Alt.OnResourceError</PackageReleaseNotes>
+Add Alt.OnAnyResourceStart
+Add Alt.OnAnyResourceStop
+Add Alt.OnAnyResourceError</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

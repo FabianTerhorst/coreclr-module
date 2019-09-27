@@ -3,22 +3,25 @@ using System.Text;
 
 namespace AltV.Net.ColoredConsole
 {
-    public class ColoredMessage
+    public struct ColoredMessage
     {
-        private readonly StringBuilder stringBuilder = new StringBuilder();
+        private StringBuilder stringBuilder;
 
-        internal ColoredMessage()
+        private void CheckStringBuilder()
         {
+            stringBuilder = new StringBuilder();
         }
 
         public static ColoredMessage operator +(ColoredMessage a, string b)
         {
+            a.CheckStringBuilder();
             a.stringBuilder.Append(b);
             return a;
         }
 
         public static ColoredMessage operator +(ColoredMessage a, TextColor b)
         {
+            a.CheckStringBuilder();
             switch (b)
             {
                 case TextColor.Black:
