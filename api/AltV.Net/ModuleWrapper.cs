@@ -23,7 +23,7 @@ namespace AltV.Net
         private static void OnStartResource(IntPtr serverPointer, IntPtr resourcePointer, string resourceName,
             string entryPoint)
         {
-           _resource.OnStart();
+            _resource.OnStart();
         }
 
         public static void MainWithAssembly(IntPtr serverPointer, IntPtr resourcePointer,
@@ -33,30 +33,32 @@ namespace AltV.Net
             {
                 return;
             }
-            
+
             var playerFactory = _resource.GetPlayerFactory();
             var vehicleFactory = _resource.GetVehicleFactory();
             var blipFactory = _resource.GetBlipFactory();
             var checkpointFactory = _resource.GetCheckpointFactory();
             var voiceChannelFactory = _resource.GetVoiceChannelFactory();
             var colShapeFactory = _resource.GetColShapeFactory();
+            var nativeResourceFactory = _resource.GetNativeResourceFactory();
             var playerPool = _resource.GetPlayerPool(playerFactory);
             var vehiclePool = _resource.GetVehiclePool(vehicleFactory);
             var blipPool = _resource.GetBlipPool(blipFactory);
             var checkpointPool = _resource.GetCheckpointPool(checkpointFactory);
             var voiceChannelPool = _resource.GetVoiceChannelPool(voiceChannelFactory);
             var colShapePool = _resource.GetColShapePool(colShapeFactory);
+            var nativeResourcePool = _resource.GetNativeResourcePool(nativeResourceFactory);
             var entityPool = _resource.GetBaseEntityPool(playerPool, vehiclePool);
             var baseObjectPool =
                 _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool,
                     colShapePool);
-            var csharpResource = new NativeResource(resourcePointer);
+            nativeResourcePool.GetOrCreate(resourcePointer, out var csharpResource);
             var server = new Server(serverPointer, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool,
                 blipPool,
-                checkpointPool, voiceChannelPool, colShapePool);
+                checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
             _module = _resource.GetModule(server, assemblyLoadContext, csharpResource, baseObjectPool, entityPool,
                 playerPool, vehiclePool,
-                blipPool, checkpointPool, voiceChannelPool, colShapePool);
+                blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
 
             foreach (var unused in server.GetPlayers())
             {
@@ -65,9 +67,9 @@ namespace AltV.Net
             foreach (var unused in server.GetVehicles())
             {
             }
-            
+
             csharpResource.CSharpResourceImpl.SetDelegates(OnStartResource);
-            
+
             _scripts = AssemblyLoader.FindAllTypes<IScript>(assemblyLoadContext.Assemblies);
             _module.OnScriptsLoaded(_scripts);
 
@@ -104,17 +106,17 @@ namespace AltV.Net
         {
             _module.OnPlayerConnect(playerPointer, playerId, reason);
         }
-        
+
         public static void OnResourceStart(IntPtr resourcePointer)
         {
             _module.OnResourceStart(resourcePointer);
         }
-        
+
         public static void OnResourceStop(IntPtr resourcePointer)
         {
             _module.OnResourceStop(resourcePointer);
         }
-        
+
         public static void OnResourceError(IntPtr resourcePointer)
         {
             _module.OnResourceError(resourcePointer);

@@ -12,7 +12,7 @@ namespace AltV.Net
 
         string RootDirectory { get; }
         
-        NativeResource Resource { get; }
+        INativeResource Resource { get; }
 
         void LogInfo(string message);
 
@@ -96,7 +96,7 @@ namespace AltV.Net
 
         void RemoveColShape(IColShape colShape);
 
-        NativeResource GetResource(string name);
+        INativeResource GetResource(string name);
 
         // Only for advanced use cases
 

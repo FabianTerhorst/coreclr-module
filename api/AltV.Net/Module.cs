@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
+using System.Text.RegularExpressions;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -20,7 +21,7 @@ namespace AltV.Net
 
         private readonly WeakReference<AssemblyLoadContext> assemblyLoadContext;
 
-        internal readonly NativeResource ModuleResource;
+        internal readonly INativeResource ModuleResource;
 
         internal readonly IBaseBaseObjectPool BaseBaseObjectPool;
 
@@ -37,6 +38,8 @@ namespace AltV.Net
         internal readonly IBaseObjectPool<IVoiceChannel> VoiceChannelPool;
 
         internal readonly IBaseObjectPool<IColShape> ColShapePool;
+
+        internal readonly INativeResourcePool NativeResourcePool;
 
         internal IEnumerable<Assembly> Assemblies => !assemblyLoadContext.TryGetTarget(out var target)
             ? new List<Assembly>()
@@ -133,13 +136,14 @@ namespace AltV.Net
         internal readonly LinkedList<GCHandle> functionExportHandles = new LinkedList<GCHandle>();
 
         public Module(IServer server, AssemblyLoadContext assemblyLoadContext,
-            NativeResource moduleResource, IBaseBaseObjectPool baseBaseObjectPool,
+            INativeResource moduleResource, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
-            IBaseObjectPool<IColShape> colShapePool)
+            IBaseObjectPool<IColShape> colShapePool,
+            INativeResourcePool nativeResourcePool)
         {
             Alt.Init(this);
             Server = server;
@@ -153,6 +157,7 @@ namespace AltV.Net
             CheckpointPool = checkpointPool;
             VoiceChannelPool = voiceChannelPool;
             ColShapePool = colShapePool;
+            NativeResourcePool = nativeResourcePool;
         }
 
         public Assembly LoadAssemblyFromName(AssemblyName assemblyName)
@@ -356,7 +361,8 @@ namespace AltV.Net
 
         public void OnResourceStart(IntPtr resourcePointer)
         {
-            OnResourceStartEvent(new NativeResource(resourcePointer));
+            if (!NativeResourcePool.GetOrCreate(resourcePointer, out var nativeResource)) return;
+            OnResourceStartEvent(nativeResource);
         }
 
         public virtual void OnResourceStartEvent(INativeResource resource)
@@ -369,7 +375,8 @@ namespace AltV.Net
 
         public void OnResourceStop(IntPtr resourcePointer)
         {
-            OnResourceStopEvent(new NativeResource(resourcePointer));
+            if (!NativeResourcePool.GetOrCreate(resourcePointer, out var nativeResource)) return;
+            OnResourceStopEvent(nativeResource);
         }
 
         public virtual void OnResourceStopEvent(INativeResource resource)
@@ -382,7 +389,8 @@ namespace AltV.Net
 
         public void OnResourceError(IntPtr resourcePointer)
         {
-            OnResourceErrorEvent(new NativeResource(resourcePointer));
+            if (!NativeResourcePool.GetOrCreate(resourcePointer, out var nativeResource)) return;
+            OnResourceErrorEvent(nativeResource);
         }
 
         public virtual void OnResourceErrorEvent(INativeResource resource)

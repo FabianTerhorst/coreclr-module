@@ -61,7 +61,7 @@ namespace AltV.Net.Async
         }
 
         public override Module GetModule(IServer server, AssemblyLoadContext assemblyLoadContext,
-            NativeResource cSharpNativeResource,
+            INativeResource cSharpNativeResource,
             IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
@@ -69,11 +69,12 @@ namespace AltV.Net.Async
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
-            IBaseObjectPool<IColShape> colShapePool)
+            IBaseObjectPool<IColShape> colShapePool,
+            INativeResourcePool nativeResourcePool)
         {
             return new AsyncModule(server, assemblyLoadContext, cSharpNativeResource, baseBaseObjectPool,
                 baseEntityPool, playerPool,
-                vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool);
+                vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
         }
     }
 }

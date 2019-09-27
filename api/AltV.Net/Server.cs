@@ -29,6 +29,8 @@ namespace AltV.Net
 
         private readonly IBaseObjectPool<IColShape> colShapePool;
 
+        private readonly INativeResourcePool nativeResourcePool;
+
         public int NetTime => AltNative.Server.Server_GetNetTime(NativePointer);
 
         private string rootDirectory;
@@ -46,16 +48,17 @@ namespace AltV.Net
             }
         }
 
-        public NativeResource Resource { get; }
+        public INativeResource Resource { get; }
 
-        public Server(IntPtr nativePointer, NativeResource resource, IBaseBaseObjectPool baseBaseObjectPool,
+        public Server(IntPtr nativePointer, INativeResource resource, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
-            IBaseObjectPool<IColShape> colShapePool)
+            IBaseObjectPool<IColShape> colShapePool,
+            INativeResourcePool nativeResourcePool)
         {
             NativePointer = nativePointer;
             this.baseBaseObjectPool = baseBaseObjectPool;
@@ -66,6 +69,7 @@ namespace AltV.Net
             this.checkpointPool = checkpointPool;
             this.voiceChannelPool = voiceChannelPool;
             this.colShapePool = colShapePool;
+            this.nativeResourcePool = nativeResourcePool;
             Resource = resource;
         }
 
@@ -350,10 +354,10 @@ namespace AltV.Net
             }
         }
 
-        public NativeResource GetResource(string name)
+        public INativeResource GetResource(string name)
         {
             var resourcePointer = AltNative.Server.Server_GetResource(NativePointer, name);
-            return resourcePointer == IntPtr.Zero ? null : new NativeResource(resourcePointer);
+            return !nativeResourcePool.GetOrCreate(resourcePointer, out var nativeResource) ? null : nativeResource;
         }
 
         public IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation)

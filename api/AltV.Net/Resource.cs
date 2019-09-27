@@ -67,6 +67,11 @@ namespace AltV.Net
             return new ColShapePool(colShapeFactory);
         }
 
+        public virtual INativeResourcePool GetNativeResourcePool(INativeResourceFactory nativeResourceFactory)
+        {
+            return new NativeResourcePool(nativeResourceFactory);
+        }
+        
         public virtual IEntityFactory<IPlayer> GetPlayerFactory()
         {
             return new PlayerFactory();
@@ -91,23 +96,29 @@ namespace AltV.Net
         {
             return new VoiceChannelFactory();
         }
-
+        
         public virtual IBaseObjectFactory<IColShape> GetColShapeFactory()
         {
             return new ColShapeFactory();
         }
 
+        public virtual INativeResourceFactory GetNativeResourceFactory()
+        {
+            return new NativeResourceFactory();
+        }
+
         public virtual Module GetModule(IServer server, 
             AssemblyLoadContext assemblyLoadContext,
-            NativeResource cSharpNativeResource,
+            INativeResource cSharpNativeResource,
             IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool, IBaseObjectPool<IVoiceChannel> voiceChannelPool,
-            IBaseObjectPool<IColShape> colShapePool)
+            IBaseObjectPool<IColShape> colShapePool,
+            INativeResourcePool nativeResourcePool)
         {
             return new Module(server, assemblyLoadContext, cSharpNativeResource, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool,
-                blipPool, checkpointPool, voiceChannelPool, colShapePool);
+                blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
         }
     }
 }
