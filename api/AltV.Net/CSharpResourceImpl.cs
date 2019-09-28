@@ -54,15 +54,15 @@ namespace AltV.Net
             AltNative.Resource.CSharpResourceImpl_SetPlayerConnectDelegate(NativePointer, onPlayerConnect);
             
             AltNative.Resource.ResourceEventDelegate onResourceStart = ModuleWrapper.OnResourceStart;
-            handles.AddFirst(GCHandle.Alloc(onPlayerConnect));
+            handles.AddFirst(GCHandle.Alloc(onResourceStart));
             AltNative.Resource.CSharpResourceImpl_SetResourceStartDelegate(NativePointer, onResourceStart);
             
             AltNative.Resource.ResourceEventDelegate onResourceStop = ModuleWrapper.OnResourceStop;
-            handles.AddFirst(GCHandle.Alloc(onPlayerConnect));
+            handles.AddFirst(GCHandle.Alloc(onResourceStop));
             AltNative.Resource.CSharpResourceImpl_SetResourceStopDelegate(NativePointer, onResourceStop);
             
             AltNative.Resource.ResourceEventDelegate onResourceError = ModuleWrapper.OnResourceError;
-            handles.AddFirst(GCHandle.Alloc(onPlayerConnect));
+            handles.AddFirst(GCHandle.Alloc(onResourceError));
             AltNative.Resource.CSharpResourceImpl_SetResourceErrorDelegate(NativePointer, onResourceError);
 
             AltNative.Resource.PlayerDeathDelegate onPlayerDeath = ModuleWrapper.OnPlayerDeath;
