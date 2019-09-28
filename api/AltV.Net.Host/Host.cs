@@ -240,7 +240,8 @@ namespace AltV.Net.Host
                 _tracing = new CollectTrace.Tracing();
             }
 
-            Task.Run(async () => await CollectTrace.Collect(_traceSizeChangeDelegates.Values, _tracing, new FileInfo(traceFileName + ".nettrace")));
+            Task.Run(async () => await CollectTrace.Collect(_traceSizeChangeDelegates.Values, _tracing,
+                new FileInfo(traceFileName + ".nettrace")));
 
             lock (TracingMutex)
             {
