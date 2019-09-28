@@ -237,12 +237,6 @@ public:
     alt::IResource* resource;
 };
 
-EXPORT void CSharpResourceImpl_Reload(CSharpResourceImpl* resource);
-
-EXPORT void CSharpResourceImpl_Load(CSharpResourceImpl* resource);
-
-EXPORT void CSharpResourceImpl_Unload(CSharpResourceImpl* resource);
-
 EXPORT void CSharpResourceImpl_SetMainDelegate(CSharpResourceImpl* resource,
                                                MainDelegate_t delegate);
 

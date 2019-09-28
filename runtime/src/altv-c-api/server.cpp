@@ -137,3 +137,15 @@ void Server_GetPlayers(alt::ICore* server, alt::Array<alt::IPlayer*> &players) {
 void Server_GetVehicles(alt::ICore* server, alt::Array<alt::IVehicle*> &vehicles) {
     vehicles = server->GetVehicles();
 }
+
+void Server_StartResource(alt::ICore* server, const char* text) {
+    server->StartResource(text);
+}
+
+void Server_StopResource(alt::ICore* server, const char* text) {
+    server->StopResource(text);
+}
+
+void Server_RestartResource(alt::ICore* server, const char* text) {
+    server->RestartResource(text);
+}

@@ -338,5 +338,20 @@ namespace AltV.Net.Mock
         {
             return new List<IVehicle>();
         }
+
+        public void StartResource(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StopResource(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RestartResource(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

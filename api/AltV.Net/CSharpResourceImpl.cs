@@ -19,22 +19,7 @@ namespace AltV.Net
         {
             NativePointer = nativePointer;
         }
-
-        public void Reload()
-        {
-            AltNative.Resource.CSharpResourceImpl_Reload(NativePointer);
-        }
-
-        public void Load()
-        {
-            AltNative.Resource.CSharpResourceImpl_Load(NativePointer);
-        }
-
-        public void Unload()
-        {
-            AltNative.Resource.CSharpResourceImpl_Unload(NativePointer);
-        }
-
+        
         internal void SetDelegates(AltNative.Resource.MainDelegate onStart)
         {
             handles.AddFirst(GCHandle.Alloc(onStart));

@@ -55,6 +55,9 @@ EXPORT int32_t Server_GetNetTime(alt::ICore* server);
 EXPORT void Server_GetRootDirectory(alt::ICore* server, const char*&text);
 EXPORT void Server_GetPlayers(alt::ICore* server, alt::Array<alt::IPlayer*> &players);
 EXPORT void Server_GetVehicles(alt::ICore* server, alt::Array<alt::IVehicle*> &vehicles);
+EXPORT void Server_StartResource(alt::ICore* server, const char* text);
+EXPORT void Server_StopResource(alt::ICore* server, const char* text);
+EXPORT void Server_RestartResource(alt::ICore* server, const char* text);
 #ifdef __cplusplus
 }
 #endif

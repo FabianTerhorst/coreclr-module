@@ -101,12 +101,23 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_GetRootDirectory(IntPtr serverPointer, ref IntPtr text);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_GetPlayers(IntPtr serverPointer, ref PlayerPointerArray playerPointerArray);
-            
+            internal static extern void Server_GetPlayers(IntPtr serverPointer,
+                ref PlayerPointerArray playerPointerArray);
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_GetVehicles(IntPtr serverPointer, ref VehiclePointerArray vehiclePointerArray);
+            internal static extern void Server_GetVehicles(IntPtr serverPointer,
+                ref VehiclePointerArray vehiclePointerArray);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_StartResource(IntPtr serverPointer, IntPtr text);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_StopResource(IntPtr serverPointer, IntPtr text);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_RestartResource(IntPtr serverPointer, IntPtr text);
         }
     }
 }

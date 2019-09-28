@@ -393,5 +393,26 @@ namespace AltV.Net
                 }
             }
         }
+
+        public void StartResource(string name)
+        {
+            var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
+            AltNative.Server.Server_StartResource(NativePointer, namePtr);
+            Marshal.FreeHGlobal(namePtr);
+        }
+        
+        public void StopResource(string name)
+        {
+            var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
+            AltNative.Server.Server_StopResource(NativePointer, namePtr);
+            Marshal.FreeHGlobal(namePtr);
+        }
+        
+        public void RestartResource(string name)
+        {
+            var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
+            AltNative.Server.Server_RestartResource(NativePointer, namePtr);
+            Marshal.FreeHGlobal(namePtr);
+        }
     }
 }

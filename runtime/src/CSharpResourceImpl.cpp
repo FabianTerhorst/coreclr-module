@@ -326,31 +326,6 @@ void CSharpResourceImpl::OnTick() {
     OnTickDelegate();
 }
 
-void CSharpResourceImpl_Reload(CSharpResourceImpl* resource) {
-    resource->OnStopDelegate();
-    resource->coreClr->ExecuteManagedResourceUnload(resource->resource->GetPath().CStr(),
-                                                    resource->resource->GetMain().CStr());
-    resource->coreClr->ExecuteManagedResource(resource->resource->GetPath().CStr(),
-                                              resource->resource->GetName().CStr(),
-                                              resource->resource->GetMain().CStr(), resource->resource);
-    resource->MainDelegate(resource->server, resource->resource, resource->resource->GetName().CStr(),
-                           resource->resource->GetMain().CStr());
-}
-
-void CSharpResourceImpl_Load(CSharpResourceImpl* resource) {
-    resource->coreClr->ExecuteManagedResource(resource->resource->GetPath().CStr(),
-                                              resource->resource->GetName().CStr(),
-                                              resource->resource->GetMain().CStr(), resource->resource);
-    resource->MainDelegate(resource->server, resource->resource, resource->resource->GetName().CStr(),
-                           resource->resource->GetMain().CStr());
-}
-
-void CSharpResourceImpl_Unload(CSharpResourceImpl* resource) {
-    resource->OnStopDelegate();
-    resource->coreClr->ExecuteManagedResourceUnload(resource->resource->GetPath().CStr(),
-                                                    resource->resource->GetMain().CStr());
-}
-
 void CSharpResourceImpl_SetMainDelegate(CSharpResourceImpl* resource,
                                         MainDelegate_t delegate) {
     resource->MainDelegate = delegate;

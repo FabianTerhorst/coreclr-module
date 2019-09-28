@@ -105,5 +105,11 @@ namespace AltV.Net
         IEnumerable<IPlayer> GetPlayers();
 
         IEnumerable<IVehicle> GetVehicles();
+
+        void StartResource(string name);
+
+        void StopResource(string name);
+
+        void RestartResource(string name);
     }
 }
