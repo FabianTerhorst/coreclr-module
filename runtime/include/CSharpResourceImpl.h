@@ -7,6 +7,8 @@
 #endif
 
 #include <altv-cpp-api/SDK.h>
+#include <altv-cpp-api/events/CMetaDataChangeEvent.h>
+#include <altv-cpp-api/events/CSyncedMetaDataChangeEvent.h>
 
 #ifdef _WIN32
 #define RESOURCES_PATH "\\resources\\"
