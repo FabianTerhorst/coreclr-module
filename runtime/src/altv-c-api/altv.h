@@ -3,7 +3,6 @@
 #include "baseobject.h"
 #include "blip.h"
 #include "checkpoint.h"
-#include "entity.h"
 #include "player.h"
 #include "server.h"
 #include "vehicle.h"
