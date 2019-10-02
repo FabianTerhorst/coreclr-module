@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using AltV.Net.Elements.Entities;
 
-namespace AltV.Net.Example
+namespace AltV.Net.Resources.Chat.Api
 {
-    public class Chat
+    internal class Chat
     {
         private readonly Action<string> broadcast;
 
