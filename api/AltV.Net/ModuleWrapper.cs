@@ -25,11 +25,11 @@ namespace AltV.Net
         private static void OnStartResource(IntPtr serverPointer, IntPtr resourcePointer, string resourceName,
             string entryPoint)
         {
-            _resource.OnStart();
             foreach (var module in _modules)
             {
                 module.OnScriptsStarted(_scripts);
             }
+            _resource.OnStart();
         }
 
         public static void MainWithAssembly(IntPtr serverPointer, IntPtr resourcePointer,

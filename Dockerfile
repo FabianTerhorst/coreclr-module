@@ -68,7 +68,7 @@ COPY libnode.so.72 .
 COPY libnode-module.so modules/
 
 COPY resource.cfg resources/example/
-COPY --from=dotnet /altv-example/AltV.Net.Chat/resource.cfg resources/chat/
+COPY --from=dotnet /altv-example/AltV.Net.Resources.Chat/resource.cfg resources/chat/
 COPY data/ ./data
 #COPY chat/ resources/chat
 COPY --from=clang /runtime/build/src/libcsharp-module.so modules/

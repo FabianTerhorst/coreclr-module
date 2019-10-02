@@ -8,6 +8,7 @@ using AltV.Net.Elements.Args;
 using AltV.Net.Enums;
 using AltV.Net.Native;
 using System.Drawing;
+using AltV.Net.Resources.Chat.Api;
 
 namespace AltV.Net.Example
 {
@@ -277,6 +278,8 @@ namespace AltV.Net.Example
             colShapeCircle.SetData("bla", (int) 4);
 
             Alt.CreateVehicle(VehicleModel.Adder, new Position(1337, 1337, 1337), Rotation.Zero);
+            
+            AltChat.SendBroadcast("Test");
         }
 
         [Event("bla2")]
