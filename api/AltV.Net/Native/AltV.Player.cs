@@ -16,6 +16,9 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern ushort Player_GetID(IntPtr entityPointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Player_GetNetworkOwner(IntPtr entityPointer);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern uint Player_GetModel(IntPtr entityPointer);

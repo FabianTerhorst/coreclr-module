@@ -7,6 +7,8 @@ namespace AltV.Net.Elements.Entities
     public abstract class Entity : WorldObject, IEntity
     {
         public ushort Id { get; }
+        
+        public abstract IPlayer NetworkOwner { get; }
 
         public abstract Rotation Rotation { get; set; }
 

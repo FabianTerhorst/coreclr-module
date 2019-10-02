@@ -10,6 +10,17 @@ namespace AltV.Net.Elements.Entities
     {
         public static ushort GetId(IntPtr playerPointer) => AltNative.Player.Player_GetID(playerPointer);
 
+        public override IPlayer NetworkOwner
+        {
+            get
+            {
+                CheckIfEntityExists();
+                var entityPointer = AltNative.Player.Player_GetNetworkOwner(NativePointer);
+                if (entityPointer == IntPtr.Zero) return null;
+                return Alt.Module.PlayerPool.GetOrCreate(entityPointer, out var player) ? player : null;
+            }
+        }
+
         public override uint Model
         {
             get
@@ -478,7 +489,7 @@ namespace AltV.Net.Elements.Entities
             CheckIfEntityExists();
             return AltNative.Player.Player_GetCurrentWeaponTintIndex(NativePointer);
         }
-        
+
         public void Kick(string reason)
         {
             CheckIfEntityExists();

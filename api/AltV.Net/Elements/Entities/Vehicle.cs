@@ -11,6 +11,17 @@ namespace AltV.Net.Elements.Entities
     {
         public static ushort GetId(IntPtr vehiclePointer) => AltNative.Vehicle.Vehicle_GetID(vehiclePointer);
 
+        public override IPlayer NetworkOwner
+        {
+            get
+            {
+                CheckIfEntityExists();
+                var entityPointer = AltNative.Vehicle.Vehicle_GetNetworkOwner(NativePointer);
+                if (entityPointer == IntPtr.Zero) return null;
+                return Alt.Module.PlayerPool.GetOrCreate(entityPointer, out var player) ? player : null;
+            }
+        }
+        
         public override uint Model
         {
             get

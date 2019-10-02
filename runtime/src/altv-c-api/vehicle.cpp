@@ -6,6 +6,10 @@ uint16_t Vehicle_GetID(alt::IVehicle* entity) {
     return entity->GetID();
 }
 
+alt::IPlayer* Vehicle_GetNetworkOwner(alt::IVehicle* vehicle) {
+    return vehicle->GetNetworkOwner();
+}
+
 uint32_t Vehicle_GetModel(alt::IVehicle* vehicle) {
     return vehicle->GetModel();
 }

@@ -9,6 +9,7 @@ namespace AltV.Net.ColShape.Tests
     public class MockVehicle : IVehicle
     {
         public IntPtr NativePointer { get; }
+        public IPlayer NetworkOwner { get; }
         public bool Exists { get; }
         public BaseObjectType Type { get; }
         public void SetMetaData(string key, object value)

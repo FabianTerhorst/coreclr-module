@@ -15,6 +15,9 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern ushort Vehicle_GetID(IntPtr entityPointer);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Vehicle_GetNetworkOwner(IntPtr entityPointer);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern uint Vehicle_GetModel(IntPtr entityPointer);

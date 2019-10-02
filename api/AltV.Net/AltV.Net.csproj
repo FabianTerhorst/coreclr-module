@@ -13,7 +13,7 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.16.1-beta</PackageVersion>
+        <PackageVersion>1.16.2-beta</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>Add Alt.OnWeaponDamage
 Add Alt.OnExplosion
@@ -24,6 +24,7 @@ Add Alt.OnAnyResourceStart
 Add Alt.OnAnyResourceStop
 Add Alt.OnAnyResourceError
 Add Alt.Server.Start/Stop/Restart-/Resource</PackageReleaseNotes>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <ItemGroup>

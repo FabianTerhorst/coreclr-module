@@ -21,6 +21,7 @@ extern "C"
 #endif
 // Entity
 EXPORT uint16_t Vehicle_GetID(alt::IVehicle* vehicle);
+EXPORT alt::IPlayer* Vehicle_GetNetworkOwner(alt::IVehicle* vehicle);
 EXPORT uint32_t Vehicle_GetModel(alt::IVehicle* vehicle);
 EXPORT void Vehicle_GetPosition(alt::IVehicle* vehicle, position_t &position);
 EXPORT void Vehicle_SetPosition(alt::IVehicle* vehicle, alt::Position pos);

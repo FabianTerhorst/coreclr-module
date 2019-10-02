@@ -6,6 +6,10 @@ uint16_t Player_GetID(alt::IPlayer* player) {
     return player->GetID();
 }
 
+alt::IPlayer* Player_GetNetworkOwner(alt::IPlayer* player) {
+    return player->GetNetworkOwner();
+}
+
 uint32_t Player_GetModel(alt::IPlayer* player) {
     return player->GetModel();
 }

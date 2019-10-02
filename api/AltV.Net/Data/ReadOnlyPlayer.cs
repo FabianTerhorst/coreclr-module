@@ -76,6 +76,7 @@ namespace AltV.Net.Data
         public ulong HardwareIdHash { get; }
         public ulong HardwareIdExHash { get; }
         public string AuthToken { get; }
+        public IPlayer NetworkOwner { get; }
 
         public void SetMetaData(string key, object value)
         {
