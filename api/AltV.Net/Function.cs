@@ -89,7 +89,7 @@ namespace AltV.Net
                 {
                     parsers[i] = FunctionMValueParsers.ParseLong;
                     objectParsers[i] = FunctionObjectParsers.ParseLong;
-                    stringParsers[i] = FunctionStringParsers.ParseBool;
+                    stringParsers[i] = FunctionStringParsers.ParseLong;
                 }
                 else if (arg == FunctionTypes.UInt)
                 {
