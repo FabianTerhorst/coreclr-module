@@ -12,112 +12,110 @@ namespace AltV.Net.Native
         internal static class Server
         {
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_LogInfo(IntPtr serverPointer, IntPtr message);
+            internal static extern void Server_LogInfo(IntPtr server, IntPtr str);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_LogDebug(IntPtr serverPointer, IntPtr message);
+            internal static extern void Server_LogDebug(IntPtr server, IntPtr str);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_LogWarning(IntPtr serverPointer, IntPtr message);
+            internal static extern void Server_LogWarning(IntPtr server, IntPtr str);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_LogError(IntPtr serverPointer, IntPtr message);
+            internal static extern void Server_LogError(IntPtr server, IntPtr str);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_LogColored(IntPtr serverPointer, IntPtr message);
-
-            //TODO: is currently implemented in c#, maybe remove?
-            //[DllImport(_dllName, CharSet = CharSet.Ansi, CallingConvention = _callingConvention)]
-            //internal static extern uint Server_Hash(IntPtr serverPointer, string hash);
+            internal static extern void Server_LogColored(IntPtr server, IntPtr str);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_TriggerServerEvent(IntPtr serverPointer, IntPtr eventName,
+            internal static extern void Server_SubscribeEvent(IntPtr server, ushort ev,
+                AltV.Net.Server.EventCallback cb);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_SubscribeTick(IntPtr server, AltV.Net.Server.TickCallback cb);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Server_SubscribeCommand(IntPtr server, IntPtr cmd,
+                AltV.Net.Server.CommandCallback cb);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_TriggerServerEvent(IntPtr server, IntPtr ev, ref MValue args);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_TriggerClientEvent(IntPtr server, IntPtr target, IntPtr ev,
                 ref MValue args);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_TriggerClientEvent(IntPtr serverPointer, IntPtr playerPointer,
-                IntPtr eventName, ref MValue args);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Server_CreateVehicle(IntPtr serverPointer, uint model, Position pos,
-                Rotation rotation, ref ushort id);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Server_CreateCheckpoint(IntPtr serverPointer, IntPtr playerTargetPointer,
-                byte type, Position pos, float radius, float height, Rgba color);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Server_CreateBlip(IntPtr serverPointer, IntPtr playerTargetPointer, byte type,
-                Position pos);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Server_CreateBlipAttached(IntPtr serverPointer, IntPtr playerTargetPointer,
-                byte type, IntPtr entityAttachPointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Server_GetResource(IntPtr serverPointer, string resourceName);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Server_CreateVoiceChannel(IntPtr serverPointer, bool spatial,
-                float maxDistance);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Server_CreateColShapeCylinder(IntPtr serverPointer, Position pos,
-                float radius, float height);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Server_CreateColShapeSphere(IntPtr serverPointer, Position pos, float radius);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Server_CreateColShapeCircle(IntPtr serverPointer, Position pos, float radius);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Server_CreateColShapeCube(IntPtr serverPointer, Position pos, Position pos2);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Server_CreateColShapeRectangle(IntPtr serverPointer, Position pos,
-                Position pos2);
+            internal static extern IntPtr Server_CreateVehicle(IntPtr server, uint model, Position pos, Rotation rot,
+                ref ushort id);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_DestroyBaseObject(IntPtr serverPointer, IntPtr baseObjectPointer);
+            internal static extern IntPtr Server_CreateCheckpoint(IntPtr server, IntPtr target, byte type, Position pos,
+                float radius, float height, Rgba color);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_DestroyVehicle(IntPtr serverPointer, IntPtr baseObjectPointer);
+            internal static extern IntPtr Server_CreateBlip(IntPtr server, IntPtr target, byte type, Position pos);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_DestroyBlip(IntPtr serverPointer, IntPtr baseObjectPointer);
+            internal static extern IntPtr Server_CreateBlipAttached(IntPtr server, IntPtr target, byte type,
+                IntPtr attachTo);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_DestroyCheckpoint(IntPtr serverPointer, IntPtr baseObjectPointer);
+            internal static extern IntPtr Server_GetResource(IntPtr server, IntPtr resourceName);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_DestroyVoiceChannel(IntPtr serverPointer, IntPtr baseObjectPointer);
+            internal static extern IntPtr Server_CreateVoiceChannel(IntPtr server, bool spatial, float maxDistance);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_DestroyColShape(IntPtr serverPointer, IntPtr baseObjectPointer);
+            internal static extern IntPtr Server_CreateColShapeCylinder(IntPtr server, Position pos, float radius,
+                float height);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern int Server_GetNetTime(IntPtr serverPointer);
+            internal static extern IntPtr Server_CreateColShapeSphere(IntPtr server, Position pos, float radius);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_GetRootDirectory(IntPtr serverPointer, ref IntPtr text);
+            internal static extern IntPtr Server_CreateColShapeCircle(IntPtr server, Position pos, float radius);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_GetPlayers(IntPtr serverPointer,
-                ref PlayerPointerArray playerPointerArray);
+            internal static extern IntPtr Server_CreateColShapeCube(IntPtr server, Position pos, Position pos2);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_GetVehicles(IntPtr serverPointer,
-                ref VehiclePointerArray vehiclePointerArray);
+            internal static extern IntPtr Server_CreateColShapeRectangle(IntPtr server, Position pos, Position pos2);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_StartResource(IntPtr serverPointer, IntPtr text);
+            internal static extern void Server_DestroyVehicle(IntPtr server, IntPtr baseObject);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_StopResource(IntPtr serverPointer, IntPtr text);
+            internal static extern void Server_DestroyBlip(IntPtr server, IntPtr baseObject);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_RestartResource(IntPtr serverPointer, IntPtr text);
+            internal static extern void Server_DestroyCheckpoint(IntPtr server, IntPtr baseObject);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_DestroyVoiceChannel(IntPtr server, IntPtr baseObject);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_DestroyColShape(IntPtr server, IntPtr baseObject);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern int Server_GetNetTime(IntPtr server);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_GetRootDirectory(IntPtr server, ref IntPtr text);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_GetPlayers(IntPtr server, ref PlayerPointerArray players);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_GetVehicles(IntPtr server, ref VehiclePointerArray vehicles);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_StartResource(IntPtr server, IntPtr text);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_StopResource(IntPtr server, IntPtr text);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_RestartResource(IntPtr server, IntPtr text);
         }
     }
 }

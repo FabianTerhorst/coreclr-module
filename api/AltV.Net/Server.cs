@@ -11,6 +11,12 @@ namespace AltV.Net
 {
     public class Server : IServer
     {
+        public delegate bool EventCallback(IntPtr eventPointer, IntPtr userData);
+
+        public delegate void TickCallback(IntPtr userData);
+
+        public delegate void CommandCallback(StringView cmd, StringViewArray args, IntPtr userData);
+
         public readonly IntPtr NativePointer;
 
         private readonly IBaseBaseObjectPool baseBaseObjectPool;
@@ -356,7 +362,9 @@ namespace AltV.Net
 
         public INativeResource GetResource(string name)
         {
-            var resourcePointer = AltNative.Server.Server_GetResource(NativePointer, name);
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
+            var resourcePointer = AltNative.Server.Server_GetResource(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
             return !nativeResourcePool.GetOrCreate(resourcePointer, out var nativeResource) ? null : nativeResource;
         }
 
@@ -400,14 +408,14 @@ namespace AltV.Net
             AltNative.Server.Server_StartResource(NativePointer, namePtr);
             Marshal.FreeHGlobal(namePtr);
         }
-        
+
         public void StopResource(string name)
         {
             var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
             AltNative.Server.Server_StopResource(NativePointer, namePtr);
             Marshal.FreeHGlobal(namePtr);
         }
-        
+
         public void RestartResource(string name)
         {
             var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);

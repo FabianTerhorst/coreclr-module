@@ -21,7 +21,7 @@ EXPORT void Server_LogDebug(alt::ICore* server, const char* str);
 EXPORT void Server_LogWarning(alt::ICore* server, const char* str);
 EXPORT void Server_LogError(alt::ICore* server, const char* str);
 EXPORT void Server_LogColored(alt::ICore* server, const char* str);
-EXPORT uint32_t Server_Hash(alt::ICore* server, const char* str);
+//EXPORT uint32_t Server_Hash(alt::ICore* server, const char* str);
 EXPORT void Server_SubscribeEvent(alt::ICore* server, alt::CEvent::Type ev, alt::EventCallback cb);
 EXPORT void Server_SubscribeTick(alt::ICore* server, alt::TickCallback cb);
 EXPORT bool Server_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb);
@@ -45,7 +45,7 @@ EXPORT alt::IColShape* Server_CreateColShapeSphere(alt::ICore* server, alt::Posi
 EXPORT alt::IColShape* Server_CreateColShapeCircle(alt::ICore* server, alt::Position pos, float radius);
 EXPORT alt::IColShape* Server_CreateColShapeCube(alt::ICore* server, alt::Position pos, alt::Position pos2);
 EXPORT alt::IColShape* Server_CreateColShapeRectangle(alt::ICore* server, alt::Position pos, alt::Position pos2);
-EXPORT void Server_DestroyBaseObject(alt::ICore* server, alt::IBaseObject* baseObject);
+//EXPORT void Server_DestroyBaseObject(alt::ICore* server, alt::IBaseObject* baseObject);
 EXPORT void Server_DestroyVehicle(alt::ICore* server, alt::IVehicle* baseObject);
 EXPORT void Server_DestroyBlip(alt::ICore* server, alt::IBlip* baseObject);
 EXPORT void Server_DestroyCheckpoint(alt::ICore* server, alt::ICheckpoint* baseObject);
