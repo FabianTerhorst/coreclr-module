@@ -1,6 +1,6 @@
 using AltV.Net.Elements.Entities;
 
-namespace AltV.Net.Chat
+namespace AltV.Net.Resources.Chat
 {
     public static class PlayerChat
     {
