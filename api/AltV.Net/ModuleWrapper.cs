@@ -20,10 +20,16 @@ namespace AltV.Net
 
         private static IScript[] _scripts;
 
+        private static IModule[] _modules;
+
         private static void OnStartResource(IntPtr serverPointer, IntPtr resourcePointer, string resourceName,
             string entryPoint)
         {
             _resource.OnStart();
+            foreach (var module in _modules)
+            {
+                module.OnScriptsStarted(_scripts);
+            }
         }
 
         public static void MainWithAssembly(IntPtr serverPointer, IntPtr resourcePointer,
@@ -72,6 +78,8 @@ namespace AltV.Net
 
             _scripts = AssemblyLoader.FindAllTypes<IScript>(assemblyLoadContext.Assemblies);
             _module.OnScriptsLoaded(_scripts);
+            _modules = AssemblyLoader.FindAllTypes<IModule>(assemblyLoadContext.Assemblies);
+            _module.OnModulesLoaded(_modules);
 
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
         }

@@ -953,6 +953,19 @@ namespace AltV.Net
         {
         }
 
+        public void OnModulesLoaded(IModule[] modules)
+        {
+            foreach (var module in modules)
+            {
+                OnModuleLoaded(module);
+            }
+        }
+
+        public virtual void OnModuleLoaded(IModule module)
+        {
+            
+        }
+
         public void SetExport(string key, Function function)
         {
             if (function == null) return;
