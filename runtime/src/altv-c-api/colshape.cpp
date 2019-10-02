@@ -17,7 +17,7 @@ int16_t ColShape_GetDimension(alt::IColShape* colShape) {
     return colShape->GetDimension();
 }
 
-void ColShape_SetDimension(alt::IColShape* colShape, uint16_t dimension) {
+void ColShape_SetDimension(alt::IColShape* colShape, int16_t dimension) {
     colShape->SetDimension(dimension);
 }
 

@@ -20,9 +20,9 @@ void Server_LogColored(alt::ICore* server, const char* str) {
     server->LogColored(str);
 }
 
-uint32_t Server_Hash(alt::ICore* server, const char* str) {
+/*uint32_t Server_Hash(alt::ICore* server, const char* str) {
     return server->Hash(str);
-}
+}*/
 
 void Server_SubscribeEvent(alt::ICore* server, alt::CEvent::Type ev, alt::EventCallback cb) {
     return server->SubscribeEvent(ev, cb);
@@ -98,9 +98,9 @@ alt::IColShape* Server_CreateColShapeRectangle(alt::ICore* server, alt::Position
     return server->CreateColShapeRectangle(pos, pos2);
 }
 
-void Server_DestroyBaseObject(alt::ICore* server, alt::IBaseObject* baseObject) {
+/*void Server_DestroyBaseObject(alt::ICore* server, alt::IBaseObject* baseObject) {
     return server->DestroyBaseObject(baseObject);
-}
+}*/
 
 void Server_DestroyVehicle(alt::ICore* server, alt::IVehicle* baseObject) {
     return server->DestroyBaseObject(baseObject);

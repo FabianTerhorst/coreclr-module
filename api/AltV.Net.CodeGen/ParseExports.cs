@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace AltV.Net.CodeGen
 {
@@ -46,7 +47,19 @@ namespace AltV.Net.CodeGen
         // param namen sind getrennt mit '*' oder '&' oder ' ' der kleinste index > 0 wird genommen von hinten nach vorne, also  erst string reversen
         private static CMethod ParseMethod(ReadOnlySpan<char> span)
         {
-            var methodReturnTypeEnd = span.IndexOf(BlankExpression);
+            var methodReturnTypeEndBlank = span.IndexOf(BlankExpression);
+            if (methodReturnTypeEndBlank == -1)
+            {
+                methodReturnTypeEndBlank = int.MaxValue;
+            }
+            var methodReturnTypeEndNewLine = span.IndexOf(Environment.NewLine);
+            if (methodReturnTypeEndNewLine == -1)
+            {
+                methodReturnTypeEndNewLine = int.MaxValue;
+            }
+
+            var methodReturnTypeEnd = Math.Min(methodReturnTypeEndBlank, methodReturnTypeEndNewLine);
+            
             if (methodReturnTypeEnd == -1)
             {
                 throw new ArgumentException("Wrong c method:" + span.ToString());
@@ -106,17 +119,43 @@ namespace AltV.Net.CodeGen
                 paramType = paramType.Trim();
                 paramName = paramName.Trim();
 
-                methodParameters.AddLast(new CMethodParam {Type = paramType.ToString(), Name = paramName.ToString()});
+                var paramTypeString = paramType.ToString();
+                var paramNameString = paramName.ToString();
+                
+                if (paramNameString.EndsWith("[]"))
+                {
+                    paramNameString = paramNameString.Replace("[]", "");
+                    paramTypeString += "[]";
+                }
+
+                methodParameters.AddLast(new CMethodParam {Type = paramTypeString, Name = paramNameString});
             } while (commaIndex != -1);
 
 
             return new CMethod {ReturnType = methodReturnType, Name = methodName, Params = methodParameters.ToArray()};
         }
 
+        private static string RemoveComments(string text)
+        {
+            var blockComments = @"/\*(.*?)\*/";
+            var lineComments = @"//(.*?)\r?\n";
+            var strings = @"""((\\[^\n]|[^""\n])*)""";
+            var verbatimStrings = @"@(""[^""]*"")+";
+            return Regex.Replace(text,
+                blockComments + "|" + lineComments + "|" + strings + "|" + verbatimStrings,
+                me => {
+                    if (me.Value.StartsWith("/*") || me.Value.StartsWith("//"))
+                        return me.Value.StartsWith("//") ? Environment.NewLine : "";
+                    // Keep the literal strings
+                    return me.Value;
+                },
+                RegexOptions.Singleline);
+        }
+
         public static CMethod[] Parse(string text)
         {
             var methods = new LinkedList<CMethod>();
-            var span = text.AsSpan();
+            var span = RemoveComments(text).AsSpan();
             int index;
             while ((index = span.IndexOf(ExportExpression)) != -1)
             {

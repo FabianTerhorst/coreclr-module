@@ -23,7 +23,7 @@ extern "C"
 EXPORT void ColShape_GetPosition(alt::IColShape* colShape, position_t &position);
 EXPORT void ColShape_SetPosition(alt::IColShape* colShape, alt::Position pos);
 EXPORT int16_t ColShape_GetDimension(alt::IColShape* colShape);
-EXPORT void ColShape_SetDimension(alt::IColShape* colShape, uint16_t dimension);
+EXPORT void ColShape_SetDimension(alt::IColShape* colShape, int16_t dimension);
 EXPORT void ColShape_GetMetaData(alt::IColShape* colShape, const char* key, alt::MValue &val);
 EXPORT void ColShape_SetMetaData(alt::IColShape* colShape, const char* key, alt::MValue* val);
 // ColShape

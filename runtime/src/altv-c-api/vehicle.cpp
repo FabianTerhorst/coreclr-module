@@ -40,7 +40,7 @@ int16_t Vehicle_GetDimension(alt::IVehicle* entity) {
     return entity->GetDimension();
 }
 
-void Vehicle_SetDimension(alt::IVehicle* entity, uint16_t dimension) {
+void Vehicle_SetDimension(alt::IVehicle* entity, int16_t dimension) {
     entity->SetDimension(dimension);
 }
 

@@ -14,7 +14,7 @@
 extern "C"
 {
 #endif
-EXPORT void FreeUIntArray(alt::Array<uint16_t> *array);
+EXPORT void FreeUIntArray(alt::Array<uint32_t> *array);
 EXPORT void FreePlayerPointerArray(alt::Array<alt::IPlayer*> *array);
 EXPORT void FreeVehiclePointerArray(alt::Array<alt::IVehicle*>* array);
 EXPORT void FreeStringViewArray(alt::Array<alt::StringView> *array);
