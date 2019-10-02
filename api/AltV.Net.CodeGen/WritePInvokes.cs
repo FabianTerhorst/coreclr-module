@@ -78,8 +78,9 @@ namespace AltV.Net.CodeGen
             ["alt::Array<alt::MValue>*"] = "ref MValueArray"
         };
 
-        private static string TypeToCSharp(string cType)
+        private static string TypeToCSharp(string cType, string name = null)
         {
+            if (name == "base64" && cType == "const char*") return "string";
             cType = cType.Replace(" &", "&").Replace(" *", "*");
             if (CToCSharpTypes.TryGetValue(cType, out var cSharpType))
             {
@@ -95,7 +96,7 @@ namespace AltV.Net.CodeGen
             foreach (var method in methods)
             {
                 var template = $@"[DllImport(DllName, CallingConvention = NativeCallingConvention)]
-internal static extern {TypeToCSharp(method.ReturnType)} {method.Name}({string.Join(", ", method.Params.Select(param => TypeToCSharp(param.Type) + " " + param.Name).ToArray())});";
+internal static extern {TypeToCSharp(method.ReturnType)} {method.Name}({string.Join(", ", method.Params.Select(param => TypeToCSharp(param.Type, param.Name) + " " + param.Name).ToArray())});";
                 template += Environment.NewLine;
                 fullFile.Append(template);
             }

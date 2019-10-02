@@ -70,7 +70,15 @@ namespace AltV.Net.Elements.Entities
             CheckIfEntityExists();
             entity.CheckIfEntityExists();
 
-            return AltNative.ColShape.ColShape_IsEntityIn(NativePointer, entity.NativePointer);
+            switch (entity)
+            {
+                case IPlayer player:
+                    return AltNative.ColShape.ColShape_IsPlayerIn(NativePointer, player.NativePointer);
+                case IVehicle vehicle:
+                    return AltNative.ColShape.ColShape_IsVehicleIn(NativePointer, vehicle.NativePointer);
+                default:
+                    return false;
+            }
         }
 
         public void Remove()

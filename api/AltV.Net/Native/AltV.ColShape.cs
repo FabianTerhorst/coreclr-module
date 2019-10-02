@@ -34,7 +34,10 @@ namespace AltV.Net.Native
             internal static extern ColShapeType ColShape_GetColShapeType(IntPtr colShape);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern bool ColShape_IsEntityIn(IntPtr colShape, IntPtr entity);
+            internal static extern bool ColShape_IsPlayerIn(IntPtr colShape, IntPtr player);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool ColShape_IsVehicleIn(IntPtr colShape, IntPtr vehicle);
         }
     }
 }
