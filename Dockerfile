@@ -42,8 +42,21 @@ RUN apt-get install -y libc6-i386
 
 RUN apt-get install -y gdb
 
-# install valgrind
-#RUN apt-get update && apt-get install -y valgrind
+RUN apt-get install -y wget
+
+RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+RUN dpkg -i packages-microsoft-prod.deb
+
+RUN apt-get install -y software-properties-common
+
+RUN add-apt-repository universe
+RUN apt-get install -y apt-transport-https
+
+RUN apt-get update
+
+RUN export PATH="$PATH:/root/.dotnet/tools"
+
+RUN dotnet tool install --global dotnet-trace --version 3.0.0-preview9.19454.1
 
 # construct server structure
 WORKDIR /altv-server
@@ -61,7 +74,10 @@ COPY data/ ./data
 COPY --from=clang /runtime/build/src/libcsharp-module.so modules/
 COPY --from=dotnet /altv-example/AltV.Net.Example/bin/Release/netcoreapp3.0/publish resources/example/
 COPY --from=dotnet /altv-example/AltV.Net.Chat/bin/Release/netcoreapp3.0/publish resources/chat/
-COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.0/publish .
+#COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.0/publish .
+COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.dll .
+COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.runtimeconfig.json .
+#COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/Microsoft.Diagnostics.Tracing.TraceEvent.dll .
 RUN ls -l
 RUN chmod +x ./altv-server
 
@@ -69,4 +85,4 @@ EXPOSE 7788/udp
 EXPOSE 7788/tcp
 
 #ENTRYPOINT ["tail", "-f", "/dev/null"]
-CMD sh startgdb.sh
+#CMD sh startgdb.sh
