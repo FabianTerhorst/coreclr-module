@@ -24,6 +24,9 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_GetPosition(IntPtr entityPointer, ref Position position);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern unsafe void Vehicle_GetPosition(void* entityPointer, Position* position);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_SetPosition(IntPtr entityPointer, Position position);

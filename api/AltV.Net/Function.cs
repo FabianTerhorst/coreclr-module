@@ -259,6 +259,8 @@ namespace AltV.Net
             {
                 invokeValues[i] = typeInfos[i].DefaultValue;
             }
+            
+            //TODO: fill remaining values in event params
 
             var result = @delegate.DynamicInvoke(invokeValues);
             if (returnType == FunctionTypes.Void) return MValue.Nil;

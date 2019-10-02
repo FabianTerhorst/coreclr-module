@@ -44,7 +44,7 @@ int16_t Player_GetDimension(alt::IPlayer* player) {
     return player->GetDimension();
 }
 
-void Player_SetDimension(alt::IPlayer* player, uint16_t dimension) {
+void Player_SetDimension(alt::IPlayer* player, int16_t dimension) {
     player->SetDimension(dimension);
 }
 
