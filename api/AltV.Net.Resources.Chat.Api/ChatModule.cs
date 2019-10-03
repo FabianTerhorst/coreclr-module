@@ -27,9 +27,9 @@ namespace AltV.Net.Resources.Chat.Api
                     var function = Function.Create(eventMethodDelegate);
                     Functions.AddLast(function);
                     chat.RegisterCommand(commandName,
-                        (player, chatCommandName, chatCommandArguments) =>
+                        (player, arguments) =>
                         {
-                            function.InvokeNoResult(function.CalculateStringInvokeValues(chatCommandArguments, player));
+                            function.InvokeNoResult(function.CalculateStringInvokeValues(arguments, player));
                         });
                 });
         }
