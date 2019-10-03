@@ -94,6 +94,10 @@ namespace AltV.Net
         public static void OnStop()
         {
             _resource.OnStop();
+            foreach (var module in _modules)
+            {
+                module.OnStop();
+            }
             Alt.Server.Resource.CSharpResourceImpl.Dispose();
             _module.Dispose();
             AppDomain.CurrentDomain.UnhandledException -= OnUnhandledException;
