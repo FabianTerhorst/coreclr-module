@@ -2,13 +2,15 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
-        <PackageVersion>1.4.3-dev-preview</PackageVersion>
+        <PackageVersion>1.4.4-dev-preview</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Improve client dimensions</PackageReleaseNotes>
+        <PackageReleaseNotes>update dependencies</PackageReleaseNotes>
+        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
     <ItemGroup>
         <None Include="license\license.txt" Pack="true" PackagePath="" />
+        <None Include="icon.png" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -30,7 +32,7 @@
     <ItemGroup>
       <PackageReference Include="System.Threading.Channels" Version="4.6.0" />
       <PackageReference Include="VIEApps.Components.WebSockets" Version="10.2.1906.1" />
-      <PackageReference Include="Google.Protobuf" Version="3.9.1" />
+      <PackageReference Include="Google.Protobuf" Version="3.9.2" />
       <PackageReference Include="Grpc" Version="2.23.0" />
       <PackageReference Include="Grpc.Tools" Version="2.23.0" PrivateAssets="All" />
     </ItemGroup>
