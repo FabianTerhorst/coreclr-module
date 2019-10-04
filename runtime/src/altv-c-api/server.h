@@ -25,6 +25,8 @@ EXPORT void Server_LogColored(alt::ICore* server, const char* str);
 EXPORT void Server_SubscribeEvent(alt::ICore* server, alt::CEvent::Type ev, alt::EventCallback cb);
 EXPORT void Server_SubscribeTick(alt::ICore* server, alt::TickCallback cb);
 EXPORT bool Server_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb);
+EXPORT bool Server_FileExists(alt::ICore* server, const char* path);
+EXPORT void Server_FileRead(alt::ICore* server, const char* path, const char*&text);
 EXPORT void Server_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueList &args);
 EXPORT void
 Server_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* ev, const alt::MValueList &args);
