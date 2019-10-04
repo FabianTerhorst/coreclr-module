@@ -5,10 +5,12 @@
         <PackageVersion>1.4.4-dev-preview</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>update dependencies</PackageReleaseNotes>
+        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
     <ItemGroup>
         <None Include="license\license.txt" Pack="true" PackagePath="" />
+        <None Include="icon.png" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
     <ItemGroup>
