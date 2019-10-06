@@ -103,7 +103,12 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
                                 }
 
                                 if (!AltNetworking.Module.ClientPool.Remove(token, out var client)) continue;
-                                var clientWebSocket = client.WebSocket;
+                                ManagedWebSocket clientWebSocket;
+                                lock (client)
+                                {
+                                    clientWebSocket = client.WebSocket;
+                                }
+
                                 if (clientWebSocket == null) continue;
                                 try
                                 {
@@ -154,7 +159,10 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
         {
             if (!webSocket.Extra.Remove(ClientExtra, out var playerObject) ||
                 !(playerObject is INetworkingClient client)) return;
-            client.WebSocket = null;
+            lock (client)
+            {
+                client.WebSocket = null;
+            }
         }
 
         public void OnConnectionEstablished(ManagedWebSocket webSocket)
