@@ -783,6 +783,11 @@ namespace AltV.Net.FunctionParser
         {
             return MValueAdapters.FromMValue(ref mValue, type, out var obj) ? obj : null;
         }
+        
+        public static object ParseEnum(ref MValue value, Type type, IBaseBaseObjectPool baseBaseObjectPool, FunctionTypeInfo typeInfo)
+        {
+            return !Enum.TryParse(type, value.ToString(), true, out var enumObject) ? null : enumObject;
+        }
     }
 
     internal delegate object FunctionMValueParser(ref MValue mValue, Type type, IBaseBaseObjectPool baseBaseObjectPool,

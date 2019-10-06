@@ -45,6 +45,8 @@ namespace AltV.Net.FunctionParser
 
         public readonly Type NullableType;
 
+        public readonly bool IsEnum;
+        
         public FunctionTypeInfo(Type type)
         {
             IsList = type.BaseType == FunctionTypes.Array;
@@ -119,6 +121,8 @@ namespace AltV.Net.FunctionParser
                     DefaultValue = typeof(Nullable<>).MakeGenericType(NullableType);
                 }
             }
+            
+            IsEnum = type.IsEnum;
         }
     }
 }
