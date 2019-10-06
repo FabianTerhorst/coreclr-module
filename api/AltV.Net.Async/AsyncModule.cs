@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Loader;
+using System.Threading;
 using System.Threading.Tasks;
 using AltV.Net.Async.Events;
 using AltV.Net.Data;
@@ -88,6 +89,11 @@ namespace AltV.Net.Async
             checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool)
         {
             AltAsync.Setup(this);
+        }
+
+        public override bool IsMainThread()
+        {
+            return AltAsync.AltVAsync.TickThread == Thread.CurrentThread || base.IsMainThread();
         }
 
         public override void OnCheckPointEvent(ICheckpoint checkpoint, IEntity entity, bool state)

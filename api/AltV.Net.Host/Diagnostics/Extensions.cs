@@ -1,6 +1,11 @@
 using System;
 using System.IO;
 using System.Text;
+#if DEBUG
+using AltV.Net.Host.Diagnostics.Eventing;
+using System.Runtime.InteropServices;
+
+#endif
 
 namespace AltV.Net.Host.Diagnostics
 {

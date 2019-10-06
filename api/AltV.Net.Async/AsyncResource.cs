@@ -19,7 +19,7 @@ namespace AltV.Net.Async
 
         public override void OnTick()
         {
-            altVAsync.Tick();
+            altVAsync.TickDelegate();
         }
 
         public override IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool,
