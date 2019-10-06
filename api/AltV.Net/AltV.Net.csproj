@@ -9,8 +9,8 @@
         <Authors>AltMp</Authors>
         <Description>AltV .NET Core Server Api</Description>
         <Copyright>AltMp</Copyright>
-        <PackageProjectUrl>https://github.com/altmp-csharp/docs</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/FabianTerhorst/coreclr-module</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
         <PackageVersion>1.16.4-beta</PackageVersion>
@@ -35,6 +35,7 @@ Debug improvements</PackageReleaseNotes>
     <ItemGroup>
         <None Include="license\license.txt" Pack="true" PackagePath="" />
         <None Include="icon.png" Pack="true" PackagePath="\"/>
+        <None Include="package\**" Pack="True" PackagePath="build\" />
     </ItemGroup>
 
     <PropertyGroup>

@@ -148,10 +148,15 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             break;
         case alt::CEvent::Type::PLAYER_DEATH: {
             auto entity = ((alt::CPlayerDeathEvent*) (ev))->GetKiller();
-            auto entityPtr = GetEntityPointer(entity);
-            if (entity != nullptr && entityPtr != nullptr) {
+            if (entity != nullptr) {
+                auto entityPtr = GetEntityPointer(entity);
                 OnPlayerDeathDelegate(((alt::CPlayerDeathEvent*) (ev))->GetTarget(),
                                       entityPtr,
+                                      entity->GetType(),
+                                      ((alt::CPlayerDeathEvent*) (ev))->GetWeapon());
+            } else {
+                OnPlayerDeathDelegate(((alt::CPlayerDeathEvent*) (ev))->GetTarget(),
+                                      nullptr,
                                       entity->GetType(),
                                       ((alt::CPlayerDeathEvent*) (ev))->GetWeapon());
             }
