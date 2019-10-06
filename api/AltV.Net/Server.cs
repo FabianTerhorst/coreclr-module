@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using AltV.Net.Data;
-using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
+using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
 namespace AltV.Net
 {
     public class Server : IServer
     {
+        public delegate bool EventCallback(IntPtr eventPointer, IntPtr userData);
+
+        public delegate void TickCallback(IntPtr userData);
+
+        public delegate void CommandCallback(StringView cmd, StringViewArray args, IntPtr userData);
+
         public readonly IntPtr NativePointer;
 
         private readonly IBaseBaseObjectPool baseBaseObjectPool;
@@ -29,19 +35,36 @@ namespace AltV.Net
 
         private readonly IBaseObjectPool<IColShape> colShapePool;
 
+        private readonly INativeResourcePool nativeResourcePool;
+
         public int NetTime => AltNative.Server.Server_GetNetTime(NativePointer);
 
-        public string RootDirectory { get; }
+        private string rootDirectory;
 
-        public CSharpNativeResource Resource { get; }
+        public string RootDirectory
+        {
+            get
+            {
+                if (rootDirectory != null) return rootDirectory;
+                var ptr = IntPtr.Zero;
+                AltNative.Server.Server_GetRootDirectory(NativePointer, ref ptr);
+                rootDirectory = Marshal.PtrToStringUTF8(ptr);
 
-        public Server(IntPtr nativePointer, CSharpNativeResource resource, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool,
+                return rootDirectory;
+            }
+        }
+
+        public INativeResource Resource { get; }
+
+        public Server(IntPtr nativePointer, INativeResource resource, IBaseBaseObjectPool baseBaseObjectPool,
+            IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
-            IBaseObjectPool<IColShape> colShapePool)
+            IBaseObjectPool<IColShape> colShapePool,
+            INativeResourcePool nativeResourcePool)
         {
             NativePointer = nativePointer;
             this.baseBaseObjectPool = baseBaseObjectPool;
@@ -52,9 +75,7 @@ namespace AltV.Net
             this.checkpointPool = checkpointPool;
             this.voiceChannelPool = voiceChannelPool;
             this.colShapePool = colShapePool;
-            var ptr = IntPtr.Zero;
-            AltNative.Server.Server_GetRootDirectory(nativePointer, ref ptr);
-            RootDirectory = Marshal.PtrToStringUTF8(ptr);
+            this.nativeResourcePool = nativeResourcePool;
             Resource = resource;
         }
 
@@ -170,6 +191,7 @@ namespace AltV.Net
 
         public void TriggerServerEvent(IntPtr eventNamePtr, params object[] args)
         {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
             var mValues = MValue.CreateFromObjects(args);
             TriggerServerEvent(eventNamePtr, mValues);
             MValue.Dispose(mValues);
@@ -177,6 +199,7 @@ namespace AltV.Net
 
         public void TriggerServerEvent(string eventName, params object[] args)
         {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
             var mValues = MValue.CreateFromObjects(args);
             TriggerServerEvent(eventName, mValues);
             MValue.Dispose(mValues);
@@ -215,6 +238,7 @@ namespace AltV.Net
 
         public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params object[] args)
         {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
             var mValues = MValue.CreateFromObjects(args);
             TriggerClientEvent(player, eventNamePtr, mValues);
             MValue.Dispose(mValues);
@@ -222,6 +246,7 @@ namespace AltV.Net
 
         public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)
         {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
             var mValues = MValue.CreateFromObjects(args);
             TriggerClientEvent(player, eventName, mValues);
             MValue.Dispose(mValues);
@@ -335,18 +360,12 @@ namespace AltV.Net
             }
         }
 
-        public ServerNativeResource GetResource(string name)
+        public INativeResource GetResource(string name)
         {
-            var resourcePointer = IntPtr.Zero;
-            AltNative.Server.Server_GetResource(NativePointer, name, ref resourcePointer);
-            return resourcePointer == IntPtr.Zero ? null : new ServerNativeResource(resourcePointer);
-        }
-        
-        public CSharpNativeResource GetCSharpResource(string name)
-        {
-            var resourcePointer = IntPtr.Zero;
-            AltNative.Server.Server_GetCSharpResource(NativePointer, name, ref resourcePointer);
-            return resourcePointer == IntPtr.Zero ? null : new CSharpNativeResource(resourcePointer);
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
+            var resourcePointer = AltNative.Server.Server_GetResource(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+            return !nativeResourcePool.GetOrCreate(resourcePointer, out var nativeResource) ? null : nativeResource;
         }
 
         public IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation)
@@ -381,6 +400,27 @@ namespace AltV.Net
                     yield return vehicle;
                 }
             }
+        }
+
+        public void StartResource(string name)
+        {
+            var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
+            AltNative.Server.Server_StartResource(NativePointer, namePtr);
+            Marshal.FreeHGlobal(namePtr);
+        }
+
+        public void StopResource(string name)
+        {
+            var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
+            AltNative.Server.Server_StopResource(NativePointer, namePtr);
+            Marshal.FreeHGlobal(namePtr);
+        }
+
+        public void RestartResource(string name)
+        {
+            var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
+            AltNative.Server.Server_RestartResource(NativePointer, namePtr);
+            Marshal.FreeHGlobal(namePtr);
         }
     }
 }

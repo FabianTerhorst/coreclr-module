@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Security;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 
@@ -7,419 +8,415 @@ namespace AltV.Net.Native
 {
     internal static partial class AltNative
     {
+        [SuppressUnmanagedCodeSecurity]
         internal static class Vehicle
         {
             // Entity
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern ushort Vehicle_GetID(IntPtr vehicle);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern ushort Vehicle_GetID(IntPtr entityPointer);
+            internal static extern IntPtr Vehicle_GetNetworkOwner(IntPtr vehicle);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern uint Vehicle_GetModel(IntPtr entityPointer);
+            internal static extern uint Vehicle_GetModel(IntPtr vehicle);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_GetPosition(IntPtr entityPointer, ref Position position);
+            internal static extern void Vehicle_GetPosition(IntPtr vehicle, ref Position position);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetPosition(IntPtr entityPointer, Position position);
+            internal static extern void Vehicle_SetPosition(IntPtr vehicle, Position pos);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_GetRotation(IntPtr entityPointer, ref Rotation rotation);
+            internal static extern void Vehicle_GetRotation(IntPtr vehicle, ref Rotation rotation);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetRotation(IntPtr entityPointer, Rotation rotation);
+            internal static extern void Vehicle_SetRotation(IntPtr vehicle, Rotation rot);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern short Vehicle_GetDimension(IntPtr entityPointer);
+            internal static extern short Vehicle_GetDimension(IntPtr vehicle);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetDimension(IntPtr entityPointer, short dimension);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_GetMetaData(IntPtr entityPointer, string key, ref MValue value);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetMetaData(IntPtr entityPointer, string key, ref MValue value);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void
-                Vehicle_GetSyncedMetaData(IntPtr entityPointer, string key, ref MValue value);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void
-                Vehicle_SetSyncedMetaData(IntPtr entityPointer, string key, ref MValue value);
-
-            // Vehicle
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Vehicle_GetDriver(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetMod(IntPtr vehiclePointer, byte category);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetModsCount(IntPtr vehiclePointer, byte category);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_SetMod(IntPtr vehiclePointer, byte category, byte id);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetModKitsCount(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetModKit(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_SetModKit(IntPtr vehiclePointer, byte id);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_IsPrimaryColorRGB(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetPrimaryColor(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_GetPrimaryColorRGB(IntPtr vehiclePointer, ref Rgba primaryColor);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetPrimaryColor(IntPtr vehiclePointer, byte color);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetPrimaryColorRGB(IntPtr vehiclePointer, Rgba color);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_IsSecondaryColorRGB(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetSecondaryColor(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_GetSecondaryColorRGB(IntPtr vehiclePointer, ref Rgba secondaryColor);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetSecondaryColor(IntPtr vehiclePointer, byte color);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetSecondaryColorRGB(IntPtr vehiclePointer, Rgba color);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetPearlColor(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetPearlColor(IntPtr vehiclePointer, byte color);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetWheelColor(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetWheelColor(IntPtr vehiclePointer, byte color);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetInteriorColor(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetInteriorColor(IntPtr vehiclePointer, byte color);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetDashboardColor(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetDashboardColor(IntPtr vehiclePointer, byte color);
+            internal static extern void Vehicle_SetDimension(IntPtr vehicle, short dimension);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_IsTireSmokeColorCustom(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_GetTireSmokeColor(IntPtr vehiclePointer, ref Rgba tireSmokeColor);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetTireSmokeColor(IntPtr vehiclePointer, Rgba color);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetWheelType(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetWheelVariation(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetWheels(IntPtr vehiclePointer, byte type, byte variation);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_GetCustomTires(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetCustomTires(IntPtr vehiclePointer, bool state);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetSpecialDarkness(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetSpecialDarkness(IntPtr vehiclePointer, byte value);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern uint Vehicle_GetNumberplateIndex(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetNumberplateIndex(IntPtr vehiclePointer, uint index);
+            internal static extern void Vehicle_GetMetaData(IntPtr vehicle, IntPtr key, ref MValue val);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_GetNumberplateText(IntPtr vehiclePointer, ref IntPtr text);
+            internal static extern void Vehicle_SetMetaData(IntPtr vehicle, IntPtr key, ref MValue val);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetNumberplateText(IntPtr vehiclePointer, IntPtr text);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetWindowTint(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetWindowTint(IntPtr vehiclePointer, byte tint);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetDirtLevel(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetDirtLevel(IntPtr vehiclePointer, byte level);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_IsExtraOn(IntPtr vehiclePointer, byte extraID);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_ToggleExtra(IntPtr vehiclePointer, byte extraID, bool state);
+            internal static extern void Vehicle_GetSyncedMetaData(IntPtr vehicle, IntPtr key, ref MValue val);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_IsNeonActive(IntPtr vehiclePointer);
+            internal static extern void Vehicle_SetSyncedMetaData(IntPtr vehicle, IntPtr key, ref MValue val);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_GetNeonActive(IntPtr vehiclePointer, ref bool left, ref bool right,
-                ref bool top, ref bool back);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Vehicle_GetDriver(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetNeonActive(IntPtr vehiclePointer, bool left, bool right, bool top,
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetMod(IntPtr vehicle, byte category);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetModsCount(IntPtr vehicle, byte category);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_SetMod(IntPtr vehicle, byte category, byte id);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetModKitsCount(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetModKit(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_SetModKit(IntPtr vehicle, byte id);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsPrimaryColorRGB(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetPrimaryColor(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_GetPrimaryColorRGB(IntPtr vehicle, ref Rgba primaryColor);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetPrimaryColor(IntPtr vehicle, byte color);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetPrimaryColorRGB(IntPtr vehicle, Rgba color);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsSecondaryColorRGB(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetSecondaryColor(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_GetSecondaryColorRGB(IntPtr vehicle, ref Rgba secondaryColor);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetSecondaryColor(IntPtr vehicle, byte color);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetSecondaryColorRGB(IntPtr vehicle, Rgba color);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetPearlColor(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetPearlColor(IntPtr vehicle, byte color);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetWheelColor(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetWheelColor(IntPtr vehicle, byte color);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetInteriorColor(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetInteriorColor(IntPtr vehicle, byte color);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetDashboardColor(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetDashboardColor(IntPtr vehicle, byte color);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsTireSmokeColorCustom(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_GetTireSmokeColor(IntPtr vehicle, ref Rgba tireSmokeColor);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetTireSmokeColor(IntPtr vehicle, Rgba color);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetWheelType(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetWheelVariation(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetWheels(IntPtr vehicle, byte type, byte variation);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_GetCustomTires(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetCustomTires(IntPtr vehicle, bool state);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetSpecialDarkness(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetSpecialDarkness(IntPtr vehicle, byte value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern uint Vehicle_GetNumberplateIndex(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetNumberplateIndex(IntPtr vehicle, uint index);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_GetNumberplateText(IntPtr vehicle, ref IntPtr text);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetNumberplateText(IntPtr vehicle, IntPtr text);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetWindowTint(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetWindowTint(IntPtr vehicle, byte tint);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetDirtLevel(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetDirtLevel(IntPtr vehicle, byte level);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsExtraOn(IntPtr vehicle, byte extraID);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_ToggleExtra(IntPtr vehicle, byte extraID, bool state);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsNeonActive(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_GetNeonActive(IntPtr vehicle, ref bool left, ref bool right,
+                ref bool front, ref bool back);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetNeonActive(IntPtr vehicle, bool left, bool right, bool front,
                 bool back);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_GetNeonColor(IntPtr vehiclePointer, ref Rgba neonColor);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetNeonColor(IntPtr vehiclePointer, Rgba color);
-            
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetLivery(IntPtr vehiclePointer);
-            
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetLivery(IntPtr vehiclePointer, byte livery);
-            
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetRoofLivery(IntPtr vehiclePointer);
-            
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetRoofLivery(IntPtr vehiclePointer, byte roofLivery);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_GetNeonColor(IntPtr vehicle, ref Rgba neonColor);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_GetAppearanceDataBase64(IntPtr vehiclePointer, ref IntPtr text);
-            
+            internal static extern void Vehicle_SetNeonColor(IntPtr vehicle, Rgba color);
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_LoadAppearanceDataFromBase64(IntPtr vehiclePointer, string base64);
+            internal static extern byte Vehicle_GetLivery(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_IsEngineOn(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetEngineOn(IntPtr vehiclePointer, bool state);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_IsHandbrakeActive(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetHeadlightColor(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetHeadlightColor(IntPtr vehiclePointer, byte color);
-            
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern uint Vehicle_GetRadioStationIndex(IntPtr vehiclePointer);
-            
+            internal static extern void Vehicle_SetLivery(IntPtr vehicle, byte livery);
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetRadioStationIndex(IntPtr vehiclePointer, uint stationIndex);
+            internal static extern byte Vehicle_GetRoofLivery(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_IsSirenActive(IntPtr vehiclePointer);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetRoofLivery(IntPtr vehicle, byte roofLivery);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetSirenActive(IntPtr vehiclePointer, bool state);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_GetAppearanceDataBase64(IntPtr vehicle, ref IntPtr base64);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetLockState(IntPtr vehiclePointer);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_LoadAppearanceDataFromBase64(IntPtr vehicle, string base64);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetLockState(IntPtr vehiclePointer, byte state);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsEngineOn(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetDoorState(IntPtr vehiclePointer, byte doorId);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetEngineOn(IntPtr vehicle, bool state);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetDoorState(IntPtr vehiclePointer, byte doorId, byte state);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsHandbrakeActive(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_IsWindowOpened(IntPtr vehiclePointer, byte windowId);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetHeadlightColor(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetWindowOpened(IntPtr vehiclePointer, byte windowId, bool state);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetHeadlightColor(IntPtr vehicle, byte color);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_IsDaylightOn(IntPtr vehiclePointer);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern uint Vehicle_GetRadioStationIndex(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_IsNightlightOn(IntPtr vehiclePointer);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetRadioStationIndex(IntPtr vehicle, uint stationIndex);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_IsRoofOpened(IntPtr vehiclePointer);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsSirenActive(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetRoofOpened(IntPtr vehiclePointer, bool state);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetSirenActive(IntPtr vehicle, bool state);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_IsFlamethrowerActive(IntPtr vehiclePointer);
-            
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern float Vehicle_GetLightsMultiplier(IntPtr vehiclePointer);
-            
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetLightsMultiplier(IntPtr vehiclePointer, float multiplier);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetLockState(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_GetGameStateBase64(IntPtr vehiclePointer, ref IntPtr text);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetLockState(IntPtr vehicle, byte state);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_LoadGameStateFromBase64(IntPtr vehiclePointer, string base64);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetDoorState(IntPtr vehicle, byte doorId);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern int Vehicle_GetEngineHealth(IntPtr vehiclePointer);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetDoorState(IntPtr vehicle, byte doorId, byte state);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetEngineHealth(IntPtr vehiclePointer, int health);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsWindowOpened(IntPtr vehicle, byte windowId);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern int Vehicle_GetPetrolTankHealth(IntPtr vehiclePointer);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetWindowOpened(IntPtr vehicle, byte windowId, bool state);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetPetrolTankHealth(IntPtr vehiclePointer, int health);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsDaylightOn(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetWheelsCount(IntPtr vehiclePointer);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsNightlightOn(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_IsWheelBurst(IntPtr vehiclePointer, byte wheelId);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsRoofOpened(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetWheelBurst(IntPtr vehiclePointer, byte wheelId, bool state);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetRoofOpened(IntPtr vehicle, bool state);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_DoesWheelHasTire(IntPtr vehiclePointer, byte wheelId);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsFlamethrowerActive(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetWheelHasTire(IntPtr vehiclePointer, byte wheelId, bool state);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern float Vehicle_GetLightsMultiplier(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern float Vehicle_GetWheelHealth(IntPtr vehiclePointer, byte wheelId);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetLightsMultiplier(IntPtr vehicle, float multiplier);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetWheelHealth(IntPtr vehiclePointer, byte wheelId, float health);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_GetGameStateBase64(IntPtr vehicle, ref IntPtr text);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetRepairsCount(IntPtr vehiclePointer);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_LoadGameStateFromBase64(IntPtr vehicle, string base64);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern uint Vehicle_GetBodyHealth(IntPtr vehiclePointer);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern int Vehicle_GetEngineHealth(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetBodyHealth(IntPtr vehiclePointer, uint health);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetEngineHealth(IntPtr vehicle, int health);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern uint Vehicle_GetBodyAdditionalHealth(IntPtr vehiclePointer);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern int Vehicle_GetPetrolTankHealth(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetBodyAdditionalHealth(IntPtr vehiclePointer, uint health);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetPetrolTankHealth(IntPtr vehicle, int health);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_GetHealthDataBase64(IntPtr vehiclePointer, ref IntPtr text);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetWheelsCount(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_LoadHealthDataFromBase64(IntPtr vehiclePointer, string base64);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsWheelBurst(IntPtr vehicle, byte wheelId);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetPartDamageLevel(IntPtr vehiclePointer, byte partId);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetWheelBurst(IntPtr vehicle, byte wheelId, bool state);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetPartDamageLevel(IntPtr vehiclePointer, byte partId, byte damage);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_DoesWheelHasTire(IntPtr vehicle, byte wheelId);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetPartBulletHoles(IntPtr vehiclePointer, byte partId);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetWheelHasTire(IntPtr vehicle, byte wheelId, bool state);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void
-                Vehicle_SetPartBulletHoles(IntPtr vehiclePointer, byte partId, byte shootsCount);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern float Vehicle_GetWheelHealth(IntPtr vehicle, byte wheelId);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_IsLightDamaged(IntPtr vehiclePointer, byte lightId);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetWheelHealth(IntPtr vehicle, byte wheelId, float health);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetLightDamaged(IntPtr vehiclePointer, byte lightId, bool isDamaged);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetRepairsCount(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_IsWindowDamaged(IntPtr vehiclePointer, byte windowId);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern uint Vehicle_GetBodyHealth(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetWindowDamaged(IntPtr vehiclePointer, byte windowId, bool isDamaged);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetBodyHealth(IntPtr vehicle, uint health);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_IsSpecialLightDamaged(IntPtr vehiclePointer, byte specialLightId);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern uint Vehicle_GetBodyAdditionalHealth(IntPtr vehicle);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetSpecialLightDamaged(IntPtr vehiclePointer, byte specialLightId,
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetBodyAdditionalHealth(IntPtr vehicle, uint health);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_GetHealthDataBase64(IntPtr vehicle, ref IntPtr text);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_LoadHealthDataFromBase64(IntPtr vehicle, string base64);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetPartDamageLevel(IntPtr vehicle, byte partId);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetPartDamageLevel(IntPtr vehicle, byte partId, byte damage);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetPartBulletHoles(IntPtr vehicle, byte partId);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetPartBulletHoles(IntPtr vehicle, byte partId, byte shootsCount);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsLightDamaged(IntPtr vehicle, byte lightId);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetLightDamaged(IntPtr vehicle, byte lightId, bool isDamaged);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsWindowDamaged(IntPtr vehicle, byte windowId);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetWindowDamaged(IntPtr vehicle, byte windowId, bool isDamaged);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsSpecialLightDamaged(IntPtr vehicle, byte specialLightId);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetSpecialLightDamaged(IntPtr vehicle, byte specialLightId,
                 bool isDamaged);
 
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_HasArmoredWindows(IntPtr vehiclePointer);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern float Vehicle_GetArmoredWindowHealth(IntPtr vehiclePointer, byte windowId);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetArmoredWindowHealth(IntPtr vehiclePointer, byte windowId,
-                float health);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetArmoredWindowShootCount(IntPtr vehiclePointer, byte windowId);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetArmoredWindowShootCount(IntPtr vehiclePointer, byte windowId,
-                byte count);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetBumperDamageLevel(IntPtr vehiclePointer, byte bumperId);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetBumperDamageLevel(IntPtr vehiclePointer, byte bumperId,
-                byte damageLevel);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_GetDamageDataBase64(IntPtr vehiclePointer, ref IntPtr text);
-
-            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_LoadDamageDataFromBase64(IntPtr vehiclePointer, string base64);
-            
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Vehicle_IsManualEngineControl(IntPtr vehiclePointer);
-            
+            internal static extern bool Vehicle_HasArmoredWindows(IntPtr vehicle);
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetManualEngineControl(IntPtr vehiclePointer, bool state);
-            
+            internal static extern float Vehicle_GetArmoredWindowHealth(IntPtr vehicle, byte windowId);
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_GetScriptDataBase64(IntPtr vehiclePointer, ref IntPtr text);
-            
+            internal static extern void Vehicle_SetArmoredWindowHealth(IntPtr vehicle, byte windowId, float health);
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_LoadScriptDataFromBase64(IntPtr vehiclePointer, string base64);
+            internal static extern byte Vehicle_GetArmoredWindowShootCount(IntPtr vehicle, byte windowId);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetArmoredWindowShootCount(IntPtr vehicle, byte windowId, byte count);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetBumperDamageLevel(IntPtr vehicle, byte bumperId);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetBumperDamageLevel(IntPtr vehicle, byte bumperId, byte damageLevel);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_GetDamageDataBase64(IntPtr vehicle, ref IntPtr text);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_LoadDamageDataFromBase64(IntPtr vehicle, string base64);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetManualEngineControl(IntPtr vehicle, bool state);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsManualEngineControl(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_GetScriptDataBase64(IntPtr vehicle, ref IntPtr base64);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_LoadScriptDataFromBase64(IntPtr vehicle, string base64);
         }
     }
 }

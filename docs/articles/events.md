@@ -28,13 +28,13 @@ public void OnPlayerConnect(IPlayer player, string reason)
 
 You should not register event handlers in async code.
 
+Below is a list of all event handlers.
+
 [!code-csharp[Events](../../api/AltV.Net/Alt.Events.cs)]
 
-For a list of all event handlers see [Alt.Events.cs](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Alt.Events.cs).
+Below is a list of all event handler method signatures.
 
-[!code-csharp[Events](../api/AltV.Net/Events/Events.cs)]
-
-And the method signatures can be found in [Events.cs](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Events/Events.cs).
+[!code-csharp[Events](../../api/AltV.Net/Events/Events.cs)]
 
 The player event handler looks like this.
 

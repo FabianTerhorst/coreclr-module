@@ -17,14 +17,15 @@ namespace AltV.Net.NetworkingEntity
     public class ClientEntityStreamingHandler : IStreamingHandler
     {
         private readonly INetworkingClientPool networkingClientPool;
-        
+
         private readonly IAuthenticationProvider authenticationProvider;
 
         public event Action<INetworkingEntity, INetworkingClient> EntityStreamInHandler;
 
         public event Action<INetworkingEntity, INetworkingClient> EntityStreamOutHandler;
 
-        public ClientEntityStreamingHandler(INetworkingClientPool networkingClientPool, IAuthenticationProvider authenticationProvider)
+        public ClientEntityStreamingHandler(INetworkingClientPool networkingClientPool,
+            IAuthenticationProvider authenticationProvider)
         {
             this.networkingClientPool = networkingClientPool;
             this.authenticationProvider = authenticationProvider;
@@ -43,11 +44,14 @@ namespace AltV.Net.NetworkingEntity
                 {
                     var token = authEvent.Token;
                     if (token == null) return;
-                    var verified = await authenticationProvider.Verify(networkingClientPool, managedWebSocket, token, out var client);
+                    var verified = await authenticationProvider.Verify(networkingClientPool, managedWebSocket, token,
+                        out var client);
                     if (!verified)
                     {
                         return;
                     }
+
+                    client.OnConnect(managedWebSocket);
 
                     var sendEvent = new ServerEvent();
                     var currSendEvent = new EntitySendEvent();

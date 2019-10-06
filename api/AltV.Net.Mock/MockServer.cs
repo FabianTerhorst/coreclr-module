@@ -27,18 +27,21 @@ namespace AltV.Net.Mock
 
         private readonly IBaseObjectPool<IVoiceChannel> voiceChannelPool;
 
+        private readonly INativeResourcePool nativeResourcePool;
+
         public int NetTime => 0;
 
         public string RootDirectory => "";
 
-        public CSharpNativeResource Resource => new CSharpNativeResource(IntPtr.Zero);
+        public INativeResource Resource => new NativeResource(IntPtr.Zero);
 
         internal MockServer(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
-            IBaseObjectPool<IVoiceChannel> voiceChannelPool)
+            IBaseObjectPool<IVoiceChannel> voiceChannelPool,
+            INativeResourcePool nativeResourcePool)
         {
             this.nativePointer = nativePointer;
             this.baseBaseObjectPool = baseBaseObjectPool;
@@ -48,6 +51,7 @@ namespace AltV.Net.Mock
             this.blipPool = blipPool;
             this.checkpointPool = checkpointPool;
             this.voiceChannelPool = voiceChannelPool;
+            this.nativeResourcePool = nativeResourcePool;
         }
 
         public void LogInfo(string message)
@@ -320,14 +324,9 @@ namespace AltV.Net.Mock
             Alt.Module.OnRemoveVoiceChannel(channel.NativePointer);
         }
 
-        public ServerNativeResource GetResource(string name)
+        public INativeResource GetResource(string name)
         {
-            return new ServerNativeResource(IntPtr.Zero);
-        }
-
-        public CSharpNativeResource GetCSharpResource(string name)
-        {
-            return new CSharpNativeResource(IntPtr.Zero);
+            return new NativeResource(IntPtr.Zero);
         }
 
         public IEnumerable<IPlayer> GetPlayers()
@@ -338,6 +337,21 @@ namespace AltV.Net.Mock
         public IEnumerable<IVehicle> GetVehicles()
         {
             return new List<IVehicle>();
+        }
+
+        public void StartResource(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StopResource(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RestartResource(string name)
+        {
+            throw new NotImplementedException();
         }
     }
 }

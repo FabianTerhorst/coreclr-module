@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
+using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
@@ -19,17 +20,6 @@ namespace AltV.Net
 
         private static IScript[] _scripts;
 
-        public static void Main(IntPtr serverPointer, IntPtr resourcePointer, string resourceName, string entryPoint)
-        {
-            var assemblyLoader = new AssemblyLoader();
-            MainWithResource(serverPointer, resourcePointer,
-                new ResourceLoader(serverPointer, assemblyLoader, resourceName, entryPoint).Init(),
-                AssemblyLoadContext.Default);
-            _scripts = new ScriptLoader(assemblyLoader).GetAllScripts();
-            _module.OnScriptsLoaded(_scripts);
-            _resource.OnStart();
-        }
-
         private static void OnStartResource(IntPtr serverPointer, IntPtr resourcePointer, string resourceName,
             string entryPoint)
         {
@@ -39,22 +29,7 @@ namespace AltV.Net
         public static void MainWithAssembly(IntPtr serverPointer, IntPtr resourcePointer,
             AssemblyLoadContext assemblyLoadContext)
         {
-            if (!AssemblyLoader.FindType(assemblyLoadContext.Assemblies, out IResource resource))
-            {
-                return;
-            }
-
-            MainWithResource(serverPointer, resourcePointer, resource, assemblyLoadContext);
-            _scripts = AssemblyLoader.FindAllTypes<IScript>(assemblyLoadContext.Assemblies);
-            _module.OnScriptsLoaded(_scripts);
-            ResourceBuilder.SetDelegates(resourcePointer, OnStartResource);
-        }
-
-        public static void MainWithResource(IntPtr serverPointer, IntPtr resourcePointer, IResource resource,
-            AssemblyLoadContext assemblyLoadContext)
-        {
-            _resource = resource;
-            if (_resource == null)
+            if (!AssemblyLoader.FindType(assemblyLoadContext.Assemblies, out _resource))
             {
                 return;
             }
@@ -65,22 +40,25 @@ namespace AltV.Net
             var checkpointFactory = _resource.GetCheckpointFactory();
             var voiceChannelFactory = _resource.GetVoiceChannelFactory();
             var colShapeFactory = _resource.GetColShapeFactory();
+            var nativeResourceFactory = _resource.GetNativeResourceFactory();
             var playerPool = _resource.GetPlayerPool(playerFactory);
             var vehiclePool = _resource.GetVehiclePool(vehicleFactory);
             var blipPool = _resource.GetBlipPool(blipFactory);
             var checkpointPool = _resource.GetCheckpointPool(checkpointFactory);
             var voiceChannelPool = _resource.GetVoiceChannelPool(voiceChannelFactory);
             var colShapePool = _resource.GetColShapePool(colShapeFactory);
+            var nativeResourcePool = _resource.GetNativeResourcePool(nativeResourceFactory);
             var entityPool = _resource.GetBaseEntityPool(playerPool, vehiclePool);
             var baseObjectPool =
                 _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool,
                     colShapePool);
-            var csharpResource = new CSharpNativeResource(resourcePointer);
-            var server = new Server(serverPointer, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool,
-                checkpointPool, voiceChannelPool, colShapePool);
+            nativeResourcePool.GetOrCreate(resourcePointer, out var csharpResource);
+            var server = new Server(serverPointer, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool,
+                blipPool,
+                checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
             _module = _resource.GetModule(server, assemblyLoadContext, csharpResource, baseObjectPool, entityPool,
                 playerPool, vehiclePool,
-                blipPool, checkpointPool, voiceChannelPool, colShapePool);
+                blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
 
             foreach (var unused in server.GetPlayers())
             {
@@ -89,6 +67,11 @@ namespace AltV.Net
             foreach (var unused in server.GetVehicles())
             {
             }
+
+            csharpResource.CSharpResourceImpl.SetDelegates(OnStartResource);
+
+            _scripts = AssemblyLoader.FindAllTypes<IScript>(assemblyLoadContext.Assemblies);
+            _module.OnScriptsLoaded(_scripts);
 
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
         }
@@ -103,6 +86,9 @@ namespace AltV.Net
         public static void OnStop()
         {
             _resource.OnStop();
+            Alt.Server.Resource.CSharpResourceImpl.Dispose();
+            _module.Dispose();
+            AppDomain.CurrentDomain.UnhandledException -= OnUnhandledException;
         }
 
         public static void OnTick()
@@ -121,6 +107,21 @@ namespace AltV.Net
             _module.OnPlayerConnect(playerPointer, playerId, reason);
         }
 
+        public static void OnResourceStart(IntPtr resourcePointer)
+        {
+            _module.OnResourceStart(resourcePointer);
+        }
+
+        public static void OnResourceStop(IntPtr resourcePointer)
+        {
+            _module.OnResourceStop(resourcePointer);
+        }
+
+        public static void OnResourceError(IntPtr resourcePointer)
+        {
+            _module.OnResourceError(resourcePointer);
+        }
+
         public static void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer,
             BaseObjectType attackerBaseObjectType,
             ushort attackerEntityId, uint weapon, ushort damage)
@@ -133,6 +134,18 @@ namespace AltV.Net
             BaseObjectType killerBaseObjectType, uint weapon)
         {
             _module.OnPlayerDeath(playerPointer, killerEntityPointer, killerBaseObjectType, weapon);
+        }
+
+        public static void OnExplosion(IntPtr playerPointer, ExplosionType explosionType,
+            Position position, uint explosionFx)
+        {
+            _module.OnExplosion(playerPointer, explosionType, position, explosionFx);
+        }
+
+        public static void OnWeaponDamage(IntPtr playerPointer, IntPtr entityPointer,
+            BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart)
+        {
+            _module.OnWeaponDamage(playerPointer, entityPointer, entityType, weapon, damage, shotOffset, bodyPart);
         }
 
         public static void OnPlayerChangeVehicleSeat(IntPtr vehiclePointer, IntPtr playerPointer, byte oldSeat,

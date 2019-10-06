@@ -17,7 +17,7 @@ int16_t Checkpoint_GetDimension(alt::ICheckpoint* checkpoint) {
     return checkpoint->GetDimension();
 }
 
-void Checkpoint_SetDimension(alt::ICheckpoint* checkpoint, uint16_t dimension) {
+void Checkpoint_SetDimension(alt::ICheckpoint* checkpoint, int16_t dimension) {
     checkpoint->SetDimension(dimension);
 }
 

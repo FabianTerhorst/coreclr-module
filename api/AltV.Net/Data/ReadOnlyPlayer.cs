@@ -2,7 +2,6 @@ using System;
 using System.Runtime.InteropServices;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
-using AltV.Net.Elements.Pools;
 using AltV.Net.Native;
 
 namespace AltV.Net.Data
@@ -77,6 +76,7 @@ namespace AltV.Net.Data
         public ulong HardwareIdHash { get; }
         public ulong HardwareIdExHash { get; }
         public string AuthToken { get; }
+        public IPlayer NetworkOwner { get; }
 
         public void SetMetaData(string key, object value)
         {

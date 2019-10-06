@@ -11,6 +11,17 @@ namespace AltV.Net.Elements.Entities
     {
         public static ushort GetId(IntPtr vehiclePointer) => AltNative.Vehicle.Vehicle_GetID(vehiclePointer);
 
+        public override IPlayer NetworkOwner
+        {
+            get
+            {
+                CheckIfEntityExists();
+                var entityPointer = AltNative.Vehicle.Vehicle_GetNetworkOwner(NativePointer);
+                if (entityPointer == IntPtr.Zero) return null;
+                return Alt.Module.PlayerPool.GetOrCreate(entityPointer, out var player) ? player : null;
+            }
+        }
+
         public override uint Model
         {
             get
@@ -67,17 +78,33 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public override void GetMetaData(string key, ref MValue value) =>
-            AltNative.Vehicle.Vehicle_GetMetaData(NativePointer, key, ref value);
+        public override void GetMetaData(string key, ref MValue value)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Vehicle.Vehicle_GetMetaData(NativePointer, stringPtr, ref value);
+            Marshal.FreeHGlobal(stringPtr);
+        }
 
-        public override void SetMetaData(string key, ref MValue value) =>
-            AltNative.Vehicle.Vehicle_SetMetaData(NativePointer, key, ref value);
+        public override void SetMetaData(string key, ref MValue value)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Vehicle.Vehicle_SetMetaData(NativePointer, stringPtr, ref value);
+            Marshal.FreeHGlobal(stringPtr);
+        }
 
-        public override void SetSyncedMetaData(string key, ref MValue value) =>
-            AltNative.Vehicle.Vehicle_SetSyncedMetaData(NativePointer, key, ref value);
+        public override void SetSyncedMetaData(string key, ref MValue value)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Vehicle.Vehicle_SetSyncedMetaData(NativePointer, stringPtr, ref value);
+            Marshal.FreeHGlobal(stringPtr);
+        }
 
-        public override void GetSyncedMetaData(string key, ref MValue value) =>
-            AltNative.Vehicle.Vehicle_GetSyncedMetaData(NativePointer, key, ref value);
+        public override void GetSyncedMetaData(string key, ref MValue value)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Vehicle.Vehicle_GetSyncedMetaData(NativePointer, stringPtr, ref value);
+            Marshal.FreeHGlobal(stringPtr);
+        }
 
         public IPlayer Driver
         {

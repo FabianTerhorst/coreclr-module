@@ -6,6 +6,10 @@ uint16_t Vehicle_GetID(alt::IVehicle* entity) {
     return entity->GetID();
 }
 
+alt::IPlayer* Vehicle_GetNetworkOwner(alt::IVehicle* vehicle) {
+    return vehicle->GetNetworkOwner();
+}
+
 uint32_t Vehicle_GetModel(alt::IVehicle* vehicle) {
     return vehicle->GetModel();
 }
@@ -36,7 +40,7 @@ int16_t Vehicle_GetDimension(alt::IVehicle* entity) {
     return entity->GetDimension();
 }
 
-void Vehicle_SetDimension(alt::IVehicle* entity, uint16_t dimension) {
+void Vehicle_SetDimension(alt::IVehicle* entity, int16_t dimension) {
     entity->SetDimension(dimension);
 }
 

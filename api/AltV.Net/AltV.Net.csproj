@@ -13,9 +13,19 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.13.0</PackageVersion>
+        <PackageVersion>1.16.3-beta</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes></PackageReleaseNotes>
+        <PackageReleaseNotes>Add Alt.OnWeaponDamage
+Add Alt.OnExplosion
+Fix AssemblyLoadContext.Unload()
+Improve performance
+Add AltTrace
+Add Alt.OnAnyResourceStart
+Add Alt.OnAnyResourceStop
+Add Alt.OnAnyResourceError
+Add Alt.Server.Start/Stop/Restart-/Resource
+Add IEntity.NetworkOwner</PackageReleaseNotes>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <ItemGroup>

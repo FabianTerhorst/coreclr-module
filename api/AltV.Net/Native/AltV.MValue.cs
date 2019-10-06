@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
-using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
+using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Native
 {
@@ -55,7 +55,7 @@ namespace AltV.Net.Native
             internal static extern void MValue_CreateCheckpoint(IntPtr checkpointPointer, ref MValue mValue);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern MValue MValue_CreateFunction(IntPtr invoker, ref MValue mValue);
+            internal static extern void MValue_CreateFunction(IntPtr invoker, ref MValue mValue);
         }
 
         [SuppressUnmanagedCodeSecurity]

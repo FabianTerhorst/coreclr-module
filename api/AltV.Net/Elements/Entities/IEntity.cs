@@ -10,6 +10,12 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         ushort Id { get; }
+        
+        /// <summary>
+        /// Get the network owner, or null if none is present
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        IPlayer NetworkOwner { get; }
 
         /// <summary>
         /// Get or set rotation of the entity.
