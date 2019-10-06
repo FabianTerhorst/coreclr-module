@@ -84,6 +84,8 @@ matrix:
       - mv ./api/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.runtimeconfig.json ./upload/AltV.Net.Host.runtimeconfig.json
       - mv ./api/AltV.Net/bin/Debug/netcoreapp3.0/publish/AltV.Net.dll ./api-dlls/AltV.Net.dll
       - mv ./api/AltV.Net.Async/bin/Debug/netcoreapp3.0/publish/AltV.Net.Async.dll ./api-dlls/AltV.Net.Async.dll
+      - mv ./api/AltV.Net/bin/Debug/netcoreapp3.0/publish/AltV.Net.pdb ./api-dlls/AltV.Net.pdb
+      - mv ./api/AltV.Net.Async/bin/Debug/netcoreapp3.0/publish/AltV.Net.Async.pdb ./api-dlls/AltV.Net.Async.pdb
       - if [ "$LINUX_STABLE" = true ]; then DOTNET_STABLE=true ; fi
       - if [ "$LINUX_BETA" = true ]; then DOTNET_BETA=true ; fi
       - LINUX_STABLE=false
@@ -210,6 +212,8 @@ deploy:
       - upload/AltV.Net.Host.runtimeconfig.json
       - api-dlls/AltV.Net.dll
       - api-dlls/AltV.Net.Async.dll
+      - api-dlls/AltV.Net.pdb
+      - api-dlls/AltV.Net.Async.pdb
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$DOTNET_BETA = true"
