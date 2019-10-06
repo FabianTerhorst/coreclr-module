@@ -64,6 +64,7 @@ matrix:
     mono: none
     script:
       - mkdir upload
+      - mkdir api-dlls
       - chmod +x ./cdn-linux
       #- sudo snap alias dotnet-sdk.dotnet dotnet
       - dotnet --version
