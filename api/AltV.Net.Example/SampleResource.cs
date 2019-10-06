@@ -280,7 +280,7 @@ namespace AltV.Net.Example
 
             var vehicle2 = Alt.CreateVehicle(VehicleModel.Adder, new Position(1337, 1337, 1337), Rotation.Zero);
             Alt.On<IVehicle, VehicleModel>("onEnum", OnEnum);
-            Alt.Emit("onEnum", vehicle2, VehicleModel.Adder);
+            Alt.Emit("onEnum", vehicle2, VehicleModel.Adder.ToString());
         }
 
         public void OnEnum(IVehicle vehicle, VehicleModel vehicleModel)
