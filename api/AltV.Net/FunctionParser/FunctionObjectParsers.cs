@@ -266,6 +266,11 @@ namespace AltV.Net.FunctionParser
             mValue.Dispose();
             return obj;
         }
+
+        public static object ParseEnum(object value, Type type, FunctionTypeInfo typeInfo)
+        {
+            return !Enum.TryParse(type, value.ToString(), true, out var enumObject) ? null : enumObject;
+        }
     }
 
     internal delegate object FunctionObjectParser(object value, Type type, FunctionTypeInfo typeInfo);

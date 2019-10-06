@@ -278,7 +278,15 @@ namespace AltV.Net.Example
             colShapeCircle.SetMetaData("bla", 3);
             colShapeCircle.SetData("bla", (int) 4);
 
-            Alt.CreateVehicle(VehicleModel.Adder, new Position(1337, 1337, 1337), Rotation.Zero);
+            var vehicle2 = Alt.CreateVehicle(VehicleModel.Adder, new Position(1337, 1337, 1337), Rotation.Zero);
+            Alt.On<IVehicle, VehicleModel>("onEnum", OnEnum);
+            Alt.Emit("onEnum", vehicle2, VehicleModel.Adder);
+        }
+
+        public void OnEnum(IVehicle vehicle, VehicleModel vehicleModel)
+        {
+            Console.WriteLine("vehicle:" + vehicle.Id);
+            Console.WriteLine("vehicle-model:" + vehicleModel);
         }
 
         [Event("bla2")]
