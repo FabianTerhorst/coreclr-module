@@ -13,7 +13,7 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.16.3-beta</PackageVersion>
+        <PackageVersion>1.16.4-beta</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>Add Alt.OnWeaponDamage
 Add Alt.OnExplosion
@@ -24,12 +24,17 @@ Add Alt.OnAnyResourceStart
 Add Alt.OnAnyResourceStop
 Add Alt.OnAnyResourceError
 Add Alt.Server.Start/Stop/Restart-/Resource
-Add IEntity.NetworkOwner</PackageReleaseNotes>
+Add IEntity.NetworkOwner
+Enum support for Alt.On
+Improvements for native calls
+Debug improvements</PackageReleaseNotes>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
     <ItemGroup>
         <None Include="license\license.txt" Pack="true" PackagePath="" />
+        <None Include="icon.png" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
     <PropertyGroup>
