@@ -151,6 +151,11 @@ namespace AltV.Net
                     objectParsers[i] = FunctionObjectParsers.ParseFunction;
                     stringParsers[i] = FunctionStringParsers.ParseFunction;
                 }
+                else if (typeInfo.IsEnum)
+                {
+                    parsers[i] = FunctionMValueParsers.ParseEnum;
+                    objectParsers[i] = FunctionObjectParsers.ParseEnum;
+                }
                 else
                 {
                     // Unsupported type

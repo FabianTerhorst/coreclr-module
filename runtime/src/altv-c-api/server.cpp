@@ -36,6 +36,14 @@ bool Server_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCa
     return server->SubscribeCommand(cmd, cb);
 }
 
+bool Server_FileExists(alt::ICore* server, const char* path) {
+    return server->FileExists(path);
+}
+
+void Server_FileRead(alt::ICore* server, const char* path, const char*&text) {
+    text = server->FileRead(path).CStr();
+}
+
 void Server_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueList &args) {
     server->TriggerServerEvent(ev, args);
 }

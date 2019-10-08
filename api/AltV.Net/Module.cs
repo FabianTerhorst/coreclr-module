@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
+using System.Threading;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -134,6 +135,8 @@ namespace AltV.Net
 
         internal readonly LinkedList<GCHandle> functionExportHandles = new LinkedList<GCHandle>();
 
+        private readonly Thread MainThread;
+
         public Module(IServer server, AssemblyLoadContext assemblyLoadContext,
             INativeResource moduleResource, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
@@ -157,6 +160,12 @@ namespace AltV.Net
             VoiceChannelPool = voiceChannelPool;
             ColShapePool = colShapePool;
             NativeResourcePool = nativeResourcePool;
+            MainThread = Thread.CurrentThread;
+        }
+
+        public virtual bool IsMainThread()
+        {
+            return Thread.CurrentThread == MainThread;
         }
 
         public Assembly LoadAssemblyFromName(AssemblyName assemblyName)
