@@ -29,7 +29,7 @@ namespace AltV.Net.FunctionParser
 
         public static readonly Type Checkpoint = typeof(ICheckpoint);
 
-        public static readonly Type Array = typeof(Array);
+        public static readonly Type Array = typeof(System.Array);
 
         public static readonly Type Entity = typeof(IEntity);
 

@@ -6,7 +6,7 @@ namespace AltV.Net.Async
     {
         public static void RegisterEvents(object target)
         {
-            ModuleScriptMethodIndexer.Index(target, new[] {typeof(AsyncEvent)},
+            MethodIndexer.Index(target, new[] {typeof(AsyncEvent)},
                 (baseEvent, eventMethod, eventMethodDelegate) =>
                 {
                     if (!(baseEvent is AsyncEvent asyncEvent)) return;

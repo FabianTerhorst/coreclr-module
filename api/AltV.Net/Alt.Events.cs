@@ -10,38 +10,10 @@ namespace AltV.Net
             remove => Module.CheckpointEventHandler.Remove(value);
         }
 
-        /// <summary>
-        /// Player connect event handler
-        /// <example>
-        /// <code>
-        /// Alt.OnPlayerConnect += (player, reason) => {
-        ///   Console.WriteLine($"{player.Name} connected.");
-        /// };
-        /// </code>
-        /// </example>
-        /// </summary>
         public static event PlayerConnectDelegate OnPlayerConnect
         {
             add => Module.PlayerConnectEventHandler.Add(value);
             remove => Module.PlayerConnectEventHandler.Remove(value);
-        }
-
-        public static event ResourceEventDelegate OnAnyResourceStart
-        {
-            add => Module.ResourceStartEventHandler.Add(value);
-            remove => Module.ResourceStartEventHandler.Remove(value);
-        }
-
-        public static event ResourceEventDelegate OnAnyResourceStop
-        {
-            add => Module.ResourceStopEventHandler.Add(value);
-            remove => Module.ResourceStopEventHandler.Remove(value);
-        }
-
-        public static event ResourceEventDelegate OnAnyResourceError
-        {
-            add => Module.ResourceErrorEventHandler.Add(value);
-            remove => Module.ResourceErrorEventHandler.Remove(value);
         }
 
         public static event PlayerDamageDelegate OnPlayerDamage
@@ -54,18 +26,6 @@ namespace AltV.Net
         {
             add => Module.PlayerDeadEventHandler.Add(value);
             remove => Module.PlayerDeadEventHandler.Remove(value);
-        }
-
-        public static event ExplosionDelegate OnExplosion
-        {
-            add => Module.ExplosionEventHandler.Add(value);
-            remove => Module.ExplosionEventHandler.Remove(value);
-        }
-
-        public static event WeaponDamageDelegate OnWeaponDamage
-        {
-            add => Module.WeaponDamageEventHandler.Add(value);
-            remove => Module.WeaponDamageEventHandler.Remove(value);
         }
 
         public static event PlayerDisconnectDelegate OnPlayerDisconnect

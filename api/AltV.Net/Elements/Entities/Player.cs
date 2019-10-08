@@ -10,17 +10,6 @@ namespace AltV.Net.Elements.Entities
     {
         public static ushort GetId(IntPtr playerPointer) => AltNative.Player.Player_GetID(playerPointer);
 
-        public override IPlayer NetworkOwner
-        {
-            get
-            {
-                CheckIfEntityExists();
-                var entityPointer = AltNative.Player.Player_GetNetworkOwner(NativePointer);
-                if (entityPointer == IntPtr.Zero) return null;
-                return Alt.Module.PlayerPool.GetOrCreate(entityPointer, out var player) ? player : null;
-            }
-        }
-
         public override uint Model
         {
             get
@@ -101,33 +90,17 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public override void GetMetaData(string key, ref MValue value)
-        {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Player.Player_GetMetaData(NativePointer, stringPtr, ref value);
-            Marshal.FreeHGlobal(stringPtr);
-        }
+        public override void GetMetaData(string key, ref MValue value) =>
+            AltNative.Player.Player_GetMetaData(NativePointer, key, ref value);
 
-        public override void SetMetaData(string key, ref MValue value)
-        {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Player.Player_SetMetaData(NativePointer, stringPtr, ref value);
-            Marshal.FreeHGlobal(stringPtr);
-        }
+        public override void SetMetaData(string key, ref MValue value) =>
+            AltNative.Player.Player_SetMetaData(NativePointer, key, ref value);
 
-        public override void SetSyncedMetaData(string key, ref MValue value)
-        {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Player.Player_SetSyncedMetaData(NativePointer, stringPtr, ref value);
-            Marshal.FreeHGlobal(stringPtr);
-        }
+        public override void SetSyncedMetaData(string key, ref MValue value) =>
+            AltNative.Player.Player_SetSyncedMetaData(NativePointer, key, ref value);
 
-        public override void GetSyncedMetaData(string key, ref MValue value)
-        {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Player.Player_GetSyncedMetaData(NativePointer, stringPtr, ref value);
-            Marshal.FreeHGlobal(stringPtr);
-        }
+        public override void GetSyncedMetaData(string key, ref MValue value) =>
+            AltNative.Player.Player_GetSyncedMetaData(NativePointer, key, ref value);
 
         public bool IsConnected
         {
@@ -505,7 +478,7 @@ namespace AltV.Net.Elements.Entities
             CheckIfEntityExists();
             return AltNative.Player.Player_GetCurrentWeaponTintIndex(NativePointer);
         }
-
+        
         public void Kick(string reason)
         {
             CheckIfEntityExists();

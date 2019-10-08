@@ -36,18 +36,6 @@ namespace AltV.Net.Async
             add => Module.PlayerDeadAsyncEventHandler.Add(value);
             remove => Module.PlayerDeadAsyncEventHandler.Remove(value);
         }
-        
-        public static event ExplosionAsyncDelegate OnExplosion
-        {
-            add => Module.ExplosionAsyncEventHandler.Add(value);
-            remove => Module.ExplosionAsyncEventHandler.Remove(value);
-        }
-        
-        public static event WeaponDamageAsyncDelegate OnWeaponDamage
-        {
-            add => Module.WeaponDamageAsyncEventHandler.Add(value);
-            remove => Module.WeaponDamageAsyncEventHandler.Remove(value);
-        }
 
         public static event PlayerChangeVehicleSeatAsyncDelegate OnPlayerChangeVehicleSeat
         {

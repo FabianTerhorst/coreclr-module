@@ -16,7 +16,7 @@
 extern "C"
 {
 #endif
-//EXPORT uint8_t BaseObject_GetType(alt::IBaseObject* baseObject);
+EXPORT uint8_t BaseObject_GetType(alt::IBaseObject* baseObject);
 #ifdef __cplusplus
 }
 #endif

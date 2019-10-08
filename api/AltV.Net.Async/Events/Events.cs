@@ -11,7 +11,7 @@ namespace AltV.Net.Async.Events
     public delegate Task PlayerConnectAsyncDelegate(IPlayer player, string reason);
 
     public delegate Task PlayerDamageAsyncDelegate(IPlayer player, IEntity attacker, ushort oldHealth, ushort oldArmor,
-        ushort oldMaxHealth, ushort oldMaxArmor,  uint weapon, ushort damage);
+        uint weapon, ushort damage);
 
     public delegate Task PlayerDeadAsyncDelegate(IPlayer player, IEntity killer, uint weapon);
 
@@ -37,10 +37,4 @@ namespace AltV.Net.Async.Events
     public delegate Task MetaDataChangeAsyncDelegate(IEntity entity, string key, object value);
 
     public delegate Task ColShapeAsyncDelegate(IColShape colShape, IEntity targetEntity, bool state);
-    
-    public delegate Task ExplosionAsyncDelegate(IPlayer player, ExplosionType explosionType, Position position,
-        uint explosionFx);
-
-    public delegate Task WeaponDamageAsyncDelegate(IPlayer player, IEntity target, uint weapon, ushort damage,
-        Position shotOffset, BodyPart bodyPart);
 }

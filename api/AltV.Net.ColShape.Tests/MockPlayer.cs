@@ -8,7 +8,6 @@ namespace AltV.Net.ColShape.Tests
     public class MockPlayer : IPlayer
     {
         public IntPtr NativePointer { get; }
-        public IPlayer NetworkOwner { get; }
         public bool Exists { get; }
         public BaseObjectType Type { get; }
         public ushort MaxHealth { get; set; }

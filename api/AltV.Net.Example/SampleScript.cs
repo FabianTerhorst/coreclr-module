@@ -1,18 +1,11 @@
 using System;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
-using AltV.Net.Resources.Chat.Api;
 
 namespace AltV.Net.Example
 {
     public class SampleScript : IScript
     {
-        [Command]
-        public void MyCommand(IPlayer player, string myArgument)
-        {
-            
-        }
-        
         [Event("eventName")]
         public void MyEvent(IPlayer player)
         {

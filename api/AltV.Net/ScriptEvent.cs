@@ -1,4 +1,5 @@
 using System;
+using AltV.Net.FunctionParser;
 
 namespace AltV.Net
 {

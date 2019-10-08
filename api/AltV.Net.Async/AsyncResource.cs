@@ -19,7 +19,7 @@ namespace AltV.Net.Async
 
         public override void OnTick()
         {
-            altVAsync.TickDelegate();
+            altVAsync.Tick();
         }
 
         public override IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool,
@@ -61,7 +61,7 @@ namespace AltV.Net.Async
         }
 
         public override Module GetModule(IServer server, AssemblyLoadContext assemblyLoadContext,
-            INativeResource cSharpNativeResource,
+            CSharpNativeResource cSharpNativeResource,
             IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
@@ -69,12 +69,11 @@ namespace AltV.Net.Async
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
-            IBaseObjectPool<IColShape> colShapePool,
-            INativeResourcePool nativeResourcePool)
+            IBaseObjectPool<IColShape> colShapePool)
         {
             return new AsyncModule(server, assemblyLoadContext, cSharpNativeResource, baseBaseObjectPool,
                 baseEntityPool, playerPool,
-                vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
+                vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool);
         }
     }
 }

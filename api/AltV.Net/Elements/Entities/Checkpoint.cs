@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Native;
@@ -49,19 +48,11 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public override void GetMetaData(string key, ref MValue value)
-        {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Checkpoint.Checkpoint_GetMetaData(NativePointer, stringPtr, ref value);
-            Marshal.FreeHGlobal(stringPtr);
-        }
+        public override void GetMetaData(string key, ref MValue value) =>
+            AltNative.Checkpoint.Checkpoint_GetMetaData(NativePointer, key, ref value);
 
-        public override void SetMetaData(string key, ref MValue value)
-        {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Checkpoint.Checkpoint_SetMetaData(NativePointer, stringPtr, ref value);
-            Marshal.FreeHGlobal(stringPtr);
-        }
+        public override void SetMetaData(string key, ref MValue value) =>
+            AltNative.Checkpoint.Checkpoint_SetMetaData(NativePointer, key, ref value);
 
         public bool IsGlobal
         {

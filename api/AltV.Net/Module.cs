@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
-using System.Threading;
-using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Events;
@@ -15,13 +14,13 @@ using AltV.Net.Native;
 
 namespace AltV.Net
 {
-    public class Module : IDisposable
+    public class Module
     {
         internal readonly IServer Server;
 
         private readonly WeakReference<AssemblyLoadContext> assemblyLoadContext;
 
-        internal readonly INativeResource ModuleResource;
+        internal readonly CSharpNativeResource CSharpNativeResource;
 
         internal readonly IBaseBaseObjectPool BaseBaseObjectPool;
 
@@ -38,8 +37,6 @@ namespace AltV.Net
         internal readonly IBaseObjectPool<IVoiceChannel> VoiceChannelPool;
 
         internal readonly IBaseObjectPool<IColShape> ColShapePool;
-
-        internal readonly INativeResourcePool NativeResourcePool;
 
         internal IEnumerable<Assembly> Assemblies => !assemblyLoadContext.TryGetTarget(out var target)
             ? new List<Assembly>()
@@ -68,26 +65,11 @@ namespace AltV.Net
         internal readonly IEventHandler<PlayerConnectDelegate> PlayerConnectEventHandler =
             new HashSetEventHandler<PlayerConnectDelegate>();
 
-        internal readonly IEventHandler<ResourceEventDelegate> ResourceStartEventHandler =
-            new HashSetEventHandler<ResourceEventDelegate>();
-
-        internal readonly IEventHandler<ResourceEventDelegate> ResourceStopEventHandler =
-            new HashSetEventHandler<ResourceEventDelegate>();
-
-        internal readonly IEventHandler<ResourceEventDelegate> ResourceErrorEventHandler =
-            new HashSetEventHandler<ResourceEventDelegate>();
-
         internal readonly IEventHandler<PlayerDamageDelegate> PlayerDamageEventHandler =
             new HashSetEventHandler<PlayerDamageDelegate>();
 
         internal readonly IEventHandler<PlayerDeadDelegate> PlayerDeadEventHandler =
             new HashSetEventHandler<PlayerDeadDelegate>();
-
-        internal readonly IEventHandler<ExplosionDelegate> ExplosionEventHandler =
-            new HashSetEventHandler<ExplosionDelegate>();
-
-        internal readonly IEventHandler<WeaponDamageDelegate> WeaponDamageEventHandler =
-            new HashSetEventHandler<WeaponDamageDelegate>();
 
         internal readonly IEventHandler<PlayerChangeVehicleSeatDelegate> PlayerChangeVehicleSeatEventHandler =
             new HashSetEventHandler<PlayerChangeVehicleSeatDelegate>();
@@ -133,24 +115,19 @@ namespace AltV.Net
 
         internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
 
-        internal readonly LinkedList<GCHandle> functionExportHandles = new LinkedList<GCHandle>();
-
-        private readonly Thread MainThread;
-
         public Module(IServer server, AssemblyLoadContext assemblyLoadContext,
-            INativeResource moduleResource, IBaseBaseObjectPool baseBaseObjectPool,
+            CSharpNativeResource cSharpNativeResource, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
-            IBaseObjectPool<IColShape> colShapePool,
-            INativeResourcePool nativeResourcePool)
+            IBaseObjectPool<IColShape> colShapePool)
         {
             Alt.Init(this);
             Server = server;
             this.assemblyLoadContext = new WeakReference<AssemblyLoadContext>(assemblyLoadContext);
-            ModuleResource = moduleResource;
+            CSharpNativeResource = cSharpNativeResource;
             BaseBaseObjectPool = baseBaseObjectPool;
             BaseEntityPool = baseEntityPool;
             PlayerPool = playerPool;
@@ -159,43 +136,36 @@ namespace AltV.Net
             CheckpointPool = checkpointPool;
             VoiceChannelPool = voiceChannelPool;
             ColShapePool = colShapePool;
-            NativeResourcePool = nativeResourcePool;
-            MainThread = Thread.CurrentThread;
         }
 
-        public virtual bool IsMainThread()
+        public void LoadAssemblyFromName(AssemblyName assemblyName)
         {
-            return Thread.CurrentThread == MainThread;
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
+            target.LoadFromAssemblyName(assemblyName);
         }
 
-        public Assembly LoadAssemblyFromName(AssemblyName assemblyName)
+        public void LoadAssemblyFromStream(Stream stream)
         {
-            if (!assemblyLoadContext.TryGetTarget(out var target)) return null;
-            return target.LoadFromAssemblyName(assemblyName);
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
+            target.LoadFromStream(stream);
         }
 
-        public Assembly LoadAssemblyFromStream(Stream stream)
+        public void LoadAssemblyFromStream(Stream stream, Stream assemblySymbols)
         {
-            if (!assemblyLoadContext.TryGetTarget(out var target)) return null;
-            return target.LoadFromStream(stream);
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
+            target.LoadFromStream(stream, assemblySymbols);
         }
 
-        public Assembly LoadAssemblyFromStream(Stream stream, Stream assemblySymbols)
+        public void LoadAssemblyFromPath(string path)
         {
-            if (!assemblyLoadContext.TryGetTarget(out var target)) return null;
-            return target.LoadFromStream(stream, assemblySymbols);
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
+            target.LoadFromAssemblyPath(path);
         }
 
-        public Assembly LoadAssemblyFromPath(string path)
+        public void LoadAssemblyFromNativeImagePath(string nativeImagePath, string assemblyPath)
         {
-            if (!assemblyLoadContext.TryGetTarget(out var target)) return null;
-            return target.LoadFromAssemblyPath(path);
-        }
-
-        public Assembly LoadAssemblyFromNativeImagePath(string nativeImagePath, string assemblyPath)
-        {
-            if (!assemblyLoadContext.TryGetTarget(out var target)) return null;
-            return target.LoadFromNativeImagePath(nativeImagePath, assemblyPath);
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return;
+            target.LoadFromNativeImagePath(nativeImagePath, assemblyPath);
         }
 
         public void On(string eventName, Function function)
@@ -367,48 +337,6 @@ namespace AltV.Net
             OnPlayerConnectEvent(player, reason);
         }
 
-        public void OnResourceStart(IntPtr resourcePointer)
-        {
-            if (!NativeResourcePool.GetOrCreate(resourcePointer, out var nativeResource)) return;
-            OnResourceStartEvent(nativeResource);
-        }
-
-        public virtual void OnResourceStartEvent(INativeResource resource)
-        {
-            foreach (var @delegate in ResourceStartEventHandler.GetEvents())
-            {
-                @delegate(resource);
-            }
-        }
-
-        public void OnResourceStop(IntPtr resourcePointer)
-        {
-            if (!NativeResourcePool.GetOrCreate(resourcePointer, out var nativeResource)) return;
-            OnResourceStopEvent(nativeResource);
-        }
-
-        public virtual void OnResourceStopEvent(INativeResource resource)
-        {
-            foreach (var @delegate in ResourceStopEventHandler.GetEvents())
-            {
-                @delegate(resource);
-            }
-        }
-
-        public void OnResourceError(IntPtr resourcePointer)
-        {
-            if (!NativeResourcePool.GetOrCreate(resourcePointer, out var nativeResource)) return;
-            OnResourceErrorEvent(nativeResource);
-        }
-
-        public virtual void OnResourceErrorEvent(INativeResource resource)
-        {
-            foreach (var @delegate in ResourceErrorEventHandler.GetEvents())
-            {
-                @delegate(resource);
-            }
-        }
-
         public virtual void OnPlayerConnectEvent(IPlayer player, string reason)
         {
             foreach (var @delegate in PlayerConnectEventHandler.GetEvents())
@@ -440,6 +368,7 @@ namespace AltV.Net
             }
         }
 
+
         public void OnPlayerDeath(IntPtr playerPointer, IntPtr killerEntityPointer, BaseObjectType killerBaseObjectType,
             uint weapon)
         {
@@ -458,47 +387,6 @@ namespace AltV.Net
             foreach (var @delegate in PlayerDeadEventHandler.GetEvents())
             {
                 @delegate(player, killer, weapon);
-            }
-        }
-
-        public void OnExplosion(IntPtr playerPointer, ExplosionType explosionType, Position position, uint explosionFx)
-        {
-            if (!PlayerPool.GetOrCreate(playerPointer, out var sourcePlayer))
-            {
-                return;
-            }
-
-            OnExplosionEvent(sourcePlayer, explosionType, position, explosionFx);
-        }
-
-        public virtual void OnExplosionEvent(IPlayer sourcePlayer, ExplosionType explosionType, Position position,
-            uint explosionFx)
-        {
-            foreach (var @delegate in ExplosionEventHandler.GetEvents())
-            {
-                @delegate(sourcePlayer, explosionType, position, explosionFx);
-            }
-        }
-
-        public void OnWeaponDamage(IntPtr playerPointer, IntPtr entityPointer, BaseObjectType entityType, uint weapon,
-            ushort damage, Position shotOffset, BodyPart bodyPart)
-        {
-            if (!PlayerPool.GetOrCreate(playerPointer, out var sourcePlayer))
-            {
-                return;
-            }
-
-            BaseEntityPool.GetOrCreate(entityPointer, entityType, out var targetEntity);
-
-            OnWeaponDamageEvent(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
-        }
-
-        public virtual void OnWeaponDamageEvent(IPlayer sourcePlayer, IEntity targetEntity, uint weapon, ushort damage,
-            Position shotOffset, BodyPart bodyPart)
-        {
-            foreach (var @delegate in WeaponDamageEventHandler.GetEvents())
-            {
-                @delegate(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
             }
         }
 
@@ -962,36 +850,13 @@ namespace AltV.Net
         {
         }
 
-        public void OnModulesLoaded(IModule[] modules)
-        {
-            foreach (var module in modules)
-            {
-                OnModuleLoaded(module);
-            }
-        }
-
-        public virtual void OnModuleLoaded(IModule module)
-        {
-            
-        }
-
         public void SetExport(string key, Function function)
         {
             if (function == null) return;
             functionExports[key] = function;
             MValue.Function callDelegate = function.call;
-            functionExportHandles.AddFirst(GCHandle.Alloc(callDelegate));
-            ModuleResource.SetExport(key, MValue.Create(callDelegate));
-        }
-
-        public void Dispose()
-        {
-            foreach (var handle in functionExportHandles)
-            {
-                handle.Free();
-            }
-
-            functionExportHandles.Clear();
+            GCHandle.Alloc(callDelegate);
+            CSharpNativeResource.SetExport(key, MValue.Create(callDelegate));
         }
     }
 }

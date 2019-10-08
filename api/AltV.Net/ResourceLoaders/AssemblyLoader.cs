@@ -36,7 +36,7 @@ namespace AltV.Net.ResourceLoaders
         {
             var typeToFind = typeof(T);
             var typesFound = new LinkedList<T>();
-            foreach (var (_, assembly) in loadedAssemblies)
+            foreach (var (name, assembly) in loadedAssemblies)
             {
                 Type[] types;
                 try

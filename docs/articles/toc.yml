@@ -14,8 +14,6 @@
           href: build-in-events.md
         - name: Custom events
           href: custom-events.md
-    - name: Player communication
-      href: player-communication.md
     - name: Communication between resources
       href: resource-communication.md
     - name: Entity factories

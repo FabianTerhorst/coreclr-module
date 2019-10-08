@@ -14,7 +14,6 @@ namespace AltV.Net.Elements.Entities
 
         public override void CheckIfEntityExists()
         {
-            CheckIfCallIsValid();
             if (Exists)
             {
                 return;

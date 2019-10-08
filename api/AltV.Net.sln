@@ -28,11 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.Mock2.Example", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.Host", "AltV.Net.Host\AltV.Net.Host.csproj", "{E5A0A986-ADFB-4F3B-8FF8-77214A542526}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.Resources.Chat", "AltV.Net.Resources.Chat\AltV.Net.Resources.Chat.csproj", "{EA6CD89D-752F-4BFE-A7ED-AEBF24E97987}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.CodeGen", "AltV.Net.CodeGen\AltV.Net.CodeGen.csproj", "{939CCC42-4A24-41EE-915E-8F00D9ACCF13}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.Resources.Chat.Api", "AltV.Net.Resources.Chat.Api\AltV.Net.Resources.Chat.Api.csproj", "{C4BB33A7-C1E7-4B05-9D08-2D3253F973D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.Chat", "AltV.Net.Chat\AltV.Net.Chat.csproj", "{EA6CD89D-752F-4BFE-A7ED-AEBF24E97987}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,17 +127,5 @@ Global
 		{EA6CD89D-752F-4BFE-A7ED-AEBF24E97987}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EA6CD89D-752F-4BFE-A7ED-AEBF24E97987}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
 		{EA6CD89D-752F-4BFE-A7ED-AEBF24E97987}.Testing|Any CPU.Build.0 = Debug|Any CPU
-		{939CCC42-4A24-41EE-915E-8F00D9ACCF13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{939CCC42-4A24-41EE-915E-8F00D9ACCF13}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{939CCC42-4A24-41EE-915E-8F00D9ACCF13}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{939CCC42-4A24-41EE-915E-8F00D9ACCF13}.Release|Any CPU.Build.0 = Release|Any CPU
-		{939CCC42-4A24-41EE-915E-8F00D9ACCF13}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
-		{939CCC42-4A24-41EE-915E-8F00D9ACCF13}.Testing|Any CPU.Build.0 = Debug|Any CPU
-		{C4BB33A7-C1E7-4B05-9D08-2D3253F973D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4BB33A7-C1E7-4B05-9D08-2D3253F973D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4BB33A7-C1E7-4B05-9D08-2D3253F973D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4BB33A7-C1E7-4B05-9D08-2D3253F973D0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4BB33A7-C1E7-4B05-9D08-2D3253F973D0}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4BB33A7-C1E7-4B05-9D08-2D3253F973D0}.Testing|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal

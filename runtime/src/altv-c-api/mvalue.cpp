@@ -1,12 +1,12 @@
 #include "mvalue.h"
 
-alt::MValueFunction::Invoker* Invoker_Create(CSharpResourceImpl* resource, MValueFunctionCallback val) {
+CustomInvoker* Invoker_Create(CSharpResource* resource, MValueFunctionCallback val) {
     auto invoker = new CustomInvoker(val);
     resource->invokers->Push(invoker);
     return invoker;
 }
 
-void Invoker_Destroy(CSharpResourceImpl* resource, CustomInvoker* val) {
+void Invoker_Destroy(CSharpResource* resource, CustomInvoker* val) {
     auto newInvokers = new alt::Array<CustomInvoker*>();
     for (alt::Size i = 0, length = resource->invokers->GetSize(); i < length; i++) {
         auto invoker = (*resource->invokers)[i];
@@ -116,9 +116,9 @@ void* MValue_GetEntity(alt::MValue &mValue, alt::IBaseObject::Type &type) {
     return nullptr;
 }
 
-MValueFunctionCallback MValue_GetFunction(alt::MValue &mValue) {
-    auto fn = mValue.Get<alt::MValue::Function>();
-    return ((CustomInvoker*) static_cast<alt::MValueFunction::Invoker*>(fn.invoker))->mValueFunctionCallback;
+MValueFunctionCallback MValue_GetFunction(alt::MValueFunction &mValue) {
+    //TODO: find better way, this only works for c# module invokers
+    return ((CustomInvoker*) mValue.GetInvoker())->mValueFunctionCallback;
 }
 
 /*alt::MValueFunction::Invoker* MValue_GetInvoker(alt::MValueFunction &mValue) {
@@ -170,7 +170,7 @@ void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::
     mValue = dict;
 }
 
-void MValue_CreateFunction(alt::MValueFunction::Invoker* val, alt::MValue &mValue) {
+void MValue_CreateFunction(CustomInvoker* val, alt::MValue &mValue) {
     mValue = alt::MValueFunction(val);
 }
 
@@ -182,8 +182,8 @@ void MValue_CallFunction(alt::MValue* mValue, alt::MValue* args, int32_t size, a
     result = ((alt::MValueFunction*) mValue)->GetInvoker()->Invoke(value);
 }
 
-void MValue_CallFunctionValue(alt::MValue* mValue, alt::MValueList &value, alt::MValue &result) {
-    result = ((alt::MValueFunction*) mValue)->GetInvoker()->Invoke(value);
+void MValue_CallFunctionValue(alt::MValueFunction &mValue, alt::MValueList &value, alt::MValue &result) {
+    result = mValue.GetInvoker()->Invoke(value);
 }
 
 void MValue_Dispose(alt::MValue* mValue) {

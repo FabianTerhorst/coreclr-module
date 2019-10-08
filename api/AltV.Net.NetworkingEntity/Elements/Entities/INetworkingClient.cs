@@ -13,7 +13,5 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
         ManagedWebSocket WebSocket { get; set; }
         
         int Dimension { get; set; }
-
-        void OnConnect(ManagedWebSocket managedWebSocket);
     }
 }

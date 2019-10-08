@@ -1,10 +1,6 @@
 using System;
 using System.Collections.Concurrent;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using AltV.Net.Elements.Args;
-using AltV.Net.Exceptions;
 
 namespace AltV.Net.Elements.Entities
 {
@@ -129,21 +125,12 @@ namespace AltV.Net.Elements.Entities
 
         public virtual void CheckIfEntityExists()
         {
-            CheckIfCallIsValid();
             if (Exists)
             {
                 return;
             }
 
             throw new BaseObjectRemovedException(this);
-        }
-
-        [Conditional("DEBUG")]
-        public void CheckIfCallIsValid([CallerMemberName] string callerName = "")
-        {
-            if (Alt.Module.IsMainThread()) return;
-            if (Monitor.IsEntered(this)) return;
-            throw new IllegalThreadException(this, callerName);
         }
 
         public override int GetHashCode()

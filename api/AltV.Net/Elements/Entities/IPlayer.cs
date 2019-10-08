@@ -267,7 +267,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="player">The Player</param>
         /// <param name="weatherType">The weather type</param>
         public static void SetWeather(this IPlayer player, WeatherType weatherType) =>
-            player.SetWeather((uint) weatherType);
+            player.SetWeather((uint)weatherType);
 
         /// <summary>
         /// Adds a weapon component to model
@@ -276,7 +276,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="weaponModel">The Weapon</param>
         /// <param name="weaponComponent">The Component</param>
         public static void AddWeaponComponent(this IPlayer player, WeaponModel weaponModel, uint weaponComponent) =>
-            player.AddWeaponComponent((uint) weaponModel, weaponComponent);
+            player.AddWeaponComponent((uint)weaponModel, weaponComponent);
 
         /// <summary>
         /// Removes a weapon component from model
@@ -285,7 +285,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="weaponModel">The weapon</param>
         /// <param name="weaponComponent">The component to be removed</param>
         public static void RemoveWeaponComponent(this IPlayer player, WeaponModel weaponModel, uint weaponComponent) =>
-            player.RemoveWeaponComponent((uint) weaponModel, weaponComponent);
+            player.RemoveWeaponComponent((uint)weaponModel, weaponComponent);
 
         /// <summary>
         /// Sets the weapon tint to a weapon
@@ -294,24 +294,6 @@ namespace AltV.Net.Elements.Entities
         /// <param name="weaponModel">The weapon</param>
         /// <param name="tintIndex">The tint index</param>
         public static void SetWeaponTintIndex(this IPlayer player, WeaponModel weaponModel, byte tintIndex) =>
-            player.SetWeaponTintIndex((uint) weaponModel, tintIndex);
-
-        /// <summary>
-        /// Gives player a weapon
-        /// </summary>
-        /// <param name="player">The player</param>
-        /// <param name="weaponModel">The weapon</param>
-        /// <param name="ammo">The amount of ammo</param>
-        /// <param name="selectWeapon">If the weapon is selected automatically</param>
-        public static void GiveWeapon(this IPlayer player, WeaponModel weaponModel, int ammo, bool selectWeapon) =>
-            player.GiveWeapon((uint) weaponModel, ammo, selectWeapon);
-
-        /// <summary>
-        /// Removes the specific weapon from the player
-        /// </summary>
-        /// <param name="player">The player</param>
-        /// <param name="weaponModel">The weapon to remove</param>
-        public static void RemoveWeapon(this IPlayer player, WeaponModel weaponModel) =>
-            player.RemoveWeapon((uint) weaponModel);
+            player.SetWeaponTintIndex((uint)weaponModel, tintIndex);
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using System.Security;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -9,35 +8,41 @@ namespace AltV.Net.Native
 {
     internal static partial class AltNative
     {
-        [SuppressUnmanagedCodeSecurity]
         internal static class ColShape
         {
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void ColShape_GetPosition(IntPtr colShape, ref Position position);
+            // Entity
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void ColShape_SetPosition(IntPtr colShape, Position pos);
+            internal static extern void ColShape_GetPosition(IntPtr entityPointer, ref Position position);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern short ColShape_GetDimension(IntPtr colShape);
+            internal static extern void ColShape_SetPosition(IntPtr entityPointer, Position position);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void ColShape_SetDimension(IntPtr colShape, short dimension);
+            internal static extern void ColShape_GetRotation(IntPtr entityPointer, ref Rotation rotation);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void ColShape_GetMetaData(IntPtr colShape, IntPtr key, ref MValue val);
+            internal static extern void ColShape_SetRotation(IntPtr entityPointer, Rotation rotation);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void ColShape_SetMetaData(IntPtr colShape, IntPtr key, ref MValue val);
+            internal static extern short ColShape_GetDimension(IntPtr entityPointer);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern ColShapeType ColShape_GetColShapeType(IntPtr colShape);
+            internal static extern void ColShape_SetDimension(IntPtr entityPointer, short dimension);
+
+            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
+            internal static extern void ColShape_GetMetaData(IntPtr entityPointer, string key, ref MValue value);
+
+            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
+            internal static extern void ColShape_SetMetaData(IntPtr entityPointer, string key, ref MValue value);
+
+            // ColShape
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern ColShapeType ColShape_GetColShapeType(IntPtr colShapePointer);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern bool ColShape_IsPlayerIn(IntPtr colShape, IntPtr player);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern bool ColShape_IsVehicleIn(IntPtr colShape, IntPtr vehicle);
+            internal static extern bool ColShape_IsEntityIn(IntPtr colShapePointer, IntPtr entityPointer);
         }
     }
 }

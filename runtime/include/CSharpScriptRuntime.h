@@ -7,7 +7,7 @@
 #endif
 #include <altv-cpp-api/SDK.h>
 #include <altv-cpp-api/IScriptRuntime.h>
-#include "CSharpResourceImpl.h"
+#include "CSharpResource.h"
 #include "CoreClr.h"
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -15,17 +15,15 @@
 
 class CSharpScriptRuntime : public alt::IScriptRuntime
 {
-    alt::IResource::Impl* CreateImpl(alt::IResource *resource) override;
-    void DestroyImpl(alt::IResource::Impl *impl) override;
+    alt::IResource *CreateResource(alt::IResource::CreationInfo *info) override;
+    void RemoveResource(alt::IResource *resource) override;
 
     void OnTick() override;
 
   public:
-    CSharpScriptRuntime(alt::ICore* server);
+    CSharpScriptRuntime(alt::IServer* server);
 
-    virtual ~CSharpScriptRuntime();
-
-private:
-    alt::ICore *core;
+  private:
+    alt::IServer *server;
     CoreClr* coreClr;
 };

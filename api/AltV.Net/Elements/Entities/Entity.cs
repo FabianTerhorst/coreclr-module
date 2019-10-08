@@ -7,8 +7,6 @@ namespace AltV.Net.Elements.Entities
     public abstract class Entity : WorldObject, IEntity
     {
         public ushort Id { get; }
-        
-        public abstract IPlayer NetworkOwner { get; }
 
         public abstract Rotation Rotation { get; set; }
 
@@ -46,7 +44,6 @@ namespace AltV.Net.Elements.Entities
 
         public override void CheckIfEntityExists()
         {
-            CheckIfCallIsValid();
             if (Exists) return;
 
             throw new EntityRemovedException(this);

@@ -9,9 +9,6 @@ namespace AltV.Net.Async
         private readonly TaskFactory taskFactory;
         private readonly TickScheduler scheduler;
         private readonly Thread mainThread;
-        internal Thread TickThread;
-
-        public Action TickDelegate;
 
         public AltVAsync(ITickSchedulerFactory tickSchedulerFactory)
         {
@@ -26,16 +23,9 @@ namespace AltV.Net.Async
                 CancellationToken.None, TaskCreationOptions.DenyChildAttach,
                 TaskContinuationOptions.None, scheduler);
             AltAsync.Setup(this);
-            TickDelegate = FirstTick;
         }
 
-        private void FirstTick()
-        {
-            TickThread = Thread.CurrentThread;
-            TickDelegate = Tick;
-        }
-
-        private void Tick()
+        internal void Tick()
         {
             scheduler.Tick();
         }

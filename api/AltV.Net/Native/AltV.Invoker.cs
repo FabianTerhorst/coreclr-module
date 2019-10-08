@@ -1,10 +1,17 @@
 using System;
+using AltV.Net.Elements.Args;
 
 //TODO: maybe cache invoker here instead of using cpp?
 namespace AltV.Net.Native
 {
     internal class Invoker : IDisposable
     {
+        public static Invoker Create(MValue.Function function)
+        {
+            return new Invoker(
+                AltNative.MValueCreate.Invoker_Create(Alt.Module.CSharpNativeResource.NativePointer, function));
+        }
+
         internal IntPtr NativePointer { get; }
 
         private Invoker(IntPtr nativePointer)
@@ -14,7 +21,7 @@ namespace AltV.Net.Native
 
         public void Destroy()
         {
-            Alt.Server.Resource.CSharpResourceImpl.DestroyInvoker(NativePointer);
+            AltNative.MValueCreate.Invoker_Destroy(Alt.Module.CSharpNativeResource.NativePointer, NativePointer);
         }
 
         public void Dispose()

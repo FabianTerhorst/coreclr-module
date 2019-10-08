@@ -268,8 +268,7 @@ namespace AltV.Net.Elements.Args
         public static MValue Create(Function function)
         {
             var mValue = Nil;
-            AltNative.MValueCreate.MValue_CreateFunction(Alt.Server.Resource.CSharpResourceImpl.CreateInvoker(function),
-                ref mValue);
+            AltNative.MValueCreate.MValue_CreateFunction(AltNative.MValueCreate.Invoker_Create(Alt.Module.CSharpNativeResource.NativePointer, function), ref mValue);
             return mValue;
         }
 
@@ -379,7 +378,7 @@ namespace AltV.Net.Elements.Args
                     dictionary[key] = value;
                 }
             }
-
+            
             stringViewArray.Dispose();
             valueArray.Dispose();
 
@@ -474,7 +473,7 @@ namespace AltV.Net.Elements.Args
                     {
                         arrayValues[i] = mValueArray.GetNextWithOffset(ref arrayValue).ToObject(baseBaseObjectPool);
                     }
-
+                    
                     mValueArray.Dispose();
 
                     return arrayValues;
@@ -500,7 +499,7 @@ namespace AltV.Net.Elements.Args
                             dictionary[key] = value.ToObject(baseBaseObjectPool);
                         }
                     }
-
+                    
                     stringArray.Dispose();
                     valueArray.Dispose();
 

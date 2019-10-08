@@ -7,7 +7,6 @@
 #endif
 
 #include <altv-cpp-api/SDK.h>
-#include <CSharpResourceImpl.h>
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -19,17 +18,14 @@ extern "C"
 #endif
 EXPORT void Resource_GetExports(alt::IResource* resource, alt::Array<alt::String> &keys, alt::MValue::List &values);
 EXPORT bool Resource_GetExport(alt::IResource* resource, const char* key, alt::MValue &value);
-EXPORT void Resource_SetExport(alt::IResource* resource, const char* key, const alt::MValue& val);
-EXPORT void Resource_SetExports(alt::IResource* resource, alt::MValue* val, const char** keys, int size);
+EXPORT void Resource_SetExport(alt::IResource* resource, const char* key, const alt::MValue* val);
 EXPORT void Resource_GetPath(alt::IResource* resource, const char*&text);
 EXPORT void Resource_GetName(alt::IResource* resource, const char*&text);
 EXPORT void Resource_GetMain(alt::IResource* resource, const char*&text);
 EXPORT void Resource_GetType(alt::IResource* resource, const char*&text);
-EXPORT bool Resource_IsStarted(alt::IResource* resource);
+EXPORT alt::IResource::State Resource_GetState(alt::IResource* resource);
 EXPORT void Resource_Start(alt::IResource* resource);
 EXPORT void Resource_Stop(alt::IResource* resource);
-EXPORT alt::IResource::Impl* Resource_GetImpl(alt::IResource* resource);
-EXPORT CSharpResourceImpl* Resource_GetCSharpImpl(alt::IResource* resource);
 #ifdef __cplusplus
 }
 #endif

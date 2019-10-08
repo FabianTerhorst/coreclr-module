@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Native;
@@ -38,19 +37,11 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public override void GetMetaData(string key, ref MValue value)
-        {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.ColShape.ColShape_GetMetaData(NativePointer, stringPtr, ref value);
-            Marshal.FreeHGlobal(stringPtr);
-        }
+        public override void GetMetaData(string key, ref MValue value) =>
+            AltNative.ColShape.ColShape_GetMetaData(NativePointer, key, ref value);
 
-        public override void SetMetaData(string key, ref MValue value)
-        {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.ColShape.ColShape_SetMetaData(NativePointer, stringPtr, ref value);
-            Marshal.FreeHGlobal(stringPtr);
-        }
+        public override void SetMetaData(string key, ref MValue value) =>
+            AltNative.ColShape.ColShape_SetMetaData(NativePointer, key, ref value);
 
         public ColShapeType ColShapeType
         {
@@ -70,15 +61,7 @@ namespace AltV.Net.Elements.Entities
             CheckIfEntityExists();
             entity.CheckIfEntityExists();
 
-            switch (entity)
-            {
-                case IPlayer player:
-                    return AltNative.ColShape.ColShape_IsPlayerIn(NativePointer, player.NativePointer);
-                case IVehicle vehicle:
-                    return AltNative.ColShape.ColShape_IsVehicleIn(NativePointer, vehicle.NativePointer);
-                default:
-                    return false;
-            }
+            return AltNative.ColShape.ColShape_IsEntityIn(NativePointer, entity.NativePointer);
         }
 
         public void Remove()

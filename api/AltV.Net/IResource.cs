@@ -29,7 +29,6 @@ namespace AltV.Net
         IBaseObjectPool<ICheckpoint> GetCheckpointPool(IBaseObjectFactory<ICheckpoint> checkpointFactory);
         IBaseObjectPool<IVoiceChannel> GetVoiceChannelPool(IBaseObjectFactory<IVoiceChannel> voiceChannelFactory);
         IBaseObjectPool<IColShape> GetColShapePool(IBaseObjectFactory<IColShape> colShapeFactory);
-        INativeResourcePool GetNativeResourcePool(INativeResourceFactory nativeResourceFactory);
 
         IEntityFactory<IPlayer> GetPlayerFactory();
         IEntityFactory<IVehicle> GetVehicleFactory();
@@ -37,11 +36,10 @@ namespace AltV.Net
         IBaseObjectFactory<ICheckpoint> GetCheckpointFactory();
         IBaseObjectFactory<IVoiceChannel> GetVoiceChannelFactory();
         IBaseObjectFactory<IColShape> GetColShapeFactory();
-        INativeResourceFactory GetNativeResourceFactory();
 
         Module GetModule(IServer server,
             AssemblyLoadContext assemblyLoadContext,
-            INativeResource cSharpNativeResource,
+            CSharpNativeResource cSharpNativeResource,
             IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
@@ -49,7 +47,6 @@ namespace AltV.Net
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
-            IBaseObjectPool<IColShape> colShapePool,
-            INativeResourcePool resourcePool);
+            IBaseObjectPool<IColShape> colShapePool);
     }
 }

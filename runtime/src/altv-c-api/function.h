@@ -16,7 +16,7 @@
 extern "C"
 {
 #endif
-//EXPORT alt::MValue::Function MValueFunction_Create(void* (* fct)());
+EXPORT alt::MValue::Function MValueFunction_Create(void* (* fct)());
 #ifdef __cplusplus
 }
 #endif

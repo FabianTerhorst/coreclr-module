@@ -8,7 +8,7 @@ namespace AltV.Net
     {
         public static void RegisterEvents(object target)
         {
-            ModuleScriptMethodIndexer.Index(target, new[] {typeof(Event), typeof(ScriptEvent)},
+            MethodIndexer.Index(target, new[] {typeof(Event), typeof(ScriptEvent)},
                 (baseEvent, eventMethod, eventMethodDelegate) =>
                 {
                     switch (baseEvent)
@@ -22,7 +22,7 @@ namespace AltV.Net
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[] {typeof(ICheckpoint), typeof(IEntity), typeof(bool)});
                                     if (scriptFunction == null) return;
-                                    OnCheckpoint += (checkpoint, entity, state) =>
+                                    Alt.OnCheckpoint += (checkpoint, entity, state) =>
                                     {
                                         scriptFunction.Set(checkpoint);
                                         scriptFunction.Set(entity);
@@ -34,7 +34,7 @@ namespace AltV.Net
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[] {typeof(IPlayer), typeof(string)});
                                     if (scriptFunction == null) return;
-                                    OnPlayerConnect += (player, reason) =>
+                                    Alt.OnPlayerConnect += (player, reason) =>
                                     {
                                         scriptFunction.Set(player);
                                         scriptFunction.Set(reason);
@@ -45,7 +45,7 @@ namespace AltV.Net
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[] {typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(ushort)});
                                     if (scriptFunction == null) return;
-                                    OnPlayerDamage += (player, attacker, weapon, damage) =>
+                                    Alt.OnPlayerDamage += (player, attacker, weapon, damage) =>
                                     {
                                         scriptFunction.Set(player);
                                         scriptFunction.Set(attacker);
@@ -58,7 +58,7 @@ namespace AltV.Net
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[] {typeof(IPlayer), typeof(IEntity), typeof(uint)});
                                     if (scriptFunction == null) return;
-                                    OnPlayerDead += (player, attacker, weapon) =>
+                                    Alt.OnPlayerDead += (player, attacker, weapon) =>
                                     {
                                         scriptFunction.Set(player);
                                         scriptFunction.Set(attacker);
@@ -70,7 +70,7 @@ namespace AltV.Net
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[] {typeof(IPlayer), typeof(string)});
                                     if (scriptFunction == null) return;
-                                    OnPlayerDisconnect += (player, reason) =>
+                                    Alt.OnPlayerDisconnect += (player, reason) =>
                                     {
                                         scriptFunction.Set(player);
                                         scriptFunction.Set(reason);
@@ -81,7 +81,7 @@ namespace AltV.Net
                                     scriptFunction =
                                         ScriptFunction.Create(eventMethodDelegate, new[] {typeof(IPlayer)});
                                     if (scriptFunction == null) return;
-                                    OnPlayerRemove += player =>
+                                    Alt.OnPlayerRemove += player =>
                                     {
                                         scriptFunction.Set(player);
                                         scriptFunction.Call();
@@ -91,7 +91,7 @@ namespace AltV.Net
                                     scriptFunction =
                                         ScriptFunction.Create(eventMethodDelegate, new[] {typeof(IVehicle)});
                                     if (scriptFunction == null) return;
-                                    OnVehicleRemove += vehicle =>
+                                    Alt.OnVehicleRemove += vehicle =>
                                     {
                                         scriptFunction.Set(vehicle);
                                         scriptFunction.Call();
@@ -102,7 +102,7 @@ namespace AltV.Net
                                         ScriptFunction.Create(eventMethodDelegate,
                                             new[] {typeof(IVehicle), typeof(IPlayer), typeof(byte), typeof(byte)});
                                     if (scriptFunction == null) return;
-                                    OnPlayerChangeVehicleSeat += (vehicle, player, seat, newSeat) =>
+                                    Alt.OnPlayerChangeVehicleSeat += (vehicle, player, seat, newSeat) =>
                                     {
                                         scriptFunction.Set(vehicle);
                                         scriptFunction.Set(player);
@@ -116,7 +116,7 @@ namespace AltV.Net
                                         ScriptFunction.Create(eventMethodDelegate,
                                             new[] {typeof(IVehicle), typeof(IPlayer), typeof(byte)});
                                     if (scriptFunction == null) return;
-                                    OnPlayerEnterVehicle += (vehicle, player, seat) =>
+                                    Alt.OnPlayerEnterVehicle += (vehicle, player, seat) =>
                                     {
                                         scriptFunction.Set(vehicle);
                                         scriptFunction.Set(player);
@@ -129,7 +129,7 @@ namespace AltV.Net
                                         ScriptFunction.Create(eventMethodDelegate,
                                             new[] {typeof(IVehicle), typeof(IPlayer), typeof(byte)});
                                     if (scriptFunction == null) return;
-                                    OnPlayerLeaveVehicle += (vehicle, player, seat) =>
+                                    Alt.OnPlayerLeaveVehicle += (vehicle, player, seat) =>
                                     {
                                         scriptFunction.Set(vehicle);
                                         scriptFunction.Set(player);
@@ -142,7 +142,7 @@ namespace AltV.Net
                                         ScriptFunction.Create(eventMethodDelegate,
                                             new[] {typeof(IPlayer), typeof(string), typeof(object[])});
                                     if (scriptFunction == null) return;
-                                    OnPlayerEvent += (player, name, args) =>
+                                    Alt.OnPlayerEvent += (player, name, args) =>
                                     {
                                         scriptFunction.Set(player);
                                         scriptFunction.Set(name);
@@ -155,7 +155,7 @@ namespace AltV.Net
                                         ScriptFunction.Create(eventMethodDelegate,
                                             new[] {typeof(IPlayer), typeof(string), typeof(MValueArray)});
                                     if (scriptFunction == null) return;
-                                    OnPlayerCustomEvent += (IPlayer player, string name, ref MValueArray array) =>
+                                    Alt.OnPlayerCustomEvent += (IPlayer player, string name, ref MValueArray array) =>
                                     {
                                         scriptFunction.Set(player);
                                         scriptFunction.Set(name);
@@ -167,7 +167,7 @@ namespace AltV.Net
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[] {typeof(string), typeof(object[])});
                                     if (scriptFunction == null) return;
-                                    OnServerEvent += (serverEventName, serverEventArgs) =>
+                                    Alt.OnServerEvent += (serverEventName, serverEventArgs) =>
                                     {
                                         scriptFunction.Set(serverEventName);
                                         scriptFunction.Set(serverEventArgs);
@@ -178,7 +178,7 @@ namespace AltV.Net
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[] {typeof(string), typeof(MValueArray)});
                                     if (scriptFunction == null) return;
-                                    OnServerCustomEvent += (string name, ref MValueArray array) =>
+                                    Alt.OnServerCustomEvent += (string name, ref MValueArray array) =>
                                     {
                                         scriptFunction.Set(name);
                                         scriptFunction.Set(array);
@@ -189,7 +189,7 @@ namespace AltV.Net
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[] {typeof(string), typeof(string[])});
                                     if (scriptFunction == null) return;
-                                    OnConsoleCommand += (name, args) =>
+                                    Alt.OnConsoleCommand += (name, args) =>
                                     {
                                         scriptFunction.Set(name);
                                         scriptFunction.Set(args);
@@ -200,7 +200,7 @@ namespace AltV.Net
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[] {typeof(IEntity), typeof(string), typeof(object)});
                                     if (scriptFunction == null) return;
-                                    OnMetaDataChange += (entity, key, value) =>
+                                    Alt.OnMetaDataChange += (entity, key, value) =>
                                     {
                                         scriptFunction.Set(entity);
                                         scriptFunction.Set(key);
@@ -212,7 +212,7 @@ namespace AltV.Net
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[] {typeof(IEntity), typeof(string), typeof(object)});
                                     if (scriptFunction == null) return;
-                                    OnSyncedMetaDataChange += (entity, key, value) =>
+                                    Alt.OnSyncedMetaDataChange += (entity, key, value) =>
                                     {
                                         scriptFunction.Set(entity);
                                         scriptFunction.Set(key);
@@ -224,7 +224,7 @@ namespace AltV.Net
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[] {typeof(IColShape), typeof(IEntity), typeof(bool)});
                                     if (scriptFunction == null) return;
-                                    OnColShape += (shape, entity, state) =>
+                                    Alt.OnColShape += (shape, entity, state) =>
                                     {
                                         scriptFunction.Set(shape);
                                         scriptFunction.Set(entity);

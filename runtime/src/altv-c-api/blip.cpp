@@ -17,7 +17,7 @@ int16_t Blip_GetDimension(alt::IBlip* blip) {
     return blip->GetDimension();
 }
 
-void Blip_SetDimension(alt::IBlip* blip, int16_t dimension) {
+void Blip_SetDimension(alt::IBlip* blip, uint16_t dimension) {
     blip->SetDimension(dimension);
 }
 

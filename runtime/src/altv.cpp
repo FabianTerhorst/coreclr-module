@@ -12,12 +12,12 @@
 #pragma clang diagnostic pop
 #endif
 
-EXPORT bool altMain(alt::ICore* server) {
+EXPORT bool altMain(alt::IServer* server) {
     auto* cSharpScriptRuntime = new CSharpScriptRuntime(server);
     server->RegisterScriptRuntime("csharp", cSharpScriptRuntime);
     return true;
 }
 
 EXPORT uint32_t GetSDKVersion() {
-    return alt::ICore::SDK_VERSION;
+    return ALTV_SDK_VERSION;
 }

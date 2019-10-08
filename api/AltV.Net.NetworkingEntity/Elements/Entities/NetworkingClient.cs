@@ -19,21 +19,12 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
 
         public int Dimension
         {
-            get
-            {
-                lock (this)
-                {
-                    return dimension;
-                }
-            }
+            get => dimension;
             set
             {
-                lock (this)
-                {
-                    if (dimension == value) return;
-                    entityStreamer.UpdateClientDimension(this, value);
-                    dimension = value;
-                }
+                if (dimension == value) return;
+                entityStreamer.UpdateClientDimension(this, value);
+                dimension = value;
             }
         }
 
@@ -42,18 +33,6 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
             Token = token;
             Exists = true;
             this.entityStreamer = entityStreamer;
-        }
-
-        public void OnConnect(ManagedWebSocket managedWebSocket)
-        {
-            lock (this)
-            {
-                WebSocket = managedWebSocket;
-                if (dimension != 0)
-                {
-                    entityStreamer.UpdateClientDimension(this, dimension);
-                }
-            }
         }
     }
 }

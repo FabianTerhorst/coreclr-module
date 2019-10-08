@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using System.Security;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 
@@ -8,50 +7,53 @@ namespace AltV.Net.Native
 {
     internal static partial class AltNative
     {
-        [SuppressUnmanagedCodeSecurity]
         internal static class Checkpoint
         {
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Checkpoint_GetPosition(IntPtr checkpoint, ref Position position);
+            // Entity
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Checkpoint_SetPosition(IntPtr checkpoint, Position pos);
+            internal static extern void Checkpoint_GetPosition(IntPtr entityPointer, ref Position position);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern short Checkpoint_GetDimension(IntPtr checkpoint);
+            internal static extern void Checkpoint_SetPosition(IntPtr entityPointer, Position position);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Checkpoint_SetDimension(IntPtr checkpoint, short dimension);
+            internal static extern short Checkpoint_GetDimension(IntPtr entityPointer);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Checkpoint_GetMetaData(IntPtr checkpoint, IntPtr key, ref MValue val);
+            internal static extern void Checkpoint_SetDimension(IntPtr entityPointer, short dimension);
+
+            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
+            internal static extern void Checkpoint_GetMetaData(IntPtr entityPointer, string key, ref MValue value);
+
+            [DllImport(DllName, CharSet = CharSet.Ansi, CallingConvention = NativeCallingConvention)]
+            internal static extern void Checkpoint_SetMetaData(IntPtr entityPointer, string key, ref MValue value);
+
+            // Checkpoint
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Checkpoint_IsGlobal(IntPtr checkpointPointer);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Checkpoint_SetMetaData(IntPtr checkpoint, IntPtr key, ref MValue val);
-
+            internal static extern byte Checkpoint_GetCheckpointType(IntPtr checkpointPointer);
+            
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Checkpoint_IsGlobal(IntPtr checkpoint);
-
+            internal static extern float Checkpoint_GetHeight(IntPtr checkpointPointer);
+            
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Checkpoint_GetCheckpointType(IntPtr checkpoint);
-
+            internal static extern float Checkpoint_GetRadius(IntPtr checkpointPointer);
+            
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern float Checkpoint_GetHeight(IntPtr checkpoint);
-
+            internal static extern void Checkpoint_GetColor(IntPtr checkpointPointer, ref Rgba color);
+            
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern float Checkpoint_GetRadius(IntPtr checkpoint);
-
+            internal static extern bool Checkpoint_IsPlayerIn(IntPtr checkpointPointer, IntPtr playerPointer);
+            
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Checkpoint_GetColor(IntPtr checkpoint, ref Rgba color);
-
+            internal static extern bool Checkpoint_IsVehicleIn(IntPtr checkpointPointer, IntPtr vehiclePointer);
+            
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Checkpoint_IsPlayerIn(IntPtr checkpoint, IntPtr player);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Checkpoint_IsVehicleIn(IntPtr checkpoint, IntPtr vehicle);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Checkpoint_GetTarget(IntPtr checkpoint);
+            internal static extern IntPtr Checkpoint_GetTarget(IntPtr checkpointPointer);
         }
     }
 }

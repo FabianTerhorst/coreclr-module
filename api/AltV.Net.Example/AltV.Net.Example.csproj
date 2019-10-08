@@ -23,12 +23,16 @@
 
     <ItemGroup>
       <ProjectReference Include="..\AltV.Net.ColShape\AltV.Net.ColShape.csproj" />
-      <ProjectReference Include="..\AltV.Net.Resources.Chat.Api\AltV.Net.Resources.Chat.Api.csproj" />
       <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\AltV.Net.Async\AltV.Net.Async.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MySql.Data" Version="8.0.17" />
+      <PackageReference Include="System.Data.SqlClient" Version="4.7.0-preview8.19405.3" />
     </ItemGroup>
 
     <Target Name="CopyFiles" AfterTargets="build">

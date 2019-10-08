@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Events;
 
 namespace AltV.Net
 {

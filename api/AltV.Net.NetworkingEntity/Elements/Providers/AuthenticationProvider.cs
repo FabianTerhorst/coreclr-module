@@ -63,68 +63,45 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
                 {
                     while (playerEventsReader.TryRead(out var playerEvent))
                     {
-                        try
+                        var player = playerEvent.Player;
+                        if (playerEvent.Connected)
                         {
-                            var player = playerEvent.Player;
-                            if (playerEvent.Connected)
+                            var client = AltNetworking.CreateClient();
+                            lock (client)
                             {
-                                var client = AltNetworking.CreateClient();
-                                lock (client)
+                                if (!client.Exists) continue;
+                                playerTokens[client.Token] = player;
+                                playerTokenAccess[player] = client.Token;
+                                player.SetNetworkingClient(client);
+
+                                lock (player)
                                 {
-                                    if (!client.Exists)
+                                    if (player.Exists)
                                     {
-                                        AltNetworking.Module.ClientPool.Remove(client.Token);
-                                        continue;
+                                        player.Emit("streamingToken", url, client.Token);
                                     }
-
-                                    playerTokens[client.Token] = player;
-                                    playerTokenAccess[player] = client.Token;
-                                    player.SetNetworkingClient(client);
-
-                                    lock (player)
-                                    {
-                                        if (player.Exists)
-                                        {
-                                            player.Emit("streamingToken", url, client.Token);
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                player.RemoveNetworkingClient();
-                                if (playerTokenAccess.Remove(player, out var token))
-                                {
-                                    playerTokens.Remove(token);
-                                }
-                                else
-                                {
-                                    continue;
-                                }
-
-                                if (!AltNetworking.Module.ClientPool.Remove(token, out var client)) continue;
-                                ManagedWebSocket clientWebSocket;
-                                lock (client)
-                                {
-                                    clientWebSocket = client.WebSocket;
-                                }
-
-                                if (clientWebSocket == null) continue;
-                                try
-                                {
-                                    await webSocket.CloseWebSocketAsync(clientWebSocket,
-                                        WebSocketCloseStatus.NormalClosure,
-                                        "disconnected");
-                                }
-                                catch (Exception exception)
-                                {
-                                    Console.WriteLine(exception);
                                 }
                             }
                         }
-                        catch (Exception exception)
+                        else
                         {
-                            Console.WriteLine(exception);
+                            player.RemoveNetworkingClient();
+                            if (playerTokenAccess.Remove(player, out var token))
+                            {
+                                playerTokens.Remove(token);
+                            }
+                            else
+                            {
+                                continue;
+                            }
+
+                            if (!AltNetworking.Module.ClientPool.Remove(token, out var client)) continue;
+                            var clientWebSocket = client.WebSocket;
+                            if (clientWebSocket != null)
+                            {
+                                await webSocket.CloseWebSocketAsync(clientWebSocket, WebSocketCloseStatus.NormalClosure,
+                                    "disconnected");
+                            }
                         }
                     }
                 }
@@ -143,7 +120,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
             out INetworkingClient client)
         {
             if (!networkingClientPool.TryGet(token, out client)) return Task.FromResult(false);
-            //TODO: check if already has websocket ect. client.WebSocket
+            client.WebSocket = webSocket; //TODO: check if already has websocket ect.
             webSocket.Extra[ClientExtra] = client;
             return Task.FromResult(true);
         }
@@ -157,12 +134,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Providers
 
         public void OnConnectionBroken(ManagedWebSocket webSocket)
         {
-            if (!webSocket.Extra.Remove(ClientExtra, out var playerObject) ||
-                !(playerObject is INetworkingClient client)) return;
-            lock (client)
-            {
-                client.WebSocket = null;
-            }
+            webSocket.Extra.Remove(ClientExtra);
         }
 
         public void OnConnectionEstablished(ManagedWebSocket webSocket)

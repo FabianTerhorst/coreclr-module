@@ -24,11 +24,7 @@ namespace AltV.Net.FunctionParser
 
             var mValueArgs = MValue.Create(mValues);
             function(ref mValueArgs, ref result);
-            mValueArgs.Dispose();
-            MValue.Dispose(mValues);
-            var resultObj = result.ToObject(Alt.Module.BaseBaseObjectPool);
-            result.Dispose();
-            return resultObj;
+            return result.ToObject(Alt.Module.BaseBaseObjectPool);
         }
     }
 }
