@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-
-[assembly: InternalsVisibleTo("AltV.Net.Async")]
 
 namespace AltV.Net.FunctionParser
 {
-    internal static class MethodIndexer
+    public static class ModuleScriptMethodIndexer
     {
-        internal static void Index(object target, Type[] customAttributes, Action<object, MethodInfo, Delegate> found)
+        public static void Index(object target, Type[] customAttributes, Action<object, MethodInfo, Delegate> found)
         {
             var eventMethods = target.GetType().GetMethods();
             var attributeMethods = new LinkedList<(MethodInfo, object[])>();

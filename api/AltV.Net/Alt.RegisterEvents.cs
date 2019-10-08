@@ -8,7 +8,7 @@ namespace AltV.Net
     {
         public static void RegisterEvents(object target)
         {
-            MethodIndexer.Index(target, new[] {typeof(Event), typeof(ScriptEvent)},
+            ModuleScriptMethodIndexer.Index(target, new[] {typeof(Event), typeof(ScriptEvent)},
                 (baseEvent, eventMethod, eventMethodDelegate) =>
                 {
                     switch (baseEvent)
