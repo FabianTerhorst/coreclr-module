@@ -157,7 +157,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             } else {
                 OnPlayerDeathDelegate(((alt::CPlayerDeathEvent*) (ev))->GetTarget(),
                                       nullptr,
-                                      nullptr,
+                                      (alt::IBaseObject::Type) 0,
                                       ((alt::CPlayerDeathEvent*) (ev))->GetWeapon());
             }
         }
