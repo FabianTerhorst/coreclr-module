@@ -104,7 +104,7 @@ export function createNoneDefaultWithWebView(webview) {
 }
 
 export function createWebView() {
-    return new WebView("http://resources/networking-entity/index.html");
+    return new WebView("http://resource/index.html");
 }
 
 export function init(url, token) {

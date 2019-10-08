@@ -52,6 +52,7 @@ namespace AltV.Net
             //TODO: add parameter type attribute to annotate object[] with 
             var parsers = new FunctionMValueParser[genericArguments.Length];
             var objectParsers = new FunctionObjectParser[genericArguments.Length];
+            var stringParsers = new FunctionStringParser[genericArguments.Length];
             var typeInfos = new FunctionTypeInfo[genericArguments.Length];
             var requiredArgsCount = 0;
             for (int i = 0, length = genericArguments.Length; i < length; i++)
@@ -70,71 +71,85 @@ namespace AltV.Net
                     //TODO: use MValue.ToObject here 
                     parsers[i] = FunctionMValueParsers.ParseObject;
                     objectParsers[i] = FunctionObjectParsers.ParseObject;
+                    stringParsers[i] = FunctionStringParsers.ParseObject;
                 }
                 else if (arg == FunctionTypes.Bool)
                 {
                     parsers[i] = FunctionMValueParsers.ParseBool;
                     objectParsers[i] = FunctionObjectParsers.ParseBool;
+                    stringParsers[i] = FunctionStringParsers.ParseBool;
                 }
                 else if (arg == FunctionTypes.Int)
                 {
                     parsers[i] = FunctionMValueParsers.ParseInt;
                     objectParsers[i] = FunctionObjectParsers.ParseInt;
+                    stringParsers[i] = FunctionStringParsers.ParseInt;
                 }
                 else if (arg == FunctionTypes.Long)
                 {
                     parsers[i] = FunctionMValueParsers.ParseLong;
                     objectParsers[i] = FunctionObjectParsers.ParseLong;
+                    stringParsers[i] = FunctionStringParsers.ParseLong;
                 }
                 else if (arg == FunctionTypes.UInt)
                 {
                     parsers[i] = FunctionMValueParsers.ParseUInt;
                     objectParsers[i] = FunctionObjectParsers.ParseUInt;
+                    stringParsers[i] = FunctionStringParsers.ParseUInt;
                 }
                 else if (arg == FunctionTypes.ULong)
                 {
                     parsers[i] = FunctionMValueParsers.ParseULong;
                     objectParsers[i] = FunctionObjectParsers.ParseULong;
+                    stringParsers[i] = FunctionStringParsers.ParseULong;
                 }
                 else if (arg == FunctionTypes.Float)
                 {
                     parsers[i] = FunctionMValueParsers.ParseFloat;
                     objectParsers[i] = FunctionObjectParsers.ParseFloat;
+                    stringParsers[i] = FunctionStringParsers.ParseFloat;
                 }
                 else if (arg == FunctionTypes.Double)
                 {
                     parsers[i] = FunctionMValueParsers.ParseDouble;
                     objectParsers[i] = FunctionObjectParsers.ParseDouble;
+                    stringParsers[i] = FunctionStringParsers.ParseDouble;
                 }
                 else if (arg == FunctionTypes.String)
                 {
                     parsers[i] = FunctionMValueParsers.ParseString;
                     objectParsers[i] = FunctionObjectParsers.ParseString;
+                    stringParsers[i] = FunctionStringParsers.ParseString;
                 }
                 else if (arg.BaseType == FunctionTypes.Array)
                 {
                     parsers[i] = FunctionMValueParsers.ParseArray;
                     objectParsers[i] = FunctionObjectParsers.ParseArray;
+                    stringParsers[i] = FunctionStringParsers.ParseArray;
                 }
                 else if (typeInfo.IsEntity)
                 {
                     parsers[i] = FunctionMValueParsers.ParseEntity;
                     objectParsers[i] = FunctionObjectParsers.ParseEntity;
+                    stringParsers[i] = FunctionStringParsers.ParseEntity;
                 }
                 else if (typeInfo.IsDict)
                 {
                     parsers[i] = FunctionMValueParsers.ParseDictionary;
                     objectParsers[i] = FunctionObjectParsers.ParseDictionary;
+                    stringParsers[i] = FunctionStringParsers.ParseDictionary;
                 }
                 else if (typeInfo.IsMValueConvertible)
                 {
                     parsers[i] = FunctionMValueParsers.ParseConvertible;
                     objectParsers[i] = FunctionObjectParsers.ParseConvertible;
+                    stringParsers[i] = FunctionStringParsers.ParseConvertible;
                 }
                 else if (arg == FunctionTypes.FunctionType)
                 {
                     parsers[i] = FunctionMValueParsers.ParseFunction;
                     objectParsers[i] = FunctionObjectParsers.ParseFunction;
+                    stringParsers[i] = FunctionStringParsers.ParseFunction;
                 }
                 else if (typeInfo.IsEnum)
                 {
@@ -176,7 +191,7 @@ namespace AltV.Net
                 }
             }
 
-            return new Function(func, returnType, genericArguments, parsers, objectParsers, typeInfos,
+            return new Function(func, returnType, genericArguments, parsers, objectParsers, stringParsers, typeInfos,
                 callArgsLengthCheck, callArgsLengthCheckPlayer, requiredArgsCount);
         }
 
@@ -217,6 +232,8 @@ namespace AltV.Net
 
         private readonly FunctionObjectParser[] objectParsers;
 
+        private readonly FunctionStringParser[] stringParsers;
+
         private readonly FunctionTypeInfo[] typeInfos;
 
         private readonly CallArgsLengthCheck callArgsLengthCheck;
@@ -226,7 +243,7 @@ namespace AltV.Net
         private readonly int requiredArgsCount;
 
         private Function(Delegate @delegate, Type returnType, Type[] args, FunctionMValueParser[] parsers,
-            FunctionObjectParser[] objectParsers, FunctionTypeInfo[] typeInfos, CallArgsLengthCheck callArgsLengthCheck,
+            FunctionObjectParser[] objectParsers, FunctionStringParser[] stringParsers, FunctionTypeInfo[] typeInfos, CallArgsLengthCheck callArgsLengthCheck,
             CallArgsLengthCheckPlayer callArgsLengthCheckPlayer, int requiredArgsCount)
         {
             this.@delegate = @delegate;
@@ -234,6 +251,7 @@ namespace AltV.Net
             this.args = args;
             this.parsers = parsers;
             this.objectParsers = objectParsers;
+            this.stringParsers = stringParsers;
             this.typeInfos = typeInfos;
             this.callArgsLengthCheck = callArgsLengthCheck;
             this.callArgsLengthCheckPlayer = callArgsLengthCheckPlayer;
@@ -347,6 +365,21 @@ namespace AltV.Net
 
             return invokeValues;
         }
+        
+        public object[] CalculateStringInvokeValues(string[] values, IPlayer player)
+        {
+            var length = values.Length;
+            if (length + 1 != args.Length) return null;
+            if (!typeInfos[0].IsPlayer) return null;
+            var invokeValues = new object[length + 1];
+            invokeValues[0] = player;
+            for (var i = 0; i < length; i++)
+            {
+                invokeValues[i + 1] = stringParsers[i + 1](values[i], args[i + 1], typeInfos[i + 1]);
+            }
+
+            return invokeValues;
+        }
 
         internal MValue Invoke(object[] invokeValues)
         {
@@ -369,7 +402,7 @@ namespace AltV.Net
             return MValue.CreateFromObject(result);
         }
 
-        internal void InvokeNoResult(object[] invokeValues)
+        public void InvokeNoResult(object[] invokeValues)
         {
             @delegate.DynamicInvoke(invokeValues);
         }

@@ -1,10 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using AltV.Net.Elements.Entities;
 
-namespace AltV.Net.Example
+namespace AltV.Net.Resources.Chat.Api
 {
-    public class Chat
+    internal class Chat : IDisposable
     {
         private readonly Action<string> broadcast;
 
@@ -13,6 +14,8 @@ namespace AltV.Net.Example
         private readonly Action<string, Function> registerCmd;
 
         private readonly LinkedList<Function> functions = new LinkedList<Function>();
+
+        private readonly LinkedList<GCHandle> handles = new LinkedList<GCHandle>();
 
         public Chat()
         {
@@ -31,11 +34,22 @@ namespace AltV.Net.Example
             send?.Invoke(player, message);
         }
 
-        public void RegisterCommand(string command, Action<IPlayer, string, string[]> callback)
+        public void RegisterCommand(string command, Action<IPlayer, string[]> callback)
         {
+            handles.AddFirst(GCHandle.Alloc(callback));
             var function = Function.Create(callback);
             functions.AddFirst(function);
             registerCmd?.Invoke(command, function);
+        }
+
+        public void Dispose()
+        {
+            foreach (var handle in handles)
+            {
+                handle.Free();
+            }
+
+            handles.Clear();
         }
     }
 }

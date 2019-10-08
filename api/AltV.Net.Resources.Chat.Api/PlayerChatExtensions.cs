@@ -1,12 +1,12 @@
 using AltV.Net.Elements.Entities;
 
-namespace AltV.Net.Chat
+namespace AltV.Net.Resources.Chat.Api
 {
-    public static class PlayerChat
+    public static class PlayerChatExtensions
     {
         public static void SendChatMessage(this IPlayer player, string message)
         {
-            player.Emit("chatmessage", null, message);
+            AltChat.Chat.Send(player, message);
         }
     }
 }

@@ -28,7 +28,7 @@ RUN cd AltV.Net.Example && dotnet publish -c Release
 
 RUN cd AltV.Net.Host && dotnet publish -c Release
 
-RUN cd AltV.Net.Chat && dotnet publish -c Release
+RUN cd AltV.Net.Resources.Chat && dotnet publish -c Release
 
 #FROM debian:stable
 FROM ubuntu:18.04
@@ -64,16 +64,16 @@ COPY altv-server .
 COPY server.cfg .
 COPY start.sh .
 COPY startgdb.sh .
-COPY libnode.so.64 .
+COPY libnode.so.72 .
 COPY libnode-module.so modules/
 
 COPY resource.cfg resources/example/
-COPY --from=dotnet /altv-example/AltV.Net.Chat/resource.cfg resources/chat/
+COPY --from=dotnet /altv-example/AltV.Net.Resources.Chat/resource.cfg resources/chat/
 COPY data/ ./data
 #COPY chat/ resources/chat
 COPY --from=clang /runtime/build/src/libcsharp-module.so modules/
 COPY --from=dotnet /altv-example/AltV.Net.Example/bin/Release/netcoreapp3.0/publish resources/example/
-COPY --from=dotnet /altv-example/AltV.Net.Chat/bin/Release/netcoreapp3.0/publish resources/chat/
+COPY --from=dotnet /altv-example/AltV.Net.Resources.Chat/bin/Release/netcoreapp3.0/publish resources/chat/
 #COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.0/publish .
 COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.dll .
 COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.runtimeconfig.json .

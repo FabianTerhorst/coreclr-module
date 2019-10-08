@@ -3,7 +3,7 @@ using System.Linq;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
-namespace AltV.Net.Chat
+namespace AltV.Net.Resources.Chat
 {
     public class Chat : Resource
     {
