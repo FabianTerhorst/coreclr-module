@@ -6,6 +6,10 @@ uint16_t Player_GetID(alt::IPlayer* player) {
     return player->GetID();
 }
 
+alt::IPlayer* Player_GetNetworkOwner(alt::IPlayer* player) {
+    return player->GetNetworkOwner();
+}
+
 uint32_t Player_GetModel(alt::IPlayer* player) {
     return player->GetModel();
 }
@@ -40,7 +44,7 @@ int16_t Player_GetDimension(alt::IPlayer* player) {
     return player->GetDimension();
 }
 
-void Player_SetDimension(alt::IPlayer* player, uint16_t dimension) {
+void Player_SetDimension(alt::IPlayer* player, int16_t dimension) {
     player->SetDimension(dimension);
 }
 

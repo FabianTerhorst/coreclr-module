@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using AltV.Net.Data;
-using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
+using AltV.Net.Elements.Entities;
 
 namespace AltV.Net
 {
@@ -12,7 +12,7 @@ namespace AltV.Net
 
         string RootDirectory { get; }
         
-        CSharpNativeResource Resource { get; }
+        INativeResource Resource { get; }
 
         void LogInfo(string message);
 
@@ -96,9 +96,7 @@ namespace AltV.Net
 
         void RemoveColShape(IColShape colShape);
 
-        ServerNativeResource GetResource(string name);
-
-        CSharpNativeResource GetCSharpResource(string name);
+        INativeResource GetResource(string name);
 
         // Only for advanced use cases
 
@@ -107,5 +105,11 @@ namespace AltV.Net
         IEnumerable<IPlayer> GetPlayers();
 
         IEnumerable<IVehicle> GetVehicles();
+
+        void StartResource(string name);
+
+        void StopResource(string name);
+
+        void RestartResource(string name);
     }
 }

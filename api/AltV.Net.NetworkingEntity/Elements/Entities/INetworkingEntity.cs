@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using AltV.Net.Elements.Entities;
 using Entity;
 
 namespace AltV.Net.NetworkingEntity.Elements.Entities
@@ -40,6 +39,11 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
         /// The way the entity gets streamed
         /// </summary>
         StreamingType StreamingType { get; }
+        
+        /// <summary>
+        /// The main entity streamer, not in use currently
+        /// </summary>
+        INetworkingClient MainStreamer { get; }
         
 
         /// <summary>

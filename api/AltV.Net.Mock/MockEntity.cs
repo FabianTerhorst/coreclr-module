@@ -10,6 +10,7 @@ namespace AltV.Net.Mock
     public abstract class MockEntity : IEntity
     {
         public IntPtr NativePointer { get; }
+        public IPlayer NetworkOwner { get; }
         public bool Exists { get; }
         public ushort Id { get; }
         public BaseObjectType Type { get; }

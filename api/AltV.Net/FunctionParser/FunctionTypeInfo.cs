@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace AltV.Net.FunctionParser
 {
@@ -33,21 +35,29 @@ namespace AltV.Net.FunctionParser
 
         public readonly Type DictType;
 
-        public readonly Func<System.Collections.IDictionary> CreateDictionary;
+        public readonly Func<IDictionary> CreateDictionary;
 
         public readonly object DefaultValue;
 
+        public readonly bool IsEventParams;
+
+        public readonly bool IsNullable;
+
+        public readonly Type NullableType;
+
+        public readonly bool IsEnum;
+        
         public FunctionTypeInfo(Type type)
         {
             IsList = type.BaseType == FunctionTypes.Array;
-            IsDict = type.Name.StartsWith("Dictionary");
+            IsDict = type.Name.StartsWith("Dictionary") || type.Name.StartsWith("IDictionary");
             if (IsDict)
             {
                 GenericArguments = type.GetGenericArguments();
                 //TODO: dont create this for primitive type dictionaries
                 DictType = typeof(Dictionary<,>).MakeGenericType(GenericArguments[0], GenericArguments[1]);
                 DictionaryValue = GenericArguments.Length == 2 ? new FunctionTypeInfo(GenericArguments[1]) : null;
-                CreateDictionary = Expression.Lambda<Func<System.Collections.IDictionary>>(
+                CreateDictionary = Expression.Lambda<Func<IDictionary>>(
                     Expression.New(DictType)
                 ).Compile();
             }
@@ -94,6 +104,25 @@ namespace AltV.Net.FunctionParser
                 ElementType = elementType;
                 Element = new FunctionTypeInfo(elementType);
             }
+
+            IsEventParams = type.GetCustomAttribute<EventParams>() != null;
+
+            IsNullable = type.Name.StartsWith("Nullable");
+            if (IsNullable)
+            {
+                var genericArguments = type.GetGenericArguments();
+                if (genericArguments.Length != 1)
+                {
+                    IsNullable = false;
+                }
+                else
+                {
+                    NullableType = genericArguments[0];
+                    DefaultValue = typeof(Nullable<>).MakeGenericType(NullableType);
+                }
+            }
+            
+            IsEnum = type.IsEnum;
         }
     }
 }

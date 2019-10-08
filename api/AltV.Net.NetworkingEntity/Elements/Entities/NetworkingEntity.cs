@@ -10,7 +10,8 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
         private readonly IEntityStreamer entityStreamer;
 
         public EntityDataSnapshot Snapshot { get; }
-
+        
+        public INetworkingClient MainStreamer { get; }
 
         public StreamingType StreamingType { get; }
 

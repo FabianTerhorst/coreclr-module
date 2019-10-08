@@ -26,8 +26,16 @@ bool Resource_GetExport(alt::IResource* resource, const char* key, alt::MValue &
     return true;
 }
 
-void Resource_SetExport(alt::IResource* resource, const char* key, const alt::MValue* val) {
+void Resource_SetExport(alt::IResource* resource, const char* key, const alt::MValue& val) {
     resource->GetExports()[key] = val;
+}
+
+void Resource_SetExports(alt::IResource* resource, alt::MValue* val, const char** keys, int size) {
+    alt::MValueDict dict;
+    for (int i = 0; i < size; i++) {
+        dict[keys[i]] = val[i];
+    }
+    resource->SetExports(dict);
 }
 
 void Resource_GetPath(alt::IResource* resource, const char*&text) {
@@ -46,14 +54,22 @@ void Resource_GetType(alt::IResource* resource, const char*&text) {
     text = resource->GetType().CStr();
 }
 
-alt::IResource::State Resource_GetState(alt::IResource* resource) {
-    return resource->GetState();
+bool Resource_IsStarted(alt::IResource* resource) {
+    return resource->IsStarted();
 }
 
 void Resource_Start(alt::IResource* resource) {
-    resource->Start();
+    resource->GetImpl()->Start();
 }
 
 void Resource_Stop(alt::IResource* resource) {
-    resource->Stop();
+    resource->GetImpl()->Stop();
+}
+
+alt::IResource::Impl* Resource_GetImpl(alt::IResource* resource) {
+    return resource->GetImpl();
+}
+
+CSharpResourceImpl* Resource_GetCSharpImpl(alt::IResource* resource) {
+    return (CSharpResourceImpl*) resource->GetImpl();
 }

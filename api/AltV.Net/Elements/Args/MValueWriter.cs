@@ -77,10 +77,6 @@ namespace AltV.Net.Elements.Args
 
         private IWritableMValue currCurr;
 
-        public MValueWriter()
-        {
-        }
-
         public void BeginObject()
         {
             var currentObj = new MValueObject(new List<string>(), new List<MValue>());

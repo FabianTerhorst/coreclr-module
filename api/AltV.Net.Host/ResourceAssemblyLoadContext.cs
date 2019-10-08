@@ -9,8 +9,9 @@ namespace AltV.Net.Host
     {
         private readonly AssemblyDependencyResolver resolver;
 
-        public ResourceAssemblyLoadContext(string resourceDllPath, string resourcePath, string resourceName) : base(resourceName,
-            true)
+        public ResourceAssemblyLoadContext(string resourceDllPath, string resourcePath, string resourceName,
+            bool isCollectible) : base(resourceName,
+            isCollectible)
         {
             resolver = new AssemblyDependencyResolver(resourceDllPath);
             Resolving += (context, assemblyName) =>

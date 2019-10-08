@@ -1,10 +1,11 @@
+using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
 namespace AltV.Net.Data
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct Rgba
+    public struct Rgba : IEquatable<Rgba>
     {
         public static implicit operator Color(Rgba rgba)
         {
@@ -60,9 +61,14 @@ namespace AltV.Net.Data
 
         public override bool Equals(object obj)
         {
-            if (obj is Rgba rgba2)
-                return R == rgba2.R && G == rgba2.G && B == rgba2.B && A == rgba2.A;
-            return false;
+            return obj is Rgba other && Equals(other);
         }
+
+        public bool Equals(Rgba other)
+        {
+            return R == other.R && G == other.G && B == other.B && A == other.A;
+        }
+
+        public override int GetHashCode() => HashCode.Combine(R.GetHashCode(), G.GetHashCode(), B.GetHashCode(), A.GetHashCode());
     }
 }

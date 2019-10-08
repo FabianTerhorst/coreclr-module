@@ -6,8 +6,31 @@ namespace AltV.Net
 {
     public partial class Alt
     {
+        private static bool HostImport<T>(string resourceName, string key, out T value)
+        {
+            if (!HostWrapper.Import(resourceName, key, out var importValue))
+            {
+                value = default;
+                return false;
+            }
+
+            if (importValue is T action)
+            {
+                value = action;
+                return true;
+            }
+
+            value = default;
+            return false;
+        }
+
         public static bool Import(string resourceName, string key, out bool value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.BOOL, out var mValue))
             {
                 value = default;
@@ -20,6 +43,11 @@ namespace AltV.Net
 
         public static bool Import(string resourceName, string key, out int value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.INT, out var mValue))
             {
                 value = default;
@@ -32,6 +60,11 @@ namespace AltV.Net
 
         public static bool Import(string resourceName, string key, out long value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.INT, out var mValue))
             {
                 value = default;
@@ -44,6 +77,11 @@ namespace AltV.Net
 
         public static bool Import(string resourceName, string key, out uint value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.UINT, out var mValue))
             {
                 value = default;
@@ -56,6 +94,11 @@ namespace AltV.Net
 
         public static bool Import(string resourceName, string key, out ulong value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.UINT, out var mValue))
             {
                 value = default;
@@ -68,6 +111,11 @@ namespace AltV.Net
 
         public static bool Import(string resourceName, string key, out double value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.DOUBLE, out var mValue))
             {
                 value = default;
@@ -80,6 +128,11 @@ namespace AltV.Net
 
         public static bool Import(string resourceName, string key, out string value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.STRING, out var mValue))
             {
                 value = null;
@@ -139,6 +192,11 @@ namespace AltV.Net
 
         public static bool Import(string resourceName, string key, out Action value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -151,6 +209,11 @@ namespace AltV.Net
 
         public static bool Import<T1>(string resourceName, string key, out Action<T1> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -163,6 +226,11 @@ namespace AltV.Net
 
         public static bool Import<T1, T2>(string resourceName, string key, out Action<T1, T2> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -175,6 +243,11 @@ namespace AltV.Net
 
         public static bool Import<T1, T2, T3>(string resourceName, string key, out Action<T1, T2, T3> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -187,6 +260,11 @@ namespace AltV.Net
 
         public static bool Import<T1, T2, T3, T4>(string resourceName, string key, out Action<T1, T2, T3, T4> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -200,6 +278,11 @@ namespace AltV.Net
         public static bool Import<T1, T2, T3, T4, T5>(string resourceName, string key,
             out Action<T1, T2, T3, T4, T5> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -213,6 +296,11 @@ namespace AltV.Net
         public static bool Import<T1, T2, T3, T4, T5, T6>(string resourceName, string key,
             out Action<T1, T2, T3, T4, T5, T6> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -226,6 +314,11 @@ namespace AltV.Net
         public static bool Import<T1, T2, T3, T4, T5, T6, T7>(string resourceName, string key,
             out Action<T1, T2, T3, T4, T5, T6, T7> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -239,6 +332,11 @@ namespace AltV.Net
         public static bool Import<T1, T2, T3, T4, T5, T6, T7, T8>(string resourceName, string key,
             out Action<T1, T2, T3, T4, T5, T6, T7, T8> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -255,6 +353,11 @@ namespace AltV.Net
         public static bool Import<T1, T2, T3, T4, T5, T6, T7, T8, T9>(string resourceName, string key,
             out Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -271,6 +374,11 @@ namespace AltV.Net
         public static bool Import<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(string resourceName, string key,
             out Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -287,6 +395,11 @@ namespace AltV.Net
         public static bool Import<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(string resourceName, string key,
             out Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -303,6 +416,11 @@ namespace AltV.Net
         public static bool Import<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(string resourceName, string key,
             out Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -320,6 +438,11 @@ namespace AltV.Net
             string key,
             out Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -337,6 +460,11 @@ namespace AltV.Net
             string key,
             out Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -354,6 +482,11 @@ namespace AltV.Net
             string key,
             out Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -371,6 +504,11 @@ namespace AltV.Net
             string resourceName, string key,
             out Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -387,6 +525,11 @@ namespace AltV.Net
 
         public static bool Import<TResult>(string resourceName, string key, out Func<TResult> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -407,6 +550,11 @@ namespace AltV.Net
 
         public static bool Import<T1, TResult>(string resourceName, string key, out Func<T1, TResult> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -427,6 +575,11 @@ namespace AltV.Net
 
         public static bool Import<T1, T2, TResult>(string resourceName, string key, out Func<T1, T2, TResult> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -448,6 +601,11 @@ namespace AltV.Net
         public static bool Import<T1, T2, T3, TResult>(string resourceName, string key,
             out Func<T1, T2, T3, TResult> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -469,6 +627,11 @@ namespace AltV.Net
         public static bool Import<T1, T2, T3, T4, TResult>(string resourceName, string key,
             out Func<T1, T2, T3, T4, TResult> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -490,6 +653,11 @@ namespace AltV.Net
         public static bool Import<T1, T2, T3, T4, T5, TResult>(string resourceName, string key,
             out Func<T1, T2, T3, T4, T5, TResult> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -511,6 +679,11 @@ namespace AltV.Net
         public static bool Import<T1, T2, T3, T4, T5, T6, TResult>(string resourceName, string key,
             out Func<T1, T2, T3, T4, T5, T6, TResult> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -532,6 +705,11 @@ namespace AltV.Net
         public static bool Import<T1, T2, T3, T4, T5, T6, T7, TResult>(string resourceName, string key,
             out Func<T1, T2, T3, T4, T5, T6, T7, TResult> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -553,6 +731,11 @@ namespace AltV.Net
         public static bool Import<T1, T2, T3, T4, T5, T6, T7, T8, TResult>(string resourceName, string key,
             out Func<T1, T2, T3, T4, T5, T6, T7, T8, TResult> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -574,6 +757,11 @@ namespace AltV.Net
         public static bool Import<T1, T2, T3, T4, T5, T6, T7, T8, T9, TResult>(string resourceName, string key,
             out Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, TResult> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -595,6 +783,11 @@ namespace AltV.Net
         public static bool Import<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult>(string resourceName, string key,
             out Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -617,6 +810,11 @@ namespace AltV.Net
             string key,
             out Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -639,6 +837,11 @@ namespace AltV.Net
             string key,
             out Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TResult> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -662,6 +865,11 @@ namespace AltV.Net
             string key,
             out Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TResult> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -685,6 +893,11 @@ namespace AltV.Net
             string resourceName, string key,
             out Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TResult> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -708,6 +921,11 @@ namespace AltV.Net
             string resourceName, string key,
             out Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TResult> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;
@@ -731,6 +949,11 @@ namespace AltV.Net
             string resourceName, string key,
             out Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TResult> value)
         {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
             if (!Import(resourceName, key, MValue.Type.FUNCTION, out var mValue))
             {
                 value = default;

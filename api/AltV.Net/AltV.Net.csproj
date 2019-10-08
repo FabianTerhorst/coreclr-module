@@ -9,17 +9,33 @@
         <Authors>AltMp</Authors>
         <Description>AltV .NET Core Server Api</Description>
         <Copyright>AltMp</Copyright>
-        <PackageProjectUrl>https://github.com/altmp-csharp/docs</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/FabianTerhorst/coreclr-module</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.13.0</PackageVersion>
+        <PackageVersion>1.16.4-beta</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes></PackageReleaseNotes>
+        <PackageReleaseNotes>Add Alt.OnWeaponDamage
+Add Alt.OnExplosion
+Fix AssemblyLoadContext.Unload()
+Improve performance
+Add AltTrace
+Add Alt.OnAnyResourceStart
+Add Alt.OnAnyResourceStop
+Add Alt.OnAnyResourceError
+Add Alt.Server.Start/Stop/Restart-/Resource
+Add IEntity.NetworkOwner
+Enum support for Alt.On
+Improvements for native calls
+Debug improvements</PackageReleaseNotes>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
     <ItemGroup>
         <None Include="license\license.txt" Pack="true" PackagePath="" />
+        <None Include="icon.png" Pack="true" PackagePath="\"/>
+        <None Include="package\**" Pack="True" PackagePath="build\" />
     </ItemGroup>
 
     <PropertyGroup>

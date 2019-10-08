@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using AltV.Net.Elements.Args;
 using AltV.Net.Native;
 
@@ -64,11 +65,19 @@ namespace AltV.Net.Elements.Entities
         {
         }
 
-        public override void GetMetaData(string key, ref MValue value) =>
-            AltNative.VoiceChannel.VoiceChannel_GetMetaData(NativePointer, key, ref value);
+        public override void GetMetaData(string key, ref MValue value)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.VoiceChannel.VoiceChannel_GetMetaData(NativePointer, stringPtr, ref value);
+            Marshal.FreeHGlobal(stringPtr);
+        }
 
-        public override void SetMetaData(string key, ref MValue value) =>
-            AltNative.VoiceChannel.VoiceChannel_SetMetaData(NativePointer, key, ref value);
+        public override void SetMetaData(string key, ref MValue value)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.VoiceChannel.VoiceChannel_SetMetaData(NativePointer, stringPtr, ref value);
+            Marshal.FreeHGlobal(stringPtr);
+        }
 
         public void Remove()
         {
