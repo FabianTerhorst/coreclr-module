@@ -3,12 +3,12 @@ namespace AltV.Net.Elements.Entities
     public interface IColShape : IWorldObject
     {
         /// <summary>
-        /// Obtains the enumerated value of collision shape of the entity
+        /// Returns the ColShape type
         /// </summary>
         ColShapeType ColShapeType { get; }
 		
         /// <summary>
-        /// Checks whether the entity exists
+        /// Returns if the entity is inside the ColShape
         /// </summary>
         /// <param name="entity">The entity</param>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
