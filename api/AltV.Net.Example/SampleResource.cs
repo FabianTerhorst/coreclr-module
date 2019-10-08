@@ -8,6 +8,7 @@ using AltV.Net.Elements.Args;
 using AltV.Net.Enums;
 using AltV.Net.Native;
 using System.Drawing;
+using AltV.Net.Resources.Chat.Api;
 
 namespace AltV.Net.Example
 {
@@ -261,9 +262,7 @@ namespace AltV.Net.Example
             AltAsync.RegisterEvents(this);
 
             Alt.Emit("asyncBla3", "bla");
-            var chat = new Chat();
 
-            chat.RegisterCommand("bla", (player, command, args) => { });
             Alt.OnColShape += (shape, entity, state) =>
             {
                 Console.WriteLine("collision shape test:" + shape + " " + shape.GetData("bla", out int id1) + " " + id1);
@@ -277,8 +276,18 @@ namespace AltV.Net.Example
             var colShapeCircle = Alt.CreateColShapeCircle(new Position(1337, 1337, 1337), 10);
             colShapeCircle.SetMetaData("bla", 3);
             colShapeCircle.SetData("bla", (int) 4);
+            
+            AltChat.SendBroadcast("Test");
+            
+            var vehicle2 = Alt.CreateVehicle(VehicleModel.Adder, new Position(1337, 1337, 1337), Rotation.Zero);
+            Alt.On<IVehicle, VehicleModel>("onEnum", OnEnum);
+            Alt.Emit("onEnum", vehicle2, VehicleModel.Adder.ToString());
+        }
 
-            Alt.CreateVehicle(VehicleModel.Adder, new Position(1337, 1337, 1337), Rotation.Zero);
+        public void OnEnum(IVehicle vehicle, VehicleModel vehicleModel)
+        {
+            Console.WriteLine("vehicle:" + vehicle.Id);
+            Console.WriteLine("vehicle-model:" + vehicleModel);
         }
 
         [Event("bla2")]

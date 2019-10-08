@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
+using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.FunctionParser
 {
@@ -143,7 +143,7 @@ namespace AltV.Net.FunctionParser
                 defaultValueSet = true;
             }
 
-            var typedArray = System.Array.CreateInstance(elementType, length);
+            var typedArray = Array.CreateInstance(elementType, length);
 
             for (var i = 0; i < length; i++)
             {
@@ -190,7 +190,7 @@ namespace AltV.Net.FunctionParser
             var keyType = args[0];
             if (keyType != FunctionTypes.String) return null;
             var valueType = args[1];
-            System.Collections.IDictionary typedDictionary;
+            IDictionary typedDictionary;
             if (typeInfo != null)
             {
                 typedDictionary = typeInfo.CreateDictionary();
@@ -198,7 +198,7 @@ namespace AltV.Net.FunctionParser
             else
             {
                 var dictType = typeof(Dictionary<,>).MakeGenericType(keyType, valueType);
-                typedDictionary = (System.Collections.IDictionary) Activator.CreateInstance(dictType);
+                typedDictionary = (IDictionary) Activator.CreateInstance(dictType);
             }
 
             object defaultValue = null;
@@ -265,6 +265,11 @@ namespace AltV.Net.FunctionParser
 
             mValue.Dispose();
             return obj;
+        }
+
+        public static object ParseEnum(object value, Type type, FunctionTypeInfo typeInfo)
+        {
+            return !Enum.TryParse(type, value.ToString(), true, out var enumObject) ? null : enumObject;
         }
     }
 

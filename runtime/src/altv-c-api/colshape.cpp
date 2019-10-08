@@ -17,7 +17,7 @@ int16_t ColShape_GetDimension(alt::IColShape* colShape) {
     return colShape->GetDimension();
 }
 
-void ColShape_SetDimension(alt::IColShape* colShape, uint16_t dimension) {
+void ColShape_SetDimension(alt::IColShape* colShape, int16_t dimension) {
     colShape->SetDimension(dimension);
 }
 
@@ -35,6 +35,14 @@ alt::ColShapeType ColShape_GetColShapeType(alt::IColShape* colShape) {
     return colShape->GetColshapeType();
 }
 
-bool ColShape_IsEntityIn(alt::IColShape* colShape, alt::IEntity* entity) {
+/*bool ColShape_IsEntityIn(alt::IColShape* colShape, alt::IEntity* entity) {
     return colShape->IsEntityIn(entity);
+}*/
+
+bool ColShape_IsPlayerIn(alt::IColShape* colShape, alt::IPlayer* player) {
+    return colShape->IsEntityIn(player);
+}
+
+bool ColShape_IsVehicleIn(alt::IColShape* colShape, alt::IVehicle* vehicle) {
+    return colShape->IsEntityIn(vehicle);
 }

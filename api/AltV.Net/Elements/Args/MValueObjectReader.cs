@@ -142,7 +142,7 @@ namespace AltV.Net.Elements.Args
             }
         }
 
-        private bool insideObject = false;
+        private bool insideObject;
 
         private readonly Stack<IReadableMValue> currents = new Stack<IReadableMValue>();
 
