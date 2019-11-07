@@ -23,7 +23,7 @@ EXPORT void Blip_GetPosition(const alt::Ref<alt::IBlip>& blip, position_t &posit
 EXPORT void Blip_SetPosition(alt::IBlip* blip, alt::Position pos);
 EXPORT int32_t Blip_GetDimension(alt::IBlip* blip);
 EXPORT void Blip_SetDimension(alt::IBlip* blip, int32_t dimension);
-EXPORT void Blip_GetMetaData(alt::IBlip* blip, const char* key, alt::MValueConst &val);
+EXPORT alt::MValueConst* Blip_GetMetaData(alt::IBlip* blip, const char* key);
 EXPORT void Blip_SetMetaData(alt::IBlip* blip, const char* key, alt::MValue* val);
 // Blip
 EXPORT bool Blip_IsGlobal(alt::IBlip* blip);

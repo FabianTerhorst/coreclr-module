@@ -54,9 +54,9 @@ EXPORT void Player_GetRotation(alt::IPlayer* player, rotation_t &rotation);
 EXPORT void Player_SetRotation(alt::IPlayer* player, alt::Rotation rot);
 EXPORT int32_t Player_GetDimension(alt::IPlayer* player);
 EXPORT void Player_SetDimension(alt::IPlayer* player, int32_t dimension);
-EXPORT void Player_GetMetaData(alt::IPlayer* player, const char* key, alt::MValueConst &val);
+EXTERN alt::MValueConst* Player_GetMetaData(alt::IPlayer* player, const char* key);
 EXPORT void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValue* val);
-EXPORT void Player_GetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValueConst &val);
+EXTERN alt::MValueConst* Player_GetSyncedMetaData(alt::IPlayer* player, const char* key);
 EXPORT void Player_SetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValue* val);
 // Player
 EXPORT bool Player_IsConnected(alt::IPlayer* player);

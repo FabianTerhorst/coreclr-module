@@ -60,21 +60,21 @@ EXPORT void Server_GetVehicles(alt::ICore* server, alt::Array<alt::IVehicle*> &v
 EXPORT void Server_StartResource(alt::ICore* server, const char* text);
 EXPORT void Server_StopResource(alt::ICore* server, const char* text);
 EXPORT void Server_RestartResource(alt::ICore* server, const char* text);
-EXPORT alt::MValueNil* Core_CreateMValueNil(alt::ICore* core);
-EXPORT alt::MValueBool* Core_CreateMValueBool(alt::ICore* core, bool value);
-EXPORT alt::MValueInt* Core_CreateMValueInt(alt::ICore* core, int64_t value);
-EXPORT alt::MValueUInt* Core_CreateMValueUInt(alt::ICore* core, uint64_t value);
-EXPORT alt::MValueDouble* Core_CreateMValueDouble(alt::ICore* core, double value);
-EXPORT alt::MValueString* Core_CreateMValueString(alt::ICore* core, const char* value);
-EXPORT alt::MValueList* Core_CreateMValueList(alt::ICore* core, alt::MValue val[], uint64_t size);
-EXPORT alt::MValueDict* Core_CreateMValueDict(alt::ICore* core, const char** keys, alt::MValue val[], uint64_t size);
+EXPORT alt::MValue* Core_CreateMValueNil(alt::ICore* core);
+EXPORT alt::MValue* Core_CreateMValueBool(alt::ICore* core, bool value);
+EXPORT alt::MValue* Core_CreateMValueInt(alt::ICore* core, int64_t value);
+EXPORT alt::MValue* Core_CreateMValueUInt(alt::ICore* core, uint64_t value);
+EXPORT alt::MValue* Core_CreateMValueDouble(alt::ICore* core, double value);
+EXPORT alt::MValue* Core_CreateMValueString(alt::ICore* core, const char* value);
+EXPORT alt::MValue* Core_CreateMValueList(alt::ICore* core, alt::MValue val[], uint64_t size);
+EXPORT alt::MValue* Core_CreateMValueDict(alt::ICore* core, const char** keys, alt::MValue val[], uint64_t size);
 //EXPORT alt::MValueBaseObject* Core_CreateMValueBaseObject(alt::ICore* core, alt::Ref<alt::IBaseObject>* value)
-EXPORT alt::MValueBaseObject* Core_CreateMValueCheckpoint(alt::ICore* core, alt::Ref<alt::ICheckpoint>* value);
-EXPORT alt::MValueBaseObject* Core_CreateMValueBlip(alt::ICore* core, alt::Ref<alt::IBlip>* value);
-EXPORT alt::MValueBaseObject* Core_CreateMValueVoiceChannel(alt::ICore* core, alt::Ref<alt::IVoiceChannel>* value);
-EXPORT alt::MValueBaseObject* Core_CreateMValuePlayer(alt::ICore* core, alt::Ref<alt::IPlayer>* value);
-EXPORT alt::MValueBaseObject* Core_CreateMValueVehicle(alt::ICore* core, alt::Ref<alt::IVehicle>* value);
-EXPORT alt::MValueFunction* Core_CreateMValueFunction(alt::ICore* core, alt::IMValueFunction::Impl* value);
+EXPORT alt::MValue* Core_CreateMValueCheckpoint(alt::ICore* core, alt::Ref<alt::ICheckpoint>* value);
+EXPORT alt::MValue* Core_CreateMValueBlip(alt::ICore* core, alt::Ref<alt::IBlip>* value);
+EXPORT alt::MValue* Core_CreateMValueVoiceChannel(alt::ICore* core, alt::Ref<alt::IVoiceChannel>* value);
+EXPORT alt::MValue* Core_CreateMValuePlayer(alt::ICore* core, alt::Ref<alt::IPlayer>* value);
+EXPORT alt::MValue* Core_CreateMValueVehicle(alt::ICore* core, alt::Ref<alt::IVehicle>* value);
+EXPORT alt::MValue* Core_CreateMValueFunction(alt::ICore* core, alt::IMValueFunction::Impl* value);
 
 #ifdef __cplusplus
 }

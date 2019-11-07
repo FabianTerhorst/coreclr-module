@@ -48,16 +48,16 @@ void Player_SetDimension(alt::IPlayer* player, int32_t dimension) {
     player->SetDimension(dimension);
 }
 
-void Player_GetMetaData(alt::IPlayer* player, const char* key, alt::MValueConst &val) {
-    val = player->GetMetaData(key);
+alt::MValueConst* Player_GetMetaData(alt::IPlayer* player, const char* key) {
+    return new alt::ConstRef(player->GetMetaData(key));
 }
 
 void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValue* val) {
     player->SetMetaData(key, *val);
 }
 
-void Player_GetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValueConst &val) {
-    val = player->GetSyncedMetaData(key);
+alt::MValueConst* Player_GetSyncedMetaData(alt::IPlayer* player, const char* key) {
+    return new alt::ConstRef(player->GetSyncedMetaData(key));
 }
 
 void Player_SetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValue* val) {

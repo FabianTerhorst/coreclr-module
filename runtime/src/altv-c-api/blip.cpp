@@ -21,8 +21,8 @@ void Blip_SetDimension(alt::IBlip* blip, int32_t dimension) {
     blip->SetDimension(dimension);
 }
 
-void Blip_GetMetaData(alt::IBlip* blip, const char* key, alt::MValueConst &val) {
-    val = blip->GetMetaData(key);
+alt::MValueConst* Blip_GetMetaData(alt::IBlip* blip, const char* key) {
+    return new alt::ConstRef(blip->GetMetaData(key));
 }
 
 void Blip_SetMetaData(alt::IBlip* blip, const char* key, alt::MValue* val) {

@@ -1,7 +1,7 @@
 #include "voice_channel.h"
 
-void VoiceChannel_GetMetaData(alt::IVoiceChannel* channel, const char* key, alt::MValueConst &val) {
-    val = channel->GetMetaData(key);
+alt::MValueConst* VoiceChannel_GetMetaData(alt::IVoiceChannel* voiceChannel, const char* key) {
+    return new alt::ConstRef(voiceChannel->GetMetaData(key));
 }
 
 void VoiceChannel_SetMetaData(alt::IVoiceChannel* channel, const char* key, alt::MValue* val) {

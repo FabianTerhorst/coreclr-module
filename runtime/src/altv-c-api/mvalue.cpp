@@ -206,3 +206,7 @@ void MValue_Dispose(alt::MValue* mValue) {
 void MValueConst_Delete(alt::MValueConst* mValueConst) {
     delete mValueConst;
 }
+
+uint8_t MValueConst_GetType(alt::MValueConst* mValueConst) {
+    return (uint8_t) mValueConst->Get()->GetType();
+}

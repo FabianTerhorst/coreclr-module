@@ -44,16 +44,16 @@ void Vehicle_SetDimension(alt::IVehicle* entity, int32_t dimension) {
     entity->SetDimension(dimension);
 }
 
-void Vehicle_GetMetaData(alt::IVehicle* entity, const char* key, alt::MValueConst &val) {
-    val = entity->GetMetaData(key);
+alt::MValueConst* Vehicle_GetMetaData(alt::IVehicle* vehicle, const char* key) {
+    return new alt::ConstRef(vehicle->GetMetaData(key));
 }
 
 void Vehicle_SetMetaData(alt::IVehicle* entity, const char* key, alt::MValue* val) {
     entity->SetMetaData(key, *val);
 }
 
-void Vehicle_GetSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MValueConst &val) {
-    val = entity->GetSyncedMetaData(key);
+alt::MValueConst* Vehicle_GetSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
+    return new alt::ConstRef(vehicle->GetSyncedMetaData(key));
 }
 
 void Vehicle_SetSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MValue* val) {

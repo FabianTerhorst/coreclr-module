@@ -112,9 +112,9 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
         case alt::CEvent::Type::CLIENT_SCRIPT_EVENT: {
             alt::MValueArgs clientArgs = (((alt::CClientScriptEvent*) (ev))->GetArgs());
             uint64_t size = clientArgs.GetSize();
-            alt::MValueConst constArgs[size];
+            alt::MValueConst* constArgs[size];
             for (uint64_t i = 0;i < size;i++) {
-                constArgs[i] = clientArgs[i];
+                constArgs[i] = &clientArgs[i];
             }
             OnClientEventDelegate(((alt::CClientScriptEvent*) (ev))->GetTarget().Get(),
                                   ((alt::CClientScriptEvent*) (ev))->GetName().CStr(),
@@ -236,9 +236,9 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             auto serverScriptEvent = (alt::CServerScriptEvent*) ev;
             alt::MValueArgs serverArgs = serverScriptEvent->GetArgs();
             uint64_t size = serverArgs.GetSize();
-            alt::MValueConst constArgs[size];
+            alt::MValueConst* constArgs[size];
             for (uint64_t i = 0;i < size;i++) {
-                constArgs[i] = serverArgs[i];
+                constArgs[i] = &serverArgs[i];
             }
             OnServerEventDelegate(serverScriptEvent->GetName().CStr(), constArgs);
         }

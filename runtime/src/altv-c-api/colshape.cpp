@@ -21,8 +21,8 @@ void ColShape_SetDimension(alt::IColShape* colShape, int32_t dimension) {
     colShape->SetDimension(dimension);
 }
 
-void ColShape_GetMetaData(alt::IColShape* colShape, const char* key, alt::MValueConst& val) {
-    val = colShape->GetMetaData(key);
+alt::MValueConst* ColShape_GetMetaData(alt::IColShape* colShape, const char* key) {
+    return new alt::ConstRef(colShape->GetMetaData(key));
 }
 
 void ColShape_SetMetaData(alt::IColShape* colShape, const char* key, alt::MValue* val) {

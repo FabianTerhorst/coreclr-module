@@ -21,8 +21,8 @@ void Checkpoint_SetDimension(alt::ICheckpoint* checkpoint, int32_t dimension) {
     checkpoint->SetDimension(dimension);
 }
 
-void Checkpoint_GetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValueConst &val) {
-    val = checkpoint->GetMetaData(key);
+alt::MValueConst* Checkpoint_GetMetaData(alt::ICheckpoint* checkpoint, const char* key) {
+    return new alt::ConstRef(checkpoint->GetMetaData(key));
 }
 
 void Checkpoint_SetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValue* val) {

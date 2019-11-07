@@ -58,12 +58,12 @@ typedef void (* MainDelegate_t)(alt::ICore* server, alt::IResource* resource, co
 
 typedef void (* TickDelegate_t)();
 
-typedef void (* ServerEventDelegate_t)(const char* name, alt::MValueConst args[]);
+typedef void (* ServerEventDelegate_t)(const char* name, alt::MValueConst* args[]);
 
 typedef void (* CheckpointDelegate_t)(alt::ICheckpoint* checkpoint, void* entity, alt::IBaseObject::Type type,
                                       bool state);
 
-typedef void (* ClientEventDelegate_t)(alt::IPlayer* player, const char* name, alt::MValueConst args[]);
+typedef void (* ClientEventDelegate_t)(alt::IPlayer* player, const char* name, alt::MValueConst* args[]);
 
 typedef void (* PlayerConnectDelegate_t)(alt::IPlayer* player, uint16_t playerId, const char* reason);
 
