@@ -17,14 +17,29 @@ namespace AltV.Net.Host
             Resolving += (context, assemblyName) =>
             {
                 var dllPath = resourcePath + Path.DirectorySeparatorChar + assemblyName.Name;
-                if (!File.Exists(dllPath)) return null;
-                try
+                if (File.Exists(dllPath))
                 {
-                    return LoadFromAssemblyPath(dllPath);
+                    try
+                    {
+                        return LoadFromAssemblyPath(dllPath);
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine(exception);
+                    }
                 }
-                catch (Exception exception)
+                
+                dllPath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "runtime";
+                if (File.Exists(dllPath))
                 {
-                    Console.WriteLine(exception);
+                    try
+                    {
+                        return LoadFromAssemblyPath(dllPath);
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine(exception);
+                    }
                 }
 
                 return null;
@@ -32,14 +47,29 @@ namespace AltV.Net.Host
             ResolvingUnmanagedDll += (assembly, unmanagedDllName) =>
             {
                 var dllPath = resourcePath + Path.DirectorySeparatorChar + unmanagedDllName;
-                if (!File.Exists(dllPath)) return IntPtr.Zero;
-                try
+                if (File.Exists(dllPath))
                 {
-                    return LoadUnmanagedDllFromPath(dllPath);
+                    try
+                    {
+                        return LoadUnmanagedDllFromPath(dllPath);
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine(exception);
+                    }
                 }
-                catch (Exception exception)
+                
+                dllPath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "runtime";
+                if (File.Exists(dllPath))
                 {
-                    Console.WriteLine(exception);
+                    try
+                    {
+                        return LoadUnmanagedDllFromPath(dllPath);
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine(exception);
+                    }
                 }
 
                 return IntPtr.Zero;
