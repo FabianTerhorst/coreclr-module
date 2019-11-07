@@ -315,7 +315,6 @@ void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
     auto name = player->GetName();
     // Free in c# after async method ends
     auto copiedName = new char[name.GetSize() + 1];
-    alt::String(name);
     memcpy(copiedName, name.GetData(), name.GetSize());
     copiedName[name.GetSize()] = '\0';
     player_struct->name = copiedName;
