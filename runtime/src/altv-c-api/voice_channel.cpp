@@ -1,11 +1,11 @@
 #include "voice_channel.h"
 
-void VoiceChannel_GetMetaData(alt::IVoiceChannel* channel, const char* key, alt::MValue &val) {
+void VoiceChannel_GetMetaData(alt::IVoiceChannel* channel, const char* key, alt::MValueConst &val) {
     val = channel->GetMetaData(key);
 }
 
 void VoiceChannel_SetMetaData(alt::IVoiceChannel* channel, const char* key, alt::MValue* val) {
-    channel->SetMetaData(key, val);
+    channel->SetMetaData(key, *val);
 }
 
 void VoiceChannel_AddPlayer(alt::IVoiceChannel* channel, alt::IPlayer* player) {

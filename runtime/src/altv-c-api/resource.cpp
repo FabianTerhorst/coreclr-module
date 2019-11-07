@@ -4,36 +4,23 @@
 
 #include "resource.h"
 
-void Resource_GetExports(alt::IResource* resource, alt::Array<alt::String> &keys, alt::MValue::List &values) {
-    auto dict = resource->GetExports().Get<alt::MValue::Dict>();
-    alt::Array<alt::String> mapKeys;
-    alt::MValue::List mapValues;
-    for (auto &it : dict) {
-        mapKeys.Push(it.first);
-        mapValues.Push(it.second);
-    }
-    keys = mapKeys;
-    values = mapValues;
+alt::MValueDict* Resource_GetExports(alt::IResource* resource) {
+    return new alt::Ref(resource->GetExports());
 }
 
-bool Resource_GetExport(alt::IResource* resource, const char* key, alt::MValue &value) {
-    auto dict = resource->GetExports().Get<alt::MValue::Dict>();
-    auto dictValue = dict.find(key);
-    if (dictValue == dict.end()) {
-        return false;
-    }
-    value = dictValue->second;
-    return true;
+alt::MValueConst* Resource_GetExport(alt::IResource* resource, const char* key) {
+    return new alt::Ref(resource->GetExports().Get()->Get(key));
 }
 
 void Resource_SetExport(alt::IResource* resource, const char* key, const alt::MValue& val) {
-    resource->GetExports()[key] = val;
+    resource->GetExports().Get()->Set(key, val);
 }
 
 void Resource_SetExports(alt::IResource* resource, alt::MValue* val, const char** keys, int size) {
     alt::MValueDict dict;
+    auto dictValue = dict.Get();
     for (int i = 0; i < size; i++) {
-        dict[keys[i]] = val[i];
+        dictValue->Set(keys[i], val[i]);
     }
     resource->SetExports(dict);
 }

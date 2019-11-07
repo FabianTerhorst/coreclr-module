@@ -7,7 +7,7 @@ uint16_t Player_GetID(alt::IPlayer* player) {
 }
 
 alt::IPlayer* Player_GetNetworkOwner(alt::IPlayer* player) {
-    return player->GetNetworkOwner();
+    return player->GetNetworkOwner().Get();
 }
 
 uint32_t Player_GetModel(alt::IPlayer* player) {
@@ -40,15 +40,15 @@ void Player_SetRotation(alt::IPlayer* player, alt::Rotation rot) {
     player->SetRotation(rot);
 }
 
-int16_t Player_GetDimension(alt::IPlayer* player) {
+int32_t Player_GetDimension(alt::IPlayer* player) {
     return player->GetDimension();
 }
 
-void Player_SetDimension(alt::IPlayer* player, int16_t dimension) {
+void Player_SetDimension(alt::IPlayer* player, int32_t dimension) {
     player->SetDimension(dimension);
 }
 
-void Player_GetMetaData(alt::IPlayer* player, const char* key, alt::MValue &val) {
+void Player_GetMetaData(alt::IPlayer* player, const char* key, alt::MValueConst &val) {
     val = player->GetMetaData(key);
 }
 
@@ -56,7 +56,7 @@ void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValue* val)
     player->SetMetaData(key, *val);
 }
 
-void Player_GetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValue &val) {
+void Player_GetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValueConst &val) {
     val = player->GetSyncedMetaData(key);
 }
 
@@ -246,7 +246,7 @@ bool Player_IsInVehicle(alt::IPlayer* player) {
 }
 
 alt::IVehicle* Player_GetVehicle(alt::IPlayer* player) {
-    return player->GetVehicle();
+    return player->GetVehicle().Get();
 }
 
 uint8_t Player_GetSeat(alt::IPlayer* player) {
@@ -254,7 +254,7 @@ uint8_t Player_GetSeat(alt::IPlayer* player) {
 }
 
 void* Player_GetEntityAimingAt(alt::IPlayer* player, alt::IBaseObject::Type &type) {
-    auto entity = player->GetEntityAimingAt();
+    auto entity = player->GetEntityAimingAt().Get();
     if (entity != nullptr) {
         type = entity->GetType();
         switch (type) {
@@ -315,6 +315,7 @@ void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
     auto name = player->GetName();
     // Free in c# after async method ends
     auto copiedName = new char[name.GetSize() + 1];
+    alt::String(name);
     memcpy(copiedName, name.GetData(), name.GetSize());
     copiedName[name.GetSize()] = '\0';
     player_struct->name = copiedName;
@@ -327,7 +328,7 @@ void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
     player_struct->is_jumping = player->IsJumping();
     player_struct->is_reloading = player->IsReloading();
     player_struct->is_connected = player->IsConnected();
-    player_struct->vehicle = player->GetVehicle();
+    player_struct->vehicle = player->GetVehicle().Get();
 }
 
 void Player_Copy_Dispose(player_struct_t* player_struct) {

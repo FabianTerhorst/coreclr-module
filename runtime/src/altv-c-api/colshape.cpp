@@ -13,15 +13,15 @@ void ColShape_SetPosition(alt::IColShape* colShape, alt::Position pos) {
     colShape->SetPosition(pos);
 }
 
-int16_t ColShape_GetDimension(alt::IColShape* colShape) {
+int32_t ColShape_GetDimension(alt::IColShape* colShape) {
     return colShape->GetDimension();
 }
 
-void ColShape_SetDimension(alt::IColShape* colShape, int16_t dimension) {
+void ColShape_SetDimension(alt::IColShape* colShape, int32_t dimension) {
     colShape->SetDimension(dimension);
 }
 
-void ColShape_GetMetaData(alt::IColShape* colShape, const char* key, alt::MValue &val) {
+void ColShape_GetMetaData(alt::IColShape* colShape, const char* key, alt::MValueConst& val) {
     val = colShape->GetMetaData(key);
 }
 

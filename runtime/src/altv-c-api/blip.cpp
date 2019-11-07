@@ -13,15 +13,15 @@ void Blip_SetPosition(alt::IBlip* blip, alt::Position pos) {
     blip->SetPosition(pos);
 }
 
-int16_t Blip_GetDimension(alt::IBlip* blip) {
+int32_t Blip_GetDimension(alt::IBlip* blip) {
     return blip->GetDimension();
 }
 
-void Blip_SetDimension(alt::IBlip* blip, int16_t dimension) {
+void Blip_SetDimension(alt::IBlip* blip, int32_t dimension) {
     blip->SetDimension(dimension);
 }
 
-void Blip_GetMetaData(alt::IBlip* blip, const char* key, alt::MValue &val) {
+void Blip_GetMetaData(alt::IBlip* blip, const char* key, alt::MValueConst &val) {
     val = blip->GetMetaData(key);
 }
 
@@ -40,7 +40,7 @@ bool Blip_IsAttached(alt::IBlip* blip) {
 }
 
 void* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type) {
-    auto entity = blip->AttachedTo();
+    auto entity = blip->AttachedTo().Get();
     if (entity != nullptr) {
         type = entity->GetType();
         switch (type) {

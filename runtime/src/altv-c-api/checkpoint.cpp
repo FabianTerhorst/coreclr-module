@@ -13,15 +13,15 @@ void Checkpoint_SetPosition(alt::ICheckpoint* checkpoint, alt::Position pos) {
     checkpoint->SetPosition(pos);
 }
 
-int16_t Checkpoint_GetDimension(alt::ICheckpoint* checkpoint) {
+int32_t Checkpoint_GetDimension(alt::ICheckpoint* checkpoint) {
     return checkpoint->GetDimension();
 }
 
-void Checkpoint_SetDimension(alt::ICheckpoint* checkpoint, int16_t dimension) {
+void Checkpoint_SetDimension(alt::ICheckpoint* checkpoint, int32_t dimension) {
     checkpoint->SetDimension(dimension);
 }
 
-void Checkpoint_GetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValue &val) {
+void Checkpoint_GetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValueConst &val) {
     val = checkpoint->GetMetaData(key);
 }
 
@@ -64,5 +64,5 @@ bool Checkpoint_IsVehicleIn(alt::ICheckpoint* checkpoint, alt::IVehicle* vehicle
 }
 
 alt::IPlayer* Checkpoint_GetTarget(alt::ICheckpoint* checkpoint) {
-    return checkpoint->GetTarget();
+    return checkpoint->GetTarget().Get();
 }

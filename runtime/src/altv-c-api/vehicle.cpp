@@ -7,7 +7,7 @@ uint16_t Vehicle_GetID(alt::IVehicle* entity) {
 }
 
 alt::IPlayer* Vehicle_GetNetworkOwner(alt::IVehicle* vehicle) {
-    return vehicle->GetNetworkOwner();
+    return vehicle->GetNetworkOwner().Get();
 }
 
 uint32_t Vehicle_GetModel(alt::IVehicle* vehicle) {
@@ -36,15 +36,15 @@ void Vehicle_SetRotation(alt::IVehicle* entity, alt::Rotation rot) {
     entity->SetRotation(rot);
 }
 
-int16_t Vehicle_GetDimension(alt::IVehicle* entity) {
+int32_t Vehicle_GetDimension(alt::IVehicle* entity) {
     return entity->GetDimension();
 }
 
-void Vehicle_SetDimension(alt::IVehicle* entity, int16_t dimension) {
+void Vehicle_SetDimension(alt::IVehicle* entity, int32_t dimension) {
     entity->SetDimension(dimension);
 }
 
-void Vehicle_GetMetaData(alt::IVehicle* entity, const char* key, alt::MValue &val) {
+void Vehicle_GetMetaData(alt::IVehicle* entity, const char* key, alt::MValueConst &val) {
     val = entity->GetMetaData(key);
 }
 
@@ -52,7 +52,7 @@ void Vehicle_SetMetaData(alt::IVehicle* entity, const char* key, alt::MValue* va
     entity->SetMetaData(key, *val);
 }
 
-void Vehicle_GetSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MValue &val) {
+void Vehicle_GetSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MValueConst &val) {
     val = entity->GetSyncedMetaData(key);
 }
 
@@ -63,7 +63,7 @@ void Vehicle_SetSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MVal
 // Vehicle
 
 alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle) {
-    return vehicle->GetDriver();
+    return vehicle->GetDriver().Get();
 }
 
 uint8_t Vehicle_GetMod(alt::IVehicle* vehicle, uint8_t category) {

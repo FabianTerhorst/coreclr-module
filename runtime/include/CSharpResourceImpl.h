@@ -35,9 +35,9 @@
 #pragma clang diagnostic pop
 #endif
 
-typedef void (* MValueFunctionCallback)(alt::MValueList*, alt::MValue*);
+typedef void (* MValueFunctionCallback)(alt::MValueArgs*, alt::MValue*);
 
-class CustomInvoker : public alt::MValueFunction::Invoker {
+class CustomInvoker : public alt::IMValueFunction::Impl {
 public:
     MValueFunctionCallback mValueFunctionCallback;
 
@@ -45,7 +45,7 @@ public:
         this->mValueFunctionCallback = mValueFunctionCallback;
     }
 
-    alt::MValue Invoke(alt::MValueList args) override {
+    alt::MValue Call(alt::MValueArgs args) const override {
         //auto list = args.Get<alt::MValue::List>();
         alt::MValue result;
         mValueFunctionCallback(&args, &result);
@@ -58,12 +58,12 @@ typedef void (* MainDelegate_t)(alt::ICore* server, alt::IResource* resource, co
 
 typedef void (* TickDelegate_t)();
 
-typedef void (* ServerEventDelegate_t)(const char* name, alt::Array<alt::MValue>* args);
+typedef void (* ServerEventDelegate_t)(const char* name, alt::MValueArgs* args);
 
 typedef void (* CheckpointDelegate_t)(alt::ICheckpoint* checkpoint, void* entity, alt::IBaseObject::Type type,
                                       bool state);
 
-typedef void (* ClientEventDelegate_t)(alt::IPlayer* player, const char* name, alt::Array<alt::MValue>* args);
+typedef void (* ClientEventDelegate_t)(alt::IPlayer* player, const char* name, alt::Array<alt::MValueConst>* args);
 
 typedef void (* PlayerConnectDelegate_t)(alt::IPlayer* player, uint16_t playerId, const char* reason);
 
@@ -91,27 +91,27 @@ typedef void (* PlayerLeaveVehicleDelegate_t)(alt::IVehicle* vehicle, alt::IPlay
 
 typedef void (* StopDelegate_t)();
 
-typedef void (* CreatePlayerDelegate_t)(alt::IPlayer* player, uint16_t id);
+typedef void (* CreatePlayerDelegate_t)(alt::IPlayer* player, alt::Ref<alt::IPlayer>* playerReference, uint16_t id);
 
 typedef void (* RemovePlayerDelegate_t)(alt::IPlayer* player);
 
-typedef void (* CreateVehicleDelegate_t)(alt::IVehicle* vehicle, uint16_t id);
+typedef void (* CreateVehicleDelegate_t)(alt::IVehicle* vehicle, alt::Ref<alt::IVehicle>* vehicleReference, uint16_t id);
 
 typedef void (* RemoveVehicleDelegate_t)(alt::IVehicle* vehicle);
 
-typedef void (* CreateBlipDelegate_t)(alt::IBlip* blip);
+typedef void (* CreateBlipDelegate_t)(alt::IBlip* blip, alt::Ref<alt::IBlip>* blipReference);
 
 typedef void (* RemoveBlipDelegate_t)(alt::IBlip* blip);
 
-typedef void (* CreateCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
+typedef void (* CreateCheckpointDelegate_t)(alt::ICheckpoint* checkpoint, alt::Ref<alt::ICheckpoint>* checkpointReference);
 
 typedef void (* RemoveCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
 
-typedef void (* CreateVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
+typedef void (* CreateVoiceChannelDelegate_t)(alt::IVoiceChannel* channel, alt::Ref<alt::IVoiceChannel>* voiceChannelReference);
 
 typedef void (* RemoveVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
 
-typedef void (* CreateColShapeDelegate_t)(alt::IColShape* colShape);
+typedef void (* CreateColShapeDelegate_t)(alt::IColShape* colShape, alt::Ref<alt::IColShape>* colShapeReference);
 
 typedef void (* RemoveColShapeDelegate_t)(alt::IColShape* colShape);
 
@@ -139,9 +139,9 @@ class CSharpResourceImpl : public alt::IResource::Impl {
 
     bool Stop() override;
 
-    void OnCreateBaseObject(alt::IBaseObject* object) override;
+    void OnCreateBaseObject(alt::Ref<alt::IBaseObject> object) override;
 
-    void OnRemoveBaseObject(alt::IBaseObject* object) override;
+    void OnRemoveBaseObject(alt::Ref<alt::IBaseObject> object) override;
 
     void* GetBaseObjectPointer(alt::IBaseObject* baseObject);
 
