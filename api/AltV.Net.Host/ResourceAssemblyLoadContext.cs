@@ -29,7 +29,7 @@ namespace AltV.Net.Host
                     }
                 }
                 
-                dllPath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "runtime";
+                dllPath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "runtime" + Path.DirectorySeparatorChar + assemblyName.Name;
                 if (File.Exists(dllPath))
                 {
                     try
@@ -59,7 +59,7 @@ namespace AltV.Net.Host
                     }
                 }
                 
-                dllPath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "runtime";
+                dllPath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "runtime" + Path.DirectorySeparatorChar + unmanagedDllName;
                 if (File.Exists(dllPath))
                 {
                     try
