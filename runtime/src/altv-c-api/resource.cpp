@@ -4,19 +4,31 @@
 
 #include "resource.h"
 
-alt::MValueDict* Resource_GetExports(alt::IResource* resource) {
-    return new alt::Ref(resource->GetExports());
+uint64_t Resource_GetExportsCount(alt::IResource* resource) {
+    return resource->GetExports()->GetSize();
+}
+
+void Resource_GetExports(alt::IResource* resource, const char* keys[],
+                         alt::MValueConst* values[]) {
+    auto dict = resource->GetExports();
+    auto next = dict->Begin();
+    uint64_t i = 0;
+    do {
+        alt::MValueConst mValueElement = next->GetValue();
+        keys[i] = next->GetKey().CStr();
+        values[i] = &mValueElement;
+    } while ((next = dict->Next()) != nullptr);
 }
 
 alt::MValueConst* Resource_GetExport(alt::IResource* resource, const char* key) {
     return new alt::Ref(resource->GetExports().Get()->Get(key));
 }
 
-void Resource_SetExport(alt::IResource* resource, const char* key, const alt::MValue& val) {
-    resource->GetExports().Get()->Set(key, val);
+void Resource_SetExport(alt::IResource* resource, const char* key, alt::MValue* val) {
+    resource->GetExports().Get()->Set(key, *val);
 }
 
-void Resource_SetExports(alt::IResource* resource, alt::MValue* val, const char** keys, int size) {
+void Resource_SetExports(alt::IResource* resource, alt::MValue val[], const char* keys[], int size) {
     alt::MValueDict dict;
     auto dictValue = dict.Get();
     for (int i = 0; i < size; i++) {

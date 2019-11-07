@@ -128,9 +128,9 @@ bool MValueConst_GetList(alt::MValueConst* mValueConst, alt::MValueConst* values
 
 uint64_t MValueConst_GetDictSize(alt::MValueConst* mValueConst) {
     auto mValue = mValueConst->Get();
-    if (mValue->GetType() == alt::IMValue::Type::LIST) {
-        auto list = dynamic_cast<const alt::IMValueDict*>(mValue);
-        return list->GetSize();
+    if (mValue->GetType() == alt::IMValue::Type::DICT) {
+        auto dict = dynamic_cast<const alt::IMValueDict*>(mValue);
+        return dict->GetSize();
     }
     return 0;
 }

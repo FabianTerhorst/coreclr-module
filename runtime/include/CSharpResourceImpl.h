@@ -46,7 +46,6 @@ public:
     }
 
     alt::MValue Call(alt::MValueArgs args) const override {
-        //auto list = args.Get<alt::MValue::List>();
         alt::MValue result;
         mValueFunctionCallback(&args, &result);
         return result;
