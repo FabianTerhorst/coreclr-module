@@ -7,6 +7,7 @@
 #endif
 
 #include <altv-cpp-api/SDK.h>
+#include <CSharpResourceImpl.h>
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -69,12 +70,12 @@ EXPORT alt::MValue* Core_CreateMValueString(alt::ICore* core, const char* value)
 EXPORT alt::MValue* Core_CreateMValueList(alt::ICore* core, alt::MValue val[], uint64_t size);
 EXPORT alt::MValue* Core_CreateMValueDict(alt::ICore* core, const char** keys, alt::MValue val[], uint64_t size);
 //EXPORT alt::MValueBaseObject* Core_CreateMValueBaseObject(alt::ICore* core, alt::Ref<alt::IBaseObject>* value)
-EXPORT alt::MValue* Core_CreateMValueCheckpoint(alt::ICore* core, alt::Ref<alt::ICheckpoint>* value);
-EXPORT alt::MValue* Core_CreateMValueBlip(alt::ICore* core, alt::Ref<alt::IBlip>* value);
-EXPORT alt::MValue* Core_CreateMValueVoiceChannel(alt::ICore* core, alt::Ref<alt::IVoiceChannel>* value);
-EXPORT alt::MValue* Core_CreateMValuePlayer(alt::ICore* core, alt::Ref<alt::IPlayer>* value);
-EXPORT alt::MValue* Core_CreateMValueVehicle(alt::ICore* core, alt::Ref<alt::IVehicle>* value);
-EXPORT alt::MValue* Core_CreateMValueFunction(alt::ICore* core, alt::IMValueFunction::Impl* value);
+EXPORT alt::MValue* Core_CreateMValueCheckpoint(alt::ICore* core, alt::ICheckpoint* value);
+EXPORT alt::MValue* Core_CreateMValueBlip(alt::ICore* core, alt::IBlip* value);
+EXPORT alt::MValue* Core_CreateMValueVoiceChannel(alt::ICore* core, alt::IVoiceChannel* value);
+EXPORT alt::MValue* Core_CreateMValuePlayer(alt::ICore* core, alt::IPlayer* value);
+EXPORT alt::MValue* Core_CreateMValueVehicle(alt::ICore* core, alt::IVehicle* value);
+EXPORT alt::MValue* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* value);
 
 #ifdef __cplusplus
 }

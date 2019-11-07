@@ -19,7 +19,7 @@ extern "C"
 {
 #endif
 // Entity
-EXPORT void Blip_GetPosition(const alt::Ref<alt::IBlip>& blip, position_t &position);
+EXPORT void Blip_GetPosition(alt::IBlip* blip, position_t &position);
 EXPORT void Blip_SetPosition(alt::IBlip* blip, alt::Position pos);
 EXPORT int32_t Blip_GetDimension(alt::IBlip* blip);
 EXPORT void Blip_SetDimension(alt::IBlip* blip, int32_t dimension);

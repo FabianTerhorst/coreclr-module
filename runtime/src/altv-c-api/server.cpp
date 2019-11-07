@@ -234,7 +234,7 @@ alt::MValue* Core_CreateMValueVehicle(alt::ICore* core, alt::IVehicle* value) {
     return new alt::Ref((alt::IMValue*) mValue);
 }
 
-alt::MValue* Core_CreateMValueFunction(alt::ICore* core, alt::IMValueFunction::Impl* value) {
+alt::MValue* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* value) {
     auto mValue = core->CreateMValueFunction(value).Get();
     return new alt::Ref((alt::IMValue*) mValue);
 }

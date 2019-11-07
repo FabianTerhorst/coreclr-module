@@ -1,6 +1,6 @@
 #include "mvalue.h"
 
-alt::IMValueFunction::Impl* Invoker_Create(CSharpResourceImpl* resource, MValueFunctionCallback val) {
+CustomInvoker* Invoker_Create(CSharpResourceImpl* resource, MValueFunctionCallback val) {
     auto invoker = new CustomInvoker(val);
     resource->invokers->Push(invoker);
     return invoker;
@@ -19,9 +19,9 @@ void Invoker_Destroy(CSharpResourceImpl* resource, CustomInvoker* val) {
     resource->invokers = newInvokers;
 }
 
-bool MValue_GetBool(alt::MValueBool &mValue) {
+/*bool MValue_GetBool(alt::MValueBool &mValue) {
     return mValue.Get()->Value();
-}
+}*/
 
 bool MValueConst_GetBool(alt::MValueConst* mValueConst) {
     auto mValue = mValueConst->Get();
@@ -31,9 +31,9 @@ bool MValueConst_GetBool(alt::MValueConst* mValueConst) {
     return false;
 }
 
-int64_t MValue_GetInt(alt::MValueInt &mValue) {
+/*int64_t MValue_GetInt(alt::MValueInt &mValue) {
     return mValue.Get()->Value();
-}
+}*/
 
 int64_t MValueConst_GetInt(alt::MValueConst* mValueConst) {
     auto mValue = mValueConst->Get();
@@ -43,9 +43,9 @@ int64_t MValueConst_GetInt(alt::MValueConst* mValueConst) {
     return 0;
 }
 
-uint64_t MValue_GetUInt(alt::MValueUInt &mValue) {
+/*uint64_t MValue_GetUInt(alt::MValueUInt &mValue) {
     return mValue.Get()->Value();
-}
+}*/
 
 uint64_t MValueConst_GetUInt(alt::MValueConst* mValueConst) {
     auto mValue = mValueConst->Get();
@@ -55,9 +55,9 @@ uint64_t MValueConst_GetUInt(alt::MValueConst* mValueConst) {
     return 0;
 }
 
-double MValue_GetDouble(alt::MValueDouble &mValue) {
+/*double MValue_GetDouble(alt::MValueDouble &mValue) {
     return mValue.Get()->Value();
-}
+}*/
 
 double MValueConst_GetDouble(alt::MValueConst* mValueConst) {
     auto mValue = mValueConst->Get();
@@ -67,11 +67,11 @@ double MValueConst_GetDouble(alt::MValueConst* mValueConst) {
     return 0.0;
 }
 
-void MValue_GetString(alt::MValueString &mValue, const char*&value, uint64_t &size) {
+/*void MValue_GetString(alt::MValueString &mValue, const char*&value, uint64_t &size) {
     auto stringView = mValue.Get()->Value();
     value = stringView.CStr();
     size = stringView.GetSize();
-}
+}*/
 
 bool MValueConst_GetString(alt::MValueConst* mValueConst, const char*&value, uint64_t &size) {
     auto mValue = mValueConst->Get();
@@ -84,30 +84,38 @@ bool MValueConst_GetString(alt::MValueConst* mValueConst, const char*&value, uin
     return false;
 }
 
-void MValue_GetList(alt::MValueList &mValue, alt::Array<alt::MValue> &value) {
+/*void MValue_GetList(alt::MValueList &mValue, alt::Array<alt::MValue> &value) {
     auto list = mValue.Get();
     auto size = list->GetSize();
     value = alt::Array<alt::MValue>(size);
     for (uint64_t i = 0;i < size;i++) {
         value.Push(list->Get(i));
     }
-}
+}*/
 
-bool MValueConst_GetList(alt::MValueConst* mValueConst, alt::Array<alt::MValueConst> &value) {
+uint64_t MValueConst_GetListSize(alt::MValueConst* mValueConst) {
     auto mValue = mValueConst->Get();
     if (mValue->GetType() == alt::IMValue::Type::LIST) {
         auto list = dynamic_cast<const alt::IMValueList*>(mValue);
-        auto size = list->GetSize();
-        value = alt::Array<alt::MValueConst>(size);
-        for (uint64_t i = 0;i < size;i++) {
-            value.Push(list->Get(i));
+        return list->GetSize();
+    }
+    return 0;
+}
+
+bool MValueConst_GetList(alt::MValueConst* mValueConst, alt::MValueConst* values[]) {
+    auto mValue = mValueConst->Get();
+    if (mValue->GetType() == alt::IMValue::Type::LIST) {
+        auto list = dynamic_cast<const alt::IMValueList*>(mValue);
+        for (uint64_t i = 0, length = list->GetSize(); i < length; i++) {
+            alt::MValueConst mValueElement = list->Get(i);
+            values[i] = &mValueElement;
         }
         return true;
     }
     return false;
 }
 
-void MValue_GetDict(alt::MValueDict &mValue, alt::Array<alt::String> &keys, alt::Array<alt::MValueConst> &values) {
+/*void MValue_GetDict(alt::MValueDict &mValue, alt::Array<alt::String> &keys, alt::Array<alt::MValueConst> &values) {
     auto dict = mValue.Get();
     auto next = dict->Begin();
     keys = alt::Array<alt::String>(dict->GetSize());
@@ -116,25 +124,35 @@ void MValue_GetDict(alt::MValueDict &mValue, alt::Array<alt::String> &keys, alt:
         keys.Push(next->GetKey());
         values.Push(next->GetValue());
     } while((next = dict->Next()) != nullptr);
+}*/
+
+uint64_t MValueConst_GetDictSize(alt::MValueConst* mValueConst) {
+    auto mValue = mValueConst->Get();
+    if (mValue->GetType() == alt::IMValue::Type::LIST) {
+        auto list = dynamic_cast<const alt::IMValueDict*>(mValue);
+        return list->GetSize();
+    }
+    return 0;
 }
 
-bool MValueConst_GetDict(alt::MValueConst* mValueConst, alt::Array<alt::String> &keys, alt::Array<alt::MValueConst> &values) {
+bool MValueConst_GetDict(alt::MValueConst* mValueConst, const char* keys[],
+                         alt::MValueConst* values[]) {
     auto mValue = mValueConst->Get();
     if (mValue->GetType() == alt::IMValue::Type::DICT) {
         auto dict = dynamic_cast<const alt::IMValueDict*>(mValue);
         auto next = dict->Begin();
-        keys = alt::Array<alt::String>(dict->GetSize());
-        values = alt::Array<alt::MValueConst>(dict->GetSize());
+        uint64_t i = 0;
         do {
-            keys.Push(next->GetKey());
-            values.Push(next->GetValue());
-        } while((next = dict->Next()) != nullptr);
+            alt::MValueConst mValueElement = next->GetValue();
+            keys[i] = next->GetKey().CStr();
+            values[i] = &mValueElement;
+        } while ((next = dict->Next()) != nullptr);
         return true;
     }
     return false;
 }
 
-void* MValue_GetEntity(alt::MValueBaseObject &mValue, alt::IBaseObject::Type &type) {
+/*void* MValue_GetEntity(alt::MValueBaseObject &mValue, alt::IBaseObject::Type &type) {
     auto entityPointer = mValue.Get()->Value().Get();
     if (entityPointer != nullptr) {
         type = entityPointer->GetType();
@@ -152,7 +170,7 @@ void* MValue_GetEntity(alt::MValueBaseObject &mValue, alt::IBaseObject::Type &ty
         }
     }
     return nullptr;
-}
+}*/
 
 void* MValueConst_GetEntity(alt::MValueConst* mValueConst, alt::IBaseObject::Type &type) {
     auto mValue = mValueConst->Get();
@@ -177,31 +195,30 @@ void* MValueConst_GetEntity(alt::MValueConst* mValueConst, alt::IBaseObject::Typ
     return nullptr;
 }
 
-void MValue_CallFunction(alt::MValueFunction& mValue, alt::MValue val[], int32_t size, alt::MValue &result) {
+/*void MValue_CallFunction(alt::MValueFunction& mValue, alt::MValue val[], int32_t size, alt::MValue &result) {
     alt::MValueArgs value = alt::Array<alt::MValueConst>(size);
     for (int i = 0; i < size; i++) {
         value.Push(val[i]);
     }
     mValue.Get()->Call(value);
-}
+}*/
 
-bool MValueConst_CallFunction(alt::MValueConst* mValueConst, alt::MValue val[], int32_t size, alt::MValue &result) {
+alt::MValue* MValueConst_CallFunction(alt::MValueConst* mValueConst, alt::MValue* val[], uint64_t size) {
     auto mValue = mValueConst->Get();
     if (mValue->GetType() == alt::IMValue::Type::FUNCTION) {
         alt::MValueArgs value = alt::Array<alt::MValueConst>(size);
-        for (int i = 0; i < size; i++) {
-            value.Push(val[i]);
+        for (uint64_t i = 0; i < size; i++) {
+            value.Push(*val[i]);
         }
         auto mValueFunction = dynamic_cast<const alt::IMValueFunction*>(mValue);
-        mValueFunction->Call(value);
-        return true;
+        return new alt::Ref(mValueFunction->Call(value));
     }
-    return false;
+    return nullptr;
 }
 
-void MValue_Dispose(alt::MValue* mValue) {
+/*void MValue_Dispose(alt::MValue* mValue) {
     mValue->Free();
-}
+}*/
 
 void MValueConst_Delete(alt::MValueConst* mValueConst) {
     delete mValueConst;

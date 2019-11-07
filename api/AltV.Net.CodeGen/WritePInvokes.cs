@@ -75,7 +75,12 @@ namespace AltV.Net.CodeGen
             ["alt::Array<alt::IVehicle*>&"] = "ref VehiclePointerArray",
             ["alt::Array<alt::StringView>*"] = "ref StringViewArray",
             ["alt::Array<alt::String>*"] = "ref StringArray",
-            ["alt::Array<alt::MValue>*"] = "ref MValueArray"
+            ["alt::Array<alt::MValue>*"] = "ref MValueArray",
+            
+            ["alt::MValueConst*"] = "IntPtr",
+            ["alt::MValueConst*[]"] = "IntPtr[]",
+            ["const char*[]"] = "IntPtr[]",
+            ["alt::MValue*[]"] = "IntPtr[]"
         };
 
         private static string TypeToCSharp(string cType, string name = null)
