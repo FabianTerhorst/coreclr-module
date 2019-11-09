@@ -47,6 +47,10 @@ namespace AltV.Net.Elements.Args
                 var keys = Names.ToArray();
 
                 Alt.Server.CreateMValueDict(out mValue, keys, mValues, size);
+                for (ulong i = 0; i < size; i++)
+                {
+                    mValues[i].Dispose();
+                }
             }
         }
 
@@ -72,6 +76,10 @@ namespace AltV.Net.Elements.Args
                 var mValues = new MValueConst[size];
                 Alt.Server.CreateMValues(mValues, Values.ToArray());
                 Alt.Server.CreateMValueList(out mValue, mValues, size);
+                for (ulong i = 0; i < size; i++)
+                {
+                    mValues[i].Dispose();
+                }
             }
         }
 

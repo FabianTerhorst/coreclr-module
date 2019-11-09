@@ -310,13 +310,12 @@ namespace AltV.Net
             return MValue.CreateFromObject(result);
         }
         
-        internal void Call(MValueConst[] values, out MValueConst result)
+        internal object Call(MValueConst[] values)
         {
             var length = values.Length;
             if (length < requiredArgsCount)
             {
-                result = MValueConst.Nil;
-                return;
+                return null;
             }
             var argsLength = args.Length;
             var invokeValues = new object[argsLength];
@@ -336,10 +335,10 @@ namespace AltV.Net
             var resultObj = @delegate.DynamicInvoke(invokeValues);
             if (returnType == FunctionTypes.Void)
             {
-                result = MValueConst.Nil;
-                return;
+                return null;
             }
-            Alt.Server.CreateMValue(out result, resultObj);
+
+            return resultObj;
         }
 
         internal MValue Call(IPlayer player, MValue[] values)
@@ -360,19 +359,17 @@ namespace AltV.Net
             return MValue.CreateFromObject(result);
         }
         
-        internal void Call(IPlayer player, MValueConst[] values, out MValueConst result)
+        internal object Call(IPlayer player, MValueConst[] values)
         {
             var length = values.Length;
             if (length + 1 != args.Length)
             {
-                result = MValueConst.Nil;
-                return;
+                return null;
             }
 
             if (!typeInfos[0].IsPlayer)
             {
-                result = MValueConst.Nil;
-                return;
+                return null;
             }
             var invokeValues = new object[length + 1];
             invokeValues[0] = player;
@@ -385,10 +382,10 @@ namespace AltV.Net
             var resultObj = @delegate.DynamicInvoke(invokeValues);
             if (returnType == FunctionTypes.Void)
             {
-                result = MValueConst.Nil;
-                return;
+                return null;
             }
-            Alt.Server.CreateMValue(out result, resultObj);
+
+            return resultObj;
         }
 
         internal object[] CalculateInvokeValues(IPlayer player, MValue[] values)

@@ -662,7 +662,7 @@ namespace AltV.Net
 
                 foreach (var eventHandler in eventHandlers)
                 {
-                    eventHandler.Call(player, argArray, out _);
+                    eventHandler.Call(player, argArray);
                 }
             }
 
@@ -757,7 +757,7 @@ namespace AltV.Net
                 {
                     try
                     {
-                        eventNameEventHandler.Call(mValues, out _);
+                        eventNameEventHandler.Call(mValues);
                     }
                     catch (TargetInvocationException exception)
                     {
