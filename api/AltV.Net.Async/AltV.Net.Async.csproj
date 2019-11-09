@@ -20,7 +20,7 @@
 
     <ItemGroup>
         <None Include="license\license.txt" Pack="true" PackagePath="" />
-        <None Include="icon.png" Pack="true" PackagePath="\"/>
+        <None Include="icon.png" Pack="true" PackagePath="\" />
     </ItemGroup>
 
     <ItemGroup>

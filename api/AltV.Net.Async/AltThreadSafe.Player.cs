@@ -100,7 +100,7 @@ namespace AltV.Net.Async
         {
             var size = args.Length;
             var mValues = new MValueConst[size];
-            Alt.Server.CreateMValues(mValues, args);
+            MValueConstLocked.CreateFromObjectsLocked(args, mValues);
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
             var successfully = true;
             lock (player)

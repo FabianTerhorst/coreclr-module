@@ -638,9 +638,12 @@ namespace AltV.Net
                         CreateMValue(out var elementMValue, value);
                         dictValues[i++] = elementMValue;
                     }
-
-                    //TODO: mvalue needs somehow reference of childs to dispose them
+                    
                     CreateMValueDict(out mValue, dictKeys, dictValues, (ulong) dictionary.Count);
+                    for (int j = 0, dictLength = dictionary.Count;j < dictLength; j++)
+                    {
+                        dictValues[j].Dispose();
+                    }
                     return;
                 case ICollection collection:
                     var length = (ulong) collection.Count;
@@ -651,9 +654,12 @@ namespace AltV.Net
                         CreateMValue(out var elementMValue, value);
                         listValues[i++] = elementMValue;
                     }
-
-                    //TODO: mvalue needs somehow reference of childs to dispose them
+                    
                     CreateMValueList(out mValue, listValues, length);
+                    for (ulong j = 0;j < length; j++)
+                    {
+                        listValues[j].Dispose();
+                    }
                     return;
                 case IDictionary<string, object> dictionary:
                     dictKeys = new string[dictionary.Count];
@@ -670,9 +676,12 @@ namespace AltV.Net
                         CreateMValue(out var elementMValue, value);
                         dictValues[i++] = elementMValue;
                     }
-
-                    //TODO: mvalue needs somehow reference of childs to dispose them
+                    
                     CreateMValueDict(out mValue, dictKeys, dictValues, (ulong) dictionary.Count);
+                    for (int j = 0, dictLength = dictionary.Count;j < dictLength; j++)
+                    {
+                        dictValues[j].Dispose();
+                    }
                     return;
                 case IWritable writable:
                     writer = new MValueWriter2();
@@ -698,6 +707,10 @@ namespace AltV.Net
                     posKeys[1] = "y";
                     posKeys[2] = "z";
                     CreateMValueDict(out mValue, posKeys, posValues, 3);
+                    for (int j = 0, dictLength = posValues.Length;j < dictLength; j++)
+                    {
+                        posValues[j].Dispose();
+                    }
                     return;
                 case Rotation rotation:
                     var rotValues = new MValueConst[3];
@@ -713,6 +726,10 @@ namespace AltV.Net
                     rotKeys[1] = "pitch";
                     rotKeys[2] = "yaw";
                     CreateMValueDict(out mValue, rotKeys, rotValues, 3);
+                    for (int j = 0, dictLength = rotValues.Length;j < dictLength; j++)
+                    {
+                        rotValues[j].Dispose();
+                    }
                     return;
                 case short value:
                     CreateMValueInt(out mValue, value);
