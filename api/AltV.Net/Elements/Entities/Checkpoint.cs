@@ -24,7 +24,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public override short Dimension
+        public override int Dimension
         {
             get
             {
@@ -49,17 +49,17 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public override void GetMetaData(string key, ref MValue value)
+        public override void GetMetaData(string key, out MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Checkpoint.Checkpoint_GetMetaData(NativePointer, stringPtr, ref value);
+            value = new MValueConst(AltNative.Checkpoint.Checkpoint_GetMetaData(NativePointer, stringPtr));
             Marshal.FreeHGlobal(stringPtr);
         }
 
-        public override void SetMetaData(string key, ref MValue value)
+        public override void SetMetaData(string key, in MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Checkpoint.Checkpoint_SetMetaData(NativePointer, stringPtr, ref value);
+            AltNative.Checkpoint.Checkpoint_SetMetaData(NativePointer, stringPtr, value.nativePointer);
             Marshal.FreeHGlobal(stringPtr);
         }
 

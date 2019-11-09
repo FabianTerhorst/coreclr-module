@@ -12,10 +12,10 @@ namespace AltV.Net.Native
         internal static class VoiceChannel
         {
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void VoiceChannel_GetMetaData(IntPtr channel, IntPtr key, ref MValue val);
+            internal static extern IntPtr VoiceChannel_GetMetaData(IntPtr voiceChannel, IntPtr key);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void VoiceChannel_SetMetaData(IntPtr channel, IntPtr key, ref MValue val);
+            internal static extern void VoiceChannel_SetMetaData(IntPtr channel, IntPtr key, IntPtr val);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void VoiceChannel_AddPlayer(IntPtr channel, IntPtr player);

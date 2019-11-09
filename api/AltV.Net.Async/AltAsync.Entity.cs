@@ -17,10 +17,11 @@ namespace AltV.Net.Async
         public static Task<Rotation> GetRotationAsync(this IEntity entity) =>
             AltVAsync.Schedule(() => entity.Rotation);
 
-        public static Task SetSyncedMetaDataAsync(this IEntity entity, string key, object value)
+        public static async Task SetSyncedMetaDataAsync(this IEntity entity, string key, object value)
         {
-            var mValue = MValue.CreateFromObject(value);
-            return AltVAsync.Schedule(() => entity.SetSyncedMetaData(key, mValue));
+            Alt.Server.CreateMValue(out var mValue, value);
+            await AltVAsync.Schedule(() => entity.SetSyncedMetaData(key, mValue));
+            mValue.Dispose();
         }
 
         public static Task<T> GetSyncedMetaDataAsync<T>(this IEntity entity, string key) =>

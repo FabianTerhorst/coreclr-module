@@ -67,7 +67,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public override short Dimension
+        public override int Dimension
         {
             get
             {
@@ -101,31 +101,31 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public override void GetMetaData(string key, ref MValue value)
+        public override void GetMetaData(string key, out MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Player.Player_GetMetaData(NativePointer, stringPtr, ref value);
+            value = new MValueConst(AltNative.Player.Player_GetMetaData(NativePointer, stringPtr));
             Marshal.FreeHGlobal(stringPtr);
         }
 
-        public override void SetMetaData(string key, ref MValue value)
+        public override void SetMetaData(string key, in MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Player.Player_SetMetaData(NativePointer, stringPtr, ref value);
+            AltNative.Player.Player_SetMetaData(NativePointer, stringPtr, value.nativePointer);
             Marshal.FreeHGlobal(stringPtr);
         }
 
-        public override void SetSyncedMetaData(string key, ref MValue value)
+        public override void SetSyncedMetaData(string key, in MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Player.Player_SetSyncedMetaData(NativePointer, stringPtr, ref value);
+            AltNative.Player.Player_SetSyncedMetaData(NativePointer, stringPtr, value.nativePointer);
             Marshal.FreeHGlobal(stringPtr);
         }
 
-        public override void GetSyncedMetaData(string key, ref MValue value)
+        public override void GetSyncedMetaData(string key, out MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Player.Player_GetSyncedMetaData(NativePointer, stringPtr, ref value);
+            value = new MValueConst(AltNative.Player.Player_GetSyncedMetaData(NativePointer, stringPtr));
             Marshal.FreeHGlobal(stringPtr);
         }
 

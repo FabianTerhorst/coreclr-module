@@ -91,27 +91,27 @@ typedef void (* PlayerLeaveVehicleDelegate_t)(alt::IVehicle* vehicle, alt::IPlay
 
 typedef void (* StopDelegate_t)();
 
-typedef void (* CreatePlayerDelegate_t)(alt::IPlayer* player, alt::Ref<alt::IPlayer>* playerReference, uint16_t id);
+typedef void (* CreatePlayerDelegate_t)(alt::IPlayer* player, uint16_t id);
 
 typedef void (* RemovePlayerDelegate_t)(alt::IPlayer* player);
 
-typedef void (* CreateVehicleDelegate_t)(alt::IVehicle* vehicle, alt::Ref<alt::IVehicle>* vehicleReference, uint16_t id);
+typedef void (* CreateVehicleDelegate_t)(alt::IVehicle* vehicle, uint16_t id);
 
 typedef void (* RemoveVehicleDelegate_t)(alt::IVehicle* vehicle);
 
-typedef void (* CreateBlipDelegate_t)(alt::IBlip* blip, alt::Ref<alt::IBlip>* blipReference);
+typedef void (* CreateBlipDelegate_t)(alt::IBlip* blip);
 
 typedef void (* RemoveBlipDelegate_t)(alt::IBlip* blip);
 
-typedef void (* CreateCheckpointDelegate_t)(alt::ICheckpoint* checkpoint, alt::Ref<alt::ICheckpoint>* checkpointReference);
+typedef void (* CreateCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
 
 typedef void (* RemoveCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
 
-typedef void (* CreateVoiceChannelDelegate_t)(alt::IVoiceChannel* channel, alt::Ref<alt::IVoiceChannel>* voiceChannelReference);
+typedef void (* CreateVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
 
 typedef void (* RemoveVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
 
-typedef void (* CreateColShapeDelegate_t)(alt::IColShape* colShape, alt::Ref<alt::IColShape>* colShapeReference);
+typedef void (* CreateColShapeDelegate_t)(alt::IColShape* colShape);
 
 typedef void (* RemoveColShapeDelegate_t)(alt::IColShape* colShape);
 

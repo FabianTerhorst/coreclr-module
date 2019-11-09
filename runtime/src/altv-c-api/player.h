@@ -18,7 +18,7 @@ typedef struct {
     uint16_t id;
     position_t position;
     rotation_t rotation;
-    int16_t dimension;
+    int32_t dimension;
     uint32_t ping;
     uint32_t model;
     uint8_t seat;
@@ -54,10 +54,12 @@ EXPORT void Player_GetRotation(alt::IPlayer* player, rotation_t &rotation);
 EXPORT void Player_SetRotation(alt::IPlayer* player, alt::Rotation rot);
 EXPORT int32_t Player_GetDimension(alt::IPlayer* player);
 EXPORT void Player_SetDimension(alt::IPlayer* player, int32_t dimension);
-EXTERN alt::MValueConst* Player_GetMetaData(alt::IPlayer* player, const char* key);
-EXPORT void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValue* val);
-EXTERN alt::MValueConst* Player_GetSyncedMetaData(alt::IPlayer* player, const char* key);
-EXPORT void Player_SetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValue* val);
+EXPORT alt::MValueConst* Player_GetMetaData(alt::IPlayer* player, const char* key);
+EXPORT void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val);
+EXPORT alt::MValueConst* Player_GetSyncedMetaData(alt::IPlayer* player, const char* key);
+EXPORT void Player_SetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val);
+EXPORT void Player_AddRef(alt::IPlayer* player);
+EXPORT void Player_RemoveRef(alt::IPlayer* player);
 // Player
 EXPORT bool Player_IsConnected(alt::IPlayer* player);
 EXPORT void Player_Spawn(alt::IPlayer* player, alt::Position pos, uint32_t delayMs);

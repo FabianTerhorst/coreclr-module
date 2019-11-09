@@ -16,7 +16,7 @@ namespace AltV.Net.Mock
         public BaseObjectType Type { get; }
         public Position Position { get; set; }
         public Rotation Rotation { get; set; }
-        public short Dimension { get; set; }
+        public int Dimension { get; set; }
         public uint Model { get; set; }
 
         private readonly Dictionary<string, object> data = new Dictionary<string, object>();
@@ -112,22 +112,22 @@ namespace AltV.Net.Mock
             return true;
         }
 
-        public void SetMetaData(string key, ref MValue value)
+        public void SetMetaData(string key, in MValueConst value)
         {
             throw new NotImplementedException();
         }
 
-        public void GetMetaData(string key, ref MValue value)
+        public void GetMetaData(string key, out MValueConst value)
         {
             throw new NotImplementedException();
         }
 
-        public void SetSyncedMetaData(string key, ref MValue value)
+        public void SetSyncedMetaData(string key, in MValueConst value)
         {
             throw new NotImplementedException();
         }
 
-        public void GetSyncedMetaData(string key, ref MValue value)
+        public void GetSyncedMetaData(string key, out MValueConst value)
         {
             throw new NotImplementedException();
         }

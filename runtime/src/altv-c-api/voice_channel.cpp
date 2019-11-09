@@ -4,8 +4,8 @@ alt::MValueConst* VoiceChannel_GetMetaData(alt::IVoiceChannel* voiceChannel, con
     return new alt::ConstRef(voiceChannel->GetMetaData(key));
 }
 
-void VoiceChannel_SetMetaData(alt::IVoiceChannel* channel, const char* key, alt::MValue* val) {
-    channel->SetMetaData(key, *val);
+void VoiceChannel_SetMetaData(alt::IVoiceChannel* channel, const char* key, alt::MValueConst* val) {
+    channel->SetMetaData(key, alt::Ref(val->Get()));
 }
 
 void VoiceChannel_AddPlayer(alt::IVoiceChannel* channel, alt::IPlayer* player) {

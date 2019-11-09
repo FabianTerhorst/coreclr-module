@@ -19,16 +19,16 @@ namespace AltV.Net.Native
             internal static extern void ColShape_SetPosition(IntPtr colShape, Position pos);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern short ColShape_GetDimension(IntPtr colShape);
+            internal static extern int ColShape_GetDimension(IntPtr colShape);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void ColShape_SetDimension(IntPtr colShape, short dimension);
+            internal static extern void ColShape_SetDimension(IntPtr colShape, int dimension);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void ColShape_GetMetaData(IntPtr colShape, IntPtr key, ref MValue val);
+            internal static extern IntPtr ColShape_GetMetaData(IntPtr colShape, IntPtr key);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void ColShape_SetMetaData(IntPtr colShape, IntPtr key, ref MValue val);
+            internal static extern void ColShape_SetMetaData(IntPtr colShape, IntPtr key, IntPtr val);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern ColShapeType ColShape_GetColShapeType(IntPtr colShape);

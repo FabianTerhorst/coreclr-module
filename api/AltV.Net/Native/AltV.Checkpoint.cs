@@ -18,16 +18,16 @@ namespace AltV.Net.Native
             internal static extern void Checkpoint_SetPosition(IntPtr checkpoint, Position pos);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern short Checkpoint_GetDimension(IntPtr checkpoint);
+            internal static extern int Checkpoint_GetDimension(IntPtr checkpoint);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Checkpoint_SetDimension(IntPtr checkpoint, short dimension);
+            internal static extern void Checkpoint_SetDimension(IntPtr checkpoint, int dimension);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Checkpoint_GetMetaData(IntPtr checkpoint, IntPtr key, ref MValue val);
+            internal static extern IntPtr Checkpoint_GetMetaData(IntPtr checkpoint, IntPtr key);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Checkpoint_SetMetaData(IntPtr checkpoint, IntPtr key, ref MValue val);
+            internal static extern void Checkpoint_SetMetaData(IntPtr checkpoint, IntPtr key, IntPtr val);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool Checkpoint_IsGlobal(IntPtr checkpoint);

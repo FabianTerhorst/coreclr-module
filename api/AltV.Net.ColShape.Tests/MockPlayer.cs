@@ -54,12 +54,12 @@ namespace AltV.Net.ColShape.Tests
             throw new NotImplementedException();
         }
 
-        public void SetMetaData(string key, ref MValue value)
+        public void SetMetaData(string key, in MValueConst value)
         {
             throw new NotImplementedException();
         }
 
-        public void GetMetaData(string key, ref MValue value)
+        public void GetMetaData(string key, out MValueConst value)
         {
             throw new NotImplementedException();
         }
@@ -80,7 +80,7 @@ namespace AltV.Net.ColShape.Tests
         }
 
         public Position Position { get; set; }
-        public short Dimension { get; set; }
+        public int Dimension { get; set; }
         public ushort Id { get; }
         public Rotation Rotation { get; set; }
         public uint Model { get; set; }
@@ -100,12 +100,12 @@ namespace AltV.Net.ColShape.Tests
             throw new NotImplementedException();
         }
 
-        public void SetSyncedMetaData(string key, ref MValue value)
+        public void SetSyncedMetaData(string key, in MValueConst value)
         {
             throw new NotImplementedException();
         }
 
-        public void GetSyncedMetaData(string key, ref MValue value)
+        public void GetSyncedMetaData(string key, out MValueConst value)
         {
             throw new NotImplementedException();
         }

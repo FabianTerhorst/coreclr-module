@@ -47,9 +47,9 @@ namespace AltV.Net.Elements.Entities
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool GetSyncedMetaData<T>(string key, out T result);
 
-        void SetSyncedMetaData(string key, ref MValue value);
+        void SetSyncedMetaData(string key, in MValueConst value);
 
-        void GetSyncedMetaData(string key, ref MValue value);
+        void GetSyncedMetaData(string key, out MValueConst value);
     }
 
     public static class EntityExtensions
@@ -57,45 +57,54 @@ namespace AltV.Net.Elements.Entities
         public static bool GetSyncedMetaData(this IEntity entity, string key, out int result)
         {
             entity.CheckIfEntityExists();
-            var mValue = MValue.Nil;
-            entity.GetSyncedMetaData(key, ref mValue);
-            if (mValue.type != MValue.Type.INT)
+            entity.GetSyncedMetaData(key, out var mValue);
+            using (mValue)
             {
-                result = default;
-                return false;
+                if (mValue.type != MValueConst.Type.INT)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (int) mValue.GetInt();
             }
 
-            result = (int) mValue.GetInt();
             return true;
         }
         
         public static bool GetSyncedMetaData(this IEntity entity, string key, out uint result)
         {
             entity.CheckIfEntityExists();
-            var mValue = MValue.Nil;
-            entity.GetSyncedMetaData(key, ref mValue);
-            if (mValue.type != MValue.Type.UINT)
+            entity.GetSyncedMetaData(key, out var mValue);
+            using (mValue)
             {
-                result = default;
-                return false;
+                if (mValue.type != MValueConst.Type.UINT)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (uint) mValue.GetUint();
             }
 
-            result = (uint) mValue.GetUint();
             return true;
         }
         
         public static bool GetSyncedMetaData(this IEntity entity, string key, out float result)
         {
             entity.CheckIfEntityExists();
-            var mValue = MValue.Nil;
-            entity.GetSyncedMetaData(key, ref mValue);
-            if (mValue.type != MValue.Type.DOUBLE)
+            entity.GetSyncedMetaData(key, out var mValue);
+            using (mValue)
             {
-                result = default;
-                return false;
+                if (mValue.type != MValueConst.Type.DOUBLE)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (float) mValue.GetDouble();
             }
 
-            result = (float) mValue.GetDouble();
             return true;
         }
     }

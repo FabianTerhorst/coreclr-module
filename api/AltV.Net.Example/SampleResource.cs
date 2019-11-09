@@ -8,6 +8,7 @@ using AltV.Net.Elements.Args;
 using AltV.Net.Enums;
 using AltV.Net.Native;
 using System.Drawing;
+using AltV.Net.Elements.Refs;
 using AltV.Net.Resources.Chat.Api;
 
 namespace AltV.Net.Example
@@ -431,6 +432,13 @@ namespace AltV.Net.Example
 
         public async void Bla2(IPlayer player)
         {
+            using (var reference = new PlayerRef(player))
+            {
+                if (!reference.Exists) return;
+                player.Position = Position.Zero;
+                player.Rotation = Rotation.Zero;
+            }
+            
             await player.SetPositionAsync(new Position(1, 2, 3));
             var position = await player.GetPositionAsync();
             await AltAsync.Do(() => { });

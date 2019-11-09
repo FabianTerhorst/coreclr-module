@@ -25,8 +25,8 @@ alt::MValueConst* Blip_GetMetaData(alt::IBlip* blip, const char* key) {
     return new alt::ConstRef(blip->GetMetaData(key));
 }
 
-void Blip_SetMetaData(alt::IBlip* blip, const char* key, alt::MValue* val) {
-    blip->SetMetaData(key, *val);
+void Blip_SetMetaData(alt::IBlip* blip, const char* key, alt::MValueConst* val) {
+    blip->SetMetaData(key, alt::Ref(val->Get()));
 }
 
 // Blip

@@ -30,9 +30,9 @@ EXPORT void Vehicle_SetRotation(alt::IVehicle* vehicle, alt::Rotation rot);
 EXPORT int32_t Vehicle_GetDimension(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetDimension(alt::IVehicle* vehicle, int32_t dimension);
 EXPORT alt::MValueConst* Vehicle_GetMetaData(alt::IVehicle* vehicle, const char* key);
-EXPORT void Vehicle_SetMetaData(alt::IVehicle* vehicle, const char* key, alt::MValue* val);
+EXPORT void Vehicle_SetMetaData(alt::IVehicle* vehicle, const char* key, alt::MValueConst* val);
 EXPORT alt::MValueConst* Vehicle_GetSyncedMetaData(alt::IVehicle* vehicle, const char* key);
-EXPORT void Vehicle_SetSyncedMetaData(alt::IVehicle* vehicle, const char* key, alt::MValue* val);
+EXPORT void Vehicle_SetSyncedMetaData(alt::IVehicle* vehicle, const char* key, alt::MValueConst* val);
 // Vehicle
 EXPORT alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle);
 EXPORT uint8_t Vehicle_GetMod(alt::IVehicle* vehicle, uint8_t category);

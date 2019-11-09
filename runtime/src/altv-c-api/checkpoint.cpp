@@ -25,8 +25,8 @@ alt::MValueConst* Checkpoint_GetMetaData(alt::ICheckpoint* checkpoint, const cha
     return new alt::ConstRef(checkpoint->GetMetaData(key));
 }
 
-void Checkpoint_SetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValue* val) {
-    checkpoint->SetMetaData(key, *val);
+void Checkpoint_SetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValueConst* val) {
+    checkpoint->SetMetaData(key, alt::Ref(val->Get()));
 }
 
 // Checkpoint

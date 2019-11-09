@@ -17,8 +17,8 @@ namespace AltV.Net.Elements.Entities
 
         public BaseObjectType Type { get; }
 
-        public abstract void SetMetaData(string key, ref MValue value);
-        public abstract void GetMetaData(string key, ref MValue value);
+        public abstract void SetMetaData(string key, in MValueConst value);
+        public abstract void GetMetaData(string key, out MValueConst value);
 
         protected BaseObject(IntPtr nativePointer, BaseObjectType type)
         {
@@ -35,67 +35,80 @@ namespace AltV.Net.Elements.Entities
         public void SetMetaData(string key, object value)
         {
             CheckIfEntityExists();
-            var mValue = MValue.CreateFromObject(value);
-            SetMetaData(key, ref mValue);
+            Alt.Server.CreateMValue(out var mValue, value);
+            SetMetaData(key, in mValue);
+            mValue.Dispose();
         }
 
         public bool GetMetaData(string key, out int result)
         {
             CheckIfEntityExists();
-            var mValue = MValue.Nil;
-            GetMetaData(key, ref mValue);
-            if (mValue.type != MValue.Type.INT)
+            GetMetaData(key, out MValueConst mValue);
+            using (mValue)
             {
-                result = default;
-                return false;
+                if (mValue.type != MValueConst.Type.INT)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (int) mValue.GetInt();
             }
 
-            result = (int) mValue.GetInt();
             return true;
         }
 
         public bool GetMetaData(string key, out uint result)
         {
             CheckIfEntityExists();
-            var mValue = MValue.Nil;
-            GetMetaData(key, ref mValue);
-            if (mValue.type != MValue.Type.UINT)
+            GetMetaData(key, out MValueConst mValue);
+            using (mValue)
             {
-                result = default;
-                return false;
+                if (mValue.type != MValueConst.Type.UINT)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (uint) mValue.GetUint();
             }
 
-            result = (uint) mValue.GetUint();
             return true;
         }
 
         public bool GetMetaData(string key, out float result)
         {
             CheckIfEntityExists();
-            var mValue = MValue.Nil;
-            GetMetaData(key, ref mValue);
-            if (mValue.type != MValue.Type.DOUBLE)
+            GetMetaData(key, out MValueConst mValue);
+            using (mValue)
             {
-                result = default;
-                return false;
+                if (mValue.type != MValueConst.Type.DOUBLE)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (float) mValue.GetDouble();
             }
 
-            result = (float) mValue.GetDouble();
             return true;
         }
 
         public bool GetMetaData<T>(string key, out T result)
         {
             CheckIfEntityExists();
-            var mValue = MValue.Nil;
-            GetMetaData(key, ref mValue);
-            if (!(mValue.ToObject() is T cast))
+            GetMetaData(key, out MValueConst mValue);
+            using (mValue)
             {
-                result = default;
-                return false;
+                if (!(mValue.ToObject() is T cast))
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = cast;
             }
 
-            result = cast;
             return true;
         }
 

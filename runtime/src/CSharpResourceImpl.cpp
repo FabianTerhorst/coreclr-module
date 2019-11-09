@@ -29,20 +29,20 @@ void CSharpResourceImpl::ResetDelegates() {
     OnPlayerLeaveVehicleDelegate = [](auto var, auto var2, auto var3) {};
     OnStopDelegate = []() {};
     OnTickDelegate = []() {};
-    OnCreatePlayerDelegate = [](auto var, auto var2, auto var3) {};
+    OnCreatePlayerDelegate = [](auto var, auto var2) {};
     OnRemovePlayerDelegate = [](auto var) {};
-    OnCreateVehicleDelegate = [](auto var, auto var2, auto var3) {};
+    OnCreateVehicleDelegate = [](auto var, auto var2) {};
     OnRemoveVehicleDelegate = [](auto var) {};
-    OnCreateBlipDelegate = [](auto var, auto var2) {};
+    OnCreateBlipDelegate = [](auto var) {};
     OnRemoveBlipDelegate = [](auto var) {};
-    OnCreateCheckpointDelegate = [](auto var, auto var2) {};
+    OnCreateCheckpointDelegate = [](auto var) {};
     OnRemoveCheckpointDelegate = [](auto var) {};
-    OnCreateVoiceChannelDelegate = [](auto var, auto var2) {};
+    OnCreateVoiceChannelDelegate = [](auto var) {};
     OnRemoveVoiceChannelDelegate = [](auto var) {};
     OnConsoleCommandDelegate = [](auto var, auto var2) {};
     OnMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
-    OnCreateColShapeDelegate = [](auto var, auto var2) {};
+    OnCreateColShapeDelegate = [](auto var) {};
     OnRemoveColShapeDelegate = [](auto var) {};
     OnColShapeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
 }
@@ -301,43 +301,38 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
 }
 
 void CSharpResourceImpl::OnCreateBaseObject(alt::Ref<alt::IBaseObject> objectRef) {
+    objectRef->AddRef();
     auto object = objectRef.Get();
     if (object != nullptr) {
         switch (object->GetType()) {
             case alt::IBaseObject::Type::PLAYER: {
                 auto player = dynamic_cast<alt::IPlayer*>(object);
-                auto playerReference = new alt::Ref(player);
-                OnCreatePlayerDelegate(player, playerReference, player->GetID());
+                OnCreatePlayerDelegate(player, player->GetID());
                 break;
             }
             case alt::IBaseObject::Type::VEHICLE: {
                 auto vehicle = dynamic_cast<alt::IVehicle*>(object);
-                auto vehicleReference = new alt::Ref(vehicle);
-                OnCreateVehicleDelegate(vehicle, vehicleReference, vehicle->GetID());
+                OnCreateVehicleDelegate(vehicle, vehicle->GetID());
                 break;
             }
             case alt::IBaseObject::Type::BLIP: {
                 auto blip = dynamic_cast<alt::IBlip*>(object);
-                auto blipReference = new alt::Ref(blip);
-                OnCreateBlipDelegate(blip, blipReference);
+                OnCreateBlipDelegate(blip);
                 break;
             }
             case alt::IBaseObject::Type::CHECKPOINT: {
                 auto checkpoint = dynamic_cast<alt::ICheckpoint*>(object);
-                auto checkpointReference = new alt::Ref(checkpoint);
-                OnCreateCheckpointDelegate(checkpoint, checkpointReference);
+                OnCreateCheckpointDelegate(checkpoint);
                 break;
             }
             case alt::IBaseObject::Type::VOICE_CHANNEL: {
                 auto voiceChannel = dynamic_cast<alt::IVoiceChannel*>(object);
-                auto voiceChannelReference = new alt::Ref(voiceChannel);
-                OnCreateVoiceChannelDelegate(voiceChannel, voiceChannelReference);
+                OnCreateVoiceChannelDelegate(voiceChannel);
                 break;
             }
             case alt::IBaseObject::Type::COLSHAPE: {
                 auto colShape = dynamic_cast<alt::IColShape*>(object);
-                auto colShapeReference = new alt::Ref(colShape);
-                OnCreateColShapeDelegate(colShape, colShapeReference);
+                OnCreateColShapeDelegate(colShape);
                 break;
             }
         }
@@ -368,6 +363,7 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::Ref<alt::IBaseObject> objectRef
                 break;
         }
     }
+    objectRef->RemoveRef();
 }
 
 void CSharpResourceImpl::OnTick() {

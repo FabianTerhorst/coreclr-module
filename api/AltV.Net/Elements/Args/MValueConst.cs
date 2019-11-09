@@ -9,7 +9,7 @@ namespace AltV.Net.Elements.Args
     /// <summary>
     /// MValue's received from events are MValueConst
     /// </summary>
-    public struct MValueConst : IDisposable
+    public readonly struct MValueConst : IDisposable
     {
         public static MValueConst Nil = new MValueConst(Type.NIL, IntPtr.Zero);
         

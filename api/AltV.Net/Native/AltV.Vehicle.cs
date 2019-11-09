@@ -11,8 +11,6 @@ namespace AltV.Net.Native
         [SuppressUnmanagedCodeSecurity]
         internal static class Vehicle
         {
-            // Entity
-            
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern ushort Vehicle_GetID(IntPtr vehicle);
 
@@ -35,22 +33,22 @@ namespace AltV.Net.Native
             internal static extern void Vehicle_SetRotation(IntPtr vehicle, Rotation rot);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern short Vehicle_GetDimension(IntPtr vehicle);
+            internal static extern int Vehicle_GetDimension(IntPtr vehicle);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetDimension(IntPtr vehicle, short dimension);
+            internal static extern void Vehicle_SetDimension(IntPtr vehicle, int dimension);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_GetMetaData(IntPtr vehicle, IntPtr key, ref MValue val);
+            internal static extern IntPtr Vehicle_GetMetaData(IntPtr vehicle, IntPtr key);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetMetaData(IntPtr vehicle, IntPtr key, ref MValue val);
+            internal static extern void Vehicle_SetMetaData(IntPtr vehicle, IntPtr key, IntPtr val);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_GetSyncedMetaData(IntPtr vehicle, IntPtr key, ref MValue val);
+            internal static extern IntPtr Vehicle_GetSyncedMetaData(IntPtr vehicle, IntPtr key);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetSyncedMetaData(IntPtr vehicle, IntPtr key, ref MValue val);
+            internal static extern void Vehicle_SetSyncedMetaData(IntPtr vehicle, IntPtr key, IntPtr val);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr Vehicle_GetDriver(IntPtr vehicle);

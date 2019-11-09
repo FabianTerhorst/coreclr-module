@@ -52,16 +52,24 @@ alt::MValueConst* Player_GetMetaData(alt::IPlayer* player, const char* key) {
     return new alt::ConstRef(player->GetMetaData(key));
 }
 
-void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValue* val) {
-    player->SetMetaData(key, *val);
+void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val) {
+    player->SetMetaData(key, alt::Ref(val->Get()));
 }
 
 alt::MValueConst* Player_GetSyncedMetaData(alt::IPlayer* player, const char* key) {
     return new alt::ConstRef(player->GetSyncedMetaData(key));
 }
 
-void Player_SetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValue* val) {
-    player->SetSyncedMetaData(key, *val);
+void Player_SetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val) {
+    player->SetSyncedMetaData(key, alt::Ref(val->Get()));
+}
+
+void Player_AddRef(alt::IPlayer* player) {
+    player->AddRef();
+}
+
+void Player_RemoveRef(alt::IPlayer* player) {
+    player->RemoveRef();
 }
 
 // Player

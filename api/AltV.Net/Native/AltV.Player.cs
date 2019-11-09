@@ -12,8 +12,6 @@ namespace AltV.Net.Native
         [SuppressUnmanagedCodeSecurity]
         internal static class Player
         {
-            // Entity
-
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern ushort Player_GetID(IntPtr player);
 
@@ -39,22 +37,28 @@ namespace AltV.Net.Native
             internal static extern void Player_SetRotation(IntPtr player, Rotation rot);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern short Player_GetDimension(IntPtr player);
+            internal static extern int Player_GetDimension(IntPtr player);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Player_SetDimension(IntPtr player, short dimension);
+            internal static extern void Player_SetDimension(IntPtr player, int dimension);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Player_GetMetaData(IntPtr player, IntPtr key, ref MValue val);
+            internal static extern IntPtr Player_GetMetaData(IntPtr player, IntPtr key);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Player_SetMetaData(IntPtr player, IntPtr key, ref MValue val);
+            internal static extern void Player_SetMetaData(IntPtr player, IntPtr key, IntPtr val);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Player_GetSyncedMetaData(IntPtr player, IntPtr key, ref MValue val);
+            internal static extern IntPtr Player_GetSyncedMetaData(IntPtr player, IntPtr key);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Player_SetSyncedMetaData(IntPtr player, IntPtr key, ref MValue val);
+            internal static extern void Player_SetSyncedMetaData(IntPtr player, IntPtr key, IntPtr val);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_AddRef(IntPtr player);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_RemoveRef(IntPtr player);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool Player_IsConnected(IntPtr player);
