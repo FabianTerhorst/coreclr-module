@@ -120,7 +120,7 @@ namespace AltV.Net.Elements.Args
             return dictionary;
         }
 
-        public MValue2 CallFunction(MValue2[] args)
+        public void CallFunction(MValueConst[] args, out MValueConst result)
         {
             var length = (ulong) args.Length;
             var argsPointers = new IntPtr[length];
@@ -129,7 +129,7 @@ namespace AltV.Net.Elements.Args
                 argsPointers[i] = args[i].nativePointer;
             }
 
-            return new MValue2(AltNative.MValueNative.MValueConst_CallFunction(nativePointer, argsPointers, length));
+            result = new MValueConst(AltNative.MValueNative.MValueConst_CallFunction(nativePointer, argsPointers, length));
         }
 
         public object ToObject()

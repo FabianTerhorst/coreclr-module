@@ -14,7 +14,7 @@ namespace AltV.Net.Elements.Args
 
             void Append(IWritableMValue writable);
 
-            void ToMValue(out MValue2 mValue);
+            void ToMValue(out MValueConst mValue);
         }
 
         public struct MValueObject : IWritableMValue
@@ -39,10 +39,10 @@ namespace AltV.Net.Elements.Args
                 }
             }
 
-            public void ToMValue(out MValue2 mValue)
+            public void ToMValue(out MValueConst mValue)
             {
                 var size = (ulong) Values.Count;
-                var mValues = new MValue2[size];
+                var mValues = new MValueConst[size];
                 Alt.Server.CreateMValues(mValues, Values.ToArray());
                 var keys = Names.ToArray();
 
@@ -66,10 +66,10 @@ namespace AltV.Net.Elements.Args
                 Values.Add(mValue);
             }
 
-            public void ToMValue(out MValue2 mValue)
+            public void ToMValue(out MValueConst mValue)
             {
                 var size = (ulong) Values.Count;
-                var mValues = new MValue2[size];
+                var mValues = new MValueConst[size];
                 Alt.Server.CreateMValues(mValues, Values.ToArray());
                 Alt.Server.CreateMValueList(out mValue, mValues, size);
             }
@@ -249,7 +249,7 @@ namespace AltV.Net.Elements.Args
 
         //TODO: function support
 
-        public void ToMValue(out MValue2 mValue)
+        public void ToMValue(out MValueConst mValue)
         {
             if (root != null)
             {
@@ -257,7 +257,7 @@ namespace AltV.Net.Elements.Args
             }
             else
             {
-                mValue = MValue2.Nil;       
+                mValue = MValueConst.Nil;       
             }
         }
     }

@@ -156,7 +156,7 @@ namespace AltV.Net
                                         ScriptFunction.Create(eventMethodDelegate,
                                             new[] {typeof(IPlayer), typeof(string), typeof(MValueArray)});
                                     if (scriptFunction == null) return;
-                                    OnPlayerCustomEvent += (IPlayer player, string name, ref MValueArray array) =>
+                                    OnPlayerCustomEvent += (IPlayer player, string name, MValueConst[] array) =>
                                     {
                                         scriptFunction.Set(player);
                                         scriptFunction.Set(name);

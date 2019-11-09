@@ -44,13 +44,21 @@ void Server_FileRead(alt::ICore* server, const char* path, const char*&text) {
     text = server->FileRead(path).CStr();
 }
 
-void Server_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueArgs &args) {
-    server->TriggerServerEvent(ev, args);
+void Server_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size) {
+    alt::Array<alt::MValueConst> mValues = alt::Array<alt::MValueConst>(size);
+    for(int i = 0;i < size;i++) {
+        mValues[i] = *args[i];
+    }
+    server->TriggerServerEvent(ev, mValues);
 }
 
 void
-Server_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* ev, const alt::MValueArgs &args) {
-    server->TriggerClientEvent(target, ev, args);
+Server_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* ev, alt::MValueConst* args[], int size) {
+    alt::Array<alt::MValueConst> mValues = alt::Array<alt::MValueConst>(size);
+    for(int i = 0;i < size;i++) {
+        mValues[i] = *args[i];
+    }
+    server->TriggerClientEvent(target, ev, mValues);
 }
 
 alt::IVehicle*
@@ -158,50 +166,52 @@ void Server_RestartResource(alt::ICore* server, const char* text) {
     server->RestartResource(text);
 }
 
-alt::MValue* Core_CreateMValueNil(alt::ICore* core) {
+alt::MValueConst* Core_CreateMValueNil(alt::ICore* core) {
     auto mValue = (alt::IMValue*) core->CreateMValueNil().Get();
-    return new alt::Ref(mValue);
+    return new alt::ConstRef(mValue);
 }
 
-alt::MValue* Core_CreateMValueBool(alt::ICore* core, bool value) {
+alt::MValueConst* Core_CreateMValueBool(alt::ICore* core, bool value) {
     auto mValue = (alt::IMValue*) core->CreateMValueBool(value).Get();
-    return new alt::Ref(mValue);
+    return new alt::ConstRef(mValue);
 }
 
-alt::MValue* Core_CreateMValueInt(alt::ICore* core, int64_t value) {
+alt::MValueConst* Core_CreateMValueInt(alt::ICore* core, int64_t value) {
     auto mValue = (alt::IMValue*) core->CreateMValueInt(value).Get();
-    return new alt::Ref(mValue);
+    return new alt::ConstRef(mValue);
 }
 
-alt::MValue* Core_CreateMValueUInt(alt::ICore* core, uint64_t value) {
+alt::MValueConst* Core_CreateMValueUInt(alt::ICore* core, uint64_t value) {
     auto mValue = (alt::IMValue*) core->CreateMValueUInt(value).Get();
-    return new alt::Ref(mValue);
+    return new alt::ConstRef(mValue);
 }
 
-alt::MValue* Core_CreateMValueDouble(alt::ICore* core, double value) {
+alt::MValueConst* Core_CreateMValueDouble(alt::ICore* core, double value) {
     auto mValue = (alt::IMValue*) core->CreateMValueDouble(value).Get();
-    return new alt::Ref(mValue);
+    return new alt::ConstRef(mValue);
 }
 
-alt::MValue* Core_CreateMValueString(alt::ICore* core, const char* value) {
+alt::MValueConst* Core_CreateMValueString(alt::ICore* core, const char* value) {
     auto mValue = (alt::IMValue*) core->CreateMValueString(value).Get();
-    return new alt::Ref(mValue);
+    return new alt::ConstRef(mValue);
 }
 
-alt::MValue* Core_CreateMValueList(alt::ICore* core, alt::MValue val[], uint64_t size) {
+alt::MValueConst* Core_CreateMValueList(alt::ICore* core, alt::MValueConst* val[], uint64_t size) {
     auto mValue = core->CreateMValueList(size).Get();
     for (uint64_t i = 0; i < size; i++) {
-        mValue->Set(i, val[i]);
+        mValue->Set(i, alt::Ref(val[i]->Get()));
+        delete val[i];
     }
-    return new alt::Ref((alt::IMValue*) mValue);
+    return new alt::ConstRef((alt::IMValue*) mValue);
 }
 
-alt::MValue* Core_CreateMValueDict(alt::ICore* core, const char** keys, alt::MValue val[], uint64_t size) {
+alt::MValueConst* Core_CreateMValueDict(alt::ICore* core, const char** keys, alt::MValueConst* val[], uint64_t size) {
     auto mValue = core->CreateMValueDict().Get();
     for (uint64_t i = 0; i < size; i++) {
-        mValue->Set(keys[i], val[i]);
+        mValue->Set(keys[i], alt::Ref(val[i]->Get()));
+        delete val[i];
     }
-    return new alt::Ref((alt::IMValue*) mValue);
+    return new alt::ConstRef((alt::IMValue*) mValue);
 }
 
 /*alt::MValueBaseObject* Core_CreateMValueBaseObject(alt::ICore* core, alt::Ref<alt::IBaseObject>* value) {
@@ -209,32 +219,32 @@ alt::MValue* Core_CreateMValueDict(alt::ICore* core, const char** keys, alt::MVa
     return new alt::Ref(mValue);
 }*/
 
-alt::MValue* Core_CreateMValueCheckpoint(alt::ICore* core, alt::ICheckpoint* value) {
+alt::MValueConst* Core_CreateMValueCheckpoint(alt::ICore* core, alt::ICheckpoint* value) {
     auto mValue = core->CreateMValueBaseObject(value).Get();
-    return new alt::Ref((alt::IMValue*) mValue);
+    return new alt::ConstRef((alt::IMValue*) mValue);
 }
 
-alt::MValue* Core_CreateMValueBlip(alt::ICore* core, alt::IBlip* value) {
+alt::MValueConst* Core_CreateMValueBlip(alt::ICore* core, alt::IBlip* value) {
     auto mValue = core->CreateMValueBaseObject(value).Get();
-    return new alt::Ref((alt::IMValue*) mValue);
+    return new alt::ConstRef((alt::IMValue*) mValue);
 }
 
-alt::MValue* Core_CreateMValueVoiceChannel(alt::ICore* core, alt::IVoiceChannel* value) {
+alt::MValueConst* Core_CreateMValueVoiceChannel(alt::ICore* core, alt::IVoiceChannel* value) {
     auto mValue = core->CreateMValueBaseObject(value).Get();
-    return new alt::Ref((alt::IMValue*) mValue);
+    return new alt::ConstRef((alt::IMValue*) mValue);
 }
 
-alt::MValue* Core_CreateMValuePlayer(alt::ICore* core, alt::IPlayer* value) {
+alt::MValueConst* Core_CreateMValuePlayer(alt::ICore* core, alt::IPlayer* value) {
     auto mValue = core->CreateMValueBaseObject(value).Get();
-    return new alt::Ref((alt::IMValue*) mValue);
+    return new alt::ConstRef((alt::IMValue*) mValue);
 }
 
-alt::MValue* Core_CreateMValueVehicle(alt::ICore* core, alt::IVehicle* value) {
+alt::MValueConst* Core_CreateMValueVehicle(alt::ICore* core, alt::IVehicle* value) {
     auto mValue = core->CreateMValueBaseObject(value).Get();
-    return new alt::Ref((alt::IMValue*) mValue);
+    return new alt::ConstRef((alt::IMValue*) mValue);
 }
 
-alt::MValue* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* value) {
+alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* value) {
     auto mValue = core->CreateMValueFunction(value).Get();
-    return new alt::Ref((alt::IMValue*) mValue);
+    return new alt::ConstRef((alt::IMValue*) mValue);
 }

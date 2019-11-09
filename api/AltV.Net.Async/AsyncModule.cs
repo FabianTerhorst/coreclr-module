@@ -217,25 +217,29 @@ namespace AltV.Net.Async
         //TODO: we could write mvalue's to own onion struct in cpp to better share it but we would need to execute at least getorcreate entity when it contains a entity type in main thread
         //TODO: or lock entities dictionary so entity can't get removed until thread got it from dictionary
         //TODO: lock dictionary for async maybe as well for use cases like this
-        public override void OnClientEventEvent(IPlayer player, string name, ref MValueArray args, MValue[] mValues,
+        public override void OnClientEventEvent(IPlayer player, string name, IntPtr[] args, MValueConst[] mValues,
             object[] objects)
         {
-            base.OnClientEventEvent(player, name, ref args, mValues, objects);
+            base.OnClientEventEvent(player, name, args, mValues, objects);
+            int length = args.Length;
 
             if (AsyncEventHandlers.Count != 0 && AsyncEventHandlers.TryGetValue(name, out var eventHandlers))
             {
                 if (mValues == null)
                 {
-                    mValues = args.ToArray();
+                    mValues = new MValueConst[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        mValues[i] = new MValueConst(args[i]);
+                    }
                 }
 
                 if (objects == null)
                 {
-                    var length = mValues.Length;
                     objects = new object[length];
                     for (var i = 0; i < length; i++)
                     {
-                        objects[i] = mValues[i].ToObject(BaseBaseObjectPool);
+                        objects[i] = mValues[i].ToObject();
                     }
                 }
 
@@ -272,16 +276,19 @@ namespace AltV.Net.Async
             {
                 if (mValues == null)
                 {
-                    mValues = args.ToArray();
+                    mValues = new MValueConst[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        mValues[i] = new MValueConst(args[i]);
+                    }
                 }
 
                 if (objects == null)
                 {
-                    var length = mValues.Length;
                     objects = new object[length];
                     for (var i = 0; i < length; i++)
                     {
-                        objects[i] = mValues[i].ToObject(BaseBaseObjectPool);
+                        objects[i] = mValues[i].ToObject();
                     }
                 }
 
@@ -299,16 +306,19 @@ namespace AltV.Net.Async
             {
                 if (mValues == null)
                 {
-                    mValues = args.ToArray();
+                    mValues = new MValueConst[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        mValues[i] = new MValueConst(args[i]);
+                    }
                 }
 
                 if (objects == null)
                 {
-                    var length = mValues.Length;
                     objects = new object[length];
                     for (var i = 0; i < length; i++)
                     {
-                        objects[i] = mValues[i].ToObject(BaseBaseObjectPool);
+                        objects[i] = mValues[i].ToObject();
                     }
                 }
 
@@ -323,24 +333,29 @@ namespace AltV.Net.Async
             }
         }
 
-        public override void OnServerEventEvent(string name, ref MValueArray args, MValue[] mValues, object[] objects)
+        public override void OnServerEventEvent(string name, IntPtr[] args, MValueConst[] mValues, object[] objects)
         {
-            base.OnServerEventEvent(name, ref args, mValues, objects);
+            base.OnServerEventEvent(name, args, mValues, objects);
 
+
+            var length = args.Length;
             if (AsyncEventHandlers.Count != 0 && AsyncEventHandlers.TryGetValue(name, out var eventHandlers))
             {
                 if (mValues == null)
                 {
-                    mValues = args.ToArray();
+                    mValues = new MValueConst[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        mValues[i] = new MValueConst(args[i]);
+                    }
                 }
 
                 if (objects == null)
                 {
-                    var length = mValues.Length;
                     objects = new object[length];
                     for (var i = 0; i < length; i++)
                     {
-                        objects[i] = mValues[i].ToObject(BaseBaseObjectPool);
+                        objects[i] = mValues[i].ToObject();
                     }
                 }
 
@@ -377,16 +392,19 @@ namespace AltV.Net.Async
             {
                 if (mValues == null)
                 {
-                    mValues = args.ToArray();
+                    mValues = new MValueConst[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        mValues[i] = new MValueConst(args[i]);
+                    }
                 }
 
                 if (objects == null)
                 {
-                    var length = mValues.Length;
                     objects = new object[length];
                     for (var i = 0; i < length; i++)
                     {
-                        objects[i] = mValues[i].ToObject(BaseBaseObjectPool);
+                        objects[i] = mValues[i].ToObject();
                     }
                 }
 

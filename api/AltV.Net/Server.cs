@@ -163,94 +163,121 @@ namespace AltV.Net
             return hash;
         }
 
-        public void TriggerServerEvent(string eventName, params MValue[] args)
+        public void TriggerServerEvent(string eventName, params MValueConst[] args)
         {
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
             TriggerServerEvent(eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
 
-        public void TriggerServerEvent(IntPtr eventNamePtr, params MValue[] args)
+        public void TriggerServerEvent(IntPtr eventNamePtr, params MValueConst[] args)
         {
-            var mValueList = MValue.Nil;
-            AltNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
-            AltNative.Server.Server_TriggerServerEvent(NativePointer, eventNamePtr, ref mValueList);
-            AltNative.MValueDispose.MValue_Dispose(ref mValueList);
+            var size = args.Length;
+            var mValuePointers = new IntPtr[size];
+            for (var i = 0; i < size; i++)
+            {
+                mValuePointers[i] = args[i].nativePointer;
+            }
+
+            AltNative.Server.Server_TriggerServerEvent(NativePointer, eventNamePtr, mValuePointers);
         }
 
-        public void TriggerServerEvent(string eventName, ref MValue args)
+        public void TriggerServerEvent(string eventName, IntPtr[] args)
         {
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
-            TriggerServerEvent(eventNamePtr, ref args);
+            TriggerServerEvent(eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
 
-        public void TriggerServerEvent(IntPtr eventNamePtr, ref MValue args)
+        public void TriggerServerEvent(IntPtr eventNamePtr, IntPtr[] args)
         {
-            AltNative.Server.Server_TriggerServerEvent(NativePointer, eventNamePtr, ref args);
+            AltNative.Server.Server_TriggerServerEvent(NativePointer, eventNamePtr, args);
         }
 
         public void TriggerServerEvent(IntPtr eventNamePtr, params object[] args)
         {
             if (args == null) throw new ArgumentException("Arguments array should not be null.");
-            var mValues = MValue.CreateFromObjects(args);
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
             TriggerServerEvent(eventNamePtr, mValues);
-            MValue.Dispose(mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
         }
 
         public void TriggerServerEvent(string eventName, params object[] args)
         {
             if (args == null) throw new ArgumentException("Arguments array should not be null.");
-            var mValues = MValue.CreateFromObjects(args);
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
             TriggerServerEvent(eventName, mValues);
-            MValue.Dispose(mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
         }
 
-        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params MValue[] args)
+        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params MValueConst[] args)
         {
-            var mValueList = MValue.Nil;
-            AltNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValueList);
+            var size = args.Length;
+            var mValuePointers = new IntPtr[size];
+            for (var i = 0; i < size; i++)
+            {
+                mValuePointers[i] = args[i].nativePointer;
+            }
+
             AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero,
                 eventNamePtr,
-                ref mValueList);
-            AltNative.MValueDispose.MValue_Dispose(ref mValueList);
+                mValuePointers);
         }
 
-        public void TriggerClientEvent(IPlayer player, string eventName, params MValue[] args)
+        public void TriggerClientEvent(IPlayer player, string eventName, params MValueConst[] args)
         {
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
             TriggerClientEvent(player, eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
 
-        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, ref MValue args)
+        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, IntPtr[] args)
         {
             AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero,
-                eventNamePtr,
-                ref args);
+                eventNamePtr, args);
         }
 
-        public void TriggerClientEvent(IPlayer player, string eventName, ref MValue args)
+        public void TriggerClientEvent(IPlayer player, string eventName, IntPtr[] args)
         {
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
-            TriggerClientEvent(player, eventNamePtr, ref args);
+            TriggerClientEvent(player, eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
 
         public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params object[] args)
         {
             if (args == null) throw new ArgumentException("Arguments array should not be null.");
-            var mValues = MValue.CreateFromObjects(args);
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
             TriggerClientEvent(player, eventNamePtr, mValues);
-            MValue.Dispose(mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)
         {
             if (args == null) throw new ArgumentException("Arguments array should not be null.");
-            var mValues = MValue.CreateFromObjects(args);
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
             TriggerClientEvent(player, eventName, mValues);
-            MValue.Dispose(mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
         }
 
         public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
@@ -424,100 +451,114 @@ namespace AltV.Net
             Marshal.FreeHGlobal(namePtr);
         }
 
-        public void CreateMValueNil(out MValue2 mValue)
+        public void CreateMValueNil(out MValueConst mValue)
         {
-            mValue = new MValue2(MValueConst.Type.NIL, AltNative.Server.Core_CreateMValueNil(NativePointer));
+            mValue = new MValueConst(MValueConst.Type.NIL, AltNative.Server.Core_CreateMValueNil(NativePointer));
         }
 
-        public void CreateMValueBool(out MValue2 mValue, bool value)
+        public void CreateMValueBool(out MValueConst mValue, bool value)
         {
-            mValue = new MValue2(MValueConst.Type.BOOL, AltNative.Server.Core_CreateMValueBool(NativePointer, value));
+            mValue = new MValueConst(MValueConst.Type.BOOL,
+                AltNative.Server.Core_CreateMValueBool(NativePointer, value));
         }
 
-        public void CreateMValueInt(out MValue2 mValue, long value)
+        public void CreateMValueInt(out MValueConst mValue, long value)
         {
-            mValue = new MValue2(MValueConst.Type.INT, AltNative.Server.Core_CreateMValueInt(NativePointer, value));
+            mValue = new MValueConst(MValueConst.Type.INT, AltNative.Server.Core_CreateMValueInt(NativePointer, value));
         }
 
-        public void CreateMValueUInt(out MValue2 mValue, ulong value)
+        public void CreateMValueUInt(out MValueConst mValue, ulong value)
         {
-            mValue = new MValue2(MValueConst.Type.UINT, AltNative.Server.Core_CreateMValueUInt(NativePointer, value));
+            mValue = new MValueConst(MValueConst.Type.UINT,
+                AltNative.Server.Core_CreateMValueUInt(NativePointer, value));
         }
 
-        public void CreateMValueDouble(out MValue2 mValue, double value)
+        public void CreateMValueDouble(out MValueConst mValue, double value)
         {
-            mValue = new MValue2(MValueConst.Type.DOUBLE,
+            mValue = new MValueConst(MValueConst.Type.DOUBLE,
                 AltNative.Server.Core_CreateMValueDouble(NativePointer, value));
         }
 
-        public void CreateMValueString(out MValue2 mValue, string value)
+        public void CreateMValueString(out MValueConst mValue, string value)
         {
             var valuePtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
-            mValue = new MValue2(MValueConst.Type.STRING,
+            mValue = new MValueConst(MValueConst.Type.STRING,
                 AltNative.Server.Core_CreateMValueString(NativePointer, valuePtr));
             Marshal.FreeHGlobal(valuePtr);
         }
 
-        public void CreateMValueList(out MValue2 mValue, MValue2[] val, ulong size)
+        public void CreateMValueList(out MValueConst mValue, MValueConst[] val, ulong size)
         {
-            mValue = new MValue2(MValueConst.Type.LIST,
-                AltNative.Server.Core_CreateMValueList(NativePointer, val, size));
+            var pointers = new IntPtr[size];
+            for (ulong i = 0; i < size; i++)
+            {
+                pointers[i] = val[i].nativePointer;
+            }
+
+            mValue = new MValueConst(MValueConst.Type.LIST,
+                AltNative.Server.Core_CreateMValueList(NativePointer, pointers, size));
         }
 
-        public void CreateMValueDict(out MValue2 mValue, string[] keys, MValue2[] val, ulong size)
+        public void CreateMValueDict(out MValueConst mValue, string[] keys, MValueConst[] val, ulong size)
         {
-            mValue = new MValue2(MValueConst.Type.DICT,
-                AltNative.Server.Core_CreateMValueDict(NativePointer, keys, val, size));
+            var pointers = new IntPtr[size];
+            for (ulong i = 0; i < size; i++)
+            {
+                pointers[i] = val[i].nativePointer;
+            }
+
+            mValue = new MValueConst(MValueConst.Type.DICT,
+                AltNative.Server.Core_CreateMValueDict(NativePointer, keys, pointers, size));
         }
 
-        public void CreateMValueCheckpoint(out MValue2 mValue, ICheckpoint value)
+        public void CreateMValueCheckpoint(out MValueConst mValue, ICheckpoint value)
         {
-            mValue = new MValue2(MValueConst.Type.ENTITY,
+            mValue = new MValueConst(MValueConst.Type.ENTITY,
                 AltNative.Server.Core_CreateMValueCheckpoint(NativePointer, value.NativePointer));
         }
 
-        public void CreateMValueBlip(out MValue2 mValue, IBlip value)
+        public void CreateMValueBlip(out MValueConst mValue, IBlip value)
         {
-            mValue = new MValue2(MValueConst.Type.ENTITY,
+            mValue = new MValueConst(MValueConst.Type.ENTITY,
                 AltNative.Server.Core_CreateMValueBlip(NativePointer, value.NativePointer));
         }
 
-        public void CreateMValueVoiceChannel(out MValue2 mValue, IVoiceChannel value)
+        public void CreateMValueVoiceChannel(out MValueConst mValue, IVoiceChannel value)
         {
-            mValue = new MValue2(MValueConst.Type.ENTITY,
+            mValue = new MValueConst(MValueConst.Type.ENTITY,
                 AltNative.Server.Core_CreateMValueVoiceChannel(NativePointer, value.NativePointer));
         }
 
-        public void CreateMValuePlayer(out MValue2 mValue, IPlayer value)
+        public void CreateMValuePlayer(out MValueConst mValue, IPlayer value)
         {
-            mValue = new MValue2(MValueConst.Type.ENTITY,
+            mValue = new MValueConst(MValueConst.Type.ENTITY,
                 AltNative.Server.Core_CreateMValuePlayer(NativePointer, value.NativePointer));
         }
 
-        public void CreateMValueVehicle(out MValue2 mValue, IVehicle value)
+        public void CreateMValueVehicle(out MValueConst mValue, IVehicle value)
         {
-            mValue = new MValue2(MValueConst.Type.ENTITY,
+            mValue = new MValueConst(MValueConst.Type.ENTITY,
                 AltNative.Server.Core_CreateMValueVehicle(NativePointer, value.NativePointer));
         }
 
-        public void CreateMValueFunction(out MValue2 mValue, IntPtr value)
+        public void CreateMValueFunction(out MValueConst mValue, IntPtr value)
         {
-            mValue = new MValue2(MValueConst.Type.FUNCTION,
+            mValue = new MValueConst(MValueConst.Type.FUNCTION,
                 AltNative.Server.Core_CreateMValueFunction(NativePointer, value));
         }
 
-        public void CreateMValue(out MValue2 mValue, object obj)
+        public void CreateMValue(out MValueConst mValue, object obj)
         {
             if (obj == null)
             {
-                mValue = MValue2.Nil;
+                mValue = MValueConst.Nil;
                 return;
             }
 
             int i;
 
             string[] dictKeys;
-            MValue2[] dictValues;
+            MValueConst[] dictValues;
             MValueWriter2 writer;
 
             switch (obj)
@@ -558,10 +599,10 @@ namespace AltV.Net
                 case string value:
                     CreateMValueString(out mValue, value);
                     return;
-                case MValue2 value:
+                case MValueConst value:
                     mValue = value;
                     return;
-                case MValue2[] value:
+                case MValueConst[] value:
                     CreateMValueList(out mValue, value, (ulong) value.Length);
                     return;
                 case Invoker value:
@@ -576,7 +617,7 @@ namespace AltV.Net
                     return;
                 case IDictionary dictionary:
                     dictKeys = new string[dictionary.Count];
-                    dictValues = new MValue2[dictionary.Count];
+                    dictValues = new MValueConst[dictionary.Count];
                     i = 0;
                     foreach (var key in dictionary.Keys)
                     {
@@ -586,7 +627,7 @@ namespace AltV.Net
                         }
                         else
                         {
-                            mValue = MValue2.Nil;
+                            mValue = MValueConst.Nil;
                             return;
                         }
                     }
@@ -603,7 +644,7 @@ namespace AltV.Net
                     return;
                 case ICollection collection:
                     var length = (ulong) collection.Count;
-                    var listValues = new MValue2[length];
+                    var listValues = new MValueConst[length];
                     i = 0;
                     foreach (var value in collection)
                     {
@@ -616,7 +657,7 @@ namespace AltV.Net
                     return;
                 case IDictionary<string, object> dictionary:
                     dictKeys = new string[dictionary.Count];
-                    dictValues = new MValue2[dictionary.Count];
+                    dictValues = new MValueConst[dictionary.Count];
                     i = 0;
                     foreach (var key in dictionary.Keys)
                     {
@@ -644,8 +685,8 @@ namespace AltV.Net
                     writer.ToMValue(out mValue);
                     return;
                 case Position position:
-                    var posValues = new MValue2[3];
-                    MValue2 positionMValue;
+                    var posValues = new MValueConst[3];
+                    MValueConst positionMValue;
                     CreateMValueDouble(out positionMValue, position.X);
                     posValues[0] = positionMValue;
                     CreateMValueDouble(out positionMValue, position.Y);
@@ -659,8 +700,8 @@ namespace AltV.Net
                     CreateMValueDict(out mValue, posKeys, posValues, 3);
                     return;
                 case Rotation rotation:
-                    var rotValues = new MValue2[3];
-                    MValue2 rotationMValue;
+                    var rotValues = new MValueConst[3];
+                    MValueConst rotationMValue;
                     CreateMValueDouble(out rotationMValue, rotation.Roll);
                     rotValues[0] = rotationMValue;
                     CreateMValueDouble(out rotationMValue, rotation.Pitch);
@@ -681,12 +722,12 @@ namespace AltV.Net
                     return;
                 default:
                     Alt.Log("can't convert type:" + obj.GetType());
-                    mValue = MValue2.Nil;
+                    mValue = MValueConst.Nil;
                     return;
             }
         }
 
-        public void CreateMValues(MValue2[] mValues, object[] objects)
+        public void CreateMValues(MValueConst[] mValues, object[] objects)
         {
             for (int i = 0, length = objects.Length; i < length; i++)
             {

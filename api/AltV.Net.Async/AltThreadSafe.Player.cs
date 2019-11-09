@@ -98,25 +98,28 @@ namespace AltV.Net.Async
 
         public static bool EmitLocked(this IPlayer player, string eventName, params object[] args)
         {
-            var mValues = MValueLocked.CreateFromObjectsLocked(args);
-            var mValueArgs = MValue.Create(mValues);
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            Alt.Server.CreateMValues(mValues, args);
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
             var successfully = true;
             lock (player)
             {
                 if (player.Exists)
                 {
-                    Alt.Server.TriggerClientEvent(player, eventNamePtr, ref mValueArgs);
+                    Alt.Server.TriggerClientEvent(player, eventNamePtr, mValues);
                 }
                 else
                 {
                     successfully = false;
                 }
             }
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
 
             Marshal.FreeHGlobal(eventNamePtr);
-            MValue.Dispose(mValues);
-            mValueArgs.Dispose();
             return successfully;
         }
     }

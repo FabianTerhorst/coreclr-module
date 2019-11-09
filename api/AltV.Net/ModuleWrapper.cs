@@ -181,9 +181,9 @@ namespace AltV.Net
             _module.OnPlayerDisconnect(playerPointer, reason);
         }
 
-        public static void OnClientEvent(IntPtr playerPointer, string name, ref MValueArray args)
+        public static void OnClientEvent(IntPtr playerPointer, string name, IntPtr[] args)
         {
-            _module.OnClientEvent(playerPointer, name, ref args);
+            _module.OnClientEvent(playerPointer, name, args);
         }
 
         public static void OnServerEvent(string name, IntPtr[] args)

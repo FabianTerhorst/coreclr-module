@@ -27,7 +27,7 @@ namespace AltV.Net.Events
 
     public delegate void PlayerClientEventDelegate(IPlayer player, string eventName, object[] args);
 
-    public delegate void PlayerClientCustomEventDelegate(IPlayer player, string eventName, ref MValueArray mValueArray);
+    public delegate void PlayerClientCustomEventDelegate(IPlayer player, string eventName, MValueConst[] mValueArray);
 
     public delegate void PlayerChangeVehicleSeatDelegate(IVehicle vehicle, IPlayer player, byte oldSeat, byte newSeat);
 

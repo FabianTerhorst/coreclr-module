@@ -53,15 +53,48 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void MValueConst_Delete(IntPtr mValueConst);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void MValue_Delete(IntPtr mValueConst);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern byte MValueConst_GetType(IntPtr mValueConst);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern byte MValue_GetType(IntPtr mValueConst);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool MValue_GetBool(IntPtr mValueConst);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern long MValue_GetInt(IntPtr mValueConst);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern ulong MValue_GetUInt(IntPtr mValueConst);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern double MValue_GetDouble(IntPtr mValueConst);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool MValue_GetString(IntPtr mValueConst, ref IntPtr value, ref ulong size);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern ulong MValue_GetListSize(IntPtr mValueConst);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool MValue_GetList(IntPtr mValueConst, IntPtr[] values);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern ulong MValue_GetDictSize(IntPtr mValueConst);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool MValue_GetDict(IntPtr mValueConst, IntPtr[] keys, IntPtr[] values);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr MValue_GetEntity(IntPtr mValueConst, ref BaseObjectType type);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr MValue_CallFunction(IntPtr mValueConst, IntPtr[] val, ulong size);
         }
     }
 }

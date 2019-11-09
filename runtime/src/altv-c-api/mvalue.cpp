@@ -317,7 +317,7 @@ void* MValue_GetEntity(alt::MValue* mValueConst, alt::IBaseObject::Type &type) {
     mValue.Get()->Call(value);
 }*/
 
-alt::MValue* MValueConst_CallFunction(alt::MValueConst* mValueConst, alt::MValue* val[], uint64_t size) {
+alt::MValueConst* MValueConst_CallFunction(alt::MValueConst* mValueConst, alt::MValueConst* val[], uint64_t size) {
     auto mValue = mValueConst->Get();
     if (mValue->GetType() == alt::IMValue::Type::FUNCTION) {
         alt::MValueArgs value = alt::Array<alt::MValueConst>(size);
@@ -325,7 +325,7 @@ alt::MValue* MValueConst_CallFunction(alt::MValueConst* mValueConst, alt::MValue
             value.Push(*val[i]);
         }
         auto mValueFunction = dynamic_cast<const alt::IMValueFunction*>(mValue);
-        return new alt::Ref(mValueFunction->Call(value));
+        return new alt::ConstRef(mValueFunction->Call(value));
     }
     return nullptr;
 }

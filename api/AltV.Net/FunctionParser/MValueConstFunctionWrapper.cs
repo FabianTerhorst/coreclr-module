@@ -23,10 +23,10 @@ namespace AltV.Net.FunctionParser
                 mValues[i] = mValueElement.nativePointer;
             }
             
-            var result = new MValue2(AltNative.MValueNative.MValueConst_CallFunction(nativePointer, mValues, length)).ToObject();
+            var result = new MValueConst(AltNative.MValueNative.MValueConst_CallFunction(nativePointer, mValues, length)).ToObject();
             for (ulong i = 0; i < length; i++)
             {
-                AltNative.MValueNative.MValue_Delete(mValues[i]); ;
+                AltNative.MValueNative.MValueConst_Delete(mValues[i]); ;
             }
             return result;
         }

@@ -310,10 +310,14 @@ namespace AltV.Net
             return MValue.CreateFromObject(result);
         }
         
-        internal void Call(MValueConst[] values, ref MValue2 result)
+        internal void Call(MValueConst[] values, out MValueConst result)
         {
             var length = values.Length;
-            if (length < requiredArgsCount) return;
+            if (length < requiredArgsCount)
+            {
+                result = MValueConst.Nil;
+                return;
+            }
             var argsLength = args.Length;
             var invokeValues = new object[argsLength];
             var parserValuesLength = Math.Min(argsLength, length);
@@ -330,7 +334,11 @@ namespace AltV.Net
             //TODO: fill remaining values in event params
 
             var resultObj = @delegate.DynamicInvoke(invokeValues);
-            if (returnType == FunctionTypes.Void) return;
+            if (returnType == FunctionTypes.Void)
+            {
+                result = MValueConst.Nil;
+                return;
+            }
             Alt.Server.CreateMValue(out result, resultObj);
         }
 
@@ -350,6 +358,37 @@ namespace AltV.Net
             var result = @delegate.DynamicInvoke(invokeValues);
             if (returnType == FunctionTypes.Void) return MValue.Nil;
             return MValue.CreateFromObject(result);
+        }
+        
+        internal void Call(IPlayer player, MValueConst[] values, out MValueConst result)
+        {
+            var length = values.Length;
+            if (length + 1 != args.Length)
+            {
+                result = MValueConst.Nil;
+                return;
+            }
+
+            if (!typeInfos[0].IsPlayer)
+            {
+                result = MValueConst.Nil;
+                return;
+            }
+            var invokeValues = new object[length + 1];
+            invokeValues[0] = player;
+            for (var i = 0; i < length; i++)
+            {
+                invokeValues[i + 1] =
+                    constParsers[i + 1](ref values[i], args[i + 1], typeInfos[i + 1]);
+            }
+
+            var resultObj = @delegate.DynamicInvoke(invokeValues);
+            if (returnType == FunctionTypes.Void)
+            {
+                result = MValueConst.Nil;
+                return;
+            }
+            Alt.Server.CreateMValue(out result, resultObj);
         }
 
         internal object[] CalculateInvokeValues(IPlayer player, MValue[] values)

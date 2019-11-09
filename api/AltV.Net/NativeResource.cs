@@ -14,8 +14,7 @@ namespace AltV.Net
         private CSharpResourceImpl cSharpResourceImpl;
 
         public CSharpResourceImpl CSharpResourceImpl =>
-            cSharpResourceImpl ?? (cSharpResourceImpl =
-                new CSharpResourceImpl(AltNative.Resource.Resource_GetCSharpImpl(NativePointer)));
+            cSharpResourceImpl ??= new CSharpResourceImpl(AltNative.Resource.Resource_GetCSharpImpl(NativePointer));
 
         public string Path
         {

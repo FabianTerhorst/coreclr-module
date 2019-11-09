@@ -42,29 +42,28 @@ namespace AltV.Net
 
         uint Hash(string hash);
 
-        void TriggerServerEvent(IntPtr eventNamePtr, params MValue[] args);
+        public void TriggerServerEvent(string eventName, params MValueConst[] args);
 
-        void TriggerServerEvent(IntPtr eventNamePtr, params object[] args);
+        public void TriggerServerEvent(IntPtr eventNamePtr, params MValueConst[] args);
 
-        void TriggerServerEvent(IntPtr eventNamePtr, ref MValue args);
+        public void TriggerServerEvent(string eventName, IntPtr[] args);
 
-        void TriggerServerEvent(string eventName, params MValue[] args);
+        public void TriggerServerEvent(IntPtr eventNamePtr, IntPtr[] args);
 
-        void TriggerServerEvent(string eventName, params object[] args);
+        public void TriggerServerEvent(IntPtr eventNamePtr, params object[] args);
 
-        void TriggerServerEvent(string eventName, ref MValue args);
+        public void TriggerServerEvent(string eventName, params object[] args);
 
-        void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params MValue[] args);
+        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params MValueConst[] args);
 
-        void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params object[] args);
+        public void TriggerClientEvent(IPlayer player, string eventName, params MValueConst[] args);
 
-        void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, ref MValue args);
+        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, IntPtr[] args);
 
-        void TriggerClientEvent(IPlayer player, string eventName, params MValue[] args);
+        public void TriggerClientEvent(IPlayer player, string eventName, IntPtr[] args);
 
-        void TriggerClientEvent(IPlayer player, string eventName, params object[] args);
-
-        void TriggerClientEvent(IPlayer player, string eventName, ref MValue args);
+        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params object[] args);
+        public void TriggerClientEvent(IPlayer player, string eventName, params object[] args);
 
         IVehicle CreateVehicle(uint model, Position pos, Rotation rotation);
 
@@ -112,47 +111,47 @@ namespace AltV.Net
 
         void RestartResource(string name);
 
-        void CreateMValueNil(out MValue2 mValue);
+        void CreateMValueNil(out MValueConst mValue);
 
-        void CreateMValueBool(out MValue2 mValue, bool value);
+        void CreateMValueBool(out MValueConst mValue, bool value);
 
-        void CreateMValueInt(out MValue2 mValue, long value);
+        void CreateMValueInt(out MValueConst mValue, long value);
 
-        void CreateMValueUInt(out MValue2 mValue, ulong value);
-
-
-        void CreateMValueDouble(out MValue2 mValue, double value);
+        void CreateMValueUInt(out MValueConst mValue, ulong value);
 
 
-        void CreateMValueString(out MValue2 mValue, string value);
+        void CreateMValueDouble(out MValueConst mValue, double value);
 
 
-        void CreateMValueList(out MValue2 mValue, MValue2[] val, ulong size);
+        void CreateMValueString(out MValueConst mValue, string value);
 
 
-        void CreateMValueDict(out MValue2 mValue, string[] keys, MValue2[] val,
+        void CreateMValueList(out MValueConst mValue, MValueConst[] val, ulong size);
+
+
+        void CreateMValueDict(out MValueConst mValue, string[] keys, MValueConst[] val,
             ulong size);
 
 
-        void CreateMValueCheckpoint(out MValue2 mValue, ICheckpoint value);
+        void CreateMValueCheckpoint(out MValueConst mValue, ICheckpoint value);
 
 
-        void CreateMValueBlip(out MValue2 mValue, IBlip value);
+        void CreateMValueBlip(out MValueConst mValue, IBlip value);
 
 
-        void CreateMValueVoiceChannel(out MValue2 mValue, IVoiceChannel value);
+        void CreateMValueVoiceChannel(out MValueConst mValue, IVoiceChannel value);
 
 
-        void CreateMValuePlayer(out MValue2 mValue, IPlayer value);
+        void CreateMValuePlayer(out MValueConst mValue, IPlayer value);
 
 
-        void CreateMValueVehicle(out MValue2 mValue, IVehicle value);
+        void CreateMValueVehicle(out MValueConst mValue, IVehicle value);
 
 
-        void CreateMValueFunction(out MValue2 mValue, IntPtr value);
+        void CreateMValueFunction(out MValueConst mValue, IntPtr value);
 
-        void CreateMValue(out MValue2 mValue, object obj);
-        
-        void CreateMValues(MValue2[] mValues, object[] objects);
+        void CreateMValue(out MValueConst mValue, object obj);
+
+        void CreateMValues(MValueConst[] mValues, object[] objects);
     }
 }

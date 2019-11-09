@@ -626,29 +626,43 @@ namespace AltV.Net
             }
         }
 
-        public void OnClientEvent(IntPtr playerPointer, string name, ref MValueArray args)
+        public void OnClientEvent(IntPtr playerPointer, string name, IntPtr[] args)
         {
             if (!PlayerPool.GetOrCreate(playerPointer, out var player))
             {
                 return;
             }
 
+            int length = args.Length;
+            MValueConst[] argArray = null;
             if (parserClientEventHandlers.Count != 0 &&
                 parserClientEventHandlers.TryGetValue(name, out var parserEventHandlers))
             {
+                argArray = new MValueConst[length];
+                for (var i = 0; i < length; i++)
+                {
+                    argArray[i] = new MValueConst(args[i]);
+                }
                 foreach (var parserEventHandler in parserEventHandlers)
                 {
-                    parserEventHandler.Call(player, ref args);
+                    parserEventHandler.Call(player, argArray);
                 }
             }
-
-            MValue[] argArray = null;
+            
             if (this.eventHandlers.Count != 0 && this.eventHandlers.TryGetValue(name, out var eventHandlers))
             {
-                argArray = args.ToArray();
+                if (argArray == null)
+                {
+                    argArray = new MValueConst[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        argArray[i] = new MValueConst(args[i]);
+                    }
+                }
+
                 foreach (var eventHandler in eventHandlers)
                 {
-                    eventHandler.Call(player, argArray);
+                    eventHandler.Call(player, argArray, out _);
                 }
             }
 
@@ -659,14 +673,17 @@ namespace AltV.Net
             {
                 if (argArray == null)
                 {
-                    argArray = args.ToArray();
+                    argArray = new MValueConst[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        argArray[i] = new MValueConst(args[i]);
+                    }
                 }
-
-                var length = argArray.Length;
+                
                 argObjects = new object[length];
                 for (var i = 0; i < length; i++)
                 {
-                    argObjects[i] = argArray[i].ToObject(BaseBaseObjectPool);
+                    argObjects[i] = argArray[i].ToObject();
                 }
 
                 foreach (var eventHandler in eventDelegates)
@@ -679,16 +696,19 @@ namespace AltV.Net
             {
                 if (argArray == null)
                 {
-                    argArray = args.ToArray();
+                    argArray = new MValueConst[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        argArray[i] = new MValueConst(args[i]);
+                    }
                 }
 
                 if (argObjects == null)
                 {
-                    var length = argArray.Length;
                     argObjects = new object[length];
                     for (var i = 0; i < length; i++)
                     {
-                        argObjects[i] = argArray[i].ToObject(BaseBaseObjectPool);
+                        argObjects[i] = argArray[i].ToObject();
                     }
                 }
 
@@ -702,14 +722,14 @@ namespace AltV.Net
             {
                 foreach (var eventHandler in PlayerClientCustomEventEventHandler.GetEvents())
                 {
-                    eventHandler(player, name, ref args);
+                    eventHandler(player, name, argArray);
                 }
             }
 
-            OnClientEventEvent(player, name, ref args, argArray, argObjects);
+            OnClientEventEvent(player, name, args, argArray, argObjects);
         }
 
-        public virtual void OnClientEventEvent(IPlayer player, string name, ref MValueArray args, MValue[] mValues,
+        public virtual void OnClientEventEvent(IPlayer player, string name, IntPtr[] args, MValueConst[] mValues,
             object[] objects)
         {
         }
@@ -733,12 +753,11 @@ namespace AltV.Net
             
             if (this.eventHandlers.Count != 0 && this.eventHandlers.TryGetValue(name, out var eventNameEventHandlers))
             {
-                var result = MValue2.Nil;
                 foreach (var eventNameEventHandler in eventNameEventHandlers)
                 {
                     try
                     {
-                        eventNameEventHandler.Call(mValues, ref result);
+                        eventNameEventHandler.Call(mValues, out _);
                     }
                     catch (TargetInvocationException exception)
                     {
@@ -792,10 +811,10 @@ namespace AltV.Net
                 }
             }
 
-            OnServerEventEvent(name, mValues);
+            OnServerEventEvent(name, args, mValues, argObjects);
         }
 
-        public virtual void OnServerEventEvent(string name, MValueConst[] args)
+        public virtual void OnServerEventEvent(string name, IntPtr[] args, MValueConst[] mValues, object[] objects)
         {
         }
 

@@ -38,11 +38,11 @@ namespace AltV.Net.Native
                 AltV.Net.Server.CommandCallback cb);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_TriggerServerEvent(IntPtr server, IntPtr ev, ref MValue args);
+            internal static extern void Server_TriggerServerEvent(IntPtr server, IntPtr ev, IntPtr[] args);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_TriggerClientEvent(IntPtr server, IntPtr target, IntPtr ev,
-                ref MValue args);
+                IntPtr[] args);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr Server_CreateVehicle(IntPtr server, uint model, Position pos, Rotation rot,
@@ -136,10 +136,10 @@ namespace AltV.Net.Native
             internal static extern IntPtr Core_CreateMValueString(IntPtr core, IntPtr value);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Core_CreateMValueList(IntPtr core, MValue2[] val, ulong size);
+            internal static extern IntPtr Core_CreateMValueList(IntPtr core, IntPtr[] val, ulong size);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Core_CreateMValueDict(IntPtr core, string[] keys, MValue2[] val,
+            internal static extern IntPtr Core_CreateMValueDict(IntPtr core, string[] keys, IntPtr[] val,
                 ulong size);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
