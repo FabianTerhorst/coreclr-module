@@ -1,3 +1,4 @@
+using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.FunctionParser;
 using AltV.Net.Native;
@@ -178,7 +179,7 @@ namespace AltV.Net
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[] {typeof(string), typeof(MValueArray)});
                                     if (scriptFunction == null) return;
-                                    OnServerCustomEvent += (string name, ref MValueArray array) =>
+                                    OnServerCustomEvent += (string name, MValueConst[] array) =>
                                     {
                                         scriptFunction.Set(name);
                                         scriptFunction.Set(array);

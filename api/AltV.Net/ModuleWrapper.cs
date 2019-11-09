@@ -186,9 +186,9 @@ namespace AltV.Net
             _module.OnClientEvent(playerPointer, name, ref args);
         }
 
-        public static void OnServerEvent(string name, ref MValueArray args)
+        public static void OnServerEvent(string name, IntPtr[] args)
         {
-            _module.OnServerEvent(name, ref args);
+            _module.OnServerEvent(name, args);
         }
 
         public static void OnCreatePlayer(IntPtr playerPointer, ushort playerId)

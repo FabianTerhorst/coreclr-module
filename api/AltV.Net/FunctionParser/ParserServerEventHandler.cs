@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using AltV.Net.Elements.Args;
 using AltV.Net.Native;
 
 namespace AltV.Net.FunctionParser
 {
     public interface IParserServerEventHandler
     {
-        void Call(ref MValueArray mValueArray);
+        void Call(MValueConst[] mValueArray);
     }
 
     public class ParserServerEventHandler<TFunc> : IParserServerEventHandler where TFunc : Delegate
@@ -21,9 +22,9 @@ namespace AltV.Net.FunctionParser
             this.serverEventParser = serverEventParser;
         }
 
-        public void Call(ref MValueArray mValueArray)
+        public void Call(MValueConst[] mValueArray)
         {
-            serverEventParser(ref mValueArray, @delegate);
+            serverEventParser(mValueArray, @delegate);
         }
 
         public override bool Equals(object obj)

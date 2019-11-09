@@ -11,7 +11,7 @@ namespace AltV.Net
         int NetTime { get; }
 
         string RootDirectory { get; }
-        
+
         INativeResource Resource { get; }
 
         void LogInfo(string message);
@@ -111,5 +111,48 @@ namespace AltV.Net
         void StopResource(string name);
 
         void RestartResource(string name);
+
+        void CreateMValueNil(out MValue2 mValue);
+
+        void CreateMValueBool(out MValue2 mValue, bool value);
+
+        void CreateMValueInt(out MValue2 mValue, long value);
+
+        void CreateMValueUInt(out MValue2 mValue, ulong value);
+
+
+        void CreateMValueDouble(out MValue2 mValue, double value);
+
+
+        void CreateMValueString(out MValue2 mValue, string value);
+
+
+        void CreateMValueList(out MValue2 mValue, MValue2[] val, ulong size);
+
+
+        void CreateMValueDict(out MValue2 mValue, string[] keys, MValue2[] val,
+            ulong size);
+
+
+        void CreateMValueCheckpoint(out MValue2 mValue, ICheckpoint value);
+
+
+        void CreateMValueBlip(out MValue2 mValue, IBlip value);
+
+
+        void CreateMValueVoiceChannel(out MValue2 mValue, IVoiceChannel value);
+
+
+        void CreateMValuePlayer(out MValue2 mValue, IPlayer value);
+
+
+        void CreateMValueVehicle(out MValue2 mValue, IVehicle value);
+
+
+        void CreateMValueFunction(out MValue2 mValue, IntPtr value);
+
+        void CreateMValue(out MValue2 mValue, object obj);
+        
+        void CreateMValues(MValue2[] mValues, object[] objects);
     }
 }

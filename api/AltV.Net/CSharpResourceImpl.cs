@@ -172,6 +172,11 @@ namespace AltV.Net
         {
             return AltNative.MValueCreate.Invoker_Create(NativePointer, function);
         }
+        
+        public IntPtr CreateInvoker(MValueFunctionCallback function)
+        {
+            return AltNative.MValueNative.Invoker_Create(NativePointer, function);
+        }
 
         public void DestroyInvoker(IntPtr invoker)
         {

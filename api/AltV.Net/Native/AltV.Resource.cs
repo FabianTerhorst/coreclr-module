@@ -83,7 +83,7 @@ namespace AltV.Net.Native
 
             internal delegate void ClientEventDelegate(IntPtr playerPointer, string name, ref MValueArray args);
 
-            internal delegate void ServerEventDelegate(string name, ref MValueArray args);
+            internal delegate void ServerEventDelegate(string name, IntPtr[] args);
 
             internal delegate void CreatePlayerDelegate(IntPtr playerPointer, ushort playerId);
 

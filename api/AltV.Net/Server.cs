@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -421,6 +422,277 @@ namespace AltV.Net
             var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
             AltNative.Server.Server_RestartResource(NativePointer, namePtr);
             Marshal.FreeHGlobal(namePtr);
+        }
+
+        public void CreateMValueNil(out MValue2 mValue)
+        {
+            mValue = new MValue2(MValueConst.Type.NIL, AltNative.Server.Core_CreateMValueNil(NativePointer));
+        }
+
+        public void CreateMValueBool(out MValue2 mValue, bool value)
+        {
+            mValue = new MValue2(MValueConst.Type.BOOL, AltNative.Server.Core_CreateMValueBool(NativePointer, value));
+        }
+
+        public void CreateMValueInt(out MValue2 mValue, long value)
+        {
+            mValue = new MValue2(MValueConst.Type.INT, AltNative.Server.Core_CreateMValueInt(NativePointer, value));
+        }
+
+        public void CreateMValueUInt(out MValue2 mValue, ulong value)
+        {
+            mValue = new MValue2(MValueConst.Type.UINT, AltNative.Server.Core_CreateMValueUInt(NativePointer, value));
+        }
+
+        public void CreateMValueDouble(out MValue2 mValue, double value)
+        {
+            mValue = new MValue2(MValueConst.Type.DOUBLE,
+                AltNative.Server.Core_CreateMValueDouble(NativePointer, value));
+        }
+
+        public void CreateMValueString(out MValue2 mValue, string value)
+        {
+            var valuePtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+            mValue = new MValue2(MValueConst.Type.STRING,
+                AltNative.Server.Core_CreateMValueString(NativePointer, valuePtr));
+            Marshal.FreeHGlobal(valuePtr);
+        }
+
+        public void CreateMValueList(out MValue2 mValue, MValue2[] val, ulong size)
+        {
+            mValue = new MValue2(MValueConst.Type.LIST,
+                AltNative.Server.Core_CreateMValueList(NativePointer, val, size));
+        }
+
+        public void CreateMValueDict(out MValue2 mValue, string[] keys, MValue2[] val, ulong size)
+        {
+            mValue = new MValue2(MValueConst.Type.DICT,
+                AltNative.Server.Core_CreateMValueDict(NativePointer, keys, val, size));
+        }
+
+        public void CreateMValueCheckpoint(out MValue2 mValue, ICheckpoint value)
+        {
+            mValue = new MValue2(MValueConst.Type.ENTITY,
+                AltNative.Server.Core_CreateMValueCheckpoint(NativePointer, value.NativePointer));
+        }
+
+        public void CreateMValueBlip(out MValue2 mValue, IBlip value)
+        {
+            mValue = new MValue2(MValueConst.Type.ENTITY,
+                AltNative.Server.Core_CreateMValueBlip(NativePointer, value.NativePointer));
+        }
+
+        public void CreateMValueVoiceChannel(out MValue2 mValue, IVoiceChannel value)
+        {
+            mValue = new MValue2(MValueConst.Type.ENTITY,
+                AltNative.Server.Core_CreateMValueVoiceChannel(NativePointer, value.NativePointer));
+        }
+
+        public void CreateMValuePlayer(out MValue2 mValue, IPlayer value)
+        {
+            mValue = new MValue2(MValueConst.Type.ENTITY,
+                AltNative.Server.Core_CreateMValuePlayer(NativePointer, value.NativePointer));
+        }
+
+        public void CreateMValueVehicle(out MValue2 mValue, IVehicle value)
+        {
+            mValue = new MValue2(MValueConst.Type.ENTITY,
+                AltNative.Server.Core_CreateMValueVehicle(NativePointer, value.NativePointer));
+        }
+
+        public void CreateMValueFunction(out MValue2 mValue, IntPtr value)
+        {
+            mValue = new MValue2(MValueConst.Type.FUNCTION,
+                AltNative.Server.Core_CreateMValueFunction(NativePointer, value));
+        }
+
+        public void CreateMValue(out MValue2 mValue, object obj)
+        {
+            if (obj == null)
+            {
+                mValue = MValue2.Nil;
+                return;
+            }
+
+            int i;
+
+            string[] dictKeys;
+            MValue2[] dictValues;
+            MValueWriter2 writer;
+
+            switch (obj)
+            {
+                case IPlayer player:
+                    CreateMValuePlayer(out mValue, player);
+                    return;
+                case IVehicle vehicle:
+                    CreateMValueVehicle(out mValue, vehicle);
+                    return;
+                case IBlip blip:
+                    CreateMValueBlip(out mValue, blip);
+                    return;
+                case ICheckpoint checkpoint:
+                    CreateMValueCheckpoint(out mValue, checkpoint);
+                    return;
+                case bool value:
+                    CreateMValueBool(out mValue, value);
+                    return;
+                case int value:
+                    CreateMValueInt(out mValue, value);
+                    return;
+                case uint value:
+                    CreateMValueUInt(out mValue, value);
+                    return;
+                case long value:
+                    CreateMValueInt(out mValue, value);
+                    return;
+                case ulong value:
+                    CreateMValueUInt(out mValue, value);
+                    return;
+                case double value:
+                    CreateMValueDouble(out mValue, value);
+                    return;
+                case float value:
+                    CreateMValueDouble(out mValue, value);
+                    return;
+                case string value:
+                    CreateMValueString(out mValue, value);
+                    return;
+                case MValue2 value:
+                    mValue = value;
+                    return;
+                case MValue2[] value:
+                    CreateMValueList(out mValue, value, (ulong) value.Length);
+                    return;
+                case Invoker value:
+                    CreateMValueFunction(out mValue, value.NativePointer);
+                    return;
+                case MValueFunctionCallback value:
+                    CreateMValueFunction(out mValue, Alt.Server.Resource.CSharpResourceImpl.CreateInvoker(value));
+                    return;
+                case Net.Function function:
+                    CreateMValueFunction(out mValue,
+                        Alt.Server.Resource.CSharpResourceImpl.CreateInvoker(function.call));
+                    return;
+                case IDictionary dictionary:
+                    dictKeys = new string[dictionary.Count];
+                    dictValues = new MValue2[dictionary.Count];
+                    i = 0;
+                    foreach (var key in dictionary.Keys)
+                    {
+                        if (key is string stringKey)
+                        {
+                            dictKeys[i++] = stringKey;
+                        }
+                        else
+                        {
+                            mValue = MValue2.Nil;
+                            return;
+                        }
+                    }
+
+                    i = 0;
+                    foreach (var value in dictionary.Values)
+                    {
+                        CreateMValue(out var elementMValue, value);
+                        dictValues[i++] = elementMValue;
+                    }
+
+                    //TODO: mvalue needs somehow reference of childs to dispose them
+                    CreateMValueDict(out mValue, dictKeys, dictValues, (ulong) dictionary.Count);
+                    return;
+                case ICollection collection:
+                    var length = (ulong) collection.Count;
+                    var listValues = new MValue2[length];
+                    i = 0;
+                    foreach (var value in collection)
+                    {
+                        CreateMValue(out var elementMValue, value);
+                        listValues[i++] = elementMValue;
+                    }
+
+                    //TODO: mvalue needs somehow reference of childs to dispose them
+                    CreateMValueList(out mValue, listValues, length);
+                    return;
+                case IDictionary<string, object> dictionary:
+                    dictKeys = new string[dictionary.Count];
+                    dictValues = new MValue2[dictionary.Count];
+                    i = 0;
+                    foreach (var key in dictionary.Keys)
+                    {
+                        dictKeys[i++] = key;
+                    }
+
+                    i = 0;
+                    foreach (var value in dictionary.Values)
+                    {
+                        CreateMValue(out var elementMValue, value);
+                        dictValues[i++] = elementMValue;
+                    }
+
+                    //TODO: mvalue needs somehow reference of childs to dispose them
+                    CreateMValueDict(out mValue, dictKeys, dictValues, (ulong) dictionary.Count);
+                    return;
+                case IWritable writable:
+                    writer = new MValueWriter2();
+                    writable.OnWrite(writer);
+                    writer.ToMValue(out mValue);
+                    return;
+                case IMValueConvertible convertible:
+                    writer = new MValueWriter2();
+                    convertible.GetAdapter().ToMValue(obj, writer);
+                    writer.ToMValue(out mValue);
+                    return;
+                case Position position:
+                    var posValues = new MValue2[3];
+                    MValue2 positionMValue;
+                    CreateMValueDouble(out positionMValue, position.X);
+                    posValues[0] = positionMValue;
+                    CreateMValueDouble(out positionMValue, position.Y);
+                    posValues[1] = positionMValue;
+                    CreateMValueDouble(out positionMValue, position.Z);
+                    posValues[2] = positionMValue;
+                    var posKeys = new string[3];
+                    posKeys[0] = "x";
+                    posKeys[1] = "y";
+                    posKeys[2] = "z";
+                    CreateMValueDict(out mValue, posKeys, posValues, 3);
+                    return;
+                case Rotation rotation:
+                    var rotValues = new MValue2[3];
+                    MValue2 rotationMValue;
+                    CreateMValueDouble(out rotationMValue, rotation.Roll);
+                    rotValues[0] = rotationMValue;
+                    CreateMValueDouble(out rotationMValue, rotation.Pitch);
+                    rotValues[1] = rotationMValue;
+                    CreateMValueDouble(out rotationMValue, rotation.Yaw);
+                    rotValues[2] = rotationMValue;
+                    var rotKeys = new string[3];
+                    rotKeys[0] = "roll";
+                    rotKeys[1] = "pitch";
+                    rotKeys[2] = "yaw";
+                    CreateMValueDict(out mValue, rotKeys, rotValues, 3);
+                    return;
+                case short value:
+                    CreateMValueInt(out mValue, value);
+                    return;
+                case ushort value:
+                    CreateMValueUInt(out mValue, value);
+                    return;
+                default:
+                    Alt.Log("can't convert type:" + obj.GetType());
+                    mValue = MValue2.Nil;
+                    return;
+            }
+        }
+
+        public void CreateMValues(MValue2[] mValues, object[] objects)
+        {
+            for (int i = 0, length = objects.Length; i < length; i++)
+            {
+                CreateMValue(out var mValue, objects[i]);
+                mValues[i] = mValue;
+            }
         }
     }
 }

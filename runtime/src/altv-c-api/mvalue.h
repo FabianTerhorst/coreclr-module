@@ -45,7 +45,9 @@ EXPORT bool MValueConst_GetDict(alt::MValueConst* mValueConst, const char* keys[
 EXPORT void* MValueConst_GetEntity(alt::MValueConst* mValueConst, alt::IBaseObject::Type &type);
 EXPORT alt::MValue* MValueConst_CallFunction(alt::MValueConst* mValueConst, alt::MValue* val[], uint64_t size);
 EXPORT void MValueConst_Delete(alt::MValueConst* mValueConst);
+EXPORT void MValue_Delete(alt::MValue* mValue);
 EXPORT uint8_t MValueConst_GetType(alt::MValueConst* mValueConst);
+EXPORT uint8_t MValue_GetType(alt::MValue* mValueConst);
 #ifdef __cplusplus
 }
 #endif

@@ -648,7 +648,7 @@ namespace AltV.Net
                 argArray = args.ToArray();
                 foreach (var eventHandler in eventHandlers)
                 {
-                    eventHandler.Call(player, BaseBaseObjectPool, argArray);
+                    eventHandler.Call(player, argArray);
                 }
             }
 
@@ -714,26 +714,31 @@ namespace AltV.Net
         {
         }
 
-        public void OnServerEvent(string name, ref MValueArray args)
+        public void OnServerEvent(string name, IntPtr[] args)
         {
+            int length = args.Length;
+            var mValues = new MValueConst[length];
+            for (var i = 0; i < length; i++)
+            {
+                mValues[i] = new MValueConst(args[i]);
+            }
             if (parserServerEventHandlers.Count != 0 &&
                 parserServerEventHandlers.TryGetValue(name, out var parserEventHandlers))
             {
                 foreach (var parserEventHandler in parserEventHandlers)
                 {
-                    parserEventHandler.Call(ref args);
+                    parserEventHandler.Call(mValues);
                 }
             }
-
-            MValue[] argArray = null;
-            if (this.eventHandlers.Count != 0 && this.eventHandlers.TryGetValue(name, out var eventHandlers))
+            
+            if (this.eventHandlers.Count != 0 && this.eventHandlers.TryGetValue(name, out var eventNameEventHandlers))
             {
-                argArray = args.ToArray();
-                foreach (var eventHandler in eventHandlers)
+                var result = MValue2.Nil;
+                foreach (var eventNameEventHandler in eventNameEventHandlers)
                 {
                     try
                     {
-                        eventHandler.Call(BaseBaseObjectPool, argArray);
+                        eventNameEventHandler.Call(mValues, ref result);
                     }
                     catch (TargetInvocationException exception)
                     {
@@ -750,16 +755,10 @@ namespace AltV.Net
 
             if (eventDelegateHandlers.Count != 0 && eventDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
-                if (argArray == null)
-                {
-                    argArray = args.ToArray();
-                }
-
-                var length = argArray.Length;
                 argObjects = new object[length];
                 for (var i = 0; i < length; i++)
                 {
-                    argObjects[i] = argArray[i].ToObject(BaseBaseObjectPool);
+                    argObjects[i] = mValues[i].ToObject();
                 }
 
                 foreach (var eventHandler in eventDelegates)
@@ -770,18 +769,12 @@ namespace AltV.Net
 
             if (ServerEventEventHandler.HasEvents())
             {
-                if (argArray == null)
-                {
-                    argArray = args.ToArray();
-                }
-
                 if (argObjects == null)
                 {
-                    var length = argArray.Length;
                     argObjects = new object[length];
                     for (var i = 0; i < length; i++)
                     {
-                        argObjects[i] = argArray[i].ToObject(BaseBaseObjectPool);
+                        argObjects[i] = mValues[i].ToObject();
                     }
                 }
 
@@ -795,14 +788,14 @@ namespace AltV.Net
             {
                 foreach (var eventHandler in ServerCustomEventEventHandler.GetEvents())
                 {
-                    eventHandler(name, ref args);
+                    eventHandler(name, mValues);
                 }
             }
 
-            OnServerEventEvent(name, ref args, argArray, argObjects);
+            OnServerEventEvent(name, mValues);
         }
 
-        public virtual void OnServerEventEvent(string name, ref MValueArray args, MValue[] mValues, object[] objects)
+        public virtual void OnServerEventEvent(string name, MValueConst[] args)
         {
         }
 

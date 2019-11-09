@@ -224,6 +224,14 @@ void MValueConst_Delete(alt::MValueConst* mValueConst) {
     delete mValueConst;
 }
 
+void MValue_Delete(alt::MValue* mValue) {
+    delete mValue;
+}
+
 uint8_t MValueConst_GetType(alt::MValueConst* mValueConst) {
+    return (uint8_t) mValueConst->Get()->GetType();
+}
+
+uint8_t MValue_GetType(alt::MValue* mValueConst) {
     return (uint8_t) mValueConst->Get()->GetType();
 }

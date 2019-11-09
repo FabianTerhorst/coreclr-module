@@ -116,6 +116,49 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_RestartResource(IntPtr server, IntPtr text);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueNil(IntPtr core);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueBool(IntPtr core, bool value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueInt(IntPtr core, long value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueUInt(IntPtr core, ulong value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueDouble(IntPtr core, double value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueString(IntPtr core, IntPtr value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueList(IntPtr core, MValue2[] val, ulong size);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueDict(IntPtr core, string[] keys, MValue2[] val,
+                ulong size);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueCheckpoint(IntPtr core, IntPtr value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueBlip(IntPtr core, IntPtr value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueVoiceChannel(IntPtr core, IntPtr value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValuePlayer(IntPtr core, IntPtr value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueVehicle(IntPtr core, IntPtr value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueFunction(IntPtr core, IntPtr value);
         }
     }
 }
