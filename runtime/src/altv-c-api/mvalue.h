@@ -44,6 +44,20 @@ EXPORT bool MValueConst_GetDict(alt::MValueConst* mValueConst, const char* keys[
                          alt::MValueConst* values[]);
 EXPORT void* MValueConst_GetEntity(alt::MValueConst* mValueConst, alt::IBaseObject::Type &type);
 EXPORT alt::MValue* MValueConst_CallFunction(alt::MValueConst* mValueConst, alt::MValue* val[], uint64_t size);
+
+EXPORT bool MValue_GetBool(alt::MValue* mValueConst);
+EXPORT int64_t MValue_GetInt(alt::MValue* mValueConst);
+EXPORT uint64_t MValue_GetUInt(alt::MValue* mValueConst);
+EXPORT double MValue_GetDouble(alt::MValue* mValueConst);
+EXPORT bool MValue_GetString(alt::MValue* mValueConst, const char*&value, uint64_t &size);
+EXPORT uint64_t MValue_GetListSize(alt::MValue* mValueConst);
+EXPORT bool MValue_GetList(alt::MValue* mValueConst, alt::MValue* values[]);
+EXPORT uint64_t MValue_GetDictSize(alt::MValue* mValueConst);
+EXPORT bool MValue_GetDict(alt::MValue* mValueConst, const char* keys[],
+                                alt::MValueConst* values[]);
+EXPORT void* MValue_GetEntity(alt::MValue* mValueConst, alt::IBaseObject::Type &type);
+EXPORT alt::MValue* MValue_CallFunction(alt::MValue* mValueConst, alt::MValue* val[], uint64_t size);
+
 EXPORT void MValueConst_Delete(alt::MValueConst* mValueConst);
 EXPORT void MValue_Delete(alt::MValue* mValue);
 EXPORT uint8_t MValueConst_GetType(alt::MValueConst* mValueConst);
