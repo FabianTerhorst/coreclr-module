@@ -24,15 +24,15 @@ alt::MValueConst* Resource_GetExport(alt::IResource* resource, const char* key) 
     return new alt::Ref(resource->GetExports().Get()->Get(key));
 }
 
-void Resource_SetExport(alt::IResource* resource, const char* key, alt::MValue* val) {
-    resource->GetExports().Get()->Set(key, *val);
+void Resource_SetExport(alt::IResource* resource, const char* key, alt::MValueConst* val) {
+    resource->GetExports().Get()->Set(key, val->Get()->Clone());
 }
 
-void Resource_SetExports(alt::IResource* resource, alt::MValue val[], const char* keys[], int size) {
+void Resource_SetExports(alt::IResource* resource, alt::MValueConst* val[], const char* keys[], int size) {
     alt::MValueDict dict;
     auto dictValue = dict.Get();
     for (int i = 0; i < size; i++) {
-        dictValue->Set(keys[i], val[i]);
+        dictValue->Set(keys[i], val[i]->Get()->Clone());
     }
     resource->SetExports(dict);
 }

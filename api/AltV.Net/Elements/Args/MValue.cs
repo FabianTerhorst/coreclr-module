@@ -84,8 +84,8 @@ namespace AltV.Net.Elements.Args
                     return Create(value);
                 case Function value:
                     return Create(value);
-                case Net.Function function:
-                    return Create(function.call);
+                /*case Net.Function function:
+                    return Create(function.call);*/
                 case IDictionary dictionary:
                     dictKeys = new string[dictionary.Count];
                     dictValues = new MValue[dictionary.Count];

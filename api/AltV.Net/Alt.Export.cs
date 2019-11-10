@@ -7,50 +7,64 @@ namespace AltV.Net
     {
         public static void Export(string key, object value)
         {
-            Module.Server.Resource.SetExport(key, MValue.CreateFromObject(value));
+            Module.Server.Resource.SetExport(key, value);
             HostWrapper.Export(key, value);
         }
 
         public static void Export(string key, bool value)
         {
-            Module.ModuleResource.SetExport(key, MValue.Create(value));
+            Alt.Server.CreateMValueBool(out var mValue, value);
+            Module.ModuleResource.SetExport(key, in mValue);
             HostWrapper.Export(key, value);
+            mValue.Dispose();
         }
 
         public static void Export(string key, int value)
         {
-            Module.ModuleResource.SetExport(key, MValue.Create(value));
+            Alt.Server.CreateMValueInt(out var mValue, value);
+            Module.ModuleResource.SetExport(key, in mValue);
             HostWrapper.Export(key, value);
+            mValue.Dispose();
         }
 
         public static void Export(string key, long value)
         {
-            Module.ModuleResource.SetExport(key, MValue.Create(value));
+            Alt.Server.CreateMValueInt(out var mValue, value);
+            Module.ModuleResource.SetExport(key, in mValue);
             HostWrapper.Export(key, value);
+            mValue.Dispose();
         }
 
         public static void Export(string key, uint value)
         {
-            Module.ModuleResource.SetExport(key, MValue.Create(value));
+            Alt.Server.CreateMValueUInt(out var mValue, value);
+            Module.ModuleResource.SetExport(key, mValue);
             HostWrapper.Export(key, value);
+            mValue.Dispose();
         }
 
         public static void Export(string key, ulong value)
         {
-            Module.ModuleResource.SetExport(key, MValue.Create(value));
+            Alt.Server.CreateMValueUInt(out var mValue, value);
+            Module.ModuleResource.SetExport(key, mValue);
             HostWrapper.Export(key, value);
+            mValue.Dispose();
         }
 
         public static void Export(string key, double value)
         {
-            Module.ModuleResource.SetExport(key, MValue.Create(value));
+            Alt.Server.CreateMValueDouble(out var mValue, value);
+            Module.ModuleResource.SetExport(key,mValue);
             HostWrapper.Export(key, value);
+            mValue.Dispose();
         }
 
         public static void Export(string key, string value)
         {
-            Module.ModuleResource.SetExport(key, MValue.Create(value));
+            Alt.Server.CreateMValueString(out var mValue, value);
+            Module.ModuleResource.SetExport(key, mValue);
             HostWrapper.Export(key, value);
+            mValue.Dispose();
         }
 
         public static void Export(string key, Delegate value)

@@ -991,9 +991,12 @@ namespace AltV.Net
         {
             if (function == null) return;
             functionExports[key] = function;
-            MValue.Function callDelegate = function.call;
+            MValueFunctionCallback callDelegate = function.call;
             functionExportHandles.AddFirst(GCHandle.Alloc(callDelegate));
-            ModuleResource.SetExport(key, MValue.Create(callDelegate));
+            Alt.Server.CreateMValueFunction(out var mValue,
+                AltNative.MValueNative.Invoker_Create(ModuleResource.ResourceImplPtr, callDelegate));
+            ModuleResource.SetExport(key, in mValue);
+            mValue.Dispose();
         }
 
         public void Dispose()

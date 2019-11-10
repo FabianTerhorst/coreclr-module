@@ -498,14 +498,21 @@ namespace AltV.Net
             return null;
         }
 
-        internal MValue Call(MValue valueArgs)
+        internal void Call(IntPtr[] valueArgs, ref IntPtr result)
         {
-            return valueArgs.type != MValue.Type.LIST ? MValue.Nil : Call(valueArgs.GetList());
+            var length = valueArgs.Length;
+            var mValues = new MValueConst[length];
+            for (int i = 0; i < length; i++)
+            {
+                mValues[i] = new MValueConst(valueArgs[i]);
+            }
+            Alt.Server.CreateMValue(out var resultMValue, Call(mValues));
+            result = resultMValue.nativePointer;
         }
 
-        internal void call(ref MValue args, ref MValue result)
+        internal void call(IntPtr[] args, ref IntPtr result)
         {
-            result = Call(args);
+            Call(args, ref result);
         }
     }
 }

@@ -115,8 +115,8 @@ namespace AltV.Net.Async
                     return MValue.Create(value);
                 case MValue.Function value:
                     return MValue.Create(value);
-                case Function function:
-                    return MValue.Create(function.call);
+                /*case Function function:
+                    return MValue.Create(function.call);*/
                 case IDictionary dictionary:
                     dictKeys = new string[dictionary.Count];
                     dictValues = new MValue[dictionary.Count];

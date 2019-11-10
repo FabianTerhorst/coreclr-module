@@ -13,14 +13,16 @@ namespace AltV.Net.Native
         internal static class Resource
         {
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern ushort Resource_GetExports(IntPtr resourcePointer, ref StringViewArray keys,
-                ref MValueArray values);
+            internal static extern ulong Resource_GetExportsCount(IntPtr resource);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Resource_GetExport(IntPtr resourcePointer, string key, ref MValue mValue);
+            internal static extern void Resource_GetExports(IntPtr resource, IntPtr[] keys, IntPtr[] values);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Resource_SetExport(IntPtr resourcePointer, IntPtr text, ref MValue mValue);
+            internal static extern IntPtr Resource_GetExport(IntPtr resource, IntPtr key);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Resource_SetExport(IntPtr resource, IntPtr key, IntPtr val);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Resource_GetPath(IntPtr resourcePointer, ref IntPtr text);
