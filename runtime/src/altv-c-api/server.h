@@ -56,8 +56,10 @@ EXPORT void Server_DestroyVoiceChannel(alt::ICore* server, alt::IVoiceChannel* b
 EXPORT void Server_DestroyColShape(alt::ICore* server, alt::IColShape* baseObject);
 EXPORT int32_t Server_GetNetTime(alt::ICore* server);
 EXPORT void Server_GetRootDirectory(alt::ICore* server, const char*&text);
-EXPORT void Server_GetPlayers(alt::ICore* server, alt::Array<alt::IPlayer*> &players);
-EXPORT void Server_GetVehicles(alt::ICore* server, alt::Array<alt::IVehicle*> &vehicles);
+EXPORT uint64_t Server_GetPlayerCount(alt::ICore* server);
+EXPORT void Server_GetPlayers(alt::ICore* server, alt::IPlayer* players[], uint64_t size);
+EXPORT uint64_t Server_GetVehicleCount(alt::ICore* server);
+EXPORT void Server_GetVehicles(alt::ICore* server, alt::IVehicle* vehicles[], uint64_t size);
 EXPORT void Server_StartResource(alt::ICore* server, const char* text);
 EXPORT void Server_StopResource(alt::ICore* server, const char* text);
 EXPORT void Server_RestartResource(alt::ICore* server, const char* text);

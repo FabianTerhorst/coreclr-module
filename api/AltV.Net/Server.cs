@@ -179,7 +179,7 @@ namespace AltV.Net
                 mValuePointers[i] = args[i].nativePointer;
             }
 
-            AltNative.Server.Server_TriggerServerEvent(NativePointer, eventNamePtr, mValuePointers);
+            AltNative.Server.Server_TriggerServerEvent(NativePointer, eventNamePtr, mValuePointers, args.Length);
         }
 
         public void TriggerServerEvent(string eventName, IntPtr[] args)
@@ -191,7 +191,7 @@ namespace AltV.Net
 
         public void TriggerServerEvent(IntPtr eventNamePtr, IntPtr[] args)
         {
-            AltNative.Server.Server_TriggerServerEvent(NativePointer, eventNamePtr, args);
+            AltNative.Server.Server_TriggerServerEvent(NativePointer, eventNamePtr, args, args.Length);
         }
 
         public void TriggerServerEvent(IntPtr eventNamePtr, params object[] args)
@@ -231,7 +231,7 @@ namespace AltV.Net
 
             AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero,
                 eventNamePtr,
-                mValuePointers);
+                mValuePointers, args.Length);
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, params MValueConst[] args)
@@ -244,7 +244,7 @@ namespace AltV.Net
         public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, IntPtr[] args)
         {
             AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero,
-                eventNamePtr, args);
+                eventNamePtr, args, args.Length);
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, IntPtr[] args)
@@ -404,10 +404,10 @@ namespace AltV.Net
 
         public IEnumerable<IPlayer> GetPlayers()
         {
-            var playerPointerArray = PlayerPointerArray.Nil;
-            AltNative.Server.Server_GetPlayers(NativePointer, ref playerPointerArray);
-            var playerPointers = playerPointerArray.ToArrayAndFree();
-            foreach (var playerPointer in playerPointers)
+            var playerCount = AltNative.Server.Server_GetPlayerCount(NativePointer);
+            var pointers = new IntPtr[playerCount];
+            AltNative.Server.Server_GetPlayers(NativePointer, pointers, playerCount);
+            foreach (var playerPointer in pointers)
             {
                 if (playerPool.GetOrCreate(playerPointer, out var vehicle))
                 {
@@ -418,10 +418,10 @@ namespace AltV.Net
 
         public IEnumerable<IVehicle> GetVehicles()
         {
-            var vehiclePointerArray = VehiclePointerArray.Nil;
-            AltNative.Server.Server_GetVehicles(NativePointer, ref vehiclePointerArray);
-            var vehiclePointers = vehiclePointerArray.ToArrayAndFree();
-            foreach (var vehiclePointer in vehiclePointers)
+            var vehicleCount = AltNative.Server.Server_GetVehicleCount(NativePointer);
+            var pointers = new IntPtr[vehicleCount];
+            AltNative.Server.Server_GetVehicles(NativePointer, pointers, vehicleCount);
+            foreach (var vehiclePointer in pointers)
             {
                 if (vehiclePool.GetOrCreate(vehiclePointer, out var vehicle))
                 {

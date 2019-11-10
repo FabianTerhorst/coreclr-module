@@ -38,11 +38,17 @@ namespace AltV.Net.Native
                 AltV.Net.Server.CommandCallback cb);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_TriggerServerEvent(IntPtr server, IntPtr ev, IntPtr[] args);
+            internal static extern bool Server_FileExists(IntPtr server, IntPtr path);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_FileRead(IntPtr server, IntPtr path, ref IntPtr text);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_TriggerServerEvent(IntPtr server, IntPtr ev, IntPtr[] args, int size);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_TriggerClientEvent(IntPtr server, IntPtr target, IntPtr ev,
-                IntPtr[] args);
+                IntPtr[] args, int size);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr Server_CreateVehicle(IntPtr server, uint model, Position pos, Rotation rot,
@@ -103,10 +109,16 @@ namespace AltV.Net.Native
             internal static extern void Server_GetRootDirectory(IntPtr server, ref IntPtr text);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_GetPlayers(IntPtr server, ref PlayerPointerArray players);
+            internal static extern ulong Server_GetPlayerCount(IntPtr server);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_GetVehicles(IntPtr server, ref VehiclePointerArray vehicles);
+            internal static extern void Server_GetPlayers(IntPtr server, IntPtr[] players, ulong size);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern ulong Server_GetVehicleCount(IntPtr server);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_GetVehicles(IntPtr server, IntPtr[] vehicles, ulong size);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_StartResource(IntPtr server, IntPtr text);
@@ -139,8 +151,7 @@ namespace AltV.Net.Native
             internal static extern IntPtr Core_CreateMValueList(IntPtr core, IntPtr[] val, ulong size);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Core_CreateMValueDict(IntPtr core, string[] keys, IntPtr[] val,
-                ulong size);
+            internal static extern IntPtr Core_CreateMValueDict(IntPtr core, string[] keys, IntPtr[] val, ulong size);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr Core_CreateMValueCheckpoint(IntPtr core, IntPtr value);

@@ -146,12 +146,32 @@ void Server_GetRootDirectory(alt::ICore* server, const char*&text) {
     text = server->GetRootDirectory().CStr();
 }
 
-void Server_GetPlayers(alt::ICore* server, alt::Array<alt::Ref<alt::IPlayer>> &players) {
-    players = server->GetPlayers();
+uint64_t Server_GetPlayerCount(alt::ICore* server) {
+    return server->GetPlayers().GetSize();
 }
 
-void Server_GetVehicles(alt::ICore* server, alt::Array<alt::Ref<alt::IVehicle>> &vehicles) {
-    vehicles = server->GetVehicles();
+void Server_GetPlayers(alt::ICore* server, alt::IPlayer* players[], uint64_t size) {
+    auto playersArray = server->GetPlayers();
+    if (playersArray.GetSize() < size) {
+        size = playersArray.GetSize();
+    }
+    for (uint64_t i = 0;i < size;i++) {
+        players[i] = playersArray[i].Get();
+    }
+}
+
+uint64_t Server_GetVehicleCount(alt::ICore* server) {
+    return server->GetVehicles().GetSize();
+}
+
+void Server_GetVehicles(alt::ICore* server, alt::IVehicle* vehicles[], uint64_t size) {
+    auto vehiclesArray = server->GetVehicles();
+    if (vehiclesArray.GetSize() < size) {
+        size = vehiclesArray.GetSize();
+    }
+    for (uint64_t i = 0;i < size;i++) {
+        vehicles[i] = vehiclesArray[i].Get();
+    }
 }
 
 void Server_StartResource(alt::ICore* server, const char* text) {
