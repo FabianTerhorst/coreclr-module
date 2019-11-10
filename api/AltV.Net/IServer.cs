@@ -42,28 +42,28 @@ namespace AltV.Net
 
         uint Hash(string hash);
 
-        public void TriggerServerEvent(string eventName, params MValueConst[] args);
+        void TriggerServerEvent(string eventName, params MValueConst[] args);
 
-        public void TriggerServerEvent(IntPtr eventNamePtr, params MValueConst[] args);
+        void TriggerServerEvent(IntPtr eventNamePtr, params MValueConst[] args);
 
-        public void TriggerServerEvent(string eventName, IntPtr[] args);
+        void TriggerServerEvent(string eventName, IntPtr[] args);
 
-        public void TriggerServerEvent(IntPtr eventNamePtr, IntPtr[] args);
+        void TriggerServerEvent(IntPtr eventNamePtr, IntPtr[] args);
 
-        public void TriggerServerEvent(IntPtr eventNamePtr, params object[] args);
+        void TriggerServerEvent(IntPtr eventNamePtr, params object[] args);
 
-        public void TriggerServerEvent(string eventName, params object[] args);
+        void TriggerServerEvent(string eventName, params object[] args);
 
-        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params MValueConst[] args);
+        void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params MValueConst[] args);
 
-        public void TriggerClientEvent(IPlayer player, string eventName, params MValueConst[] args);
+        void TriggerClientEvent(IPlayer player, string eventName, params MValueConst[] args);
 
-        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, IntPtr[] args);
+        void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, IntPtr[] args);
 
-        public void TriggerClientEvent(IPlayer player, string eventName, IntPtr[] args);
+        void TriggerClientEvent(IPlayer player, string eventName, IntPtr[] args);
 
-        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params object[] args);
-        public void TriggerClientEvent(IPlayer player, string eventName, params object[] args);
+        void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params object[] args);
+        void TriggerClientEvent(IPlayer player, string eventName, params object[] args);
 
         IVehicle CreateVehicle(uint model, Position pos, Rotation rotation);
 
