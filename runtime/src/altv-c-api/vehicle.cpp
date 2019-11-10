@@ -49,7 +49,7 @@ alt::MValueConst* Vehicle_GetMetaData(alt::IVehicle* vehicle, const char* key) {
 }
 
 void Vehicle_SetMetaData(alt::IVehicle* entity, const char* key, alt::MValueConst* val) {
-    entity->SetMetaData(key, alt::Ref(val->Get()));
+    entity->SetMetaData(key, val->Get()->Clone());
 }
 
 alt::MValueConst* Vehicle_GetSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
@@ -57,7 +57,7 @@ alt::MValueConst* Vehicle_GetSyncedMetaData(alt::IVehicle* vehicle, const char* 
 }
 
 void Vehicle_SetSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MValueConst* val) {
-    entity->SetSyncedMetaData(key, alt::Ref(val->Get()));
+    entity->SetSyncedMetaData(key, val->Get()->Clone());
 }
 
 // Vehicle

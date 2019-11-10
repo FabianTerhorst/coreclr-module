@@ -58,6 +58,8 @@ RUN export PATH="$PATH:/root/.dotnet/tools"
 
 RUN dotnet tool install --global dotnet-trace --version 3.0.0-preview9.19454.1
 
+RUN apt-get install libatomic1
+
 # construct server structure
 WORKDIR /altv-server
 COPY altv-server .

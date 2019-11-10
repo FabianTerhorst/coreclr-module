@@ -26,7 +26,7 @@ alt::MValueConst* ColShape_GetMetaData(alt::IColShape* colShape, const char* key
 }
 
 void ColShape_SetMetaData(alt::IColShape* colShape, const char* key, alt::MValueConst* val) {
-    colShape->SetMetaData(key, alt::Ref(val->Get()));
+    colShape->SetMetaData(key, val->Get()->Clone());
 }
 
 // ColShape

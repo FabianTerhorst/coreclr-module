@@ -168,50 +168,50 @@ void Server_RestartResource(alt::ICore* server, const char* text) {
 
 alt::MValueConst* Core_CreateMValueNil(alt::ICore* core) {
     auto mValue = (alt::IMValue*) core->CreateMValueNil().Get();
-    return new alt::ConstRef(mValue);
+    return new alt::ConstRef<alt::IMValue>(mValue);
 }
 
 alt::MValueConst* Core_CreateMValueBool(alt::ICore* core, bool value) {
     auto mValue = (alt::IMValue*) core->CreateMValueBool(value).Get();
-    return new alt::ConstRef(mValue);
+    return new alt::ConstRef<alt::IMValue>(mValue);
 }
 
 alt::MValueConst* Core_CreateMValueInt(alt::ICore* core, int64_t value) {
     auto mValue = (alt::IMValue*) core->CreateMValueInt(value).Get();
-    return new alt::ConstRef(mValue);
+    return new alt::ConstRef<alt::IMValue>(mValue);
 }
 
 alt::MValueConst* Core_CreateMValueUInt(alt::ICore* core, uint64_t value) {
     auto mValue = (alt::IMValue*) core->CreateMValueUInt(value).Get();
-    return new alt::ConstRef(mValue);
+    return new alt::ConstRef<alt::IMValue>(mValue);
 }
 
 alt::MValueConst* Core_CreateMValueDouble(alt::ICore* core, double value) {
     auto mValue = (alt::IMValue*) core->CreateMValueDouble(value).Get();
-    return new alt::ConstRef(mValue);
+    return new alt::ConstRef<alt::IMValue>(mValue);
 }
 
 alt::MValueConst* Core_CreateMValueString(alt::ICore* core, const char* value) {
     auto mValue = (alt::IMValue*) core->CreateMValueString(value).Get();
-    return new alt::ConstRef(mValue);
+    return new alt::ConstRef<alt::IMValue>(mValue);
 }
 
 alt::MValueConst* Core_CreateMValueList(alt::ICore* core, alt::MValueConst* val[], uint64_t size) {
     auto mValue = core->CreateMValueList(size).Get();
     for (uint64_t i = 0; i < size; i++) {
-        mValue->Set(i, alt::Ref(val[i]->Get()));
+        mValue->Set(i, val[i]->Get()->Clone());
         delete val[i];
     }
-    return new alt::ConstRef((alt::IMValue*) mValue);
+    return new alt::ConstRef<alt::IMValue>((alt::IMValue*) mValue);
 }
 
 alt::MValueConst* Core_CreateMValueDict(alt::ICore* core, const char** keys, alt::MValueConst* val[], uint64_t size) {
     auto mValue = core->CreateMValueDict().Get();
     for (uint64_t i = 0; i < size; i++) {
-        mValue->Set(keys[i], alt::Ref(val[i]->Get()));
+        mValue->Set(keys[i], val[i]->Get()->Clone());
         delete val[i];
     }
-    return new alt::ConstRef((alt::IMValue*) mValue);
+    return new alt::ConstRef<alt::IMValue>((alt::IMValue*) mValue);
 }
 
 /*alt::MValueBaseObject* Core_CreateMValueBaseObject(alt::ICore* core, alt::Ref<alt::IBaseObject>* value) {
