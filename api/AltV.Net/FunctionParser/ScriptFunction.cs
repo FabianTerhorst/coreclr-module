@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using System.Linq;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.FunctionParser
