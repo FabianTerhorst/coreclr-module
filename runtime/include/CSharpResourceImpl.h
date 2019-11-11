@@ -115,10 +115,10 @@ typedef void (* CreateColShapeDelegate_t)(alt::IColShape* colShape);
 
 typedef void (* RemoveColShapeDelegate_t)(alt::IColShape* colShape);
 
-typedef void (* ConsoleCommandDelegate_t)(const char* name, alt::Array<alt::StringView>* args);
+typedef void (* ConsoleCommandDelegate_t)(const char* name, const char* args[]);
 
-typedef void (* MetaChangeDelegate_t)(void* entity, alt::IBaseObject::Type type, alt::StringView key,
-                                      alt::MValue* value);
+typedef void (* MetaChangeDelegate_t)(void* entity, alt::IBaseObject::Type type, const char* key,
+                                      alt::MValueConst* value);
 
 typedef void (* ColShapeDelegate_t)(alt::IColShape* colShape, void* entity, alt::IBaseObject::Type baseObjectType,
                                     bool state);

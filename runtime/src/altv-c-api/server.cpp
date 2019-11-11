@@ -46,16 +46,17 @@ void Server_FileRead(alt::ICore* server, const char* path, const char*&text) {
 
 void Server_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size) {
     alt::Array<alt::MValueConst> mValues = alt::Array<alt::MValueConst>(size);
-    for(int i = 0;i < size;i++) {
+    for (int i = 0; i < size; i++) {
         mValues[i] = *args[i];
     }
     server->TriggerServerEvent(ev, mValues);
 }
 
 void
-Server_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* ev, alt::MValueConst* args[], int size) {
+Server_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* ev, alt::MValueConst* args[],
+                          int size) {
     alt::Array<alt::MValueConst> mValues = alt::Array<alt::MValueConst>(size);
-    for(int i = 0;i < size;i++) {
+    for (int i = 0; i < size; i++) {
         mValues[i] = *args[i];
     }
     server->TriggerClientEvent(target, ev, mValues);
@@ -155,7 +156,7 @@ void Server_GetPlayers(alt::ICore* server, alt::IPlayer* players[], uint64_t siz
     if (playersArray.GetSize() < size) {
         size = playersArray.GetSize();
     }
-    for (uint64_t i = 0;i < size;i++) {
+    for (uint64_t i = 0; i < size; i++) {
         players[i] = playersArray[i].Get();
     }
 }
@@ -169,7 +170,7 @@ void Server_GetVehicles(alt::ICore* server, alt::IVehicle* vehicles[], uint64_t 
     if (vehiclesArray.GetSize() < size) {
         size = vehiclesArray.GetSize();
     }
-    for (uint64_t i = 0;i < size;i++) {
+    for (uint64_t i = 0; i < size; i++) {
         vehicles[i] = vehiclesArray[i].Get();
     }
 }
@@ -241,30 +242,30 @@ alt::MValueConst* Core_CreateMValueDict(alt::ICore* core, const char** keys, alt
 
 alt::MValueConst* Core_CreateMValueCheckpoint(alt::ICore* core, alt::ICheckpoint* value) {
     auto mValue = core->CreateMValueBaseObject(value).Get();
-    return new alt::ConstRef((alt::IMValue*) mValue);
+    return new alt::ConstRef<alt::IMValue>((alt::IMValue*) mValue);
 }
 
 alt::MValueConst* Core_CreateMValueBlip(alt::ICore* core, alt::IBlip* value) {
     auto mValue = core->CreateMValueBaseObject(value).Get();
-    return new alt::ConstRef((alt::IMValue*) mValue);
+    return new alt::ConstRef<alt::IMValue>((alt::IMValue*) mValue);
 }
 
 alt::MValueConst* Core_CreateMValueVoiceChannel(alt::ICore* core, alt::IVoiceChannel* value) {
     auto mValue = core->CreateMValueBaseObject(value).Get();
-    return new alt::ConstRef((alt::IMValue*) mValue);
+    return new alt::ConstRef<alt::IMValue>((alt::IMValue*) mValue);
 }
 
 alt::MValueConst* Core_CreateMValuePlayer(alt::ICore* core, alt::IPlayer* value) {
     auto mValue = core->CreateMValueBaseObject(value).Get();
-    return new alt::ConstRef((alt::IMValue*) mValue);
+    return new alt::ConstRef<alt::IMValue>((alt::IMValue*) mValue);
 }
 
 alt::MValueConst* Core_CreateMValueVehicle(alt::ICore* core, alt::IVehicle* value) {
     auto mValue = core->CreateMValueBaseObject(value).Get();
-    return new alt::ConstRef((alt::IMValue*) mValue);
+    return new alt::ConstRef<alt::IMValue>((alt::IMValue*) mValue);
 }
 
 alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* value) {
-    auto mValue = core->CreateMValueFunction(value).Get();
-    return new alt::ConstRef((alt::IMValue*) mValue);
+    auto mValue = (alt::IMValue*) core->CreateMValueFunction(value).Get();
+    return new alt::ConstRef<alt::IMValue>(mValue);
 }

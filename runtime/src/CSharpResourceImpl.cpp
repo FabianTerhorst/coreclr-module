@@ -85,7 +85,8 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             if (entity == nullptr) return true;
             auto key = event->GetKey();
             auto value = event->GetVal();
-            OnMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), key == nullptr ? "" : key.CStr(), &value);
+            auto constValue = alt::ConstRef<alt::IMValue>(value);
+            OnMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), key == nullptr ? "" : key.CStr(), &constValue);
         }
             break;
         case alt::CEvent::Type::SYNCED_META_CHANGE: {
@@ -94,8 +95,9 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             if (entity == nullptr) return true;
             auto key = event->GetKey();
             auto value = event->GetVal();
+            auto constValue = alt::ConstRef<alt::IMValue>(value);
             OnSyncedMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), key == nullptr ? "" : key.CStr(),
-                                       &value);
+                                       &constValue);
         }
             break;
         case alt::CEvent::Type::CHECKPOINT_EVENT: {
@@ -282,7 +284,22 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             break;
         case alt::CEvent::Type::CONSOLE_COMMAND_EVENT: {
             alt::Array<alt::StringView> args = ((alt::CConsoleCommandEvent*) (ev))->GetArgs();
-            OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(), &args);
+
+            uint64_t size = args.GetSize();
+#ifdef _WIN32
+            auto constArgs = new const char* [size];
+#else
+            const char* constArgs[size];
+#endif
+            for (uint64_t i = 0; i < size; i++) {
+                constArgs[i] = args[i].CStr();
+            }
+
+            OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(), constArgs);
+
+#ifdef _WIN32
+            delete[] constArgs;
+#endif
         }
             break;
         case alt::CEvent::Type::COLSHAPE_EVENT: {

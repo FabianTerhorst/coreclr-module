@@ -261,21 +261,21 @@ namespace AltV.Net
             _module.OnVehicleRemove(vehiclePointer);
         }
 
-        public static void OnConsoleCommand(string name, ref StringViewArray args)
+        public static void OnConsoleCommand(string name, string[] args)
         {
-            _module.OnConsoleCommand(name, ref args);
+            _module.OnConsoleCommand(name, args);
         }
 
         public static void OnMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key,
-            ref MValue value)
+            IntPtr value)
         {
-            _module.OnMetaDataChange(entityPointer, entityType, key, ref value);
+            _module.OnMetaDataChange(entityPointer, entityType, key, value);
         }
 
         public static void OnSyncedMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key,
-            ref MValue value)
+            IntPtr value)
         {
-            _module.OnSyncedMetaDataChange(entityPointer, entityType, key, ref value);
+            _module.OnSyncedMetaDataChange(entityPointer, entityType, key, value);
         }
 
         public static void OnColShape(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType,

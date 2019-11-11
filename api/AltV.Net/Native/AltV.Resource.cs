@@ -118,10 +118,10 @@ namespace AltV.Net.Native
             internal delegate void ColShapeDelegate(IntPtr colShapePointer, IntPtr targetEntityPointer,
                 BaseObjectType entityType, bool state);
 
-            internal delegate void ConsoleCommandDelegate(string name, ref StringViewArray args);
+            internal delegate void ConsoleCommandDelegate(string name, string[] args);
 
             internal delegate void MetaChangeDelegate(IntPtr entityPointer, BaseObjectType entityType, string key,
-                ref MValue value);
+                IntPtr value);
 
             internal delegate void ExplosionDelegate(IntPtr playerPointer, ExplosionType explosionType,
                 Position position, uint explosionFx);

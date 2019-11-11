@@ -878,18 +878,17 @@ namespace AltV.Net
             ColShapePool.Remove(colShapePointer);
         }
 
-        public void OnConsoleCommand(string name, ref StringViewArray args)
+        public void OnConsoleCommand(string name, string[] args)
         {
-            var stringArgs = args.ToArray();
             if (ConsoleCommandEventHandler.HasEvents())
             {
                 foreach (var eventHandler in ConsoleCommandEventHandler.GetEvents())
                 {
-                    eventHandler(name, stringArgs);
+                    eventHandler(name, args);
                 }
             }
 
-            OnConsoleCommandEvent(name, stringArgs);
+            OnConsoleCommandEvent(name, args);
         }
 
         public virtual void OnConsoleCommandEvent(string name, string[] args)
@@ -897,14 +896,14 @@ namespace AltV.Net
         }
 
         public void OnMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key,
-            ref MValue value)
+            IntPtr value)
         {
             if (!BaseEntityPool.GetOrCreate(entityPointer, entityType, out var entity))
             {
                 return;
             }
 
-            OnMetaDataChangeEvent(entity, key, value.ToObject());
+            OnMetaDataChangeEvent(entity, key, new MValueConst(value).ToObject());
         }
 
         public virtual void OnMetaDataChangeEvent(IEntity entity, string key, object value)
@@ -917,14 +916,14 @@ namespace AltV.Net
         }
 
         public void OnSyncedMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key,
-            ref MValue value)
+            IntPtr value)
         {
             if (!BaseEntityPool.GetOrCreate(entityPointer, entityType, out var entity))
             {
                 return;
             }
 
-            OnSyncedMetaDataChangeEvent(entity, key, value.ToObject());
+            OnSyncedMetaDataChangeEvent(entity, key, new MValueConst(value).ToObject());
         }
 
         public virtual void OnSyncedMetaDataChangeEvent(IEntity entity, string key, object value)
