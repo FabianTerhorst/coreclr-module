@@ -527,5 +527,15 @@ namespace AltV.Net.Elements.Entities
             AltNative.Player.Player_Copy(NativePointer, ref readOnlyPlayer);
             return readOnlyPlayer;
         }
+
+        protected override void InternalAddRef()
+        {
+            AltNative.Player.Player_AddRef(NativePointer);
+        }
+
+        protected override void InternalRemoveRef()
+        {
+            AltNative.Player.Player_RemoveRef(NativePointer);
+        }
     }
 }

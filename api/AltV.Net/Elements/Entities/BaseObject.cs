@@ -15,10 +15,15 @@ namespace AltV.Net.Elements.Entities
         public IntPtr NativePointer { get; }
         public bool Exists { get; set; }
 
+        private ulong refCount = 0;
+
         public BaseObjectType Type { get; }
 
         public abstract void SetMetaData(string key, in MValueConst value);
         public abstract void GetMetaData(string key, out MValueConst value);
+        
+        protected abstract void InternalAddRef();
+        protected abstract void InternalRemoveRef();
 
         protected BaseObject(IntPtr nativePointer, BaseObjectType type)
         {
@@ -148,6 +153,11 @@ namespace AltV.Net.Elements.Entities
                 return;
             }
 
+            if (refCount != 0)
+            {
+                return;
+            }
+
             throw new BaseObjectRemovedException(this);
         }
 
@@ -174,6 +184,34 @@ namespace AltV.Net.Elements.Entities
 
         public virtual void OnRemove()
         {
+        }
+
+        /// <summary>
+        /// Increases the reference count, only works when entity didn't got deleted yet
+        /// </summary>
+        public bool AddRef()
+        {
+            lock (this)
+            {
+                if (!Exists && refCount == 0) return false;
+                ++refCount;
+            }
+            InternalAddRef();
+            return true;
+        }
+
+        /// <summary>
+        /// Reduces the reference count, also works when entity got deleted, but a reference still exists
+        /// </summary>
+        public bool RemoveRef()
+        {
+            lock (this)
+            {
+                if (refCount == 0) return false;
+                --refCount;
+            }
+            InternalRemoveRef();
+            return true;
         }
     }
 }

@@ -9,8 +9,12 @@ void Checkpoint_GetPosition(alt::ICheckpoint* checkpoint, position_t &position) 
     position.z = checkpointPosition.z;
 }
 
-void Checkpoint_SetPosition(alt::ICheckpoint* checkpoint, alt::Position pos) {
-    checkpoint->SetPosition(pos);
+void Checkpoint_SetPosition(alt::ICheckpoint* checkpoint, position_t pos) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+    checkpoint->SetPosition(position);
 }
 
 int32_t Checkpoint_GetDimension(alt::ICheckpoint* checkpoint) {
@@ -22,11 +26,19 @@ void Checkpoint_SetDimension(alt::ICheckpoint* checkpoint, int32_t dimension) {
 }
 
 alt::MValueConst* Checkpoint_GetMetaData(alt::ICheckpoint* checkpoint, const char* key) {
-    return new alt::ConstRef(checkpoint->GetMetaData(key));
+    return new alt::MValueConst(checkpoint->GetMetaData(key));
 }
 
 void Checkpoint_SetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValueConst* val) {
     checkpoint->SetMetaData(key, val->Get()->Clone());
+}
+
+void Checkpoint_AddRef(alt::ICheckpoint* checkpoint) {
+    checkpoint->AddRef();
+}
+
+void Checkpoint_RemoveRef(alt::ICheckpoint* checkpoint) {
+    checkpoint->RemoveRef();
 }
 
 // Checkpoint

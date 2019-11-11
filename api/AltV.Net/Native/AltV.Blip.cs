@@ -29,6 +29,12 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Blip_SetMetaData(IntPtr blip, IntPtr key, IntPtr val);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Blip_AddRef(IntPtr blip);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Blip_RemoveRef(IntPtr blip);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool Blip_IsGlobal(IntPtr blip);

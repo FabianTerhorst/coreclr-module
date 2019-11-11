@@ -135,5 +135,15 @@ namespace AltV.Net.Elements.Entities
         {
             Alt.RemoveBlip(this);
         }
+        
+        protected override void InternalAddRef()
+        {
+            AltNative.Blip.Blip_AddRef(NativePointer);
+        }
+
+        protected override void InternalRemoveRef()
+        {
+            AltNative.Blip.Blip_RemoveRef(NativePointer);
+        }
     }
 }

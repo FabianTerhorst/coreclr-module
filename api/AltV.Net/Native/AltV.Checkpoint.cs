@@ -28,6 +28,12 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Checkpoint_SetMetaData(IntPtr checkpoint, IntPtr key, IntPtr val);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Checkpoint_AddRef(IntPtr checkpoint);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Checkpoint_RemoveRef(IntPtr checkpoint);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool Checkpoint_IsGlobal(IntPtr checkpoint);

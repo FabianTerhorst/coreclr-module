@@ -435,6 +435,11 @@ namespace AltV.Net.Example
             using (var reference = new PlayerRef(player))
             {
                 if (!reference.Exists) return;
+                //TODO: how to prevent player exists check to happen here inside
+                //TODO: maybe create a PlayerRef struct from player native pointer and do all calls inside that struct
+                
+                //TODO: other way would be make a counter in player that counts up on ref create and down on ref delete
+                //TODO: possible by adding addref and removeref methods to player class and counting the int up in them
                 player.Position = Position.Zero;
                 player.Rotation = Rotation.Zero;
             }
@@ -480,9 +485,9 @@ namespace AltV.Net.Example
             //Do async processing here with the copy even when player got already removed
         }
 
-        private async Task<int> OnPlayerDisconnectAsync(ReadOnlyPlayer readOnlyPlayer, IPlayer origin, string reason)
+        private async Task<int> OnPlayerDisconnectAsync(IPlayer player, string reason)
         {
-            if (origin is IMyPlayer myPlayer)
+            if (player is IMyPlayer myPlayer)
             {
             }
 

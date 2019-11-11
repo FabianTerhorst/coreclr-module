@@ -9,8 +9,12 @@ void Blip_GetPosition(alt::IBlip* blip, position_t &position) {
     position.z = blipPosition.z;
 }
 
-void Blip_SetPosition(alt::IBlip* blip, alt::Position pos) {
-    blip->SetPosition(pos);
+void Blip_SetPosition(alt::IBlip* blip, position_t pos) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+    blip->SetPosition(position);
 }
 
 int32_t Blip_GetDimension(alt::IBlip* blip) {
@@ -22,11 +26,19 @@ void Blip_SetDimension(alt::IBlip* blip, int32_t dimension) {
 }
 
 alt::MValueConst* Blip_GetMetaData(alt::IBlip* blip, const char* key) {
-    return new alt::ConstRef(blip->GetMetaData(key));
+    return new alt::MValueConst(blip->GetMetaData(key));
 }
 
 void Blip_SetMetaData(alt::IBlip* blip, const char* key, alt::MValueConst* val) {
     blip->SetMetaData(key, val->Get()->Clone());
+}
+
+void Blip_AddRef(alt::IBlip* blip) {
+    blip->AddRef();
+}
+
+void Blip_RemoveRef(alt::IBlip* blip) {
+    blip->RemoveRef();
 }
 
 // Blip

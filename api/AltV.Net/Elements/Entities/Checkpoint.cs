@@ -140,5 +140,15 @@ namespace AltV.Net.Elements.Entities
         {
             Alt.RemoveCheckpoint(this);
         }
+        
+        protected override void InternalAddRef()
+        {
+            AltNative.Checkpoint.Checkpoint_AddRef(NativePointer);
+        }
+
+        protected override void InternalRemoveRef()
+        {
+            AltNative.Checkpoint.Checkpoint_RemoveRef(NativePointer);
+        }
     }
 }

@@ -9,8 +9,12 @@ void ColShape_GetPosition(alt::IColShape* colShape, position_t &position) {
     position.z = vehiclePosition.z;
 }
 
-void ColShape_SetPosition(alt::IColShape* colShape, alt::Position pos) {
-    colShape->SetPosition(pos);
+void ColShape_SetPosition(alt::IColShape* colShape, position_t pos) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+    colShape->SetPosition(position);
 }
 
 int32_t ColShape_GetDimension(alt::IColShape* colShape) {
@@ -22,11 +26,19 @@ void ColShape_SetDimension(alt::IColShape* colShape, int32_t dimension) {
 }
 
 alt::MValueConst* ColShape_GetMetaData(alt::IColShape* colShape, const char* key) {
-    return new alt::ConstRef(colShape->GetMetaData(key));
+    return new alt::MValueConst(colShape->GetMetaData(key));
 }
 
 void ColShape_SetMetaData(alt::IColShape* colShape, const char* key, alt::MValueConst* val) {
     colShape->SetMetaData(key, val->Get()->Clone());
+}
+
+void ColShape_AddRef(alt::IColShape* colShape) {
+    colShape->AddRef();
+}
+
+void ColShape_RemoveRef(alt::IColShape* colShape) {
+    colShape->RemoveRef();
 }
 
 // ColShape

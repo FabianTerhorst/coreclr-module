@@ -23,5 +23,15 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+
+        protected override void InternalAddRef()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void InternalRemoveRef()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

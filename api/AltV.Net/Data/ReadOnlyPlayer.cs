@@ -289,5 +289,15 @@ namespace AltV.Net.Data
         {
             throw new NotImplementedException();
         }
+
+        public bool AddRef()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveRef()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

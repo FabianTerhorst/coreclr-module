@@ -85,5 +85,15 @@ namespace AltV.Net.Elements.Entities
         {
             Alt.RemoveColShape(this);
         }
+        
+        protected override void InternalAddRef()
+        {
+            AltNative.ColShape.ColShape_AddRef(NativePointer);
+        }
+
+        protected override void InternalRemoveRef()
+        {
+            AltNative.ColShape.ColShape_RemoveRef(NativePointer);
+        }
     }
 }

@@ -987,5 +987,15 @@ namespace AltV.Net.Elements.Entities
         {
             Alt.RemoveVehicle(this);
         }
+        
+        protected override void InternalAddRef()
+        {
+            AltNative.Vehicle.Vehicle_AddRef(NativePointer);
+        }
+
+        protected override void InternalRemoveRef()
+        {
+            AltNative.Vehicle.Vehicle_RemoveRef(NativePointer);
+        }
     }
 }

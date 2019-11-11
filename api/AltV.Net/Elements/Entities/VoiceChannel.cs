@@ -83,5 +83,15 @@ namespace AltV.Net.Elements.Entities
         {
             Alt.RemoveVoiceChannel(this);
         }
+        
+        protected override void InternalAddRef()
+        {
+            AltNative.VoiceChannel.VoiceChannel_AddRef(NativePointer);
+        }
+
+        protected override void InternalRemoveRef()
+        {
+            AltNative.VoiceChannel.VoiceChannel_RemoveRef(NativePointer);
+        }
     }
 }

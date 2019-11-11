@@ -147,5 +147,15 @@ namespace AltV.Net.Mock
         public void OnRemove()
         {
         }
+        
+        public bool AddRef()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveRef()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -325,7 +325,7 @@ alt::MValueConst* MValueConst_CallFunction(alt::MValueConst* mValueConst, alt::M
             value.Push(*val[i]);
         }
         auto mValueFunction = dynamic_cast<const alt::IMValueFunction*>(mValue);
-        return new alt::ConstRef(mValueFunction->Call(value));
+        return new alt::MValueConst(mValueFunction->Call(value));
     }
     return nullptr;
 }

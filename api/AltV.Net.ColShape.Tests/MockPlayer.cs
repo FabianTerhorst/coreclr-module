@@ -188,5 +188,15 @@ namespace AltV.Net.ColShape.Tests
         {
             throw new NotImplementedException();
         }
+
+        public bool AddRef()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveRef()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

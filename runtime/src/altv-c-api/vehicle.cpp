@@ -21,8 +21,12 @@ void Vehicle_GetPosition(alt::IVehicle* entity, position_t &position) {
     position.z = vehiclePosition.z;
 }
 
-void Vehicle_SetPosition(alt::IVehicle* entity, alt::Position pos) {
-    entity->SetPosition(pos);
+void Vehicle_SetPosition(alt::IVehicle* entity, position_t pos) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+    entity->SetPosition(position);
 }
 
 void Vehicle_GetRotation(alt::IVehicle* entity, rotation_t &rotation) {
@@ -32,8 +36,12 @@ void Vehicle_GetRotation(alt::IVehicle* entity, rotation_t &rotation) {
     rotation.yaw = checkpointRotation.yaw;
 }
 
-void Vehicle_SetRotation(alt::IVehicle* entity, alt::Rotation rot) {
-    entity->SetRotation(rot);
+void Vehicle_SetRotation(alt::IVehicle* entity, rotation_t rot) {
+    alt::Rotation rotation;
+    rotation.roll = rot.roll;
+    rotation.pitch = rot.pitch;
+    rotation.yaw = rot.yaw;
+    entity->SetRotation(rotation);
 }
 
 int32_t Vehicle_GetDimension(alt::IVehicle* entity) {
@@ -45,7 +53,7 @@ void Vehicle_SetDimension(alt::IVehicle* entity, int32_t dimension) {
 }
 
 alt::MValueConst* Vehicle_GetMetaData(alt::IVehicle* vehicle, const char* key) {
-    return new alt::ConstRef(vehicle->GetMetaData(key));
+    return new alt::MValueConst(vehicle->GetMetaData(key));
 }
 
 void Vehicle_SetMetaData(alt::IVehicle* entity, const char* key, alt::MValueConst* val) {
@@ -53,11 +61,19 @@ void Vehicle_SetMetaData(alt::IVehicle* entity, const char* key, alt::MValueCons
 }
 
 alt::MValueConst* Vehicle_GetSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
-    return new alt::ConstRef(vehicle->GetSyncedMetaData(key));
+    return new alt::MValueConst(vehicle->GetSyncedMetaData(key));
 }
 
 void Vehicle_SetSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MValueConst* val) {
     entity->SetSyncedMetaData(key, val->Get()->Clone());
+}
+
+void Vehicle_AddRef(alt::IVehicle* vehicle) {
+    vehicle->AddRef();
+}
+
+void Vehicle_RemoveRef(alt::IVehicle* vehicle) {
+    vehicle->RemoveRef();
 }
 
 // Vehicle

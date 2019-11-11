@@ -42,6 +42,10 @@ namespace AltV.Net.Elements.Entities
         void CheckIfEntityExists();
 
         void OnRemove();
+
+        bool AddRef();
+
+        bool RemoveRef();
     }
 
     public static class BaseObjectExtensions

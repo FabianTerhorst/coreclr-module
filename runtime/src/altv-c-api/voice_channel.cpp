@@ -1,11 +1,19 @@
 #include "voice_channel.h"
 
 alt::MValueConst* VoiceChannel_GetMetaData(alt::IVoiceChannel* voiceChannel, const char* key) {
-    return new alt::ConstRef(voiceChannel->GetMetaData(key));
+    return new alt::MValueConst(voiceChannel->GetMetaData(key));
 }
 
 void VoiceChannel_SetMetaData(alt::IVoiceChannel* channel, const char* key, alt::MValueConst* val) {
     channel->SetMetaData(key, val->Get()->Clone());
+}
+
+void VoiceChannel_AddRef(alt::IVoiceChannel* voiceChannel) {
+    voiceChannel->AddRef();
+}
+
+void VoiceChannel_RemoveRef(alt::IVoiceChannel* voiceChannel) {
+    voiceChannel->RemoveRef();
 }
 
 void VoiceChannel_AddPlayer(alt::IVoiceChannel* channel, alt::IPlayer* player) {

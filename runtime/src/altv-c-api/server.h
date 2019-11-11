@@ -8,6 +8,8 @@
 
 #include <altv-cpp-api/SDK.h>
 #include <CSharpResourceImpl.h>
+#include "rotation.h"
+#include "position.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -32,22 +34,22 @@ EXPORT void Server_TriggerServerEvent(alt::ICore* server, const char* ev, alt::M
 EXPORT void
 Server_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* ev, alt::MValueConst* args[], int size);
 EXPORT alt::IVehicle*
-Server_CreateVehicle(alt::ICore* server, uint32_t model, alt::Position pos, alt::Rotation rot, uint16_t &id);
+Server_CreateVehicle(alt::ICore* server, uint32_t model, position_t pos, rotation_t rot, uint16_t &id);
 EXPORT alt::ICheckpoint*
-Server_CreateCheckpoint(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::Position pos, float radius,
+Server_CreateCheckpoint(alt::ICore* server, alt::IPlayer* target, uint8_t type, position_t pos, float radius,
                         float height, alt::RGBA color);
 EXPORT alt::IBlip*
-Server_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::Position pos);
+Server_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, position_t pos);
 EXPORT alt::IBlip*
 Server_CreateBlipAttached(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo);
 EXPORT alt::IResource* Server_GetResource(alt::ICore* server, const char* resourceName);
 EXPORT alt::IVoiceChannel* Server_CreateVoiceChannel(alt::ICore* server, bool spatial, float maxDistance);
 EXPORT alt::IColShape*
-Server_CreateColShapeCylinder(alt::ICore* server, alt::Position pos, float radius, float height);
-EXPORT alt::IColShape* Server_CreateColShapeSphere(alt::ICore* server, alt::Position pos, float radius);
-EXPORT alt::IColShape* Server_CreateColShapeCircle(alt::ICore* server, alt::Position pos, float radius);
-EXPORT alt::IColShape* Server_CreateColShapeCube(alt::ICore* server, alt::Position pos, alt::Position pos2);
-EXPORT alt::IColShape* Server_CreateColShapeRectangle(alt::ICore* server, alt::Position pos, alt::Position pos2);
+Server_CreateColShapeCylinder(alt::ICore* server, position_t pos, float radius, float height);
+EXPORT alt::IColShape* Server_CreateColShapeSphere(alt::ICore* server, position_t pos, float radius);
+EXPORT alt::IColShape* Server_CreateColShapeCircle(alt::ICore* server, position_t pos, float radius);
+EXPORT alt::IColShape* Server_CreateColShapeCube(alt::ICore* server, position_t pos, position_t pos2);
+EXPORT alt::IColShape* Server_CreateColShapeRectangle(alt::ICore* server, position_t pos, position_t pos2);
 //EXPORT void Server_DestroyBaseObject(alt::ICore* server, alt::IBaseObject* baseObject);
 EXPORT void Server_DestroyVehicle(alt::ICore* server, alt::IVehicle* baseObject);
 EXPORT void Server_DestroyBlip(alt::ICore* server, alt::IBlip* baseObject);

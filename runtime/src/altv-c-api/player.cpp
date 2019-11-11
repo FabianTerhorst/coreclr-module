@@ -25,8 +25,12 @@ void Player_GetPosition(alt::IPlayer* player, position_t &position) {
     position.z = playerPosition.z;
 }
 
-void Player_SetPosition(alt::IPlayer* player, alt::Position pos) {
-    player->SetPosition(pos);
+void Player_SetPosition(alt::IPlayer* player, position_t pos) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+    player->SetPosition(position);
 }
 
 void Player_GetRotation(alt::IPlayer* player, rotation_t &rotation) {
@@ -36,8 +40,12 @@ void Player_GetRotation(alt::IPlayer* player, rotation_t &rotation) {
     rotation.yaw = playerRotation.yaw;
 }
 
-void Player_SetRotation(alt::IPlayer* player, alt::Rotation rot) {
-    player->SetRotation(rot);
+void Player_SetRotation(alt::IPlayer* player, rotation_t rot) {
+    alt::Rotation rotation;
+    rotation.roll = rot.roll;
+    rotation.pitch = rot.pitch;
+    rotation.yaw = rot.yaw;
+    player->SetRotation(rotation);
 }
 
 int32_t Player_GetDimension(alt::IPlayer* player) {
@@ -49,7 +57,7 @@ void Player_SetDimension(alt::IPlayer* player, int32_t dimension) {
 }
 
 alt::MValueConst* Player_GetMetaData(alt::IPlayer* player, const char* key) {
-    return new alt::ConstRef(player->GetMetaData(key));
+    return new alt::MValueConst(player->GetMetaData(key));
 }
 
 void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val) {
@@ -57,7 +65,7 @@ void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValueConst*
 }
 
 alt::MValueConst* Player_GetSyncedMetaData(alt::IPlayer* player, const char* key) {
-    return new alt::ConstRef(player->GetSyncedMetaData(key));
+    return new alt::MValueConst(player->GetSyncedMetaData(key));
 }
 
 void Player_SetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val) {

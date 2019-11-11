@@ -21,7 +21,7 @@ void Resource_GetExports(alt::IResource* resource, const char* keys[],
 }
 
 alt::MValueConst* Resource_GetExport(alt::IResource* resource, const char* key) {
-    return new alt::Ref(resource->GetExports().Get()->Get(key));
+    return new alt::MValueConst(resource->GetExports().Get()->Get(key));
 }
 
 void Resource_SetExport(alt::IResource* resource, const char* key, alt::MValueConst* val) {
