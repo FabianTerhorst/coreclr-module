@@ -47,7 +47,11 @@ void Server_FileRead(alt::ICore* server, const char* path, const char*&text) {
 void Server_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size) {
     alt::Array<alt::MValueConst> mValues = alt::Array<alt::MValueConst>(size);
     for (int i = 0; i < size; i++) {
-        mValues[i] = *args[i];
+        if (args[i] == nullptr) {
+            mValues[i] = server->CreateMValueNil();
+        } else {
+            mValues[i] = *args[i];
+        }
     }
     server->TriggerServerEvent(ev, mValues);
 }
@@ -57,7 +61,11 @@ Server_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* 
                           int size) {
     alt::Array<alt::MValueConst> mValues = alt::Array<alt::MValueConst>(size);
     for (int i = 0; i < size; i++) {
-        mValues[i] = *args[i];
+        if (args[i] == nullptr) {
+            mValues[i] = server->CreateMValueNil();
+        } else {
+            mValues[i] = *args[i];
+        }
     }
     server->TriggerClientEvent(target, ev, mValues);
 }

@@ -115,21 +115,27 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
         case alt::CEvent::Type::CLIENT_SCRIPT_EVENT: {
             alt::MValueArgs clientArgs = (((alt::CClientScriptEvent*) (ev))->GetArgs());
             uint64_t size = clientArgs.GetSize();
+            if (size == 0) {
+                OnClientEventDelegate(((alt::CClientScriptEvent*) (ev))->GetTarget().Get(),
+                                      ((alt::CClientScriptEvent*) (ev))->GetName().CStr(),
+                                      nullptr);
+            } else {
 #ifdef _WIN32
-            auto constArgs = new alt::MValueConst* [size];
+                auto constArgs = new alt::MValueConst* [size];
 #else
-            alt::MValueConst* constArgs[size];
+                alt::MValueConst* constArgs[size];
 #endif
-            for (uint64_t i = 0; i < size; i++) {
-                constArgs[i] = &clientArgs[i];
-            }
-            OnClientEventDelegate(((alt::CClientScriptEvent*) (ev))->GetTarget().Get(),
-                                  ((alt::CClientScriptEvent*) (ev))->GetName().CStr(),
-                                  constArgs);
+                for (uint64_t i = 0; i < size; i++) {
+                    constArgs[i] = &clientArgs[i];
+                }
+                OnClientEventDelegate(((alt::CClientScriptEvent*) (ev))->GetTarget().Get(),
+                                      ((alt::CClientScriptEvent*) (ev))->GetName().CStr(),
+                                      constArgs);
 
 #ifdef _WIN32
-            delete[] constArgs;
+                delete[] constArgs;
 #endif
+            }
         }
             break;
         case alt::CEvent::Type::PLAYER_CONNECT: {
@@ -247,18 +253,22 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             auto serverScriptEvent = (alt::CServerScriptEvent*) ev;
             alt::MValueArgs serverArgs = serverScriptEvent->GetArgs();
             uint64_t size = serverArgs.GetSize();
+            if (size == 0) {
+                OnServerEventDelegate(serverScriptEvent->GetName().CStr(), nullptr);
+            } else {
 #ifdef _WIN32
-            auto constArgs = new alt::MValueConst* [size];
+                auto constArgs = new alt::MValueConst* [size];
 #else
-            alt::MValueConst* constArgs[size];
+                alt::MValueConst* constArgs[size];
 #endif
-            for (uint64_t i = 0; i < size; i++) {
-                constArgs[i] = &serverArgs[i];
-            }
-            OnServerEventDelegate(serverScriptEvent->GetName().CStr(), constArgs);
+                for (uint64_t i = 0; i < size; i++) {
+                    constArgs[i] = &serverArgs[i];
+                }
+                OnServerEventDelegate(serverScriptEvent->GetName().CStr(), constArgs);
 #ifdef _WIN32
-            delete[] constArgs;
+                delete[] constArgs;
 #endif
+            }
         }
             break;
         case alt::CEvent::Type::PLAYER_CHANGE_VEHICLE_SEAT: {
@@ -287,20 +297,24 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             alt::Array<alt::StringView> args = ((alt::CConsoleCommandEvent*) (ev))->GetArgs();
 
             uint64_t size = args.GetSize();
+            if (size == 0) {
+                OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(), nullptr);
+            } else {
 #ifdef _WIN32
-            auto constArgs = new const char* [size];
+                auto constArgs = new const char* [size];
 #else
-            const char* constArgs[size];
+                const char* constArgs[size];
 #endif
-            for (uint64_t i = 0; i < size; i++) {
-                constArgs[i] = args[i].CStr();
-            }
+                for (uint64_t i = 0; i < size; i++) {
+                    constArgs[i] = args[i].CStr();
+                }
 
-            OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(), constArgs);
+                OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(), constArgs);
 
 #ifdef _WIN32
-            delete[] constArgs;
+                delete[] constArgs;
 #endif
+            }
         }
             break;
         case alt::CEvent::Type::COLSHAPE_EVENT: {

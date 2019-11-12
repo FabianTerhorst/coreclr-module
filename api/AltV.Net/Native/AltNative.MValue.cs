@@ -49,7 +49,7 @@ namespace AltV.Net.Native
             internal static extern IntPtr MValueConst_GetEntity(IntPtr mValueConst, ref BaseObjectType type);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern ref IntPtr MValueConst_CallFunction(IntPtr mValueConst, IntPtr[] val, ulong size);
+            internal static extern IntPtr MValueConst_CallFunction(IntPtr mValueConst, IntPtr[] val, ulong size);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void MValueConst_Delete(IntPtr mValueConst);

@@ -17,8 +17,41 @@ namespace AltV.Net.Example
     {
         public override void OnStart()
         {
+            Console.WriteLine("testVehicle:" + testVehicle);
+            {
+                Console.WriteLine("inside invoke");
+                Alt.Log("myData: " + myVehicle?.MyData);
+                Console.WriteLine("inside invoke2");
+            });
+            Alt.Emit("vehicle2", testVehicle);
+            Alt.On<IMyVehicle>("vehicle2", myVehicle =>
+                {
+                    Console.WriteLine("inside invoke3");
+                    Alt.Log("myData: " + myVehicle.MyData);
+                    Console.WriteLine("inside invoke4");
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception);
+                }
+            });
+            Alt.Emit("vehicle3", testVehicle);
+            Alt.On<IMyVehicle>("vehicle3", myVehicle =>
+            {
+                try
+                {
+                    Console.WriteLine("inside invoke5");
+                    Alt.Log("myData: " + myVehicle.MyData);
+                    Console.WriteLine("inside invoke6");
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception);
+                }
+            });
+            if (true) return;
             MValueAdapters.Register(new ConvertibleObject.ConvertibleObjectAdapter());
-            Alt.On("convertible_test", delegate(ConvertibleObject convertible)
+            /*Alt.On("convertible_test", delegate(ConvertibleObject convertible)
             {
                 Console.WriteLine("convertible_test received");
                 Console.WriteLine(convertible.Test);
@@ -26,7 +59,7 @@ namespace AltV.Net.Example
                 {
                     Console.WriteLine("-" + t.Test);
                 }
-            });
+            });*/
             var convertibleObject = new ConvertibleObject();
             Alt.Emit("convertible_test", convertibleObject);
 
@@ -37,7 +70,14 @@ namespace AltV.Net.Example
             Alt.On<string>("bla2", bla2);
             Alt.On<string, bool>("bla3", bla3);
             Alt.On<string, string>("bla4", bla4);
-            Alt.On<IMyVehicle>("vehicleTest", myVehicle => { Alt.Log("myData: " + myVehicle.MyData); });
+            Alt.On<IMyVehicle>("vehicleTest", myVehicle =>
+            {
+                Console.WriteLine("inside invoke");
+                Alt.Log("myData: " + myVehicle?.MyData);
+                Console.WriteLine("inside invoke2");
+            });
+            
+            Console.WriteLine("vehicleTestDone");
 
             Alt.OnPlayerConnect += OnPlayerConnect;
             Alt.OnPlayerDisconnect += OnPlayerDisconnect;

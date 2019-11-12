@@ -183,11 +183,19 @@ namespace AltV.Net
 
         public static void OnClientEvent(IntPtr playerPointer, string name, IntPtr[] args)
         {
+            if (args == null)
+            {
+                args = new IntPtr[0];
+            }
             _module.OnClientEvent(playerPointer, name, args);
         }
 
         public static void OnServerEvent(string name, IntPtr[] args)
         {
+            if (args == null)
+            {
+                args = new IntPtr[0];
+            }
             _module.OnServerEvent(name, args);
         }
 
@@ -263,6 +271,10 @@ namespace AltV.Net
 
         public static void OnConsoleCommand(string name, string[] args)
         {
+            if (args == null)
+            {
+                args = new string[0];
+            }
             _module.OnConsoleCommand(name, args);
         }
 

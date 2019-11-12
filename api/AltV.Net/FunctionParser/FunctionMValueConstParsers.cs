@@ -487,7 +487,7 @@ namespace AltV.Net.FunctionParser
 
             var entityPointer = mValue.GetEntityPointer(ref entityType);
 
-            if (entityPointer == IntPtr.Zero) return null;
+            if (entityPointer == IntPtr.Zero || entityType == BaseObjectType.Undefined) return null;
             if (!ValidateEntityType(entityType, type, typeInfo))
             {
                 return null;

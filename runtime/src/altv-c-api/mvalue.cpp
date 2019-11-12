@@ -287,6 +287,10 @@ void* MValueConst_GetEntity(alt::MValueConst* mValueConst, alt::IBaseObject::Typ
                     return dynamic_cast<alt::IBlip*>(entityPointer);
                 case alt::IBaseObject::Type::CHECKPOINT:
                     return dynamic_cast<alt::ICheckpoint*>(entityPointer);
+                case alt::IBaseObject::Type::VOICE_CHANNEL:
+                    return dynamic_cast<alt::IVoiceChannel*>(entityPointer);
+                case alt::IBaseObject::Type::COLSHAPE:
+                    return dynamic_cast<alt::IColShape*>(entityPointer);
                 default:
                     return nullptr;
             }
