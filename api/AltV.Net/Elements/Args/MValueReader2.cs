@@ -6,7 +6,6 @@ using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Args
 {
-    //TODO: look into freeing mvaluearray
     internal class MValueReader2 : IMValueReader
     {
         private interface IReadableMValue
@@ -121,7 +120,10 @@ namespace AltV.Net.Elements.Args
 
             public void Dispose()
             {
-                //mValueArray.Dispose();
+                for (int i = 0, length = mValueArray.Length; i < length; i++)
+                {
+                    mValueArray[i].Dispose();
+                }
             }
 
             public void Peek(out MValueConst mValue)
@@ -133,7 +135,7 @@ namespace AltV.Net.Elements.Args
             {
                 return (ulong) size;
             }
-            
+
             public MValueConst.Type GetPreviousType()
             {
                 return mValueArrayBuffer.GetPreviousType();
@@ -243,8 +245,10 @@ namespace AltV.Net.Elements.Args
 
             public void Dispose()
             {
-                //stringArray.Dispose();
-                //mValueArray.Dispose();
+                for (int i = 0, length = mValueArray.Length; i < length; i++)
+                {
+                    mValueArray[i].Dispose();
+                }
             }
 
             public void Peek(out MValueConst mValueConst)
@@ -261,12 +265,12 @@ namespace AltV.Net.Elements.Args
             {
                 return mValueArrayBuffer.GetPreviousType();
             }
-            
+
             public bool HasNext()
             {
                 return mValueArrayBuffer.HasNext();
             }
-            
+
             public void SkipValue()
             {
                 mValueArrayBuffer.SkipValue();
@@ -277,7 +281,7 @@ namespace AltV.Net.Elements.Args
         {
             private MValueConst mValue;
 
-            public MValueStartReader(ref MValueConst mValue)
+            public MValueStartReader(in MValueConst mValue)
             {
                 this.mValue = mValue;
             }
@@ -396,17 +400,17 @@ namespace AltV.Net.Elements.Args
             {
                 return 1;
             }
-            
+
             public MValueConst.Type GetPreviousType()
             {
                 return MValueConst.Type.NIL;
             }
-            
+
             public bool HasNext()
             {
                 return true;
             }
-            
+
             public void SkipValue()
             {
             }
@@ -420,9 +424,9 @@ namespace AltV.Net.Elements.Args
 
         private IReadableMValue readableMValue;
 
-        public MValueReader2(ref MValueConst mValue)
+        public MValueReader2(in MValueConst mValue)
         {
-            readableMValue = new MValueStartReader(ref mValue);
+            readableMValue = new MValueStartReader(in mValue);
         }
 
         public void BeginObject()
@@ -443,9 +447,12 @@ namespace AltV.Net.Elements.Args
             var valueArray = new MValueConst[size];
             for (ulong i = 0; i < size; i++)
             {
-                keyArray[i] = Marshal.PtrToStringUTF8(stringArrayPtr[i]);
+                var keyPointer = stringArrayPtr[i];
+                keyArray[i] = Marshal.PtrToStringUTF8(keyPointer);
+                AltNative.FreeCharArray(keyPointer);
                 valueArray[i] = new MValueConst(valueArrayPtr[i]);
             }
+
             readableMValue = new MValueObjectReader(keyArray, valueArray);
             currents.Push(readableMValue);
             insideObject = true;
@@ -683,6 +690,15 @@ namespace AltV.Net.Elements.Args
             return readableMValue.GetSize() <= ((MValueObjectReader) readableMValue).GetSize()
                 ? MValueReaderToken.Name
                 : MValueReaderToken.Unknown;
+        }
+
+        public void Dispose()
+        {
+            IReadableMValue popped;
+            while ((popped = currents.Pop()) != null)
+            {
+                popped.Dispose();
+            }
         }
     }
 }

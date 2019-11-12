@@ -87,4 +87,4 @@ EXPOSE 7788/udp
 EXPOSE 7788/tcp
 
 #ENTRYPOINT ["tail", "-f", "/dev/null"]
-#CMD sh startgdb.sh
+CMD sh startgdb.sh

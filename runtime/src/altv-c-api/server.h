@@ -73,7 +73,7 @@ EXPORT alt::MValueConst* Core_CreateMValueDouble(alt::ICore* core, double value)
 EXPORT alt::MValueConst* Core_CreateMValueString(alt::ICore* core, const char* value);
 EXPORT alt::MValueConst* Core_CreateMValueList(alt::ICore* core, alt::MValueConst* val[], uint64_t size);
 EXPORT alt::MValueConst*
-Core_CreateMValueDict(alt::ICore* core, const char** keys, alt::MValueConst* val[], uint64_t size);
+Core_CreateMValueDict(alt::ICore* core, const char* keys[], alt::MValueConst* val[], uint64_t size);
 //EXPORT alt::MValueBaseObject* Core_CreateMValueBaseObject(alt::ICore* core, alt::Ref<alt::IBaseObject>* value)
 EXPORT alt::MValueConst* Core_CreateMValueCheckpoint(alt::ICore* core, alt::ICheckpoint* value);
 EXPORT alt::MValueConst* Core_CreateMValueBlip(alt::ICore* core, alt::IBlip* value);

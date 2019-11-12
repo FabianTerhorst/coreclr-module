@@ -97,6 +97,8 @@ namespace AltV.Net
 
         INativeResource GetResource(string name);
 
+        INativeResource GetResource(IntPtr resourcePointer);
+
         // Only for advanced use cases
 
         IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation);

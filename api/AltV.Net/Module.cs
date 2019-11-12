@@ -369,8 +369,9 @@ namespace AltV.Net
 
         public void OnResourceStart(IntPtr resourcePointer)
         {
-            if (!NativeResourcePool.GetOrCreate(resourcePointer, out var nativeResource)) return;
-            OnResourceStartEvent(nativeResource);
+            var resource = Server.GetResource(resourcePointer);
+            if (resource == null) return;
+            OnResourceStartEvent(resource);
         }
 
         public virtual void OnResourceStartEvent(INativeResource resource)
@@ -383,8 +384,9 @@ namespace AltV.Net
 
         public void OnResourceStop(IntPtr resourcePointer)
         {
-            if (!NativeResourcePool.GetOrCreate(resourcePointer, out var nativeResource)) return;
-            OnResourceStopEvent(nativeResource);
+            var resource = Server.GetResource(resourcePointer);
+            if (resource == null) return;
+            OnResourceStopEvent(resource);
         }
 
         public virtual void OnResourceStopEvent(INativeResource resource)
@@ -397,8 +399,9 @@ namespace AltV.Net
 
         public void OnResourceError(IntPtr resourcePointer)
         {
-            if (!NativeResourcePool.GetOrCreate(resourcePointer, out var nativeResource)) return;
-            OnResourceErrorEvent(nativeResource);
+            var resource = Server.GetResource(resourcePointer);
+            if (resource == null) return;
+            OnResourceErrorEvent(resource);
         }
 
         public virtual void OnResourceErrorEvent(INativeResource resource)

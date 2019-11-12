@@ -22,7 +22,10 @@ namespace AltV.Net.Native
             internal static extern IntPtr Resource_GetExport(IntPtr resource, IntPtr key);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Resource_SetExport(IntPtr resource, IntPtr key, IntPtr val);
+            internal static extern void Resource_SetExport(IntPtr core, IntPtr resource, IntPtr key, IntPtr val);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Resource_SetExports(IntPtr core, IntPtr resource, IntPtr[] values, IntPtr[] keys, int size);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Resource_GetPath(IntPtr resourcePointer, ref IntPtr text);

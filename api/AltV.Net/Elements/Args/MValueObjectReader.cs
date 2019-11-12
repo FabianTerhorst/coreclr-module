@@ -401,5 +401,9 @@ namespace AltV.Net.Elements.Args
                 ? MValueReaderToken.Name
                 : MValueReaderToken.Unknown;
         }
+
+        public void Dispose()
+        {
+        }
     }
 }

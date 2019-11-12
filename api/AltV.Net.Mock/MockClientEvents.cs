@@ -49,7 +49,7 @@ namespace AltV.Net.Mock
             ClientEvents[player.NativePointer].Enqueue(new ClientEvent(eventName, args));
         }
 
-        internal static void PushEvent(this IPlayer player, string eventName, MValue[] args)
+        internal static void PushEvent(this IPlayer player, string eventName, MValueConst[] args)
         {
             var obj = new object[args.Length];
             for (var i = 0; i < args.Length; i++)
@@ -74,10 +74,11 @@ namespace AltV.Net.Mock
                 }
             }
             
-            var mValue = MValue.Nil;
+            //TODO:
+            /*var mValue = MValue.Nil;
             AltNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValue);
             var mValueArray = MValueArray.Nil;
-            AltNative.MValueGet.MValue_GetList(ref mValue, ref mValueArray);
+            AltNative.MValueGet.MValue_GetList(ref mValue, ref mValueArray);*/
             //Alt.Module.OnClientEvent(player.NativePointer, eventName, ref mValueArray);
         }
 

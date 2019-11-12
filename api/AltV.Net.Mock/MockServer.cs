@@ -33,7 +33,7 @@ namespace AltV.Net.Mock
 
         public string RootDirectory => "";
 
-        public INativeResource Resource => new NativeResource(IntPtr.Zero);
+        public INativeResource Resource => new NativeResource(IntPtr.Zero, IntPtr.Zero);
 
         internal MockServer(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
@@ -109,28 +109,7 @@ namespace AltV.Net.Mock
             throw new System.NotImplementedException();
         }
 
-        public void TriggerServerEvent(string eventName, params MValue[] args)
-        {
-            var mValue = MValue.Nil;
-            AltNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValue);
-            var mValueArray = MValueArray.Nil;
-            AltNative.MValueGet.MValue_GetList(ref mValue, ref mValueArray);
-            //Alt.Module.OnServerEvent(eventName, ref mValueArray);
-        }
-
-        public void TriggerServerEvent(string eventName, params object[] args)
-        {
-            TriggerServerEvent(eventName, MValue.CreateFromObjects(args));
-        }
-
-        public void TriggerServerEvent(string eventName, ref MValue args)
-        {
-            var mValueArray = MValueArray.Nil;
-            AltNative.MValueGet.MValue_GetList(ref args, ref mValueArray);
-            //Alt.Module.OnServerEvent(eventName, ref mValueArray);
-        }
-
-        public void TriggerClientEvent(IPlayer player, string eventName, params MValue[] args)
+        /*public void TriggerClientEvent(IPlayer player, string eventName, params MValueConst[] args)
         {
             if (player == null)
             {
@@ -191,7 +170,7 @@ namespace AltV.Net.Mock
         public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, ref MValue args)
         {
             TriggerClientEvent(player, Marshal.PtrToStringUTF8(eventNamePtr), ref args);
-        }
+        }*/
 
         public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
@@ -326,7 +305,12 @@ namespace AltV.Net.Mock
 
         public INativeResource GetResource(string name)
         {
-            return new NativeResource(IntPtr.Zero);
+            return new NativeResource(IntPtr.Zero, IntPtr.Zero);
+        }
+
+        public INativeResource GetResource(IntPtr resourcePointer)
+        {
+            return new NativeResource(IntPtr.Zero, IntPtr.Zero);
         }
 
         public IEnumerable<IPlayer> GetPlayers()
@@ -470,6 +454,26 @@ namespace AltV.Net.Mock
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerServerEvent(IntPtr eventNamePtr, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerServerEvent(string eventName, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)
         {
             throw new NotImplementedException();
         }

@@ -11,7 +11,7 @@ namespace AltV.Net.FunctionParser
 {
     internal static class FunctionMValueConstParsers
     {
-        public static object CreateArray(Type type, MValueConst[] mValues,
+        private static object CreateArray(Type type, MValueConst[] mValues,
             FunctionTypeInfo typeInfo)
         {
             var length = mValues.Length;
@@ -21,7 +21,7 @@ namespace AltV.Net.FunctionParser
                 for (var i = 0; i < length; i++)
                 {
                     var currMValue = mValues[i];
-                    if (!TryParseObject(ref currMValue, type, typeInfo?.Element, out var obj))
+                    if (!TryParseObject(in currMValue, type, typeInfo?.Element, out var obj))
                     {
                         array[i] = obj;
                         //return null;
@@ -174,7 +174,7 @@ namespace AltV.Net.FunctionParser
             for (var i = 0; i < length; i++)
             {
                 var currMValue = mValues[i];
-                if (!TryParseObject(ref currMValue, type, typeInfo?.Element, out var obj))
+                if (!TryParseObject(in currMValue, type, typeInfo?.Element, out var obj))
                 {
                     typeArray.SetValue( /*null*/obj, i);
                 }
@@ -187,7 +187,7 @@ namespace AltV.Net.FunctionParser
             return typeArray;
         }
 
-        public static object ParseBool(ref MValueConst mValue, Type type,
+        public static object ParseBool(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
             if (mValue.type == MValueConst.Type.BOOL)
@@ -199,7 +199,7 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
-        public static object ParseInt(ref MValueConst mValue, Type type,
+        public static object ParseInt(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
             if (mValue.type == MValueConst.Type.INT)
@@ -211,7 +211,7 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
-        public static object ParseLong(ref MValueConst mValue, Type type,
+        public static object ParseLong(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
             if (mValue.type == MValueConst.Type.INT)
@@ -223,7 +223,7 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
-        public static object ParseUInt(ref MValueConst mValue, Type type,
+        public static object ParseUInt(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
             if (mValue.type == MValueConst.Type.UINT)
@@ -235,7 +235,7 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
-        public static object ParseULong(ref MValueConst mValue, Type type,
+        public static object ParseULong(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
             if (mValue.type == MValueConst.Type.UINT)
@@ -247,7 +247,7 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
-        public static object ParseFloat(ref MValueConst mValue, Type type,
+        public static object ParseFloat(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
             if (mValue.type == MValueConst.Type.DOUBLE)
@@ -259,7 +259,7 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
-        public static object ParseDouble(ref MValueConst mValue, Type type,
+        public static object ParseDouble(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
             if (mValue.type == MValueConst.Type.DOUBLE)
@@ -271,13 +271,13 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
-        public static object ParseString(ref MValueConst mValue, Type type,
+        public static object ParseString(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
             return mValue.type != MValueConst.Type.STRING ? null : mValue.GetString();
         }
 
-        public static object ParseObject(ref MValueConst mValue, Type type,
+        public static object ParseObject(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
             //return mValue.ToObject(entityPool);
@@ -287,21 +287,21 @@ namespace AltV.Net.FunctionParser
                 case MValueConst.Type.NIL:
                     return null;
                 case MValueConst.Type.BOOL:
-                    return ParseBool(ref mValue, type, typeInfo);
+                    return ParseBool(in mValue, type, typeInfo);
                 case MValueConst.Type.INT:
                     return type == FunctionTypes.Int
-                        ? ParseInt(ref mValue, type, typeInfo)
-                        : ParseLong(ref mValue, type, typeInfo);
+                        ? ParseInt(in mValue, type, typeInfo)
+                        : ParseLong(in mValue, type, typeInfo);
                 case MValueConst.Type.UINT:
                     return type == FunctionTypes.UInt
-                        ? ParseUInt(ref mValue, type, typeInfo)
-                        : ParseULong(ref mValue, type, typeInfo);
+                        ? ParseUInt(in mValue, type, typeInfo)
+                        : ParseULong(in mValue, type, typeInfo);
                 case MValueConst.Type.DOUBLE:
                     return type == FunctionTypes.Float
-                        ? ParseFloat(ref mValue, type, typeInfo)
-                        : ParseDouble(ref mValue, type, typeInfo);
+                        ? ParseFloat(in mValue, type, typeInfo)
+                        : ParseDouble(in mValue, type, typeInfo);
                 case MValueConst.Type.STRING:
-                    return ParseString(ref mValue, type, typeInfo);
+                    return ParseString(in mValue, type, typeInfo);
                 case MValueConst.Type.LIST:
                     /*if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
                         MValueAdapters.FromMValue(ref mValue, type, out obj))
@@ -309,9 +309,9 @@ namespace AltV.Net.FunctionParser
                         return obj;
                     }*/
 
-                    return ParseArray(ref mValue, type, typeInfo);
+                    return ParseArray(in mValue, type, typeInfo);
                 case MValueConst.Type.ENTITY:
-                    return ParseEntity(ref mValue, type, typeInfo);
+                    return ParseEntity(in mValue, type, typeInfo);
                 case MValueConst.Type.DICT:
                     /*if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
                         MValueAdapters.FromMValue(ref mValue, type, out obj))
@@ -319,15 +319,15 @@ namespace AltV.Net.FunctionParser
                         return obj;
                     }*/
 
-                    return ParseDictionary(ref mValue, type, typeInfo);
+                    return ParseDictionary(in mValue, type, typeInfo);
                 case MValueConst.Type.FUNCTION:
-                    return ParseFunction(ref mValue, type, typeInfo);
+                    return ParseFunction(in mValue, type, typeInfo);
                 default:
                     return null;
             }
         }
 
-        public static bool TryParseObject(ref MValueConst mValue, Type type,
+        public static bool TryParseObject(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo, out object obj)
         {
             switch (mValue.type)
@@ -416,7 +416,7 @@ namespace AltV.Net.FunctionParser
                             return true;
                         }*/
 
-                        obj = ParseArray(ref mValue, type, typeInfo);
+                        obj = ParseArray(in mValue, type, typeInfo);
                         return true;
                     }
 
@@ -426,7 +426,7 @@ namespace AltV.Net.FunctionParser
                     if (type == FunctionTypes.Obj ||
                         (typeInfo?.IsEntity ?? type.GetInterfaces().Contains(FunctionTypes.Entity)))
                     {
-                        obj = ParseEntity(ref mValue, type, typeInfo);
+                        obj = ParseEntity(in mValue, type, typeInfo);
                         return true;
                     }
                     else
@@ -444,7 +444,7 @@ namespace AltV.Net.FunctionParser
                             return true;
                         }*/
 
-                        obj = ParseDictionary(ref mValue, type, typeInfo);
+                        obj = ParseDictionary(in mValue, type, typeInfo);
                         return true;
                     }
 
@@ -452,7 +452,7 @@ namespace AltV.Net.FunctionParser
                     return false;
                 case MValueConst.Type.FUNCTION:
                     //TODO: validate type somehow
-                    obj = ParseFunction(ref mValue, type, typeInfo);
+                    obj = ParseFunction(in mValue, type, typeInfo);
                     return true;
                 default:
                     obj = GetDefault(type, typeInfo);
@@ -460,7 +460,7 @@ namespace AltV.Net.FunctionParser
             }
         }
 
-        public static object ParseArray(ref MValueConst mValue, Type type,
+        public static object ParseArray(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
             // Types doesn't match
@@ -469,10 +469,16 @@ namespace AltV.Net.FunctionParser
             var elementType = typeInfo?.ElementType ?? (
                                   type.GetElementType() ??
                                   type); // Object has no element type so we have to use the same type again
-            return CreateArray(elementType, mValueList, typeInfo);
+            var array = CreateArray(elementType, mValueList, typeInfo);
+            for (int i = 0, length = mValueList.Length; i < length; i++)
+            {
+                mValueList[i].Dispose();
+            }
+
+            return array;
         }
 
-        public static object ParseEntity(ref MValueConst mValue, Type type,
+        public static object ParseEntity(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
             // Types doesn't match
@@ -495,7 +501,7 @@ namespace AltV.Net.FunctionParser
             return entity;
         }
 
-        public static object ParseDictionary(ref MValueConst mValue, Type type,
+        public static object ParseDictionary(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
             // Types doesn't match
@@ -516,9 +522,23 @@ namespace AltV.Net.FunctionParser
             for (ulong i = 0; i < length; i++)
             {
                 strings[i] = Marshal.PtrToStringUTF8(keyPointers[i]);
+                AltNative.FreeCharArray(keyPointers[i]);
                 valueArray[i] = new MValueConst(pointerValues[i]);
             }
 
+            var dictionary = CreateDictionary(typeInfo, keyType, valueType, length, strings, valueArray);
+
+            for (ulong i = 0; i < length; i++)
+            {
+                valueArray[i].Dispose();
+            }
+
+            return dictionary;
+        }
+
+        private static object CreateDictionary(FunctionTypeInfo typeInfo, Type keyType, Type valueType, ulong length,
+            string[] strings, MValueConst[] valueArray)
+        {
             MValueConst currMValue;
 
             if (valueType == FunctionTypes.Obj)
@@ -526,7 +546,7 @@ namespace AltV.Net.FunctionParser
                 var dict = new Dictionary<string, object>();
                 for (ulong i = 0; i < length; i++)
                 {
-                    dict[strings[i]] = ParseObject(ref valueArray[i], valueType,
+                    dict[strings[i]] = ParseObject(in valueArray[i], valueType,
                         typeInfo?.DictionaryValue);
                 }
 
@@ -711,7 +731,7 @@ namespace AltV.Net.FunctionParser
             {
                 currMValue = valueArray[i];
 
-                if (!TryParseObject(ref currMValue, valueType, typeInfo?.DictionaryValue,
+                if (!TryParseObject(in currMValue, valueType, typeInfo?.DictionaryValue,
                     out var dictObject))
                 {
                     typedDict[strings[i]] = dictObject; //null;
@@ -732,7 +752,7 @@ namespace AltV.Net.FunctionParser
             return typedDict;
         }
 
-        public static object ParseFunction(ref MValueConst mValue, Type type,
+        public static object ParseFunction(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
             if (mValue.type == MValueConst.Type.FUNCTION)
@@ -780,18 +800,18 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
-        public static object ParseConvertible(ref MValueConst mValue, Type type,
+        public static object ParseConvertible(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
             return null; //MValueAdapters.FromMValue(ref mValue, type, out var obj) ? obj : null;
         }
-        
-        public static object ParseEnum(ref MValueConst value, Type type, FunctionTypeInfo typeInfo)
+
+        public static object ParseEnum(in MValueConst value, Type type, FunctionTypeInfo typeInfo)
         {
             return !Enum.TryParse(type, value.ToString(), true, out var enumObject) ? null : enumObject;
         }
     }
 
-    internal delegate object FunctionMValueConstParser(ref MValueConst mValue, Type type,
+    internal delegate object FunctionMValueConstParser(in MValueConst mValue, Type type,
         FunctionTypeInfo typeInfo);
 }

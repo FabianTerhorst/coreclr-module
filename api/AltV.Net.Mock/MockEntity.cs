@@ -21,9 +21,9 @@ namespace AltV.Net.Mock
 
         private readonly Dictionary<string, object> data = new Dictionary<string, object>();
 
-        private readonly Dictionary<string, MValue> metaData = new Dictionary<string, MValue>();
+        private readonly Dictionary<string, MValueConst> metaData = new Dictionary<string, MValueConst>();
 
-        private readonly Dictionary<string, MValue> syncedMetaData = new Dictionary<string, MValue>();
+        private readonly Dictionary<string, MValueConst> syncedMetaData = new Dictionary<string, MValueConst>();
 
         public MockEntity(IntPtr nativePointer, BaseObjectType baseObjectType, ushort id)
         {
@@ -45,7 +45,8 @@ namespace AltV.Net.Mock
 
         public void SetMetaData(string key, object value)
         {
-            metaData[key] = MValue.CreateFromObject(value);
+            Alt.Server.CreateMValue(out var mValue, value);
+            metaData[key] = mValue;
         }
 
         public bool GetMetaData<T>(string key, out T result)
@@ -91,7 +92,8 @@ namespace AltV.Net.Mock
 
         public void SetSyncedMetaData(string key, object value)
         {
-            syncedMetaData[key] = MValue.CreateFromObject(value);
+            Alt.Server.CreateMValue(out var mValue, value);
+            syncedMetaData[key] = mValue;
         }
 
         public bool GetSyncedMetaData<T>(string key, out T result)

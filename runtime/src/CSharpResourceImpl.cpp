@@ -86,7 +86,8 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             auto key = event->GetKey();
             auto value = event->GetVal();
             auto constValue = alt::ConstRef<alt::IMValue>(value);
-            OnMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), key == nullptr ? "" : key.CStr(), &constValue);
+            OnMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), key == nullptr ? "" : key.CStr(),
+                                 &constValue);
         }
             break;
         case alt::CEvent::Type::SYNCED_META_CHANGE: {
@@ -139,16 +140,16 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             break;
         case alt::CEvent::Type::RESOURCE_START: {
             OnResourceStartDelegate(reinterpret_cast<const alt::CResourceStartEvent*>(ev)->GetResource());
-            break;
         }
+            break;
         case alt::CEvent::Type::RESOURCE_STOP: {
             OnResourceStopDelegate(reinterpret_cast<const alt::CResourceStopEvent*>(ev)->GetResource());
-            break;
         }
+            break;
         case alt::CEvent::Type::RESOURCE_ERROR: {
             OnResourceErrorDelegate(reinterpret_cast<const alt::CResourceErrorEvent*>(ev)->GetResource());
-            break;
         }
+            break;
         case alt::CEvent::Type::PLAYER_DAMAGE: {
             auto damageEvent = (alt::CPlayerDamageEvent*) ev;
             auto entity = damageEvent->GetAttacker().Get();

@@ -12,7 +12,7 @@ namespace AltV.Net.Elements.Args
     public readonly struct MValueConst : IDisposable
     {
         public static MValueConst Nil = new MValueConst(Type.NIL, IntPtr.Zero);
-        
+
         public enum Type : byte
         {
             NIL = 0,
@@ -45,9 +45,16 @@ namespace AltV.Net.Elements.Args
         public MValueConst(IntPtr nativePointer)
         {
             this.nativePointer = nativePointer;
-            this.type = (Type) AltNative.MValueNative.MValueConst_GetType(nativePointer);
+            if (nativePointer == IntPtr.Zero)
+            {
+                this.type = Type.NIL;
+            }
+            else
+            {
+                this.type = (Type) AltNative.MValueNative.MValueConst_GetType(nativePointer);
+            }
         }
-        
+
         public MValueConst(Type type, IntPtr nativePointer)
         {
             this.nativePointer = nativePointer;
@@ -114,7 +121,11 @@ namespace AltV.Net.Elements.Args
 
             for (ulong i = 0; i < size; i++)
             {
-                dictionary[Marshal.PtrToStringUTF8(keyPointers[i])] = new MValueConst(mValuePointers[i]);
+                var keyPointer = keyPointers[i];
+                var mValue = new MValueConst(mValuePointers[i]);
+                dictionary[Marshal.PtrToStringUTF8(keyPointer)] = mValue;
+                AltNative.FreeCharArray(keyPointer);
+                mValue.Dispose();
             }
 
             return dictionary;
@@ -129,7 +140,8 @@ namespace AltV.Net.Elements.Args
                 argsPointers[i] = args[i].nativePointer;
             }
 
-            result = new MValueConst(AltNative.MValueNative.MValueConst_CallFunction(nativePointer, argsPointers, length));
+            result = new MValueConst(
+                AltNative.MValueNative.MValueConst_CallFunction(nativePointer, argsPointers, length));
         }
 
         public object ToObject()
@@ -155,7 +167,9 @@ namespace AltV.Net.Elements.Args
                     var arrayValues = new object[listSize];
                     for (ulong i = 0; i < listSize; i++)
                     {
-                        arrayValues[i] = new MValueConst(mValueListPointers[i]).ToObject();
+                        var mValue = new MValueConst(mValueListPointers[i]);
+                        arrayValues[i] = mValue.ToObject();
+                        mValue.Dispose();
                     }
 
                     return arrayValues;
@@ -163,14 +177,18 @@ namespace AltV.Net.Elements.Args
                     var size = AltNative.MValueNative.MValueConst_GetDictSize(nativePointer);
                     var keyPointers = new IntPtr[size];
                     var mValuePointers = new IntPtr[size];
-                    AltNative.MValueNative.MValueConst_GetDict(nativePointer, keyPointers, mValuePointers);
+                    if (!AltNative.MValueNative.MValueConst_GetDict(nativePointer, keyPointers, mValuePointers))
+                        return null;
 
                     var dictionary = new Dictionary<string, object>();
 
                     for (ulong i = 0; i < size; i++)
                     {
-                        dictionary[Marshal.PtrToStringUTF8(keyPointers[i])] =
-                            new MValueConst(mValuePointers[i]).ToObject();
+                        var keyPointer = keyPointers[i];
+                        var mValue = new MValueConst(mValuePointers[i]);
+                        dictionary[Marshal.PtrToStringUTF8(keyPointer)] = mValue.ToObject();
+                        AltNative.FreeCharArray(keyPointer);
+                        mValue.Dispose();
                     }
 
                     return dictionary;

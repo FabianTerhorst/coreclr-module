@@ -130,8 +130,8 @@ namespace AltV.Net.Async
                     });
                     break;
             }
-            
-            
+
+
             Task.Run(async () =>
             {
                 await CheckpointAsyncEventHandler.CallAsync(@delegate => @delegate(checkpoint, entity, state));
@@ -498,7 +498,6 @@ namespace AltV.Net.Async
         {
             base.OnServerEventEvent(name, args, mValues, objects);
 
-
             var length = args.Length;
             if (AsyncEventHandlers.Count != 0 && AsyncEventHandlers.TryGetValue(name, out var eventHandlers))
             {
@@ -615,7 +614,7 @@ namespace AltV.Net.Async
                     break;
                 default:
                     Task.Run(() => MetaDataChangeAsyncDelegateHandlers.CallAsyncWithoutTask(@delegate =>
-                            @delegate(entity, key, value)));
+                        @delegate(entity, key, value)));
                     break;
             }
         }
@@ -645,8 +644,8 @@ namespace AltV.Net.Async
                     });
                     break;
                 default:
-                    Task.Run(() =>SyncedMetaDataChangeAsyncDelegateHandlers.CallAsyncWithoutTask(@delegate =>
-                            @delegate(entity, key, value)));
+                    Task.Run(() => SyncedMetaDataChangeAsyncDelegateHandlers.CallAsyncWithoutTask(@delegate =>
+                        @delegate(entity, key, value)));
                     break;
             }
         }

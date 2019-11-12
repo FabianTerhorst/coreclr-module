@@ -7,6 +7,8 @@ namespace AltV.Net
 {
     public class NativeResource : INativeResource
     {
+        private readonly IntPtr corePointer;
+        
         internal readonly IntPtr NativePointer;
 
         public IntPtr ResourceImplPtr => AltNative.Resource.Resource_GetImpl(NativePointer);
@@ -58,8 +60,9 @@ namespace AltV.Net
 
         public bool IsStarted => AltNative.Resource.Resource_IsStarted(NativePointer);
 
-        internal NativeResource(IntPtr nativePointer)
+        internal NativeResource(IntPtr corePointer, IntPtr nativePointer)
         {
+            this.corePointer = corePointer;
             NativePointer = nativePointer;
         }
 
@@ -67,7 +70,7 @@ namespace AltV.Net
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
             Alt.Server.CreateMValue(out var mValue, value);
-            AltNative.Resource.Resource_SetExport(NativePointer, stringPtr, mValue.nativePointer);
+            AltNative.Resource.Resource_SetExport(corePointer, NativePointer, stringPtr, mValue.nativePointer);
             Marshal.FreeHGlobal(stringPtr);
             mValue.Dispose();
         }
@@ -75,7 +78,7 @@ namespace AltV.Net
         public void SetExport(string key, in MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Resource.Resource_SetExport(NativePointer, stringPtr, value.nativePointer);
+            AltNative.Resource.Resource_SetExport(corePointer, NativePointer, stringPtr, value.nativePointer);
             Marshal.FreeHGlobal(stringPtr);
         }
 

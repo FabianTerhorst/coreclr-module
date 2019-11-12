@@ -1,8 +1,9 @@
+using System;
 using AltV.Net.Elements.Args;
 
 namespace AltV.Net
 {
-    public interface IMValueReader
+    public interface IMValueReader: IDisposable
     {
         void BeginObject();
         

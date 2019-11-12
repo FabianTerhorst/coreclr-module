@@ -267,18 +267,26 @@ alt::MValueConst* Core_CreateMValueList(alt::ICore* core, alt::MValueConst* val[
     auto mValueConst = core->CreateMValueList(size);
     auto mValue = mValueConst.Get();
     for (uint64_t i = 0; i < size; i++) {
-        mValue->Set(i, val[i]->Get()->Clone());
-        delete val[i];
+        auto mValueElement = val[i];
+        if (mValueElement == nullptr || mValueElement->Get() == nullptr) {
+            mValue->Set(i, core->CreateMValueNil());
+        } else {
+            mValue->Set(i, val[i]->Get()->Clone());
+        }
     }
     return new alt::MValueConst(mValueConst);
 }
 
-alt::MValueConst* Core_CreateMValueDict(alt::ICore* core, const char** keys, alt::MValueConst* val[], uint64_t size) {
+alt::MValueConst* Core_CreateMValueDict(alt::ICore* core, const char* keys[], alt::MValueConst* val[], uint64_t size) {
     auto mValueConst = core->CreateMValueDict();
     auto mValue = mValueConst.Get();
     for (uint64_t i = 0; i < size; i++) {
-        mValue->Set(keys[i], val[i]->Get()->Clone());
-        delete val[i];
+        auto mValueElement = val[i];
+        if (mValueElement == nullptr || mValueElement->Get() == nullptr) {
+            mValue->Set(keys[i], core->CreateMValueNil());
+        } else {
+            mValue->Set(keys[i], val[i]->Get()->Clone());
+        }
     }
     return new alt::MValueConst(mValue);
 }

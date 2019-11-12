@@ -171,7 +171,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -179,7 +179,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -187,7 +187,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -195,7 +195,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -203,7 +203,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -211,7 +211,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -219,7 +219,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -227,7 +227,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -235,7 +235,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -243,7 +243,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -251,22 +251,25 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
         //TODO: function support
 
-        public void ToMValue(out MValueConst mValue)
+        public bool ToMValue(out MValueConst mValue)
         {
             if (root != null)
             {
                 root.ToMValue(out mValue);
+                return true;
             }
             else
             {
                 mValue = MValueConst.Nil;       
             }
+
+            return false;
         }
     }
 }

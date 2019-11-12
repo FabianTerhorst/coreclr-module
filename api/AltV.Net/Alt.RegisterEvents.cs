@@ -154,7 +154,7 @@ namespace AltV.Net
                                 case ScriptEventType.PlayerCustomEvent:
                                     scriptFunction =
                                         ScriptFunction.Create(eventMethodDelegate,
-                                            new[] {typeof(IPlayer), typeof(string), typeof(MValueArray)});
+                                            new[] {typeof(IPlayer), typeof(string), typeof(MValueConst[])});
                                     if (scriptFunction == null) return;
                                     OnPlayerCustomEvent += (IPlayer player, string name, MValueConst[] array) =>
                                     {
@@ -177,7 +177,7 @@ namespace AltV.Net
                                     break;
                                 case ScriptEventType.ServerCustomEvent:
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] {typeof(string), typeof(MValueArray)});
+                                        new[] {typeof(string), typeof(MValueConst[])});
                                     if (scriptFunction == null) return;
                                     OnServerCustomEvent += (string name, MValueConst[] array) =>
                                     {

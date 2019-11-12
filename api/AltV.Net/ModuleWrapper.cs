@@ -58,7 +58,7 @@ namespace AltV.Net
             var baseObjectPool =
                 _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool,
                     colShapePool);
-            nativeResourcePool.GetOrCreate(resourcePointer, out var csharpResource);
+            nativeResourcePool.GetOrCreate(serverPointer, resourcePointer, out var csharpResource);
             var server = new Server(serverPointer, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool,
                 blipPool,
                 checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
