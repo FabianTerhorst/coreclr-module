@@ -303,21 +303,21 @@ namespace AltV.Net.FunctionParser
                 case MValueConst.Type.STRING:
                     return ParseString(in mValue, type, typeInfo);
                 case MValueConst.Type.LIST:
-                    /*if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
-                        MValueAdapters.FromMValue(ref mValue, type, out obj))
+                    if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
+                        MValueAdapters.FromMValue(in mValue, type, out obj))
                     {
                         return obj;
-                    }*/
+                    }
 
                     return ParseArray(in mValue, type, typeInfo);
                 case MValueConst.Type.ENTITY:
                     return ParseEntity(in mValue, type, typeInfo);
                 case MValueConst.Type.DICT:
-                    /*if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
-                        MValueAdapters.FromMValue(ref mValue, type, out obj))
+                    if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
+                        MValueAdapters.FromMValue(in mValue, type, out obj))
                     {
                         return obj;
-                    }*/
+                    }
 
                     return ParseDictionary(in mValue, type, typeInfo);
                 case MValueConst.Type.FUNCTION:
@@ -410,11 +410,11 @@ namespace AltV.Net.FunctionParser
                 case MValueConst.Type.LIST:
                     if (type == FunctionTypes.Obj || (typeInfo?.IsList ?? type.BaseType == FunctionTypes.Array))
                     {
-                        /*if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
-                            MValueAdapters.FromMValue(ref mValue, type, out obj))
+                        if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
+                            MValueAdapters.FromMValue(in mValue, type, out obj))
                         {
                             return true;
-                        }*/
+                        }
 
                         obj = ParseArray(in mValue, type, typeInfo);
                         return true;
@@ -438,11 +438,11 @@ namespace AltV.Net.FunctionParser
                 case MValueConst.Type.DICT:
                     if (type == FunctionTypes.Obj || (typeInfo?.IsDict ?? type.Name.StartsWith("Dictionary")))
                     {
-                        /*if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
-                            MValueAdapters.FromMValue(ref mValue, type, out obj))
+                        if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
+                            MValueAdapters.FromMValue(in mValue, type, out obj))
                         {
                             return true;
-                        }*/
+                        }
 
                         obj = ParseDictionary(in mValue, type, typeInfo);
                         return true;
@@ -803,7 +803,7 @@ namespace AltV.Net.FunctionParser
         public static object ParseConvertible(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            return null; //MValueAdapters.FromMValue(ref mValue, type, out var obj) ? obj : null;
+            return MValueAdapters.FromMValue(in mValue, type, out var obj) ? obj : null;
         }
 
         public static object ParseEnum(in MValueConst value, Type type, FunctionTypeInfo typeInfo)

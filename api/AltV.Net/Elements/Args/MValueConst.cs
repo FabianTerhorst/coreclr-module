@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Runtime.InteropServices;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
@@ -105,6 +107,7 @@ namespace AltV.Net.Elements.Args
         public MValueConst[] GetList()
         {
             var size = AltNative.MValueNative.MValueConst_GetListSize(nativePointer);
+            if (size == 0) return new MValueConst[] { };
             var mValuePointers = new IntPtr[size];
             AltNative.MValueNative.MValueConst_GetList(nativePointer, mValuePointers);
             return CreateFrom(mValuePointers);
@@ -113,6 +116,7 @@ namespace AltV.Net.Elements.Args
         public Dictionary<string, MValueConst> GetDictionary()
         {
             var size = AltNative.MValueNative.MValueConst_GetDictSize(nativePointer);
+            if (size == 0) return new Dictionary<string, MValueConst>();
             var keyPointers = new IntPtr[size];
             var mValuePointers = new IntPtr[size];
             AltNative.MValueNative.MValueConst_GetDict(nativePointer, keyPointers, mValuePointers);
@@ -162,6 +166,7 @@ namespace AltV.Net.Elements.Args
                     return GetString();
                 case Type.LIST:
                     var listSize = AltNative.MValueNative.MValueConst_GetListSize(nativePointer);
+                    if (listSize == 0) return new MValueConst[] {};
                     var mValueListPointers = new IntPtr[listSize];
                     AltNative.MValueNative.MValueConst_GetList(nativePointer, mValueListPointers);
                     var arrayValues = new object[listSize];
@@ -175,6 +180,7 @@ namespace AltV.Net.Elements.Args
                     return arrayValues;
                 case Type.DICT:
                     var size = AltNative.MValueNative.MValueConst_GetDictSize(nativePointer);
+                    if (size == 0) return new Dictionary<string, MValueConst>();
                     var keyPointers = new IntPtr[size];
                     var mValuePointers = new IntPtr[size];
                     if (!AltNative.MValueNative.MValueConst_GetDict(nativePointer, keyPointers, mValuePointers))
@@ -207,6 +213,55 @@ namespace AltV.Net.Elements.Args
                 default:
                     return null;
             }
+        }
+
+        public override string ToString()
+        {
+            switch (type)
+            {
+                case Type.NIL:
+                    return "Nil";
+                case Type.BOOL:
+                    return GetBool().ToString();
+                case Type.INT:
+                    return GetInt().ToString();
+                case Type.UINT:
+                    return GetUint().ToString();
+                case Type.DOUBLE:
+                    return GetDouble().ToString(CultureInfo.InvariantCulture);
+                case Type.STRING:
+                    return GetString();
+                case Type.LIST:
+                    return GetList().Aggregate("List:", (current, value) =>
+                    {
+                        var result = current + value.ToString() + ",";
+                        value.Dispose();
+                        return result;
+                    });
+                case Type.DICT:
+                    return GetDictionary().Aggregate("Dict:",
+                        (current, value) =>
+                        {
+                            var (key, mValueConst) = value;
+                            var result = current + key.ToString() + "=" + mValueConst.ToString() + ",";
+                            mValueConst.Dispose();
+                            return result;
+                        });
+                case Type.ENTITY:
+                    var entityType = BaseObjectType.Undefined;
+                    var ptr = GetEntityPointer(ref entityType);
+                    if (ptr == IntPtr.Zero) return $"MValue<entity:nilptr>";
+                    if (Alt.Module.BaseBaseObjectPool.Get(ptr, entityType, out var entity))
+                    {
+                        return $"MValue<{entity.Type.ToString()}>";
+                    }
+
+                    return "MValue<Entity>";
+                case Type.FUNCTION:
+                    return "MValue<Function>";
+            }
+
+            return "MValue<>";
         }
 
         public void Dispose()

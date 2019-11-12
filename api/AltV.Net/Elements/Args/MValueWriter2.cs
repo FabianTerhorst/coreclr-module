@@ -4,7 +4,7 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Elements.Args
 {
-    internal class MValueWriter2 : IMValueWriter
+    public class MValueWriter2 : IMValueWriter
     {
         public interface IWritableMValue
         {
@@ -36,6 +36,10 @@ namespace AltV.Net.Elements.Args
                 {
                     writable.ToMValue(out var mValue);
                     Values.Add(mValue);
+                }
+                else
+                {
+                    throw new ArithmeticException("Name(name) is required before writing a object.");
                 }
             }
 

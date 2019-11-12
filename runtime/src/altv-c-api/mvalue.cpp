@@ -140,6 +140,7 @@ uint64_t MValueConst_GetListSize(alt::MValueConst* mValueConst) {
     auto mValue = mValueConst->Get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::LIST) {
         auto list = dynamic_cast<const alt::IMValueList*>(mValue);
+        if (list == nullptr) return 0;
         return list->GetSize();
     }
     return 0;
@@ -149,6 +150,7 @@ uint64_t MValue_GetListSize(alt::MValue* mValueConst) {
     auto mValue = mValueConst->Get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::LIST) {
         auto list = dynamic_cast<alt::IMValueList*>(mValue);
+        if (list == nullptr) return 0;
         return list->GetSize();
     }
     return 0;
@@ -195,6 +197,7 @@ uint64_t MValueConst_GetDictSize(alt::MValueConst* mValueConst) {
     auto mValue = mValueConst->Get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::DICT) {
         auto dict = dynamic_cast<const alt::IMValueDict*>(mValue);
+        if (dict == nullptr) return 0;
         return dict->GetSize();
     }
     return 0;
@@ -204,6 +207,7 @@ uint64_t MValue_GetDictSize(alt::MValue* mValueConst) {
     auto mValue = mValueConst->Get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::DICT) {
         auto dict = dynamic_cast<alt::IMValueDict*>(mValue);
+        if (dict == nullptr) return 0;
         return dict->GetSize();
     }
     return 0;
