@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
@@ -181,21 +182,32 @@ namespace AltV.Net
             _module.OnPlayerDisconnect(playerPointer, reason);
         }
 
-        public static void OnClientEvent(IntPtr playerPointer, string name, IntPtr[] args)
+        public static void OnClientEvent(IntPtr playerPointer, string name, IntPtr pointer, ulong size)
         {
-            if (args == null)
+            var args = new IntPtr[size];
+            if (pointer != IntPtr.Zero)
             {
-                args = new IntPtr[0];
+                for (ulong i = 0; i < size; i++)
+                {
+                    args[i] = Marshal.ReadIntPtr(pointer);
+                    pointer += IntPtr.Size;
+                }
             }
             _module.OnClientEvent(playerPointer, name, args);
         }
 
-        public static void OnServerEvent(string name, IntPtr[] args)
+        public static void OnServerEvent(string name, IntPtr pointer, ulong size)
         {
-            if (args == null)
+            var args = new IntPtr[size];
+            if (pointer != IntPtr.Zero)
             {
-                args = new IntPtr[0];
+                for (ulong i = 0; i < size; i++)
+                {
+                    args[i] = Marshal.ReadIntPtr(pointer);
+                    pointer += IntPtr.Size;
+                }
             }
+
             _module.OnServerEvent(name, args);
         }
 

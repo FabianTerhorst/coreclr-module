@@ -163,14 +163,14 @@ namespace AltV.Net
             return hash;
         }
 
-        public void TriggerServerEvent(string eventName, params MValueConst[] args)
+        public void TriggerServerEvent(string eventName, MValueConst[] args)
         {
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
             TriggerServerEvent(eventNamePtr, args);
             Marshal.FreeHGlobal(eventNamePtr);
         }
 
-        public void TriggerServerEvent(IntPtr eventNamePtr, params MValueConst[] args)
+        public void TriggerServerEvent(IntPtr eventNamePtr, MValueConst[] args)
         {
             var size = args.Length;
             var mValuePointers = new IntPtr[size];
@@ -220,7 +220,7 @@ namespace AltV.Net
             }
         }
 
-        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params MValueConst[] args)
+        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, MValueConst[] args)
         {
             var size = args.Length;
             var mValuePointers = new IntPtr[size];
@@ -234,7 +234,7 @@ namespace AltV.Net
                 mValuePointers, args.Length);
         }
 
-        public void TriggerClientEvent(IPlayer player, string eventName, params MValueConst[] args)
+        public void TriggerClientEvent(IPlayer player, string eventName, MValueConst[] args)
         {
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
             TriggerClientEvent(player, eventNamePtr, args);

@@ -86,9 +86,9 @@ namespace AltV.Net.Native
 
             internal delegate void PlayerDisconnectDelegate(IntPtr playerPointer, string reason);
 
-            internal delegate void ClientEventDelegate(IntPtr playerPointer, string name, IntPtr[] args);
+            internal delegate void ClientEventDelegate(IntPtr playerPointer, string name, IntPtr args, ulong size);
 
-            internal delegate void ServerEventDelegate(string name, IntPtr[] args);
+            internal delegate void ServerEventDelegate(string name, IntPtr args, ulong size);
 
             internal delegate void CreatePlayerDelegate(IntPtr playerPointer, ushort playerId);
 

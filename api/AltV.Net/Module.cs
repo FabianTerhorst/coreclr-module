@@ -745,6 +745,7 @@ namespace AltV.Net
             {
                 mValues[i] = new MValueConst(args[i]);
             }
+            
             if (parserServerEventHandlers.Count != 0 &&
                 parserServerEventHandlers.TryGetValue(name, out var parserEventHandlers))
             {
@@ -753,7 +754,7 @@ namespace AltV.Net
                     parserEventHandler.Call(mValues);
                 }
             }
-            
+
             if (this.eventHandlers.Count != 0 && this.eventHandlers.TryGetValue(name, out var eventNameEventHandlers))
             {
                 foreach (var eventNameEventHandler in eventNameEventHandlers)

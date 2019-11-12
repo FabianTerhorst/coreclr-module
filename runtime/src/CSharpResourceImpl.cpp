@@ -11,7 +11,7 @@ CSharpResourceImpl::CSharpResourceImpl(alt::ICore* server, CoreClr* coreClr, alt
 void CSharpResourceImpl::ResetDelegates() {
     MainDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnCheckpointDelegate = [](auto var, auto var2, auto var3, auto var4) {};
-    OnClientEventDelegate = [](auto var, auto var2, auto var3) {};
+    OnClientEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnPlayerConnectDelegate = [](auto var, auto var2, auto var3) {};
     OnResourceStartDelegate = [](auto var) {};
     OnResourceStopDelegate = [](auto var) {};
@@ -23,7 +23,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnPlayerDisconnectDelegate = [](auto var, auto var2) {};
     OnPlayerRemoveDelegate = [](auto var) {};
     OnVehicleRemoveDelegate = [](auto var) {};
-    OnServerEventDelegate = [](auto var, auto var2) {};
+    OnServerEventDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerChangeVehicleSeatDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnPlayerEnterVehicleDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerLeaveVehicleDelegate = [](auto var, auto var2, auto var3) {};
@@ -118,7 +118,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             if (size == 0) {
                 OnClientEventDelegate(((alt::CClientScriptEvent*) (ev))->GetTarget().Get(),
                                       ((alt::CClientScriptEvent*) (ev))->GetName().CStr(),
-                                      nullptr);
+                                      nullptr, 0);
             } else {
 #ifdef _WIN32
                 auto constArgs = new alt::MValueConst* [size];
@@ -130,7 +130,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                 }
                 OnClientEventDelegate(((alt::CClientScriptEvent*) (ev))->GetTarget().Get(),
                                       ((alt::CClientScriptEvent*) (ev))->GetName().CStr(),
-                                      constArgs);
+                                      constArgs, size);
 
 #ifdef _WIN32
                 delete[] constArgs;
@@ -254,7 +254,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             alt::MValueArgs serverArgs = serverScriptEvent->GetArgs();
             uint64_t size = serverArgs.GetSize();
             if (size == 0) {
-                OnServerEventDelegate(serverScriptEvent->GetName().CStr(), nullptr);
+                OnServerEventDelegate(serverScriptEvent->GetName().CStr(), nullptr, 0);
             } else {
 #ifdef _WIN32
                 auto constArgs = new alt::MValueConst* [size];
@@ -264,7 +264,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                 for (uint64_t i = 0; i < size; i++) {
                     constArgs[i] = &serverArgs[i];
                 }
-                OnServerEventDelegate(serverScriptEvent->GetName().CStr(), constArgs);
+                OnServerEventDelegate(serverScriptEvent->GetName().CStr(), constArgs, size);
 #ifdef _WIN32
                 delete[] constArgs;
 #endif

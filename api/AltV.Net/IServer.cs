@@ -42,9 +42,9 @@ namespace AltV.Net
 
         uint Hash(string hash);
 
-        void TriggerServerEvent(string eventName, params MValueConst[] args);
+        void TriggerServerEvent(string eventName, MValueConst[] args);
 
-        void TriggerServerEvent(IntPtr eventNamePtr, params MValueConst[] args);
+        void TriggerServerEvent(IntPtr eventNamePtr, MValueConst[] args);
 
         void TriggerServerEvent(string eventName, IntPtr[] args);
 
@@ -54,15 +54,16 @@ namespace AltV.Net
 
         void TriggerServerEvent(string eventName, params object[] args);
 
-        void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params MValueConst[] args);
+        void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, MValueConst[] args);
 
-        void TriggerClientEvent(IPlayer player, string eventName, params MValueConst[] args);
+        void TriggerClientEvent(IPlayer player, string eventName, MValueConst[] args);
 
         void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, IntPtr[] args);
 
         void TriggerClientEvent(IPlayer player, string eventName, IntPtr[] args);
 
         void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params object[] args);
+        
         void TriggerClientEvent(IPlayer player, string eventName, params object[] args);
 
         IVehicle CreateVehicle(uint model, Position pos, Rotation rotation);
