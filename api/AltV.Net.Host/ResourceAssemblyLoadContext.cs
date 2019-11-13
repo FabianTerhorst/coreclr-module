@@ -9,13 +9,13 @@ namespace AltV.Net.Host
     public class ResourceAssemblyLoadContext : AssemblyLoadContext
     {
         private readonly AssemblyDependencyResolver resolver;
-        public readonly List<string> SharedAssemblyNames;
+        public readonly HashSet<string> SharedAssemblyNames;
 
         public ResourceAssemblyLoadContext(string resourceDllPath, string resourcePath, string resourceName) : base(resourceName,
             Environment.GetEnvironmentVariable("CSHARP_MODULE_DISABLE_COLLECTIBLE") == null)
         {
             resolver = new AssemblyDependencyResolver(resourceDllPath);
-            SharedAssemblyNames = new List<string>();
+            SharedAssemblyNames = new HashSet<string>();
             Resolving += (context, assemblyName) =>
             {
                 var dllPath = resourcePath + Path.DirectorySeparatorChar + assemblyName.Name + ".dll";
@@ -49,7 +49,7 @@ namespace AltV.Net.Host
             };
             ResolvingUnmanagedDll += (assembly, unmanagedDllName) =>
             {
-                var dllPath = resourcePath + Path.DirectorySeparatorChar + unmanagedDllName + ".dll";
+                var dllPath = resourcePath + Path.DirectorySeparatorChar + unmanagedDllName;
                 if (File.Exists(dllPath))
                 {
                     try
@@ -63,7 +63,7 @@ namespace AltV.Net.Host
                 }
 
                 dllPath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "runtime" +
-                          Path.DirectorySeparatorChar + unmanagedDllName + ".dll";
+                          Path.DirectorySeparatorChar + unmanagedDllName;
                 if (File.Exists(dllPath))
                 {
                     try

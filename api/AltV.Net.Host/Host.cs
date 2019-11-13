@@ -9,6 +9,10 @@ using System.Runtime.Loader;
 using System.Threading;
 using System.Threading.Tasks;
 
+//using Buildalyzer;
+//using Buildalyzer.Workspaces;
+//using Microsoft.CodeAnalysis;
+
 namespace AltV.Net.Host
 {
     public static class Host
@@ -25,6 +29,7 @@ namespace AltV.Net.Host
             new Dictionary<string, Action<long>>();
 
         private const string DllName = "csharp-module";
+
         private const CallingConvention NativeCallingConvention = CallingConvention.Cdecl;
 
         private delegate int CoreClrDelegate(IntPtr args, int argsLength);
@@ -100,24 +105,21 @@ namespace AltV.Net.Host
 
             LoadContexts[resourceDllPath] = resourceAssemblyLoadContext;
 
-            resourceAssemblyLoadContext.SharedAssemblyNames.AddRange(GetResourceSharedAssemblies(resourceDllPath));
+            resourceAssemblyLoadContext.SharedAssemblyNames.UnionWith(GetResourceSharedAssemblies(resourceDllPath));
 
             try
             {
                 resourceAssemblyLoadContext.LoadFromAssemblyPath(resourceDllPath);
-                var newList = new List<string>();
+                var newList = new HashSet<string>();
                 foreach (var referencedAssembly in resourceAssemblyLoadContext.SharedAssemblyNames)
                 {
                     var refAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(GetPath(resourcePath, referencedAssembly + ".dll"));
                     foreach (var referencedAssembly2 in refAssembly.GetReferencedAssemblies())
                     {
-                        if (!newList.Contains(referencedAssembly2.Name))
-                        {
-                            newList.Add(referencedAssembly2.Name);
-                        }
+                        newList.Add(referencedAssembly2.Name);
                     }
                 }
-                resourceAssemblyLoadContext.SharedAssemblyNames.AddRange(newList);
+                resourceAssemblyLoadContext.SharedAssemblyNames.UnionWith(newList);
             }
             catch (FileLoadException e)
             {
@@ -127,18 +129,19 @@ namespace AltV.Net.Host
 
             Assembly altVNetAssembly;
             var hasLoaded = false;
+            var hasAltVShared = resourceAssemblyLoadContext.SharedAssemblyNames.Contains("AltV.Net");
             foreach (var assembly in AssemblyLoadContext.Default.Assemblies)
             {
                 if(assembly.GetName().Name != "AltV.Net") continue;
                 hasLoaded = true;
                 break;
             }
-            if (!hasLoaded && resourceAssemblyLoadContext.SharedAssemblyNames.Contains("AltV.Net"))
+            if (!hasLoaded && hasAltVShared)
             {
                 altVNetAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(GetPath(resourcePath, "AltV.Net.dll"));
                 InitAltVAssembly(altVNetAssembly, libArgs, resourceAssemblyLoadContext, resourceName);
             }
-            var hasAltVShared = resourceAssemblyLoadContext.SharedAssemblyNames.RemoveAll(item => item == "AltV.Net") > 0;
+            resourceAssemblyLoadContext.SharedAssemblyNames.Remove("AltV.Net");
             altVNetAssembly = resourceAssemblyLoadContext.LoadFromAssemblyName(new AssemblyName("AltV.Net"));
             InitAltVAssembly(altVNetAssembly, libArgs, resourceAssemblyLoadContext, resourceName);
             if (hasAltVShared)
@@ -187,7 +190,7 @@ namespace AltV.Net.Host
             return 0;
         }
 
-        public static void InitAltVAssembly(Assembly altVNetAssembly, LibArgs libArgs,
+        private static void InitAltVAssembly(Assembly altVNetAssembly, LibArgs libArgs,
             AssemblyLoadContext resourceAssemblyLoadContext, string resourceName)
         {
             foreach (var type in altVNetAssembly.GetTypes())
@@ -237,18 +240,18 @@ namespace AltV.Net.Host
             }
         }
 
-        public static IEnumerable<string> GetResourceSharedAssemblies(string resourceDllPath) {
+        private static IEnumerable<string> GetResourceSharedAssemblies(string resourceDllPath) {
             try {
                 using var stream = File.OpenRead(resourceDllPath);
                 using var peFile = new PEReader(stream);
-                var metadataReader = peFile.GetMetadataReader();
-                foreach (var attrHandle in metadataReader.GetAssemblyDefinition().GetCustomAttributes())
+                var mdReader = peFile.GetMetadataReader();
+                foreach (var attrHandle in mdReader.GetAssemblyDefinition().GetCustomAttributes())
                 {
-                    var attr = metadataReader.GetCustomAttribute(attrHandle);
-                    var attrType = metadataReader.GetTypeReference((TypeReferenceHandle)metadataReader.GetMemberReference((MemberReferenceHandle)attr.Constructor).Parent);
-                    var attrName = metadataReader.GetString(attrType.Name);
-                    if(attrName != "ResourceSharedAssembliesAttribute") continue;
-                    var valueReader = metadataReader.GetBlobReader(attr.Value);
+                    var attr = mdReader.GetCustomAttribute(attrHandle);
+                    var attrCtor = mdReader.GetMemberReference((MemberReferenceHandle)attr.Constructor);
+                    var attrType = mdReader.GetTypeReference((TypeReferenceHandle)attrCtor.Parent);
+                    if (!mdReader.StringComparer.Equals(attrType.Name, "ResourceSharedAssembliesAttribute")) continue;
+                    var valueReader = mdReader.GetBlobReader(attr.Value);
                     valueReader.Offset = 2;
                     var strCount = valueReader.ReadInt32();
                     valueReader.Offset = 6;
