@@ -660,6 +660,7 @@ namespace AltV.Net.Elements.Args
             readableMValue.Peek(out var mValue);
             if (mValue.type == MValueConst.Type.DICT) return MValueReaderToken.Object;
             if (mValue.type == MValueConst.Type.LIST) return MValueReaderToken.Array;
+            if (mValue.type == MValueConst.Type.NIL) return MValueReaderToken.Nil;
             if (readableMValue is MValueObjectReader mValueObjectReader &&
                 readableMValue.GetSize() >= mValueObjectReader.GetSize())
                 return MValueReaderToken.Value;
