@@ -127,24 +127,23 @@ namespace AltV.Net.Host
                 return 1;
             }
 
-            Assembly altVNetAssembly;
-            var hasLoaded = false;
-            var hasAltVShared = resourceAssemblyLoadContext.SharedAssemblyNames.Contains("AltV.Net");
+            var isDefaultLoaded = false;
+            var isShared = resourceAssemblyLoadContext.SharedAssemblyNames.Contains("AltV.Net");
             foreach (var assembly in AssemblyLoadContext.Default.Assemblies)
             {
                 if(assembly.GetName().Name != "AltV.Net") continue;
-                hasLoaded = true;
+                isDefaultLoaded = true;
                 break;
             }
-            if (!hasLoaded && hasAltVShared)
+            if (!isDefaultLoaded && isShared)
             {
-                altVNetAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(GetPath(resourcePath, "AltV.Net.dll"));
-                InitAltVAssembly(altVNetAssembly, libArgs, resourceAssemblyLoadContext, resourceName);
+                var defaultAltVNetAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(GetPath(resourcePath, "AltV.Net.dll"));
+                InitAltVAssembly(defaultAltVNetAssembly, libArgs, resourceAssemblyLoadContext, resourceName);
             }
             resourceAssemblyLoadContext.SharedAssemblyNames.Remove("AltV.Net");
-            altVNetAssembly = resourceAssemblyLoadContext.LoadFromAssemblyName(new AssemblyName("AltV.Net"));
+            var altVNetAssembly = resourceAssemblyLoadContext.LoadFromAssemblyName(new AssemblyName("AltV.Net"));
             InitAltVAssembly(altVNetAssembly, libArgs, resourceAssemblyLoadContext, resourceName);
-            if (hasAltVShared)
+            if (isShared)
             {
                 resourceAssemblyLoadContext.SharedAssemblyNames.Add("AltV.Net");
             }
