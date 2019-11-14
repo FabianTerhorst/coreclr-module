@@ -220,33 +220,33 @@ namespace AltV.Net.Elements.Args
             switch (type)
             {
                 case Type.NIL:
-                    return "Nil";
+                    return "MValueNil<>";
                 case Type.BOOL:
-                    return GetBool().ToString();
+                    return "MValueBool<" + GetBool().ToString() + ">";
                 case Type.INT:
-                    return GetInt().ToString();
+                    return "MValueInt<" + GetInt().ToString() + ">";
                 case Type.UINT:
-                    return GetUint().ToString();
+                    return "MValueUInt<" + GetUint().ToString() + ">";
                 case Type.DOUBLE:
-                    return GetDouble().ToString(CultureInfo.InvariantCulture);
+                    return "MValueDouble<" + GetDouble().ToString(CultureInfo.InvariantCulture) + ">";
                 case Type.STRING:
-                    return GetString();
+                    return "MValueString<" + GetString() + ">";
                 case Type.LIST:
-                    return GetList().Aggregate("List:", (current, value) =>
+                    return "MValueList<{" + GetList().Aggregate("", (current, value) =>
                     {
                         var result = current + value.ToString() + ",";
                         value.Dispose();
                         return result;
-                    });
+                    }) + "}>";
                 case Type.DICT:
-                    return GetDictionary().Aggregate("Dict:",
-                        (current, value) =>
-                        {
-                            var (key, mValueConst) = value;
-                            var result = current + key.ToString() + "=" + mValueConst.ToString() + ",";
-                            mValueConst.Dispose();
-                            return result;
-                        });
+                    return "MValueDict<{" + GetDictionary().Aggregate("",
+                               (current, value) =>
+                               {
+                                   var (key, mValueConst) = value;
+                                   var result = current + key.ToString() + "=" + mValueConst.ToString() + ",";
+                                   mValueConst.Dispose();
+                                   return result;
+                               }) + "}>";
                 case Type.ENTITY:
                     var entityType = BaseObjectType.Undefined;
                     var ptr = GetEntityPointer(ref entityType);
