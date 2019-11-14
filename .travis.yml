@@ -17,6 +17,7 @@ matrix:
         - gcc-8
         - g++-8
     script:
+      - ALPHA = $(if [ "$TRAVIS_BRANCH" = "alpha" ] ; then echo true; else echo false; fi)
       - chmod +x ./cdn-linux
       - mkdir upload
       - cd upload
@@ -37,6 +38,7 @@ matrix:
     filter_secrets: false
     language: cpp
     script:
+      - ALPHA = $(if [ "$TRAVIS_BRANCH" = "alpha" ] ; then echo true; else echo false; fi)
       - mkdir upload
       - cd upload
       - mkdir modules
