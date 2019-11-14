@@ -17,7 +17,11 @@ matrix:
         - gcc-8
         - g++-8
     script:
-      - ALPHA=$(if [ "$TRAVIS_BRANCH" = "alpha" ] ; then echo true; else echo false; fi)
+      - LINUX_ALPHA=$(if [ "$TRAVIS_BRANCH" = "alpha" ] ; then echo true; else echo false; fi)
+      - if [ "$LINUX_ALPHA" = true ]; then WINDOWS_STABLE=false ; fi
+      - if [ "$LINUX_ALPHA" = true ]; then LINUX_STABLE=false ; fi
+      - if [ "$LINUX_ALPHA" = true ]; then LINUX_BETA=false ; fi
+      - if [ "$LINUX_ALPHA" = true ]; then WINDOWS_BETA=false ; fi
       - chmod +x ./cdn-linux
       - mkdir upload
       - cd upload
@@ -38,7 +42,11 @@ matrix:
     filter_secrets: false
     language: cpp
     script:
-      - ALPHA=$(if [ "$TRAVIS_BRANCH" = "alpha" ] ; then echo true; else echo false; fi)
+      - WINDOWS_ALPHA=$(if [ "$TRAVIS_BRANCH" = "alpha" ] ; then echo true; else echo false; fi)
+      - if [ "$WINDOWS_ALPHA" = true ]; then WINDOWS_STABLE=false ; fi
+      - if [ "$WINDOWS_ALPHA" = true ]; then LINUX_STABLE=false ; fi
+      - if [ "$WINDOWS_ALPHA" = true ]; then LINUX_BETA=false ; fi
+      - if [ "$WINDOWS_ALPHA" = true ]; then WINDOWS_BETA=false ; fi
       - mkdir upload
       - cd upload
       - mkdir modules
@@ -204,6 +212,28 @@ deploy:
       repo: FabianTerhorst/coreclr-module
       condition: "$WINDOWS_BETA = true"
       tags: true
+
+  - provider: releases
+    skip_cleanup: true
+    prerelease: true
+    api_key:
+      secure: SHN0O0J2NFHAXP5bIRKufF3u8RqHDSKSNbVNXKnDS5FXJkhwDlHYfL1mF9xIlkAUSNvYvrKaReDAxWwRulKWisZi4JXA4OL96j2Pqiovw7npomDmEQpXLC8TgiH9TvkIFFXr4L5Cm6zzXTVjrI2FA1WiHR2rga1A367dCVX0wdSjsH4qwC3CsNFBhStsbPMQl49U2hHGe+Nl02LkzSqS0QBZ6RZsChF+fzs35512Xvfiz0qXExCIIQpIYbnPAKbNA4vd6/zTkj72xYYsK8pKGKu56ENCPf2uvzfacUDQKrTKLTVVVWlJ8865VfIwjPixfD/dvnD4XZ/mC3SQbAwEE5WjSApOXCs/eL/zKq4Wa3oaJTc0mFf31wCySAQfL3vD51Wu/pjPuixsH1o6JPxWZuGA5KbL7Bi0D3I8T3mD4CJoPwIYbmu/6kwUHbOi/Nd9fb0YraL9k1uX4WzROIpGLbADccr1L7itGVdnhD5vlrp07ETluOxyJZlsB4gNVaSk4MUAppNVlXAi/4UOmEmQYIZRg1akO+4nDN0+nfwzNRSM4chSDBFwDBthqsADErFf5yFGy9JmLHLD2qkeSjqEm/rc1a2zV66nucVmwKHZyPL92GhGkguxsYKFNu/42382W1wHJ47nDCpEQWOVgFgix7xdgSKeZiYvoEs0JgWSjLU=
+    file: upload/modules/libcsharp-module.so
+    on:
+      repo: FabianTerhorst/coreclr-module
+      condition: "$LINUX_ALPHA = true"
+      tags: true
+  - provider: releases
+    skip_cleanup: true
+    prerelease: true
+    api_key:
+      secure: SHN0O0J2NFHAXP5bIRKufF3u8RqHDSKSNbVNXKnDS5FXJkhwDlHYfL1mF9xIlkAUSNvYvrKaReDAxWwRulKWisZi4JXA4OL96j2Pqiovw7npomDmEQpXLC8TgiH9TvkIFFXr4L5Cm6zzXTVjrI2FA1WiHR2rga1A367dCVX0wdSjsH4qwC3CsNFBhStsbPMQl49U2hHGe+Nl02LkzSqS0QBZ6RZsChF+fzs35512Xvfiz0qXExCIIQpIYbnPAKbNA4vd6/zTkj72xYYsK8pKGKu56ENCPf2uvzfacUDQKrTKLTVVVWlJ8865VfIwjPixfD/dvnD4XZ/mC3SQbAwEE5WjSApOXCs/eL/zKq4Wa3oaJTc0mFf31wCySAQfL3vD51Wu/pjPuixsH1o6JPxWZuGA5KbL7Bi0D3I8T3mD4CJoPwIYbmu/6kwUHbOi/Nd9fb0YraL9k1uX4WzROIpGLbADccr1L7itGVdnhD5vlrp07ETluOxyJZlsB4gNVaSk4MUAppNVlXAi/4UOmEmQYIZRg1akO+4nDN0+nfwzNRSM4chSDBFwDBthqsADErFf5yFGy9JmLHLD2qkeSjqEm/rc1a2zV66nucVmwKHZyPL92GhGkguxsYKFNu/42382W1wHJ47nDCpEQWOVgFgix7xdgSKeZiYvoEs0JgWSjLU=
+    file: upload/modules/csharp-module.dll
+    on:
+      repo: FabianTerhorst/coreclr-module
+      condition: "$WINDOWS_ALPHA = true"
+      tags: true
+
   - provider: releases
     skip_cleanup: true
     prerelease: true
