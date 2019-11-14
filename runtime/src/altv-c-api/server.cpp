@@ -279,10 +279,14 @@ alt::MValueConst* Core_CreateMValueList(alt::ICore* core, alt::MValueConst* val[
         if (mValueElement == nullptr || mValueElement->Get() == nullptr) {
             mValue->Set(i, core->CreateMValueNil());
         } else {
-            mValue->Set(i, val[i]->Get()->Clone());
+            //TODO: cpp sdk bug
+            //mValue->Set(i, val[i]->Get()->Clone());
+            auto ref = alt::Ref<alt::IMValue>((alt::IMValue*)val[i]->Get());
+            mValue->Set(i, ref);
+            //delete val[i];
         }
     }
-    return new alt::MValueConst(mValueConst);
+    return new alt::MValueConst(mValue);
 }
 
 alt::MValueConst* Core_CreateMValueDict(alt::ICore* core, const char* keys[], alt::MValueConst* val[], uint64_t size) {
@@ -293,7 +297,11 @@ alt::MValueConst* Core_CreateMValueDict(alt::ICore* core, const char* keys[], al
         if (mValueElement == nullptr || mValueElement->Get() == nullptr) {
             mValue->Set(keys[i], core->CreateMValueNil());
         } else {
-            mValue->Set(keys[i], val[i]->Get()->Clone());
+            //TODO: cpp sdk bug
+            //mValue->Set(keys[i], val[i]->Get()->Clone());
+            auto ref = alt::Ref<alt::IMValue>((alt::IMValue*)val[i]->Get());
+            mValue->Set(keys[i], ref);
+            //delete val[i];
         }
     }
     return new alt::MValueConst(mValue);
