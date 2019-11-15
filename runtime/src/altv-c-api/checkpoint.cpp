@@ -70,3 +70,7 @@ bool Checkpoint_IsPlayerIn(alt::ICheckpoint* checkpoint, alt::IPlayer* player) {
 bool Checkpoint_IsVehicleIn(alt::ICheckpoint* checkpoint, alt::IVehicle* vehicle) {
     return checkpoint->IsEntityIn(vehicle);
 }
+
+uint8_t Checkpoint_GetColShapeType(alt::ICheckpoint* checkpoint) {
+    return (uint8_t) checkpoint->GetColshapeType();
+}

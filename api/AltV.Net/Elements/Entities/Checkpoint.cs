@@ -38,6 +38,15 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public ColShapeType ColShapeType
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Checkpoint.Checkpoint_GetColShapeType(NativePointer);
+            }
+        }
+
         public override void GetMetaData(string key, out MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
@@ -114,6 +123,22 @@ namespace AltV.Net.Elements.Entities
             }
 
             return AltNative.Checkpoint.Checkpoint_IsVehicleIn(NativePointer, vehicle.NativePointer);
+        }
+        
+        public bool IsEntityIn(IEntity entity)
+        {
+            CheckIfEntityExists();
+            entity.CheckIfEntityExists();
+
+            switch (entity)
+            {
+                case IPlayer player:
+                    return AltNative.Checkpoint.Checkpoint_IsPlayerIn(NativePointer, player.NativePointer);
+                case IVehicle vehicle:
+                    return AltNative.Checkpoint.Checkpoint_IsVehicleIn(NativePointer, vehicle.NativePointer);
+                default:
+                    return false;
+            }
         }
         
         public void Remove()

@@ -415,7 +415,7 @@ namespace AltV.Net.FunctionParser
                         {
                             return true;
                         }
-
+                        
                         obj = ParseArray(in mValue, type, typeInfo);
                         return true;
                     }
@@ -782,9 +782,9 @@ namespace AltV.Net.FunctionParser
                 case BaseObjectType.Vehicle:
                     return typeInfo?.IsVehicle ?? type == FunctionTypes.Vehicle ||
                            type.GetInterfaces().Contains(FunctionTypes.Vehicle);
-                case BaseObjectType.Checkpoint:
-                    return typeInfo?.IsCheckpoint ?? type == FunctionTypes.Checkpoint ||
-                           type.GetInterfaces().Contains(FunctionTypes.Checkpoint);
+                case BaseObjectType.ColShape:
+                    return typeInfo?.IsColShape ?? type == FunctionTypes.ColShape ||
+                           type.GetInterfaces().Contains(FunctionTypes.ColShape);
                 default:
                     return false;
             }

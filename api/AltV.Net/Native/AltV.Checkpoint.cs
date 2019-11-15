@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
+using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Native
 {
@@ -52,6 +53,9 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool Checkpoint_IsVehicleIn(IntPtr checkpoint, IntPtr vehicle);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern ColShapeType Checkpoint_GetColShapeType(IntPtr colShape);
         }
     }
 }

@@ -2,7 +2,7 @@ using AltV.Net.Data;
 
 namespace AltV.Net.Elements.Entities
 {
-    public interface ICheckpoint : IWorldObject
+    public interface ICheckpoint : IColShape
     {
         /// <summary>
         /// Returns the checkpoint type

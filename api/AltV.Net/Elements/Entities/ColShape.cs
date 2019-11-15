@@ -81,6 +81,28 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public bool IsPlayerIn(IPlayer player)
+        {
+            CheckIfEntityExists();
+            if (!player.Exists)
+            {
+                throw new EntityRemovedException(player);
+            }
+
+            return AltNative.ColShape.ColShape_IsPlayerIn(NativePointer, player.NativePointer);
+        }
+
+        public bool IsVehicleIn(IVehicle vehicle)
+        {
+            CheckIfEntityExists();
+            if (!vehicle.Exists)
+            {
+                throw new EntityRemovedException(vehicle);
+            }
+
+            return AltNative.ColShape.ColShape_IsVehicleIn(NativePointer, vehicle.NativePointer);
+        }
+        
         public void Remove()
         {
             Alt.RemoveColShape(this);
