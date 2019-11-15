@@ -440,6 +440,11 @@ void CoreClr::CreateManagedHost() {
     args[0] = STR("AltV.Net.Host.dll");
     rc = _initForCmd(1, args, nullptr, &cxt);
     if (rc != 0) {
+        if (rc == 0x80008094) {
+            std::cerr
+                    << "Make sure you have AltV.Net.Host.dll and AltV.Net.Host.runtimeconfig.json in the folder of the altv-server executable or binary."
+                    << std::endl;
+        }
         std::cerr << "Init for cmd failed: " << std::hex << std::showbase << rc << std::endl;
         _closeFxr(cxt);
         return;
@@ -455,7 +460,7 @@ void CoreClr::CreateManagedHost() {
 bool CoreClr::ExecuteManagedResource(const char* resourcePath, const char* resourceName,
                                      const char* resourceMain, alt::IResource* resource) {
     std::unique_lock<std::mutex> lck(mtx);
-    while(hostResourceExecute == nullptr){ cv.wait(lck); }
+    while (hostResourceExecute == nullptr) { cv.wait(lck); }
     if (hostResourceExecute == nullptr) {
         core->LogInfo(alt::String("coreclr-module: Core CLR host not loaded"));
         return false;
@@ -486,7 +491,7 @@ bool CoreClr::ExecuteManagedResource(const char* resourcePath, const char* resou
 
 bool CoreClr::ExecuteManagedResourceUnload(const char* resourcePath, const char* resourceMain) {
     std::unique_lock<std::mutex> lck(mtx);
-    while(hostResourceExecuteUnload == nullptr){ cv.wait(lck); }
+    while (hostResourceExecuteUnload == nullptr) { cv.wait(lck); }
     if (hostResourceExecuteUnload == nullptr) {
         core->LogInfo(alt::String("coreclr-module: Core CLR host not loaded"));
         return false;

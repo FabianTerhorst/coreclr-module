@@ -83,16 +83,16 @@ namespace AltV.Net.Enums
         Widowmaker = 3056410471,
         Grenade = 2481070269,
         BZGas = 2694266206,
-        MolotovCocktail = 4256991824,
-        StickyBomb = 1233104067,
-        ProximityMines = 615608432,
-        Snowballs = 741814745,
-        PipeBombs = 2874559379,
-        Baseball = 126349499,
-        TearGas = 3125143736,
-        Flare = 600439132,
-        JerryCan = 314298409,
-        Parachute = 1940617049,
-        FireExtinguisher = 1532858877
+        MolotovCocktail = 615608432,
+        StickyBomb = 741814745,
+        ProximityMines = 2874559379,
+        Snowballs = 126349499,
+        PipeBombs = 3125143736,
+        Baseball = 600439132,
+        TearGas = 4256991824,
+        Flare = 1233104067,
+        JerryCan = 883325847,
+        Parachute = 4222310262,
+        FireExtinguisher = 101631238
     }
 }
