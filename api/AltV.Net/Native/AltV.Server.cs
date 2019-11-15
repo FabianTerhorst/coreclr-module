@@ -55,7 +55,7 @@ namespace AltV.Net.Native
                 ref ushort id);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Server_CreateCheckpoint(IntPtr server, IntPtr target, byte type, Position pos,
+            internal static extern IntPtr Server_CreateCheckpoint(IntPtr server, byte type, Position pos,
                 float radius, float height, Rgba color);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
@@ -85,7 +85,7 @@ namespace AltV.Net.Native
             internal static extern IntPtr Server_CreateColShapeCube(IntPtr server, Position pos, Position pos2);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Server_CreateColShapeRectangle(IntPtr server, Position pos, Position pos2);
+            internal static extern IntPtr Server_CreateColShapeRectangle(IntPtr server, float x1, float y1, float x2, float y2, float z);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_DestroyVehicle(IntPtr server, IntPtr baseObject);

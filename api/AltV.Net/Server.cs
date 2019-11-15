@@ -287,12 +287,10 @@ namespace AltV.Net
             return vehiclePool.Get(ptr, out var vehicle) ? vehicle : null;
         }
 
-        public ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height,
+        public ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height,
             Rgba color)
         {
-            var ptr = AltNative.Server.Server_CreateCheckpoint(NativePointer,
-                player?.NativePointer ?? IntPtr.Zero,
-                type, pos, radius, height, color);
+            var ptr = AltNative.Server.Server_CreateCheckpoint(NativePointer, type, pos, radius, height, color);
             return checkpointPool.Get(ptr, out var checkpoint) ? checkpoint : null;
         }
 
@@ -342,9 +340,9 @@ namespace AltV.Net
             return colShapePool.Get(ptr, out var colShape) ? colShape : null;
         }
 
-        public IColShape CreateColShapeRectangle(Position pos, Position pos2)
+        public IColShape CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z)
         {
-            var ptr = AltNative.Server.Server_CreateColShapeRectangle(NativePointer, pos, pos2);
+            var ptr = AltNative.Server.Server_CreateColShapeRectangle(NativePointer, x1, y1, x2, y2, z);
             return colShapePool.Get(ptr, out var colShape) ? colShape : null;
         }
 

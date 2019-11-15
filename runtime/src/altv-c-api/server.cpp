@@ -88,13 +88,13 @@ Server_CreateVehicle(alt::ICore* server, uint32_t model, position_t pos, rotatio
 }
 
 alt::ICheckpoint*
-Server_CreateCheckpoint(alt::ICore* server, alt::IPlayer* target, uint8_t type, position_t pos, float radius,
+Server_CreateCheckpoint(alt::ICore* server, uint8_t type, position_t pos, float radius,
                         float height, alt::RGBA color) {
     alt::Position position;
     position.x = pos.x;
     position.y = pos.y;
     position.z = pos.z;
-    return server->CreateCheckpoint(target, type, position, radius, height, color).Get();
+    return server->CreateCheckpoint(type, position, radius, height, color).Get();
 }
 
 alt::IBlip*
@@ -156,17 +156,8 @@ alt::IColShape* Server_CreateColShapeCube(alt::ICore* server, position_t pos, po
     return server->CreateColShapeCube(position, position2).Get();
 }
 
-alt::IColShape* Server_CreateColShapeRectangle(alt::ICore* server, position_t pos, position_t pos2) {
-    alt::Position position;
-    position.x = pos.x;
-    position.y = pos.y;
-    position.z = pos.z;
-
-    alt::Position position2;
-    position2.x = pos2.x;
-    position2.y = pos2.y;
-    position2.z = pos2.z;
-    return server->CreateColShapeRectangle(position, position2).Get();
+alt::IColShape* Server_CreateColShapeRectangle(alt::ICore* server, float x1, float y1, float x2, float y2, float z) {
+    return server->CreateColShapeRectangle(x1, y1, x2, y2, z).Get();
 }
 
 /*void Server_DestroyBaseObject(alt::ICore* server, alt::IBaseObject* baseObject) {

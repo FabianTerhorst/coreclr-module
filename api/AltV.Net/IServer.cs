@@ -68,7 +68,7 @@ namespace AltV.Net
 
         IVehicle CreateVehicle(uint model, Position pos, Rotation rotation);
 
-        ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height, Rgba color);
+        ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color);
 
         IBlip CreateBlip(IPlayer player, byte type, Position pos);
 
@@ -84,7 +84,7 @@ namespace AltV.Net
 
         IColShape CreateColShapeCube(Position pos, Position pos2);
 
-        IColShape CreateColShapeRectangle(Position pos, Position pos2);
+        IColShape CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z);
 
         void RemoveBlip(IBlip blip);
 

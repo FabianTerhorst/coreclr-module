@@ -36,7 +36,7 @@ Server_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* 
 EXPORT alt::IVehicle*
 Server_CreateVehicle(alt::ICore* server, uint32_t model, position_t pos, rotation_t rot, uint16_t &id);
 EXPORT alt::ICheckpoint*
-Server_CreateCheckpoint(alt::ICore* server, alt::IPlayer* target, uint8_t type, position_t pos, float radius,
+Server_CreateCheckpoint(alt::ICore* server, uint8_t type, position_t pos, float radius,
                         float height, alt::RGBA color);
 EXPORT alt::IBlip*
 Server_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, position_t pos);
@@ -49,7 +49,7 @@ Server_CreateColShapeCylinder(alt::ICore* server, position_t pos, float radius, 
 EXPORT alt::IColShape* Server_CreateColShapeSphere(alt::ICore* server, position_t pos, float radius);
 EXPORT alt::IColShape* Server_CreateColShapeCircle(alt::ICore* server, position_t pos, float radius);
 EXPORT alt::IColShape* Server_CreateColShapeCube(alt::ICore* server, position_t pos, position_t pos2);
-EXPORT alt::IColShape* Server_CreateColShapeRectangle(alt::ICore* server, position_t pos, position_t pos2);
+EXPORT alt::IColShape* Server_CreateColShapeRectangle(alt::ICore* server, float x1, float y1, float x2, float y2, float z);
 //EXPORT void Server_DestroyBaseObject(alt::ICore* server, alt::IBaseObject* baseObject);
 EXPORT void Server_DestroyVehicle(alt::ICore* server, alt::IVehicle* baseObject);
 EXPORT void Server_DestroyBlip(alt::ICore* server, alt::IBlip* baseObject);

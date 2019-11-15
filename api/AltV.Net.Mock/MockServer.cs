@@ -477,5 +477,15 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+
+        public ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IColShape CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

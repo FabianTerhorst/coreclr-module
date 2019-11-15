@@ -11,7 +11,7 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge mock</PackageTags>
-        <PackageVersion>1.17.0-alpha</PackageVersion>
+        <PackageVersion>1.17.1-alpha</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>Update dependencies</PackageReleaseNotes>
     </PropertyGroup>

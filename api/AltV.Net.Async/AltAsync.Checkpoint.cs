@@ -6,17 +6,6 @@ namespace AltV.Net.Async
 {
     public static partial class AltAsync
     {
-        public static Task<ICheckpoint> CreateCheckpoint(IPlayer player, byte type, Position pos, float radius,
-            float height,
-            Rgba color) =>
-            AltVAsync.Schedule(() => Alt.CreateCheckpoint(player, type, pos, radius, height, color));
-
-        public static Task<ICheckpoint> CreateCheckpoint(IPlayer player, CheckpointType type, Position pos,
-            float radius,
-            float height,
-            Rgba color) =>
-            AltVAsync.Schedule(() => Alt.CreateCheckpoint(player, type, pos, radius, height, color));
-
         public static Task<ICheckpoint> CreateCheckpoint(byte type, Position pos, float radius,
             float height,
             Rgba color) =>
