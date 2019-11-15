@@ -38,18 +38,24 @@ namespace AltV.Net.Native
                 AltV.Net.Server.CommandCallback cb);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_TriggerServerEvent(IntPtr server, IntPtr ev, ref MValue args);
+            internal static extern bool Server_FileExists(IntPtr server, IntPtr path);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_FileRead(IntPtr server, IntPtr path, ref IntPtr text);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_TriggerServerEvent(IntPtr server, IntPtr ev, IntPtr[] args, int size);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_TriggerClientEvent(IntPtr server, IntPtr target, IntPtr ev,
-                ref MValue args);
+                IntPtr[] args, int size);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr Server_CreateVehicle(IntPtr server, uint model, Position pos, Rotation rot,
                 ref ushort id);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Server_CreateCheckpoint(IntPtr server, IntPtr target, byte type, Position pos,
+            internal static extern IntPtr Server_CreateCheckpoint(IntPtr server, byte type, Position pos,
                 float radius, float height, Rgba color);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
@@ -79,7 +85,7 @@ namespace AltV.Net.Native
             internal static extern IntPtr Server_CreateColShapeCube(IntPtr server, Position pos, Position pos2);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Server_CreateColShapeRectangle(IntPtr server, Position pos, Position pos2);
+            internal static extern IntPtr Server_CreateColShapeRectangle(IntPtr server, float x1, float y1, float x2, float y2, float z);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_DestroyVehicle(IntPtr server, IntPtr baseObject);
@@ -103,10 +109,16 @@ namespace AltV.Net.Native
             internal static extern void Server_GetRootDirectory(IntPtr server, ref IntPtr text);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_GetPlayers(IntPtr server, ref PlayerPointerArray players);
+            internal static extern ulong Server_GetPlayerCount(IntPtr server);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Server_GetVehicles(IntPtr server, ref VehiclePointerArray vehicles);
+            internal static extern void Server_GetPlayers(IntPtr server, IntPtr[] players, ulong size);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern ulong Server_GetVehicleCount(IntPtr server);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_GetVehicles(IntPtr server, IntPtr[] vehicles, ulong size);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_StartResource(IntPtr server, IntPtr text);
@@ -116,6 +128,48 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_RestartResource(IntPtr server, IntPtr text);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueNil(IntPtr core);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueBool(IntPtr core, bool value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueInt(IntPtr core, long value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueUInt(IntPtr core, ulong value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueDouble(IntPtr core, double value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueString(IntPtr core, IntPtr value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueList(IntPtr core, IntPtr[] val, ulong size);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueDict(IntPtr core, string[] keys, IntPtr[] val, ulong size);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueCheckpoint(IntPtr core, IntPtr value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueBlip(IntPtr core, IntPtr value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueVoiceChannel(IntPtr core, IntPtr value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValuePlayer(IntPtr core, IntPtr value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueVehicle(IntPtr core, IntPtr value);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueFunction(IntPtr core, IntPtr value);
         }
     }
 }

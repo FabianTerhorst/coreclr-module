@@ -7,7 +7,7 @@ uint16_t Player_GetID(alt::IPlayer* player) {
 }
 
 alt::IPlayer* Player_GetNetworkOwner(alt::IPlayer* player) {
-    return player->GetNetworkOwner();
+    return player->GetNetworkOwner().Get();
 }
 
 uint32_t Player_GetModel(alt::IPlayer* player) {
@@ -25,8 +25,12 @@ void Player_GetPosition(alt::IPlayer* player, position_t &position) {
     position.z = playerPosition.z;
 }
 
-void Player_SetPosition(alt::IPlayer* player, alt::Position pos) {
-    player->SetPosition(pos);
+void Player_SetPosition(alt::IPlayer* player, position_t pos) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+    player->SetPosition(position);
 }
 
 void Player_GetRotation(alt::IPlayer* player, rotation_t &rotation) {
@@ -36,32 +40,44 @@ void Player_GetRotation(alt::IPlayer* player, rotation_t &rotation) {
     rotation.yaw = playerRotation.yaw;
 }
 
-void Player_SetRotation(alt::IPlayer* player, alt::Rotation rot) {
-    player->SetRotation(rot);
+void Player_SetRotation(alt::IPlayer* player, rotation_t rot) {
+    alt::Rotation rotation;
+    rotation.roll = rot.roll;
+    rotation.pitch = rot.pitch;
+    rotation.yaw = rot.yaw;
+    player->SetRotation(rotation);
 }
 
-int16_t Player_GetDimension(alt::IPlayer* player) {
+int32_t Player_GetDimension(alt::IPlayer* player) {
     return player->GetDimension();
 }
 
-void Player_SetDimension(alt::IPlayer* player, int16_t dimension) {
+void Player_SetDimension(alt::IPlayer* player, int32_t dimension) {
     player->SetDimension(dimension);
 }
 
-void Player_GetMetaData(alt::IPlayer* player, const char* key, alt::MValue &val) {
-    val = player->GetMetaData(key);
+alt::MValueConst* Player_GetMetaData(alt::IPlayer* player, const char* key) {
+    return new alt::MValueConst(player->GetMetaData(key));
 }
 
-void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValue* val) {
-    player->SetMetaData(key, *val);
+void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val) {
+    player->SetMetaData(key, val->Get()->Clone());
 }
 
-void Player_GetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValue &val) {
-    val = player->GetSyncedMetaData(key);
+alt::MValueConst* Player_GetSyncedMetaData(alt::IPlayer* player, const char* key) {
+    return new alt::MValueConst(player->GetSyncedMetaData(key));
 }
 
-void Player_SetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValue* val) {
-    player->SetSyncedMetaData(key, *val);
+void Player_SetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val) {
+    player->SetSyncedMetaData(key, val->Get()->Clone());
+}
+
+void Player_AddRef(alt::IPlayer* player) {
+    player->AddRef();
+}
+
+void Player_RemoveRef(alt::IPlayer* player) {
+    player->RemoveRef();
 }
 
 // Player
@@ -246,7 +262,7 @@ bool Player_IsInVehicle(alt::IPlayer* player) {
 }
 
 alt::IVehicle* Player_GetVehicle(alt::IPlayer* player) {
-    return player->GetVehicle();
+    return player->GetVehicle().Get();
 }
 
 uint8_t Player_GetSeat(alt::IPlayer* player) {
@@ -254,7 +270,7 @@ uint8_t Player_GetSeat(alt::IPlayer* player) {
 }
 
 void* Player_GetEntityAimingAt(alt::IPlayer* player, alt::IBaseObject::Type &type) {
-    auto entity = player->GetEntityAimingAt();
+    auto entity = player->GetEntityAimingAt().Get();
     if (entity != nullptr) {
         type = entity->GetType();
         switch (type) {
@@ -327,7 +343,7 @@ void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
     player_struct->is_jumping = player->IsJumping();
     player_struct->is_reloading = player->IsReloading();
     player_struct->is_connected = player->IsConnected();
-    player_struct->vehicle = player->GetVehicle();
+    player_struct->vehicle = player->GetVehicle().Get();
 }
 
 void Player_Copy_Dispose(player_struct_t* player_struct) {

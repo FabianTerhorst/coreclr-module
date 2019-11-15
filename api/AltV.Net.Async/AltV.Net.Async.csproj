@@ -12,7 +12,7 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.16.2</PackageVersion>
+        <PackageVersion>1.17.2-alpha</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>Update dependencies</PackageReleaseNotes>
         <PackageIcon>icon.png</PackageIcon>

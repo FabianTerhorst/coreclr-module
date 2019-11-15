@@ -1,4 +1,5 @@
 using AltV.Net.Data;
+using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
@@ -26,7 +27,7 @@ namespace AltV.Net.Events
 
     public delegate void PlayerClientEventDelegate(IPlayer player, string eventName, object[] args);
 
-    public delegate void PlayerClientCustomEventDelegate(IPlayer player, string eventName, ref MValueArray mValueArray);
+    public delegate void PlayerClientCustomEventDelegate(IPlayer player, string eventName, MValueConst[] mValueArray);
 
     public delegate void PlayerChangeVehicleSeatDelegate(IVehicle vehicle, IPlayer player, byte oldSeat, byte newSeat);
 
@@ -36,7 +37,7 @@ namespace AltV.Net.Events
 
     public delegate void ServerEventEventDelegate(string eventName, object[] args);
 
-    public delegate void ServerCustomEventEventDelegate(string eventName, ref MValueArray mValueArray);
+    public delegate void ServerCustomEventEventDelegate(string eventName, MValueConst[] mValueArray);
 
     public delegate void ConsoleCommandDelegate(string name, string[] args);
 

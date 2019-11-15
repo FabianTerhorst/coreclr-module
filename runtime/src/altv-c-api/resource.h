@@ -17,10 +17,12 @@
 extern "C"
 {
 #endif
-EXPORT void Resource_GetExports(alt::IResource* resource, alt::Array<alt::String> &keys, alt::MValue::List &values);
-EXPORT bool Resource_GetExport(alt::IResource* resource, const char* key, alt::MValue &value);
-EXPORT void Resource_SetExport(alt::IResource* resource, const char* key, const alt::MValue& val);
-EXPORT void Resource_SetExports(alt::IResource* resource, alt::MValue* val, const char** keys, int size);
+EXPORT uint64_t Resource_GetExportsCount(alt::IResource* resource);
+EXPORT void Resource_GetExports(alt::IResource* resource, const char* keys[],
+                         alt::MValueConst* values[]);
+EXPORT alt::MValueConst* Resource_GetExport(alt::IResource* resource, const char* key);
+EXPORT void Resource_SetExport(alt::ICore* core, alt::IResource* resource, const char* key, alt::MValueConst* val);
+EXPORT void Resource_SetExports(alt::ICore* core, alt::IResource* resource, alt::MValueConst* val[], const char* keys[], int size);
 EXPORT void Resource_GetPath(alt::IResource* resource, const char*&text);
 EXPORT void Resource_GetName(alt::IResource* resource, const char*&text);
 EXPORT void Resource_GetMain(alt::IResource* resource, const char*&text);

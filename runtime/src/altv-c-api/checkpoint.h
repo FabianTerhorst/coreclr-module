@@ -21,20 +21,21 @@ extern "C"
 #endif
 // Entity
 EXPORT void Checkpoint_GetPosition(alt::ICheckpoint* checkpoint, position_t &position);
-EXPORT void Checkpoint_SetPosition(alt::ICheckpoint* checkpoint, alt::Position pos);
-EXPORT int16_t Checkpoint_GetDimension(alt::ICheckpoint* checkpoint);
-EXPORT void Checkpoint_SetDimension(alt::ICheckpoint* checkpoint, int16_t dimension);
-EXPORT void Checkpoint_GetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValue &val);
-EXPORT void Checkpoint_SetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValue* val);
+EXPORT void Checkpoint_SetPosition(alt::ICheckpoint* checkpoint, position_t pos);
+EXPORT int32_t Checkpoint_GetDimension(alt::ICheckpoint* checkpoint);
+EXPORT void Checkpoint_SetDimension(alt::ICheckpoint* checkpoint, int32_t dimension);
+EXPORT alt::MValueConst* Checkpoint_GetMetaData(alt::ICheckpoint* checkpoint, const char* key);
+EXPORT void Checkpoint_SetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValueConst* val);
+EXPORT void Checkpoint_AddRef(alt::ICheckpoint* checkpoint);
+EXPORT void Checkpoint_RemoveRef(alt::ICheckpoint* checkpoint);
 // Checkpoint
-EXPORT bool Checkpoint_IsGlobal(alt::ICheckpoint* checkpoint);
 EXPORT uint8_t Checkpoint_GetCheckpointType(alt::ICheckpoint* checkpoint);
 EXPORT float Checkpoint_GetHeight(alt::ICheckpoint* checkpoint);
 EXPORT float Checkpoint_GetRadius(alt::ICheckpoint* checkpoint);
 EXPORT void Checkpoint_GetColor(alt::ICheckpoint* checkpoint, rgba_t &color);
 EXPORT bool Checkpoint_IsPlayerIn(alt::ICheckpoint* checkpoint, alt::IPlayer* player);
 EXPORT bool Checkpoint_IsVehicleIn(alt::ICheckpoint* checkpoint, alt::IVehicle* vehicle);
-EXPORT alt::IPlayer* Checkpoint_GetTarget(alt::ICheckpoint* checkpoint);
+EXPORT uint8_t Checkpoint_GetColShapeType(alt::ICheckpoint* checkpoint);
 #ifdef __cplusplus
 }
 #endif

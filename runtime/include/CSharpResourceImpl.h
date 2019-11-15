@@ -35,9 +35,9 @@
 #pragma clang diagnostic pop
 #endif
 
-typedef void (* MValueFunctionCallback)(alt::MValueList*, alt::MValue*);
+typedef void (* MValueFunctionCallback)(alt::MValueArgs*, alt::MValue*);
 
-class CustomInvoker : public alt::MValueFunction::Invoker {
+class CustomInvoker : public alt::IMValueFunction::Impl {
 public:
     MValueFunctionCallback mValueFunctionCallback;
 
@@ -45,8 +45,8 @@ public:
         this->mValueFunctionCallback = mValueFunctionCallback;
     }
 
-    alt::MValue Invoke(alt::MValueList args) override {
-        //auto list = args.Get<alt::MValue::List>();
+    alt::MValue Call(alt::MValueArgs args) const override {
+        //TODO: pass MValue array not alt::Array
         alt::MValue result;
         mValueFunctionCallback(&args, &result);
         return result;
@@ -58,12 +58,12 @@ typedef void (* MainDelegate_t)(alt::ICore* server, alt::IResource* resource, co
 
 typedef void (* TickDelegate_t)();
 
-typedef void (* ServerEventDelegate_t)(const char* name, alt::Array<alt::MValue>* args);
+typedef void (* ServerEventDelegate_t)(const char* name, alt::MValueConst** args, uint64_t size);
 
 typedef void (* CheckpointDelegate_t)(alt::ICheckpoint* checkpoint, void* entity, alt::IBaseObject::Type type,
                                       bool state);
 
-typedef void (* ClientEventDelegate_t)(alt::IPlayer* player, const char* name, alt::Array<alt::MValue>* args);
+typedef void (* ClientEventDelegate_t)(alt::IPlayer* player, const char* name, alt::MValueConst** args, uint64_t);
 
 typedef void (* PlayerConnectDelegate_t)(alt::IPlayer* player, uint16_t playerId, const char* reason);
 
@@ -115,12 +115,12 @@ typedef void (* CreateColShapeDelegate_t)(alt::IColShape* colShape);
 
 typedef void (* RemoveColShapeDelegate_t)(alt::IColShape* colShape);
 
-typedef void (* ConsoleCommandDelegate_t)(const char* name, alt::Array<alt::StringView>* args);
+typedef void (* ConsoleCommandDelegate_t)(const char* name, const char* args[]);
 
-typedef void (* MetaChangeDelegate_t)(void* entity, alt::IBaseObject::Type type, alt::StringView key,
-                                      alt::MValue* value);
+typedef void (* MetaChangeDelegate_t)(void* entity, alt::IBaseObject::Type type, const char* key,
+                                      alt::MValueConst* value);
 
-typedef void (* ColShapeDelegate_t)(alt::IColShape* colShape, void* entity, alt::IBaseObject::Type baseObjectType,
+typedef void (* ColShapeDelegate_t)(void* colShape, void* entity, alt::IBaseObject::Type baseObjectType,
                                     bool state);
 
 typedef void (* WeaponDamageDelegate_t)(alt::IPlayer* source, void* target, alt::IBaseObject::Type targetBaseObjectType,
@@ -139,9 +139,9 @@ class CSharpResourceImpl : public alt::IResource::Impl {
 
     bool Stop() override;
 
-    void OnCreateBaseObject(alt::IBaseObject* object) override;
+    void OnCreateBaseObject(alt::Ref<alt::IBaseObject> object) override;
 
-    void OnRemoveBaseObject(alt::IBaseObject* object) override;
+    void OnRemoveBaseObject(alt::Ref<alt::IBaseObject> object) override;
 
     void* GetBaseObjectPointer(alt::IBaseObject* baseObject);
 

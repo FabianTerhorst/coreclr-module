@@ -53,12 +53,15 @@ namespace AltV.Net
         /// <summary>
         /// Creates a alt:v cube colshape between two positions with no height (from vottom to top of the height of the map).
         /// </summary>
-        /// <param name="pos">The first position of the colshape.</param>
-        /// <param name="pos2">The second position of the colshape.</param>
+        /// <param name="x1">The first position of the colshape.</param>
+        /// <param name="y1">The second position of the colshape.</param>
+        /// <param name="x2">The first position of the colshape.</param>
+        /// <param name="y2">The second position of the colshape.</param>
+        /// <param name="z">The second position of the colshape.</param>
         /// <returns>The created colshape.</returns>
-        public static IColShape CreateColShapeRectangle(Position pos, Position pos2)
+        public static IColShape CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z)
         {
-            return Module.Server.CreateColShapeRectangle(pos, pos2);
+            return Module.Server.CreateColShapeRectangle(x1, y1, x2, y2, z);
         }
     }
 }

@@ -8,6 +8,7 @@ using AltV.Net.Elements.Args;
 using AltV.Net.Enums;
 using AltV.Net.Native;
 using System.Drawing;
+using AltV.Net.Elements.Refs;
 using AltV.Net.Resources.Chat.Api;
 
 namespace AltV.Net.Example
@@ -16,8 +17,41 @@ namespace AltV.Net.Example
     {
         public override void OnStart()
         {
+            Console.WriteLine("testVehicle:" + testVehicle);
+            {
+                Console.WriteLine("inside invoke");
+                Alt.Log("myData: " + myVehicle?.MyData);
+                Console.WriteLine("inside invoke2");
+            });
+            Alt.Emit("vehicle2", testVehicle);
+            Alt.On<IMyVehicle>("vehicle2", myVehicle =>
+                {
+                    Console.WriteLine("inside invoke3");
+                    Alt.Log("myData: " + myVehicle.MyData);
+                    Console.WriteLine("inside invoke4");
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception);
+                }
+            });
+            Alt.Emit("vehicle3", testVehicle);
+            Alt.On<IMyVehicle>("vehicle3", myVehicle =>
+            {
+                try
+                {
+                    Console.WriteLine("inside invoke5");
+                    Alt.Log("myData: " + myVehicle.MyData);
+                    Console.WriteLine("inside invoke6");
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception);
+                }
+            });
+            if (true) return;
             MValueAdapters.Register(new ConvertibleObject.ConvertibleObjectAdapter());
-            Alt.On("convertible_test", delegate(ConvertibleObject convertible)
+            /*Alt.On("convertible_test", delegate(ConvertibleObject convertible)
             {
                 Console.WriteLine("convertible_test received");
                 Console.WriteLine(convertible.Test);
@@ -25,7 +59,7 @@ namespace AltV.Net.Example
                 {
                     Console.WriteLine("-" + t.Test);
                 }
-            });
+            });*/
             var convertibleObject = new ConvertibleObject();
             Alt.Emit("convertible_test", convertibleObject);
 
@@ -36,7 +70,14 @@ namespace AltV.Net.Example
             Alt.On<string>("bla2", bla2);
             Alt.On<string, bool>("bla3", bla3);
             Alt.On<string, string>("bla4", bla4);
-            Alt.On<IMyVehicle>("vehicleTest", myVehicle => { Alt.Log("myData: " + myVehicle.MyData); });
+            Alt.On<IMyVehicle>("vehicleTest", myVehicle =>
+            {
+                Console.WriteLine("inside invoke");
+                Alt.Log("myData: " + myVehicle?.MyData);
+                Console.WriteLine("inside invoke2");
+            });
+            
+            Console.WriteLine("vehicleTestDone");
 
             Alt.OnPlayerConnect += OnPlayerConnect;
             Alt.OnPlayerDisconnect += OnPlayerDisconnect;
@@ -302,65 +343,65 @@ namespace AltV.Net.Example
             AltAsync.Log(myString);
         }
 
-        public void MyParser(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string> func)
+        public void MyParser(IPlayer player, MValueConst[] mValueArray, Action<IPlayer, string> func)
         {
-            if (mValueArray.Size != 1) return;
-            var reader = mValueArray.Reader();
-            var mValue = reader.GetNext();
-            if (mValue.type != MValue.Type.STRING) return;
-            func(player, mValue.GetString());
+            if (mValueArray.Length != 1) return;
+            var reader = new MValueBuffer2(mValueArray);
+            reader.GetNext(out MValueConst mValueConst);
+            if (mValueConst.type != MValueConst.Type.STRING) return;
+            func(player, mValueConst.GetString());
         }
 
-        public void MyServerEventParser(ref MValueArray mValueArray, Action<string> func)
+        public void MyServerEventParser(MValueConst[] mValueArray, Action<string> func)
         {
-            if (mValueArray.Size != 1) return;
-            var reader = mValueArray.Reader();
+            if (mValueArray.Length != 1) return;
+            var reader = new MValueBuffer2(mValueArray);
             if (!reader.GetNext(out string value)) return;
             func(value);
         }
 
         // Converts string array to string
-        public void MyServerEventParser2(ref MValueArray mValueArray, Action<string> func)
+        public void MyServerEventParser2(MValueConst[] mValueArray, Action<string> func)
         {
-            if (mValueArray.Size != 1) return;
-            var reader = mValueArray.Reader();
-            if (!reader.GetNext(out MValueArray array)) return;
-            var valueReader = array.Reader();
+            if (mValueArray.Length != 1) return;
+            var reader = new MValueBuffer2(mValueArray);
+            if (!reader.GetNext(out MValueConst[] array)) return;
+            var valueReader = new MValueBuffer2(array);
             if (!valueReader.GetNext(out string value)) return;
             func(value);
         }
 
-        public void MyServerEventParser3(ref MValueArray mValueArray, Action<IMyVehicle> func)
+        public void MyServerEventParser3(MValueConst[] mValueArray, Action<IMyVehicle> func)
         {
-            if (mValueArray.Size != 1) return;
-            var reader = mValueArray.Reader();
+            if (mValueArray.Length != 1) return;
+            var reader = new MValueBuffer2(mValueArray);
             if (!reader.GetNext(out IMyVehicle vehicle)) return;
             func(vehicle);
         }
 
-        public void MyServerEventParserAsync(ref MValueArray mValueArray, Action<IMyVehicle> func)
+        public void MyServerEventParserAsync(MValueConst[] mValueArray, Action<IMyVehicle> func)
         {
-            if (mValueArray.Size != 1) return;
-            var reader = mValueArray.Reader();
+            if (mValueArray.Length != 1) return;
+            var reader = new MValueBuffer2(mValueArray);
             if (!reader.GetNext(out IMyVehicle vehicle)) return;
             Task.Run(() => func(vehicle));
         }
 
-        public void MyParser4(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string> func)
+        public void MyParser4(IPlayer player, MValueConst[] mValueArray, Action<IPlayer, string> func)
         {
-            if (mValueArray.Size != 1) return;
-            var reader = mValueArray.Reader();
+            if (mValueArray.Length != 1) return;
+            var reader = new MValueBuffer2(mValueArray);
             if (!reader.GetNext(out string value)) return;
             func(player, value);
         }
 
-        public void MyParser5(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, string[]> func)
+        public void MyParser5(IPlayer player, MValueConst[] mValueArray, Action<IPlayer, string[]> func)
         {
-            if (mValueArray.Size != 1) return;
-            var reader = mValueArray.Reader();
-            if (!reader.GetNext(out MValueArray values)) return;
-            var strings = new string[values.Size];
-            var valuesReader = values.Reader();
+            if (mValueArray.Length != 1) return;
+            var reader = new MValueBuffer2(mValueArray);
+            if (!reader.GetNext(out MValueConst[] values)) return;
+            var strings = new string[values.Length];
+            var valuesReader = new MValueBuffer2(values);
             var i = 0;
             while (valuesReader.GetNext(out string value))
             {
@@ -370,10 +411,10 @@ namespace AltV.Net.Example
             func(player, strings);
         }
 
-        public void MyParser6(IPlayer player, ref MValueArray mValueArray, Action<IPlayer, IMyVehicle> func)
+        public void MyParser6(IPlayer player, MValueConst[] mValueArray, Action<IPlayer, IMyVehicle> func)
         {
-            if (mValueArray.Size != 1) return;
-            var reader = mValueArray.Reader();
+            if (mValueArray.Length != 1) return;
+            var reader = new MValueBuffer2(mValueArray);
             if (!reader.GetNext(out IMyVehicle vehicle)) return;
             func(player, vehicle);
         }
@@ -431,6 +472,18 @@ namespace AltV.Net.Example
 
         public async void Bla2(IPlayer player)
         {
+            using (var reference = new PlayerRef(player))
+            {
+                if (!reference.Exists) return;
+                //TODO: how to prevent player exists check to happen here inside
+                //TODO: maybe create a PlayerRef struct from player native pointer and do all calls inside that struct
+                
+                //TODO: other way would be make a counter in player that counts up on ref create and down on ref delete
+                //TODO: possible by adding addref and removeref methods to player class and counting the int up in them
+                player.Position = Position.Zero;
+                player.Rotation = Rotation.Zero;
+            }
+            
             await player.SetPositionAsync(new Position(1, 2, 3));
             var position = await player.GetPositionAsync();
             await AltAsync.Do(() => { });
@@ -472,9 +525,9 @@ namespace AltV.Net.Example
             //Do async processing here with the copy even when player got already removed
         }
 
-        private async Task<int> OnPlayerDisconnectAsync(ReadOnlyPlayer readOnlyPlayer, IPlayer origin, string reason)
+        private async Task<int> OnPlayerDisconnectAsync(IPlayer player, string reason)
         {
-            if (origin is IMyPlayer myPlayer)
+            if (player is IMyPlayer myPlayer)
             {
             }
 

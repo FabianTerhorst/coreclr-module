@@ -10,8 +10,7 @@ CSharpResourceImpl::CSharpResourceImpl(alt::ICore* server, CoreClr* coreClr, alt
 
 void CSharpResourceImpl::ResetDelegates() {
     MainDelegate = [](auto var, auto var2, auto var3, auto var4) {};
-    OnCheckpointDelegate = [](auto var, auto var2, auto var3, auto var4) {};
-    OnClientEventDelegate = [](auto var, auto var2, auto var3) {};
+    OnClientEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnPlayerConnectDelegate = [](auto var, auto var2, auto var3) {};
     OnResourceStartDelegate = [](auto var) {};
     OnResourceStopDelegate = [](auto var) {};
@@ -23,7 +22,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnPlayerDisconnectDelegate = [](auto var, auto var2) {};
     OnPlayerRemoveDelegate = [](auto var) {};
     OnVehicleRemoveDelegate = [](auto var) {};
-    OnServerEventDelegate = [](auto var, auto var2) {};
+    OnServerEventDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerChangeVehicleSeatDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnPlayerEnterVehicleDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerLeaveVehicleDelegate = [](auto var, auto var2, auto var3) {};
@@ -81,65 +80,76 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
     switch (ev->GetType()) {
         case alt::CEvent::Type::META_CHANGE: {
             auto event = ((alt::CMetaChangeEvent*) (ev));
-            auto entity = event->GetTarget();
+            auto entity = event->GetTarget().Get();
             if (entity == nullptr) return true;
             auto key = event->GetKey();
             auto value = event->GetVal();
-            OnMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), key == nullptr ? "" : key.CStr(), &value);
+            auto constValue = alt::ConstRef<alt::IMValue>(value);
+            OnMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), key == nullptr ? "" : key.CStr(),
+                                 &constValue);
         }
             break;
         case alt::CEvent::Type::SYNCED_META_CHANGE: {
             auto event = ((alt::CSyncedMetaDataChangeEvent*) (ev));
-            auto entity = event->GetTarget();
+            auto entity = event->GetTarget().Get();
             if (entity == nullptr) return true;
             auto key = event->GetKey();
             auto value = event->GetVal();
+            auto constValue = alt::ConstRef<alt::IMValue>(value);
             OnSyncedMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), key == nullptr ? "" : key.CStr(),
-                                       &value);
-        }
-            break;
-        case alt::CEvent::Type::CHECKPOINT_EVENT: {
-            auto entity = ((alt::CCheckpointEvent*) (ev))->GetEntity();
-            auto entityPtr = GetEntityPointer(entity);
-            if (entity != nullptr && entityPtr != nullptr) {
-                OnCheckpointDelegate(((alt::CCheckpointEvent*) (ev))->GetTarget(),
-                                     entityPtr,
-                                     entity->GetType(),
-                                     ((alt::CCheckpointEvent*) (ev))->GetState());
-            }
+                                       &constValue);
         }
             break;
         case alt::CEvent::Type::CLIENT_SCRIPT_EVENT: {
-            alt::Array<alt::MValue> clientArgs = (((alt::CClientScriptEvent*) (ev))->GetArgs());
-            OnClientEventDelegate(((alt::CClientScriptEvent*) (ev))->GetTarget(),
-                                  ((alt::CClientScriptEvent*) (ev))->GetName().CStr(),
-                                  &clientArgs);
+            alt::MValueArgs clientArgs = (((alt::CClientScriptEvent*) (ev))->GetArgs());
+            uint64_t size = clientArgs.GetSize();
+            if (size == 0) {
+                OnClientEventDelegate(((alt::CClientScriptEvent*) (ev))->GetTarget().Get(),
+                                      ((alt::CClientScriptEvent*) (ev))->GetName().CStr(),
+                                      nullptr, 0);
+            } else {
+#ifdef _WIN32
+                auto constArgs = new alt::MValueConst* [size];
+#else
+                alt::MValueConst* constArgs[size];
+#endif
+                for (uint64_t i = 0; i < size; i++) {
+                    constArgs[i] = &clientArgs[i];
+                }
+                OnClientEventDelegate(((alt::CClientScriptEvent*) (ev))->GetTarget().Get(),
+                                      ((alt::CClientScriptEvent*) (ev))->GetName().CStr(),
+                                      constArgs, size);
+
+#ifdef _WIN32
+                delete[] constArgs;
+#endif
+            }
         }
             break;
         case alt::CEvent::Type::PLAYER_CONNECT: {
-            auto connectPlayer = reinterpret_cast<const alt::CPlayerConnectEvent*>(ev)->GetTarget();
+            auto connectPlayer = reinterpret_cast<const alt::CPlayerConnectEvent*>(ev)->GetTarget().Get();
             OnPlayerConnectDelegate(connectPlayer, connectPlayer->GetID(),
                                     "");//TODO: maybe better solution
         }
             break;
         case alt::CEvent::Type::RESOURCE_START: {
             OnResourceStartDelegate(reinterpret_cast<const alt::CResourceStartEvent*>(ev)->GetResource());
-            break;
         }
+            break;
         case alt::CEvent::Type::RESOURCE_STOP: {
             OnResourceStopDelegate(reinterpret_cast<const alt::CResourceStopEvent*>(ev)->GetResource());
-            break;
         }
+            break;
         case alt::CEvent::Type::RESOURCE_ERROR: {
             OnResourceErrorDelegate(reinterpret_cast<const alt::CResourceErrorEvent*>(ev)->GetResource());
-            break;
         }
+            break;
         case alt::CEvent::Type::PLAYER_DAMAGE: {
             auto damageEvent = (alt::CPlayerDamageEvent*) ev;
-            auto entity = damageEvent->GetAttacker();
+            auto entity = damageEvent->GetAttacker().Get();
             auto entityPtr = GetEntityPointer(entity);
             if (entity != nullptr && entityPtr != nullptr) {
-                OnPlayerDamageDelegate(damageEvent->GetTarget(),
+                OnPlayerDamageDelegate(damageEvent->GetTarget().Get(),
                                        entityPtr,
                                        entity->GetType(),
                                        entity->GetID(),
@@ -149,15 +159,15 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
         }
             break;
         case alt::CEvent::Type::PLAYER_DEATH: {
-            auto entity = ((alt::CPlayerDeathEvent*) (ev))->GetKiller();
+            auto entity = ((alt::CPlayerDeathEvent*) (ev))->GetKiller().Get();
             if (entity != nullptr) {
                 auto entityPtr = GetEntityPointer(entity);
-                OnPlayerDeathDelegate(((alt::CPlayerDeathEvent*) (ev))->GetTarget(),
+                OnPlayerDeathDelegate(((alt::CPlayerDeathEvent*) (ev))->GetTarget().Get(),
                                       entityPtr,
                                       entity->GetType(),
                                       ((alt::CPlayerDeathEvent*) (ev))->GetWeapon());
             } else {
-                OnPlayerDeathDelegate(((alt::CPlayerDeathEvent*) (ev))->GetTarget(),
+                OnPlayerDeathDelegate(((alt::CPlayerDeathEvent*) (ev))->GetTarget().Get(),
                                       nullptr,
                                       (alt::IBaseObject::Type) 0,
                                       ((alt::CPlayerDeathEvent*) (ev))->GetWeapon());
@@ -176,27 +186,27 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             position.x = eventPosition.x;
             position.y = eventPosition.y;
             position.z = eventPosition.z;
-            OnExplosionDelegate(explosionEvent->GetSource(), explosionEvent->GetExplosionType(), position,
+            OnExplosionDelegate(explosionEvent->GetSource().Get(), explosionEvent->GetExplosionType(), position,
                                 explosionEvent->GetExplosionFX());
         }
             break;
         case alt::CEvent::Type::WEAPON_DAMAGE_EVENT: {
             auto weaponDamageEvent = ((alt::CWeaponDamageEvent*) (ev));
-            auto targetEntity = weaponDamageEvent->GetTarget();
+            auto targetEntity = weaponDamageEvent->GetTarget().Get();
             if (targetEntity == nullptr) return true;
             auto eventShotOffset = weaponDamageEvent->GetShotOffset();
             position_t shotOffset = {};
             shotOffset.x = eventShotOffset[0];
             shotOffset.y = eventShotOffset[1];
             shotOffset.z = eventShotOffset[2];
-            OnWeaponDamageDelegate(weaponDamageEvent->GetSource(), GetEntityPointer(targetEntity),
+            OnWeaponDamageDelegate(weaponDamageEvent->GetSource().Get(), GetEntityPointer(targetEntity),
                                    targetEntity->GetType(), weaponDamageEvent->GetWeaponHash(),
                                    weaponDamageEvent->GetDamageValue(), shotOffset, weaponDamageEvent->GetBodyPart());
         }
             break;
         case alt::CEvent::Type::PLAYER_DISCONNECT: {
             auto disconnectEvent = reinterpret_cast<const alt::CPlayerDisconnectEvent*>(ev);
-            auto disconnectPlayer = disconnectEvent->GetTarget();
+            auto disconnectPlayer = disconnectEvent->GetTarget().Get();
             /*auto reason = disconnectEvent->GetReason();
             if (reason != nullptr && reason.GetSize() > 0) {
                 auto reasonCStr = reason.CStr();
@@ -214,7 +224,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
         }
             break;
         case alt::CEvent::Type::REMOVE_ENTITY_EVENT: {
-            auto removeEntityEntity = ((alt::CRemoveEntityEvent*) (ev))->GetEntity();
+            auto removeEntityEntity = ((alt::CRemoveEntityEvent*) (ev))->GetEntity().Get();
             if (removeEntityEntity != nullptr) {
                 switch (removeEntityEntity->GetType()) {
                     case alt::IBaseObject::Type::PLAYER:
@@ -229,45 +239,88 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             break;
         case alt::CEvent::Type::SERVER_SCRIPT_EVENT: {
             auto serverScriptEvent = (alt::CServerScriptEvent*) ev;
-            alt::Array<alt::MValue> serverArgs = serverScriptEvent->GetArgs();
-            OnServerEventDelegate(serverScriptEvent->GetName().CStr(), &serverArgs);
+            alt::MValueArgs serverArgs = serverScriptEvent->GetArgs();
+            uint64_t size = serverArgs.GetSize();
+            if (size == 0) {
+                OnServerEventDelegate(serverScriptEvent->GetName().CStr(), nullptr, 0);
+            } else {
+#ifdef _WIN32
+                auto constArgs = new alt::MValueConst* [size];
+#else
+                alt::MValueConst* constArgs[size];
+#endif
+                for (uint64_t i = 0; i < size; i++) {
+                    constArgs[i] = &serverArgs[i];
+                }
+                OnServerEventDelegate(serverScriptEvent->GetName().CStr(), constArgs, size);
+#ifdef _WIN32
+                delete[] constArgs;
+#endif
+            }
         }
             break;
         case alt::CEvent::Type::PLAYER_CHANGE_VEHICLE_SEAT: {
             auto changeSeatEvent = (alt::CPlayerChangeVehicleSeatEvent*) ev;
-            OnPlayerChangeVehicleSeatDelegate(changeSeatEvent->GetTarget(),
-                                              changeSeatEvent->GetPlayer(),
+            OnPlayerChangeVehicleSeatDelegate(changeSeatEvent->GetTarget().Get(),
+                                              changeSeatEvent->GetPlayer().Get(),
                                               changeSeatEvent->GetOldSeat(),
                                               changeSeatEvent->GetNewSeat());
         }
             break;
         case alt::CEvent::Type::PLAYER_ENTER_VEHICLE: {
             auto enterEvent = (alt::CPlayerEnterVehicleEvent*) ev;
-            OnPlayerEnterVehicleDelegate(enterEvent->GetTarget(),
-                                         enterEvent->GetPlayer(),
+            OnPlayerEnterVehicleDelegate(enterEvent->GetTarget().Get(),
+                                         enterEvent->GetPlayer().Get(),
                                          enterEvent->GetSeat());
         }
             break;
         case alt::CEvent::Type::PLAYER_LEAVE_VEHICLE: {
             auto leaveEvent = (alt::CPlayerLeaveVehicleEvent*) ev;
-            OnPlayerLeaveVehicleDelegate(leaveEvent->GetTarget(),
-                                         leaveEvent->GetPlayer(),
+            OnPlayerLeaveVehicleDelegate(leaveEvent->GetTarget().Get(),
+                                         leaveEvent->GetPlayer().Get(),
                                          leaveEvent->GetSeat());
         }
             break;
         case alt::CEvent::Type::CONSOLE_COMMAND_EVENT: {
             alt::Array<alt::StringView> args = ((alt::CConsoleCommandEvent*) (ev))->GetArgs();
-            OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(), &args);
+
+            uint64_t size = args.GetSize();
+            if (size == 0) {
+                OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(), nullptr);
+            } else {
+#ifdef _WIN32
+                auto constArgs = new const char* [size];
+#else
+                const char* constArgs[size];
+#endif
+                for (uint64_t i = 0; i < size; i++) {
+                    constArgs[i] = args[i].CStr();
+                }
+
+                OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(), constArgs);
+
+#ifdef _WIN32
+                delete[] constArgs;
+#endif
+            }
         }
             break;
         case alt::CEvent::Type::COLSHAPE_EVENT: {
-            auto entity = ((alt::CColShapeEvent*) (ev))->GetEntity();
+            auto entity = ((alt::CColShapeEvent*) (ev))->GetEntity().Get();
             auto entityPointer = GetEntityPointer(entity);
             if (entity != nullptr && entityPointer != nullptr) {
-                OnColShapeDelegate(((alt::CColShapeEvent*) (ev))->GetTarget(),
-                                   entityPointer,
-                                   entity->GetType(),
-                                   ((alt::CColShapeEvent*) (ev))->GetState());
+                auto colShapePointer = ((alt::CColShapeEvent*) (ev))->GetTarget().Get();
+                if (auto checkpoint = dynamic_cast<alt::ICheckpoint*>(colShapePointer)) {
+                    OnCheckpointDelegate(checkpoint,
+                                         entityPointer,
+                                         entity->GetType(),
+                                         ((alt::CColShapeEvent*) (ev))->GetState());
+                } else {
+                    OnColShapeDelegate(colShapePointer,
+                                       entityPointer,
+                                       entity->GetType(),
+                                       ((alt::CColShapeEvent*) (ev))->GetState());
+                }
             }
         }
             break;
@@ -275,36 +328,46 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
     return true;
 }
 
-void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object) {
+void CSharpResourceImpl::OnCreateBaseObject(alt::Ref<alt::IBaseObject> objectRef) {
+    objectRef->AddRef();
+    auto object = objectRef.Get();
     if (object != nullptr) {
         switch (object->GetType()) {
             case alt::IBaseObject::Type::PLAYER: {
                 auto player = dynamic_cast<alt::IPlayer*>(object);
                 OnCreatePlayerDelegate(player, player->GetID());
-            }
                 break;
+            }
             case alt::IBaseObject::Type::VEHICLE: {
                 auto vehicle = dynamic_cast<alt::IVehicle*>(object);
                 OnCreateVehicleDelegate(vehicle, vehicle->GetID());
+                break;
             }
+            case alt::IBaseObject::Type::BLIP: {
+                auto blip = dynamic_cast<alt::IBlip*>(object);
+                OnCreateBlipDelegate(blip);
                 break;
-            case alt::IBaseObject::Type::BLIP:
-                OnCreateBlipDelegate(dynamic_cast<alt::IBlip*>(object));
+            }
+            case alt::IBaseObject::Type::VOICE_CHANNEL: {
+                auto voiceChannel = dynamic_cast<alt::IVoiceChannel*>(object);
+                OnCreateVoiceChannelDelegate(voiceChannel);
                 break;
-            case alt::IBaseObject::Type::CHECKPOINT:
-                OnCreateCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+            }
+            case alt::IBaseObject::Type::COLSHAPE: {
+                if (auto checkpoint = dynamic_cast<alt::ICheckpoint*>(object)) {
+                    OnCreateCheckpointDelegate(checkpoint);
+                } else {
+                    auto colShape = dynamic_cast<alt::IColShape*>(object);
+                    OnCreateColShapeDelegate(colShape);
+                }
                 break;
-            case alt::IBaseObject::Type::VOICE_CHANNEL:
-                OnCreateVoiceChannelDelegate(dynamic_cast<alt::IVoiceChannel*>(object));
-                break;
-            case alt::IBaseObject::Type::COLSHAPE:
-                OnCreateColShapeDelegate(dynamic_cast<alt::IColShape*>(object));
-                break;
+            }
         }
     }
 }
 
-void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object) {
+void CSharpResourceImpl::OnRemoveBaseObject(alt::Ref<alt::IBaseObject> objectRef) {
+    auto object = objectRef.Get();
     if (object != nullptr) {
         switch (object->GetType()) {
             case alt::IBaseObject::Type::PLAYER:
@@ -316,17 +379,20 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object) {
             case alt::IBaseObject::Type::BLIP:
                 OnRemoveBlipDelegate(dynamic_cast<alt::IBlip*>(object));
                 break;
-            case alt::IBaseObject::Type::CHECKPOINT:
-                OnRemoveCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
-                break;
             case alt::IBaseObject::Type::VOICE_CHANNEL:
                 OnRemoveVoiceChannelDelegate(dynamic_cast<alt::IVoiceChannel*>(object));
                 break;
             case alt::IBaseObject::Type::COLSHAPE:
-                OnRemoveColShapeDelegate(dynamic_cast<alt::IColShape*>(object));
+                if (auto checkpoint = dynamic_cast<alt::ICheckpoint*>(object)) {
+                    OnRemoveCheckpointDelegate(checkpoint);
+                } else {
+                    auto colShape = dynamic_cast<alt::IColShape*>(object);
+                    OnRemoveColShapeDelegate(colShape);
+                }
                 break;
         }
     }
+    objectRef->RemoveRef();
 }
 
 void CSharpResourceImpl::OnTick() {
@@ -524,9 +590,10 @@ void* CSharpResourceImpl::GetBaseObjectPointer(alt::IBaseObject* baseObject) {
                 return dynamic_cast<alt::IVehicle*>(baseObject);
             case alt::IBaseObject::Type::BLIP:
                 return dynamic_cast<alt::IBlip*>(baseObject);
-            case alt::IBaseObject::Type::CHECKPOINT:
-                return dynamic_cast<alt::ICheckpoint*>(baseObject);
             case alt::IBaseObject::Type::COLSHAPE:
+                if (auto checkpoint = dynamic_cast<alt::ICheckpoint*>(baseObject)) {
+                    return checkpoint;
+                }
                 return dynamic_cast<alt::IColShape*>(baseObject);
             default:
                 return nullptr;

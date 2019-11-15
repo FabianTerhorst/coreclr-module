@@ -4,11 +4,10 @@ namespace AltV.Net.Elements.Entities
     {
         Player = 0,
         Vehicle = 1,
-        Checkpoint = 2,
-        Blip = 3,
-        WebView = 4,
-        VoiceChannel = 5,
-        ColShape = 6,
+        Blip = 2,
+        WebView = 3,
+        VoiceChannel = 4,
+        ColShape = 5,
         Undefined = 255
     }
 }

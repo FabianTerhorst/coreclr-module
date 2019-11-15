@@ -19,6 +19,7 @@ EXPORT void FreeVehiclePointerArray(alt::Array<alt::IVehicle*>* array);
 EXPORT void FreeStringViewArray(alt::Array<alt::StringView> *array);
 EXPORT void FreeStringArray(alt::Array<alt::String>* array);
 EXPORT void FreeMValueArray(alt::Array<alt::MValue> *array);
+EXPORT void FreeCharArray(char charArray[]);
 #ifdef __cplusplus
 }
 #endif

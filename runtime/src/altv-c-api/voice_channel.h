@@ -16,8 +16,10 @@
 extern "C"
 {
 #endif
-EXPORT void VoiceChannel_GetMetaData(alt::IVoiceChannel* channel, const char* key, alt::MValue &val);
-EXPORT void VoiceChannel_SetMetaData(alt::IVoiceChannel* channel, const char* key, alt::MValue* val);
+EXPORT alt::MValueConst* VoiceChannel_GetMetaData(alt::IVoiceChannel* voiceChannel, const char* key);
+EXPORT void VoiceChannel_SetMetaData(alt::IVoiceChannel* channel, const char* key, alt::MValueConst* val);
+EXPORT void VoiceChannel_AddRef(alt::IVoiceChannel* voiceChannel);
+EXPORT void VoiceChannel_RemoveRef(alt::IVoiceChannel* voiceChannel);
 
 EXPORT void VoiceChannel_AddPlayer(alt::IVoiceChannel* channel, alt::IPlayer* player);
 EXPORT void VoiceChannel_RemovePlayer(alt::IVoiceChannel* channel, alt::IPlayer* player);

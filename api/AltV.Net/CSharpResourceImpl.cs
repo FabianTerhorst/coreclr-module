@@ -168,14 +168,14 @@ namespace AltV.Net
             AltNative.Resource.CSharpResourceImpl_SetColShapeDelegate(NativePointer, onColShape);
         }
 
-        public IntPtr CreateInvoker(MValue.Function function)
+        public IntPtr CreateInvoker(MValueFunctionCallback function)
         {
-            return AltNative.MValueCreate.Invoker_Create(NativePointer, function);
+            return AltNative.MValueNative.Invoker_Create(NativePointer, function);
         }
 
         public void DestroyInvoker(IntPtr invoker)
         {
-            AltNative.MValueCreate.Invoker_Destroy(NativePointer, invoker);
+            AltNative.MValueNative.Invoker_Destroy(NativePointer, invoker);
         }
 
         public void Dispose()

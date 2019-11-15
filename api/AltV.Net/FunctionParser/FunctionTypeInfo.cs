@@ -18,6 +18,8 @@ namespace AltV.Net.FunctionParser
         public readonly bool IsBlip;
 
         public readonly bool IsCheckpoint;
+        
+        public readonly bool IsColShape;
 
         public readonly bool IsDict;
 
@@ -86,6 +88,7 @@ namespace AltV.Net.FunctionParser
                 IsPlayer = type == FunctionTypes.Player || interfaces.Contains(FunctionTypes.Player);
                 IsBlip = type == FunctionTypes.Blip || interfaces.Contains(FunctionTypes.Blip);
                 IsCheckpoint = type == FunctionTypes.Checkpoint || interfaces.Contains(FunctionTypes.Checkpoint);
+                IsColShape = type == FunctionTypes.ColShape || interfaces.Contains(FunctionTypes.ColShape);
             }
             else
             {
@@ -94,6 +97,7 @@ namespace AltV.Net.FunctionParser
                 IsPlayer = false;
                 IsBlip = false;
                 IsCheckpoint = false;
+                IsColShape = false;
             }
 
             IsMValueConvertible = interfaces.Contains(FunctionTypes.MValueConvertible);

@@ -11,7 +11,7 @@ namespace AltV.Net
         int NetTime { get; }
 
         string RootDirectory { get; }
-        
+
         INativeResource Resource { get; }
 
         void LogInfo(string message);
@@ -42,33 +42,33 @@ namespace AltV.Net
 
         uint Hash(string hash);
 
-        void TriggerServerEvent(IntPtr eventNamePtr, params MValue[] args);
+        void TriggerServerEvent(string eventName, MValueConst[] args);
+
+        void TriggerServerEvent(IntPtr eventNamePtr, MValueConst[] args);
+
+        void TriggerServerEvent(string eventName, IntPtr[] args);
+
+        void TriggerServerEvent(IntPtr eventNamePtr, IntPtr[] args);
 
         void TriggerServerEvent(IntPtr eventNamePtr, params object[] args);
 
-        void TriggerServerEvent(IntPtr eventNamePtr, ref MValue args);
-
-        void TriggerServerEvent(string eventName, params MValue[] args);
-
         void TriggerServerEvent(string eventName, params object[] args);
 
-        void TriggerServerEvent(string eventName, ref MValue args);
+        void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, MValueConst[] args);
 
-        void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params MValue[] args);
+        void TriggerClientEvent(IPlayer player, string eventName, MValueConst[] args);
+
+        void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, IntPtr[] args);
+
+        void TriggerClientEvent(IPlayer player, string eventName, IntPtr[] args);
 
         void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params object[] args);
-
-        void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, ref MValue args);
-
-        void TriggerClientEvent(IPlayer player, string eventName, params MValue[] args);
-
+        
         void TriggerClientEvent(IPlayer player, string eventName, params object[] args);
-
-        void TriggerClientEvent(IPlayer player, string eventName, ref MValue args);
 
         IVehicle CreateVehicle(uint model, Position pos, Rotation rotation);
 
-        ICheckpoint CreateCheckpoint(IPlayer player, byte type, Position pos, float radius, float height, Rgba color);
+        ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color);
 
         IBlip CreateBlip(IPlayer player, byte type, Position pos);
 
@@ -84,7 +84,7 @@ namespace AltV.Net
 
         IColShape CreateColShapeCube(Position pos, Position pos2);
 
-        IColShape CreateColShapeRectangle(Position pos, Position pos2);
+        IColShape CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z);
 
         void RemoveBlip(IBlip blip);
 
@@ -97,6 +97,8 @@ namespace AltV.Net
         void RemoveColShape(IColShape colShape);
 
         INativeResource GetResource(string name);
+
+        INativeResource GetResource(IntPtr resourcePointer);
 
         // Only for advanced use cases
 
@@ -111,5 +113,48 @@ namespace AltV.Net
         void StopResource(string name);
 
         void RestartResource(string name);
+
+        void CreateMValueNil(out MValueConst mValue);
+
+        void CreateMValueBool(out MValueConst mValue, bool value);
+
+        void CreateMValueInt(out MValueConst mValue, long value);
+
+        void CreateMValueUInt(out MValueConst mValue, ulong value);
+
+
+        void CreateMValueDouble(out MValueConst mValue, double value);
+
+
+        void CreateMValueString(out MValueConst mValue, string value);
+
+
+        void CreateMValueList(out MValueConst mValue, MValueConst[] val, ulong size);
+
+
+        void CreateMValueDict(out MValueConst mValue, string[] keys, MValueConst[] val,
+            ulong size);
+
+
+        void CreateMValueCheckpoint(out MValueConst mValue, ICheckpoint value);
+
+
+        void CreateMValueBlip(out MValueConst mValue, IBlip value);
+
+
+        void CreateMValueVoiceChannel(out MValueConst mValue, IVoiceChannel value);
+
+
+        void CreateMValuePlayer(out MValueConst mValue, IPlayer value);
+
+
+        void CreateMValueVehicle(out MValueConst mValue, IVehicle value);
+
+
+        void CreateMValueFunction(out MValueConst mValue, IntPtr value);
+
+        void CreateMValue(out MValueConst mValue, object obj);
+
+        void CreateMValues(MValueConst[] mValues, object[] objects);
     }
 }

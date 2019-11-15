@@ -25,7 +25,7 @@ namespace AltV.Net.Async
         public static Task SetDimensionAsync(this IWorldObject worldObject, short dimension) =>
             AltVAsync.Schedule(() => worldObject.Dimension = dimension);
 
-        public static Task<short> GetDimensionAsync(this IWorldObject worldObject) =>
+        public static Task<int> GetDimensionAsync(this IWorldObject worldObject) =>
             AltVAsync.Schedule(() => worldObject.Dimension);
     }
 }

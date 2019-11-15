@@ -7,7 +7,7 @@ uint16_t Vehicle_GetID(alt::IVehicle* entity) {
 }
 
 alt::IPlayer* Vehicle_GetNetworkOwner(alt::IVehicle* vehicle) {
-    return vehicle->GetNetworkOwner();
+    return vehicle->GetNetworkOwner().Get();
 }
 
 uint32_t Vehicle_GetModel(alt::IVehicle* vehicle) {
@@ -21,8 +21,12 @@ void Vehicle_GetPosition(alt::IVehicle* entity, position_t &position) {
     position.z = vehiclePosition.z;
 }
 
-void Vehicle_SetPosition(alt::IVehicle* entity, alt::Position pos) {
-    entity->SetPosition(pos);
+void Vehicle_SetPosition(alt::IVehicle* entity, position_t pos) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+    entity->SetPosition(position);
 }
 
 void Vehicle_GetRotation(alt::IVehicle* entity, rotation_t &rotation) {
@@ -32,38 +36,50 @@ void Vehicle_GetRotation(alt::IVehicle* entity, rotation_t &rotation) {
     rotation.yaw = checkpointRotation.yaw;
 }
 
-void Vehicle_SetRotation(alt::IVehicle* entity, alt::Rotation rot) {
-    entity->SetRotation(rot);
+void Vehicle_SetRotation(alt::IVehicle* entity, rotation_t rot) {
+    alt::Rotation rotation;
+    rotation.roll = rot.roll;
+    rotation.pitch = rot.pitch;
+    rotation.yaw = rot.yaw;
+    entity->SetRotation(rotation);
 }
 
-int16_t Vehicle_GetDimension(alt::IVehicle* entity) {
+int32_t Vehicle_GetDimension(alt::IVehicle* entity) {
     return entity->GetDimension();
 }
 
-void Vehicle_SetDimension(alt::IVehicle* entity, int16_t dimension) {
+void Vehicle_SetDimension(alt::IVehicle* entity, int32_t dimension) {
     entity->SetDimension(dimension);
 }
 
-void Vehicle_GetMetaData(alt::IVehicle* entity, const char* key, alt::MValue &val) {
-    val = entity->GetMetaData(key);
+alt::MValueConst* Vehicle_GetMetaData(alt::IVehicle* vehicle, const char* key) {
+    return new alt::MValueConst(vehicle->GetMetaData(key));
 }
 
-void Vehicle_SetMetaData(alt::IVehicle* entity, const char* key, alt::MValue* val) {
-    entity->SetMetaData(key, *val);
+void Vehicle_SetMetaData(alt::IVehicle* entity, const char* key, alt::MValueConst* val) {
+    entity->SetMetaData(key, val->Get()->Clone());
 }
 
-void Vehicle_GetSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MValue &val) {
-    val = entity->GetSyncedMetaData(key);
+alt::MValueConst* Vehicle_GetSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
+    return new alt::MValueConst(vehicle->GetSyncedMetaData(key));
 }
 
-void Vehicle_SetSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MValue* val) {
-    entity->SetSyncedMetaData(key, *val);
+void Vehicle_SetSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MValueConst* val) {
+    entity->SetSyncedMetaData(key, val->Get()->Clone());
+}
+
+void Vehicle_AddRef(alt::IVehicle* vehicle) {
+    vehicle->AddRef();
+}
+
+void Vehicle_RemoveRef(alt::IVehicle* vehicle) {
+    vehicle->RemoveRef();
 }
 
 // Vehicle
 
 alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle) {
-    return vehicle->GetDriver();
+    return vehicle->GetDriver().Get();
 }
 
 uint8_t Vehicle_GetMod(alt::IVehicle* vehicle, uint8_t category) {

@@ -17,8 +17,7 @@ RUN mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && cma
 
 WORKDIR /runtime/build/src
 
-#FROM mcr.microsoft.com/dotnet/core/sdk:2.2 as dotnet
-FROM mcr.microsoft.com/dotnet/core-nightly/sdk:3.0.100-rc1 as dotnet
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0 as dotnet
 
 # build example resource
 WORKDIR /altv-example/
@@ -31,7 +30,7 @@ RUN cd AltV.Net.Host && dotnet publish -c Release
 RUN cd AltV.Net.Resources.Chat && dotnet publish -c Release
 
 #FROM debian:stable
-FROM ubuntu:18.04
+FROM ubuntu:18.10
 
 COPY --from=dotnet /usr/share/dotnet /usr/share/dotnet
 RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
@@ -57,6 +56,8 @@ RUN apt-get update
 RUN export PATH="$PATH:/root/.dotnet/tools"
 
 RUN dotnet tool install --global dotnet-trace --version 3.0.0-preview9.19454.1
+
+RUN apt-get install libatomic1
 
 # construct server structure
 WORKDIR /altv-server
@@ -85,4 +86,4 @@ EXPOSE 7788/udp
 EXPOSE 7788/tcp
 
 #ENTRYPOINT ["tail", "-f", "/dev/null"]
-#CMD sh startgdb.sh
+CMD sh startgdb.sh

@@ -12,14 +12,24 @@ namespace AltV.Net.Mock
         }
 
         public override Position Position { get; set; }
-        public override short Dimension { get; set; }
+        public override int Dimension { get; set; }
 
-        public override void SetMetaData(string key, ref MValue value)
+        public override void SetMetaData(string key, in MValueConst value)
         {
             throw new NotImplementedException();
         }
 
-        public override void GetMetaData(string key, ref MValue value)
+        public override void GetMetaData(string key, out MValueConst value)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void InternalAddRef()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void InternalRemoveRef()
         {
             throw new NotImplementedException();
         }

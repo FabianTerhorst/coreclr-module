@@ -4,7 +4,7 @@ using AltV.Net.Elements.Args;
 
 namespace AltV.Net.Native
 {
-    [StructLayout(LayoutKind.Sequential)]
+    /*[StructLayout(LayoutKind.Sequential)]
     public struct MValueArray : IDisposable
     {
         internal IntPtr data; // Array of MValue's
@@ -53,7 +53,7 @@ namespace AltV.Net.Native
         {
             return new MValueArrayBuffer(data, Size);
         }
-    }
+    }*/
 
     [StructLayout(LayoutKind.Sequential)]
     public struct StringViewArray : IDisposable

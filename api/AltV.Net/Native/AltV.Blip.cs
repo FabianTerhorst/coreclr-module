@@ -19,16 +19,22 @@ namespace AltV.Net.Native
             internal static extern void Blip_SetPosition(IntPtr blip, Position pos);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern short Blip_GetDimension(IntPtr blip);
+            internal static extern int Blip_GetDimension(IntPtr blip);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Blip_SetDimension(IntPtr blip, short dimension);
+            internal static extern void Blip_SetDimension(IntPtr blip, int dimension);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Blip_GetMetaData(IntPtr blip, IntPtr key, ref MValue val);
+            internal static extern IntPtr Blip_GetMetaData(IntPtr blip, IntPtr key);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Blip_SetMetaData(IntPtr blip, IntPtr key, ref MValue val);
+            internal static extern void Blip_SetMetaData(IntPtr blip, IntPtr key, IntPtr val);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Blip_AddRef(IntPtr blip);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Blip_RemoveRef(IntPtr blip);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool Blip_IsGlobal(IntPtr blip);

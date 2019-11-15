@@ -7,6 +7,8 @@ namespace AltV.Net
 {
     public class NativeResource : INativeResource
     {
+        private readonly IntPtr corePointer;
+        
         internal readonly IntPtr NativePointer;
 
         public IntPtr ResourceImplPtr => AltNative.Resource.Resource_GetImpl(NativePointer);
@@ -14,8 +16,7 @@ namespace AltV.Net
         private CSharpResourceImpl cSharpResourceImpl;
 
         public CSharpResourceImpl CSharpResourceImpl =>
-            cSharpResourceImpl ?? (cSharpResourceImpl =
-                new CSharpResourceImpl(AltNative.Resource.Resource_GetCSharpImpl(NativePointer)));
+            cSharpResourceImpl ??= new CSharpResourceImpl(AltNative.Resource.Resource_GetCSharpImpl(NativePointer));
 
         public string Path
         {
@@ -59,26 +60,44 @@ namespace AltV.Net
 
         public bool IsStarted => AltNative.Resource.Resource_IsStarted(NativePointer);
 
-        internal NativeResource(IntPtr nativePointer)
+        internal NativeResource(IntPtr corePointer, IntPtr nativePointer)
         {
+            this.corePointer = corePointer;
             NativePointer = nativePointer;
         }
 
         public void SetExport(string key, object value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            var mValue = MValue.CreateFromObject(value);
-            AltNative.Resource.Resource_SetExport(NativePointer, stringPtr, ref mValue);
+            Alt.Server.CreateMValue(out var mValue, value);
+            AltNative.Resource.Resource_SetExport(corePointer, NativePointer, stringPtr, mValue.nativePointer);
             Marshal.FreeHGlobal(stringPtr);
             mValue.Dispose();
         }
 
-        public bool GetExport(string key, ref MValue value)
+        public void SetExport(string key, in MValueConst value)
         {
-            var result =  AltNative.Resource.Resource_GetExport(NativePointer, key, ref value);
-            if (!result) return false;
-            value.Dispose();
-            return true;
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Resource.Resource_SetExport(corePointer, NativePointer, stringPtr, value.nativePointer);
+            Marshal.FreeHGlobal(stringPtr);
+        }
+
+        public object GetExport(string key)
+        {
+            var ptr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            var mValue = new MValueConst(AltNative.Resource.Resource_GetExport(NativePointer, ptr));
+            var obj = mValue.ToObject();
+            mValue.Dispose();
+            Marshal.FreeHGlobal(ptr);
+            return obj;
+        }
+        
+        public bool GetExport(string key, out MValueConst mValue)
+        {
+            var ptr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            mValue = new MValueConst(AltNative.Resource.Resource_GetExport(NativePointer, ptr));
+            Marshal.FreeHGlobal(ptr);
+            return mValue.type != MValueConst.Type.NIL;
         }
 
         public void Start()

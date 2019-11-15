@@ -8,6 +8,8 @@ namespace AltV.Net
         internal static Module Module;
 
         public static IServer Server => Module.Server;
+        
+        public static IServer Core => Module.Server;
 
         public static void Emit(string eventName, params object[] args) => Server.TriggerServerEvent(eventName, args);
 

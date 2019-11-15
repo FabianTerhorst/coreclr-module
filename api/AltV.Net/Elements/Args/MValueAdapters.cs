@@ -13,13 +13,13 @@ namespace AltV.Net.Elements.Args
             Adapters[typeof(T)] = adapter;
         }
 
-        public static bool ToMValue(object obj, Type type, out MValue mValue)
+        public static bool ToMValue(object obj, Type type, out MValueConst mValue)
         {
             if (Adapters.TryGetValue(type, out var adapter))
             {
-                var writer = new MValueWriter();
+                var writer = new MValueWriter2();
                 adapter.ToMValue(obj, writer);
-                mValue = writer.ToMValue();
+                writer.ToMValue(out mValue);
                 return true;
             }
 
@@ -27,17 +27,25 @@ namespace AltV.Net.Elements.Args
             return false;
         }
 
-        public static bool FromMValue(ref MValue mValue, Type type, out object obj)
+        public static bool FromMValue(in MValueConst mValue, Type type, out object obj)
         {
             switch (mValue.type)
             {
-                case MValue.Type.LIST when Adapters.TryGetValue(type, out var adapter):
+                case MValueConst.Type.LIST when Adapters.TryGetValue(type, out var adapter):
                 {
-                    obj = adapter.FromMValue(new MValueReader(ref mValue));
+                    using (var reader = new MValueReader2(in mValue))
+                    {
+                        obj = adapter.FromMValue(reader);
+                    }
+
                     return true;
                 }
-                case MValue.Type.DICT when Adapters.TryGetValue(type, out var adapter):
-                    obj = adapter.FromMValue(new MValueReader(ref mValue));
+                case MValueConst.Type.DICT when Adapters.TryGetValue(type, out var adapter):
+                    using (var reader = new MValueReader2(in mValue))
+                    {
+                        obj = adapter.FromMValue(reader);
+                    }
+
                     return true;
                 default:
                     obj = null;

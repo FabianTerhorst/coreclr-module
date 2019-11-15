@@ -46,10 +46,10 @@ namespace AltV.Net.Elements.Pools
                     result = blipPool.Get(entityPointer, out var blip);
                     entity = blip;
                     return result;
-                case BaseObjectType.Checkpoint:
+                /*case BaseObjectType.Checkpoint:
                     result = checkpointPool.Get(entityPointer, out var checkpoint);
                     entity = checkpoint;
-                    return result;
+                    return result;*/
                 case BaseObjectType.VoiceChannel:
                     result = voiceChannelPool.Get(entityPointer, out var voiceChannel);
                     entity = voiceChannel;
@@ -81,10 +81,10 @@ namespace AltV.Net.Elements.Pools
                     result = blipPool.GetOrCreate(entityPointer, out var blip);
                     entity = blip;
                     return result;
-                case BaseObjectType.Checkpoint:
+                /*case BaseObjectType.Checkpoint:
                     result = checkpointPool.GetOrCreate(entityPointer, out var checkpoint);
                     entity = checkpoint;
-                    return result;
+                    return result;*/
                 case BaseObjectType.VoiceChannel:
                     result = voiceChannelPool.GetOrCreate(entityPointer, out var voiceChannel);
                     entity = voiceChannel;
@@ -117,10 +117,10 @@ namespace AltV.Net.Elements.Pools
                     result = blipPool.GetOrCreate(entityPointer, out var blip);
                     entity = blip;
                     return result;
-                case BaseObjectType.Checkpoint:
+                /*case BaseObjectType.Checkpoint:
                     result = checkpointPool.GetOrCreate(entityPointer, out var checkpoint);
                     entity = checkpoint;
-                    return result;
+                    return result;*/
                 case BaseObjectType.VoiceChannel:
                     result = voiceChannelPool.GetOrCreate(entityPointer, out var voiceChannel);
                     entity = voiceChannel;
@@ -150,8 +150,8 @@ namespace AltV.Net.Elements.Pools
                     return vehiclePool.Remove(entityPointer);
                 case BaseObjectType.Blip:
                     return blipPool.Remove(entityPointer);
-                case BaseObjectType.Checkpoint:
-                    return checkpointPool.Remove(entityPointer);
+                /*case BaseObjectType.Checkpoint:
+                    return checkpointPool.Remove(entityPointer);*/
                 case BaseObjectType.VoiceChannel:
                     return voiceChannelPool.Remove(entityPointer);
                 case BaseObjectType.ColShape:

@@ -369,8 +369,9 @@ namespace AltV.Net
 
         public void OnResourceStart(IntPtr resourcePointer)
         {
-            if (!NativeResourcePool.GetOrCreate(resourcePointer, out var nativeResource)) return;
-            OnResourceStartEvent(nativeResource);
+            var resource = Server.GetResource(resourcePointer);
+            if (resource == null) return;
+            OnResourceStartEvent(resource);
         }
 
         public virtual void OnResourceStartEvent(INativeResource resource)
@@ -383,8 +384,9 @@ namespace AltV.Net
 
         public void OnResourceStop(IntPtr resourcePointer)
         {
-            if (!NativeResourcePool.GetOrCreate(resourcePointer, out var nativeResource)) return;
-            OnResourceStopEvent(nativeResource);
+            var resource = Server.GetResource(resourcePointer);
+            if (resource == null) return;
+            OnResourceStopEvent(resource);
         }
 
         public virtual void OnResourceStopEvent(INativeResource resource)
@@ -397,8 +399,9 @@ namespace AltV.Net
 
         public void OnResourceError(IntPtr resourcePointer)
         {
-            if (!NativeResourcePool.GetOrCreate(resourcePointer, out var nativeResource)) return;
-            OnResourceErrorEvent(nativeResource);
+            var resource = Server.GetResource(resourcePointer);
+            if (resource == null) return;
+            OnResourceErrorEvent(resource);
         }
 
         public virtual void OnResourceErrorEvent(INativeResource resource)
@@ -626,29 +629,43 @@ namespace AltV.Net
             }
         }
 
-        public void OnClientEvent(IntPtr playerPointer, string name, ref MValueArray args)
+        public void OnClientEvent(IntPtr playerPointer, string name, IntPtr[] args)
         {
             if (!PlayerPool.GetOrCreate(playerPointer, out var player))
             {
                 return;
             }
 
+            int length = args.Length;
+            MValueConst[] argArray = null;
             if (parserClientEventHandlers.Count != 0 &&
                 parserClientEventHandlers.TryGetValue(name, out var parserEventHandlers))
             {
+                argArray = new MValueConst[length];
+                for (var i = 0; i < length; i++)
+                {
+                    argArray[i] = new MValueConst(args[i]);
+                }
                 foreach (var parserEventHandler in parserEventHandlers)
                 {
-                    parserEventHandler.Call(player, ref args);
+                    parserEventHandler.Call(player, argArray);
                 }
             }
-
-            MValue[] argArray = null;
+            
             if (this.eventHandlers.Count != 0 && this.eventHandlers.TryGetValue(name, out var eventHandlers))
             {
-                argArray = args.ToArray();
+                if (argArray == null)
+                {
+                    argArray = new MValueConst[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        argArray[i] = new MValueConst(args[i]);
+                    }
+                }
+
                 foreach (var eventHandler in eventHandlers)
                 {
-                    eventHandler.Call(player, BaseBaseObjectPool, argArray);
+                    eventHandler.Call(player, argArray);
                 }
             }
 
@@ -659,14 +676,17 @@ namespace AltV.Net
             {
                 if (argArray == null)
                 {
-                    argArray = args.ToArray();
+                    argArray = new MValueConst[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        argArray[i] = new MValueConst(args[i]);
+                    }
                 }
-
-                var length = argArray.Length;
+                
                 argObjects = new object[length];
                 for (var i = 0; i < length; i++)
                 {
-                    argObjects[i] = argArray[i].ToObject(BaseBaseObjectPool);
+                    argObjects[i] = argArray[i].ToObject();
                 }
 
                 foreach (var eventHandler in eventDelegates)
@@ -679,16 +699,19 @@ namespace AltV.Net
             {
                 if (argArray == null)
                 {
-                    argArray = args.ToArray();
+                    argArray = new MValueConst[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        argArray[i] = new MValueConst(args[i]);
+                    }
                 }
 
                 if (argObjects == null)
                 {
-                    var length = argArray.Length;
                     argObjects = new object[length];
                     for (var i = 0; i < length; i++)
                     {
-                        argObjects[i] = argArray[i].ToObject(BaseBaseObjectPool);
+                        argObjects[i] = argArray[i].ToObject();
                     }
                 }
 
@@ -702,38 +725,43 @@ namespace AltV.Net
             {
                 foreach (var eventHandler in PlayerClientCustomEventEventHandler.GetEvents())
                 {
-                    eventHandler(player, name, ref args);
+                    eventHandler(player, name, argArray);
                 }
             }
 
-            OnClientEventEvent(player, name, ref args, argArray, argObjects);
+            OnClientEventEvent(player, name, args, argArray, argObjects);
         }
 
-        public virtual void OnClientEventEvent(IPlayer player, string name, ref MValueArray args, MValue[] mValues,
+        public virtual void OnClientEventEvent(IPlayer player, string name, IntPtr[] args, MValueConst[] mValues,
             object[] objects)
         {
         }
 
-        public void OnServerEvent(string name, ref MValueArray args)
+        public void OnServerEvent(string name, IntPtr[] args)
         {
+            int length = args.Length;
+            var mValues = new MValueConst[length];
+            for (var i = 0; i < length; i++)
+            {
+                mValues[i] = new MValueConst(args[i]);
+            }
+            
             if (parserServerEventHandlers.Count != 0 &&
                 parserServerEventHandlers.TryGetValue(name, out var parserEventHandlers))
             {
                 foreach (var parserEventHandler in parserEventHandlers)
                 {
-                    parserEventHandler.Call(ref args);
+                    parserEventHandler.Call(mValues);
                 }
             }
 
-            MValue[] argArray = null;
-            if (this.eventHandlers.Count != 0 && this.eventHandlers.TryGetValue(name, out var eventHandlers))
+            if (this.eventHandlers.Count != 0 && this.eventHandlers.TryGetValue(name, out var eventNameEventHandlers))
             {
-                argArray = args.ToArray();
-                foreach (var eventHandler in eventHandlers)
+                foreach (var eventNameEventHandler in eventNameEventHandlers)
                 {
                     try
                     {
-                        eventHandler.Call(BaseBaseObjectPool, argArray);
+                        eventNameEventHandler.Call(mValues);
                     }
                     catch (TargetInvocationException exception)
                     {
@@ -750,16 +778,10 @@ namespace AltV.Net
 
             if (eventDelegateHandlers.Count != 0 && eventDelegateHandlers.TryGetValue(name, out var eventDelegates))
             {
-                if (argArray == null)
-                {
-                    argArray = args.ToArray();
-                }
-
-                var length = argArray.Length;
                 argObjects = new object[length];
                 for (var i = 0; i < length; i++)
                 {
-                    argObjects[i] = argArray[i].ToObject(BaseBaseObjectPool);
+                    argObjects[i] = mValues[i].ToObject();
                 }
 
                 foreach (var eventHandler in eventDelegates)
@@ -770,18 +792,12 @@ namespace AltV.Net
 
             if (ServerEventEventHandler.HasEvents())
             {
-                if (argArray == null)
-                {
-                    argArray = args.ToArray();
-                }
-
                 if (argObjects == null)
                 {
-                    var length = argArray.Length;
                     argObjects = new object[length];
                     for (var i = 0; i < length; i++)
                     {
-                        argObjects[i] = argArray[i].ToObject(BaseBaseObjectPool);
+                        argObjects[i] = mValues[i].ToObject();
                     }
                 }
 
@@ -795,14 +811,14 @@ namespace AltV.Net
             {
                 foreach (var eventHandler in ServerCustomEventEventHandler.GetEvents())
                 {
-                    eventHandler(name, ref args);
+                    eventHandler(name, mValues);
                 }
             }
 
-            OnServerEventEvent(name, ref args, argArray, argObjects);
+            OnServerEventEvent(name, args, mValues, argObjects);
         }
 
-        public virtual void OnServerEventEvent(string name, ref MValueArray args, MValue[] mValues, object[] objects)
+        public virtual void OnServerEventEvent(string name, IntPtr[] args, MValueConst[] mValues, object[] objects)
         {
         }
 
@@ -866,18 +882,17 @@ namespace AltV.Net
             ColShapePool.Remove(colShapePointer);
         }
 
-        public void OnConsoleCommand(string name, ref StringViewArray args)
+        public void OnConsoleCommand(string name, string[] args)
         {
-            var stringArgs = args.ToArray();
             if (ConsoleCommandEventHandler.HasEvents())
             {
                 foreach (var eventHandler in ConsoleCommandEventHandler.GetEvents())
                 {
-                    eventHandler(name, stringArgs);
+                    eventHandler(name, args);
                 }
             }
 
-            OnConsoleCommandEvent(name, stringArgs);
+            OnConsoleCommandEvent(name, args);
         }
 
         public virtual void OnConsoleCommandEvent(string name, string[] args)
@@ -885,14 +900,14 @@ namespace AltV.Net
         }
 
         public void OnMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key,
-            ref MValue value)
+            IntPtr value)
         {
             if (!BaseEntityPool.GetOrCreate(entityPointer, entityType, out var entity))
             {
                 return;
             }
 
-            OnMetaDataChangeEvent(entity, key, value.ToObject());
+            OnMetaDataChangeEvent(entity, key, new MValueConst(value).ToObject());
         }
 
         public virtual void OnMetaDataChangeEvent(IEntity entity, string key, object value)
@@ -905,14 +920,14 @@ namespace AltV.Net
         }
 
         public void OnSyncedMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key,
-            ref MValue value)
+            IntPtr value)
         {
             if (!BaseEntityPool.GetOrCreate(entityPointer, entityType, out var entity))
             {
                 return;
             }
 
-            OnSyncedMetaDataChangeEvent(entity, key, value.ToObject());
+            OnSyncedMetaDataChangeEvent(entity, key, new MValueConst(value).ToObject());
         }
 
         public virtual void OnSyncedMetaDataChangeEvent(IEntity entity, string key, object value)
@@ -979,9 +994,12 @@ namespace AltV.Net
         {
             if (function == null) return;
             functionExports[key] = function;
-            MValue.Function callDelegate = function.call;
+            MValueFunctionCallback callDelegate = function.call;
             functionExportHandles.AddFirst(GCHandle.Alloc(callDelegate));
-            ModuleResource.SetExport(key, MValue.Create(callDelegate));
+            Alt.Server.CreateMValueFunction(out var mValue,
+                AltNative.MValueNative.Invoker_Create(ModuleResource.ResourceImplPtr, callDelegate));
+            ModuleResource.SetExport(key, in mValue);
+            mValue.Dispose();
         }
 
         public void Dispose()

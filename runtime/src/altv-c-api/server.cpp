@@ -44,18 +44,43 @@ void Server_FileRead(alt::ICore* server, const char* path, const char*&text) {
     text = server->FileRead(path).CStr();
 }
 
-void Server_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueList &args) {
-    server->TriggerServerEvent(ev, args);
+void Server_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size) {
+    alt::Array<alt::MValueConst> mValues = alt::Array<alt::MValueConst>(size);
+    for (int i = 0; i < size; i++) {
+        if (args[i] == nullptr) {
+            mValues[i] = server->CreateMValueNil();
+        } else {
+            mValues[i] = *args[i];
+        }
+    }
+    server->TriggerServerEvent(ev, mValues);
 }
 
 void
-Server_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* ev, const alt::MValueList &args) {
-    server->TriggerClientEvent(target, ev, args);
+Server_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* ev, alt::MValueConst* args[],
+                          int size) {
+    alt::Array<alt::MValueConst> mValues = alt::Array<alt::MValueConst>(size);
+    for (int i = 0; i < size; i++) {
+        if (args[i] == nullptr) {
+            mValues[i] = server->CreateMValueNil();
+        } else {
+            mValues[i] = *args[i];
+        }
+    }
+    server->TriggerClientEvent(target, ev, mValues);
 }
 
 alt::IVehicle*
-Server_CreateVehicle(alt::ICore* server, uint32_t model, alt::Position pos, alt::Rotation rot, uint16_t &id) {
-    auto vehicle = server->CreateVehicle(model, pos, rot);
+Server_CreateVehicle(alt::ICore* server, uint32_t model, position_t pos, rotation_t rot, uint16_t &id) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+    alt::Rotation rotation;
+    rotation.roll = rot.roll;
+    rotation.pitch = rot.pitch;
+    rotation.yaw = rot.yaw;
+    auto vehicle = server->CreateVehicle(model, position, rotation).Get();
     if (vehicle != nullptr) {
         id = vehicle->GetID();
     }
@@ -63,19 +88,27 @@ Server_CreateVehicle(alt::ICore* server, uint32_t model, alt::Position pos, alt:
 }
 
 alt::ICheckpoint*
-Server_CreateCheckpoint(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::Position pos, float radius,
+Server_CreateCheckpoint(alt::ICore* server, uint8_t type, position_t pos, float radius,
                         float height, alt::RGBA color) {
-    return server->CreateCheckpoint(target, type, pos, radius, height, color);
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+    return server->CreateCheckpoint(type, position, radius, height, color).Get();
 }
 
 alt::IBlip*
-Server_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::Position pos) {
-    return server->CreateBlip(target, (alt::IBlip::Type) type, pos);
+Server_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, position_t pos) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+    return server->CreateBlip(target, (alt::IBlip::Type) type, position).Get();
 }
 
 alt::IBlip*
 Server_CreateBlipAttached(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo) {
-    return server->CreateBlip(target, (alt::IBlip::Type) type, attachTo);
+    return server->CreateBlip(target, (alt::IBlip::Type) type, attachTo).Get();
 }
 
 alt::IResource* Server_GetResource(alt::ICore* server, const char* resourceName) {
@@ -83,27 +116,48 @@ alt::IResource* Server_GetResource(alt::ICore* server, const char* resourceName)
 }
 
 alt::IVoiceChannel* Server_CreateVoiceChannel(alt::ICore* server, bool spatial, float maxDistance) {
-    return server->CreateVoiceChannel(spatial, maxDistance);
+    return server->CreateVoiceChannel(spatial, maxDistance).Get();
 }
 
-alt::IColShape* Server_CreateColShapeCylinder(alt::ICore* server, alt::Position pos, float radius, float height) {
-    return server->CreateColShapeCylinder(pos, radius, height);
+alt::IColShape* Server_CreateColShapeCylinder(alt::ICore* server, position_t pos, float radius, float height) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+    return server->CreateColShapeCylinder(position, radius, height).Get();
 }
 
-alt::IColShape* Server_CreateColShapeSphere(alt::ICore* server, alt::Position pos, float radius) {
-    return server->CreateColShapeSphere(pos, radius);
+alt::IColShape* Server_CreateColShapeSphere(alt::ICore* server, position_t pos, float radius) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+    return server->CreateColShapeSphere(position, radius).Get();
 }
 
-alt::IColShape* Server_CreateColShapeCircle(alt::ICore* server, alt::Position pos, float radius) {
-    return server->CreateColShapeCircle(pos, radius);
+alt::IColShape* Server_CreateColShapeCircle(alt::ICore* server, position_t pos, float radius) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+    return server->CreateColShapeCircle(position, radius).Get();
 }
 
-alt::IColShape* Server_CreateColShapeCube(alt::ICore* server, alt::Position pos, alt::Position pos2) {
-    return server->CreateColShapeCube(pos, pos2);
+alt::IColShape* Server_CreateColShapeCube(alt::ICore* server, position_t pos, position_t pos2) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+
+    alt::Position position2;
+    position2.x = pos2.x;
+    position2.y = pos2.y;
+    position2.z = pos2.z;
+    return server->CreateColShapeCube(position, position2).Get();
 }
 
-alt::IColShape* Server_CreateColShapeRectangle(alt::ICore* server, alt::Position pos, alt::Position pos2) {
-    return server->CreateColShapeRectangle(pos, pos2);
+alt::IColShape* Server_CreateColShapeRectangle(alt::ICore* server, float x1, float y1, float x2, float y2, float z) {
+    return server->CreateColShapeRectangle(x1, y1, x2, y2, z).Get();
 }
 
 /*void Server_DestroyBaseObject(alt::ICore* server, alt::IBaseObject* baseObject) {
@@ -138,12 +192,32 @@ void Server_GetRootDirectory(alt::ICore* server, const char*&text) {
     text = server->GetRootDirectory().CStr();
 }
 
-void Server_GetPlayers(alt::ICore* server, alt::Array<alt::IPlayer*> &players) {
-    players = server->GetPlayers();
+uint64_t Server_GetPlayerCount(alt::ICore* server) {
+    return server->GetPlayers().GetSize();
 }
 
-void Server_GetVehicles(alt::ICore* server, alt::Array<alt::IVehicle*> &vehicles) {
-    vehicles = server->GetVehicles();
+void Server_GetPlayers(alt::ICore* server, alt::IPlayer* players[], uint64_t size) {
+    auto playersArray = server->GetPlayers();
+    if (playersArray.GetSize() < size) {
+        size = playersArray.GetSize();
+    }
+    for (uint64_t i = 0; i < size; i++) {
+        players[i] = playersArray[i].Get();
+    }
+}
+
+uint64_t Server_GetVehicleCount(alt::ICore* server) {
+    return server->GetVehicles().GetSize();
+}
+
+void Server_GetVehicles(alt::ICore* server, alt::IVehicle* vehicles[], uint64_t size) {
+    auto vehiclesArray = server->GetVehicles();
+    if (vehiclesArray.GetSize() < size) {
+        size = vehiclesArray.GetSize();
+    }
+    for (uint64_t i = 0; i < size; i++) {
+        vehicles[i] = vehiclesArray[i].Get();
+    }
 }
 
 void Server_StartResource(alt::ICore* server, const char* text) {
@@ -156,4 +230,97 @@ void Server_StopResource(alt::ICore* server, const char* text) {
 
 void Server_RestartResource(alt::ICore* server, const char* text) {
     server->RestartResource(text);
+}
+
+alt::MValueConst* Core_CreateMValueNil(alt::ICore* core) {
+    auto mValue = core->CreateMValueNil();
+    return new alt::MValueConst(mValue);
+}
+
+alt::MValueConst* Core_CreateMValueBool(alt::ICore* core, bool value) {
+    auto mValue = core->CreateMValueBool(value);
+    return new alt::MValueConst(mValue);
+}
+
+alt::MValueConst* Core_CreateMValueInt(alt::ICore* core, int64_t value) {
+    auto mValue = core->CreateMValueInt(value);
+    return new alt::MValueConst(mValue);
+}
+
+alt::MValueConst* Core_CreateMValueUInt(alt::ICore* core, uint64_t value) {
+    auto mValue = core->CreateMValueUInt(value);
+    return new alt::MValueConst(mValue);
+}
+
+alt::MValueConst* Core_CreateMValueDouble(alt::ICore* core, double value) {
+    auto mValue = core->CreateMValueDouble(value);
+    return new alt::MValueConst(mValue);
+}
+
+alt::MValueConst* Core_CreateMValueString(alt::ICore* core, const char* value) {
+    auto mValue = core->CreateMValueString(value);
+    return new alt::MValueConst(mValue);
+}
+
+alt::MValueConst* Core_CreateMValueList(alt::ICore* core, alt::MValueConst* val[], uint64_t size) {
+    auto mValueConst = core->CreateMValueList(size);
+    auto mValue = mValueConst.Get();
+    for (uint64_t i = 0; i < size; i++) {
+        auto mValueElement = val[i];
+        if (mValueElement == nullptr || mValueElement->Get() == nullptr) {
+            mValue->Set(i, core->CreateMValueNil());
+        } else {
+            mValue->SetConst(i, *val[i]);
+        }
+    }
+    return new alt::MValueConst(mValue);
+}
+
+alt::MValueConst* Core_CreateMValueDict(alt::ICore* core, const char* keys[], alt::MValueConst* val[], uint64_t size) {
+    auto mValueConst = core->CreateMValueDict();
+    auto mValue = mValueConst.Get();
+    for (uint64_t i = 0; i < size; i++) {
+        auto mValueElement = val[i];
+        if (mValueElement == nullptr || mValueElement->Get() == nullptr) {
+            mValue->Set(keys[i], core->CreateMValueNil());
+        } else {
+            mValue->SetConst(keys[i], *val[i]);
+        }
+    }
+    return new alt::MValueConst(mValue);
+}
+
+/*alt::MValueBaseObject* Core_CreateMValueBaseObject(alt::ICore* core, alt::Ref<alt::IBaseObject>* value) {
+    auto mValue = core->CreateMValueBaseObject(*value);
+    return new alt::Ref(mValue);
+}*/
+
+alt::MValueConst* Core_CreateMValueCheckpoint(alt::ICore* core, alt::ICheckpoint* value) {
+    auto mValue = core->CreateMValueBaseObject(value);
+    return new alt::MValueConst(mValue);
+}
+
+alt::MValueConst* Core_CreateMValueBlip(alt::ICore* core, alt::IBlip* value) {
+    auto mValue = core->CreateMValueBaseObject(value);
+    return new alt::MValueConst(mValue);
+}
+
+alt::MValueConst* Core_CreateMValueVoiceChannel(alt::ICore* core, alt::IVoiceChannel* value) {
+    auto mValue = core->CreateMValueBaseObject(value);
+    return new alt::MValueConst(mValue);
+}
+
+alt::MValueConst* Core_CreateMValuePlayer(alt::ICore* core, alt::IPlayer* value) {
+    auto mValue = core->CreateMValueBaseObject(value);
+    return new alt::MValueConst(mValue);
+}
+
+alt::MValueConst* Core_CreateMValueVehicle(alt::ICore* core, alt::IVehicle* value) {
+    alt::MValueConst mValue = core->CreateMValueBaseObject(value);
+    return new alt::MValueConst(mValue);
+}
+
+alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* value) {
+    alt::MValueConst mValue = core->CreateMValueFunction(value);
+    return new alt::MValueConst(mValue);
 }

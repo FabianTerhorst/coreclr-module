@@ -64,7 +64,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public override short Dimension
+        public override int Dimension
         {
             get
             {
@@ -78,31 +78,31 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public override void GetMetaData(string key, ref MValue value)
+        public override void GetMetaData(string key, out MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Vehicle.Vehicle_GetMetaData(NativePointer, stringPtr, ref value);
+            value = new MValueConst(AltNative.Vehicle.Vehicle_GetMetaData(NativePointer, stringPtr));
             Marshal.FreeHGlobal(stringPtr);
         }
 
-        public override void SetMetaData(string key, ref MValue value)
+        public override void SetMetaData(string key, in MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Vehicle.Vehicle_SetMetaData(NativePointer, stringPtr, ref value);
+            AltNative.Vehicle.Vehicle_SetMetaData(NativePointer, stringPtr, value.nativePointer);
             Marshal.FreeHGlobal(stringPtr);
         }
 
-        public override void SetSyncedMetaData(string key, ref MValue value)
+        public override void SetSyncedMetaData(string key, in MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Vehicle.Vehicle_SetSyncedMetaData(NativePointer, stringPtr, ref value);
+            AltNative.Vehicle.Vehicle_SetSyncedMetaData(NativePointer, stringPtr, value.nativePointer);
             Marshal.FreeHGlobal(stringPtr);
         }
 
-        public override void GetSyncedMetaData(string key, ref MValue value)
+        public override void GetSyncedMetaData(string key, out MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Vehicle.Vehicle_GetSyncedMetaData(NativePointer, stringPtr, ref value);
+            value = new MValueConst(AltNative.Vehicle.Vehicle_GetSyncedMetaData(NativePointer, stringPtr));
             Marshal.FreeHGlobal(stringPtr);
         }
 
@@ -986,6 +986,16 @@ namespace AltV.Net.Elements.Entities
         public void Remove()
         {
             Alt.RemoveVehicle(this);
+        }
+        
+        protected override void InternalAddRef()
+        {
+            AltNative.Vehicle.Vehicle_AddRef(NativePointer);
+        }
+
+        protected override void InternalRemoveRef()
+        {
+            AltNative.Vehicle.Vehicle_RemoveRef(NativePointer);
         }
     }
 }

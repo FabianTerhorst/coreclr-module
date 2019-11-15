@@ -4,36 +4,50 @@
 
 #include "resource.h"
 
-void Resource_GetExports(alt::IResource* resource, alt::Array<alt::String> &keys, alt::MValue::List &values) {
-    auto dict = resource->GetExports().Get<alt::MValue::Dict>();
-    alt::Array<alt::String> mapKeys;
-    alt::MValue::List mapValues;
-    for (auto &it : dict) {
-        mapKeys.Push(it.first);
-        mapValues.Push(it.second);
+uint64_t Resource_GetExportsCount(alt::IResource* resource) {
+    alt::IMValueDict* dict = resource->GetExports().Get();
+    if (dict == nullptr) return 0;
+    return dict->GetSize();
+}
+
+void Resource_GetExports(alt::IResource* resource, const char* keys[],
+                         alt::MValueConst* values[]) {
+    auto dict = resource->GetExports();
+    if (dict.Get() == nullptr) {
+        return;
     }
-    keys = mapKeys;
-    values = mapValues;
+    auto next = dict->Begin();
+    uint64_t i = 0;
+    do {
+        alt::MValueConst mValueElement = next->GetValue();
+        keys[i] = next->GetKey().CStr();
+        values[i] = &mValueElement;
+    } while ((next = dict->Next()) != nullptr);
 }
 
-bool Resource_GetExport(alt::IResource* resource, const char* key, alt::MValue &value) {
-    auto dict = resource->GetExports().Get<alt::MValue::Dict>();
-    auto dictValue = dict.find(key);
-    if (dictValue == dict.end()) {
-        return false;
+alt::MValueConst* Resource_GetExport(alt::IResource* resource, const char* key) {
+    alt::IMValueDict* dict = resource->GetExports().Get();
+    if (dict == nullptr) return nullptr;
+    auto value = dict->Get(key);
+    if (value.Get() == nullptr) {
+        return nullptr;
     }
-    value = dictValue->second;
-    return true;
+    return new alt::MValueConst(value);
 }
 
-void Resource_SetExport(alt::IResource* resource, const char* key, const alt::MValue& val) {
-    resource->GetExports()[key] = val;
+void Resource_SetExport(alt::ICore* core, alt::IResource* resource, const char* key, alt::MValueConst* val) {
+    alt::MValueDict dict = resource->GetExports();
+    if (dict.Get() == nullptr) {
+        dict = core->CreateMValueDict();
+        resource->SetExports(dict);
+    }
+    dict->Set(key, val->Get()->Clone());
 }
 
-void Resource_SetExports(alt::IResource* resource, alt::MValue* val, const char** keys, int size) {
-    alt::MValueDict dict;
+void Resource_SetExports(alt::ICore* core, alt::IResource* resource, alt::MValueConst* val[], const char* keys[], int size) {
+    alt::MValueDict dict = core->CreateMValueDict();
     for (int i = 0; i < size; i++) {
-        dict[keys[i]] = val[i];
+        dict->Set(keys[i], val[i]->Get()->Clone());
     }
     resource->SetExports(dict);
 }

@@ -20,8 +20,12 @@ namespace AltV.Net
         bool IsStarted { get; }
 
         void SetExport(string key, object value);
+        
+        void SetExport(string key, in MValueConst value);
 
-        bool GetExport(string key, ref MValue value);
+        object GetExport(string key);
+
+        bool GetExport(string key, out MValueConst mValue);
 
         void Start();
 

@@ -23,7 +23,7 @@ namespace AltV.Net.FunctionParser
 
         public static object ParseFunction(object value, Type type, FunctionTypeInfo typeInfo)
         {
-            if (value is MValue.Function function)
+            if (value is MValueFunctionCallback function)
             {
                 return (Function.Func) new FunctionWrapper(function).Call;
             }
@@ -96,9 +96,9 @@ namespace AltV.Net.FunctionParser
                 case BaseObjectType.Vehicle:
                     return typeInfo?.IsVehicle ?? type == FunctionTypes.Vehicle ||
                            type.GetInterfaces().Contains(FunctionTypes.Vehicle);
-                case BaseObjectType.Checkpoint:
-                    return typeInfo?.IsCheckpoint ?? type == FunctionTypes.Checkpoint ||
-                           type.GetInterfaces().Contains(FunctionTypes.Checkpoint);
+                case BaseObjectType.ColShape:
+                    return typeInfo?.IsColShape ?? type == FunctionTypes.ColShape ||
+                           type.GetInterfaces().Contains(FunctionTypes.ColShape);
                 default:
                     return false;
             }
@@ -256,8 +256,8 @@ namespace AltV.Net.FunctionParser
         public static object ParseConvertible(object value, Type type, FunctionTypeInfo typeInfo)
         {
             if (!(value is IDictionary dictionary)) return null;
-            var mValue = MValue.CreateFromObject(dictionary);
-            if (!MValueAdapters.FromMValue(ref mValue, type, out var obj))
+            Alt.Server.CreateMValue(out var mValue, dictionary);
+            if (!MValueAdapters.FromMValue(in mValue, type, out var obj))
             {
                 mValue.Dispose();
                 return null;

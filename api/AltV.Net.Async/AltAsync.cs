@@ -124,24 +124,30 @@ namespace AltV.Net.Async
 
         public static async void Emit(string eventName, params object[] args)
         {
-            var mValues = MValue.CreateFromObjects(args);
-            var mValueArgs = MValue.Create(mValues);
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            Alt.Server.CreateMValues(mValues, args);
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
-            await AltVAsync.Schedule(() => Alt.Server.TriggerServerEvent(eventNamePtr, ref mValueArgs));
-            Marshal.FreeHGlobal(eventNamePtr); 
-            MValue.Dispose(mValues);
-            mValueArgs.Dispose();
+            await AltVAsync.Schedule(() => Alt.Server.TriggerServerEvent(eventNamePtr, mValues));
+            Marshal.FreeHGlobal(eventNamePtr);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
         }
 
         public static async void EmitAllClients(string eventName, params object[] args)
         {
-            var mValues = MValue.CreateFromObjects(args);
-            var mValueArgs = MValue.Create(mValues);
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            Alt.Server.CreateMValues(mValues, args);
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
-            await AltVAsync.Schedule(() => Alt.Server.TriggerClientEvent(null, eventNamePtr, ref mValueArgs));
+            await AltVAsync.Schedule(() => Alt.Server.TriggerClientEvent(null, eventNamePtr, mValues));
             Marshal.FreeHGlobal(eventNamePtr);
-            MValue.Dispose(mValues);
-            mValueArgs.Dispose();
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
         }
 
         internal static void Setup(AltVAsync altVAsync)

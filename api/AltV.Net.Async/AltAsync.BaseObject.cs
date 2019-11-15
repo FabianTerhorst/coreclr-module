@@ -13,10 +13,11 @@ namespace AltV.Net.Async
         public static Task<BaseObjectType> GetTypeAsync(this IBaseObject baseObject) =>
             AltVAsync.Schedule(() => baseObject.Type);
 
-        public static Task SetMetaDataAsync(this IBaseObject baseObject, string key, object value)
+        public static async Task SetMetaDataAsync(this IBaseObject baseObject, string key, object value)
         {
-            var mValue = MValue.CreateFromObject(value);
-            return AltVAsync.Schedule(() => baseObject.SetMetaData(key, mValue));
+            Alt.Server.CreateMValue(out var mValue, value);
+            await AltVAsync.Schedule(() => baseObject.SetMetaData(key, in mValue));
+            mValue.Dispose();
         }
 
         public static Task<T> GetMetaDataAsync<T>(this IBaseObject baseObject, string key) =>
