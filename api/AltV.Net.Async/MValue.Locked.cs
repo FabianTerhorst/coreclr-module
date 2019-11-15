@@ -174,6 +174,10 @@ namespace AltV.Net.Async
                     writer = new MValueWriter();
                     convertible.GetAdapter().ToMValue(obj, writer);
                     return writer.ToMValue();
+                case short value:
+                    return MValue.Create(value);
+                case ushort value:
+                    return MValue.Create(value);
                 default:
                     Alt.Log("can't convert type:" + obj.GetType());
                     return MValue.Nil;

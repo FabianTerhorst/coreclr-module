@@ -13,7 +13,7 @@
         <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.16.4-beta</PackageVersion>
+        <PackageVersion>1.16.5</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>Add Alt.OnWeaponDamage
 Add Alt.OnExplosion
@@ -34,7 +34,7 @@ Debug improvements</PackageReleaseNotes>
 
     <ItemGroup>
         <None Include="license\license.txt" Pack="true" PackagePath="" />
-        <None Include="icon.png" Pack="true" PackagePath="\"/>
+        <None Include="icon.png" Pack="true" PackagePath="\" />
         <None Include="package\**" Pack="True" PackagePath="build\" />
     </ItemGroup>
 
