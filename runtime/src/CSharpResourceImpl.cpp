@@ -379,9 +379,6 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::Ref<alt::IBaseObject> objectRef
             case alt::IBaseObject::Type::BLIP:
                 OnRemoveBlipDelegate(dynamic_cast<alt::IBlip*>(object));
                 break;
-            case alt::IBaseObject::Type::CHECKPOINT:
-                OnRemoveCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
-                break;
             case alt::IBaseObject::Type::VOICE_CHANNEL:
                 OnRemoveVoiceChannelDelegate(dynamic_cast<alt::IVoiceChannel*>(object));
                 break;
