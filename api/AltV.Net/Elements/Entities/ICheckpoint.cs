@@ -23,24 +23,5 @@ namespace AltV.Net.Elements.Entities
         /// Obtains the color in Rgba format
         /// </summary>
         Rgba Color { get; }
-
-        /// <summary>
-        /// Returns if the player is inside the checkpoint
-        /// </summary>
-        /// <param name="player">The player</param>
-        /// <exception cref="EntityRemovedException">This entity was removed</exception>
-        bool IsPlayerIn(IPlayer player);
-        
-        /// <summary>
-        /// Returns if the vehicle is inside the checkpoint
-        /// </summary>
-        /// <param name="vehicle">The vehicle</param>
-        /// <exception cref="EntityRemovedException">This entity was removed</exception>
-        bool IsVehicleIn(IVehicle vehicle);
-        
-        /// <summary>
-        /// Removes the checkpoint
-        /// </summary>
-        void Remove();
     }
 }

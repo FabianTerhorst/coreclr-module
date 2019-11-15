@@ -16,19 +16,5 @@ namespace AltV.Net.Mock
         public float Height { get; set; }
         public float Radius { get; set; }
         public Rgba Color { get; set; }
-        public bool IsPlayerIn(IPlayer player)
-        {
-            throw new NotImplementedException();
-        }
-
-        bool ICheckpoint.IsVehicleIn(IVehicle vehicle)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove()
-        {
-            Alt.Server.RemoveCheckpoint(this);
-        }
     }
 }
