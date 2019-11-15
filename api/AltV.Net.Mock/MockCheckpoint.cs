@@ -4,13 +4,14 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Mock
 {
-    public class MockCheckpoint : MockWorldObject, ICheckpoint
+    public class MockCheckpoint : MockColShape, ICheckpoint
     {
-        public MockCheckpoint(IntPtr nativePointer) : base(nativePointer, BaseObjectType.Checkpoint)
+        public MockCheckpoint(IntPtr nativePointer) : base(nativePointer)
         {
         }
-
-        public bool IsGlobal { get; set; }
+        
+        
+        
         public byte CheckpointType { get; set; }
         public float Height { get; set; }
         public float Radius { get; set; }
@@ -24,8 +25,6 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
-
-        public IPlayer Target { get; }
 
         public void Remove()
         {
