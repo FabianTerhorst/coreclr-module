@@ -43,8 +43,8 @@ void ColShape_RemoveRef(alt::IColShape* colShape) {
 
 // ColShape
 
-alt::ColShapeType ColShape_GetColShapeType(alt::IColShape* colShape) {
-    return colShape->GetColshapeType();
+uint8_t ColShape_GetColShapeType(alt::IColShape* colShape) {
+    return (uint8_t) colShape->GetColshapeType();
 }
 
 /*bool ColShape_IsEntityIn(alt::IColShape* colShape, alt::IEntity* entity) {

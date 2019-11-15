@@ -36,9 +36,6 @@ namespace AltV.Net.Native
             internal static extern void Checkpoint_RemoveRef(IntPtr checkpoint);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Checkpoint_IsGlobal(IntPtr checkpoint);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern byte Checkpoint_GetCheckpointType(IntPtr checkpoint);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
@@ -55,9 +52,6 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool Checkpoint_IsVehicleIn(IntPtr checkpoint, IntPtr vehicle);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Checkpoint_GetTarget(IntPtr checkpoint);
         }
     }
 }

@@ -5,11 +5,6 @@ namespace AltV.Net.Elements.Entities
     public interface ICheckpoint : IWorldObject
     {
         /// <summary>
-        /// Gets whether the checkpoint is global
-        /// </summary>
-        bool IsGlobal { get; }
-        
-        /// <summary>
         /// Returns the checkpoint type
         /// </summary>
         byte CheckpointType { get; }
@@ -28,12 +23,7 @@ namespace AltV.Net.Elements.Entities
         /// Obtains the color in Rgba format
         /// </summary>
         Rgba Color { get; }
-        
-        /// <summary>
-        /// Returns the player for whom the checkpoint is visible
-        /// </summary>
-        IPlayer Target { get; }
-        
+
         /// <summary>
         /// Returns if the player is inside the checkpoint
         /// </summary>

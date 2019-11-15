@@ -289,12 +289,15 @@ void* MValueConst_GetEntity(alt::MValueConst* mValueConst, alt::IBaseObject::Typ
                     return dynamic_cast<alt::IVehicle*>(entityPointer);
                 case alt::IBaseObject::Type::BLIP:
                     return dynamic_cast<alt::IBlip*>(entityPointer);
-                case alt::IBaseObject::Type::CHECKPOINT:
-                    return dynamic_cast<alt::ICheckpoint*>(entityPointer);
                 case alt::IBaseObject::Type::VOICE_CHANNEL:
                     return dynamic_cast<alt::IVoiceChannel*>(entityPointer);
                 case alt::IBaseObject::Type::COLSHAPE:
-                    return dynamic_cast<alt::IColShape*>(entityPointer);
+                    if (auto checkpoint = dynamic_cast<alt::ICheckpoint*>(entityPointer)) {
+                        return checkpoint;
+                    } else {
+                        auto colShape = dynamic_cast<alt::IColShape*>(entityPointer);
+                        return colShape;
+                    }
                 default:
                     return nullptr;
             }
@@ -316,8 +319,13 @@ void* MValue_GetEntity(alt::MValue* mValueConst, alt::IBaseObject::Type &type) {
                     return dynamic_cast<alt::IVehicle*>(entityPointer);
                 case alt::IBaseObject::Type::BLIP:
                     return dynamic_cast<alt::IBlip*>(entityPointer);
-                case alt::IBaseObject::Type::CHECKPOINT:
-                    return dynamic_cast<alt::ICheckpoint*>(entityPointer);
+                case alt::IBaseObject::Type::COLSHAPE:
+                    if (auto checkpoint = dynamic_cast<alt::ICheckpoint*>(entityPointer)) {
+                        return checkpoint;
+                    } else {
+                        auto colShape = dynamic_cast<alt::IColShape*>(entityPointer);
+                        return colShape;
+                    }
                 default:
                     return nullptr;
             }

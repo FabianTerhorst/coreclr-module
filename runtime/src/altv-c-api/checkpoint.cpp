@@ -43,10 +43,6 @@ void Checkpoint_RemoveRef(alt::ICheckpoint* checkpoint) {
 
 // Checkpoint
 
-bool Checkpoint_IsGlobal(alt::ICheckpoint* checkpoint) {
-    return checkpoint->IsGlobal();
-}
-
 uint8_t Checkpoint_GetCheckpointType(alt::ICheckpoint* checkpoint) {
     return checkpoint->GetCheckpointType();
 }
@@ -73,8 +69,4 @@ bool Checkpoint_IsPlayerIn(alt::ICheckpoint* checkpoint, alt::IPlayer* player) {
 
 bool Checkpoint_IsVehicleIn(alt::ICheckpoint* checkpoint, alt::IVehicle* vehicle) {
     return checkpoint->IsEntityIn(vehicle);
-}
-
-alt::IPlayer* Checkpoint_GetTarget(alt::ICheckpoint* checkpoint) {
-    return checkpoint->GetTarget().Get();
 }

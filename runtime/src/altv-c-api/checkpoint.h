@@ -29,14 +29,12 @@ EXPORT void Checkpoint_SetMetaData(alt::ICheckpoint* checkpoint, const char* key
 EXPORT void Checkpoint_AddRef(alt::ICheckpoint* checkpoint);
 EXPORT void Checkpoint_RemoveRef(alt::ICheckpoint* checkpoint);
 // Checkpoint
-EXPORT bool Checkpoint_IsGlobal(alt::ICheckpoint* checkpoint);
 EXPORT uint8_t Checkpoint_GetCheckpointType(alt::ICheckpoint* checkpoint);
 EXPORT float Checkpoint_GetHeight(alt::ICheckpoint* checkpoint);
 EXPORT float Checkpoint_GetRadius(alt::ICheckpoint* checkpoint);
 EXPORT void Checkpoint_GetColor(alt::ICheckpoint* checkpoint, rgba_t &color);
 EXPORT bool Checkpoint_IsPlayerIn(alt::ICheckpoint* checkpoint, alt::IPlayer* player);
 EXPORT bool Checkpoint_IsVehicleIn(alt::ICheckpoint* checkpoint, alt::IVehicle* vehicle);
-EXPORT alt::IPlayer* Checkpoint_GetTarget(alt::ICheckpoint* checkpoint);
 #ifdef __cplusplus
 }
 #endif
