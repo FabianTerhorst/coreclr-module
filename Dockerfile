@@ -59,6 +59,10 @@ RUN dotnet tool install --global dotnet-trace --version 3.0.0-preview9.19454.1
 
 RUN apt-get install libatomic1
 
+RUN dotnet tool install --global dotnet-sos
+
+#RUN dotnet-sos install
+
 # construct server structure
 WORKDIR /altv-server
 COPY altv-server .
@@ -85,5 +89,7 @@ RUN chmod +x ./altv-server
 EXPOSE 7788/udp
 EXPOSE 7788/tcp
 
+RUN COREHOST_TRACE=1
+
 #ENTRYPOINT ["tail", "-f", "/dev/null"]
-CMD sh startgdb.sh
+#CMD sh startgdb.sh

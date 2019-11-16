@@ -24,7 +24,6 @@ namespace AltV.Net.FunctionParser
                     if (!TryParseObject(in currMValue, type, typeInfo?.Element, out var obj))
                     {
                         array[i] = obj;
-                        //return null;
                     }
                     else
                     {

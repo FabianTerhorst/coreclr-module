@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AltV.Net.Async;
@@ -6,10 +7,8 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
 using AltV.Net.Enums;
-using AltV.Net.Native;
 using System.Drawing;
 using AltV.Net.Elements.Refs;
-using AltV.Net.Resources.Chat.Api;
 
 namespace AltV.Net.Example
 {
@@ -17,41 +16,38 @@ namespace AltV.Net.Example
     {
         public override void OnStart()
         {
-            Console.WriteLine("testVehicle:" + testVehicle);
+            Alt.On<object[]>("array_test", objects =>
             {
-                Console.WriteLine("inside invoke");
-                Alt.Log("myData: " + myVehicle?.MyData);
-                Console.WriteLine("inside invoke2");
+                Console.WriteLine("count:" + objects.Length);
+                Console.WriteLine("1:" + objects[0]);
+                Console.WriteLine("3:" + objects[1]);
+                Console.WriteLine("2:" + ((object[])objects[2]).Length);
+                Console.WriteLine("2:" + string.Join(",", objects[1]));
+                Console.WriteLine("2:" + ((object[])objects[2])[0]);
             });
-            Alt.Emit("vehicle2", testVehicle);
-            Alt.On<IMyVehicle>("vehicle2", myVehicle =>
-                {
-                    Console.WriteLine("inside invoke3");
-                    Alt.Log("myData: " + myVehicle.MyData);
-                    Console.WriteLine("inside invoke4");
-                }
-                catch (Exception exception)
-                {
-                    Console.WriteLine(exception);
-                }
-            });
-            Alt.Emit("vehicle3", testVehicle);
-            Alt.On<IMyVehicle>("vehicle3", myVehicle =>
+            Alt.Emit("array_test", new object[] {new object[] {"test", "test4", new[] {1337}}});
+            Alt.On<object[]>("array_test2", objects =>
             {
-                try
-                {
-                    Console.WriteLine("inside invoke5");
-                    Alt.Log("myData: " + myVehicle.MyData);
-                    Console.WriteLine("inside invoke6");
-                }
-                catch (Exception exception)
-                {
-                    Console.WriteLine(exception);
-                }
+                Console.WriteLine("count2:" + objects.Length);
+                Console.WriteLine("count3:" + ((object[])(((object[])objects)[0]))[0]);
             });
-            if (true) return;
+            Alt.Emit("array_test2", new object[] {new object[] {new object[]{1337}}});
+            
+            
+            var mValues = new MValueConst[1];
+            var mInnerValues = new MValueConst[1];
+            Alt.Core.CreateMValueInt(out mInnerValues[0], 5);
+            Alt.Core.CreateMValueList(out mValues[0], mInnerValues, 1);
+            Alt.Core.CreateMValueList(out var mValueList, mValues, 1);
+            var mValuesListGet = mValueList.GetList();
+            for (var i = 0; i < mValuesListGet.Length; i++)
+            { 
+                Console.WriteLine("val: " + mValuesListGet[i].ToString());
+                mValuesListGet[i].Dispose();   
+            }
+            
             MValueAdapters.Register(new ConvertibleObject.ConvertibleObjectAdapter());
-            /*Alt.On("convertible_test", delegate(ConvertibleObject convertible)
+            Alt.On("convertible_test", delegate(ConvertibleObject convertible)
             {
                 Console.WriteLine("convertible_test received");
                 Console.WriteLine(convertible.Test);
@@ -59,8 +55,19 @@ namespace AltV.Net.Example
                 {
                     Console.WriteLine("-" + t.Test);
                 }
-            });*/
+            });
             var convertibleObject = new ConvertibleObject();
+            /*var writer = new MValueWriter2();
+            convertibleObject.GetAdapter().ToMValue(convertibleObject, writer);
+            writer.ToMValue(out var mValueFromConvertible);
+            foreach (var entry in  mValueFromConvertible.GetDictionary())
+            {
+                Console.WriteLine("key="+ entry.Key + " =" + entry.Value.type);
+                entry.Value.Dispose();
+            }*/
+            
+            //Console.WriteLine("obj:" + mValueFromConvertible.type + " " + mValueFromConvertible.nativePointer);
+            //mValueFromConvertible.Dispose();
             Alt.Emit("convertible_test", convertibleObject);
 
             Alt.On<string>("test", s => { Alt.Log("test=" + s); });
@@ -106,6 +113,7 @@ namespace AltV.Net.Example
             Alt.Log(voiceChannel.MaxDistance.ToString());
 
             var vehicle = Alt.CreateVehicle(VehicleModel.Apc, new Position(1, 2, 3), new Rotation(1, 2, 3));
+            vehicle.SetSyncedMetaData("test", 123);
             Alt.Log(vehicle.Position.ToString());
             vehicle.PrimaryColor = 7;
             vehicle.NumberplateText = "AltV-C#";
@@ -207,7 +215,7 @@ namespace AltV.Net.Example
 
             Alt.Emit("test_string_array", new object[] {new string[] {"bla"}});
 
-            Alt.On("function_event", delegate(Function.Func func)
+            /*Alt.On("function_event", delegate(Function.Func func)
             {
                 var result = func("parameter1");
                 Alt.Log("result:" + result);
@@ -217,7 +225,7 @@ namespace AltV.Net.Example
             {
                 Alt.Log("parameter=" + bla);
                 return 42;
-            }));
+            }));*/
 
             foreach (var player in Alt.GetAllPlayers())
             {
