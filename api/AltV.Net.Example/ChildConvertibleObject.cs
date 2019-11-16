@@ -1,3 +1,5 @@
+using AltV.Net.Elements.Args;
+
 namespace AltV.Net.Example
 {
     public class ChildConvertibleObject : IMValueConvertible
