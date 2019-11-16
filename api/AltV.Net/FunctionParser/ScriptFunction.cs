@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using System.Linq;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.FunctionParser
@@ -9,13 +10,13 @@ namespace AltV.Net.FunctionParser
         private static void WrongType(MethodInfo methodInfo, Type expected, Type got)
         {
             Console.WriteLine(
-                $"{methodInfo} Expected {expected} param, but got {got}");
+                $"{methodInfo.DeclaringType?.FullName}.{methodInfo.Name}({string.Join(", ", methodInfo.GetParameters().Select(m => $"{m.ParameterType.FullName} {m.Name}"))}): Expected {expected} param, but got {got}");
         }
 
         private static void WrongLength(MethodInfo methodInfo, int expected, int got)
         {
             Console.WriteLine(
-                $"{methodInfo} Expected {expected} parameters, but got {got}");
+                $"{methodInfo.DeclaringType?.FullName}.{methodInfo.Name}({string.Join(", ", methodInfo.GetParameters().Select(m => $"{m.ParameterType.FullName} {m.Name}"))}): Expected {expected} parameters, but got {got}");
         }
 
         private struct ScriptFunctionParameter
