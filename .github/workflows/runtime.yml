@@ -13,6 +13,8 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
+      with:
+        submodules: true
     - name: configure
       working-directory: ./runtime
       run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
@@ -26,6 +28,8 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
+      with:
+        submodules: true
     - name: configure
       working-directory: ./runtime
       run: mkdir build && cd build && cmake -G"Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=RelWithDebInfo -T host=x64 ..
