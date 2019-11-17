@@ -9,6 +9,7 @@ using AltV.Net.Elements.Args;
 using AltV.Net.Enums;
 using System.Drawing;
 using AltV.Net.Elements.Refs;
+using AltV.Net.Resources.Chat.Api;
 
 namespace AltV.Net.Example
 {
@@ -16,6 +17,33 @@ namespace AltV.Net.Example
     {
         public override void OnStart()
         {
+            long currentTraceSize = 0;
+            AltTrace.OnTraceFileSizeChange += size =>
+            {
+                currentTraceSize = size;
+            };
+            
+            Alt.OnConsoleCommand += (name, args) =>
+            {
+                switch (name)
+                {
+                    case "trace_start":
+                        if (args.Length != 1)
+                        {
+                            Console.WriteLine("trace_start {name}");
+                            return;
+                        }
+                        AltTrace.Start(args[0]);
+                        break;
+                    case "trace_stop":
+                        AltTrace.Stop();
+                        break;
+                    case "trace_size":
+                        Console.WriteLine("trace file size: " + currentTraceSize + " bytes");
+                        break;
+                }
+            };
+
             Alt.On<object[]>("array_test", objects =>
             {
                 Console.WriteLine("count:" + objects.Length);
