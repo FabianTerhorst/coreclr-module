@@ -121,7 +121,7 @@ namespace AltV.Net.Native
             internal delegate void ColShapeDelegate(IntPtr colShapePointer, IntPtr targetEntityPointer,
                 BaseObjectType entityType, bool state);
 
-            internal delegate void ConsoleCommandDelegate(string name, string[] args);
+            internal delegate void ConsoleCommandDelegate(string name, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] string[] args, int argsSize);
 
             internal delegate void MetaChangeDelegate(IntPtr entityPointer, BaseObjectType entityType, string key,
                 IntPtr value);
