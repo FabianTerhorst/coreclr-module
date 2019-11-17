@@ -48,9 +48,9 @@ void CSharpResourceImpl::ResetDelegates() {
 
 bool CSharpResourceImpl::Start() {
     ResetDelegates();
-    if (!coreClr->ExecuteManagedResource(/*this->resource->GetPath().CStr()*/
-            (alt::String(this->server->GetRootDirectory()) + "/resources/" +
-             alt::String(this->resource->GetName().CStr())).CStr(), this->resource->GetName().CStr(),
+
+    if (!coreClr->ExecuteManagedResource(this->resource->GetPath().CStr()/*(alt::String(this->server->GetRootDirectory()) + "/resources/" +
+             alt::String(this->resource->GetName().CStr())).CStr()*/, this->resource->GetName().CStr(),
             this->resource->GetMain().CStr(),
             this->resource)) {
         return false;
