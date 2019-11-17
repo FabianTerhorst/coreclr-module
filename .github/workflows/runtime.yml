@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'runtime/**'
+    - '.github/workflows/runtime.yml'
 
 jobs:
   build-ubuntu:
