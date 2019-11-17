@@ -30,6 +30,7 @@ namespace AltV.Net
             {
                 module.OnScriptsStarted(_scripts);
             }
+
             _resource.OnStart();
         }
 
@@ -99,6 +100,7 @@ namespace AltV.Net
             {
                 module.OnStop();
             }
+
             Alt.Server.Resource.CSharpResourceImpl.Dispose();
             _module.Dispose();
             AppDomain.CurrentDomain.UnhandledException -= OnUnhandledException;
@@ -193,6 +195,7 @@ namespace AltV.Net
                     pointer += IntPtr.Size;
                 }
             }
+
             _module.OnClientEvent(playerPointer, name, args);
         }
 
@@ -281,12 +284,14 @@ namespace AltV.Net
             _module.OnVehicleRemove(vehiclePointer);
         }
 
-        public static void OnConsoleCommand(string name, string[] args)
+        public static void OnConsoleCommand(string name,
+            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] string[] args, int argsSize)
         {
             if (args == null)
             {
                 args = new string[0];
             }
+
             _module.OnConsoleCommand(name, args);
         }
 

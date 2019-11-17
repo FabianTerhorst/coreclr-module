@@ -38,7 +38,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnRemoveCheckpointDelegate = [](auto var) {};
     OnCreateVoiceChannelDelegate = [](auto var) {};
     OnRemoveVoiceChannelDelegate = [](auto var) {};
-    OnConsoleCommandDelegate = [](auto var, auto var2) {};
+    OnConsoleCommandDelegate = [](auto var, auto var2, auto var3) {};
     OnMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnCreateColShapeDelegate = [](auto var) {};
@@ -286,7 +286,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
 
             uint64_t size = args.GetSize();
             if (size == 0) {
-                OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(), nullptr);
+                OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(), nullptr, 0);
             } else {
 #ifdef _WIN32
                 auto constArgs = new const char* [size];
@@ -297,7 +297,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                     constArgs[i] = args[i].CStr();
                 }
 
-                OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(), constArgs);
+                OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(), constArgs, size);
 
 #ifdef _WIN32
                 delete[] constArgs;
