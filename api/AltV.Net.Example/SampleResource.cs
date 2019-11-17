@@ -25,6 +25,11 @@ namespace AltV.Net.Example
             
             Alt.OnConsoleCommand += (name, args) =>
             {
+                Console.WriteLine("Command name: " + name);
+                foreach (var arg in args)
+                {
+                    Console.WriteLine("arg:" + arg);
+                }
                 switch (name)
                 {
                     case "trace_start":
