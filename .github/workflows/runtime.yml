@@ -17,7 +17,8 @@ jobs:
       working-directory: ./runtime
       run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
     - name: build
-      run: cd build && cmake --build build --config Release
+      working-directory: ./runtime
+      run: cmake --build build --config Release
 
   build-windows:
 
