@@ -189,11 +189,7 @@ namespace AltV.Net
             var args = new IntPtr[size];
             if (pointer != IntPtr.Zero)
             {
-                for (ulong i = 0; i < size; i++)
-                {
-                    args[i] = Marshal.ReadIntPtr(pointer);
-                    pointer += IntPtr.Size;
-                }
+                Marshal.Copy(pointer, args, 0, (int) size);
             }
 
             _module.OnClientEvent(playerPointer, name, args);
@@ -204,11 +200,7 @@ namespace AltV.Net
             var args = new IntPtr[size];
             if (pointer != IntPtr.Zero)
             {
-                for (ulong i = 0; i < size; i++)
-                {
-                    args[i] = Marshal.ReadIntPtr(pointer);
-                    pointer += IntPtr.Size;
-                }
+                Marshal.Copy(pointer, args, 0, (int) size);
             }
 
             _module.OnServerEvent(name, args);
