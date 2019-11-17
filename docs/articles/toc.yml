@@ -28,3 +28,5 @@
       href: networking-entity.md
     - name: Async ColShapes
       href: async-colshapes.md
+    - name: Performance debugging
+      href: trace.md
