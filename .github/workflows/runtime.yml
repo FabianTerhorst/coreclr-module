@@ -31,7 +31,7 @@ jobs:
       with:
         submodules: true
     - name: set path to vs
-      run: PATH=C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\\MSBuild\Current\Bin;PATH=C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise;%PATH%
+      run: PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\\MSBuild\Current\Bin;PATH=C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise;%PATH%"
     - name: configure
       shell: bash
       working-directory: ./runtime
