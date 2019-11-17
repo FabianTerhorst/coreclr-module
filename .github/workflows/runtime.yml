@@ -34,4 +34,5 @@ jobs:
       working-directory: ./runtime
       run: mkdir build && cd build && cmake -G"Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=RelWithDebInfo -T host=x64 ..
     - name: build
+      working-directory: ./runtime
       run: cmake --build build --config Release
