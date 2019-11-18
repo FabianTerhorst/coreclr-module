@@ -77,6 +77,12 @@ namespace AltV.Net.NetworkingEntity
             return networkingEntity;
         }
 
+        public static void AddEntity(INetworkingEntity entity)
+        {
+            entity.Init(Module.IdProvider.GetNext(), Module.Streamer);
+            Module.EntityPool.Add(entity);
+        }
+
         public static void RemoveEntity(INetworkingEntity entity)
         {
             Module.EntityPool.Remove(entity);

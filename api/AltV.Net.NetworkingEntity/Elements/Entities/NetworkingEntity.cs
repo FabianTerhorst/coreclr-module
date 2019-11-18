@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 using AltV.Net.NetworkingEntity.Elements.Args;
+using AltV.Net.NetworkingEntity.Elements.Pools;
 using Entity;
 
 namespace AltV.Net.NetworkingEntity.Elements.Entities
@@ -8,17 +10,17 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
     {
         public Entity.Entity StreamedEntity { get; }
 
-        private readonly IEntityStreamer entityStreamer;
+        private IEntityStreamer entityStreamer;
 
-        public EntityDataSnapshot Snapshot { get; }
-        
+        public EntityDataSnapshot Snapshot { get; private set; }
+
         public INetworkingClient MainStreamer { get; }
 
         public StreamingType StreamingType { get; }
 
         public HashSet<INetworkingClient> StreamedInClients { get; } = new HashSet<INetworkingClient>();
 
-        public ulong Id => StreamedEntity.Id;
+        public ulong Id => StreamedEntity?.Id ?? 0;
 
         public int Dimension
         {
@@ -52,13 +54,46 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
 
         public bool Exists { get; set; }
 
-        public NetworkingEntity(IEntityStreamer entityStreamer, Entity.Entity streamedEntity, StreamingType streamingType = StreamingType.Default)
+        public NetworkingEntity(IEntityStreamer entityStreamer, Entity.Entity streamedEntity,
+            StreamingType streamingType = StreamingType.Default)
         {
             this.entityStreamer = entityStreamer;
             StreamedEntity = streamedEntity;
             StreamingType = streamingType;
             Exists = true;
             Snapshot = new EntityDataSnapshot(Id);
+        }
+
+        public NetworkingEntity(Position position, int dimension, float range, Dictionary<string, object> data,
+            StreamingType streamingType = StreamingType.DataStreaming)
+        {
+            var entity = new Entity.Entity {Position = position, Dimension = dimension, Range = range};
+            foreach (var (key, value) in data)
+            {
+                entity.Data[key] = MValueUtils.ToMValue(value);
+            }
+
+            StreamingType = streamingType;
+            StreamedEntity = entity;
+            Exists = false;
+        }
+
+        public void Init(ulong id, IEntityStreamer streamer)
+        {
+            StreamedEntity.Id = id;
+            entityStreamer = streamer;
+            if (StreamingType == StreamingType.DataStreaming)
+            {
+                foreach (var (key, value) in StreamedEntity.Data)
+                {
+                    SetData(key, value);
+                }
+
+                this.StreamedEntity.Data.Clear();
+            }
+
+            Snapshot = new EntityDataSnapshot(Id);
+            Exists = true;
         }
 
         public void SetData(string key, bool value)
@@ -117,7 +152,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
 
         public void SetData(string key, object value)
         {
-            UpdateData(key,  MValueUtils.ToMValue(value));
+            UpdateData(key, MValueUtils.ToMValue(value));
         }
 
         public bool GetData(string key, out bool value)
@@ -184,7 +219,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
             value = default;
             return false;
         }
-        
+
         public bool GetData<T>(string key, out T value)
         {
             if (StreamedEntity.Data.TryGetValue(key, out var mValue))
