@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AltV.Net.NetworkingEntity.Elements.Args;
 using Entity;
 
 namespace AltV.Net.NetworkingEntity.Elements.Entities
@@ -178,6 +179,22 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
             {
                 value = mValue.UintValue;
                 return true;
+            }
+
+            value = default;
+            return false;
+        }
+        
+        public bool GetData<T>(string key, out T value)
+        {
+            if (StreamedEntity.Data.TryGetValue(key, out var mValue))
+            {
+                var obj = MValueUtils.FromMValue(mValue);
+                if (obj is T expectedObject)
+                {
+                    value = expectedObject;
+                    return true;
+                }
             }
 
             value = default;

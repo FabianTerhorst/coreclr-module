@@ -118,6 +118,8 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
         bool GetData(string key, out ulong value);
 
         bool GetData(string key, out long value);
+        
+        bool GetData<T>(string key, out T value);
 
         bool IsDataNull(string key);
 
