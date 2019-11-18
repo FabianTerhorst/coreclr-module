@@ -65,7 +65,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
         }
 
         public NetworkingEntity(Position position, int dimension, float range, Dictionary<string, object> data,
-            StreamingType streamingType = StreamingType.DataStreaming)
+            StreamingType streamingType = StreamingType.Default)
         {
             var entity = new Entity.Entity {Position = position, Dimension = dimension, Range = range};
             foreach (var (key, value) in data)
