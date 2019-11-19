@@ -30,7 +30,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}-ne
-          release_name: Release ${{ github.ref }} NetworkingEntity
+          release_name: Release-Networking-Entity ${{ github.ref }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
