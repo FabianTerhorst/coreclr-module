@@ -18,7 +18,7 @@ jobs:
         run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
       - name: build
         working-directory: ./runtime
-        run: cmake --build build --config Release
+        run: cmake --build build --config Release && ls -l
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0
