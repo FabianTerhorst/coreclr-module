@@ -7,14 +7,18 @@ on:
     - './api/AltV.Net.NetworkingEntity/Client/**.*'
     - '.github/workflows/networking-entity-release.yml'
 
-steps:
-- uses: actions/checkout@v1
-- uses: actions/setup-node@v1
-  with:
-    node-version: '10.x'
-- name: 'npm install'
-  working-directory: './api/AltV.Net.NetworkingEntity/Client'
-  run: npm install
-- name: 'build'
-  working-directory: './api/AltV.Net.NetworkingEntity/Client'
-- run: 'npm run-script build'
+jobs:
+  build-ubuntu:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+    - name: 'npm install'
+      working-directory: './api/AltV.Net.NetworkingEntity/Client'
+      run: npm install
+    - name: 'build'
+      working-directory: './api/AltV.Net.NetworkingEntity/Client'
+    - run: 'npm run-script build'
