@@ -21,7 +21,7 @@ jobs:
         working-directory: './api/AltV.Net.NetworkingEntity/Client'
         run: 'npm run-script build'
       - name: 'zip'
-        working-directory: './api/AltV.Net.NetworkingEntity/Client'
+        working-directory: './api/AltV.Net.NetworkingEntity/Client/build'
         run: zip -r networking-entity.zip .
       - name: Create Release
         id: create_release
