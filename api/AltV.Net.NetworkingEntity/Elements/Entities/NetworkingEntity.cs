@@ -82,6 +82,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
         {
             StreamedEntity.Id = id;
             entityStreamer = streamer;
+            Snapshot = new EntityDataSnapshot(Id);
             if (StreamingType == StreamingType.DataStreaming)
             {
                 foreach (var (key, value) in StreamedEntity.Data)
@@ -91,8 +92,6 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
 
                 this.StreamedEntity.Data.Clear();
             }
-
-            Snapshot = new EntityDataSnapshot(Id);
             Exists = true;
         }
 

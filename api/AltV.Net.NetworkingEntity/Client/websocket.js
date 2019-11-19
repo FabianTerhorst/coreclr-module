@@ -1,6 +1,7 @@
 import EntityRepository from "./entity-repository.js";
 import clientRepository from "./client-repository.js";
 import proto from "./proto.js";
+import ReconnectingWebSocket from './deps/reconnecting-websocket';
 
 export default class WebSocket {
     constructor(url, token) {
@@ -9,18 +10,22 @@ export default class WebSocket {
 
         this.entityRepository = new EntityRepository(this);
 
-        this.connection.onopen = () => {
+        this.connection.addEventListener("open", () => {
             const authEvent = proto.AuthEvent.create({token: token});
             const clientEvent = proto.ClientEvent.create({auth: authEvent});
             const buffer = proto.ClientEvent.encode(clientEvent).finish();
             this.connection.send(buffer);
-        };
+        });
 
-        this.connection.onerror = (error) => {
+        this.connection.addEventListener("error", (error) => {
             console.log("err", error);
-        };
+        });
 
-        this.connection.onmessage = async (e) => {
+        this.connection.addEventListener("close", (code) => {
+            console.log("close", code);
+        });
+
+        this.connection.addEventListener("message", async (e) => {
             const serverEvent = proto.ServerEvent.decode(new Uint8Array(await new Response(e.data).arrayBuffer()));
             const obj = proto.ServerEvent.toObject(serverEvent, {
                 defaults: true
@@ -110,7 +115,7 @@ export default class WebSocket {
                 clientRepository.dimension = clientDimensionChange.dimension;
                 this.entityRepository.updateWorker();
             }
-        };
+        });
     }
 
     sendEvent(event) {

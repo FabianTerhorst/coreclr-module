@@ -11,13 +11,6 @@ export default [{
         format: 'esm',
         sourcemap: false
     },
-    moduleContext: (id) => {
-        const path = id.split("/");
-        if (path.length > 0 && path[path.length - 1] === "reconnecting-websocket.min.js") {
-            return "window";
-        }
-        return undefined;
-    },
     cache: true,
     plugins: [
         resolve(),

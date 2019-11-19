@@ -15,6 +15,7 @@ namespace AltV.Net.Networking.Example
         public ObjectEntity(Position position, int dimension, float range, ulong model, Vector3 rotation) : base(
             position, dimension, range, new Dictionary<string, object>()
             {
+                ["type"] = 1,
                 ["model"] = model,
                 ["rotation"] = new Dictionary<string, object>()
                 {

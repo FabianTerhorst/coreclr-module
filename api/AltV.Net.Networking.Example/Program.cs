@@ -37,7 +37,7 @@ namespace AltV.Net.Networking.Example
             {
             }
 
-            var networkingEntity = new ObjectEntity(new Position {X = 0, Y = 0, Z = 0}, 1, 50, Alt.Hash("a_b_deer"),
+            var networkingEntity = new ObjectEntity(new Position {X = 0, Y = 0, Z = 0}, 1, 50, 0,
                 new Vector3(1, 2, 3));
             AltNetworking.AddEntity(networkingEntity);
 
