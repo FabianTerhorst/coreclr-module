@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AltV.Net.NetworkingEntity.Elements.Args;
 using AltV.Net.NetworkingEntity.Elements.Entities;
 using Entity;
 
@@ -74,6 +75,12 @@ namespace AltV.Net.NetworkingEntity
             }
 
             return networkingEntity;
+        }
+
+        public static void AddEntity(INetworkingEntity entity)
+        {
+            entity.Init(Module.IdProvider.GetNext(), Module.Streamer);
+            Module.EntityPool.Add(entity);
         }
 
         public static void RemoveEntity(INetworkingEntity entity)

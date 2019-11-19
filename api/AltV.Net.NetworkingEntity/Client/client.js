@@ -7,6 +7,15 @@ class NetworkingEntityClient {
     // create position submit interval
     constructor(webview, defaultToken, defaultWebView) {
         this.webview = webview;
+        this.webviewReady = false;
+        this.webviewQueue = [];
+        webview.on("ne::ready", () => {
+            this.webviewReady = true;
+            for (const operation of this.webviewQueue) {
+                operation();
+            }
+            this.webviewQueue = [];
+        });
         this.defaultToken = defaultToken;
         this.defaultWebView = defaultWebView;
         this.streamedInEntities = {};
@@ -49,9 +58,19 @@ class NetworkingEntityClient {
         });
         if (defaultToken) {
             this.tokenCallback = (url, token) => {
-                this.init(url, token);
+                this.enqueue(() => {
+                    this.init(url, token);
+                });
             };
             onServer("streamingToken", this.tokenCallback);
+        }
+    }
+
+    enqueue(operation) {
+        if (!this.webviewReady) {
+            this.webviewQueue.push(operation);
+        } else {
+            operation();
         }
     }
 

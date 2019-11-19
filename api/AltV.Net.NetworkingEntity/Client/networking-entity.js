@@ -1,5 +1,4 @@
 import WebSocket from "./websocket.js";
-import "./deps/reconnecting-websocket.min.js";
 
 class NetworkingEntity {
     constructor() {
@@ -30,6 +29,9 @@ class NetworkingEntity {
                 this.websocket.deinit();
             }
         });
+        setTimeout(() => {
+            alt.emit("ne::ready");
+        }, 1500);
     }
 }
 

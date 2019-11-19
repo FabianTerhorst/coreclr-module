@@ -723,6 +723,14 @@ namespace AltV.Net
 
             if (PlayerClientCustomEventEventHandler.HasEvents())
             {
+                if (argArray == null)
+                {
+                    argArray = new MValueConst[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        argArray[i] = new MValueConst(args[i]);
+                    }
+                }
                 foreach (var eventHandler in PlayerClientCustomEventEventHandler.GetEvents())
                 {
                     eventHandler(player, name, argArray);
