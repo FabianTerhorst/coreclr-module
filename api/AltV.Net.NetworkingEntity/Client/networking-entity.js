@@ -29,6 +29,9 @@ class NetworkingEntity {
                 this.websocket.deinit();
             }
         });
+        setTimeout(() => {
+            alt.emit("ne::ready");
+        }, 1500);
     }
 }
 
