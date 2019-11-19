@@ -21,4 +21,4 @@ jobs:
       run: npm install
     - name: 'build'
       working-directory: './api/AltV.Net.NetworkingEntity/Client'
-    - run: 'npm run-script build'
+      run: 'npm run-script build'
