@@ -79,7 +79,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
     if (ev == nullptr) return true;
     switch (ev->GetType()) {
         case alt::CEvent::Type::META_CHANGE: {
-            auto event = ((alt::CMetaChangeEvent*) (ev));
+            /*auto event = ((alt::CMetaChangeEvent*) (ev));
             auto entity = event->GetTarget().Get();
             if (entity == nullptr) return true;
             auto key = event->GetKey();
@@ -94,11 +94,11 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                 }
             }
             auto constValue = alt::MValueConst(value);
-            OnMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), keyCStr, &constValue);
+            OnMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), keyCStr, &constValue);*/
         }
             break;
         case alt::CEvent::Type::SYNCED_META_CHANGE: {
-            auto event = ((alt::CSyncedMetaDataChangeEvent*) (ev));
+            /*auto event = ((alt::CSyncedMetaDataChangeEvent*) (ev));
             auto entity = event->GetTarget().Get();
             if (entity == nullptr) return true;
             auto key = event->GetKey();
@@ -113,7 +113,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                 }
             }
             auto constValue = alt::MValueConst(value);
-            OnSyncedMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), keyCStr, &constValue);
+            OnSyncedMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), keyCStr, &constValue);*/
         }
             break;
         case alt::CEvent::Type::CLIENT_SCRIPT_EVENT: {
