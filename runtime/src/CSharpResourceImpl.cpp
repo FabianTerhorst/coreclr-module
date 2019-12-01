@@ -51,8 +51,8 @@ bool CSharpResourceImpl::Start() {
 
     if (!coreClr->ExecuteManagedResource(this->resource->GetPath().CStr()/*(alt::String(this->server->GetRootDirectory()) + "/resources/" +
              alt::String(this->resource->GetName().CStr())).CStr()*/, this->resource->GetName().CStr(),
-            this->resource->GetMain().CStr(),
-            this->resource)) {
+                                         this->resource->GetMain().CStr(),
+                                         this->resource)) {
         return false;
     }
     if (MainDelegate == nullptr) return false;
@@ -84,9 +84,17 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             if (entity == nullptr) return true;
             auto key = event->GetKey();
             auto value = event->GetVal();
-            auto constValue = alt::ConstRef<alt::IMValue>(value);
-            OnMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), key == nullptr ? "" : key.CStr(),
-                                 &constValue);
+            const char* keyCStr;
+            if (key == nullptr) {
+                keyCStr = "";
+            } else {
+                keyCStr = key.CStr();
+                if (keyCStr == nullptr) {
+                    keyCStr = "";
+                }
+            }
+            auto constValue = alt::MValueConst(value);
+            OnMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), keyCStr, &constValue);
         }
             break;
         case alt::CEvent::Type::SYNCED_META_CHANGE: {
@@ -95,9 +103,17 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             if (entity == nullptr) return true;
             auto key = event->GetKey();
             auto value = event->GetVal();
-            auto constValue = alt::ConstRef<alt::IMValue>(value);
-            OnSyncedMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), key == nullptr ? "" : key.CStr(),
-                                       &constValue);
+            const char* keyCStr;
+            if (key == nullptr) {
+                keyCStr = "";
+            } else {
+                keyCStr = key.CStr();
+                if (keyCStr == nullptr) {
+                    keyCStr = "";
+                }
+            }
+            auto constValue = alt::MValueConst(value);
+            OnSyncedMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), keyCStr, &constValue);
         }
             break;
         case alt::CEvent::Type::CLIENT_SCRIPT_EVENT: {
