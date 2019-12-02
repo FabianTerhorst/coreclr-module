@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Linq;
+using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.FunctionParser
@@ -114,6 +115,25 @@ namespace AltV.Net.FunctionParser
             try
             {
                 @delegate.DynamicInvoke(args);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
+        }
+        
+        public async Task CallAsync()
+        {
+            valid = true;
+            currentIndex = 0;
+            if (!valid) return;
+            try
+            {
+                var task = (Task)@delegate.DynamicInvoke(args);
+                await task.ConfigureAwait(false);
+                await task;
+                //var resultProperty = task.GetType().GetProperty("Result");
+                //return resultProperty.GetValue(task);
             }
             catch (Exception exception)
             {
