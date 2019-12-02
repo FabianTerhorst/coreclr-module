@@ -12,7 +12,7 @@ namespace AltV.Net.Async
                 {
                     switch (baseEvent)
                     {
-                        case ScriptEvent scriptEvent:
+                        case AsyncScriptEvent scriptEvent:
                             var scriptEventType = scriptEvent.EventType;
                             ScriptFunction scriptFunction;
                             switch (scriptEventType)

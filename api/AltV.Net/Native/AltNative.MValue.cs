@@ -52,15 +52,15 @@ namespace AltV.Net.Native
             internal static extern IntPtr MValueConst_CallFunction(IntPtr mValueConst, IntPtr[] val, ulong size);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void MValueConst_Delete(IntPtr mValueConst);
+            internal static extern void MValueConst_Delete(IntPtr mValueCons);
 
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void MValue_Delete(IntPtr mValueConst);
+            //[DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            //internal static extern void MValue_Delete(IntPtr mValueConst);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern byte MValueConst_GetType(IntPtr mValueConst);
 
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            /*[DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern byte MValue_GetType(IntPtr mValueConst);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
@@ -94,7 +94,7 @@ namespace AltV.Net.Native
             internal static extern IntPtr MValue_GetEntity(IntPtr mValueConst, ref BaseObjectType type);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr MValue_CallFunction(IntPtr mValueConst, IntPtr[] val, ulong size);
+            internal static extern IntPtr MValue_CallFunction(IntPtr mValueConst, IntPtr[] val, ulong size);*/
         }
     }
 }

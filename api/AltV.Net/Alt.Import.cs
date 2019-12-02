@@ -200,7 +200,7 @@ namespace AltV.Net
                 mValueArgs[i] = mValueElement.nativePointer;
             }
 
-            var result = new MValueConst(AltNative.MValueNative.MValue_CallFunction(mValue.nativePointer, mValueArgs, length));
+            var result = new MValueConst(AltNative.MValueNative.MValueConst_CallFunction(mValue.nativePointer, mValueArgs, length));
             var resultObj = result.ToObject();
             for (ulong i = 0;i < length;i++)
             {

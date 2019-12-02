@@ -1,5 +1,5 @@
 #FROM 7hazard/node-clang-7 as clang
-FROM ubuntu:18.10 as clang
+FROM ubuntu:18.04 as clang
 
 # build coreclr-module
 WORKDIR /runtime
@@ -30,7 +30,7 @@ RUN cd AltV.Net.Host && dotnet publish -c Release
 RUN cd AltV.Net.Resources.Chat && dotnet publish -c Release
 
 #FROM debian:stable
-FROM ubuntu:18.10
+FROM ubuntu:18.04
 
 COPY --from=dotnet /usr/share/dotnet /usr/share/dotnet
 RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet

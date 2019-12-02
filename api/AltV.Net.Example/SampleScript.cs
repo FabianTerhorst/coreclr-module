@@ -1,4 +1,6 @@
 using System;
+using System.Threading.Tasks;
+using AltV.Net.Async;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using AltV.Net.Resources.Chat.Api;
@@ -72,6 +74,13 @@ namespace AltV.Net.Example
         public void VehicleRemoveInvalidMethodSignature2(IMyInvalidVehicle vehicle)
         {
             Console.WriteLine("vehicle removed invalid2: " + vehicle);
+        }
+        
+        [AsyncScriptEvent(ScriptEventType.VehicleRemove)]
+        public Task VehicleRemove2Async(IMyVehicle vehicle)
+        {
+            Console.WriteLine("vehicle removed2 async: " + vehicle?.MyData);
+            return Task.CompletedTask;
         }
     }
 }
