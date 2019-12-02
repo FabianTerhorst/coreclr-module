@@ -45,7 +45,9 @@ export default class WebSocket {
                     const newEntity = this.entityRepository.entities.get(dataChange.id);
                     //console.log("data changed", newEntity.id, newEntity.data);
                     if (this.entityRepository.isStreamedIn(dataChange.id)) {
+                        dataChange[dataChange.key] = dataChange.value;
                         delete dataChange.id;
+                        delete dataChange.key;
                         alt.emit("dataChange", JSON.stringify({
                             entity: newEntity,
                             data: dataChange

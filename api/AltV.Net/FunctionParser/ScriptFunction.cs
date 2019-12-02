@@ -76,7 +76,11 @@ namespace AltV.Net.FunctionParser
 
         private readonly Delegate @delegate;
 
+        private readonly FunctionParserMethodInfo functionParserMethodInfo;
+
         private readonly ScriptFunctionParameter[] scriptFunctionParameters;
+
+        private readonly object target;
 
         private bool valid = true;
 
@@ -86,7 +90,9 @@ namespace AltV.Net.FunctionParser
         {
             args = new object[scriptFunctionParameters.Length];
             this.@delegate = @delegate;
+            this.functionParserMethodInfo = new FunctionParserMethodInfo(@delegate.Method);
             this.scriptFunctionParameters = scriptFunctionParameters;
+            this.target = @delegate.Target;
         }
 
         public void Set(object value)
@@ -114,14 +120,15 @@ namespace AltV.Net.FunctionParser
             if (!valid) return;
             try
             {
-                @delegate.DynamicInvoke(args);
+                //@delegate.DynamicInvoke(args);
+                functionParserMethodInfo.Invoke(target, args);
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
             }
         }
-        
+
         public async Task CallAsync()
         {
             valid = true;
@@ -129,7 +136,7 @@ namespace AltV.Net.FunctionParser
             if (!valid) return;
             try
             {
-                var task = (Task)@delegate.DynamicInvoke(args);
+                var task = (Task) functionParserMethodInfo.Invoke(target, args);
                 await task.ConfigureAwait(false);
                 await task;
                 //var resultProperty = task.GetType().GetProperty("Result");
