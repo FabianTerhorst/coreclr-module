@@ -56,7 +56,13 @@ export default class WebSocket {
                 const positionChange = obj.positionChange;
                 if (this.entityRepository.entities.has(positionChange.id)) {
                     const entity = this.entityRepository.entities.get(positionChange.id);
+                    const oldPosition = entity.position;
                     entity.position = positionChange.position;
+                    alt.emit("positionChange", JSON.stringify({
+                        entity: entity,
+                        oldPosition: oldPosition,
+                        newPosition: entity.position
+                    }));
                     this.entityRepository.updateWorker();
                     //TODO: update only changed entity
                     //console.log("position changed", entity.id, entity.position);
@@ -65,7 +71,13 @@ export default class WebSocket {
                 const rangeChange = obj.rangeChange;
                 if (this.entityRepository.entities.has(rangeChange.id)) {
                     const entity = this.entityRepository.entities.get(rangeChange.id);
+                    const oldRange = entity.range;
                     entity.range = rangeChange.range;
+                    alt.emit("rangeChange", JSON.stringify({
+                        entity: entity,
+                        oldRange: oldRange,
+                        newRange: entity.range,
+                    }));
                     this.entityRepository.updateWorker();
                     //TODO: update only changed entity
                     //console.log("range changed", entity.id, entity.range);

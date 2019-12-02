@@ -25,6 +25,10 @@ class NetworkingEntityClient {
         };
         this.onDataChange = () => {
         };
+        this.onRangeChange = () => {
+        };
+        this.onPositionChange = () => {
+        };
         webview.on("streamIn", (entities) => {
             for (const entity of JSON.parse(entities)) {
                 this.streamedInEntities[entity.id] = entity;
@@ -54,6 +58,26 @@ class NetworkingEntityClient {
                 this.onDataChange(currEntity, entityAndNewDataParsed.data);
             } else {
                 this.onDataChange(entityAndNewDataParsed.entity, entityAndNewDataParsed.data);
+            }
+        });
+        webview.on("rangeChange", (entityAndNewData) => {
+            const entityAndNewDataParsed = JSON.parse(entityAndNewData);
+            const currEntity = this.streamedInEntities[entityAndNewDataParsed.entity.id];
+            if (currEntity) {
+                currEntity.range = entityAndNewDataParsed.newRange;
+                this.onRangeChange(currEntity, entityAndNewDataParsed.oldRange, entityAndNewDataParsed.newRange);
+            } else {
+                this.onRangeChange(entityAndNewDataParsed.entity, entityAndNewDataParsed.oldRange, entityAndNewDataParsed.newRange);
+            }
+        });
+        webview.on("positionChange", (entityAndNewData) => {
+            const entityAndNewDataParsed = JSON.parse(entityAndNewData);
+            const currEntity = this.streamedInEntities[entityAndNewDataParsed.entity.id];
+            if (currEntity) {
+                currEntity.position = entityAndNewDataParsed.newPosition;
+                this.onPositionChange(currEntity, entityAndNewDataParsed.oldPosition, entityAndNewDataParsed.newPosition);
+            } else {
+                this.onPositionChange(entityAndNewDataParsed.entity, entityAndNewDataParsed.oldPosition, entityAndNewDataParsed.newPosition);
             }
         });
         if (defaultToken) {
@@ -172,6 +196,26 @@ export function onDataChange(callback) {
     };
 }
 
+export function onRangeChange(callback) {
+    if (networkingEntityClient == null) {
+        log("call create(webview) first");
+        return;
+    }
+    networkingEntityClient.onRangeChange = (entity, oldRange, newRange) => {
+        callback(entity, oldRange, newRange);
+    };
+}
+
+export function onPositionChange(callback) {
+    if (networkingEntityClient == null) {
+        log("call create(webview) first");
+        return;
+    }
+    networkingEntityClient.onPositionChange = (entity, oldPosition, newPosition) => {
+        callback(entity, oldPosition, newPosition);
+    };
+}
+
 export function getStreamedInEntities() {
     return networkingEntityClient.streamedInEntities;
 }
@@ -187,5 +231,7 @@ export default {
     onStreamIn,
     onStreamOut,
     onDataChange,
+    onRangeChange,
+    onPositionChange,
     getStreamedInEntities
 };
