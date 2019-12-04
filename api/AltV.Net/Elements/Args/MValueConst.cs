@@ -264,6 +264,20 @@ namespace AltV.Net.Elements.Args
             return "MValue<>";
         }
 
+        public void AddRef()
+        {
+            // Nil types have zero int ptr to reduce allocations on heap
+            if (nativePointer == IntPtr.Zero) return;
+            AltNative.MValueNative.MValueConst_AddRef(nativePointer);
+        }
+
+        public void RemoveRef()
+        {
+            // Nil types have zero int ptr to reduce allocations on heap
+            if (nativePointer == IntPtr.Zero) return;
+            AltNative.MValueNative.MValueConst_RemoveRef(nativePointer);
+        }
+
         public void Dispose()
         {
             // Nil types have zero int ptr to reduce allocations on heap

@@ -19,6 +19,14 @@ void Invoker_Destroy(CSharpResourceImpl* resource, CustomInvoker* val) {
     resource->invokers = newInvokers;
 }
 
+void MValueConst_AddRef(alt::MValueConst* mValueConst) {
+    (*mValueConst)->AddRef();
+}
+
+void MValueConst_RemoveRef(alt::MValueConst* mValueConst) {
+    (*mValueConst)->RemoveRef();
+}
+
 bool MValueConst_GetBool(alt::MValueConst* mValueConst) {
     auto mValue = mValueConst->Get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::BOOL) {

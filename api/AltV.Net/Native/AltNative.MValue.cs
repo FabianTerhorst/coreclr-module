@@ -50,6 +50,12 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr MValueConst_CallFunction(IntPtr mValueConst, IntPtr[] val, ulong size);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void MValueConst_AddRef(IntPtr mValueConst);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void MValueConst_RemoveRef(IntPtr mValueConst);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void MValueConst_Delete(IntPtr mValueCons);
