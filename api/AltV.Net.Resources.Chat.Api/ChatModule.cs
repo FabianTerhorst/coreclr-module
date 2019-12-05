@@ -30,7 +30,7 @@ namespace AltV.Net.Resources.Chat.Api
             }
 
             Alt.On<IPlayer, string>("chat:message", OnChatMessage, OnChatMessageParser);
-            Alt.OnServer<IPlayer, string>("chat:message", OnChatMessage, OnChatMessageParserServer);
+            //Alt.OnServer<IPlayer, string>("chat:message", OnChatMessage, OnChatMessageParserServer);
         }
 
         private static void OnChatMessageParser(IPlayer player, MValueConst[] mValueArray,
@@ -42,13 +42,13 @@ namespace AltV.Net.Resources.Chat.Api
             action(player, arg.GetString());
         }
 
-        private static void OnChatMessageParserServer(MValueConst[] mValueArray, Action<IPlayer, string> action)
+        /*private static void OnChatMessageParserServer(MValueConst[] mValueArray, Action<IPlayer, string> action)
         {
             if (mValueArray.Length != 1) return;
             var argMsg = mValueArray[0];
             if (argMsg.type != MValueConst.Type.STRING) return;
             action(null, argMsg.GetString());
-        }
+        }*/
 
         private void OnChatMessage(IPlayer player, string message)
         {
