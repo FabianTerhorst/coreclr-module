@@ -146,18 +146,13 @@ namespace AltV.Net.Resources.Chat.Api
                         {
                             delegates.AddLast((player, arguments) =>
                             {
-                                var args = function.CalculateStringInvokeValues(new[] {string.Join(" ", arguments)},
-                                    player);
-                                if (args == null) return;
-                                function.InvokeNoResult(args);
+                                function.Call(new[] {string.Join(" ", arguments)}, player);
                             });
                         }
                         else
                         {
                             delegates.AddLast((player, arguments) =>
                             {
-                                //var args = function.CalculateStringInvokeValues(arguments, player);
-                                //if (args == null) return;
                                 function.Call(arguments, player);
                             });
                         }
@@ -177,20 +172,14 @@ namespace AltV.Net.Resources.Chat.Api
                                 {
                                     delegates.AddLast((player, arguments) =>
                                     {
-                                        var args = function.CalculateStringInvokeValues(
-                                            new[] {string.Join(" ", arguments)},
-                                            player);
-                                        if (args == null) return;
-                                        function.InvokeNoResult(args);
+                                        function.Call(new[] {string.Join(" ", arguments)}, player);
                                     });
                                 }
                                 else
                                 {
                                     delegates.AddLast((player, arguments) =>
                                     {
-                                        var args = function.CalculateStringInvokeValues(arguments, player);
-                                        if (args == null) return;
-                                        function.InvokeNoResult(args);
+                                        function.Call(arguments, player);
                                     });
                                 }
                             }
