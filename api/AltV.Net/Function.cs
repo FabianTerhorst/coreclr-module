@@ -302,12 +302,15 @@ namespace AltV.Net
                 {
                     var remainingLength = length - requiredArgsCount - 1;
                     var remainingValues = lastTypeInfo.CreateArrayOfElementType(remainingLength);
-                    var constParser = constParsers[^1];
-                    var lastArg = args[^1];
+                    var elementTypeInfo = lastTypeInfo.Element;
+                    var elementConstParser = elementTypeInfo.ConstParser;
+                    var elementType = lastTypeInfo.ElementType;
                     for (var i = 0; i < remainingLength; i++)
                     {
-                        remainingValues.SetValue(
-                            constParser(in values[i + requiredArgsCount - 1], lastArg, lastTypeInfo.Element), i);
+                        var elementObject = elementConstParser(in values[i + requiredArgsCount - 1],
+                            elementType, lastTypeInfo.Element);
+                        var convertedElementObject = Convert.ChangeType(elementObject, elementType);
+                        remainingValues.SetValue(convertedElementObject, i);
                     }
 
                     invokeValues[^1] = remainingValues;
