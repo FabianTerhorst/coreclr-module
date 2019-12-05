@@ -408,7 +408,7 @@ namespace AltV.Net.Async
                 {
                     foreach (var eventHandler in eventHandlers)
                     {
-                        var invokeValues = eventHandler.CalculateInvokeValues(objects, player);
+                        var invokeValues = eventHandler.CalculateInvokeValues(player, objects);
                         if (invokeValues != null)
                         {
                             try
