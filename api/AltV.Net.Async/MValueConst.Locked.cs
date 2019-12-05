@@ -131,7 +131,7 @@ namespace AltV.Net.Async
                     return;
                 case Net.Function function:
                     Alt.Server.CreateMValueFunction(out mValue,
-                        Alt.Server.Resource.CSharpResourceImpl.CreateInvoker(function.call));
+                        Alt.Server.Resource.CSharpResourceImpl.CreateInvoker(function.Call));
                     return;
                 case IDictionary dictionary:
                     dictKeys = new string[dictionary.Count];

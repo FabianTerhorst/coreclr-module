@@ -41,7 +41,7 @@ namespace AltV.Net.FunctionParser
 
         public readonly object DefaultValue;
 
-        public readonly bool IsEventParams;
+        public readonly bool IsParamArray;
 
         public readonly bool IsNullable;
 
@@ -49,13 +49,13 @@ namespace AltV.Net.FunctionParser
 
         public readonly bool IsEnum;
         
-        public FunctionTypeInfo(Type type)
+        public FunctionTypeInfo(Type paramType, ParameterInfo paramInfo = null)
         {
-            IsList = type.BaseType == FunctionTypes.Array;
-            IsDict = type.Name.StartsWith("Dictionary") || type.Name.StartsWith("IDictionary");
+            IsList = paramType.BaseType == FunctionTypes.Array;
+            IsDict = paramType.Name.StartsWith("Dictionary") || paramType.Name.StartsWith("IDictionary");
             if (IsDict)
             {
-                GenericArguments = type.GetGenericArguments();
+                GenericArguments = paramType.GetGenericArguments();
                 //TODO: dont create this for primitive type dictionaries
                 DictType = typeof(Dictionary<,>).MakeGenericType(GenericArguments[0], GenericArguments[1]);
                 DictionaryValue = GenericArguments.Length == 2 ? new FunctionTypeInfo(GenericArguments[1]) : null;
@@ -71,24 +71,24 @@ namespace AltV.Net.FunctionParser
                 CreateDictionary = null;
             }
 
-            if (type.IsValueType && type != FunctionTypes.String)
+            if (paramType.IsValueType && paramType != FunctionTypes.String)
             {
-                DefaultValue = Activator.CreateInstance(type);
+                DefaultValue = Activator.CreateInstance(paramType);
             }
             else
             {
                 DefaultValue = null;
             }
 
-            var interfaces = type.GetInterfaces();
+            var interfaces = paramType.GetInterfaces();
             if (interfaces.Contains(FunctionTypes.Entity))
             {
                 IsEntity = true;
-                IsVehicle = type == FunctionTypes.Vehicle || interfaces.Contains(FunctionTypes.Vehicle);
-                IsPlayer = type == FunctionTypes.Player || interfaces.Contains(FunctionTypes.Player);
-                IsBlip = type == FunctionTypes.Blip || interfaces.Contains(FunctionTypes.Blip);
-                IsCheckpoint = type == FunctionTypes.Checkpoint || interfaces.Contains(FunctionTypes.Checkpoint);
-                IsColShape = type == FunctionTypes.ColShape || interfaces.Contains(FunctionTypes.ColShape);
+                IsVehicle = paramType == FunctionTypes.Vehicle || interfaces.Contains(FunctionTypes.Vehicle);
+                IsPlayer = paramType == FunctionTypes.Player || interfaces.Contains(FunctionTypes.Player);
+                IsBlip = paramType == FunctionTypes.Blip || interfaces.Contains(FunctionTypes.Blip);
+                IsCheckpoint = paramType == FunctionTypes.Checkpoint || interfaces.Contains(FunctionTypes.Checkpoint);
+                IsColShape = paramType == FunctionTypes.ColShape || interfaces.Contains(FunctionTypes.ColShape);
             }
             else
             {
@@ -102,19 +102,22 @@ namespace AltV.Net.FunctionParser
 
             IsMValueConvertible = interfaces.Contains(FunctionTypes.MValueConvertible);
 
-            var elementType = type.GetElementType();
+            var elementType = paramType.GetElementType();
             if (elementType != null)
             {
                 ElementType = elementType;
                 Element = new FunctionTypeInfo(elementType);
             }
 
-            IsEventParams = type.GetCustomAttribute<EventParams>() != null;
+            if (paramInfo != null)
+            {
+                IsParamArray = paramInfo.GetCustomAttribute<ParamArrayAttribute>() != null;
+            }
 
-            IsNullable = type.Name.StartsWith("Nullable");
+            IsNullable = paramType.Name.StartsWith("Nullable");
             if (IsNullable)
             {
-                var genericArguments = type.GetGenericArguments();
+                var genericArguments = paramType.GetGenericArguments();
                 if (genericArguments.Length != 1)
                 {
                     IsNullable = false;
@@ -126,7 +129,7 @@ namespace AltV.Net.FunctionParser
                 }
             }
             
-            IsEnum = type.IsEnum;
+            IsEnum = paramType.IsEnum;
         }
     }
 }

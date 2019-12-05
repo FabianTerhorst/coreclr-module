@@ -618,9 +618,9 @@ namespace AltV.Net
                 case MValueFunctionCallback value:
                     CreateMValueFunction(out mValue, Alt.Server.Resource.CSharpResourceImpl.CreateInvoker(value));
                     return;
-                case Net.Function function:
+                case Function function:
                     CreateMValueFunction(out mValue,
-                        Alt.Server.Resource.CSharpResourceImpl.CreateInvoker(function.call));
+                        Alt.Server.Resource.CSharpResourceImpl.CreateInvoker(function.Call));
                     return;
                 case IDictionary dictionary:
                     dictKeys = new string[dictionary.Count];
