@@ -257,12 +257,12 @@ namespace AltV.Net
                 {
                     var remainingLength = length - requiredArgsCount;
                     var remainingValues = lastTypeInfo.CreateArrayOfElementType(remainingLength);
-                    var objectParser = objectParsers[^1];
+                    var constParser = constParsers[^1];
                     var lastArg = args[^1];
                     for (var i = 0; i < remainingLength; i++)
                     {
                         remainingValues.SetValue(
-                            objectParser(values[i + requiredArgsCount].ToObject(), lastArg, lastTypeInfo.Element), i);
+                            constParser(in values[i + requiredArgsCount], lastArg, lastTypeInfo.Element), i);
                     }
 
                     invokeValues[^1] = remainingValues;
@@ -302,12 +302,12 @@ namespace AltV.Net
                 {
                     var remainingLength = length - requiredArgsCount - 1;
                     var remainingValues = lastTypeInfo.CreateArrayOfElementType(remainingLength);
-                    var objectParser = objectParsers[^1];
+                    var constParser = constParsers[^1];
                     var lastArg = args[^1];
                     for (var i = 0; i < remainingLength; i++)
                     {
                         remainingValues.SetValue(
-                            objectParser(values[i + requiredArgsCount - 1].ToObject(), lastArg, lastTypeInfo.Element), i);
+                            constParser(in values[i + requiredArgsCount - 1], lastArg, lastTypeInfo.Element), i);
                     }
 
                     invokeValues[^1] = remainingValues;
