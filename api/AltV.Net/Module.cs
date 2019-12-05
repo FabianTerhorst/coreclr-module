@@ -1002,7 +1002,7 @@ namespace AltV.Net
         {
             if (function == null) return;
             functionExports[key] = function;
-            MValueFunctionCallback callDelegate = function.call;
+            MValueFunctionCallback callDelegate = function.Call;
             functionExportHandles.AddFirst(GCHandle.Alloc(callDelegate));
             Alt.Server.CreateMValueFunction(out var mValue,
                 AltNative.MValueNative.Invoker_Create(ModuleResource.ResourceImplPtr, callDelegate));

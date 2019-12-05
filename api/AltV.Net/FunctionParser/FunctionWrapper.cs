@@ -26,8 +26,7 @@ namespace AltV.Net.FunctionParser
                 mValuePointers[i] = mValues[i].nativePointer;
             }
 
-            var result = IntPtr.Zero;
-            function(mValuePointers, ref result);
+            function(mValuePointers, out var result);
             for (var i = 0; i < length; i++)
             {
                 mValues[i].Dispose();
