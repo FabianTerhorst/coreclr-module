@@ -40,7 +40,7 @@ namespace AltV.Net.FunctionParser
         public readonly Func<IDictionary> CreateDictionary;
 
         public readonly Func<int, Array> CreateArrayOfElementType;
-        
+
         public readonly Func<int, Array> CreateArrayOfTypeExp;
 
         public readonly object DefaultValue;
@@ -52,6 +52,12 @@ namespace AltV.Net.FunctionParser
         public readonly Type NullableType;
 
         public readonly bool IsEnum;
+
+        public readonly FunctionMValueConstParser ConstParser;
+
+        public readonly FunctionStringParser StringParser;
+
+        public readonly FunctionObjectParser ObjectParser;
 
         public FunctionTypeInfo(Type paramType, ParameterInfo paramInfo = null)
         {
@@ -114,11 +120,11 @@ namespace AltV.Net.FunctionParser
             {
                 ElementType = elementType;
                 Element = new FunctionTypeInfo(elementType);
-                
+
                 var arraySizeParam = Expression.Parameter(typeof(int));
                 CreateArrayOfTypeExp = Expression.Lambda<Func<int, Array>>(
                     Expression.NewArrayBounds(ElementType, arraySizeParam),
-                    new[] { arraySizeParam }
+                    new[] {arraySizeParam}
                 ).Compile();
             }
             else
@@ -145,7 +151,100 @@ namespace AltV.Net.FunctionParser
                     DefaultValue = Activator.CreateInstance(typeof(Nullable<>).MakeGenericType(NullableType));
                 }
             }
+
             IsEnum = paramType.IsEnum;
+
+
+            if (paramType == FunctionTypes.Obj)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseObject;
+                ObjectParser = FunctionObjectParsers.ParseObject;
+                StringParser = FunctionStringParsers.ParseObject;
+            }
+            else if (paramType == FunctionTypes.Bool)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseBool;
+                ObjectParser = FunctionObjectParsers.ParseBool;
+                StringParser = FunctionStringParsers.ParseBool;
+            }
+            else if (paramType == FunctionTypes.Int)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseInt;
+                ObjectParser = FunctionObjectParsers.ParseInt;
+                StringParser = FunctionStringParsers.ParseInt;
+            }
+            else if (paramType == FunctionTypes.Long)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseLong;
+                ObjectParser = FunctionObjectParsers.ParseLong;
+                StringParser = FunctionStringParsers.ParseLong;
+            }
+            else if (paramType == FunctionTypes.UInt)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseUInt;
+                ObjectParser = FunctionObjectParsers.ParseUInt;
+                StringParser = FunctionStringParsers.ParseUInt;
+            }
+            else if (paramType == FunctionTypes.ULong)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseULong;
+                ObjectParser = FunctionObjectParsers.ParseULong;
+                StringParser = FunctionStringParsers.ParseULong;
+            }
+            else if (paramType == FunctionTypes.Float)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseFloat;
+                ObjectParser = FunctionObjectParsers.ParseFloat;
+                StringParser = FunctionStringParsers.ParseFloat;
+            }
+            else if (paramType == FunctionTypes.Double)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseDouble;
+                ObjectParser = FunctionObjectParsers.ParseDouble;
+                StringParser = FunctionStringParsers.ParseDouble;
+            }
+            else if (paramType == FunctionTypes.String)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseString;
+                ObjectParser = FunctionObjectParsers.ParseString;
+                StringParser = FunctionStringParsers.ParseString;
+            }
+            else if (paramType.BaseType == FunctionTypes.Array)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseArray;
+                ObjectParser = FunctionObjectParsers.ParseArray;
+                StringParser = FunctionStringParsers.ParseArray;
+            }
+            else if (IsEntity)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseEntity;
+                ObjectParser = FunctionObjectParsers.ParseEntity;
+                StringParser = FunctionStringParsers.ParseEntity;
+            }
+            else if (IsDict)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseDictionary;
+                ObjectParser = FunctionObjectParsers.ParseDictionary;
+                StringParser = FunctionStringParsers.ParseDictionary;
+            }
+            else if (IsMValueConvertible)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseConvertible;
+                ObjectParser = FunctionObjectParsers.ParseConvertible;
+                StringParser = FunctionStringParsers.ParseConvertible;
+            }
+            else if (paramType == FunctionTypes.FunctionType)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseFunction;
+                ObjectParser = FunctionObjectParsers.ParseFunction;
+                StringParser = FunctionStringParsers.ParseFunction;
+            }
+            else if (IsEnum)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseEnum;
+                ObjectParser = FunctionObjectParsers.ParseEnum;
+                StringParser = null;
+            }
         }
 
         public Array CreateArrayOfType(int size, Type type)

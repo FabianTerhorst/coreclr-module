@@ -243,26 +243,26 @@ namespace AltV.Net
             {
                 invokeValues[i] = typeInfos[i].DefaultValue;
             }
-
-            /*if (length > requiredArgsCount && typeInfos[^1].IsParamArray)
-            {
-                var remainingValues = values[requiredArgsCount..length];
-                Alt.Server.CreateMValue(out var cValueConst, remainingValues);
-                invokeValues[^1] = constParsers[^1](in cValueConst, args[^1], typeInfos[^1]);
-            }*/
+            
             if (length > requiredArgsCount)
             {
                 var lastTypeInfo = typeInfos[^1];
                 if (lastTypeInfo.IsParamArray)
                 {
                     var remainingLength = length - requiredArgsCount;
-                    var remainingValues = lastTypeInfo.CreateArrayOfElementType(remainingLength);
-                    var constParser = constParsers[^1];
-                    var lastArg = args[^1];
-                    for (var i = 0; i < remainingLength; i++)
+                    var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
+                    var elementTypeInfo = lastTypeInfo.Element;
+                    var elementConstParser = elementTypeInfo.ConstParser;
+                    var elementType = lastTypeInfo.ElementType;
+                    if (elementConstParser != null)
                     {
-                        remainingValues.SetValue(
-                            constParser(in values[i + requiredArgsCount], lastArg, lastTypeInfo.Element), i);
+                        for (var i = 0; i < remainingLength; i++)
+                        {
+                            var elementObject = elementConstParser(in values[i + requiredArgsCount],
+                                elementType, lastTypeInfo.Element);
+                            var convertedElementObject = Convert.ChangeType(elementObject, elementType);
+                            remainingValues.SetValue(convertedElementObject, i);
+                        }
                     }
 
                     invokeValues[^1] = remainingValues;
