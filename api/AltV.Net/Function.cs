@@ -157,7 +157,8 @@ namespace AltV.Net
                 }
             }
 
-            return new Function(func, returnType, genericArguments, constParsers, objectParsers, stringParsers, typeInfos, requiredArgsCount);
+            return new Function(func, returnType, genericArguments, constParsers, objectParsers, stringParsers,
+                typeInfos, requiredArgsCount);
         }
 
         /*private static bool CheckArgsLength(Type[] args, int requiredArgsCount, FunctionTypeInfo[] typeInfos,
@@ -195,7 +196,8 @@ namespace AltV.Net
 
         private Function(Delegate @delegate, Type returnType, Type[] args,
             FunctionMValueConstParser[] constParsers,
-            FunctionObjectParser[] objectParsers, FunctionStringParser[] stringParsers, FunctionTypeInfo[] typeInfos, int requiredArgsCount)
+            FunctionObjectParser[] objectParsers, FunctionStringParser[] stringParsers, FunctionTypeInfo[] typeInfos,
+            int requiredArgsCount)
         {
             this.@delegate = @delegate;
             this.returnType = returnType;
@@ -205,7 +207,7 @@ namespace AltV.Net
             this.stringParsers = stringParsers;
             this.typeInfos = typeInfos;
             this.requiredArgsCount = requiredArgsCount;
-            
+
             var parameterDefaultValues = ParameterDefaultValues
                 .GetParameterDefaultValues(@delegate.Method);
 
@@ -228,6 +230,7 @@ namespace AltV.Net
             {
                 return null;
             }
+
             var argsLength = args.Length;
             var invokeValues = new object[argsLength];
             var parserValuesLength = Math.Min(requiredArgsCount, length);
@@ -235,6 +238,7 @@ namespace AltV.Net
             {
                 invokeValues[i] = constParsers[i](in values[i], args[i], typeInfos[i]);
             }
+
             for (var i = parserValuesLength; i < argsLength; i++)
             {
                 invokeValues[i] = typeInfos[i].DefaultValue;
@@ -258,6 +262,7 @@ namespace AltV.Net
             {
                 return null;
             }
+
             var argsLength = args.Length;
             var invokeValues = new object[argsLength];
             var parserValuesLength = Math.Min(requiredArgsCount, length);
@@ -271,11 +276,19 @@ namespace AltV.Net
                 invokeValues[i] = typeInfos[i].DefaultValue;
             }*/
 
-            if (length > requiredArgsCount && typeInfos[^1].IsParamArray)
+            var lastTypeInfo = typeInfos[^1];
+            if (length > requiredArgsCount && lastTypeInfo.IsParamArray)
             {
-                var remainingValues = values[^requiredArgsCount..length];
-                Alt.Server.CreateMValue(out var cValueConst, remainingValues);
-                invokeValues[^1] = constParsers[^1](in cValueConst, args[^1], typeInfos[^1]);
+                var remainingLength = requiredArgsCount - length;
+                var remainingValues = lastTypeInfo.CreateArrayOfElementType(remainingLength);
+                var objectParser = objectParsers[^1];
+                var lastArg = args[^1];
+                for (var i = 0; i < remainingLength; i++)
+                {
+                    remainingValues.SetValue(objectParser(values[i + requiredArgsCount], lastArg, lastTypeInfo.Element), i);
+                }
+
+                invokeValues[^1] = remainingValues;
             }
 
             var resultObj = @delegate.DynamicInvoke(invokeValues);
@@ -352,6 +365,7 @@ namespace AltV.Net
             {
                 return null;
             }
+
             var invokeValues = new object[length + 1];
             invokeValues[0] = player;
             for (var i = 0; i < length; i++)
@@ -361,8 +375,8 @@ namespace AltV.Net
 
             return invokeValues;
         }
-        
-        
+
+
         public object Call(string[] values, IPlayer player)
         {
             var length = values.Length;
@@ -370,6 +384,7 @@ namespace AltV.Net
             {
                 return null;
             }
+
             var argsLength = args.Length;
             var invokeValues = new object[argsLength];
             invokeValues[0] = player;
@@ -405,6 +420,7 @@ namespace AltV.Net
                 resultMValue = MValueConst.Nil;
                 return;
             }
+
             Alt.Server.CreateMValue(out resultMValue, result);
         }
 
@@ -447,6 +463,7 @@ namespace AltV.Net
             {
                 mValues[i] = new MValueConst(nativePointers[i]);
             }
+
             Alt.Server.CreateMValue(out var resultMValue, Call(mValues));
             result = resultMValue.nativePointer;
         }
