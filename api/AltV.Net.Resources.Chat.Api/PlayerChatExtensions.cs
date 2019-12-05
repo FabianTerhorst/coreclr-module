@@ -6,7 +6,8 @@ namespace AltV.Net.Resources.Chat.Api
     {
         public static void SendChatMessage(this IPlayer player, string message)
         {
-            AltChat.Chat.Send(player, message);
+            //AltChat.Chat.Send(player, message);
+            player.Emit("chat:message", null, message);
         }
     }
 }

@@ -12,9 +12,20 @@ namespace AltV.Net.Example
         [Command]
         public void MyCommand(IPlayer player, string myArgument)
         {
-            
         }
-        
+
+        [Command("bla")]
+        public void MyCommand2(IPlayer player, int? myArgument)
+        {
+            Console.WriteLine("bla with arg:" + myArgument);
+        }
+
+        [Command("bla", true, new [] {"bla2", "bla3"})]
+        public void MyCommand2(IPlayer player, string myArgument)
+        {
+            Console.WriteLine("bla with greedy arg:" + myArgument);
+        }
+
         [Event("eventName")]
         public void MyEvent(IPlayer player)
         {
@@ -26,11 +37,11 @@ namespace AltV.Net.Example
             Console.WriteLine(message);
         }
 
-        [Event("MyEventName")]
+        /*[Event("MyEventName")]
         public static void MyEventName2(string message)
         {
             Console.WriteLine(message);
-        }
+        }*/
 
         [ScriptEvent(ScriptEventType.PlayerConnect)]
         public void MyPlayerConnect(IPlayer player, string reason)
@@ -63,19 +74,19 @@ namespace AltV.Net.Example
         {
             Console.WriteLine("vehicle removed3: " + vehicle);
         }
-        
+
         [ScriptEvent(ScriptEventType.VehicleRemove)]
         public void VehicleRemoveInvalidMethodSignature(MyPlayer player)
         {
             Console.WriteLine("vehicle removed invalid: " + player);
         }
-        
+
         [ScriptEvent(ScriptEventType.VehicleRemove)]
         public void VehicleRemoveInvalidMethodSignature2(IMyInvalidVehicle vehicle)
         {
             Console.WriteLine("vehicle removed invalid2: " + vehicle);
         }
-        
+
         [AsyncScriptEvent(ScriptEventType.VehicleRemove)]
         public Task VehicleRemove2Async(IMyVehicle vehicle)
         {

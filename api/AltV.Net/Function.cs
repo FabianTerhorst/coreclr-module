@@ -1,9 +1,12 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
 using AltV.Net.FunctionParser;
+using AltV.Net.ObjectMethodExecutors;
+using AltV.Net.ObjectMethodExecutors.ParameterValues;
 
 namespace AltV.Net
 {
@@ -59,6 +62,10 @@ namespace AltV.Net
             {
                 var arg = genericArguments[i];
                 var typeInfo = new FunctionTypeInfo(arg);
+                if (typeInfo.IsNullable)
+                {
+                    arg = typeInfo.NullableType;
+                }
                 typeInfos[i] = typeInfo;
 
                 if (!typeInfo.IsNullable && !typeInfo.IsEventParams)
@@ -165,7 +172,7 @@ namespace AltV.Net
 
             for (int i = 0, length = typeInfos.Length; i < length; i++)
             {
-                if (!typeInfos[i].IsNullable || i - 1 >= length) continue;
+                if (!typeInfos[i].IsNullable || i + 1 >= length) continue;
                 if (!typeInfos[i + 1].IsNullable && !typeInfos[i + 1].IsEventParams)
                 {
                     throw new ArgumentException(
@@ -242,6 +249,10 @@ namespace AltV.Net
 
         private readonly int requiredArgsCount;
 
+        private readonly ObjectMethodExecutor objectMethodExecutor;
+
+        private readonly object target;
+
         private Function(Delegate @delegate, Type returnType, Type[] args,
             FunctionMValueConstParser[] constParsers,
             FunctionObjectParser[] objectParsers, FunctionStringParser[] stringParsers, FunctionTypeInfo[] typeInfos, CallArgsLengthCheck callArgsLengthCheck,
@@ -257,6 +268,15 @@ namespace AltV.Net
             this.callArgsLengthCheck = callArgsLengthCheck;
             this.callArgsLengthCheckPlayer = callArgsLengthCheckPlayer;
             this.requiredArgsCount = requiredArgsCount;
+            
+            var parameterDefaultValues = ParameterDefaultValues
+                .GetParameterDefaultValues(@delegate.Method);
+
+            objectMethodExecutor = ObjectMethodExecutor.Create(
+                @delegate.Method,
+                @delegate.Target?.GetType().GetTypeInfo(),
+                parameterDefaultValues);
+            target = @delegate.Target;
         }
 
         //TODO: make call async because it doesnt matter there is no concurrent problems inside
@@ -460,8 +480,15 @@ namespace AltV.Net
         public object[] CalculateStringInvokeValues(string[] values, IPlayer player)
         {
             var length = values.Length;
-            if (length + 1 != args.Length) return null;
-            if (!typeInfos[0].IsPlayer) return null;
+            if (length + 1 != args.Length)
+            {
+                return null;
+            }
+
+            if (!typeInfos[0].IsPlayer)
+            {
+                return null;
+            }
             var invokeValues = new object[length + 1];
             invokeValues[0] = player;
             for (var i = 0; i < length; i++)
@@ -471,6 +498,41 @@ namespace AltV.Net
 
             return invokeValues;
         }
+        
+        
+        public object Call(string[] values, IPlayer player)
+        {
+            var length = values.Length;
+            if (length + 1 < requiredArgsCount)
+            {
+                return null;
+            }
+            var argsLength = args.Length;
+            var invokeValues = new object[argsLength];
+            invokeValues[0] = player;
+            var parserValuesLength = Math.Min(argsLength, length);
+            for (var i = 0; i < parserValuesLength; i++)
+            {
+                invokeValues[i + 1] = stringParsers[i + 1](values[i], args[i + 1], typeInfos[i + 1]);
+            }
+
+            for (var i = parserValuesLength; i < (argsLength - 1); i++)
+            {
+                invokeValues[i + 1] = typeInfos[i + 1].DefaultValue;
+            }
+
+            //TODO: fill remaining values in event params
+
+            //var resultObj = objectMethodExecutor.Execute(target, invokeValues);
+            var resultObj = @delegate.DynamicInvoke(invokeValues);
+            if (returnType == FunctionTypes.Void)
+            {
+                return null;
+            }
+
+            return resultObj;
+        }
+
 
         /*internal MValue Invoke(object[] invokeValues)
         {

@@ -122,7 +122,7 @@ namespace AltV.Net.FunctionParser
                 else
                 {
                     NullableType = genericArguments[0];
-                    DefaultValue = typeof(Nullable<>).MakeGenericType(NullableType);
+                    DefaultValue = Activator.CreateInstance(typeof(Nullable<>).MakeGenericType(NullableType));
                 }
             }
             
