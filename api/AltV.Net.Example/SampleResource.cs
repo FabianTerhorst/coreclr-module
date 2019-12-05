@@ -275,9 +275,9 @@ namespace AltV.Net.Example
 
             Alt.Emit("1337", 1);
 
-            Alt.On<IMyVehicle>("MyServerEvent3", MyServerEventHandler2, MyServerEventParser3);
+            Alt.OnServer<IMyVehicle>("MyServerEvent3", MyServerEventHandler2, MyServerEventParser3);
 
-            Alt.On<IMyVehicle>("MyServerEvent3", MyServerEventHandlerAsync, MyServerEventParserAsync);
+            Alt.OnServer<IMyVehicle>("MyServerEvent3", MyServerEventHandlerAsync, MyServerEventParserAsync);
 
             Alt.Emit("MyServerEvent3", vehicle);
 
@@ -287,11 +287,11 @@ namespace AltV.Net.Example
 
             Bla();
 
-            Alt.On<IPlayer, string>("MyEvent", MyEventHandler, MyParser);
+            Alt.OnClient<IPlayer, string>("MyEvent", MyEventHandler, MyParser);
 
-            Alt.On<string>("MyServerEvent", MyServerEventHandler, MyServerEventParser);
+            Alt.OnServer<string>("MyServerEvent", MyServerEventHandler, MyServerEventParser);
 
-            Alt.On<string>("MyServerEvent2", MyServerEventHandler, MyServerEventParser2);
+            Alt.OnServer<string>("MyServerEvent2", MyServerEventHandler, MyServerEventParser2);
 
             Alt.Emit("MyServerEvent", "test-custom-parser");
 
