@@ -275,20 +275,24 @@ namespace AltV.Net
             {
                 invokeValues[i] = typeInfos[i].DefaultValue;
             }*/
-
-            var lastTypeInfo = typeInfos[^1];
-            if (length > requiredArgsCount && lastTypeInfo.IsParamArray)
+            
+            if (length > requiredArgsCount)
             {
-                var remainingLength = requiredArgsCount - length;
-                var remainingValues = lastTypeInfo.CreateArrayOfElementType(remainingLength);
-                var objectParser = objectParsers[^1];
-                var lastArg = args[^1];
-                for (var i = 0; i < remainingLength; i++)
+                var lastTypeInfo = typeInfos[^1];
+                if (lastTypeInfo.IsParamArray)
                 {
-                    remainingValues.SetValue(objectParser(values[i + requiredArgsCount], lastArg, lastTypeInfo.Element), i);
-                }
+                    var remainingLength = requiredArgsCount - length;
+                    var remainingValues = lastTypeInfo.CreateArrayOfElementType(remainingLength);
+                    var objectParser = objectParsers[^1];
+                    var lastArg = args[^1];
+                    for (var i = 0; i < remainingLength; i++)
+                    {
+                        remainingValues.SetValue(
+                            objectParser(values[i + requiredArgsCount], lastArg, lastTypeInfo.Element), i);
+                    }
 
-                invokeValues[^1] = remainingValues;
+                    invokeValues[^1] = remainingValues;
+                }
             }
 
             var resultObj = @delegate.DynamicInvoke(invokeValues);
