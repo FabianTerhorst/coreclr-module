@@ -139,6 +139,7 @@ namespace AltV.Net
                 {
                     constParsers[i] = FunctionMValueConstParsers.ParseEnum;
                     objectParsers[i] = FunctionObjectParsers.ParseEnum;
+                    stringParsers[i] = FunctionStringParsers.ParseEnum;
                 }
                 else
                 {

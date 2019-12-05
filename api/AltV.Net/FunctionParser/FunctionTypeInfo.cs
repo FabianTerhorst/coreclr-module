@@ -243,7 +243,7 @@ namespace AltV.Net.FunctionParser
             {
                 ConstParser = FunctionMValueConstParsers.ParseEnum;
                 ObjectParser = FunctionObjectParsers.ParseEnum;
-                StringParser = null;
+                StringParser = FunctionStringParsers.ParseEnum;
             }
         }
 
