@@ -26,20 +26,22 @@ namespace AltV.Net.Resources.Chat.Api
             //AltChat.Init(chat);
             foreach (var script in scripts)
             {
-                RegisterEvents(script/*, chat*/);
+                RegisterEvents(script /*, chat*/);
             }
 
             Alt.On<IPlayer, string>("chat:message", OnChatMessage, OnChatMessageParser);
+            Alt.OnServer<IPlayer, string>("chat:message", OnChatMessage, OnChatMessageParserServer);
         }
 
-        private static void OnChatMessageParser(IPlayer player, MValueConst[] mValueArray, Action<IPlayer, string> action)
+        private static void OnChatMessageParser(IPlayer player, MValueConst[] mValueArray,
+            Action<IPlayer, string> action)
         {
             if (mValueArray.Length != 1) return;
             var arg = mValueArray[0];
             if (arg.type != MValueConst.Type.STRING) return;
             action(player, arg.GetString());
         }
-        
+
         private static void OnChatMessageParserServer(MValueConst[] mValueArray, Action<IPlayer, string> action)
         {
             if (mValueArray.Length != 1) return;
@@ -62,24 +64,38 @@ namespace AltV.Net.Resources.Chat.Api
                 LinkedList<CommandDelegate> delegates;
                 if (argsLength < 2)
                 {
-                    if (commandDelegates.TryGetValue(cmd, out delegates))
+                    if (commandDelegates.TryGetValue(cmd, out delegates) && delegates.Count > 0)
                     {
                         foreach (var commandDelegate in delegates)
                         {
                             commandDelegate(player, EmptyArgs);
                         }
                     }
+                    else
+                    {
+                        foreach (var doesNotExistsDelegate in AltChat.CommandDoesNotExistsDelegates)
+                        {
+                            doesNotExistsDelegate(player, cmd);
+                        }
+                    }
 
                     return;
                 }
-                
+
                 var argsArray = new string[argsLength - 1];
                 Array.Copy(args, 1, argsArray, 0, argsLength - 1);
-                if (commandDelegates.TryGetValue(cmd, out delegates))
+                if (commandDelegates.TryGetValue(cmd, out delegates) && delegates.Count > 0)
                 {
                     foreach (var commandDelegate in delegates)
                     {
                         commandDelegate(player, argsArray);
+                    }
+                }
+                else
+                {
+                    foreach (var doesNotExistsDelegate in AltChat.CommandDoesNotExistsDelegates)
+                    {
+                        doesNotExistsDelegate(player, cmd);
                     }
                 }
             }
@@ -97,81 +113,106 @@ namespace AltV.Net.Resources.Chat.Api
             Handles.Clear();
         }
 
-        private void RegisterEvents(object target/*, Chat chat*/)
+        private void RegisterEvents(object target /*, Chat chat*/)
         {
-            ModuleScriptMethodIndexer.Index(target, new[] {typeof(Command)},
+            ModuleScriptMethodIndexer.Index(target, new[] {typeof(Command), typeof(CommandEvent)},
                 (baseEvent, eventMethod, eventMethodDelegate) =>
                 {
-                    if (!(baseEvent is Command command)) return;
-                    var commandName = command.Name ?? eventMethod.Name;
-                    Handles.AddLast(GCHandle.Alloc(eventMethodDelegate));
-                    var function = Function.Create(eventMethodDelegate);
-                    if (function == null)
+                    if (baseEvent is Command command)
                     {
-                        Alt.Log("Unsupported Command method: " + eventMethod);
-                        return;
-                    }
-                    Functions.AddLast(function);
-                    /*chat.RegisterCommand(commandName,
-                        (player, arguments) =>
+                        var commandName = command.Name ?? eventMethod.Name;
+                        Handles.AddLast(GCHandle.Alloc(eventMethodDelegate));
+                        var function = Function.Create(eventMethodDelegate);
+                        if (function == null)
                         {
-                            function.InvokeNoResult(function.CalculateStringInvokeValues(arguments, player));
-                        });*/
-                    LinkedList<CommandDelegate> delegates;
-                    if (!commandDelegates.TryGetValue(commandName, out delegates))
-                    {
-                        delegates = new LinkedList<CommandDelegate>();
-                        commandDelegates[commandName] = delegates;
-                    }
+                            Alt.Log("Unsupported Command method: " + eventMethod);
+                            return;
+                        }
 
-                    if (command.GreedyArg)
-                    {
-                        delegates.AddLast((player, arguments) =>
-                        {
-                            var args = function.CalculateStringInvokeValues(new [] {string.Join(" ", arguments)}, player);
-                            if (args == null) return;
-                            function.InvokeNoResult(args);
-                        });
-                    }
-                    else
-                    {
-                        delegates.AddLast((player, arguments) =>
-                        {
-                            //var args = function.CalculateStringInvokeValues(arguments, player);
-                            //if (args == null) return;
-                            function.Call(arguments, player);
-                        });
-                    }
-
-                    var aliases = command.Aliases;
-                    if (aliases != null)
-                    {
-                        foreach (var alias in aliases)
-                        {
-                            if (!commandDelegates.TryGetValue(alias, out delegates))
+                        Functions.AddLast(function);
+                        /*chat.RegisterCommand(commandName,
+                            (player, arguments) =>
                             {
-                                delegates = new LinkedList<CommandDelegate>();
-                                commandDelegates[alias] = delegates;
-                            }
+                                function.InvokeNoResult(function.CalculateStringInvokeValues(arguments, player));
+                            });*/
+                        LinkedList<CommandDelegate> delegates;
+                        if (!commandDelegates.TryGetValue(commandName, out delegates))
+                        {
+                            delegates = new LinkedList<CommandDelegate>();
+                            commandDelegates[commandName] = delegates;
+                        }
 
-                            if (command.GreedyArg)
+                        if (command.GreedyArg)
+                        {
+                            delegates.AddLast((player, arguments) =>
                             {
-                                delegates.AddLast((player, arguments) =>
+                                var args = function.CalculateStringInvokeValues(new[] {string.Join(" ", arguments)},
+                                    player);
+                                if (args == null) return;
+                                function.InvokeNoResult(args);
+                            });
+                        }
+                        else
+                        {
+                            delegates.AddLast((player, arguments) =>
+                            {
+                                //var args = function.CalculateStringInvokeValues(arguments, player);
+                                //if (args == null) return;
+                                function.Call(arguments, player);
+                            });
+                        }
+
+                        var aliases = command.Aliases;
+                        if (aliases != null)
+                        {
+                            foreach (var alias in aliases)
+                            {
+                                if (!commandDelegates.TryGetValue(alias, out delegates))
                                 {
-                                    var args = function.CalculateStringInvokeValues(new [] {string.Join(" ", arguments)}, player);
-                                    if (args == null) return;
-                                    function.InvokeNoResult(args);
-                                });
-                            }
-                            else
-                            {
-                                delegates.AddLast((player, arguments) =>
+                                    delegates = new LinkedList<CommandDelegate>();
+                                    commandDelegates[alias] = delegates;
+                                }
+
+                                if (command.GreedyArg)
                                 {
-                                    var args = function.CalculateStringInvokeValues(arguments, player);
-                                    if (args == null) return;
-                                    function.InvokeNoResult(args);
-                                });
+                                    delegates.AddLast((player, arguments) =>
+                                    {
+                                        var args = function.CalculateStringInvokeValues(
+                                            new[] {string.Join(" ", arguments)},
+                                            player);
+                                        if (args == null) return;
+                                        function.InvokeNoResult(args);
+                                    });
+                                }
+                                else
+                                {
+                                    delegates.AddLast((player, arguments) =>
+                                    {
+                                        var args = function.CalculateStringInvokeValues(arguments, player);
+                                        if (args == null) return;
+                                        function.InvokeNoResult(args);
+                                    });
+                                }
                             }
+                        }
+                    }
+                    else if (baseEvent is CommandEvent commandEvent)
+                    {
+                        var commandEventType = commandEvent.EventType;
+                        ScriptFunction scriptFunction;
+                        switch (commandEventType)
+                        {
+                            case CommandEventType.CommandNotFound:
+                                scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                    new[] {typeof(IPlayer), typeof(string)});
+                                if (scriptFunction == null) return;
+                                AltChat.OnCommandDoesNotExists += (player, commandName) =>
+                                {
+                                    scriptFunction.Set(player);
+                                    scriptFunction.Set(commandName);
+                                    scriptFunction.Call();
+                                };
+                                break;
                         }
                     }
                 });

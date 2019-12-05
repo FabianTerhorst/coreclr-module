@@ -4,7 +4,7 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Async.RPC
 {
-    public static class AsyncRpc
+    /*public static class AsyncRpc
     {
         internal static Func<IPlayer, string, object, Task> EmitSingleFunc;
 
@@ -12,5 +12,5 @@ namespace AltV.Net.Async.RPC
         {
             return EmitSingleFunc(player, eventName, data);
         }
-    }
+    }*/
 }

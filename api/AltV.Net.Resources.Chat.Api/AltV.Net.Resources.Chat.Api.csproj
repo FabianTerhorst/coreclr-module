@@ -2,7 +2,16 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
+         <PackageVersion>1.0.0-dev-preview</PackageVersion>
+        <PackageLicenseFile>license.txt</PackageLicenseFile>
+        <PackageReleaseNotes>update dependencies</PackageReleaseNotes>
+        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
+
+        <ItemGroup>
+        <None Include="license\license.txt" Pack="true" PackagePath="" />
+        <None Include="icon.png" Pack="true" PackagePath="\" />
+    </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />

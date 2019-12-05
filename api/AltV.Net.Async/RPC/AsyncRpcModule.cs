@@ -7,7 +7,8 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Async.RPC
 {
-    public class AsyncRpcModule// : IModule
+    //TODO: move to own Alt.Net.Rpc package so it doesnt get loaded for all that include async
+    /*public class AsyncRpcModule// : IModule
     {
         private static readonly IDictionary<IPlayer, SemaphoreSlim> PlayerSemaphores = new Dictionary<IPlayer, SemaphoreSlim>();
         
@@ -120,5 +121,5 @@ namespace AltV.Net.Async.RPC
                 }
             });
         }
-    }
+    }*/
 }

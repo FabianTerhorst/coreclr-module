@@ -5,7 +5,7 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Resources.Chat.Api
 {
-    internal class Chat : IDisposable
+    /*internal class Chat : IDisposable
     {
         private readonly Action<string> broadcast;
 
@@ -51,5 +51,5 @@ namespace AltV.Net.Resources.Chat.Api
 
             handles.Clear();
         }
-    }
+    }*/
 }

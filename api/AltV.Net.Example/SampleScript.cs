@@ -25,6 +25,12 @@ namespace AltV.Net.Example
         {
             Console.WriteLine("bla with greedy arg:" + myArgument);
         }
+        
+        [CommandEvent(CommandEventType.CommandNotFound)]
+        public void MyCommandNotFoundHandler(IPlayer player, string command)
+        {
+            Console.WriteLine("Command not found:" + command);
+        }
 
         [Event("eventName")]
         public void MyEvent(IPlayer player)
