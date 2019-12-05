@@ -29,7 +29,7 @@ namespace AltV.Net.Resources.Chat.Api
                 RegisterEvents(script /*, chat*/);
             }
 
-            Alt.On<IPlayer, string>("chat:message", OnChatMessage, OnChatMessageParser);
+            Alt.OnClient<IPlayer, string>("chat:message", OnChatMessage, OnChatMessageParser);
             //Alt.OnServer<IPlayer, string>("chat:message", OnChatMessage, OnChatMessageParserServer);
         }
 
