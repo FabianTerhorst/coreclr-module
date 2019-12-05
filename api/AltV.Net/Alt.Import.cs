@@ -126,6 +126,22 @@ namespace AltV.Net
             return true;
         }
 
+        public static bool Import(string resourceName, string key, out object value)
+        {
+            if (HostImport(resourceName, key, out value))
+            {
+                return true;
+            }
+
+            if (!Import(resourceName, key, out MValueConst mValue))
+            {
+                return false;
+            }
+
+            value = mValue.ToObject();
+            return true;
+        }
+        
         public static bool Import(string resourceName, string key, out string value)
         {
             if (HostImport(resourceName, key, out value))
