@@ -281,7 +281,7 @@ namespace AltV.Net
                 var lastTypeInfo = typeInfos[^1];
                 if (lastTypeInfo.IsParamArray)
                 {
-                    var remainingLength = requiredArgsCount - length;
+                    var remainingLength = length - requiredArgsCount;
                     var remainingValues = lastTypeInfo.CreateArrayOfElementType(remainingLength);
                     var objectParser = objectParsers[^1];
                     var lastArg = args[^1];
