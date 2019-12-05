@@ -50,98 +50,10 @@ namespace AltV.Net
                     requiredArgsCount++;
                 }
 
-                if (arg == FunctionTypes.Obj)
-                {
-                    //TODO: use MValue.ToObject here
-                    constParsers[i] = FunctionMValueConstParsers.ParseObject;
-                    objectParsers[i] = FunctionObjectParsers.ParseObject;
-                    stringParsers[i] = FunctionStringParsers.ParseObject;
-                }
-                else if (arg == FunctionTypes.Bool)
-                {
-                    constParsers[i] = FunctionMValueConstParsers.ParseBool;
-                    objectParsers[i] = FunctionObjectParsers.ParseBool;
-                    stringParsers[i] = FunctionStringParsers.ParseBool;
-                }
-                else if (arg == FunctionTypes.Int)
-                {
-                    constParsers[i] = FunctionMValueConstParsers.ParseInt;
-                    objectParsers[i] = FunctionObjectParsers.ParseInt;
-                    stringParsers[i] = FunctionStringParsers.ParseInt;
-                }
-                else if (arg == FunctionTypes.Long)
-                {
-                    constParsers[i] = FunctionMValueConstParsers.ParseLong;
-                    objectParsers[i] = FunctionObjectParsers.ParseLong;
-                    stringParsers[i] = FunctionStringParsers.ParseLong;
-                }
-                else if (arg == FunctionTypes.UInt)
-                {
-                    constParsers[i] = FunctionMValueConstParsers.ParseUInt;
-                    objectParsers[i] = FunctionObjectParsers.ParseUInt;
-                    stringParsers[i] = FunctionStringParsers.ParseUInt;
-                }
-                else if (arg == FunctionTypes.ULong)
-                {
-                    constParsers[i] = FunctionMValueConstParsers.ParseULong;
-                    objectParsers[i] = FunctionObjectParsers.ParseULong;
-                    stringParsers[i] = FunctionStringParsers.ParseULong;
-                }
-                else if (arg == FunctionTypes.Float)
-                {
-                    constParsers[i] = FunctionMValueConstParsers.ParseFloat;
-                    objectParsers[i] = FunctionObjectParsers.ParseFloat;
-                    stringParsers[i] = FunctionStringParsers.ParseFloat;
-                }
-                else if (arg == FunctionTypes.Double)
-                {
-                    constParsers[i] = FunctionMValueConstParsers.ParseDouble;
-                    objectParsers[i] = FunctionObjectParsers.ParseDouble;
-                    stringParsers[i] = FunctionStringParsers.ParseDouble;
-                }
-                else if (arg == FunctionTypes.String)
-                {
-                    constParsers[i] = FunctionMValueConstParsers.ParseString;
-                    objectParsers[i] = FunctionObjectParsers.ParseString;
-                    stringParsers[i] = FunctionStringParsers.ParseString;
-                }
-                else if (arg.BaseType == FunctionTypes.Array)
-                {
-                    constParsers[i] = FunctionMValueConstParsers.ParseArray;
-                    objectParsers[i] = FunctionObjectParsers.ParseArray;
-                    stringParsers[i] = FunctionStringParsers.ParseArray;
-                }
-                else if (typeInfo.IsEntity)
-                {
-                    constParsers[i] = FunctionMValueConstParsers.ParseEntity;
-                    objectParsers[i] = FunctionObjectParsers.ParseEntity;
-                    stringParsers[i] = FunctionStringParsers.ParseEntity;
-                }
-                else if (typeInfo.IsDict)
-                {
-                    constParsers[i] = FunctionMValueConstParsers.ParseDictionary;
-                    objectParsers[i] = FunctionObjectParsers.ParseDictionary;
-                    stringParsers[i] = FunctionStringParsers.ParseDictionary;
-                }
-                else if (typeInfo.IsMValueConvertible)
-                {
-                    constParsers[i] = FunctionMValueConstParsers.ParseConvertible;
-                    objectParsers[i] = FunctionObjectParsers.ParseConvertible;
-                    stringParsers[i] = FunctionStringParsers.ParseConvertible;
-                }
-                else if (arg == FunctionTypes.FunctionType)
-                {
-                    constParsers[i] = FunctionMValueConstParsers.ParseFunction;
-                    objectParsers[i] = FunctionObjectParsers.ParseFunction;
-                    stringParsers[i] = FunctionStringParsers.ParseFunction;
-                }
-                else if (typeInfo.IsEnum)
-                {
-                    constParsers[i] = FunctionMValueConstParsers.ParseEnum;
-                    objectParsers[i] = FunctionObjectParsers.ParseEnum;
-                    stringParsers[i] = FunctionStringParsers.ParseEnum;
-                }
-                else
+                constParsers[i] = typeInfo.ConstParser;
+                objectParsers[i] = typeInfo.ObjectParser;
+                stringParsers[i] = typeInfo.StringParser;
+                if (constParsers[i] == null || objectParsers[i] == null || stringParsers[i] == null)
                 {
                     // Unsupported type
                     return null;

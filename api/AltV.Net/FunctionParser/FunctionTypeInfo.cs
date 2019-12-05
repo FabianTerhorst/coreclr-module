@@ -245,6 +245,12 @@ namespace AltV.Net.FunctionParser
                 ObjectParser = FunctionObjectParsers.ParseEnum;
                 StringParser = FunctionStringParsers.ParseEnum;
             }
+            else
+            {
+                ConstParser = null;
+                ObjectParser = null;
+                StringParser = null;
+            }
         }
 
         public Array CreateArrayOfType(int size, Type type)
