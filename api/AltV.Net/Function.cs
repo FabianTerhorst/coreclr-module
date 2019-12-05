@@ -244,12 +244,31 @@ namespace AltV.Net
                 invokeValues[i] = typeInfos[i].DefaultValue;
             }
 
-            if (length > requiredArgsCount && typeInfos[^1].IsParamArray)
+            /*if (length > requiredArgsCount && typeInfos[^1].IsParamArray)
             {
                 var remainingValues = values[requiredArgsCount..length];
                 Alt.Server.CreateMValue(out var cValueConst, remainingValues);
                 invokeValues[^1] = constParsers[^1](in cValueConst, args[^1], typeInfos[^1]);
+            }*/
+            if (length > requiredArgsCount)
+            {
+                var lastTypeInfo = typeInfos[^1];
+                if (lastTypeInfo.IsParamArray)
+                {
+                    var remainingLength = length - requiredArgsCount;
+                    var remainingValues = lastTypeInfo.CreateArrayOfElementType(remainingLength);
+                    var objectParser = objectParsers[^1];
+                    var lastArg = args[^1];
+                    for (var i = 0; i < remainingLength; i++)
+                    {
+                        remainingValues.SetValue(
+                            objectParser(values[i + requiredArgsCount], lastArg, lastTypeInfo.Element), i);
+                    }
+
+                    invokeValues[^1] = remainingValues;
+                }
             }
+
 
             var resultObj = @delegate.DynamicInvoke(invokeValues);
             return returnType == FunctionTypes.Void ? null : resultObj;
@@ -281,14 +300,14 @@ namespace AltV.Net
                 var lastTypeInfo = typeInfos[^1];
                 if (lastTypeInfo.IsParamArray)
                 {
-                    var remainingLength = length - requiredArgsCount;
+                    var remainingLength = length - requiredArgsCount - 1;
                     var remainingValues = lastTypeInfo.CreateArrayOfElementType(remainingLength);
                     var objectParser = objectParsers[^1];
                     var lastArg = args[^1];
                     for (var i = 0; i < remainingLength; i++)
                     {
                         remainingValues.SetValue(
-                            objectParser(values[i + requiredArgsCount], lastArg, lastTypeInfo.Element), i);
+                            objectParser(values[i + requiredArgsCount - 1], lastArg, lastTypeInfo.Element), i);
                     }
 
                     invokeValues[^1] = remainingValues;
