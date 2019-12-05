@@ -18,7 +18,7 @@ namespace AltV.Net.FunctionParser
         public readonly bool IsBlip;
 
         public readonly bool IsCheckpoint;
-        
+
         public readonly bool IsColShape;
 
         public readonly bool IsDict;
@@ -39,6 +39,10 @@ namespace AltV.Net.FunctionParser
 
         public readonly Func<IDictionary> CreateDictionary;
 
+        public readonly Func<int, Array> CreateArrayOfElementType;
+        
+        public readonly Func<int, Array> CreateArrayOfTypeExp;
+
         public readonly object DefaultValue;
 
         public readonly bool IsEventParams;
@@ -48,9 +52,13 @@ namespace AltV.Net.FunctionParser
         public readonly Type NullableType;
 
         public readonly bool IsEnum;
-        
+
         public FunctionTypeInfo(Type type)
         {
+            var param = Expression.Parameter(typeof(int));
+            CreateArrayOfElementType = Expression.Lambda<Func<int, Array>>(
+                Expression.NewArrayBounds(type, param), param).Compile();
+
             IsList = type.BaseType == FunctionTypes.Array;
             IsDict = type.Name.StartsWith("Dictionary") || type.Name.StartsWith("IDictionary");
             if (IsDict)
@@ -107,6 +115,16 @@ namespace AltV.Net.FunctionParser
             {
                 ElementType = elementType;
                 Element = new FunctionTypeInfo(elementType);
+                
+                var arraySizeParam = Expression.Parameter(typeof(int));
+                CreateArrayOfTypeExp = Expression.Lambda<Func<int, Array>>(
+                    Expression.NewArrayBounds(ElementType, arraySizeParam),
+                    new[] { arraySizeParam }
+                ).Compile();
+            }
+            else
+            {
+                CreateArrayOfTypeExp = null;
             }
 
             IsEventParams = type.GetCustomAttribute<EventParams>() != null;
@@ -125,8 +143,20 @@ namespace AltV.Net.FunctionParser
                     DefaultValue = Activator.CreateInstance(typeof(Nullable<>).MakeGenericType(NullableType));
                 }
             }
-            
+
             IsEnum = type.IsEnum;
+        }
+
+        public Array CreateArrayOfType(int size, Type type)
+        {
+            if (CreateArrayOfTypeExp != null)
+            {
+                return CreateArrayOfTypeExp.Invoke(size);
+            }
+            else
+            {
+                return Array.CreateInstance(type, size);
+            }
         }
     }
 }

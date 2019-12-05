@@ -169,7 +169,9 @@ namespace AltV.Net.FunctionParser
                 return array;
             }
 
-            var typeArray = Array.CreateInstance(type, length);
+            
+            var typeArray = typeInfo != null ? typeInfo.CreateArrayOfType(length, type) : Array.CreateInstance(type, length);
+            
             for (var i = 0; i < length; i++)
             {
                 var currMValue = mValues[i];
