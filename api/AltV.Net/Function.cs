@@ -202,7 +202,7 @@ namespace AltV.Net
                     }
                     else
                     {
-                        var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(0);
+                        var remainingValues = lastTypeInfo.EmptyArrayOfType;
                         invokeValues[^1] = remainingValues;
                     }
                 }
@@ -260,7 +260,7 @@ namespace AltV.Net
                     }
                     else
                     {
-                        var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(0);
+                        var remainingValues = lastTypeInfo.EmptyArrayOfType;
                         invokeValues[^1] = remainingValues;
                     }
                 }
@@ -318,7 +318,7 @@ namespace AltV.Net
                     }
                     else
                     {
-                        var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(0);
+                        var remainingValues = lastTypeInfo.EmptyArrayOfType;
                         invokeValues[^1] = remainingValues;
                     }
                 }
@@ -374,7 +374,7 @@ namespace AltV.Net
                     }
                     else
                     {
-                        var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(0);
+                        var remainingValues = lastTypeInfo.EmptyArrayOfType;
                         invokeValues[^1] = remainingValues;
                     }
                 }
@@ -433,7 +433,7 @@ namespace AltV.Net
                     }
                     else
                     {
-                        var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(0);
+                        var remainingValues = lastTypeInfo.EmptyArrayOfType;
                         invokeValues[^1] = remainingValues;
                     }
                 }
