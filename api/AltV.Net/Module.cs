@@ -695,15 +695,16 @@ namespace AltV.Net
             }
 
             var length = args.Length;
-            var mValues = new MValueConst[length];
-            for (var i = 0; i < length; i++)
-            {
-                mValues[i] = new MValueConst(args[i]);
-            }
+            MValueConst[] mValues = null;
 
             if (eventBusClientParser.Count != 0 &&
                 eventBusClientParser.TryGetValue(name, out var parserEventHandlers))
             {
+                mValues = new MValueConst[length];
+                for (var i = 0; i < length; i++)
+                {
+                    mValues[i] = new MValueConst(args[i]);
+                }
                 foreach (var parserEventHandler in parserEventHandlers)
                 {
                     parserEventHandler.Call(player, mValues);
@@ -712,6 +713,14 @@ namespace AltV.Net
 
             if (eventBusClient.Count != 0 && eventBusClient.TryGetValue(name, out var eventHandlersClient))
             {
+                if (mValues == null)
+                {
+                    mValues = new MValueConst[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        mValues[i] = new MValueConst(args[i]);
+                    }
+                }
                 foreach (var eventHandler in eventHandlersClient)
                 {
                     eventHandler.Call(player, mValues);
@@ -720,6 +729,14 @@ namespace AltV.Net
 
             if (eventBus.Count != 0 && eventBus.TryGetValue(name, out var eventHandlers))
             {
+                if (mValues == null)
+                {
+                    mValues = new MValueConst[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        mValues[i] = new MValueConst(args[i]);
+                    }
+                }
                 foreach (var eventHandler in eventHandlers)
                 {
                     eventHandler.Call(player, mValues);
@@ -731,6 +748,14 @@ namespace AltV.Net
             if (eventBusClientDelegate.Count != 0 &&
                 eventBusClientDelegate.TryGetValue(name, out var eventDelegates))
             {
+                if (mValues == null)
+                {
+                    mValues = new MValueConst[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        mValues[i] = new MValueConst(args[i]);
+                    }
+                }
                 argObjects = new object[length];
                 for (var i = 0; i < length; i++)
                 {
@@ -745,6 +770,15 @@ namespace AltV.Net
 
             if (PlayerClientEventEventHandler.HasEvents())
             {
+                if (mValues == null)
+                {
+                    mValues = new MValueConst[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        mValues[i] = new MValueConst(args[i]);
+                    }
+                }
+
                 if (argObjects == null)
                 {
                     argObjects = new object[length];
@@ -762,6 +796,14 @@ namespace AltV.Net
 
             if (PlayerClientCustomEventEventHandler.HasEvents())
             {
+                if (mValues == null)
+                {
+                    mValues = new MValueConst[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        mValues[i] = new MValueConst(args[i]);
+                    }
+                }
                 foreach (var eventHandler in PlayerClientCustomEventEventHandler.GetEvents())
                 {
                     eventHandler(player, name, mValues);
@@ -784,7 +826,7 @@ namespace AltV.Net
             {
                 mValues[i] = new MValueConst(args[i]);
             }
-            
+
             if (eventBusServerParser.Count != 0 &&
                 eventBusServerParser.TryGetValue(name, out var parserEventHandlers))
             {
