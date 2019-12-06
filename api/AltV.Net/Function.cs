@@ -41,10 +41,6 @@ namespace AltV.Net
                 var parameterInfo = parameters[i];
                 var arg = parameterInfo.ParameterType;
                 var typeInfo = typeInfos[i] = new FunctionTypeInfo(arg, parameterInfo);
-                if (typeInfo.IsNullable)
-                {
-                    arg = typeInfo.NullableType;
-                }
 
                 if (!typeInfo.IsNullable && !typeInfo.IsParamArray)
                 {
@@ -63,6 +59,11 @@ namespace AltV.Net
 
             for (int i = 0, length = typeInfos.Length; i < length; i++)
             {
+                if (typeInfos[i].IsParamArray && i + 1 < length)
+                {
+                    throw new ArgumentException(
+                        "params array needs to be at the end of the method. E.g. (int p1, int p2, params int[] args)");
+                }
                 if (!typeInfos[i].IsNullable || i + 1 >= length) continue;
                 if (!typeInfos[i + 1].IsNullable && !typeInfos[i + 1].IsParamArray)
                 {
@@ -176,7 +177,7 @@ namespace AltV.Net
                 invokeValues[i] = typeInfos[i].DefaultValue;
             }
             
-            if (length > requiredArgsCount)
+            if (length > requiredArgsCount && argsLength > 0)
             {
                 var lastTypeInfo = typeInfos[^1];
                 if (lastTypeInfo.IsParamArray)
@@ -223,7 +224,7 @@ namespace AltV.Net
                 invokeValues[i] = typeInfos[i].DefaultValue;
             }
             
-            if (length > requiredArgsCount)
+            if (length > requiredArgsCount && argsLength > 0)
             {
                 var lastTypeInfo = typeInfos[^1];
                 if (lastTypeInfo.IsParamArray)
@@ -273,7 +274,7 @@ namespace AltV.Net
                 invokeValues[i] = typeInfos[i].DefaultValue;
             }
             
-            if (length > requiredArgsCount)
+            if (length > requiredArgsCount && argsLength > 0)
             {
                 var lastTypeInfo = typeInfos[^1];
                 if (lastTypeInfo.IsParamArray)
@@ -323,7 +324,7 @@ namespace AltV.Net
                 invokeValues[i] = typeInfos[i].DefaultValue;
             }
             
-            if (length > requiredArgsCount)
+            if (length > requiredArgsCount && argsLength > 0)
             {
                 var lastTypeInfo = typeInfos[^1];
                 if (lastTypeInfo.IsParamArray)
@@ -371,7 +372,7 @@ namespace AltV.Net
                 invokeValues[i] = typeInfos[i].DefaultValue;
             }
             
-            if (length > requiredArgsCount)
+            if (length > requiredArgsCount && argsLength > 0)
             {
                 var lastTypeInfo = typeInfos[^1];
                 if (lastTypeInfo.IsParamArray)
@@ -410,7 +411,6 @@ namespace AltV.Net
 
             return resultObj;
         }
-
 
         internal void Invoke(object[] invokeValues, out MValueConst resultMValue)
         {
