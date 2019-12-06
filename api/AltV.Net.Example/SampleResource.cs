@@ -364,6 +364,34 @@ namespace AltV.Net.Example
             var vehicle2 = Alt.CreateVehicle(VehicleModel.Adder, new Position(1337, 1337, 1337), Rotation.Zero);
             Alt.On<IVehicle, VehicleModel>("onEnum", OnEnum);
             Alt.Emit("onEnum", vehicle2, VehicleModel.Adder.ToString());
+            
+            Alt.On("EmptyParams", TestEmptyParams);
+            Alt.Emit("EmptyParams", 1, 2, 3);
+            
+            Alt.Emit("chat:message", "/dynamicArgs2 7");
+            
+            Alt.Emit("chat:message", "/dynamicArgs2 7 5 test");
+            
+            Alt.Emit("chat:message", "bla");
+            Alt.Emit("chat:message", "/bla");
+            Alt.Emit("chat:message", "/bla 5");
+            Alt.Emit("chat:message", "/bla2 3223");
+            Alt.Emit("chat:message", "/bla3 3535");
+            Alt.Emit("chat:message", "/invalidCommand");
+            Alt.Emit("chat:message", "/invalidCommand 3535");
+            
+            Alt.On<int, object[]>("onOptionalAndParamArray", OnOptionalAndParamArray);
+            
+            Alt.Emit("onOptionalAndParamArray", 5, 42, "test");
+        }
+        
+        public void OnOptionalAndParamArray(int test, params object[] args) {
+            System.Console.WriteLine($"Event<OnOptionalAndParamArray>({test}, [{string.Join(',', System.Array.ConvertAll(args ?? new object[] {""}, el => el.ToString()))}])");
+        }
+
+        public void TestEmptyParams()
+        {
+            Alt.Log("Empty params");
         }
 
         public void OnEnum(IVehicle vehicle, VehicleModel vehicleModel)

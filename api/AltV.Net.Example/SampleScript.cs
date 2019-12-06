@@ -31,6 +31,18 @@ namespace AltV.Net.Example
         {
             Console.WriteLine("Command not found:" + command);
         }
+        
+        [Command("dynamicArgs")]
+        public void MyCommandWithDynamicArgs(IPlayer player, int arg1, int arg2, params string[] args)
+        {
+            Console.WriteLine("Command:" + arg1 + " " + arg2 + " remaining args " + string.Join(",", args));
+        }
+        
+        [Command("dynamicArgs2")]
+        public void MyCommandWithDynamicArgs2(IPlayer player, int arg1, int? arg2, params string[] args)
+        {
+            Console.WriteLine("Command:" + arg1 + " " + arg2 + " remaining args " + string.Join(",", args));
+        }
 
         [Event("eventName")]
         public void MyEvent(IPlayer player)

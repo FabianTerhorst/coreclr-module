@@ -43,6 +43,8 @@ namespace AltV.Net.FunctionParser
 
         public readonly Func<int, Array> CreateArrayOfTypeExp;
 
+        public readonly object EmptyArrayOfType;
+
         public readonly object DefaultValue;
 
         public readonly bool IsParamArray;
@@ -126,10 +128,12 @@ namespace AltV.Net.FunctionParser
                     Expression.NewArrayBounds(ElementType, arraySizeParam),
                     new[] {arraySizeParam}
                 ).Compile();
+                EmptyArrayOfType = Array.CreateInstance(ElementType, 0);
             }
             else
             {
                 CreateArrayOfTypeExp = null;
+                EmptyArrayOfType = null;
             }
 
             if (paramInfo != null)
@@ -155,6 +159,10 @@ namespace AltV.Net.FunctionParser
             IsEnum = paramType.IsEnum;
 
 
+            if (IsNullable)
+            {
+                paramType = NullableType;
+            }
             if (paramType == FunctionTypes.Obj)
             {
                 ConstParser = FunctionMValueConstParsers.ParseObject;
