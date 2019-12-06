@@ -6,13 +6,13 @@ using AltV.Net.Native;
 
 namespace AltV.Net.FunctionParser
 {
-    public interface IParserClientEventHandler
+    internal interface IParserClientEventHandler
     {
         void Call(IPlayer player, MValueConst[] mValueArray);
     }
 
     //TODO: make event handler a struct
-    public class ParserClientEventHandler<TFunc> : IParserClientEventHandler where TFunc : Delegate
+    internal class ParserClientEventHandler<TFunc> : IParserClientEventHandler where TFunc : Delegate
     {
         private readonly TFunc @delegate;
 
