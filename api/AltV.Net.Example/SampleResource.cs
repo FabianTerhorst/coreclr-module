@@ -131,7 +131,7 @@ namespace AltV.Net.Example
                 AltAsync.Log("event:" + name);
                 return Task.CompletedTask;
             };
-            AltAsync.OnServer("bla",
+            AltAsync.OnServer<object[]>("bla",
                 async args => { await AltAsync.Do(() => Alt.Log("bla with no args:" + args.Length)); });
             Alt.Emit("bla");
 
@@ -142,7 +142,7 @@ namespace AltV.Net.Example
             Alt.Log(checkpoint.Color.ToString());
 
             var voiceChannel = Alt.CreateVoiceChannel(true, 10f);
-            Alt.Log(voiceChannel.MaxDistance.ToString());
+            Alt.Log(voiceChannel.MaxDistance.ToString("R"));
 
             var vehicle = Alt.CreateVehicle(VehicleModel.Apc, new Position(1, 2, 3), new Rotation(1, 2, 3));
             vehicle.SetSyncedMetaData("test", 123);
@@ -401,7 +401,7 @@ namespace AltV.Net.Example
             Alt.Log(myString);
         }
 
-        [AsyncEvent]
+        [AsyncServerEvent]
         public void asyncBla3(string myString)
         {
             AltAsync.Log(myString);

@@ -219,17 +219,13 @@ namespace AltV.Net
             }
         }
 
-        public void OnServer(string eventName, Function function)
+        [Obsolete]
+        public void Off(string eventName, Function function)
         {
             if (function == null) return;
-            if (eventBusServer.TryGetValue(eventName, out var eventHandlers))
+            if (eventBus.TryGetValue(eventName, out var eventHandlers))
             {
-                eventHandlers.Add(function);
-            }
-            else
-            {
-                eventHandlers = new HashSet<Function> {function};
-                eventBusServer[eventName] = eventHandlers;
+                eventHandlers.Remove(function);
             }
         }
 
@@ -247,25 +243,6 @@ namespace AltV.Net
             }
         }
 
-        [Obsolete]
-        public void Off(string eventName, Function function)
-        {
-            if (function == null) return;
-            if (eventBus.TryGetValue(eventName, out var eventHandlers))
-            {
-                eventHandlers.Remove(function);
-            }
-        }
-
-        public void OffServer(string eventName, Function function)
-        {
-            if (function == null) return;
-            if (eventBusServer.TryGetValue(eventName, out var eventHandlers))
-            {
-                eventHandlers.Remove(function);
-            }
-        }
-
         public void OffClient(string eventName, Function function)
         {
             if (function == null) return;
@@ -275,28 +252,26 @@ namespace AltV.Net
             }
         }
 
-        [Obsolete]
-        public void OnServer(string eventName, ServerEventDelegate serverEventDelegate)
+        public void OnServer(string eventName, Function function)
         {
-            if (serverEventDelegate == null) return;
-            if (eventBusServerDelegate.TryGetValue(eventName, out var eventHandlers))
+            if (function == null) return;
+            if (eventBusServer.TryGetValue(eventName, out var eventHandlers))
             {
-                eventHandlers.Add(serverEventDelegate);
+                eventHandlers.Add(function);
             }
             else
             {
-                eventHandlers = new HashSet<ServerEventDelegate> {serverEventDelegate};
-                eventBusServerDelegate[eventName] = eventHandlers;
+                eventHandlers = new HashSet<Function> {function};
+                eventBusServer[eventName] = eventHandlers;
             }
         }
 
-        [Obsolete]
-        public void OffServer(string eventName, ServerEventDelegate serverEventDelegate)
+        public void OffServer(string eventName, Function function)
         {
-            if (serverEventDelegate == null) return;
-            if (eventBusServerDelegate.TryGetValue(eventName, out var eventHandlers))
+            if (function == null) return;
+            if (eventBusServer.TryGetValue(eventName, out var eventHandlers))
             {
-                eventHandlers.Remove(serverEventDelegate);
+                eventHandlers.Remove(function);
             }
         }
 
@@ -322,6 +297,31 @@ namespace AltV.Net
             if (eventBusClientDelegate.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Remove(eventDelegate);
+            }
+        }
+
+        [Obsolete]
+        public void OnServer(string eventName, ServerEventDelegate serverEventDelegate)
+        {
+            if (serverEventDelegate == null) return;
+            if (eventBusServerDelegate.TryGetValue(eventName, out var eventHandlers))
+            {
+                eventHandlers.Add(serverEventDelegate);
+            }
+            else
+            {
+                eventHandlers = new HashSet<ServerEventDelegate> {serverEventDelegate};
+                eventBusServerDelegate[eventName] = eventHandlers;
+            }
+        }
+
+        [Obsolete]
+        public void OffServer(string eventName, ServerEventDelegate serverEventDelegate)
+        {
+            if (serverEventDelegate == null) return;
+            if (eventBusServerDelegate.TryGetValue(eventName, out var eventHandlers))
+            {
+                eventHandlers.Remove(serverEventDelegate);
             }
         }
 

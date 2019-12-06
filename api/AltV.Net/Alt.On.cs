@@ -8,13 +8,13 @@ namespace AltV.Net
         [Obsolete("This method is obsolete. Use Alt.OnServer or Alt.OnClient instead.")]
         public static void On(string eventName, Function function) => Module.On(eventName, function);
 
-        [Obsolete("This method is obsolete. Use Alt.OnServer or Alt.OnClient instead.")]
+        [Obsolete("This method is obsolete. Use Alt.OnClient instead.")]
         public static void OnClient(string eventName, ClientEventDelegate clientEventDelegate)
         {
             Module.OnClient(eventName, clientEventDelegate);
         }
 
-        [Obsolete("This method is obsolete. Use Alt.OnServer or Alt.OnClient instead.")]
+        [Obsolete("This method is obsolete. Use Alt.OnServer instead.")]
         public static void OnServer(string eventName, ServerEventDelegate serverEventDelegate)
         {
             Module.OnServer(eventName, serverEventDelegate);

@@ -2,7 +2,7 @@ using System;
 
 namespace AltV.Net
 {
-    [Obsolete]
+    [Obsolete("This attribute is obsolete. Use ServerEventAttribute or ClientEventAttribute instead.")]
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class EventAttribute : Attribute
     {

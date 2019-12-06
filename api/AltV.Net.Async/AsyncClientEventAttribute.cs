@@ -3,11 +3,11 @@ using System;
 namespace AltV.Net.Async
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class AsyncEvent : Attribute
+    public sealed class AsyncClientEventAttribute : Attribute
     {
         public string Name { get; }
 
-        public AsyncEvent(string name = null)
+        public AsyncClientEventAttribute(string name = null)
         {
             Name = name;
         }
