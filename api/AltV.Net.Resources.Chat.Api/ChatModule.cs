@@ -146,14 +146,14 @@ namespace AltV.Net.Resources.Chat.Api
                         {
                             delegates.AddLast((player, arguments) =>
                             {
-                                function.Call(new[] {string.Join(" ", arguments)}, player);
+                                function.Call(player, new[] {string.Join(" ", arguments)});
                             });
                         }
                         else
                         {
                             delegates.AddLast((player, arguments) =>
                             {
-                                function.Call(arguments, player);
+                                function.Call(player, arguments);
                             });
                         }
 
@@ -172,14 +172,14 @@ namespace AltV.Net.Resources.Chat.Api
                                 {
                                     delegates.AddLast((player, arguments) =>
                                     {
-                                        function.Call(new[] {string.Join(" ", arguments)}, player);
+                                        function.Call(player, new[] {string.Join(" ", arguments)});
                                     });
                                 }
                                 else
                                 {
                                     delegates.AddLast((player, arguments) =>
                                     {
-                                        function.Call(arguments, player);
+                                        function.Call(player, arguments);
                                     });
                                 }
                             }
