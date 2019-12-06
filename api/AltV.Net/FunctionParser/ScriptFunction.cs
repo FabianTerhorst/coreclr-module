@@ -6,7 +6,7 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.FunctionParser
 {
-    internal class ScriptFunction
+    public class ScriptFunction
     {
         private static void WrongType(MethodInfo methodInfo, Type expected, Type got)
         {
