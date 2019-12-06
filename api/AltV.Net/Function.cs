@@ -64,6 +64,7 @@ namespace AltV.Net
                     throw new ArgumentException(
                         "params array needs to be at the end of the method. E.g. (int p1, int p2, params int[] args)");
                 }
+
                 if (!typeInfos[i].IsNullable || i + 1 >= length) continue;
                 if (!typeInfos[i + 1].IsNullable && !typeInfos[i + 1].IsParamArray)
                 {
@@ -141,7 +142,7 @@ namespace AltV.Net
         internal object Call(MValueConst[] values)
         {
             var invokeValues = CalculateInvokeValues(values);
-            
+
             var resultObj = @delegate.DynamicInvoke(invokeValues);
             return returnType == FunctionTypes.Void ? null : resultObj;
         }
@@ -153,7 +154,7 @@ namespace AltV.Net
             var resultObj = @delegate.DynamicInvoke(invokeValues);
             return returnType == FunctionTypes.Void ? null : resultObj;
         }
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal object[] CalculateInvokeValues(IPlayer player, MValueConst[] values)
         {
@@ -171,31 +172,39 @@ namespace AltV.Net
             {
                 invokeValues[i] = constParsers[i](in values[i - 1], args[i], typeInfos[i]);
             }
-            
+
             for (var i = parserValuesLength; i < argsLength; i++)
             {
                 invokeValues[i] = typeInfos[i].DefaultValue;
             }
-            
-            if (length > requiredArgsCount && argsLength > 0)
+
+            if (argsLength > 0)
             {
                 var lastTypeInfo = typeInfos[^1];
                 if (lastTypeInfo.IsParamArray)
                 {
-                    var remainingLength = length - requiredArgsCount - 1;
-                    var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
-                    var elementTypeInfo = lastTypeInfo.Element;
-                    var elementConstParser = elementTypeInfo.ConstParser;
-                    var elementType = lastTypeInfo.ElementType;
-                    for (var i = 0; i < remainingLength; i++)
+                    if (length > requiredArgsCount)
                     {
-                        var elementObject = elementConstParser(in values[i + requiredArgsCount - 1],
-                            elementType, lastTypeInfo.Element);
-                        var convertedElementObject = Convert.ChangeType(elementObject, elementType);
-                        remainingValues.SetValue(convertedElementObject, i);
-                    }
+                        var remainingLength = length - requiredArgsCount - 1;
+                        var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
+                        var elementTypeInfo = lastTypeInfo.Element;
+                        var elementConstParser = elementTypeInfo.ConstParser;
+                        var elementType = lastTypeInfo.ElementType;
+                        for (var i = 0; i < remainingLength; i++)
+                        {
+                            var elementObject = elementConstParser(values[i + requiredArgsCount - 1],
+                                elementType, lastTypeInfo.Element);
+                            var convertedElementObject = Convert.ChangeType(elementObject, elementType);
+                            remainingValues.SetValue(convertedElementObject, i);
+                        }
 
-                    invokeValues[^1] = remainingValues;
+                        invokeValues[^1] = remainingValues;
+                    }
+                    else
+                    {
+                        var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(0);
+                        invokeValues[^1] = remainingValues;
+                    }
                 }
             }
 
@@ -223,29 +232,37 @@ namespace AltV.Net
             {
                 invokeValues[i] = typeInfos[i].DefaultValue;
             }
-            
-            if (length > requiredArgsCount && argsLength > 0)
+
+            if (argsLength > 0)
             {
                 var lastTypeInfo = typeInfos[^1];
                 if (lastTypeInfo.IsParamArray)
                 {
-                    var remainingLength = length - requiredArgsCount;
-                    var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
-                    var elementTypeInfo = lastTypeInfo.Element;
-                    var elementConstParser = elementTypeInfo.ConstParser;
-                    var elementType = lastTypeInfo.ElementType;
-                    if (elementConstParser != null)
+                    if (length > requiredArgsCount)
                     {
-                        for (var i = 0; i < remainingLength; i++)
+                        var remainingLength = length - requiredArgsCount;
+                        var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
+                        var elementTypeInfo = lastTypeInfo.Element;
+                        var elementConstParser = elementTypeInfo.ConstParser;
+                        var elementType = lastTypeInfo.ElementType;
+                        if (elementConstParser != null)
                         {
-                            var elementObject = elementConstParser(in values[i + requiredArgsCount],
-                                elementType, lastTypeInfo.Element);
-                            var convertedElementObject = Convert.ChangeType(elementObject, elementType);
-                            remainingValues.SetValue(convertedElementObject, i);
+                            for (var i = 0; i < remainingLength; i++)
+                            {
+                                var elementObject = elementConstParser(in values[i + requiredArgsCount],
+                                    elementType, lastTypeInfo.Element);
+                                var convertedElementObject = Convert.ChangeType(elementObject, elementType);
+                                remainingValues.SetValue(convertedElementObject, i);
+                            }
                         }
-                    }
 
-                    invokeValues[^1] = remainingValues;
+                        invokeValues[^1] = remainingValues;
+                    }
+                    else
+                    {
+                        var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(0);
+                        invokeValues[^1] = remainingValues;
+                    }
                 }
             }
 
@@ -273,29 +290,37 @@ namespace AltV.Net
             {
                 invokeValues[i] = typeInfos[i].DefaultValue;
             }
-            
-            if (length > requiredArgsCount && argsLength > 0)
+
+            if (argsLength > 0)
             {
                 var lastTypeInfo = typeInfos[^1];
                 if (lastTypeInfo.IsParamArray)
                 {
-                    var remainingLength = length - requiredArgsCount;
-                    var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
-                    var elementTypeInfo = lastTypeInfo.Element;
-                    var elementConstParser = elementTypeInfo.ObjectParser;
-                    var elementType = lastTypeInfo.ElementType;
-                    if (elementConstParser != null)
+                    if (length > requiredArgsCount)
                     {
-                        for (var i = 0; i < remainingLength; i++)
+                        var remainingLength = length - requiredArgsCount;
+                        var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
+                        var elementTypeInfo = lastTypeInfo.Element;
+                        var elementConstParser = elementTypeInfo.ObjectParser;
+                        var elementType = lastTypeInfo.ElementType;
+                        if (elementConstParser != null)
                         {
-                            var elementObject = elementConstParser(values[i + requiredArgsCount],
-                                elementType, lastTypeInfo.Element);
-                            var convertedElementObject = Convert.ChangeType(elementObject, elementType);
-                            remainingValues.SetValue(convertedElementObject, i);
+                            for (var i = 0; i < remainingLength; i++)
+                            {
+                                var elementObject = elementConstParser(values[i + requiredArgsCount],
+                                    elementType, lastTypeInfo.Element);
+                                var convertedElementObject = Convert.ChangeType(elementObject, elementType);
+                                remainingValues.SetValue(convertedElementObject, i);
+                            }
                         }
-                    }
 
-                    invokeValues[^1] = remainingValues;
+                        invokeValues[^1] = remainingValues;
+                    }
+                    else
+                    {
+                        var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(0);
+                        invokeValues[^1] = remainingValues;
+                    }
                 }
             }
 
@@ -310,6 +335,7 @@ namespace AltV.Net
             {
                 return null;
             }
+
             var argsLength = args.Length;
             var invokeValues = new object[argsLength];
             invokeValues[0] = player;
@@ -318,31 +344,39 @@ namespace AltV.Net
             {
                 invokeValues[i] = objectParsers[i](values[i - 1], args[i], typeInfos[i]);
             }
-            
+
             for (var i = parserValuesLength; i < argsLength; i++)
             {
                 invokeValues[i] = typeInfos[i].DefaultValue;
             }
-            
-            if (length > requiredArgsCount && argsLength > 0)
+
+            if (argsLength > 0)
             {
                 var lastTypeInfo = typeInfos[^1];
                 if (lastTypeInfo.IsParamArray)
                 {
-                    var remainingLength = length - requiredArgsCount - 1;
-                    var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
-                    var elementTypeInfo = lastTypeInfo.Element;
-                    var elementConstParser = elementTypeInfo.ObjectParser;
-                    var elementType = lastTypeInfo.ElementType;
-                    for (var i = 0; i < remainingLength; i++)
+                    if (length > requiredArgsCount)
                     {
-                        var elementObject = elementConstParser(values[i + requiredArgsCount - 1],
-                            elementType, lastTypeInfo.Element);
-                        var convertedElementObject = Convert.ChangeType(elementObject, elementType);
-                        remainingValues.SetValue(convertedElementObject, i);
-                    }
+                        var remainingLength = length - requiredArgsCount - 1;
+                        var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
+                        var elementTypeInfo = lastTypeInfo.Element;
+                        var elementConstParser = elementTypeInfo.ObjectParser;
+                        var elementType = lastTypeInfo.ElementType;
+                        for (var i = 0; i < remainingLength; i++)
+                        {
+                            var elementObject = elementConstParser(values[i + requiredArgsCount - 1],
+                                elementType, lastTypeInfo.Element);
+                            var convertedElementObject = Convert.ChangeType(elementObject, elementType);
+                            remainingValues.SetValue(convertedElementObject, i);
+                        }
 
-                    invokeValues[^1] = remainingValues;
+                        invokeValues[^1] = remainingValues;
+                    }
+                    else
+                    {
+                        var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(0);
+                        invokeValues[^1] = remainingValues;
+                    }
                 }
             }
 
@@ -353,6 +387,9 @@ namespace AltV.Net
         public object[] CalculateInvokeValues(IPlayer player, string[] values)
         {
             var length = values.Length;
+            Console.WriteLine("commands:" + string.Join(",", values));
+            Console.WriteLine("commands length:" + length);
+            Console.WriteLine("commands requiredArgsCount:" + requiredArgsCount);
             if (length + 1 < requiredArgsCount || !typeInfos[0].IsPlayer)
             {
                 return null;
@@ -366,31 +403,39 @@ namespace AltV.Net
             {
                 invokeValues[i] = stringParsers[i](values[i - 1], args[i], typeInfos[i]);
             }
-            
+
             for (var i = parserValuesLength; i < argsLength; i++)
             {
                 invokeValues[i] = typeInfos[i].DefaultValue;
             }
-            
-            if (length > requiredArgsCount && argsLength > 0)
+
+            if (argsLength > 0)
             {
                 var lastTypeInfo = typeInfos[^1];
                 if (lastTypeInfo.IsParamArray)
                 {
-                    var remainingLength = length - requiredArgsCount - 1;
-                    var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
-                    var elementTypeInfo = lastTypeInfo.Element;
-                    var elementConstParser = elementTypeInfo.StringParser;
-                    var elementType = lastTypeInfo.ElementType;
-                    for (var i = 0; i < remainingLength; i++)
+                    if (length > requiredArgsCount)
                     {
-                        var elementObject = elementConstParser(values[i + requiredArgsCount - 1],
-                            elementType, lastTypeInfo.Element);
-                        var convertedElementObject = Convert.ChangeType(elementObject, elementType);
-                        remainingValues.SetValue(convertedElementObject, i);
-                    }
+                        var remainingLength = length - requiredArgsCount - 1;
+                        var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
+                        var elementTypeInfo = lastTypeInfo.Element;
+                        var elementConstParser = elementTypeInfo.StringParser;
+                        var elementType = lastTypeInfo.ElementType;
+                        for (var i = 0; i < remainingLength; i++)
+                        {
+                            var elementObject = elementConstParser(values[i + requiredArgsCount - 1],
+                                elementType, lastTypeInfo.Element);
+                            var convertedElementObject = Convert.ChangeType(elementObject, elementType);
+                            remainingValues.SetValue(convertedElementObject, i);
+                        }
 
-                    invokeValues[^1] = remainingValues;
+                        invokeValues[^1] = remainingValues;
+                    }
+                    else
+                    {
+                        var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(0);
+                        invokeValues[^1] = remainingValues;
+                    }
                 }
             }
 
