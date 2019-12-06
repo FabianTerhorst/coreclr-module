@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AltV.Net.Async;
@@ -49,7 +48,7 @@ namespace AltV.Net.Example
                 }
             };
 
-            Alt.On<object[]>("array_test", objects =>
+            Alt.OnServer<object[]>("array_test", objects =>
             {
                 Console.WriteLine("count:" + objects.Length);
                 Console.WriteLine("1:" + objects[0]);
@@ -59,10 +58,10 @@ namespace AltV.Net.Example
                 Console.WriteLine("2:" + ((object[])objects[2])[0]);
             });
             Alt.Emit("array_test", new object[] {new object[] {"test", "test4", new[] {1337}}});
-            Alt.On<object[]>("array_test2", objects =>
+            Alt.OnServer<object[]>("array_test2", objects =>
             {
                 Console.WriteLine("count2:" + objects.Length);
-                Console.WriteLine("count3:" + ((object[])(((object[])objects)[0]))[0]);
+                Console.WriteLine("count3:" + ((object[])objects[0])[0]);
             });
             Alt.Emit("array_test2", new object[] {new object[] {new object[]{1337}}});
             
@@ -75,12 +74,12 @@ namespace AltV.Net.Example
             var mValuesListGet = mValueList.GetList();
             for (var i = 0; i < mValuesListGet.Length; i++)
             { 
-                Console.WriteLine("val: " + mValuesListGet[i].ToString());
+                Console.WriteLine("val: " + mValuesListGet[i]);
                 mValuesListGet[i].Dispose();   
             }
             
             MValueAdapters.Register(new ConvertibleObject.ConvertibleObjectAdapter());
-            Alt.On("convertible_test", delegate(ConvertibleObject convertible)
+            Alt.OnServer("convertible_test", delegate(ConvertibleObject convertible)
             {
                 Console.WriteLine("convertible_test received");
                 Console.WriteLine(convertible.Test);
@@ -103,14 +102,14 @@ namespace AltV.Net.Example
             //mValueFromConvertible.Dispose();
             Alt.Emit("convertible_test", convertibleObject);
 
-            Alt.On<string>("test", s => { Alt.Log("test=" + s); });
-            Alt.OnServer("test", args => { Alt.Log("args=" + args[0]); });
+            Alt.OnServer<string>("test", s => { Alt.Log("test=" + s); });
+            Alt.OnServer<object[]>("test", args => { Alt.Log("args=" + args[0]); });
             Alt.Emit("test", "bla");
-            Alt.On("bla", bla);
-            Alt.On<string>("bla2", bla2);
-            Alt.On<string, bool>("bla3", bla3);
-            Alt.On<string, string>("bla4", bla4);
-            Alt.On<IMyVehicle>("vehicleTest", myVehicle =>
+            Alt.OnServer("bla", bla);
+            Alt.OnServer<string>("bla2", bla2);
+            Alt.OnServer<string, bool>("bla3", bla3);
+            Alt.OnServer<string, string>("bla4", bla4);
+            Alt.OnServer<IMyVehicle>("vehicleTest", myVehicle =>
             {
                 Console.WriteLine("inside invoke");
                 Alt.Log("myData: " + myVehicle?.MyData);
@@ -186,7 +185,7 @@ namespace AltV.Net.Example
 
             Alt.Emit("vehicleTest", vehicle);
 
-            Alt.On("event_name",
+            Alt.OnServer("event_name",
                 delegate(string s, string s1, long i1, string[] arg3, object[] arg4, IMyVehicle arg5,
                     Dictionary<string, object> arg6, IMyVehicle[] myVehicles, string probablyNull, string[] nullArray,
                     Dictionary<string, double> bla)
@@ -202,7 +201,7 @@ namespace AltV.Net.Example
                     Alt.Log("bla2:" + bla["test"]);
                 });
 
-            Alt.On("entity-array-obj",
+            Alt.OnServer<object[]>("entity-array-obj",
                 delegate(object[] myVehicles)
                 {
                     Alt.Log("entity-array-obj: " + ((MyVehicle) myVehicles[0]).Position.X + " " +
@@ -215,8 +214,7 @@ namespace AltV.Net.Example
                     Dictionary<string, double> bla)
                 {
                     await Task.Delay(500);
-                    var asyncVehicle =
-                        await AltAsync.CreateVehicle(VehicleModel.Apc, Position.Zero, new Rotation(1, 2, 3));
+                    await AltAsync.CreateVehicle(VehicleModel.Apc, Position.Zero, new Rotation(1, 2, 3));
 
                     AltAsync.Log("async-param1:" + s);
                     AltAsync.Log("async-param2:" + s1);
@@ -238,15 +236,15 @@ namespace AltV.Net.Example
                     //["test2"] = new Dictionary<string, long> {["test"] = 1},
                     //["test3"] = new Dictionary<string, long> {["test"] = 42}
                 },
-                new IMyVehicle[] {(IMyVehicle) vehicle}, null, new string[] {null},
+                new[] {(IMyVehicle) vehicle}, null, new string[] {null},
                 new Dictionary<string, object>
                 {
                     ["test"] = null
                 });
 
-            Alt.On<string[]>("test_string_array", s => { Alt.Log("string-array-entry-0:" + s[0]); });
+            Alt.OnServer<string[]>("test_string_array", s => { Alt.Log("string-array-entry-0:" + s[0]); });
 
-            Alt.Emit("test_string_array", new object[] {new string[] {"bla"}});
+            Alt.Emit("test_string_array", new object[] {new[] {"bla"}});
 
             /*Alt.On("function_event", delegate(Function.Func func)
             {
@@ -260,8 +258,9 @@ namespace AltV.Net.Example
                 return 42;
             }));*/
 
-            foreach (var player in Alt.GetAllPlayers())
+            foreach (var pl in Alt.GetAllPlayers())
             {
+                Alt.Log("player:" + pl.Position.X + " " + pl.Position.Y + " " + pl.Position.Z);
             }
 
             foreach (var veh in Alt.GetAllVehicles())
@@ -269,7 +268,7 @@ namespace AltV.Net.Example
                 Alt.Log("vehicle:" + veh.Position.X + " " + veh.Position.Y + " " + veh.Position.Z);
             }
 
-            Alt.On("1337", delegate(int int1) { Alt.Log("int1:" + int1); });
+            Alt.OnServer("1337", delegate(int int1) { Alt.Log("int1:" + int1); });
 
             AltAsync.On("1337", delegate(int int1) { Alt.Log("int1:" + int1); });
 
@@ -281,7 +280,7 @@ namespace AltV.Net.Example
 
             Alt.Emit("MyServerEvent3", vehicle);
 
-            Alt.Emit("entity-array-obj", new[] {new[] {vehicle}});
+            Alt.Emit("entity-array-obj", new object[] {new[] {vehicle}});
 
             vehicle.Remove();
 
@@ -295,7 +294,7 @@ namespace AltV.Net.Example
 
             Alt.Emit("MyServerEvent", "test-custom-parser");
 
-            Alt.Emit("MyServerEvent2", new object[] {new string[] {"test-custom-parser-array"}});
+            Alt.Emit("MyServerEvent2", new object[] {new[] {"test-custom-parser-array"}});
 
             //dynamic dynamic = new ExpandoObject();
 
@@ -303,17 +302,13 @@ namespace AltV.Net.Example
 
             Alt.Export("GetBla", () => { Alt.Log("GetBla called"); });
 
-            Action action;
-
-            Alt.Import("example", "GetBla", out action);
+            Alt.Import("example", "GetBla", out Action action);
 
             action();
 
             Alt.Export("functionExport", delegate(string name) { Alt.Log("called with:" + name); });
 
-            Action<string> action2;
-
-            Alt.Import("example", "functionExport", out action2);
+            Alt.Import("example", "functionExport", out Action<string> action2);
 
             action2("123");
             /*if (Alt.Import("Bla", "GetBla", out Action value))
@@ -326,14 +321,14 @@ namespace AltV.Net.Example
             Alt.Emit("none-existing-event", new ConvertibleObject());
 
             // You need to catch this with a exception because its not possible to construct a invalid entity
-            // Remember not all vehicles you receive from events has to be constructored by this constructor when there got created from different resources ect.
+            // Remember not all vehicles you receive from events has to be constructed by this constructor when there got created from different resources ect.
             // But when you don't use a entity factory you can validate that by checking if the ivehicle is a imyvehicle
             try
             {
-                IMyVehicle myConstructedVehicle =
+                IMyVehicle unused =
                     new MyVehicle((uint) VehicleModel.Apc, new Position(1, 1, 1), new Rotation(1, 1, 1));
             }
-            catch (BaseObjectRemovedException baseObjectRemovedException)
+            catch (BaseObjectRemovedException)
             {
             }
 
@@ -353,19 +348,19 @@ namespace AltV.Net.Example
             
             var colShapeCylinder = Alt.CreateColShapeCylinder(new Position(1337, 1337, 1337), 10, 10);
             colShapeCylinder.SetMetaData("bla", 1);
-            colShapeCylinder.SetData("bla", (int) 2);
+            colShapeCylinder.SetData("bla", 2);
             
             var colShapeCircle = Alt.CreateColShapeCircle(new Position(1337, 1337, 1337), 10);
             colShapeCircle.SetMetaData("bla", 3);
-            colShapeCircle.SetData("bla", (int) 4);
+            colShapeCircle.SetData("bla", 4);
             
             AltChat.SendBroadcast("Test");
             
             var vehicle2 = Alt.CreateVehicle(VehicleModel.Adder, new Position(1337, 1337, 1337), Rotation.Zero);
-            Alt.On<IVehicle, VehicleModel>("onEnum", OnEnum);
+            Alt.OnServer<IVehicle, VehicleModel>("onEnum", OnEnum);
             Alt.Emit("onEnum", vehicle2, VehicleModel.Adder.ToString());
             
-            Alt.On("EmptyParams", TestEmptyParams);
+            Alt.OnServer("EmptyParams", TestEmptyParams);
             Alt.Emit("EmptyParams", 1, 2, 3);
             
             Alt.Emit("chat:message", "/dynamicArgs2 7");
@@ -380,27 +375,27 @@ namespace AltV.Net.Example
             Alt.Emit("chat:message", "/invalidCommand");
             Alt.Emit("chat:message", "/invalidCommand 3535");
             
-            Alt.On<int, object[]>("onOptionalAndParamArray", OnOptionalAndParamArray);
+            Alt.OnServer<int, object[]>("onOptionalAndParamArray", OnOptionalAndParamArray);
             
             Alt.Emit("onOptionalAndParamArray", 5, 42, "test");
         }
         
-        public void OnOptionalAndParamArray(int test, params object[] args) {
-            System.Console.WriteLine($"Event<OnOptionalAndParamArray>({test}, [{string.Join(',', System.Array.ConvertAll(args ?? new object[] {""}, el => el.ToString()))}])");
+        public static void OnOptionalAndParamArray(int test, params object[] args) {
+            Console.WriteLine($"Event<OnOptionalAndParamArray>({test}, [{string.Join(',', Array.ConvertAll(args ?? new object[] {""}, el => el.ToString()))}])");
         }
 
-        public void TestEmptyParams()
+        public static void TestEmptyParams()
         {
             Alt.Log("Empty params");
         }
 
-        public void OnEnum(IVehicle vehicle, VehicleModel vehicleModel)
+        public static void OnEnum(IVehicle vehicle, VehicleModel vehicleModel)
         {
             Console.WriteLine("vehicle:" + vehicle.Id);
             Console.WriteLine("vehicle-model:" + vehicleModel);
         }
 
-        [Event("bla2")]
+        [ServerEvent("bla2")]
         public void MyServerEventHandler2(string myString)
         {
             Alt.Log(myString);
@@ -554,9 +549,9 @@ namespace AltV.Net.Example
             }
             
             await player.SetPositionAsync(new Position(1, 2, 3));
-            var position = await player.GetPositionAsync();
+            var unused = await player.GetPositionAsync();
             await AltAsync.Do(() => { });
-            var vehicle = await AltAsync.Do(() =>
+            var unused2 = await AltAsync.Do(() =>
                 Alt.CreateVehicle(VehicleModel.Apc, new Position(1, 2, 3), new Rotation(1, 2, 3)));
         }
 
@@ -596,7 +591,7 @@ namespace AltV.Net.Example
 
         private async Task<int> OnPlayerDisconnectAsync(IPlayer player, string reason)
         {
-            if (player is IMyPlayer myPlayer)
+            if (player is IMyPlayer unused3)
             {
             }
 

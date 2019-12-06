@@ -2,12 +2,13 @@ using System;
 
 namespace AltV.Net
 {
+    [Obsolete]
     [AttributeUsage(AttributeTargets.Method)]
-    public class Event : Attribute
+    public sealed class EventAttribute : Attribute
     {
         public string Name { get; }
 
-        public Event(string name = null)
+        public EventAttribute(string name = null)
         {
             Name = name;
         }
