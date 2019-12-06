@@ -155,6 +155,10 @@ namespace AltV.Net.FunctionParser
             IsEnum = paramType.IsEnum;
 
 
+            if (IsNullable)
+            {
+                paramType = NullableType;
+            }
             if (paramType == FunctionTypes.Obj)
             {
                 ConstParser = FunctionMValueConstParsers.ParseObject;
