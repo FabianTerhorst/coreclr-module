@@ -385,7 +385,7 @@ namespace AltV.Net.Async
             object[] objects)
         {
             base.OnClientEventEvent(player, name, args, mValues, objects);
-            int length = args.Length;
+            var length = args.Length;
 
             if (asyncEventBus.Count != 0 && asyncEventBus.TryGetValue(name, out var eventHandlers))
             {
@@ -407,12 +407,11 @@ namespace AltV.Net.Async
                     }
                 }
 
-                var objects1 = objects;
                 Task.Run(async () =>
                 {
                     foreach (var eventHandler in eventHandlers)
                     {
-                        var invokeValues = eventHandler.CalculateInvokeValues(player, objects1);
+                        var invokeValues = eventHandler.CalculateInvokeValues(player, objects);
                         if (invokeValues != null)
                         {
                             try
@@ -456,12 +455,11 @@ namespace AltV.Net.Async
                     }
                 }
 
-                var objects1 = objects;
                 Task.Run(async () =>
                 {
                     foreach (var eventHandler in eventHandlersClient)
                     {
-                        var invokeValues = eventHandler.CalculateInvokeValues(player, objects1);
+                        var invokeValues = eventHandler.CalculateInvokeValues(player, objects);
                         if (invokeValues != null)
                         {
                             try
