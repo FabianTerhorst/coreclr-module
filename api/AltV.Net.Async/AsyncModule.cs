@@ -407,11 +407,13 @@ namespace AltV.Net.Async
                     }
                 }
 
-                Task.Run(async () =>
+                Task.Factory.StartNew(async obj =>
                 {
-                    foreach (var eventHandler in eventHandlers)
+                    var (taskPlayer, taskObjects, taskEventHandlers, taskName) =
+                        (ValueTuple<IPlayer, object[], HashSet<Function>, string>) obj;
+                    foreach (var eventHandler in taskEventHandlers)
                     {
-                        var invokeValues = eventHandler.CalculateInvokeValues(player, objects);
+                        var invokeValues = eventHandler.CalculateInvokeValues(taskPlayer, taskObjects);
                         if (invokeValues != null)
                         {
                             try
@@ -424,15 +426,15 @@ namespace AltV.Net.Async
                             }
                             catch (Exception e)
                             {
-                                AltAsync.Log($"Execution of {name} threw an error: {e}");
+                                AltAsync.Log($"Execution of {taskName} threw an error: {e}");
                             }
                         }
                         else
                         {
-                            AltAsync.Log("Wrong function params for " + name);
+                            AltAsync.Log("Wrong function params for " + taskName);
                         }
                     }
-                });
+                }, new ValueTuple<IPlayer, object[], HashSet<Function>, string>(player, objects, eventHandlers, name));
             }
 
             if (asyncEventBusClient.Count != 0 && asyncEventBusClient.TryGetValue(name, out var eventHandlersClient))
@@ -455,11 +457,13 @@ namespace AltV.Net.Async
                     }
                 }
 
-                Task.Run(async () =>
+                Task.Factory.StartNew(async obj =>
                 {
-                    foreach (var eventHandler in eventHandlersClient)
+                    var (taskPlayer, taskObjects, taskEventHandlers, taskName) =
+                        (ValueTuple<IPlayer, object[], HashSet<Function>, string>) obj;
+                    foreach (var eventHandler in taskEventHandlers)
                     {
-                        var invokeValues = eventHandler.CalculateInvokeValues(player, objects);
+                        var invokeValues = eventHandler.CalculateInvokeValues(taskPlayer, taskObjects);
                         if (invokeValues != null)
                         {
                             try
@@ -472,15 +476,15 @@ namespace AltV.Net.Async
                             }
                             catch (Exception e)
                             {
-                                AltAsync.Log($"Execution of {name} threw an error: {e}");
+                                AltAsync.Log($"Execution of {taskName} threw an error: {e}");
                             }
                         }
                         else
                         {
-                            AltAsync.Log("Wrong function params for " + name);
+                            AltAsync.Log("Wrong function params for " + taskName);
                         }
                     }
-                });
+                }, new ValueTuple<IPlayer, object[], HashSet<Function>, string>(player, objects, eventHandlersClient, name));
             }
 
             if (asyncEventBusClientDelegate.Count != 0 &&
@@ -504,14 +508,16 @@ namespace AltV.Net.Async
                     }
                 }
 
-                Task.Run(() =>
+                Task.Factory.StartNew(obj =>
                 {
-                    foreach (var eventHandler in eventDelegates)
+                    var (taskPlayer, taskObjects, taskEventHandlers) =
+                        (ValueTuple<IPlayer, object[], HashSet<ClientEventAsyncDelegate>>) obj;
+                    foreach (var eventHandler in taskEventHandlers)
                     {
                         AsyncEventHandler<ClientEventAsyncDelegate>.ExecuteEventAsyncWithoutTask(eventHandler,
-                            @delegate => @delegate(player, objects));
+                            @delegate => @delegate(taskPlayer, taskObjects));
                     }
-                });
+                }, new ValueTuple<IPlayer, object[], HashSet<ClientEventAsyncDelegate>>(player, objects, eventDelegates));
             }
 
             if (PlayerClientEventAsyncEventHandler.HasEvents())
@@ -534,14 +540,16 @@ namespace AltV.Net.Async
                     }
                 }
 
-                Task.Run(() =>
+                Task.Factory.StartNew(obj =>
                 {
-                    foreach (var eventHandler in PlayerClientEventAsyncEventHandler.GetEvents())
+                    var (taskPlayer, taskObjects, taskEventHandlers, taskName) =
+                        (ValueTuple<IPlayer, object[], AsyncEventHandler<PlayerClientEventAsyncDelegate>, string>) obj;
+                    foreach (var eventHandler in taskEventHandlers.GetEvents())
                     {
                         AsyncEventHandler<PlayerClientEventAsyncDelegate>.ExecuteEventAsyncWithoutTask(eventHandler,
-                            @delegate => @delegate(player, name, objects));
+                            @delegate => @delegate(taskPlayer, taskName, taskObjects));
                     }
-                });
+                }, new ValueTuple<IPlayer, object[], AsyncEventHandler<PlayerClientEventAsyncDelegate>, string>(player, objects, PlayerClientEventAsyncEventHandler, name));
             }
         }
 
@@ -570,11 +578,13 @@ namespace AltV.Net.Async
                     }
                 }
 
-                Task.Run(async () =>
+                Task.Factory.StartNew(async obj =>
                 {
-                    foreach (var eventHandler in eventHandlersServer)
+                    var (taskObjects, taskEventHandlers, taskName) =
+                        (ValueTuple<object[], HashSet<Function>, string>) obj;
+                    foreach (var eventHandler in taskEventHandlers)
                     {
-                        var invokeValues = eventHandler.CalculateInvokeValues(objects);
+                        var invokeValues = eventHandler.CalculateInvokeValues(taskObjects);
                         if (invokeValues != null)
                         {
                             try
@@ -587,15 +597,15 @@ namespace AltV.Net.Async
                             }
                             catch (Exception e)
                             {
-                                AltAsync.Log($"Execution of {name} threw an error: {e}");
+                                AltAsync.Log($"Execution of {taskName} threw an error: {e}");
                             }
                         }
                         else
                         {
-                            AltAsync.Log("Wrong function params for " + name);
+                            AltAsync.Log("Wrong function params for " + taskName);
                         }
                     }
-                });
+                }, new ValueTuple<object[], HashSet<Function>, string>(objects, eventHandlersServer, name));
             }
 
             if (asyncEventBus.Count != 0 && asyncEventBus.TryGetValue(name, out var eventHandlers))
@@ -618,11 +628,13 @@ namespace AltV.Net.Async
                     }
                 }
 
-                Task.Run(async () =>
+                Task.Factory.StartNew(async obj =>
                 {
-                    foreach (var eventHandler in eventHandlers)
+                    var (taskObjects, taskEventHandlers, taskName) =
+                        (ValueTuple<object[], HashSet<Function>, string>) obj;
+                    foreach (var eventHandler in taskEventHandlers)
                     {
-                        var invokeValues = eventHandler.CalculateInvokeValues(objects);
+                        var invokeValues = eventHandler.CalculateInvokeValues(taskObjects);
                         if (invokeValues != null)
                         {
                             try
@@ -635,15 +647,15 @@ namespace AltV.Net.Async
                             }
                             catch (Exception e)
                             {
-                                AltAsync.Log($"Execution of {name} threw an error: {e}");
+                                AltAsync.Log($"Execution of {taskName} threw an error: {e}");
                             }
                         }
                         else
                         {
-                            AltAsync.Log("Wrong function params for " + name);
+                            AltAsync.Log("Wrong function params for " + taskName);
                         }
                     }
-                });
+                }, new ValueTuple<object[], HashSet<Function>, string>(objects, eventHandlers, name));
             }
 
             if (asyncEventBusServerDelegate.Count != 0 &&
@@ -667,14 +679,16 @@ namespace AltV.Net.Async
                     }
                 }
 
-                Task.Run(() =>
+                Task.Factory.StartNew(o =>
                 {
-                    foreach (var eventHandler in eventDelegates)
+                    var (taskObjects, taskEventHandlers, taskName) =
+                        (ValueTuple<object[], HashSet<ServerEventAsyncDelegate>, string>) o;
+                    foreach (var eventHandler in taskEventHandlers)
                     {
                         AsyncEventHandler<ServerEventAsyncDelegate>.ExecuteEventAsyncWithoutTask(eventHandler,
-                            @delegate => @delegate(objects));
+                            @delegate => @delegate(taskObjects));
                     }
-                });
+                }, new ValueTuple<object[], HashSet<ServerEventAsyncDelegate>, string>(objects, eventDelegates, name));
             }
         }
 

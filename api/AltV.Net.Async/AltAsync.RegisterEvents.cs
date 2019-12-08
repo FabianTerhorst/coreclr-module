@@ -7,9 +7,9 @@ namespace AltV.Net.Async
     {
         public static void RegisterEvents(object target)
         {
-#pragma warning disable 612
+#pragma warning disable 612, 618
             ModuleScriptMethodIndexer.Index(target, new[] {typeof(AsyncEventAttribute), typeof(AsyncServerEventAttribute), typeof(AsyncClientEventAttribute), typeof(AsyncScriptEventAttribute)},
-#pragma warning restore 612
+#pragma warning restore 612, 618
                 (baseEvent, eventMethod, eventMethodDelegate) =>
                 {
                     switch (baseEvent)
@@ -213,12 +213,12 @@ namespace AltV.Net.Async
                             }
 
                             break;
-#pragma warning disable 612
+#pragma warning disable 612, 618
                         case AsyncEventAttribute @event:
                             var eventName = @event.Name ?? eventMethod.Name;
                             Module.On(eventName, Function.Create(eventMethodDelegate));
                             break;
-#pragma warning restore 612
+#pragma warning restore 612, 618
                         case AsyncServerEventAttribute @event:
                             var serverEventName = @event.Name ?? eventMethod.Name;
                             Module.OnServer(serverEventName, Function.Create(eventMethodDelegate));

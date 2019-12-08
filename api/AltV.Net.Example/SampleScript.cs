@@ -44,12 +44,12 @@ namespace AltV.Net.Example
             Console.WriteLine("Command:" + arg1 + " " + arg2 + " remaining args " + string.Join(",", args));
         }
 
-        [Event("eventName")]
+        [ServerEvent("eventName")]
         public void MyEvent(IPlayer player)
         {
         }
 
-        [Event]
+        [ServerEvent]
         public void MyEventName(string message)
         {
             Console.WriteLine(message);
