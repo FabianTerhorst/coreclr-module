@@ -679,10 +679,10 @@ namespace AltV.Net.Async
                     }
                 }
 
-                Task.Factory.StartNew(o =>
+                Task.Factory.StartNew(obj =>
                 {
                     var (taskObjects, taskEventHandlers, taskName) =
-                        (ValueTuple<object[], HashSet<ServerEventAsyncDelegate>, string>) o;
+                        (ValueTuple<object[], HashSet<ServerEventAsyncDelegate>, string>) obj;
                     foreach (var eventHandler in taskEventHandlers)
                     {
                         AsyncEventHandler<ServerEventAsyncDelegate>.ExecuteEventAsyncWithoutTask(eventHandler,
