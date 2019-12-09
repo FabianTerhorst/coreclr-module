@@ -46,20 +46,26 @@ namespace AltV.Net
             : target.Assemblies;
 
         //For custom defined args event handlers
-        private readonly Dictionary<string, HashSet<Function>> eventHandlers =
+        private readonly Dictionary<string, HashSet<Function>> eventBus =
             new Dictionary<string, HashSet<Function>>();
 
-        private readonly Dictionary<string, HashSet<IParserClientEventHandler>> parserClientEventHandlers =
+        private readonly Dictionary<string, HashSet<Function>> eventBusClient =
+            new Dictionary<string, HashSet<Function>>();
+
+        private readonly Dictionary<string, HashSet<Function>> eventBusServer =
+            new Dictionary<string, HashSet<Function>>();
+
+        private readonly Dictionary<string, HashSet<IParserClientEventHandler>> eventBusClientParser =
             new Dictionary<string, HashSet<IParserClientEventHandler>>();
 
-        private readonly Dictionary<string, HashSet<IParserServerEventHandler>> parserServerEventHandlers =
+        private readonly Dictionary<string, HashSet<IParserServerEventHandler>> eventBusServerParser =
             new Dictionary<string, HashSet<IParserServerEventHandler>>();
 
         //For object[] args event handlers
-        private readonly Dictionary<string, HashSet<ServerEventDelegate>> eventDelegateHandlers =
+        private readonly Dictionary<string, HashSet<ServerEventDelegate>> eventBusServerDelegate =
             new Dictionary<string, HashSet<ServerEventDelegate>>();
 
-        private readonly Dictionary<string, HashSet<ClientEventDelegate>> clientEventDelegateHandlers =
+        private readonly Dictionary<string, HashSet<ClientEventDelegate>> eventBusClientDelegate =
             new Dictionary<string, HashSet<ClientEventDelegate>>();
 
         internal readonly IEventHandler<CheckpointDelegate> CheckpointEventHandler =
@@ -198,97 +204,149 @@ namespace AltV.Net
             return target.LoadFromNativeImagePath(nativeImagePath, assemblyPath);
         }
 
+        [Obsolete]
         public void On(string eventName, Function function)
         {
             if (function == null) return;
-            if (eventHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            if (eventBus.TryGetValue(eventName, out var eventHandlers))
             {
-                eventHandlersForEvent.Add(function);
+                eventHandlers.Add(function);
             }
             else
             {
-                eventHandlersForEvent = new HashSet<Function> {function};
-                eventHandlers[eventName] = eventHandlersForEvent;
+                eventHandlers = new HashSet<Function> {function};
+                eventBus[eventName] = eventHandlers;
             }
         }
 
+        [Obsolete]
         public void Off(string eventName, Function function)
         {
             if (function == null) return;
-            if (eventHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            if (eventBus.TryGetValue(eventName, out var eventHandlers))
             {
-                eventHandlersForEvent.Remove(function);
+                eventHandlers.Remove(function);
             }
         }
 
-        public void OnServer(string eventName, ServerEventDelegate serverEventDelegate)
+        public void OnClient(string eventName, Function function)
         {
-            if (serverEventDelegate == null) return;
-            if (eventDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            if (function == null) return;
+            if (eventBusClient.TryGetValue(eventName, out var eventHandlers))
             {
-                eventHandlersForEvent.Add(serverEventDelegate);
+                eventHandlers.Add(function);
             }
             else
             {
-                eventHandlersForEvent = new HashSet<ServerEventDelegate> {serverEventDelegate};
-                eventDelegateHandlers[eventName] = eventHandlersForEvent;
+                eventHandlers = new HashSet<Function> {function};
+                eventBusClient[eventName] = eventHandlers;
             }
         }
 
-        public void OffServer(string eventName, ServerEventDelegate serverEventDelegate)
+        public void OffClient(string eventName, Function function)
         {
-            if (serverEventDelegate == null) return;
-            if (eventDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            if (function == null) return;
+            if (eventBusClient.TryGetValue(eventName, out var eventHandlers))
             {
-                eventHandlersForEvent.Remove(serverEventDelegate);
+                eventHandlers.Remove(function);
             }
         }
 
+        public void OnServer(string eventName, Function function)
+        {
+            if (function == null) return;
+            if (eventBusServer.TryGetValue(eventName, out var eventHandlers))
+            {
+                eventHandlers.Add(function);
+            }
+            else
+            {
+                eventHandlers = new HashSet<Function> {function};
+                eventBusServer[eventName] = eventHandlers;
+            }
+        }
+
+        public void OffServer(string eventName, Function function)
+        {
+            if (function == null) return;
+            if (eventBusServer.TryGetValue(eventName, out var eventHandlers))
+            {
+                eventHandlers.Remove(function);
+            }
+        }
+
+        [Obsolete]
         public void OnClient(string eventName, ClientEventDelegate eventDelegate)
         {
             if (eventDelegate == null) return;
-            if (clientEventDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            if (eventBusClientDelegate.TryGetValue(eventName, out var eventHandlers))
             {
-                eventHandlersForEvent.Add(eventDelegate);
+                eventHandlers.Add(eventDelegate);
             }
             else
             {
-                eventHandlersForEvent = new HashSet<ClientEventDelegate> {eventDelegate};
-                clientEventDelegateHandlers[eventName] = eventHandlersForEvent;
+                eventHandlers = new HashSet<ClientEventDelegate> {eventDelegate};
+                eventBusClientDelegate[eventName] = eventHandlers;
             }
         }
 
+        [Obsolete]
         public void OffClient(string eventName, ClientEventDelegate eventDelegate)
         {
             if (eventDelegate == null) return;
-            if (clientEventDelegateHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            if (eventBusClientDelegate.TryGetValue(eventName, out var eventHandlers))
             {
-                eventHandlersForEvent.Remove(eventDelegate);
+                eventHandlers.Remove(eventDelegate);
+            }
+        }
+
+        [Obsolete]
+        public void OnServer(string eventName, ServerEventDelegate serverEventDelegate)
+        {
+            if (serverEventDelegate == null) return;
+            if (eventBusServerDelegate.TryGetValue(eventName, out var eventHandlers))
+            {
+                eventHandlers.Add(serverEventDelegate);
+            }
+            else
+            {
+                eventHandlers = new HashSet<ServerEventDelegate> {serverEventDelegate};
+                eventBusServerDelegate[eventName] = eventHandlers;
+            }
+        }
+
+        [Obsolete]
+        public void OffServer(string eventName, ServerEventDelegate serverEventDelegate)
+        {
+            if (serverEventDelegate == null) return;
+            if (eventBusServerDelegate.TryGetValue(eventName, out var eventHandlers))
+            {
+                eventHandlers.Remove(serverEventDelegate);
             }
         }
 
         public void On<TFunc>(string eventName, TFunc func, ClientEventParser<TFunc> parser) where TFunc : Delegate
         {
             if (func == null || parser == null) return;
-            if (parserClientEventHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            if (eventBusClientParser.TryGetValue(eventName, out var eventHandlers))
             {
-                eventHandlersForEvent.Add(new ParserClientEventHandler<TFunc>(func, parser));
+                eventHandlers.Add(new ParserClientEventHandler<TFunc>(func, parser));
             }
             else
             {
-                eventHandlersForEvent = new HashSet<IParserClientEventHandler>
+                eventHandlers = new HashSet<IParserClientEventHandler>
                     {new ParserClientEventHandler<TFunc>(func, parser)};
-                parserClientEventHandlers[eventName] = eventHandlersForEvent;
+                eventBusClientParser[eventName] = eventHandlers;
             }
         }
 
         public void Off<TFunc>(string eventName, TFunc func, ClientEventParser<TFunc> parser) where TFunc : Delegate
         {
             if (func == null || parser == null) return;
-            if (!parserClientEventHandlers.TryGetValue(eventName, out var eventHandlersForEvent)) return;
+            if (!eventBusClientParser.TryGetValue(eventName, out var eventHandlers)) return;
             var parsersToDelete = new LinkedList<IParserClientEventHandler>();
             var eventHandlerToFind = new ParserClientEventHandler<TFunc>(func, parser);
-            foreach (var eventHandler in eventHandlersForEvent.Where(eventHandler =>
+            foreach (var eventHandler in eventHandlers.Where(eventHandler =>
                 eventHandler.Equals(eventHandlerToFind)))
             {
                 parsersToDelete.AddFirst(eventHandler);
@@ -296,32 +354,32 @@ namespace AltV.Net
 
             foreach (var parserToDelete in parsersToDelete)
             {
-                eventHandlersForEvent.Remove(parserToDelete);
+                eventHandlers.Remove(parserToDelete);
             }
         }
 
         public void On<TFunc>(string eventName, TFunc func, ServerEventParser<TFunc> parser) where TFunc : Delegate
         {
             if (func == null || parser == null) return;
-            if (parserServerEventHandlers.TryGetValue(eventName, out var eventHandlersForEvent))
+            if (eventBusServerParser.TryGetValue(eventName, out var eventHandlers))
             {
-                eventHandlersForEvent.Add(new ParserServerEventHandler<TFunc>(func, parser));
+                eventHandlers.Add(new ParserServerEventHandler<TFunc>(func, parser));
             }
             else
             {
-                eventHandlersForEvent = new HashSet<IParserServerEventHandler>
+                eventHandlers = new HashSet<IParserServerEventHandler>
                     {new ParserServerEventHandler<TFunc>(func, parser)};
-                parserServerEventHandlers[eventName] = eventHandlersForEvent;
+                eventBusServerParser[eventName] = eventHandlers;
             }
         }
 
         public void Off<TFunc>(string eventName, TFunc func, ServerEventParser<TFunc> parser) where TFunc : Delegate
         {
             if (func == null || parser == null) return;
-            if (!parserServerEventHandlers.TryGetValue(eventName, out var eventHandlersForEvent)) return;
+            if (!eventBusServerParser.TryGetValue(eventName, out var eventHandlers)) return;
             var parsersToDelete = new LinkedList<IParserServerEventHandler>();
             var eventHandlerToFind = new ParserServerEventHandler<TFunc>(func, parser);
-            foreach (var eventHandler in eventHandlersForEvent.Where(eventHandler =>
+            foreach (var eventHandler in eventHandlers.Where(eventHandler =>
                 eventHandler.Equals(eventHandlerToFind)))
             {
                 parsersToDelete.AddFirst(eventHandler);
@@ -329,7 +387,7 @@ namespace AltV.Net
 
             foreach (var parserToDelete in parsersToDelete)
             {
-                eventHandlersForEvent.Remove(parserToDelete);
+                eventHandlers.Remove(parserToDelete);
             }
         }
 
@@ -636,57 +694,72 @@ namespace AltV.Net
                 return;
             }
 
-            int length = args.Length;
-            MValueConst[] argArray = null;
-            if (parserClientEventHandlers.Count != 0 &&
-                parserClientEventHandlers.TryGetValue(name, out var parserEventHandlers))
+            var length = args.Length;
+            MValueConst[] mValues = null;
+
+            if (eventBusClientParser.Count != 0 &&
+                eventBusClientParser.TryGetValue(name, out var parserEventHandlers))
             {
-                argArray = new MValueConst[length];
+                mValues = new MValueConst[length];
                 for (var i = 0; i < length; i++)
                 {
-                    argArray[i] = new MValueConst(args[i]);
+                    mValues[i] = new MValueConst(args[i]);
                 }
                 foreach (var parserEventHandler in parserEventHandlers)
                 {
-                    parserEventHandler.Call(player, argArray);
+                    parserEventHandler.Call(player, mValues);
                 }
             }
-            
-            if (this.eventHandlers.Count != 0 && this.eventHandlers.TryGetValue(name, out var eventHandlers))
+
+            if (eventBusClient.Count != 0 && eventBusClient.TryGetValue(name, out var eventHandlersClient))
             {
-                if (argArray == null)
+                if (mValues == null)
                 {
-                    argArray = new MValueConst[length];
+                    mValues = new MValueConst[length];
                     for (var i = 0; i < length; i++)
                     {
-                        argArray[i] = new MValueConst(args[i]);
+                        mValues[i] = new MValueConst(args[i]);
                     }
                 }
+                foreach (var eventHandler in eventHandlersClient)
+                {
+                    eventHandler.Call(player, mValues);
+                }
+            }
 
+            if (eventBus.Count != 0 && eventBus.TryGetValue(name, out var eventHandlers))
+            {
+                if (mValues == null)
+                {
+                    mValues = new MValueConst[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        mValues[i] = new MValueConst(args[i]);
+                    }
+                }
                 foreach (var eventHandler in eventHandlers)
                 {
-                    eventHandler.Call(player, argArray);
+                    eventHandler.Call(player, mValues);
                 }
             }
 
             object[] argObjects = null;
 
-            if (clientEventDelegateHandlers.Count != 0 &&
-                clientEventDelegateHandlers.TryGetValue(name, out var eventDelegates))
+            if (eventBusClientDelegate.Count != 0 &&
+                eventBusClientDelegate.TryGetValue(name, out var eventDelegates))
             {
-                if (argArray == null)
+                if (mValues == null)
                 {
-                    argArray = new MValueConst[length];
+                    mValues = new MValueConst[length];
                     for (var i = 0; i < length; i++)
                     {
-                        argArray[i] = new MValueConst(args[i]);
+                        mValues[i] = new MValueConst(args[i]);
                     }
                 }
-                
                 argObjects = new object[length];
                 for (var i = 0; i < length; i++)
                 {
-                    argObjects[i] = argArray[i].ToObject();
+                    argObjects[i] = mValues[i].ToObject();
                 }
 
                 foreach (var eventHandler in eventDelegates)
@@ -697,12 +770,12 @@ namespace AltV.Net
 
             if (PlayerClientEventEventHandler.HasEvents())
             {
-                if (argArray == null)
+                if (mValues == null)
                 {
-                    argArray = new MValueConst[length];
+                    mValues = new MValueConst[length];
                     for (var i = 0; i < length; i++)
                     {
-                        argArray[i] = new MValueConst(args[i]);
+                        mValues[i] = new MValueConst(args[i]);
                     }
                 }
 
@@ -711,7 +784,7 @@ namespace AltV.Net
                     argObjects = new object[length];
                     for (var i = 0; i < length; i++)
                     {
-                        argObjects[i] = argArray[i].ToObject();
+                        argObjects[i] = mValues[i].ToObject();
                     }
                 }
 
@@ -723,21 +796,21 @@ namespace AltV.Net
 
             if (PlayerClientCustomEventEventHandler.HasEvents())
             {
-                if (argArray == null)
+                if (mValues == null)
                 {
-                    argArray = new MValueConst[length];
+                    mValues = new MValueConst[length];
                     for (var i = 0; i < length; i++)
                     {
-                        argArray[i] = new MValueConst(args[i]);
+                        mValues[i] = new MValueConst(args[i]);
                     }
                 }
                 foreach (var eventHandler in PlayerClientCustomEventEventHandler.GetEvents())
                 {
-                    eventHandler(player, name, argArray);
+                    eventHandler(player, name, mValues);
                 }
             }
 
-            OnClientEventEvent(player, name, args, argArray, argObjects);
+            OnClientEventEvent(player, name, args, mValues, argObjects);
         }
 
         public virtual void OnClientEventEvent(IPlayer player, string name, IntPtr[] args, MValueConst[] mValues,
@@ -747,15 +820,15 @@ namespace AltV.Net
 
         public void OnServerEvent(string name, IntPtr[] args)
         {
-            int length = args.Length;
+            var length = args.Length;
             var mValues = new MValueConst[length];
             for (var i = 0; i < length; i++)
             {
                 mValues[i] = new MValueConst(args[i]);
             }
-            
-            if (parserServerEventHandlers.Count != 0 &&
-                parserServerEventHandlers.TryGetValue(name, out var parserEventHandlers))
+
+            if (eventBusServerParser.Count != 0 &&
+                eventBusServerParser.TryGetValue(name, out var parserEventHandlers))
             {
                 foreach (var parserEventHandler in parserEventHandlers)
                 {
@@ -763,7 +836,27 @@ namespace AltV.Net
                 }
             }
 
-            if (this.eventHandlers.Count != 0 && this.eventHandlers.TryGetValue(name, out var eventNameEventHandlers))
+            if (eventBusServer.Count != 0 && eventBusServer.TryGetValue(name, out var eventHandlersServer))
+            {
+                foreach (var eventNameEventHandler in eventHandlersServer)
+                {
+                    try
+                    {
+                        eventNameEventHandler.Call(mValues);
+                    }
+                    catch (TargetInvocationException exception)
+                    {
+                        Alt.Log("exception at event:" + name + ":" + exception.InnerException);
+                    }
+                    catch (Exception exception)
+                    {
+                        Alt.Log("exception at event:" + name + ":" + exception);
+                    }
+                }
+            }
+
+
+            if (eventBus.Count != 0 && eventBus.TryGetValue(name, out var eventNameEventHandlers))
             {
                 foreach (var eventNameEventHandler in eventNameEventHandlers)
                 {
@@ -784,7 +877,7 @@ namespace AltV.Net
 
             object[] argObjects = null;
 
-            if (eventDelegateHandlers.Count != 0 && eventDelegateHandlers.TryGetValue(name, out var eventDelegates))
+            if (eventBusServerDelegate.Count != 0 && eventBusServerDelegate.TryGetValue(name, out var eventDelegates))
             {
                 argObjects = new object[length];
                 for (var i = 0; i < length; i++)

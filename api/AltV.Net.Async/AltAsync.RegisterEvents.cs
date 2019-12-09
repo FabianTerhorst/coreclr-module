@@ -7,12 +7,14 @@ namespace AltV.Net.Async
     {
         public static void RegisterEvents(object target)
         {
-            ModuleScriptMethodIndexer.Index(target, new[] {typeof(AsyncEvent), typeof(AsyncScriptEvent)},
+#pragma warning disable 612, 618
+            ModuleScriptMethodIndexer.Index(target, new[] {typeof(AsyncEventAttribute), typeof(AsyncServerEventAttribute), typeof(AsyncClientEventAttribute), typeof(AsyncScriptEventAttribute)},
+#pragma warning restore 612, 618
                 (baseEvent, eventMethod, eventMethodDelegate) =>
                 {
                     switch (baseEvent)
                     {
-                        case AsyncScriptEvent scriptEvent:
+                        case AsyncScriptEventAttribute scriptEvent:
                             var scriptEventType = scriptEvent.EventType;
                             ScriptFunction scriptFunction;
                             switch (scriptEventType)
@@ -211,9 +213,19 @@ namespace AltV.Net.Async
                             }
 
                             break;
-                        case AsyncEvent @event:
+#pragma warning disable 612, 618
+                        case AsyncEventAttribute @event:
                             var eventName = @event.Name ?? eventMethod.Name;
                             Module.On(eventName, Function.Create(eventMethodDelegate));
+                            break;
+#pragma warning restore 612, 618
+                        case AsyncServerEventAttribute @event:
+                            var serverEventName = @event.Name ?? eventMethod.Name;
+                            Module.OnServer(serverEventName, Function.Create(eventMethodDelegate));
+                            break;
+                        case AsyncClientEventAttribute @event:
+                            var clientEventName = @event.Name ?? eventMethod.Name;
+                            Module.OnClient(clientEventName, Function.Create(eventMethodDelegate));
                             break;
                     }
                 });
