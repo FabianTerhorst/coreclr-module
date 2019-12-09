@@ -19,6 +19,7 @@ namespace AltV.Net
         ConsoleCommand,
         MetaDataChange,
         SyncedMetaDataChange,
-        ColShape
+        ColShape,
+        WeaponDamage
     }
 }

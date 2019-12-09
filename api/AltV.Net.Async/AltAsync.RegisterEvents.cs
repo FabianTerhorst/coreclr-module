@@ -1,3 +1,4 @@
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.FunctionParser;
 
@@ -207,6 +208,26 @@ namespace AltV.Net.Async
                                         scriptFunction.Set(state);
                                         return scriptFunction.CallAsync();
                                     };
+                                    break;
+                                case ScriptEventType.WeaponDamage:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(ushort),
+                                            typeof(Position), typeof(BodyPart)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnWeaponDamage +=
+                                        (player, targetEntity, weapon, damage, shotOffset, damageOffset) =>
+                                        {
+                                            scriptFunction.Set(player);
+                                            scriptFunction.Set(targetEntity);
+                                            scriptFunction.Set(weapon);
+                                            scriptFunction.Set(damage);
+                                            scriptFunction.Set(shotOffset);
+                                            scriptFunction.Set(damageOffset);
+                                            return scriptFunction.CallAsync();
+                                        };
                                     break;
                             }
 
