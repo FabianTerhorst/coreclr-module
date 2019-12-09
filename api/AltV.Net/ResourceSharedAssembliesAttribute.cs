@@ -2,10 +2,10 @@ using System;
 
 namespace AltV.Net
 {
-	[AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false, Inherited = false)]
+	[AttributeUsage(AttributeTargets.Assembly)]
 	public sealed class ResourceSharedAssembliesAttribute : Attribute
 	{
-		public string[] Values { get; set; }
+		private string[] Values { get; set; }
 
 		public ResourceSharedAssembliesAttribute(params string[] values)
 		{
