@@ -166,7 +166,7 @@ namespace AltV.Net
 
             var argsLength = args.Length;
             var invokeValues = new object[argsLength];
-            var parserValuesLength = Math.Min(requiredArgsCount, length);
+            var parserValuesLength = Math.Max(1, Math.Min(requiredArgsCount, length));
             invokeValues[0] = player;
             for (var i = 1; i < parserValuesLength; i++)
             {
