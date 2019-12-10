@@ -387,9 +387,6 @@ namespace AltV.Net
         public object[] CalculateInvokeValues(IPlayer player, string[] values)
         {
             var length = values.Length;
-            Console.WriteLine("commands:" + string.Join(",", values));
-            Console.WriteLine("commands length:" + length);
-            Console.WriteLine("commands requiredArgsCount:" + requiredArgsCount);
             if (length + 1 < requiredArgsCount || !typeInfos[0].IsPlayer)
             {
                 return null;
