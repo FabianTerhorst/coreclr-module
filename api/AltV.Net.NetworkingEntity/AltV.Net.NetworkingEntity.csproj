@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
-        <PackageVersion>1.5.2-dev-preview</PackageVersion>
+        <PackageVersion>1.6.1-dev-preview</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>update dependencies</PackageReleaseNotes>
         <PackageIcon>icon.png</PackageIcon>

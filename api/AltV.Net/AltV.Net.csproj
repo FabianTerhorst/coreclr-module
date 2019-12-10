@@ -13,7 +13,7 @@
         <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.17.8-beta</PackageVersion>
+        <PackageVersion>1.18.3-beta</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes></PackageReleaseNotes>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>

@@ -27,6 +27,16 @@ namespace AltV.Net.NetworkingEntity
             set => Module.Server.StreamingHandler.EntityStreamOutHandler += value;
         }
 
+        public static ICollection<INetworkingClient> GetAllClients() => Module.ClientPool.Clients.Values;
+
+        public static ICollection<INetworkingEntity> GetAllEntities() => Module.EntityPool.Entities.Values;
+
+        public static bool TryGetClient(string token, out INetworkingClient client) =>
+            Module.ClientPool.TryGet(token, out client);
+
+        public static bool TryGetEntity(ulong id, out INetworkingEntity entity) =>
+            Module.EntityPool.TryGet(id, out entity);
+
         /// <summary>
         /// Configure networking entity module
         /// </summary>
