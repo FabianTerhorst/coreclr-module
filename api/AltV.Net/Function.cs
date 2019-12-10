@@ -166,7 +166,7 @@ namespace AltV.Net
 
             var argsLength = args.Length;
             var invokeValues = new object[argsLength];
-            var parserValuesLength = Math.Max(1, Math.Min(requiredArgsCount, length));
+            var parserValuesLength = Math.Max(1, Math.Min(argsLength, length));
             invokeValues[0] = player;
             for (var i = 1; i < parserValuesLength; i++)
             {
@@ -222,7 +222,7 @@ namespace AltV.Net
 
             var argsLength = args.Length;
             var invokeValues = new object[argsLength];
-            var parserValuesLength = Math.Min(requiredArgsCount, length);
+            var parserValuesLength = Math.Min(argsLength, length);
             for (var i = 0; i < parserValuesLength; i++)
             {
                 invokeValues[i] = constParsers[i](in values[i], args[i], typeInfos[i]);
@@ -280,7 +280,7 @@ namespace AltV.Net
 
             var argsLength = args.Length;
             var invokeValues = new object[argsLength];
-            var parserValuesLength = Math.Min(requiredArgsCount, length);
+            var parserValuesLength = Math.Min(argsLength, length);
             for (var i = 0; i < parserValuesLength; i++)
             {
                 invokeValues[i] = objectParsers[i](values[i], args[i], typeInfos[i]);
@@ -339,7 +339,7 @@ namespace AltV.Net
             var argsLength = args.Length;
             var invokeValues = new object[argsLength];
             invokeValues[0] = player;
-            var parserValuesLength = Math.Max(1, Math.Min(requiredArgsCount, length));
+            var parserValuesLength = Math.Max(1, Math.Min(argsLength, length));
             for (var i = 1; i < parserValuesLength; i++)
             {
                 invokeValues[i] = objectParsers[i](values[i - 1], args[i], typeInfos[i]);
@@ -395,7 +395,7 @@ namespace AltV.Net
             var argsLength = args.Length;
             var invokeValues = new object[argsLength];
             invokeValues[0] = player;
-            var parserValuesLength = Math.Max(1, Math.Min(requiredArgsCount, length));
+            var parserValuesLength = Math.Max(1, Math.Min(argsLength, length));
             for (var i = 1; i < parserValuesLength; i++)
             {
                 invokeValues[i] = stringParsers[i](values[i - 1], args[i], typeInfos[i]);
