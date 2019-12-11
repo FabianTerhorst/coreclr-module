@@ -42,7 +42,7 @@ namespace AltV.Net
                 var arg = parameterInfo.ParameterType;
                 var typeInfo = typeInfos[i] = new FunctionTypeInfo(arg, parameterInfo);
 
-                if (!typeInfo.IsNullable && !typeInfo.IsParamArray)
+                if (!typeInfo.IsNullable && !typeInfo.IsParamArray && !parameterInfo.HasDefaultValue)
                 {
                     requiredArgsCount++;
                 }
@@ -142,6 +142,7 @@ namespace AltV.Net
         internal object Call(MValueConst[] values)
         {
             var invokeValues = CalculateInvokeValues(values);
+            if (invokeValues == null) return null;
 
             var resultObj = @delegate.DynamicInvoke(invokeValues);
             return returnType == FunctionTypes.Void ? null : resultObj;
@@ -150,6 +151,7 @@ namespace AltV.Net
         internal object Call(IPlayer player, MValueConst[] values)
         {
             var invokeValues = CalculateInvokeValues(player, values);
+            if (invokeValues == null) return null;
 
             var resultObj = @delegate.DynamicInvoke(invokeValues);
             return returnType == FunctionTypes.Void ? null : resultObj;
@@ -394,6 +396,7 @@ namespace AltV.Net
 
             var argsLength = args.Length;
             var invokeValues = new object[argsLength];
+            Console.WriteLine("argsLength:" + argsLength);
             invokeValues[0] = player;
             var parserValuesLength = Math.Min(argsLength, length + 1);
             for (var i = 1; i < parserValuesLength; i++)
@@ -444,8 +447,19 @@ namespace AltV.Net
         {
             var invokeValues = CalculateInvokeValues(player, values);
 
+            if (invokeValues == null) return null;
             //var resultObj = objectMethodExecutor.Execute(target, invokeValues);
-            var resultObj = @delegate.DynamicInvoke(invokeValues);
+            object resultObj;
+            try
+            {
+                resultObj = @delegate.DynamicInvoke(invokeValues);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                resultObj = null;
+            }
+
             if (returnType == FunctionTypes.Void)
             {
                 return null;

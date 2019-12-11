@@ -86,13 +86,20 @@ namespace AltV.Net.FunctionParser
                 CreateDictionary = null;
             }
 
-            if (paramType.IsValueType && paramType != FunctionTypes.String)
+            if (paramInfo != null && paramInfo.HasDefaultValue)
             {
-                DefaultValue = Activator.CreateInstance(paramType);
+                DefaultValue = paramInfo.DefaultValue;
             }
             else
             {
-                DefaultValue = null;
+                if (paramType.IsValueType && paramType != FunctionTypes.String)
+                {
+                    DefaultValue = Activator.CreateInstance(paramType);
+                }
+                else
+                {
+                    DefaultValue = null;
+                }
             }
 
             var interfaces = paramType.GetInterfaces();

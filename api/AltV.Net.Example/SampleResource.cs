@@ -374,6 +374,10 @@ namespace AltV.Net.Example
             Alt.Emit("chat:message", "/bla3 3535");
             Alt.Emit("chat:message", "/invalidCommand");
             Alt.Emit("chat:message", "/invalidCommand 3535");
+            Alt.Emit("chat:message", "/defaultParamsCommand test");
+            Alt.Emit("chat:message", "/defaultParamsCommand test 5");
+            Alt.Emit("chat:message", "/defaultParamsCommand test 6 3");
+            Alt.Emit("chat:message", "/defaultParamsCommand2 test 6 3");
             
             Alt.OnServer<int, object[]>("onOptionalAndParamArray", OnOptionalAndParamArray);
             

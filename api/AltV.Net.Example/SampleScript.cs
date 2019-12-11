@@ -43,6 +43,12 @@ namespace AltV.Net.Example
         {
             Console.WriteLine("Command:" + arg1 + " " + arg2 + " remaining args " + string.Join(",", args));
         }
+        
+        [Command("defaultParamsCommand", aliases: new []{"defaultParamsCommand2"})]
+        public void DefaultParamsCommand(IPlayer player, string test, int arg1 = 1, int arg2 = 2)
+        {
+            Console.WriteLine("Command:" + test + " " + arg1 + " " + arg2);
+        }
 
         [ServerEvent("eventName")]
         public void MyEvent(IPlayer player)
