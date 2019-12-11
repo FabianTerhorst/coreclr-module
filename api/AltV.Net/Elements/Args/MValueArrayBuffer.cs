@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using System.Runtime.InteropServices;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
@@ -354,4 +354,4 @@ namespace AltV.Net.Elements.Args
             return mValue.type;
         }
     }
-}
+}*/

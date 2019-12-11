@@ -17,39 +17,26 @@
 extern "C"
 {
 #endif
-EXPORT alt::MValueFunction::Invoker* Invoker_Create(CSharpResourceImpl* resource, MValueFunctionCallback val);
+EXPORT CustomInvoker* Invoker_Create(CSharpResourceImpl* resource, MValueFunctionCallback val);
 EXPORT void Invoker_Destroy(CSharpResourceImpl* resource, CustomInvoker* val);
 
-EXPORT void MValue_CreateNil(alt::MValue &mValue);
-EXPORT void MValue_CreateBool(bool val, alt::MValue &mValue);
-EXPORT void MValue_CreateInt(int64_t val, alt::MValue &mValue);
-EXPORT void MValue_CreateUInt(uint64_t val, alt::MValue &mValue);
-EXPORT void MValue_CreateDouble(double val, alt::MValue &mValue);
-EXPORT void MValue_CreateString(const char* val, alt::MValue &value);
-EXPORT void MValue_CreateList(alt::MValue val[], uint64_t size, alt::MValueList &valueList);
-EXPORT void MValue_CreateDict(alt::MValue* val, const char** keys, uint64_t size, alt::MValueDict &mValue);
-EXPORT void MValue_CreatePlayer(alt::IPlayer* val, alt::MValue &mValue);
-EXPORT void MValue_CreateVehicle(alt::IVehicle* val, alt::MValue &mValue);
-EXPORT void MValue_CreateBlip(alt::IVehicle* val, alt::MValue &mValue);
-EXPORT void MValue_CreateCheckpoint(alt::ICheckpoint* val, alt::MValue &mValue);
-EXPORT void MValue_CreateFunction(alt::MValueFunction::Invoker* val, alt::MValue &mValue);
+EXPORT bool MValueConst_GetBool(alt::MValueConst* mValueConst);
+EXPORT int64_t MValueConst_GetInt(alt::MValueConst* mValueConst);
+EXPORT uint64_t MValueConst_GetUInt(alt::MValueConst* mValueConst);
+EXPORT double MValueConst_GetDouble(alt::MValueConst* mValueConst);
+EXPORT bool MValueConst_GetString(alt::MValueConst* mValueConst, const char*&value, uint64_t &size);
+EXPORT uint64_t MValueConst_GetListSize(alt::MValueConst* mValueConst);
+EXPORT bool MValueConst_GetList(alt::MValueConst* mValueConst, alt::MValueConst* values[]);
+EXPORT uint64_t MValueConst_GetDictSize(alt::MValueConst* mValueConst);
+EXPORT bool MValueConst_GetDict(alt::MValueConst* mValueConst, const char* keys[],
+                         alt::MValueConst* values[]);
+EXPORT void* MValueConst_GetEntity(alt::MValueConst* mValueConst, alt::IBaseObject::Type &type);
+EXPORT alt::MValueConst* MValueConst_CallFunction(alt::MValueConst* mValueConst, alt::MValueConst* val[], uint64_t size);
+EXPORT void MValueConst_AddRef(alt::MValueConst* mValueConst);
+EXPORT void MValueConst_RemoveRef(alt::MValueConst* mValueConst);
 
-EXPORT bool MValue_GetBool(alt::MValue &mValue);
-EXPORT int64_t MValue_GetInt(alt::MValue &mValue);
-EXPORT uint64_t MValue_GetUInt(alt::MValue &mValue);
-EXPORT double MValue_GetDouble(alt::MValue &mValue);
-EXPORT void MValue_GetString(alt::MValue &mValue, const char*&value, uint64_t &size);
-EXPORT void MValue_GetList(alt::MValue &mValue, alt::MValue::List &value);
-EXPORT void MValue_GetDict(alt::MValue &mValue, alt::Array<alt::String> &keys, alt::MValue::List &values);
-EXPORT void* MValue_GetEntity(alt::MValue &mValue, alt::IBaseObject::Type &type);
-EXPORT MValueFunctionCallback MValue_GetFunction(alt::MValue &mValue);
-
-EXPORT void MValue_CallFunction(alt::MValue* mValue, alt::MValue* args, int32_t size, alt::MValue &result);
-EXPORT void MValue_CallFunctionValue(alt::MValue* mValue, alt::MValueList &value, alt::MValue &result);
-EXPORT void MValue_Dispose(alt::MValue* mValue);
-
-//EXPORT alt::MValueFunction::Invoker* MValue_GetInvoker(alt::MValueFunction &mValue);
-//EXPORT void MValue_CallInvoker(alt::MValueFunction::Invoker &invoker, alt::MValue &value);
+EXPORT void MValueConst_Delete(alt::MValueConst* mValueConst);
+EXPORT uint8_t MValueConst_GetType(alt::MValueConst* mValueConst);
 #ifdef __cplusplus
 }
 #endif

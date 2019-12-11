@@ -14,22 +14,24 @@ namespace AltV.Net.Elements.Entities
 
         public abstract uint Model { get; set; }
 
-        public abstract void SetSyncedMetaData(string key, ref MValue value);
-        public abstract void GetSyncedMetaData(string key, ref MValue value);
+        public abstract void SetSyncedMetaData(string key, in MValueConst value);
+        public abstract void GetSyncedMetaData(string key, out MValueConst value);
         
         public void SetSyncedMetaData(string key, object value)
         {
             CheckIfEntityExists();
-            var mValue = MValue.CreateFromObject(value);
-            SetSyncedMetaData(key, ref mValue);
+            Alt.Server.CreateMValue(out var mValue, value);
+            SetSyncedMetaData(key, in mValue);
+            mValue.Dispose();
         }
 
         public bool GetSyncedMetaData<T>(string key, out T result)
         {
             CheckIfEntityExists();
-            var mValue = MValue.Nil;
-            GetSyncedMetaData(key, ref mValue);
-            if (!(mValue.ToObject() is T cast))
+            GetSyncedMetaData(key, out var mValue);
+            var obj = mValue.ToObject();
+            mValue.Dispose();
+            if (!(obj is T cast))
             {
                 result = default;
                 return false;

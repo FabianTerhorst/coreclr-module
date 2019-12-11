@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AltV.Net.NetworkingEntity.Elements.Pools;
 using Entity;
 
 namespace AltV.Net.NetworkingEntity.Elements.Entities
@@ -34,17 +35,17 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
         /// Clients that are in streaming range of entity
         /// </summary>
         HashSet<INetworkingClient> StreamedInClients { get; }
-        
+
         /// <summary>
         /// The way the entity gets streamed
         /// </summary>
         StreamingType StreamingType { get; }
-        
+
         /// <summary>
         /// The main entity streamer, not in use currently
         /// </summary>
         INetworkingClient MainStreamer { get; }
-        
+
 
         /// <summary>
         /// This method is required to call to change entity data after creation to update data snapshot
@@ -95,7 +96,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
         /// <param name="key"></param>
         /// <param name="value"></param>
         void SetData(string key, IDictionary<string, object> value);
-        
+
         /// <summary>
         /// This method is required to call to change entity data after creation to update data snapshot
         /// </summary>
@@ -119,6 +120,8 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
 
         bool GetData(string key, out long value);
 
+        bool GetData<T>(string key, out T value);
+
         bool IsDataNull(string key);
 
         /// <summary>
@@ -136,5 +139,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
 
         // Returns true when removed successfully
         bool ClientStreamedOut(INetworkingClient client);
+
+        void Init(ulong id, IEntityStreamer streamer);
     }
 }

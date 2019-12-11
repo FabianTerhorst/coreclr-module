@@ -4,26 +4,26 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Elements.Args
 {
-    internal class MValueWriter : IMValueWriter
+    public class MValueWriter2 : IMValueWriter
     {
         public interface IWritableMValue
         {
-            List<MValue> Values { get; }
+            List<object> Values { get; }
 
             byte Type { get; }
 
             void Append(IWritableMValue writable);
 
-            MValue ToMValue();
+            void ToMValue(out MValueConst mValue);
         }
 
         public struct MValueObject : IWritableMValue
         {
             public byte Type => 0;
             public readonly List<string> Names;
-            public List<MValue> Values { get; }
+            public List<object> Values { get; }
 
-            public MValueObject(List<string> names, List<MValue> values)
+            public MValueObject(List<string> names, List<object> values)
             {
                 Names = names;
                 Values = values;
@@ -34,34 +34,56 @@ namespace AltV.Net.Elements.Args
                 // Only valid when we have a open Name without a value
                 if (Names.Count > Values.Count)
                 {
-                    Values.Add(writable.ToMValue());
+                    writable.ToMValue(out var mValue);
+                    Values.Add(mValue);
+                }
+                else
+                {
+                    throw new ArithmeticException("Name(name) is required before writing a object.");
                 }
             }
 
-            public MValue ToMValue()
+            public void ToMValue(out MValueConst mValue)
             {
-                return MValue.Create(Values.ToArray(), Names.ToArray());
+                var size = (ulong) Values.Count;
+                var mValues = new MValueConst[size];
+                Alt.Server.CreateMValues(mValues, Values.ToArray());
+                var keys = Names.ToArray();
+
+                Alt.Server.CreateMValueDict(out mValue, keys, mValues, size);
+                for (ulong i = 0; i < size; i++)
+                {
+                    mValues[i].Dispose();
+                }
             }
         }
 
         public struct MValueArray : IWritableMValue
         {
             public byte Type => 1;
-            public List<MValue> Values { get; }
+            public List<object> Values { get; }
 
-            public MValueArray(List<MValue> values)
+            public MValueArray(List<object> values)
             {
                 Values = values;
             }
 
             public void Append(IWritableMValue writable)
             {
-                Values.Add(writable.ToMValue());
+                writable.ToMValue(out var mValue);
+                Values.Add(mValue);
             }
 
-            public MValue ToMValue()
+            public void ToMValue(out MValueConst mValue)
             {
-                return MValue.Create(Values.ToArray());
+                var size = (ulong) Values.Count;
+                var mValues = new MValueConst[size];
+                Alt.Server.CreateMValues(mValues, Values.ToArray());
+                Alt.Server.CreateMValueList(out mValue, mValues, size);
+                for (ulong i = 0; i < size; i++)
+                {
+                    mValues[i].Dispose();
+                }
             }
         }
 
@@ -79,7 +101,7 @@ namespace AltV.Net.Elements.Args
 
         public void BeginObject()
         {
-            var currentObj = new MValueObject(new List<string>(), new List<MValue>());
+            var currentObj = new MValueObject(new List<string>(), new List<object>());
 
             currents.Push(currentObj);
         }
@@ -111,7 +133,7 @@ namespace AltV.Net.Elements.Args
 
         public void BeginArray()
         {
-            var currentArr = new MValueArray(new List<MValue>());
+            var currentArr = new MValueArray(new List<object>());
 
             currents.Push(currentArr);
         }
@@ -153,7 +175,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -161,7 +183,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -169,7 +191,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -177,7 +199,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -185,7 +207,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -193,7 +215,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -201,7 +223,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -209,7 +231,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -217,7 +239,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -225,7 +247,7 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
@@ -233,12 +255,25 @@ namespace AltV.Net.Elements.Args
         {
             if (currents.TryPeek(out currCurr))
             {
-                currCurr.Values.Add(MValue.Create(value));
+                currCurr.Values.Add(value);
             }
         }
 
         //TODO: function support
 
-        public MValue ToMValue() => root?.ToMValue() ?? MValue.Nil;
+        public bool ToMValue(out MValueConst mValue)
+        {
+            if (root != null)
+            {
+                root.ToMValue(out mValue);
+                return true;
+            }
+            else
+            {
+                mValue = MValueConst.Nil;       
+            }
+
+            return false;
+        }
     }
 }

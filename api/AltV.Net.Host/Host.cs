@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Reflection.Metadata;
+using System.Reflection.PortableExecutable;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using System.Threading;
@@ -13,26 +15,27 @@ using System.Threading.Tasks;
 
 namespace AltV.Net.Host
 {
-    public class Host
+    public static class Host
     {
         private delegate bool ImportDelegate(string resourceName, string key, out object value);
 
-        private static readonly IDictionary<string, AssemblyLoadContext> _loadContexts =
+        private static readonly IDictionary<string, AssemblyLoadContext> LoadContexts =
             new Dictionary<string, AssemblyLoadContext>();
 
-        private static readonly IDictionary<string, IDictionary<string, object>> _exports =
+        private static readonly IDictionary<string, IDictionary<string, object>> Exports =
             new Dictionary<string, IDictionary<string, object>>();
 
-        private static readonly IDictionary<string, Action<long>> _traceSizeChangeDelegates =
+        private static readonly IDictionary<string, Action<long>> TraceSizeChangeDelegates =
             new Dictionary<string, Action<long>>();
 
         private const string DllName = "csharp-module";
+
         private const CallingConvention NativeCallingConvention = CallingConvention.Cdecl;
 
-        internal delegate int CoreClrDelegate(IntPtr args, int argsLength);
+        private delegate int CoreClrDelegate(IntPtr args, int argsLength);
 
         [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-        internal static extern void CoreClr_SetResourceLoadDelegates(CoreClrDelegate resourceExecute,
+        private static extern void CoreClr_SetResourceLoadDelegates(CoreClrDelegate resourceExecute,
             CoreClrDelegate resourceExecuteUnload);
 
         private static CoreClrDelegate _executeResource;
@@ -42,7 +45,7 @@ namespace AltV.Net.Host
         /// <summary>
         /// Main is present to execute the dll as a assembly
         /// </summary>
-        static int Main(string[] args)
+        public static int Main(string[] args)
         {
             var semaphore = new Semaphore(0, 1);
             SetDelegates();
@@ -97,19 +100,26 @@ namespace AltV.Net.Host
             var resourceName = Marshal.PtrToStringUTF8(libArgs.ResourceName);
             var resourceMain = Marshal.PtrToStringUTF8(libArgs.ResourceMain);
 
-            var isCollectible = Environment.GetEnvironmentVariable("CSHARP_MODULE_DISABLE_COLLECTIBLE") == null;
-
             var resourceDllPath = GetPath(resourcePath, resourceMain);
-            var resourceAssemblyLoadContext =
-                new ResourceAssemblyLoadContext(resourceDllPath, resourcePath, resourceName, isCollectible);
+            var resourceAssemblyLoadContext = new ResourceAssemblyLoadContext(resourceDllPath, resourcePath, resourceName);
 
-            _loadContexts[resourceDllPath] = resourceAssemblyLoadContext;
+            LoadContexts[resourceDllPath] = resourceAssemblyLoadContext;
 
-            Assembly resourceAssembly;
+            resourceAssemblyLoadContext.SharedAssemblyNames.UnionWith(GetResourceSharedAssemblies(resourceDllPath));
 
             try
             {
-                resourceAssembly = resourceAssemblyLoadContext.LoadFromAssemblyPath(resourceDllPath);
+                resourceAssemblyLoadContext.LoadFromAssemblyPath(resourceDllPath);
+                var newList = new HashSet<string>();
+                foreach (var referencedAssembly in resourceAssemblyLoadContext.SharedAssemblyNames)
+                {
+                    var refAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(GetPath(resourcePath, referencedAssembly + ".dll"));
+                    foreach (var referencedAssembly2 in refAssembly.GetReferencedAssemblies())
+                    {
+                        newList.Add(referencedAssembly2.Name);
+                    }
+                }
+                resourceAssemblyLoadContext.SharedAssemblyNames.UnionWith(newList);
             }
             catch (FileLoadException e)
             {
@@ -117,7 +127,71 @@ namespace AltV.Net.Host
                 return 1;
             }
 
+            var isDefaultLoaded = false;
+            var isShared = resourceAssemblyLoadContext.SharedAssemblyNames.Contains("AltV.Net");
+            foreach (var assembly in AssemblyLoadContext.Default.Assemblies)
+            {
+                if(assembly.GetName().Name != "AltV.Net") continue;
+                isDefaultLoaded = true;
+                break;
+            }
+            if (!isDefaultLoaded && isShared)
+            {
+                var defaultAltVNetAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(GetPath(resourcePath, "AltV.Net.dll"));
+                InitAltVAssembly(defaultAltVNetAssembly, libArgs, resourceAssemblyLoadContext, resourceName);
+            }
+            resourceAssemblyLoadContext.SharedAssemblyNames.Remove("AltV.Net");
             var altVNetAssembly = resourceAssemblyLoadContext.LoadFromAssemblyName(new AssemblyName("AltV.Net"));
+            InitAltVAssembly(altVNetAssembly, libArgs, resourceAssemblyLoadContext, resourceName);
+            if (isShared)
+            {
+                resourceAssemblyLoadContext.SharedAssemblyNames.Add("AltV.Net");
+            }
+
+            return 0;
+        }
+
+        public static int ExecuteResourceUnload(IntPtr arg, int argLength)
+        {
+            if (argLength < Marshal.SizeOf(typeof(UnloadArgs)))
+            {
+                return 1;
+            }
+
+            var libArgs = Marshal.PtrToStructure<UnloadArgs>(arg);
+            var resourcePath = Marshal.PtrToStringUTF8(libArgs.ResourcePath);
+            var resourceMain = Marshal.PtrToStringUTF8(libArgs.ResourceMain);
+            AssemblyLoadContext loadContext;
+            {
+                var resourceDllPath = GetPath(resourcePath, resourceMain);
+                if (!LoadContexts.Remove(resourceDllPath, out loadContext)) return 1;
+                TraceSizeChangeDelegates.Remove(loadContext.Name);
+                Exports.Remove(loadContext.Name);
+                loadContext.Unload();
+            }
+
+            var weakLoadContext = new WeakReference(loadContext);
+
+            if (weakLoadContext.IsAlive)
+            {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+
+            if (weakLoadContext.IsAlive)
+            {
+                Console.WriteLine("Resource " + resourcePath + " leaked!");
+            }
+
+            return 0;
+        }
+
+        private static void InitAltVAssembly(Assembly altVNetAssembly, LibArgs libArgs,
+            AssemblyLoadContext resourceAssemblyLoadContext, string resourceName)
+        {
             foreach (var type in altVNetAssembly.GetTypes())
             {
                 switch (type.Name)
@@ -151,7 +225,7 @@ namespace AltV.Net.Host
                                 new object[]
                                 {
                                 });
-                            _traceSizeChangeDelegates[resourceName] = traceSizeChangeDelegate;
+                            TraceSizeChangeDelegates[resourceName] = traceSizeChangeDelegate;
                         }
                         catch (Exception exception)
                         {
@@ -163,47 +237,38 @@ namespace AltV.Net.Host
                         break;
                 }
             }
-
-            return 0;
         }
 
-        public static int ExecuteResourceUnload(IntPtr arg, int argLength)
-        {
-            if (argLength < Marshal.SizeOf(typeof(UnloadArgs)))
-            {
-                return 1;
+        private static IEnumerable<string> GetResourceSharedAssemblies(string resourceDllPath) {
+            try {
+                using var stream = File.OpenRead(resourceDllPath);
+                using var peFile = new PEReader(stream);
+                var mdReader = peFile.GetMetadataReader();
+                foreach (var attrHandle in mdReader.GetAssemblyDefinition().GetCustomAttributes())
+                {
+                    var attr = mdReader.GetCustomAttribute(attrHandle);
+                    var attrCtor = mdReader.GetMemberReference((MemberReferenceHandle)attr.Constructor);
+                    var attrType = mdReader.GetTypeReference((TypeReferenceHandle)attrCtor.Parent);
+                    if (!mdReader.StringComparer.Equals(attrType.Name, "ResourceSharedAssembliesAttribute")) continue;
+                    var valueReader = mdReader.GetBlobReader(attr.Value);
+                    valueReader.Offset = 2;
+                    var strCount = valueReader.ReadInt32();
+                    valueReader.Offset = 6;
+                    var sharedAssemblies = new string[strCount];
+                    for (var i = 0; i < strCount; i++)
+                    {
+                        var strLen = valueReader.ReadCompressedInteger();
+                        var sharedAssemblyName = valueReader.ReadUTF8(strLen);
+                        sharedAssemblies[i] = sharedAssemblyName;
+                    }
+                    return sharedAssemblies;
+                }
             }
-
-            var libArgs = Marshal.PtrToStructure<UnloadArgs>(arg);
-            var resourcePath = Marshal.PtrToStringUTF8(libArgs.ResourcePath);
-            var resourceMain = Marshal.PtrToStringUTF8(libArgs.ResourceMain);
-            AssemblyLoadContext loadContext;
+            catch (Exception ex)
             {
-                var resourceDllPath = GetPath(resourcePath, resourceMain);
-                if (!_loadContexts.Remove(resourceDllPath, out loadContext)) return 1;
-                _traceSizeChangeDelegates.Remove(loadContext.Name);
-                _exports.Remove(loadContext.Name);
-                loadContext.Unload();
+                Console.WriteLine(ex);
             }
-
-            var weakLoadContext = new WeakReference(loadContext);
-            loadContext = null;
-
-            if (weakLoadContext.IsAlive)
-            {
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-            }
-
-            if (weakLoadContext.IsAlive)
-            {
-                Console.WriteLine("Resource " + resourcePath + " leaked!");
-            }
-
-            return 0;
+            return new string[] {};
         }
 
         /*public static async void CompileResource()
@@ -230,7 +295,7 @@ namespace AltV.Net.Host
 
         private static CollectTrace.Tracing _tracing;
 
-        private static byte _tracingState = 0;
+        private static byte _tracingState;
 
         public static void StartTracing(string traceFileName)
         {
@@ -240,7 +305,7 @@ namespace AltV.Net.Host
                 _tracing = new CollectTrace.Tracing();
             }
 
-            Task.Run(async () => await CollectTrace.Collect(_traceSizeChangeDelegates.Values, _tracing,
+            Task.Run(async () => await CollectTrace.Collect(TraceSizeChangeDelegates.Values, _tracing,
                 new FileInfo(traceFileName + ".nettrace")));
 
             lock (TracingMutex)
@@ -262,7 +327,7 @@ namespace AltV.Net.Host
 
         public static bool Import(string resourceName, string key, out object value)
         {
-            if (_exports.TryGetValue(resourceName, out var resourceExports))
+            if (Exports.TryGetValue(resourceName, out var resourceExports))
                 return resourceExports.TryGetValue(key, out value);
             value = null;
             return false;
@@ -270,10 +335,10 @@ namespace AltV.Net.Host
 
         public static void Export(string resourceName, string key, object value)
         {
-            if (!_exports.TryGetValue(resourceName, out var resourceExports))
+            if (!Exports.TryGetValue(resourceName, out var resourceExports))
             {
                 resourceExports = new Dictionary<string, object>();
-                _exports[resourceName] = resourceExports;
+                Exports[resourceName] = resourceExports;
             }
 
             resourceExports[key] = value;

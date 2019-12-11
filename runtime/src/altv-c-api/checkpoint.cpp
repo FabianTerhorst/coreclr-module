@@ -9,31 +9,40 @@ void Checkpoint_GetPosition(alt::ICheckpoint* checkpoint, position_t &position) 
     position.z = checkpointPosition.z;
 }
 
-void Checkpoint_SetPosition(alt::ICheckpoint* checkpoint, alt::Position pos) {
-    checkpoint->SetPosition(pos);
+void Checkpoint_SetPosition(alt::ICheckpoint* checkpoint, position_t pos) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+    checkpoint->SetPosition(position);
 }
 
-int16_t Checkpoint_GetDimension(alt::ICheckpoint* checkpoint) {
+int32_t Checkpoint_GetDimension(alt::ICheckpoint* checkpoint) {
     return checkpoint->GetDimension();
 }
 
-void Checkpoint_SetDimension(alt::ICheckpoint* checkpoint, int16_t dimension) {
+void Checkpoint_SetDimension(alt::ICheckpoint* checkpoint, int32_t dimension) {
     checkpoint->SetDimension(dimension);
 }
 
-void Checkpoint_GetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValue &val) {
-    val = checkpoint->GetMetaData(key);
+alt::MValueConst* Checkpoint_GetMetaData(alt::ICheckpoint* checkpoint, const char* key) {
+    return new alt::MValueConst(checkpoint->GetMetaData(key));
 }
 
-void Checkpoint_SetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValue* val) {
-    checkpoint->SetMetaData(key, *val);
+void Checkpoint_SetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValueConst* val) {
+    if (val == nullptr) return;
+    checkpoint->SetMetaData(key, val->Get()->Clone());
+}
+
+void Checkpoint_AddRef(alt::ICheckpoint* checkpoint) {
+    checkpoint->AddRef();
+}
+
+void Checkpoint_RemoveRef(alt::ICheckpoint* checkpoint) {
+    checkpoint->RemoveRef();
 }
 
 // Checkpoint
-
-bool Checkpoint_IsGlobal(alt::ICheckpoint* checkpoint) {
-    return checkpoint->IsGlobal();
-}
 
 uint8_t Checkpoint_GetCheckpointType(alt::ICheckpoint* checkpoint) {
     return checkpoint->GetCheckpointType();
@@ -63,6 +72,6 @@ bool Checkpoint_IsVehicleIn(alt::ICheckpoint* checkpoint, alt::IVehicle* vehicle
     return checkpoint->IsEntityIn(vehicle);
 }
 
-alt::IPlayer* Checkpoint_GetTarget(alt::ICheckpoint* checkpoint) {
-    return checkpoint->GetTarget();
+uint8_t Checkpoint_GetColShapeType(alt::ICheckpoint* checkpoint) {
+    return (uint8_t) checkpoint->GetColshapeType();
 }

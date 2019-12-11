@@ -6,7 +6,7 @@ namespace AltV.Net.Elements.Entities
     public abstract class WorldObject : BaseObject, IWorldObject
     {
         public abstract Position Position { get; set; }
-        public abstract short Dimension { get; set; }
+        public abstract int Dimension { get; set; }
 
         protected WorldObject(IntPtr nativePointer, BaseObjectType type) : base(nativePointer, type)
         {

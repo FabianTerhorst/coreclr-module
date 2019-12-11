@@ -13,14 +13,19 @@ namespace AltV.Net.Native
         internal static class Resource
         {
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern ushort Resource_GetExports(IntPtr resourcePointer, ref StringViewArray keys,
-                ref MValueArray values);
+            internal static extern ulong Resource_GetExportsCount(IntPtr resource);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Resource_GetExport(IntPtr resourcePointer, string key, ref MValue mValue);
+            internal static extern void Resource_GetExports(IntPtr resource, IntPtr[] keys, IntPtr[] values);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Resource_SetExport(IntPtr resourcePointer, IntPtr text, ref MValue mValue);
+            internal static extern IntPtr Resource_GetExport(IntPtr resource, IntPtr key);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Resource_SetExport(IntPtr core, IntPtr resource, IntPtr key, IntPtr val);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Resource_SetExports(IntPtr core, IntPtr resource, IntPtr[] values, IntPtr[] keys, int size);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Resource_GetPath(IntPtr resourcePointer, ref IntPtr text);
@@ -81,9 +86,9 @@ namespace AltV.Net.Native
 
             internal delegate void PlayerDisconnectDelegate(IntPtr playerPointer, string reason);
 
-            internal delegate void ClientEventDelegate(IntPtr playerPointer, string name, ref MValueArray args);
+            internal delegate void ClientEventDelegate(IntPtr playerPointer, string name, IntPtr args, ulong size);
 
-            internal delegate void ServerEventDelegate(string name, ref MValueArray args);
+            internal delegate void ServerEventDelegate(string name, IntPtr args, ulong size);
 
             internal delegate void CreatePlayerDelegate(IntPtr playerPointer, ushort playerId);
 
@@ -116,10 +121,10 @@ namespace AltV.Net.Native
             internal delegate void ColShapeDelegate(IntPtr colShapePointer, IntPtr targetEntityPointer,
                 BaseObjectType entityType, bool state);
 
-            internal delegate void ConsoleCommandDelegate(string name, ref StringViewArray args);
+            internal delegate void ConsoleCommandDelegate(string name, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] string[] args, int argsSize);
 
             internal delegate void MetaChangeDelegate(IntPtr entityPointer, BaseObjectType entityType, string key,
-                ref MValue value);
+                IntPtr value);
 
             internal delegate void ExplosionDelegate(IntPtr playerPointer, ExplosionType explosionType,
                 Position position, uint explosionFx);

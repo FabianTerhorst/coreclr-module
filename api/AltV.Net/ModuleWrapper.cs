@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
@@ -29,6 +30,7 @@ namespace AltV.Net
             {
                 module.OnScriptsStarted(_scripts);
             }
+
             _resource.OnStart();
         }
 
@@ -58,7 +60,7 @@ namespace AltV.Net
             var baseObjectPool =
                 _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool,
                     colShapePool);
-            nativeResourcePool.GetOrCreate(resourcePointer, out var csharpResource);
+            nativeResourcePool.GetOrCreate(serverPointer, resourcePointer, out var csharpResource);
             var server = new Server(serverPointer, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool,
                 blipPool,
                 checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
@@ -98,6 +100,7 @@ namespace AltV.Net
             {
                 module.OnStop();
             }
+
             Alt.Server.Resource.CSharpResourceImpl.Dispose();
             _module.Dispose();
             AppDomain.CurrentDomain.UnhandledException -= OnUnhandledException;
@@ -181,14 +184,26 @@ namespace AltV.Net
             _module.OnPlayerDisconnect(playerPointer, reason);
         }
 
-        public static void OnClientEvent(IntPtr playerPointer, string name, ref MValueArray args)
+        public static void OnClientEvent(IntPtr playerPointer, string name, IntPtr pointer, ulong size)
         {
-            _module.OnClientEvent(playerPointer, name, ref args);
+            var args = new IntPtr[size];
+            if (pointer != IntPtr.Zero)
+            {
+                Marshal.Copy(pointer, args, 0, (int) size);
+            }
+
+            _module.OnClientEvent(playerPointer, name, args);
         }
 
-        public static void OnServerEvent(string name, ref MValueArray args)
+        public static void OnServerEvent(string name, IntPtr pointer, ulong size)
         {
-            _module.OnServerEvent(name, ref args);
+            var args = new IntPtr[size];
+            if (pointer != IntPtr.Zero)
+            {
+                Marshal.Copy(pointer, args, 0, (int) size);
+            }
+
+            _module.OnServerEvent(name, args);
         }
 
         public static void OnCreatePlayer(IntPtr playerPointer, ushort playerId)
@@ -261,21 +276,27 @@ namespace AltV.Net
             _module.OnVehicleRemove(vehiclePointer);
         }
 
-        public static void OnConsoleCommand(string name, ref StringViewArray args)
+        public static void OnConsoleCommand(string name,
+            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] string[] args, int argsSize)
         {
-            _module.OnConsoleCommand(name, ref args);
+            if (args == null)
+            {
+                args = new string[0];
+            }
+
+            _module.OnConsoleCommand(name, args);
         }
 
         public static void OnMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key,
-            ref MValue value)
+            IntPtr value)
         {
-            _module.OnMetaDataChange(entityPointer, entityType, key, ref value);
+            _module.OnMetaDataChange(entityPointer, entityType, key, value);
         }
 
         public static void OnSyncedMetaDataChange(IntPtr entityPointer, BaseObjectType entityType, string key,
-            ref MValue value)
+            IntPtr value)
         {
-            _module.OnSyncedMetaDataChange(entityPointer, entityType, key, ref value);
+            _module.OnSyncedMetaDataChange(entityPointer, entityType, key, value);
         }
 
         public static void OnColShape(IntPtr colShapePointer, IntPtr targetEntityPointer, BaseObjectType entityType,

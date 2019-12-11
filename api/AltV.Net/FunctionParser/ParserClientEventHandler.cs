@@ -1,17 +1,18 @@
 using System;
 using System.Collections.Generic;
+using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
 namespace AltV.Net.FunctionParser
 {
-    public interface IParserClientEventHandler
+    internal interface IParserClientEventHandler
     {
-        void Call(IPlayer player, ref MValueArray mValueArray);
+        void Call(IPlayer player, MValueConst[] mValueArray);
     }
 
     //TODO: make event handler a struct
-    public class ParserClientEventHandler<TFunc> : IParserClientEventHandler where TFunc : Delegate
+    internal class ParserClientEventHandler<TFunc> : IParserClientEventHandler where TFunc : Delegate
     {
         private readonly TFunc @delegate;
 
@@ -23,9 +24,9 @@ namespace AltV.Net.FunctionParser
             this.clientEventParser = clientEventParser;
         }
 
-        public void Call(IPlayer player, ref MValueArray mValueArray)
+        public void Call(IPlayer player, MValueConst[] mValueArray)
         {
-            clientEventParser(player, ref mValueArray, @delegate);
+            clientEventParser(player, mValueArray, @delegate);
         }
 
         public override bool Equals(object obj)

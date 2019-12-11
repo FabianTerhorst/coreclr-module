@@ -1,7 +1,8 @@
 using System;
 using System.Linq;
+using AltV.Net.Elements;
+using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
-using AltV.Net.Native;
 
 namespace AltV.Net.Resources.Chat
 {
@@ -9,7 +10,7 @@ namespace AltV.Net.Resources.Chat
     {
         public override void OnStart()
         {
-            Alt.On<IPlayer, string>("chatmessage", OnChatMessage, OnChatMessageParser);
+            Alt.OnClient<IPlayer, string>("chatmessage", OnChatMessage, OnChatMessageParser);
             Alt.Export<string, Function.Func>("registerCmd",
                 (commandName, handler) =>
                 {
@@ -50,10 +51,10 @@ namespace AltV.Net.Resources.Chat
             }
         }
 
-        private void OnChatMessageParser(IPlayer player, ref MValueArray mValueArray,
+        private void OnChatMessageParser(IPlayer player, MValueConst[] mValueArray,
             Action<IPlayer, string> func)
         {
-            if (mValueArray.Size != 1) return;
+            if (mValueArray.Length != 1) return;
             var reader = mValueArray.Reader();
             if (!reader.GetNext(out string message)) return;
             /*if (!reader.GetNext(out MValueArray mValueArgs)) return;

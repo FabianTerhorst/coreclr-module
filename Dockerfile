@@ -1,5 +1,5 @@
 #FROM 7hazard/node-clang-7 as clang
-FROM ubuntu:18.10 as clang
+FROM ubuntu:18.04 as clang
 
 # build coreclr-module
 WORKDIR /runtime
@@ -17,8 +17,7 @@ RUN mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && cma
 
 WORKDIR /runtime/build/src
 
-#FROM mcr.microsoft.com/dotnet/core/sdk:2.2 as dotnet
-FROM mcr.microsoft.com/dotnet/core-nightly/sdk:3.0.100-rc1 as dotnet
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0 as dotnet
 
 # build example resource
 WORKDIR /altv-example/
@@ -58,6 +57,12 @@ RUN export PATH="$PATH:/root/.dotnet/tools"
 
 RUN dotnet tool install --global dotnet-trace --version 3.0.0-preview9.19454.1
 
+RUN apt-get install libatomic1
+
+RUN dotnet tool install --global dotnet-sos
+
+#RUN dotnet-sos install
+
 # construct server structure
 WORKDIR /altv-server
 COPY altv-server .
@@ -83,6 +88,8 @@ RUN chmod +x ./altv-server
 
 EXPOSE 7788/udp
 EXPOSE 7788/tcp
+
+RUN COREHOST_TRACE=1
 
 #ENTRYPOINT ["tail", "-f", "/dev/null"]
 #CMD sh startgdb.sh

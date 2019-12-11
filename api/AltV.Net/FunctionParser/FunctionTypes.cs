@@ -26,6 +26,8 @@ namespace AltV.Net.FunctionParser
         public static readonly Type Player = typeof(IPlayer);
 
         public static readonly Type Vehicle = typeof(IVehicle);
+        
+        public static readonly Type ColShape = typeof(IColShape);
 
         public static readonly Type Checkpoint = typeof(ICheckpoint);
 

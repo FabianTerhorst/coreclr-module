@@ -4,6 +4,6 @@ namespace AltV.Net
 {
     public interface INativeResourceFactory
     {
-        INativeResource Create(IntPtr resourcePointer);
+        INativeResource Create(IntPtr corePointer, IntPtr resourcePointer);
     }
 }

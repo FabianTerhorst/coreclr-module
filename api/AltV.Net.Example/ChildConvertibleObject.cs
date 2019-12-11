@@ -1,3 +1,5 @@
+using AltV.Net.Elements.Args;
+
 namespace AltV.Net.Example
 {
     public class ChildConvertibleObject : IMValueConvertible
@@ -10,6 +12,7 @@ namespace AltV.Net.Example
 
             public ChildConvertibleObject FromMValue(IMValueReader reader)
             {
+                if (reader.Peek() == MValueReaderToken.Nil) return null;
                 reader.BeginObject();
                 string test = null;
                 while (reader.HasNext())
@@ -44,7 +47,7 @@ namespace AltV.Net.Example
 
             public void ToMValue(object obj, IMValueWriter writer)
             {
-                if (obj is ConvertibleObject value)
+                if (obj is ChildConvertibleObject value)
                 {
                     ToMValue(value, writer);
                 }

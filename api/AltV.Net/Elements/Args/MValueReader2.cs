@@ -1,20 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Args
 {
-    //TODO: look into freeing mvaluearray
-    internal class MValueReader : IMValueReader
+    internal class MValueReader2 : IMValueReader
     {
         private interface IReadableMValue
         {
-            MValue GetNext();
+            void GetNext(out MValueConst mValue);
 
             void Dispose();
 
-            MValue Peek();
+            void Peek(out MValueConst mValue);
 
             ulong GetSize();
 
@@ -34,7 +34,7 @@ namespace AltV.Net.Elements.Args
 
             bool GetNext(out string value);
 
-            MValue.Type GetPreviousType();
+            MValueConst.Type GetPreviousType();
 
             bool HasNext();
 
@@ -43,98 +43,88 @@ namespace AltV.Net.Elements.Args
 
         private class MValueArrayReader : IReadableMValue
         {
-            private MValueArray mValueArray;
+            private MValueConst[] mValueArray;
 
-            private MValueArrayBuffer mValueArrayBuffer;
+            private MValueBuffer2 mValueArrayBuffer;
 
-            private ulong size;
-
-            public MValueArrayReader(MValueArray mValueArray)
+            public MValueArrayReader(MValueConst[] mValueArray)
             {
                 this.mValueArray = mValueArray;
-                mValueArrayBuffer = mValueArray.Reader();
-                size = mValueArrayBuffer.size;
+                mValueArrayBuffer = new MValueBuffer2(mValueArray);
             }
 
-            public MValue GetNext()
+            public void GetNext(out MValueConst mValue)
             {
-                var value = mValueArrayBuffer.GetNext();
-                size--;
-                return value;
+                mValueArrayBuffer.GetNext(out mValue);
             }
 
             public bool GetNext(out bool value)
             {
                 var result = mValueArrayBuffer.GetNext(out value);
-                size--;
                 return result;
             }
 
             public bool GetNext(out int value)
             {
                 var result = mValueArrayBuffer.GetNext(out value);
-                size--;
                 return result;
             }
 
             public bool GetNext(out uint value)
             {
                 var result = mValueArrayBuffer.GetNext(out value);
-                size--;
                 return result;
             }
 
             public bool GetNext(out long value)
             {
                 var result = mValueArrayBuffer.GetNext(out value);
-                size--;
                 return result;
             }
 
             public bool GetNext(out ulong value)
             {
                 var result = mValueArrayBuffer.GetNext(out value);
-                size--;
                 return result;
             }
 
             public bool GetNext(out float value)
             {
                 var result = mValueArrayBuffer.GetNext(out value);
-                size--;
                 return result;
             }
 
             public bool GetNext(out double value)
             {
                 var result = mValueArrayBuffer.GetNext(out value);
-                size--;
                 return result;
             }
 
             public bool GetNext(out string value)
             {
                 var result = mValueArrayBuffer.GetNext(out value);
-                size--;
                 return result;
             }
 
             public void Dispose()
             {
-                mValueArray.Dispose();
+                for (int i = 0, length = mValueArray.Length; i < length; i++)
+                {
+                    mValueArray[i].Dispose();
+                }
             }
 
-            public MValue Peek()
+            public void Peek(out MValueConst mValue)
             {
-                return mValueArrayBuffer.Peek();
+                mValueArrayBuffer.Peek(out mValue);
             }
 
             public ulong GetSize()
             {
-                return size;
+                return (ulong) mValueArrayBuffer.size;
             }
-            
-            public MValue.Type GetPreviousType()
+
+            public MValueConst.Type GetPreviousType()
             {
                 return mValueArrayBuffer.GetPreviousType();
             }
@@ -152,121 +142,111 @@ namespace AltV.Net.Elements.Args
 
         private class MValueObjectReader : IReadableMValue
         {
-            private StringArray stringArray;
-            private MValueArray mValueArray;
-            private MValueArrayBuffer mValueArrayBuffer;
-            private IntPtr stringArrayOffset;
-            private ulong size;
+            private string[] stringArray;
+            private MValueConst[] mValueArray;
+            private MValueBuffer2 mValueArrayBuffer;
+            private int nameOffset;
 
-            public MValueObjectReader(StringArray stringArray, MValueArray mValueArray)
+            public MValueObjectReader(string[] stringArray, MValueConst[] mValueArray)
             {
                 this.stringArray = stringArray;
                 this.mValueArray = mValueArray;
-                mValueArrayBuffer = mValueArray.Reader();
-                stringArrayOffset = this.stringArray.data;
-                size = this.stringArray.size;
+                mValueArrayBuffer = new MValueBuffer2(mValueArray);
+                nameOffset = 0;
             }
 
-            public MValue GetNext()
+            public void GetNext(out MValueConst mValue)
             {
-                return mValueArrayBuffer.GetNext();
+                mValueArrayBuffer.GetNext(out mValue);
             }
 
             public bool GetNext(out bool value)
             {
                 var result = mValueArrayBuffer.GetNext(out value);
-                size--;
                 return result;
             }
 
             public bool GetNext(out int value)
             {
                 var result = mValueArrayBuffer.GetNext(out value);
-                size--;
                 return result;
             }
 
             public bool GetNext(out uint value)
             {
                 var result = mValueArrayBuffer.GetNext(out value);
-                size--;
                 return result;
             }
 
             public bool GetNext(out long value)
             {
                 var result = mValueArrayBuffer.GetNext(out value);
-                size--;
                 return result;
             }
 
             public bool GetNext(out ulong value)
             {
                 var result = mValueArrayBuffer.GetNext(out value);
-                size--;
                 return result;
             }
 
             public bool GetNext(out float value)
             {
                 var result = mValueArrayBuffer.GetNext(out value);
-                size--;
                 return result;
             }
 
             public bool GetNext(out double value)
             {
                 var result = mValueArrayBuffer.GetNext(out value);
-                size--;
                 return result;
             }
 
             public bool GetNext(out string value)
             {
                 var result = mValueArrayBuffer.GetNext(out value);
-                size--;
                 return result;
             }
 
             public string GetNextName()
             {
-                var value = stringArray.GetNextWithOffset(ref stringArrayOffset);
-                size--;
+                var value = stringArray[nameOffset++];
                 return value;
             }
 
             public void SkipNextName()
             {
-                stringArray.SkipValueWithOffset(ref stringArrayOffset);
-                size--;
+                nameOffset++;
             }
 
             public void Dispose()
             {
-                stringArray.Dispose();
-                mValueArray.Dispose();
+                for (int i = 0, length = mValueArray.Length; i < length; i++)
+                {
+                    mValueArray[i].Dispose();
+                }
             }
 
-            public MValue Peek()
+            public void Peek(out MValueConst mValueConst)
             {
-                return mValueArrayBuffer.Peek();
+                mValueArrayBuffer.Peek(out mValueConst);
             }
 
             public ulong GetSize()
             {
-                return size;
+                return (ulong) mValueArrayBuffer.size;
             }
 
-            public MValue.Type GetPreviousType()
+            public MValueConst.Type GetPreviousType()
             {
                 return mValueArrayBuffer.GetPreviousType();
             }
-            
+
             public bool HasNext()
             {
                 return mValueArrayBuffer.HasNext();
             }
-            
+
             public void SkipValue()
             {
                 mValueArrayBuffer.SkipValue();
@@ -275,24 +255,21 @@ namespace AltV.Net.Elements.Args
 
         private class MValueStartReader : IReadableMValue
         {
-            private MValueArrayBuffer mValueArrayBuffer;
+            private MValueConst mValue;
 
-            private MValue mValue;
-
-            public MValueStartReader(ref MValue mValue)
+            public MValueStartReader(in MValueConst mValue)
             {
                 this.mValue = mValue;
-                mValueArrayBuffer = new MValueArrayBuffer();
             }
 
-            public MValue GetNext()
+            public void GetNext(out MValueConst mValue)
             {
-                return mValue;
+                mValue = this.mValue;
             }
 
             public bool GetNext(out bool value)
             {
-                if (mValue.type != MValue.Type.BOOL)
+                if (mValue.type != MValueConst.Type.BOOL)
                 {
                     value = default;
                     return false;
@@ -304,7 +281,7 @@ namespace AltV.Net.Elements.Args
 
             public bool GetNext(out int value)
             {
-                if (mValue.type != MValue.Type.INT)
+                if (mValue.type != MValueConst.Type.INT)
                 {
                     value = default;
                     return false;
@@ -316,7 +293,7 @@ namespace AltV.Net.Elements.Args
 
             public bool GetNext(out uint value)
             {
-                if (mValue.type != MValue.Type.UINT)
+                if (mValue.type != MValueConst.Type.UINT)
                 {
                     value = default;
                     return false;
@@ -328,7 +305,7 @@ namespace AltV.Net.Elements.Args
 
             public bool GetNext(out long value)
             {
-                if (mValue.type != MValue.Type.INT)
+                if (mValue.type != MValueConst.Type.INT)
                 {
                     value = default;
                     return false;
@@ -340,7 +317,7 @@ namespace AltV.Net.Elements.Args
 
             public bool GetNext(out ulong value)
             {
-                if (mValue.type != MValue.Type.UINT)
+                if (mValue.type != MValueConst.Type.UINT)
                 {
                     value = default;
                     return false;
@@ -352,7 +329,7 @@ namespace AltV.Net.Elements.Args
 
             public bool GetNext(out float value)
             {
-                if (mValue.type != MValue.Type.DOUBLE)
+                if (mValue.type != MValueConst.Type.DOUBLE)
                 {
                     value = default;
                     return false;
@@ -364,7 +341,7 @@ namespace AltV.Net.Elements.Args
 
             public bool GetNext(out double value)
             {
-                if (mValue.type != MValue.Type.DOUBLE)
+                if (mValue.type != MValueConst.Type.DOUBLE)
                 {
                     value = default;
                     return false;
@@ -376,7 +353,7 @@ namespace AltV.Net.Elements.Args
 
             public bool GetNext(out string value)
             {
-                if (mValue.type != MValue.Type.STRING)
+                if (mValue.type != MValueConst.Type.STRING)
                 {
                     value = default;
                     return false;
@@ -390,29 +367,28 @@ namespace AltV.Net.Elements.Args
             {
             }
 
-            public MValue Peek()
+            public void Peek(out MValueConst mValue)
             {
-                return mValue;
+                mValue = this.mValue;
             }
 
             public ulong GetSize()
             {
                 return 1;
             }
-            
-            public MValue.Type GetPreviousType()
+
+            public MValueConst.Type GetPreviousType()
             {
-                return mValueArrayBuffer.GetPreviousType();
+                return MValueConst.Type.NIL;
             }
-            
+
             public bool HasNext()
             {
-                return mValueArrayBuffer.HasNext();
+                return true;
             }
-            
+
             public void SkipValue()
             {
-                mValueArrayBuffer.SkipValue();
             }
         }
 
@@ -424,25 +400,36 @@ namespace AltV.Net.Elements.Args
 
         private IReadableMValue readableMValue;
 
-        public MValueReader(ref MValue mValue)
+        public MValueReader2(in MValueConst mValue)
         {
-            readableMValue = new MValueStartReader(ref mValue);
+            readableMValue = new MValueStartReader(in mValue);
         }
 
         public void BeginObject()
         {
             //CheckObject();
-            var mValue = readableMValue.GetNext();
+            readableMValue.GetNext(out MValueConst mValue);
 
-            if (mValue.type != MValue.Type.DICT)
+            if (mValue.type != MValueConst.Type.DICT)
             {
-                return;
+                throw new InvalidDataException("Expected object but got " + mValue.type);
             }
 
-            var stringArray = StringArray.Nil;
-            var valueArrayRef = MValueArray.Nil;
-            AltNative.MValueGet.MValue_GetDict(ref mValue, ref stringArray, ref valueArrayRef);
-            readableMValue = new MValueObjectReader(stringArray, valueArrayRef);
+            var size = AltNative.MValueNative.MValueConst_GetDictSize(mValue.nativePointer);
+            var stringArrayPtr = new IntPtr[size];
+            var valueArrayPtr = new IntPtr[size];
+            AltNative.MValueNative.MValueConst_GetDict(mValue.nativePointer, stringArrayPtr, valueArrayPtr);
+            var keyArray = new string[size];
+            var valueArray = new MValueConst[size];
+            for (ulong i = 0; i < size; i++)
+            {
+                var keyPointer = stringArrayPtr[i];
+                keyArray[i] = Marshal.PtrToStringUTF8(keyPointer);
+                AltNative.FreeCharArray(keyPointer);
+                valueArray[i] = new MValueConst(valueArrayPtr[i]);
+            }
+
+            readableMValue = new MValueObjectReader(keyArray, valueArray);
             currents.Push(readableMValue);
             insideObject = true;
         }
@@ -457,16 +444,17 @@ namespace AltV.Net.Elements.Args
         public void BeginArray()
         {
             //CheckArray();
-            var mValue = readableMValue.GetNext();
+            readableMValue.GetNext(out MValueConst mValue);
 
-            if (mValue.type != MValue.Type.LIST)
+            if (mValue.type != MValueConst.Type.LIST)
             {
-                return;
+                throw new InvalidDataException("Expected array but got " + mValue.type);
             }
 
-            var valueArrayRef = MValueArray.Nil;
-            AltNative.MValueGet.MValue_GetList(ref mValue, ref valueArrayRef);
-            readableMValue = new MValueArrayReader(valueArrayRef);
+            var size = AltNative.MValueNative.MValueConst_GetListSize(mValue.nativePointer);
+            var valueArrayRef = new IntPtr[size];
+            AltNative.MValueNative.MValueConst_GetList(mValue.nativePointer, valueArrayRef);
+            readableMValue = new MValueArrayReader(MValueConst.CreateFrom(valueArrayRef));
             currents.Push(readableMValue);
             insideObject = true;
         }
@@ -480,24 +468,32 @@ namespace AltV.Net.Elements.Args
 
         private void CheckObject()
         {
-            if (!insideObject && readableMValue.Peek().type != MValue.Type.DICT)
+            if (!insideObject)
             {
-                throw new InvalidDataException("Not inside a object or array");
+                readableMValue.Peek(out var mValue);
+                if (mValue.type != MValueConst.Type.DICT)
+                {
+                    throw new InvalidDataException("Not inside a object or array");
+                }
             }
         }
 
         private void CheckArray()
         {
-            if (!insideObject && readableMValue.Peek().type != MValue.Type.LIST)
+            if (!insideObject)
             {
-                throw new InvalidDataException("Not inside a object or array");
+                readableMValue.Peek(out var mValue);
+                if (mValue.type != MValueConst.Type.LIST)
+                {
+                    throw new InvalidDataException("Not inside a object or array");
+                }
             }
         }
 
         private void CheckObjectOrArray()
         {
-            var mValue = readableMValue.Peek();
-            if (!insideObject && mValue.type != MValue.Type.DICT && mValue.type != MValue.Type.LIST)
+            readableMValue.Peek(out var mValue);
+            if (!insideObject && mValue.type != MValueConst.Type.DICT && mValue.type != MValueConst.Type.LIST)
             {
                 throw new InvalidDataException("Not inside a object or array");
             }
@@ -661,14 +657,25 @@ namespace AltV.Net.Elements.Args
 
         public MValueReaderToken Peek()
         {
-            if (readableMValue.Peek().type == MValue.Type.DICT) return MValueReaderToken.Object;
-            if (readableMValue.Peek().type == MValue.Type.LIST) return MValueReaderToken.Array;
+            readableMValue.Peek(out var mValue);
+            if (mValue.type == MValueConst.Type.DICT) return MValueReaderToken.Object;
+            if (mValue.type == MValueConst.Type.LIST) return MValueReaderToken.Array;
+            if (mValue.type == MValueConst.Type.NIL) return MValueReaderToken.Nil;
             if (readableMValue is MValueObjectReader mValueObjectReader &&
                 readableMValue.GetSize() >= mValueObjectReader.GetSize())
                 return MValueReaderToken.Value;
             return readableMValue.GetSize() <= ((MValueObjectReader) readableMValue).GetSize()
                 ? MValueReaderToken.Name
                 : MValueReaderToken.Unknown;
+        }
+
+        public void Dispose()
+        {
+            IReadableMValue popped;
+            while (currents.TryPop(out popped))
+            {
+                popped.Dispose();
+            }
         }
     }
 }

@@ -16,14 +16,14 @@ namespace AltV.Net.Mock
         public BaseObjectType Type { get; }
         public Position Position { get; set; }
         public Rotation Rotation { get; set; }
-        public short Dimension { get; set; }
+        public int Dimension { get; set; }
         public uint Model { get; set; }
 
         private readonly Dictionary<string, object> data = new Dictionary<string, object>();
 
-        private readonly Dictionary<string, MValue> metaData = new Dictionary<string, MValue>();
+        private readonly Dictionary<string, MValueConst> metaData = new Dictionary<string, MValueConst>();
 
-        private readonly Dictionary<string, MValue> syncedMetaData = new Dictionary<string, MValue>();
+        private readonly Dictionary<string, MValueConst> syncedMetaData = new Dictionary<string, MValueConst>();
 
         public MockEntity(IntPtr nativePointer, BaseObjectType baseObjectType, ushort id)
         {
@@ -45,7 +45,8 @@ namespace AltV.Net.Mock
 
         public void SetMetaData(string key, object value)
         {
-            metaData[key] = MValue.CreateFromObject(value);
+            Alt.Server.CreateMValue(out var mValue, value);
+            metaData[key] = mValue;
         }
 
         public bool GetMetaData<T>(string key, out T result)
@@ -91,7 +92,8 @@ namespace AltV.Net.Mock
 
         public void SetSyncedMetaData(string key, object value)
         {
-            syncedMetaData[key] = MValue.CreateFromObject(value);
+            Alt.Server.CreateMValue(out var mValue, value);
+            syncedMetaData[key] = mValue;
         }
 
         public bool GetSyncedMetaData<T>(string key, out T result)
@@ -112,22 +114,22 @@ namespace AltV.Net.Mock
             return true;
         }
 
-        public void SetMetaData(string key, ref MValue value)
+        public void SetMetaData(string key, in MValueConst value)
         {
             throw new NotImplementedException();
         }
 
-        public void GetMetaData(string key, ref MValue value)
+        public void GetMetaData(string key, out MValueConst value)
         {
             throw new NotImplementedException();
         }
 
-        public void SetSyncedMetaData(string key, ref MValue value)
+        public void SetSyncedMetaData(string key, in MValueConst value)
         {
             throw new NotImplementedException();
         }
 
-        public void GetSyncedMetaData(string key, ref MValue value)
+        public void GetSyncedMetaData(string key, out MValueConst value)
         {
             throw new NotImplementedException();
         }
@@ -146,6 +148,16 @@ namespace AltV.Net.Mock
 
         public void OnRemove()
         {
+        }
+        
+        public bool AddRef()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveRef()
+        {
+            throw new NotImplementedException();
         }
     }
 }

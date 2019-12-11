@@ -33,7 +33,7 @@ namespace AltV.Net.Mock
 
         public string RootDirectory => "";
 
-        public INativeResource Resource => new NativeResource(IntPtr.Zero);
+        public INativeResource Resource => new NativeResource(IntPtr.Zero, IntPtr.Zero);
 
         internal MockServer(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
@@ -109,28 +109,7 @@ namespace AltV.Net.Mock
             throw new System.NotImplementedException();
         }
 
-        public void TriggerServerEvent(string eventName, params MValue[] args)
-        {
-            var mValue = MValue.Nil;
-            AltNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValue);
-            var mValueArray = MValueArray.Nil;
-            AltNative.MValueGet.MValue_GetList(ref mValue, ref mValueArray);
-            Alt.Module.OnServerEvent(eventName, ref mValueArray);
-        }
-
-        public void TriggerServerEvent(string eventName, params object[] args)
-        {
-            TriggerServerEvent(eventName, MValue.CreateFromObjects(args));
-        }
-
-        public void TriggerServerEvent(string eventName, ref MValue args)
-        {
-            var mValueArray = MValueArray.Nil;
-            AltNative.MValueGet.MValue_GetList(ref args, ref mValueArray);
-            Alt.Module.OnServerEvent(eventName, ref mValueArray);
-        }
-
-        public void TriggerClientEvent(IPlayer player, string eventName, params MValue[] args)
+        /*public void TriggerClientEvent(IPlayer player, string eventName, params MValueConst[] args)
         {
             if (player == null)
             {
@@ -148,14 +127,14 @@ namespace AltV.Net.Mock
             AltNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValue);
             var mValueArray = MValueArray.Nil;
             AltNative.MValueGet.MValue_GetList(ref mValue, ref mValueArray);
-            Alt.Module.OnClientEvent(player?.NativePointer ?? IntPtr.Zero, eventName, ref mValueArray);
+            //Alt.Module.OnClientEvent(player?.NativePointer ?? IntPtr.Zero, eventName, ref mValueArray);
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, ref MValue args)
         {
             var mValueArray = MValueArray.Nil;
             AltNative.MValueGet.MValue_GetList(ref args, ref mValueArray);
-            Alt.Module.OnClientEvent(player?.NativePointer ?? IntPtr.Zero, eventName, ref mValueArray);
+            //Alt.Module.OnClientEvent(player?.NativePointer ?? IntPtr.Zero, eventName, ref mValueArray);
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)
@@ -191,7 +170,7 @@ namespace AltV.Net.Mock
         public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, ref MValue args)
         {
             TriggerClientEvent(player, Marshal.PtrToStringUTF8(eventNamePtr), ref args);
-        }
+        }*/
 
         public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
@@ -326,7 +305,12 @@ namespace AltV.Net.Mock
 
         public INativeResource GetResource(string name)
         {
-            return new NativeResource(IntPtr.Zero);
+            return new NativeResource(IntPtr.Zero, IntPtr.Zero);
+        }
+
+        public INativeResource GetResource(IntPtr resourcePointer)
+        {
+            return new NativeResource(IntPtr.Zero, IntPtr.Zero);
         }
 
         public IEnumerable<IPlayer> GetPlayers()
@@ -350,6 +334,156 @@ namespace AltV.Net.Mock
         }
 
         public void RestartResource(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValueNil(out MValueConst mValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValueBool(out MValueConst mValue, bool value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValueInt(out MValueConst mValue, long value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValueUInt(out MValueConst mValue, ulong value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValueDouble(out MValueConst mValue, double value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValueString(out MValueConst mValue, string value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValueList(out MValueConst mValue, MValueConst[] val, ulong size)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValueDict(out MValueConst mValue, string[] keys, MValueConst[] val, ulong size)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValueCheckpoint(out MValueConst mValue, ICheckpoint value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValueBlip(out MValueConst mValue, IBlip value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValueVoiceChannel(out MValueConst mValue, IVoiceChannel value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValuePlayer(out MValueConst mValue, IPlayer value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValueVehicle(out MValueConst mValue, IVehicle value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValueFunction(out MValueConst mValue, IntPtr value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValue(out MValueConst mValue, object obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValues(MValueConst[] mValues, object[] objects)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerServerEvent(string eventName, params MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerServerEvent(IntPtr eventNamePtr, params MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerServerEvent(string eventName, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerServerEvent(IntPtr eventNamePtr, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEvent(IPlayer player, string eventName, params MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEvent(IPlayer player, string eventName, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerServerEvent(IntPtr eventNamePtr, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerServerEvent(string eventName, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IColShape CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z)
         {
             throw new NotImplementedException();
         }

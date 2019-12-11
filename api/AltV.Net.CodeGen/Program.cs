@@ -21,15 +21,22 @@ namespace AltV.Net.CodeGen
             }
 
             Directory.CreateDirectory(genDirectory);
-            foreach (var file in files)
+            try
             {
-                if (!file.EndsWith(".h")) continue;
-                var methods = ParseExports.Parse(File.ReadAllText(file));
-                var methodsOutput = WritePInvokes.Write(methods);
-                if (methodsOutput.Length == 0) continue;
-                File.WriteAllText(
-                    genDirectory + GetAltNativeFileName(Path.GetFileName(file)),
-                    methodsOutput);
+                foreach (var file in files)
+                {
+                    if (!file.EndsWith(".h")) continue;
+                    var methods = ParseExports.Parse(File.ReadAllText(file));
+                    var methodsOutput = WritePInvokes.Write(methods);
+                    if (methodsOutput.Length == 0) continue;
+                    File.WriteAllText(
+                        genDirectory + GetAltNativeFileName(Path.GetFileName(file)),
+                        methodsOutput);
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
             }
         }
 
@@ -44,6 +51,7 @@ namespace AltV.Net.CodeGen
                 var upperCaseString = char.ToUpper(oldNoneUpperCase).ToString();
                 newFileName = newFileName.Replace("_" + oldNoneUpperCase, upperCaseString);
             }
+
             return "AltV." + newFileName;
         }
     }

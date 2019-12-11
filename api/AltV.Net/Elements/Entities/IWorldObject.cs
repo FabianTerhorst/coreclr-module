@@ -14,7 +14,7 @@ namespace AltV.Net.Elements.Entities
         /// Get or set dimension of the entity.
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was deleted before</exception>
-        short Dimension { get; set; }
+        int Dimension { get; set; }
     }
 
     public static class WorldObjectExtensions

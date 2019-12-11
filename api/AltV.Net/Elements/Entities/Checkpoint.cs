@@ -24,7 +24,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public override short Dimension
+        public override int Dimension
         {
             get
             {
@@ -38,38 +38,27 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public IPlayer Target
+        public ColShapeType ColShapeType
         {
             get
             {
                 CheckIfEntityExists();
-                var playerPointer = AltNative.Checkpoint.Checkpoint_GetTarget(NativePointer);
-                if (playerPointer == IntPtr.Zero) return null;
-                return Alt.Module.PlayerPool.GetOrCreate(playerPointer, out var player) ? player : null;
+                return AltNative.Checkpoint.Checkpoint_GetColShapeType(NativePointer);
             }
         }
 
-        public override void GetMetaData(string key, ref MValue value)
+        public override void GetMetaData(string key, out MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Checkpoint.Checkpoint_GetMetaData(NativePointer, stringPtr, ref value);
+            value = new MValueConst(AltNative.Checkpoint.Checkpoint_GetMetaData(NativePointer, stringPtr));
             Marshal.FreeHGlobal(stringPtr);
         }
 
-        public override void SetMetaData(string key, ref MValue value)
+        public override void SetMetaData(string key, in MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Checkpoint.Checkpoint_SetMetaData(NativePointer, stringPtr, ref value);
+            AltNative.Checkpoint.Checkpoint_SetMetaData(NativePointer, stringPtr, value.nativePointer);
             Marshal.FreeHGlobal(stringPtr);
-        }
-
-        public bool IsGlobal
-        {
-            get
-            {
-                CheckIfEntityExists();
-                return AltNative.Checkpoint.Checkpoint_IsGlobal(NativePointer);
-            }
         }
 
         public byte CheckpointType
@@ -110,7 +99,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public Checkpoint(IntPtr nativePointer) : base(nativePointer, BaseObjectType.Checkpoint)
+        public Checkpoint(IntPtr nativePointer) : base(nativePointer, BaseObjectType.ColShape)
         {
         }
 
@@ -136,9 +125,35 @@ namespace AltV.Net.Elements.Entities
             return AltNative.Checkpoint.Checkpoint_IsVehicleIn(NativePointer, vehicle.NativePointer);
         }
         
+        public bool IsEntityIn(IEntity entity)
+        {
+            CheckIfEntityExists();
+            entity.CheckIfEntityExists();
+
+            switch (entity)
+            {
+                case IPlayer player:
+                    return AltNative.Checkpoint.Checkpoint_IsPlayerIn(NativePointer, player.NativePointer);
+                case IVehicle vehicle:
+                    return AltNative.Checkpoint.Checkpoint_IsVehicleIn(NativePointer, vehicle.NativePointer);
+                default:
+                    return false;
+            }
+        }
+        
         public void Remove()
         {
             Alt.RemoveCheckpoint(this);
+        }
+        
+        protected override void InternalAddRef()
+        {
+            AltNative.Checkpoint.Checkpoint_AddRef(NativePointer);
+        }
+
+        protected override void InternalRemoveRef()
+        {
+            AltNative.Checkpoint.Checkpoint_RemoveRef(NativePointer);
         }
     }
 }

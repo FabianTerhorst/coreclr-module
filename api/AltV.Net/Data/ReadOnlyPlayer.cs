@@ -14,7 +14,7 @@ namespace AltV.Net.Data
         private ushort id;
         private Position position;
         private Rotation rotation;
-        private short dimension;
+        private int dimension;
         private uint ping;
         private uint model;
         private byte seat;
@@ -98,22 +98,22 @@ namespace AltV.Net.Data
             throw new NotImplementedException();
         }
 
-        public void SetMetaData(string key, ref MValue value)
+        public void SetMetaData(string key, in MValueConst value)
         {
             throw new NotImplementedException();
         }
 
-        public void GetMetaData(string key, ref MValue value)
+        public void GetMetaData(string key, out MValueConst value)
         {
             throw new NotImplementedException();
         }
 
-        public void SetSyncedMetaData(string key, ref MValue value)
+        public void SetSyncedMetaData(string key, in MValueConst value)
         {
             throw new NotImplementedException();
         }
 
-        public void GetSyncedMetaData(string key, ref MValue value)
+        public void GetSyncedMetaData(string key, out MValueConst value)
         {
             throw new NotImplementedException();
         }
@@ -124,7 +124,7 @@ namespace AltV.Net.Data
             set => throw new NotImplementedException();
         }
 
-        public short Dimension
+        public int Dimension
         {
             get => dimension;
             set => throw new NotImplementedException();
@@ -286,6 +286,16 @@ namespace AltV.Net.Data
         }
 
         public void OnRemove()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AddRef()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveRef()
         {
             throw new NotImplementedException();
         }

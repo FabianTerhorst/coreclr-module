@@ -9,24 +9,37 @@ void Blip_GetPosition(alt::IBlip* blip, position_t &position) {
     position.z = blipPosition.z;
 }
 
-void Blip_SetPosition(alt::IBlip* blip, alt::Position pos) {
-    blip->SetPosition(pos);
+void Blip_SetPosition(alt::IBlip* blip, position_t pos) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+    blip->SetPosition(position);
 }
 
-int16_t Blip_GetDimension(alt::IBlip* blip) {
+int32_t Blip_GetDimension(alt::IBlip* blip) {
     return blip->GetDimension();
 }
 
-void Blip_SetDimension(alt::IBlip* blip, int16_t dimension) {
+void Blip_SetDimension(alt::IBlip* blip, int32_t dimension) {
     blip->SetDimension(dimension);
 }
 
-void Blip_GetMetaData(alt::IBlip* blip, const char* key, alt::MValue &val) {
-    val = blip->GetMetaData(key);
+alt::MValueConst* Blip_GetMetaData(alt::IBlip* blip, const char* key) {
+    return new alt::MValueConst(blip->GetMetaData(key));
 }
 
-void Blip_SetMetaData(alt::IBlip* blip, const char* key, alt::MValue* val) {
-    blip->SetMetaData(key, *val);
+void Blip_SetMetaData(alt::IBlip* blip, const char* key, alt::MValueConst* val) {
+    if (val == nullptr) return;
+    blip->SetMetaData(key, val->Get()->Clone());
+}
+
+void Blip_AddRef(alt::IBlip* blip) {
+    blip->AddRef();
+}
+
+void Blip_RemoveRef(alt::IBlip* blip) {
+    blip->RemoveRef();
 }
 
 // Blip
@@ -40,7 +53,7 @@ bool Blip_IsAttached(alt::IBlip* blip) {
 }
 
 void* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type) {
-    auto entity = blip->AttachedTo();
+    auto entity = blip->AttachedTo().Get();
     if (entity != nullptr) {
         type = entity->GetType();
         switch (type) {

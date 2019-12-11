@@ -4,7 +4,7 @@ using AltV.Net.Elements.Args;
 
 namespace AltV.Net.Native
 {
-    [StructLayout(LayoutKind.Sequential)]
+    /*[StructLayout(LayoutKind.Sequential)]
     public struct MValueArray : IDisposable
     {
         internal IntPtr data; // Array of MValue's
@@ -53,7 +53,7 @@ namespace AltV.Net.Native
         {
             return new MValueArrayBuffer(data, Size);
         }
-    }
+    }*/
 
     [StructLayout(LayoutKind.Sequential)]
     public struct StringViewArray : IDisposable
@@ -244,44 +244,6 @@ namespace AltV.Net.Native
         public void Dispose()
         {
             AltNative.FreePlayerPointerArray(ref this);
-        }
-    }
-    
-    [StructLayout(LayoutKind.Sequential)]
-    public struct VehiclePointerArray : IDisposable
-    {
-        public IntPtr data; // Array of player pointers
-        public ulong size;
-        public ulong capacity;
-
-        public static VehiclePointerArray Nil = new VehiclePointerArray
-        {
-            data = IntPtr.Zero,
-            size = 0,
-            capacity = 0
-        };
-
-        public IntPtr[] ToArrayAndFree()
-        {
-            var value = data;
-            var length = (int) size;
-            var values = new IntPtr[length];
-            for (var i = 0; i < length; i++)
-            {
-                values[i] = Marshal.ReadIntPtr(value);
-                value += IntPtr.Size;
-            }
-
-            Dispose();
-
-            size = 0;
-
-            return values;
-        }
-
-        public void Dispose()
-        {
-            AltNative.FreeVehiclePointerArray(ref this);
         }
     }
 }

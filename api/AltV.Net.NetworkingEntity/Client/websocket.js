@@ -1,6 +1,7 @@
 import EntityRepository from "./entity-repository.js";
 import clientRepository from "./client-repository.js";
 import proto from "./proto.js";
+import ReconnectingWebSocket from './deps/reconnecting-websocket';
 
 export default class WebSocket {
     constructor(url, token) {
@@ -9,18 +10,22 @@ export default class WebSocket {
 
         this.entityRepository = new EntityRepository(this);
 
-        this.connection.onopen = () => {
+        this.connection.addEventListener("open", () => {
             const authEvent = proto.AuthEvent.create({token: token});
             const clientEvent = proto.ClientEvent.create({auth: authEvent});
             const buffer = proto.ClientEvent.encode(clientEvent).finish();
             this.connection.send(buffer);
-        };
+        });
 
-        this.connection.onerror = (error) => {
+        this.connection.addEventListener("error", (error) => {
             console.log("err", error);
-        };
+        });
 
-        this.connection.onmessage = async (e) => {
+        this.connection.addEventListener("close", (code) => {
+            console.log("close", code);
+        });
+
+        this.connection.addEventListener("message", async (e) => {
             const serverEvent = proto.ServerEvent.decode(new Uint8Array(await new Response(e.data).arrayBuffer()));
             const obj = proto.ServerEvent.toObject(serverEvent, {
                 defaults: true
@@ -40,7 +45,9 @@ export default class WebSocket {
                     const newEntity = this.entityRepository.entities.get(dataChange.id);
                     //console.log("data changed", newEntity.id, newEntity.data);
                     if (this.entityRepository.isStreamedIn(dataChange.id)) {
+                        dataChange[dataChange.key] = dataChange.value;
                         delete dataChange.id;
+                        delete dataChange.key;
                         alt.emit("dataChange", JSON.stringify({
                             entity: newEntity,
                             data: dataChange
@@ -51,7 +58,13 @@ export default class WebSocket {
                 const positionChange = obj.positionChange;
                 if (this.entityRepository.entities.has(positionChange.id)) {
                     const entity = this.entityRepository.entities.get(positionChange.id);
+                    const oldPosition = entity.position;
                     entity.position = positionChange.position;
+                    alt.emit("positionChange", JSON.stringify({
+                        entity: entity,
+                        oldPosition: oldPosition,
+                        newPosition: entity.position
+                    }));
                     this.entityRepository.updateWorker();
                     //TODO: update only changed entity
                     //console.log("position changed", entity.id, entity.position);
@@ -60,7 +73,13 @@ export default class WebSocket {
                 const rangeChange = obj.rangeChange;
                 if (this.entityRepository.entities.has(rangeChange.id)) {
                     const entity = this.entityRepository.entities.get(rangeChange.id);
+                    const oldRange = entity.range;
                     entity.range = rangeChange.range;
+                    alt.emit("rangeChange", JSON.stringify({
+                        entity: entity,
+                        oldRange: oldRange,
+                        newRange: entity.range,
+                    }));
                     this.entityRepository.updateWorker();
                     //TODO: update only changed entity
                     //console.log("range changed", entity.id, entity.range);
@@ -110,7 +129,7 @@ export default class WebSocket {
                 clientRepository.dimension = clientDimensionChange.dimension;
                 this.entityRepository.updateWorker();
             }
-        };
+        });
     }
 
     sendEvent(event) {

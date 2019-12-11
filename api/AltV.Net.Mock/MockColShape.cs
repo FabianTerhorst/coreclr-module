@@ -21,5 +21,15 @@ namespace AltV.Net.Mock
         {
             Alt.Server.RemoveColShape(this);
         }
+
+        public bool IsPlayerIn(IPlayer entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsVehicleIn(IVehicle entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

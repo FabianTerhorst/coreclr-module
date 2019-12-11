@@ -24,7 +24,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public override short Dimension
+        public override int Dimension
         {
             get
             {
@@ -38,17 +38,17 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public override void GetMetaData(string key, ref MValue value)
+        public override void GetMetaData(string key, out MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.ColShape.ColShape_GetMetaData(NativePointer, stringPtr, ref value);
+            value = new MValueConst(AltNative.ColShape.ColShape_GetMetaData(NativePointer, stringPtr));
             Marshal.FreeHGlobal(stringPtr);
         }
 
-        public override void SetMetaData(string key, ref MValue value)
+        public override void SetMetaData(string key, in MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.ColShape.ColShape_SetMetaData(NativePointer, stringPtr, ref value);
+            AltNative.ColShape.ColShape_SetMetaData(NativePointer, stringPtr, value.nativePointer);
             Marshal.FreeHGlobal(stringPtr);
         }
 
@@ -81,9 +81,41 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public bool IsPlayerIn(IPlayer player)
+        {
+            CheckIfEntityExists();
+            if (!player.Exists)
+            {
+                throw new EntityRemovedException(player);
+            }
+
+            return AltNative.ColShape.ColShape_IsPlayerIn(NativePointer, player.NativePointer);
+        }
+
+        public bool IsVehicleIn(IVehicle vehicle)
+        {
+            CheckIfEntityExists();
+            if (!vehicle.Exists)
+            {
+                throw new EntityRemovedException(vehicle);
+            }
+
+            return AltNative.ColShape.ColShape_IsVehicleIn(NativePointer, vehicle.NativePointer);
+        }
+        
         public void Remove()
         {
             Alt.RemoveColShape(this);
+        }
+        
+        protected override void InternalAddRef()
+        {
+            AltNative.ColShape.ColShape_AddRef(NativePointer);
+        }
+
+        protected override void InternalRemoveRef()
+        {
+            AltNative.ColShape.ColShape_RemoveRef(NativePointer);
         }
     }
 }

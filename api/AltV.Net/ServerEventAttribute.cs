@@ -3,11 +3,11 @@ using System;
 namespace AltV.Net
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class Event : Attribute
+    public sealed class ServerEventAttribute : Attribute
     {
         public string Name { get; }
 
-        public Event(string name = null)
+        public ServerEventAttribute(string name = null)
         {
             Name = name;
         }

@@ -21,13 +21,15 @@ extern "C"
 #endif
 // Entity
 EXPORT void ColShape_GetPosition(alt::IColShape* colShape, position_t &position);
-EXPORT void ColShape_SetPosition(alt::IColShape* colShape, alt::Position pos);
-EXPORT int16_t ColShape_GetDimension(alt::IColShape* colShape);
-EXPORT void ColShape_SetDimension(alt::IColShape* colShape, int16_t dimension);
-EXPORT void ColShape_GetMetaData(alt::IColShape* colShape, const char* key, alt::MValue &val);
-EXPORT void ColShape_SetMetaData(alt::IColShape* colShape, const char* key, alt::MValue* val);
+EXPORT void ColShape_SetPosition(alt::IColShape* colShape, position_t pos);
+EXPORT int32_t ColShape_GetDimension(alt::IColShape* colShape);
+EXPORT void ColShape_SetDimension(alt::IColShape* colShape, int32_t dimension);
+EXPORT alt::MValueConst* ColShape_GetMetaData(alt::IColShape* colShape, const char* key);
+EXPORT void ColShape_SetMetaData(alt::IColShape* colShape, const char* key, alt::MValueConst* val);
+EXPORT void ColShape_AddRef(alt::IColShape* colShape);
+EXPORT void ColShape_RemoveRef(alt::IColShape* colShape);
 // ColShape
-EXPORT alt::ColShapeType ColShape_GetColShapeType(alt::IColShape* colShape);
+EXPORT uint8_t ColShape_GetColShapeType(alt::IColShape* colShape);
 //EXPORT bool ColShape_IsEntityIn(alt::IColShape* colShape, alt::IEntity* entity);
 EXPORT bool ColShape_IsPlayerIn(alt::IColShape* colShape, alt::IPlayer* player);
 EXPORT bool ColShape_IsVehicleIn(alt::IColShape* colShape, alt::IVehicle* vehicle);

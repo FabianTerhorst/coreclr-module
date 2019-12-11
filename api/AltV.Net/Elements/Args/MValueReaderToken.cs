@@ -6,6 +6,7 @@ namespace AltV.Net.Elements.Args
         Array,
         Name,
         Value,
+        Nil,
         Unknown
     }
 }

@@ -30,6 +30,6 @@ void FreePlayerPointerArray(alt::Array<alt::IPlayer*>* array) {
     array->~Array<alt::IPlayer*>();
 }
 
-void FreeVehiclePointerArray(alt::Array<alt::IVehicle*>* array) {
-    array->~Array<alt::IVehicle*>();
+void FreeCharArray(char charArray[]) {
+    delete[] charArray;
 }
