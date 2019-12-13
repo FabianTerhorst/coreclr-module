@@ -64,6 +64,18 @@ namespace AltV.Net.ColShape.Tests
             return players;
         }
 
+        public KeyValuePair<IntPtr, IPlayer>[] GetEntitiesArray()
+        {
+            var arr = new KeyValuePair<IntPtr, IPlayer>[players.Count];
+            var i = 0;
+            foreach (var entity in players)
+            {
+                arr[i++] = new KeyValuePair<IntPtr, IPlayer>(IntPtr.Zero, entity);
+            }
+
+            return arr;
+        }
+
         public void OnAdd(IPlayer entity)
         {
             throw new NotImplementedException();

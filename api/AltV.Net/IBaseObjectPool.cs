@@ -14,5 +14,6 @@ namespace AltV.Net
         bool Get(IntPtr entityPointer, out TBaseObject entity);
         bool GetOrCreate(IntPtr entityPointer, out TBaseObject entity);
         ICollection<TBaseObject> GetAllObjects();
+        KeyValuePair<IntPtr, TBaseObject>[] GetObjectsArray();
     }
 }

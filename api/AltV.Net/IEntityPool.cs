@@ -26,6 +26,8 @@ namespace AltV.Net
 
         ICollection<TEntity> GetAllEntities();
 
+        KeyValuePair<IntPtr, TEntity>[] GetEntitiesArray();
+
         void OnAdd(TEntity entity);
 
         void OnRemove(TEntity entity);
