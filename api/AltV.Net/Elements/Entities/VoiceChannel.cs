@@ -31,10 +31,10 @@ namespace AltV.Net.Elements.Entities
             AltNative.VoiceChannel.VoiceChannel_UnmutePlayer(NativePointer, player.NativePointer);
         }
 
-        public bool IsPlayerConnected(IPlayer player)
+        public bool HasPlayer(IPlayer player)
         {
             CheckIfEntityExists();
-            return AltNative.VoiceChannel.VoiceChannel_IsPlayerConnected(NativePointer, player.NativePointer);
+            return AltNative.VoiceChannel.VoiceChannel_HasPlayer(NativePointer, player.NativePointer);
         }
 
         public bool IsPlayerMuted(IPlayer player)

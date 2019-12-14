@@ -33,6 +33,8 @@ EXPORT alt::MValueConst* Vehicle_GetMetaData(alt::IVehicle* vehicle, const char*
 EXPORT void Vehicle_SetMetaData(alt::IVehicle* vehicle, const char* key, alt::MValueConst* val);
 EXPORT alt::MValueConst* Vehicle_GetSyncedMetaData(alt::IVehicle* vehicle, const char* key);
 EXPORT void Vehicle_SetSyncedMetaData(alt::IVehicle* vehicle, const char* key, alt::MValueConst* val);
+EXPORT alt::MValueConst* Vehicle_GetStreamSyncedMetaData(alt::IVehicle* vehicle, const char* key);
+EXPORT void Vehicle_SetStreamSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MValueConst* val);
 EXPORT void Vehicle_AddRef(alt::IVehicle* vehicle);
 EXPORT void Vehicle_RemoveRef(alt::IVehicle* vehicle);
 // Vehicle

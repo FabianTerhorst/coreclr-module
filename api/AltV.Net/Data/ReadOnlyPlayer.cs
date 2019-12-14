@@ -154,6 +154,26 @@ namespace AltV.Net.Data
             throw new NotImplementedException();
         }
 
+        public void SetStreamSyncedMetaData(string key, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GetStreamSyncedMetaData<T>(string key, out T result)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetStreamSyncedMetaData(string key, in MValueConst value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetStreamSyncedMetaData(string key, out MValueConst value)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool IsConnected => isConnected;
 
         public string Name

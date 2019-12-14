@@ -51,6 +51,12 @@ namespace AltV.Net.Native
             internal static extern void Vehicle_SetSyncedMetaData(IntPtr vehicle, IntPtr key, IntPtr val);
             
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Vehicle_GetStreamSyncedMetaData(IntPtr vehicle, IntPtr key);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetStreamSyncedMetaData(IntPtr vehicle, IntPtr key, IntPtr val);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_AddRef(IntPtr player);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]

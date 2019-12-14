@@ -25,7 +25,6 @@ EXPORT void VoiceChannel_AddPlayer(alt::IVoiceChannel* channel, alt::IPlayer* pl
 EXPORT void VoiceChannel_RemovePlayer(alt::IVoiceChannel* channel, alt::IPlayer* player);
 EXPORT void VoiceChannel_MutePlayer(alt::IVoiceChannel* channel, alt::IPlayer* player);
 EXPORT void VoiceChannel_UnmutePlayer(alt::IVoiceChannel* channel, alt::IPlayer* player);
-EXPORT bool VoiceChannel_IsPlayerConnected(alt::IVoiceChannel* channel, alt::IPlayer* player);
 EXPORT bool VoiceChannel_HasPlayer(alt::IVoiceChannel* channel, alt::IPlayer* player);
 EXPORT bool VoiceChannel_IsPlayerMuted(alt::IVoiceChannel* channel, alt::IPlayer* player);
 EXPORT bool VoiceChannel_IsSpatial(alt::IVoiceChannel* channel);

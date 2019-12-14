@@ -36,7 +36,7 @@ namespace AltV.Net.Native
             internal static extern void VoiceChannel_UnmutePlayer(IntPtr channel, IntPtr player);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern bool VoiceChannel_IsPlayerConnected(IntPtr channel, IntPtr player);
+            internal static extern bool VoiceChannel_HasPlayer(IntPtr channel, IntPtr player);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool VoiceChannel_IsPlayerMuted(IntPtr channel, IntPtr player);

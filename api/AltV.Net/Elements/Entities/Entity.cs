@@ -16,6 +16,8 @@ namespace AltV.Net.Elements.Entities
 
         public abstract void SetSyncedMetaData(string key, in MValueConst value);
         public abstract void GetSyncedMetaData(string key, out MValueConst value);
+        public abstract void SetStreamSyncedMetaData(string key, in MValueConst value);
+        public abstract void GetStreamSyncedMetaData(string key, out MValueConst value);
         
         public void SetSyncedMetaData(string key, object value)
         {
@@ -29,6 +31,30 @@ namespace AltV.Net.Elements.Entities
         {
             CheckIfEntityExists();
             GetSyncedMetaData(key, out var mValue);
+            var obj = mValue.ToObject();
+            mValue.Dispose();
+            if (!(obj is T cast))
+            {
+                result = default;
+                return false;
+            }
+
+            result = cast;
+            return true;
+        }
+        
+        public void SetStreamSyncedMetaData(string key, object value)
+        {
+            CheckIfEntityExists();
+            Alt.Server.CreateMValue(out var mValue, value);
+            SetStreamSyncedMetaData(key, in mValue);
+            mValue.Dispose();
+        }
+
+        public bool GetStreamSyncedMetaData<T>(string key, out T result)
+        {
+            CheckIfEntityExists();
+            GetStreamSyncedMetaData(key, out var mValue);
             var obj = mValue.ToObject();
             mValue.Dispose();
             if (!(obj is T cast))

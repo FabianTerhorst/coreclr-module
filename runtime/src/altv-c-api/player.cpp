@@ -74,6 +74,15 @@ void Player_SetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValue
     player->SetSyncedMetaData(key, val->Get()->Clone());
 }
 
+alt::MValueConst* Player_GetStreamSyncedMetaData(alt::IPlayer* player, const char* key) {
+    return new alt::MValueConst(player->GetStreamSyncedMetaData(key));
+}
+
+void Player_SetStreamSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val) {
+    if (val == nullptr) return;
+    player->SetStreamSyncedMetaData(key, val->Get()->Clone());
+}
+
 void Player_AddRef(alt::IPlayer* player) {
     player->AddRef();
 }

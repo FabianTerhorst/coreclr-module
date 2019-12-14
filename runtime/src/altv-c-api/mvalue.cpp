@@ -143,12 +143,9 @@ void* MValueConst_GetEntity(alt::MValueConst* mValueConst, alt::IBaseObject::Typ
                 case alt::IBaseObject::Type::VOICE_CHANNEL:
                     return dynamic_cast<alt::IVoiceChannel*>(entityPointer);
                 case alt::IBaseObject::Type::COLSHAPE:
-                    if (auto checkpoint = dynamic_cast<alt::ICheckpoint*>(entityPointer)) {
-                        return checkpoint;
-                    } else {
-                        auto colShape = dynamic_cast<alt::IColShape*>(entityPointer);
-                        return colShape;
-                    }
+                    return dynamic_cast<alt::IColShape*>(entityPointer);
+                case alt::IBaseObject::Type::CHECKPOINT:
+                    return dynamic_cast<alt::ICheckpoint*>(entityPointer);
                 default:
                     return nullptr;
             }

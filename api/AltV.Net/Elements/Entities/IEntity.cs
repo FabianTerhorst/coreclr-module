@@ -46,10 +46,32 @@ namespace AltV.Net.Elements.Entities
         /// <returns></returns>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool GetSyncedMetaData<T>(string key, out T result);
+        
+        /// <summary>
+        /// Set synced meta data of the entity.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        void SetStreamSyncedMetaData(string key, object value);
+
+        /// <summary>
+        /// Get synced meta data of the entity.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="result"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        bool GetStreamSyncedMetaData<T>(string key, out T result);
 
         void SetSyncedMetaData(string key, in MValueConst value);
 
         void GetSyncedMetaData(string key, out MValueConst value);
+        
+        void SetStreamSyncedMetaData(string key, in MValueConst value);
+
+        void GetStreamSyncedMetaData(string key, out MValueConst value);
     }
 
     public static class EntityExtensions
@@ -94,6 +116,60 @@ namespace AltV.Net.Elements.Entities
         {
             entity.CheckIfEntityExists();
             entity.GetSyncedMetaData(key, out var mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.DOUBLE)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (float) mValue.GetDouble();
+            }
+
+            return true;
+        }
+        
+        public static bool GetStreamSyncedMetaData(this IEntity entity, string key, out int result)
+        {
+            entity.CheckIfEntityExists();
+            entity.GetStreamSyncedMetaData(key, out var mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.INT)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (int) mValue.GetInt();
+            }
+
+            return true;
+        }
+        
+        public static bool GetStreamSyncedMetaData(this IEntity entity, string key, out uint result)
+        {
+            entity.CheckIfEntityExists();
+            entity.GetStreamSyncedMetaData(key, out var mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.UINT)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (uint) mValue.GetUint();
+            }
+
+            return true;
+        }
+        
+        public static bool GetStreamSyncedMetaData(this IEntity entity, string key, out float result)
+        {
+            entity.CheckIfEntityExists();
+            entity.GetStreamSyncedMetaData(key, out var mValue);
             using (mValue)
             {
                 if (mValue.type != MValueConst.Type.DOUBLE)

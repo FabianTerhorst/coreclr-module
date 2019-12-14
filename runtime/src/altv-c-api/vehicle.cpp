@@ -70,6 +70,15 @@ void Vehicle_SetSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MVal
     entity->SetSyncedMetaData(key, val->Get()->Clone());
 }
 
+alt::MValueConst* Vehicle_GetStreamSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
+    return new alt::MValueConst(vehicle->GetStreamSyncedMetaData(key));
+}
+
+void Vehicle_SetStreamSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MValueConst* val) {
+    if (val == nullptr) return;
+    entity->SetStreamSyncedMetaData(key, val->Get()->Clone());
+}
+
 void Vehicle_AddRef(alt::IVehicle* vehicle) {
     vehicle->AddRef();
 }

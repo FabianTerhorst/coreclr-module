@@ -103,12 +103,12 @@ Server_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, positi
     position.x = pos.x;
     position.y = pos.y;
     position.z = pos.z;
-    return server->CreateBlip(target, (alt::IBlip::Type) type, position).Get();
+    return server->CreateBlip(target, (alt::IBlip::BlipType) type, position).Get();
 }
 
 alt::IBlip*
 Server_CreateBlipAttached(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo) {
-    return server->CreateBlip(target, (alt::IBlip::Type) type, attachTo).Get();
+    return server->CreateBlip(target, (alt::IBlip::BlipType) type, attachTo).Get();
 }
 
 alt::IResource* Server_GetResource(alt::ICore* server, const char* resourceName) {

@@ -128,6 +128,20 @@ namespace AltV.Net.Elements.Entities
             value = new MValueConst(AltNative.Player.Player_GetSyncedMetaData(NativePointer, stringPtr));
             Marshal.FreeHGlobal(stringPtr);
         }
+        
+        public override void SetStreamSyncedMetaData(string key, in MValueConst value)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Player.Player_SetStreamSyncedMetaData(NativePointer, stringPtr, value.nativePointer);
+            Marshal.FreeHGlobal(stringPtr);
+        }
+
+        public override void GetStreamSyncedMetaData(string key, out MValueConst value)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            value = new MValueConst(AltNative.Player.Player_GetStreamSyncedMetaData(NativePointer, stringPtr));
+            Marshal.FreeHGlobal(stringPtr);
+        }
 
         public bool IsConnected
         {

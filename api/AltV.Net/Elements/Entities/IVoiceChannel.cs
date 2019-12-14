@@ -31,11 +31,11 @@ namespace AltV.Net.Elements.Entities
         void UnmutePlayer(IPlayer player);
         
         /// <summary>
-        /// Returns if the player is connected to the voice channel
+        /// Returns if the player is inside the voice channel
         /// </summary>
         /// <param name="player">The player</param>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
-        bool IsPlayerConnected(IPlayer player);
+        bool HasPlayer(IPlayer player);
         
         /// <summary>
         /// Returns if the player is muted in the voice channel

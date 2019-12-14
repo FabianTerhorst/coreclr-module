@@ -58,6 +58,8 @@ EXPORT alt::MValueConst* Player_GetMetaData(alt::IPlayer* player, const char* ke
 EXPORT void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val);
 EXPORT alt::MValueConst* Player_GetSyncedMetaData(alt::IPlayer* player, const char* key);
 EXPORT void Player_SetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val);
+EXPORT alt::MValueConst* Player_GetStreamSyncedMetaData(alt::IPlayer* player, const char* key);
+EXPORT void Player_SetStreamSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val);
 EXPORT void Player_AddRef(alt::IPlayer* player);
 EXPORT void Player_RemoveRef(alt::IPlayer* player);
 // Player

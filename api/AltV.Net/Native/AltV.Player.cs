@@ -53,6 +53,12 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_SetSyncedMetaData(IntPtr player, IntPtr key, IntPtr val);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Player_GetStreamSyncedMetaData(IntPtr player, IntPtr key);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_SetStreamSyncedMetaData(IntPtr player, IntPtr key, IntPtr val);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_AddRef(IntPtr player);
