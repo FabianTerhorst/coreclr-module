@@ -37,6 +37,10 @@ bool VoiceChannel_IsPlayerConnected(alt::IVoiceChannel* channel, alt::IPlayer* p
     return channel->HasPlayer(player);
 }
 
+bool VoiceChannel_HasPlayer(alt::IVoiceChannel* channel, alt::IPlayer* player) {
+    return channel->HasPlayer(player);
+}
+
 bool VoiceChannel_IsPlayerMuted(alt::IVoiceChannel* channel, alt::IPlayer* player) {
     return channel->IsPlayerMuted(player);
 }
