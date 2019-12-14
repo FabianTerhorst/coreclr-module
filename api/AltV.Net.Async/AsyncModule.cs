@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Loader;
 using System.Threading;
 using System.Threading.Tasks;
@@ -607,7 +608,7 @@ namespace AltV.Net.Async
                     }
                 }, new ValueTuple<object[], HashSet<Function>, string>(objects, eventHandlersServer, name));
             }
-
+            
             if (asyncEventBus.Count != 0 && asyncEventBus.TryGetValue(name, out var eventHandlers))
             {
                 if (mValues == null)
@@ -630,32 +631,40 @@ namespace AltV.Net.Async
 
                 Task.Factory.StartNew(async obj =>
                 {
-                    var (taskObjects, taskEventHandlers, taskName) =
-                        (ValueTuple<object[], HashSet<Function>, string>) obj;
-                    foreach (var eventHandler in taskEventHandlers)
+                    try
                     {
-                        var invokeValues = eventHandler.CalculateInvokeValues(taskObjects);
-                        if (invokeValues != null)
+                        var (taskObjects, taskEventHandlers, taskName) =
+                            (ValueTuple<object[], HashSet<Function>, string>) obj;
+                        foreach (var eventHandler in taskEventHandlers)
                         {
-                            try
+                            var invokeValues = eventHandler.CalculateInvokeValues(taskObjects);
+                            if (invokeValues != null)
                             {
-                                var task = eventHandler.InvokeTaskOrNull(invokeValues);
-                                if (task != null)
+                                try
                                 {
-                                    await task;
+                                    var task = eventHandler.InvokeTaskOrNull(invokeValues);
+                                    if (task != null)
+                                    {
+                                        await task;
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    AltAsync.Log($"Execution of {taskName} threw an error: {e}");
                                 }
                             }
-                            catch (Exception e)
+                            else
                             {
-                                AltAsync.Log($"Execution of {taskName} threw an error: {e}");
+                                AltAsync.Log("Wrong function params for " + taskName);
                             }
                         }
-                        else
-                        {
-                            AltAsync.Log("Wrong function params for " + taskName);
-                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine($"Execution of async events threw an error: {exception}");
                     }
                 }, new ValueTuple<object[], HashSet<Function>, string>(objects, eventHandlers, name));
+                
             }
 
             if (asyncEventBusServerDelegate.Count != 0 &&

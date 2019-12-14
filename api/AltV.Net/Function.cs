@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -29,6 +30,10 @@ namespace AltV.Net
             var genericArguments = func.GetType().GetGenericArguments();
             var parameters = func.Method.GetParameters();
             var returnType = func.Method.ReturnType;
+            if (returnType != FunctionTypes.Void)
+            {
+                genericArguments = genericArguments.SkipLast(1).ToArray();
+            }
 
             //TODO: check for unsupported types
             var constParsers = new FunctionMValueConstParser[parameters.Length];
@@ -224,7 +229,7 @@ namespace AltV.Net
 
             var argsLength = args.Length;
             var invokeValues = new object[argsLength];
-            var parserValuesLength = Math.Max(1, Math.Min(argsLength, length));
+            var parserValuesLength = Math.Min(argsLength, length);
             for (var i = 0; i < parserValuesLength; i++)
             {
                 invokeValues[i] = constParsers[i](in values[i], args[i], typeInfos[i]);
@@ -282,7 +287,7 @@ namespace AltV.Net
 
             var argsLength = args.Length;
             var invokeValues = new object[argsLength];
-            var parserValuesLength = Math.Max(1, Math.Min(argsLength, length));
+            var parserValuesLength = Math.Min(argsLength, length);
             for (var i = 0; i < parserValuesLength; i++)
             {
                 invokeValues[i] = objectParsers[i](values[i], args[i], typeInfos[i]);
