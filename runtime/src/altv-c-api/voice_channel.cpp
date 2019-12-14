@@ -34,7 +34,7 @@ void VoiceChannel_UnmutePlayer(alt::IVoiceChannel* channel, alt::IPlayer* player
 }
 
 bool VoiceChannel_IsPlayerConnected(alt::IVoiceChannel* channel, alt::IPlayer* player) {
-    return channel->IsPlayerConnected(player);
+    return channel->HasPlayer(player);
 }
 
 bool VoiceChannel_IsPlayerMuted(alt::IVoiceChannel* channel, alt::IPlayer* player) {
