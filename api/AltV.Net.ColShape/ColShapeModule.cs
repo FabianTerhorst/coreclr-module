@@ -43,7 +43,7 @@ namespace AltV.Net.ColShape
         private readonly int maxAreaIndex;
 
         private const int MaxCoordinate = 50_000;
-        
+
         /// <summary>
         /// Init col shape module
         /// areaSize of 1 requires 10gb ram
@@ -72,14 +72,14 @@ namespace AltV.Net.ColShape
             thread.Start();
         }
 
-        public virtual ICollection<IPlayer> GetAllPlayers()
+        public virtual KeyValuePair<IntPtr, IPlayer>[] GetAllPlayers()
         {
-            return Alt.GetAllPlayers();
+            return Alt.GetPlayersArray();
         }
 
-        public virtual ICollection<IVehicle> GetAllVehicles()
+        public virtual KeyValuePair<IntPtr, IVehicle>[] GetAllVehicles()
         {
-            return Alt.GetAllVehicles();
+            return Alt.GetVehiclesArray();
         }
 
         // we need to save in players somehow current state to check if its not inside anymore for this player to call exit
@@ -87,20 +87,14 @@ namespace AltV.Net.ColShape
         {
             while (running)
             {
-                using (var players = GetAllPlayers().GetEnumerator())
+                foreach (var player in GetAllPlayers())
                 {
-                    while (players.MoveNext())
-                    {
-                        ComputeWorldObject(players.Current);
-                    }
+                    ComputeWorldObject(player.Value);
                 }
 
-                using (var vehicles = GetAllVehicles().GetEnumerator())
+                foreach (var vehicle in GetAllVehicles())
                 {
-                    while (vehicles.MoveNext())
-                    {
-                        ComputeWorldObject(vehicles.Current);
-                    }
+                    ComputeWorldObject(vehicle.Value);
                 }
 
                 if (worldObjectsToRemove.Count != 0)
@@ -228,7 +222,8 @@ namespace AltV.Net.ColShape
 
             var colShapePositionX = OffsetPosition(colShape.Position.X);
             var colShapePositionY = OffsetPosition(colShape.Position.Y);
-            if (colShape.Radius == 0 || colShapePositionX < 0 || colShapePositionY < 0 || colShapePositionX > MaxCoordinate ||
+            if (colShape.Radius == 0 || colShapePositionX < 0 || colShapePositionY < 0 ||
+                colShapePositionX > MaxCoordinate ||
                 colShapePositionY > MaxCoordinate) return;
 
             lock (colShapes)

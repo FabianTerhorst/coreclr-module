@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using AltV.Net.Elements.Entities;
 
@@ -15,14 +16,14 @@ namespace AltV.Net.ColShape.Tests
             this.vehiclePool = vehiclePool;
         }
         
-        public override ICollection<IPlayer> GetAllPlayers()
+        public override KeyValuePair<IntPtr, IPlayer>[] GetAllPlayers()
         {
-            return playerPool.GetAllEntities();
+            return playerPool.GetEntitiesArray();
         }
 
-        public override ICollection<IVehicle> GetAllVehicles()
+        public override KeyValuePair<IntPtr, IVehicle>[] GetAllVehicles()
         {
-            return vehiclePool.GetAllEntities();
+            return vehiclePool.GetEntitiesArray();
         }
     }
 }
