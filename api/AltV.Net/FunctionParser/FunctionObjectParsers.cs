@@ -99,6 +99,9 @@ namespace AltV.Net.FunctionParser
                 case BaseObjectType.ColShape:
                     return typeInfo?.IsColShape ?? type == FunctionTypes.ColShape ||
                            type.GetInterfaces().Contains(FunctionTypes.ColShape);
+                case BaseObjectType.Checkpoint:
+                    return typeInfo?.IsCheckpoint ?? type == FunctionTypes.Checkpoint ||
+                           type.GetInterfaces().Contains(FunctionTypes.Checkpoint);
                 default:
                     return false;
             }

@@ -99,7 +99,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public Checkpoint(IntPtr nativePointer) : base(nativePointer, BaseObjectType.ColShape)
+        public Checkpoint(IntPtr nativePointer) : base(nativePointer, BaseObjectType.Checkpoint)
         {
         }
 
