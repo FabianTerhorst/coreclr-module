@@ -72,12 +72,12 @@ namespace AltV.Net.ColShape
             thread.Start();
         }
 
-        public virtual KeyValuePair<IntPtr, IPlayer>[] GetAllPlayers()
+        public virtual IEnumerable<KeyValuePair<IntPtr, IPlayer>> GetAllPlayers()
         {
             return Alt.GetPlayersArray();
         }
 
-        public virtual KeyValuePair<IntPtr, IVehicle>[] GetAllVehicles()
+        public virtual IEnumerable<KeyValuePair<IntPtr, IVehicle>> GetAllVehicles()
         {
             return Alt.GetVehiclesArray();
         }

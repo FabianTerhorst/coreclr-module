@@ -31,10 +31,11 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnCheckpoint += (checkpoint, entity, state) =>
                                     {
-                                        scriptFunction.Set(checkpoint);
-                                        scriptFunction.Set(entity);
-                                        scriptFunction.Set(state);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(checkpoint);
+                                        currScriptFunction.Set(entity);
+                                        currScriptFunction.Set(state);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                 case ScriptEventType.PlayerConnect:
@@ -43,9 +44,10 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnPlayerConnect += (player, reason) =>
                                     {
-                                        scriptFunction.Set(player);
-                                        scriptFunction.Set(reason);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(player);
+                                        currScriptFunction.Set(reason);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                 case ScriptEventType.PlayerDamage:
@@ -57,11 +59,12 @@ namespace AltV.Net.Async
                                         oldMaxHealth, oldMaxArmor,
                                         weapon, damage) =>
                                     {
-                                        scriptFunction.Set(player);
-                                        scriptFunction.Set(attacker);
-                                        scriptFunction.Set(weapon);
-                                        scriptFunction.Set(damage);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(player);
+                                        currScriptFunction.Set(attacker);
+                                        currScriptFunction.Set(weapon);
+                                        currScriptFunction.Set(damage);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                 case ScriptEventType.PlayerDead:
@@ -70,10 +73,11 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnPlayerDead += (player, attacker, weapon) =>
                                     {
-                                        scriptFunction.Set(player);
-                                        scriptFunction.Set(attacker);
-                                        scriptFunction.Set(weapon);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(player);
+                                        currScriptFunction.Set(attacker);
+                                        currScriptFunction.Set(weapon);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                 case ScriptEventType.PlayerDisconnect:
@@ -82,9 +86,10 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnPlayerDisconnect += (player, reason) =>
                                     {
-                                        scriptFunction.Set(player);
-                                        scriptFunction.Set(reason);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(player);
+                                        currScriptFunction.Set(reason);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                 case ScriptEventType.PlayerRemove:
@@ -93,8 +98,9 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnPlayerRemove += player =>
                                     {
-                                        scriptFunction.Set(player);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(player);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                 case ScriptEventType.VehicleRemove:
@@ -103,8 +109,9 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnVehicleRemove += vehicle =>
                                     {
-                                        scriptFunction.Set(vehicle);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(vehicle);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                 case ScriptEventType.PlayerChangeVehicleSeat:
@@ -114,11 +121,12 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnPlayerChangeVehicleSeat += (vehicle, player, seat, newSeat) =>
                                     {
-                                        scriptFunction.Set(vehicle);
-                                        scriptFunction.Set(player);
-                                        scriptFunction.Set(seat);
-                                        scriptFunction.Set(newSeat);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(vehicle);
+                                        currScriptFunction.Set(player);
+                                        currScriptFunction.Set(seat);
+                                        currScriptFunction.Set(newSeat);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                 case ScriptEventType.PlayerEnterVehicle:
@@ -128,10 +136,11 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnPlayerEnterVehicle += (vehicle, player, seat) =>
                                     {
-                                        scriptFunction.Set(vehicle);
-                                        scriptFunction.Set(player);
-                                        scriptFunction.Set(seat);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(vehicle);
+                                        currScriptFunction.Set(player);
+                                        currScriptFunction.Set(seat);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                 case ScriptEventType.PlayerLeaveVehicle:
@@ -141,10 +150,11 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnPlayerLeaveVehicle += (vehicle, player, seat) =>
                                     {
-                                        scriptFunction.Set(vehicle);
-                                        scriptFunction.Set(player);
-                                        scriptFunction.Set(seat);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(vehicle);
+                                        currScriptFunction.Set(player);
+                                        currScriptFunction.Set(seat);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                 case ScriptEventType.PlayerEvent:
@@ -154,10 +164,11 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnPlayerEvent += (player, name, args) =>
                                     {
-                                        scriptFunction.Set(player);
-                                        scriptFunction.Set(name);
-                                        scriptFunction.Set(args);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(player);
+                                        currScriptFunction.Set(name);
+                                        currScriptFunction.Set(args);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                 case ScriptEventType.PlayerCustomEvent:
@@ -175,9 +186,10 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnConsoleCommand += (name, args) =>
                                     {
-                                        scriptFunction.Set(name);
-                                        scriptFunction.Set(args);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(name);
+                                        currScriptFunction.Set(args);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                 case ScriptEventType.MetaDataChange:
@@ -186,10 +198,11 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnMetaDataChange += (entity, key, value) =>
                                     {
-                                        scriptFunction.Set(entity);
-                                        scriptFunction.Set(key);
-                                        scriptFunction.Set(value);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(entity);
+                                        currScriptFunction.Set(key);
+                                        currScriptFunction.Set(value);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                 case ScriptEventType.SyncedMetaDataChange:
@@ -198,10 +211,11 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnSyncedMetaDataChange += (entity, key, value) =>
                                     {
-                                        scriptFunction.Set(entity);
-                                        scriptFunction.Set(key);
-                                        scriptFunction.Set(value);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(entity);
+                                        currScriptFunction.Set(key);
+                                        currScriptFunction.Set(value);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                 case ScriptEventType.ColShape:
@@ -210,10 +224,11 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnColShape += (shape, entity, state) =>
                                     {
-                                        scriptFunction.Set(shape);
-                                        scriptFunction.Set(entity);
-                                        scriptFunction.Set(state);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(shape);
+                                        currScriptFunction.Set(entity);
+                                        currScriptFunction.Set(state);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                 case ScriptEventType.WeaponDamage:
@@ -227,13 +242,14 @@ namespace AltV.Net.Async
                                     OnWeaponDamage +=
                                         (player, targetEntity, weapon, damage, shotOffset, damageOffset) =>
                                         {
-                                            scriptFunction.Set(player);
-                                            scriptFunction.Set(targetEntity);
-                                            scriptFunction.Set(weapon);
-                                            scriptFunction.Set(damage);
-                                            scriptFunction.Set(shotOffset);
-                                            scriptFunction.Set(damageOffset);
-                                            return scriptFunction.CallAsync();
+                                            var currScriptFunction = scriptFunction.Clone();
+                                            currScriptFunction.Set(player);
+                                            currScriptFunction.Set(targetEntity);
+                                            currScriptFunction.Set(weapon);
+                                            currScriptFunction.Set(damage);
+                                            currScriptFunction.Set(shotOffset);
+                                            currScriptFunction.Set(damageOffset);
+                                            return currScriptFunction.CallAsync();
                                         };
                                     break;
                             }

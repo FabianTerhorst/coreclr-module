@@ -16,12 +16,12 @@ namespace AltV.Net.ColShape.Tests
             this.vehiclePool = vehiclePool;
         }
         
-        public override KeyValuePair<IntPtr, IPlayer>[] GetAllPlayers()
+        public override IEnumerable<KeyValuePair<IntPtr, IPlayer>> GetAllPlayers()
         {
             return playerPool.GetEntitiesArray();
         }
 
-        public override KeyValuePair<IntPtr, IVehicle>[] GetAllVehicles()
+        public override IEnumerable<KeyValuePair<IntPtr, IVehicle>> GetAllVehicles()
         {
             return vehiclePool.GetEntitiesArray();
         }
