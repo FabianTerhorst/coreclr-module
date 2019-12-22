@@ -245,5 +245,7 @@ namespace AltV.Net.Mock
         {
             Alt.Server.RemoveVehicle(this);
         }
+
+        public byte RearWheel { get; set; }
     }
 }

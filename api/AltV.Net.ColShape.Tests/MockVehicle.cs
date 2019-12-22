@@ -333,5 +333,7 @@ namespace AltV.Net.ColShape.Tests
         {
             throw new NotImplementedException();
         }
+
+        public byte RearWheel { get; set; }
     }
 }
