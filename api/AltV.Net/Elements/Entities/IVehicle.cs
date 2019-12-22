@@ -92,6 +92,11 @@ namespace AltV.Net.Elements.Entities
         /// The wheel variation
         /// </summary>
         byte WheelVariation { get; }
+        
+        /// <summary>
+        /// Rear wheel variation
+        /// </summary>
+        byte RearWheel { get; set; }
 
         /// <summary>
         /// Sets custom tires on the vehicle

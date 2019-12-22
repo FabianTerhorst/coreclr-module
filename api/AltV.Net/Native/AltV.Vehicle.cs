@@ -151,9 +151,15 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern byte Vehicle_GetWheelVariation(IntPtr vehicle);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Vehicle_GetRearWheelVariation(IntPtr vehicle);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_SetWheels(IntPtr vehicle, byte type, byte variation);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetRearWheels(IntPtr vehicle, byte variation);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool Vehicle_GetCustomTires(IntPtr vehicle);

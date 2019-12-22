@@ -330,6 +330,20 @@ namespace AltV.Net.Elements.Entities
                 return AltNative.Vehicle.Vehicle_GetWheelVariation(NativePointer);
             }
         }
+        
+        public byte RearWheel
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Vehicle.Vehicle_GetRearWheelVariation(NativePointer);
+            }
+            set
+            {
+                CheckIfEntityExists();
+                AltNative.Vehicle.Vehicle_SetRearWheels(NativePointer, value);
+            }
+        }
 
         public bool CustomTires
         {

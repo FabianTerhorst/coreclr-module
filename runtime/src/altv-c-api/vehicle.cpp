@@ -221,8 +221,16 @@ uint8_t Vehicle_GetWheelVariation(alt::IVehicle* vehicle) {
     return vehicle->GetWheelVariation();
 }
 
+uint8_t Vehicle_GetRearWheelVariation(alt::IVehicle* vehicle) {
+    return vehicle->GetRearWheelVariation();
+}
+
 void Vehicle_SetWheels(alt::IVehicle* vehicle, uint8_t type, uint8_t variation) {
     vehicle->SetWheels(type, variation);
+}
+
+void Vehicle_SetRearWheels(alt::IVehicle* vehicle, uint8_t variation) {
+    vehicle->SetRearWheels(variation);
 }
 
 bool Vehicle_GetCustomTires(alt::IVehicle* vehicle) {

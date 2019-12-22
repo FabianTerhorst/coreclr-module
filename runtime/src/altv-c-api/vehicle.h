@@ -68,7 +68,9 @@ EXPORT void Vehicle_GetTireSmokeColor(alt::IVehicle* vehicle, rgba_t &tireSmokeC
 EXPORT void Vehicle_SetTireSmokeColor(alt::IVehicle* vehicle, alt::RGBA color);
 EXPORT uint8_t Vehicle_GetWheelType(alt::IVehicle* vehicle);
 EXPORT uint8_t Vehicle_GetWheelVariation(alt::IVehicle* vehicle);
+EXPORT uint8_t Vehicle_GetRearWheelVariation(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetWheels(alt::IVehicle* vehicle, uint8_t type, uint8_t variation);
+EXPORT void Vehicle_SetRearWheels(alt::IVehicle* vehicle, uint8_t variation);
 EXPORT bool Vehicle_GetCustomTires(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetCustomTires(alt::IVehicle* vehicle, bool state);
 EXPORT uint8_t Vehicle_GetSpecialDarkness(alt::IVehicle* vehicle);
