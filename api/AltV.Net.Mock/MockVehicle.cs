@@ -247,5 +247,25 @@ namespace AltV.Net.Mock
         }
 
         public byte RearWheel { get; set; }
+
+        public bool IsWheelDetached(byte wheelId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetWheelDetached(byte wheelId, bool state)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsWheelOnFire(byte wheelId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetWheelOnFire(byte wheelId, bool state)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
