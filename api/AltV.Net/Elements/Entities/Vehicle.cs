@@ -728,6 +728,29 @@ namespace AltV.Net.Elements.Entities
             AltNative.Vehicle.Vehicle_SetWheelHasTire(NativePointer, wheelId, state);
         }
 
+        public bool IsWheelDetached(byte wheelId)
+        {
+            CheckIfEntityExists();
+            return AltNative.Vehicle.Vehicle_IsWheelDetached(NativePointer, wheelId);
+        }
+
+        public void SetWheelDetached(byte wheelId, bool state)
+        {
+            CheckIfEntityExists();
+            AltNative.Vehicle.Vehicle_SetWheelDetached(NativePointer, wheelId, state);
+        }
+
+        public bool IsWheelOnFire(byte wheelId)
+        {
+            CheckIfEntityExists();
+            return AltNative.Vehicle.Vehicle_IsWheelDetached(NativePointer, wheelId);
+        }
+
+        public void SetWheelOnFire(byte wheelId, bool state)
+        {
+            throw new NotImplementedException();
+        }
+
         public float GetWheelHealth(byte wheelId)
         {
             CheckIfEntityExists();

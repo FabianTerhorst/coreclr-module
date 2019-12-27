@@ -153,6 +153,12 @@ EXPORT void Vehicle_SetWheelBurst(alt::IVehicle* vehicle, uint8_t wheelId, bool 
 EXPORT bool Vehicle_DoesWheelHasTire(alt::IVehicle* vehicle, uint8_t wheelId);
 EXPORT void Vehicle_SetWheelHasTire(alt::IVehicle* vehicle, uint8_t wheelId, bool state);
 
+EXPORT bool Vehicle_IsWheelDetached(alt::IVehicle* vehicle, uint8_t wheelId);
+EXPORT void Vehicle_SetWheelDetached(alt::IVehicle* vehicle, uint8_t wheelId, bool state);
+
+EXPORT bool Vehicle_IsWheelOnFire(alt::IVehicle* vehicle, uint8_t wheelId);
+EXPORT void Vehicle_SetWheelOnFire(alt::IVehicle* vehicle, uint8_t wheelId, bool state);
+
 EXPORT float Vehicle_GetWheelHealth(alt::IVehicle* vehicle, uint8_t wheelId);
 EXPORT void Vehicle_SetWheelHealth(alt::IVehicle* vehicle, uint8_t wheelId, float health);
 

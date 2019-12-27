@@ -49,18 +49,18 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_SetSyncedMetaData(IntPtr vehicle, IntPtr key, IntPtr val);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr Vehicle_GetStreamSyncedMetaData(IntPtr vehicle, IntPtr key);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetStreamSyncedMetaData(IntPtr vehicle, IntPtr key, IntPtr val);
-            
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_AddRef(IntPtr player);
+            internal static extern void Vehicle_SetStreamSyncedMetaData(IntPtr entity, IntPtr key, IntPtr val);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_RemoveRef(IntPtr player);
+            internal static extern void Vehicle_AddRef(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_RemoveRef(IntPtr vehicle);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr Vehicle_GetDriver(IntPtr vehicle);
@@ -151,13 +151,13 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern byte Vehicle_GetWheelVariation(IntPtr vehicle);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern byte Vehicle_GetRearWheelVariation(IntPtr vehicle);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_SetWheels(IntPtr vehicle, byte type, byte variation);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_SetRearWheels(IntPtr vehicle, byte variation);
 
@@ -336,6 +336,18 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_SetWheelHasTire(IntPtr vehicle, byte wheelId, bool state);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsWheelDetached(IntPtr vehicle, byte wheelId);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetWheelDetached(IntPtr vehicle, byte wheelId, bool state);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_IsWheelOnFire(IntPtr vehicle, byte wheelId);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetWheelOnFire(IntPtr vehicle, byte wheelId, bool state);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern float Vehicle_GetWheelHealth(IntPtr vehicle, byte wheelId);

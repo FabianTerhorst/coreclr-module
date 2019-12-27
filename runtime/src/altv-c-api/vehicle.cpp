@@ -469,6 +469,22 @@ void Vehicle_SetWheelHasTire(alt::IVehicle* vehicle, uint8_t wheelId, bool state
     vehicle->SetWheelHasTire(wheelId, state);
 }
 
+bool Vehicle_IsWheelDetached(alt::IVehicle* vehicle, uint8_t wheelId) {
+    return vehicle->IsWheelDetached(wheelId);
+}
+
+void Vehicle_SetWheelDetached(alt::IVehicle* vehicle, uint8_t wheelId, bool state) {
+    vehicle->SetWheelDetached(wheelId, state);
+}
+
+bool Vehicle_IsWheelOnFire(alt::IVehicle* vehicle, uint8_t wheelId) {
+    return vehicle->IsWheelOnFire(wheelId);
+}
+
+void Vehicle_SetWheelOnFire(alt::IVehicle* vehicle, uint8_t wheelId, bool state) {
+    vehicle->SetWheelOnFire(wheelId, state);
+}
+
 float Vehicle_GetWheelHealth(alt::IVehicle* vehicle, uint8_t wheelId) {
     return vehicle->GetWheelHealth(wheelId);
 }
