@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
@@ -515,17 +516,22 @@ namespace AltV.Net
             return null;
         }
 
-        internal void Call(IntPtr[] nativePointers, out IntPtr result)
+        internal IntPtr Call(IntPtr pointer, long size)
         {
-            var length = nativePointers.Length;
-            var mValues = new MValueConst[length];
-            for (var i = 0; i < length; i++)
+            var currArgs = new IntPtr[size];
+            if (pointer != IntPtr.Zero)
             {
-                mValues[i] = new MValueConst(nativePointers[i]);
+                Marshal.Copy(pointer, currArgs, 0, (int) size);
+            }
+            
+            var mValues = new MValueConst[size];
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i] = new MValueConst(currArgs[i]);
             }
 
             Alt.Server.CreateMValue(out var resultMValue, Call(mValues));
-            result = resultMValue.nativePointer;
+            return resultMValue.nativePointer;
         }
     }
 }

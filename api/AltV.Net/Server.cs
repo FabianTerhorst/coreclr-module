@@ -18,7 +18,7 @@ namespace AltV.Net
 
         public delegate void CommandCallback(StringView cmd, StringViewArray args, IntPtr userData);
 
-        public readonly IntPtr NativePointer;
+        public IntPtr NativePointer { get; }
 
         private readonly IBaseBaseObjectPool baseBaseObjectPool;
 

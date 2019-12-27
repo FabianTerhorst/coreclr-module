@@ -13,6 +13,8 @@ namespace AltV.Net
         string RootDirectory { get; }
 
         INativeResource Resource { get; }
+        
+        IntPtr NativePointer { get; }
 
         void LogInfo(string message);
 

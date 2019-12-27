@@ -154,15 +154,20 @@ void* MValueConst_GetEntity(alt::MValueConst* mValueConst, alt::IBaseObject::Typ
     return nullptr;
 }
 
-alt::MValueConst* MValueConst_CallFunction(alt::MValueConst* mValueConst, alt::MValueConst* val[], uint64_t size) {
+alt::MValueConst* MValueConst_CallFunction(alt::ICore* core, alt::MValueConst* mValueConst, alt::MValueConst* val[], uint64_t size) {
     auto mValue = mValueConst->Get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::FUNCTION) {
         alt::MValueArgs value = alt::Array<alt::MValueConst>(size);
         for (uint64_t i = 0; i < size; i++) {
-            value.Push(*val[i]);
+            if (val == nullptr) {
+                value[i] = core->CreateMValueNil();
+            } else {
+                value[i] = *val[i];
+            }
         }
         auto mValueFunction = dynamic_cast<const alt::IMValueFunction*>(mValue);
-        return new alt::MValueConst(mValueFunction->Call(value));
+        auto result = new alt::MValueConst(mValueFunction->Call(value));
+        return result;
     }
     return nullptr;
 }

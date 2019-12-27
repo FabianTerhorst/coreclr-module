@@ -145,7 +145,7 @@ namespace AltV.Net.Elements.Args
             }
 
             result = new MValueConst(
-                AltNative.MValueNative.MValueConst_CallFunction(nativePointer, argsPointers, length));
+                AltNative.MValueNative.MValueConst_CallFunction(Alt.Server.NativePointer, nativePointer, argsPointers, length));
         }
 
         public object ToObject()

@@ -31,7 +31,7 @@ EXPORT uint64_t MValueConst_GetDictSize(alt::MValueConst* mValueConst);
 EXPORT bool MValueConst_GetDict(alt::MValueConst* mValueConst, const char* keys[],
                          alt::MValueConst* values[]);
 EXPORT void* MValueConst_GetEntity(alt::MValueConst* mValueConst, alt::IBaseObject::Type &type);
-EXPORT alt::MValueConst* MValueConst_CallFunction(alt::MValueConst* mValueConst, alt::MValueConst* val[], uint64_t size);
+EXPORT alt::MValueConst* MValueConst_CallFunction(alt::ICore* core, alt::MValueConst* mValueConst, alt::MValueConst* val[], uint64_t size);
 EXPORT void MValueConst_AddRef(alt::MValueConst* mValueConst);
 EXPORT void MValueConst_RemoveRef(alt::MValueConst* mValueConst);
 
