@@ -748,7 +748,8 @@ namespace AltV.Net.Elements.Entities
 
         public void SetWheelOnFire(byte wheelId, bool state)
         {
-            throw new NotImplementedException();
+            CheckIfEntityExists();
+            AltNative.Vehicle.Vehicle_SetWheelOnFire(NativePointer, wheelId, state);
         }
 
         public float GetWheelHealth(byte wheelId)
