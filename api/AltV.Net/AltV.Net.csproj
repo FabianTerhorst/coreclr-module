@@ -13,9 +13,15 @@
         <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.21.0-beta</PackageVersion>
+        <PackageVersion>1.22.2-beta</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Add IVehicle RearWheels variation getter and setter</PackageReleaseNotes>
+        <PackageReleaseNotes>
+Add following methods to IVehicle
+Improve external function calls
+        bool IsWheelDetached(byte wheelId);
+        void SetWheelDetached(byte wheelId, bool state);
+        bool IsWheelOnFire(byte wheelId);
+        void SetWheelOnFire(byte wheelId, bool state);</PackageReleaseNotes>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>

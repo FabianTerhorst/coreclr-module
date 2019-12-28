@@ -191,9 +191,9 @@ namespace AltV.Net
                 var lastTypeInfo = typeInfos[^1];
                 if (lastTypeInfo.IsParamArray)
                 {
-                    if (length > requiredArgsCount)
+                    if (length + 1 > requiredArgsCount)
                     {
-                        var remainingLength = length - requiredArgsCount - 1;
+                        var remainingLength = length - requiredArgsCount + 1;
                         var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
                         var elementTypeInfo = lastTypeInfo.Element;
                         var elementConstParser = elementTypeInfo.ConstParser;
@@ -363,9 +363,9 @@ namespace AltV.Net
                 var lastTypeInfo = typeInfos[^1];
                 if (lastTypeInfo.IsParamArray)
                 {
-                    if (length > requiredArgsCount)
+                    if (length + 1 > requiredArgsCount)
                     {
-                        var remainingLength = length - requiredArgsCount - 1;
+                        var remainingLength = length - requiredArgsCount + 1;
                         var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
                         var elementTypeInfo = lastTypeInfo.Element;
                         var elementConstParser = elementTypeInfo.ObjectParser;
@@ -419,9 +419,9 @@ namespace AltV.Net
                 var lastTypeInfo = typeInfos[^1];
                 if (lastTypeInfo.IsParamArray)
                 {
-                    if (length > requiredArgsCount)
+                    if (length + 1 > requiredArgsCount)
                     {
-                        var remainingLength = length - requiredArgsCount - 1;
+                        var remainingLength = length - requiredArgsCount + 1;
                         var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
                         var elementTypeInfo = lastTypeInfo.Element;
                         var elementConstParser = elementTypeInfo.StringParser;
