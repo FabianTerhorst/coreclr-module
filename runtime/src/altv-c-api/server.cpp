@@ -53,7 +53,7 @@ void Server_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueCo
             mValues[i] = *args[i];
         }
     }
-    server->TriggerServerEvent(ev, mValues);
+    server->TriggerLocalEvent(ev, mValues);
 }
 
 void
