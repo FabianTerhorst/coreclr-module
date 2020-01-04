@@ -346,13 +346,13 @@ namespace AltV.Net.Host
             foreach (var projectId in projectIds)
             {
                 var proj = solution.GetProject(projectId);
-                Console.WriteLine("start compile:" + proj.Name);
+                Console.WriteLine($"Compiling {proj.Name}");
                 var c = await proj
                     .GetCompilationAsync();
 
                 var result = c.WithOptions(proj.CompilationOptions).AddReferences(proj.MetadataReferences)
-                    .Emit(resourcePath + Path.DirectorySeparatorChar + /*proj.Name + ".dll"*/proj.AssemblyName + ".dll");
-                Console.WriteLine(resourcePath + Path.DirectorySeparatorChar + /*proj.Name + ".dll"*/proj.AssemblyName + ".dll");
+                    .Emit(resourcePath + Path.DirectorySeparatorChar + proj.AssemblyName + ".dll");
+                Console.WriteLine($"Compiled {proj.AssemblyName}");
                 foreach (var diagnostic in result.Diagnostics)
                 {
                     Console.WriteLine(diagnostic.GetMessage());
