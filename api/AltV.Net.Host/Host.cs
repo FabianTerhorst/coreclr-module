@@ -139,11 +139,13 @@ namespace AltV.Net.Host
                     return null;
                 };
                 AssemblyLoadContext.Default.Resolving += resolving;
-                var task = Task.Run(async () =>
+                var task = Task.Run(async () => await CompileResource(resourcePath, GetPath(resourcePath, resourceMain)));
+                var result = task.GetAwaiter().GetResult();
+                if (!result)
                 {
-                    await CompileResource(resourcePath, GetPath(resourcePath, resourceMain));
-                });
-                task.GetAwaiter().GetResult();
+                    Console.WriteLine($"Compilation of resource {resourceName} wasn't successfully.");
+                    return 1;
+                }
                 AssemblyLoadContext.Default.Resolving -= resolving;
 
                 resourceDllPath = GetPath(resourcePath, resourceMain.Replace(".csproj", ".dll"));
@@ -334,7 +336,7 @@ namespace AltV.Net.Host
             return new string[] { };
         }
 
-        public static async Task CompileResource(string resourcePath, string resourceProjPath)
+        public static async Task<bool> CompileResource(string resourcePath, string resourceProjPath)
         {
             //TODO: need solution path as well for supporting solutions
             var manager = new AnalyzerManager();
@@ -343,6 +345,7 @@ namespace AltV.Net.Host
             var solution = workspace.CurrentSolution;
             var dependencyGraph = solution.GetProjectDependencyGraph();
             var projectIds = dependencyGraph.GetTopologicallySortedProjects();
+            var success = true;
             foreach (var projectId in projectIds)
             {
                 var proj = solution.GetProject(projectId);
@@ -357,7 +360,10 @@ namespace AltV.Net.Host
                 {
                     Console.WriteLine(diagnostic.GetMessage());
                 }
-                Console.WriteLine(result.Success);
+                if (!result.Success)
+                {
+                    success = false;
+                }
             }
 
             //var dependencyGraph = solution.GetProjectDependencyGraph();
@@ -372,6 +378,8 @@ namespace AltV.Net.Host
 
                 Console.WriteLine(result.Success);
             }*/
+
+            return success;
         }
 
         private static readonly object TracingMutex = new object();
