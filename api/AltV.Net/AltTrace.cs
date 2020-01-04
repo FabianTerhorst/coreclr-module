@@ -22,7 +22,8 @@ namespace AltV.Net
             }
         }
 
-        public static void Start(string traceFileName) => HostWrapper.StartTracing(traceFileName);
+        public static void Start(string traceFileName, TraceFileFormat traceFileFormat = TraceFileFormat.NetTrace) =>
+            HostWrapper.StartTracing(traceFileName, traceFileFormat.ToString());
 
         public static void Stop() => HostWrapper.StopTracing();
     }

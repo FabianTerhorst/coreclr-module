@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using System.Threading;
 using System.Threading.Tasks;
+using AltV.Net.Host.Diagnostics.Tools;
 using Buildalyzer;
 using Buildalyzer.Workspaces;
 using Microsoft.CodeAnalysis;
@@ -266,7 +267,7 @@ namespace AltV.Net.Host
                             type.GetMethod("SetStartTracingDelegate", BindingFlags.Public | BindingFlags.Static)
                                 ?.Invoke(
                                     null,
-                                    new object[] {new Action<string>(StartTracing)});
+                                    new object[] {new Action<string, string>(StartTracing)});
                             type.GetMethod("SetStopTracingDelegate", BindingFlags.Public | BindingFlags.Static)?.Invoke(
                                 null,
                                 new object[] {new Action(StopTracing)});
@@ -343,12 +344,12 @@ namespace AltV.Net.Host
             var manager = new AnalyzerManager();
             var analyzer = manager.GetProject(resourceProjPath);
             analyzer.SetGlobalProperty("Configuration", "Release");
-            
+
             var buildEnvironment = analyzer.EnvironmentFactory.GetBuildEnvironment().WithTargetsToBuild("publish");
             var analyzerResults = analyzer.Build(buildEnvironment);
-            
+
             var workspace = analyzer.GetWorkspace();
-            
+
             workspace.ClearSolution();
             foreach (var analyzerResult in analyzerResults)
             {
@@ -407,7 +408,7 @@ namespace AltV.Net.Host
 
         private static byte _tracingState;
 
-        public static void StartTracing(string traceFileName)
+        public static void StartTracing(string traceFileName, string traceFileFormatName)
         {
             lock (TracingMutex)
             {
@@ -415,8 +416,13 @@ namespace AltV.Net.Host
                 _tracing = new CollectTrace.Tracing();
             }
 
-            Task.Run(async () => await CollectTrace.Collect(TraceSizeChangeDelegates.Values, _tracing,
-                new FileInfo(traceFileName + ".nettrace")));
+            if (!Enum.TryParse<TraceFileFormat>(traceFileFormatName, true, out var traceFileFormat))
+            {
+                traceFileFormat = TraceFileFormat.NetTrace;
+            }
+
+            Task.Run(async () => await CollectTraceClient.Collect(TraceSizeChangeDelegates.Values, _tracing,
+                new FileInfo(traceFileName + ".nettrace"), format: traceFileFormat));
 
             lock (TracingMutex)
             {

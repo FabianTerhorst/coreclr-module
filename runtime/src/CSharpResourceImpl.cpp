@@ -68,11 +68,12 @@ bool CSharpResourceImpl::Stop() {
 }
 
 CSharpResourceImpl::~CSharpResourceImpl() {
-    for (alt::Size i = 0, length = invokers->GetSize(); i < length; i++) {
+    //TODO: fix segmentation fault
+    /*for (alt::Size i = 0, length = invokers->GetSize(); i < length; i++) {
         auto invoker = (*invokers)[i];
         delete invoker;
-    }
-    delete invokers;
+    }*/
+    //delete[] invokers;
 }
 
 bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
