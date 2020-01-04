@@ -118,10 +118,11 @@ namespace AltV.Net.Host
                             Console.WriteLine(exception);
                         }
                     }
-                    
-                    dllPath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + assemblyName.Name + ".dll";
-                    
-                    
+
+                    dllPath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + assemblyName.Name +
+                              ".dll";
+
+
                     if (File.Exists(dllPath))
                     {
                         try
@@ -133,19 +134,20 @@ namespace AltV.Net.Host
                             Console.WriteLine(exception);
                         }
                     }
-                    
+
                     return null;
                 };
                 AssemblyLoadContext.Default.Resolving += resolving;
-                var task = Task.Run(async () => await CompileResource(resourcePath, GetPath(resourcePath, resourceMain)));
-                var result = task.GetAwaiter().GetResult();
+                var task = Task.Run(
+                    async () => await CompileResource(resourceName, GetPath(resourcePath, resourceMain)));
+                var (result, dllPath) = task.GetAwaiter().GetResult();
                 AssemblyLoadContext.Default.Resolving -= resolving;
                 if (!result)
                 {
                     Console.WriteLine($"Compilation of resource {resourceName} wasn't successfully.");
                 }
 
-                resourceDllPath = GetPath(resourcePath, resourceMain.Replace(".csproj", ".dll"));
+                resourceDllPath = dllPath;
             }
             else
             {
@@ -333,16 +335,31 @@ namespace AltV.Net.Host
             return new string[] { };
         }
 
-        public static async Task<bool> CompileResource(string resourcePath, string resourceProjPath)
+        public static async Task<(bool, string)> CompileResource(string resourceName, string resourceProjPath)
         {
             //TODO: need solution path as well for supporting solutions
+
+
             var manager = new AnalyzerManager();
             var analyzer = manager.GetProject(resourceProjPath);
+            analyzer.SetGlobalProperty("Configuration", "Release");
+            
+            var buildEnvironment = analyzer.EnvironmentFactory.GetBuildEnvironment().WithTargetsToBuild("publish");
+            var analyzerResults = analyzer.Build(buildEnvironment);
+            
             var workspace = analyzer.GetWorkspace();
+            
+            workspace.ClearSolution();
+            foreach (var analyzerResult in analyzerResults)
+            {
+                analyzerResult.AddToWorkspace(workspace);
+            }
+
             var solution = workspace.CurrentSolution;
             var dependencyGraph = solution.GetProjectDependencyGraph();
             var projectIds = dependencyGraph.GetTopologicallySortedProjects();
             var success = true;
+            string projectAssemblyDllPath = null;
             foreach (var projectId in projectIds)
             {
                 var proj = solution.GetProject(projectId);
@@ -351,15 +368,20 @@ namespace AltV.Net.Host
                     .GetCompilationAsync();
 
                 var result = c.WithOptions(proj.CompilationOptions).AddReferences(proj.MetadataReferences)
-                    .Emit(resourcePath + Path.DirectorySeparatorChar + proj.AssemblyName + ".dll");
+                    .Emit(proj.OutputFilePath);
                 Console.WriteLine($"Compiled {proj.AssemblyName}");
                 foreach (var diagnostic in result.Diagnostics)
                 {
                     Console.WriteLine(diagnostic.GetMessage());
                 }
+
                 if (!result.Success)
                 {
                     success = false;
+                }
+                else if (proj.Name.Equals(resourceName) || projectAssemblyDllPath == null)
+                {
+                    projectAssemblyDllPath = proj.OutputFilePath;
                 }
             }
 
@@ -376,7 +398,7 @@ namespace AltV.Net.Host
                 Console.WriteLine(result.Success);
             }*/
 
-            return success;
+            return (success, projectAssemblyDllPath);
         }
 
         private static readonly object TracingMutex = new object();
