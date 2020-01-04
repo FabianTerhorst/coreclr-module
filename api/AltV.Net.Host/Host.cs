@@ -8,10 +8,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using System.Threading;
 using System.Threading.Tasks;
-
-//using Buildalyzer;
-//using Buildalyzer.Workspaces;
-//using Microsoft.CodeAnalysis;
+using Buildalyzer;
+using Buildalyzer.Workspaces;
+using Microsoft.CodeAnalysis;
 
 namespace AltV.Net.Host
 {
@@ -100,8 +99,62 @@ namespace AltV.Net.Host
             var resourceName = Marshal.PtrToStringUTF8(libArgs.ResourceName);
             var resourceMain = Marshal.PtrToStringUTF8(libArgs.ResourceMain);
 
-            var resourceDllPath = GetPath(resourcePath, resourceMain);
-            var resourceAssemblyLoadContext = new ResourceAssemblyLoadContext(resourceDllPath, resourcePath, resourceName);
+            string resourceDllPath;
+
+            Console.WriteLine("Load:" + resourceMain);
+
+            if (resourceMain.EndsWith(".csproj"))
+            {
+                Func<AssemblyLoadContext, AssemblyName, Assembly> resolving = (context, assemblyName) =>
+                {
+                    var dllPath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "runtime" +
+                                  Path.DirectorySeparatorChar + assemblyName.Name + ".dll";
+                    if (File.Exists(dllPath))
+                    {
+                        try
+                        {
+                            return context.LoadFromAssemblyPath(dllPath);
+                        }
+                        catch (Exception exception)
+                        {
+                            Console.WriteLine(exception);
+                        }
+                    }
+                    
+                    dllPath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + assemblyName.Name + ".dll";
+                    
+                    
+                    if (File.Exists(dllPath))
+                    {
+                        try
+                        {
+                            return context.LoadFromAssemblyPath(dllPath);
+                        }
+                        catch (Exception exception)
+                        {
+                            Console.WriteLine(exception);
+                        }
+                    }
+                    
+                    return null;
+                };
+                AssemblyLoadContext.Default.Resolving += resolving;
+                var task = Task.Run(async () =>
+                {
+                    await CompileResource(resourcePath, GetPath(resourcePath, resourceMain));
+                });
+                task.GetAwaiter().GetResult();
+                AssemblyLoadContext.Default.Resolving -= resolving;
+
+                resourceDllPath = GetPath(resourcePath, resourceMain.Replace(".csproj", ".dll"));
+            }
+            else
+            {
+                resourceDllPath = GetPath(resourcePath, resourceMain);
+            }
+
+            var resourceAssemblyLoadContext =
+                new ResourceAssemblyLoadContext(resourceDllPath, resourcePath, resourceName);
 
             LoadContexts[resourceDllPath] = resourceAssemblyLoadContext;
 
@@ -113,12 +166,15 @@ namespace AltV.Net.Host
                 var newList = new HashSet<string>();
                 foreach (var referencedAssembly in resourceAssemblyLoadContext.SharedAssemblyNames)
                 {
-                    var refAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(GetPath(resourcePath, referencedAssembly + ".dll"));
+                    var refAssembly =
+                        AssemblyLoadContext.Default.LoadFromAssemblyPath(GetPath(resourcePath,
+                            referencedAssembly + ".dll"));
                     foreach (var referencedAssembly2 in refAssembly.GetReferencedAssemblies())
                     {
                         newList.Add(referencedAssembly2.Name);
                     }
                 }
+
                 resourceAssemblyLoadContext.SharedAssemblyNames.UnionWith(newList);
             }
             catch (FileLoadException e)
@@ -131,15 +187,18 @@ namespace AltV.Net.Host
             var isShared = resourceAssemblyLoadContext.SharedAssemblyNames.Contains("AltV.Net");
             foreach (var assembly in AssemblyLoadContext.Default.Assemblies)
             {
-                if(assembly.GetName().Name != "AltV.Net") continue;
+                if (assembly.GetName().Name != "AltV.Net") continue;
                 isDefaultLoaded = true;
                 break;
             }
+
             if (!isDefaultLoaded && isShared)
             {
-                var defaultAltVNetAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(GetPath(resourcePath, "AltV.Net.dll"));
+                var defaultAltVNetAssembly =
+                    AssemblyLoadContext.Default.LoadFromAssemblyPath(GetPath(resourcePath, "AltV.Net.dll"));
                 InitAltVAssembly(defaultAltVNetAssembly, libArgs, resourceAssemblyLoadContext, resourceName);
             }
+
             resourceAssemblyLoadContext.SharedAssemblyNames.Remove("AltV.Net");
             var altVNetAssembly = resourceAssemblyLoadContext.LoadFromAssemblyName(new AssemblyName("AltV.Net"));
             InitAltVAssembly(altVNetAssembly, libArgs, resourceAssemblyLoadContext, resourceName);
@@ -239,16 +298,18 @@ namespace AltV.Net.Host
             }
         }
 
-        private static IEnumerable<string> GetResourceSharedAssemblies(string resourceDllPath) {
-            try {
+        private static IEnumerable<string> GetResourceSharedAssemblies(string resourceDllPath)
+        {
+            try
+            {
                 using var stream = File.OpenRead(resourceDllPath);
                 using var peFile = new PEReader(stream);
                 var mdReader = peFile.GetMetadataReader();
                 foreach (var attrHandle in mdReader.GetAssemblyDefinition().GetCustomAttributes())
                 {
                     var attr = mdReader.GetCustomAttribute(attrHandle);
-                    var attrCtor = mdReader.GetMemberReference((MemberReferenceHandle)attr.Constructor);
-                    var attrType = mdReader.GetTypeReference((TypeReferenceHandle)attrCtor.Parent);
+                    var attrCtor = mdReader.GetMemberReference((MemberReferenceHandle) attr.Constructor);
+                    var attrType = mdReader.GetTypeReference((TypeReferenceHandle) attrCtor.Parent);
                     if (!mdReader.StringComparer.Equals(attrType.Name, "ResourceSharedAssembliesAttribute")) continue;
                     var valueReader = mdReader.GetBlobReader(attr.Value);
                     valueReader.Offset = 2;
@@ -261,6 +322,7 @@ namespace AltV.Net.Host
                         var sharedAssemblyName = valueReader.ReadUTF8(strLen);
                         sharedAssemblies[i] = sharedAssemblyName;
                     }
+
                     return sharedAssemblies;
                 }
             }
@@ -268,28 +330,49 @@ namespace AltV.Net.Host
             {
                 Console.WriteLine(ex);
             }
-            return new string[] {};
+
+            return new string[] { };
         }
 
-        /*public static async void CompileResource()
+        public static async Task CompileResource(string resourcePath, string resourceProjPath)
         {
-            var resourceProjPath = GetPath(resourcePath, resourceMain);
+            //TODO: need solution path as well for supporting solutions
             var manager = new AnalyzerManager();
             var analyzer = manager.GetProject(resourceProjPath);
             var workspace = analyzer.GetWorkspace();
             var solution = workspace.CurrentSolution;
-            //var dependencyGraph = solution.GetProjectDependencyGraph();
-            //GetTopologicallySortedProjects
-            foreach (var proj in solution.Projects)
+            var dependencyGraph = solution.GetProjectDependencyGraph();
+            var projectIds = dependencyGraph.GetTopologicallySortedProjects();
+            foreach (var projectId in projectIds)
             {
-                var c = await proj.GetCompilationAsync(); .WithOptions(proj.CompilationOptions)
-                    .AddReferences(proj.MetadataReferences);
+                var proj = solution.GetProject(projectId);
+                Console.WriteLine("start compile:" + proj.Name);
+                var c = await proj
+                    .GetCompilationAsync();
 
-                var result = c.Emit(proj.Name + ".dll");
-
+                var result = c.WithOptions(proj.CompilationOptions).AddReferences(proj.MetadataReferences)
+                    .Emit(resourcePath + Path.DirectorySeparatorChar + /*proj.Name + ".dll"*/proj.AssemblyName + ".dll");
+                Console.WriteLine(resourcePath + Path.DirectorySeparatorChar + /*proj.Name + ".dll"*/proj.AssemblyName + ".dll");
+                foreach (var diagnostic in result.Diagnostics)
+                {
+                    Console.WriteLine(diagnostic.GetMessage());
+                }
                 Console.WriteLine(result.Success);
             }
-        }*/
+
+            //var dependencyGraph = solution.GetProjectDependencyGraph();
+            //GetTopologicallySortedProjects
+            /*foreach (var proj in solution.Projects)
+            {
+                var c = await proj
+                    .GetCompilationAsync(); //.WithOptions(proj.CompilationOptions).AddReferences(proj.MetadataReferences);
+
+                var result = c.WithOptions(proj.CompilationOptions).AddReferences(proj.MetadataReferences)
+                    .Emit(resourcePath + Path.DirectorySeparatorChar + proj.Name + ".dll");
+
+                Console.WriteLine(result.Success);
+            }*/
+        }
 
         private static readonly object TracingMutex = new object();
 
