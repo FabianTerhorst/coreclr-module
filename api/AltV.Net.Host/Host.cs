@@ -101,8 +101,6 @@ namespace AltV.Net.Host
 
             string resourceDllPath;
 
-            Console.WriteLine("Load:" + resourceMain);
-
             if (resourceMain.EndsWith(".csproj"))
             {
                 Func<AssemblyLoadContext, AssemblyName, Assembly> resolving = (context, assemblyName) =>
