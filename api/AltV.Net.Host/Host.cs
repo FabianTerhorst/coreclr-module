@@ -139,12 +139,11 @@ namespace AltV.Net.Host
                 AssemblyLoadContext.Default.Resolving += resolving;
                 var task = Task.Run(async () => await CompileResource(resourcePath, GetPath(resourcePath, resourceMain)));
                 var result = task.GetAwaiter().GetResult();
+                AssemblyLoadContext.Default.Resolving -= resolving;
                 if (!result)
                 {
                     Console.WriteLine($"Compilation of resource {resourceName} wasn't successfully.");
-                    return 1;
                 }
-                AssemblyLoadContext.Default.Resolving -= resolving;
 
                 resourceDllPath = GetPath(resourcePath, resourceMain.Replace(".csproj", ".dll"));
             }
