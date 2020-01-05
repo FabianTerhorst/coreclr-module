@@ -31,9 +31,9 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
                 lock (this)
                 {
                     if (dimension == value) return;
-                    entityStreamer.UpdateClientDimension(this, value);
                     dimension = value;
                 }
+                entityStreamer.UpdateClientDimension(this, value);
             }
         }
 
