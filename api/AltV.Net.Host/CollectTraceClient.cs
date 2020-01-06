@@ -354,8 +354,8 @@ namespace AltV.Net.Host
 
                 await collectingTask;
 
-                if (format != TraceFileFormat.NetTrace)
-                    TraceFileFormatConverter.ConvertToFormat(format, output.FullName);
+                //if (format != TraceFileFormat.NetTrace)
+                //    TraceFileFormatConverter.ConvertToFormat(format, output.FullName);
 
                 return failed ? ErrorCodes.TracingError : 0;
             }

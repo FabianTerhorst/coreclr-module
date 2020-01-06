@@ -268,8 +268,8 @@ namespace AltV.Net.Host
                                 }
                             }
 
-                            if (format != TraceFileFormat.NetTrace)
-                                TraceFileFormatConverter.ConvertToFormat(format, output.FullName);
+                            //if (format != TraceFileFormat.NetTrace)
+                            //    TraceFileFormatConverter.ConvertToFormat(format, output.FullName);
                         }
                         catch (Exception ex)
                         {

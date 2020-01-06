@@ -1,11 +1,11 @@
-using System;
+/*using System;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Diagnostics.Symbols;
 using Microsoft.Diagnostics.Tracing;
 using Microsoft.Diagnostics.Tracing.Stacks;
 using Microsoft.Diagnostics.Tracing.Stacks.Formats;
-using TraceLog = Microsoft.Diagnostics.Tracing.Etlx.TraceLog;
+using TraceLog = Microsoft.Diagnostics.Tracing.Etlx.TraceLog;*/
 
 namespace AltV.Net.Host.Diagnostics.Tools
 {
@@ -15,7 +15,7 @@ namespace AltV.Net.Host.Diagnostics.Tools
         Speedscope
     };
 
-    internal static class TraceFileFormatConverter
+    /*internal static class TraceFileFormatConverter
     {
         private static Dictionary<TraceFileFormat, string> TraceFileFormatExtensions =
             new Dictionary<TraceFileFormat, string>()
@@ -70,5 +70,5 @@ namespace AltV.Net.Host.Diagnostics.Tools
                 File.Delete(etlxFilePath);
             }
         }
-    }
+    }*/
 }
