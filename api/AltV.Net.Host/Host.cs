@@ -9,9 +9,9 @@ using System.Runtime.Loader;
 using System.Threading;
 using System.Threading.Tasks;
 using AltV.Net.Host.Diagnostics.Tools;
-using Buildalyzer;
+/*using Buildalyzer;
 using Buildalyzer.Workspaces;
-using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis;*/
 
 namespace AltV.Net.Host
 {
@@ -102,7 +102,7 @@ namespace AltV.Net.Host
 
             string resourceDllPath;
 
-            if (resourceMain.EndsWith(".csproj"))
+            /*if (resourceMain.EndsWith(".csproj"))
             {
                 Func<AssemblyLoadContext, AssemblyName, Assembly> resolving = (context, assemblyName) =>
                 {
@@ -151,9 +151,9 @@ namespace AltV.Net.Host
                 resourceDllPath = dllPath;
             }
             else
-            {
+            {*/
                 resourceDllPath = GetPath(resourcePath, resourceMain);
-            }
+            //}
 
             var resourceAssemblyLoadContext =
                 new ResourceAssemblyLoadContext(resourceDllPath, resourcePath, resourceName);
@@ -336,7 +336,7 @@ namespace AltV.Net.Host
             return new string[] { };
         }
 
-        public static async Task<(bool, string)> CompileResource(string resourceName, string resourceProjPath)
+        /*public static async Task<(bool, string)> CompileResource(string resourceName, string resourceProjPath)
         {
             //TODO: need solution path as well for supporting solutions
 
@@ -386,21 +386,8 @@ namespace AltV.Net.Host
                 }
             }
 
-            //var dependencyGraph = solution.GetProjectDependencyGraph();
-            //GetTopologicallySortedProjects
-            /*foreach (var proj in solution.Projects)
-            {
-                var c = await proj
-                    .GetCompilationAsync(); //.WithOptions(proj.CompilationOptions).AddReferences(proj.MetadataReferences);
-
-                var result = c.WithOptions(proj.CompilationOptions).AddReferences(proj.MetadataReferences)
-                    .Emit(resourcePath + Path.DirectorySeparatorChar + proj.Name + ".dll");
-
-                Console.WriteLine(result.Success);
-            }*/
-
             return (success, projectAssemblyDllPath);
-        }
+        }*/
 
         private static readonly object TracingMutex = new object();
 
