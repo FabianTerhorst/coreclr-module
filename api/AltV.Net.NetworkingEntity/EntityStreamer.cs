@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using AltV.Net.NetworkingEntity.Elements.Entities;
 using Entity;
 using Google.Protobuf;
@@ -37,7 +38,7 @@ namespace AltV.Net.NetworkingEntity
             AltNetworking.Module.ClientPool.SendToAll(bytes);
         }
 
-        public void RemoveEntity(INetworkingEntity networkingEntity)
+        public async Task RemoveEntity(INetworkingEntity networkingEntity)
         {
             if (networkingEntity.StreamingType == StreamingType.EntityStreaming)
             {
@@ -47,7 +48,7 @@ namespace AltV.Net.NetworkingEntity
             var entityDeleteEvent = new EntityDeleteEvent {Id = networkingEntity.StreamedEntity.Id};
             var serverEvent = new ServerEvent {Delete = entityDeleteEvent};
             var bytes = serverEvent.ToByteArray();
-            AltNetworking.Module.ClientPool.SendToAll(bytes);
+            await AltNetworking.Module.ClientPool.SendToAllTask(bytes);
         }
 
         public void UpdateEntityData(INetworkingEntity entity, string key, MValue value)

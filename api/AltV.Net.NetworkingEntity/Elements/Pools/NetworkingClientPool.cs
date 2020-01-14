@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AltV.Net.NetworkingEntity.Elements.Entities;
 using AltV.Net.NetworkingEntity.Elements.Factories;
 using AltV.Net.NetworkingEntity.Elements.Providers;
+using net.vieapps.Components.WebSockets;
 
 namespace AltV.Net.NetworkingEntity.Elements.Pools
 {
@@ -110,6 +112,33 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
                         }
                     }
                 }
+            }
+        }
+
+        public async Task SendToAllTask(byte[] bytes)
+        {
+            ManagedWebSocket[] managedWebSockets;
+            lock (entities)
+            {
+                managedWebSockets = new ManagedWebSocket[entities.Count];
+                var i = 0;
+                foreach (var (_, value) in entities)
+                {
+                    lock (value)
+                    {
+                        if (!value.Exists) continue;
+                        var websocket = value.WebSocket;
+                        if (websocket != null)
+                        {
+                            managedWebSockets[i++] = websocket;
+                        }
+                    }
+                }
+            }
+
+            foreach (var webSocket in managedWebSockets)
+            {
+                await webSocket.SendAsync(bytes, true);
             }
         }
     }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AltV.Net.NetworkingEntity.Elements.Entities;
 
 namespace AltV.Net.NetworkingEntity.Elements.Pools
@@ -13,9 +14,9 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
 
         bool Add(INetworkingEntity entity);
 
-        void Remove(INetworkingEntity entity);
+        Task Remove(INetworkingEntity entity);
         
-        void Remove(ulong id);
+        Task Remove(ulong id);
 
         bool TryGet(ulong id, out INetworkingEntity entity);
     }
