@@ -117,11 +117,10 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
 
         public async Task SendToAllTask(byte[] bytes)
         {
-            ManagedWebSocket[] managedWebSockets;
+            LinkedList<ManagedWebSocket> managedWebSockets;
             lock (entities)
             {
-                managedWebSockets = new ManagedWebSocket[entities.Count];
-                var i = 0;
+                managedWebSockets = new LinkedList<ManagedWebSocket>();
                 foreach (var (_, value) in entities)
                 {
                     lock (value)
@@ -130,7 +129,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
                         var websocket = value.WebSocket;
                         if (websocket != null)
                         {
-                            managedWebSockets[i++] = websocket;
+                            managedWebSockets.AddLast(websocket);
                         }
                     }
                 }
