@@ -17,6 +17,11 @@ void CSharpScriptRuntime::DestroyImpl(alt::IResource::Impl* impl) {
 void CSharpScriptRuntime::OnTick() {
 }
 
+
+
 CSharpScriptRuntime::~CSharpScriptRuntime() {
+}
+
+void CSharpScriptRuntime::OnDispose() {
     delete this->coreClr;
 }

@@ -1,4 +1,8 @@
 {
+  "template": [
+    "default",
+    "templates/darkfx"
+  ],
   "metadata": [
     {
       "src": [
