@@ -110,6 +110,8 @@ namespace AltV.Net
 
         IEnumerable<IVehicle> GetVehicles();
 
+        IEntity GetEntityById(ushort id);
+
         void StartResource(string name);
 
         void StopResource(string name);

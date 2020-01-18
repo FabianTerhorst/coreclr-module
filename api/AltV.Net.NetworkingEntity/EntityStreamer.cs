@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Threading.Tasks;
 using AltV.Net.NetworkingEntity.Elements.Entities;
 using Entity;
@@ -102,6 +103,32 @@ namespace AltV.Net.NetworkingEntity
         {
             var clientDimensionChangeEvent = new ClientDimensionChangeEvent {Dimension = dimension};
             var serverEvent = new ServerEvent {ClientDimensionChange = clientDimensionChangeEvent};
+            var bytes = serverEvent.ToByteArray();
+            lock (networkingClient)
+            {
+                if (networkingClient.Exists)
+                {
+                    networkingClient.WebSocket?.SendAsync(bytes, true);
+                }
+            }
+        }
+
+        public void UpdateClientPositionOverride(INetworkingClient networkingClient, Vector3? position)
+        {
+            ServerEvent serverEvent;
+            if (position != null)
+            {
+                var clientPositionOverrideChangeEvent = new ClientPositionOverrideChangeEvent
+                    {PositionX = position.Value.X, PositionY = position.Value.Y, PositionZ = position.Value.Z};
+                serverEvent = new ServerEvent {ClientPositionOverrideChange = clientPositionOverrideChangeEvent};
+            }
+            else
+            {
+                var clientPositionStopOverrideChangeEvent = new ClientPositionStopOverrideChangeEvent();
+                serverEvent = new ServerEvent
+                    {ClientPositionStopOverrideChange = clientPositionStopOverrideChangeEvent};
+            }
+
             var bytes = serverEvent.ToByteArray();
             lock (networkingClient)
             {

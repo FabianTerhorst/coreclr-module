@@ -220,6 +220,18 @@ void Server_GetVehicles(alt::ICore* server, alt::IVehicle* vehicles[], uint64_t 
     }
 }
 
+void* Server_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type) {
+    auto entity = core->GetEntityByID(id);
+    type = (uint8_t) entity->GetType();
+    switch (entity->GetType()) {
+        case alt::IBaseObject::Type::PLAYER:
+            return dynamic_cast<alt::IPlayer*>(entity.Get());
+        case alt::IBaseObject::Type::VEHICLE:
+            return dynamic_cast<alt::IVehicle*>(entity.Get());
+    }
+    return nullptr;
+}
+
 void Server_StartResource(alt::ICore* server, const char* text) {
     server->StartResource(text);
 }

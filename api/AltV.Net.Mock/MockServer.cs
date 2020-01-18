@@ -323,6 +323,11 @@ namespace AltV.Net.Mock
             return new List<IVehicle>();
         }
 
+        public IEntity GetEntityById(ushort id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void StartResource(string name)
         {
             throw new NotImplementedException();

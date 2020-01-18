@@ -1,3 +1,4 @@
+using System.Numerics;
 using net.vieapps.Components.WebSockets;
 
 namespace AltV.Net.NetworkingEntity.Elements.Entities
@@ -6,6 +7,11 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
     {
         string Token { get; }
         
+        /// <summary>
+        /// Overrides the client position with the defined position, will reset when set to null 
+        /// </summary>
+        Vector3? PositionOverride { get; set; }
+
         bool Exists { get; }
 
         ClientDataSnapshot Snapshot { get; }

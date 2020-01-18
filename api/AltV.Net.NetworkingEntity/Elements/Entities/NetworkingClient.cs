@@ -1,3 +1,4 @@
+using System.Numerics;
 using net.vieapps.Components.WebSockets;
 
 namespace AltV.Net.NetworkingEntity.Elements.Entities
@@ -16,6 +17,8 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
         public ManagedWebSocket WebSocket { get; set; }
 
         private int dimension;
+
+        private Vector3? position;
 
         public int Dimension
         {
@@ -37,6 +40,26 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
             }
         }
 
+        public Vector3? PositionOverride
+        {
+            get
+            {
+                lock (this)
+                {
+                    return position;
+                }
+            }
+            set
+            {
+                lock (this)
+                {
+                    if (position == value) return;
+                    position = value;
+                }
+                entityStreamer.UpdateClientPositionOverride(this, value);
+            }
+        }
+
         public NetworkingClient(string token, IEntityStreamer entityStreamer)
         {
             Token = token;
@@ -52,6 +75,11 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
                 if (dimension != 0)
                 {
                     entityStreamer.UpdateClientDimension(this, dimension);
+                }
+
+                if (PositionOverride != null)
+                {
+                    entityStreamer.UpdateClientPositionOverride(this, PositionOverride);
                 }
             }
         }

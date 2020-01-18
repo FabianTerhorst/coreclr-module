@@ -238,6 +238,25 @@
             }
           }
         },
+        "ClientPositionOverrideChangeEvent": {
+          "fields": {
+            "positionX": {
+              "type": "float",
+              "id": 1
+            },
+            "positionY": {
+              "type": "float",
+              "id": 2
+            },
+            "positionZ": {
+              "type": "float",
+              "id": 3
+            }
+          }
+        },
+        "ClientPositionStopOverrideChangeEvent": {
+          "fields": {}
+        },
         "ServerEvent": {
           "oneofs": {
             "Event": {
@@ -250,7 +269,9 @@
                 "create",
                 "multipleDataChange",
                 "dimensionChange",
-                "clientDimensionChange"
+                "clientDimensionChange",
+                "clientPositionOverrideChange",
+                "clientPositionStopOverrideChange"
               ]
             }
           },
@@ -290,6 +311,14 @@
             "clientDimensionChange": {
               "type": "ClientDimensionChangeEvent",
               "id": 9
+            },
+            "clientPositionOverrideChange": {
+              "type": "ClientPositionOverrideChangeEvent",
+              "id": 10
+            },
+            "clientPositionStopOverrideChange": {
+              "type": "ClientPositionStopOverrideChangeEvent",
+              "id": 11
             }
           }
         },

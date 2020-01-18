@@ -437,6 +437,21 @@ namespace AltV.Net
             }
         }
 
+        public IEntity GetEntityById(ushort id)
+        {
+            var entityPointer = AltNative.Server.Server_GetEntityById(NativePointer, id, out var type);
+            if (entityPointer == IntPtr.Zero) return null;
+            switch (type)
+            {
+                case (byte) BaseObjectType.Player:
+                    return playerPool.GetOrCreate(entityPointer, out var player) ? player : null;
+                case (byte) BaseObjectType.Vehicle:
+                    return vehiclePool.GetOrCreate(entityPointer, out var vehicle) ? vehicle : null;
+                default:
+                    return null;
+            }
+        }
+
         public void StartResource(string name)
         {
             var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);

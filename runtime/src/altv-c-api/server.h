@@ -62,6 +62,7 @@ EXPORT uint64_t Server_GetPlayerCount(alt::ICore* server);
 EXPORT void Server_GetPlayers(alt::ICore* server, alt::IPlayer* players[], uint64_t size);
 EXPORT uint64_t Server_GetVehicleCount(alt::ICore* server);
 EXPORT void Server_GetVehicles(alt::ICore* server, alt::IVehicle* vehicles[], uint64_t size);
+EXPORT void* Server_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type);
 EXPORT void Server_StartResource(alt::ICore* server, const char* text);
 EXPORT void Server_StopResource(alt::ICore* server, const char* text);
 EXPORT void Server_RestartResource(alt::ICore* server, const char* text);

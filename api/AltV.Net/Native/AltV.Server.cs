@@ -119,6 +119,9 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_GetVehicles(IntPtr server, IntPtr[] vehicles, ulong size);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Server_GetEntityById(IntPtr server, ushort id, out byte type);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_StartResource(IntPtr server, IntPtr text);
