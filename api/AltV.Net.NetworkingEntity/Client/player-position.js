@@ -10,7 +10,13 @@ class PlayerPosition {
             if (this.update && this.overridePosition == null) {
                 this.update(this.position);
             }
-        })
+        });
+        alt.on("overridePlayerPosition", (x, y, z) => {
+          this.setOverridePosition({x: x, y: y, z: z});
+        });
+        alt.on("stopOverridePlayerPosition", () => {
+            this.setOverridePosition(null);
+        });
     }
 
     getPosition() {
