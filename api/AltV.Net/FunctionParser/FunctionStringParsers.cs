@@ -110,6 +110,31 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
+        public static object ParsePosition(string value, Type type, FunctionTypeInfo typeInfo)
+        {
+            return null;
+        }
+        
+        public static object ParseRotation(string value, Type type, FunctionTypeInfo typeInfo)
+        {
+            return null;
+        }
+        
+        public static object ParseVector3(string value, Type type, FunctionTypeInfo typeInfo)
+        {
+            return null;
+        }
+        
+        public static object ParseRgba(string value, Type type, FunctionTypeInfo typeInfo)
+        {
+            return null;
+        }
+        
+        public static object ParseByteArray(string value, Type type, FunctionTypeInfo typeInfo)
+        {
+            return null;
+        }
+
         public static object ParseEnum(string value, Type type, FunctionTypeInfo typeInfo)
         {
             return !Enum.TryParse(type, value, true, out var enumObject) ? null : enumObject;

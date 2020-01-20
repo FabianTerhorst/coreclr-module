@@ -85,7 +85,11 @@ namespace AltV.Net.CodeGen
             ["alt::MValue*[]"] = "IntPtr[]",
             ["alt::IPlayer*[]"] = "IntPtr[]",
             ["alt::IVehicle*[]"] = "IntPtr[]",
-            ["char[]"] = "IntPtr"
+            ["char[]"] = "IntPtr",
+            ["uint8_t&"] = "ref byte",
+            ["rgba_t"] = "Rgba",
+            ["void*"] = "IntPtr",
+            ["const void*"] = "IntPtr"
         };
 
         private static string TypeToCSharp(string cType, string name = null)

@@ -336,3 +336,28 @@ alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* val
     alt::MValueConst mValue = core->CreateMValueFunction(value);
     return new alt::MValueConst(mValue);
 }
+
+alt::MValueConst* Core_CreateMValueVector3(alt::ICore* core, position_t value) {
+    alt::Vector3f vector3F;
+    vector3F[0] = value.x;
+    vector3F[1] = value.y;
+    vector3F[2] = value.z;
+    alt::MValueConst mValue = core->CreateMValueVector3(vector3F);
+    return new alt::MValueConst(mValue);
+}
+
+alt::MValueConst* Core_CreateMValueByteArray(alt::ICore* core, uint64_t size, const void* data) {
+    auto byteArray = (const uint8_t*) data;
+    alt::MValueConst mValue = core->CreateMValueByteArray(byteArray, size);
+    return new alt::MValueConst(mValue);
+}
+
+alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value) {
+    alt::RGBA rgba;
+    rgba.r = value.r;
+    rgba.g = value.g;
+    rgba.b = value.b;
+    rgba.a = value.a;
+    alt::MValueConst mValue = core->CreateMValueRGBA(rgba);
+    return new alt::MValueConst(mValue);
+}

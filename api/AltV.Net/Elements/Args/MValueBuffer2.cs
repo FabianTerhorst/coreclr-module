@@ -1,4 +1,5 @@
 using System;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
@@ -56,7 +57,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.BOOL)
+            if (mValue.type != MValueConst.Type.Bool)
             {
                 value = default;
                 return false;
@@ -76,7 +77,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.INT)
+            if (mValue.type != MValueConst.Type.Int)
             {
                 value = default;
                 return false;
@@ -96,7 +97,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.UINT)
+            if (mValue.type != MValueConst.Type.Uint)
             {
                 value = default;
                 return false;
@@ -116,7 +117,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.INT)
+            if (mValue.type != MValueConst.Type.Int)
             {
                 value = default;
                 return false;
@@ -136,7 +137,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.UINT)
+            if (mValue.type != MValueConst.Type.Uint)
             {
                 value = default;
                 return false;
@@ -156,7 +157,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.DOUBLE)
+            if (mValue.type != MValueConst.Type.Double)
             {
                 value = default;
                 return false;
@@ -176,7 +177,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.DOUBLE)
+            if (mValue.type != MValueConst.Type.Double)
             {
                 value = default;
                 return false;
@@ -196,13 +197,75 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.STRING)
+            if (mValue.type != MValueConst.Type.String)
             {
                 value = default;
                 return false;
             }
 
             value = mValue.GetString();
+            return true;
+        }
+
+        public bool GetNext(out Position value)
+        {
+            if (size == 0)
+            {
+                value = default;
+                return false;
+            }
+
+            var mValue = values[position++];
+            size--;
+            if (mValue.type != MValueConst.Type.Vector3)
+            {
+                value = default;
+                return false;
+            }
+
+            value = Position.Zero;
+            mValue.GetVector3(ref value);
+            return true;
+        }
+
+        public bool GetNext(out Rgba value)
+        {
+            if (size == 0)
+            {
+                value = default;
+                return false;
+            }
+
+            var mValue = values[position++];
+            size--;
+            if (mValue.type != MValueConst.Type.Rgba)
+            {
+                value = default;
+                return false;
+            }
+
+            value = Rgba.Zero;
+            mValue.GetRgba(ref value);
+            return true;
+        }
+
+        public bool GetNext(out byte[] value)
+        {
+            if (size == 0)
+            {
+                value = default;
+                return false;
+            }
+
+            var mValue = values[position++];
+            size--;
+            if (mValue.type != MValueConst.Type.ByteArray)
+            {
+                value = default;
+                return false;
+            }
+
+            value = mValue.GetByteArray();
             return true;
         }
 
@@ -257,7 +320,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.LIST)
+            if (mValue.type != MValueConst.Type.List)
             {
                 valuesList = default;
                 return false;
@@ -297,7 +360,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.ENTITY)
+            if (mValue.type != MValueConst.Type.Entity)
             {
                 value = default;
                 return false;

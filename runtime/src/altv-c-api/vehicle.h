@@ -31,10 +31,16 @@ EXPORT int32_t Vehicle_GetDimension(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetDimension(alt::IVehicle* vehicle, int32_t dimension);
 EXPORT alt::MValueConst* Vehicle_GetMetaData(alt::IVehicle* vehicle, const char* key);
 EXPORT void Vehicle_SetMetaData(alt::IVehicle* vehicle, const char* key, alt::MValueConst* val);
+EXPORT bool Vehicle_HasMetaData(alt::IVehicle* vehicle, const char* key);
+EXPORT void Vehicle_DeleteMetaData(alt::IVehicle* vehicle, const char* key);
 EXPORT alt::MValueConst* Vehicle_GetSyncedMetaData(alt::IVehicle* vehicle, const char* key);
 EXPORT void Vehicle_SetSyncedMetaData(alt::IVehicle* vehicle, const char* key, alt::MValueConst* val);
+EXPORT bool Vehicle_HasSyncedMetaData(alt::IVehicle* vehicle, const char* key);
+EXPORT void Vehicle_DeleteSyncedMetaData(alt::IVehicle* vehicle, const char* key);
 EXPORT alt::MValueConst* Vehicle_GetStreamSyncedMetaData(alt::IVehicle* vehicle, const char* key);
 EXPORT void Vehicle_SetStreamSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MValueConst* val);
+EXPORT bool Vehicle_HasStreamSyncedMetaData(alt::IVehicle* vehicle, const char* key);
+EXPORT void Vehicle_DeleteStreamSyncedMetaData(alt::IVehicle* vehicle, const char* key);
 EXPORT void Vehicle_AddRef(alt::IVehicle* vehicle);
 EXPORT void Vehicle_RemoveRef(alt::IVehicle* vehicle);
 // Vehicle

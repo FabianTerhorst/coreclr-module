@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 
@@ -273,6 +275,31 @@ namespace AltV.Net.FunctionParser
         public static object ParseEnum(object value, Type type, FunctionTypeInfo typeInfo)
         {
             return !Enum.TryParse(type, value.ToString(), true, out var enumObject) ? null : enumObject;
+        }
+        
+        public static object ParsePosition(object value, Type type, FunctionTypeInfo typeInfo)
+        {
+            return value is Position position ? position : default;
+        }
+        
+        public static object ParseRotation(object value, Type type, FunctionTypeInfo typeInfo)
+        {
+            return value is Position position ? (Rotation) position : default;
+        }
+        
+        public static object ParseVector3(object value, Type type, FunctionTypeInfo typeInfo)
+        {
+            return value is Position position ? (Vector3) position : default;
+        }
+        
+        public static object ParseRgba(object value, Type type, FunctionTypeInfo typeInfo)
+        {
+            return value is Rgba rgba ? rgba : default;
+        }
+        
+        public static object ParseByteArray(object value, Type type, FunctionTypeInfo typeInfo)
+        {
+            return value is byte[] bytes ? bytes : default;
         }
     }
 

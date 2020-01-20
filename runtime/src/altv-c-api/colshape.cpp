@@ -34,6 +34,14 @@ void ColShape_SetMetaData(alt::IColShape* colShape, const char* key, alt::MValue
     colShape->SetMetaData(key, val->Get()->Clone());
 }
 
+bool ColShape_HasMetaData(alt::IColShape* colShape, const char* key) {
+    return colShape->HasMetaData(key);
+}
+
+void ColShape_DeleteMetaData(alt::IColShape* colShape, const char* key) {
+    colShape->DeleteMetaData(key);
+}
+
 void ColShape_AddRef(alt::IColShape* colShape) {
     colShape->AddRef();
 }

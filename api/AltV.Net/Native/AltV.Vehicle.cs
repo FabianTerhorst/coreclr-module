@@ -45,16 +45,34 @@ namespace AltV.Net.Native
             internal static extern void Vehicle_SetMetaData(IntPtr vehicle, IntPtr key, IntPtr val);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_HasMetaData(IntPtr vehicle, IntPtr key);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_DeleteMetaData(IntPtr vehicle, IntPtr key);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr Vehicle_GetSyncedMetaData(IntPtr vehicle, IntPtr key);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_SetSyncedMetaData(IntPtr vehicle, IntPtr key, IntPtr val);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_HasSyncedMetaData(IntPtr vehicle, IntPtr key);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_DeleteSyncedMetaData(IntPtr vehicle, IntPtr key);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr Vehicle_GetStreamSyncedMetaData(IntPtr vehicle, IntPtr key);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_SetStreamSyncedMetaData(IntPtr entity, IntPtr key, IntPtr val);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_HasStreamSyncedMetaData(IntPtr vehicle, IntPtr key);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_DeleteStreamSyncedMetaData(IntPtr vehicle, IntPtr key);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_AddRef(IntPtr vehicle);

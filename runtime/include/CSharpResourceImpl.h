@@ -30,6 +30,7 @@
 
 #include "CoreClr.h"
 #include "../src/altv-c-api/position.h"
+#include "../src/altv-c-api/rgba.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop

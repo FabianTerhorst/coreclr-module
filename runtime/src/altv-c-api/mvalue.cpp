@@ -172,6 +172,49 @@ alt::MValueConst* MValueConst_CallFunction(alt::ICore* core, alt::MValueConst* m
     return nullptr;
 }
 
+void MValueConst_GetVector3(alt::MValueConst* mValueConst, position_t& position) {
+    auto mValue = mValueConst->Get();
+    if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::VECTOR3) {
+        auto vector = dynamic_cast<const alt::IMValueVector3*>(mValue)->Value();
+        position.x = vector[0];
+        position.y = vector[1];
+        position.z = vector[2];
+    }
+}
+
+void MValueConst_GetRGBA(alt::MValueConst* mValueConst, rgba_t& rgba) {
+    auto mValue = mValueConst->Get();
+    if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::RGBA) {
+        auto rgbaValue = dynamic_cast<const alt::IMValueRGBA*>(mValue)->Value();
+        rgba.r = rgbaValue.r;
+        rgba.g = rgbaValue.g;
+        rgba.b = rgbaValue.b;
+        rgba.a = rgbaValue.a;
+    }
+}
+
+void MValueConst_GetByteArray(alt::MValueConst* mValueConst, uint64_t size, void* data) {
+    auto mValue = mValueConst->Get();
+    if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::RGBA) {
+        auto byteArrayMValue = dynamic_cast<const alt::IMValueByteArray*>(mValue);
+        auto byteArraySize = byteArrayMValue->GetSize();
+        if (byteArraySize < size) {
+            size = byteArraySize;
+        }
+        auto byteArray = byteArrayMValue->GetData();
+        memcpy(data, byteArray, size);
+    }
+}
+
+uint64_t MValueConst_GetByteArraySize(alt::MValueConst* mValueConst) {
+    auto mValue = mValueConst->Get();
+    if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::BYTE_ARRAY) {
+        return dynamic_cast<const alt::IMValueByteArray*>(mValue)->GetSize();
+    }
+    return 0;
+}
+
+
 /*void MValue_Dispose(alt::MValue* mValue) {
     mValue->Free();
 }*/

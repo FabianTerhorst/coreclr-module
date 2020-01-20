@@ -35,7 +35,9 @@ namespace AltV.Net.Elements.Entities
 
         public abstract void SetMetaData(string key, in MValueConst value);
         public abstract void GetMetaData(string key, out MValueConst value);
-        
+        public abstract bool HasMetaData(string key);
+        public abstract void DeleteMetaData(string key);
+
         protected abstract void InternalAddRef();
         protected abstract void InternalRemoveRef();
 
@@ -65,7 +67,7 @@ namespace AltV.Net.Elements.Entities
             GetMetaData(key, out MValueConst mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.INT)
+                if (mValue.type != MValueConst.Type.Int)
                 {
                     result = default;
                     return false;
@@ -83,7 +85,7 @@ namespace AltV.Net.Elements.Entities
             GetMetaData(key, out MValueConst mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.UINT)
+                if (mValue.type != MValueConst.Type.Uint)
                 {
                     result = default;
                     return false;
@@ -101,7 +103,7 @@ namespace AltV.Net.Elements.Entities
             GetMetaData(key, out MValueConst mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.DOUBLE)
+                if (mValue.type != MValueConst.Type.Double)
                 {
                     result = default;
                     return false;
@@ -154,6 +156,16 @@ namespace AltV.Net.Elements.Entities
             return true;
         }
 
+        public bool HasData(string key)
+        {
+            return data.ContainsKey(key);
+        }
+
+        public void DeleteData(string key)
+        {
+            data.TryRemove(key, out _);
+        }
+
         public void ClearData()
         {
             data.Clear();
@@ -166,7 +178,7 @@ namespace AltV.Net.Elements.Entities
             {
                 return;
             }
-            
+
             throw new BaseObjectRemovedException(this);
         }
 
@@ -205,6 +217,7 @@ namespace AltV.Net.Elements.Entities
                 if (!Exists) return false;
                 ++refCount;
             }
+
             InternalAddRef();
             return true;
         }
@@ -219,6 +232,7 @@ namespace AltV.Net.Elements.Entities
                 if (refCount == 0) return false;
                 --refCount;
             }
+
             InternalRemoveRef();
             return true;
         }

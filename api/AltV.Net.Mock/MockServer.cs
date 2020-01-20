@@ -323,6 +323,21 @@ namespace AltV.Net.Mock
             return new List<IVehicle>();
         }
 
+        public void CreateMValueVector3(out MValueConst mValue, Position value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValueRgba(out MValueConst mValue, Rgba value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValueByteArray(out MValueConst mValue, byte[] value)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEntity GetEntityById(ushort id)
         {
             throw new NotImplementedException();

@@ -97,7 +97,7 @@ namespace AltV.Net
             var ptr = AltNative.StringUtils.StringToHGlobalUtf8(key);
             mValue = new MValueConst(AltNative.Resource.Resource_GetExport(NativePointer, ptr));
             Marshal.FreeHGlobal(ptr);
-            return mValue.type != MValueConst.Type.NIL;
+            return mValue.type != MValueConst.Type.Nil;
         }
 
         public void Start()

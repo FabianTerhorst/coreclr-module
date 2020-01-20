@@ -18,7 +18,47 @@ namespace AltV.Net.ColShape.Tests
         public Position EntityAimOffset { get; }
         public bool IsFlashlightActive { get; }
         public string Ip { get; }
-        
+
+        public bool HasData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasSyncedMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteSyncedMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasStreamSyncedMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteStreamSyncedMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
         public void AddWeaponComponent(uint weapon, uint weaponComponent)
         {
             throw new NotImplementedException();

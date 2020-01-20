@@ -156,6 +156,12 @@ namespace AltV.Net
 
 
         void CreateMValueFunction(out MValueConst mValue, IntPtr value);
+        
+        void CreateMValueVector3(out MValueConst mValue, Position value);
+        
+        void CreateMValueRgba(out MValueConst mValue, Rgba value);
+        
+        void CreateMValueByteArray(out MValueConst mValue, byte[] value);
 
         void CreateMValue(out MValueConst mValue, object obj);
 

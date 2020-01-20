@@ -18,6 +18,16 @@ namespace AltV.Net.Data
                 Z = rotation.Yaw
             };
         }
+        
+        public static implicit operator Position(Rotation rotation)
+        {
+            return new Position
+            {
+                X = rotation.Roll,
+                Y = rotation.Pitch,
+                Z = rotation.Yaw
+            };
+        }
 
         public static implicit operator Rotation(Vector3 vector3)
         {

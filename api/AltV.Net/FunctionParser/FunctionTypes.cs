@@ -1,4 +1,6 @@
 using System;
+using System.Numerics;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.FunctionParser
@@ -18,7 +20,7 @@ namespace AltV.Net.FunctionParser
         public static readonly Type ULong = typeof(ulong);
 
         public static readonly Type Float = typeof(float);
-        
+
         public static readonly Type Double = typeof(double);
 
         public static readonly Type String = typeof(string);
@@ -26,7 +28,7 @@ namespace AltV.Net.FunctionParser
         public static readonly Type Player = typeof(IPlayer);
 
         public static readonly Type Vehicle = typeof(IVehicle);
-        
+
         public static readonly Type ColShape = typeof(IColShape);
 
         public static readonly Type Checkpoint = typeof(ICheckpoint);
@@ -39,8 +41,18 @@ namespace AltV.Net.FunctionParser
 
         public static readonly Type Obj = typeof(object);
 
-        public static readonly Type FunctionType = typeof(Function.Func);
+        public static readonly Type Position = typeof(Position);
         
+        public static readonly Type Rotation = typeof(Rotation);
+        
+        public static readonly Type Rgba = typeof(Rgba);
+        
+        public static readonly Type Vector3 = typeof(Vector3);
+
+        public static readonly Type ByteArray = typeof(byte[]);
+
+        public static readonly Type FunctionType = typeof(Function.Func);
+
         public static readonly Type MValueConvertible = typeof(IMValueConvertible);
     }
 }

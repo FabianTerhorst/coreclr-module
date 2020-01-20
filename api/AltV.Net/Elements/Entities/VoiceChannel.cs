@@ -78,6 +78,21 @@ namespace AltV.Net.Elements.Entities
             AltNative.VoiceChannel.VoiceChannel_SetMetaData(NativePointer, stringPtr, value.nativePointer);
             Marshal.FreeHGlobal(stringPtr);
         }
+        
+        public override bool HasMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            var result = AltNative.VoiceChannel.VoiceChannel_HasMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+            return result;
+        }
+
+        public override void DeleteMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.VoiceChannel.VoiceChannel_DeleteMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+        }
 
         public void Remove()
         {

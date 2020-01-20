@@ -72,6 +72,14 @@ namespace AltV.Net.Elements.Entities
         void SetStreamSyncedMetaData(string key, in MValueConst value);
 
         void GetStreamSyncedMetaData(string key, out MValueConst value);
+        
+        bool HasSyncedMetaData(string key);
+        
+        void DeleteSyncedMetaData(string key);
+        
+        bool HasStreamSyncedMetaData(string key);
+        
+        void DeleteStreamSyncedMetaData(string key);
     }
 
     public static class EntityExtensions
@@ -82,7 +90,7 @@ namespace AltV.Net.Elements.Entities
             entity.GetSyncedMetaData(key, out var mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.INT)
+                if (mValue.type != MValueConst.Type.Int)
                 {
                     result = default;
                     return false;
@@ -100,7 +108,7 @@ namespace AltV.Net.Elements.Entities
             entity.GetSyncedMetaData(key, out var mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.UINT)
+                if (mValue.type != MValueConst.Type.Uint)
                 {
                     result = default;
                     return false;
@@ -118,7 +126,7 @@ namespace AltV.Net.Elements.Entities
             entity.GetSyncedMetaData(key, out var mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.DOUBLE)
+                if (mValue.type != MValueConst.Type.Double)
                 {
                     result = default;
                     return false;
@@ -136,7 +144,7 @@ namespace AltV.Net.Elements.Entities
             entity.GetStreamSyncedMetaData(key, out var mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.INT)
+                if (mValue.type != MValueConst.Type.Int)
                 {
                     result = default;
                     return false;
@@ -154,7 +162,7 @@ namespace AltV.Net.Elements.Entities
             entity.GetStreamSyncedMetaData(key, out var mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.UINT)
+                if (mValue.type != MValueConst.Type.Uint)
                 {
                     result = default;
                     return false;
@@ -172,7 +180,7 @@ namespace AltV.Net.Elements.Entities
             entity.GetStreamSyncedMetaData(key, out var mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.DOUBLE)
+                if (mValue.type != MValueConst.Type.Double)
                 {
                     result = default;
                     return false;

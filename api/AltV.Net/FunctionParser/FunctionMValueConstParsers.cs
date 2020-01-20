@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices;
+using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
@@ -40,7 +42,7 @@ namespace AltV.Net.FunctionParser
                 for (var i = 0; i < length; i++)
                 {
                     var currMValue = mValues[i];
-                    if (currMValue.type == MValueConst.Type.BOOL)
+                    if (currMValue.type == MValueConst.Type.Bool)
                     {
                         array[i] = currMValue.GetBool();
                     }
@@ -61,7 +63,7 @@ namespace AltV.Net.FunctionParser
                 for (var i = 0; i < length; i++)
                 {
                     var currMValue = mValues[i];
-                    if (currMValue.type == MValueConst.Type.INT)
+                    if (currMValue.type == MValueConst.Type.Int)
                     {
                         array[i] = (int) currMValue.GetInt();
                     }
@@ -80,7 +82,7 @@ namespace AltV.Net.FunctionParser
                 for (var i = 0; i < length; i++)
                 {
                     var currMValue = mValues[i];
-                    if (currMValue.type == MValueConst.Type.INT)
+                    if (currMValue.type == MValueConst.Type.Int)
                     {
                         array[i] = currMValue.GetInt();
                     }
@@ -99,7 +101,7 @@ namespace AltV.Net.FunctionParser
                 for (var i = 0; i < length; i++)
                 {
                     var currMValue = mValues[i];
-                    if (currMValue.type == MValueConst.Type.UINT)
+                    if (currMValue.type == MValueConst.Type.Uint)
                     {
                         array[i] = (uint) currMValue.GetUint();
                     }
@@ -118,7 +120,7 @@ namespace AltV.Net.FunctionParser
                 for (var i = 0; i < length; i++)
                 {
                     var currMValue = mValues[i];
-                    if (currMValue.type == MValueConst.Type.UINT)
+                    if (currMValue.type == MValueConst.Type.Uint)
                     {
                         array[i] = currMValue.GetUint();
                     }
@@ -137,7 +139,7 @@ namespace AltV.Net.FunctionParser
                 for (var i = 0; i < length; i++)
                 {
                     var currMValue = mValues[i];
-                    if (currMValue.type == MValueConst.Type.DOUBLE)
+                    if (currMValue.type == MValueConst.Type.Double)
                     {
                         array[i] = currMValue.GetDouble();
                     }
@@ -156,7 +158,7 @@ namespace AltV.Net.FunctionParser
                 for (var i = 0; i < length; i++)
                 {
                     var currMValue = mValues[i];
-                    if (currMValue.type == MValueConst.Type.STRING)
+                    if (currMValue.type == MValueConst.Type.String)
                     {
                         array[i] = currMValue.GetString();
                     }
@@ -191,7 +193,7 @@ namespace AltV.Net.FunctionParser
         public static object ParseBool(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            if (mValue.type == MValueConst.Type.BOOL)
+            if (mValue.type == MValueConst.Type.Bool)
             {
                 return mValue.GetBool();
             }
@@ -203,7 +205,7 @@ namespace AltV.Net.FunctionParser
         public static object ParseInt(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            if (mValue.type == MValueConst.Type.INT)
+            if (mValue.type == MValueConst.Type.Int)
             {
                 return (int) mValue.GetInt();
             }
@@ -215,7 +217,7 @@ namespace AltV.Net.FunctionParser
         public static object ParseLong(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            if (mValue.type == MValueConst.Type.INT)
+            if (mValue.type == MValueConst.Type.Int)
             {
                 return mValue.GetInt();
             }
@@ -227,7 +229,7 @@ namespace AltV.Net.FunctionParser
         public static object ParseUInt(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            if (mValue.type == MValueConst.Type.UINT)
+            if (mValue.type == MValueConst.Type.Uint)
             {
                 return (uint) mValue.GetUint();
             }
@@ -239,7 +241,7 @@ namespace AltV.Net.FunctionParser
         public static object ParseULong(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            if (mValue.type == MValueConst.Type.UINT)
+            if (mValue.type == MValueConst.Type.Uint)
             {
                 return mValue.GetUint();
             }
@@ -251,7 +253,7 @@ namespace AltV.Net.FunctionParser
         public static object ParseFloat(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            if (mValue.type == MValueConst.Type.DOUBLE)
+            if (mValue.type == MValueConst.Type.Double)
             {
                 return (float) mValue.GetDouble();
             }
@@ -263,7 +265,7 @@ namespace AltV.Net.FunctionParser
         public static object ParseDouble(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            if (mValue.type == MValueConst.Type.DOUBLE)
+            if (mValue.type == MValueConst.Type.Double)
             {
                 return mValue.GetDouble();
             }
@@ -275,7 +277,7 @@ namespace AltV.Net.FunctionParser
         public static object ParseString(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            return mValue.type != MValueConst.Type.STRING ? null : mValue.GetString();
+            return mValue.type != MValueConst.Type.String ? null : mValue.GetString();
         }
 
         public static object ParseObject(in MValueConst mValue, Type type,
@@ -285,25 +287,25 @@ namespace AltV.Net.FunctionParser
             object obj;
             switch (mValue.type)
             {
-                case MValueConst.Type.NIL:
+                case MValueConst.Type.Nil:
                     return null;
-                case MValueConst.Type.BOOL:
+                case MValueConst.Type.Bool:
                     return ParseBool(in mValue, type, typeInfo);
-                case MValueConst.Type.INT:
+                case MValueConst.Type.Int:
                     return type == FunctionTypes.Int
                         ? ParseInt(in mValue, type, typeInfo)
                         : ParseLong(in mValue, type, typeInfo);
-                case MValueConst.Type.UINT:
+                case MValueConst.Type.Uint:
                     return type == FunctionTypes.UInt
                         ? ParseUInt(in mValue, type, typeInfo)
                         : ParseULong(in mValue, type, typeInfo);
-                case MValueConst.Type.DOUBLE:
+                case MValueConst.Type.Double:
                     return type == FunctionTypes.Float
                         ? ParseFloat(in mValue, type, typeInfo)
                         : ParseDouble(in mValue, type, typeInfo);
-                case MValueConst.Type.STRING:
+                case MValueConst.Type.String:
                     return ParseString(in mValue, type, typeInfo);
-                case MValueConst.Type.LIST:
+                case MValueConst.Type.List:
                     if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
                         MValueAdapters.FromMValue(in mValue, type, out obj))
                     {
@@ -311,9 +313,9 @@ namespace AltV.Net.FunctionParser
                     }
 
                     return ParseArray(in mValue, type, typeInfo);
-                case MValueConst.Type.ENTITY:
+                case MValueConst.Type.Entity:
                     return ParseEntity(in mValue, type, typeInfo);
-                case MValueConst.Type.DICT:
+                case MValueConst.Type.Dict:
                     if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
                         MValueAdapters.FromMValue(in mValue, type, out obj))
                     {
@@ -321,7 +323,7 @@ namespace AltV.Net.FunctionParser
                     }
 
                     return ParseDictionary(in mValue, type, typeInfo);
-                case MValueConst.Type.FUNCTION:
+                case MValueConst.Type.Function:
                     return ParseFunction(in mValue, type, typeInfo);
                 default:
                     return null;
@@ -333,10 +335,10 @@ namespace AltV.Net.FunctionParser
         {
             switch (mValue.type)
             {
-                case MValueConst.Type.NIL:
+                case MValueConst.Type.Nil:
                     obj = GetDefault(type, typeInfo);
                     return true;
-                case MValueConst.Type.BOOL:
+                case MValueConst.Type.Bool:
                     if (type == FunctionTypes.Obj || type == FunctionTypes.Bool)
                     {
                         obj = mValue.GetBool();
@@ -348,7 +350,7 @@ namespace AltV.Net.FunctionParser
                         return false;
                     }
 
-                case MValueConst.Type.INT:
+                case MValueConst.Type.Int:
                     if (type == FunctionTypes.Int)
                     {
                         obj = (int) mValue.GetInt();
@@ -365,7 +367,7 @@ namespace AltV.Net.FunctionParser
                         return false;
                     }
 
-                case MValueConst.Type.UINT:
+                case MValueConst.Type.Uint:
                     if (type == FunctionTypes.UInt)
                     {
                         obj = (uint) mValue.GetUint();
@@ -382,7 +384,7 @@ namespace AltV.Net.FunctionParser
                         return false;
                     }
 
-                case MValueConst.Type.DOUBLE:
+                case MValueConst.Type.Double:
                     if (type == FunctionTypes.Float)
                     {
                         obj = (float) mValue.GetDouble();
@@ -399,7 +401,7 @@ namespace AltV.Net.FunctionParser
                         return false;
                     }
 
-                case MValueConst.Type.STRING:
+                case MValueConst.Type.String:
                     if (type == FunctionTypes.Obj || type == FunctionTypes.String)
                     {
                         obj = mValue.GetString();
@@ -408,7 +410,7 @@ namespace AltV.Net.FunctionParser
 
                     obj = GetDefault(type, typeInfo);
                     return false;
-                case MValueConst.Type.LIST:
+                case MValueConst.Type.List:
                     if (type == FunctionTypes.Obj || (typeInfo?.IsList ?? type.BaseType == FunctionTypes.Array))
                     {
                         if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
@@ -423,7 +425,7 @@ namespace AltV.Net.FunctionParser
 
                     obj = GetDefault(type, typeInfo);
                     return false;
-                case MValueConst.Type.ENTITY:
+                case MValueConst.Type.Entity:
                     if (type == FunctionTypes.Obj ||
                         (typeInfo?.IsEntity ?? type.GetInterfaces().Contains(FunctionTypes.Entity)))
                     {
@@ -436,7 +438,7 @@ namespace AltV.Net.FunctionParser
                         return false;
                     }
 
-                case MValueConst.Type.DICT:
+                case MValueConst.Type.Dict:
                     if (type == FunctionTypes.Obj || (typeInfo?.IsDict ?? type.Name.StartsWith("Dictionary")))
                     {
                         if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
@@ -451,7 +453,7 @@ namespace AltV.Net.FunctionParser
 
                     obj = GetDefault(type, typeInfo);
                     return false;
-                case MValueConst.Type.FUNCTION:
+                case MValueConst.Type.Function:
                     //TODO: validate type somehow
                     obj = ParseFunction(in mValue, type, typeInfo);
                     return true;
@@ -465,7 +467,7 @@ namespace AltV.Net.FunctionParser
             FunctionTypeInfo typeInfo)
         {
             // Types doesn't match
-            if (mValue.type != MValueConst.Type.LIST) return null;
+            if (mValue.type != MValueConst.Type.List) return null;
             var mValueList = mValue.GetList();
             var elementType = typeInfo?.ElementType ?? (
                                   type.GetElementType() ??
@@ -483,7 +485,7 @@ namespace AltV.Net.FunctionParser
             FunctionTypeInfo typeInfo)
         {
             // Types doesn't match
-            if (mValue.type != MValueConst.Type.ENTITY) return null;
+            if (mValue.type != MValueConst.Type.Entity) return null;
             var entityType = BaseObjectType.Undefined;
 
             var entityPointer = mValue.GetEntityPointer(ref entityType);
@@ -506,7 +508,7 @@ namespace AltV.Net.FunctionParser
             FunctionTypeInfo typeInfo)
         {
             // Types doesn't match
-            if (mValue.type != MValueConst.Type.DICT) return null;
+            if (mValue.type != MValueConst.Type.Dict) return null;
             var args = typeInfo?.GenericArguments ?? type.GetGenericArguments();
             if (args.Length != 2) return null;
             var keyType = args[0];
@@ -560,7 +562,7 @@ namespace AltV.Net.FunctionParser
                 for (ulong i = 0; i < length; i++)
                 {
                     currMValue = valueArray[i];
-                    if (currMValue.type == MValueConst.Type.BOOL)
+                    if (currMValue.type == MValueConst.Type.Bool)
                     {
                         dict[strings[i]] = currMValue.GetBool();
                     }
@@ -579,7 +581,7 @@ namespace AltV.Net.FunctionParser
                 for (ulong i = 0; i < length; i++)
                 {
                     currMValue = valueArray[i];
-                    if (currMValue.type == MValueConst.Type.INT)
+                    if (currMValue.type == MValueConst.Type.Int)
                     {
                         dict[strings[i]] = (int) currMValue.GetInt();
                     }
@@ -598,7 +600,7 @@ namespace AltV.Net.FunctionParser
                 for (ulong i = 0; i < length; i++)
                 {
                     currMValue = valueArray[i];
-                    if (currMValue.type == MValueConst.Type.INT)
+                    if (currMValue.type == MValueConst.Type.Int)
                     {
                         dict[strings[i]] = currMValue.GetInt();
                     }
@@ -617,7 +619,7 @@ namespace AltV.Net.FunctionParser
                 for (ulong i = 0; i < length; i++)
                 {
                     currMValue = valueArray[i];
-                    if (currMValue.type == MValueConst.Type.UINT)
+                    if (currMValue.type == MValueConst.Type.Uint)
                     {
                         dict[strings[i]] = (uint) currMValue.GetUint();
                     }
@@ -636,7 +638,7 @@ namespace AltV.Net.FunctionParser
                 for (ulong i = 0; i < length; i++)
                 {
                     currMValue = valueArray[i];
-                    if (currMValue.type == MValueConst.Type.UINT)
+                    if (currMValue.type == MValueConst.Type.Uint)
                     {
                         dict[strings[i]] = currMValue.GetUint();
                     }
@@ -655,7 +657,7 @@ namespace AltV.Net.FunctionParser
                 for (ulong i = 0; i < length; i++)
                 {
                     currMValue = valueArray[i];
-                    if (currMValue.type == MValueConst.Type.DOUBLE)
+                    if (currMValue.type == MValueConst.Type.Double)
                     {
                         dict[strings[i]] = (float) currMValue.GetDouble();
                     }
@@ -674,7 +676,7 @@ namespace AltV.Net.FunctionParser
                 for (ulong i = 0; i < length; i++)
                 {
                     currMValue = valueArray[i];
-                    if (currMValue.type == MValueConst.Type.DOUBLE)
+                    if (currMValue.type == MValueConst.Type.Double)
                     {
                         dict[strings[i]] = (float) currMValue.GetDouble();
                     }
@@ -693,7 +695,7 @@ namespace AltV.Net.FunctionParser
                 for (ulong i = 0; i < length; i++)
                 {
                     currMValue = valueArray[i];
-                    if (currMValue.type == MValueConst.Type.DOUBLE)
+                    if (currMValue.type == MValueConst.Type.Double)
                     {
                         dict[strings[i]] = currMValue.GetDouble();
                     }
@@ -712,7 +714,7 @@ namespace AltV.Net.FunctionParser
                 for (ulong i = 0; i < length; i++)
                 {
                     currMValue = valueArray[i];
-                    if (currMValue.type == MValueConst.Type.STRING)
+                    if (currMValue.type == MValueConst.Type.String)
                     {
                         dict[strings[i]] = currMValue.GetString();
                     }
@@ -756,9 +758,69 @@ namespace AltV.Net.FunctionParser
         public static object ParseFunction(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            if (mValue.type == MValueConst.Type.FUNCTION)
+            if (mValue.type == MValueConst.Type.Function)
             {
                 return (Function.Func) new MValueConstFunctionWrapper(mValue.nativePointer).Call;
+            }
+
+            // Types doesn't match
+            return null;
+        }
+        
+        public static object ParsePosition(in MValueConst mValue, Type type,
+            FunctionTypeInfo typeInfo)
+        {
+            if (mValue.type == MValueConst.Type.Vector3)
+            {
+                return mValue.GetVector3();
+            }
+
+            // Types doesn't match
+            return null;
+        }
+        
+        public static object ParseRotation(in MValueConst mValue, Type type,
+            FunctionTypeInfo typeInfo)
+        {
+            if (mValue.type == MValueConst.Type.Vector3)
+            {
+                return (Rotation) mValue.GetVector3();
+            }
+
+            // Types doesn't match
+            return null;
+        }
+        
+        public static object ParseVector3(in MValueConst mValue, Type type,
+            FunctionTypeInfo typeInfo)
+        {
+            if (mValue.type == MValueConst.Type.Vector3)
+            {
+                return (Vector3) mValue.GetVector3();
+            }
+
+            // Types doesn't match
+            return null;
+        }
+        
+        public static object ParseRgba(in MValueConst mValue, Type type,
+            FunctionTypeInfo typeInfo)
+        {
+            if (mValue.type == MValueConst.Type.Rgba)
+            {
+                return mValue.GetRgba();
+            }
+
+            // Types doesn't match
+            return null;
+        }
+        
+        public static object ParseByteArray(in MValueConst mValue, Type type,
+            FunctionTypeInfo typeInfo)
+        {
+            if (mValue.type == MValueConst.Type.ByteArray)
+            {
+                return mValue.GetByteArray();
             }
 
             // Types doesn't match

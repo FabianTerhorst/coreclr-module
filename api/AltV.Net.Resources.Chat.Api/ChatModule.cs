@@ -38,7 +38,7 @@ namespace AltV.Net.Resources.Chat.Api
         {
             if (mValueArray.Length != 1) return;
             var arg = mValueArray[0];
-            if (arg.type != MValueConst.Type.STRING) return;
+            if (arg.type != MValueConst.Type.String) return;
             action(player, arg.GetString());
         }
 
@@ -46,7 +46,7 @@ namespace AltV.Net.Resources.Chat.Api
         {
             if (mValueArray.Length != 1) return;
             var argMsg = mValueArray[0];
-            if (argMsg.type != MValueConst.Type.STRING) return;
+            if (argMsg.type != MValueConst.Type.String) return;
             action(null, argMsg.GetString());
         }*/
 

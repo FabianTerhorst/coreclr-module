@@ -51,6 +51,21 @@ namespace AltV.Net.Elements.Entities
             AltNative.Blip.Blip_SetMetaData(NativePointer, stringPtr, value.nativePointer);
             Marshal.FreeHGlobal(stringPtr);
         }
+        
+        public override bool HasMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            var result = AltNative.Blip.Blip_HasMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+            return result;
+        }
+
+        public override void DeleteMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Blip.Blip_DeleteMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+        }
 
         public bool IsGlobal
         {

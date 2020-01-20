@@ -439,7 +439,8 @@ namespace AltV.Net
 
         public IEntity GetEntityById(ushort id)
         {
-            var entityPointer = AltNative.Server.Server_GetEntityById(NativePointer, id, out var type);
+            var type = (byte) BaseObjectType.Undefined;
+            var entityPointer = AltNative.Server.Server_GetEntityById(NativePointer, id, ref type);
             if (entityPointer == IntPtr.Zero) return null;
             switch (type)
             {
@@ -475,36 +476,36 @@ namespace AltV.Net
 
         public void CreateMValueNil(out MValueConst mValue)
         {
-            mValue = new MValueConst(MValueConst.Type.NIL, AltNative.Server.Core_CreateMValueNil(NativePointer));
+            mValue = new MValueConst(MValueConst.Type.Nil, AltNative.Server.Core_CreateMValueNil(NativePointer));
         }
 
         public void CreateMValueBool(out MValueConst mValue, bool value)
         {
-            mValue = new MValueConst(MValueConst.Type.BOOL,
+            mValue = new MValueConst(MValueConst.Type.Bool,
                 AltNative.Server.Core_CreateMValueBool(NativePointer, value));
         }
 
         public void CreateMValueInt(out MValueConst mValue, long value)
         {
-            mValue = new MValueConst(MValueConst.Type.INT, AltNative.Server.Core_CreateMValueInt(NativePointer, value));
+            mValue = new MValueConst(MValueConst.Type.Int, AltNative.Server.Core_CreateMValueInt(NativePointer, value));
         }
 
         public void CreateMValueUInt(out MValueConst mValue, ulong value)
         {
-            mValue = new MValueConst(MValueConst.Type.UINT,
+            mValue = new MValueConst(MValueConst.Type.Uint,
                 AltNative.Server.Core_CreateMValueUInt(NativePointer, value));
         }
 
         public void CreateMValueDouble(out MValueConst mValue, double value)
         {
-            mValue = new MValueConst(MValueConst.Type.DOUBLE,
+            mValue = new MValueConst(MValueConst.Type.Double,
                 AltNative.Server.Core_CreateMValueDouble(NativePointer, value));
         }
 
         public void CreateMValueString(out MValueConst mValue, string value)
         {
             var valuePtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
-            mValue = new MValueConst(MValueConst.Type.STRING,
+            mValue = new MValueConst(MValueConst.Type.String,
                 AltNative.Server.Core_CreateMValueString(NativePointer, valuePtr));
             Marshal.FreeHGlobal(valuePtr);
         }
@@ -517,7 +518,7 @@ namespace AltV.Net
                 pointers[i] = val[i].nativePointer;
             }
 
-            mValue = new MValueConst(MValueConst.Type.LIST,
+            mValue = new MValueConst(MValueConst.Type.List,
                 AltNative.Server.Core_CreateMValueList(NativePointer, pointers, size));
         }
 
@@ -529,44 +530,66 @@ namespace AltV.Net
                 pointers[i] = val[i].nativePointer;
             }
 
-            mValue = new MValueConst(MValueConst.Type.DICT,
+            mValue = new MValueConst(MValueConst.Type.Dict,
                 AltNative.Server.Core_CreateMValueDict(NativePointer, keys, pointers, size));
         }
 
         public void CreateMValueCheckpoint(out MValueConst mValue, ICheckpoint value)
         {
-            mValue = new MValueConst(MValueConst.Type.ENTITY,
+            mValue = new MValueConst(MValueConst.Type.Entity,
                 AltNative.Server.Core_CreateMValueCheckpoint(NativePointer, value.NativePointer));
         }
 
         public void CreateMValueBlip(out MValueConst mValue, IBlip value)
         {
-            mValue = new MValueConst(MValueConst.Type.ENTITY,
+            mValue = new MValueConst(MValueConst.Type.Entity,
                 AltNative.Server.Core_CreateMValueBlip(NativePointer, value.NativePointer));
         }
 
         public void CreateMValueVoiceChannel(out MValueConst mValue, IVoiceChannel value)
         {
-            mValue = new MValueConst(MValueConst.Type.ENTITY,
+            mValue = new MValueConst(MValueConst.Type.Entity,
                 AltNative.Server.Core_CreateMValueVoiceChannel(NativePointer, value.NativePointer));
         }
 
         public void CreateMValuePlayer(out MValueConst mValue, IPlayer value)
         {
-            mValue = new MValueConst(MValueConst.Type.ENTITY,
+            mValue = new MValueConst(MValueConst.Type.Entity,
                 AltNative.Server.Core_CreateMValuePlayer(NativePointer, value.NativePointer));
         }
 
         public void CreateMValueVehicle(out MValueConst mValue, IVehicle value)
         {
-            mValue = new MValueConst(MValueConst.Type.ENTITY,
+            mValue = new MValueConst(MValueConst.Type.Entity,
                 AltNative.Server.Core_CreateMValueVehicle(NativePointer, value.NativePointer));
         }
 
         public void CreateMValueFunction(out MValueConst mValue, IntPtr value)
         {
-            mValue = new MValueConst(MValueConst.Type.FUNCTION,
+            mValue = new MValueConst(MValueConst.Type.Function,
                 AltNative.Server.Core_CreateMValueFunction(NativePointer, value));
+        }
+
+        public void CreateMValueVector3(out MValueConst mValue, Position value)
+        {
+            mValue = new MValueConst(MValueConst.Type.Entity,
+                AltNative.Server.Core_CreateMValueVector3(NativePointer, value));
+        }
+
+        public void CreateMValueRgba(out MValueConst mValue, Rgba value)
+        {
+            mValue = new MValueConst(MValueConst.Type.Entity,
+                AltNative.Server.Core_CreateMValueRgba(NativePointer, value));
+        }
+
+        public void CreateMValueByteArray(out MValueConst mValue, byte[] value)
+        {
+            var size = value.Length;
+            var dataPtr = Marshal.AllocHGlobal(size);
+            Marshal.Copy(value, 0, dataPtr, size);
+            mValue = new MValueConst(MValueConst.Type.Entity,
+                AltNative.Server.Core_CreateMValueByteArray(NativePointer, (ulong) size, dataPtr));
+            Marshal.FreeHGlobal(dataPtr);
         }
 
         public void CreateMValue(out MValueConst mValue, object obj)
@@ -636,6 +659,9 @@ namespace AltV.Net
                 case Function function:
                     CreateMValueFunction(out mValue,
                         Alt.Server.Resource.CSharpResourceImpl.CreateInvoker(function.Call));
+                    return;
+                case byte[] byteArray:
+                    CreateMValueByteArray(out mValue, byteArray);
                     return;
                 case IDictionary dictionary:
                     dictKeys = new string[dictionary.Count];
@@ -719,44 +745,13 @@ namespace AltV.Net
                     writer.ToMValue(out mValue);
                     return;
                 case Position position:
-                    var posValues = new MValueConst[3];
-                    MValueConst positionMValue;
-                    CreateMValueDouble(out positionMValue, position.X);
-                    posValues[0] = positionMValue;
-                    CreateMValueDouble(out positionMValue, position.Y);
-                    posValues[1] = positionMValue;
-                    CreateMValueDouble(out positionMValue, position.Z);
-                    posValues[2] = positionMValue;
-                    var posKeys = new string[3];
-                    posKeys[0] = "x";
-                    posKeys[1] = "y";
-                    posKeys[2] = "z";
-                    CreateMValueDict(out mValue, posKeys, posValues, 3);
-                    for (int j = 0, dictLength = posValues.Length; j < dictLength; j++)
-                    {
-                        posValues[j].Dispose();
-                    }
-
+                    CreateMValueVector3(out mValue, position);
                     return;
                 case Rotation rotation:
-                    var rotValues = new MValueConst[3];
-                    MValueConst rotationMValue;
-                    CreateMValueDouble(out rotationMValue, rotation.Roll);
-                    rotValues[0] = rotationMValue;
-                    CreateMValueDouble(out rotationMValue, rotation.Pitch);
-                    rotValues[1] = rotationMValue;
-                    CreateMValueDouble(out rotationMValue, rotation.Yaw);
-                    rotValues[2] = rotationMValue;
-                    var rotKeys = new string[3];
-                    rotKeys[0] = "roll";
-                    rotKeys[1] = "pitch";
-                    rotKeys[2] = "yaw";
-                    CreateMValueDict(out mValue, rotKeys, rotValues, 3);
-                    for (int j = 0, dictLength = rotValues.Length; j < dictLength; j++)
-                    {
-                        rotValues[j].Dispose();
-                    }
-
+                    CreateMValueVector3(out mValue, rotation);
+                    return;
+                case Rgba rgba:
+                    CreateMValueRgba(out mValue, rgba);
                     return;
                 case short value:
                     CreateMValueInt(out mValue, value);

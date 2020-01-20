@@ -39,6 +39,14 @@ namespace AltV.Net.Elements.Entities
 
         bool GetData<T>(string key, out T result);
 
+        bool HasData(string key);
+
+        void DeleteData(string key);
+        
+        bool HasMetaData(string key);
+        
+        void DeleteMetaData(string key);
+
         void CheckIfEntityExists();
 
         void OnRemove();
@@ -56,7 +64,7 @@ namespace AltV.Net.Elements.Entities
             baseObject.GetMetaData(key, out var mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.INT)
+                if (mValue.type != MValueConst.Type.Int)
                 {
                     result = default;
                     return false;
@@ -74,7 +82,7 @@ namespace AltV.Net.Elements.Entities
             baseObject.GetMetaData(key, out var mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.UINT)
+                if (mValue.type != MValueConst.Type.Uint)
                 {
                     result = default;
                     return false;
@@ -92,7 +100,7 @@ namespace AltV.Net.Elements.Entities
             baseObject.GetMetaData(key, out var mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.DOUBLE)
+                if (mValue.type != MValueConst.Type.Double)
                 {
                     result = default;
                     return false;

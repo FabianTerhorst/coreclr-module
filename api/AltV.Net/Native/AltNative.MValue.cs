@@ -2,6 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security;
+using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 
@@ -50,6 +51,18 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr MValueConst_CallFunction(IntPtr core, IntPtr mValueConst, IntPtr[] val, ulong size);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern ulong MValueConst_GetVector3(IntPtr mValueConst, ref Position position);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern ulong MValueConst_GetRGBA(IntPtr mValueConst, ref Rgba position);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void MValueConst_GetByteArray(IntPtr mValueConst, ulong size, IntPtr data);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern ulong MValueConst_GetByteArraySize(IntPtr mValueConst);
             
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void MValueConst_AddRef(IntPtr mValueConst);

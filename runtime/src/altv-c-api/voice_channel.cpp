@@ -9,6 +9,14 @@ void VoiceChannel_SetMetaData(alt::IVoiceChannel* channel, const char* key, alt:
     channel->SetMetaData(key, val->Get()->Clone());
 }
 
+bool VoiceChannel_HasMetaData(alt::IVoiceChannel* voiceChannel, const char* key) {
+    return voiceChannel->HasMetaData(key);
+}
+
+void VoiceChannel_DeleteMetaData(alt::IVoiceChannel* voiceChannel, const char* key) {
+    voiceChannel->DeleteMetaData(key);
+}
+
 void VoiceChannel_AddRef(alt::IVoiceChannel* voiceChannel) {
     voiceChannel->AddRef();
 }

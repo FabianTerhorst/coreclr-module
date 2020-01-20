@@ -12,6 +12,47 @@ namespace AltV.Net.ColShape.Tests
         public IPlayer NetworkOwner { get; }
         public bool Exists { get; }
         public BaseObjectType Type { get; }
+
+        public bool HasData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasSyncedMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteSyncedMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasStreamSyncedMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteStreamSyncedMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
         public void SetMetaData(string key, object value)
         {
             throw new NotImplementedException();
