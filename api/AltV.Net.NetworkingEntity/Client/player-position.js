@@ -20,6 +20,9 @@ class PlayerPosition {
     }
 
     getPosition() {
+        if (this.overridePosition) {
+            return this.overridePosition;
+        }
         return this.position;
     }
 

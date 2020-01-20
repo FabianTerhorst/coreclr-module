@@ -220,6 +220,18 @@ export function getStreamedInEntities() {
     return networkingEntityClient.streamedInEntities;
 }
 
+export function overridePlayerPosition(x, y, z) {
+    this.enqueue(() => {
+        this.webview.emit("overridePlayerPosition", x, y, z);
+    });
+}
+
+export function stopOverridePlayerPosition() {
+    this.enqueue(() => {
+        this.webview.emit("stopOverridePlayerPosition");
+    });
+}
+
 export default {
     create,
     createWebView,
@@ -233,5 +245,7 @@ export default {
     onDataChange,
     onRangeChange,
     onPositionChange,
-    getStreamedInEntities
+    getStreamedInEntities,
+    overridePlayerPosition,
+    stopOverridePlayerPosition
 };
