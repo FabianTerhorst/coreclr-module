@@ -416,7 +416,7 @@ namespace AltV.Net.Example
             if (mValueArray.Length != 1) return;
             var reader = new MValueBuffer2(mValueArray);
             reader.GetNext(out MValueConst mValueConst);
-            if (mValueConst.type != MValueConst.Type.STRING) return;
+            if (mValueConst.type != MValueConst.Type.String) return;
             func(player, mValueConst.GetString());
         }
 
