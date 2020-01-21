@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Reflection.Metadata;
 using System.Reflection.PortableExecutable;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using System.Threading;
@@ -212,6 +213,7 @@ namespace AltV.Net.Host
             return 0;
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public static int ExecuteResourceUnload(IntPtr arg, int argLength)
         {
             if (argLength < Marshal.SizeOf(typeof(UnloadArgs)))
@@ -226,6 +228,11 @@ namespace AltV.Net.Host
             {
                 var resourceDllPath = GetPath(resourcePath, resourceMain);
                 if (!LoadContexts.Remove(resourceDllPath, out loadContext)) return 1;
+                if (!loadContext.IsCollectible)
+                {
+                    Console.WriteLine("Resource " + resourcePath + " is not collectible.");
+                    return 1;
+                }
                 TraceSizeChangeDelegates.Remove(loadContext.Name);
                 Exports.Remove(loadContext.Name);
                 loadContext.Unload();
@@ -233,11 +240,8 @@ namespace AltV.Net.Host
 
             var weakLoadContext = new WeakReference(loadContext);
 
-            if (weakLoadContext.IsAlive)
+            for (var i = 0; i < 8 && weakLoadContext.IsAlive; i++)
             {
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
             }
