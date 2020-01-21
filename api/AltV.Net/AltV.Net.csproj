@@ -12,7 +12,7 @@
         <PackageProjectUrl>https://github.com/FabianTerhorst/coreclr-module</PackageProjectUrl>
         <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageTags>altv gta bridge</PackageTags>
+        <PackageTags>altv gta bridge gta5 gtav</PackageTags>
         <PackageVersion>1.26.0-beta</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>
