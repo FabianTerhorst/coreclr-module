@@ -10,6 +10,7 @@ using System.Runtime.Loader;
 using System.Threading;
 using System.Threading.Tasks;
 using AltV.Net.Host.Diagnostics.Tools;
+
 /*using Buildalyzer;
 using Buildalyzer.Workspaces;
 using Microsoft.CodeAnalysis;*/
@@ -82,7 +83,7 @@ namespace AltV.Net.Host
             {
                 handle.Free();
             }
-            
+
             _runtimeBlockingSemaphore.Release();
 
             return 0;
@@ -172,7 +173,7 @@ namespace AltV.Net.Host
             }
             else
             {*/
-                resourceDllPath = GetPath(resourcePath, resourceMain);
+            resourceDllPath = GetPath(resourcePath, resourceMain);
             //}
 
             var resourceAssemblyLoadContext =
@@ -243,21 +244,19 @@ namespace AltV.Net.Host
             var libArgs = Marshal.PtrToStructure<UnloadArgs>(arg);
             var resourcePath = Marshal.PtrToStringUTF8(libArgs.ResourcePath);
             var resourceMain = Marshal.PtrToStringUTF8(libArgs.ResourceMain);
-            AssemblyLoadContext loadContext;
+            var resourceDllPath = GetPath(resourcePath, resourceMain);
+            if (!LoadContexts.Remove(resourceDllPath, out var loadContext)) return 1;
+            if (!loadContext.IsCollectible)
             {
-                var resourceDllPath = GetPath(resourcePath, resourceMain);
-                if (!LoadContexts.Remove(resourceDllPath, out loadContext)) return 1;
-                if (!loadContext.IsCollectible)
-                {
-                    Console.WriteLine("Resource " + resourcePath + " is not collectible.");
-                    return 1;
-                }
-                TraceSizeChangeDelegates.Remove(loadContext.Name);
-                Exports.Remove(loadContext.Name);
-                loadContext.Unload();
+                Console.WriteLine("Resource " + resourcePath + " is not collectible.");
+                return 1;
             }
 
+            TraceSizeChangeDelegates.Remove(loadContext.Name);
+            Exports.Remove(loadContext.Name);
+            loadContext.Unload();
             var weakLoadContext = new WeakReference(loadContext);
+            loadContext = null;
 
             for (var i = 0; i < 8 && weakLoadContext.IsAlive; i++)
             {
