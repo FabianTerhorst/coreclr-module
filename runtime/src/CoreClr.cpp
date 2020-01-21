@@ -11,11 +11,13 @@ std::mutex mtx;             // mutex for critical section
 std::condition_variable cv; // condition variable for critical section
 CoreClrDelegate_t hostResourceExecute;
 CoreClrDelegate_t hostResourceExecuteUnload;
+CoreClrDelegate_t hostStopRuntime;
 
-void CoreClr_SetResourceLoadDelegates(CoreClrDelegate_t resourceExecute, CoreClrDelegate_t resourceExecuteUnload) {
+void CoreClr_SetResourceLoadDelegates(CoreClrDelegate_t resourceExecute, CoreClrDelegate_t resourceExecuteUnload, CoreClrDelegate_t stopRuntime) {
     std::unique_lock<std::mutex> lck(mtx);
     hostResourceExecute = resourceExecute;
     hostResourceExecuteUnload = resourceExecuteUnload;
+    hostStopRuntime = stopRuntime;
     cv.notify_all();
 }
 
@@ -96,7 +98,10 @@ CoreClr::CoreClr(alt::ICore* core) {
 }
 
 CoreClr::~CoreClr() {
-    //TODO: close thread
+    if (hostStopRuntime != nullptr) {
+        hostStopRuntime(nullptr, 0);
+    }
+    thread.join();
     delete[] runtimeDirectory;
     delete[] dotnetDirectory;
     if (cxt != nullptr) {

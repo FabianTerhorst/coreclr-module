@@ -37,20 +37,26 @@ namespace AltV.Net.Host
 
         [DllImport(DllName, CallingConvention = NativeCallingConvention)]
         private static extern void CoreClr_SetResourceLoadDelegates(CoreClrDelegate resourceExecute,
-            CoreClrDelegate resourceExecuteUnload);
+            CoreClrDelegate resourceExecuteUnload, CoreClrDelegate stopRuntime);
 
         private static CoreClrDelegate _executeResource;
 
         private static CoreClrDelegate _executeResourceUnload;
+
+        private static CoreClrDelegate _stopRuntime;
+
+        private static LinkedList<GCHandle> _handles = new LinkedList<GCHandle>();
+
+        private static Semaphore _runtimeBlockingSemaphore;
 
         /// <summary>
         /// Main is present to execute the dll as a assembly
         /// </summary>
         public static int Main(string[] args)
         {
-            var semaphore = new Semaphore(0, 1);
+            _runtimeBlockingSemaphore = new Semaphore(0, 1);
             SetDelegates();
-            semaphore.WaitOne();
+            _runtimeBlockingSemaphore.WaitOne();
             return 0;
         }
 
@@ -63,10 +69,23 @@ namespace AltV.Net.Host
         private static void SetDelegates()
         {
             _executeResource = ExecuteResource;
-            GCHandle.Alloc(_executeResource);
+            _handles.AddFirst(GCHandle.Alloc(_executeResource));
             _executeResourceUnload = ExecuteResourceUnload;
-            GCHandle.Alloc(_executeResourceUnload);
-            CoreClr_SetResourceLoadDelegates(_executeResource, _executeResourceUnload);
+            _handles.AddFirst(GCHandle.Alloc(_executeResourceUnload));
+            _stopRuntime = StopRuntime;
+            CoreClr_SetResourceLoadDelegates(_executeResource, _executeResourceUnload, _stopRuntime);
+        }
+
+        private static int StopRuntime(IntPtr arg, int argLength)
+        {
+            foreach (var handle in _handles)
+            {
+                handle.Free();
+            }
+            
+            _runtimeBlockingSemaphore.Release();
+
+            return 0;
         }
 
         private static string GetPath(string resourcePath, string resourceMain) =>

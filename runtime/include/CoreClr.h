@@ -168,4 +168,4 @@ private:
     alt::ICore* core = nullptr;
 };
 
-EXPORT void CoreClr_SetResourceLoadDelegates(CoreClrDelegate_t resourceExecute, CoreClrDelegate_t resourceExecuteUnload);
+EXPORT void CoreClr_SetResourceLoadDelegates(CoreClrDelegate_t resourceExecute, CoreClrDelegate_t resourceExecuteUnload, CoreClrDelegate_t stopRuntime);
