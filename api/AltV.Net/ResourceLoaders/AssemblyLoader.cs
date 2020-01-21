@@ -8,7 +8,7 @@ namespace AltV.Net.ResourceLoaders
 {
     public class AssemblyLoader
     {
-        private readonly Dictionary<string, Assembly> loadedAssemblies =
+        /*private readonly Dictionary<string, Assembly> loadedAssemblies =
             AppDomain.CurrentDomain.GetAssemblies().ToDictionary(x => x.GetName().FullName, x => x);
 
         public Assembly LoadAssembly(string path)
@@ -93,7 +93,7 @@ namespace AltV.Net.ResourceLoaders
             }
 
             return typesFound.ToArray();
-        }
+        }*/
         
         public static T[] FindAllTypes<T>(IEnumerable<Assembly> assemblies)
         {

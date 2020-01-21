@@ -3,9 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using AltV.Net.Data;
-using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
-using AltV.Net.Native;
 using AltV.Net.ResourceLoaders;
 
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
@@ -102,8 +100,15 @@ namespace AltV.Net
             }
 
             Alt.Server.Resource.CSharpResourceImpl.Dispose();
-            _module.Dispose();
+            
             AppDomain.CurrentDomain.UnhandledException -= OnUnhandledException;
+            
+            _module.Dispose();
+
+            _modules = new IModule[0];
+            _scripts = new IScript[0];
+            _module = null;
+            _resource = null;
         }
 
         public static void OnTick()
