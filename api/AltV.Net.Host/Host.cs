@@ -264,13 +264,13 @@ namespace AltV.Net.Host
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static WeakReference UnloadAssemblyLoadContext(string resourcePath, string resourceDllPath)
         {
-            if (!LoadContexts.Remove(resourceDllPath, out var loadContext)) return null;
+            if (!LoadContexts.TryGetValue(resourceDllPath, out var loadContext)) return null;
             if (!loadContext.IsCollectible)
             {
                 Console.WriteLine("Resource " + resourcePath + " is not collectible.");
                 return null;
             }
-
+            if (!LoadContexts.Remove(resourceDllPath, out loadContext)) return null;
             TraceSizeChangeDelegates.Remove(loadContext.Name);
             Exports.Remove(loadContext.Name);
             loadContext.Unload();
