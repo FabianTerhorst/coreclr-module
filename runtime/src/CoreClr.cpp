@@ -101,7 +101,10 @@ CoreClr::~CoreClr() {
     if (hostStopRuntime != nullptr) {
         hostStopRuntime(nullptr, 0);
     }
-    thread.join();
+    if (thread != nullptr) {
+        thread->join();
+        delete thread;
+    }
     delete[] runtimeDirectory;
     delete[] dotnetDirectory;
     if (cxt != nullptr) {
@@ -459,7 +462,7 @@ void CoreClr::CreateManagedHost() {
     userData->runApp = _runApp;
     userData->closeFxr = _closeFxr;
     userData->cxt = cxt;
-    thread = std::thread(thread_proc, userData);
+    thread = new std::thread(thread_proc, userData);
 }
 
 bool CoreClr::ExecuteManagedResource(const char* resourcePath, const char* resourceName,

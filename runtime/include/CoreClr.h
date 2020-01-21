@@ -164,7 +164,7 @@ private:
     hostfxr_initialize_for_dotnet_command_line_fn _initForCmd = nullptr;
     hostfxr_close_fn _closeFxr = nullptr;
     hostfxr_handle cxt = nullptr;
-    std::thread thread;
+    std::thread* thread = nullptr;
     alt::ICore* core = nullptr;
 };
 
