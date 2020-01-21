@@ -81,7 +81,7 @@ COPY --from=dotnet /altv-example/AltV.Net.Example/bin/Release/netcoreapp3.0/publ
 COPY --from=dotnet /altv-example/AltV.Net.Resources.Chat/bin/Release/netcoreapp3.0/publish resources/chat/
 #COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.0/publish .
 COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.dll .
-COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.runtimeconfig.json .
+#COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.runtimeconfig.json .
 #COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/Microsoft.Diagnostics.Tracing.TraceEvent.dll .
 RUN ls -l
 RUN chmod +x ./altv-server

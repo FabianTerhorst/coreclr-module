@@ -126,6 +126,12 @@ public:
 
     void GetPath(alt::ICore* server, const char* defaultPath);
 
+    alt::String GenerateRuntimeConfigText();
+
+    void CreateRuntimeConfigFile();
+
+    void DeleteRuntimeConfigFile();
+
     /**
      * prints out error when error code in known
      * @param server
@@ -166,6 +172,7 @@ private:
     hostfxr_handle cxt = nullptr;
     std::thread* thread = nullptr;
     alt::ICore* core = nullptr;
+    char* version = nullptr;
 };
 
 EXPORT void CoreClr_SetResourceLoadDelegates(CoreClrDelegate_t resourceExecute, CoreClrDelegate_t resourceExecuteUnload, CoreClrDelegate_t stopRuntime);

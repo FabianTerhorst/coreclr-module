@@ -6,6 +6,7 @@
 #include <semver.h>
 #include <mutex>
 #include <condition_variable>
+#include <fstream>
 
 std::mutex mtx;             // mutex for critical section
 std::condition_variable cv; // condition variable for critical section
@@ -107,6 +108,7 @@ CoreClr::~CoreClr() {
     }
     delete[] runtimeDirectory;
     delete[] dotnetDirectory;
+    delete version;
     if (cxt != nullptr) {
         _closeFxr(cxt);
     }
@@ -386,6 +388,11 @@ void CoreClr::GetPath(alt::ICore* server, const char* defaultPath) {
     memset(runtimeDirectory, '\0', size);
     strcpy(runtimeDirectory, defaultPath);
     strcat(runtimeDirectory, greatest);
+    auto greatestVersionStrLen = strlen(greatest);
+    char* currVersion = (char*) malloc(greatestVersionStrLen + 1);
+    memcpy(currVersion, greatest, greatestVersionStrLen);
+    currVersion[greatestVersionStrLen] = '\0';
+    this->version = currVersion;
 }
 
 //TODO: https://github.com/rashiph/DecompliedDotNetLibraries/blob/6056fc6ff7ae8fb3057c936d9ebf36da73f990a6/mscorlib/System/__HResults.cs
@@ -436,7 +443,31 @@ void thread_proc(struct thread_user_data* userData) {
     delete userData;
 }
 
+alt::String CoreClr::GenerateRuntimeConfigText() {
+    if (version == nullptr) return "";
+    return alt::String("{\n"
+           "  \"runtimeOptions\": {\n"
+           "    \"tfm\": \"netcoreapp3.0\",\n"
+           "    \"framework\": {\n"
+           "      \"name\": \"Microsoft.NETCore.App\",\n"
+           "      \"version\": \"") + version + "\"\n"
+           "    }\n"
+           "  }\n"
+           "}";
+}
+
+void CoreClr::CreateRuntimeConfigFile() {
+    std::ofstream outfile ((alt::String(core->GetRootDirectory()) + DIR_SEPARATOR + alt::StringView("AltV.Net.Host.runtimeconfig.json")).CStr());
+    outfile << GenerateRuntimeConfigText() << std::endl;
+    outfile.close();
+}
+
+void CoreClr::DeleteRuntimeConfigFile() {
+    remove((alt::String(core->GetRootDirectory()) + DIR_SEPARATOR + alt::StringView("AltV.Net.Host.runtimeconfig.json")).CStr());
+}
+
 void CoreClr::CreateManagedHost() {
+    CreateRuntimeConfigFile();
     // Load .NET Core
     /*void* load_assembly_and_get_function_pointer = nullptr;
     hostfxr_initialize_parameters initializeParameters = {};
@@ -457,6 +488,8 @@ void CoreClr::CreateManagedHost() {
         _closeFxr(cxt);
         return;
     }
+
+    DeleteRuntimeConfigFile();
 
     auto userData = new struct thread_user_data;
     userData->runApp = _runApp;
