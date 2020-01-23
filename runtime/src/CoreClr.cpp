@@ -7,6 +7,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <fstream>
+#include <sys/file.h>
 
 std::mutex mtx;             // mutex for critical section
 std::condition_variable cv; // condition variable for critical section
@@ -445,29 +446,39 @@ void thread_proc(struct thread_user_data* userData) {
 
 alt::String CoreClr::GenerateRuntimeConfigText() {
     if (version == nullptr) return "";
-    return alt::String("{\n"
+    semver_t sem_ver;
+    semver_parse_version(version, &sem_ver);
+    auto minor_version = std::to_string(sem_ver.major) + alt::String(".") + std::to_string(sem_ver.minor);
+    auto result = alt::String("{\n"
            "  \"runtimeOptions\": {\n"
-           "    \"tfm\": \"netcoreapp3.0\",\n"
+           "    \"tfm\": \"netcoreapp" + minor_version + "\",\n"
            "    \"framework\": {\n"
            "      \"name\": \"Microsoft.NETCore.App\",\n"
            "      \"version\": \"") + version + "\"\n"
            "    }\n"
            "  }\n"
            "}";
+    semver_free(&sem_ver);
+    return result;
 }
 
-void CoreClr::CreateRuntimeConfigFile() {
-    std::ofstream outfile ((alt::String(core->GetRootDirectory()) + DIR_SEPARATOR + alt::StringView("AltV.Net.Host.runtimeconfig.json")).CStr());
-    outfile << GenerateRuntimeConfigText() << std::endl;
+bool CoreClr::CreateRuntimeConfigFile() {
+    auto fileName = (alt::String(core->GetRootDirectory()) + DIR_SEPARATOR + alt::String("AltV.Net.Host.runtimeconfig.json"));
+    struct stat buffer{};
+    auto exists = (stat (fileName.CStr(), &buffer) == 0);
+    if (exists) return false;
+    std::ofstream outfile (fileName.CStr());
+    outfile << GenerateRuntimeConfigText() << std::flush;
     outfile.close();
+    return true;
 }
 
 void CoreClr::DeleteRuntimeConfigFile() {
-    remove((alt::String(core->GetRootDirectory()) + DIR_SEPARATOR + alt::StringView("AltV.Net.Host.runtimeconfig.json")).CStr());
+    remove((alt::String(core->GetRootDirectory()) + DIR_SEPARATOR + alt::String("AltV.Net.Host.runtimeconfig.json")).CStr());
 }
 
 void CoreClr::CreateManagedHost() {
-    CreateRuntimeConfigFile();
+    auto result = CreateRuntimeConfigFile();
     // Load .NET Core
     /*void* load_assembly_and_get_function_pointer = nullptr;
     hostfxr_initialize_parameters initializeParameters = {};
@@ -489,7 +500,9 @@ void CoreClr::CreateManagedHost() {
         return;
     }
 
-    DeleteRuntimeConfigFile();
+    if (result) {
+        DeleteRuntimeConfigFile();
+    }
 
     auto userData = new struct thread_user_data;
     userData->runApp = _runApp;
@@ -500,6 +513,7 @@ void CoreClr::CreateManagedHost() {
 
 bool CoreClr::ExecuteManagedResource(const char* resourcePath, const char* resourceName,
                                      const char* resourceMain, alt::IResource* resource) {
+    if (cxt == nullptr) return false;
     std::unique_lock<std::mutex> lck(mtx);
     while (hostResourceExecute == nullptr) { cv.wait(lck); }
     if (hostResourceExecute == nullptr) {
@@ -531,6 +545,7 @@ bool CoreClr::ExecuteManagedResource(const char* resourcePath, const char* resou
 }
 
 bool CoreClr::ExecuteManagedResourceUnload(const char* resourcePath, const char* resourceMain) {
+    if (cxt == nullptr) return false;
     std::unique_lock<std::mutex> lck(mtx);
     while (hostResourceExecuteUnload == nullptr) { cv.wait(lck); }
     if (hostResourceExecuteUnload == nullptr) {

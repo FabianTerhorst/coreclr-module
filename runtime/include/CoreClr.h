@@ -128,7 +128,7 @@ public:
 
     alt::String GenerateRuntimeConfigText();
 
-    void CreateRuntimeConfigFile();
+    bool CreateRuntimeConfigFile();
 
     void DeleteRuntimeConfigFile();
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -531,6 +532,8 @@ namespace AltV.Net
             }
 
             Alt.Server.CreateMValue(out var resultMValue, Call(mValues));
+            if (resultMValue.nativePointer != IntPtr.Zero) return resultMValue.nativePointer;
+            Alt.Server.CreateMValueNil(out resultMValue);
             return resultMValue.nativePointer;
         }
     }

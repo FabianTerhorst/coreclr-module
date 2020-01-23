@@ -94,7 +94,7 @@ class NetworkingEntityClient {
         if (!this.webviewReady) {
             this.webviewQueue.push(operation);
         } else {
-            operation();
+            operation(this.webview);
         }
     }
 
@@ -221,14 +221,22 @@ export function getStreamedInEntities() {
 }
 
 export function overridePlayerPosition(x, y, z) {
-    this.enqueue(() => {
-        this.webview.emit("overridePlayerPosition", x, y, z);
+    if (networkingEntityClient == null) {
+        log("call create(webview) first");
+        return;
+    }
+    networkingEntityClient.enqueue((webview) => {
+        webview.emit("overridePlayerPosition", x, y, z);
     });
 }
 
 export function stopOverridePlayerPosition() {
-    this.enqueue(() => {
-        this.webview.emit("stopOverridePlayerPosition");
+    if (networkingEntityClient == null) {
+        log("call create(webview) first");
+        return;
+    }
+    networkingEntityClient.enqueue((webview) => {
+        webview.emit("stopOverridePlayerPosition");
     });
 }
 
