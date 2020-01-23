@@ -5,6 +5,7 @@
 #include "CoreClr.h"
 #include <semver.h>
 #include <mutex>
+#include <condition_variable>
 #include <fstream>
 
 std::mutex mtx;             // mutex for critical section
