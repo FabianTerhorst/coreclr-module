@@ -13,7 +13,7 @@
         <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge gta5 gtav</PackageTags>
-        <PackageVersion>1.26.1-beta</PackageVersion>
+        <PackageVersion>1.26.2-beta</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>
 Add following methods to IVehicle
@@ -21,7 +21,8 @@ Improve external function calls
         bool IsWheelDetached(byte wheelId);
         void SetWheelDetached(byte wheelId, bool state);
         bool IsWheelOnFire(byte wheelId);
-        void SetWheelOnFire(byte wheelId, bool state);</PackageReleaseNotes>
+        void SetWheelOnFire(byte wheelId, bool state);
+   Fix Action&lt;*&gt; exports</PackageReleaseNotes>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <PackageIcon>icon.png</PackageIcon>
         <IncludeSymbols>true</IncludeSymbols>
