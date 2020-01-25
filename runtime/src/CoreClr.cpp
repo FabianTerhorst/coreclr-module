@@ -444,9 +444,15 @@ void thread_proc(struct thread_user_data* userData) {
 }
 
 alt::String CoreClr::GenerateRuntimeConfigText() {
-    if (version == nullptr) return "";
+    if (version == nullptr) {
+        std::cerr << "Unknown coreclr version" << std::endl;
+        return "";
+    }
     semver_t sem_ver;
-    semver_parse_version(version, &sem_ver);
+    if (semver_parse_version(version, &sem_ver) != 0) {
+        std::cerr << "Couldn't parse coreclr version" << std::endl;
+        return "";
+    }
     auto minor_version = std::to_string(sem_ver.major) + alt::String(".") + std::to_string(sem_ver.minor);
     auto result = alt::String("{\n"
            "  \"runtimeOptions\": {\n"
