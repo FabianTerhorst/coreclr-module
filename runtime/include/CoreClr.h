@@ -151,7 +151,7 @@ private:
 #ifdef _WIN32
     HMODULE _coreClrLib;
 #else
-    void* _coreClrLib;
+    void* _coreClrLib = nullptr;
 #endif
     char* runtimeDirectory = nullptr;
     char* dotnetDirectory = nullptr;

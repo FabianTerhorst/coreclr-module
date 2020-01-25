@@ -496,6 +496,9 @@ void CoreClr::CreateManagedHost() {
         }
         std::cerr << "Init for cmd failed: " << std::hex << std::showbase << rc << std::endl;
         _closeFxr(cxt);
+        if (result) {
+            DeleteRuntimeConfigFile();
+        }
         return;
     }
 
