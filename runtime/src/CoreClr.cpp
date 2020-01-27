@@ -454,12 +454,13 @@ alt::String CoreClr::GenerateRuntimeConfigText() {
         return "";
     }
     auto minor_version = std::to_string(sem_ver.major) + alt::String(".") + std::to_string(sem_ver.minor);
+    auto patch_version = std::to_string(sem_ver.major) + alt::String(".") + std::to_string(sem_ver.minor) + alt::String(".") + std::to_string(sem_ver.patch);
     auto result = alt::String("{\n"
            "  \"runtimeOptions\": {\n"
            "    \"tfm\": \"netcoreapp" + minor_version + "\",\n"
            "    \"framework\": {\n"
            "      \"name\": \"Microsoft.NETCore.App\",\n"
-           "      \"version\": \"") + version + "\"\n"
+           "      \"version\": \"") + patch_version + "\"\n"
            "    }\n"
            "  }\n"
            "}";
