@@ -147,7 +147,14 @@ namespace AltV.Net.Example
             var vehicle = Alt.CreateVehicle(VehicleModel.Apc, new Position(1, 2, 3), new Rotation(1, 2, 3));
             vehicle.SetSyncedMetaData("test", 123);
             Alt.Log(vehicle.Position.ToString());
-            vehicle.PrimaryColor = 7;
+            /*var watch = System.Diagnostics.Stopwatch.StartNew();
+            for (int i = 0; i < int.MaxValue; i++)
+            {
+                vehicle.PrimaryColor = (i % 2 == 0) ? (byte) 1 : (byte) 0;   
+            }
+            watch.Stop();
+            var elapsedMs = watch.Elapsed;
+            Console.WriteLine("primaryColor took " + elapsedMs);*/
             vehicle.NumberplateText = "AltV-C#";
             vehicle.NumberplateIndex = 2;
             vehicle.SetMod(0, 0);

@@ -443,19 +443,19 @@ void thread_proc(struct thread_user_data* userData) {
     delete userData;
 }
 
-alt::String CoreClr::GenerateRuntimeConfigText() {
+void CoreClr::GenerateRuntimeConfigText(std::ofstream* outfile) {
     if (version == nullptr) {
         std::cerr << "Unknown coreclr version" << std::endl;
-        return "";
+        return;
     }
     semver_t sem_ver;
     if (semver_parse_version(version, &sem_ver) != 0) {
         std::cerr << "Couldn't parse coreclr version" << std::endl;
-        return "";
+        return;
     }
     auto minor_version = std::to_string(sem_ver.major) + alt::String(".") + std::to_string(sem_ver.minor);
     auto patch_version = std::to_string(sem_ver.major) + alt::String(".") + std::to_string(sem_ver.minor) + alt::String(".") + std::to_string(sem_ver.patch);
-    auto result = alt::String("{\n"
+    (*outfile) << alt::String("{\n"
            "  \"runtimeOptions\": {\n"
            "    \"tfm\": \"netcoreapp" + minor_version + "\",\n"
            "    \"framework\": {\n"
@@ -465,7 +465,6 @@ alt::String CoreClr::GenerateRuntimeConfigText() {
            "  }\n"
            "}";
     semver_free(&sem_ver);
-    return result;
 }
 
 bool CoreClr::CreateRuntimeConfigFile() {
@@ -473,8 +472,10 @@ bool CoreClr::CreateRuntimeConfigFile() {
     struct stat buffer{};
     auto exists = (stat (fileName.CStr(), &buffer) == 0);
     if (exists) return false;
-    std::ofstream outfile (fileName.CStr());
-    outfile << GenerateRuntimeConfigText() << std::flush;
+    std::ofstream outfile;
+    outfile.open(fileName.CStr());
+    GenerateRuntimeConfigText(&outfile);
+    outfile << std::flush;
     outfile.close();
     return true;
 }

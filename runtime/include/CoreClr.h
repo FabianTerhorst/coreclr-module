@@ -126,7 +126,7 @@ public:
 
     void GetPath(alt::ICore* server, const char* defaultPath);
 
-    alt::String GenerateRuntimeConfigText();
+    void GenerateRuntimeConfigText(std::ofstream* outfile);
 
     bool CreateRuntimeConfigFile();
 
