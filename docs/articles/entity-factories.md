@@ -104,5 +104,3 @@ private void OnPlayerConnect(IPlayer player, string reason)
   //...
 }
 ```
-
-}
