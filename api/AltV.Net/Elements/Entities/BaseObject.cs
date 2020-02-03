@@ -187,6 +187,7 @@ namespace AltV.Net.Elements.Entities
         {
             if (Alt.Module.IsMainThread()) return;
             if (Monitor.IsEntered(this)) return;
+            if (Alt.Module.HasRefForCurrentThread(this)) return;
             throw new IllegalThreadException(this, callerName);
         }
 

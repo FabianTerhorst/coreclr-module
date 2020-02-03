@@ -12,11 +12,13 @@ namespace AltV.Net.Elements.Refs
         public BlipRef(IBlip blip)
         {
             this.blip = blip.AddRef() ? blip : null;
+            Alt.Module.CountUpRefForCurrentThread(blip);
         }
 
         public void Dispose()
         {
             blip?.RemoveRef();
+            Alt.Module.CountDownRefForCurrentThread(blip);
         }
     }
 }
