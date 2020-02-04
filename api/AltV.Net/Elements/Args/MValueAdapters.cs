@@ -31,7 +31,7 @@ namespace AltV.Net.Elements.Args
         {
             switch (mValue.type)
             {
-                case MValueConst.Type.LIST when Adapters.TryGetValue(type, out var adapter):
+                case MValueConst.Type.List when Adapters.TryGetValue(type, out var adapter):
                 {
                     using (var reader = new MValueReader2(in mValue))
                     {
@@ -40,7 +40,7 @@ namespace AltV.Net.Elements.Args
 
                     return true;
                 }
-                case MValueConst.Type.DICT when Adapters.TryGetValue(type, out var adapter):
+                case MValueConst.Type.Dict when Adapters.TryGetValue(type, out var adapter):
                     using (var reader = new MValueReader2(in mValue))
                     {
                         obj = adapter.FromMValue(reader);

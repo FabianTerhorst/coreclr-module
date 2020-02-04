@@ -12,11 +12,13 @@ namespace AltV.Net.Elements.Refs
         public ColShapeRef(IColShape colShape)
         {
             this.colShape = colShape.AddRef() ? colShape : null;
+            Alt.Module.CountUpRefForCurrentThread(colShape);
         }
 
         public void Dispose()
         {
             colShape?.RemoveRef();
+            Alt.Module.CountDownRefForCurrentThread(colShape);
         }
     }
 }

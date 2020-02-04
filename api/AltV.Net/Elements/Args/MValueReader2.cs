@@ -269,7 +269,7 @@ namespace AltV.Net.Elements.Args
 
             public bool GetNext(out bool value)
             {
-                if (mValue.type != MValueConst.Type.BOOL)
+                if (mValue.type != MValueConst.Type.Bool)
                 {
                     value = default;
                     return false;
@@ -281,7 +281,7 @@ namespace AltV.Net.Elements.Args
 
             public bool GetNext(out int value)
             {
-                if (mValue.type != MValueConst.Type.INT)
+                if (mValue.type != MValueConst.Type.Int)
                 {
                     value = default;
                     return false;
@@ -293,7 +293,7 @@ namespace AltV.Net.Elements.Args
 
             public bool GetNext(out uint value)
             {
-                if (mValue.type != MValueConst.Type.UINT)
+                if (mValue.type != MValueConst.Type.Uint)
                 {
                     value = default;
                     return false;
@@ -305,7 +305,7 @@ namespace AltV.Net.Elements.Args
 
             public bool GetNext(out long value)
             {
-                if (mValue.type != MValueConst.Type.INT)
+                if (mValue.type != MValueConst.Type.Int)
                 {
                     value = default;
                     return false;
@@ -317,7 +317,7 @@ namespace AltV.Net.Elements.Args
 
             public bool GetNext(out ulong value)
             {
-                if (mValue.type != MValueConst.Type.UINT)
+                if (mValue.type != MValueConst.Type.Uint)
                 {
                     value = default;
                     return false;
@@ -329,7 +329,7 @@ namespace AltV.Net.Elements.Args
 
             public bool GetNext(out float value)
             {
-                if (mValue.type != MValueConst.Type.DOUBLE)
+                if (mValue.type != MValueConst.Type.Double)
                 {
                     value = default;
                     return false;
@@ -341,7 +341,7 @@ namespace AltV.Net.Elements.Args
 
             public bool GetNext(out double value)
             {
-                if (mValue.type != MValueConst.Type.DOUBLE)
+                if (mValue.type != MValueConst.Type.Double)
                 {
                     value = default;
                     return false;
@@ -353,7 +353,7 @@ namespace AltV.Net.Elements.Args
 
             public bool GetNext(out string value)
             {
-                if (mValue.type != MValueConst.Type.STRING)
+                if (mValue.type != MValueConst.Type.String)
                 {
                     value = default;
                     return false;
@@ -379,7 +379,7 @@ namespace AltV.Net.Elements.Args
 
             public MValueConst.Type GetPreviousType()
             {
-                return MValueConst.Type.NIL;
+                return MValueConst.Type.Nil;
             }
 
             public bool HasNext()
@@ -410,7 +410,7 @@ namespace AltV.Net.Elements.Args
             //CheckObject();
             readableMValue.GetNext(out MValueConst mValue);
 
-            if (mValue.type != MValueConst.Type.DICT)
+            if (mValue.type != MValueConst.Type.Dict)
             {
                 throw new InvalidDataException("Expected object but got " + mValue.type);
             }
@@ -446,7 +446,7 @@ namespace AltV.Net.Elements.Args
             //CheckArray();
             readableMValue.GetNext(out MValueConst mValue);
 
-            if (mValue.type != MValueConst.Type.LIST)
+            if (mValue.type != MValueConst.Type.List)
             {
                 throw new InvalidDataException("Expected array but got " + mValue.type);
             }
@@ -471,7 +471,7 @@ namespace AltV.Net.Elements.Args
             if (!insideObject)
             {
                 readableMValue.Peek(out var mValue);
-                if (mValue.type != MValueConst.Type.DICT)
+                if (mValue.type != MValueConst.Type.Dict)
                 {
                     throw new InvalidDataException("Not inside a object or array");
                 }
@@ -483,7 +483,7 @@ namespace AltV.Net.Elements.Args
             if (!insideObject)
             {
                 readableMValue.Peek(out var mValue);
-                if (mValue.type != MValueConst.Type.LIST)
+                if (mValue.type != MValueConst.Type.List)
                 {
                     throw new InvalidDataException("Not inside a object or array");
                 }
@@ -493,7 +493,7 @@ namespace AltV.Net.Elements.Args
         private void CheckObjectOrArray()
         {
             readableMValue.Peek(out var mValue);
-            if (!insideObject && mValue.type != MValueConst.Type.DICT && mValue.type != MValueConst.Type.LIST)
+            if (!insideObject && mValue.type != MValueConst.Type.Dict && mValue.type != MValueConst.Type.List)
             {
                 throw new InvalidDataException("Not inside a object or array");
             }
@@ -658,9 +658,9 @@ namespace AltV.Net.Elements.Args
         public MValueReaderToken Peek()
         {
             readableMValue.Peek(out var mValue);
-            if (mValue.type == MValueConst.Type.DICT) return MValueReaderToken.Object;
-            if (mValue.type == MValueConst.Type.LIST) return MValueReaderToken.Array;
-            if (mValue.type == MValueConst.Type.NIL) return MValueReaderToken.Nil;
+            if (mValue.type == MValueConst.Type.Dict) return MValueReaderToken.Object;
+            if (mValue.type == MValueConst.Type.List) return MValueReaderToken.Array;
+            if (mValue.type == MValueConst.Type.Nil) return MValueReaderToken.Nil;
             if (readableMValue is MValueObjectReader mValueObjectReader &&
                 readableMValue.GetSize() >= mValueObjectReader.GetSize())
                 return MValueReaderToken.Value;

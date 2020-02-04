@@ -26,6 +26,8 @@ EXPORT int32_t ColShape_GetDimension(alt::IColShape* colShape);
 EXPORT void ColShape_SetDimension(alt::IColShape* colShape, int32_t dimension);
 EXPORT alt::MValueConst* ColShape_GetMetaData(alt::IColShape* colShape, const char* key);
 EXPORT void ColShape_SetMetaData(alt::IColShape* colShape, const char* key, alt::MValueConst* val);
+EXPORT bool ColShape_HasMetaData(alt::IColShape* colShape, const char* key);
+EXPORT void ColShape_DeleteMetaData(alt::IColShape* colShape, const char* key);
 EXPORT void ColShape_AddRef(alt::IColShape* colShape);
 EXPORT void ColShape_RemoveRef(alt::IColShape* colShape);
 // ColShape

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Elements.Args
@@ -252,6 +253,22 @@ namespace AltV.Net.Elements.Args
         }
 
         public void Value(IPlayer value)
+        {
+            if (currents.TryPeek(out currCurr))
+            {
+                currCurr.Values.Add(value);
+            }
+        }
+        
+        public void Value(Position value)
+        {
+            if (currents.TryPeek(out currCurr))
+            {
+                currCurr.Values.Add(value);
+            }
+        }
+        
+        public void Value(Rgba value)
         {
             if (currents.TryPeek(out currCurr))
             {

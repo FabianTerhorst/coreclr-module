@@ -31,8 +31,16 @@ EXPORT int32_t Vehicle_GetDimension(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetDimension(alt::IVehicle* vehicle, int32_t dimension);
 EXPORT alt::MValueConst* Vehicle_GetMetaData(alt::IVehicle* vehicle, const char* key);
 EXPORT void Vehicle_SetMetaData(alt::IVehicle* vehicle, const char* key, alt::MValueConst* val);
+EXPORT bool Vehicle_HasMetaData(alt::IVehicle* vehicle, const char* key);
+EXPORT void Vehicle_DeleteMetaData(alt::IVehicle* vehicle, const char* key);
 EXPORT alt::MValueConst* Vehicle_GetSyncedMetaData(alt::IVehicle* vehicle, const char* key);
 EXPORT void Vehicle_SetSyncedMetaData(alt::IVehicle* vehicle, const char* key, alt::MValueConst* val);
+EXPORT bool Vehicle_HasSyncedMetaData(alt::IVehicle* vehicle, const char* key);
+EXPORT void Vehicle_DeleteSyncedMetaData(alt::IVehicle* vehicle, const char* key);
+EXPORT alt::MValueConst* Vehicle_GetStreamSyncedMetaData(alt::IVehicle* vehicle, const char* key);
+EXPORT void Vehicle_SetStreamSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MValueConst* val);
+EXPORT bool Vehicle_HasStreamSyncedMetaData(alt::IVehicle* vehicle, const char* key);
+EXPORT void Vehicle_DeleteStreamSyncedMetaData(alt::IVehicle* vehicle, const char* key);
 EXPORT void Vehicle_AddRef(alt::IVehicle* vehicle);
 EXPORT void Vehicle_RemoveRef(alt::IVehicle* vehicle);
 // Vehicle
@@ -66,7 +74,9 @@ EXPORT void Vehicle_GetTireSmokeColor(alt::IVehicle* vehicle, rgba_t &tireSmokeC
 EXPORT void Vehicle_SetTireSmokeColor(alt::IVehicle* vehicle, alt::RGBA color);
 EXPORT uint8_t Vehicle_GetWheelType(alt::IVehicle* vehicle);
 EXPORT uint8_t Vehicle_GetWheelVariation(alt::IVehicle* vehicle);
+EXPORT uint8_t Vehicle_GetRearWheelVariation(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetWheels(alt::IVehicle* vehicle, uint8_t type, uint8_t variation);
+EXPORT void Vehicle_SetRearWheels(alt::IVehicle* vehicle, uint8_t variation);
 EXPORT bool Vehicle_GetCustomTires(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetCustomTires(alt::IVehicle* vehicle, bool state);
 EXPORT uint8_t Vehicle_GetSpecialDarkness(alt::IVehicle* vehicle);
@@ -148,6 +158,12 @@ EXPORT void Vehicle_SetWheelBurst(alt::IVehicle* vehicle, uint8_t wheelId, bool 
 
 EXPORT bool Vehicle_DoesWheelHasTire(alt::IVehicle* vehicle, uint8_t wheelId);
 EXPORT void Vehicle_SetWheelHasTire(alt::IVehicle* vehicle, uint8_t wheelId, bool state);
+
+EXPORT bool Vehicle_IsWheelDetached(alt::IVehicle* vehicle, uint8_t wheelId);
+EXPORT void Vehicle_SetWheelDetached(alt::IVehicle* vehicle, uint8_t wheelId, bool state);
+
+EXPORT bool Vehicle_IsWheelOnFire(alt::IVehicle* vehicle, uint8_t wheelId);
+EXPORT void Vehicle_SetWheelOnFire(alt::IVehicle* vehicle, uint8_t wheelId, bool state);
 
 EXPORT float Vehicle_GetWheelHealth(alt::IVehicle* vehicle, uint8_t wheelId);
 EXPORT void Vehicle_SetWheelHealth(alt::IVehicle* vehicle, uint8_t wheelId, float health);

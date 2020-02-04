@@ -26,6 +26,8 @@ EXPORT int32_t Checkpoint_GetDimension(alt::ICheckpoint* checkpoint);
 EXPORT void Checkpoint_SetDimension(alt::ICheckpoint* checkpoint, int32_t dimension);
 EXPORT alt::MValueConst* Checkpoint_GetMetaData(alt::ICheckpoint* checkpoint, const char* key);
 EXPORT void Checkpoint_SetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValueConst* val);
+EXPORT bool Checkpoint_HasMetaData(alt::ICheckpoint* checkpoint, const char* key);
+EXPORT void Checkpoint_DeleteMetaData(alt::ICheckpoint* checkpoint, const char* key);
 EXPORT void Checkpoint_AddRef(alt::ICheckpoint* checkpoint);
 EXPORT void Checkpoint_RemoveRef(alt::ICheckpoint* checkpoint);
 // Checkpoint

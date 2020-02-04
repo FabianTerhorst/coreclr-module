@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -142,6 +143,8 @@ namespace AltV.Net
         internal readonly LinkedList<GCHandle> functionExportHandles = new LinkedList<GCHandle>();
 
         private readonly Thread MainThread;
+        
+        private readonly IDictionary<int, IDictionary<IBaseObject, ulong>> threadRefCount = new Dictionary<int, IDictionary<IBaseObject, ulong>>();
 
         public Module(IServer server, AssemblyLoadContext assemblyLoadContext,
             INativeResource moduleResource, IBaseBaseObjectPool baseBaseObjectPool,
@@ -172,6 +175,71 @@ namespace AltV.Net
         public virtual bool IsMainThread()
         {
             return Thread.CurrentThread == MainThread;
+        }
+
+        [Conditional("DEBUG")]
+        public void CountUpRefForCurrentThread(IBaseObject baseObject)
+        {
+            var currThread = Thread.CurrentThread.ManagedThreadId;
+            lock (threadRefCount)
+            {
+                if (!threadRefCount.TryGetValue(currThread, out var baseObjectRefCount))
+                {
+                    baseObjectRefCount = new Dictionary<IBaseObject, ulong>();
+                    threadRefCount[currThread] = baseObjectRefCount;
+                }
+                if (!baseObjectRefCount.TryGetValue(baseObject, out var count))
+                {
+                    count = 0;
+                }
+
+                baseObjectRefCount[baseObject] = count + 1;
+            }
+        }
+        
+        [Conditional("DEBUG")]
+        public void CountDownRefForCurrentThread(IBaseObject baseObject)
+        {
+            var currThread = Thread.CurrentThread.ManagedThreadId;
+            lock (threadRefCount)
+            {
+                if (!threadRefCount.TryGetValue(currThread, out var baseObjectRefCount))
+                {
+                    return;
+                }
+                
+                if (!baseObjectRefCount.TryGetValue(baseObject, out var count))
+                {
+                    return;
+                }
+
+                if (count == 1)
+                {
+                    baseObjectRefCount.Remove(baseObject);
+                    return;
+                }
+
+                baseObjectRefCount[baseObject] = count - 1;
+            }
+        }
+        
+        public bool HasRefForCurrentThread(IBaseObject baseObject)
+        {
+            var currThread = Thread.CurrentThread.ManagedThreadId;
+            lock (threadRefCount)
+            {
+                if (!threadRefCount.TryGetValue(currThread, out var baseObjectRefCount))
+                {
+                    return false;
+                }
+                
+                if (!baseObjectRefCount.TryGetValue(baseObject, out var count))
+                {
+                    return false;
+                }
+
+                return count > 0;
+            }
         }
 
         public Assembly LoadAssemblyFromName(AssemblyName assemblyName)
@@ -1105,12 +1173,14 @@ namespace AltV.Net
 
         public void Dispose()
         {
+            functionExports.Clear();
             foreach (var handle in functionExportHandles)
             {
                 handle.Free();
             }
 
             functionExportHandles.Clear();
+            assemblyLoadContext.SetTarget(null);
         }
     }
 }

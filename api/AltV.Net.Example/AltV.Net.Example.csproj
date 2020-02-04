@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
         <Configurations>Debug;Release;Testing;Linux</Configurations>
         <Platforms>AnyCPU</Platforms>
         <RootNamespace>AltV.Net.Example</RootNamespace>
@@ -22,6 +22,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\AltV.Net.BenchmarkRunners\AltV.Net.BenchmarkRunners.csproj" />
+      <ProjectReference Include="..\AltV.Net.Benchmarks\AltV.Net.Benchmarks.csproj" />
       <ProjectReference Include="..\AltV.Net.ColShape\AltV.Net.ColShape.csproj" />
       <ProjectReference Include="..\AltV.Net.Resources.Chat.Api\AltV.Net.Resources.Chat.Api.csproj" />
       <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />

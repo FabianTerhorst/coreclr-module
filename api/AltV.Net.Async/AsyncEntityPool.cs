@@ -146,6 +146,11 @@ namespace AltV.Net.Async
         {
             return entities.Values;
         }
+        
+        public KeyValuePair<IntPtr, TEntity>[] GetEntitiesArray()
+        {
+            return entities.ToArray();
+        }
 
         public virtual void OnAdd(TEntity entity)
         {

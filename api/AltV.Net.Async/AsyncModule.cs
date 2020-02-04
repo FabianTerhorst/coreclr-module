@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Loader;
 using System.Threading;
 using System.Threading.Tasks;
@@ -408,20 +409,26 @@ namespace AltV.Net.Async
                 }
 
                 Task.Factory.StartNew(async obj =>
-                {
-                    var (taskPlayer, taskObjects, taskEventHandlers, taskName) =
-                        (ValueTuple<IPlayer, object[], HashSet<Function>, string>) obj;
-                    foreach (var eventHandler in taskEventHandlers)
                     {
-                        var invokeValues = eventHandler.CalculateInvokeValues(taskPlayer, taskObjects);
-                        if (invokeValues != null)
+                        var (taskPlayer, taskObjects, taskEventHandlers, taskName, playerRef) =
+                            (ValueTuple<IPlayer, object[], HashSet<Function>, string, PlayerRef>) obj;
+
+                        foreach (var eventHandler in taskEventHandlers)
                         {
                             try
                             {
-                                var task = eventHandler.InvokeTaskOrNull(invokeValues);
-                                if (task != null)
+                                var invokeValues = eventHandler.CalculateInvokeValues(taskPlayer, taskObjects);
+                                if (invokeValues != null)
                                 {
-                                    await task;
+                                    var task = eventHandler.InvokeTaskOrNull(invokeValues);
+                                    if (task != null)
+                                    {
+                                        await task;
+                                    }
+                                }
+                                else
+                                {
+                                    AltAsync.Log("Wrong function params for " + taskName);
                                 }
                             }
                             catch (Exception e)
@@ -429,12 +436,12 @@ namespace AltV.Net.Async
                                 AltAsync.Log($"Execution of {taskName} threw an error: {e}");
                             }
                         }
-                        else
-                        {
-                            AltAsync.Log("Wrong function params for " + taskName);
-                        }
-                    }
-                }, new ValueTuple<IPlayer, object[], HashSet<Function>, string>(player, objects, eventHandlers, name));
+
+                        playerRef.Dispose();
+                    },
+                    new ValueTuple<IPlayer, object[], HashSet<Function>, string, PlayerRef>(player, objects,
+                        eventHandlers,
+                        name, new PlayerRef(player)));
             }
 
             if (asyncEventBusClient.Count != 0 && asyncEventBusClient.TryGetValue(name, out var eventHandlersClient))
@@ -458,20 +465,25 @@ namespace AltV.Net.Async
                 }
 
                 Task.Factory.StartNew(async obj =>
-                {
-                    var (taskPlayer, taskObjects, taskEventHandlers, taskName) =
-                        (ValueTuple<IPlayer, object[], HashSet<Function>, string>) obj;
-                    foreach (var eventHandler in taskEventHandlers)
                     {
-                        var invokeValues = eventHandler.CalculateInvokeValues(taskPlayer, taskObjects);
-                        if (invokeValues != null)
+                        var (taskPlayer, taskObjects, taskEventHandlers, taskName, playerRef) =
+                            (ValueTuple<IPlayer, object[], HashSet<Function>, string, PlayerRef>) obj;
+                        foreach (var eventHandler in taskEventHandlers)
                         {
                             try
                             {
-                                var task = eventHandler.InvokeTaskOrNull(invokeValues);
-                                if (task != null)
+                                var invokeValues = eventHandler.CalculateInvokeValues(taskPlayer, taskObjects);
+                                if (invokeValues != null)
                                 {
-                                    await task;
+                                    var task = eventHandler.InvokeTaskOrNull(invokeValues);
+                                    if (task != null)
+                                    {
+                                        await task;
+                                    }
+                                }
+                                else
+                                {
+                                    AltAsync.Log("Wrong function params for " + taskName);
                                 }
                             }
                             catch (Exception e)
@@ -479,12 +491,11 @@ namespace AltV.Net.Async
                                 AltAsync.Log($"Execution of {taskName} threw an error: {e}");
                             }
                         }
-                        else
-                        {
-                            AltAsync.Log("Wrong function params for " + taskName);
-                        }
-                    }
-                }, new ValueTuple<IPlayer, object[], HashSet<Function>, string>(player, objects, eventHandlersClient, name));
+                        playerRef.Dispose();
+                    },
+                    new ValueTuple<IPlayer, object[], HashSet<Function>, string, PlayerRef>(player, objects,
+                        eventHandlersClient,
+                        name, new PlayerRef(player)));
             }
 
             if (asyncEventBusClientDelegate.Count != 0 &&
@@ -509,15 +520,18 @@ namespace AltV.Net.Async
                 }
 
                 Task.Factory.StartNew(obj =>
-                {
-                    var (taskPlayer, taskObjects, taskEventHandlers) =
-                        (ValueTuple<IPlayer, object[], HashSet<ClientEventAsyncDelegate>>) obj;
-                    foreach (var eventHandler in taskEventHandlers)
                     {
-                        AsyncEventHandler<ClientEventAsyncDelegate>.ExecuteEventAsyncWithoutTask(eventHandler,
-                            @delegate => @delegate(taskPlayer, taskObjects));
-                    }
-                }, new ValueTuple<IPlayer, object[], HashSet<ClientEventAsyncDelegate>>(player, objects, eventDelegates));
+                        var (taskPlayer, taskObjects, taskEventHandlers, playerRef) =
+                            (ValueTuple<IPlayer, object[], HashSet<ClientEventAsyncDelegate>, PlayerRef>) obj;
+                        foreach (var eventHandler in taskEventHandlers)
+                        {
+                            AsyncEventHandler<ClientEventAsyncDelegate>.ExecuteEventAsyncWithoutTask(eventHandler,
+                                @delegate => @delegate(taskPlayer, taskObjects));
+                        }
+                        playerRef.Dispose();
+                    },
+                    new ValueTuple<IPlayer, object[], HashSet<ClientEventAsyncDelegate>, PlayerRef>(player, objects,
+                        eventDelegates, new PlayerRef(player)));
             }
 
             if (PlayerClientEventAsyncEventHandler.HasEvents())
@@ -541,15 +555,19 @@ namespace AltV.Net.Async
                 }
 
                 Task.Factory.StartNew(obj =>
-                {
-                    var (taskPlayer, taskObjects, taskEventHandlers, taskName) =
-                        (ValueTuple<IPlayer, object[], AsyncEventHandler<PlayerClientEventAsyncDelegate>, string>) obj;
-                    foreach (var eventHandler in taskEventHandlers.GetEvents())
                     {
-                        AsyncEventHandler<PlayerClientEventAsyncDelegate>.ExecuteEventAsyncWithoutTask(eventHandler,
-                            @delegate => @delegate(taskPlayer, taskName, taskObjects));
-                    }
-                }, new ValueTuple<IPlayer, object[], AsyncEventHandler<PlayerClientEventAsyncDelegate>, string>(player, objects, PlayerClientEventAsyncEventHandler, name));
+                        var (taskPlayer, taskObjects, taskEventHandlers, taskName, playerRef) =
+                            (ValueTuple<IPlayer, object[], AsyncEventHandler<PlayerClientEventAsyncDelegate>, string, PlayerRef>)
+                            obj;
+                        foreach (var eventHandler in taskEventHandlers.GetEvents())
+                        {
+                            AsyncEventHandler<PlayerClientEventAsyncDelegate>.ExecuteEventAsyncWithoutTask(eventHandler,
+                                @delegate => @delegate(taskPlayer, taskName, taskObjects));
+                        }
+                        playerRef.Dispose();
+                    },
+                    new ValueTuple<IPlayer, object[], AsyncEventHandler<PlayerClientEventAsyncDelegate>, string, PlayerRef>(player,
+                        objects, PlayerClientEventAsyncEventHandler, name, new PlayerRef(player)));
             }
         }
 
@@ -630,30 +648,37 @@ namespace AltV.Net.Async
 
                 Task.Factory.StartNew(async obj =>
                 {
-                    var (taskObjects, taskEventHandlers, taskName) =
-                        (ValueTuple<object[], HashSet<Function>, string>) obj;
-                    foreach (var eventHandler in taskEventHandlers)
+                    try
                     {
-                        var invokeValues = eventHandler.CalculateInvokeValues(taskObjects);
-                        if (invokeValues != null)
+                        var (taskObjects, taskEventHandlers, taskName) =
+                            (ValueTuple<object[], HashSet<Function>, string>) obj;
+                        foreach (var eventHandler in taskEventHandlers)
                         {
-                            try
+                            var invokeValues = eventHandler.CalculateInvokeValues(taskObjects);
+                            if (invokeValues != null)
                             {
-                                var task = eventHandler.InvokeTaskOrNull(invokeValues);
-                                if (task != null)
+                                try
                                 {
-                                    await task;
+                                    var task = eventHandler.InvokeTaskOrNull(invokeValues);
+                                    if (task != null)
+                                    {
+                                        await task;
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    AltAsync.Log($"Execution of {taskName} threw an error: {e}");
                                 }
                             }
-                            catch (Exception e)
+                            else
                             {
-                                AltAsync.Log($"Execution of {taskName} threw an error: {e}");
+                                AltAsync.Log("Wrong function params for " + taskName);
                             }
                         }
-                        else
-                        {
-                            AltAsync.Log("Wrong function params for " + taskName);
-                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine($"Execution of async events threw an error: {exception}");
                     }
                 }, new ValueTuple<object[], HashSet<Function>, string>(objects, eventHandlers, name));
             }

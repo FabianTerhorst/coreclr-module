@@ -12,11 +12,13 @@ namespace AltV.Net.Elements.Refs
         public CheckpointRef(ICheckpoint checkpoint)
         {
             this.checkpoint = checkpoint.AddRef() ? checkpoint : null;
+            Alt.Module.CountUpRefForCurrentThread(checkpoint);
         }
 
         public void Dispose()
         {
             checkpoint?.RemoveRef();
+            Alt.Module.CountDownRefForCurrentThread(checkpoint);
         }
     }
 }

@@ -27,6 +27,16 @@ namespace AltV.Net.FunctionParser
 
         public readonly bool IsMValueConvertible;
 
+        public readonly bool IsPosition;
+        
+        public readonly bool IsRotation;
+        
+        public readonly bool IsRgba;
+        
+        public readonly bool IsVector3;
+
+        public readonly bool IsByteArray;
+        
         public readonly FunctionTypeInfo Element;
 
         public readonly Type ElementType;
@@ -68,6 +78,7 @@ namespace AltV.Net.FunctionParser
                 Expression.NewArrayBounds(paramType, param), param).Compile();
             IsList = paramType.BaseType == FunctionTypes.Array;
             IsDict = paramType.Name.StartsWith("Dictionary") || paramType.Name.StartsWith("IDictionary");
+            
             if (IsDict)
             {
                 GenericArguments = paramType.GetGenericArguments();
@@ -86,15 +97,28 @@ namespace AltV.Net.FunctionParser
                 CreateDictionary = null;
             }
 
-            if (paramType.IsValueType && paramType != FunctionTypes.String)
+            if (paramInfo != null && paramInfo.HasDefaultValue)
             {
-                DefaultValue = Activator.CreateInstance(paramType);
+                DefaultValue = paramInfo.DefaultValue;
             }
             else
             {
-                DefaultValue = null;
+                if (paramType.IsValueType && paramType != FunctionTypes.String)
+                {
+                    DefaultValue = Activator.CreateInstance(paramType);
+                }
+                else
+                {
+                    DefaultValue = null;
+                }
             }
 
+            IsPosition = paramType == FunctionTypes.Position;
+            IsRotation = paramType == FunctionTypes.Rotation;
+            IsRgba = paramType == FunctionTypes.Rgba;
+            IsVector3 = paramType == FunctionTypes.Vector3;
+            IsByteArray = paramType == FunctionTypes.ByteArray;
+            
             var interfaces = paramType.GetInterfaces();
             if (interfaces.Contains(FunctionTypes.Entity))
             {
@@ -252,6 +276,36 @@ namespace AltV.Net.FunctionParser
                 ConstParser = FunctionMValueConstParsers.ParseEnum;
                 ObjectParser = FunctionObjectParsers.ParseEnum;
                 StringParser = FunctionStringParsers.ParseEnum;
+            }
+            else if (IsPosition)
+            {
+                ConstParser = FunctionMValueConstParsers.ParsePosition;
+                ObjectParser = FunctionObjectParsers.ParsePosition;
+                StringParser = FunctionStringParsers.ParsePosition;
+            }
+            else if (IsRotation)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseRotation;
+                ObjectParser = FunctionObjectParsers.ParseRotation;
+                StringParser = FunctionStringParsers.ParseRotation;
+            }
+            else if (IsVector3)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseVector3;
+                ObjectParser = FunctionObjectParsers.ParseVector3;
+                StringParser = FunctionStringParsers.ParseVector3;
+            }
+            else if (IsRgba)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseRgba;
+                ObjectParser = FunctionObjectParsers.ParseRgba;
+                StringParser = FunctionStringParsers.ParseRgba;
+            }
+            else if (IsByteArray)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseByteArray;
+                ObjectParser = FunctionObjectParsers.ParseByteArray;
+                StringParser = FunctionStringParsers.ParseByteArray;
             }
             else
             {

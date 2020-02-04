@@ -25,6 +25,8 @@ EXPORT int32_t Blip_GetDimension(alt::IBlip* blip);
 EXPORT void Blip_SetDimension(alt::IBlip* blip, int32_t dimension);
 EXPORT alt::MValueConst* Blip_GetMetaData(alt::IBlip* blip, const char* key);
 EXPORT void Blip_SetMetaData(alt::IBlip* blip, const char* key, alt::MValueConst* val);
+EXPORT bool Blip_HasMetaData(alt::IBlip* blip, const char* key);
+EXPORT void Blip_DeleteMetaData(alt::IBlip* blip, const char* key);
 EXPORT void Blip_AddRef(alt::IBlip* blip);
 EXPORT void Blip_RemoveRef(alt::IBlip* blip);
 // Blip

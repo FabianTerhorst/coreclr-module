@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
         <RootNamespace>AltV.Net</RootNamespace>
         <Configurations>Debug;Release;Testing</Configurations>
         <Platforms>AnyCPU</Platforms>
@@ -12,12 +12,20 @@
         <PackageProjectUrl>https://github.com/FabianTerhorst/coreclr-module</PackageProjectUrl>
         <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.18.5-beta</PackageVersion>
+        <PackageTags>altv gta bridge gta5 gtav</PackageTags>
+        <PackageVersion>1.27.0</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes></PackageReleaseNotes>
+        <PackageReleaseNotes>
+Add following methods to IVehicle
+Improve external function calls
+        bool IsWheelDetached(byte wheelId);
+        void SetWheelDetached(byte wheelId, bool state);
+        bool IsWheelOnFire(byte wheelId);
+        void SetWheelOnFire(byte wheelId, bool state);
+   Fix Action&lt;*&gt; exports</PackageReleaseNotes>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <PackageIcon>icon.png</PackageIcon>
+        <IncludeSymbols>true</IncludeSymbols>
     </PropertyGroup>
 
     <ItemGroup>

@@ -12,11 +12,13 @@ namespace AltV.Net.Elements.Refs
         public VehicleRef(IVehicle vehicle)
         {
             this.vehicle = vehicle.AddRef() ? vehicle : null;
+            Alt.Module.CountUpRefForCurrentThread(vehicle);
         }
 
         public void Dispose()
         {
             vehicle?.RemoveRef();
+            Alt.Module.CountDownRefForCurrentThread(vehicle);
         }
     }
 }

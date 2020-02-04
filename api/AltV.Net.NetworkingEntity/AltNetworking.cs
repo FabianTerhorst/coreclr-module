@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AltV.Net.NetworkingEntity.Elements.Args;
 using AltV.Net.NetworkingEntity.Elements.Entities;
 using Entity;
@@ -93,9 +94,9 @@ namespace AltV.Net.NetworkingEntity
             Module.EntityPool.Add(entity);
         }
 
-        public static void RemoveEntity(INetworkingEntity entity)
+        public static Task RemoveEntity(INetworkingEntity entity)
         {
-            Module.EntityPool.Remove(entity);
+            return Module.EntityPool.Remove(entity);
         }
 
         public static INetworkingClient CreateClient()

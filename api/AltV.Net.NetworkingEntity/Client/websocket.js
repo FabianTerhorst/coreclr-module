@@ -2,6 +2,7 @@ import EntityRepository from "./entity-repository.js";
 import clientRepository from "./client-repository.js";
 import proto from "./proto.js";
 import ReconnectingWebSocket from './deps/reconnecting-websocket';
+import playerPosition from "./player-position";
 
 export default class WebSocket {
     constructor(url, token) {
@@ -128,6 +129,14 @@ export default class WebSocket {
                 const clientDimensionChange = obj.clientDimensionChange;
                 clientRepository.dimension = clientDimensionChange.dimension;
                 this.entityRepository.updateWorker();
+            } else if (obj.clientPositionOverrideChange) {
+                const clientPositionOverrideChange = obj.clientPositionOverrideChange;
+                const positionX = clientPositionOverrideChange.positionX;
+                const positionY = clientPositionOverrideChange.positionY;
+                const positionZ = clientPositionOverrideChange.positionZ;
+                playerPosition.setOverridePosition({x: positionX, y: positionY, z: positionZ});
+            } else if (obj.clientPositionStopOverrideChange) {
+                playerPosition.setOverridePosition(null);
             }
         });
     }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection.Metadata;
+using System.Threading.Tasks;
 using AltV.Net.NetworkingEntity.Elements.Args;
 using AltV.Net.NetworkingEntity.Elements.Pools;
 using Entity;
@@ -92,6 +93,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
 
                 this.StreamedEntity.Data.Clear();
             }
+
             Exists = true;
         }
 
@@ -248,9 +250,9 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
             entityStreamer.UpdateEntityData(this, key, value);
         }
 
-        public void Remove()
+        public Task Remove()
         {
-            AltNetworking.RemoveEntity(this);
+            return AltNetworking.RemoveEntity(this);
         }
 
         // Internal

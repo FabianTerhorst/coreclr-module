@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
@@ -29,6 +31,10 @@ namespace AltV.Net
             var genericArguments = func.GetType().GetGenericArguments();
             var parameters = func.Method.GetParameters();
             var returnType = func.Method.ReturnType;
+            if (returnType != FunctionTypes.Void)
+            {
+                genericArguments = genericArguments.SkipLast(1).ToArray();
+            }
 
             //TODO: check for unsupported types
             var constParsers = new FunctionMValueConstParser[parameters.Length];
@@ -42,7 +48,7 @@ namespace AltV.Net
                 var arg = parameterInfo.ParameterType;
                 var typeInfo = typeInfos[i] = new FunctionTypeInfo(arg, parameterInfo);
 
-                if (!typeInfo.IsNullable && !typeInfo.IsParamArray)
+                if (!typeInfo.IsNullable && !typeInfo.IsParamArray && !parameterInfo.HasDefaultValue)
                 {
                     requiredArgsCount++;
                 }
@@ -142,6 +148,7 @@ namespace AltV.Net
         internal object Call(MValueConst[] values)
         {
             var invokeValues = CalculateInvokeValues(values);
+            if (invokeValues == null) return null;
 
             var resultObj = @delegate.DynamicInvoke(invokeValues);
             return returnType == FunctionTypes.Void ? null : resultObj;
@@ -150,6 +157,7 @@ namespace AltV.Net
         internal object Call(IPlayer player, MValueConst[] values)
         {
             var invokeValues = CalculateInvokeValues(player, values);
+            if (invokeValues == null) return null;
 
             var resultObj = @delegate.DynamicInvoke(invokeValues);
             return returnType == FunctionTypes.Void ? null : resultObj;
@@ -166,7 +174,7 @@ namespace AltV.Net
 
             var argsLength = args.Length;
             var invokeValues = new object[argsLength];
-            var parserValuesLength = Math.Min(argsLength, length + 1);
+            var parserValuesLength = Math.Max(1, Math.Min(argsLength, length + 1));
             invokeValues[0] = player;
             for (var i = 1; i < parserValuesLength; i++)
             {
@@ -183,9 +191,9 @@ namespace AltV.Net
                 var lastTypeInfo = typeInfos[^1];
                 if (lastTypeInfo.IsParamArray)
                 {
-                    if (length > requiredArgsCount)
+                    if (length + 1 > requiredArgsCount)
                     {
-                        var remainingLength = length - requiredArgsCount - 1;
+                        var remainingLength = length - requiredArgsCount + 1;
                         var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
                         var elementTypeInfo = lastTypeInfo.Element;
                         var elementConstParser = elementTypeInfo.ConstParser;
@@ -339,7 +347,7 @@ namespace AltV.Net
             var argsLength = args.Length;
             var invokeValues = new object[argsLength];
             invokeValues[0] = player;
-            var parserValuesLength = Math.Min(argsLength, length + 1);
+            var parserValuesLength = Math.Max(1, Math.Min(argsLength, length + 1));
             for (var i = 1; i < parserValuesLength; i++)
             {
                 invokeValues[i] = objectParsers[i](values[i - 1], args[i], typeInfos[i]);
@@ -355,9 +363,9 @@ namespace AltV.Net
                 var lastTypeInfo = typeInfos[^1];
                 if (lastTypeInfo.IsParamArray)
                 {
-                    if (length > requiredArgsCount)
+                    if (length + 1 > requiredArgsCount)
                     {
-                        var remainingLength = length - requiredArgsCount - 1;
+                        var remainingLength = length - requiredArgsCount + 1;
                         var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
                         var elementTypeInfo = lastTypeInfo.Element;
                         var elementConstParser = elementTypeInfo.ObjectParser;
@@ -395,7 +403,7 @@ namespace AltV.Net
             var argsLength = args.Length;
             var invokeValues = new object[argsLength];
             invokeValues[0] = player;
-            var parserValuesLength = Math.Min(argsLength, length + 1);
+            var parserValuesLength = Math.Max(1, Math.Min(argsLength, length + 1));
             for (var i = 1; i < parserValuesLength; i++)
             {
                 invokeValues[i] = stringParsers[i](values[i - 1], args[i], typeInfos[i]);
@@ -411,9 +419,9 @@ namespace AltV.Net
                 var lastTypeInfo = typeInfos[^1];
                 if (lastTypeInfo.IsParamArray)
                 {
-                    if (length > requiredArgsCount)
+                    if (length + 1 > requiredArgsCount)
                     {
-                        var remainingLength = length - requiredArgsCount - 1;
+                        var remainingLength = length - requiredArgsCount + 1;
                         var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
                         var elementTypeInfo = lastTypeInfo.Element;
                         var elementConstParser = elementTypeInfo.StringParser;
@@ -444,8 +452,19 @@ namespace AltV.Net
         {
             var invokeValues = CalculateInvokeValues(player, values);
 
+            if (invokeValues == null) return null;
             //var resultObj = objectMethodExecutor.Execute(target, invokeValues);
-            var resultObj = @delegate.DynamicInvoke(invokeValues);
+            object resultObj;
+            try
+            {
+                resultObj = @delegate.DynamicInvoke(invokeValues);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                resultObj = null;
+            }
+
             if (returnType == FunctionTypes.Void)
             {
                 return null;
@@ -497,17 +516,24 @@ namespace AltV.Net
             return null;
         }
 
-        internal void Call(IntPtr[] nativePointers, out IntPtr result)
+        internal IntPtr Call(IntPtr pointer, long size)
         {
-            var length = nativePointers.Length;
-            var mValues = new MValueConst[length];
-            for (var i = 0; i < length; i++)
+            var currArgs = new IntPtr[size];
+            if (pointer != IntPtr.Zero)
             {
-                mValues[i] = new MValueConst(nativePointers[i]);
+                Marshal.Copy(pointer, currArgs, 0, (int) size);
+            }
+            
+            var mValues = new MValueConst[size];
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i] = new MValueConst(currArgs[i]);
             }
 
             Alt.Server.CreateMValue(out var resultMValue, Call(mValues));
-            result = resultMValue.nativePointer;
+            if (resultMValue.nativePointer != IntPtr.Zero) return resultMValue.nativePointer;
+            Alt.Server.CreateMValueNil(out resultMValue);
+            return resultMValue.nativePointer;
         }
     }
 }

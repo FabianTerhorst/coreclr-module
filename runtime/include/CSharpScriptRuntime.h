@@ -18,6 +18,14 @@ class CSharpScriptRuntime : public alt::IScriptRuntime
     alt::IResource::Impl* CreateImpl(alt::IResource *resource) override;
     void DestroyImpl(alt::IResource::Impl *impl) override;
 
+public:
+    bool RequiresMain() const override;
+
+public:
+    void OnDispose() override;
+
+private:
+
     void OnTick() override;
 
   public:

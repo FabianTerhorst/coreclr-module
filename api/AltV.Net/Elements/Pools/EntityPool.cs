@@ -104,6 +104,18 @@ namespace AltV.Net.Elements.Pools
             return entities.Values;
         }
 
+        public KeyValuePair<IntPtr, TEntity>[] GetEntitiesArray()
+        {
+            var arr = new KeyValuePair<IntPtr, TEntity>[entities.Count];
+            var i = 0;
+            foreach (var (ptr, entity) in entities)
+            {
+                arr[i++] = new KeyValuePair<IntPtr, TEntity>(ptr, entity);
+            }
+
+            return arr;
+        }
+
         public virtual void OnAdd(TEntity entity)
         {
         }

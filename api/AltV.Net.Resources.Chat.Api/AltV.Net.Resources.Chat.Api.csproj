@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.0</TargetFramework>
-         <PackageVersion>1.1.0-dev-preview</PackageVersion>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+         <PackageVersion>1.27.0</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>update dependencies</PackageReleaseNotes>
         <PackageIcon>icon.png</PackageIcon>

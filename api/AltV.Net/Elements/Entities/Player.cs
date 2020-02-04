@@ -115,6 +115,21 @@ namespace AltV.Net.Elements.Entities
             Marshal.FreeHGlobal(stringPtr);
         }
 
+        public override bool HasMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            var result = AltNative.Player.Player_HasMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+            return result;
+        }
+
+        public override void DeleteMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Player.Player_DeleteMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+        }
+
         public override void SetSyncedMetaData(string key, in MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
@@ -126,6 +141,50 @@ namespace AltV.Net.Elements.Entities
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
             value = new MValueConst(AltNative.Player.Player_GetSyncedMetaData(NativePointer, stringPtr));
+            Marshal.FreeHGlobal(stringPtr);
+        }
+        
+        public override bool HasSyncedMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            var result = AltNative.Player.Player_HasSyncedMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+            return result;
+        }
+
+        public override void DeleteSyncedMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Player.Player_DeleteSyncedMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+        }
+        
+        public override void SetStreamSyncedMetaData(string key, in MValueConst value)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Player.Player_SetStreamSyncedMetaData(NativePointer, stringPtr, value.nativePointer);
+            Marshal.FreeHGlobal(stringPtr);
+        }
+
+        public override void GetStreamSyncedMetaData(string key, out MValueConst value)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            value = new MValueConst(AltNative.Player.Player_GetStreamSyncedMetaData(NativePointer, stringPtr));
+            Marshal.FreeHGlobal(stringPtr);
+        }
+        
+        public override bool HasStreamSyncedMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            var result = AltNative.Player.Player_HasStreamSyncedMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+            return result;
+        }
+
+        public override void DeleteStreamSyncedMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Player.Player_DeleteStreamSyncedMetaData(NativePointer, stringPtr);
             Marshal.FreeHGlobal(stringPtr);
         }
 

@@ -143,12 +143,9 @@ void* MValueConst_GetEntity(alt::MValueConst* mValueConst, alt::IBaseObject::Typ
                 case alt::IBaseObject::Type::VOICE_CHANNEL:
                     return dynamic_cast<alt::IVoiceChannel*>(entityPointer);
                 case alt::IBaseObject::Type::COLSHAPE:
-                    if (auto checkpoint = dynamic_cast<alt::ICheckpoint*>(entityPointer)) {
-                        return checkpoint;
-                    } else {
-                        auto colShape = dynamic_cast<alt::IColShape*>(entityPointer);
-                        return colShape;
-                    }
+                    return dynamic_cast<alt::IColShape*>(entityPointer);
+                case alt::IBaseObject::Type::CHECKPOINT:
+                    return dynamic_cast<alt::ICheckpoint*>(entityPointer);
                 default:
                     return nullptr;
             }
@@ -157,18 +154,66 @@ void* MValueConst_GetEntity(alt::MValueConst* mValueConst, alt::IBaseObject::Typ
     return nullptr;
 }
 
-alt::MValueConst* MValueConst_CallFunction(alt::MValueConst* mValueConst, alt::MValueConst* val[], uint64_t size) {
+alt::MValueConst* MValueConst_CallFunction(alt::ICore* core, alt::MValueConst* mValueConst, alt::MValueConst* val[], uint64_t size) {
     auto mValue = mValueConst->Get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::FUNCTION) {
         alt::MValueArgs value = alt::Array<alt::MValueConst>(size);
         for (uint64_t i = 0; i < size; i++) {
-            value.Push(*val[i]);
+            if (val == nullptr) {
+                value[i] = core->CreateMValueNil();
+            } else {
+                value[i] = *val[i];
+            }
         }
         auto mValueFunction = dynamic_cast<const alt::IMValueFunction*>(mValue);
-        return new alt::MValueConst(mValueFunction->Call(value));
+        auto result = new alt::MValueConst(mValueFunction->Call(value));
+        return result;
     }
     return nullptr;
 }
+
+void MValueConst_GetVector3(alt::MValueConst* mValueConst, position_t& position) {
+    auto mValue = mValueConst->Get();
+    if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::VECTOR3) {
+        auto vector = dynamic_cast<const alt::IMValueVector3*>(mValue)->Value();
+        position.x = vector[0];
+        position.y = vector[1];
+        position.z = vector[2];
+    }
+}
+
+void MValueConst_GetRGBA(alt::MValueConst* mValueConst, rgba_t& rgba) {
+    auto mValue = mValueConst->Get();
+    if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::RGBA) {
+        auto rgbaValue = dynamic_cast<const alt::IMValueRGBA*>(mValue)->Value();
+        rgba.r = rgbaValue.r;
+        rgba.g = rgbaValue.g;
+        rgba.b = rgbaValue.b;
+        rgba.a = rgbaValue.a;
+    }
+}
+
+void MValueConst_GetByteArray(alt::MValueConst* mValueConst, uint64_t size, void* data) {
+    auto mValue = mValueConst->Get();
+    if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::RGBA) {
+        auto byteArrayMValue = dynamic_cast<const alt::IMValueByteArray*>(mValue);
+        auto byteArraySize = byteArrayMValue->GetSize();
+        if (byteArraySize < size) {
+            size = byteArraySize;
+        }
+        auto byteArray = byteArrayMValue->GetData();
+        memcpy(data, byteArray, size);
+    }
+}
+
+uint64_t MValueConst_GetByteArraySize(alt::MValueConst* mValueConst) {
+    auto mValue = mValueConst->Get();
+    if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::BYTE_ARRAY) {
+        return dynamic_cast<const alt::IMValueByteArray*>(mValue)->GetSize();
+    }
+    return 0;
+}
+
 
 /*void MValue_Dispose(alt::MValue* mValue) {
     mValue->Free();

@@ -13,6 +13,8 @@ namespace AltV.Net
         string RootDirectory { get; }
 
         INativeResource Resource { get; }
+        
+        IntPtr NativePointer { get; }
 
         void LogInfo(string message);
 
@@ -108,6 +110,8 @@ namespace AltV.Net
 
         IEnumerable<IVehicle> GetVehicles();
 
+        IEntity GetEntityById(ushort id);
+
         void StartResource(string name);
 
         void StopResource(string name);
@@ -152,6 +156,12 @@ namespace AltV.Net
 
 
         void CreateMValueFunction(out MValueConst mValue, IntPtr value);
+        
+        void CreateMValueVector3(out MValueConst mValue, Position value);
+        
+        void CreateMValueRgba(out MValueConst mValue, Rgba value);
+        
+        void CreateMValueByteArray(out MValueConst mValue, byte[] value);
 
         void CreateMValue(out MValueConst mValue, object obj);
 

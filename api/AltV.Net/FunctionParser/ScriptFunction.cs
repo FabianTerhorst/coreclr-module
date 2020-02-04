@@ -94,6 +94,20 @@ namespace AltV.Net.FunctionParser
             this.scriptFunctionParameters = scriptFunctionParameters;
             this.target = @delegate.Target;
         }
+        
+        private ScriptFunction(Delegate @delegate, ScriptFunctionParameter[] scriptFunctionParameters, FunctionParserMethodInfo functionParserMethodInfo)
+        {
+            args = new object[scriptFunctionParameters.Length];
+            this.@delegate = @delegate;
+            this.functionParserMethodInfo = functionParserMethodInfo;
+            this.scriptFunctionParameters = scriptFunctionParameters;
+            this.target = @delegate.Target;
+        }
+
+        public ScriptFunction Clone()
+        {
+            return new ScriptFunction(this.@delegate, this.scriptFunctionParameters, this.functionParserMethodInfo);
+        }
 
         public void Set(object value)
         {

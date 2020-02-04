@@ -92,6 +92,15 @@ message ClientDimensionChangeEvent {
     int64 dimension = 1;
 }
 
+message ClientPositionOverrideChangeEvent {
+    float position_x = 1;
+    float position_y = 2;
+    float position_z = 3;
+}
+
+message ClientPositionStopOverrideChangeEvent {
+}
+
 message ServerEvent {
     oneof Event {
         EntityDataChangeEvent dataChange = 1;
@@ -103,6 +112,8 @@ message ServerEvent {
         EntityMultipleDataChangeEvent multipleDataChange = 7;
         EntityDimensionChangeEvent dimensionChange = 8;
         ClientDimensionChangeEvent clientDimensionChange = 9;
+        ClientPositionOverrideChangeEvent clientPositionOverrideChange = 10;
+        ClientPositionStopOverrideChangeEvent clientPositionStopOverrideChange = 11;
     }
 }
 

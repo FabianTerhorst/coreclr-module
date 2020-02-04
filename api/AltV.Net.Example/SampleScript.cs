@@ -9,6 +9,12 @@ namespace AltV.Net.Example
 {
     public class SampleScript : IScript
     {
+        [AsyncScriptEvent(ScriptEventType.Checkpoint)]
+        public async Task Checkpoint(ICheckpoint checkpoint, IEntity entity, bool state)
+        {
+            Console.WriteLine("bla");
+        } 
+        
         [Command]
         public void MyCommand(IPlayer player, string myArgument)
         {
@@ -18,6 +24,12 @@ namespace AltV.Net.Example
         public void MyCommand2(IPlayer player, int? myArgument)
         {
             Console.WriteLine("bla with arg:" + myArgument);
+        }
+        
+        [Command("bladyn")]
+        public void MyCommand(IPlayer player, int myArgument, params string[] message)
+        {
+            Console.WriteLine("bladync with arg:" + myArgument + string.Join(" ", message));
         }
 
         [Command("bla", true, new [] {"bla2", "bla3"})]
@@ -42,6 +54,12 @@ namespace AltV.Net.Example
         public void MyCommandWithDynamicArgs2(IPlayer player, int arg1, int? arg2, params string[] args)
         {
             Console.WriteLine("Command:" + arg1 + " " + arg2 + " remaining args " + string.Join(",", args));
+        }
+        
+        [Command("defaultParamsCommand", aliases: new []{"defaultParamsCommand2"})]
+        public void DefaultParamsCommand(IPlayer player, string test, int arg1 = 1, int arg2 = 2)
+        {
+            Console.WriteLine("Command:" + test + " " + arg1 + " " + arg2);
         }
 
         [ServerEvent("eventName")]

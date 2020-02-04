@@ -17,7 +17,7 @@ RUN mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && cma
 
 WORKDIR /runtime/build/src
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0 as dotnet
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as dotnet
 
 # build example resource
 WORKDIR /altv-example/
@@ -72,17 +72,19 @@ COPY startgdb.sh .
 COPY libnode.so.72 .
 COPY libnode-module.so modules/
 
+COPY --from=dotnet /altv-example/AltV.Net.Benchmarks resources/example/
+
 COPY resource.cfg resources/example/
 COPY --from=dotnet /altv-example/AltV.Net.Resources.Chat/resource.cfg resources/chat/
 COPY data/ ./data
 #COPY chat/ resources/chat
 COPY --from=clang /runtime/build/src/libcsharp-module.so modules/
-COPY --from=dotnet /altv-example/AltV.Net.Example/bin/Release/netcoreapp3.0/publish resources/example/
-COPY --from=dotnet /altv-example/AltV.Net.Resources.Chat/bin/Release/netcoreapp3.0/publish resources/chat/
-#COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.0/publish .
-COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.dll .
-COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/AltV.Net.Host.runtimeconfig.json .
-#COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.0/publish/Microsoft.Diagnostics.Tracing.TraceEvent.dll .
+COPY --from=dotnet /altv-example/AltV.Net.Example/bin/Release/netcoreapp3.1/publish resources/example/
+COPY --from=dotnet /altv-example/AltV.Net.Resources.Chat/bin/Release/netcoreapp3.1/publish resources/chat/
+#COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.1/publish .
+COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.1/publish/AltV.Net.Host.dll .
+#COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.1/publish/AltV.Net.Host.runtimeconfig.json .
+#COPY --from=dotnet /altv-example/AltV.Net.Host/bin/Release/netcoreapp3.1/publish/Microsoft.Diagnostics.Tracing.TraceEvent.dll .
 RUN ls -l
 RUN chmod +x ./altv-server
 

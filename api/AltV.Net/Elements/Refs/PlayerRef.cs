@@ -12,11 +12,13 @@ namespace AltV.Net.Elements.Refs
         public PlayerRef(IPlayer player)
         {
             this.player = player.AddRef() ? player : null;
+            Alt.Module.CountUpRefForCurrentThread(player);
         }
 
         public void Dispose()
         {
             player?.RemoveRef();
+            Alt.Module.CountDownRefForCurrentThread(player);
         }
     }
 }

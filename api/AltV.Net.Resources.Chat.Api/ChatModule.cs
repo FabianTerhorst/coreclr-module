@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -38,17 +39,17 @@ namespace AltV.Net.Resources.Chat.Api
         {
             if (mValueArray.Length != 1) return;
             var arg = mValueArray[0];
-            if (arg.type != MValueConst.Type.STRING) return;
+            if (arg.type != MValueConst.Type.String) return;
             action(player, arg.GetString());
         }
 
-        /*private static void OnChatMessageParserServer(MValueConst[] mValueArray, Action<IPlayer, string> action)
+        private static void OnChatMessageParserServer(MValueConst[] mValueArray, Action<IPlayer, string> action)
         {
             if (mValueArray.Length != 1) return;
             var argMsg = mValueArray[0];
-            if (argMsg.type != MValueConst.Type.STRING) return;
+            if (argMsg.type != MValueConst.Type.String) return;
             action(null, argMsg.GetString());
-        }*/
+        }
 
         private void OnChatMessage(IPlayer player, string message)
         {
@@ -97,6 +98,74 @@ namespace AltV.Net.Resources.Chat.Api
                     {
                         doesNotExistsDelegate(player, cmd);
                     }
+                }
+            }
+        }
+
+        //TODO: add function parsers for ReadOnlySpan<byte> that are same as the parsers for string for faster command parsing
+        private void OnChatMessageSpan(IPlayer player, string message)
+        {
+            if (string.IsNullOrEmpty(message)) return;
+            var messageSpan = message.AsSpan();
+            var length = messageSpan.Length;
+            var start = true;
+            var end = false;
+            var currBlockIndex = -1;
+            for(var i= 0;i < length;++i)
+            {
+                if (start && messageSpan[i] != ' ')
+                {
+                    start = false;
+                    currBlockIndex = i;
+                }
+                else if(currBlockIndex != -1)
+                {
+                    messageSpan.Slice(currBlockIndex, i - currBlockIndex);
+                    start = true;
+                }
+            }
+            if (messageSpan.Length < 2 || messageSpan[0] != '/') return;
+            //TODO: do all operations, including trim, slice and split for ' ' in single span manipulation
+            messageSpan = messageSpan.Slice(1).Trim(); // Remove '/' and whitespace
+            var args = message.Split(' ');
+            var argsLength = args.Length;
+            if (argsLength < 1) return;
+            var cmd = args[0];
+            LinkedList<CommandDelegate> delegates;
+            if (argsLength < 2)
+            {
+                if (commandDelegates.TryGetValue(cmd, out delegates) && delegates.Count > 0)
+                {
+                    foreach (var commandDelegate in delegates)
+                    {
+                        commandDelegate(player, EmptyArgs);
+                    }
+                }
+                else
+                {
+                    foreach (var doesNotExistsDelegate in AltChat.CommandDoesNotExistsDelegates)
+                    {
+                        doesNotExistsDelegate(player, cmd);
+                    }
+                }
+
+                return;
+            }
+
+            var argsArray = new string[argsLength - 1];
+            Array.Copy(args, 1, argsArray, 0, argsLength - 1);
+            if (commandDelegates.TryGetValue(cmd, out delegates) && delegates.Count > 0)
+            {
+                foreach (var commandDelegate in delegates)
+                {
+                    commandDelegate(player, argsArray);
+                }
+            }
+            else
+            {
+                foreach (var doesNotExistsDelegate in AltChat.CommandDoesNotExistsDelegates)
+                {
+                    doesNotExistsDelegate(player, cmd);
                 }
             }
         }
@@ -151,10 +220,7 @@ namespace AltV.Net.Resources.Chat.Api
                         }
                         else
                         {
-                            delegates.AddLast((player, arguments) =>
-                            {
-                                function.Call(player, arguments);
-                            });
+                            delegates.AddLast((player, arguments) => { function.Call(player, arguments); });
                         }
 
                         var aliases = command.Aliases;
@@ -177,10 +243,7 @@ namespace AltV.Net.Resources.Chat.Api
                                 }
                                 else
                                 {
-                                    delegates.AddLast((player, arguments) =>
-                                    {
-                                        function.Call(player, arguments);
-                                    });
+                                    delegates.AddLast((player, arguments) => { function.Call(player, arguments); });
                                 }
                             }
                         }

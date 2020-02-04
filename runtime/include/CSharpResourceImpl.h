@@ -30,12 +30,13 @@
 
 #include "CoreClr.h"
 #include "../src/altv-c-api/position.h"
+#include "../src/altv-c-api/rgba.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
 
-typedef void (* MValueFunctionCallback)(alt::MValueArgs*, alt::MValue*);
+typedef alt::MValueConst* (* MValueFunctionCallback)(alt::MValueConst*[], long size);
 
 class CustomInvoker : public alt::IMValueFunction::Impl {
 public:
@@ -46,10 +47,27 @@ public:
     }
 
     alt::MValue Call(alt::MValueArgs args) const override {
-        //TODO: pass MValue array not alt::Array
-        alt::MValue result;
-        mValueFunctionCallback(&args, &result);
-        return result;
+        uint64_t size = args.GetSize();
+        if (size == 0) {
+            alt::MValueConst* resultConstPtr = mValueFunctionCallback(nullptr, 0);
+            alt::MValue result = *((alt::MValue*)resultConstPtr);
+            return result;
+        } else {
+#ifdef _WIN32
+            auto constArgs = new alt::MValueConst* [size];
+#else
+            alt::MValueConst* constArgs[size];
+#endif
+            for (uint64_t i = 0; i < size; i++) {
+                constArgs[i] = &args[i];
+            }
+            alt::MValueConst* resultConstPtr = mValueFunctionCallback(constArgs, size);
+#ifdef _WIN32
+            delete[] constArgs;
+#endif
+            alt::MValue result = *((alt::MValue*)resultConstPtr);
+            return result;
+        }
     }
 };
 

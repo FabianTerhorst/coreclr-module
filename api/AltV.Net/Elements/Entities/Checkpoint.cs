@@ -61,6 +61,21 @@ namespace AltV.Net.Elements.Entities
             Marshal.FreeHGlobal(stringPtr);
         }
 
+        public override bool HasMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            var result = AltNative.Checkpoint.Checkpoint_HasMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+            return result;
+        }
+
+        public override void DeleteMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Checkpoint.Checkpoint_DeleteMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+        }
+        
         public byte CheckpointType
         {
             get
@@ -99,7 +114,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public Checkpoint(IntPtr nativePointer) : base(nativePointer, BaseObjectType.ColShape)
+        public Checkpoint(IntPtr nativePointer) : base(nativePointer, BaseObjectType.Checkpoint)
         {
         }
 

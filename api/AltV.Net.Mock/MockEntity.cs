@@ -114,6 +114,46 @@ namespace AltV.Net.Mock
             return true;
         }
 
+        public bool HasData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasSyncedMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteSyncedMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasStreamSyncedMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteStreamSyncedMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
         public void SetMetaData(string key, in MValueConst value)
         {
             throw new NotImplementedException();
@@ -130,6 +170,26 @@ namespace AltV.Net.Mock
         }
 
         public void GetSyncedMetaData(string key, out MValueConst value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetStreamSyncedMetaData(string key, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GetStreamSyncedMetaData<T>(string key, out T result)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetStreamSyncedMetaData(string key, in MValueConst value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetStreamSyncedMetaData(string key, out MValueConst value)
         {
             throw new NotImplementedException();
         }

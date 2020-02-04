@@ -29,7 +29,13 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Checkpoint_SetMetaData(IntPtr checkpoint, IntPtr key, IntPtr val);
-            
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Checkpoint_HasMetaData(IntPtr checkpoint, IntPtr key);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Checkpoint_DeleteMetaData(IntPtr checkpoint, IntPtr key);
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Checkpoint_AddRef(IntPtr checkpoint);
 
@@ -53,9 +59,9 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool Checkpoint_IsVehicleIn(IntPtr checkpoint, IntPtr vehicle);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern ColShapeType Checkpoint_GetColShapeType(IntPtr colShape);
+            internal static extern ColShapeType Checkpoint_GetColShapeType(IntPtr checkpoint);
         }
     }
 }

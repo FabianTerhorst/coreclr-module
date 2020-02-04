@@ -10,7 +10,7 @@ namespace AltV.Net
     {
         public delegate bool ImportDelegate(string resourceName, string key, out object value);
 
-        private static Action<string> _startTracing;
+        private static Action<string, string> _startTracing;
 
         private static Action _stopTracing;
 
@@ -38,7 +38,7 @@ namespace AltV.Net
             return OnTraceSizeChange;
         }
 
-        public static void SetStartTracingDelegate(Action<string> startTracing)
+        public static void SetStartTracingDelegate(Action<string, string> startTracing)
         {
             _startTracing = startTracing;
         }
@@ -64,9 +64,9 @@ namespace AltV.Net
             _export = export;
         }
 
-        public static void StartTracing(string traceFileName)
+        public static void StartTracing(string traceFileName, string traceFileFormatName)
         {
-            _startTracing?.Invoke(traceFileName);
+            _startTracing?.Invoke(traceFileName, traceFileFormatName);
         }
 
         public static void StopTracing()

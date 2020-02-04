@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AltV.Net.NetworkingEntity.Elements.Entities;
 using AltV.Net.NetworkingEntity.Elements.Factories;
 using AltV.Net.NetworkingEntity.Elements.Providers;
@@ -47,12 +49,11 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
             return false;
         }
 
-        public void Remove(INetworkingEntity entity) => Remove(entity.Id);
+        public Task Remove(INetworkingEntity entity) => Remove(entity.Id);
 
-        public void Remove(ulong id)
+        public async Task Remove(ulong id)
         {
             INetworkingEntity removedEntity;
-            idProvider.Free(id);
             lock (entities)
             {
                 if (!entities.Remove(id, out removedEntity))
@@ -61,8 +62,6 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
                 }
             }
 
-            OnRemove(removedEntity);
-
             if (removedEntity is IInternalNetworkingEntity internalNetworkingEntity)
             {
                 lock (internalNetworkingEntity)
@@ -70,6 +69,8 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
                     internalNetworkingEntity.Exists = false;
                 }
             }
+
+            await OnRemove(removedEntity);
         }
 
         public bool TryGet(ulong id, out INetworkingEntity entity)
@@ -85,9 +86,20 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
             AltNetworking.Module.Streamer.CreateEntity(entity);
         }
 
-        public virtual void OnRemove(INetworkingEntity entity)
+        public virtual async Task OnRemove(INetworkingEntity entity)
         {
-            AltNetworking.Module.Streamer.RemoveEntity(entity);
+            try
+            {
+                await AltNetworking.Module.Streamer.RemoveEntity(entity);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
+            finally
+            {
+                idProvider.Free(entity.Id);
+            }
         }
     }
 }
