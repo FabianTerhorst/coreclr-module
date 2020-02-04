@@ -7,6 +7,7 @@ using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
 using AltV.Net.Enums;
 using System.Drawing;
+using AltV.Net.BenchmarkRunners;
 using AltV.Net.Elements.Refs;
 using AltV.Net.Resources.Chat.Api;
 
@@ -16,6 +17,9 @@ namespace AltV.Net.Example
     {
         public override void OnStart()
         {
+            //var benchmarkRunner = new BenchmarkRunner();
+            //benchmarkRunner.Run();
+
             long currentTraceSize = 0;
             AltTrace.OnTraceFileSizeChange += size =>
             {
@@ -103,7 +107,7 @@ namespace AltV.Net.Example
             Alt.Emit("convertible_test", convertibleObject);
 
             Alt.OnServer<string>("test", s => { Alt.Log("test=" + s); });
-            Alt.OnServer<object[]>("test", args => { Alt.Log("args=" + args[0]); });
+            //Alt.OnServer<object[]>("test", args => { Alt.Log("args=" + args[0]); });
             Alt.Emit("test", "bla");
             Alt.OnServer("bla", bla);
             Alt.OnServer<string>("bla2", bla2);
@@ -253,7 +257,7 @@ namespace AltV.Net.Example
 
             Alt.Emit("test_string_array", new object[] {new[] {"bla"}});
 
-            /*Alt.On("function_event", delegate(Function.Func func)
+            Alt.OnServer("function_event", delegate(Function.Func func)
             {
                 var result = func("parameter1");
                 Alt.Log("result:" + result);
@@ -261,9 +265,22 @@ namespace AltV.Net.Example
 
             Alt.Emit("function_event", Function.Create(delegate(string bla)
             {
+                Console.WriteLine(bla + " " + (bla == null));
                 Alt.Log("parameter=" + bla);
                 return 42;
-            }));*/
+            }));
+            
+            Alt.OnServer("function_event_action", delegate(Function.Func func)
+            {
+                var result = func("parameter1");
+                Alt.Log("result:" + result);
+            });
+
+            Alt.Emit("function_event_action", Function.Create(delegate(string bla)
+            {
+                Console.WriteLine(bla + " " + (bla == null));
+                Alt.Log("parameter=" + bla);
+            }));
 
             foreach (var pl in Alt.GetAllPlayers())
             {
@@ -386,9 +403,18 @@ namespace AltV.Net.Example
             Alt.Emit("chat:message", "/defaultParamsCommand test 6 3");
             Alt.Emit("chat:message", "/defaultParamsCommand2 test 6 3");
             
+            Alt.Emit("chat:message", "/bladyn 6");
+            Alt.Emit("chat:message", "/bladyn 6 test");
+            Alt.Emit("chat:message", "/bladyn 6 test test2");
+            Alt.Emit("chat:message", "/bladyn 6 test test2 test3");
+            
             Alt.OnServer<int, object[]>("onOptionalAndParamArray", OnOptionalAndParamArray);
             
             Alt.Emit("onOptionalAndParamArray", 5, 42, "test");
+            
+            Alt.CreateCheckpoint(CheckpointType.Cyclinder, Position.Zero, 50f, 50f, Rgba.Zero);
+
+            Alt.CreateVehicle(VehicleModel.Adder, Position.Zero, Rotation.Zero);
         }
         
         public static void OnOptionalAndParamArray(int test, params object[] args) {
@@ -584,6 +610,7 @@ namespace AltV.Net.Example
 
         private void OnPlayerConnect(IPlayer player, string reason)
         {
+            var myCustomPlayer = (MyPlayer)player;
             player.Emit("connect_event");
             player.SetDateTime(DateTime.Now);
             player.Model = (uint) PedModel.FreemodeMale01;
