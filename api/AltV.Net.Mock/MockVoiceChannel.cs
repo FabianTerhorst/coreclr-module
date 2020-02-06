@@ -29,7 +29,7 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public bool IsPlayerConnected(IPlayer player)
+        public bool HasPlayer(IPlayer player)
         {
             throw new NotImplementedException();
         }

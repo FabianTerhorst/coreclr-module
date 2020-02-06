@@ -5,12 +5,12 @@ using AltV.Net.Native;
 
 namespace AltV.Net.FunctionParser
 {
-    public interface IParserServerEventHandler
+    internal interface IParserServerEventHandler
     {
         void Call(MValueConst[] mValueArray);
     }
 
-    public class ParserServerEventHandler<TFunc> : IParserServerEventHandler where TFunc : Delegate
+    internal class ParserServerEventHandler<TFunc> : IParserServerEventHandler where TFunc : Delegate
     {
         private readonly TFunc @delegate;
 

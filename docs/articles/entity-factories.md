@@ -78,3 +78,29 @@ public class MyVehicle : Vehicle
         }
 }
 ```
+
+## Use the custom Entity class
+
+For events inside IScript class you can just use your own class instead of IPlayer/IVehicle ect.
+
+```csharp
+public class SampleScript: IScript {
+  [ScriptEvent(ScriptEventType.PlayerConnect)]
+  public void MyPlayerConnect(MyPlayer player, string reason)
+  {
+   //...
+  }
+}
+```
+
+For events registered via Alt you can just cast the entities to the custom classes.
+
+```csharp
+Alt.OnPlayerConnect += OnPlayerConnect;
+//...
+private void OnPlayerConnect(IPlayer player, string reason)
+{
+  var myPlayer = (MyPlayer)player;
+  //...
+}
+```

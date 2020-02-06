@@ -14,6 +14,16 @@ namespace AltV.Net.Mock
         public override Position Position { get; set; }
         public override int Dimension { get; set; }
 
+        public override bool HasMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void DeleteMetaData(string key)
+        {
+            throw new NotImplementedException();
+        }
+
         public override void SetMetaData(string key, in MValueConst value)
         {
             throw new NotImplementedException();

@@ -62,29 +62,82 @@ namespace AltV.Net.FunctionParser
             return value;
         }
 
-        public static object ParseEntity(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseEntity(string value, Type type, FunctionTypeInfo typeInfo)
+        {
+            if (typeInfo.IsPlayer)
+            {
+                foreach (var player in Alt.Server.GetPlayers())
+                {
+                    if (!player.Exists) continue;
+                    if (player.Name.Equals(value))
+                    {
+                        return player;
+                    }
+                }
+
+                if (!ushort.TryParse(value, out var playerId)) return null;
+                var entity = Alt.Server.GetEntityById(playerId);
+                if (entity is IPlayer playerEntity)
+                {
+                    return playerEntity;
+                }
+            }
+            else if (typeInfo.IsVehicle)
+            {
+                if (!ushort.TryParse(value, out var vehicleId)) return null;
+                var entity = Alt.Server.GetEntityById(vehicleId);
+                if (entity is IVehicle vehicleEntity)
+                {
+                    return vehicleEntity;
+                }
+            }
+
+            return null;
+        }
+
+        public static object ParseArray(string value, Type type, FunctionTypeInfo typeInfo)
         {
             return null;
         }
 
-        public static bool ValidateEntityType(BaseObjectType baseObjectType, Type type, FunctionTypeInfo typeInfo)
-        {
-            return false;
-        }
-
-        public static object ParseArray(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseDictionary(string value, Type type, FunctionTypeInfo typeInfo)
         {
             return null;
         }
 
-        public static object ParseDictionary(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseConvertible(string value, Type type, FunctionTypeInfo typeInfo)
         {
             return null;
         }
 
-        public static object ParseConvertible(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParsePosition(string value, Type type, FunctionTypeInfo typeInfo)
         {
             return null;
+        }
+        
+        public static object ParseRotation(string value, Type type, FunctionTypeInfo typeInfo)
+        {
+            return null;
+        }
+        
+        public static object ParseVector3(string value, Type type, FunctionTypeInfo typeInfo)
+        {
+            return null;
+        }
+        
+        public static object ParseRgba(string value, Type type, FunctionTypeInfo typeInfo)
+        {
+            return null;
+        }
+        
+        public static object ParseByteArray(string value, Type type, FunctionTypeInfo typeInfo)
+        {
+            return null;
+        }
+
+        public static object ParseEnum(string value, Type type, FunctionTypeInfo typeInfo)
+        {
+            return !Enum.TryParse(type, value, true, out var enumObject) ? null : enumObject;
         }
     }
 

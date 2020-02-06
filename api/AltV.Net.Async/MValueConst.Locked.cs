@@ -131,8 +131,11 @@ namespace AltV.Net.Async
                     return;
                 case Net.Function function:
                     Alt.Server.CreateMValueFunction(out mValue,
-                        Alt.Server.Resource.CSharpResourceImpl.CreateInvoker(function.call));
+                        Alt.Server.Resource.CSharpResourceImpl.CreateInvoker(function.Call));
                     return;
+                case byte[] byteArray:
+                    Alt.Server.CreateMValueByteArray(out mValue, byteArray);
+                    break;
                 case IDictionary dictionary:
                     dictKeys = new string[dictionary.Count];
                     dictValues = new MValueConst[dictionary.Count];
@@ -212,42 +215,13 @@ namespace AltV.Net.Async
                     writer.ToMValue(out mValue);
                     return;
                 case Position position:
-                    var posValues = new MValueConst[3];
-                    MValueConst positionMValue;
-                    Alt.Server.CreateMValueDouble(out positionMValue, position.X);
-                    posValues[0] = positionMValue;
-                    Alt.Server.CreateMValueDouble(out positionMValue, position.Y);
-                    posValues[1] = positionMValue;
-                    Alt.Server.CreateMValueDouble(out positionMValue, position.Z);
-                    posValues[2] = positionMValue;
-                    var posKeys = new string[3];
-                    posKeys[0] = "x";
-                    posKeys[1] = "y";
-                    posKeys[2] = "z";
-                    Alt.Server.CreateMValueDict(out mValue, posKeys, posValues, 3);
-                    for (int j = 0, dictLength = posValues.Length; j < dictLength; j++)
-                    {
-                        posValues[j].Dispose();
-                    }
+                    Alt.Server.CreateMValueVector3(out mValue, position);
                     return;
                 case Rotation rotation:
-                    var rotValues = new MValueConst[3];
-                    MValueConst rotationMValue;
-                    Alt.Server.CreateMValueDouble(out rotationMValue, rotation.Roll);
-                    rotValues[0] = rotationMValue;
-                    Alt.Server.CreateMValueDouble(out rotationMValue, rotation.Pitch);
-                    rotValues[1] = rotationMValue;
-                    Alt.Server.CreateMValueDouble(out rotationMValue, rotation.Yaw);
-                    rotValues[2] = rotationMValue;
-                    var rotKeys = new string[3];
-                    rotKeys[0] = "roll";
-                    rotKeys[1] = "pitch";
-                    rotKeys[2] = "yaw";
-                    Alt.Server.CreateMValueDict(out mValue, rotKeys, rotValues, 3);
-                    for (int j = 0, dictLength = rotValues.Length; j < dictLength; j++)
-                    {
-                        rotValues[j].Dispose();
-                    }
+                    Alt.Server.CreateMValueVector3(out mValue, rotation);
+                    return;
+                case Rgba rgba:
+                    Alt.Server.CreateMValueRgba(out mValue, rgba);
                     return;
                 case short value:
                     Alt.Server.CreateMValueInt(out mValue, value);

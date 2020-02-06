@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AltV.Net.NetworkingEntity.Elements.Pools;
 using Entity;
 
@@ -127,7 +128,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Entities
         /// <summary>
         /// Removes entity
         /// </summary>
-        void Remove();
+        Task Remove();
 
         // Internal
 

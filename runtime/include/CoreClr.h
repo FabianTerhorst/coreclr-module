@@ -126,6 +126,12 @@ public:
 
     void GetPath(alt::ICore* server, const char* defaultPath);
 
+    void GenerateRuntimeConfigText(std::ofstream* outfile);
+
+    bool CreateRuntimeConfigFile();
+
+    void DeleteRuntimeConfigFile();
+
     /**
      * prints out error when error code in known
      * @param server
@@ -145,7 +151,7 @@ private:
 #ifdef _WIN32
     HMODULE _coreClrLib;
 #else
-    void* _coreClrLib;
+    void* _coreClrLib = nullptr;
 #endif
     char* runtimeDirectory = nullptr;
     char* dotnetDirectory = nullptr;
@@ -164,8 +170,9 @@ private:
     hostfxr_initialize_for_dotnet_command_line_fn _initForCmd = nullptr;
     hostfxr_close_fn _closeFxr = nullptr;
     hostfxr_handle cxt = nullptr;
-    std::thread thread;
+    std::thread* thread = nullptr;
     alt::ICore* core = nullptr;
+    char* version = nullptr;
 };
 
-EXPORT void CoreClr_SetResourceLoadDelegates(CoreClrDelegate_t resourceExecute, CoreClrDelegate_t resourceExecuteUnload);
+EXPORT void CoreClr_SetResourceLoadDelegates(CoreClrDelegate_t resourceExecute, CoreClrDelegate_t resourceExecuteUnload, CoreClrDelegate_t stopRuntime);

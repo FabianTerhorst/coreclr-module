@@ -364,8 +364,7 @@ AltColShape.OnEntityEnterColShape = (entity, shape) => {
  
  ### Experimental entity streaming
  
-https://github.com/FabianTerhorst/coreclr-module/releases/download/cdntest1.12.0-beta/networking-entity.zip
-Extract the files from the zip and put them into resources/networking-entity.
+Build the AltV.Net.NetworkingEntity/Client folder via npm run-script build and put the files inside build directory into resources/networking-entity.
 Add the https://www.nuget.org/packages/AltV.Net.NetworkingEntity/ dependency to your server.
 When running on server don't forget to open the websocket port 46429 or change it to a own port.
 You need to call ``AltNetworking.Configure`` even when you don't want to modify the default port.

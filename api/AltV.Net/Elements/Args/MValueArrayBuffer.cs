@@ -195,7 +195,7 @@ namespace AltV.Net.Elements.Args
             var mValue = Marshal.PtrToStructure<MValue>(data);
             data += MValue.Size;
             size--;
-            if (mValue.type != MValue.Type.STRING)
+            if (mValue.type != MValue.Type.String)
             {
                 value = default;
                 return false;

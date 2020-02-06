@@ -58,6 +58,20 @@ namespace AltV.Net.ColShape.Tests
             var vehicles = new List<IVehicle> {mockVehicle};
             return vehicles;
         }
+        
+        public KeyValuePair<IntPtr, IVehicle>[] GetEntitiesArray()
+        {
+            var mockVehicle = new MockVehicle() {Position = new Position(1, 1, 1)};
+            var vehicles = new List<IVehicle> {mockVehicle};
+            var arr = new KeyValuePair<IntPtr, IVehicle>[vehicles.Count];
+            var i = 0;
+            foreach (var entity in vehicles)
+            {
+                arr[i++] = new KeyValuePair<IntPtr, IVehicle>(IntPtr.Zero, entity);
+            }
+
+            return arr;
+        }
 
         public void OnAdd(IVehicle entity)
         {

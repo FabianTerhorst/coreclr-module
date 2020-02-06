@@ -35,7 +35,7 @@ namespace AltV.Net.Networking.Example
             }
 
             client = AltNetworking.CreateClient(token);
-            client.WebSocket = managedWebSocket; //TODO: maybe do that automatically, but we would lost freedom
+            //client.WebSocket = managedWebSocket; //TODO: maybe do that automatically, but we would lost freedom
             client.Dimension = 1;
             managedWebSocket.Extra.TryAdd("client", client);
             return Task.FromResult(true);

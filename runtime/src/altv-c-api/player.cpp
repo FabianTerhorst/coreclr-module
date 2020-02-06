@@ -65,6 +65,14 @@ void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValueConst*
     player->SetMetaData(key, val->Get()->Clone());
 }
 
+bool Player_HasMetaData(alt::IPlayer* player, const char* key) {
+    return player->HasMetaData(key);
+}
+
+void Player_DeleteMetaData(alt::IPlayer* player, const char* key) {
+    player->DeleteMetaData(key);
+}
+
 alt::MValueConst* Player_GetSyncedMetaData(alt::IPlayer* player, const char* key) {
     return new alt::MValueConst(player->GetSyncedMetaData(key));
 }
@@ -72,6 +80,31 @@ alt::MValueConst* Player_GetSyncedMetaData(alt::IPlayer* player, const char* key
 void Player_SetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
     player->SetSyncedMetaData(key, val->Get()->Clone());
+}
+
+bool Player_HasSyncedMetaData(alt::IPlayer* player, const char* key) {
+    return player->HasSyncedMetaData(key);
+}
+
+void Player_DeleteSyncedMetaData(alt::IPlayer* player, const char* key) {
+    player->DeleteSyncedMetaData(key);
+}
+
+alt::MValueConst* Player_GetStreamSyncedMetaData(alt::IPlayer* player, const char* key) {
+    return new alt::MValueConst(player->GetStreamSyncedMetaData(key));
+}
+
+void Player_SetStreamSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val) {
+    if (val == nullptr) return;
+    player->SetStreamSyncedMetaData(key, val->Get()->Clone());
+}
+
+bool Player_HasStreamSyncedMetaData(alt::IPlayer* player, const char* key) {
+    return player->HasStreamSyncedMetaData(key);
+}
+
+void Player_DeleteStreamSyncedMetaData(alt::IPlayer* player, const char* key) {
+    player->DeleteStreamSyncedMetaData(key);
 }
 
 void Player_AddRef(alt::IPlayer* player) {

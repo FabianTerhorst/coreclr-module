@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using AltV.Net.Elements.Entities;
 
@@ -8,7 +9,7 @@ namespace AltV.Net
         internal static Module Module;
 
         public static IServer Server => Module.Server;
-        
+
         public static IServer Core => Module.Server;
 
         public static void Emit(string eventName, params object[] args) => Server.TriggerServerEvent(eventName, args);
@@ -33,6 +34,20 @@ namespace AltV.Net
 
         public static ICollection<IColShape> GetAllColShapes() =>
             Module.ColShapePool.GetAllObjects();
+
+        public static KeyValuePair<IntPtr, IPlayer>[] GetPlayersArray() => Module.PlayerPool.GetEntitiesArray();
+
+        public static KeyValuePair<IntPtr, IVehicle>[] GetVehiclesArray() => Module.VehiclePool.GetEntitiesArray();
+
+        public static KeyValuePair<IntPtr, IBlip>[] GetBlipsArray() => Module.BlipPool.GetObjectsArray();
+
+        public static KeyValuePair<IntPtr, ICheckpoint>[] GetCheckpointsArray() =>
+            Module.CheckpointPool.GetObjectsArray();
+
+        public static KeyValuePair<IntPtr, IVoiceChannel>[] GetVoiceChannelsArray() =>
+            Module.VoiceChannelPool.GetObjectsArray();
+
+        public static KeyValuePair<IntPtr, IColShape>[] GetColShapesArray() => Module.ColShapePool.GetObjectsArray();
 
         public static uint Hash(string stringToHash) => Server.Hash(stringToHash);
 

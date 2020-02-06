@@ -53,7 +53,7 @@ void Server_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueCo
             mValues[i] = *args[i];
         }
     }
-    server->TriggerServerEvent(ev, mValues);
+    server->TriggerLocalEvent(ev, mValues);
 }
 
 void
@@ -103,12 +103,12 @@ Server_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, positi
     position.x = pos.x;
     position.y = pos.y;
     position.z = pos.z;
-    return server->CreateBlip(target, (alt::IBlip::Type) type, position).Get();
+    return server->CreateBlip(target, (alt::IBlip::BlipType) type, position).Get();
 }
 
 alt::IBlip*
 Server_CreateBlipAttached(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo) {
-    return server->CreateBlip(target, (alt::IBlip::Type) type, attachTo).Get();
+    return server->CreateBlip(target, (alt::IBlip::BlipType) type, attachTo).Get();
 }
 
 alt::IResource* Server_GetResource(alt::ICore* server, const char* resourceName) {
@@ -220,6 +220,18 @@ void Server_GetVehicles(alt::ICore* server, alt::IVehicle* vehicles[], uint64_t 
     }
 }
 
+void* Server_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type) {
+    auto entity = core->GetEntityByID(id);
+    type = (uint8_t) entity->GetType();
+    switch (entity->GetType()) {
+        case alt::IBaseObject::Type::PLAYER:
+            return dynamic_cast<alt::IPlayer*>(entity.Get());
+        case alt::IBaseObject::Type::VEHICLE:
+            return dynamic_cast<alt::IVehicle*>(entity.Get());
+    }
+    return nullptr;
+}
+
 void Server_StartResource(alt::ICore* server, const char* text) {
     server->StartResource(text);
 }
@@ -322,5 +334,30 @@ alt::MValueConst* Core_CreateMValueVehicle(alt::ICore* core, alt::IVehicle* valu
 
 alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* value) {
     alt::MValueConst mValue = core->CreateMValueFunction(value);
+    return new alt::MValueConst(mValue);
+}
+
+alt::MValueConst* Core_CreateMValueVector3(alt::ICore* core, position_t value) {
+    alt::Vector3f vector3F;
+    vector3F[0] = value.x;
+    vector3F[1] = value.y;
+    vector3F[2] = value.z;
+    alt::MValueConst mValue = core->CreateMValueVector3(vector3F);
+    return new alt::MValueConst(mValue);
+}
+
+alt::MValueConst* Core_CreateMValueByteArray(alt::ICore* core, uint64_t size, const void* data) {
+    auto byteArray = (const uint8_t*) data;
+    alt::MValueConst mValue = core->CreateMValueByteArray(byteArray, size);
+    return new alt::MValueConst(mValue);
+}
+
+alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value) {
+    alt::RGBA rgba;
+    rgba.r = value.r;
+    rgba.g = value.g;
+    rgba.b = value.b;
+    rgba.a = value.a;
+    alt::MValueConst mValue = core->CreateMValueRGBA(rgba);
     return new alt::MValueConst(mValue);
 }

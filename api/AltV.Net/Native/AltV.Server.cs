@@ -119,6 +119,9 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_GetVehicles(IntPtr server, IntPtr[] vehicles, ulong size);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Server_GetEntityById(IntPtr server, ushort id, ref byte type);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_StartResource(IntPtr server, IntPtr text);
@@ -170,6 +173,15 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr Core_CreateMValueFunction(IntPtr core, IntPtr value);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueVector3(IntPtr core, Position value);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueRgba(IntPtr core, Rgba value);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Core_CreateMValueByteArray(IntPtr core, ulong size, IntPtr data);
         }
     }
 }

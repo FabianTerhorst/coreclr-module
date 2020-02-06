@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AltV.Net.NetworkingEntity.Elements.Entities;
 
 namespace AltV.Net.NetworkingEntity.Elements.Pools
@@ -22,5 +23,7 @@ namespace AltV.Net.NetworkingEntity.Elements.Pools
         bool TryGet(string token, out INetworkingClient client);
 
         void SendToAll(byte[] bytes);
+        
+        Task SendToAllTask(byte[] bytes);
     }
 }

@@ -9,6 +9,8 @@
 * Select Browse and search for AltV.Net and install the packages "AltV.Net", ("AltV.Net.Async" when you need async thread save api access)
 * Now go to "Project -> {Your Project Name} Properties... -> Build", here you can select the Output path where the dll should be saved.
 
+See https://docs.microsoft.com/en-us/visualstudio/deployment/quickstart-deploy-to-local-folder?view=vs-2019 for automatically publish it in your resource folder or see the boilerplate project file.
+
 Boilerplate YourProject.csproj:
 ```
 <Project Sdk="Microsoft.NET.Sdk">

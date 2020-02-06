@@ -62,6 +62,7 @@ EXPORT uint64_t Server_GetPlayerCount(alt::ICore* server);
 EXPORT void Server_GetPlayers(alt::ICore* server, alt::IPlayer* players[], uint64_t size);
 EXPORT uint64_t Server_GetVehicleCount(alt::ICore* server);
 EXPORT void Server_GetVehicles(alt::ICore* server, alt::IVehicle* vehicles[], uint64_t size);
+EXPORT void* Server_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type);
 EXPORT void Server_StartResource(alt::ICore* server, const char* text);
 EXPORT void Server_StopResource(alt::ICore* server, const char* text);
 EXPORT void Server_RestartResource(alt::ICore* server, const char* text);
@@ -81,6 +82,9 @@ EXPORT alt::MValueConst* Core_CreateMValueVoiceChannel(alt::ICore* core, alt::IV
 EXPORT alt::MValueConst* Core_CreateMValuePlayer(alt::ICore* core, alt::IPlayer* value);
 EXPORT alt::MValueConst* Core_CreateMValueVehicle(alt::ICore* core, alt::IVehicle* value);
 EXPORT alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* value);
+EXPORT alt::MValueConst* Core_CreateMValueVector3(alt::ICore* core, position_t value);
+EXPORT alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value);
+EXPORT alt::MValueConst* Core_CreateMValueByteArray(alt::ICore* core, uint64_t size, const void* data);
 
 #ifdef __cplusplus
 }

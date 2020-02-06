@@ -91,6 +91,21 @@ namespace AltV.Net.Elements.Entities
             AltNative.Vehicle.Vehicle_SetMetaData(NativePointer, stringPtr, value.nativePointer);
             Marshal.FreeHGlobal(stringPtr);
         }
+        
+        public override bool HasMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            var result = AltNative.Vehicle.Vehicle_HasMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+            return result;
+        }
+
+        public override void DeleteMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Vehicle.Vehicle_DeleteMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+        }
 
         public override void SetSyncedMetaData(string key, in MValueConst value)
         {
@@ -103,6 +118,50 @@ namespace AltV.Net.Elements.Entities
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
             value = new MValueConst(AltNative.Vehicle.Vehicle_GetSyncedMetaData(NativePointer, stringPtr));
+            Marshal.FreeHGlobal(stringPtr);
+        }
+        
+        public override bool HasSyncedMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            var result = AltNative.Vehicle.Vehicle_HasSyncedMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+            return result;
+        }
+
+        public override void DeleteSyncedMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Vehicle.Vehicle_DeleteSyncedMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+        }
+        
+        public override void SetStreamSyncedMetaData(string key, in MValueConst value)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Vehicle.Vehicle_SetStreamSyncedMetaData(NativePointer, stringPtr, value.nativePointer);
+            Marshal.FreeHGlobal(stringPtr);
+        }
+
+        public override void GetStreamSyncedMetaData(string key, out MValueConst value)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            value = new MValueConst(AltNative.Vehicle.Vehicle_GetStreamSyncedMetaData(NativePointer, stringPtr));
+            Marshal.FreeHGlobal(stringPtr);
+        }
+        
+        public override bool HasStreamSyncedMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            var result = AltNative.Vehicle.Vehicle_HasStreamSyncedMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+            return result;
+        }
+
+        public override void DeleteStreamSyncedMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Vehicle.Vehicle_DeleteStreamSyncedMetaData(NativePointer, stringPtr);
             Marshal.FreeHGlobal(stringPtr);
         }
 
@@ -314,6 +373,20 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckIfEntityExists();
                 return AltNative.Vehicle.Vehicle_GetWheelVariation(NativePointer);
+            }
+        }
+        
+        public byte RearWheel
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Vehicle.Vehicle_GetRearWheelVariation(NativePointer);
+            }
+            set
+            {
+                CheckIfEntityExists();
+                AltNative.Vehicle.Vehicle_SetRearWheels(NativePointer, value);
             }
         }
 
@@ -698,6 +771,30 @@ namespace AltV.Net.Elements.Entities
         {
             CheckIfEntityExists();
             AltNative.Vehicle.Vehicle_SetWheelHasTire(NativePointer, wheelId, state);
+        }
+
+        public bool IsWheelDetached(byte wheelId)
+        {
+            CheckIfEntityExists();
+            return AltNative.Vehicle.Vehicle_IsWheelDetached(NativePointer, wheelId);
+        }
+
+        public void SetWheelDetached(byte wheelId, bool state)
+        {
+            CheckIfEntityExists();
+            AltNative.Vehicle.Vehicle_SetWheelDetached(NativePointer, wheelId, state);
+        }
+
+        public bool IsWheelOnFire(byte wheelId)
+        {
+            CheckIfEntityExists();
+            return AltNative.Vehicle.Vehicle_IsWheelDetached(NativePointer, wheelId);
+        }
+
+        public void SetWheelOnFire(byte wheelId, bool state)
+        {
+            CheckIfEntityExists();
+            AltNative.Vehicle.Vehicle_SetWheelOnFire(NativePointer, wheelId, state);
         }
 
         public float GetWheelHealth(byte wheelId)

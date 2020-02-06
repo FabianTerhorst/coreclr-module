@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using AltV.Net.Elements.Args;
 
 namespace AltV.Net.FunctionParser
@@ -20,18 +21,19 @@ namespace AltV.Net.FunctionParser
             var length = args.Length;
             var mValues = new MValueConst[length];
             Alt.Server.CreateMValues(mValues, args);
-            var mValuePointers = new IntPtr[length];
+            var argsPointers = Marshal.AllocHGlobal(length * IntPtr.Size);
             for (var i = 0; i < length; i++)
             {
-                mValuePointers[i] = mValues[i].nativePointer;
+                Marshal.WriteIntPtr(argsPointers, mValues[i].nativePointer);
             }
 
-            var result = IntPtr.Zero;
-            function(mValuePointers, ref result);
+            var result = function(argsPointers, length);
             for (var i = 0; i < length; i++)
             {
                 mValues[i].Dispose();
             }
+
+            Marshal.FreeHGlobal(argsPointers);
 
             var resultMValue = new MValueConst(result);
             var resultObj = resultMValue.ToObject();

@@ -11,7 +11,7 @@ namespace AltV.Net.Mock
 {
     public class MockServer : IServer
     {
-        private readonly IntPtr nativePointer;
+        public IntPtr NativePointer { get; }
 
         private readonly IBaseBaseObjectPool baseBaseObjectPool;
 
@@ -43,7 +43,7 @@ namespace AltV.Net.Mock
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             INativeResourcePool nativeResourcePool)
         {
-            this.nativePointer = nativePointer;
+            this.NativePointer = nativePointer;
             this.baseBaseObjectPool = baseBaseObjectPool;
             this.baseEntityPool = baseEntityPool;
             this.playerPool = playerPool;
@@ -321,6 +321,26 @@ namespace AltV.Net.Mock
         public IEnumerable<IVehicle> GetVehicles()
         {
             return new List<IVehicle>();
+        }
+
+        public void CreateMValueVector3(out MValueConst mValue, Position value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValueRgba(out MValueConst mValue, Rgba value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMValueByteArray(out MValueConst mValue, byte[] value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEntity GetEntityById(ushort id)
+        {
+            throw new NotImplementedException();
         }
 
         public void StartResource(string name)

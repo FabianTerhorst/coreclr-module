@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AltV.Net.NetworkingEntity.Elements.Args;
 using AltV.Net.NetworkingEntity.Elements.Entities;
 using Entity;
@@ -26,6 +27,16 @@ namespace AltV.Net.NetworkingEntity
         {
             set => Module.Server.StreamingHandler.EntityStreamOutHandler += value;
         }
+
+        public static ICollection<INetworkingClient> GetAllClients() => Module.ClientPool.Clients.Values;
+
+        public static ICollection<INetworkingEntity> GetAllEntities() => Module.EntityPool.Entities.Values;
+
+        public static bool TryGetClient(string token, out INetworkingClient client) =>
+            Module.ClientPool.TryGet(token, out client);
+
+        public static bool TryGetEntity(ulong id, out INetworkingEntity entity) =>
+            Module.EntityPool.TryGet(id, out entity);
 
         /// <summary>
         /// Configure networking entity module
@@ -83,9 +94,9 @@ namespace AltV.Net.NetworkingEntity
             Module.EntityPool.Add(entity);
         }
 
-        public static void RemoveEntity(INetworkingEntity entity)
+        public static Task RemoveEntity(INetworkingEntity entity)
         {
-            Module.EntityPool.Remove(entity);
+            return Module.EntityPool.Remove(entity);
         }
 
         public static INetworkingClient CreateClient()

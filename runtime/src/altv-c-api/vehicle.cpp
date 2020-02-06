@@ -61,6 +61,14 @@ void Vehicle_SetMetaData(alt::IVehicle* entity, const char* key, alt::MValueCons
     entity->SetMetaData(key, val->Get()->Clone());
 }
 
+bool Vehicle_HasMetaData(alt::IVehicle* vehicle, const char* key) {
+    return vehicle->HasMetaData(key);
+}
+
+void Vehicle_DeleteMetaData(alt::IVehicle* vehicle, const char* key) {
+    vehicle->DeleteMetaData(key);
+}
+
 alt::MValueConst* Vehicle_GetSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
     return new alt::MValueConst(vehicle->GetSyncedMetaData(key));
 }
@@ -68,6 +76,31 @@ alt::MValueConst* Vehicle_GetSyncedMetaData(alt::IVehicle* vehicle, const char* 
 void Vehicle_SetSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
     entity->SetSyncedMetaData(key, val->Get()->Clone());
+}
+
+bool Vehicle_HasSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
+    return vehicle->HasSyncedMetaData(key);
+}
+
+void Vehicle_DeleteSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
+    vehicle->DeleteSyncedMetaData(key);
+}
+
+alt::MValueConst* Vehicle_GetStreamSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
+    return new alt::MValueConst(vehicle->GetStreamSyncedMetaData(key));
+}
+
+void Vehicle_SetStreamSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MValueConst* val) {
+    if (val == nullptr) return;
+    entity->SetStreamSyncedMetaData(key, val->Get()->Clone());
+}
+
+bool Vehicle_HasStreamSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
+    return vehicle->HasStreamSyncedMetaData(key);
+}
+
+void Vehicle_DeleteStreamSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
+    vehicle->DeleteStreamSyncedMetaData(key);
 }
 
 void Vehicle_AddRef(alt::IVehicle* vehicle) {
@@ -212,8 +245,16 @@ uint8_t Vehicle_GetWheelVariation(alt::IVehicle* vehicle) {
     return vehicle->GetWheelVariation();
 }
 
+uint8_t Vehicle_GetRearWheelVariation(alt::IVehicle* vehicle) {
+    return vehicle->GetRearWheelVariation();
+}
+
 void Vehicle_SetWheels(alt::IVehicle* vehicle, uint8_t type, uint8_t variation) {
     vehicle->SetWheels(type, variation);
+}
+
+void Vehicle_SetRearWheels(alt::IVehicle* vehicle, uint8_t variation) {
+    vehicle->SetRearWheels(variation);
 }
 
 bool Vehicle_GetCustomTires(alt::IVehicle* vehicle) {
@@ -450,6 +491,22 @@ bool Vehicle_DoesWheelHasTire(alt::IVehicle* vehicle, uint8_t wheelId) {
 
 void Vehicle_SetWheelHasTire(alt::IVehicle* vehicle, uint8_t wheelId, bool state) {
     vehicle->SetWheelHasTire(wheelId, state);
+}
+
+bool Vehicle_IsWheelDetached(alt::IVehicle* vehicle, uint8_t wheelId) {
+    return vehicle->IsWheelDetached(wheelId);
+}
+
+void Vehicle_SetWheelDetached(alt::IVehicle* vehicle, uint8_t wheelId, bool state) {
+    vehicle->SetWheelDetached(wheelId, state);
+}
+
+bool Vehicle_IsWheelOnFire(alt::IVehicle* vehicle, uint8_t wheelId) {
+    return vehicle->IsWheelOnFire(wheelId);
+}
+
+void Vehicle_SetWheelOnFire(alt::IVehicle* vehicle, uint8_t wheelId, bool state) {
+    vehicle->SetWheelOnFire(wheelId, state);
 }
 
 float Vehicle_GetWheelHealth(alt::IVehicle* vehicle, uint8_t wheelId) {

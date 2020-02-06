@@ -34,6 +34,14 @@ void Blip_SetMetaData(alt::IBlip* blip, const char* key, alt::MValueConst* val) 
     blip->SetMetaData(key, val->Get()->Clone());
 }
 
+bool Blip_HasMetaData(alt::IBlip* blip, const char* key) {
+    return blip->HasMetaData(key);
+}
+
+void Blip_DeleteMetaData(alt::IBlip* blip, const char* key) {
+    blip->DeleteMetaData(key);
+}
+
 void Blip_AddRef(alt::IBlip* blip) {
     blip->AddRef();
 }

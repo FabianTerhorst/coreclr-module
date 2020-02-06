@@ -51,8 +51,8 @@ bool CSharpResourceImpl::Start() {
 
     if (!coreClr->ExecuteManagedResource(this->resource->GetPath().CStr()/*(alt::String(this->server->GetRootDirectory()) + "/resources/" +
              alt::String(this->resource->GetName().CStr())).CStr()*/, this->resource->GetName().CStr(),
-            this->resource->GetMain().CStr(),
-            this->resource)) {
+                                         this->resource->GetMain().CStr(),
+                                         this->resource)) {
         return false;
     }
     if (MainDelegate == nullptr) return false;
@@ -68,36 +68,53 @@ bool CSharpResourceImpl::Stop() {
 }
 
 CSharpResourceImpl::~CSharpResourceImpl() {
-    for (alt::Size i = 0, length = invokers->GetSize(); i < length; i++) {
+    //TODO: fix segmentation fault
+    /*for (alt::Size i = 0, length = invokers->GetSize(); i < length; i++) {
         auto invoker = (*invokers)[i];
         delete invoker;
-    }
-    delete invokers;
+    }*/
+    //delete[] invokers;
 }
 
 bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
     if (ev == nullptr) return true;
     switch (ev->GetType()) {
         case alt::CEvent::Type::META_CHANGE: {
-            auto event = ((alt::CMetaChangeEvent*) (ev));
+            /*auto event = ((alt::CMetaChangeEvent*) (ev));
             auto entity = event->GetTarget().Get();
             if (entity == nullptr) return true;
             auto key = event->GetKey();
             auto value = event->GetVal();
-            auto constValue = alt::ConstRef<alt::IMValue>(value);
-            OnMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), key == nullptr ? "" : key.CStr(),
-                                 &constValue);
+            const char* keyCStr;
+            if (key == nullptr) {
+                keyCStr = "";
+            } else {
+                keyCStr = key.CStr();
+                if (keyCStr == nullptr) {
+                    keyCStr = "";
+                }
+            }
+            auto constValue = alt::MValueConst(value);
+            OnMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), keyCStr, &constValue);*/
         }
             break;
         case alt::CEvent::Type::SYNCED_META_CHANGE: {
-            auto event = ((alt::CSyncedMetaDataChangeEvent*) (ev));
+            /*auto event = ((alt::CSyncedMetaDataChangeEvent*) (ev));
             auto entity = event->GetTarget().Get();
             if (entity == nullptr) return true;
             auto key = event->GetKey();
             auto value = event->GetVal();
-            auto constValue = alt::ConstRef<alt::IMValue>(value);
-            OnSyncedMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), key == nullptr ? "" : key.CStr(),
-                                       &constValue);
+            const char* keyCStr;
+            if (key == nullptr) {
+                keyCStr = "";
+            } else {
+                keyCStr = key.CStr();
+                if (keyCStr == nullptr) {
+                    keyCStr = "";
+                }
+            }
+            auto constValue = alt::MValueConst(value);
+            OnSyncedMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), keyCStr, &constValue);*/
         }
             break;
         case alt::CEvent::Type::CLIENT_SCRIPT_EVENT: {
@@ -310,16 +327,16 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             auto entityPointer = GetEntityPointer(entity);
             if (entity != nullptr && entityPointer != nullptr) {
                 auto colShapePointer = ((alt::CColShapeEvent*) (ev))->GetTarget().Get();
-                if (auto checkpoint = dynamic_cast<alt::ICheckpoint*>(colShapePointer)) {
-                    OnCheckpointDelegate(checkpoint,
-                                         entityPointer,
-                                         entity->GetType(),
-                                         ((alt::CColShapeEvent*) (ev))->GetState());
-                } else {
+                if (colShapePointer->GetType() == alt::IBaseObject::Type::COLSHAPE) {
                     OnColShapeDelegate(colShapePointer,
                                        entityPointer,
                                        entity->GetType(),
                                        ((alt::CColShapeEvent*) (ev))->GetState());
+                } else if (colShapePointer->GetType() == alt::IBaseObject::Type::CHECKPOINT) {
+                    OnCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(colShapePointer),
+                                         entityPointer,
+                                         entity->GetType(),
+                                         ((alt::CColShapeEvent*) (ev))->GetState());
                 }
             }
         }
@@ -353,15 +370,12 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::Ref<alt::IBaseObject> objectRef
                 OnCreateVoiceChannelDelegate(voiceChannel);
                 break;
             }
-            case alt::IBaseObject::Type::COLSHAPE: {
-                if (auto checkpoint = dynamic_cast<alt::ICheckpoint*>(object)) {
-                    OnCreateCheckpointDelegate(checkpoint);
-                } else {
-                    auto colShape = dynamic_cast<alt::IColShape*>(object);
-                    OnCreateColShapeDelegate(colShape);
-                }
+            case alt::IBaseObject::Type::COLSHAPE:
+                OnCreateColShapeDelegate(dynamic_cast<alt::IColShape*>(object));
                 break;
-            }
+            case alt::IBaseObject::Type::CHECKPOINT:
+                OnCreateCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+                break;
         }
     }
 }
@@ -383,12 +397,10 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::Ref<alt::IBaseObject> objectRef
                 OnRemoveVoiceChannelDelegate(dynamic_cast<alt::IVoiceChannel*>(object));
                 break;
             case alt::IBaseObject::Type::COLSHAPE:
-                if (auto checkpoint = dynamic_cast<alt::ICheckpoint*>(object)) {
-                    OnRemoveCheckpointDelegate(checkpoint);
-                } else {
-                    auto colShape = dynamic_cast<alt::IColShape*>(object);
-                    OnRemoveColShapeDelegate(colShape);
-                }
+                OnRemoveColShapeDelegate(dynamic_cast<alt::IColShape*>(object));
+                break;
+            case alt::IBaseObject::Type::CHECKPOINT:
+                OnRemoveCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
                 break;
         }
     }
@@ -591,10 +603,9 @@ void* CSharpResourceImpl::GetBaseObjectPointer(alt::IBaseObject* baseObject) {
             case alt::IBaseObject::Type::BLIP:
                 return dynamic_cast<alt::IBlip*>(baseObject);
             case alt::IBaseObject::Type::COLSHAPE:
-                if (auto checkpoint = dynamic_cast<alt::ICheckpoint*>(baseObject)) {
-                    return checkpoint;
-                }
                 return dynamic_cast<alt::IColShape*>(baseObject);
+            case alt::IBaseObject::Type::CHECKPOINT:
+                return dynamic_cast<alt::ICheckpoint*>(baseObject);
             default:
                 return nullptr;
         }

@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 
@@ -13,20 +15,26 @@ namespace AltV.Net.Elements.Args
     /// </summary>
     public readonly struct MValueConst : IDisposable
     {
-        public static MValueConst Nil = new MValueConst(Type.NIL, IntPtr.Zero);
+        public static MValueConst Nil = new MValueConst(Type.Nil, IntPtr.Zero);
+
+        public static MValueConst None = new MValueConst(Type.None, IntPtr.Zero);
 
         public enum Type : byte
         {
-            NIL = 0,
-            BOOL = 1,
-            INT = 2,
-            UINT = 3,
-            DOUBLE = 4,
-            STRING = 5,
-            LIST = 6,
-            DICT = 7,
-            ENTITY = 8,
-            FUNCTION = 9
+            None = 0,
+            Nil = 1,
+            Bool = 2,
+            Int = 3,
+            Uint = 4,
+            Double = 5,
+            String = 6,
+            List = 7,
+            Dict = 8,
+            Entity = 9,
+            Function = 10,
+            Vector3 = 11,
+            Rgba = 12,
+            ByteArray = 13
         }
 
         public static MValueConst[] CreateFrom(IntPtr[] pointers)
@@ -49,7 +57,7 @@ namespace AltV.Net.Elements.Args
             this.nativePointer = nativePointer;
             if (nativePointer == IntPtr.Zero)
             {
-                this.type = Type.NIL;
+                this.type = Type.Nil;
             }
             else
             {
@@ -145,28 +153,74 @@ namespace AltV.Net.Elements.Args
             }
 
             result = new MValueConst(
-                AltNative.MValueNative.MValueConst_CallFunction(nativePointer, argsPointers, length));
+                AltNative.MValueNative.MValueConst_CallFunction(Alt.Server.NativePointer, nativePointer, argsPointers,
+                    length));
+        }
+
+        public void GetVector3(ref Position position)
+        {
+            AltNative.MValueNative.MValueConst_GetVector3(nativePointer, ref position);
+        }
+
+        public Position GetVector3()
+        {
+            var position = Position.Zero;
+            AltNative.MValueNative.MValueConst_GetVector3(nativePointer, ref position);
+            return position;
+        }
+
+        public void GetRgba(ref Rgba rgba)
+        {
+            AltNative.MValueNative.MValueConst_GetRGBA(nativePointer, ref rgba);
+        }
+
+        public Rgba GetRgba()
+        {
+            var rgba = Rgba.Zero;
+            AltNative.MValueNative.MValueConst_GetRGBA(nativePointer, ref rgba);
+            return rgba;
+        }
+
+        public byte[] GetByteArray()
+        {
+            var size = AltNative.MValueNative.MValueConst_GetByteArraySize(nativePointer);
+            var sizeInt = (int) size;
+            var data = Marshal.AllocHGlobal(sizeInt);
+            AltNative.MValueNative.MValueConst_GetByteArray(nativePointer, size, data);
+            var byteSize = Marshal.SizeOf<byte>();
+            var byteArray = new byte[size];
+            for (var i = 0; i < sizeInt; i++)
+            {
+                byteArray[i] = Marshal.ReadByte(data);
+                data += byteSize;
+            }
+
+            Marshal.FreeHGlobal(data);
+
+            return byteArray;
         }
 
         public object ToObject()
         {
             switch (type)
             {
-                case Type.NIL:
+                case Type.None:
+                    return None;
+                case Type.Nil:
                     return null;
-                case Type.BOOL:
+                case Type.Bool:
                     return GetBool();
-                case Type.INT:
+                case Type.Int:
                     return GetInt();
-                case Type.UINT:
+                case Type.Uint:
                     return GetUint();
-                case Type.DOUBLE:
+                case Type.Double:
                     return GetDouble();
-                case Type.STRING:
+                case Type.String:
                     return GetString();
-                case Type.LIST:
+                case Type.List:
                     var listSize = AltNative.MValueNative.MValueConst_GetListSize(nativePointer);
-                    if (listSize == 0) return new MValueConst[] {};
+                    if (listSize == 0) return new MValueConst[] { };
                     var mValueListPointers = new IntPtr[listSize];
                     AltNative.MValueNative.MValueConst_GetList(nativePointer, mValueListPointers);
                     var arrayValues = new object[listSize];
@@ -178,7 +232,7 @@ namespace AltV.Net.Elements.Args
                     }
 
                     return arrayValues;
-                case Type.DICT:
+                case Type.Dict:
                     var size = AltNative.MValueNative.MValueConst_GetDictSize(nativePointer);
                     if (size == 0) return new Dictionary<string, MValueConst>();
                     var keyPointers = new IntPtr[size];
@@ -198,7 +252,7 @@ namespace AltV.Net.Elements.Args
                     }
 
                     return dictionary;
-                case Type.ENTITY:
+                case Type.Entity:
                     var entityType = BaseObjectType.Undefined;
                     var entityPointer = GetEntityPointer(ref entityType);
                     if (entityPointer == IntPtr.Zero) return null;
@@ -208,8 +262,18 @@ namespace AltV.Net.Elements.Args
                     }
 
                     return null;
-                case Type.FUNCTION:
+                case Type.Function:
                     return null;
+                case Type.Vector3:
+                    var position = Position.Zero;
+                    GetVector3(ref position);
+                    return position;
+                case Type.Rgba:
+                    var rgba = Rgba.Zero;
+                    GetRgba(ref rgba);
+                    return rgba;
+                case Type.ByteArray:
+                    return GetByteArray();
                 default:
                     return null;
             }
@@ -219,26 +283,28 @@ namespace AltV.Net.Elements.Args
         {
             switch (type)
             {
-                case Type.NIL:
+                case Type.None:
+                    return "MValueNone<>";
+                case Type.Nil:
                     return "MValueNil<>";
-                case Type.BOOL:
+                case Type.Bool:
                     return "MValueBool<" + GetBool().ToString() + ">";
-                case Type.INT:
+                case Type.Int:
                     return "MValueInt<" + GetInt().ToString() + ">";
-                case Type.UINT:
+                case Type.Uint:
                     return "MValueUInt<" + GetUint().ToString() + ">";
-                case Type.DOUBLE:
+                case Type.Double:
                     return "MValueDouble<" + GetDouble().ToString(CultureInfo.InvariantCulture) + ">";
-                case Type.STRING:
+                case Type.String:
                     return "MValueString<" + GetString() + ">";
-                case Type.LIST:
+                case Type.List:
                     return "MValueList<{" + GetList().Aggregate("", (current, value) =>
                     {
                         var result = current + value.ToString() + ",";
                         value.Dispose();
                         return result;
                     }) + "}>";
-                case Type.DICT:
+                case Type.Dict:
                     return "MValueDict<{" + GetDictionary().Aggregate("",
                                (current, value) =>
                                {
@@ -247,7 +313,7 @@ namespace AltV.Net.Elements.Args
                                    mValueConst.Dispose();
                                    return result;
                                }) + "}>";
-                case Type.ENTITY:
+                case Type.Entity:
                     var entityType = BaseObjectType.Undefined;
                     var ptr = GetEntityPointer(ref entityType);
                     if (ptr == IntPtr.Zero) return $"MValue<entity:nilptr>";
@@ -257,11 +323,35 @@ namespace AltV.Net.Elements.Args
                     }
 
                     return "MValue<Entity>";
-                case Type.FUNCTION:
+                case Type.Function:
                     return "MValue<Function>";
+                case Type.Vector3:
+                    var position = Position.Zero;
+                    GetVector3(ref position);
+                    return $"MValue<Vector3<{position.X},{position.Y},{position.Z}>>";
+                case Type.Rgba:
+                    var rgba = Rgba.Zero;
+                    GetRgba(ref rgba);
+                    return $"MValue<Rgba<{rgba.R},{rgba.G},{rgba.B},{rgba.A}>>";
+                case Type.ByteArray:
+                    return $"MValueByteArray<{AltNative.MValueNative.MValueConst_GetByteArraySize(nativePointer)}>";
             }
 
             return "MValue<>";
+        }
+
+        public void AddRef()
+        {
+            // Nil types have zero int ptr to reduce allocations on heap
+            if (nativePointer == IntPtr.Zero) return;
+            AltNative.MValueNative.MValueConst_AddRef(nativePointer);
+        }
+
+        public void RemoveRef()
+        {
+            // Nil types have zero int ptr to reduce allocations on heap
+            if (nativePointer == IntPtr.Zero) return;
+            AltNative.MValueNative.MValueConst_RemoveRef(nativePointer);
         }
 
         public void Dispose()

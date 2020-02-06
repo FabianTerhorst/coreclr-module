@@ -22,9 +22,6 @@ namespace AltV.Net.Native
         internal static extern void FreePlayerPointerArray(ref PlayerPointerArray array);
 
         [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-        internal static extern void FreeVehiclePointerArray(ref VehiclePointerArray array);
-
-        [DllImport(DllName, CallingConvention = NativeCallingConvention)]
         internal static extern void FreeStringViewArray(ref StringViewArray array);
 
         [DllImport(DllName, CallingConvention = NativeCallingConvention)]

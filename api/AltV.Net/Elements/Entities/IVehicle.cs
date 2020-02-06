@@ -92,6 +92,11 @@ namespace AltV.Net.Elements.Entities
         /// The wheel variation
         /// </summary>
         byte WheelVariation { get; }
+        
+        /// <summary>
+        /// Rear wheel variation
+        /// </summary>
+        byte RearWheel { get; set; }
 
         /// <summary>
         /// Sets custom tires on the vehicle
@@ -335,6 +340,34 @@ namespace AltV.Net.Elements.Entities
         /// <param name="wheelId">Wheel Id</param>
         /// <param name="state">True = Has tyre</param>
         void SetWheelHasTire(byte wheelId, bool state);
+
+        /// <summary>
+        /// Returns if the wheel is detached
+        /// </summary>
+        /// <param name="wheelId">Wheel Id</param>
+        /// <returns>True if the wheel is detached</returns>
+        bool IsWheelDetached(byte wheelId);
+        
+        /// <summary>
+        /// Sets the detached state of the given wheel
+        /// </summary>
+        /// <param name="wheelId">Wheel Id</param>
+        /// <param name="state">True when it should be detached, False when it should be attached</param>
+        void SetWheelDetached(byte wheelId, bool state);
+        
+        /// <summary>
+        /// Returns if the wheel is on fire
+        /// </summary>
+        /// <param name="wheelId">Wheel Id</param>
+        /// <returns>True if the wheel is on fire</returns>
+        bool IsWheelOnFire(byte wheelId);
+        
+        /// <summary>
+        /// Sets the fire state of the given wheel
+        /// </summary>
+        /// <param name="wheelId">Wheel Id</param>
+        /// <param name="state">True when it should be on fire, False when it should not be on fire</param>
+        void SetWheelOnFire(byte wheelId, bool state);
 
         /// <summary>
         /// Gets the wheels health

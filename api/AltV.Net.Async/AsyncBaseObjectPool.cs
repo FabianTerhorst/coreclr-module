@@ -79,6 +79,18 @@ namespace AltV.Net.Async
         {
             return entities.Values;
         }
+        
+        public KeyValuePair<IntPtr, TBaseObject>[] GetObjectsArray()
+        {
+            var arr = new KeyValuePair<IntPtr, TBaseObject>[entities.Count];
+            var i = 0;
+            foreach (var (ptr, entity) in entities)
+            {
+                arr[i++] = new KeyValuePair<IntPtr, TBaseObject>(ptr, entity);
+            }
+
+            return arr;
+        }
 
         public virtual void OnAdd(TBaseObject entity)
         {

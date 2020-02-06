@@ -13,7 +13,21 @@ namespace AltV.Net.Elements.Entities
         private readonly ConcurrentDictionary<string, object> data = new ConcurrentDictionary<string, object>();
 
         public IntPtr NativePointer { get; }
-        public bool Exists { get; set; }
+        private bool exists;
+
+        public bool Exists
+        {
+            get
+            {
+                if (exists)
+                {
+                    return true;
+                }
+
+                return refCount != 0;
+            }
+            set => exists = value;
+        }
 
         private ulong refCount = 0;
 
@@ -21,7 +35,9 @@ namespace AltV.Net.Elements.Entities
 
         public abstract void SetMetaData(string key, in MValueConst value);
         public abstract void GetMetaData(string key, out MValueConst value);
-        
+        public abstract bool HasMetaData(string key);
+        public abstract void DeleteMetaData(string key);
+
         protected abstract void InternalAddRef();
         protected abstract void InternalRemoveRef();
 
@@ -34,7 +50,7 @@ namespace AltV.Net.Elements.Entities
 
             NativePointer = nativePointer;
             Type = type;
-            Exists = true;
+            exists = true;
         }
 
         public void SetMetaData(string key, object value)
@@ -51,7 +67,7 @@ namespace AltV.Net.Elements.Entities
             GetMetaData(key, out MValueConst mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.INT)
+                if (mValue.type != MValueConst.Type.Int)
                 {
                     result = default;
                     return false;
@@ -69,7 +85,7 @@ namespace AltV.Net.Elements.Entities
             GetMetaData(key, out MValueConst mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.UINT)
+                if (mValue.type != MValueConst.Type.Uint)
                 {
                     result = default;
                     return false;
@@ -87,7 +103,7 @@ namespace AltV.Net.Elements.Entities
             GetMetaData(key, out MValueConst mValue);
             using (mValue)
             {
-                if (mValue.type != MValueConst.Type.DOUBLE)
+                if (mValue.type != MValueConst.Type.Double)
                 {
                     result = default;
                     return false;
@@ -140,6 +156,16 @@ namespace AltV.Net.Elements.Entities
             return true;
         }
 
+        public bool HasData(string key)
+        {
+            return data.ContainsKey(key);
+        }
+
+        public void DeleteData(string key)
+        {
+            data.TryRemove(key, out _);
+        }
+
         public void ClearData()
         {
             data.Clear();
@@ -153,11 +179,6 @@ namespace AltV.Net.Elements.Entities
                 return;
             }
 
-            if (refCount != 0)
-            {
-                return;
-            }
-
             throw new BaseObjectRemovedException(this);
         }
 
@@ -166,6 +187,7 @@ namespace AltV.Net.Elements.Entities
         {
             if (Alt.Module.IsMainThread()) return;
             if (Monitor.IsEntered(this)) return;
+            if (Alt.Module.HasRefForCurrentThread(this)) return;
             throw new IllegalThreadException(this, callerName);
         }
 
@@ -193,9 +215,10 @@ namespace AltV.Net.Elements.Entities
         {
             lock (this)
             {
-                if (!Exists && refCount == 0) return false;
+                if (!Exists) return false;
                 ++refCount;
             }
+
             InternalAddRef();
             return true;
         }
@@ -210,6 +233,7 @@ namespace AltV.Net.Elements.Entities
                 if (refCount == 0) return false;
                 --refCount;
             }
+
             InternalRemoveRef();
             return true;
         }

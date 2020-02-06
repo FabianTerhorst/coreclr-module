@@ -12,11 +12,13 @@ namespace AltV.Net.Elements.Refs
         public VoiceChannelRef(IVoiceChannel voiceChannel)
         {
             this.voiceChannel = voiceChannel.AddRef() ? voiceChannel : null;
+            Alt.Module.CountUpRefForCurrentThread(voiceChannel);
         }
 
         public void Dispose()
         {
             voiceChannel?.RemoveRef();
+            Alt.Module.CountDownRefForCurrentThread(voiceChannel);
         }
     }
 }

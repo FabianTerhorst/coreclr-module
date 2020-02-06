@@ -245,9 +245,6 @@ namespace AltV.Net.Host
                     {
                         try
                         {
-                            var stopwatch = new Stopwatch();
-                            stopwatch.Start();
-
                             using (var fs = new FileStream(output.FullName, FileMode.Create, FileAccess.Write))
                             {
                                 Console.Out.WriteLine("\n\n");

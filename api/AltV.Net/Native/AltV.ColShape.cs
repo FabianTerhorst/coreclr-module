@@ -29,7 +29,13 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void ColShape_SetMetaData(IntPtr colShape, IntPtr key, IntPtr val);
-            
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool ColShape_HasMetaData(IntPtr colShape, IntPtr key);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void ColShape_DeleteMetaData(IntPtr colShape, IntPtr key);
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void ColShape_AddRef(IntPtr colShape);
 

@@ -1,7 +1,8 @@
+using System;
+using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.FunctionParser;
-using AltV.Net.Native;
 
 namespace AltV.Net
 {
@@ -9,12 +10,14 @@ namespace AltV.Net
     {
         public static void RegisterEvents(object target)
         {
-            ModuleScriptMethodIndexer.Index(target, new[] {typeof(Event), typeof(ScriptEvent)},
+#pragma warning disable 612, 618
+            ModuleScriptMethodIndexer.Index(target, new[] {typeof(EventAttribute), typeof(ServerEventAttribute), typeof(ClientEventAttribute), typeof(ScriptEventAttribute)},
+#pragma warning restore 612, 618
                 (baseEvent, eventMethod, eventMethodDelegate) =>
                 {
                     switch (baseEvent)
                     {
-                        case ScriptEvent scriptEvent:
+                        case ScriptEventAttribute scriptEvent:
                             var scriptEventType = scriptEvent.EventType;
                             ScriptFunction scriptFunction;
                             switch (scriptEventType)
@@ -156,7 +159,7 @@ namespace AltV.Net
                                         ScriptFunction.Create(eventMethodDelegate,
                                             new[] {typeof(IPlayer), typeof(string), typeof(MValueConst[])});
                                     if (scriptFunction == null) return;
-                                    OnPlayerCustomEvent += (IPlayer player, string name, MValueConst[] array) =>
+                                    OnPlayerCustomEvent += (player, name, array) =>
                                     {
                                         scriptFunction.Set(player);
                                         scriptFunction.Set(name);
@@ -168,10 +171,10 @@ namespace AltV.Net
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[] {typeof(string), typeof(object[])});
                                     if (scriptFunction == null) return;
-                                    OnServerEvent += (serverEventName, serverEventArgs) =>
+                                    OnServerEvent += (scriptEventName, scriptEventArgs) =>
                                     {
-                                        scriptFunction.Set(serverEventName);
-                                        scriptFunction.Set(serverEventArgs);
+                                        scriptFunction.Set(scriptEventName);
+                                        scriptFunction.Set(scriptEventArgs);
                                         scriptFunction.Call();
                                     };
                                     break;
@@ -179,7 +182,7 @@ namespace AltV.Net
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[] {typeof(string), typeof(MValueConst[])});
                                     if (scriptFunction == null) return;
-                                    OnServerCustomEvent += (string name, MValueConst[] array) =>
+                                    OnServerCustomEvent += (name, array) =>
                                     {
                                         scriptFunction.Set(name);
                                         scriptFunction.Set(array);
@@ -233,12 +236,44 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                case ScriptEventType.WeaponDamage:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(ushort),
+                                            typeof(Position), typeof(BodyPart)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnWeaponDamage +=
+                                        (player, targetEntity, weapon, damage, shotOffset, damageOffset) =>
+                                        {
+                                            scriptFunction.Set(player);
+                                            scriptFunction.Set(targetEntity);
+                                            scriptFunction.Set(weapon);
+                                            scriptFunction.Set(damage);
+                                            scriptFunction.Set(shotOffset);
+                                            scriptFunction.Set(damageOffset);
+                                            scriptFunction.Call();
+                                        };
+                                    break;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
                             }
 
                             break;
-                        case Event @event:
+#pragma warning disable 612, 618
+                        case EventAttribute @event:
                             var eventName = @event.Name ?? eventMethod.Name;
                             Module.On(eventName, Function.Create(eventMethodDelegate));
+                            break;
+#pragma warning restore 612, 618
+                        case ServerEventAttribute @event:
+                            var serverEventName = @event.Name ?? eventMethod.Name;
+                            Module.OnServer(serverEventName, Function.Create(eventMethodDelegate));
+                            break;
+                        case ClientEventAttribute @event:
+                            var clientEventName = @event.Name ?? eventMethod.Name;
+                            Module.OnClient(clientEventName, Function.Create(eventMethodDelegate));
                             break;
                     }
                 });

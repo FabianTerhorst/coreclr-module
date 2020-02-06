@@ -2,7 +2,6 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 using AltV.Net.Data;
-using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Native
@@ -49,10 +48,34 @@ namespace AltV.Net.Native
             internal static extern void Player_SetMetaData(IntPtr player, IntPtr key, IntPtr val);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Player_HasMetaData(IntPtr player, IntPtr key);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_DeleteMetaData(IntPtr player, IntPtr key);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr Player_GetSyncedMetaData(IntPtr player, IntPtr key);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_SetSyncedMetaData(IntPtr player, IntPtr key, IntPtr val);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Player_HasSyncedMetaData(IntPtr player, IntPtr key);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_DeleteSyncedMetaData(IntPtr player, IntPtr key);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern IntPtr Player_GetStreamSyncedMetaData(IntPtr player, IntPtr key);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_SetStreamSyncedMetaData(IntPtr player, IntPtr key, IntPtr val);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Player_HasStreamSyncedMetaData(IntPtr player, IntPtr key);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_DeleteStreamSyncedMetaData(IntPtr player, IntPtr key);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_AddRef(IntPtr player);

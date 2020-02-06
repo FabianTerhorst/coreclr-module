@@ -56,8 +56,16 @@ EXPORT int32_t Player_GetDimension(alt::IPlayer* player);
 EXPORT void Player_SetDimension(alt::IPlayer* player, int32_t dimension);
 EXPORT alt::MValueConst* Player_GetMetaData(alt::IPlayer* player, const char* key);
 EXPORT void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val);
+EXPORT bool Player_HasMetaData(alt::IPlayer* player, const char* key);
+EXPORT void Player_DeleteMetaData(alt::IPlayer* player, const char* key);
 EXPORT alt::MValueConst* Player_GetSyncedMetaData(alt::IPlayer* player, const char* key);
 EXPORT void Player_SetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val);
+EXPORT bool Player_HasSyncedMetaData(alt::IPlayer* player, const char* key);
+EXPORT void Player_DeleteSyncedMetaData(alt::IPlayer* player, const char* key);
+EXPORT alt::MValueConst* Player_GetStreamSyncedMetaData(alt::IPlayer* player, const char* key);
+EXPORT void Player_SetStreamSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val);
+EXPORT bool Player_HasStreamSyncedMetaData(alt::IPlayer* player, const char* key);
+EXPORT void Player_DeleteStreamSyncedMetaData(alt::IPlayer* player, const char* key);
 EXPORT void Player_AddRef(alt::IPlayer* player);
 EXPORT void Player_RemoveRef(alt::IPlayer* player);
 // Player

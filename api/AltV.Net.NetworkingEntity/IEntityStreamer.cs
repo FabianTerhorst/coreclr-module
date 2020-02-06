@@ -1,3 +1,5 @@
+using System.Numerics;
+using System.Threading.Tasks;
 using AltV.Net.NetworkingEntity.Elements.Entities;
 using Entity;
 
@@ -7,7 +9,7 @@ namespace AltV.Net.NetworkingEntity
     {
         void CreateEntity(INetworkingEntity networkingEntity);
 
-        void RemoveEntity(INetworkingEntity networkingEntity);
+        Task RemoveEntity(INetworkingEntity networkingEntity);
 
         void UpdateEntityData(INetworkingEntity entity, string key, MValue value);
 
@@ -18,5 +20,7 @@ namespace AltV.Net.NetworkingEntity
         void UpdateEntityDimension(Entity.Entity entity, int dimension);
 
         void UpdateClientDimension(INetworkingClient networkingClient, int dimension);
+
+        void UpdateClientPositionOverride(INetworkingClient networkingClient, Vector3? position);
     }
 }

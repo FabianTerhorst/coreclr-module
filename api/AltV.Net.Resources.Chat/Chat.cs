@@ -10,7 +10,7 @@ namespace AltV.Net.Resources.Chat
     {
         public override void OnStart()
         {
-            Alt.On<IPlayer, string>("chatmessage", OnChatMessage, OnChatMessageParser);
+            Alt.OnClient<IPlayer, string>("chatmessage", OnChatMessage, OnChatMessageParser);
             Alt.Export<string, Function.Func>("registerCmd",
                 (commandName, handler) =>
                 {

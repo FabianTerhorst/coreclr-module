@@ -16,12 +16,18 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void VoiceChannel_SetMetaData(IntPtr channel, IntPtr key, IntPtr val);
-            
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void VoiceChannel_AddRef(IntPtr channel);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void VoiceChannel_RemoveRef(IntPtr channel);
+            internal static extern bool VoiceChannel_HasMetaData(IntPtr voiceChannel, IntPtr key);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void VoiceChannel_DeleteMetaData(IntPtr voiceChannel, IntPtr key);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void VoiceChannel_AddRef(IntPtr voiceChannel);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void VoiceChannel_RemoveRef(IntPtr voiceChannel);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void VoiceChannel_AddPlayer(IntPtr channel, IntPtr player);
@@ -36,7 +42,7 @@ namespace AltV.Net.Native
             internal static extern void VoiceChannel_UnmutePlayer(IntPtr channel, IntPtr player);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern bool VoiceChannel_IsPlayerConnected(IntPtr channel, IntPtr player);
+            internal static extern bool VoiceChannel_HasPlayer(IntPtr channel, IntPtr player);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool VoiceChannel_IsPlayerMuted(IntPtr channel, IntPtr player);

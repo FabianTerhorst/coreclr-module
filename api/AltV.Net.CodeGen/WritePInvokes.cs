@@ -21,8 +21,10 @@ namespace AltV.Net.CodeGen
             ["void"] = "void",
             ["uint16_t&"] = "ref ushort",
             ["position_t&"] = "ref Position",
+            ["position_t"] = "Position",
             ["alt::Position"] = "Position",
             ["rotation_t&"] = "ref Rotation",
+            ["rotation_t"] = "Rotation",
             ["alt::Rotation"] = "Rotation",
             ["const char*"] = "IntPtr",
             ["alt::MValue&"] = "ref MValue",
@@ -82,7 +84,12 @@ namespace AltV.Net.CodeGen
             ["const char*[]"] = "IntPtr[]",
             ["alt::MValue*[]"] = "IntPtr[]",
             ["alt::IPlayer*[]"] = "IntPtr[]",
-            ["alt::IVehicle*[]"] = "IntPtr[]"
+            ["alt::IVehicle*[]"] = "IntPtr[]",
+            ["char[]"] = "IntPtr",
+            ["uint8_t&"] = "ref byte",
+            ["rgba_t"] = "Rgba",
+            ["void*"] = "IntPtr",
+            ["const void*"] = "IntPtr"
         };
 
         private static string TypeToCSharp(string cType, string name = null)
@@ -94,7 +101,7 @@ namespace AltV.Net.CodeGen
                 return cSharpType;
             }
 
-            throw new ArgumentException("No csharp type found for:" + cType);
+            throw new ArgumentException("No csharp type found for:" + cType + " param:" + name);
         }
 
         public static string Write(ParseExports.CMethod[] methods)

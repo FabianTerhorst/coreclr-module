@@ -34,6 +34,14 @@ void Checkpoint_SetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::
     checkpoint->SetMetaData(key, val->Get()->Clone());
 }
 
+bool Checkpoint_HasMetaData(alt::ICheckpoint* checkpoint, const char* key) {
+    return checkpoint->HasMetaData(key);
+}
+
+void Checkpoint_DeleteMetaData(alt::ICheckpoint* checkpoint, const char* key) {
+    checkpoint->DeleteMetaData(key);
+}
+
 void Checkpoint_AddRef(alt::ICheckpoint* checkpoint) {
     checkpoint->AddRef();
 }

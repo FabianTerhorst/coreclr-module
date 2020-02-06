@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using AltV.Net.Data;
 
 namespace AltV.Net.Elements.Args
 {
@@ -347,6 +348,34 @@ namespace AltV.Net.Elements.Args
             {
                 throw new InvalidDataException(
                     $"Expected a ulong but found a {next.GetType()}");
+            }
+
+            return value;
+        }
+        
+        public Position NextPosition()
+        {
+            CheckObjectOrArray();
+            CheckValue();
+            var next = readableMValue.GetNext();
+            if (!(next is Position value))
+            {
+                throw new InvalidDataException(
+                    $"Expected a Position but found a {next.GetType()}");
+            }
+
+            return value;
+        }
+        
+        public Rgba NextRgba()
+        {
+            CheckObjectOrArray();
+            CheckValue();
+            var next = readableMValue.GetNext();
+            if (!(next is Rgba value))
+            {
+                throw new InvalidDataException(
+                    $"Expected a Position but found a {next.GetType()}");
             }
 
             return value;
