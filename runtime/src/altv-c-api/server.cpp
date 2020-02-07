@@ -89,12 +89,17 @@ Server_CreateVehicle(alt::ICore* server, uint32_t model, position_t pos, rotatio
 
 alt::ICheckpoint*
 Server_CreateCheckpoint(alt::ICore* server, uint8_t type, position_t pos, float radius,
-                        float height, alt::RGBA color) {
+                        float height, rgba_t color) {
     alt::Position position;
     position.x = pos.x;
     position.y = pos.y;
     position.z = pos.z;
-    return server->CreateCheckpoint(type, position, radius, height, color).Get();
+    alt::RGBA rgba;
+    rgba.r = color.r;
+    rgba.g = color.g;
+    rgba.b = color.b;
+    rgba.a = color.a;
+    return server->CreateCheckpoint(type, position, radius, height, rgba).Get();
 }
 
 alt::IBlip*
