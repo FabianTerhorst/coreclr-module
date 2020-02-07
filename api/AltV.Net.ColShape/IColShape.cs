@@ -18,7 +18,7 @@ namespace AltV.Net.ColShape
 
         IDictionary<IWorldObject, bool> LastChecked { get; }
 
-        void AddWorldObject(IWorldObject worldObject);
+        bool AddWorldObject(IWorldObject worldObject);
 
         void RemoveWorldObject(IWorldObject worldObject);
 
