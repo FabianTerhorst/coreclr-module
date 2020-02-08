@@ -37,6 +37,7 @@ namespace AltV.Net.EntitySync
 
             entityThreads = new EntityThread[threadCount];
             entityThreadRepositories = new EntityThreadRepository[threadCount];
+
             for (var i = 0; i < threadCount; i++)
             {
                 var entityThreadRepository = new EntityThreadRepository();

@@ -36,6 +36,20 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             this.areaSize = areaSize;
             this.xOffset = xOffset;
             this.yOffset = yOffset;
+            
+            var maxXAreaIndex = maxX / areaSize;
+            var maxYAreaIndex = maxX / areaSize;
+            
+            entityAreas = new IEntity[maxXAreaIndex][][];
+            
+            for (var i = 0; i < maxXAreaIndex; i++)
+            {
+                entityAreas[i] = new IEntity[maxYAreaIndex][];
+                for (var j = 0; j < maxYAreaIndex; j++)
+                {
+                    entityAreas[i][j] = new IEntity[0];
+                }
+            }
         }
 
         public override void Add(IEntity entity)
@@ -129,7 +143,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
                             arr[l] = arr[l + 1];
                         }
 
-                        Array.Resize(ref arr, newLength);
+                        Array.Resize(ref entityAreas[i][j], newLength);
                     }
                 }
             //}

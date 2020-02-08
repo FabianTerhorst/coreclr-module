@@ -28,36 +28,37 @@ namespace AltV.Net.EntitySync
         private readonly Action<IClient, IEntity, IEnumerable<string>> onEntityCreate;
 
         private readonly Action<IClient, IEntity> onEntityRemove;
-        
+
         private readonly Action<IClient, IEntity, IEnumerable<string>> onEntityDataChange;
-        
+
         private readonly Action<IClient, IEntity, Vector3> onEntityPositionChange;
 
         public EntityThread(IEntityThreadRepository entityThreadRepository, IClientRepository clientRepository,
-            SpatialPartition spatialPartition, 
+            SpatialPartition spatialPartition,
             Action<IClient, IEntity, IEnumerable<string>> onEntityCreate, Action<IClient, IEntity> onEntityRemove,
-            Action<IClient, IEntity, IEnumerable<string>> onEntityDataChange, Action<IClient, IEntity, Vector3> onEntityPositionChange)
+            Action<IClient, IEntity, IEnumerable<string>> onEntityDataChange,
+            Action<IClient, IEntity, Vector3> onEntityPositionChange)
         {
             if (onEntityCreate == null)
             {
                 throw new ArgumentException("onEntityCreate should not be null.");
             }
-            
+
             if (onEntityRemove == null)
             {
                 throw new ArgumentException("onEntityRemove should not be null.");
             }
-            
+
             if (onEntityDataChange == null)
             {
                 throw new ArgumentException("onEntityDataChange should not be null.");
             }
-            
+
             if (onEntityPositionChange == null)
             {
                 throw new ArgumentException("onEntityPositionChange should not be null.");
             }
-            
+
             thread = new Thread(OnLoop);
             thread.Start();
             this.entityThreadRepository = entityThreadRepository;
@@ -68,13 +69,13 @@ namespace AltV.Net.EntitySync
             this.onEntityDataChange = onEntityDataChange;
             this.onEntityPositionChange = onEntityPositionChange;
         }
-        
+
         public void OnLoop()
         {
             while (running)
             {
                 var (entities, removedEntities, addedEntities) = entityThreadRepository.GetAll();
-                
+
                 if (removedEntities != null)
                 {
                     foreach (var removedEntity in removedEntities)
@@ -86,7 +87,7 @@ namespace AltV.Net.EntitySync
                         }
                     }
                 }
-                
+
                 if (addedEntities != null)
                 {
                     foreach (var addedEntity in addedEntities)
@@ -96,6 +97,7 @@ namespace AltV.Net.EntitySync
                 }
 
                 var clients = clientRepository.GetAll();
+
                 foreach (var client in clients)
                 {
                     if (!client.TryGetPosition(out var position))
@@ -111,7 +113,7 @@ namespace AltV.Net.EntitySync
                         {
                             onEntityCreate(client, foundEntity, changedKeys);
                         }
-                        else if(changedKeys != null)
+                        else if (changedKeys != null)
                         {
                             onEntityDataChange(client, foundEntity, changedKeys);
                         }
@@ -156,7 +158,7 @@ namespace AltV.Net.EntitySync
                             entity.RemoveClient(client);
                         }
                     }
-                    
+
                     // Check if position state is new position so we can set the new position to the entity internal position
 
                     if (entity.TrySetPositionComputing(out var newPosition))
@@ -166,6 +168,7 @@ namespace AltV.Net.EntitySync
                         {
                             onEntityPositionChange(entityClient, entity, newPosition);
                         }
+
                         entity.SetPositionComputed();
                     }
                 }

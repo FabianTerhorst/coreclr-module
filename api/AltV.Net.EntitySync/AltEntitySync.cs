@@ -9,7 +9,7 @@ namespace AltV.Net.EntitySync
 
         internal static EntitySyncServer _entitySyncServer;
 
-        internal static void Init(long threadCount,
+        public static void Init(long threadCount,
             Func<IClientRepository, NetworkLayer> createNetworkLayer,
             Func<SpatialPartition> createSpatialPartition, IIdProvider<ulong> idProvider)
         {

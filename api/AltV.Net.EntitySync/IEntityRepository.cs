@@ -1,5 +1,3 @@
-using System.Numerics;
-
 namespace AltV.Net.EntitySync
 {
     public interface IEntityRepository

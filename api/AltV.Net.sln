@@ -44,6 +44,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.EntitySync.WebSock
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.EntitySync.ServerEvent", "AltV.Net.EntitySync.ServerEvent\AltV.Net.EntitySync.ServerEvent.csproj", "{745BFAE2-ED9E-4029-8302-F04FE7B69345}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.EntitySync.Tests", "AltV.Net.EntitySync.Tests\AltV.Net.EntitySync.Tests.csproj", "{0344043F-7287-44FD-A83D-EC23BBBCD307}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -183,5 +185,11 @@ Global
 		{745BFAE2-ED9E-4029-8302-F04FE7B69345}.Release|Any CPU.Build.0 = Release|Any CPU
 		{745BFAE2-ED9E-4029-8302-F04FE7B69345}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
 		{745BFAE2-ED9E-4029-8302-F04FE7B69345}.Testing|Any CPU.Build.0 = Debug|Any CPU
+		{0344043F-7287-44FD-A83D-EC23BBBCD307}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0344043F-7287-44FD-A83D-EC23BBBCD307}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0344043F-7287-44FD-A83D-EC23BBBCD307}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0344043F-7287-44FD-A83D-EC23BBBCD307}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0344043F-7287-44FD-A83D-EC23BBBCD307}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
+		{0344043F-7287-44FD-A83D-EC23BBBCD307}.Testing|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal
