@@ -104,8 +104,8 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             var stoppingXIndex =
                 (int) Math.Ceiling(squareMaxX / areaSize);
             // Now remove entity from all areas from min {x, y} to max {x, y}
-            lock (entityAreas)
-            {
+            //lock (entityAreas)
+            //{
                 for (var i = startingYIndex; i <= stoppingYIndex; i++)
                 {
                     for (var j = startingXIndex; j <= stoppingXIndex; j++)
@@ -132,7 +132,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
                         Array.Resize(ref arr, newLength);
                     }
                 }
-            }
+            //}
         }
 
         public override void UpdateEntityPosition(IEntity entity, in Vector3 newPosition)
@@ -206,8 +206,8 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             // Now we have to check if some of the (oldStartingXIndex, oldStoppingXIndex) areas are inside (newStartingXIndex, newStoppingXIndex)
 
 
-            lock (entityAreas)
-            {
+            //lock (entityAreas)
+            //{
                 for (var i = oldStartingYIndex; i <= oldStoppingYIndex; i++)
                 {
                     for (var j = oldStartingXIndex; j <= oldStoppingXIndex; j++)
@@ -245,7 +245,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
                         entityAreas[j][i][length] = entity;
                     }
                 }
-            }
+            //}
         }
 
         public override void UpdateEntityRange(IEntity entity, uint range)
@@ -271,8 +271,8 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
             var y2Index = (int) Math.Ceiling(posY / areaSize);*/
 
-            lock (entityAreas)
-            {
+            //lock (entityAreas)
+            //{
                 var areaEntities = entityAreas[xIndex][yIndex];
 
                 for (int j = 0, innerLength = areaEntities.Length; j < innerLength; j++)
@@ -331,7 +331,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
                         callback(entity);
                     }
                 }*/
-            }
+            //}
         }
     }
 }

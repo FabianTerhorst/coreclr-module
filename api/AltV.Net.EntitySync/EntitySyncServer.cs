@@ -39,9 +39,9 @@ namespace AltV.Net.EntitySync
             entityThreadRepositories = new EntityThreadRepository[threadCount];
             for (var i = 0; i < threadCount; i++)
             {
-                var entityThreadRepository = new EntityThreadRepository(createSpatialPartition());
+                var entityThreadRepository = new EntityThreadRepository();
                 entityThreadRepositories[i] = entityThreadRepository;
-                entityThreads[i] = new EntityThread(entityThreadRepository, clientRepository, OnEntityCreate,
+                entityThreads[i] = new EntityThread(entityThreadRepository, clientRepository, createSpatialPartition(), OnEntityCreate,
                     OnEntityRemove, OnEntityDataChange, OnEntityPositionChange);
             }
 

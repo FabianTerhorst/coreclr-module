@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Threading;
+using AltV.Net.EntitySync.SpatialPartitions;
 
 namespace AltV.Net.EntitySync
 {
@@ -19,6 +20,8 @@ namespace AltV.Net.EntitySync
 
         private readonly IClientRepository clientRepository;
 
+        private readonly SpatialPartition spatialPartition;
+
         private readonly HashSet<IClient> clientsToRemoveFromEntity = new HashSet<IClient>();
         private readonly HashSet<IClient> clientsToResetFromEntity = new HashSet<IClient>();
 
@@ -31,6 +34,7 @@ namespace AltV.Net.EntitySync
         private readonly Action<IClient, IEntity, Vector3> onEntityPositionChange;
 
         public EntityThread(IEntityThreadRepository entityThreadRepository, IClientRepository clientRepository,
+            SpatialPartition spatialPartition, 
             Action<IClient, IEntity, IEnumerable<string>> onEntityCreate, Action<IClient, IEntity> onEntityRemove,
             Action<IClient, IEntity, IEnumerable<string>> onEntityDataChange, Action<IClient, IEntity, Vector3> onEntityPositionChange)
         {
@@ -58,6 +62,7 @@ namespace AltV.Net.EntitySync
             thread.Start();
             this.entityThreadRepository = entityThreadRepository;
             this.clientRepository = clientRepository;
+            this.spatialPartition = spatialPartition;
             this.onEntityCreate = onEntityCreate;
             this.onEntityRemove = onEntityRemove;
             this.onEntityDataChange = onEntityDataChange;
@@ -68,16 +73,25 @@ namespace AltV.Net.EntitySync
         {
             while (running)
             {
-                var (entities, removedEntities) = entityThreadRepository.GetAll();
+                var (entities, removedEntities, addedEntities) = entityThreadRepository.GetAll();
                 
                 if (removedEntities != null)
                 {
                     foreach (var removedEntity in removedEntities)
                     {
+                        spatialPartition.Remove(removedEntity);
                         foreach (var client in removedEntity.GetClients())
                         {
                             onEntityRemove(client, removedEntity);
                         }
+                    }
+                }
+                
+                if (addedEntities != null)
+                {
+                    foreach (var addedEntity in addedEntities)
+                    {
+                        spatialPartition.Add(addedEntity);
                     }
                 }
 
@@ -89,7 +103,7 @@ namespace AltV.Net.EntitySync
                         continue;
                     }
 
-                    foreach (var foundEntity in entityThreadRepository.Find(in position))
+                    foreach (var foundEntity in spatialPartition.Find(position))
                     {
                         foundEntity.AddCheck(client);
                         var changedKeys = foundEntity.CompareSnapshotWithClient(client);
@@ -109,7 +123,6 @@ namespace AltV.Net.EntitySync
                     var lastCheckedClients = entity.GetLastCheckedClients();
                     if (lastCheckedClients.Count != 0)
                     {
-
                         if (clientsToRemoveFromEntity.Count != 0)
                         {
                             clientsToRemoveFromEntity.Clear();
@@ -145,14 +158,10 @@ namespace AltV.Net.EntitySync
                     }
                     
                     // Check if position state is new position so we can set the new position to the entity internal position
-                    //TODO: modify spartial spacing position of entities here as well and not in the thread repository
-                    //TODO: this means we should remove the entities from the grid here as well
-                    //TODO: this means we should add the entities to the grid here as well, so that it is full thread safe
-                    //TODO: butt add / remove is not required for thread safety, just for better performance
 
                     if (entity.TrySetPositionComputing(out var newPosition))
                     {
-                        entityThreadRepository.UpdatePosition(entity, newPosition);
+                        spatialPartition.UpdateEntityPosition(entity, newPosition);
                         foreach (var entityClient in entity.GetClients())
                         {
                             onEntityPositionChange(entityClient, entity, newPosition);

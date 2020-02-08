@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using System.Numerics;
 
 namespace AltV.Net.EntitySync
@@ -14,8 +14,6 @@ namespace AltV.Net.EntitySync
         
         void UpdatePosition(IEntity entity, Vector3 newPosition);
 
-        KeyValuePair<IEntity[], IEntity[]> GetAll();
-
-        IEnumerable<IEntity> Find(in Vector3 position);
+        ValueTuple<IEntity[], IEntity[], IEntity[]> GetAll();
     }
 }
