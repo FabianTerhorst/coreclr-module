@@ -17,6 +17,7 @@ namespace AltV.Net.EntitySync
         {
             lock (entities)
             {
+                entitiesToRemove.Remove(entity);
                 if (!entitiesToAdd.Add(entity)) return;
                 if (!entities.TryAdd(entity.Id, entity)) return;
             }
@@ -26,6 +27,7 @@ namespace AltV.Net.EntitySync
         {
             lock (entities)
             {
+                entitiesToAdd.Remove(entity);
                 if (!entitiesToRemove.Add(entity)) return;
                 if (!entities.Remove(entity.Id, out _)) return;
             }
