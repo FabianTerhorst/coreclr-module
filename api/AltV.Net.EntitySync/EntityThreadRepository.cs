@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 
 namespace AltV.Net.EntitySync
 {
@@ -31,11 +30,6 @@ namespace AltV.Net.EntitySync
                 if (!entitiesToRemove.Add(entity)) return;
                 if (!entities.Remove(entity.Id, out _)) return;
             }
-        }
-
-        public void UpdatePosition(IEntity entity, Vector3 newPosition)
-        {
-            entity.SetPositionInternal(newPosition);
         }
 
         public ValueTuple<IEntity[], IEntity[], IEntity[]> GetAll()

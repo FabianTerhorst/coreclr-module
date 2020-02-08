@@ -9,10 +9,16 @@ namespace AltV.Net.EntitySync
 
         ulong Type { get; }
 
-        Vector3 Position { get; }
+        // set position update flag to true in entity when updating position
+        // thread will normally check if client is near entity
+        // 1.) when client was near entity and is not anymore stream not, ( no change)
+        // 2.) when client was not near entity and is now near entity stream in, (no change)
+        // 3.) when client was not near entity and is still not near entity do nothing, (no change)
+        // 4.) when client was near entity and is still near entity send client position change, client knows old position, don't send it
+        Vector3 Position { get; set; }
 
         uint Range { get; }
-        
+
         object FlagsMutex { get; }
 
         int Flags { get; }
@@ -20,7 +26,7 @@ namespace AltV.Net.EntitySync
         void SetData(string key, object value);
 
         bool TryGetData(string key, out object value);
-        
+
         bool TryGetData<T>(string key, out T value);
 
         void ResetData(string key);
@@ -38,8 +44,6 @@ namespace AltV.Net.EntitySync
         HashSet<IClient> GetClients();
 
         byte[] Serialize(IEnumerable<string> changedKeys);
-
-        void SetPositionInternal(Vector3 position);
 
         bool TrySetPositionComputing(out Vector3 newPosition);
 

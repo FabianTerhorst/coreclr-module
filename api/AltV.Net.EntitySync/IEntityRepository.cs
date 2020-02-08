@@ -7,7 +7,5 @@ namespace AltV.Net.EntitySync
         void Add(IEntity entity);
 
         void Remove(IEntity entity);
-
-        void UpdatePosition(IEntity entity, Vector3 newPosition);
     }
 }

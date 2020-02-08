@@ -96,17 +96,6 @@ namespace AltV.Net.EntitySync
             return entity;
         }
 
-        // set position update flag to true in entity when updating position
-        // thread will normally check if client is near entity
-        // 1.) when client was near entity and is not anymore stream not, ( no change)
-        // 2.) when client was not near entity and is now near entity stream in, (no change)
-        // 3.) when client was not near entity and is still not near entity do nothing, (no change)
-        // 4.) when client was near entity and is still near entity send client position change, client knows old position, don't send it
-        public void UpdateEntityPosition(IEntity entity, Vector3 newPosition)
-        {
-            entityRepository.UpdatePosition(entity, newPosition);
-        }
-
         public void AddEntity(IEntity entity)
         {
             entityRepository.Add(entity);

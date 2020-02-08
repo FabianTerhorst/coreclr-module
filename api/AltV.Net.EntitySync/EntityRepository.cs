@@ -1,5 +1,3 @@
-using System.Numerics;
-
 namespace AltV.Net.EntitySync
 {
     public class EntityRepository : IEntityRepository
@@ -26,12 +24,6 @@ namespace AltV.Net.EntitySync
         {
             var threadIndex = (int) (entity.Id % threadCount);
             entityThreadRepositories[threadIndex].Remove(entity);
-        }
-
-        public void UpdatePosition(IEntity entity, Vector3 newPosition)
-        {
-            var threadIndex = (int) (entity.Id % threadCount);
-            entityThreadRepositories[threadIndex].UpdatePosition(entity, newPosition);
         }
     }
 }

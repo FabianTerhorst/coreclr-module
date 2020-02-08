@@ -8,9 +8,17 @@ namespace AltV.Net.EntitySync
     {
         public ulong Id { get; }
         public ulong Type { get; }
-        public Vector3 Position { get; set; }
+
+        private Vector3 position;
+        
+        public Vector3 Position
+        {
+            get => position;
+            set => SetPositionInternal(value);
+        }
+
         public int PositionState { get; set; }
-        public Vector3 NewPosition { get; set; }
+        private Vector3 newPosition;
         public uint Range { get; }
         public object FlagsMutex { get; } = new object();
         public int Flags { get; set; }
@@ -38,7 +46,7 @@ namespace AltV.Net.EntitySync
         {
             Id = id;
             Type = type;
-            Position = position;
+            this.position = position;
             Range = range;
             dataSnapshot = new EntityDataSnapshot(Id);
         }
@@ -126,26 +134,26 @@ namespace AltV.Net.EntitySync
             return clients;
         }
         
-        public void SetPositionInternal(Vector3 position)
+        public void SetPositionInternal(Vector3 currNewPosition)
         {
             lock (FlagsMutex)
             {
                 PositionState = (int) EntityPositionState.PositionChanged;
-                NewPosition = position;
+                newPosition = currNewPosition;
             }
         }
 
-        public bool TrySetPositionComputing(out Vector3 newPosition)
+        public bool TrySetPositionComputing(out Vector3 currNewPosition)
         {
             lock (FlagsMutex)
             {
                 if (PositionState != (int) EntityPositionState.PositionChanged)
                 {
-                    newPosition = default;
+                    currNewPosition = default;
                     return false;
                 }
 
-                newPosition = NewPosition;
+                currNewPosition = newPosition;
                 PositionState = (int) EntityPositionState.PositionChangeComputing;
             }
 
@@ -158,7 +166,7 @@ namespace AltV.Net.EntitySync
             {
                 if (PositionState != (int) EntityPositionState.PositionChangeComputing) return;
                 PositionState = (int) EntityPositionState.PositionChangeComputed;
-                Position = NewPosition;
+                position = newPosition;
             }
         }
 
@@ -169,9 +177,9 @@ namespace AltV.Net.EntitySync
             {
                 writer.Write(Id);
                 writer.Write(Type);
-                writer.Write(Position.X);
-                writer.Write(Position.Y);
-                writer.Write(Position.Z);
+                writer.Write(position.X);
+                writer.Write(position.Y);
+                writer.Write(position.Z);
                 writer.Write(Range);
                 //TODO: serialize data depending on changedKeys
             }
