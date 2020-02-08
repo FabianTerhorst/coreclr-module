@@ -13,4 +13,7 @@ namespace AltV.Net.EntitySync.Events
 
     public delegate void EntityPositionUpdateEventDelegate(IClient client,
         in EntityPositionUpdateEvent entityPositionUpdate);
+    
+    public delegate void EntityDataUpdateEventDelegate(IClient client,
+        in EntityDataChangeEvent entityDataChange);
 }

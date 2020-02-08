@@ -15,12 +15,19 @@ namespace AltV.Net.EntitySync
             }
         }
 
-        public void Remove(IClient client)
+        public IClient Remove(IClient client)
+        {
+            return Remove(client.Token);
+        }
+
+        public IClient Remove(string token)
         {
             lock (clients)
             {
-                clients.Remove(client.Token);
+                if (clients.Remove(token, out var client)) return client;
             }
+
+            return null;
         }
 
         public IClient[] GetAll()

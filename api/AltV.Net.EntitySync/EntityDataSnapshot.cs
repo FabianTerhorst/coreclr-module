@@ -75,10 +75,13 @@ namespace AltV.Net.EntitySync
             ) // client visited entity before
             {
                 changedKeys = Compare(entitySnapshotFromClient);
-                entitySnapshotFromClient.Snapshots.Clear();
-                foreach (var (key, value) in Snapshots)
+                if (changedKeys != null) //TODO: test if check works correctly
                 {
-                    entitySnapshotFromClient.Snapshots[key] = value;
+                    entitySnapshotFromClient.Snapshots.Clear();
+                    foreach (var (key, value) in Snapshots)
+                    {
+                        entitySnapshotFromClient.Snapshots[key] = value;
+                    }
                 }
             }
             else // client never visited entity before
@@ -92,6 +95,41 @@ namespace AltV.Net.EntitySync
         }
 
         private IEnumerable<string> Compare(DataSnapshot dataSnapshot)
+        {
+            var missing = false;
+            foreach (var (key, value) in Snapshots)
+            {
+                if (dataSnapshot.Snapshots.TryGetValue(key, out var snapShotValue))
+                {
+                    if (snapShotValue < value)
+                    {
+                        yield return key;
+                    }
+                }
+                else
+                {
+                    missing = true;
+
+                    yield return key;
+                }
+            }
+
+            if (missing || Snapshots.Count != dataSnapshot.Snapshots.Count
+            ) // snapshot contains at least one removed key or has a different size, we need to notify the player about that
+            {
+                //TODO: is the removed key also just a changed key, because then we have to deliver a null mvalue as well, yeah why not
+                foreach (var (key, _) in dataSnapshot.Snapshots)
+                {
+                    if (!Snapshots.ContainsKey(key))
+                    {
+                        yield return key;
+                    }
+                }
+            }
+        }
+        
+        /*
+         private IEnumerable<string> Compare(DataSnapshot dataSnapshot)
         {
             var missing = false;
             //TODO: do we need to create a buffer for the hash sets?
@@ -142,5 +180,6 @@ namespace AltV.Net.EntitySync
 
             return changedKeys;
         }
+         */
     }
 }

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AltV.Net.Async\AltV.Net.Async.csproj" />
+      <ProjectReference Include="..\AltV.Net.EntitySync\AltV.Net.EntitySync.csproj" />
+      <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Threading.Channels" Version="4.7.0" />
+    </ItemGroup>
+
+</Project>

@@ -14,6 +14,7 @@ namespace AltV.Net.EntitySync
         public abstract event EntityCreateEventDelegate OnEntityCreate;
         public abstract event EntityRemoveEventDelegate OnEntityRemove;
         public abstract event EntityPositionUpdateEventDelegate OnEntityPositionUpdate;
+        public abstract event EntityPositionUpdateEventDelegate OnEntityDataUpdate;
 
         public IClientRepository ClientRepository;
 
@@ -25,5 +26,6 @@ namespace AltV.Net.EntitySync
         public abstract void SendEvent(IClient client, in EntityCreateEvent entityCreate);
         public abstract void SendEvent(IClient client, in EntityRemoveEvent entityRemove);
         public abstract void SendEvent(IClient client, in EntityPositionUpdateEvent entityPositionUpdate);
+        public abstract void SendEvent(IClient client, in EntityDataChangeEvent entityDataChange);
     }
 }

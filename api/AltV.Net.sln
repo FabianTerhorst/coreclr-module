@@ -40,6 +40,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.BenchmarkRunners",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.EntitySync", "AltV.Net.EntitySync\AltV.Net.EntitySync.csproj", "{65405326-4156-49C6-BD5B-241CC94CE170}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.EntitySync.WebSocket", "AltV.Net.EntitySync.WebSocket\AltV.Net.EntitySync.WebSocket.csproj", "{7AAEDA57-4EF0-4664-A69D-B77F742B8A86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.EntitySync.ServerEvent", "AltV.Net.EntitySync.ServerEvent\AltV.Net.EntitySync.ServerEvent.csproj", "{745BFAE2-ED9E-4029-8302-F04FE7B69345}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -167,5 +171,17 @@ Global
 		{65405326-4156-49C6-BD5B-241CC94CE170}.Release|Any CPU.Build.0 = Release|Any CPU
 		{65405326-4156-49C6-BD5B-241CC94CE170}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
 		{65405326-4156-49C6-BD5B-241CC94CE170}.Testing|Any CPU.Build.0 = Debug|Any CPU
+		{7AAEDA57-4EF0-4664-A69D-B77F742B8A86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AAEDA57-4EF0-4664-A69D-B77F742B8A86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AAEDA57-4EF0-4664-A69D-B77F742B8A86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AAEDA57-4EF0-4664-A69D-B77F742B8A86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AAEDA57-4EF0-4664-A69D-B77F742B8A86}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AAEDA57-4EF0-4664-A69D-B77F742B8A86}.Testing|Any CPU.Build.0 = Debug|Any CPU
+		{745BFAE2-ED9E-4029-8302-F04FE7B69345}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{745BFAE2-ED9E-4029-8302-F04FE7B69345}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{745BFAE2-ED9E-4029-8302-F04FE7B69345}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{745BFAE2-ED9E-4029-8302-F04FE7B69345}.Release|Any CPU.Build.0 = Release|Any CPU
+		{745BFAE2-ED9E-4029-8302-F04FE7B69345}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
+		{745BFAE2-ED9E-4029-8302-F04FE7B69345}.Testing|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal

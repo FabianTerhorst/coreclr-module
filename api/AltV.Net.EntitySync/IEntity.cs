@@ -12,6 +12,18 @@ namespace AltV.Net.EntitySync
         Vector3 Position { get; }
 
         uint Range { get; }
+        
+        object FlagsMutex { get; }
+
+        int Flags { get; }
+
+        void SetData(string key, object value);
+
+        bool TryGetData(string key, out object value);
+        
+        bool TryGetData<T>(string key, out T value);
+
+        void ResetData(string key);
 
         bool TryAddClient(IClient client);
 
@@ -28,6 +40,10 @@ namespace AltV.Net.EntitySync
         byte[] Serialize(IEnumerable<string> changedKeys);
 
         void SetPositionInternal(Vector3 position);
+
+        bool TrySetPositionComputing(out Vector3 newPosition);
+
+        void SetPositionComputed();
 
         IEnumerable<string> CompareSnapshotWithClient(IClient client);
     }

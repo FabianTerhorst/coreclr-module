@@ -9,8 +9,12 @@ namespace AltV.Net.EntitySync
         public ulong Id { get; }
         public ulong Type { get; }
         public Vector3 Position { get; set; }
+        public int PositionState { get; set; }
+        public Vector3 NewPosition { get; set; }
         public uint Range { get; }
-        
+        public object FlagsMutex { get; } = new object();
+        public int Flags { get; set; }
+
         private readonly IDictionary<string, object> data = new Dictionary<string, object>();
 
         private readonly EntityDataSnapshot dataSnapshot;
@@ -41,14 +45,49 @@ namespace AltV.Net.EntitySync
 
         public void SetData(string key, object value)
         {
-            dataSnapshot.Update(key);
-            data[key] = value;
+            lock (data)
+            {
+                dataSnapshot.Update(key);
+                data[key] = value;
+            }
         }
 
         public void ResetData(string key)
         {
-            dataSnapshot.Update(key);
-            data.Remove(key);
+            lock (data)
+            {
+                dataSnapshot.Update(key);
+                data.Remove(key);
+            }
+        }
+
+        public bool TryGetData(string key, out object value)
+        {
+            lock (data)
+            {
+                return data.TryGetValue(key, out value);
+            }
+        }
+
+        public bool TryGetData<T>(string key, out T value)
+        {
+            lock (data)
+            {
+                if (!data.TryGetValue(key, out var currValue))
+                {
+                    value = default;
+                    return false;
+                }
+
+                if (!(currValue is T correctValue))
+                {
+                    value = default;
+                    return false;
+                }
+
+                value = correctValue;
+                return true;
+            }
         }
 
         /// <summary>
@@ -86,10 +125,41 @@ namespace AltV.Net.EntitySync
         {
             return clients;
         }
-
+        
         public void SetPositionInternal(Vector3 position)
         {
-            Position = position;
+            lock (FlagsMutex)
+            {
+                PositionState = (int) EntityPositionState.PositionChanged;
+                NewPosition = position;
+            }
+        }
+
+        public bool TrySetPositionComputing(out Vector3 newPosition)
+        {
+            lock (FlagsMutex)
+            {
+                if (PositionState != (int) EntityPositionState.PositionChanged)
+                {
+                    newPosition = default;
+                    return false;
+                }
+
+                newPosition = NewPosition;
+                PositionState = (int) EntityPositionState.PositionChangeComputing;
+            }
+
+            return true;
+        }
+        
+        public void SetPositionComputed()
+        {
+            lock (FlagsMutex)
+            {
+                if (PositionState != (int) EntityPositionState.PositionChangeComputing) return;
+                PositionState = (int) EntityPositionState.PositionChangeComputed;
+                Position = NewPosition;
+            }
         }
 
         public virtual byte[] Serialize(IEnumerable<string> changedKeys)

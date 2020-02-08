@@ -9,7 +9,7 @@ namespace AltV.Net.EntitySync
     {
         private readonly IDictionary<ulong, IEntity> entities = new Dictionary<ulong, IEntity>();
 
-        private readonly LinkedList<IEntity> entitiesToRemove = new LinkedList<IEntity>();
+        private readonly HashSet<IEntity> entitiesToRemove = new HashSet<IEntity>();
 
         private readonly SpatialPartition spatialPartition;
 
@@ -22,7 +22,7 @@ namespace AltV.Net.EntitySync
         {
             lock (entities)
             {
-                entities[entity.Id] = entity;
+                if (!entities.TryAdd(entity.Id, entity)) return;
             }
 
             spatialPartition.Add(entity);
@@ -32,8 +32,8 @@ namespace AltV.Net.EntitySync
         {
             lock (entities)
             {
-                entities.Remove(entity.Id);
-                entitiesToRemove.AddLast(entity);
+                if (!entitiesToRemove.Add(entity)) return;
+                if (!entities.Remove(entity.Id, out _)) return;
             }
 
             spatialPartition.Remove(entity);
@@ -41,7 +41,6 @@ namespace AltV.Net.EntitySync
 
         public void UpdatePosition(IEntity entity, Vector3 newPosition)
         {
-            spatialPartition.UpdateEntityPosition(entity, newPosition);
             entity.SetPositionInternal(newPosition);
         }
 

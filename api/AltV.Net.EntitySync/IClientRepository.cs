@@ -4,7 +4,9 @@ namespace AltV.Net.EntitySync
     {
         void Add(IClient client);
 
-        void Remove(IClient client);
+        IClient Remove(IClient client);
+        
+        IClient Remove(string token);
 
         IClient[] GetAll();
     }
