@@ -16,8 +16,10 @@ namespace AltV.Net.EntitySync.Tests
         public MockNetworkLayer(IClientRepository clientRepository) : base(clientRepository)
         {
             var a = new Client("a");
+            a.Dimension = 0;
             a.Position = new Vector3(0, 0, 0);
             var b = new Client("b");
+            b.Dimension = 0;
             b.Position = new Vector3(100, 100, 100);
             clientRepository.Add(a);
             clientRepository.Add(b);

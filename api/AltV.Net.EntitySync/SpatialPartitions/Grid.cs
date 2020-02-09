@@ -390,7 +390,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             {
                 var entity = areaEntities[j];
                 if (Vector3.Distance(entity.Position, position) > entity.Range ||
-                    CanSeeOtherDimension(entity.Dimension, dimension)) continue;
+                    !CanSeeOtherDimension(entity.Dimension, dimension)) continue;
                 yield return entity;
             }
 

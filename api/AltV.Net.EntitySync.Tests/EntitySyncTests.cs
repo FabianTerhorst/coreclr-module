@@ -14,15 +14,27 @@ namespace AltV.Net.EntitySync.Tests
                 repository => new MockNetworkLayer(repository),
                 () => new Grid(50_000, 50_000, 100, 10_000, 10_000),
                 new IdProvider());
-        } 
+        }
 
         [Test]
         public void AddTest()
         {
             var entity = new Entity(1, Vector3.Zero, 2);
+            entity.Dimension = 0;
             AltEntitySync.AddEntity(entity);
             Thread.Sleep(3000);
             AltEntitySync.RemoveEntity(entity);
+            Thread.Sleep(5000);
+        }
+
+        [Test]
+        public void UpdatePositionTest()
+        {
+            var entity = new Entity(1, Vector3.Zero, 2);
+            entity.Dimension = 0;
+            AltEntitySync.AddEntity(entity);
+            Thread.Sleep(3000);
+            entity.Position = new Vector3(1, 1, 1);
             Thread.Sleep(5000);
         }
     }
