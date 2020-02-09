@@ -16,6 +16,8 @@ namespace AltV.Net.EntitySync
         // 3.) when client was not near entity and is still not near entity do nothing, (no change)
         // 4.) when client was near entity and is still near entity send client position change, client knows old position, don't send it
         Vector3 Position { get; set; }
+        
+        int Dimension { get; set; }
 
         uint Range { get; }
 
@@ -48,6 +50,10 @@ namespace AltV.Net.EntitySync
         bool TrySetPositionComputing(out Vector3 newPosition);
 
         void SetPositionComputed();
+
+        bool TrySetDimensionComputing(out int currNewDimension);
+
+        void SetDimensionComputed();
 
         IEnumerable<string> CompareSnapshotWithClient(IClient client);
     }

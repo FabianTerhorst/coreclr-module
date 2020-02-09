@@ -24,6 +24,22 @@ namespace AltV.Net.EntitySync.ServerEvent
             }
         }
 
+        public override int Dimension
+        {
+            get
+            {
+                lock (player)
+                {
+                    if (player.Exists)
+                    {
+                        return player.Dimension;
+                    }
+                }
+
+                return default;
+            }
+        }
+
         public override bool Exists
         {
             get
@@ -56,6 +72,20 @@ namespace AltV.Net.EntitySync.ServerEvent
                 }
             }
             position = Vector3.Zero;
+            return false;
+        }
+
+        public override bool TryGetDimension(out int dimension)
+        {
+            lock (player)
+            {
+                if (player.Exists)
+                {
+                    dimension = player.Dimension;
+                    return true;
+                }
+            }
+            dimension = default;
             return false;
         }
 

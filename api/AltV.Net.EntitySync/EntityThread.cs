@@ -105,7 +105,7 @@ namespace AltV.Net.EntitySync
                         continue;
                     }
 
-                    foreach (var foundEntity in spatialPartition.Find(position))
+                    foreach (var foundEntity in spatialPartition.Find(position, client.Dimension))
                     {
                         foundEntity.AddCheck(client);
                         var changedKeys = foundEntity.CompareSnapshotWithClient(client);
@@ -170,6 +170,12 @@ namespace AltV.Net.EntitySync
                         }
 
                         entity.SetPositionComputed();
+                    }
+                    
+                    if (entity.TrySetDimensionComputing(out var newDimension))
+                    {
+                        spatialPartition.UpdateEntityDimension(entity, newDimension);
+                        entity.SetDimensionComputed();
                     }
                 }
 

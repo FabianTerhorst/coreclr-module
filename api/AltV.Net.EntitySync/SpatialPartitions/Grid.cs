@@ -36,12 +36,12 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             this.areaSize = areaSize;
             this.xOffset = xOffset;
             this.yOffset = yOffset;
-            
+
             var maxXAreaIndex = maxX / areaSize;
             var maxYAreaIndex = maxX / areaSize;
-            
+
             entityAreas = new IEntity[maxXAreaIndex][][];
-            
+
             for (var i = 0; i < maxXAreaIndex; i++)
             {
                 entityAreas[i] = new IEntity[maxYAreaIndex][];
@@ -120,32 +120,33 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             // Now remove entity from all areas from min {x, y} to max {x, y}
             //lock (entityAreas)
             //{
-                for (var i = startingYIndex; i <= stoppingYIndex; i++)
+            for (var i = startingYIndex; i <= stoppingYIndex; i++)
+            {
+                for (var j = startingXIndex; j <= stoppingXIndex; j++)
                 {
-                    for (var j = startingXIndex; j <= stoppingXIndex; j++)
+                    var arr = entityAreas[i][j];
+                    var length = arr.Length;
+                    int k;
+                    var found = false;
+                    for (k = 0; k < length; k++)
                     {
-                        var arr = entityAreas[i][j];
-                        var length = arr.Length;
-                        int k;
-                        var found = false;
-                        for (k = 0; k < length; k++)
-                        {
-                            var currEntity = arr[k];
-                            if (currEntity.Id != id || currEntity.Type != type) continue;
-                            found = true;
-                            break;
-                        }
-
-                        if (!found) continue;
-                        var newLength = length - 1;
-                        for (var l = k; l < newLength; l++)
-                        {
-                            arr[l] = arr[l + 1];
-                        }
-
-                        Array.Resize(ref entityAreas[i][j], newLength);
+                        var currEntity = arr[k];
+                        if (currEntity.Id != id || currEntity.Type != type) continue;
+                        found = true;
+                        break;
                     }
+
+                    if (!found) continue;
+                    var newLength = length - 1;
+                    for (var l = k; l < newLength; l++)
+                    {
+                        arr[l] = arr[l + 1];
+                    }
+
+                    Array.Resize(ref entityAreas[i][j], newLength);
                 }
+            }
+
             //}
         }
 
@@ -222,53 +223,143 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
             //lock (entityAreas)
             //{
-                for (var i = oldStartingYIndex; i <= oldStoppingYIndex; i++)
+            for (var i = oldStartingYIndex; i <= oldStoppingYIndex; i++)
+            {
+                for (var j = oldStartingXIndex; j <= oldStoppingXIndex; j++)
                 {
-                    for (var j = oldStartingXIndex; j <= oldStoppingXIndex; j++)
+                    //TODO: Now we check if (i,j) is inside the new position range, so we don't have to delete it
+                    var arr = entityAreas[i][j];
+                    var length = arr.Length;
+                    int k;
+                    var found = false;
+                    for (k = 0; k < length; k++)
                     {
-                        //TODO: Now we check if (i,j) is inside the new position range, so we don't have to delete it
-                        var arr = entityAreas[i][j];
-                        var length = arr.Length;
-                        int k;
-                        var found = false;
-                        for (k = 0; k < length; k++)
-                        {
-                            var currEntity = arr[k];
-                            if (currEntity.Id != id || currEntity.Type != type) continue;
-                            found = true;
-                            break;
-                        }
-
-                        if (!found) continue;
-                        var newLength = length - 1;
-                        for (var l = k; l < newLength; l++)
-                        {
-                            arr[l] = arr[l + 1];
-                        }
-
-                        Array.Resize(ref arr, newLength);
+                        var currEntity = arr[k];
+                        if (currEntity.Id != id || currEntity.Type != type) continue;
+                        found = true;
+                        break;
                     }
-                }
 
-                for (var i = newStartingYIndex; i <= newStoppingYIndex; i++)
+                    if (!found) continue;
+                    var newLength = length - 1;
+                    for (var l = k; l < newLength; l++)
+                    {
+                        arr[l] = arr[l + 1];
+                    }
+
+                    Array.Resize(ref entityAreas[i][j], newLength);
+                }
+            }
+
+            for (var i = newStartingYIndex; i <= newStoppingYIndex; i++)
+            {
+                for (var j = newStartingXIndex; j <= newStoppingXIndex; j++)
                 {
-                    for (var j = newStartingXIndex; j <= newStoppingXIndex; j++)
-                    {
-                        var length = entityAreas[j][i].Length;
-                        Array.Resize(ref entityAreas[j][i], length + 1);
-                        entityAreas[j][i][length] = entity;
-                    }
+                    var length = entityAreas[j][i].Length;
+                    Array.Resize(ref entityAreas[j][i], length + 1);
+                    entityAreas[j][i][length] = entity;
                 }
+            }
+
             //}
         }
 
         public override void UpdateEntityRange(IEntity entity, uint range)
         {
-            throw new NotImplementedException();
+            var entityPositionX = entity.Position.X + xOffset;
+            var entityPositionY = entity.Position.Y + yOffset;
+            var oldRange = entity.Range;
+            var id = entity.Id;
+            var type = entity.Type;
+            if (range == 0 || entityPositionX < 0 || entityPositionY < 0 ||
+                entityPositionX > maxX ||
+                entityPositionY > maxY) return;
+
+            // we actually have a circle but we use this as a square for performance reasons
+            // we now find all areas that are inside this square
+            var oldSquareMaxX = entityPositionX + oldRange;
+            var oldSquareMaxY = entityPositionY + oldRange;
+            var oldSquareMinX = entityPositionX - oldRange;
+            var oldSquareMinY = entityPositionY - oldRange;
+            // We first use starting y index to start filling
+            var oldStartingYIndex = (int) Math.Floor(oldSquareMinY / areaSize);
+            // We now define starting x index to start filling
+            var oldStartingXIndex = (int) Math.Floor(oldSquareMinX / areaSize);
+            // Also define stopping indexes
+            var oldStoppingYIndex =
+                (int) Math.Ceiling(oldSquareMaxY / areaSize);
+            var oldStoppingXIndex =
+                (int) Math.Ceiling(oldSquareMaxX / areaSize);
+
+            // we actually have a circle but we use this as a square for performance reasons
+            // we now find all areas that are inside this square
+            var newSquareMaxX = entityPositionX + range;
+            var newSquareMaxY = entityPositionY + range;
+            var newSquareMinX = entityPositionX - range;
+            var newSquareMinY = entityPositionY - range;
+            // We first use starting y index to start filling
+            var newStartingYIndex = (int) Math.Floor(newSquareMinY / areaSize);
+            // We now define starting x index to start filling
+            var newStartingXIndex = (int) Math.Floor(newSquareMinX / areaSize);
+            // Also define stopping indexes
+            var newStoppingYIndex =
+                (int) Math.Ceiling(newSquareMaxY / areaSize);
+            var newStoppingXIndex =
+                (int) Math.Ceiling(newSquareMaxX / areaSize);
+
+            for (var i = oldStartingYIndex; i <= oldStoppingYIndex; i++)
+            {
+                for (var j = oldStartingXIndex; j <= oldStoppingXIndex; j++)
+                {
+                    //TODO: Now we check if (i,j) is inside the new position range, so we don't have to delete it
+                    var arr = entityAreas[i][j];
+                    var length = arr.Length;
+                    int k;
+                    var found = false;
+                    for (k = 0; k < length; k++)
+                    {
+                        var currEntity = arr[k];
+                        if (currEntity.Id != id || currEntity.Type != type) continue;
+                        found = true;
+                        break;
+                    }
+
+                    if (!found) continue;
+                    var newLength = length - 1;
+                    for (var l = k; l < newLength; l++)
+                    {
+                        arr[l] = arr[l + 1];
+                    }
+
+                    Array.Resize(ref entityAreas[i][j], newLength);
+                }
+            }
+
+            for (var i = newStartingYIndex; i <= newStoppingYIndex; i++)
+            {
+                for (var j = newStartingXIndex; j <= newStoppingXIndex; j++)
+                {
+                    var length = entityAreas[j][i].Length;
+                    Array.Resize(ref entityAreas[j][i], length + 1);
+                    entityAreas[j][i][length] = entity;
+                }
+            }
+        }
+
+        public override void UpdateEntityDimension(IEntity entity, int dimension)
+        {
+        }
+
+        private static bool CanSeeOtherDimension(int dimension, int otherDimension)
+        {
+            if (dimension > 0) return dimension == otherDimension;
+            if (dimension < 0) return otherDimension == 0 || dimension == otherDimension;
+            if (dimension == 0) return otherDimension == 0;
+            return false;
         }
 
         //TODO: check if we can find a better way to pass a position and e.g. improve performance of this method by return type ect.
-        public override IEnumerable<IEntity> Find(Vector3 position)
+        public override IEnumerable<IEntity> Find(Vector3 position, int dimension)
         {
             var posX = position.X + xOffset;
             var posY = position.Y + yOffset;
@@ -287,64 +378,65 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
             //lock (entityAreas)
             //{
-                var areaEntities = entityAreas[xIndex][yIndex];
+            var areaEntities = entityAreas[xIndex][yIndex];
 
-                for (int j = 0, innerLength = areaEntities.Length; j < innerLength; j++)
+            for (int j = 0, innerLength = areaEntities.Length; j < innerLength; j++)
+            {
+                var entity = areaEntities[j];
+                if (Vector3.Distance(entity.Position, position) > entity.Range ||
+                    CanSeeOtherDimension(entity.Dimension, dimension)) continue;
+                yield return entity;
+            }
+
+            /*if (xIndex != x2Index && yIndex == y2Index)
+            {
+                var innerAreaEntities = entityAreas[x2Index][yIndex];
+
+                for (int j = 0, innerLength = innerAreaEntities.Length; j < innerLength; j++)
                 {
-                    var entity = areaEntities[j];
+                    var entity = innerAreaEntities[j];
                     if (Vector3.Distance(entity.Position, position) > entity.Range) continue;
-                    yield return entity;
+                    callback(entity);
                 }
+            } else if (xIndex == x2Index && yIndex != y2Index)
+            {
+                var innerAreaEntities = entityAreas[xIndex][y2Index];
 
-                /*if (xIndex != x2Index && yIndex == y2Index)
+                for (int j = 0, innerLength = innerAreaEntities.Length; j < innerLength; j++)
                 {
-                    var innerAreaEntities = entityAreas[x2Index][yIndex];
+                    var entity = innerAreaEntities[j];
+                    if (Vector3.Distance(entity.Position, position) > entity.Range) continue;
+                    callback(entity);
+                }
+            } else if (xIndex != x2Index && yIndex != y2Index)
+            {
+                var innerAreaEntities = entityAreas[x2Index][yIndex];
 
-                    for (int j = 0, innerLength = innerAreaEntities.Length; j < innerLength; j++)
-                    {
-                        var entity = innerAreaEntities[j];
-                        if (Vector3.Distance(entity.Position, position) > entity.Range) continue;
-                        callback(entity);
-                    }
-                } else if (xIndex == x2Index && yIndex != y2Index)
+                for (int j = 0, innerLength = innerAreaEntities.Length; j < innerLength; j++)
                 {
-                    var innerAreaEntities = entityAreas[xIndex][y2Index];
+                    var entity = innerAreaEntities[j];
+                    if (Vector3.Distance(entity.Position, position) > entity.Range) continue;
+                    callback(entity);
+                }
+                
+                innerAreaEntities = entityAreas[x2Index][y2Index];
 
-                    for (int j = 0, innerLength = innerAreaEntities.Length; j < innerLength; j++)
-                    {
-                        var entity = innerAreaEntities[j];
-                        if (Vector3.Distance(entity.Position, position) > entity.Range) continue;
-                        callback(entity);
-                    }
-                } else if (xIndex != x2Index && yIndex != y2Index)
+                for (int j = 0, innerLength = innerAreaEntities.Length; j < innerLength; j++)
                 {
-                    var innerAreaEntities = entityAreas[x2Index][yIndex];
+                    var entity = innerAreaEntities[j];
+                    if (Vector3.Distance(entity.Position, position) > entity.Range) continue;
+                    callback(entity);
+                }
+                
+                innerAreaEntities = entityAreas[xIndex][y2Index];
 
-                    for (int j = 0, innerLength = innerAreaEntities.Length; j < innerLength; j++)
-                    {
-                        var entity = innerAreaEntities[j];
-                        if (Vector3.Distance(entity.Position, position) > entity.Range) continue;
-                        callback(entity);
-                    }
-                    
-                    innerAreaEntities = entityAreas[x2Index][y2Index];
-
-                    for (int j = 0, innerLength = innerAreaEntities.Length; j < innerLength; j++)
-                    {
-                        var entity = innerAreaEntities[j];
-                        if (Vector3.Distance(entity.Position, position) > entity.Range) continue;
-                        callback(entity);
-                    }
-                    
-                    innerAreaEntities = entityAreas[xIndex][y2Index];
-
-                    for (int j = 0, innerLength = innerAreaEntities.Length; j < innerLength; j++)
-                    {
-                        var entity = innerAreaEntities[j];
-                        if (Vector3.Distance(entity.Position, position) > entity.Range) continue;
-                        callback(entity);
-                    }
-                }*/
+                for (int j = 0, innerLength = innerAreaEntities.Length; j < innerLength; j++)
+                {
+                    var entity = innerAreaEntities[j];
+                    if (Vector3.Distance(entity.Position, position) > entity.Range) continue;
+                    callback(entity);
+                }
+            }*/
             //}
         }
     }

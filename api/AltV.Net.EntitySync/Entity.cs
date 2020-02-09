@@ -10,15 +10,29 @@ namespace AltV.Net.EntitySync
         public ulong Type { get; }
 
         private Vector3 position;
-        
+
         public Vector3 Position
         {
             get => position;
             set => SetPositionInternal(value);
         }
 
-        public int PositionState { get; set; }
+        private int positionState = (int) EntityPropertyState.PropertyNotChanged;
+
         private Vector3 newPosition;
+
+        private int dimension;
+
+        public int Dimension
+        {
+            get => dimension;
+            set => SetDimensionInternal(value);
+        }
+
+        private int dimensionState = (int) EntityPropertyState.PropertyNotChanged;
+
+        private int newDimension;
+
         public uint Range { get; }
         public object FlagsMutex { get; } = new object();
         public int Flags { get; set; }
@@ -133,12 +147,12 @@ namespace AltV.Net.EntitySync
         {
             return clients;
         }
-        
+
         public void SetPositionInternal(Vector3 currNewPosition)
         {
             lock (FlagsMutex)
             {
-                PositionState = (int) EntityPositionState.PositionChanged;
+                positionState = (int) EntityPropertyState.PropertyChanged;
                 newPosition = currNewPosition;
             }
         }
@@ -147,26 +161,62 @@ namespace AltV.Net.EntitySync
         {
             lock (FlagsMutex)
             {
-                if (PositionState != (int) EntityPositionState.PositionChanged)
+                if (positionState != (int) EntityPropertyState.PropertyChanged)
                 {
                     currNewPosition = default;
                     return false;
                 }
 
                 currNewPosition = newPosition;
-                PositionState = (int) EntityPositionState.PositionChangeComputing;
+                positionState = (int) EntityPropertyState.PropertyChangeComputing;
             }
 
             return true;
         }
-        
+
         public void SetPositionComputed()
         {
             lock (FlagsMutex)
             {
-                if (PositionState != (int) EntityPositionState.PositionChangeComputing) return;
-                PositionState = (int) EntityPositionState.PositionChangeComputed;
+                if (positionState != (int) EntityPropertyState.PropertyChangeComputing) return;
+                positionState = (int) EntityPropertyState.PropertyChangeComputed;
                 position = newPosition;
+            }
+        }
+
+        public void SetDimensionInternal(int currNewDimension)
+        {
+            lock (FlagsMutex)
+            {
+                dimensionState = (int) EntityPropertyState.PropertyChanged;
+                newDimension = currNewDimension;
+            }
+        }
+
+        public bool TrySetDimensionComputing(out int currNewDimension)
+        {
+            lock (FlagsMutex)
+            {
+                if (dimensionState != (int) EntityPropertyState.PropertyChanged)
+                {
+                    currNewDimension = default;
+                    return false;
+                }
+
+                currNewDimension = newDimension;
+                dimensionState = (int) EntityPropertyState.PropertyChangeComputing;
+            }
+
+            return true;
+        }
+
+        public void SetDimensionComputed()
+        {
+            lock (FlagsMutex)
+            {
+                if (dimensionState != (int) EntityPropertyState.PropertyChangeComputing) return;
+                dimensionState = (int) EntityPropertyState.PropertyChangeComputed;
+                dimension = newDimension;
             }
         }
 

@@ -8,11 +8,15 @@ namespace AltV.Net.EntitySync
         
         Vector3 Position { get; set; }
         
+        int Dimension { get; set; }
+        
         ClientDataSnapshot Snapshot { get; }
         
         bool Exists { get; }
 
         public bool TryGetPosition(out Vector3 position);
+        
+        public bool TryGetDimension(out int dimension);
 
         //TODO: save streamed in entities in client i think
     }

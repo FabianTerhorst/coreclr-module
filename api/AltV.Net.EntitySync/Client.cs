@@ -12,6 +12,8 @@ namespace AltV.Net.EntitySync
 
         public virtual Vector3 Position { get; set; }
 
+        public virtual int Dimension { get; set; }
+
         public ClientDataSnapshot Snapshot { get; } = new ClientDataSnapshot();
 
         public virtual bool Exists { get; } = true;
@@ -24,6 +26,12 @@ namespace AltV.Net.EntitySync
         public virtual bool TryGetPosition(out Vector3 position)
         {
             position = Position;
+            return true;
+        }
+
+        public virtual bool TryGetDimension(out int dimension)
+        {
+            dimension = Dimension;
             return true;
         }
     }

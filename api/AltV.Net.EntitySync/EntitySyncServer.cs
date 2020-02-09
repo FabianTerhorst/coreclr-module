@@ -6,7 +6,6 @@ using AltV.Net.EntitySync.SpatialPartitions;
 
 namespace AltV.Net.EntitySync
 {
-    //TODO: find out where to implement position update
     public class EntitySyncServer
     {
         private readonly EntityThread[] entityThreads;
