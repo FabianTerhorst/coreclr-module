@@ -25,8 +25,7 @@ namespace AltV.Net.EntitySync.Tests
         public void MultiAddTest()
         {
             var readAsyncCreate = mockNetworkLayer.CreateEventChannel.Reader.ReadAsync();
-            var entityA = new Entity(1, Vector3.Zero, 2);
-            entityA.Dimension = 0;
+            var entityA = new Entity(1, Vector3.Zero, 0, 2);
             AltEntitySync.AddEntity(entityA);
             var createTask = readAsyncCreate.AsTask();
             createTask.Wait();
@@ -34,8 +33,7 @@ namespace AltV.Net.EntitySync.Tests
             Assert.AreSame(createResult.Entity, entityA);
             
             readAsyncCreate = mockNetworkLayer.CreateEventChannel.Reader.ReadAsync();
-            var entityB = new Entity(1, Vector3.Zero, 2);
-            entityB.Dimension = 0;
+            var entityB = new Entity(1, Vector3.Zero, 0, 2);
             AltEntitySync.AddEntity(entityB);
             createTask = readAsyncCreate.AsTask();
             createTask.Wait();

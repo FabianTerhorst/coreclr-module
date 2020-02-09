@@ -53,7 +53,7 @@ namespace AltV.Net.EntitySync
 
         private readonly IDictionary<string, object> data;
 
-        private readonly EntityDataSnapshot dataSnapshot;
+        public EntityDataSnapshot DataSnapshot { get; }
 
         /// <summary>
         /// List of clients that have the entity created.
@@ -65,25 +65,26 @@ namespace AltV.Net.EntitySync
         /// </summary>
         private readonly IDictionary<IClient, bool> lastCheckedClients = new Dictionary<IClient, bool>();
 
-        public Entity(ulong type, Vector3 position, uint range) : this(
+        public Entity(ulong type, Vector3 position, int dimension, uint range) : this(
             AltEntitySync.IdProvider.GetNext(), type,
-            position, range, new Dictionary<string, object>())
+            position, dimension, range, new Dictionary<string, object>())
         {
         }
 
-        public Entity(ulong type, Vector3 position, uint range, IDictionary<string, object> data) : this(
+        public Entity(ulong type, Vector3 position, int dimension, uint range, IDictionary<string, object> data) : this(
             AltEntitySync.IdProvider.GetNext(), type,
-            position, range, data)
+            position, dimension, range, data)
         {
         }
 
-        internal Entity(ulong id, ulong type, Vector3 position, uint range, IDictionary<string, object> data)
+        internal Entity(ulong id, ulong type, Vector3 position, int dimension, uint range, IDictionary<string, object> data)
         {
             Id = id;
             Type = type;
             this.position = position;
+            this.dimension = dimension;
             Range = range;
-            dataSnapshot = new EntityDataSnapshot(Id);
+            DataSnapshot = new EntityDataSnapshot(Id);
             this.data = data;
         }
 
@@ -91,7 +92,7 @@ namespace AltV.Net.EntitySync
         {
             lock (data)
             {
-                dataSnapshot.Update(key);
+                DataSnapshot.Update(key);
                 data[key] = value;
             }
         }
@@ -100,7 +101,7 @@ namespace AltV.Net.EntitySync
         {
             lock (data)
             {
-                dataSnapshot.Update(key);
+                DataSnapshot.Update(key);
                 data.Remove(key);
             }
         }
@@ -287,11 +288,6 @@ namespace AltV.Net.EntitySync
             }
 
             return m.ToArray();
-        }
-
-        public IEnumerable<string> CompareSnapshotWithClient(IClient client)
-        {
-            return dataSnapshot.CompareWithClient(client);
         }
     }
 }

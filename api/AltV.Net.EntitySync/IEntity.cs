@@ -55,6 +55,6 @@ namespace AltV.Net.EntitySync
 
         public void SetRangeComputed(uint currNewRange);
 
-        IEnumerable<string> CompareSnapshotWithClient(IClient client);
+        EntityDataSnapshot DataSnapshot { get; }
     }
 }

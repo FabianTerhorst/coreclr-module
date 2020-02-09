@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AltV.Net.EntitySync
 {
-        /// <summary>
+    /// <summary>
     /// Saves the state of the entity data
     /// </summary>
     public class EntityDataSnapshot : DataSnapshot
@@ -67,7 +68,7 @@ namespace AltV.Net.EntitySync
         /// <returns>the changed keys, returns null when no changes</returns>
         public IEnumerable<string> CompareWithClient(IClient networkingClient)
         {
-            if (Snapshots == null) return null; // entity snapshot never updated, nothing to do
+            if (Snapshots == null || Snapshots.IsEmpty) return null; // entity snapshot never updated, nothing to do
             lastClients.Add(networkingClient);
             IEnumerable<string> changedKeys;
             var clientDataSnapshot = networkingClient.Snapshot;
@@ -75,13 +76,12 @@ namespace AltV.Net.EntitySync
             ) // client visited entity before
             {
                 changedKeys = Compare(entitySnapshotFromClient);
-                if (changedKeys != null) //TODO: test if check works correctly
+
+                // Here we align client and entity snapshot with same data
+                entitySnapshotFromClient.Snapshots.Clear();
+                foreach (var (key, value) in Snapshots)
                 {
-                    entitySnapshotFromClient.Snapshots.Clear();
-                    foreach (var (key, value) in Snapshots)
-                    {
-                        entitySnapshotFromClient.Snapshots[key] = value;
-                    }
+                    entitySnapshotFromClient.Snapshots[key] = value;
                 }
             }
             else // client never visited entity before
@@ -127,7 +127,7 @@ namespace AltV.Net.EntitySync
                 }
             }
         }
-        
+
         /*
          private IEnumerable<string> Compare(DataSnapshot dataSnapshot)
         {

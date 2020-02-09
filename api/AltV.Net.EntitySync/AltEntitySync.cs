@@ -30,14 +30,15 @@ namespace AltV.Net.EntitySync
             _entitySyncServer.RemoveEntity(entity);
         }
 
-        public static IEntity CreateEntity(ulong type, Vector3 position, uint range)
+        public static IEntity CreateEntity(ulong type, Vector3 position, int dimension, uint range)
         {
-            return CreateEntity(type, position, range, new Dictionary<string, object>());
+            return CreateEntity(type, position, dimension, range, new Dictionary<string, object>());
         }
 
-        public static IEntity CreateEntity(ulong type, Vector3 position, uint range, IDictionary<string, object> data)
+        public static IEntity CreateEntity(ulong type, Vector3 position, int dimension, uint range,
+            IDictionary<string, object> data)
         {
-            return _entitySyncServer.CreateEntity(type, position, range, data);
+            return _entitySyncServer.CreateEntity(type, position, dimension, range, data);
         }
     }
 }

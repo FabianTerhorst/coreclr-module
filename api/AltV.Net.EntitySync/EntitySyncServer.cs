@@ -88,6 +88,7 @@ namespace AltV.Net.EntitySync
 
         private IEnumerable<object> GetChangedEntityData(IEntity entity, IEnumerable<string> changedKeys)
         {
+            if (changedKeys == null) yield break;
             foreach (var key in changedKeys)
             {
                 if (!entity.TryGetData(key, out var value)) continue;
@@ -96,9 +97,9 @@ namespace AltV.Net.EntitySync
             }
         }
 
-        public IEntity CreateEntity(ulong type, Vector3 position, uint range, IDictionary<string, object> data)
+        public IEntity CreateEntity(ulong type, Vector3 position, int dimension, uint range, IDictionary<string, object> data)
         {
-            var entity = new Entity(idProvider.GetNext(), type, position, range, data);
+            var entity = new Entity(idProvider.GetNext(), type, position, dimension, range, data);
             AddEntity(entity);
             return entity;
         }

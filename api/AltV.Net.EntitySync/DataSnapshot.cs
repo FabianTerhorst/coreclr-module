@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Concurrent;
 
 namespace AltV.Net.EntitySync
@@ -8,13 +9,13 @@ namespace AltV.Net.EntitySync
     public class DataSnapshot
     {
         // snapshot versions for each data key
-        public ConcurrentDictionary<string, ulong> Snapshots;
+        public readonly ConcurrentDictionary<string, ulong> Snapshots;
 
         public DataSnapshot()
         {
-            
+            Snapshots = new ConcurrentDictionary<string, ulong>();
         }
-        
+
         public DataSnapshot(ConcurrentDictionary<string, ulong> snapshots)
         {
             Snapshots = snapshots;
@@ -22,11 +23,6 @@ namespace AltV.Net.EntitySync
 
         public void Update(string key)
         {
-            if (Snapshots == null)
-            {
-                Snapshots = new ConcurrentDictionary<string, ulong>();
-            }
-
             if (Snapshots.TryGetValue(key, out var currSnapshot))
             {
                 if (currSnapshot == 0)
@@ -35,7 +31,7 @@ namespace AltV.Net.EntitySync
                     currSnapshot = 1;
                 }
 
-                Snapshots[key] = currSnapshot;
+                Snapshots[key] = currSnapshot + 1;
             }
             else
             {

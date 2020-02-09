@@ -86,8 +86,10 @@ namespace AltV.Net.EntitySync.ServerEvent
                                         break;
                                     case 4:
                                         var dictionary = new Dictionary<string, object>();
-                                        using (var changedDataIterator = entityEvent.ChangedData.GetEnumerator())
+                                        var changedData = entityEvent.ChangedData;
+                                        if (changedData != null)
                                         {
+                                            using var changedDataIterator = changedData.GetEnumerator();
                                             while (true)
                                             {
                                                 string key;

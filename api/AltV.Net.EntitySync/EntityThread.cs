@@ -41,6 +41,11 @@ namespace AltV.Net.EntitySync
             Action<IClient, IEntity, IEnumerable<string>> onEntityDataChange,
             Action<IClient, IEntity, Vector3> onEntityPositionChange)
         {
+            if (spatialPartition == null)
+            {
+                throw new ArgumentException("spatialPartition should not be null.");
+            }
+            
             if (entityThreadRepository == null)
             {
                 throw new ArgumentException("entityThreadRepository should not be null.");
@@ -116,7 +121,8 @@ namespace AltV.Net.EntitySync
                     foreach (var foundEntity in spatialPartition.Find(position, client.Dimension))
                     {
                         foundEntity.AddCheck(client);
-                        var changedKeys = foundEntity.CompareSnapshotWithClient(client);
+                        var changedKeys = foundEntity.DataSnapshot.CompareWithClient(client);
+
                         if (foundEntity.TryAddClient(client))
                         {
                             onEntityCreate(client, foundEntity, changedKeys);
