@@ -37,7 +37,7 @@ namespace AltV.Net.EntitySync
         public object FlagsMutex { get; } = new object();
         public int Flags { get; set; }
 
-        private readonly IDictionary<string, object> data = new Dictionary<string, object>();
+        private readonly IDictionary<string, object> data;
 
         private readonly EntityDataSnapshot dataSnapshot;
 
@@ -51,18 +51,26 @@ namespace AltV.Net.EntitySync
         /// </summary>
         private readonly IDictionary<IClient, bool> lastCheckedClients = new Dictionary<IClient, bool>();
 
-        public Entity(ulong type, Vector3 position, uint range) : this(AltEntitySync._idProvider.GetNext(), type,
-            position, range)
+        public Entity(ulong type, Vector3 position, uint range) : this(
+            AltEntitySync.IdProvider.GetNext(), type,
+            position, range, new Dictionary<string, object>())
         {
         }
 
-        internal Entity(ulong id, ulong type, Vector3 position, uint range)
+        public Entity(ulong type, Vector3 position, uint range, IDictionary<string, object> data) : this(
+            AltEntitySync.IdProvider.GetNext(), type,
+            position, range, data)
+        {
+        }
+
+        internal Entity(ulong id, ulong type, Vector3 position, uint range, IDictionary<string, object> data)
         {
             Id = id;
             Type = type;
             this.position = position;
             Range = range;
             dataSnapshot = new EntityDataSnapshot(Id);
+            this.data = data;
         }
 
         public void SetData(string key, object value)

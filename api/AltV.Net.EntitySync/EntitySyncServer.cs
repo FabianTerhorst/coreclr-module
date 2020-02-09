@@ -46,7 +46,8 @@ namespace AltV.Net.EntitySync
             {
                 var entityThreadRepository = new EntityThreadRepository();
                 entityThreadRepositories[i] = entityThreadRepository;
-                entityThreads[i] = new EntityThread(entityThreadRepository, clientRepository, createSpatialPartition(), OnEntityCreate,
+                entityThreads[i] = new EntityThread(entityThreadRepository, clientRepository, createSpatialPartition(),
+                    OnEntityCreate,
                     OnEntityRemove, OnEntityDataChange, OnEntityPositionChange);
             }
 
@@ -73,12 +74,13 @@ namespace AltV.Net.EntitySync
         {
             networkLayer.SendEvent(client, new EntityRemoveEvent(entity));
         }
-        
+
         private void OnEntityDataChange(IClient client, IEntity entity, IEnumerable<string> changedKeys)
         {
-            networkLayer.SendEvent(client, new EntityDataChangeEvent(entity, GetChangedEntityData(entity, changedKeys)));
+            networkLayer.SendEvent(client,
+                new EntityDataChangeEvent(entity, GetChangedEntityData(entity, changedKeys)));
         }
-        
+
         private void OnEntityPositionChange(IClient client, IEntity entity, Vector3 newPosition)
         {
             networkLayer.SendEvent(client, new EntityPositionUpdateEvent(entity, newPosition));
@@ -94,9 +96,9 @@ namespace AltV.Net.EntitySync
             }
         }
 
-        public IEntity CreateEntity(ulong type, Vector3 position, uint range)
+        public IEntity CreateEntity(ulong type, Vector3 position, uint range, IDictionary<string, object> data)
         {
-            var entity = new Entity(idProvider.GetNext(), type, position, range);
+            var entity = new Entity(idProvider.GetNext(), type, position, range, data);
             AddEntity(entity);
             return entity;
         }
@@ -110,6 +112,14 @@ namespace AltV.Net.EntitySync
         {
             entityRepository.Remove(entity);
             idProvider.Free(entity.Id);
+        }
+
+        public void Stop()
+        {
+            foreach (var entityThread in entityThreads)
+            {
+                entityThread.Stop();
+            }
         }
     }
 }
