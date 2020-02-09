@@ -68,5 +68,25 @@ namespace AltV.Net.EntitySync.Tests
             var removeResult = removeTask.Result;
             Assert.AreSame(removeResult.Entity, entity);
         }
+        
+        [Test]
+        public void UpdateDimensionTest()
+        {
+            var readAsyncCreate = mockNetworkLayer.CreateEventChannel.Reader.ReadAsync();
+            var entity = new Entity(1, Vector3.Zero, 2);
+            entity.Dimension = 0;
+            AltEntitySync.AddEntity(entity);
+            var createTask = readAsyncCreate.AsTask();
+            createTask.Wait();
+            var createResult = createTask.Result;
+            Assert.AreSame(createResult.Entity, entity);
+            
+            var readAsyncRemove = mockNetworkLayer.RemoveEventChannel.Reader.ReadAsync();
+            entity.Dimension = 1;
+            var removeTask = readAsyncRemove.AsTask();
+            removeTask.Wait();
+            var removeResult = removeTask.Result;
+            Assert.AreSame(removeResult.Entity, entity);
+        }
     }
 }
