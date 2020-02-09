@@ -52,6 +52,7 @@ namespace AltV.Net.EntitySync.ServerEvent
             Alt.OnPlayerConnect += (player, reason) =>
             {
                 var playerClient = new PlayerClient(player.Id.ToString(), player);
+                player.SetEntitySyncClient(playerClient);
                 clientRepository.Add(playerClient);
                 Task.Factory.StartNew(async obj =>
                 {

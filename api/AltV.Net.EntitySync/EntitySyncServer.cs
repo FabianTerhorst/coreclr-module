@@ -6,6 +6,11 @@ using AltV.Net.EntitySync.SpatialPartitions;
 
 namespace AltV.Net.EntitySync
 {
+    /// <summary>
+    /// The sync server creates the threads, the client repository and entity repositories.
+    /// It transmits the streamer callbacks to the network layer.
+    /// It will also transfer callbacks from network layer to streamer, for e.g. updating entity position when net owner is implemented.
+    /// </summary>
     public class EntitySyncServer
     {
         private readonly EntityThread[] entityThreads;

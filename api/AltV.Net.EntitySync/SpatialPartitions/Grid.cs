@@ -348,8 +348,14 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
         public override void UpdateEntityDimension(IEntity entity, int dimension)
         {
+            // This algorithm doesn't has different memory layout depending on dimension
         }
 
+        /*
+        X can see only X
+        -X can see 0 and -X
+        0 can't see -X and X
+        */
         private static bool CanSeeOtherDimension(int dimension, int otherDimension)
         {
             if (dimension > 0) return dimension == otherDimension;
