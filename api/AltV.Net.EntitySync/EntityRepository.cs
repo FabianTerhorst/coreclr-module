@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace AltV.Net.EntitySync
 {
     public class EntityRepository : IEntityRepository
@@ -13,7 +15,7 @@ namespace AltV.Net.EntitySync
         }
 
         // Entity id needs to start at 0 to work for this
-        
+
         public void Add(IEntity entity)
         {
             var threadIndex = (int) (entity.Id % threadCount);
@@ -24,6 +26,23 @@ namespace AltV.Net.EntitySync
         {
             var threadIndex = (int) (entity.Id % threadCount);
             entityThreadRepositories[threadIndex].Remove(entity);
+        }
+
+        public bool TryGet(ulong id, out IEntity entity)
+        {
+            var threadIndex = (int) (id % threadCount);
+            return entityThreadRepositories[threadIndex].TryGet(id, out entity);
+        }
+
+        public IEnumerable<IEntity> GetAll()
+        {
+            foreach (var entityThreadRepository in entityThreadRepositories)
+            {
+                foreach (var entity in entityThreadRepository.GetAllAvailable())
+                {
+                    yield return entity;
+                }
+            }
         }
     }
 }

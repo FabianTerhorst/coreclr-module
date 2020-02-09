@@ -30,6 +30,16 @@ namespace AltV.Net.EntitySync
             _entitySyncServer.RemoveEntity(entity);
         }
 
+        public static bool TryGetEntity(ulong id, out IEntity entity)
+        {
+            return _entitySyncServer.TryGetEntity(id, out entity);
+        }
+
+        public static IEnumerable<IEntity> GetAllEntities()
+        {
+            return _entitySyncServer.GetAllEntities();
+        }
+
         public static IEntity CreateEntity(ulong type, Vector3 position, int dimension, uint range)
         {
             return CreateEntity(type, position, dimension, range, new Dictionary<string, object>());

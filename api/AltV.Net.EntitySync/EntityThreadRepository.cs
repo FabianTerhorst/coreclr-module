@@ -9,7 +9,7 @@ namespace AltV.Net.EntitySync
         private readonly IDictionary<ulong, IEntity> entities = new Dictionary<ulong, IEntity>();
 
         private readonly HashSet<IEntity> entitiesToRemove = new HashSet<IEntity>();
-        
+
         private readonly HashSet<IEntity> entitiesToAdd = new HashSet<IEntity>();
 
         public void Add(IEntity entity)
@@ -32,6 +32,14 @@ namespace AltV.Net.EntitySync
             }
         }
 
+        public bool TryGet(ulong id, out IEntity entity)
+        {
+            lock (entities)
+            {
+                return entities.TryGetValue(id, out entity);
+            }
+        }
+
         public ValueTuple<IEntity[], IEntity[], IEntity[]> GetAll()
         {
             lock (entities)
@@ -47,7 +55,7 @@ namespace AltV.Net.EntitySync
                     currEntitiesToRemove = entitiesToRemove.ToArray();
                     entitiesToRemove.Clear();
                 }
-                
+
                 IEntity[] currEntitiesToAdd;
                 if (entitiesToAdd.Count == 0)
                 {
@@ -60,6 +68,14 @@ namespace AltV.Net.EntitySync
                 }
 
                 return ValueTuple.Create(currEntities, currEntitiesToRemove, currEntitiesToAdd);
+            }
+        }
+
+        public IEnumerable<IEntity> GetAllAvailable()
+        {
+            lock (entities)
+            {
+                return entities.Values.ToArray();
             }
         }
     }

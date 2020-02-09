@@ -115,6 +115,16 @@ namespace AltV.Net.EntitySync
             idProvider.Free(entity.Id);
         }
 
+        public bool TryGetEntity(ulong id, out IEntity entity)
+        {
+            return entityRepository.TryGet(id, out entity);
+        }
+
+        public IEnumerable<IEntity> GetAllEntities()
+        {
+            return entityRepository.GetAll();
+        }
+
         public void Stop()
         {
             foreach (var entityThread in entityThreads)

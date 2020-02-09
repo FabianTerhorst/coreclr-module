@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace AltV.Net.EntitySync
 {
@@ -12,5 +13,9 @@ namespace AltV.Net.EntitySync
         void Remove(IEntity entity);
 
         ValueTuple<IEntity[], IEntity[], IEntity[]> GetAll();
+
+        bool TryGet(ulong id, out IEntity entity);
+
+        IEnumerable<IEntity> GetAllAvailable();
     }
 }
