@@ -21,10 +21,6 @@ namespace AltV.Net.EntitySync
 
         uint Range { get; }
 
-        object FlagsMutex { get; }
-
-        int Flags { get; }
-
         void SetData(string key, object value);
 
         bool TryGetData(string key, out object value);
@@ -49,11 +45,15 @@ namespace AltV.Net.EntitySync
 
         bool TrySetPositionComputing(out Vector3 newPosition);
 
-        void SetPositionComputed();
+        void SetPositionComputed(in Vector3 currNewPosition);
 
         bool TrySetDimensionComputing(out int currNewDimension);
 
-        void SetDimensionComputed();
+        void SetDimensionComputed(int currNewDimension);
+
+        public bool TrySetRangeComputing(out uint currNewRange);
+
+        public void SetRangeComputed(uint currNewRange);
 
         IEnumerable<string> CompareSnapshotWithClient(IClient client);
     }

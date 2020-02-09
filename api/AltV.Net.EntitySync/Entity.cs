@@ -16,10 +16,12 @@ namespace AltV.Net.EntitySync
             get => position;
             set => SetPositionInternal(value);
         }
-
-        private int positionState = (int) EntityPropertyState.PropertyNotChanged;
+        
+        private bool positionState = false;
 
         private Vector3 newPosition;
+        
+        private readonly object positionMutex = new object();
 
         private int dimension;
 
@@ -28,14 +30,26 @@ namespace AltV.Net.EntitySync
             get => dimension;
             set => SetDimensionInternal(value);
         }
-
-        private int dimensionState = (int) EntityPropertyState.PropertyNotChanged;
+        
+        private bool dimensionState = false;
 
         private int newDimension;
+        
+        private readonly object dimensionMutex = new object();
 
-        public uint Range { get; }
-        public object FlagsMutex { get; } = new object();
-        public int Flags { get; set; }
+        private uint range;
+        
+        public uint Range
+        {
+            get => range;
+            set => SetRangeInternal(value);
+        }
+        
+        private bool rangeState = false;
+
+        private uint newRange;
+        
+        private readonly object rangeMutex = new object();
 
         private readonly IDictionary<string, object> data;
 
@@ -158,73 +172,103 @@ namespace AltV.Net.EntitySync
 
         public void SetPositionInternal(Vector3 currNewPosition)
         {
-            lock (FlagsMutex)
+            lock (positionMutex)
             {
-                positionState = (int) EntityPropertyState.PropertyChanged;
+                positionState = true;
                 newPosition = currNewPosition;
             }
         }
 
         public bool TrySetPositionComputing(out Vector3 currNewPosition)
         {
-            lock (FlagsMutex)
+            lock (positionMutex)
             {
-                if (positionState != (int) EntityPropertyState.PropertyChanged)
+                if (!positionState)
                 {
                     currNewPosition = default;
                     return false;
                 }
 
                 currNewPosition = newPosition;
-                positionState = (int) EntityPropertyState.PropertyChangeComputing;
+                positionState = false;
             }
 
             return true;
         }
 
-        public void SetPositionComputed()
+        public void SetPositionComputed(in Vector3 currNewPosition)
         {
-            lock (FlagsMutex)
+            lock (positionMutex)
             {
-                if (positionState != (int) EntityPropertyState.PropertyChangeComputing) return;
-                positionState = (int) EntityPropertyState.PropertyChangeComputed;
-                position = newPosition;
+                position = currNewPosition;
             }
         }
 
         public void SetDimensionInternal(int currNewDimension)
         {
-            lock (FlagsMutex)
+            lock (dimensionMutex)
             {
-                dimensionState = (int) EntityPropertyState.PropertyChanged;
+                dimensionState = true;
                 newDimension = currNewDimension;
             }
         }
 
         public bool TrySetDimensionComputing(out int currNewDimension)
         {
-            lock (FlagsMutex)
+            lock (dimensionMutex)
             {
-                if (dimensionState != (int) EntityPropertyState.PropertyChanged)
+                if (!dimensionState)
                 {
                     currNewDimension = default;
                     return false;
                 }
 
                 currNewDimension = newDimension;
-                dimensionState = (int) EntityPropertyState.PropertyChangeComputing;
+                dimensionState = false;
             }
 
             return true;
         }
 
-        public void SetDimensionComputed()
+        public void SetDimensionComputed(int currNewDimension)
         {
-            lock (FlagsMutex)
+            lock (dimensionMutex)
             {
-                if (dimensionState != (int) EntityPropertyState.PropertyChangeComputing) return;
-                dimensionState = (int) EntityPropertyState.PropertyChangeComputed;
-                dimension = newDimension;
+                dimension = currNewDimension;
+            }
+        }
+
+        public void SetRangeInternal(uint currNewRange)
+        {
+            lock (rangeMutex)
+            {
+                rangeState = true;
+                newRange = currNewRange;
+            }
+        }
+
+        public bool TrySetRangeComputing(out uint currNewRange)
+        {
+            lock (rangeMutex)
+            {
+                if (!rangeState)
+                {
+                    currNewRange = default;
+                    return false;
+                }
+
+                currNewRange = newRange;
+                rangeState = false;
+            }
+
+            return true;
+        }
+
+        public void SetRangeComputed(uint currNewRange)
+        {
+            lock (rangeMutex)
+            {
+                range = currNewRange;
             }
         }
 

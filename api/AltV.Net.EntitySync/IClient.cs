@@ -18,6 +18,10 @@ namespace AltV.Net.EntitySync
         
         public bool TryGetDimension(out int dimension);
 
+        public void SetPositionOverride(Vector3 newPositionOverride);
+
+        public void ResetPositionOverride();
+
         //TODO: save streamed in entities in client i think
     }
 }

@@ -6,12 +6,12 @@ namespace AltV.Net.EntitySync.ServerEvent
     {
         private const string PlayerSyncClientKey = "entitySync:client";
 
-        public static bool TryGetEntitySyncClient(this IPlayer player, out IClient client)
+        public static bool TryGetEntitySyncClient(this IPlayer player, out PlayerClient client)
         {
             return player.GetData(PlayerSyncClientKey, out client);
         }
 
-        internal static void SetEntitySyncClient(this IPlayer player, IClient client)
+        internal static void SetEntitySyncClient(this IPlayer player, PlayerClient client)
         {
             player.SetData(PlayerSyncClientKey, client);
         }

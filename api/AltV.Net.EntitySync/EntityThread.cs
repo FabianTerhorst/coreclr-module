@@ -22,6 +22,8 @@ namespace AltV.Net.EntitySync
 
         private readonly SpatialPartition spatialPartition;
 
+        private readonly int syncRate;
+
         private readonly HashSet<IClient> clientsToRemoveFromEntity = new HashSet<IClient>();
         private readonly HashSet<IClient> clientsToResetFromEntity = new HashSet<IClient>();
 
@@ -34,11 +36,16 @@ namespace AltV.Net.EntitySync
         private readonly Action<IClient, IEntity, Vector3> onEntityPositionChange;
 
         public EntityThread(IEntityThreadRepository entityThreadRepository, IClientRepository clientRepository,
-            SpatialPartition spatialPartition,
+            SpatialPartition spatialPartition, int syncRate,
             Action<IClient, IEntity, IEnumerable<string>> onEntityCreate, Action<IClient, IEntity> onEntityRemove,
             Action<IClient, IEntity, IEnumerable<string>> onEntityDataChange,
             Action<IClient, IEntity, Vector3> onEntityPositionChange)
         {
+            if (entityThreadRepository == null)
+            {
+                throw new ArgumentException("entityThreadRepository should not be null.");
+            }
+            
             if (onEntityCreate == null)
             {
                 throw new ArgumentException("onEntityCreate should not be null.");
@@ -64,6 +71,7 @@ namespace AltV.Net.EntitySync
             this.entityThreadRepository = entityThreadRepository;
             this.clientRepository = clientRepository;
             this.spatialPartition = spatialPartition;
+            this.syncRate = syncRate;
             this.onEntityCreate = onEntityCreate;
             this.onEntityRemove = onEntityRemove;
             this.onEntityDataChange = onEntityDataChange;
@@ -169,17 +177,23 @@ namespace AltV.Net.EntitySync
                             onEntityPositionChange(entityClient, entity, newPosition);
                         }
 
-                        entity.SetPositionComputed();
+                        entity.SetPositionComputed(in newPosition);
                     }
-                    
+
                     if (entity.TrySetDimensionComputing(out var newDimension))
                     {
                         spatialPartition.UpdateEntityDimension(entity, newDimension);
-                        entity.SetDimensionComputed();
+                        entity.SetDimensionComputed(newDimension);
+                    }
+
+                    if (entity.TrySetRangeComputing(out var newRange))
+                    {
+                        spatialPartition.UpdateEntityRange(entity, newRange);
+                        entity.SetRangeComputed(newRange);
                     }
                 }
 
-                Thread.Sleep(1000);
+                Thread.Sleep(syncRate);
             }
         }
 

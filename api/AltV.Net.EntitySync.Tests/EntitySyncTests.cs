@@ -11,7 +11,7 @@ namespace AltV.Net.EntitySync.Tests
         [SetUp]
         public void Setup()
         {
-            AltEntitySync.Init(1,
+            AltEntitySync.Init(1, 500,
                 repository =>
                 {
                     mockNetworkLayer = new MockNetworkLayer(repository);
@@ -86,6 +86,76 @@ namespace AltV.Net.EntitySync.Tests
             var removeTask = readAsyncRemove.AsTask();
             removeTask.Wait();
             var removeResult = removeTask.Result;
+            Assert.AreSame(removeResult.Entity, entity);
+        }
+        
+        [Test]
+        public void UpdateRangeTest()
+        {
+            var readAsyncCreate = mockNetworkLayer.CreateEventChannel.Reader.ReadAsync();
+            var entity = new Entity(1, Vector3.One, 2);
+            entity.Dimension = 0;
+            AltEntitySync.AddEntity(entity);
+            var createTask = readAsyncCreate.AsTask();
+            createTask.Wait();
+            var createResult = createTask.Result;
+            Assert.AreSame(createResult.Entity, entity);
+            
+            var readAsyncRemove = mockNetworkLayer.RemoveEventChannel.Reader.ReadAsync();
+            entity.Range = 1;
+            var removeTask = readAsyncRemove.AsTask();
+            removeTask.Wait();
+            var removeResult = removeTask.Result;
+            Assert.AreSame(removeResult.Entity, entity);
+        }
+        
+        [Test]
+        public void PositionOverrideTest()
+        {
+            var readAsyncCreate = mockNetworkLayer.CreateEventChannel.Reader.ReadAsync();
+            var entity = new Entity(1, Vector3.One, 2);
+            entity.Dimension = 0;
+            AltEntitySync.AddEntity(entity);
+            var createTask = readAsyncCreate.AsTask();
+            createTask.Wait();
+            var createResult = createTask.Result;
+            Assert.AreSame(createResult.Entity, entity);
+
+            var readAsyncRemove = mockNetworkLayer.RemoveEventChannel.Reader.ReadAsync();
+            
+            if (mockNetworkLayer.ClientRepository.TryGet("a", out var client))
+            {
+                client.SetPositionOverride(new Vector3(10, 10, 10));
+            }
+            
+            var removeTask = readAsyncRemove.AsTask();
+            removeTask.Wait();
+            var removeResult = removeTask.Result;
+            Assert.AreSame(removeResult.Entity, entity);
+            
+            
+            if (mockNetworkLayer.ClientRepository.TryGet("a", out client))
+            {
+                client.ResetPositionOverride();
+            }
+            
+            readAsyncCreate = mockNetworkLayer.CreateEventChannel.Reader.ReadAsync();
+            createTask = readAsyncCreate.AsTask();
+            createTask.Wait();
+            createResult = createTask.Result;
+            
+            Assert.AreSame(createResult.Entity, entity);
+            
+            readAsyncRemove = mockNetworkLayer.RemoveEventChannel.Reader.ReadAsync();
+            
+            if (mockNetworkLayer.ClientRepository.TryGet("a", out client))
+            {
+                client.SetPositionOverride(new Vector3(100, 100, 100));
+            }
+
+            removeTask = readAsyncRemove.AsTask();
+            removeTask.Wait();
+            removeResult = removeTask.Result;
             Assert.AreSame(removeResult.Entity, entity);
         }
     }

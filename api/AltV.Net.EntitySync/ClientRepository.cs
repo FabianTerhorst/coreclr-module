@@ -30,6 +30,14 @@ namespace AltV.Net.EntitySync
             return null;
         }
 
+        public bool TryGet(string token, out IClient client)
+        {
+            lock (clients)
+            {
+                return clients.TryGetValue(token, out client);
+            }
+        }
+
         public IClient[] GetAll()
         {
             lock (clients)

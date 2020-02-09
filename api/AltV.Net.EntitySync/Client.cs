@@ -18,6 +18,10 @@ namespace AltV.Net.EntitySync
 
         public virtual bool Exists { get; } = true;
 
+        private Vector3 positionOverride;
+
+        private bool isPositionOverwritten;
+
         public Client(string token)
         {
             Token = token;
@@ -25,7 +29,18 @@ namespace AltV.Net.EntitySync
 
         public virtual bool TryGetPosition(out Vector3 position)
         {
-            position = Position;
+            lock (this)
+            {
+                if (isPositionOverwritten)
+                {
+                    position = positionOverride;
+                }
+                else
+                {
+                    position = Position;
+                }
+            }
+
             return true;
         }
 
@@ -33,6 +48,23 @@ namespace AltV.Net.EntitySync
         {
             dimension = Dimension;
             return true;
+        }
+
+        public void SetPositionOverride(Vector3 newPositionOverride)
+        {
+            lock (this)
+            {
+                positionOverride = newPositionOverride;
+                isPositionOverwritten = true;
+            }
+        }
+
+        public void ResetPositionOverride()
+        {
+            lock (this)
+            {
+                isPositionOverwritten = false;
+            }
         }
     }
 }

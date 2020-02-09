@@ -11,13 +11,13 @@ namespace AltV.Net.EntitySync
 
         private static EntitySyncServer _entitySyncServer;
 
-        public static void Init(long threadCount,
+        public static void Init(long threadCount, int syncRate,
             Func<IClientRepository, NetworkLayer> createNetworkLayer,
             Func<SpatialPartition> createSpatialPartition, IIdProvider<ulong> idProvider)
         {
             IdProvider = idProvider;
             _entitySyncServer =
-                new EntitySyncServer(threadCount, createNetworkLayer, createSpatialPartition, idProvider);
+                new EntitySyncServer(threadCount, syncRate, createNetworkLayer, createSpatialPartition, idProvider);
         }
 
         public static void AddEntity(IEntity entity)

@@ -25,7 +25,7 @@ namespace AltV.Net.EntitySync
 
         private readonly IIdProvider<ulong> idProvider;
 
-        public EntitySyncServer(long threadCount,
+        public EntitySyncServer(long threadCount, int syncRate,
             Func<IClientRepository, NetworkLayer> createNetworkLayer,
             Func<SpatialPartition> createSpatialPartition, IIdProvider<ulong> idProvider)
         {
@@ -46,7 +46,7 @@ namespace AltV.Net.EntitySync
             {
                 var entityThreadRepository = new EntityThreadRepository();
                 entityThreadRepositories[i] = entityThreadRepository;
-                entityThreads[i] = new EntityThread(entityThreadRepository, clientRepository, createSpatialPartition(),
+                entityThreads[i] = new EntityThread(entityThreadRepository, clientRepository, createSpatialPartition(),syncRate,
                     OnEntityCreate,
                     OnEntityRemove, OnEntityDataChange, OnEntityPositionChange);
             }

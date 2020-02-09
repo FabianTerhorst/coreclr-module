@@ -24,6 +24,10 @@ namespace AltV.Net.EntitySync.ServerEvent
             }
         }
 
+        private Vector3 positionOverride;
+        
+        private bool positionOverrideEnabled;
+
         public override int Dimension
         {
             get
@@ -67,7 +71,15 @@ namespace AltV.Net.EntitySync.ServerEvent
             {
                 if (player.Exists)
                 {
-                    position = player.Position;
+                    if (positionOverrideEnabled)
+                    {
+                        position = positionOverride;
+                    }
+                    else
+                    {
+                        position = player.Position;
+                    }
+
                     return true;
                 }
             }
@@ -87,6 +99,29 @@ namespace AltV.Net.EntitySync.ServerEvent
             }
             dimension = default;
             return false;
+        }
+
+        public void SetPositionOverride(Vector3 newPositionOverride)
+        {
+            lock (player)
+            {
+                if (player.Exists)
+                {
+                    positionOverride = newPositionOverride;
+                    positionOverrideEnabled = true;
+                }
+            }
+        }
+
+        public void StopPositionOverride()
+        {
+            lock (player)
+            {
+                if (player.Exists)
+                {
+                    positionOverrideEnabled = false;
+                }
+            }
         }
 
         public void Emit(string eventName, params object[] args)

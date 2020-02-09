@@ -8,6 +8,8 @@ namespace AltV.Net.EntitySync
         
         IClient Remove(string token);
 
+        bool TryGet(string token, out IClient client);
+
         IClient[] GetAll();
     }
 }
