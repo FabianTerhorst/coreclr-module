@@ -4,12 +4,9 @@ using System.Numerics;
 
 namespace AltV.Net.EntitySync.SpatialPartitions
 {
-    public class Grid : SpatialPartition
+    public class Grid2 : SpatialPartition
     {
-        private static readonly float Tolerance = 0.013F; //0.01318359375F;
-
-        // x-index, y-index, col shapes
-        private readonly IEntity[][][] entityAreas;
+        private readonly GridEntity[][] entityAreas;
 
         private readonly int maxX;
 
@@ -21,6 +18,8 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
         private readonly int yOffset;
 
+        private readonly int distance;
+
         /// <summary>
         /// The constructor of the grid spatial partition algorithm
         /// </summary>
@@ -29,25 +28,32 @@ namespace AltV.Net.EntitySync.SpatialPartitions
         /// <param name="areaSize">The Size of a grid area</param>
         /// <param name="xOffset"></param>
         /// <param name="yOffset"></param>
-        public Grid(int maxX, int maxY, int areaSize, int xOffset, int yOffset)
+        /// <param name="distance"></param>
+        public Grid2(int maxX, int maxY, int areaSize, int xOffset, int yOffset, int distance = 0)
         {
+            if (distance > areaSize)
+            {
+                throw new ArgumentException("Distance shouldn't be larger then area size:");
+            }
+
             this.maxX = maxX;
             this.maxY = maxY;
             this.areaSize = areaSize;
             this.xOffset = xOffset;
             this.yOffset = yOffset;
+            this.distance = distance;
 
             var maxXAreaIndex = maxX / areaSize;
             var maxYAreaIndex = maxX / areaSize;
 
-            entityAreas = new IEntity[maxXAreaIndex][][];
+            entityAreas = new GridEntity[maxXAreaIndex][];
 
             for (var i = 0; i < maxXAreaIndex; i++)
             {
-                entityAreas[i] = new IEntity[maxYAreaIndex][];
+                entityAreas[i] = new GridEntity[maxYAreaIndex];
                 for (var j = 0; j < maxYAreaIndex; j++)
                 {
-                    entityAreas[i][j] = new IEntity[0];
+                    entityAreas[i][j] = null;
                 }
             }
         }
@@ -76,14 +82,19 @@ namespace AltV.Net.EntitySync.SpatialPartitions
                 (int) Math.Ceiling(squareMaxY / areaSize);
             var stoppingXIndex =
                 (int) Math.Ceiling(squareMaxX / areaSize);
+
             // Now fill all areas from min {x, y} to max {x, y}
-            for (var i = startingYIndex; i <= stoppingYIndex; i++)
+            for (var j = startingXIndex; j <= stoppingXIndex; j++)
             {
-                for (var j = startingXIndex; j <= stoppingXIndex; j++)
+                var xArr = entityAreas[j];
+                for (var i = startingYIndex; i <= stoppingYIndex; i++)
                 {
-                    var length = entityAreas[j][i].Length;
-                    Array.Resize(ref entityAreas[j][i], length + 1);
-                    entityAreas[j][i][length] = entity;
+                    var gridEntity = new GridEntity(entity, null, xArr[i]);
+                    xArr[i] = gridEntity;
+                    if (gridEntity.Next != null)
+                    {
+                        gridEntity.Next.Prev = gridEntity;
+                    }
                 }
             }
         }
@@ -115,30 +126,42 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             var stoppingXIndex =
                 (int) Math.Ceiling(squareMaxX / areaSize);
             // Now remove entity from all areas from min {x, y} to max {x, y}
-            for (var i = startingYIndex; i <= stoppingYIndex; i++)
+            for (var j = startingXIndex; j <= stoppingXIndex; j++)
             {
-                for (var j = startingXIndex; j <= stoppingXIndex; j++)
+                var xArr = entityAreas[j];
+                for (var i = startingYIndex; i <= stoppingYIndex; i++)
                 {
-                    var arr = entityAreas[j][i];
-                    var length = arr.Length;
-                    int k;
-                    var found = false;
-                    for (k = 0; k < length; k++)
+                    var gridEntity = xArr[i];
+                    while (gridEntity != null)
                     {
-                        var currEntity = arr[k];
-                        if (currEntity.Id != id || currEntity.Type != type) continue;
-                        found = true;
-                        break;
-                    }
+                        if (gridEntity.Entity.Id == id && gridEntity.Entity.Type == type)
+                        {
+                            var prev = gridEntity.Prev;
+                            var next = gridEntity.Next;
+                            if (prev == null) // head of list
+                            {
+                                if (next != null) // maybe only element in list
+                                {
+                                    next.Prev = null;
+                                }
 
-                    if (!found) continue;
-                    var newLength = length - 1;
-                    for (var l = k; l < newLength; l++)
-                    {
-                        arr[l] = arr[l + 1];
-                    }
+                                xArr[i] = next;
+                            }
+                            else // not head of list
+                            {
+                                if (next != null)
+                                {
+                                    next.Prev = prev;
+                                }
 
-                    Array.Resize(ref entityAreas[j][i], newLength);
+                                prev.Next = next;
+                            }
+
+                            break;
+                        }
+
+                        gridEntity = gridEntity.Next;
+                    }
                 }
             }
         }
@@ -190,65 +213,56 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             var newStoppingXIndex =
                 (int) Math.Ceiling(newSquareMaxX / areaSize);
 
-            //TODO: do later checking for overlaps between the grid areas in the two dimensional array
-            //  --    --    --    --   
-            // |xy|  |xy|  |yy|  |  |    
-            // |yx|  |yx|  |yy|  |  |
-            //  --    --    --    --  
-            //
-            //  --    --    --    --   
-            // |xy|  |xy|  |yy|  |  |    
-            // |yx|  |yx|  |yy|  |  |
-            //  --    --    --    --  
-            //
-            //  --    --    --    --   
-            // |yy|  |yy|  |yy|  |  |    
-            // |yy|  |yy|  |yy|  |  |
-            //  --    --    --    --  
-            //
-            //  --    --    --    --   
-            // |  |  |  |  |  |  |  |    
-            // |  |  |  |  |  |  |  |
-            //  --    --    --    --  
-            // Now we have to check if some of the (oldStartingYIndex, oldStoppingYIndex) areas are inside (newStartingYIndex, newStoppingYIndex)
-            // Now we have to check if some of the (oldStartingXIndex, oldStoppingXIndex) areas are inside (newStartingXIndex, newStoppingXIndex)
-
-
-            for (var i = oldStartingYIndex; i <= oldStoppingYIndex; i++)
+            for (var j = oldStartingXIndex; j <= oldStoppingXIndex; j++)
             {
-                for (var j = oldStartingXIndex; j <= oldStoppingXIndex; j++)
+                var xArr = entityAreas[j];
+                for (var i = oldStartingYIndex; i <= oldStoppingYIndex; i++)
                 {
-                    //TODO: Now we check if (i,j) is inside the new position range, so we don't have to delete it
-                    var arr = entityAreas[j][i];
-                    var length = arr.Length;
-                    int k;
-                    var found = false;
-                    for (k = 0; k < length; k++)
+                    var gridEntity = xArr[i];
+                    while (gridEntity != null)
                     {
-                        var currEntity = arr[k];
-                        if (currEntity.Id != id || currEntity.Type != type) continue;
-                        found = true;
-                        break;
-                    }
+                        if (gridEntity.Entity.Id == id && gridEntity.Entity.Type == type)
+                        {
+                            var prev = gridEntity.Prev;
+                            var next = gridEntity.Next;
+                            if (prev == null) // head of list
+                            {
+                                if (next != null) // maybe only element in list
+                                {
+                                    next.Prev = null;
+                                }
 
-                    if (!found) continue;
-                    var newLength = length - 1;
-                    for (var l = k; l < newLength; l++)
-                    {
-                        arr[l] = arr[l + 1];
-                    }
+                                xArr[i] = next;
+                            }
+                            else // not head of list
+                            {
+                                if (next != null)
+                                {
+                                    next.Prev = prev;
+                                }
 
-                    Array.Resize(ref entityAreas[j][i], newLength);
+                                prev.Next = next;
+                            }
+
+                            break;
+                        }
+
+                        gridEntity = gridEntity.Next;
+                    }
                 }
             }
 
-            for (var i = newStartingYIndex; i <= newStoppingYIndex; i++)
+            for (var j = newStartingXIndex; j <= newStoppingXIndex; j++)
             {
-                for (var j = newStartingXIndex; j <= newStoppingXIndex; j++)
+                var xArr = entityAreas[j];
+                for (var i = newStartingYIndex; i <= newStoppingYIndex; i++)
                 {
-                    var length = entityAreas[j][i].Length;
-                    Array.Resize(ref entityAreas[j][i], length + 1);
-                    entityAreas[j][i][length] = entity;
+                    var gridEntity = new GridEntity(entity, null, xArr[i]);
+                    xArr[i] = gridEntity;
+                    if (gridEntity.Next != null)
+                    {
+                        gridEntity.Next.Prev = gridEntity;
+                    }
                 }
             }
         }
@@ -296,41 +310,56 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             var newStoppingXIndex =
                 (int) Math.Ceiling(newSquareMaxX / areaSize);
 
-            for (var i = oldStartingYIndex; i <= oldStoppingYIndex; i++)
+            for (var j = oldStartingXIndex; j <= oldStoppingXIndex; j++)
             {
-                for (var j = oldStartingXIndex; j <= oldStoppingXIndex; j++)
+                var xArr = entityAreas[j];
+                for (var i = oldStartingYIndex; i <= oldStoppingYIndex; i++)
                 {
-                    //TODO: Now we check if (i,j) is inside the new position range, so we don't have to delete it
-                    var arr = entityAreas[j][i];
-                    var length = arr.Length;
-                    int k;
-                    var found = false;
-                    for (k = 0; k < length; k++)
+                    var gridEntity = xArr[i];
+                    while (gridEntity != null)
                     {
-                        var currEntity = arr[k];
-                        if (currEntity.Id != id || currEntity.Type != type) continue;
-                        found = true;
-                        break;
-                    }
+                        if (gridEntity.Entity.Id == id && gridEntity.Entity.Type == type)
+                        {
+                            var prev = gridEntity.Prev;
+                            var next = gridEntity.Next;
+                            if (prev == null) // head of list
+                            {
+                                if (next != null) // maybe only element in list
+                                {
+                                    next.Prev = null;
+                                }
 
-                    if (!found) continue;
-                    var newLength = length - 1;
-                    for (var l = k; l < newLength; l++)
-                    {
-                        arr[l] = arr[l + 1];
-                    }
+                                xArr[i] = next;
+                            }
+                            else // not head of list
+                            {
+                                if (next != null)
+                                {
+                                    next.Prev = prev;
+                                }
 
-                    Array.Resize(ref entityAreas[j][i], newLength);
+                                prev.Next = next;
+                            }
+
+                            break;
+                        }
+
+                        gridEntity = gridEntity.Next;
+                    }
                 }
             }
 
-            for (var i = newStartingYIndex; i <= newStoppingYIndex; i++)
+            for (var j = newStartingXIndex; j <= newStoppingXIndex; j++)
             {
-                for (var j = newStartingXIndex; j <= newStoppingXIndex; j++)
+                var xArr = entityAreas[j];
+                for (var i = newStartingYIndex; i <= newStoppingYIndex; i++)
                 {
-                    var length = entityAreas[j][i].Length;
-                    Array.Resize(ref entityAreas[j][i], length + 1);
-                    entityAreas[j][i][length] = entity;
+                    var gridEntity = new GridEntity(entity, null, xArr[i]);
+                    xArr[i] = gridEntity;
+                    if (gridEntity.Next != null)
+                    {
+                        gridEntity.Next.Prev = gridEntity;
+                    }
                 }
             }
         }
@@ -353,7 +382,6 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             return false;
         }
 
-        //TODO: check if we can find a better way to pass a position and e.g. improve performance of this method by return type ect.
         public override IEnumerable<IEntity> Find(Vector3 position, int dimension)
         {
             var posX = position.X + xOffset;
@@ -371,65 +399,18 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
             var y2Index = (int) Math.Ceiling(posY / areaSize);*/
 
-            var areaEntities = entityAreas[xIndex][yIndex];
+            var gridEntity = entityAreas[xIndex][yIndex];
 
-            for (int j = 0, innerLength = areaEntities.Length; j < innerLength; j++)
+            while (gridEntity != null)
             {
-                var entity = areaEntities[j];
-                if (Vector3.Distance(entity.Position, position) > entity.Range ||
-                    !CanSeeOtherDimension(entity.Dimension, dimension)) continue;
-                yield return entity;
+                if (Vector3.Distance(gridEntity.Entity.Position, position) <= gridEntity.Entity.Range &&
+                    CanSeeOtherDimension(gridEntity.Entity.Dimension, dimension))
+                {
+                    yield return gridEntity.Entity;
+                }
+
+                gridEntity = gridEntity.Next;
             }
-
-            /*if (xIndex != x2Index && yIndex == y2Index)
-            {
-                var innerAreaEntities = entityAreas[x2Index][yIndex];
-
-                for (int j = 0, innerLength = innerAreaEntities.Length; j < innerLength; j++)
-                {
-                    var entity = innerAreaEntities[j];
-                    if (Vector3.Distance(entity.Position, position) > entity.Range) continue;
-                    callback(entity);
-                }
-            } else if (xIndex == x2Index && yIndex != y2Index)
-            {
-                var innerAreaEntities = entityAreas[xIndex][y2Index];
-
-                for (int j = 0, innerLength = innerAreaEntities.Length; j < innerLength; j++)
-                {
-                    var entity = innerAreaEntities[j];
-                    if (Vector3.Distance(entity.Position, position) > entity.Range) continue;
-                    callback(entity);
-                }
-            } else if (xIndex != x2Index && yIndex != y2Index)
-            {
-                var innerAreaEntities = entityAreas[x2Index][yIndex];
-
-                for (int j = 0, innerLength = innerAreaEntities.Length; j < innerLength; j++)
-                {
-                    var entity = innerAreaEntities[j];
-                    if (Vector3.Distance(entity.Position, position) > entity.Range) continue;
-                    callback(entity);
-                }
-                
-                innerAreaEntities = entityAreas[x2Index][y2Index];
-
-                for (int j = 0, innerLength = innerAreaEntities.Length; j < innerLength; j++)
-                {
-                    var entity = innerAreaEntities[j];
-                    if (Vector3.Distance(entity.Position, position) > entity.Range) continue;
-                    callback(entity);
-                }
-                
-                innerAreaEntities = entityAreas[xIndex][y2Index];
-
-                for (int j = 0, innerLength = innerAreaEntities.Length; j < innerLength; j++)
-                {
-                    var entity = innerAreaEntities[j];
-                    if (Vector3.Distance(entity.Position, position) > entity.Range) continue;
-                    callback(entity);
-                }
-            }*/
         }
     }
 }

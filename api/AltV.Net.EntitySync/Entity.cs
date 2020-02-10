@@ -83,7 +83,7 @@ namespace AltV.Net.EntitySync
             Type = type;
             this.position = position;
             this.dimension = dimension;
-            Range = range;
+            this.range = range;
             DataSnapshot = new EntityDataSnapshot(Id);
             this.data = data;
         }
