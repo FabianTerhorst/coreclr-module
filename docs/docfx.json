@@ -1,8 +1,4 @@
 {
-  "template": [
-    "default",
-    "templates/darkfx"
-  ],
   "metadata": [
     {
       "src": [
@@ -63,7 +59,8 @@
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
-      "default"
+      "default",
+      "templates/darkfx"
     ],
     "postProcessors": [],
     "markdownEngineName": "markdig",
