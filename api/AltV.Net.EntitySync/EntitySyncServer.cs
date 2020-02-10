@@ -24,6 +24,10 @@ namespace AltV.Net.EntitySync
         private readonly NetworkLayer networkLayer;
 
         private readonly IIdProvider<ulong> idProvider;
+        
+        internal readonly HashSet<EntityCreateDelegate> EntityCreateCallbacks = new HashSet<EntityCreateDelegate>();
+        
+        internal readonly HashSet<EntityRemoveDelegate> EntityRemoveCallbacks = new HashSet<EntityRemoveDelegate>();
 
         public EntitySyncServer(long threadCount, int syncRate,
             Func<IClientRepository, NetworkLayer> createNetworkLayer,
@@ -68,11 +72,19 @@ namespace AltV.Net.EntitySync
         private void OnEntityCreate(IClient client, IEntity entity, IEnumerable<string> changedKeys)
         {
             networkLayer.SendEvent(client, new EntityCreateEvent(entity, changedKeys));
+            foreach (var entityCreateCallback in EntityCreateCallbacks)
+            {
+                entityCreateCallback(client, entity);
+            }
         }
 
         private void OnEntityRemove(IClient client, IEntity entity)
         {
             networkLayer.SendEvent(client, new EntityRemoveEvent(entity));
+            foreach (var entityRemoveCallback in EntityRemoveCallbacks)
+            {
+                entityRemoveCallback(client, entity);
+            }
         }
 
         private void OnEntityDataChange(IClient client, IEntity entity, IEnumerable<string> changedKeys)

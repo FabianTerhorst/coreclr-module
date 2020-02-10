@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using AltV.Net.EntitySync.Events;
 using AltV.Net.EntitySync.SpatialPartitions;
 
 namespace AltV.Net.EntitySync
@@ -10,6 +11,18 @@ namespace AltV.Net.EntitySync
         internal static IIdProvider<ulong> IdProvider;
 
         private static EntitySyncServer _entitySyncServer;
+
+        public static event EntityCreateDelegate OnEntityCreate
+        {
+            add => _entitySyncServer.EntityCreateCallbacks.Add(value);
+            remove => _entitySyncServer.EntityCreateCallbacks.Remove(value);
+        }
+
+        public static event EntityRemoveDelegate OnEntityRemove
+        {
+            add => _entitySyncServer.EntityRemoveCallbacks.Add(value);
+            remove => _entitySyncServer.EntityRemoveCallbacks.Remove(value);
+        }
 
         public static void Init(long threadCount, int syncRate,
             Func<IClientRepository, NetworkLayer> createNetworkLayer,
