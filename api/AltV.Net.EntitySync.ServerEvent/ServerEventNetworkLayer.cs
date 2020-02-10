@@ -74,8 +74,22 @@ namespace AltV.Net.EntitySync.ServerEvent
                                 switch (entityEvent.EventType)
                                 {
                                     case 1:
-                                        currPlayerClient.Emit("entitySync:create",
-                                            entityEvent.Entity.Serialize(entityEvent.ChangedKeys));
+                                        IDictionary<string, object> entityDictionary = new Dictionary<string, object>();
+                                        entityDictionary["id"] = entityEvent.Entity.Id;
+                                        entityDictionary["type"] = entityEvent.Entity.Type;
+                                        entityDictionary["position"] = entityEvent.Entity.Position;
+                                        IDictionary<string, object> entityDataDictionary = new Dictionary<string, object>();
+                                        foreach (var key in entityEvent.ChangedKeys)
+                                        {
+                                            if (entityEvent.Entity.TryGetData(key, out var dataValue))
+                                            {
+                                                entityDataDictionary[key] = dataValue;
+                                            }
+                                        }
+
+                                        entityDictionary["data"] = entityDataDictionary;
+
+                                        currPlayerClient.Emit("entitySync:create", entityDictionary);
                                         break;
                                     case 2:
                                         currPlayerClient.Emit("entitySync:remove", entityEvent.Entity.Id);
