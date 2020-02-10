@@ -26,10 +26,10 @@ namespace AltV.Net.EntitySync.ServerEvent
 
             public readonly Vector3 Position;
 
-            public readonly IEnumerable<object> ChangedData;
+            public readonly IDictionary<string, object> ChangedData;
 
             public ServerEntityEvent(byte eventType, IEntity entity, IEnumerable<string> changedKeys, Vector3 position,
-                IEnumerable<object> changedData)
+                IDictionary<string, object> changedData)
             {
                 EventType = eventType;
                 Entity = entity;
@@ -99,36 +99,8 @@ namespace AltV.Net.EntitySync.ServerEvent
                                             entityEvent.Position);
                                         break;
                                     case 4:
-                                        var dictionary = new Dictionary<string, object>();
-                                        var changedData = entityEvent.ChangedData;
-                                        if (changedData != null)
-                                        {
-                                            using var changedDataIterator = changedData.GetEnumerator();
-                                            while (true)
-                                            {
-                                                string key;
-                                                if (changedDataIterator.MoveNext())
-                                                {
-                                                    key = (string) changedDataIterator.Current;
-                                                }
-                                                else
-                                                {
-                                                    break;
-                                                }
-
-                                                if (changedDataIterator.MoveNext() && key != null)
-                                                {
-                                                    dictionary[key] = changedDataIterator.Current;
-                                                }
-                                                else
-                                                {
-                                                    break;
-                                                }
-                                            }
-                                        }
-
                                         currPlayerClient.Emit("entitySync:updateData", entityEvent.Entity.Id,
-                                            dictionary);
+                                            entityEvent.ChangedData);
                                         break;
                                 }
                             }
@@ -195,9 +167,36 @@ namespace AltV.Net.EntitySync.ServerEvent
             {
                 if (!serverEventChannels.TryGetValue(client, out channel)) return;
             }
+            
+            var dictionary = new Dictionary<string, object>();
+            if (entityDataChange.Data != null)
+            {
+                using var changedDataIterator = entityDataChange.Data.GetEnumerator();
+                while (true)
+                {
+                    string key;
+                    if (changedDataIterator.MoveNext())
+                    {
+                        key = (string) changedDataIterator.Current;
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                    if (changedDataIterator.MoveNext() && key != null)
+                    {
+                        dictionary[key] = changedDataIterator.Current;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
 
             channel.Writer.TryWrite(new ServerEntityEvent(4, entityDataChange.Entity, null,
-                Vector3.Zero, entityDataChange.Data));
+                Vector3.Zero, dictionary));
         }
     }
 }
