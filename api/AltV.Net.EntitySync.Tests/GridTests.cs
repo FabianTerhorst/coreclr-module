@@ -5,9 +5,9 @@ using NUnit.Framework;
 
 namespace AltV.Net.EntitySync.Tests
 {
-    public class Grid2Tests
+    public class GridTests
     {
-        private Grid2 grid2;
+        private Grid grid2;
 
         [SetUp]
         public void Setup()
@@ -16,7 +16,7 @@ namespace AltV.Net.EntitySync.Tests
                 repository => new MockNetworkLayer(repository),
                 () => new Grid(50_000, 50_000, 100, 10_000, 10_000),
                 new IdProvider());
-            grid2 = new Grid2(50_000, 50_000, 100, 10_000, 10_000);
+            grid2 = new Grid(50_000, 50_000, 100, 10_000, 10_000);
         }
 
         [Test]
