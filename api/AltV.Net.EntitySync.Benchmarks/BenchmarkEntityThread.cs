@@ -1,13 +1,16 @@
 using System;
 using System.Numerics;
+using System.Threading;
 using AltV.Net.EntitySync.SpatialPartitions;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using BenchmarkDotNet.Jobs;
 
 namespace AltV.Net.EntitySync.Benchmarks
 {
     [SimpleJob(RuntimeMoniker.NetCoreApp31)]
     //[RPlotExporter]
+    [EtwProfiler]
     public class BenchmarkEntityThread
     {
         private MockNetworkLayer mockNetworkLayer;
@@ -45,6 +48,7 @@ namespace AltV.Net.EntitySync.Benchmarks
                 var entity = new Entity(1, GetRandomVector3(), 0, 2);
                 AltEntitySync.AddEntity(entity);
             }
+            Thread.Sleep(5000);
         }
 
         [GlobalCleanup]
