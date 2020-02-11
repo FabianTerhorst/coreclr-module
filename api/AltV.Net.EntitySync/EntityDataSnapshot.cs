@@ -10,14 +10,14 @@ namespace AltV.Net.EntitySync
     /// </summary>
     public class EntityDataSnapshot : DataSnapshot
     {
-        private readonly ulong entityId;
+        private readonly IEntity entity;
 
         // This is a reference of the last clients that got synced with this snapshot to know who to notify when overflow of snapshot version is happening
         private readonly HashSet<IClient> lastClients = new HashSet<IClient>();
 
-        public EntityDataSnapshot(ulong entityId)
+        public EntityDataSnapshot(IEntity entity)
         {
-            this.entityId = entityId;
+            this.entity = entity;
         }
 
         public override void OnOverflow(string key)
@@ -36,7 +36,7 @@ namespace AltV.Net.EntitySync
                 }
                 else
                 {
-                    if (lastClient.Snapshot.TryGetSnapshotForEntity(entityId, out var entitySnapshotFromClient))
+                    if (lastClient.Snapshot.TryGetSnapshotForEntity(entity, out var entitySnapshotFromClient))
                     {
                         entitySnapshotFromClient.Reset(key);
                     }
@@ -68,11 +68,11 @@ namespace AltV.Net.EntitySync
         /// <returns>the changed keys, returns null when no changes</returns>
         public IEnumerable<string> CompareWithClient(IClient networkingClient)
         {
-            if (Snapshots == null || Snapshots.IsEmpty) return null; // entity snapshot never updated, nothing to do
+            if (Snapshots == null || Snapshots.IsEmpty) return null; // entity snapshot should never be null
             lastClients.Add(networkingClient);
             IEnumerable<string> changedKeys;
             var clientDataSnapshot = networkingClient.Snapshot;
-            if (clientDataSnapshot.TryGetSnapshotForEntity(entityId, out var entitySnapshotFromClient)
+            if (clientDataSnapshot.TryGetSnapshotForEntity(entity, out var entitySnapshotFromClient)
             ) // client visited entity before
             {
                 changedKeys = Compare(entitySnapshotFromClient);
@@ -87,14 +87,19 @@ namespace AltV.Net.EntitySync
             else // client never visited entity before
             {
                 changedKeys = Snapshots.Keys.ToArray();
-                clientDataSnapshot.SetSnapshotForEntity(entityId,
+                clientDataSnapshot.SetSnapshotForEntity(entity,
                     new DataSnapshot(new ConcurrentDictionary<string, ulong>(Snapshots)));
             }
 
             return changedKeys;
         }
 
-        private IEnumerable<string> Compare(DataSnapshot dataSnapshot)
+        public void RemoveClient(IClient client)
+        {
+            lastClients.Remove(client);
+        }
+
+        /*private IEnumerable<string> Compare(DataSnapshot dataSnapshot)
         {
             var missing = false;
             foreach (var (key, value) in Snapshots)
@@ -126,9 +131,9 @@ namespace AltV.Net.EntitySync
                     }
                 }
             }
-        }
+        }*/
 
-        /*
+        
          private IEnumerable<string> Compare(DataSnapshot dataSnapshot)
         {
             var missing = false;
@@ -180,6 +185,5 @@ namespace AltV.Net.EntitySync
 
             return changedKeys;
         }
-         */
     }
 }

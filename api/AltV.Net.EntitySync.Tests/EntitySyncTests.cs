@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Numerics;
 using AltV.Net.EntitySync.SpatialPartitions;
@@ -13,7 +12,7 @@ namespace AltV.Net.EntitySync.Tests
         [SetUp]
         public void Setup()
         {
-            AltEntitySync.Init(1, 500,
+            AltEntitySync.Init(1, 100,
                 repository =>
                 {
                     mockNetworkLayer = new MockNetworkLayer(repository);
@@ -167,7 +166,8 @@ namespace AltV.Net.EntitySync.Tests
             var createTask = readAsyncCreate.AsTask();
             createTask.Wait();
             var createResult = createTask.Result;
-            Assert.AreSame(createResult.Entity, entity);
+            Assert.AreSame(entity, createResult.Entity);
+            Assert.AreEqual(new string[] {"bla"}, createResult.ChangedKeys);
 
             var readAsyncDataUpdate = mockNetworkLayer.DataChangeEventChannel.Reader.ReadAsync();
 
@@ -180,9 +180,8 @@ namespace AltV.Net.EntitySync.Tests
             using (var enumerator = updateDataResult.Data.GetEnumerator())
             {
                 Assert.AreEqual(true, enumerator.MoveNext());
-                Assert.AreEqual("bla", enumerator.Current);
-                Assert.AreEqual(true, enumerator.MoveNext());
-                Assert.AreEqual(1338, enumerator.Current);
+                Assert.AreEqual("bla", enumerator.Current.Key);
+                Assert.AreEqual(1338, enumerator.Current.Value);
                 Assert.AreEqual(false, enumerator.MoveNext());
             }
 

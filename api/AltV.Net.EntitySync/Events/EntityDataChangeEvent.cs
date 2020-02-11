@@ -9,9 +9,9 @@ namespace AltV.Net.EntitySync.Events
     {
         public readonly IEntity Entity;
 
-        public readonly IEnumerable<object> Data;
+        public readonly IDictionary<string, object> Data;
 
-        public EntityDataChangeEvent(IEntity entity, IEnumerable<object> data)
+        public EntityDataChangeEvent(IEntity entity, IDictionary<string, object> data)
         {
             Entity = entity;
             Data = data;

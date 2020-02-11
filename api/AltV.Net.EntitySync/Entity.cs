@@ -16,11 +16,11 @@ namespace AltV.Net.EntitySync
             get => position;
             set => SetPositionInternal(value);
         }
-        
+
         private bool positionState = false;
 
         private Vector3 newPosition;
-        
+
         private readonly object positionMutex = new object();
 
         private int dimension;
@@ -30,25 +30,25 @@ namespace AltV.Net.EntitySync
             get => dimension;
             set => SetDimensionInternal(value);
         }
-        
+
         private bool dimensionState = false;
 
         private int newDimension;
-        
+
         private readonly object dimensionMutex = new object();
 
         private uint range;
-        
+
         public uint Range
         {
             get => range;
             set => SetRangeInternal(value);
         }
-        
+
         private bool rangeState = false;
 
         private uint newRange;
-        
+
         private readonly object rangeMutex = new object();
 
         private readonly IDictionary<string, object> data;
@@ -77,15 +77,20 @@ namespace AltV.Net.EntitySync
         {
         }
 
-        internal Entity(ulong id, ulong type, Vector3 position, int dimension, uint range, IDictionary<string, object> data)
+        internal Entity(ulong id, ulong type, Vector3 position, int dimension, uint range,
+            IDictionary<string, object> data)
         {
             Id = id;
             Type = type;
             this.position = position;
             this.dimension = dimension;
             this.range = range;
-            DataSnapshot = new EntityDataSnapshot(Id);
             this.data = data;
+            DataSnapshot = new EntityDataSnapshot(this);
+            foreach (var (key, _) in data)
+            {
+                DataSnapshot.Update(key);
+            }
         }
 
         public void SetData(string key, object value)
@@ -288,6 +293,23 @@ namespace AltV.Net.EntitySync
             }
 
             return m.ToArray();
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (!(obj is Entity entity)) return false;
+            if (entity.Id != Id) return false;
+            if (entity.Type != Type) return false;
+            if (entity.dimension != dimension) return false;
+            if (entity.range != range) return false;
+            if (entity.position != position) return false;
+            if (entity.data != data) return false;
+            return true;
         }
     }
 }

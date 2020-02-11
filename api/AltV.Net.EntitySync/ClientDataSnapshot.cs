@@ -8,12 +8,20 @@ namespace AltV.Net.EntitySync
     public class ClientDataSnapshot
     {
         // Snapshots of all entities the client visited
-        private readonly ConcurrentDictionary<ulong, DataSnapshot> snapshots =
-            new ConcurrentDictionary<ulong, DataSnapshot>();
+        private readonly ConcurrentDictionary<IEntity, DataSnapshot> snapshots =
+            new ConcurrentDictionary<IEntity, DataSnapshot>();
 
-        public bool TryGetSnapshotForEntity(ulong id, out DataSnapshot snapshot) =>
-            snapshots.TryGetValue(id, out snapshot);
+        public bool TryGetSnapshotForEntity(IEntity entity, out DataSnapshot snapshot) =>
+            snapshots.TryGetValue(entity, out snapshot);
 
-        public void SetSnapshotForEntity(ulong id, DataSnapshot snapshot) => snapshots[id] = snapshot;
+        public void SetSnapshotForEntity(IEntity entity, DataSnapshot snapshot) => snapshots[entity] = snapshot;
+
+        public void CleanupEntities(IClient client)
+        {
+            foreach (var snapshot in snapshots)
+            {
+                snapshot.Key.DataSnapshot.RemoveClient(client);
+            }
+        }
     }
 }

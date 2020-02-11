@@ -22,24 +22,21 @@ namespace AltV.Net.EntitySync.ServerEvent
 
             public readonly IEntity Entity;
 
-            public readonly IEnumerable<string> ChangedKeys;
-
             public readonly Vector3 Position;
 
             public readonly IDictionary<string, object> ChangedData;
 
-            public ServerEntityEvent(byte eventType, IEntity entity, IEnumerable<string> changedKeys, Vector3 position,
+            public ServerEntityEvent(byte eventType, IEntity entity, Vector3 position,
                 IDictionary<string, object> changedData)
             {
                 EventType = eventType;
                 Entity = entity;
-                ChangedKeys = changedKeys;
                 Position = position;
                 ChangedData = changedData;
             }
 
-            public ServerEntityEvent(byte eventType, IEntity entity, IEnumerable<string> changedKeys) : this(eventType,
-                entity, changedKeys, Vector3.Zero, null)
+            public ServerEntityEvent(byte eventType, IEntity entity) : this(eventType,
+                entity, Vector3.Zero, null)
             {
             }
         }
@@ -78,16 +75,10 @@ namespace AltV.Net.EntitySync.ServerEvent
                                         entityDictionary["id"] = entityEvent.Entity.Id;
                                         entityDictionary["type"] = entityEvent.Entity.Type;
                                         entityDictionary["position"] = entityEvent.Entity.Position;
-                                        IDictionary<string, object> entityDataDictionary = new Dictionary<string, object>();
-                                        foreach (var key in entityEvent.ChangedKeys)
+                                        if (entityEvent.ChangedData != null)
                                         {
-                                            if (entityEvent.Entity.TryGetData(key, out var dataValue))
-                                            {
-                                                entityDataDictionary[key] = dataValue;
-                                            }
+                                            entityDictionary["data"] = entityEvent.ChangedData;
                                         }
-
-                                        entityDictionary["data"] = entityDataDictionary;
 
                                         currPlayerClient.Emit("entitySync:create", entityDictionary);
                                         break;
@@ -134,7 +125,25 @@ namespace AltV.Net.EntitySync.ServerEvent
                 if (!serverEventChannels.TryGetValue(client, out channel)) return;
             }
 
-            channel.Writer.TryWrite(new ServerEntityEvent(1, entityCreate.Entity, entityCreate.ChangedKeys));
+            IDictionary<string, object> entityDataDictionary;
+            var changedKeys = entityCreate.ChangedKeys;
+            if (changedKeys != null)
+            {
+                entityDataDictionary = new Dictionary<string, object>();
+                foreach (var key in changedKeys)
+                {
+                    if (entityCreate.Entity.TryGetData(key, out var dataValue))
+                    {
+                        entityDataDictionary[key] = dataValue;
+                    }
+                }
+            }
+            else
+            {
+                entityDataDictionary = null;
+            }
+
+            channel.Writer.TryWrite(new ServerEntityEvent(1, entityCreate.Entity, Vector3.Zero, entityDataDictionary));
         }
 
         public override void SendEvent(IClient client, in EntityRemoveEvent entityRemove)
@@ -145,7 +154,7 @@ namespace AltV.Net.EntitySync.ServerEvent
                 if (!serverEventChannels.TryGetValue(client, out channel)) return;
             }
 
-            channel.Writer.TryWrite(new ServerEntityEvent(2, entityRemove.Entity, null));
+            channel.Writer.TryWrite(new ServerEntityEvent(2, entityRemove.Entity));
         }
 
         public override void SendEvent(IClient client, in EntityPositionUpdateEvent entityPositionUpdate)
@@ -156,7 +165,7 @@ namespace AltV.Net.EntitySync.ServerEvent
                 if (!serverEventChannels.TryGetValue(client, out channel)) return;
             }
 
-            channel.Writer.TryWrite(new ServerEntityEvent(3, entityPositionUpdate.Entity, null,
+            channel.Writer.TryWrite(new ServerEntityEvent(3, entityPositionUpdate.Entity,
                 entityPositionUpdate.Position, null));
         }
 
@@ -168,35 +177,8 @@ namespace AltV.Net.EntitySync.ServerEvent
                 if (!serverEventChannels.TryGetValue(client, out channel)) return;
             }
             
-            var dictionary = new Dictionary<string, object>();
-            if (entityDataChange.Data != null)
-            {
-                using var changedDataIterator = entityDataChange.Data.GetEnumerator();
-                while (true)
-                {
-                    string key;
-                    if (changedDataIterator.MoveNext())
-                    {
-                        key = (string) changedDataIterator.Current;
-                    }
-                    else
-                    {
-                        break;
-                    }
-
-                    if (changedDataIterator.MoveNext() && key != null)
-                    {
-                        dictionary[key] = changedDataIterator.Current;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            channel.Writer.TryWrite(new ServerEntityEvent(4, entityDataChange.Entity, null,
-                Vector3.Zero, dictionary));
+            channel.Writer.TryWrite(new ServerEntityEvent(4, entityDataChange.Entity,
+                Vector3.Zero, entityDataChange.Data));
         }
     }
 }

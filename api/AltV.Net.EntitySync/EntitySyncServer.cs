@@ -16,6 +16,8 @@ namespace AltV.Net.EntitySync
         private readonly EntityThread[] entityThreads;
 
         private readonly EntityThreadRepository[] entityThreadRepositories;
+        
+        private readonly ClientThreadRepository[] clientThreadRepositories;
 
         private readonly IEntityRepository entityRepository;
 
@@ -38,24 +40,26 @@ namespace AltV.Net.EntitySync
                 throw new ArgumentException("threadCount must be >= 1");
             }
 
-            clientRepository = new ClientRepository();
-            networkLayer = createNetworkLayer(clientRepository);
-            networkLayer.OnConnectionConnect += OnConnectionConnect;
-            networkLayer.OnConnectionDisconnect += OnConnectionDisconnect;
-
             entityThreads = new EntityThread[threadCount];
             entityThreadRepositories = new EntityThreadRepository[threadCount];
+            clientThreadRepositories = new ClientThreadRepository[threadCount];
 
             for (var i = 0; i < threadCount; i++)
             {
+                var clientThreadRepository = new ClientThreadRepository();
                 var entityThreadRepository = new EntityThreadRepository();
                 entityThreadRepositories[i] = entityThreadRepository;
-                entityThreads[i] = new EntityThread(entityThreadRepository, clientRepository, createSpatialPartition(),syncRate,
+                clientThreadRepositories[i] = clientThreadRepository;
+                entityThreads[i] = new EntityThread(entityThreadRepository, clientThreadRepository, createSpatialPartition(),syncRate,
                     OnEntityCreate,
                     OnEntityRemove, OnEntityDataChange, OnEntityPositionChange);
             }
 
             entityRepository = new EntityRepository(entityThreadRepositories);
+            clientRepository = new ClientRepository(clientThreadRepositories);
+            networkLayer = createNetworkLayer(clientRepository);
+            networkLayer.OnConnectionConnect += OnConnectionConnect;
+            networkLayer.OnConnectionDisconnect += OnConnectionDisconnect;
             this.idProvider = idProvider;
         }
 
@@ -89,24 +93,28 @@ namespace AltV.Net.EntitySync
 
         private void OnEntityDataChange(IClient client, IEntity entity, IEnumerable<string> changedKeys)
         {
-            networkLayer.SendEvent(client,
-                new EntityDataChangeEvent(entity, GetChangedEntityData(entity, changedKeys)));
+            Dictionary<string, object> data;
+            if (changedKeys != null)
+            {
+                data = new Dictionary<string, object>();
+                foreach (var key in changedKeys)
+                {
+                    if (entity.TryGetData(key, out var value))
+                    {
+                        data[key] = value;
+                    }
+                }
+            }
+            else
+            {
+                data = null;
+            }
+            networkLayer.SendEvent(client, new EntityDataChangeEvent(entity, data));
         }
 
         private void OnEntityPositionChange(IClient client, IEntity entity, Vector3 newPosition)
         {
             networkLayer.SendEvent(client, new EntityPositionUpdateEvent(entity, newPosition));
-        }
-
-        private IEnumerable<object> GetChangedEntityData(IEntity entity, IEnumerable<string> changedKeys)
-        {
-            if (changedKeys == null) yield break;
-            foreach (var key in changedKeys)
-            {
-                if (!entity.TryGetData(key, out var value)) continue;
-                yield return key;
-                yield return value;
-            }
         }
 
         public IEntity CreateEntity(ulong type, Vector3 position, int dimension, uint range, IDictionary<string, object> data)

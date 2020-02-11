@@ -1,27 +1,20 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AltV.Net.EntitySync
 {
-    public class ClientRepository : IClientRepository
+    public class ClientThreadRepository : IClientThreadRepository
     {
         private readonly IDictionary<string, IClient> clients = new Dictionary<string, IClient>();
-
-        private readonly ClientThreadRepository[] clientThreadRepositories;
-
-        public ClientRepository(ClientThreadRepository[] clientThreadRepositories)
-        {
-            this.clientThreadRepositories = clientThreadRepositories;
-        }
+        
+        private readonly HashSet<IClient> clientsToRemove = new HashSet<IClient>();
 
         public void Add(IClient client)
         {
             lock (clients)
             {
-                foreach (var clientThreadRepository in clientThreadRepositories)
-                {
-                    clientThreadRepository.Add(client);
-                }
-
+                clientsToRemove.Remove(client);
                 clients[client.Token] = client;
             }
         }
@@ -37,11 +30,7 @@ namespace AltV.Net.EntitySync
             {
                 if (clients.Remove(token, out var client))
                 {
-                    foreach (var clientThreadRepository in clientThreadRepositories)
-                    {
-                        clientThreadRepository.Remove(client);
-                    }
-
+                    clientsToRemove.Add(client);
                     return client;
                 }
             }
@@ -54,6 +43,24 @@ namespace AltV.Net.EntitySync
             lock (clients)
             {
                 return clients.TryGetValue(token, out client);
+            }
+        }
+
+        public ValueTuple<IClient[], IClient[]> GetAll()
+        {
+            lock (clients)
+            {
+                IClient[] currClientsToRemove;
+                if (clientsToRemove.Count == 0)
+                {
+                    currClientsToRemove = null;
+                }
+                else
+                {
+                    currClientsToRemove = clientsToRemove.ToArray();
+                    clientsToRemove.Clear();
+                }
+                return ValueTuple.Create(clients.Values.ToArray(), currClientsToRemove);
             }
         }
     }
