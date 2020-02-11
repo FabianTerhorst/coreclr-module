@@ -69,6 +69,52 @@ namespace AltV.Net.EntitySync.Tests
             
             Assert.AreSame(clearCacheResult.Entity, entity);
         }
+        
+        [Test]
+        public void RemoveTestWithoutInitialData()
+        {
+            var readAsyncCreate = mockNetworkLayer.CreateEventChannel.Reader.ReadAsync();
+            var entity = new Entity(1, Vector3.Zero, 0, 2);
+            AltEntitySync.AddEntity(entity);
+            var createTask = readAsyncCreate.AsTask();
+            createTask.Wait();
+            var createResult = createTask.Result;
+            Assert.AreSame(createResult.Entity, entity);
+            
+            var readAsyncDataUpdate = mockNetworkLayer.DataChangeEventChannel.Reader.ReadAsync();
+            
+            entity.SetData("bla", 1337);
+            
+            var updateDataTask = readAsyncDataUpdate.AsTask();
+            updateDataTask.Wait();
+            var updateDataResult = updateDataTask.Result;
+
+            using (var enumerator = updateDataResult.Data.GetEnumerator())
+            {
+                Assert.AreEqual(true, enumerator.MoveNext());
+                Assert.AreEqual("bla", enumerator.Current.Key);
+                Assert.AreEqual(1337, enumerator.Current.Value);
+                Assert.AreEqual(false, enumerator.MoveNext());
+            }
+
+            Assert.AreSame(updateDataResult.Entity, entity);
+            
+            var readAsyncRemove = mockNetworkLayer.RemoveEventChannel.Reader.ReadAsync();
+            var readAsyncClearCache = mockNetworkLayer.ClearCacheEventChannel.Reader.ReadAsync();
+            
+            AltEntitySync.RemoveEntity(entity);
+
+            var removeTask = readAsyncRemove.AsTask();
+            removeTask.Wait();
+            var removeResult = removeTask.Result;
+            Assert.AreSame(removeResult.Entity, entity);
+            
+            var clearCacheTask = readAsyncClearCache.AsTask();
+            clearCacheTask.Wait();
+            var clearCacheResult = clearCacheTask.Result;
+            
+            Assert.AreSame(clearCacheResult.Entity, entity);
+        }
 
         [Test]
         public void UpdatePositionTest()
