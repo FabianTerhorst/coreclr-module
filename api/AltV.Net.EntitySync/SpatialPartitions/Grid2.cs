@@ -6,19 +6,19 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 {
     public class Grid2 : SpatialPartition
     {
-        private readonly GridEntity[][] entityAreas;
+        protected readonly GridEntity[][] entityAreas;
 
-        private readonly int maxX;
+        protected readonly int maxX;
 
-        private readonly int maxY;
+        protected readonly int maxY;
 
-        private readonly int areaSize;
+        protected readonly int areaSize;
 
-        private readonly int xOffset;
+        protected readonly int xOffset;
 
-        private readonly int yOffset;
+        protected readonly int yOffset;
 
-        private readonly int distance;
+        protected readonly int distance;
 
         /// <summary>
         /// The constructor of the grid spatial partition algorithm
@@ -387,7 +387,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
         -X can see 0 and -X
         0 can't see -X and X
         */
-        private static bool CanSeeOtherDimension(int dimension, int otherDimension)
+        protected static bool CanSeeOtherDimension(int dimension, int otherDimension)
         {
             if (dimension > 0) return dimension == otherDimension;
             if (dimension < 0) return otherDimension == 0 || dimension == otherDimension;
