@@ -39,6 +39,36 @@ namespace AltV.Net.EntitySync.Tests
             var removeResult = removeTask.Result;
             Assert.AreSame(removeResult.Entity, entity);
         }
+        
+        [Test]
+        public void RemoveTest()
+        {
+            var readAsyncCreate = mockNetworkLayer.CreateEventChannel.Reader.ReadAsync();
+            var data = new Dictionary<string, object>();
+            data["bla"] = 1337;
+            var entity = new Entity(1, Vector3.Zero, 0, 2, data);
+            AltEntitySync.AddEntity(entity);
+            var createTask = readAsyncCreate.AsTask();
+            createTask.Wait();
+            var createResult = createTask.Result;
+            Assert.AreSame(createResult.Entity, entity);
+            
+            var readAsyncRemove = mockNetworkLayer.RemoveEventChannel.Reader.ReadAsync();
+            var readAsyncClearCache = mockNetworkLayer.ClearCacheEventChannel.Reader.ReadAsync();
+            
+            AltEntitySync.RemoveEntity(entity);
+
+            var removeTask = readAsyncRemove.AsTask();
+            removeTask.Wait();
+            var removeResult = removeTask.Result;
+            Assert.AreSame(removeResult.Entity, entity);
+            
+            var clearCacheTask = readAsyncClearCache.AsTask();
+            clearCacheTask.Wait();
+            var clearCacheResult = clearCacheTask.Result;
+            
+            Assert.AreSame(clearCacheResult.Entity, entity);
+        }
 
         [Test]
         public void UpdatePositionTest()

@@ -27,5 +27,6 @@ namespace AltV.Net.EntitySync
         public abstract void SendEvent(IClient client, in EntityRemoveEvent entityRemove);
         public abstract void SendEvent(IClient client, in EntityPositionUpdateEvent entityPositionUpdate);
         public abstract void SendEvent(IClient client, in EntityDataChangeEvent entityDataChange);
+        public abstract void SendEvent(IClient client, in EntityClearCacheEvent entityClearCache);
     }
 }

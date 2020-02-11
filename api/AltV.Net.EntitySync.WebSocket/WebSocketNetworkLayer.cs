@@ -61,5 +61,10 @@ namespace AltV.Net.EntitySync.WebSocket
         {
             throw new System.NotImplementedException();
         }
+
+        public override void SendEvent(IClient client, in EntityClearCacheEvent entityClearCache)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

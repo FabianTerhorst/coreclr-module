@@ -18,6 +18,7 @@ namespace AltV.Net.EntitySync.Tests
         public readonly Channel<EntityRemoveEvent> RemoveEventChannel = Channel.CreateUnbounded<EntityRemoveEvent>();
         public readonly Channel<EntityPositionUpdateEvent> PositionUpdateEventChannel = Channel.CreateUnbounded<EntityPositionUpdateEvent>();
         public readonly Channel<EntityDataChangeEvent> DataChangeEventChannel = Channel.CreateUnbounded<EntityDataChangeEvent>();
+        public readonly Channel<EntityClearCacheEvent> ClearCacheEventChannel = Channel.CreateUnbounded<EntityClearCacheEvent>();
 
         public MockNetworkLayer(IClientRepository clientRepository) : base(clientRepository)
         {
@@ -53,6 +54,12 @@ namespace AltV.Net.EntitySync.Tests
         {
             DataChangeEventChannel.Writer.TryWrite(entityDataChange);
             Console.WriteLine("SendEvent EntityDataChangeEvent");
+        }
+
+        public override void SendEvent(IClient client, in EntityClearCacheEvent entityClearCache)
+        {
+            ClearCacheEventChannel.Writer.TryWrite(entityClearCache);
+            Console.WriteLine("SendEvent EntityClearCacheEvent");
         }
     }
 }

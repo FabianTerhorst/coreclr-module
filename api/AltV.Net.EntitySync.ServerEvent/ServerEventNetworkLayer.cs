@@ -93,6 +93,9 @@ namespace AltV.Net.EntitySync.ServerEvent
                                         currPlayerClient.Emit("entitySync:updateData", entityEvent.Entity.Id,
                                             entityEvent.ChangedData);
                                         break;
+                                    case 5:
+                                        currPlayerClient.Emit("entitySync:clearCache", entityEvent.Entity.Id);
+                                        break;
                                 }
                             }
                             catch (Exception exception)
@@ -179,6 +182,18 @@ namespace AltV.Net.EntitySync.ServerEvent
             
             channel.Writer.TryWrite(new ServerEntityEvent(4, entityDataChange.Entity,
                 Vector3.Zero, entityDataChange.Data));
+        }
+
+        public override void SendEvent(IClient client, in EntityClearCacheEvent entityClearCache)
+        {
+            Channel<ServerEntityEvent> channel;
+            lock (serverEventChannels)
+            {
+                if (!serverEventChannels.TryGetValue(client, out channel)) return;
+            }
+            
+            channel.Writer.TryWrite(new ServerEntityEvent(5, entityClearCache.Entity,
+                Vector3.Zero, null));
         }
     }
 }

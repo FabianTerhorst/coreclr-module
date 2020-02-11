@@ -34,12 +34,14 @@ namespace AltV.Net.EntitySync
         private readonly Action<IClient, IEntity, IEnumerable<string>> onEntityDataChange;
 
         private readonly Action<IClient, IEntity, Vector3> onEntityPositionChange;
+        
+        private readonly Action<IClient, IEntity> onEntityClearCache;
 
         public EntityThread(IEntityThreadRepository entityThreadRepository, IClientThreadRepository clientThreadRepository,
             SpatialPartition spatialPartition, int syncRate,
             Action<IClient, IEntity, IEnumerable<string>> onEntityCreate, Action<IClient, IEntity> onEntityRemove,
             Action<IClient, IEntity, IEnumerable<string>> onEntityDataChange,
-            Action<IClient, IEntity, Vector3> onEntityPositionChange)
+            Action<IClient, IEntity, Vector3> onEntityPositionChange, Action<IClient, IEntity> onEntityClearCache)
         {
             if (spatialPartition == null)
             {
@@ -70,6 +72,11 @@ namespace AltV.Net.EntitySync
             {
                 throw new ArgumentException("onEntityPositionChange should not be null.");
             }
+            
+            if (onEntityClearCache == null)
+            {
+                throw new ArgumentException("onEntityPositionChange should not be null.");
+            }
 
             thread = new Thread(OnLoop);
             thread.Start();
@@ -81,6 +88,7 @@ namespace AltV.Net.EntitySync
             this.onEntityRemove = onEntityRemove;
             this.onEntityDataChange = onEntityDataChange;
             this.onEntityPositionChange = onEntityPositionChange;
+            this.onEntityClearCache = onEntityClearCache;
         }
 
         public void OnLoop()
@@ -99,6 +107,11 @@ namespace AltV.Net.EntitySync
                             foreach (var client in removedEntity.GetClients())
                             {
                                 onEntityRemove(client, removedEntity);
+                            }
+
+                            foreach (var client in removedEntity.DataSnapshot.GetLastClients())
+                            {
+                                onEntityClearCache(client, removedEntity);
                             }
                         }
                     }

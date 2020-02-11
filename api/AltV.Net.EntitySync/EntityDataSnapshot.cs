@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -185,5 +184,10 @@ namespace AltV.Net.EntitySync
 
             return changedKeys;
         }
+
+         public HashSet<IClient> GetLastClients()
+         {
+             return lastClients;
+         }
     }
 }

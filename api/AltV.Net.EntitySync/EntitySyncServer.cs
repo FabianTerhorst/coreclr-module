@@ -52,7 +52,7 @@ namespace AltV.Net.EntitySync
                 clientThreadRepositories[i] = clientThreadRepository;
                 entityThreads[i] = new EntityThread(entityThreadRepository, clientThreadRepository, createSpatialPartition(),syncRate,
                     OnEntityCreate,
-                    OnEntityRemove, OnEntityDataChange, OnEntityPositionChange);
+                    OnEntityRemove, OnEntityDataChange, OnEntityPositionChange, OnEntityClearCache);
             }
 
             entityRepository = new EntityRepository(entityThreadRepositories);
@@ -115,6 +115,11 @@ namespace AltV.Net.EntitySync
         private void OnEntityPositionChange(IClient client, IEntity entity, Vector3 newPosition)
         {
             networkLayer.SendEvent(client, new EntityPositionUpdateEvent(entity, newPosition));
+        }
+
+        private void OnEntityClearCache(IClient client, IEntity entity)
+        {
+            networkLayer.SendEvent(client, new EntityClearCacheEvent(entity));
         }
 
         public IEntity CreateEntity(ulong type, Vector3 position, int dimension, uint range, IDictionary<string, object> data)
