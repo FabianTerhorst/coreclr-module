@@ -18,7 +18,7 @@ namespace AltV.Net.EntitySync
 
         private readonly IEntityThreadRepository entityThreadRepository;
 
-        private readonly IClientRepository clientRepository;
+        private readonly IClientThreadRepository clientThreadRepository;
 
         private readonly SpatialPartition spatialPartition;
 
@@ -35,7 +35,7 @@ namespace AltV.Net.EntitySync
 
         private readonly Action<IClient, IEntity, Vector3> onEntityPositionChange;
 
-        public EntityThread(IEntityThreadRepository entityThreadRepository, IClientRepository clientRepository,
+        public EntityThread(IEntityThreadRepository entityThreadRepository, IClientThreadRepository clientThreadRepository,
             SpatialPartition spatialPartition, int syncRate,
             Action<IClient, IEntity, IEnumerable<string>> onEntityCreate, Action<IClient, IEntity> onEntityRemove,
             Action<IClient, IEntity, IEnumerable<string>> onEntityDataChange,
@@ -45,12 +45,12 @@ namespace AltV.Net.EntitySync
             {
                 throw new ArgumentException("spatialPartition should not be null.");
             }
-            
+
             if (entityThreadRepository == null)
             {
                 throw new ArgumentException("entityThreadRepository should not be null.");
             }
-            
+
             if (onEntityCreate == null)
             {
                 throw new ArgumentException("onEntityCreate should not be null.");
@@ -74,7 +74,7 @@ namespace AltV.Net.EntitySync
             thread = new Thread(OnLoop);
             thread.Start();
             this.entityThreadRepository = entityThreadRepository;
-            this.clientRepository = clientRepository;
+            this.clientThreadRepository = clientThreadRepository;
             this.spatialPartition = spatialPartition;
             this.syncRate = syncRate;
             this.onEntityCreate = onEntityCreate;
@@ -87,116 +87,130 @@ namespace AltV.Net.EntitySync
         {
             while (running)
             {
-                var (entities, removedEntities, addedEntities) = entityThreadRepository.GetAll();
-
-                if (removedEntities != null)
+                try
                 {
-                    foreach (var removedEntity in removedEntities)
+                    var (entities, removedEntities, addedEntities) = entityThreadRepository.GetAll();
+
+                    if (removedEntities != null)
                     {
-                        spatialPartition.Remove(removedEntity);
-                        foreach (var client in removedEntity.GetClients())
+                        foreach (var removedEntity in removedEntities)
                         {
-                            onEntityRemove(client, removedEntity);
-                        }
-                    }
-                }
-
-                if (addedEntities != null)
-                {
-                    foreach (var addedEntity in addedEntities)
-                    {
-                        spatialPartition.Add(addedEntity);
-                    }
-                }
-
-                var clients = clientRepository.GetAll();
-
-                foreach (var client in clients)
-                {
-                    if (!client.TryGetPosition(out var position))
-                    {
-                        continue;
-                    }
-
-                    foreach (var foundEntity in spatialPartition.Find(position, client.Dimension))
-                    {
-                        foundEntity.AddCheck(client);
-                        var changedKeys = foundEntity.DataSnapshot.CompareWithClient(client);
-
-                        if (foundEntity.TryAddClient(client))
-                        {
-                            onEntityCreate(client, foundEntity, changedKeys);
-                        }
-                        else if (changedKeys != null)
-                        {
-                            onEntityDataChange(client, foundEntity, changedKeys);
-                        }
-                    }
-                }
-
-                foreach (var entity in entities)
-                {
-                    var lastCheckedClients = entity.GetLastCheckedClients();
-                    if (lastCheckedClients.Count != 0)
-                    {
-                        if (clientsToRemoveFromEntity.Count != 0)
-                        {
-                            clientsToRemoveFromEntity.Clear();
-                        }
-
-                        if (clientsToResetFromEntity.Count != 0)
-                        {
-                            clientsToResetFromEntity.Clear();
-                        }
-
-                        foreach (var (client, lastChecked) in lastCheckedClients)
-                        {
-                            if (lastChecked)
+                            spatialPartition.Remove(removedEntity);
+                            foreach (var client in removedEntity.GetClients())
                             {
-                                clientsToResetFromEntity.Add(client);
-                            }
-                            else
-                            {
-                                clientsToRemoveFromEntity.Add(client);
-                                onEntityRemove(client, entity);
+                                onEntityRemove(client, removedEntity);
                             }
                         }
+                    }
 
-                        foreach (var client in clientsToResetFromEntity)
+                    if (addedEntities != null)
+                    {
+                        foreach (var addedEntity in addedEntities)
                         {
-                            entity.RemoveCheck(client);
-                        }
-
-                        foreach (var client in clientsToRemoveFromEntity)
-                        {
-                            entity.RemoveClient(client);
+                            spatialPartition.Add(addedEntity);
                         }
                     }
 
-                    // Check if position state is new position so we can set the new position to the entity internal position
+                    var (clients, clientsToRemove) = clientThreadRepository.GetAll();
 
-                    if (entity.TrySetPositionComputing(out var newPosition))
+                    if (clientsToRemove != null)
                     {
-                        spatialPartition.UpdateEntityPosition(entity, newPosition);
-                        foreach (var entityClient in entity.GetClients())
+                        foreach (var clientToRemove in clientsToRemove)
                         {
-                            onEntityPositionChange(entityClient, entity, newPosition);
+                            clientToRemove.Snapshot.CleanupEntities(clientToRemove);
+                        }
+                    }
+
+                    foreach (var client in clients)
+                    {
+                        if (!client.TryGetPosition(out var position))
+                        {
+                            continue;
+                        }
+                        foreach (var foundEntity in spatialPartition.Find(position, client.Dimension))
+                        {
+                            foundEntity.AddCheck(client);
+                            var changedKeys = foundEntity.DataSnapshot.CompareWithClient(client);
+
+                            if (foundEntity.TryAddClient(client))
+                            {
+                                onEntityCreate(client, foundEntity, changedKeys);
+                            }
+                            else if (changedKeys != null)
+                            {
+                                onEntityDataChange(client, foundEntity, changedKeys);
+                            }
+                        }
+                    }
+
+                    foreach (var entity in entities)
+                    {
+                        var lastCheckedClients = entity.GetLastCheckedClients();
+                        if (lastCheckedClients.Count != 0)
+                        {
+                            if (clientsToRemoveFromEntity.Count != 0)
+                            {
+                                clientsToRemoveFromEntity.Clear();
+                            }
+
+                            if (clientsToResetFromEntity.Count != 0)
+                            {
+                                clientsToResetFromEntity.Clear();
+                            }
+
+                            foreach (var (client, lastChecked) in lastCheckedClients)
+                            {
+                                if (lastChecked)
+                                {
+                                    clientsToResetFromEntity.Add(client);
+                                }
+                                else
+                                {
+                                    clientsToRemoveFromEntity.Add(client);
+                                    onEntityRemove(client, entity);
+                                }
+                            }
+
+                            foreach (var client in clientsToResetFromEntity)
+                            {
+                                entity.RemoveCheck(client);
+                            }
+
+                            foreach (var client in clientsToRemoveFromEntity)
+                            {
+                                entity.RemoveClient(client);
+                            }
                         }
 
-                        entity.SetPositionComputed(in newPosition);
-                    }
+                        // Check if position state is new position so we can set the new position to the entity internal position
 
-                    if (entity.TrySetDimensionComputing(out var newDimension))
-                    {
-                        spatialPartition.UpdateEntityDimension(entity, newDimension);
-                        entity.SetDimensionComputed(newDimension);
-                    }
+                        if (entity.TrySetPositionComputing(out var newPosition))
+                        {
+                            spatialPartition.UpdateEntityPosition(entity, newPosition);
+                            foreach (var entityClient in entity.GetClients())
+                            {
+                                onEntityPositionChange(entityClient, entity, newPosition);
+                            }
 
-                    if (entity.TrySetRangeComputing(out var newRange))
-                    {
-                        spatialPartition.UpdateEntityRange(entity, newRange);
-                        entity.SetRangeComputed(newRange);
+                            entity.SetPositionComputed(in newPosition);
+                        }
+
+                        if (entity.TrySetDimensionComputing(out var newDimension))
+                        {
+                            spatialPartition.UpdateEntityDimension(entity, newDimension);
+                            entity.SetDimensionComputed(newDimension);
+                        }
+
+                        if (entity.TrySetRangeComputing(out var newRange))
+                        {
+                            spatialPartition.UpdateEntityRange(entity, newRange);
+                            entity.SetRangeComputed(newRange);
+                        }
                     }
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception);
                 }
 
                 Thread.Sleep(syncRate);
