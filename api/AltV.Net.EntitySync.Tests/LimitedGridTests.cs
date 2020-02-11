@@ -45,8 +45,8 @@ namespace AltV.Net.EntitySync.Tests
 
         private static Vector3 GetRandomVector3()
         {
-            return new Vector3((float) GetRandomNumber(0, 49_999), (float) GetRandomNumber(0, 49_999),
-                (float) GetRandomNumber(0, 49_999));
+            return new Vector3((float) GetRandomNumber(0, 49_997), (float) GetRandomNumber(0, 49_997),
+                (float) GetRandomNumber(0, 49_997));
         }
 
         private static double GetRandomNumber(double minimum, double maximum)

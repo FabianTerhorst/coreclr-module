@@ -20,6 +20,11 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
         protected readonly int distance;
 
+        protected readonly int maxXAreaIndex;
+        
+        protected readonly int maxYAreaIndex;
+        
+
         /// <summary>
         /// The constructor of the grid spatial partition algorithm
         /// </summary>
@@ -43,8 +48,8 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             this.yOffset = yOffset;
             this.distance = distance;
 
-            var maxXAreaIndex = maxX / areaSize;
-            var maxYAreaIndex = maxX / areaSize;
+            maxXAreaIndex = maxX / areaSize;
+            maxYAreaIndex = maxX / areaSize;
 
             entityAreas = new GridEntity[maxXAreaIndex][];
 
@@ -70,11 +75,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             var squareMaxY = entityPositionY + range;
             var squareMinX = entityPositionX - range;
             var squareMinY = entityPositionY - range;
-            
-            if (range == 0 || squareMinX < 0 || squareMinY < 0 ||
-                squareMaxX > maxX ||
-                squareMaxY > maxY) return;
-            
+
             // We first use starting y index to start filling
             var startingYIndex = (int) Math.Floor(squareMinY / areaSize);
             // We now define starting x index to start filling
@@ -84,6 +85,11 @@ namespace AltV.Net.EntitySync.SpatialPartitions
                 (int) Math.Ceiling(squareMaxY / areaSize);
             var stoppingXIndex =
                 (int) Math.Ceiling(squareMaxX / areaSize);
+            
+            if (startingXIndex < 0) return;
+            if (startingYIndex < 0) return;
+            if (stoppingXIndex >= maxYAreaIndex) return;
+            if (stoppingYIndex >= maxYAreaIndex) return;
 
             // Now fill all areas from min {x, y} to max {x, y}
             for (var j = startingXIndex; j <= stoppingXIndex; j++)
@@ -115,11 +121,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             var squareMaxY = entityPositionY + range;
             var squareMinX = entityPositionX - range;
             var squareMinY = entityPositionY - range;
-            
-            if (range == 0 || squareMinX < 0 || squareMinY < 0 ||
-                squareMaxX > maxX ||
-                squareMaxY > maxY) return;
-            
+
             // We first use starting y index to start filling
             var startingYIndex = (int) Math.Floor(squareMinY / areaSize);
             // We now define starting x index to start filling
@@ -129,6 +131,12 @@ namespace AltV.Net.EntitySync.SpatialPartitions
                 (int) Math.Ceiling(squareMaxY / areaSize);
             var stoppingXIndex =
                 (int) Math.Ceiling(squareMaxX / areaSize);
+
+            if (startingXIndex < 0) return;
+            if (startingYIndex < 0) return;
+            if (stoppingXIndex >= maxYAreaIndex) return;
+            if (stoppingYIndex >= maxYAreaIndex) return;
+            
             // Now remove entity from all areas from min {x, y} to max {x, y}
             for (var j = startingXIndex; j <= stoppingXIndex; j++)
             {
@@ -193,13 +201,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             var newSquareMaxY = newEntityPositionY + range;
             var newSquareMinX = newEntityPositionX - range;
             var newSquareMinY = newEntityPositionY - range;
-            
-            if (range == 0 || oldSquareMinX < 0 || oldSquareMinY < 0 ||
-                oldSquareMaxX > maxX ||
-                oldSquareMaxY > maxY || newSquareMinX < 0 || newSquareMinY < 0 ||
-                newSquareMaxX > maxX ||
-                newSquareMaxY > maxY) return;
-            
+
             // We first use starting y index to start filling
             var oldStartingYIndex = (int) Math.Floor(oldSquareMinY / areaSize);
             // We now define starting x index to start filling
@@ -219,6 +221,16 @@ namespace AltV.Net.EntitySync.SpatialPartitions
                 (int) Math.Ceiling(newSquareMaxY / areaSize);
             var newStoppingXIndex =
                 (int) Math.Ceiling(newSquareMaxX / areaSize);
+            
+            if (oldStartingXIndex < 0) return;
+            if (oldStartingYIndex < 0) return;
+            if (oldStoppingXIndex >= maxYAreaIndex) return;
+            if (oldStoppingYIndex >= maxYAreaIndex) return;
+            
+            if (newStartingXIndex < 0) return;
+            if (newStartingYIndex < 0) return;
+            if (newStoppingXIndex >= maxYAreaIndex) return;
+            if (newStoppingYIndex >= maxYAreaIndex) return;
 
             for (var j = oldStartingXIndex; j <= oldStoppingXIndex; j++)
             {
@@ -295,13 +307,6 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             var newSquareMaxY = entityPositionY + range;
             var newSquareMinX = entityPositionX - range;
             var newSquareMinY = entityPositionY - range;
-            
-            if (range == 0 || oldSquareMinX < 0 || oldSquareMinY < 0 ||
-                oldSquareMaxX > maxX ||
-                oldSquareMaxY > maxY || 
-                newSquareMinX < 0 || newSquareMinY < 0 ||
-                newSquareMaxX > maxX ||
-                newSquareMaxY > maxY) return;
 
             // We first use starting y index to start filling
             var oldStartingYIndex = (int) Math.Floor(oldSquareMinY / areaSize);
@@ -322,6 +327,16 @@ namespace AltV.Net.EntitySync.SpatialPartitions
                 (int) Math.Ceiling(newSquareMaxY / areaSize);
             var newStoppingXIndex =
                 (int) Math.Ceiling(newSquareMaxX / areaSize);
+            
+            if (oldStartingXIndex < 0) return;
+            if (oldStartingYIndex < 0) return;
+            if (oldStoppingXIndex >= maxYAreaIndex) return;
+            if (oldStoppingYIndex >= maxYAreaIndex) return;
+            
+            if (newStartingXIndex < 0) return;
+            if (newStartingYIndex < 0) return;
+            if (newStoppingXIndex >= maxYAreaIndex) return;
+            if (newStoppingYIndex >= maxYAreaIndex) return;
 
             for (var j = oldStartingXIndex; j <= oldStoppingXIndex; j++)
             {
