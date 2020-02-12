@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace AltV.Net.EntitySync
@@ -12,11 +11,15 @@ namespace AltV.Net.EntitySync
 
         void Remove(IEntity entity);
 
+        void Update(IEntity entity);
+
         IEnumerable<IEntity> GetAll();
         
         IEnumerable<IEntity> GetAllDeleted();
         
         IEnumerable<IEntity> GetAllAdded();
+        
+        IEnumerable<IEntity> GetAllUpdated();
 
         bool TryGet(ulong id, out IEntity entity);
     }

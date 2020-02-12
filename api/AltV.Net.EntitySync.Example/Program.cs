@@ -36,12 +36,12 @@ namespace AltV.Net.EntitySync.Example
         
         public static void Entities()
         {
-            for (var i = 0; i < 1000; i++)
+            for (var i = 0; i < 5000; i++)
             {
                 var entity = new Entity(1, GetRandomVector3(), 0, 2);
                 AltEntitySync.AddEntity(entity);
             }
-            Thread.Sleep(5000);
+            Thread.Sleep(20000);
         }
     }
 }

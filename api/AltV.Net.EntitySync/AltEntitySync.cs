@@ -10,18 +10,18 @@ namespace AltV.Net.EntitySync
     {
         internal static IIdProvider<ulong> IdProvider;
 
-        private static EntitySyncServer _entitySyncServer;
+        internal static EntitySyncServer EntitySyncServer;
 
         public static event EntityCreateDelegate OnEntityCreate
         {
-            add => _entitySyncServer.EntityCreateCallbacks.AddLast(value);
-            remove => _entitySyncServer.EntityCreateCallbacks.Remove(value);
+            add => EntitySyncServer.EntityCreateCallbacks.AddLast(value);
+            remove => EntitySyncServer.EntityCreateCallbacks.Remove(value);
         }
 
         public static event EntityRemoveDelegate OnEntityRemove
         {
-            add => _entitySyncServer.EntityRemoveCallbacks.AddLast(value);
-            remove => _entitySyncServer.EntityRemoveCallbacks.Remove(value);
+            add => EntitySyncServer.EntityRemoveCallbacks.AddLast(value);
+            remove => EntitySyncServer.EntityRemoveCallbacks.Remove(value);
         }
 
         public static void Init(long threadCount, int syncRate,
@@ -29,28 +29,28 @@ namespace AltV.Net.EntitySync
             Func<SpatialPartition> createSpatialPartition, IIdProvider<ulong> idProvider)
         {
             IdProvider = idProvider;
-            _entitySyncServer =
+            EntitySyncServer =
                 new EntitySyncServer(threadCount, syncRate, createNetworkLayer, createSpatialPartition, idProvider);
         }
 
         public static void AddEntity(IEntity entity)
         {
-            _entitySyncServer.AddEntity(entity);
+            EntitySyncServer.AddEntity(entity);
         }
 
         public static void RemoveEntity(IEntity entity)
         {
-            _entitySyncServer.RemoveEntity(entity);
+            EntitySyncServer.RemoveEntity(entity);
         }
 
         public static bool TryGetEntity(ulong id, out IEntity entity)
         {
-            return _entitySyncServer.TryGetEntity(id, out entity);
+            return EntitySyncServer.TryGetEntity(id, out entity);
         }
 
         public static IEnumerable<IEntity> GetAllEntities()
         {
-            return _entitySyncServer.GetAllEntities();
+            return EntitySyncServer.GetAllEntities();
         }
 
         public static IEntity CreateEntity(ulong type, Vector3 position, int dimension, uint range)
@@ -61,12 +61,12 @@ namespace AltV.Net.EntitySync
         public static IEntity CreateEntity(ulong type, Vector3 position, int dimension, uint range,
             IDictionary<string, object> data)
         {
-            return _entitySyncServer.CreateEntity(type, position, dimension, range, data);
+            return EntitySyncServer.CreateEntity(type, position, dimension, range, data);
         }
 
         public static void Stop()
         {
-            _entitySyncServer.Stop();
+            EntitySyncServer.Stop();
         }
     }
 }

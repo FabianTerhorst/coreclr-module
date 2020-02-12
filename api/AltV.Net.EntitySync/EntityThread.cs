@@ -104,6 +104,8 @@ namespace AltV.Net.EntitySync
                     var addedEntities = entityThreadRepository.GetAllAdded();
                     
                     var removedEntities = entityThreadRepository.GetAllDeleted();
+                    
+                    var updatedEntities = entityThreadRepository.GetAllUpdated();
 
                     //TODO: when the id provider add / remove doesn't work use the idprovider inside this loop only
                     // We have to remove first, then add, because the added entities may contain the same ids that are removed as well
@@ -178,6 +180,36 @@ namespace AltV.Net.EntitySync
                         }
                     }
 
+                    if (updatedEntities != null)
+                    {
+                        foreach (var entity in updatedEntities)
+                        {
+                            // Check if position state is new position so we can set the new position to the entity internal position
+                            var (hasNewPosition, hasNewRange, hasNewDimension) = entity.TrySetPropertiesComputing(
+                                out var newPosition,
+                                out var newRange, out var newDimension);
+
+                            if (hasNewPosition)
+                            {
+                                spatialPartition.UpdateEntityPosition(entity, newPosition);
+                                foreach (var entityClient in entity.GetClients())
+                                {
+                                    onEntityPositionChange(entityClient, entity, newPosition);
+                                }
+                            }
+
+                            if (hasNewRange)
+                            {
+                                spatialPartition.UpdateEntityRange(entity, newRange);
+                            }
+
+                            if (hasNewDimension)
+                            {
+                                spatialPartition.UpdateEntityDimension(entity, newDimension);
+                            }
+                        }
+                    }
+
                     foreach (var entity in entities)
                     {
                         var lastCheckedClients = entity.GetLastCheckedClients();
@@ -221,29 +253,6 @@ namespace AltV.Net.EntitySync
                                 entity.RemoveClient(currClient.Value);
                                 currClient = currClient.Next;
                             }
-                        }
-
-                        // Check if position state is new position so we can set the new position to the entity internal position
-                        var (hasNewPosition, hasNewRange, hasNewDimension) = entity.TrySetPropertiesComputing(out var newPosition,
-                            out var newRange, out var newDimension);
-
-                        if (hasNewPosition)
-                        {
-                            spatialPartition.UpdateEntityPosition(entity, newPosition);
-                            foreach (var entityClient in entity.GetClients())
-                            {
-                                onEntityPositionChange(entityClient, entity, newPosition);
-                            }
-                        }
-
-                        if (hasNewRange)
-                        {
-                            spatialPartition.UpdateEntityRange(entity, newRange);
-                        }
-                        
-                        if (hasNewDimension)
-                        {
-                            spatialPartition.UpdateEntityDimension(entity, newDimension);
                         }
                     }
                 }

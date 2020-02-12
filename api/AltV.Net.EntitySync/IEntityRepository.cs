@@ -8,6 +8,8 @@ namespace AltV.Net.EntitySync
 
         void Remove(IEntity entity);
 
+        void Update(IEntity entity);
+
         bool TryGet(ulong id, out IEntity entity);
 
         IEnumerable<IEntity> GetAll();

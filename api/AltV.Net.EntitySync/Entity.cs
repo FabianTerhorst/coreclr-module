@@ -183,6 +183,7 @@ namespace AltV.Net.EntitySync
                 positionState = true;
                 newPosition = currNewPosition;
             }
+            AltEntitySync.EntitySyncServer.UpdateEntity(this);
         }
 
         public void SetDimensionInternal(int currNewDimension)
@@ -192,6 +193,7 @@ namespace AltV.Net.EntitySync
                 dimensionState = true;
                 newDimension = currNewDimension;
             }
+            AltEntitySync.EntitySyncServer.UpdateEntity(this);
         }
 
         public void SetRangeInternal(uint currNewRange)
@@ -201,6 +203,7 @@ namespace AltV.Net.EntitySync
                 rangeState = true;
                 newRange = currNewRange;
             }
+            AltEntitySync.EntitySyncServer.UpdateEntity(this);
         }
 
         public (bool, bool, bool) TrySetPropertiesComputing(out Vector3 currNewPosition, out uint currNewRange, out int currNewDimension)
