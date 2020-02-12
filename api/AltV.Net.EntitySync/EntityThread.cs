@@ -99,6 +99,8 @@ namespace AltV.Net.EntitySync
                 {
                     var (entities, removedEntities, addedEntities) = entityThreadRepository.GetAll();
 
+                    //TODO: when the id provider add / remove doesn't work use the idprovider inside this loop only
+                    // We have to remove first, then add, because the added entities may contain the same ids that are removed as well
                     if (removedEntities != null)
                     {
                         foreach (var removedEntity in removedEntities)
@@ -140,6 +142,9 @@ namespace AltV.Net.EntitySync
                         {
                             continue;
                         }
+
+                        //TODO: cache streamed in entities in list, so we don't have to iterate all entities
+                        //TODO: maybe add changed entities to a list as well
                         foreach (var foundEntity in spatialPartition.Find(position, client.Dimension))
                         {
                             foundEntity.AddCheck(client);
