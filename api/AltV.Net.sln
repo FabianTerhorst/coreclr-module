@@ -48,6 +48,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.EntitySync.Tests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.EntitySync.Benchmarks", "AltV.Net.EntitySync.Benchmarks\AltV.Net.EntitySync.Benchmarks.csproj", "{8982BEC7-6D4C-4777-91AE-6437AF0D10EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.EntitySync.Example", "AltV.Net.EntitySync.Example\AltV.Net.EntitySync.Example.csproj", "{F06D1998-C773-4E71-BE27-EE9F4971BE8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -199,5 +201,11 @@ Global
 		{8982BEC7-6D4C-4777-91AE-6437AF0D10EE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8982BEC7-6D4C-4777-91AE-6437AF0D10EE}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
 		{8982BEC7-6D4C-4777-91AE-6437AF0D10EE}.Testing|Any CPU.Build.0 = Debug|Any CPU
+		{F06D1998-C773-4E71-BE27-EE9F4971BE8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F06D1998-C773-4E71-BE27-EE9F4971BE8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F06D1998-C773-4E71-BE27-EE9F4971BE8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F06D1998-C773-4E71-BE27-EE9F4971BE8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F06D1998-C773-4E71-BE27-EE9F4971BE8B}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
+		{F06D1998-C773-4E71-BE27-EE9F4971BE8B}.Testing|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal
