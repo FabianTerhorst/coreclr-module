@@ -155,21 +155,25 @@ namespace AltV.Net.EntitySync
                         //TODO: maybe add changed entities to a list as well
                         foreach (var foundEntity in spatialPartition.Find(position, dimension))
                         {
-                            if (changedEntityDataKeys.Count != 0)
-                            {
-                                changedEntityDataKeys.Clear();
-                            }
-
                             foundEntity.AddCheck(client);
                             foundEntity.DataSnapshot.CompareWithClient(changedEntityDataKeys, client);
 
                             if (foundEntity.TryAddClient(client))
                             {
-                                onEntityCreate(client, foundEntity, changedEntityDataKeys);
+                                if (changedEntityDataKeys.Count == 0)
+                                {
+                                    onEntityCreate(client, foundEntity, null);   
+                                }
+                                else
+                                {
+                                    onEntityCreate(client, foundEntity, changedEntityDataKeys);
+                                    changedEntityDataKeys.Clear();   
+                                }
                             }
-                            else if (changedEntityDataKeys != null)
+                            else if (changedEntityDataKeys.Count != 0)
                             {
                                 onEntityDataChange(client, foundEntity, changedEntityDataKeys);
+                                changedEntityDataKeys.Clear();
                             }
                         }
                     }
