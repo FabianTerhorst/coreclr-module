@@ -38,7 +38,7 @@ namespace AltV.Net.EntitySync
         {
             foreach (var entityThreadRepository in entityThreadRepositories)
             {
-                foreach (var entity in entityThreadRepository.GetAllAvailable())
+                foreach (var entity in entityThreadRepository.GetAll())
                 {
                     yield return entity;
                 }

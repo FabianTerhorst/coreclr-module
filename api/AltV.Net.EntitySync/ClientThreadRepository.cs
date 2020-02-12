@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AltV.Net.EntitySync
 {
@@ -46,21 +44,28 @@ namespace AltV.Net.EntitySync
             }
         }
 
-        public ValueTuple<IClient[], IClient[]> GetAll()
+        public IEnumerable<IClient> GetAll()
         {
             lock (clients)
             {
-                IClient[] currClientsToRemove;
-                if (clientsToRemove.Count == 0)
+                if (clients.Count == 0) yield break;
+                foreach (var (_, client) in clients)
                 {
-                    currClientsToRemove = null;
+                    yield return client;
                 }
-                else
+            }
+        }
+        
+        public IEnumerable<IClient> GetAllDeleted()
+        {
+            lock (clients)
+            {
+                if (clientsToRemove.Count == 0) yield break;
+                foreach (var client in clientsToRemove)
                 {
-                    currClientsToRemove = clientsToRemove.ToArray();
-                    clientsToRemove.Clear();
+                    yield return client;
                 }
-                return ValueTuple.Create(clients.Values.ToArray(), currClientsToRemove);
+                clientsToRemove.Clear();
             }
         }
     }

@@ -97,7 +97,11 @@ namespace AltV.Net.EntitySync
             {
                 try
                 {
-                    var (entities, removedEntities, addedEntities) = entityThreadRepository.GetAll();
+                    var entities = entityThreadRepository.GetAll();
+
+                    var addedEntities = entityThreadRepository.GetAllAdded();
+                    
+                    var removedEntities = entityThreadRepository.GetAllDeleted();
 
                     if (removedEntities != null)
                     {
@@ -124,7 +128,9 @@ namespace AltV.Net.EntitySync
                         }
                     }
 
-                    var (clients, clientsToRemove) = clientThreadRepository.GetAll();
+                    var clients = clientThreadRepository.GetAll();
+
+                    var clientsToRemove = clientThreadRepository.GetAllDeleted();
 
                     if (clientsToRemove != null)
                     {

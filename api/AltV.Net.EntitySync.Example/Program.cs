@@ -19,6 +19,7 @@ namespace AltV.Net.EntitySync.Example
                 },
                 () => new Grid2(50_000, 50_000, 10, 10_000, 10_000), 
                 new IdProvider());
+            Entities();
         }
         
         private static Vector3 GetRandomVector3()
@@ -35,7 +36,7 @@ namespace AltV.Net.EntitySync.Example
         
         public static void Entities()
         {
-            for (var i = 0; i < 100; i++)
+            for (var i = 0; i < 1000; i++)
             {
                 var entity = new Entity(1, GetRandomVector3(), 0, 2);
                 AltEntitySync.AddEntity(entity);

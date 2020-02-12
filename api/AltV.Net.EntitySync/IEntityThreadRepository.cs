@@ -12,10 +12,12 @@ namespace AltV.Net.EntitySync
 
         void Remove(IEntity entity);
 
-        ValueTuple<IEntity[], IEntity[], IEntity[]> GetAll();
+        IEnumerable<IEntity> GetAll();
+        
+        IEnumerable<IEntity> GetAllDeleted();
+        
+        IEnumerable<IEntity> GetAllAdded();
 
         bool TryGet(ulong id, out IEntity entity);
-
-        IEnumerable<IEntity> GetAllAvailable();
     }
 }
