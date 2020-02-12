@@ -23,13 +23,13 @@ namespace AltV.Net.EntitySync.WebSocket
 
             public readonly IEntity Entity;
 
-            public readonly IEnumerable<string> ChangedKeys;
+            public readonly IDictionary<string, object> Data;
 
-            public WebSocketEntityEvent(byte eventType, IEntity entity, IEnumerable<string> changedKeys)
+            public WebSocketEntityEvent(byte eventType, IEntity entity, IDictionary<string, object> data)
             {
                 EventType = eventType;
                 Entity = entity;
-                ChangedKeys = changedKeys;
+                Data = data;
             }
         }
 
@@ -43,7 +43,7 @@ namespace AltV.Net.EntitySync.WebSocket
         public override void SendEvent(IClient client, in EntityCreateEvent entityCreate)
         {
             if (!webSocketWriters.TryGetValue(client, out var channel)) return;
-            channel.Writer.TryWrite(new WebSocketEntityEvent(1, entityCreate.Entity, entityCreate.ChangedKeys));
+            channel.Writer.TryWrite(new WebSocketEntityEvent(1, entityCreate.Entity, entityCreate.Data));
         }
 
         public override void SendEvent(IClient client, in EntityRemoveEvent entityRemove)

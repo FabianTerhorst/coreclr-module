@@ -1,6 +1,5 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AltV.Net.EntitySync
 {
@@ -64,17 +63,50 @@ namespace AltV.Net.EntitySync
         /// Checks which keys have changed for the input data snapshot to stay in sync
         /// </summary>
         /// <param name="networkingClient">The networking client to compare, we need the client not the snapshot to keep reference for possible overflow</param>
+        /// <param name="keys"></param>
         /// <returns>the changed keys, returns null when no changes</returns>
-        public IEnumerable<string> CompareWithClient(IClient networkingClient)
+        public void CompareWithClient(LinkedList<string> keys, IClient networkingClient)
         {
-            if (Snapshots == null || Snapshots.IsEmpty) return null; // entity snapshot should never be null
+            if (Snapshots == null || Snapshots.IsEmpty) return; // entity snapshot should never be null
             lastClients.Add(networkingClient);
-            IEnumerable<string> changedKeys;
             var clientDataSnapshot = networkingClient.Snapshot;
             if (clientDataSnapshot.TryGetSnapshotForEntity(entity, out var entitySnapshotFromClient)
             ) // client visited entity before
             {
-                changedKeys = Compare(entitySnapshotFromClient);
+                
+                //changedKeys = Compare(entitySnapshotFromClient);
+                #region Compare
+                var missing = false;
+                foreach (var (key, value) in Snapshots)
+                {
+                    if (entitySnapshotFromClient.Snapshots.TryGetValue(key, out var snapShotValue))
+                    {
+                        if (snapShotValue < value)
+                        {
+                            keys.AddLast(key);
+                        }
+                    }
+                    else
+                    {
+                        missing = true;
+
+                        keys.AddLast(key);
+                    }
+                }
+
+                if (missing || Snapshots.Count != entitySnapshotFromClient.Snapshots.Count
+                ) // snapshot contains at least one removed key or has a different size, we need to notify the player about that
+                {
+                    //TODO: is the removed key also just a changed key, because then we have to deliver a null mvalue as well, yeah why not
+                    foreach (var (key, _) in entitySnapshotFromClient.Snapshots)
+                    {
+                        if (!Snapshots.ContainsKey(key))
+                        {
+                            keys.AddLast(key);
+                        }
+                    }
+                }
+                #endregion
 
                 // Here we align client and entity snapshot with same data
                 entitySnapshotFromClient.Snapshots.Clear();
@@ -85,12 +117,16 @@ namespace AltV.Net.EntitySync
             }
             else // client never visited entity before
             {
-                changedKeys = Snapshots.Keys.ToArray();
+                //changedKeys = Snapshots.Keys.ToArray();
+                foreach (var key in Snapshots.Keys)
+                {
+                    keys.AddLast(key);
+                }
                 clientDataSnapshot.SetSnapshotForEntity(entity,
                     new DataSnapshot(new ConcurrentDictionary<string, ulong>(Snapshots)));
             }
 
-            return changedKeys;
+            //return changedKeys;
         }
 
         public void RemoveClient(IClient client)
@@ -133,7 +169,7 @@ namespace AltV.Net.EntitySync
         }*/
 
         
-         private IEnumerable<string> Compare(DataSnapshot dataSnapshot)
+         /*private IEnumerable<string> Compare(DataSnapshot dataSnapshot)
         {
             var missing = false;
             //TODO: do we need to create a buffer for the hash sets?
@@ -183,7 +219,7 @@ namespace AltV.Net.EntitySync
             }
 
             return changedKeys;
-        }
+        }*/
 
          public HashSet<IClient> GetLastClients()
          {

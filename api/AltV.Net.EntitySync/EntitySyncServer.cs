@@ -27,9 +27,9 @@ namespace AltV.Net.EntitySync
 
         private readonly IIdProvider<ulong> idProvider;
         
-        internal readonly HashSet<EntityCreateDelegate> EntityCreateCallbacks = new HashSet<EntityCreateDelegate>();
+        internal readonly LinkedList<EntityCreateDelegate> EntityCreateCallbacks = new LinkedList<EntityCreateDelegate>();
         
-        internal readonly HashSet<EntityRemoveDelegate> EntityRemoveCallbacks = new HashSet<EntityRemoveDelegate>();
+        internal readonly LinkedList<EntityRemoveDelegate> EntityRemoveCallbacks = new LinkedList<EntityRemoveDelegate>();
 
         public EntitySyncServer(long threadCount, int syncRate,
             Func<IClientRepository, NetworkLayer> createNetworkLayer,
@@ -73,36 +73,61 @@ namespace AltV.Net.EntitySync
             //clientRepository.Remove(client);
         }
 
-        private void OnEntityCreate(IClient client, IEntity entity, IEnumerable<string> changedKeys)
+        private void OnEntityCreate(IClient client, IEntity entity, LinkedList<string> changedKeys)
         {
-            networkLayer.SendEvent(client, new EntityCreateEvent(entity, changedKeys));
-            foreach (var entityCreateCallback in EntityCreateCallbacks)
+            Dictionary<string, object> data;
+            if (changedKeys != null) {
+                data = new Dictionary<string, object>();
+                var changedKey = changedKeys.First;
+                while (changedKey != null)
+                {
+                    var key = changedKey.Value;
+                    if (entity.TryGetData(key, out var value))
+                    {
+                        data[key] = value;
+                    }
+                    changedKey = changedKey.Next;
+                }
+            }
+            else
             {
-                entityCreateCallback(client, entity);
+                data = null;
+            }
+            networkLayer.SendEvent(client, new EntityCreateEvent(entity, data));
+
+            var callback = EntityCreateCallbacks.First;
+            while (callback != null)
+            {
+                callback.Value(client, entity);
+                callback = callback.Next;
             }
         }
 
         private void OnEntityRemove(IClient client, IEntity entity)
         {
             networkLayer.SendEvent(client, new EntityRemoveEvent(entity));
-            foreach (var entityRemoveCallback in EntityRemoveCallbacks)
+            var callback = EntityRemoveCallbacks.First;
+            while (callback != null)
             {
-                entityRemoveCallback(client, entity);
+                callback.Value(client, entity);
+                callback = callback.Next;
             }
         }
 
-        private void OnEntityDataChange(IClient client, IEntity entity, IEnumerable<string> changedKeys)
+        private void OnEntityDataChange(IClient client, IEntity entity, LinkedList<string> changedKeys)
         {
             Dictionary<string, object> data;
-            if (changedKeys != null)
-            {
+            if (changedKeys != null) {
                 data = new Dictionary<string, object>();
-                foreach (var key in changedKeys)
+                var changedKey = changedKeys.First;
+                while (changedKey != null)
                 {
+                    var key = changedKey.Value;
                     if (entity.TryGetData(key, out var value))
                     {
                         data[key] = value;
                     }
+                    changedKey = changedKey.Next;
                 }
             }
             else

@@ -26,12 +26,14 @@ namespace AltV.Net.EntitySync
 
         private readonly LinkedList<IClient> clientsToRemoveFromEntity = new LinkedList<IClient>();
         private readonly LinkedList<IClient> clientsToResetFromEntity = new LinkedList<IClient>();
+        
+        private readonly LinkedList<string> changedEntityDataKeys = new LinkedList<string>();
 
-        private readonly Action<IClient, IEntity, IEnumerable<string>> onEntityCreate;
+        private readonly Action<IClient, IEntity, LinkedList<string>> onEntityCreate;
 
         private readonly Action<IClient, IEntity> onEntityRemove;
 
-        private readonly Action<IClient, IEntity, IEnumerable<string>> onEntityDataChange;
+        private readonly Action<IClient, IEntity, LinkedList<string>> onEntityDataChange;
 
         private readonly Action<IClient, IEntity, Vector3> onEntityPositionChange;
         
@@ -39,8 +41,8 @@ namespace AltV.Net.EntitySync
 
         public EntityThread(IEntityThreadRepository entityThreadRepository, IClientThreadRepository clientThreadRepository,
             SpatialPartition spatialPartition, int syncRate,
-            Action<IClient, IEntity, IEnumerable<string>> onEntityCreate, Action<IClient, IEntity> onEntityRemove,
-            Action<IClient, IEntity, IEnumerable<string>> onEntityDataChange,
+            Action<IClient, IEntity, LinkedList<string>> onEntityCreate, Action<IClient, IEntity> onEntityRemove,
+            Action<IClient, IEntity, LinkedList<string>> onEntityDataChange,
             Action<IClient, IEntity, Vector3> onEntityPositionChange, Action<IClient, IEntity> onEntityClearCache)
         {
             if (spatialPartition == null)
@@ -153,16 +155,21 @@ namespace AltV.Net.EntitySync
                         //TODO: maybe add changed entities to a list as well
                         foreach (var foundEntity in spatialPartition.Find(position, dimension))
                         {
+                            if (changedEntityDataKeys.Count != 0)
+                            {
+                                changedEntityDataKeys.Clear();
+                            }
+
                             foundEntity.AddCheck(client);
-                            var changedKeys = foundEntity.DataSnapshot.CompareWithClient(client);
+                            foundEntity.DataSnapshot.CompareWithClient(changedEntityDataKeys, client);
 
                             if (foundEntity.TryAddClient(client))
                             {
-                                onEntityCreate(client, foundEntity, changedKeys);
+                                onEntityCreate(client, foundEntity, changedEntityDataKeys);
                             }
-                            else if (changedKeys != null)
+                            else if (changedEntityDataKeys != null)
                             {
-                                onEntityDataChange(client, foundEntity, changedKeys);
+                                onEntityDataChange(client, foundEntity, changedEntityDataKeys);
                             }
                         }
                     }

@@ -128,25 +128,7 @@ namespace AltV.Net.EntitySync.ServerEvent
                 if (!serverEventChannels.TryGetValue(client, out channel)) return;
             }
 
-            IDictionary<string, object> entityDataDictionary;
-            var changedKeys = entityCreate.ChangedKeys;
-            if (changedKeys != null)
-            {
-                entityDataDictionary = new Dictionary<string, object>();
-                foreach (var key in changedKeys)
-                {
-                    if (entityCreate.Entity.TryGetData(key, out var dataValue))
-                    {
-                        entityDataDictionary[key] = dataValue;
-                    }
-                }
-            }
-            else
-            {
-                entityDataDictionary = null;
-            }
-
-            channel.Writer.TryWrite(new ServerEntityEvent(1, entityCreate.Entity, Vector3.Zero, entityDataDictionary));
+            channel.Writer.TryWrite(new ServerEntityEvent(1, entityCreate.Entity, Vector3.Zero, entityCreate.Data));
         }
 
         public override void SendEvent(IClient client, in EntityRemoveEvent entityRemove)

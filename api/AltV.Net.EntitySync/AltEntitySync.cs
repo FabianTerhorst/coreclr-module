@@ -14,13 +14,13 @@ namespace AltV.Net.EntitySync
 
         public static event EntityCreateDelegate OnEntityCreate
         {
-            add => _entitySyncServer.EntityCreateCallbacks.Add(value);
+            add => _entitySyncServer.EntityCreateCallbacks.AddLast(value);
             remove => _entitySyncServer.EntityCreateCallbacks.Remove(value);
         }
 
         public static event EntityRemoveDelegate OnEntityRemove
         {
-            add => _entitySyncServer.EntityRemoveCallbacks.Add(value);
+            add => _entitySyncServer.EntityRemoveCallbacks.AddLast(value);
             remove => _entitySyncServer.EntityRemoveCallbacks.Remove(value);
         }
 
@@ -62,6 +62,11 @@ namespace AltV.Net.EntitySync
             IDictionary<string, object> data)
         {
             return _entitySyncServer.CreateEntity(type, position, dimension, range, data);
+        }
+
+        public static void Stop()
+        {
+            _entitySyncServer.Stop();
         }
     }
 }

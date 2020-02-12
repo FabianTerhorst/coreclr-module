@@ -9,12 +9,12 @@ namespace AltV.Net.EntitySync.Events
     {
         public readonly IEntity Entity;
 
-        public readonly IEnumerable<string> ChangedKeys;
+        public readonly IDictionary<string, object> Data;
 
-        public EntityCreateEvent(IEntity entity, IEnumerable<string> changedKeys)
+        public EntityCreateEvent(IEntity entity, IDictionary<string, object> data)
         {
             Entity = entity;
-            ChangedKeys = changedKeys;
+            Data = data;
         }
     }
 }

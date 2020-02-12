@@ -243,7 +243,8 @@ namespace AltV.Net.EntitySync.Tests
             createTask.Wait();
             var createResult = createTask.Result;
             Assert.AreSame(entity, createResult.Entity);
-            Assert.AreEqual(new string[] {"bla"}, createResult.ChangedKeys);
+            Assert.AreEqual(new string[] {"bla"}, createResult.Data.Keys);
+            Assert.AreEqual(new object[] {1337}, createResult.Data.Values);
 
             var readAsyncDataUpdate = mockNetworkLayer.DataChangeEventChannel.Reader.ReadAsync();
 
