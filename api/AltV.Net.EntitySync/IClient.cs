@@ -14,9 +14,7 @@ namespace AltV.Net.EntitySync
         
         bool Exists { get; }
 
-        public bool TryGetPosition(out Vector3 position);
-        
-        public bool TryGetDimension(out int dimension);
+        public bool TryGetDimensionAndPosition(out int dimension, out Vector3 position);
 
         public void SetPositionOverride(Vector3 newPositionOverride);
 

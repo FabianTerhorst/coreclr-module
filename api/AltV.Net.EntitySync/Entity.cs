@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
@@ -21,8 +22,6 @@ namespace AltV.Net.EntitySync
 
         private Vector3 newPosition;
 
-        private readonly object positionMutex = new object();
-
         private int dimension;
 
         public int Dimension
@@ -34,8 +33,6 @@ namespace AltV.Net.EntitySync
         private bool dimensionState = false;
 
         private int newDimension;
-
-        private readonly object dimensionMutex = new object();
 
         private uint range;
 
@@ -49,7 +46,7 @@ namespace AltV.Net.EntitySync
 
         private uint newRange;
 
-        private readonly object rangeMutex = new object();
+        private readonly object propertiesMutex = new object();
 
         private readonly IDictionary<string, object> data;
 
@@ -178,103 +175,74 @@ namespace AltV.Net.EntitySync
 
         public void SetPositionInternal(Vector3 currNewPosition)
         {
-            lock (positionMutex)
+            lock (propertiesMutex)
             {
                 positionState = true;
                 newPosition = currNewPosition;
             }
         }
 
-        public bool TrySetPositionComputing(out Vector3 currNewPosition)
-        {
-            lock (positionMutex)
-            {
-                if (!positionState)
-                {
-                    currNewPosition = default;
-                    return false;
-                }
-
-                currNewPosition = newPosition;
-                positionState = false;
-            }
-
-            return true;
-        }
-
-        public void SetPositionComputed(in Vector3 currNewPosition)
-        {
-            lock (positionMutex)
-            {
-                position = currNewPosition;
-            }
-        }
-
         public void SetDimensionInternal(int currNewDimension)
         {
-            lock (dimensionMutex)
+            lock (propertiesMutex)
             {
                 dimensionState = true;
                 newDimension = currNewDimension;
             }
         }
 
-        public bool TrySetDimensionComputing(out int currNewDimension)
-        {
-            lock (dimensionMutex)
-            {
-                if (!dimensionState)
-                {
-                    currNewDimension = default;
-                    return false;
-                }
-
-                currNewDimension = newDimension;
-                dimensionState = false;
-            }
-
-            return true;
-        }
-
-        public void SetDimensionComputed(int currNewDimension)
-        {
-            lock (dimensionMutex)
-            {
-                dimension = currNewDimension;
-            }
-        }
-
         public void SetRangeInternal(uint currNewRange)
         {
-            lock (rangeMutex)
+            lock (propertiesMutex)
             {
                 rangeState = true;
                 newRange = currNewRange;
             }
         }
 
-        public bool TrySetRangeComputing(out uint currNewRange)
+        public (bool, bool, bool) TrySetPropertiesComputing(out Vector3 currNewPosition, out uint currNewRange, out int currNewDimension)
         {
-            lock (rangeMutex)
+            lock (propertiesMutex)
             {
+                var newPositionFound = positionState;
+                var newRangeFound = rangeState;
+                var newDimensionFound = dimensionState;
+                
+                if (!positionState)
+                {
+                    currNewPosition = default;
+                }
+                else
+                {
+                    currNewPosition = newPosition;
+                    positionState = false;
+                    position = newPosition;
+                }
+                
                 if (!rangeState)
                 {
                     currNewRange = default;
-                    return false;
+                }
+                else
+                {
+                    currNewRange = newRange;
+                    rangeState = false;
+                    range = newRange;
+                }
+                
+                if (!dimensionState)
+                {
+                    currNewDimension = default;
+                }
+                else
+                {
+                    currNewDimension = newDimension;
+                    dimensionState = false;
+                    dimension = newDimension;
                 }
 
-                currNewRange = newRange;
-                rangeState = false;
-            }
 
-            return true;
-        }
-
-        public void SetRangeComputed(uint currNewRange)
-        {
-            lock (rangeMutex)
-            {
-                range = currNewRange;
+                return ValueTuple.Create(newPositionFound, newRangeFound, newDimensionFound);
             }
         }
 

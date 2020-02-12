@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -16,10 +17,12 @@ namespace AltV.Net.EntitySync
         // 3.) when client was not near entity and is still not near entity do nothing, (no change)
         // 4.) when client was near entity and is still near entity send client position change, client knows old position, don't send it
         Vector3 Position { get; set; }
-        
+
         int Dimension { get; set; }
 
         uint Range { get; }
+        
+        EntityDataSnapshot DataSnapshot { get; }
 
         void SetData(string key, object value);
 
@@ -43,18 +46,7 @@ namespace AltV.Net.EntitySync
 
         byte[] Serialize(IEnumerable<string> changedKeys);
 
-        bool TrySetPositionComputing(out Vector3 newPosition);
-
-        void SetPositionComputed(in Vector3 currNewPosition);
-
-        bool TrySetDimensionComputing(out int currNewDimension);
-
-        void SetDimensionComputed(int currNewDimension);
-
-        public bool TrySetRangeComputing(out uint currNewRange);
-
-        public void SetRangeComputed(uint currNewRange);
-
-        EntityDataSnapshot DataSnapshot { get; }
+        ValueTuple<bool, bool, bool> TrySetPropertiesComputing(out Vector3 currNewPosition, out uint currNewRange,
+            out int currNewDimension);
     }
 }

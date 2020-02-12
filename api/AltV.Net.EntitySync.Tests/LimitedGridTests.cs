@@ -14,7 +14,7 @@ namespace AltV.Net.EntitySync.Tests
         {
             AltEntitySync.Init(1, 500,
                 repository => new MockNetworkLayer(repository),
-                () => new Grid(50_000, 50_000, 100, 10_000, 10_000),
+                () => new LimitedGrid(50_000, 50_000, 100, 10_000, 10_000, 3),
                 new IdProvider());
             grid2 = new LimitedGrid(50_000, 50_000, 100, 10_000, 10_000, 3);
         }
@@ -45,8 +45,8 @@ namespace AltV.Net.EntitySync.Tests
 
         private static Vector3 GetRandomVector3()
         {
-            return new Vector3((float) GetRandomNumber(0, 49_997), (float) GetRandomNumber(0, 49_997),
-                (float) GetRandomNumber(0, 49_997));
+            return new Vector3((float) GetRandomNumber(0, 49_899), (float) GetRandomNumber(0, 49_899),
+                (float) GetRandomNumber(0, 49_899));
         }
 
         private static double GetRandomNumber(double minimum, double maximum)

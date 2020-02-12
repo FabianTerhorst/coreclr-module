@@ -60,7 +60,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
             var y2Index = (int) Math.Ceiling(posY / areaSize);*/
             
-            if (posX < 0 || posY < 0 || posX >= maxXAreaIndex || posY >= maxYAreaIndex) yield break;
+            if (xIndex < 0 || yIndex < 0 || xIndex >= maxXAreaIndex || yIndex >= maxYAreaIndex) yield break;
 
             var gridEntity = entityAreas[xIndex][yIndex];
 

@@ -21,6 +21,10 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
         private readonly int yOffset;
 
+        private readonly int maxXAreaIndex;
+        
+        private readonly int maxYAreaIndex;
+
         /// <summary>
         /// The constructor of the grid spatial partition algorithm
         /// </summary>
@@ -31,14 +35,14 @@ namespace AltV.Net.EntitySync.SpatialPartitions
         /// <param name="yOffset"></param>
         public Grid(int maxX, int maxY, int areaSize, int xOffset, int yOffset)
         {
-            this.maxX = maxX;
-            this.maxY = maxY;
+            this.maxX = maxX + xOffset;
+            this.maxY = maxY + yOffset;
             this.areaSize = areaSize;
             this.xOffset = xOffset;
             this.yOffset = yOffset;
 
-            var maxXAreaIndex = maxX / areaSize;
-            var maxYAreaIndex = maxX / areaSize;
+            maxXAreaIndex = this.maxX / areaSize;
+            maxYAreaIndex = this.maxY / areaSize;
 
             entityAreas = new IEntity[maxXAreaIndex][][];
 
@@ -62,10 +66,6 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             var squareMaxY = entityPositionY + range;
             var squareMinX = entityPositionX - range;
             var squareMinY = entityPositionY - range;
-            
-            if (range == 0 || squareMinX < 0 || squareMinY < 0 ||
-                squareMaxX > maxX ||
-                squareMaxY > maxY) return;
 
             // we actually have a circle but we use this as a square for performance reasons
             // we now find all areas that are inside this square
@@ -78,6 +78,11 @@ namespace AltV.Net.EntitySync.SpatialPartitions
                 (int) Math.Ceiling(squareMaxY / areaSize);
             var stoppingXIndex =
                 (int) Math.Ceiling(squareMaxX / areaSize);
+
+            if (range == 0 || startingYIndex < 0 || startingXIndex < 0 ||
+                stoppingYIndex >= maxYAreaIndex ||
+                stoppingXIndex >= maxXAreaIndex) return;
+
             // Now fill all areas from min {x, y} to max {x, y}
             for (var i = startingYIndex; i <= stoppingYIndex; i++)
             {
@@ -102,10 +107,6 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             var squareMaxY = entityPositionY + range;
             var squareMinX = entityPositionX - range;
             var squareMinY = entityPositionY - range;
-            
-            if (range == 0 || squareMinX < 0 || squareMinY < 0 ||
-                squareMaxX > maxX ||
-                squareMaxY > maxY) return;
 
             // we actually have a circle but we use this as a square for performance reasons
             // we now find all areas that are inside this square
@@ -118,6 +119,11 @@ namespace AltV.Net.EntitySync.SpatialPartitions
                 (int) Math.Ceiling(squareMaxY / areaSize);
             var stoppingXIndex =
                 (int) Math.Ceiling(squareMaxX / areaSize);
+            
+            if (range == 0 || startingYIndex < 0 || startingXIndex < 0 ||
+                stoppingYIndex > maxYAreaIndex ||
+                stoppingXIndex > maxXAreaIndex) return;
+            
             // Now remove entity from all areas from min {x, y} to max {x, y}
             for (var i = startingYIndex; i <= stoppingYIndex; i++)
             {
@@ -372,11 +378,11 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             var posX = position.X + xOffset;
             var posY = position.Y + yOffset;
 
-            if (posX < 0 || posY < 0 || posX > maxX || posY > maxY) yield break;
-
             var xIndex = (int) Math.Floor(posX / areaSize);
 
             var yIndex = (int) Math.Floor(posY / areaSize);
+
+            if (xIndex < 0 || yIndex < 0 || xIndex >= maxXAreaIndex || yIndex >= maxYAreaIndex) yield break;
 
             // x2 and y2 only required for complete exact range check
 

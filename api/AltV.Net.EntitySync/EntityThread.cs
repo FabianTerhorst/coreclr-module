@@ -78,7 +78,7 @@ namespace AltV.Net.EntitySync
                 throw new ArgumentException("onEntityPositionChange should not be null.");
             }
 
-            thread = new Thread(OnLoop);
+            thread = new Thread(OnLoop) {IsBackground = true};
             thread.Start();
             this.entityThreadRepository = entityThreadRepository;
             this.clientThreadRepository = clientThreadRepository;
@@ -144,14 +144,14 @@ namespace AltV.Net.EntitySync
 
                     foreach (var client in clients)
                     {
-                        if (!client.TryGetPosition(out var position))
+                        if (!client.TryGetDimensionAndPosition(out var dimension, out var position))
                         {
                             continue;
                         }
 
                         //TODO: cache streamed in entities in list, so we don't have to iterate all entities
                         //TODO: maybe add changed entities to a list as well
-                        foreach (var foundEntity in spatialPartition.Find(position, client.Dimension))
+                        foreach (var foundEntity in spatialPartition.Find(position, dimension))
                         {
                             foundEntity.AddCheck(client);
                             var changedKeys = foundEntity.DataSnapshot.CompareWithClient(client);
@@ -213,28 +213,26 @@ namespace AltV.Net.EntitySync
                         }
 
                         // Check if position state is new position so we can set the new position to the entity internal position
+                        var (hasNewPosition, hasNewRange, hasNewDimension) = entity.TrySetPropertiesComputing(out var newPosition,
+                            out var newRange, out var newDimension);
 
-                        if (entity.TrySetPositionComputing(out var newPosition))
+                        if (hasNewPosition)
                         {
                             spatialPartition.UpdateEntityPosition(entity, newPosition);
                             foreach (var entityClient in entity.GetClients())
                             {
                                 onEntityPositionChange(entityClient, entity, newPosition);
                             }
-
-                            entity.SetPositionComputed(in newPosition);
                         }
 
-                        if (entity.TrySetDimensionComputing(out var newDimension))
-                        {
-                            spatialPartition.UpdateEntityDimension(entity, newDimension);
-                            entity.SetDimensionComputed(newDimension);
-                        }
-
-                        if (entity.TrySetRangeComputing(out var newRange))
+                        if (hasNewRange)
                         {
                             spatialPartition.UpdateEntityRange(entity, newRange);
-                            entity.SetRangeComputed(newRange);
+                        }
+                        
+                        if (hasNewDimension)
+                        {
+                            spatialPartition.UpdateEntityDimension(entity, newDimension);
                         }
                     }
                 }

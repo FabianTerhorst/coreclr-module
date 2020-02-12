@@ -23,6 +23,10 @@ namespace AltV.Net.EntitySync.WebSocket
             }
         }
 
+        private Vector3 positionOverride;
+        
+        private bool positionOverrideEnabled;
+
         public override int Dimension
         {
             get
@@ -60,32 +64,54 @@ namespace AltV.Net.EntitySync.WebSocket
             this.player = player;
         }
 
-        public override bool TryGetPosition(out Vector3 position)
+        public override bool TryGetDimensionAndPosition(out int dimension, out Vector3 position)
         {
             lock (player)
             {
                 if (player.Exists)
                 {
-                    position = player.Position;
+                    if (positionOverrideEnabled)
+                    {
+                        position = positionOverride;
+                    }
+                    else
+                    {
+                        position = player.Position;
+                    }
+
+                    dimension = player.Dimension;
+
                     return true;
                 }
             }
             position = Vector3.Zero;
+            dimension = default;
             return false;
         }
 
-        public override bool TryGetDimension(out int dimension)
+        public new void SetPositionOverride(Vector3 newPositionOverride)
+        {
+            lock (player)
+            {
+                if (!player.Exists) return;
+                positionOverride = newPositionOverride;
+                positionOverrideEnabled = true;
+            }
+        }
+
+        public void StopPositionOverride()
         {
             lock (player)
             {
                 if (player.Exists)
                 {
-                    dimension = player.Dimension;
-                    return true;
+                    positionOverrideEnabled = false;
                 }
             }
-            dimension = default;
-            return false;
+        }
+
+        public void Emit(string eventName, params object[] args)
+        {
         }
     }
 }
