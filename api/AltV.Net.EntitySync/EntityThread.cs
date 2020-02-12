@@ -24,8 +24,8 @@ namespace AltV.Net.EntitySync
 
         private readonly int syncRate;
 
-        private readonly HashSet<IClient> clientsToRemoveFromEntity = new HashSet<IClient>();
-        private readonly HashSet<IClient> clientsToResetFromEntity = new HashSet<IClient>();
+        private readonly LinkedList<IClient> clientsToRemoveFromEntity = new LinkedList<IClient>();
+        private readonly LinkedList<IClient> clientsToResetFromEntity = new LinkedList<IClient>();
 
         private readonly Action<IClient, IEntity, IEnumerable<string>> onEntityCreate;
 
@@ -186,23 +186,29 @@ namespace AltV.Net.EntitySync
                             {
                                 if (lastChecked)
                                 {
-                                    clientsToResetFromEntity.Add(client);
+                                    clientsToResetFromEntity.AddLast(client);
                                 }
                                 else
                                 {
-                                    clientsToRemoveFromEntity.Add(client);
+                                    clientsToRemoveFromEntity.AddLast(client);
                                     onEntityRemove(client, entity);
                                 }
                             }
 
-                            foreach (var client in clientsToResetFromEntity)
-                            {
-                                entity.RemoveCheck(client);
-                            }
+                            var currClient = clientsToResetFromEntity.First;
 
-                            foreach (var client in clientsToRemoveFromEntity)
+                            while (currClient != null)
                             {
-                                entity.RemoveClient(client);
+                                entity.RemoveCheck(currClient.Value);
+                                currClient = currClient.Next;
+                            }
+                            
+                            currClient = clientsToRemoveFromEntity.First;
+
+                            while (currClient != null)
+                            {
+                                entity.RemoveClient(currClient.Value);
+                                currClient = currClient.Next;
                             }
                         }
 
