@@ -22,6 +22,8 @@ namespace AltV.Net.EntitySync
 
         uint Range { get; }
         
+        uint RangeSquared { get; }
+        
         EntityDataSnapshot DataSnapshot { get; }
 
         void SetData(string key, object value);

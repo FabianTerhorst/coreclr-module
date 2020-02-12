@@ -395,7 +395,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             for (int j = 0, innerLength = areaEntities.Length; j < innerLength; j++)
             {
                 var entity = areaEntities[j];
-                if (Vector3.Distance(entity.Position, position) > entity.Range ||
+                if (Vector3.DistanceSquared(entity.Position, position) > entity.RangeSquared ||
                     !CanSeeOtherDimension(entity.Dimension, dimension)) continue;
                 yield return entity;
             }

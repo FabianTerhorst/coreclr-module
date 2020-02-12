@@ -48,8 +48,8 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             this.yOffset = yOffset;
             this.distance = distance;
 
-            maxXAreaIndex = maxX / areaSize;
-            maxYAreaIndex = maxX / areaSize;
+            maxXAreaIndex = this.maxX / areaSize;
+            maxYAreaIndex = this.maxX / areaSize;
 
             entityAreas = new GridEntity[maxXAreaIndex][];
 
@@ -440,7 +440,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
             while (gridEntity != null)
             {
-                if (Vector3.Distance(gridEntity.Entity.Position, position) <= gridEntity.Entity.Range &&
+                if (Vector3.DistanceSquared(gridEntity.Entity.Position, position) <= gridEntity.Entity.RangeSquared &&
                     CanSeeOtherDimension(gridEntity.Entity.Dimension, dimension))
                 {
                     yield return gridEntity.Entity;

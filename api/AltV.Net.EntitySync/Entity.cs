@@ -42,6 +42,8 @@ namespace AltV.Net.EntitySync
             set => SetRangeInternal(value);
         }
 
+        public uint RangeSquared { get; private set; }
+
         private bool rangeState = false;
 
         private uint newRange;
@@ -82,6 +84,7 @@ namespace AltV.Net.EntitySync
             this.position = position;
             this.dimension = dimension;
             this.range = range;
+            RangeSquared = range * range;
             this.data = data;
             DataSnapshot = new EntityDataSnapshot(this);
             foreach (var (key, _) in data)
@@ -228,6 +231,7 @@ namespace AltV.Net.EntitySync
                     currNewRange = newRange;
                     rangeState = false;
                     range = newRange;
+                    RangeSquared = range * range;
                 }
                 
                 if (!dimensionState)
