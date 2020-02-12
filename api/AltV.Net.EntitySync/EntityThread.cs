@@ -97,7 +97,11 @@ namespace AltV.Net.EntitySync
             {
                 try
                 {
-                    var (entities, removedEntities, addedEntities) = entityThreadRepository.GetAll();
+                    var entities = entityThreadRepository.GetAll();
+
+                    var addedEntities = entityThreadRepository.GetAllAdded();
+                    
+                    var removedEntities = entityThreadRepository.GetAllDeleted();
 
                     //TODO: when the id provider add / remove doesn't work use the idprovider inside this loop only
                     // We have to remove first, then add, because the added entities may contain the same ids that are removed as well
@@ -126,7 +130,9 @@ namespace AltV.Net.EntitySync
                         }
                     }
 
-                    var (clients, clientsToRemove) = clientThreadRepository.GetAll();
+                    var clients = clientThreadRepository.GetAll();
+
+                    var clientsToRemove = clientThreadRepository.GetAllDeleted();
 
                     if (clientsToRemove != null)
                     {

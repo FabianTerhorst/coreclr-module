@@ -88,7 +88,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             
             if (startingXIndex < 0) return;
             if (startingYIndex < 0) return;
-            if (stoppingXIndex >= maxYAreaIndex) return;
+            if (stoppingXIndex >= maxXAreaIndex) return;
             if (stoppingYIndex >= maxYAreaIndex) return;
 
             // Now fill all areas from min {x, y} to max {x, y}
@@ -425,7 +425,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
             var y2Index = (int) Math.Ceiling(posY / areaSize);*/
             
-            if (posX < 0 || posY < 0 || posX >= maxXAreaIndex || posY >= maxYAreaIndex) yield break;
+            if (xIndex < 0 || yIndex < 0 || xIndex >= maxXAreaIndex || yIndex >= maxYAreaIndex) yield break;
 
             var gridEntity = entityAreas[xIndex][yIndex];
 

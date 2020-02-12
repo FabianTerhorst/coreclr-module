@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AltV.Net.EntitySync
 {
@@ -40,42 +39,40 @@ namespace AltV.Net.EntitySync
             }
         }
 
-        public ValueTuple<IEntity[], IEntity[], IEntity[]> GetAll()
+        public IEnumerable<IEntity> GetAll()
         {
             lock (entities)
             {
-                var currEntities = entities.Values.ToArray();
-                IEntity[] currEntitiesToRemove;
-                if (entitiesToRemove.Count == 0)
+                foreach (var (_, entity) in entities)
                 {
-                    currEntitiesToRemove = null;
+                    yield return entity;
                 }
-                else
-                {
-                    currEntitiesToRemove = entitiesToRemove.ToArray();
-                    entitiesToRemove.Clear();
-                }
-
-                IEntity[] currEntitiesToAdd;
-                if (entitiesToAdd.Count == 0)
-                {
-                    currEntitiesToAdd = null;
-                }
-                else
-                {
-                    currEntitiesToAdd = entitiesToAdd.ToArray();
-                    entitiesToAdd.Clear();
-                }
-
-                return ValueTuple.Create(currEntities, currEntitiesToRemove, currEntitiesToAdd);
             }
         }
-
-        public IEnumerable<IEntity> GetAllAvailable()
+        
+        public IEnumerable<IEntity> GetAllAdded()
         {
             lock (entities)
             {
-                return entities.Values.ToArray();
+                if (entitiesToAdd.Count == 0) yield break;
+                foreach (var entity in entitiesToAdd)
+                {
+                    yield return entity;
+                }
+                entitiesToAdd.Clear();
+            }
+        }
+        
+        public IEnumerable<IEntity> GetAllDeleted()
+        {
+            lock (entities)
+            {
+                if (entitiesToRemove.Count == 0) yield break;
+                foreach (var entity in entitiesToRemove)
+                {
+                    yield return entity;
+                }
+                entitiesToRemove.Clear();
             }
         }
     }
