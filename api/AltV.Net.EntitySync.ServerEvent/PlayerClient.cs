@@ -12,7 +12,7 @@ namespace AltV.Net.EntitySync.ServerEvent
 
         [DllImport(DllName, CallingConvention = NativeCallingConvention)]
         private static extern unsafe void Player_GetPositionCoords(void* player, float* positionX, float* positionY,
-            float* positionZ);
+            float* positionZ, int* dimension);
 
         private readonly IPlayer player;
 
@@ -82,6 +82,7 @@ namespace AltV.Net.EntitySync.ServerEvent
                     if (positionOverrideEnabled)
                     {
                         position = positionOverride;
+                        dimension = player.Dimension;
                     }
                     else
                     {
@@ -90,14 +91,14 @@ namespace AltV.Net.EntitySync.ServerEvent
                             float x;
                             float y;
                             float z;
-                            Player_GetPositionCoords(player.NativePointer.ToPointer(), &x, &y, &z);
+                            int currDimension;
+                            Player_GetPositionCoords(player.NativePointer.ToPointer(), &x, &y, &z, &currDimension);
                             position.X = x;
                             position.Y = y;
                             position.Z = z;
+                            dimension = currDimension;
                         }
                     }
-
-                    dimension = player.Dimension;
 
                     return true;
                 }

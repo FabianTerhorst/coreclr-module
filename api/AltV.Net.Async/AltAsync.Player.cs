@@ -28,17 +28,6 @@ namespace AltV.Net.Async
             return ptr == IntPtr.Zero ? string.Empty : Marshal.PtrToStringUTF8(ptr);
         }
 
-        public static async Task SetNameAsync(this IPlayer player, string name)
-        {
-            var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
-            await AltVAsync.Schedule(() =>
-            {
-                player.CheckIfEntityExists();
-                AltNative.Player.Player_SetName(player.NativePointer, namePtr);
-            });
-            Marshal.FreeHGlobal(namePtr);
-        }
-
         public static Task<ushort> GetHealthAsync(this IPlayer player) =>
             AltVAsync.Schedule(() => player.Health);
 
