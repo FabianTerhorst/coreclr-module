@@ -27,7 +27,7 @@ namespace AltV.Net.EntitySync
             Token = token;
         }
 
-        public virtual bool TryGetDimensionAndPosition(out int dimension, out Vector3 position)
+        public virtual bool TryGetDimensionAndPosition(out int dimension, ref Vector3 position)
         {
             lock (this)
             {

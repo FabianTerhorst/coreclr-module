@@ -49,6 +49,7 @@ EXPORT alt::IPlayer* Player_GetNetworkOwner(alt::IPlayer* player);
 EXPORT uint32_t Player_GetModel(alt::IPlayer* player);
 EXPORT void Player_SetModel(alt::IPlayer* player, uint32_t model);
 EXPORT void Player_GetPosition(alt::IPlayer* player, position_t &position);
+EXPORT void Player_GetPositionCoords(alt::IPlayer* player, float *position_x, float *position_y, float *position_z);
 EXPORT void Player_SetPosition(alt::IPlayer* player, position_t pos);
 EXPORT void Player_GetRotation(alt::IPlayer* player, rotation_t &rotation);
 EXPORT void Player_SetRotation(alt::IPlayer* player, rotation_t rot);

@@ -1,10 +1,17 @@
 using System.Numerics;
 using AltV.Net.Elements.Entities;
+using System.Runtime.InteropServices;
 
 namespace AltV.Net.EntitySync.WebSocket
 {
     public class PlayerClient : Client
     {
+        private const string DllName = "csharp-module";
+        private const CallingConvention NativeCallingConvention = CallingConvention.Cdecl;
+
+        [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+        private static extern unsafe void Player_GetPosition(void* player, ref Vector3 position);
+
         private readonly IPlayer player;
 
         public override Vector3 Position
@@ -24,7 +31,7 @@ namespace AltV.Net.EntitySync.WebSocket
         }
 
         private Vector3 positionOverride;
-        
+
         private bool positionOverrideEnabled;
 
         public override int Dimension
@@ -64,7 +71,7 @@ namespace AltV.Net.EntitySync.WebSocket
             this.player = player;
         }
 
-        public override bool TryGetDimensionAndPosition(out int dimension, out Vector3 position)
+        public override bool TryGetDimensionAndPosition(out int dimension, ref Vector3 position)
         {
             lock (player)
             {
@@ -76,7 +83,10 @@ namespace AltV.Net.EntitySync.WebSocket
                     }
                     else
                     {
-                        position = player.Position;
+                        unsafe
+                        {
+                            Player_GetPosition(player.NativePointer.ToPointer(), ref position);
+                        }
                     }
 
                     dimension = player.Dimension;
@@ -84,6 +94,7 @@ namespace AltV.Net.EntitySync.WebSocket
                     return true;
                 }
             }
+
             position = Vector3.Zero;
             dimension = default;
             return false;

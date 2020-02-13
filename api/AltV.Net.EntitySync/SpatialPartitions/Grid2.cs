@@ -49,7 +49,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             this.distance = distance;
 
             maxXAreaIndex = this.maxX / areaSize;
-            maxYAreaIndex = this.maxX / areaSize;
+            maxYAreaIndex = this.maxY / areaSize;
 
             entityAreas = new GridEntity[maxXAreaIndex][];
 
@@ -134,7 +134,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
             if (startingXIndex < 0) return;
             if (startingYIndex < 0) return;
-            if (stoppingXIndex >= maxYAreaIndex) return;
+            if (stoppingXIndex >= maxXAreaIndex) return;
             if (stoppingYIndex >= maxYAreaIndex) return;
 
             // Now remove entity from all areas from min {x, y} to max {x, y}
@@ -228,12 +228,12 @@ namespace AltV.Net.EntitySync.SpatialPartitions
                 oldStoppingYIndex == newStoppingYIndex) return;
             if (oldStartingXIndex < 0) return;
             if (oldStartingYIndex < 0) return;
-            if (oldStoppingXIndex >= maxYAreaIndex) return;
+            if (oldStoppingXIndex >= maxXAreaIndex) return;
             if (oldStoppingYIndex >= maxYAreaIndex) return;
 
             if (newStartingXIndex < 0) return;
             if (newStartingYIndex < 0) return;
-            if (newStoppingXIndex >= maxYAreaIndex) return;
+            if (newStoppingXIndex >= maxXAreaIndex) return;
             if (newStoppingYIndex >= maxYAreaIndex) return;
 
             for (var j = oldStartingXIndex; j <= oldStoppingXIndex; j++)
@@ -339,12 +339,12 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
             if (oldStartingXIndex < 0) return;
             if (oldStartingYIndex < 0) return;
-            if (oldStoppingXIndex >= maxYAreaIndex) return;
+            if (oldStoppingXIndex >= maxXAreaIndex) return;
             if (oldStoppingYIndex >= maxYAreaIndex) return;
 
             if (newStartingXIndex < 0) return;
             if (newStartingYIndex < 0) return;
-            if (newStoppingXIndex >= maxYAreaIndex) return;
+            if (newStoppingXIndex >= maxXAreaIndex) return;
             if (newStoppingYIndex >= maxYAreaIndex) return;
 
             for (var j = oldStartingXIndex; j <= oldStoppingXIndex; j++)

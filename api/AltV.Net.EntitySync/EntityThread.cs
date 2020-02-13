@@ -16,9 +16,9 @@ namespace AltV.Net.EntitySync
 
         private readonly Thread thread;
 
-        private readonly IEntityThreadRepository entityThreadRepository;
+        private readonly EntityThreadRepository entityThreadRepository;
 
-        private readonly IClientThreadRepository clientThreadRepository;
+        private readonly ClientThreadRepository clientThreadRepository;
 
         private readonly SpatialPartition spatialPartition;
 
@@ -26,7 +26,7 @@ namespace AltV.Net.EntitySync
 
         private readonly LinkedList<IClient> clientsToRemoveFromEntity = new LinkedList<IClient>();
         private readonly LinkedList<IClient> clientsToResetFromEntity = new LinkedList<IClient>();
-        
+
         private readonly LinkedList<string> changedEntityDataKeys = new LinkedList<string>();
 
         private readonly Action<IClient, IEntity, LinkedList<string>> onEntityCreate;
@@ -36,10 +36,13 @@ namespace AltV.Net.EntitySync
         private readonly Action<IClient, IEntity, LinkedList<string>> onEntityDataChange;
 
         private readonly Action<IClient, IEntity, Vector3> onEntityPositionChange;
-        
-        private readonly Action<IClient, IEntity> onEntityClearCache;
 
-        public EntityThread(IEntityThreadRepository entityThreadRepository, IClientThreadRepository clientThreadRepository,
+        private readonly Action<IClient, IEntity> onEntityClearCache;
+        
+        private Vector3 clientPosition = Vector3.Zero;
+
+        public EntityThread(EntityThreadRepository entityThreadRepository,
+            ClientThreadRepository clientThreadRepository,
             SpatialPartition spatialPartition, int syncRate,
             Action<IClient, IEntity, LinkedList<string>> onEntityCreate, Action<IClient, IEntity> onEntityRemove,
             Action<IClient, IEntity, LinkedList<string>> onEntityDataChange,
@@ -74,7 +77,7 @@ namespace AltV.Net.EntitySync
             {
                 throw new ArgumentException("onEntityPositionChange should not be null.");
             }
-            
+
             if (onEntityClearCache == null)
             {
                 throw new ArgumentException("onEntityPositionChange should not be null.");
@@ -99,159 +102,171 @@ namespace AltV.Net.EntitySync
             {
                 try
                 {
-                    var entities = entityThreadRepository.GetAll();
-
-                    var addedEntities = entityThreadRepository.GetAllAdded();
-                    
-                    var removedEntities = entityThreadRepository.GetAllDeleted();
-                    
-                    var updatedEntities = entityThreadRepository.GetAllUpdated();
-
-                    //TODO: when the id provider add / remove doesn't work use the idprovider inside this loop only
-                    // We have to remove first, then add, because the added entities may contain the same ids that are removed as well
-                    if (removedEntities != null)
+                    lock (entityThreadRepository.Mutex)
                     {
-                        foreach (var removedEntity in removedEntities)
+                        foreach (var (_, entity) in entityThreadRepository.Entities)
                         {
-                            spatialPartition.Remove(removedEntity);
-                            foreach (var client in removedEntity.GetClients())
+                            var lastCheckedClients = entity.GetLastCheckedClients();
+                            if (lastCheckedClients.Count != 0)
                             {
-                                onEntityRemove(client, removedEntity);
+                                if (clientsToRemoveFromEntity.Count != 0)
+                                {
+                                    clientsToRemoveFromEntity.Clear();
+                                }
+
+                                if (clientsToResetFromEntity.Count != 0)
+                                {
+                                    clientsToResetFromEntity.Clear();
+                                }
+
+                                foreach (var (client, lastChecked) in lastCheckedClients)
+                                {
+                                    if (lastChecked)
+                                    {
+                                        clientsToResetFromEntity.AddLast(client);
+                                    }
+                                    else
+                                    {
+                                        clientsToRemoveFromEntity.AddLast(client);
+                                        onEntityRemove(client, entity);
+                                    }
+                                }
+
+                                var currClient = clientsToResetFromEntity.First;
+
+                                while (currClient != null)
+                                {
+                                    entity.RemoveCheck(currClient.Value);
+                                    currClient = currClient.Next;
+                                }
+
+                                currClient = clientsToRemoveFromEntity.First;
+
+                                while (currClient != null)
+                                {
+                                    entity.RemoveClient(currClient.Value);
+                                    currClient = currClient.Next;
+                                }
+                            }
+                        }
+
+                        //TODO: when the id provider add / remove doesn't work use the idprovider inside this loop only
+                        // We have to remove first, then add, because the added entities may contain the same ids that are removed as well
+                        if (entityThreadRepository.EntitiesToRemove.Count != 0)
+                        {
+                            var entityToRemove = entityThreadRepository.EntitiesToRemove.First;
+                            while (entityToRemove != null)
+                            {
+                                var removedEntity = entityToRemove.Value;
+                                spatialPartition.Remove(removedEntity);
+                                foreach (var client in removedEntity.GetClients())
+                                {
+                                    onEntityRemove(client, removedEntity);
+                                }
+
+                                foreach (var client in removedEntity.DataSnapshot.GetLastClients())
+                                {
+                                    onEntityClearCache(client, removedEntity);
+                                }
+                                entityToRemove = entityToRemove.Next;
                             }
 
-                            foreach (var client in removedEntity.DataSnapshot.GetLastClients())
+                            entityThreadRepository.EntitiesToRemove.Clear();
+                        }
+
+                        if (entityThreadRepository.EntitiesToAdd.Count != 0)
+                        {
+                            var entityToAdd = entityThreadRepository.EntitiesToAdd.First;
+                            while (entityToAdd != null)
                             {
-                                onEntityClearCache(client, removedEntity);
+                                spatialPartition.Add(entityToAdd.Value);
+                                entityToAdd = entityToAdd.Next;
                             }
+
+                            entityThreadRepository.EntitiesToAdd.Clear();
+                        }
+
+                        if (entityThreadRepository.EntitiesToUpdate.Count != 0)
+                        {
+                            var entityToUpdate = entityThreadRepository.EntitiesToUpdate.First;
+                            while (entityToUpdate != null)
+                            {
+                                var entity = entityToUpdate.Value;
+                                // Check if position state is new position so we can set the new position to the entity internal position
+                                var (hasNewPosition, hasNewRange, hasNewDimension) = entity.TrySetPropertiesComputing(
+                                    out var newPosition,
+                                    out var newRange, out var newDimension);
+
+                                if (hasNewPosition)
+                                {
+                                    spatialPartition.UpdateEntityPosition(entity, newPosition);
+                                    foreach (var entityClient in entity.GetClients())
+                                    {
+                                        onEntityPositionChange(entityClient, entity, newPosition);
+                                    }
+                                }
+
+                                if (hasNewRange)
+                                {
+                                    spatialPartition.UpdateEntityRange(entity, newRange);
+                                }
+
+                                if (hasNewDimension)
+                                {
+                                    spatialPartition.UpdateEntityDimension(entity, newDimension);
+                                }
+                                entityToUpdate = entityToUpdate.Next;
+                            }
+
+                            entityThreadRepository.EntitiesToUpdate.Clear();
                         }
                     }
 
-                    if (addedEntities != null)
+                    lock (clientThreadRepository.Mutex)
                     {
-                        foreach (var addedEntity in addedEntities)
+                        if (clientThreadRepository.ClientsToRemove.Count != 0)
                         {
-                            spatialPartition.Add(addedEntity);
-                        }
-                    }
+                            var clientToRemove = clientThreadRepository.ClientsToRemove.First;
+                            while (clientToRemove != null)
+                            {
+                                clientToRemove.Value.Snapshot.CleanupEntities(clientToRemove.Value);
+                                clientToRemove = clientToRemove.Next;
+                            }
 
-                    var clients = clientThreadRepository.GetAll();
-
-                    var clientsToRemove = clientThreadRepository.GetAllDeleted();
-
-                    if (clientsToRemove != null)
-                    {
-                        foreach (var clientToRemove in clientsToRemove)
-                        {
-                            clientToRemove.Snapshot.CleanupEntities(clientToRemove);
-                        }
-                    }
-
-                    foreach (var client in clients)
-                    {
-                        if (!client.TryGetDimensionAndPosition(out var dimension, out var position))
-                        {
-                            continue;
+                            clientThreadRepository.ClientsToRemove.Clear();
                         }
 
-                        //TODO: cache streamed in entities in list, so we don't have to iterate all entities
-                        //TODO: maybe add changed entities to a list as well
-                        foreach (var foundEntity in spatialPartition.Find(position, dimension))
+                        foreach (var (_, client) in clientThreadRepository.Clients)
                         {
-                            foundEntity.AddCheck(client);
-                            foundEntity.DataSnapshot.CompareWithClient(changedEntityDataKeys, client);
-
-                            if (foundEntity.TryAddClient(client))
+                            if (!client.TryGetDimensionAndPosition(out var dimension, ref clientPosition))
                             {
-                                if (changedEntityDataKeys.Count == 0)
+                                continue;
+                            }
+
+                            //TODO: cache streamed in entities in list, so we don't have to iterate all entities
+                            //TODO: maybe add changed entities to a list as well
+                            foreach (var foundEntity in spatialPartition.Find(clientPosition, dimension))
+                            {
+                                foundEntity.AddCheck(client);
+                                foundEntity.DataSnapshot.CompareWithClient(changedEntityDataKeys, client);
+
+                                if (foundEntity.TryAddClient(client))
                                 {
-                                    onEntityCreate(client, foundEntity, null);   
+                                    if (changedEntityDataKeys.Count == 0)
+                                    {
+                                        onEntityCreate(client, foundEntity, null);
+                                    }
+                                    else
+                                    {
+                                        onEntityCreate(client, foundEntity, changedEntityDataKeys);
+                                        changedEntityDataKeys.Clear();
+                                    }
                                 }
-                                else
+                                else if (changedEntityDataKeys.Count != 0)
                                 {
-                                    onEntityCreate(client, foundEntity, changedEntityDataKeys);
-                                    changedEntityDataKeys.Clear();   
+                                    onEntityDataChange(client, foundEntity, changedEntityDataKeys);
+                                    changedEntityDataKeys.Clear();
                                 }
-                            }
-                            else if (changedEntityDataKeys.Count != 0)
-                            {
-                                onEntityDataChange(client, foundEntity, changedEntityDataKeys);
-                                changedEntityDataKeys.Clear();
-                            }
-                        }
-                    }
-
-                    if (updatedEntities != null)
-                    {
-                        foreach (var entity in updatedEntities)
-                        {
-                            // Check if position state is new position so we can set the new position to the entity internal position
-                            var (hasNewPosition, hasNewRange, hasNewDimension) = entity.TrySetPropertiesComputing(
-                                out var newPosition,
-                                out var newRange, out var newDimension);
-
-                            if (hasNewPosition)
-                            {
-                                spatialPartition.UpdateEntityPosition(entity, newPosition);
-                                foreach (var entityClient in entity.GetClients())
-                                {
-                                    onEntityPositionChange(entityClient, entity, newPosition);
-                                }
-                            }
-
-                            if (hasNewRange)
-                            {
-                                spatialPartition.UpdateEntityRange(entity, newRange);
-                            }
-
-                            if (hasNewDimension)
-                            {
-                                spatialPartition.UpdateEntityDimension(entity, newDimension);
-                            }
-                        }
-                    }
-
-                    foreach (var entity in entities)
-                    {
-                        var lastCheckedClients = entity.GetLastCheckedClients();
-                        if (lastCheckedClients.Count != 0)
-                        {
-                            if (clientsToRemoveFromEntity.Count != 0)
-                            {
-                                clientsToRemoveFromEntity.Clear();
-                            }
-
-                            if (clientsToResetFromEntity.Count != 0)
-                            {
-                                clientsToResetFromEntity.Clear();
-                            }
-
-                            foreach (var (client, lastChecked) in lastCheckedClients)
-                            {
-                                if (lastChecked)
-                                {
-                                    clientsToResetFromEntity.AddLast(client);
-                                }
-                                else
-                                {
-                                    clientsToRemoveFromEntity.AddLast(client);
-                                    onEntityRemove(client, entity);
-                                }
-                            }
-
-                            var currClient = clientsToResetFromEntity.First;
-
-                            while (currClient != null)
-                            {
-                                entity.RemoveCheck(currClient.Value);
-                                currClient = currClient.Next;
-                            }
-                            
-                            currClient = clientsToRemoveFromEntity.First;
-
-                            while (currClient != null)
-                            {
-                                entity.RemoveClient(currClient.Value);
-                                currClient = currClient.Next;
                             }
                         }
                     }

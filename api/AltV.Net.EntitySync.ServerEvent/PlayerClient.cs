@@ -1,11 +1,19 @@
 using System.Numerics;
 using AltV.Net.Async;
 using AltV.Net.Elements.Entities;
+using System.Runtime.InteropServices;
 
 namespace AltV.Net.EntitySync.ServerEvent
 {
     public class PlayerClient : Client
     {
+        private const string DllName = "csharp-module";
+        private const CallingConvention NativeCallingConvention = CallingConvention.Cdecl;
+
+        [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+        private static extern unsafe void Player_GetPositionCoords(void* player, float* positionX, float* positionY,
+            float* positionZ);
+
         private readonly IPlayer player;
 
         public override Vector3 Position
@@ -25,7 +33,7 @@ namespace AltV.Net.EntitySync.ServerEvent
         }
 
         private Vector3 positionOverride;
-        
+
         private bool positionOverrideEnabled;
 
         public override int Dimension
@@ -65,7 +73,7 @@ namespace AltV.Net.EntitySync.ServerEvent
             this.player = player;
         }
 
-        public override bool TryGetDimensionAndPosition(out int dimension, out Vector3 position)
+        public override bool TryGetDimensionAndPosition(out int dimension, ref Vector3 position)
         {
             lock (player)
             {
@@ -77,7 +85,16 @@ namespace AltV.Net.EntitySync.ServerEvent
                     }
                     else
                     {
-                        position = player.Position;
+                        unsafe
+                        {
+                            float x;
+                            float y;
+                            float z;
+                            Player_GetPositionCoords(player.NativePointer.ToPointer(), &x, &y, &z);
+                            position.X = x;
+                            position.Y = y;
+                            position.Z = z;
+                        }
                     }
 
                     dimension = player.Dimension;
@@ -85,6 +102,7 @@ namespace AltV.Net.EntitySync.ServerEvent
                     return true;
                 }
             }
+
             position = Vector3.Zero;
             dimension = default;
             return false;

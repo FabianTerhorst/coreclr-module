@@ -4,16 +4,18 @@ namespace AltV.Net.EntitySync
 {
     public class ClientThreadRepository : IClientThreadRepository
     {
-        private readonly IDictionary<string, IClient> clients = new Dictionary<string, IClient>();
+        public readonly object Mutex = new object();
         
-        private readonly HashSet<IClient> clientsToRemove = new HashSet<IClient>();
+        internal readonly IDictionary<string, IClient> Clients = new Dictionary<string, IClient>();
+        
+        internal readonly LinkedList<IClient> ClientsToRemove = new LinkedList<IClient>();
 
         public void Add(IClient client)
         {
-            lock (clients)
+            lock (Mutex)
             {
-                clientsToRemove.Remove(client);
-                clients[client.Token] = client;
+                ClientsToRemove.Remove(client);
+                Clients[client.Token] = client;
             }
         }
 
@@ -24,11 +26,11 @@ namespace AltV.Net.EntitySync
 
         public IClient Remove(string token)
         {
-            lock (clients)
+            lock (Mutex)
             {
-                if (clients.Remove(token, out var client))
+                if (Clients.Remove(token, out var client))
                 {
-                    clientsToRemove.Add(client);
+                    ClientsToRemove.AddLast(client);
                     return client;
                 }
             }
@@ -38,18 +40,18 @@ namespace AltV.Net.EntitySync
 
         public bool TryGet(string token, out IClient client)
         {
-            lock (clients)
+            lock (Mutex)
             {
-                return clients.TryGetValue(token, out client);
+                return Clients.TryGetValue(token, out client);
             }
         }
 
         public IEnumerable<IClient> GetAll()
         {
-            lock (clients)
+            lock (Mutex)
             {
-                if (clients.Count == 0) yield break;
-                foreach (var (_, client) in clients)
+                if (Clients.Count == 0) yield break;
+                foreach (var (_, client) in Clients)
                 {
                     yield return client;
                 }
@@ -58,14 +60,16 @@ namespace AltV.Net.EntitySync
         
         public IEnumerable<IClient> GetAllDeleted()
         {
-            lock (clients)
+            lock (Mutex)
             {
-                if (clientsToRemove.Count == 0) yield break;
-                foreach (var client in clientsToRemove)
+                if (ClientsToRemove.Count == 0) yield break;
+                var clientToRemove = ClientsToRemove.First;
+                while (clientToRemove != null)
                 {
-                    yield return client;
+                    yield return clientToRemove.Value;
+                    clientToRemove = clientToRemove.Next;
                 }
-                clientsToRemove.Clear();
+                ClientsToRemove.Clear();
             }
         }
     }
