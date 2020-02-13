@@ -141,10 +141,6 @@ void Player_GetName(alt::IPlayer* player, const char*&name) {
     name = player->GetName().CStr();
 }
 
-void Player_SetName(alt::IPlayer* player, const char* name) {
-    //player->SetName(name);
-}
-
 uint64_t Player_GetSocialID(alt::IPlayer* player) {
     return player->GetSocialID();
 }

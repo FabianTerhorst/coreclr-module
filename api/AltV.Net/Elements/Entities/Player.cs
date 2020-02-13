@@ -248,7 +248,7 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckIfEntityExists();
                 var ptr = IntPtr.Zero;
-                AltNative.Player.Player_GetName(NativePointer, ref ptr);
+                AltNative.Player.Player_GetAuthToken(NativePointer, ref ptr);
                 return Marshal.PtrToStringUTF8(ptr);
             }
         }

@@ -96,9 +96,6 @@ namespace AltV.Net.Native
             internal static extern void Player_GetName(IntPtr player, ref IntPtr name);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Player_SetName(IntPtr player, IntPtr name);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern ulong Player_GetSocialID(IntPtr player);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]

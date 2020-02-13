@@ -76,7 +76,6 @@ EXPORT void Player_Spawn(alt::IPlayer* player, alt::Position pos, uint32_t delay
 EXPORT void Player_Despawn(alt::IPlayer* player);
 
 EXPORT void Player_GetName(alt::IPlayer* player, const char*&name);
-EXPORT void Player_SetName(alt::IPlayer* player, const char* name);
 
 EXPORT uint64_t Player_GetSocialID(alt::IPlayer* player);
 EXPORT uint64_t Player_GetHwidHash(alt::IPlayer* player);
