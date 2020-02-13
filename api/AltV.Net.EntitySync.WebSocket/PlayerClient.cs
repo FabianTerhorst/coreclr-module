@@ -10,7 +10,8 @@ namespace AltV.Net.EntitySync.WebSocket
         private const CallingConvention NativeCallingConvention = CallingConvention.Cdecl;
 
         [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-        private static extern unsafe void Player_GetPosition(void* player, ref Vector3 position);
+        private static extern unsafe void Player_GetPositionCoords(void* player, float* positionX, float* positionY,
+            float* positionZ);
 
         private readonly IPlayer player;
 
@@ -85,7 +86,13 @@ namespace AltV.Net.EntitySync.WebSocket
                     {
                         unsafe
                         {
-                            Player_GetPosition(player.NativePointer.ToPointer(), ref position);
+                            float x;
+                            float y;
+                            float z;
+                            Player_GetPositionCoords(player.NativePointer.ToPointer(), &x, &y, &z);
+                            position.X = x;
+                            position.Y = y;
+                            position.Z = z;
                         }
                     }
 
