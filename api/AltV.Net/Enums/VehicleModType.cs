@@ -36,6 +36,9 @@
         Livery = 48,
         Plate = 62,
         Color1 = 66,
-        Color2
+        Color2,
+        WindowTint = 69,
+        DashboardColor = 74,
+        TrimColor,
     }
 }
