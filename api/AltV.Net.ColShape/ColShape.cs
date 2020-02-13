@@ -30,9 +30,9 @@ namespace AltV.Net.ColShape
             LastChecked = new Dictionary<IWorldObject, bool>();
         }
 
-        public void AddWorldObject(IWorldObject worldObject)
+        public bool AddWorldObject(IWorldObject worldObject)
         {
-            worldObjects.Add(worldObject);
+            return worldObjects.Add(worldObject);
         }
 
         public void RemoveWorldObject(IWorldObject worldObject)

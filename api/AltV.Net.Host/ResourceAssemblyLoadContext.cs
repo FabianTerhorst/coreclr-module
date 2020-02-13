@@ -141,10 +141,10 @@ namespace AltV.Net.Host
 
         protected override Assembly Load(AssemblyName assemblyName)
         {
+            if (!SharedAssemblyNames.Contains(assemblyName.Name)) return null;
             var assemblyPath = resolver.ResolveAssemblyToPath(assemblyName);
-            return assemblyPath != null && !SharedAssemblyNames.Contains(assemblyName.Name)
-                ? LoadFromAssemblyPath(assemblyPath)
-                : null;
+            if (assemblyPath == null) return null;
+            return LoadFromAssemblyPath(assemblyPath);
         }
 
         protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)

@@ -52,6 +52,16 @@ onmessage = function (e) {
             addEntityToArea(entity);
         }
     }
+    if (data.entityToUpdate && data.oldEntityPosition) {
+        const oldEntity = {
+            id: data.entityToUpdate.id,
+            range: data.entityToUpdate.range,
+            dimension: data.entityToUpdate.dimension,
+            position: data.oldEntityPosition
+        };
+        removeEntityFromArea(oldEntity);
+        addEntityToArea(data.entityToUpdate);
+    }
     if (data.entityToAdd) {
         addEntityToArea(data.entityToAdd);
     }

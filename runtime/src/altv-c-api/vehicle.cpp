@@ -161,7 +161,12 @@ void Vehicle_SetPrimaryColor(alt::IVehicle* vehicle, uint8_t color) {
     vehicle->SetPrimaryColor(color);
 }
 
-void Vehicle_SetPrimaryColorRGB(alt::IVehicle* vehicle, alt::RGBA color) {
+void Vehicle_SetPrimaryColorRGB(alt::IVehicle* vehicle, rgba_t primaryColor) {
+    alt::RGBA color;
+    color.r = primaryColor.r;
+    color.g = primaryColor.g;
+    color.b = primaryColor.b;
+    color.a = primaryColor.a;
     vehicle->SetPrimaryColorRGB(color);
 }
 
@@ -185,7 +190,12 @@ void Vehicle_SetSecondaryColor(alt::IVehicle* vehicle, uint8_t color) {
     vehicle->SetSecondaryColor(color);
 }
 
-void Vehicle_SetSecondaryColorRGB(alt::IVehicle* vehicle, alt::RGBA color) {
+void Vehicle_SetSecondaryColorRGB(alt::IVehicle* vehicle,rgba_t secondaryColor) {
+    alt::RGBA color;
+    color.r = secondaryColor.r;
+    color.g = secondaryColor.g;
+    color.b = secondaryColor.b;
+    color.a = secondaryColor.a;
     vehicle->SetSecondaryColorRGB(color);
 }
 
@@ -233,7 +243,12 @@ void Vehicle_GetTireSmokeColor(alt::IVehicle* vehicle, rgba_t &tireSmokeColor) {
     tireSmokeColor.a = vehicleTireSmokeColor.a;
 }
 
-void Vehicle_SetTireSmokeColor(alt::IVehicle* vehicle, alt::RGBA color) {
+void Vehicle_SetTireSmokeColor(alt::IVehicle* vehicle, rgba_t tireSmokeColor) {
+    alt::RGBA color;
+    color.r = tireSmokeColor.r;
+    color.g = tireSmokeColor.g;
+    color.b = tireSmokeColor.b;
+    color.a = tireSmokeColor.a;
     vehicle->SetTireSmokeColor(color);
 }
 
@@ -333,7 +348,12 @@ void Vehicle_GetNeonColor(alt::IVehicle* vehicle, rgba_t &neonColor) {
     neonColor.a = vehicleNeonColor.a;
 }
 
-void Vehicle_SetNeonColor(alt::IVehicle* vehicle, alt::RGBA color) {
+void Vehicle_SetNeonColor(alt::IVehicle* vehicle, rgba_t neonColor) {
+    alt::RGBA color;
+    color.r = neonColor.r;
+    color.g = neonColor.g;
+    color.b = neonColor.b;
+    color.a = neonColor.a;
     return vehicle->SetNeonColor(color);
 }
 

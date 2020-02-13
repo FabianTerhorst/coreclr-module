@@ -12,8 +12,16 @@ namespace AltV.Net.Example
         [AsyncScriptEvent(ScriptEventType.Checkpoint)]
         public async Task Checkpoint(ICheckpoint checkpoint, IEntity entity, bool state)
         {
-            Console.WriteLine("bla");
+            await Task.Delay(100);
+            Console.WriteLine("checkpoint event");
         } 
+        
+        [AsyncScriptEvent(ScriptEventType.ColShape)]
+        public async Task ColShape(IColShape checkpoint, IEntity entity, bool state)
+        {
+            await Task.Delay(100);
+            Console.WriteLine("colshape event");
+        }
         
         [Command]
         public void MyCommand(IPlayer player, string myArgument)

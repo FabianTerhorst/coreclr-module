@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <PackageVersion>1.0.12-dev-preview</PackageVersion>
+        <Authors>AltMp</Authors>
+        <Description>AltV .NET Core Entity Sync</Description>
+        <Copyright>AltMp</Copyright>
+        <PackageProjectUrl>https://github.com/FabianTerhorst/coreclr-module</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>altv gta bridge gta5 gtav</PackageTags>
+        <PackageLicenseFile>license.txt</PackageLicenseFile>
+        <PackageReleaseNotes>
+            Initial commit
+        </PackageReleaseNotes>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <PackageIcon>icon.png</PackageIcon>
+        <IncludeSymbols>true</IncludeSymbols>
+    </PropertyGroup>
+
+     <ItemGroup>
+        <None Include="license\license.txt" Pack="true" PackagePath="" />
+        <None Include="icon.png" Pack="true" PackagePath="\" />
+        <None Include="package\**" Pack="True" PackagePath="build\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AltV.Net.Async\AltV.Net.Async.csproj" />
+      <ProjectReference Include="..\AltV.Net.EntitySync\AltV.Net.EntitySync.csproj" />
+      <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Threading.Channels" Version="4.7.0" />
+    </ItemGroup>
+
+</Project>
