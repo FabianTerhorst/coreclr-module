@@ -25,11 +25,12 @@ void Player_GetPosition(alt::IPlayer* player, position_t &position) {
     position.z = playerPosition.z;
 }
 
-void Player_GetPositionCoords(alt::IPlayer* player, float *position_x, float *position_y, float *position_z) {
+void Player_GetPositionCoords(alt::IPlayer* player, float *position_x, float *position_y, float *position_z, int *dimension) {
     auto playerPosition = player->GetPosition();
     *position_x = playerPosition.x;
     *position_y = playerPosition.y;
     *position_z = playerPosition.z;
+    *dimension = player->GetDimension();
 }
 
 void Player_SetPosition(alt::IPlayer* player, position_t pos) {

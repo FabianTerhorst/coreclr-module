@@ -1,6 +1,7 @@
 using System.Numerics;
 using AltV.Net.Elements.Entities;
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace AltV.Net.EntitySync.WebSocket
 {
@@ -10,8 +11,9 @@ namespace AltV.Net.EntitySync.WebSocket
         private const CallingConvention NativeCallingConvention = CallingConvention.Cdecl;
 
         [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+        [SuppressUnmanagedCodeSecurity]
         private static extern unsafe void Player_GetPositionCoords(void* player, float* positionX, float* positionY,
-            float* positionZ);
+            float* positionZ, int* dimension);
 
         private readonly IPlayer player;
 
@@ -81,6 +83,7 @@ namespace AltV.Net.EntitySync.WebSocket
                     if (positionOverrideEnabled)
                     {
                         position = positionOverride;
+                        dimension = player.Dimension;
                     }
                     else
                     {
@@ -89,14 +92,14 @@ namespace AltV.Net.EntitySync.WebSocket
                             float x;
                             float y;
                             float z;
-                            Player_GetPositionCoords(player.NativePointer.ToPointer(), &x, &y, &z);
+                            int currDimension;
+                            Player_GetPositionCoords(player.NativePointer.ToPointer(), &x, &y, &z, &currDimension);
                             position.X = x;
                             position.Y = y;
                             position.Z = z;
+                            dimension = currDimension;
                         }
                     }
-
-                    dimension = player.Dimension;
 
                     return true;
                 }
