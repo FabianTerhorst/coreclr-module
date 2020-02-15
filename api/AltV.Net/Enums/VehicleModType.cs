@@ -32,7 +32,6 @@
         Plaques,
         Hydraulics = 38,
         Boost = 40,
-        WindowTint = 46,
         Livery = 48,
         Plate = 62,
         Color1 = 66,
