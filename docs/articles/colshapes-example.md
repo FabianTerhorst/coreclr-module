@@ -3,12 +3,11 @@ This is a Example how to create a Collision sphere & Call it. This is a shape th
 ColShape Event handler have to be Created in a IScript Class! Otherwise it won´t work.
 
 ```csharp
+IColShape col = Alt.CreateColShapeSphere(new Position(0, 0, 0), 3.0f); // We Declare & Create our ColSphere.
+col.SetData("IS_FREEROAM_COLSHAPE", true); // We setting Data to our ColSphere.
+
 public class ColShapes : IScript
 {
-    IColShape col = Alt.CreateColShapeSphere(new Position(0, 0, 0), 3.0f); // We Declare & Create our ColSphere.
-    col.SetData("IS_FREEROAM_COLSHAPE", true); // We setting Data to our ColSphere.
-
-
     [ScriptEvent(ScriptEventType.ColShape)] // We Create the Event Handler.
     public static void OnEntityColshapeHit(IColShape shape, IEntity entity, bool state)
     {
