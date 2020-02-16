@@ -4,26 +4,8 @@ ColShape Event handler have to be Created in a IScript Class! Otherwise it won´
 
 ```csharp
 
-public class ColShapes : IScript
-{
-    
-    internal class MyResource : Resource
-    {
-        //OnResourceStart
-        public override void OnStart()
-        {
-            // We Declare & Create our ColSphere
-            IColShape col = Alt.CreateColShapeSphere(new Position(0, 0, 0), 3.0f); 
-            col.SetData("IS_FREEROAM_COLSHAPE", true);
-            Console.WriteLine("Started");
-        }
-        //OnResourceStop
-        public override void OnStop()
-        {
-            Console.WriteLine("Stopped");
-        }
-    }
-
+    IColShape col = Alt.CreateColShapeSphere(new Position(0, 0, 0), 3.0f); // We Declare & Create our ColSphere.
+    col.SetData("IS_FREEROAM_COLSHAPE", true); // We setting Data to our ColSphere.
 
 
     [ScriptEvent(ScriptEventType.ColShape)] // We Create the Event Handler.
