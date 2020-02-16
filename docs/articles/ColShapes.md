@@ -1,27 +1,68 @@
 # ColShape Example
 This is a Example how to create a Collision sphere & Call it. This is a shape that has a position and a radius.
-ColShapes have to be Created in a IScript Class! Otherwise it won´t work.
+ColShape Event handler have to be Created in a IScript Class! Otherwise it won´t work.
 
 ```csharp
-    
-    IColShape col = Alt.CreateColShapeSphere(new Position(0, 0, 0), 3.0f); // We Declare & Create our ColSphere
 
-  
+public class ColShapes : IScript
+{
+    
+    internal class MyResource : Resource
+    {
+        //OnResourceStart
+        public override void OnStart()
+        {
+            // We Declare & Create our ColSphere
+            IColShape col = Alt.CreateColShapeSphere(new Position(0, 0, 0), 3.0f); 
+            col.SetData("IS_FREEROAM_COLSHAPE", true);
+            Console.WriteLine("Started");
+        }
+        //OnResourceStop
+        public override void OnStop()
+        {
+            Console.WriteLine("Stopped");
+        }
+    }
+
+
+
     [ScriptEvent(ScriptEventType.ColShape)] // We Create the Event Handler.
     public static void OnEntityColshapeHit(IColShape shape, IEntity entity, bool state)
     {
-        IPlayer player = entity as IPlayer;         //We declare the player.
-        if(shape == col) // If the ColSphere is the ColSphere we declared then it should do this :
+        // If the ColSphere is the ColSphere we declared then it should do this :
+        if (shape.GetData("IS_FREEROAM_COLSHAPE", out bool result)) 
         {
-            if(state) // If player Entered the ColShape then 
+            if (entity is IPlayer player)   //We Check if the Entity is the player.
             {
-                  player.SendChatMessage("Hello " + player.Name + "! Welcome to your ColShape :)");
+                if (state) // If player Entered the ColShape then 
+                {
+                    player.SendChatMessage("Hello " + player.Name + "! Welcome to your ColShape :)");
+                }
+                else
+                {
+                    player.SendChatMessage("Bye " + player.Name + "! :(");
+                }
             }
-            else{
-                  player.SendChatMessage("Bye " + player.Name + "! :(");
+            else if (entity is IVehicle vehicle)
+            {
+                if (state) // If a Vehicle Entered the ColShape
+                {
+                    // We set the Primary Color of this Vehicle to Red.
+                    vehicle.PrimaryColorRgb = new Rgba(255, 0, 0, 255);
+                    // We Notify the Driver that his Vehicle Color is now Red.
+                    vehicle.Driver.SendChatMessage("You hitted your Created ColShape! Now your Car is Red hehe :>"); 
+                }
+                else
+                {
+                    // We set the Primary Color of this Vehicle to Blue.
+                    vehicle.PrimaryColorRgb = new Rgba(0, 0, 255, 255);
+                    // We Notify the Driver that his Vehicle Color is now Blue.
+                    vehicle.Driver.SendChatMessage("You hitted your Created ColShape! Now your Car is Red hehe :>");
+                }
             }
         }
     }
+}
 ```
 
 # ColShape Type´s
