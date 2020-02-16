@@ -22,7 +22,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
         /// <param name="entity"></param>
         /// <param name="range"></param>
         public abstract void UpdateEntityRange(IEntity entity, uint range);
-        
+
         /// <summary>
         /// Updates the entity dimension, some algorithms might just call remove and add, depending on the possibilities
         /// </summary>
@@ -30,6 +30,6 @@ namespace AltV.Net.EntitySync.SpatialPartitions
         /// <param name="dimension"></param>
         public abstract void UpdateEntityDimension(IEntity entity, int dimension);
 
-        public abstract IEnumerable<IEntity> Find(Vector3 position, int dimension);
+        public abstract IList<IEntity> Find(Vector3 position, int dimension);
     }
 }

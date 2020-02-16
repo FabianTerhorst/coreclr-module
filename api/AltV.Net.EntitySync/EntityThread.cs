@@ -220,29 +220,33 @@ namespace AltV.Net.EntitySync
                             {
                                 continue;
                             }
-
-                            //TODO: cache streamed in entities in list, so we don't have to iterate all entities
-                            foreach (var foundEntity in spatialPartition.Find(clientPosition, dimension))
+                            
+                            var foundEntities = spatialPartition.Find(clientPosition, dimension);
+                            if (foundEntities != null)
                             {
-                                foundEntity.AddCheck(client);
-                                foundEntity.DataSnapshot.CompareWithClient(changedEntityDataKeys, client);
-
-                                if (foundEntity.TryAddClient(client))
+                                for (int i = 0, length = foundEntities.Count; i < length; i++)
                                 {
-                                    if (changedEntityDataKeys.Count == 0)
+                                    var foundEntity = foundEntities[i];
+                                    foundEntity.AddCheck(client);
+                                    foundEntity.DataSnapshot.CompareWithClient(changedEntityDataKeys, client);
+
+                                    if (foundEntity.TryAddClient(client))
                                     {
-                                        onEntityCreate(client, foundEntity, null);
+                                        if (changedEntityDataKeys.Count == 0)
+                                        {
+                                            onEntityCreate(client, foundEntity, null);
+                                        }
+                                        else
+                                        {
+                                            onEntityCreate(client, foundEntity, changedEntityDataKeys);
+                                            changedEntityDataKeys.Clear();
+                                        }
                                     }
-                                    else
+                                    else if (changedEntityDataKeys.Count != 0)
                                     {
-                                        onEntityCreate(client, foundEntity, changedEntityDataKeys);
+                                        onEntityDataChange(client, foundEntity, changedEntityDataKeys);
                                         changedEntityDataKeys.Clear();
                                     }
-                                }
-                                else if (changedEntityDataKeys.Count != 0)
-                                {
-                                    onEntityDataChange(client, foundEntity, changedEntityDataKeys);
-                                    changedEntityDataKeys.Clear();
                                 }
                             }
                         }

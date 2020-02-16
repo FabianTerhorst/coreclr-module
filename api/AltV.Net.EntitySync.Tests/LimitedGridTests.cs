@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using AltV.Net.EntitySync.SpatialPartitions;
 using NUnit.Framework;
@@ -33,13 +34,15 @@ namespace AltV.Net.EntitySync.Tests
             grid2.Add(entity4);
             using (var enumerator = grid2.Find(position, 0).GetEnumerator())
             {
-                Assert.True(enumerator.MoveNext());
-                Assert.AreEqual(entity, enumerator.Current);
-                Assert.True(enumerator.MoveNext());
-                Assert.AreEqual(entity2, enumerator.Current);
-                Assert.True(enumerator.MoveNext());
-                Assert.AreEqual(entity3, enumerator.Current);
-                Assert.False(enumerator.MoveNext());
+                var currSet = new HashSet<IEntity>();
+                while (enumerator.MoveNext())
+                {
+                    currSet.Add(enumerator.Current);
+                }
+                Assert.True(currSet.Contains(entity));
+                Assert.True(currSet.Contains(entity2));
+                Assert.True(currSet.Contains(entity3));
+                Assert.False(currSet.Contains(entity4));
             }
         }
 

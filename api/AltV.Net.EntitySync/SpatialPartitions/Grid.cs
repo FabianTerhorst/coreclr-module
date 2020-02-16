@@ -24,6 +24,8 @@ namespace AltV.Net.EntitySync.SpatialPartitions
         private readonly int maxXAreaIndex;
         
         private readonly int maxYAreaIndex;
+        
+        private readonly IList<IEntity> entities = new List<IEntity>();
 
         /// <summary>
         /// The constructor of the grid spatial partition algorithm
@@ -373,7 +375,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
         }
 
         //TODO: check if we can find a better way to pass a position and e.g. improve performance of this method by return type ect.
-        public override IEnumerable<IEntity> Find(Vector3 position, int dimension)
+        public override IList<IEntity> Find(Vector3 position, int dimension)
         {
             var posX = position.X + xOffset;
             var posY = position.Y + yOffset;
@@ -382,8 +384,10 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
             var yIndex = (int) Math.Floor(posY / areaSize);
 
-            if (xIndex < 0 || yIndex < 0 || xIndex >= maxXAreaIndex || yIndex >= maxYAreaIndex) yield break;
+            if (xIndex < 0 || yIndex < 0 || xIndex >= maxXAreaIndex || yIndex >= maxYAreaIndex) return null;
 
+            entities.Clear();
+            
             // x2 and y2 only required for complete exact range check
 
             /*var x2Index = (int) Math.Ceiling(posX / areaSize);
@@ -397,8 +401,10 @@ namespace AltV.Net.EntitySync.SpatialPartitions
                 var entity = areaEntities[j];
                 if (Vector3.DistanceSquared(entity.Position, position) > entity.RangeSquared ||
                     !CanSeeOtherDimension(entity.Dimension, dimension)) continue;
-                yield return entity;
+                entities.Add(entity);
             }
+
+            return entities;
 
             /*if (xIndex != x2Index && yIndex == y2Index)
             {

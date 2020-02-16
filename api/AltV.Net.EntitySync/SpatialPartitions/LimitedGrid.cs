@@ -11,11 +11,10 @@ namespace AltV.Net.EntitySync.SpatialPartitions
         /// Use this Comparer e.g. with SortedLists or SortedDictionaries, that don't allow duplicate keys
         /// </summary>
         /// <typeparam name="TKey"></typeparam>
-        class DuplicateKeyComparer<TKey>
-            :
-                IComparer<TKey> where TKey : IComparable
+        private class DuplicateKeyComparer
+            : IComparer<float>
         {
-            public int Compare(TKey x, TKey y)
+            public int Compare(float x, float y)
             {
                 var result = x.CompareTo(y);
 
@@ -23,12 +22,10 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             }
         }
         
-        private static readonly DuplicateKeyComparer<float> _duplicateKeyComparer = new DuplicateKeyComparer<float>();
+        private static readonly DuplicateKeyComparer _duplicateKeyComparer = new DuplicateKeyComparer();
 
-        private readonly int limit;
-        
-        private readonly SortedList<float, IEntity> sortedList = new SortedList<float, IEntity>(_duplicateKeyComparer);
-        
+        private readonly SortedLimitedList<float, IEntity> sortedList;
+
         /// <summary>
         /// The constructor of the grid spatial partition algorithm
         /// </summary>
@@ -42,10 +39,10 @@ namespace AltV.Net.EntitySync.SpatialPartitions
         public LimitedGrid(int maxX, int maxY, int areaSize, int xOffset, int yOffset, int limit, int distance = 0) : base(maxX,
             maxY, areaSize, xOffset, yOffset, distance)
         {
-            this.limit = limit;
+            sortedList = new SortedLimitedList<float, IEntity>(limit, limit,_duplicateKeyComparer);
         }
 
-        public override IEnumerable<IEntity> Find(Vector3 position, int dimension)
+        public override IList<IEntity> Find(Vector3 position, int dimension)
         {
             var posX = position.X + xOffset;
             var posY = position.Y + yOffset;
@@ -60,7 +57,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
             var y2Index = (int) Math.Ceiling(posY / areaSize);*/
             
-            if (xIndex < 0 || yIndex < 0 || xIndex >= maxXAreaIndex || yIndex >= maxYAreaIndex) yield break;
+            if (xIndex < 0 || yIndex < 0 || xIndex >= maxXAreaIndex || yIndex >= maxYAreaIndex) return null;
 
             var gridEntity = entityAreas[xIndex][yIndex];
 
@@ -79,15 +76,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
                 gridEntity = gridEntity.Next;
             }
 
-            var i = limit;
-            
-            using (var enumerator = sortedList.GetEnumerator())
-            {
-                while (i-- != 0 && enumerator.MoveNext())
-                {
-                    yield return enumerator.Current.Value;
-                }
-            }
+            return sortedList.Values;
         }
     }
 }

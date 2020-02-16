@@ -24,6 +24,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
         protected readonly int maxYAreaIndex;
 
+        private readonly IList<IEntity> entities = new List<IEntity>();
 
         /// <summary>
         /// The constructor of the grid spatial partition algorithm
@@ -419,7 +420,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             return false;
         }
 
-        public override IEnumerable<IEntity> Find(Vector3 position, int dimension)
+        public override IList<IEntity> Find(Vector3 position, int dimension)
         {
             var posX = position.X + xOffset;
             var posY = position.Y + yOffset;
@@ -434,20 +435,24 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
             var y2Index = (int) Math.Ceiling(posY / areaSize);*/
 
-            if (xIndex < 0 || yIndex < 0 || xIndex >= maxXAreaIndex || yIndex >= maxYAreaIndex) yield break;
+            if (xIndex < 0 || yIndex < 0 || xIndex >= maxXAreaIndex || yIndex >= maxYAreaIndex) return null;
 
             var gridEntity = entityAreas[xIndex][yIndex];
+            
+            entities.Clear();
 
             while (gridEntity != null)
             {
                 if (Vector3.DistanceSquared(gridEntity.Entity.Position, position) <= gridEntity.Entity.RangeSquared &&
                     CanSeeOtherDimension(gridEntity.Entity.Dimension, dimension))
                 {
-                    yield return gridEntity.Entity;
+                    entities.Add(gridEntity.Entity);
                 }
 
                 gridEntity = gridEntity.Next;
             }
+
+            return entities;
         }
     }
 }
