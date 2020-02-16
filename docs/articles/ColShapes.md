@@ -1,6 +1,6 @@
 # ColShape Example
 This is a Example how to create a Collision sphere & Call it. This is a shape that has a position and a radius.
-
+ColShapes have to be Created in a IScript Class! Otherwise it won´t work.
 
 ```csharp
     
