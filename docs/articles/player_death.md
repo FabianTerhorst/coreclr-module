@@ -1,5 +1,7 @@
 # OnPlayerDeath
-Note : Death reason could be a WeaponHash too.
+Note : 
+##### Death reason could be a WeaponHash too.
+##### Events have to be created in a IScript Class! Otherwise it won´t work!
 
 ```csharp 
     /* We create our IScript class */
