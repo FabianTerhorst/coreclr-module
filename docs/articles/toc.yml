@@ -32,3 +32,10 @@
       href: trace.md
     - name: Serialization
       href: serialization.md
+- name: Player Events
+  href: player_events.md
+  items:
+    - name: Death
+      href: player_death.md
+    - name: Weapon Damage
+      href: player_damage.md
