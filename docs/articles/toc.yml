@@ -24,8 +24,8 @@
       href: async.md
     - name: ColShapes example
       href: colshapes-example.md
-    - name: Networking entity
-      href: networking-entity.md
+    - name: Entity sync
+      href: entity-sync.md
     - name: Async ColShapes
       href: async-colshapes.md
     - name: Performance debugging
