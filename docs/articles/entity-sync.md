@@ -127,7 +127,7 @@ This is called every time you come in the range of the entity.
 The server assumes you cache the entity depending on the entity.id so make sure to do it.
 
 ```js
-alt.on("entitySync:create", entity => {
+alt.onServer("entitySync:create", entity => {
     alt.log(entity.id);
     alt.log(entity.type);
     alt.log(entity.position);
@@ -143,7 +143,7 @@ alt.on("entitySync:create", entity => {
 This is called every time you go out of the range of the entity.
 
 ```js
-alt.on("entitySync:remove", entityId => {
+alt.onServer("entitySync:remove", entityId => {
     const entityData = entityData[entityId];
     alt.log(entityId);
     alt.log(entityData);
@@ -155,7 +155,7 @@ alt.on("entitySync:remove", entityId => {
 This is called very time you update the entity position while you are in the range of the entity.
 
 ```js
-alt.on("entitySync:updatePosition", (entityId, position) => {
+alt.onServer("entitySync:updatePosition", (entityId, position) => {
     const entityData = entityData[entityId];
     alt.log(entityId);
     alt.log(entityData);
@@ -168,7 +168,7 @@ alt.on("entitySync:updatePosition", (entityId, position) => {
 This is called every time you update the entity data while you are in the range of the entity.
 
 ```js
-alt.on("entitySync:updateData", (entityId, newEntityData) => {
+alt.onServer("entitySync:updateData", (entityId, newEntityData) => {
     let entityData = entityData[entityId];
     if (!entityData) {
         entityData = {};
@@ -184,7 +184,7 @@ alt.on("entitySync:updateData", (entityId, newEntityData) => {
 This is called every time you remove a entity on serverside completely and clients still have data in cache of this entity.
 
 ```js
-alt.on("entitySync:clearCache", entityId => {
+alt.onServer("entitySync:clearCache", entityId => {
     delete entityData[entityId];
 })
 ```
