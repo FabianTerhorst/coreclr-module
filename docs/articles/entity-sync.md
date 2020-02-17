@@ -168,13 +168,13 @@ alt.on("entitySync:updatePosition", (entityId, position) => {
 This is called every time you update the entity data while you are in the range of the entity.
 
 ```js
-alt.on("entitySync:updateData", (entityId, entityData) => {
+alt.on("entitySync:updateData", (entityId, newEntityData) => {
     let entityData = entityData[entityId];
     if (!entityData) {
         entityData = {};
     }
-    for (const key in entityData) {
-        entityData[key] = entityData[key];
+    for (const key in newEntityData) {
+        entityData[key] = newEntityData[key];
     }
 })
 ```
