@@ -86,6 +86,10 @@ namespace AltV.Net.EntitySync
                     {
                         data[key] = value;
                     }
+                    else
+                    {
+                        data[key] = null;
+                    }
                     changedKey = changedKey.Next;
                 }
             }
@@ -126,6 +130,10 @@ namespace AltV.Net.EntitySync
                     if (entity.TryGetData(key, out var value))
                     {
                         data[key] = value;
+                    }
+                    else
+                    {
+                        data[key] = null;
                     }
                     changedKey = changedKey.Next;
                 }
