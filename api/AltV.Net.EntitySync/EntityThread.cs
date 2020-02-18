@@ -38,7 +38,7 @@ namespace AltV.Net.EntitySync
         private readonly Action<IClient, IEntity, Vector3> onEntityPositionChange;
 
         private readonly Action<IClient, IEntity> onEntityClearCache;
-        
+
         private Vector3 clientPosition = Vector3.Zero;
 
         public EntityThread(EntityThreadRepository entityThreadRepository,
@@ -131,6 +131,7 @@ namespace AltV.Net.EntitySync
                                     entity.RemoveCheck(currClient.Value);
                                     currClient = currClient.Next;
                                 }
+
                                 clientsToResetFromEntity.Clear();
                             }
 
@@ -143,10 +144,11 @@ namespace AltV.Net.EntitySync
                                     entity.RemoveClient(currClient.Value);
                                     currClient = currClient.Next;
                                 }
+
                                 clientsToRemoveFromEntity.Clear();
                             }
                         }
-                        
+
                         if (entityThreadRepository.EntitiesQueue.Count != 0)
                         {
                             while (entityThreadRepository.EntitiesQueue.TryDequeue(out var entityQueueResult))
@@ -168,12 +170,14 @@ namespace AltV.Net.EntitySync
                                         {
                                             onEntityClearCache(client, entityToChange);
                                         }
+
                                         break;
                                     case 2:
                                         // Check if position state is new position so we can set the new position to the entity internal position
-                                        var (hasNewPosition, hasNewRange, hasNewDimension) = entityToChange.TrySetPropertiesComputing(
-                                            out var newPosition,
-                                            out var newRange, out var newDimension);
+                                        var (hasNewPosition, hasNewRange, hasNewDimension) =
+                                            entityToChange.TrySetPropertiesComputing(
+                                                out var newPosition,
+                                                out var newRange, out var newDimension);
 
                                         if (hasNewPosition)
                                         {
@@ -193,10 +197,12 @@ namespace AltV.Net.EntitySync
                                         {
                                             spatialPartition.UpdateEntityDimension(entityToChange, newDimension);
                                         }
+
                                         break;
                                 }
                             }
                         }
+
                         //TODO: when the id provider add / remove doesn't work use the idprovider inside this loop only
                     }
 
@@ -221,28 +227,32 @@ namespace AltV.Net.EntitySync
                                 continue;
                             }
 
-                            //TODO: cache streamed in entities in list, so we don't have to iterate all entities
-                            foreach (var foundEntity in spatialPartition.Find(clientPosition, dimension))
+                            var foundEntities = spatialPartition.Find(clientPosition, dimension);
+                            if (foundEntities != null)
                             {
-                                foundEntity.AddCheck(client);
-                                foundEntity.DataSnapshot.CompareWithClient(changedEntityDataKeys, client);
-
-                                if (foundEntity.TryAddClient(client))
+                                for (int i = 0, length = foundEntities.Count; i < length; i++)
                                 {
-                                    if (changedEntityDataKeys.Count == 0)
+                                    var foundEntity = foundEntities[i];
+                                    foundEntity.AddCheck(client);
+                                    foundEntity.DataSnapshot.CompareWithClient(changedEntityDataKeys, client);
+
+                                    if (foundEntity.TryAddClient(client))
                                     {
-                                        onEntityCreate(client, foundEntity, null);
+                                        if (changedEntityDataKeys.Count == 0)
+                                        {
+                                            onEntityCreate(client, foundEntity, null);
+                                        }
+                                        else
+                                        {
+                                            onEntityCreate(client, foundEntity, changedEntityDataKeys);
+                                            changedEntityDataKeys.Clear();
+                                        }
                                     }
-                                    else
+                                    else if (changedEntityDataKeys.Count != 0)
                                     {
-                                        onEntityCreate(client, foundEntity, changedEntityDataKeys);
+                                        onEntityDataChange(client, foundEntity, changedEntityDataKeys);
                                         changedEntityDataKeys.Clear();
                                     }
-                                }
-                                else if (changedEntityDataKeys.Count != 0)
-                                {
-                                    onEntityDataChange(client, foundEntity, changedEntityDataKeys);
-                                    changedEntityDataKeys.Clear();
                                 }
                             }
                         }

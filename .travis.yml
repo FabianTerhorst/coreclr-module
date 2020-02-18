@@ -121,21 +121,21 @@ matrix:
 deploy:
   - provider: script
     skip_cleanup: true
-    script: cdn-win.exe upload coreclr-module/stable/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    script: cdn-win.exe upload coreclr-module/release/x64_win32 "${TRAVIS_BUILD_NUMBER}"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$WINDOWS_STABLE = true"
       tags: true
   - provider: script
     skip_cleanup: true
-    script: ./cdn-linux ./upload coreclr-module/stable/x64_linux "${TRAVIS_BUILD_NUMBER}"
+    script: ./cdn-linux ./upload coreclr-module/release/x64_linux "${TRAVIS_BUILD_NUMBER}"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$LINUX_STABLE = true"
       tags: true
   - provider: script
     skip_cleanup: true
-    script: ./cdn-linux ./upload coreclr-module/stable/x64_linux "${TRAVIS_BUILD_NUMBER}" && ./cdn-linux ./upload coreclr-module/stable/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    script: ./cdn-linux ./upload coreclr-module/release/x64_linux "${TRAVIS_BUILD_NUMBER}" && ./cdn-linux ./upload coreclr-module/stable/x64_win32 "${TRAVIS_BUILD_NUMBER}"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$DOTNET_STABLE = true"
@@ -143,7 +143,7 @@ deploy:
   - provider: script
     skip_cleanup: true
     prerelease: true
-    script: cdn-win.exe upload coreclr-module/beta/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    script: cdn-win.exe upload coreclr-module/rc/x64_win32 "${TRAVIS_BUILD_NUMBER}"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$WINDOWS_BETA = true"
@@ -151,14 +151,14 @@ deploy:
   - provider: script
     skip_cleanup: true
     prerelease: true
-    script: ./cdn-linux upload coreclr-module/beta/x64_linux "${TRAVIS_BUILD_NUMBER}"
+    script: ./cdn-linux upload coreclr-module/rc/x64_linux "${TRAVIS_BUILD_NUMBER}"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$LINUX_BETA = true"
       tags: true
   - provider: script
     skip_cleanup: true
-    script: ./cdn-linux ./upload coreclr-module/beta/x64_linux "${TRAVIS_BUILD_NUMBER}" && ./cdn-linux ./upload coreclr-module/beta/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    script: ./cdn-linux ./upload coreclr-module/rc/x64_linux "${TRAVIS_BUILD_NUMBER}" && ./cdn-linux ./upload coreclr-module/beta/x64_win32 "${TRAVIS_BUILD_NUMBER}"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$DOTNET_BETA = true"

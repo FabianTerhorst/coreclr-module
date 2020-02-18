@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace AltV.Net.EntitySync.SpatialPartitions
 {
-    public class LimitedGrid : Grid2
+    public class LimitedGrid3 : Grid3
     {
         /// <summary>
         /// Comparer for comparing two keys, handling equality as beeing greater
@@ -25,7 +25,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
         private static readonly DuplicateKeyComparer _duplicateKeyComparer = new DuplicateKeyComparer();
 
         private readonly SortedLimitedList<float, IEntity> sortedList;
-
+        
         /// <summary>
         /// The constructor of the grid spatial partition algorithm
         /// </summary>
@@ -36,10 +36,10 @@ namespace AltV.Net.EntitySync.SpatialPartitions
         /// <param name="yOffset"></param>
         /// <param name="limit"></param>
         /// <param name="distance"></param>
-        public LimitedGrid(int maxX, int maxY, int areaSize, int xOffset, int yOffset, int limit, int distance = 0) : base(maxX,
-            maxY, areaSize, xOffset, yOffset, distance)
+        public LimitedGrid3(int maxX, int maxY, int areaSize, int xOffset, int yOffset, int limit) : base(maxX,
+            maxY, areaSize, xOffset, yOffset)
         {
-            sortedList = new SortedLimitedList<float, IEntity>(limit, limit,_duplicateKeyComparer);
+            sortedList = new SortedLimitedList<float, IEntity>(limit, limit, _duplicateKeyComparer);
         }
 
         public override IList<IEntity> Find(Vector3 position, int dimension)
@@ -59,22 +59,31 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             
             if (xIndex < 0 || yIndex < 0 || xIndex >= maxXAreaIndex || yIndex >= maxYAreaIndex) return null;
 
-            var gridEntity = entityAreas[xIndex][yIndex];
+            var areaEntities = entityAreas[xIndex][yIndex];
 
             sortedList.Clear();
 
-            while (gridEntity != null)
+            for (int j = 0, innerLength = areaEntities.Count; j < innerLength; j++)
             {
-                var entityClientDistance = Vector3.DistanceSquared(gridEntity.Entity.Position, position);
-                
-                if (entityClientDistance <= gridEntity.Entity.RangeSquared &&
-                    CanSeeOtherDimension(gridEntity.Entity.Dimension, dimension))
+                var areaEntity = areaEntities[j];
+                var entityClientDistance = Vector3.DistanceSquared(areaEntity.Position, position);
+                var entity = areaEntities[j];
+                if (entityClientDistance <= entity.RangeSquared &&
+                    CanSeeOtherDimension(entity.Dimension, dimension))
                 {
-                    sortedList.Add(entityClientDistance, gridEntity.Entity);
+                    sortedList.Add(entityClientDistance, areaEntity);
                 }
-
-                gridEntity = gridEntity.Next;
             }
+
+            /*var i = limit;
+            
+            using (var enumerator = sortedList.GetEnumerator())
+            {
+                while (i-- != 0 && enumerator.MoveNext())
+                {
+                    yield return enumerator.Current.Value;
+                }
+            }*/
 
             return sortedList.Values;
         }

@@ -27,7 +27,7 @@ namespace AltV.Net.EntitySync
             var threadIndex = (int) (entity.Id % threadCount);
             entityThreadRepositories[threadIndex].Remove(entity);
         }
-        
+
         public void Update(IEntity entity)
         {
             var threadIndex = (int) (entity.Id % threadCount);

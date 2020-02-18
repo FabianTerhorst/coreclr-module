@@ -45,7 +45,7 @@ namespace AltV.Net.EntitySync
             return true;
         }
 
-        public void SetPositionOverride(Vector3 newPositionOverride)
+        public virtual void SetPositionOverride(Vector3 newPositionOverride)
         {
             lock (this)
             {
@@ -54,7 +54,7 @@ namespace AltV.Net.EntitySync
             }
         }
 
-        public void ResetPositionOverride()
+        public virtual void ResetPositionOverride()
         {
             lock (this)
             {

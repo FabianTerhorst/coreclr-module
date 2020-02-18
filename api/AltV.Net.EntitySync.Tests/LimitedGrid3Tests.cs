@@ -6,9 +6,9 @@ using NUnit.Framework;
 
 namespace AltV.Net.EntitySync.Tests
 {
-    public class LimitedGridTests
+    public class LimitedGrid3Tests
     {
-        private LimitedGrid grid2;
+        private LimitedGrid3 grid2;
 
         [SetUp]
         public void Setup()
@@ -17,7 +17,7 @@ namespace AltV.Net.EntitySync.Tests
                 repository => new MockNetworkLayer(repository),
                 () => new LimitedGrid(50_000, 50_000, 100, 10_000, 10_000, 3),
                 new IdProvider());
-            grid2 = new LimitedGrid(50_000, 50_000, 100, 10_000, 10_000, 3);
+            grid2 = new LimitedGrid3(50_000, 50_000, 100, 10_000, 10_000, 3);
         }
 
         [Test]
