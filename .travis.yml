@@ -135,7 +135,7 @@ deploy:
       tags: true
   - provider: script
     skip_cleanup: true
-    script: ./cdn-linux ./upload coreclr-module/release/x64_linux "${TRAVIS_BUILD_NUMBER}" && ./cdn-linux ./upload coreclr-module/stable/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    script: ./cdn-linux ./upload coreclr-module/release/x64_linux "${TRAVIS_BUILD_NUMBER}" && ./cdn-linux ./upload coreclr-module/release/x64_win32 "${TRAVIS_BUILD_NUMBER}"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$DOTNET_STABLE = true"
@@ -158,7 +158,7 @@ deploy:
       tags: true
   - provider: script
     skip_cleanup: true
-    script: ./cdn-linux ./upload coreclr-module/rc/x64_linux "${TRAVIS_BUILD_NUMBER}" && ./cdn-linux ./upload coreclr-module/beta/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    script: ./cdn-linux ./upload coreclr-module/rc/x64_linux "${TRAVIS_BUILD_NUMBER}" && ./cdn-linux ./upload coreclr-module/rc/x64_win32 "${TRAVIS_BUILD_NUMBER}"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$DOTNET_BETA = true"
