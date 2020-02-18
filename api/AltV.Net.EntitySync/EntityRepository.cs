@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace AltV.Net.EntitySync
@@ -18,18 +19,30 @@ namespace AltV.Net.EntitySync
 
         public void Add(IEntity entity)
         {
+            if (entity == null)
+            {
+                throw new ArgumentException("Entity must not be null.");
+            }
             var threadIndex = (int) (entity.Id % threadCount);
             entityThreadRepositories[threadIndex].Add(entity);
         }
 
         public void Remove(IEntity entity)
         {
+            if (entity == null)
+            {
+                throw new ArgumentException("Entity must not be null.");
+            }
             var threadIndex = (int) (entity.Id % threadCount);
             entityThreadRepositories[threadIndex].Remove(entity);
         }
 
         public void Update(IEntity entity)
         {
+            if (entity == null)
+            {
+                throw new ArgumentException("Entity must not be null.");
+            }
             var threadIndex = (int) (entity.Id % threadCount);
             entityThreadRepositories[threadIndex].Update(entity);
         }

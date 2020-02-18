@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace AltV.Net.EntitySync
@@ -15,6 +16,10 @@ namespace AltV.Net.EntitySync
 
         public void Add(IClient client)
         {
+            if (client == null)
+            {
+                throw new ArgumentException("Client must not be null.");
+            }
             lock (clients)
             {
                 foreach (var clientThreadRepository in clientThreadRepositories)
@@ -28,6 +33,10 @@ namespace AltV.Net.EntitySync
 
         public IClient Remove(IClient client)
         {
+            if (client == null)
+            {
+                throw new ArgumentException("Client must not be null.");
+            }
             return Remove(client.Token);
         }
 
