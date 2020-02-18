@@ -24,9 +24,18 @@
       href: async.md
     - name: ColShapes example
       href: colshapes-example.md
-    - name: Networking entity
-      href: networking-entity.md
+    - name: Entity sync
+      href: entity-sync.md
     - name: Async ColShapes
       href: async-colshapes.md
     - name: Performance debugging
       href: trace.md
+    - name: Serialization
+      href: serialization.md
+- name: Player Events
+  href: player_events.md
+  items:
+    - name: Death
+      href: player_death.md
+    - name: Weapon Damage
+      href: player_damage.md
