@@ -18,7 +18,7 @@ Note : Events have to be created in a IScript Class! Otherwise it won´t work!
                 players.SendChatMessage(client?.Name + " has joined the Server!");
             }
             //We spawn our Connected Client after 1 sec.
-            client.Spawn(new Position(0, 0, 0), 1000);
+            client.Spawn(new Position(0, 0, 72));
             // We set his Skin to the standard GTA Online Skin.
             client.Model = Alt.Hash("FreemodeMale01");
         }
