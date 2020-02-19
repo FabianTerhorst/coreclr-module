@@ -1,4 +1,4 @@
-# OnPlayerDisconnected
+# OnPlayerDisconnect
 This event will be called if a player disconnect.
 Note : Events have to be created in a IScript Class! Otherwise it won´t work!
 
@@ -7,7 +7,7 @@ Note : Events have to be created in a IScript Class! Otherwise it won´t work!
     {
         /* We declare & Create our Event Handler. */
         [ScriptEvent(ScriptEventType.PlayerDisconnect)]
-        public void OnPlayerDisconnected(IPlayer client, string reason)
+        public void OnPlayerDisconnect(IPlayer client, string reason)
         {
             // We loop through every player on our Server & Notify them.
             foreach(IPlayer players in Alt.GetAllPlayers())
