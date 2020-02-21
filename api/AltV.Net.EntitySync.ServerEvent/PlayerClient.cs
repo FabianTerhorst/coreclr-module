@@ -109,7 +109,7 @@ namespace AltV.Net.EntitySync.ServerEvent
             return false;
         }
 
-        public new void SetPositionOverride(Vector3 newPositionOverride)
+        public override void SetPositionOverride(Vector3 newPositionOverride)
         {
             lock (player)
             {
@@ -119,7 +119,7 @@ namespace AltV.Net.EntitySync.ServerEvent
             }
         }
 
-        public void StopPositionOverride()
+        public override void ResetPositionOverride()
         {
             lock (player)
             {
@@ -133,6 +133,11 @@ namespace AltV.Net.EntitySync.ServerEvent
         public void Emit(string eventName, params object[] args)
         {
             player.EmitLocked(eventName, args);
+        }
+
+        public IPlayer GetPlayer()
+        {
+            return player;
         }
     }
 }
