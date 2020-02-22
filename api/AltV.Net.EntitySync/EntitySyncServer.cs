@@ -31,9 +31,11 @@ namespace AltV.Net.EntitySync
         
         internal readonly LinkedList<EntityRemoveDelegate> EntityRemoveCallbacks = new LinkedList<EntityRemoveDelegate>();
 
-        public EntitySyncServer(long threadCount, int syncRate,
+        public EntitySyncServer(ulong threadCount, int syncRate,
             Func<IClientRepository, NetworkLayer> createNetworkLayer,
-            Func<SpatialPartition> createSpatialPartition, IIdProvider<ulong> idProvider)
+            Func<IEntity, ulong, ulong> entityThreadId,
+            Func<ulong, string, ulong, ulong> entityIdAndTypeThreadId,
+            Func<ulong, SpatialPartition> createSpatialPartition, IIdProvider<ulong> idProvider)
         {
             if (threadCount < 1)
             {
@@ -44,18 +46,18 @@ namespace AltV.Net.EntitySync
             entityThreadRepositories = new EntityThreadRepository[threadCount];
             clientThreadRepositories = new ClientThreadRepository[threadCount];
 
-            for (var i = 0; i < threadCount; i++)
+            for (ulong i = 0; i < threadCount; i++)
             {
                 var clientThreadRepository = new ClientThreadRepository();
                 var entityThreadRepository = new EntityThreadRepository();
                 entityThreadRepositories[i] = entityThreadRepository;
                 clientThreadRepositories[i] = clientThreadRepository;
-                entityThreads[i] = new EntityThread(entityThreadRepository, clientThreadRepository, createSpatialPartition(),syncRate,
+                entityThreads[i] = new EntityThread(entityThreadRepository, clientThreadRepository, createSpatialPartition(i),syncRate,
                     OnEntityCreate,
                     OnEntityRemove, OnEntityDataChange, OnEntityPositionChange, OnEntityClearCache);
             }
 
-            entityRepository = new EntityRepository(entityThreadRepositories);
+            entityRepository = new EntityRepository(entityThreadRepositories, entityThreadId, entityIdAndTypeThreadId);
             clientRepository = new ClientRepository(clientThreadRepositories);
             networkLayer = createNetworkLayer(clientRepository);
             networkLayer.OnConnectionConnect += OnConnectionConnect;
@@ -178,9 +180,9 @@ namespace AltV.Net.EntitySync
             entityRepository.Update(entity);
         }
 
-        public bool TryGetEntity(ulong id, out IEntity entity)
+        public bool TryGetEntity(ulong id, string type, out IEntity entity)
         {
-            return entityRepository.TryGet(id, out entity);
+            return entityRepository.TryGet(id, type, out entity);
         }
 
         public IEnumerable<IEntity> GetAllEntities()

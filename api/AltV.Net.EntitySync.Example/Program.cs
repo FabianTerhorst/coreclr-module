@@ -17,7 +17,9 @@ namespace AltV.Net.EntitySync.Example
                     mockNetworkLayer = new MockNetworkLayer(repository);
                     return mockNetworkLayer;
                 },
-                () => new Grid2(50_000, 50_000, 10, 10_000, 10_000), 
+                (entity, threadCount) => (entity.Id % threadCount), 
+                (entityId, entityType, threadCount) => (entityId % threadCount),
+                (id) => new Grid3(50_000, 50_000, 10, 10_000, 10_000), 
                 new IdProvider());
             Entities();
         }
