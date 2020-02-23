@@ -11,9 +11,9 @@ namespace AltV.Net.EntitySync
 
         private readonly Func<IEntity, ulong, ulong> entityThreadId;
         
-        private readonly Func<ulong, string, ulong, ulong> entityIdAndTypeThreadId;
+        private readonly Func<ulong, ulong, ulong, ulong> entityIdAndTypeThreadId;
 
-        public EntityRepository(EntityThreadRepository[] entityThreadRepositories, Func<IEntity, ulong, ulong> entityThreadId, Func<ulong, string, ulong, ulong> entityIdAndTypeThreadId)
+        public EntityRepository(EntityThreadRepository[] entityThreadRepositories, Func<IEntity, ulong, ulong> entityThreadId, Func<ulong, ulong, ulong, ulong> entityIdAndTypeThreadId)
         {
             this.entityThreadRepositories = entityThreadRepositories;
             threadCount = (ulong) entityThreadRepositories.Length;
@@ -50,7 +50,7 @@ namespace AltV.Net.EntitySync
             entityThreadRepositories[entityThreadId(entity, threadCount)].Update(entity);
         }
 
-        public bool TryGet(ulong id, string type, out IEntity entity)
+        public bool TryGet(ulong id, ulong type, out IEntity entity)
         {
             return entityThreadRepositories[entityIdAndTypeThreadId(id, type, threadCount)].TryGet(id, out entity);
         }

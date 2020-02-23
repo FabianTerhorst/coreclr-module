@@ -36,7 +36,7 @@ namespace AltV.Net.EntitySync
         public static void Init(ulong threadCount, int syncRate,
             Func<IClientRepository, NetworkLayer> createNetworkLayer,
             Func<IEntity, ulong, ulong> entityThreadId,
-            Func<ulong, string, ulong, ulong> entityIdAndTypeThreadId,
+            Func<ulong, ulong, ulong, ulong> entityIdAndTypeThreadId,
             Func<ulong, SpatialPartition> createSpatialPartition, IIdProvider<ulong> idProvider)
         {
             IdProvider = idProvider;
@@ -55,7 +55,7 @@ namespace AltV.Net.EntitySync
             EntitySyncServer.RemoveEntity(entity);
         }
 
-        public static bool TryGetEntity(ulong id, string type, out IEntity entity)
+        public static bool TryGetEntity(ulong id, ulong type, out IEntity entity)
         {
             return EntitySyncServer.TryGetEntity(id, type, out entity);
         }

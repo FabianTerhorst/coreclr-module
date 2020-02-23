@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <PackageVersion>1.0.20-dev-preview</PackageVersion>
+        <PackageVersion>1.1.1-dev-preview</PackageVersion>
         <Authors>AltMp</Authors>
         <Description>AltV .NET Core Entity Sync</Description>
         <Copyright>AltMp</Copyright>

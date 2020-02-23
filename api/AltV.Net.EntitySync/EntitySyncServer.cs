@@ -34,7 +34,7 @@ namespace AltV.Net.EntitySync
         public EntitySyncServer(ulong threadCount, int syncRate,
             Func<IClientRepository, NetworkLayer> createNetworkLayer,
             Func<IEntity, ulong, ulong> entityThreadId,
-            Func<ulong, string, ulong, ulong> entityIdAndTypeThreadId,
+            Func<ulong, ulong, ulong, ulong> entityIdAndTypeThreadId,
             Func<ulong, SpatialPartition> createSpatialPartition, IIdProvider<ulong> idProvider)
         {
             if (threadCount < 1)
@@ -180,7 +180,7 @@ namespace AltV.Net.EntitySync
             entityRepository.Update(entity);
         }
 
-        public bool TryGetEntity(ulong id, string type, out IEntity entity)
+        public bool TryGetEntity(ulong id, ulong type, out IEntity entity)
         {
             return entityRepository.TryGet(id, type, out entity);
         }
