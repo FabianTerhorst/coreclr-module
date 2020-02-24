@@ -57,6 +57,24 @@ namespace AltV.Net.Async
 
             return taskFactory.StartNew(action);
         }
+        
+        internal Task Schedule(Action<object> action, object value)
+        {
+            if (Thread.CurrentThread == mainThread)
+            {
+                try
+                {
+                    action(value);
+                    return Task.CompletedTask;
+                }
+                catch (Exception ex)
+                {
+                    return Task.FromException(ex);
+                }
+            }
+
+            return taskFactory.StartNew(action, value);
+        }
 
         internal Task<TResult> Schedule<TResult>(Func<TResult> action)
         {
@@ -73,6 +91,23 @@ namespace AltV.Net.Async
             }
 
             return taskFactory.StartNew(action);
+        }
+        
+        internal Task<TResult> Schedule<TResult>(Func<object, TResult> action, object value)
+        {
+            if (Thread.CurrentThread == mainThread)
+            {
+                try
+                {
+                    return Task.FromResult(action(value));
+                }
+                catch (Exception ex)
+                {
+                    return Task.FromException<TResult>(ex);
+                }
+            }
+
+            return taskFactory.StartNew(action, value);
         }
     }
 }

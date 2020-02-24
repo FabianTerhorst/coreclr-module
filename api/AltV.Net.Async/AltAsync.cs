@@ -164,10 +164,20 @@ namespace AltV.Net.Async
         {
             return AltVAsync.Schedule(action);
         }
+        
+        public static Task Do(Action<object> action, object value)
+        {
+            return AltVAsync.Schedule(action, value);
+        }
 
         public static Task<TResult> Do<TResult>(Func<TResult> action)
         {
             return AltVAsync.Schedule(action);
+        }
+        
+        public static Task<TResult> Do<TResult>(Func<object, TResult> action, object value)
+        {
+            return AltVAsync.Schedule(action, value);
         }
     }
 }
