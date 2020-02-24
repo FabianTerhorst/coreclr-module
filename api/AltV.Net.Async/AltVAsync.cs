@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -32,12 +33,7 @@ namespace AltV.Net.Async
         private void FirstTick()
         {
             TickThread = Thread.CurrentThread;
-            TickDelegate = Tick;
-        }
-
-        private void Tick()
-        {
-            scheduler.Tick();
+            TickDelegate = scheduler.Tick;
         }
 
         internal Task Schedule(Action action)
