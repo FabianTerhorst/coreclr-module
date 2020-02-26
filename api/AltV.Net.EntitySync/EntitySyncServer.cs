@@ -168,6 +168,17 @@ namespace AltV.Net.EntitySync
             AddEntity(entity);
             return entity;
         }
+        
+        public IEntity CreateEntity(ulong id, ulong type, Vector3 position, int dimension, uint range, IDictionary<string, object> data)
+        {
+            if (idProvider != null)
+            {
+                throw new InvalidOperationException("IdProvider needs to be null to use own id management.");
+            }
+            var entity = new Entity(id, type, position, dimension, range, data);
+            AddEntity(entity);
+            return entity;
+        }
 
         public void AddEntity(IEntity entity)
         {
@@ -177,7 +188,7 @@ namespace AltV.Net.EntitySync
         public void RemoveEntity(IEntity entity)
         {
             entityRepository.Remove(entity);
-            idProvider.Free(entity.Id);
+            idProvider?.Free(entity.Id);
         }
         
         public void UpdateEntity(IEntity entity)

@@ -80,6 +80,12 @@ namespace AltV.Net.EntitySync
         {
             return EntitySyncServer.CreateEntity(type, position, dimension, range, data);
         }
+        
+        public static IEntity CreateEntityWithOwnIdManagement(ulong id, ulong type, Vector3 position, int dimension, uint range,
+            IDictionary<string, object> data)
+        {
+            return EntitySyncServer.CreateEntity(id, type, position, dimension, range, data);
+        }
 
         public static void Stop()
         {

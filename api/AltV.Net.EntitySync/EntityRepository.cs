@@ -52,7 +52,7 @@ namespace AltV.Net.EntitySync
 
         public bool TryGet(ulong id, ulong type, out IEntity entity)
         {
-            return entityThreadRepositories[entityIdAndTypeThreadId(id, type, threadCount)].TryGet(id, out entity);
+            return entityThreadRepositories[entityIdAndTypeThreadId(id, type, threadCount)].TryGet(id, type, out entity);
         }
 
         public IEnumerable<IEntity> GetAll()

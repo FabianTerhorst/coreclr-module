@@ -10,6 +10,8 @@ namespace AltV.Net.EntitySync
 
         ulong Type { get; }
 
+        (ulong, ulong) HashKey { get; }
+
         // set position update flag to true in entity when updating position
         // thread will normally check if client is near entity
         // 1.) when client was near entity and is not anymore stream not, ( no change)
