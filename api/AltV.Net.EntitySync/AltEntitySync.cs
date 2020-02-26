@@ -60,6 +60,11 @@ namespace AltV.Net.EntitySync
             return EntitySyncServer.TryGetEntity(id, type, out entity);
         }
 
+        public static List<IEntity> FindEntities(Vector3 position, int dimension)
+        {
+            return EntitySyncServer.FindEntities(position, dimension);
+        }
+
         public static IEnumerable<IEntity> GetAllEntities()
         {
             return EntitySyncServer.GetAllEntities();

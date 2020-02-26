@@ -19,6 +19,8 @@ namespace AltV.Net.EntitySync
         
         private readonly ClientThreadRepository[] clientThreadRepositories;
 
+        private readonly SpatialPartition[] spatialPartitions;
+
         private readonly IEntityRepository entityRepository;
 
         private readonly IClientRepository clientRepository;
@@ -45,14 +47,17 @@ namespace AltV.Net.EntitySync
             entityThreads = new EntityThread[threadCount];
             entityThreadRepositories = new EntityThreadRepository[threadCount];
             clientThreadRepositories = new ClientThreadRepository[threadCount];
+            spatialPartitions = new SpatialPartition[threadCount];
 
             for (ulong i = 0; i < threadCount; i++)
             {
                 var clientThreadRepository = new ClientThreadRepository();
                 var entityThreadRepository = new EntityThreadRepository();
+                var spatialPartition = createSpatialPartition(i);
                 entityThreadRepositories[i] = entityThreadRepository;
                 clientThreadRepositories[i] = clientThreadRepository;
-                entityThreads[i] = new EntityThread(entityThreadRepository, clientThreadRepository, createSpatialPartition(i),syncRate,
+                spatialPartitions[i] = spatialPartition;
+                entityThreads[i] = new EntityThread(entityThreadRepository, clientThreadRepository, spatialPartition, syncRate,
                     OnEntityCreate,
                     OnEntityRemove, OnEntityDataChange, OnEntityPositionChange, OnEntityClearCache);
             }
@@ -188,6 +193,20 @@ namespace AltV.Net.EntitySync
         public IEnumerable<IEntity> GetAllEntities()
         {
             return entityRepository.GetAll();
+        }
+
+        public List<IEntity> FindEntities(Vector3 position, int dimension)
+        {
+            var foundEntities = new List<IEntity>();
+            for (int i = 0, length = entityThreads.Length; i < length; i++)
+            {
+                lock (clientThreadRepositories[i].Mutex)
+                {
+                    foundEntities.AddRange(spatialPartitions[i].Find(position, dimension));
+                }
+            }
+
+            return foundEntities;
         }
 
         public void Stop()
