@@ -32,16 +32,30 @@ public void PlayerConnect(IPlayer player, string reason)
 For adding a custom event handler. The method name is used as a event name when its not defined in the attribute.
 
 ```cs
-// Here the event name is 'MyEventName'
-[Event("MyEventName")]
+// Here the event name is 'MyEventName' and the event handler receives server events
+[ServerEvent("MyEventName")]
 public static void MyEventName2(string message)
 {
   Console.WriteLine(message);
 }
 
-// Here the event name is 'MyCustomEvent'
-[Event]
+// Here the event name is 'MyCustomEvent' and the event handler receives server events
+[ServerEvent]
 public static void MyCustomEvent(string message)
+{
+  Console.WriteLine(message);
+}
+
+// Here the event name is 'MyClientEventName' and the event handler receives client events
+[ClientEvent("MyClientEventName")]
+public static void MyClientEventName2(string message)
+{
+  Console.WriteLine(message);
+}
+
+// Here the event name is 'MyClientCustomEvent' and the event handler receives client events
+[ClientEvent]
+public static void MyClientCustomEvent(string message)
 {
   Console.WriteLine(message);
 }
