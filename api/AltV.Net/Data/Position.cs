@@ -1,9 +1,11 @@
 using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 
 namespace AltV.Net.Data
 {
+    [DataContract]
     [StructLayout(LayoutKind.Sequential)]
     public struct Position : IEquatable<Position>
     {
@@ -44,9 +46,11 @@ namespace AltV.Net.Data
                 Z = vector3.Z
             };
         }
-
+        [DataMember]
         public float X;
+        [DataMember]
         public float Y;
+        [DataMember]
         public float Z;
 
         public Position(float x, float y, float z)
