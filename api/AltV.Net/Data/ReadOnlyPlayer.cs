@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -129,6 +130,11 @@ namespace AltV.Net.Data
         }
 
         public void SetData(string key, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<string> GetAllDataKeys()
         {
             throw new NotImplementedException();
         }
