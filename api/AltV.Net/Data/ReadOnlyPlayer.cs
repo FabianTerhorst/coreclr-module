@@ -134,7 +134,7 @@ namespace AltV.Net.Data
             throw new NotImplementedException();
         }
 
-        public IEnumerable<string> GetAllData()
+        public IEnumerable<string> GetAllDataKeys()
         {
             throw new NotImplementedException();
         }

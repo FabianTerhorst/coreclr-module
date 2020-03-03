@@ -159,7 +159,7 @@ namespace AltV.Net.Elements.Entities
         }
 
         
-        public IEnumerable<string> GetAllData()
+        public IEnumerable<string> GetAllDataKeys()
         {
             return data.Keys.ToList(); // make copy!
         }

@@ -46,7 +46,7 @@ namespace AltV.Net.Elements.Entities
         /// Returns all stored data keys retrievable with <see cref="GetData{T}(string, out T)"/>
         /// </summary>
         /// <returns>IEnumerable</returns>
-        IEnumerable<string> GetAllData();
+        IEnumerable<string> GetAllDataKeys();
 
         void DeleteData(string key);
         
