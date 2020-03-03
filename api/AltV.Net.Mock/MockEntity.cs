@@ -219,5 +219,10 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<string> GetAllDataKeys()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
