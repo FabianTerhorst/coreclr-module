@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using AltV.Net.Elements.Args;
@@ -154,6 +156,15 @@ namespace AltV.Net.Elements.Entities
 
             result = cast;
             return true;
+        }
+
+        /// <summary>
+        /// Returns all stored data keys retrievable with <see cref="GetData{T}(string, out T)"/>
+        /// </summary>
+        /// <returns>IEnumerable</returns>
+        public IEnumerable<string> GetAllData()
+        {
+            return data.Keys.ToList(); // make copy!
         }
 
         public bool HasData(string key)
