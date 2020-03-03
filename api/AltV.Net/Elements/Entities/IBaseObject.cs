@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using AltV.Net.Elements.Args;
 
 namespace AltV.Net.Elements.Entities
@@ -40,6 +41,12 @@ namespace AltV.Net.Elements.Entities
         bool GetData<T>(string key, out T result);
 
         bool HasData(string key);
+
+        /// <summary>
+        /// Returns all stored data keys retrievable with <see cref="GetData{T}(string, out T)"/>
+        /// </summary>
+        /// <returns>IEnumerable</returns>
+        IEnumerable<string> GetAllData();
 
         void DeleteData(string key);
         
