@@ -1,13 +1,21 @@
 import * as alt from "alt";
 import * as natives from "natives";
-import resourceConfig from "./config.js";
+import resourceConfig from "/client/config.js";
 
 var filesToLoad = new Set();
 for (const file of resourceConfig.dependencies) {
-  filesToLoad.add("./" + file);
+  filesToLoad.add(file);
 }
+
+var dllToResource = new Map();
+
 for (const resourceName in resourceConfig.resources) {
-  filesToLoad.add("@" + resourceName + "/" + resourceConfig.resources[resourceName].assembly + ".dll");
+  const resourceDll = resourceConfig.resources[resourceName].assembly + ".dll";
+  filesToLoad.add(resourceDll);
+  if (dllToResource.has(resourceDll)) {
+    throw "A resource with same dll name is already present current:" + dllToResource.get(resourceDll) + " new:" + resourceName;
+  }
+  dllToResource.set(resourceDll, resourceName);
 }
 
 var App = {
@@ -29,8 +37,8 @@ var App = {
 };
 
 var config = config = {
-  vfs_prefix: "",
-  deploy_prefix: "",
+  vfs_prefix: "/client",
+  deploy_prefix: "/client",
   enable_debugging: 0,
   file_list: Array.from(filesToLoad),
 }
@@ -210,8 +218,7 @@ if (ENVIRONMENT_IS_SHELL) {
     data = read(f, 'binary');
     assert(typeof data === 'object');
     return data;*/
-    alt.log("load:" + f);
-    return new Uint8Array(alt.File.read('./dotnet.wasm', 'binary'));
+    return new Uint8Array(alt.File.read('/client/dotnet.wasm', 'binary'));
   };
 
   if (typeof scriptArgs != 'undefined') {
@@ -7496,7 +7503,14 @@ function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
   					};
   				} else {
   					fetch_file_cb = function (asset) {
-              var result = alt.File.read(asset, 'binary');
+              var resourcePath = asset.substring(8);
+              var result;
+              if (!dllToResource.has(resourcePath)) {
+                result = alt.File.read(asset, 'binary');
+              } else {
+                var resourceName = dllToResource.get(resourcePath);
+                result = alt.File.read("@" + resourceName + "/" + resourcePath, 'binary');
+              }
               var promise = new Promise(function(resolve, reject) {
                 resolve({
                   ok: true,
@@ -10667,9 +10681,6 @@ dependenciesFulfilled = function runCaller() {
 function run(args) {
   args = args || arguments_;
 
-  alt.log("run()");
-  alt.log(runDependencies);
-
   if (runDependencies > 0) {
     return;
   }
@@ -10677,8 +10688,6 @@ function run(args) {
   writeStackCookie();
 
   preRun();
-
-  alt.log(runDependencies);
 
   if (runDependencies > 0) return; // a preRun added a dependency, run will be called later
 
@@ -10796,8 +10805,6 @@ if (Module['preInit']) {
 
 
   noExitRuntime = true;
-
-alt.log("runtime init");
 
 run();
 
