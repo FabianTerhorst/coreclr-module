@@ -1,29 +1,38 @@
 import * as alt from "alt";
 import * as natives from "natives";
+import resourceConfig from "/config.json";
 
-//global.alt = alt;
+var filesToLoad = new Set();
+for (const file of resourceConfig.dependencies) {
+  filesToLoad.add(file);
+}
+for (const resourceName in resourceConfig.resources) {
+  filesToLoad.add(resourceConfig.resources[resourceName].assembly + ".dll");
+}
 
 var App = {
   init: function () {
-      //BINDING.call_static_method("[WasmTemplate.1]WasmTemplate.1.Program:Main", ["WasmTemplate.1"]);
-      var execute = Module.mono_bind_static_method("[AltV.Net.WebAssembly.Example] AltV.Net.WebAssembly.Example.Program:Main");
-      var altWrapper = {};
-      for (const key in alt) {
-        altWrapper[key] = alt[key];
-      }
-      var nativesWrapper = {};
-      for (const key in natives) {
-        nativesWrapper[key] = natives[key];
-      }
+    var altWrapper = {};
+    for (const key in alt) {
+      altWrapper[key] = alt[key];
+    }
+    var nativesWrapper = {};
+    for (const key in natives) {
+      nativesWrapper[key] = natives[key];
+    }
+    for (const resourceName in resourceConfig.resources) {
+      const resource = resourceConfig.resources[resourceName];
+      var execute = Module.mono_bind_static_method("[" + resource.assembly + "] " + resource.class + ":" + resource.method);
       execute(altWrapper, nativesWrapper);
+    }
   },
 };
 
 var config = config = {
-  vfs_prefix: "@dotnet",
-  deploy_prefix: "@dotnet",
+  vfs_prefix: "/",
+  deploy_prefix: "/",
   enable_debugging: 0,
-  file_list: [ "AltV.Net.WebAssembly.Example.dll","AltV.Net.Client.dll", "mscorlib.dll","WebAssembly.Bindings.dll","netstandard.dll","System.dll","Mono.Security.dll","System.Xml.dll","System.Numerics.dll","System.Core.dll","WebAssembly.Net.WebSockets.dll","System.Memory.dll","System.Data.dll","System.Transactions.dll","System.Data.DataSetExtensions.dll","System.Drawing.Common.dll","System.IO.Compression.dll","System.IO.Compression.FileSystem.dll","System.ComponentModel.Composition.dll","System.Net.Http.dll","WebAssembly.Net.Http.dll","System.Runtime.Serialization.dll","System.ServiceModel.Internals.dll","System.Xml.Linq.dll" ],
+  file_list: Array.from(filesToLoad),
 }
 
 var Module = { 
@@ -202,7 +211,7 @@ if (ENVIRONMENT_IS_SHELL) {
     assert(typeof data === 'object');
     return data;*/
     alt.log("load:" + f);
-    return new Uint8Array(alt.File.read('@dotnet/dotnet.wasm', 'binary'));
+    return new Uint8Array(alt.File.read('/dotnet.wasm', 'binary'));
   };
 
   if (typeof scriptArgs != 'undefined') {
@@ -7487,8 +7496,6 @@ function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
   					};
   				} else {
   					fetch_file_cb = function (asset) {
-              alt.log("start fetch");
-              alt.log(asset);
               var result = alt.File.read(asset, 'binary');
               var promise = new Promise(function(resolve, reject) {
                 resolve({
@@ -7498,7 +7505,7 @@ function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
                 });
               });
 
-  						return promise;//alt.File.read(asset, 'binary');//fetch (asset, { credentials: 'same-origin' });
+  						return promise;
   					}
   				}
   			}

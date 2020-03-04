@@ -10,4 +10,8 @@
   <ItemGroup>
     <ProjectReference Include="..\AltV.Net.WebAssembly.Bindings\AltV.Net.WebAssembly.Bindings.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Elements\Entities" />
+  </ItemGroup>
 </Project>
