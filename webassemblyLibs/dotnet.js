@@ -6,7 +6,7 @@ import * as natives from "natives";
 var App = {
   init: function () {
       //BINDING.call_static_method("[WasmTemplate.1]WasmTemplate.1.Program:Main", ["WasmTemplate.1"]);
-      var execute = Module.mono_bind_static_method("[AltV.Net.WebAssembly.Example] AltV.Net.WebAssembly.Example.Main:Hello");
+      var execute = Module.mono_bind_static_method("[AltV.Net.WebAssembly.Example] AltV.Net.WebAssembly.Example.Program:Main");
       var altWrapper = {};
       for (const key in alt) {
         altWrapper[key] = alt[key];

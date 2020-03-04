@@ -3,9 +3,9 @@ using AltV.Net.Client;
 
 namespace AltV.Net.WebAssembly.Example
 {
-    public class Main
+    public class Program
     {
-        public static void Hello(object alt, object natives)
+        public static void Main(object alt, object natives)
         {
             Alt.Init(alt, natives);
             Alt.Log($"Hello World, Im a message from C# and this message generated at {DateTime.Now}");
