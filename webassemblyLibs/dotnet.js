@@ -4,10 +4,10 @@ import resourceConfig from "./config.js";
 
 var filesToLoad = new Set();
 for (const file of resourceConfig.dependencies) {
-  filesToLoad.add(file);
+  filesToLoad.add("./" + file);
 }
 for (const resourceName in resourceConfig.resources) {
-  filesToLoad.add(resourceConfig.resources[resourceName].assembly + ".dll");
+  filesToLoad.add("@" + resourceName + "/" + resourceConfig.resources[resourceName].assembly + ".dll");
 }
 
 var App = {
@@ -29,8 +29,8 @@ var App = {
 };
 
 var config = config = {
-  vfs_prefix: "./",
-  deploy_prefix: "./",
+  vfs_prefix: "",
+  deploy_prefix: "",
   enable_debugging: 0,
   file_list: Array.from(filesToLoad),
 }
