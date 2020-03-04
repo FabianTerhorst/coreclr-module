@@ -1,6 +1,6 @@
 import * as alt from "alt";
 import * as natives from "natives";
-import resourceConfig from "./config.json";
+import resourceConfig from "./config.js";
 
 var filesToLoad = new Set();
 for (const file of resourceConfig.dependencies) {
