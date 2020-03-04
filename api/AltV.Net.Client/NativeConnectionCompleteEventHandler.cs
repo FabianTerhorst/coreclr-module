@@ -1,3 +1,4 @@
+using System;
 using AltV.Net.Client.Events;
 
 namespace AltV.Net.Client
@@ -13,11 +14,18 @@ namespace AltV.Net.Client
 
         public void OnConnectionComplete()
         {
-            var scriptEventHandler = EventHandlers.First;
-            while (scriptEventHandler != null)
+            try
             {
-                scriptEventHandler.Value();
-                scriptEventHandler = scriptEventHandler.Next;
+                var scriptEventHandler = EventHandlers.First;
+                while (scriptEventHandler != null)
+                {
+                    scriptEventHandler.Value();
+                    scriptEventHandler = scriptEventHandler.Next;
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine("Exception in connectionComplete handler:" + exception);
             }
         }
 

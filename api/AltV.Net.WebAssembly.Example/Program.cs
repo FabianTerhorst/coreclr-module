@@ -15,11 +15,16 @@ namespace AltV.Net.WebAssembly.Example
             Alt.On("test14", (args) => { Alt.Log("event fired"); });
             Alt.On("test15", (args) =>
             {
-                Alt.Log("event fired");
-                foreach (var arg in args)
+                Alt.Log("event fired start");
+                if (args != null)
                 {
-                    Alt.Log(arg.ToString());
+                    foreach (var arg in args)
+                    {
+                        Alt.Log(arg?.ToString());
+                    }
                 }
+
+                Alt.Log("event fired end");
             });
             Alt.Emit("test14");
             Alt.Emit("test15", "bla", "bla2");
@@ -37,10 +42,10 @@ namespace AltV.Net.WebAssembly.Example
             {
                 Alt.Log("connectionComplete");
             });
-            Alt.On("disconnect", (args) =>
+            /*Alt.On("disconnect", (args) =>
             {
                 Alt.Log("disconnect");
-            });
+            });*/
         }
     }
 }

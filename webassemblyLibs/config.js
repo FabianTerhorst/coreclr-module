@@ -2,13 +2,14 @@ export default {
     resources: {
         example: {
             assembly: "AltV.Net.WebAssembly.Example",
+            pdb: "AltV.Net.WebAssembly.Example",
             class: "AltV.Net.WebAssembly.Example.Program",
             method: "Main"
-        } 
+        }
     },
     dependencies: [
-        "AltV.Net.WebAssembly.Example.dll",
         "AltV.Net.Client.dll", 
+        "AltV.Net.Client.pdb", 
         "mscorlib.dll",
         "WebAssembly.Bindings.dll",
         "netstandard.dll","System.dll",

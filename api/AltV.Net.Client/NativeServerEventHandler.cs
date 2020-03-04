@@ -1,5 +1,6 @@
+using System;
 using AltV.Net.Client.Events;
-using WebAssembly.Core;
+using Array = WebAssembly.Core.Array;
 
 namespace AltV.Net.Client
 {
@@ -14,17 +15,33 @@ namespace AltV.Net.Client
 
         public void OnNativeEvent(Array nativeArgs)
         {
-            var scriptEventHandler = EventHandlers.First;
-            var length = nativeArgs.Length;
-            var args = new object[length];
-            for (var i = 0; i < length; i++)
+            try
             {
-                args[i] = nativeArgs[i];
+                var scriptEventHandler = EventHandlers.First;
+                object[] args;
+                if (nativeArgs != null)
+                {
+                    var length = nativeArgs.Length;
+                    args = new object[length];
+                    for (var i = 0; i < length; i++)
+                    {
+                        args[i] = nativeArgs[i];
+                    }
+                }
+                else
+                {
+                    args = new object[0];
+                }
+
+                while (scriptEventHandler != null)
+                {
+                    scriptEventHandler.Value(args);
+                    scriptEventHandler = scriptEventHandler.Next;
+                }
             }
-            while (scriptEventHandler != null)
+            catch (Exception exception)
             {
-                scriptEventHandler.Value(args);
-                scriptEventHandler = scriptEventHandler.Next;
+                Console.WriteLine("Exception in event handler:" + exception);
             }
         }
 

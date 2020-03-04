@@ -9,13 +9,24 @@ for (const file of resourceConfig.dependencies) {
 
 var dllToResource = new Map();
 
+var debugEnabled = 0;
+
 for (const resourceName in resourceConfig.resources) {
   const resourceDll = resourceConfig.resources[resourceName].assembly + ".dll";
+  const resourcePdb = resourceConfig.resources[resourceName].pdb + ".pdb";
   filesToLoad.add(resourceDll);
   if (dllToResource.has(resourceDll)) {
-    throw "A resource with same dll name is already present current:" + dllToResource.get(resourceDll) + " new:" + resourceName;
+    throw "A resource with same dll name is already present " + resourceDll + " current:" + dllToResource.get(resourceDll) + " new:" + resourceName;
   }
   dllToResource.set(resourceDll, resourceName);
+  if (resourcePdb) {
+    filesToLoad.add(resourcePdb);
+    if (dllToResource.has(resourcePdb)) {
+      throw "A resource with same pdb name is already present " + resourcePdb + " current:" + dllToResource.get(resourcePdb) + " new:" + resourceName;
+    }
+    dllToResource.set(resourcePdb, resourceName);
+    debugEnabled = 1;
+  }
 }
 
 var App = {
@@ -39,7 +50,7 @@ var App = {
 var config = config = {
   vfs_prefix: "/client",
   deploy_prefix: "/client",
-  enable_debugging: 0,
+  enable_debugging: debugEnabled,
   file_list: Array.from(filesToLoad),
 }
 
