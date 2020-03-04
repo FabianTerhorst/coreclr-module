@@ -1,6 +1,6 @@
 import * as alt from "alt";
 import * as natives from "natives";
-import resourceConfig from "/config.json";
+import resourceConfig from "./config.json";
 
 var filesToLoad = new Set();
 for (const file of resourceConfig.dependencies) {
@@ -29,8 +29,8 @@ var App = {
 };
 
 var config = config = {
-  vfs_prefix: "/",
-  deploy_prefix: "/",
+  vfs_prefix: "./",
+  deploy_prefix: "./",
   enable_debugging: 0,
   file_list: Array.from(filesToLoad),
 }
@@ -211,7 +211,7 @@ if (ENVIRONMENT_IS_SHELL) {
     assert(typeof data === 'object');
     return data;*/
     alt.log("load:" + f);
-    return new Uint8Array(alt.File.read('/dotnet.wasm', 'binary'));
+    return new Uint8Array(alt.File.read('./dotnet.wasm', 'binary'));
   };
 
   if (typeof scriptArgs != 'undefined') {
