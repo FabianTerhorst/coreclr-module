@@ -1,12 +1,12 @@
-{
-    "resources": {
-        "example": {
-            "assembly": "AltV.Net.WebAssembly.Example",
-            "class": "AltV.Net.WebAssembly.Example.Program",
-            "method": "Main"
+export default {
+    resources: {
+        example: {
+            assembly: "AltV.Net.WebAssembly.Example",
+            class: "AltV.Net.WebAssembly.Example.Program",
+            method: "Main"
         } 
     },
-    "dependencies": [
+    dependencies: [
         "AltV.Net.WebAssembly.Example.dll",
         "AltV.Net.Client.dll", 
         "mscorlib.dll",
