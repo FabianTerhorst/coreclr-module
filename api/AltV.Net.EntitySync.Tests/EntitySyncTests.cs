@@ -18,7 +18,7 @@ namespace AltV.Net.EntitySync.Tests
                     mockNetworkLayer = new MockNetworkLayer(repository);
                     return mockNetworkLayer;
                 },
-                (entity, threadCount) => (entity.Id % threadCount), 
+                (entity, threadCount) => (entity.Id % threadCount),
                 (entityId, entityType, threadCount) => (entityId % threadCount),
                 (id) => new Grid2(50_000, 50_000, 100, 10_000, 10_000),
                 new IdProvider());
@@ -41,7 +41,7 @@ namespace AltV.Net.EntitySync.Tests
             var removeResult = removeTask.Result;
             Assert.AreSame(removeResult.Entity, entity);
         }
-        
+
         [Test]
         public void RemoveTest()
         {
@@ -54,24 +54,24 @@ namespace AltV.Net.EntitySync.Tests
             createTask.Wait();
             var createResult = createTask.Result;
             Assert.AreSame(createResult.Entity, entity);
-            
+
             var readAsyncRemove = mockNetworkLayer.RemoveEventChannel.Reader.ReadAsync();
             var readAsyncClearCache = mockNetworkLayer.ClearCacheEventChannel.Reader.ReadAsync();
-            
+
             AltEntitySync.RemoveEntity(entity);
 
             var removeTask = readAsyncRemove.AsTask();
             removeTask.Wait();
             var removeResult = removeTask.Result;
             Assert.AreSame(removeResult.Entity, entity);
-            
+
             var clearCacheTask = readAsyncClearCache.AsTask();
             clearCacheTask.Wait();
             var clearCacheResult = clearCacheTask.Result;
-            
+
             Assert.AreSame(clearCacheResult.Entity, entity);
         }
-        
+
         [Test]
         public void RemoveTestWithoutInitialData()
         {
@@ -82,11 +82,11 @@ namespace AltV.Net.EntitySync.Tests
             createTask.Wait();
             var createResult = createTask.Result;
             Assert.AreSame(createResult.Entity, entity);
-            
+
             var readAsyncDataUpdate = mockNetworkLayer.DataChangeEventChannel.Reader.ReadAsync();
-            
+
             entity.SetData("bla", 1337);
-            
+
             var updateDataTask = readAsyncDataUpdate.AsTask();
             updateDataTask.Wait();
             var updateDataResult = updateDataTask.Result;
@@ -100,21 +100,21 @@ namespace AltV.Net.EntitySync.Tests
             }
 
             Assert.AreSame(updateDataResult.Entity, entity);
-            
+
             var readAsyncRemove = mockNetworkLayer.RemoveEventChannel.Reader.ReadAsync();
             var readAsyncClearCache = mockNetworkLayer.ClearCacheEventChannel.Reader.ReadAsync();
-            
+
             AltEntitySync.RemoveEntity(entity);
 
             var removeTask = readAsyncRemove.AsTask();
             removeTask.Wait();
             var removeResult = removeTask.Result;
             Assert.AreSame(removeResult.Entity, entity);
-            
+
             var clearCacheTask = readAsyncClearCache.AsTask();
             clearCacheTask.Wait();
             var clearCacheResult = clearCacheTask.Result;
-            
+
             Assert.AreSame(clearCacheResult.Entity, entity);
         }
 
@@ -272,6 +272,27 @@ namespace AltV.Net.EntitySync.Tests
             removeTask.Wait();
             var removeResult = removeTask.Result;
             Assert.AreSame(removeResult.Entity, entity);
+        }
+
+        [Test]
+        public void AddRepositoryTest()
+        {
+            var entity2 = new Entity(0, Vector3.Zero, 0, 2);
+            AltEntitySync.AddEntity(entity2);
+            if (AltEntitySync.TryGetEntity(entity2.Id, 0, out var foundEntity2))
+            {
+                Assert.AreSame(entity2, foundEntity2);
+            }
+            var entity = new Entity(1, Vector3.Zero, 0, 2);
+            AltEntitySync.AddEntity(entity);
+            if (AltEntitySync.TryGetEntity(entity.Id, 1, out var foundEntity))
+            {
+                Assert.AreSame(entity, foundEntity);
+            }
+            AltEntitySync.RemoveEntity(entity2);
+            Assert.False(AltEntitySync.TryGetEntity(entity2.Id, 0, out _));
+            AltEntitySync.RemoveEntity(entity);
+            Assert.False(AltEntitySync.TryGetEntity(entity.Id, 1, out _));
         }
     }
 }
