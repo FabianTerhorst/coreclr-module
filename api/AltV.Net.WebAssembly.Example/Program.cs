@@ -30,13 +30,13 @@ namespace AltV.Net.WebAssembly.Example
             Alt.Emit("test15", "bla", "bla2");
             Alt.EveryTick += () =>
             {
-                Alt.Natives.DrawRect(0.42478, 0, 0.1, 0.1, 0, 140, 183, 175);
-                Alt.Natives.DrawRect(0.5, 0, 0.05, 0.1, 0, 0, 0, 175);
-                Alt.Natives.DrawRect(0.575, 0, 0.1, 0.1, 0, 152, 0, 175);
+                Alt.Natives.DrawRect(0.42478, 0, 0.1, 0.1, 0, 140, 183, 175, false);
+                Alt.Natives.DrawRect(0.5, 0, 0.05, 0.1, 0, 0, 0, 175, false);
+                Alt.Natives.DrawRect(0.575, 0, 0.1, 0.1, 0, 152, 0, 175, false);
 
-                Alt.Natives.DrawRect(0.846, 0.30, 0.06, 0.035, 0, 0, 0, 175);
-                Alt.Natives.DrawRect(0.9105, 0.30, 0.06, 0.035, 0, 0, 0, 175);
-                Alt.Natives.DrawRect(0.975, 0.30, 0.06, 0.035, 0, 0, 0, 175);
+                Alt.Natives.DrawRect(0.846, 0.30, 0.06, 0.035, 0, 0, 0, 175, false);
+                Alt.Natives.DrawRect(0.9105, 0.30, 0.06, 0.035, 0, 0, 0, 175, false);
+                Alt.Natives.DrawRect(0.975, 0.30, 0.06, 0.035, 0, 0, 0, 175, false);
             };
             Alt.On("connectionComplete", (args) =>
             {

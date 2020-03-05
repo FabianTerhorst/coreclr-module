@@ -1,6 +1,6 @@
 using AltV.Net.Client.Events;
 
-namespace AltV.Net.Client
+namespace AltV.Net.Client.EventHandlers
 {
     internal class NativeEveryTickEventHandler : NativeEventHandler<EveryTickEventDelegate, EveryTickEventDelegate>
     {

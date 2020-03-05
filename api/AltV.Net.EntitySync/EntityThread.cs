@@ -82,9 +82,7 @@ namespace AltV.Net.EntitySync
             {
                 throw new ArgumentException("onEntityPositionChange should not be null.");
             }
-
-            thread = new Thread(OnLoop) {IsBackground = true};
-            thread.Start();
+           
             this.entityThreadRepository = entityThreadRepository;
             this.clientThreadRepository = clientThreadRepository;
             this.spatialPartition = spatialPartition;
@@ -94,6 +92,9 @@ namespace AltV.Net.EntitySync
             this.onEntityDataChange = onEntityDataChange;
             this.onEntityPositionChange = onEntityPositionChange;
             this.onEntityClearCache = onEntityClearCache;
+
+            thread = new Thread(OnLoop) { IsBackground = true };
+            thread.Start();
         }
 
         public void OnLoop()

@@ -1,7 +1,7 @@
 using System;
 using AltV.Net.Client.Events;
 
-namespace AltV.Net.Client
+namespace AltV.Net.Client.EventHandlers
 {
     internal class NativeConnectionCompleteEventHandler : NativeEventHandler<ConnectionCompleteEventDelegate, ConnectionCompleteEventDelegate>
     {
