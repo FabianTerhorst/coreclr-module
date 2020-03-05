@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace AltV.Net.Client
+namespace AltV.Net.Client.EventHandlers
 {
     internal abstract class NativeEventHandler<T, T2>
     {

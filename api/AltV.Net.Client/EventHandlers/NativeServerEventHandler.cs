@@ -2,7 +2,7 @@ using System;
 using AltV.Net.Client.Events;
 using Array = WebAssembly.Core.Array;
 
-namespace AltV.Net.Client
+namespace AltV.Net.Client.EventHandlers
 {
     internal class NativeServerEventHandler : NativeEventHandler<NativeEventDelegate, ServerEventDelegate>
     {

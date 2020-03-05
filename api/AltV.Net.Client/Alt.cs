@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AltV.Net.Client.EventHandlers;
 using AltV.Net.Client.Events;
 using WebAssembly;
 
@@ -9,6 +10,8 @@ namespace AltV.Net.Client
         private static NativeAlt _alt;
 
         public static NativeNatives Natives;
+
+        internal static NativeLocalStorage LocalStorage;
 
         private static readonly IDictionary<string, NativeEventHandler<NativeEventDelegate, ServerEventDelegate>>
             NativeServerEventHandlers =
@@ -74,6 +77,7 @@ namespace AltV.Net.Client
         {
             _alt = new NativeAlt((JSObject) alt);
             Natives = new NativeNatives((JSObject) natives);
+            LocalStorage = new NativeLocalStorage((JSObject) alt);
         }
 
         public static void Log(string message)
