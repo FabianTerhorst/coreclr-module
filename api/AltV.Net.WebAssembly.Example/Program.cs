@@ -1,5 +1,6 @@
 using System;
 using AltV.Net.Client;
+using AltV.Net.Client.Elements.Entities;
 
 namespace AltV.Net.WebAssembly.Example
 {
@@ -42,6 +43,11 @@ namespace AltV.Net.WebAssembly.Example
             {
                 Alt.Log("connectionComplete");
             });
+
+            var localStorage = LocalStorage.Get();
+            localStorage.Set("bla", "123");
+            Console.WriteLine(localStorage.Get("bla"));
+            localStorage.Save();
             /*Alt.On("disconnect", (args) =>
             {
                 Alt.Log("disconnect");
