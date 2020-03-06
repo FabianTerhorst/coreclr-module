@@ -4,7 +4,24 @@ import resourceConfig from "/client/config.js";
 
 var filesToLoad = new Set();
 for (const file of resourceConfig.dependencies) {
-  filesToLoad.add(file);
+  if (file.startsWith("@")) {
+    for (var i = 0; i < file.length; i++) {
+      if (file.charAt(i) === "/") {
+        const resourceDllPath = file.substring(i + 1);
+        filesToLoad.add(resourceDllPath);
+        const resourceName = file.substring(1, i);
+        if (dllToResource.has(resourceDllPath)) {
+          throw "A resource with same dll name is already present " + resourceDllPath + " current:" + dllToResource.get(resourceDllPath) + " new:" + resourceName;
+        }
+        dllToResource.set(resourceDllPath, resourceName);
+        alt.log("add dll from resource " + resourceName);
+        alt.log("path " + resourceDllPath);
+        break;
+      }
+    }
+  } else {
+    filesToLoad.add(file);
+  }
 }
 
 var dllToResource = new Map();
