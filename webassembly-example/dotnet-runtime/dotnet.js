@@ -249,6 +249,7 @@ if (ENVIRONMENT_IS_SHELL) {
     alt.log("start loading .wasm");
     const dotnetWasmRuntimeConfig = resourceConfig.runtime;
     if (dotnetWasmRuntimeConfig) {
+      alt.log("load .wasm from path:" + dotnetWasmRuntimeConfig);
       return new Uint8Array(alt.File.read(dotnetWasmRuntimeConfig, 'binary'));
     } else {
       return new Uint8Array(alt.File.read('/client/dotnet.wasm', 'binary'));
