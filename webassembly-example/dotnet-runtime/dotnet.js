@@ -10845,8 +10845,11 @@ if (Module['preInit']) {
 
   noExitRuntime = true;
 
+  alt.log("start run runtime");
+
 run();
 
+alt.log("end run runtime");
 
 
 
