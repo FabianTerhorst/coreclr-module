@@ -32,10 +32,18 @@
       href: trace.md
     - name: Serialization
       href: serialization.md
+    - name: Create vehicles
+      href: vehicle_create.md
+    - name: Give player a weapon
+      href: player_giveweapon.md
 - name: Player Events
   href: player_events.md
   items:
     - name: Death
       href: player_death.md
-    - name: Weapon Damage
+    - name: Weapon damage
       href: player_damage.md
+    - name: Connect
+      href: player_connect.md
+    - name: Disconnect
+      href: player_disconnect.md
