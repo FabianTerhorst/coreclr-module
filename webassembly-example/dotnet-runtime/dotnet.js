@@ -246,6 +246,7 @@ if (ENVIRONMENT_IS_SHELL) {
     data = read(f, 'binary');
     assert(typeof data === 'object');
     return data;*/
+    alt.log("start loading .wasm");
     return new Uint8Array(alt.File.read('/client/dotnet.wasm', 'binary'));
   };
 
@@ -1733,6 +1734,7 @@ if (!isDataURI(wasmBinaryFile)) {
 }
 
 function getBinary() {
+  alt.log("start get binary");
   try {
     if (wasmBinary) {
       return new Uint8Array(wasmBinary);
@@ -1750,6 +1752,7 @@ function getBinary() {
 }
 
 function getBinaryPromise() {
+  alt.log("start binary promise");
   // if we don't have the binary yet, and have the Fetch api, use that
   // in some environments, like Electron's render process, Fetch api may be present, but have a different context than expected, let's only use it on the Web
   if (!wasmBinary && (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) && typeof fetch === 'function') {
@@ -1765,6 +1768,7 @@ function getBinaryPromise() {
   // Otherwise, getBinary should be able to get it synchronously
   return new Promise(function(resolve, reject) {
     resolve(getBinary());
+    alt.log("got binary promise");
   });
 }
 
@@ -1807,6 +1811,7 @@ function createWasm() {
 
   function instantiateArrayBuffer(receiver) {
     return getBinaryPromise().then(function(binary) {
+      alt.log("start wasm init");
       return WebAssembly.instantiate(binary, info);
     }).then(receiver, function(reason) {
       err('failed to asynchronously prepare wasm: ' + reason);
@@ -1847,6 +1852,7 @@ function createWasm() {
     }
   }
 
+  alt.log("start wasm init async");
   instantiateAsync();
   return {}; // no exports yet; we'll fill them in later
 }
