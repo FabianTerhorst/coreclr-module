@@ -7546,9 +7546,11 @@ function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
               var resourcePath = asset.substring(8);
               var result;
               if (!dllToResource.has(resourcePath)) {
+                alt.log("load file:" + asset);
                 result = alt.File.read(asset, 'binary');
               } else {
                 var resourceName = dllToResource.get(resourcePath);
+                alt.log("@" + resourceName + "/" + resourcePath);
                 result = alt.File.read("@" + resourceName + "/" + resourcePath, 'binary');
               }
               var promise = new Promise(function(resolve, reject) {
