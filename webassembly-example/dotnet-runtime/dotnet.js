@@ -64,10 +64,10 @@ var App = {
   },
 };
 
-var config = config = {
+var config = {
   vfs_prefix: "/client",
   deploy_prefix: "/client",
-  enable_debugging: debugEnabled,
+  enable_debugging: /*debugEnabled*/0,
   file_list: Array.from(filesToLoad),
 }
 
@@ -80,7 +80,35 @@ var Module = {
 			config.file_list,
 			function () {
 				App.init ();
-			}
+      },
+      function (asset) {
+        var resourcePath = asset.substring(8);
+        var result;
+        if (!dllToResource.has(resourcePath)) {
+          alt.log("load file:" + asset);
+          result = alt.File.read(asset, 'binary');
+        } else {
+          var resourceName = dllToResource.get(resourcePath);
+          alt.log("@" + resourceName + "/" + resourcePath);
+          result = alt.File.read("@" + resourceName + "/" + resourcePath, 'binary');
+        }
+
+        var resultFunc = function(resolve, reject) {
+          resolve(result);
+        };
+
+        var promise = new Promise(function(resolve, reject) {
+          resolve({
+            ok: true,
+            url: asset,
+            arrayBuffer: function() { 
+              return new Promise(resultFunc);
+             }
+          });
+        });
+
+        return promise;
+      }
 		)
   },
   print: function(msg) {
@@ -88,6 +116,26 @@ var Module = {
   },
   printErr: function(msg) {
     alt.log(msg);
+  },
+  instantiateWasm: function(info, receiveInstance) {
+    alt.log("start loading .wasm");
+    const dotnetWasmRuntimeConfig = resourceConfig.runtime;
+    var binary;
+    if (dotnetWasmRuntimeConfig) {
+      alt.log("load .wasm from path:" + dotnetWasmRuntimeConfig);
+      binary = new Uint8Array(alt.File.read(dotnetWasmRuntimeConfig, 'binary'));
+    } else {
+      binary = new Uint8Array(alt.File.read('/client/dotnet.wasm', 'binary'));
+    }
+    var wasmInstance =  WebAssembly.instantiate(binary, info);
+    alt.log("end wasm init instance");
+    wasmInstance.then((webassemblyInstance) => {
+      receiveInstance(webassemblyInstance['instance']);
+    }, function(reason) {
+      err('failed to asynchronously prepare wasm: ' + reason);
+      abort(reason);
+    });
+    return {};
   }
 };
 
@@ -10721,7 +10769,10 @@ dependenciesFulfilled = function runCaller() {
 
 /** @type {function(Array=)} */
 function run(args) {
+  alt.log("run");
   args = args || arguments_;
+
+  alt.log("run1:" + runDependencies);
 
   if (runDependencies > 0) {
     return;
@@ -10731,9 +10782,12 @@ function run(args) {
 
   preRun();
 
+  alt.log("run2:" + runDependencies);
+
   if (runDependencies > 0) return; // a preRun added a dependency, run will be called later
 
   function doRun() {
+    alt.log("do run:" + calledRun);
     // run may have just been called through dependencies being fulfilled just in this very frame,
     // or while the async setStatus time below was happening
     if (calledRun) return;
@@ -10745,6 +10799,8 @@ function run(args) {
     initRuntime();
 
     preMain();
+
+    alt.log("onRuntimeInitialized");
 
     if (Module['onRuntimeInitialized']) Module['onRuntimeInitialized']();
 
