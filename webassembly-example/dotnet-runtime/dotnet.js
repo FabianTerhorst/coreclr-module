@@ -1,6 +1,6 @@
 import * as alt from "alt";
 import * as natives from "natives";
-import resourceConfig from "/client/config.js";
+import resourceConfig from "@dotnet-runtime-config/config.js";
 
 var filesToLoad = new Set();
 for (const file of resourceConfig.dependencies) {
