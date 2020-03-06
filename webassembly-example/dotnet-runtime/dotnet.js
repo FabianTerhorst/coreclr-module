@@ -46,32 +46,18 @@ for (const resourceName in resourceConfig.resources) {
   }
 }
 
-var App = {
-  init: function () {
-    var altWrapper = {};
-    for (const key in alt) {
-      altWrapper[key] = alt[key];
-    }
-    var nativesWrapper = {};
-    for (const key in natives) {
-      nativesWrapper[key] = natives[key];
-    }
-    for (const resourceName in resourceConfig.resources) {
-      const resource = resourceConfig.resources[resourceName];
-      var execute = Module.mono_bind_static_method("[" + resource.assembly + "] " + resource.class + ":" + resource.method);
-      execute(altWrapper, nativesWrapper);
-    }
-  },
-};
-
 var config = {
-  vfs_prefix: "/client",
-  deploy_prefix: "/client",
+  vfs_prefix: "managed",
+  deploy_prefix: "managed",
   enable_debugging: /*debugEnabled*/0,
   file_list: Array.from(filesToLoad),
 }
 
-var Module = { 
+for (const file of config.file_list) {
+  alt.log("file to load:" + file);
+}
+
+var Module = {
 	onRuntimeInitialized: function () {
 		MONO.mono_load_runtime_and_bcl (
 			config.vfs_prefix,
@@ -79,10 +65,22 @@ var Module = {
 			config.enable_debugging,
 			config.file_list,
 			function () {
-				App.init ();
+				var altWrapper = {};
+        for (const key in alt) {
+          altWrapper[key] = alt[key];
+        }
+        var nativesWrapper = {};
+        for (const key in natives) {
+          nativesWrapper[key] = natives[key];
+        }
+        Module.mono_bindings_init("[WebAssembly.Bindings]WebAssembly.Runtime");
+        for (const resourceName in resourceConfig.resources) {
+          const resource = resourceConfig.resources[resourceName];
+          BINDING.call_static_method("[" + resource.assembly + "] " + resource.class + ":" + resource.method, [altWrapper, nativesWrapper]);
+        }
       },
       function (asset) {
-        var resourcePath = asset.substring(8);
+        var resourcePath = asset.substring(7);
         var result;
         if (!dllToResource.has(resourcePath)) {
           alt.log("load file:" + asset);
@@ -139,6 +137,9 @@ var Module = {
   }
 };
 
+var dateNow = function() {
+  return Date.now();
+};
 
 // Copyright 2010 The Emscripten Authors.  All rights reserved.
 // Emscripten is available under two separate licenses, the MIT license and the
@@ -287,21 +288,13 @@ if (ENVIRONMENT_IS_SHELL) {
   }
 
   readBinary = function readBinary(f) {
-    /*var data;
+    var data;
     if (typeof readbuffer === 'function') {
       return new Uint8Array(readbuffer(f));
     }
     data = read(f, 'binary');
     assert(typeof data === 'object');
-    return data;*/
-    alt.log("start loading .wasm");
-    const dotnetWasmRuntimeConfig = resourceConfig.runtime;
-    if (dotnetWasmRuntimeConfig) {
-      alt.log("load .wasm from path:" + dotnetWasmRuntimeConfig);
-      return new Uint8Array(alt.File.read(dotnetWasmRuntimeConfig, 'binary'));
-    } else {
-      return new Uint8Array(alt.File.read('/client/dotnet.wasm', 'binary'));
-    }
+    return data;
   };
 
   if (typeof scriptArgs != 'undefined') {
@@ -1392,11 +1385,11 @@ function updateGlobalBufferAndViews(buf) {
 }
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 5943088,
+    STACK_BASE = 5943104,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 700208,
-    DYNAMIC_BASE = 5943088,
-    DYNAMICTOP_PTR = 700048;
+    STACK_MAX = 700224,
+    DYNAMIC_BASE = 5943104,
+    DYNAMICTOP_PTR = 700064;
 
 assert(STACK_BASE % 16 === 0, 'stack must start aligned');
 assert(DYNAMIC_BASE % 16 === 0, 'heap must start aligned');
@@ -1932,7 +1925,7 @@ function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
 
 
 
-// STATICTOP = STATIC_BASE + 699184;
+// STATICTOP = STATIC_BASE + 699200;
 /* global initializers */  __ATINIT__.push({ func: function() { ___wasm_call_ctors() } });
 
 
@@ -6768,7 +6761,7 @@ function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
     }
 
   function _emscripten_get_sbrk_ptr() {
-      return 700048;
+      return 700064;
     }
 
   function _emscripten_memcpy_big(dest, src, num) {
@@ -7279,7 +7272,7 @@ function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
     }
 
   
-  var ___tm_timezone=(stringToUTF8("GMT", 700112, 4), 700112);function _gmtime_r(time, tmPtr) {
+  var ___tm_timezone=(stringToUTF8("GMT", 700128, 4), 700128);function _gmtime_r(time, tmPtr) {
       var date = new Date(HEAP32[((time)>>2)]*1000);
       HEAP32[((tmPtr)>>2)]=date.getUTCSeconds();
       HEAP32[(((tmPtr)+(4))>>2)]=date.getUTCMinutes();
@@ -7591,25 +7584,7 @@ function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
   					};
   				} else {
   					fetch_file_cb = function (asset) {
-              var resourcePath = asset.substring(8);
-              var result;
-              if (!dllToResource.has(resourcePath)) {
-                alt.log("load file:" + asset);
-                result = alt.File.read(asset, 'binary');
-              } else {
-                var resourceName = dllToResource.get(resourcePath);
-                alt.log("@" + resourceName + "/" + resourcePath);
-                result = alt.File.read("@" + resourceName + "/" + resourcePath, 'binary');
-              }
-              var promise = new Promise(function(resolve, reject) {
-                resolve({
-                  ok: true,
-                  url: asset,
-                  arrayBuffer: function() { return result; }
-                });
-              });
-
-  						return promise;
+  						return fetch (asset, { credentials: 'same-origin' });
   					}
   				}
   			}
