@@ -247,7 +247,12 @@ if (ENVIRONMENT_IS_SHELL) {
     assert(typeof data === 'object');
     return data;*/
     alt.log("start loading .wasm");
-    return new Uint8Array(alt.File.read('/client/dotnet.wasm', 'binary'));
+    const dotnetWasmRuntimeConfig = runtimeConfig.runtime;
+    if (dotnetWasmRuntimeConfig) {
+      return new Uint8Array(alt.File.read(rdotnetWasmRuntimeConfig, 'binary'));
+    } else {
+      return new Uint8Array(alt.File.read('/client/dotnet.wasm', 'binary'));
+    }
   };
 
   if (typeof scriptArgs != 'undefined') {

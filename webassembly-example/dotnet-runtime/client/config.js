@@ -7,6 +7,7 @@ export default {
             method: "Main"
         }
     },
+    runtime: "/client/dotnet.wasm",
     dependencies: [
         "AltV.Net.Client.dll", 
         "AltV.Net.Client.pdb", 
