@@ -12,12 +12,12 @@ for (const file of resourceConfig.dependencies) {
         const resourceDllPath = file.substring(i + 1);
         filesToLoad.add(resourceDllPath);
         const resourceName = file.substring(1, i);
+        alt.log("add dll from resource " + resourceName);
+        alt.log("path " + resourceDllPath);
         if (dllToResource.has(resourceDllPath)) {
           throw "A resource with same dll name is already present " + resourceDllPath + " current:" + dllToResource.get(resourceDllPath) + " new:" + resourceName;
         }
         dllToResource.set(resourceDllPath, resourceName);
-        alt.log("add dll from resource " + resourceName);
-        alt.log("path " + resourceDllPath);
         break;
       }
     }
@@ -247,9 +247,9 @@ if (ENVIRONMENT_IS_SHELL) {
     assert(typeof data === 'object');
     return data;*/
     alt.log("start loading .wasm");
-    const dotnetWasmRuntimeConfig = runtimeConfig.runtime;
+    const dotnetWasmRuntimeConfig = resourceConfig.runtime;
     if (dotnetWasmRuntimeConfig) {
-      return new Uint8Array(alt.File.read(rdotnetWasmRuntimeConfig, 'binary'));
+      return new Uint8Array(alt.File.read(dotnetWasmRuntimeConfig, 'binary'));
     } else {
       return new Uint8Array(alt.File.read('/client/dotnet.wasm', 'binary'));
     }
