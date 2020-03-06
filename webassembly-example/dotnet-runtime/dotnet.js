@@ -2,6 +2,8 @@ import * as alt from "alt";
 import * as natives from "natives";
 import resourceConfig from "@dotnet-runtime-config/config.js";
 
+var dllToResource = new Map();
+
 var filesToLoad = new Set();
 for (const file of resourceConfig.dependencies) {
   if (file.startsWith("@")) {
@@ -23,8 +25,6 @@ for (const file of resourceConfig.dependencies) {
     filesToLoad.add(file);
   }
 }
-
-var dllToResource = new Map();
 
 var debugEnabled = 0;
 
