@@ -1,5 +1,6 @@
 import * as alt from "alt";
 import * as natives from "natives";
+import {Player, LocalStorage} from "alt";
 import resourceConfig from "@dotnet-runtime-config/config.js";
 
 var dllToResource = new Map();
@@ -67,12 +68,18 @@ var Module = {
         for (const key in natives) {
           nativesWrapper[key] = natives[key];
         }
+        var playerWrapper = {};
+        for (const key in Player) {
+          playerWrapper[key] = Player[key];
+        }
+        var localStorageWrapper = {};
+        for (const key in LocalStorage) {
+          localStorageWrapper[key] = LocalStorage[key];
+        }
         Module.mono_bindings_init("[WebAssembly.Bindings]WebAssembly.Runtime");
         for (const resourceName in resourceConfig.resources) {
           const resource = resourceConfig.resources[resourceName];
-          BINDING.call_static_method("[" + resource.assembly + "] " + resource.class + ":" + resource.method, [altWrapper, nativesWrapper]);
-          //var execute = Module.mono_bind_static_method("[" + resource.assembly + "] " + resource.class + ":" + resource.method);	
-          //execute(altWrapper, nativesWrapper);	
+          BINDING.call_static_method("[" + resource.assembly + "] " + resource.class + ":" + resource.method, [altWrapper, nativesWrapper, playerWrapper, localStorageWrapper]);
         }
       },
       function (asset) {
