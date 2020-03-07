@@ -1,3 +1,4 @@
+using System;
 using WebAssembly;
 using WebAssembly.Core;
 
@@ -19,17 +20,10 @@ namespace AltV.Net.Client
 
         private readonly Function localStorageSet;
 
-        public NativeLocalStorage(JSObject alt)
+        public NativeLocalStorage(JSObject localStorage)
         {
-            localStorage = (JSObject) alt.GetObjectProperty("LocalStorage");
+            this.localStorage = localStorage;
             get = (Function) localStorage.GetObjectProperty("get");
-
-            var prototype = (JSObject) localStorage.GetObjectProperty("prototype");
-            localStorageDelete = (Function) prototype.GetObjectProperty("delete");
-            localStorageDeleteAll = (Function) prototype.GetObjectProperty("deleteAll");
-            localStorageGet = (Function) prototype.GetObjectProperty("get");
-            localStorageSave = (Function) prototype.GetObjectProperty("save");
-            localStorageSet = (Function) prototype.GetObjectProperty("set");
         }
 
         public JSObject Get()
@@ -39,27 +33,27 @@ namespace AltV.Net.Client
 
         public void Delete(JSObject instance, string key)
         {
-            localStorageDelete.Call(instance, key);
+            instance.Invoke("delete", key);
         }
 
         public void DeleteAll(JSObject instance)
         {
-            localStorageDeleteAll.Call(instance);
+            instance.Invoke("deleteAll",instance);
         }
 
         public object Get(JSObject instance, string key)
         {
-            return localStorageGet.Call(instance, key);
+            return instance.Invoke("get", key);
         }
 
         public void Save(JSObject instance)
         {
-            localStorageSave.Call(instance);
+            instance.Invoke("save");
         }
 
         public void Set(JSObject instance, string key, object value)
         {
-            localStorageSet.Call(instance, key, value);
+            instance.Invoke("set", key, value);
         }
     }
 }

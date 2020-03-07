@@ -4,14 +4,20 @@ namespace AltV.Net.Client.Elements.Entities
 {
     public class Player
     {
-        private static JSObject player;
-
-        private static JSObject prototype;
-
-        internal static void Init(JSObject alt)
+        public static Player Local()
         {
-            player = (JSObject) alt.GetObjectProperty("Player");
-            prototype = (JSObject) player.GetObjectProperty("prototype");
+            return new Player(Alt.Player.Local());
+        }
+        
+        private readonly JSObject jsObject;
+        
+        public int Id => Alt.Player.Id(jsObject);
+
+        public string Name => Alt.Player.Name(jsObject);
+
+        private Player(JSObject jsObject)
+        {
+            this.jsObject = jsObject;
         }
     }
 }

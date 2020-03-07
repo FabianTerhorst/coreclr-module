@@ -6,9 +6,9 @@ namespace AltV.Net.WebAssembly.Example
 {
     public class Program
     {
-        public static void Main(object alt, object natives)
+        public static void Main(object alt, object natives, object player, object localStorageObj)
         {
-            Alt.Init(alt, natives);
+            Alt.Init(alt, natives, player, localStorageObj);
             Alt.Log($"Hello World, Im a message from C# and this message generated at {DateTime.Now}");
             Alt.OnConnectionComplete += () => { Alt.Log("on connection completed"); };
             Alt.OnDisconnect += () => { Alt.Log("on disconnect"); };
@@ -39,19 +39,16 @@ namespace AltV.Net.WebAssembly.Example
                 Alt.Natives.DrawRect(0.9105, 0.30, 0.06, 0.035, 0, 0, 0, 175, false);
                 Alt.Natives.DrawRect(0.975, 0.30, 0.06, 0.035, 0, 0, 0, 175, false);
             };
-            Alt.On("connectionComplete", (args) =>
-            {
-                Alt.Log("connectionComplete");
-            });
 
             var localStorage = LocalStorage.Get();
             localStorage.Set("bla", "123");
             Console.WriteLine(localStorage.Get("bla"));
             localStorage.Save();
-            /*Alt.On("disconnect", (args) =>
-            {
-                Alt.Log("disconnect");
-            });*/
+
+            var localPlayer = Player.Local();
+            Console.WriteLine(localPlayer.Name);
+            Console.WriteLine(localPlayer.Id);
+            Console.WriteLine(localPlayer.Id.GetType().Name);
         }
     }
 }

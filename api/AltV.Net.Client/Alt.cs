@@ -12,6 +12,8 @@ namespace AltV.Net.Client
         public static NativeNatives Natives;
 
         internal static NativeLocalStorage LocalStorage;
+        
+        internal static NativePlayer Player;
 
         private static readonly IDictionary<string, NativeEventHandler<NativeEventDelegate, ServerEventDelegate>>
             NativeServerEventHandlers =
@@ -73,11 +75,12 @@ namespace AltV.Net.Client
             remove => _nativeEveryTickHandler?.Remove(value);
         }
 
-        public static void Init(object alt, object natives)
+        public static void Init(object alt, object natives, object player, object localStorage)
         {
             _alt = new NativeAlt((JSObject) alt);
             Natives = new NativeNatives((JSObject) natives);
-            LocalStorage = new NativeLocalStorage((JSObject) alt);
+            LocalStorage = new NativeLocalStorage((JSObject) localStorage);
+            Player = new NativePlayer((JSObject) player);
         }
 
         public static void Log(string message)
