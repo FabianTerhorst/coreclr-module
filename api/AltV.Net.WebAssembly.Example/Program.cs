@@ -29,7 +29,7 @@ namespace AltV.Net.WebAssembly.Example
             });
             Alt.Emit("test14");
             Alt.Emit("test15", "bla", "bla2");
-            Alt.EveryTick += () =>
+            Alt.OnEveryTick += () =>
             {
                 Alt.Natives.DrawRect(0.42478, 0, 0.1, 0.1, 0, 140, 183, 175, false);
                 Alt.Natives.DrawRect(0.5, 0, 0.05, 0.1, 0, 0, 0, 175, false);
@@ -48,7 +48,6 @@ namespace AltV.Net.WebAssembly.Example
             var localPlayer = Player.Local();
             Console.WriteLine(localPlayer.Name);
             Console.WriteLine(localPlayer.Id);
-            Console.WriteLine(localPlayer.Id.GetType().Name);
         }
     }
 }

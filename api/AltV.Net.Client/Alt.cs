@@ -29,6 +29,10 @@ namespace AltV.Net.Client
         private static NativeEventHandler<DisconnectEventDelegate, DisconnectEventDelegate> _nativeDisconnectHandler;
         
         private static NativeEventHandler<EveryTickEventDelegate, EveryTickEventDelegate> _nativeEveryTickHandler;
+        
+        private static NativeEventHandler<NativeGameEntityCreateEventDelegate, GameEntityCreateEventDelegate> _nativeGameEntityCreateHandler;
+        
+        private static NativeEventHandler<NativeGameEntityDestroyEventDelegate, GameEntityDestroyEventDelegate> _nativeGameEntityDestroyHandler;
 
         public static event ConnectionCompleteEventDelegate OnConnectionComplete
         {
@@ -60,7 +64,7 @@ namespace AltV.Net.Client
             remove => _nativeDisconnectHandler?.Remove(value);
         }
         
-        public static event EveryTickEventDelegate EveryTick
+        public static event EveryTickEventDelegate OnEveryTick
         {
             add
             {
@@ -73,6 +77,36 @@ namespace AltV.Net.Client
                 _nativeEveryTickHandler.Add(value);
             }
             remove => _nativeEveryTickHandler?.Remove(value);
+        }
+        
+        public static event GameEntityCreateEventDelegate OnGameEntityCreate
+        {
+            add
+            {
+                if (_nativeGameEntityCreateHandler == null)
+                {
+                    _nativeGameEntityCreateHandler = new GameEntityCreateEventHandler();
+                    _alt.On("gameEntityCreate", _nativeGameEntityCreateHandler.GetNativeEventHandler());
+                }
+
+                _nativeGameEntityCreateHandler.Add(value);
+            }
+            remove => _nativeGameEntityCreateHandler?.Remove(value);
+        }
+        
+        public static event GameEntityDestroyEventDelegate OnGameEntityDestroy
+        {
+            add
+            {
+                if (_nativeGameEntityDestroyHandler == null)
+                {
+                    _nativeGameEntityDestroyHandler = new GameEntityDestroyEventHandler();
+                    _alt.On("gameEntityDestroy", _nativeGameEntityDestroyHandler.GetNativeEventHandler());
+                }
+
+                _nativeGameEntityDestroyHandler.Add(value);
+            }
+            remove => _nativeGameEntityDestroyHandler?.Remove(value);
         }
 
         public static void Init(object alt, object natives, object player, object localStorage)
