@@ -12,8 +12,6 @@ for (const file of resourceConfig.dependencies) {
         const resourceDllPath = file.substring(i + 1);
         filesToLoad.add(resourceDllPath);
         const resourceName = file.substring(1, i);
-        alt.log("add dll from resource " + resourceName);
-        alt.log("path " + resourceDllPath);
         if (dllToResource.has(resourceDllPath)) {
           throw "A resource with same dll name is already present " + resourceDllPath + " current:" + dllToResource.get(resourceDllPath) + " new:" + resourceName;
         }
@@ -53,10 +51,6 @@ var config = {
   file_list: Array.from(filesToLoad),
 }
 
-for (const file of config.file_list) {
-  alt.log("file to load:" + file);
-}
-
 var Module = {
 	onRuntimeInitialized: function () {
 		MONO.mono_load_runtime_and_bcl (
@@ -77,17 +71,17 @@ var Module = {
         for (const resourceName in resourceConfig.resources) {
           const resource = resourceConfig.resources[resourceName];
           BINDING.call_static_method("[" + resource.assembly + "] " + resource.class + ":" + resource.method, [altWrapper, nativesWrapper]);
+          //var execute = Module.mono_bind_static_method("[" + resource.assembly + "] " + resource.class + ":" + resource.method);	
+          //execute(altWrapper, nativesWrapper);	
         }
       },
       function (asset) {
-        var resourcePath = asset.substring(7);
+        var resourcePath = asset.substring(8);
         var result;
         if (!dllToResource.has(resourcePath)) {
-          alt.log("load file:" + asset);
           result = alt.File.read(asset, 'binary');
         } else {
           var resourceName = dllToResource.get(resourcePath);
-          alt.log("@" + resourceName + "/" + resourcePath);
           result = alt.File.read("@" + resourceName + "/" + resourcePath, 'binary');
         }
 
@@ -116,23 +110,22 @@ var Module = {
     alt.log(msg);
   },
   instantiateWasm: function(info, receiveInstance) {
-    alt.log("start loading .wasm");
     const dotnetWasmRuntimeConfig = resourceConfig.runtime;
-    var binary;
-    if (dotnetWasmRuntimeConfig) {
-      alt.log("load .wasm from path:" + dotnetWasmRuntimeConfig);
-      binary = new Uint8Array(alt.File.read(dotnetWasmRuntimeConfig, 'binary'));
-    } else {
-      binary = new Uint8Array(alt.File.read('/client/dotnet.wasm', 'binary'));
-    }
-    var wasmInstance =  WebAssembly.instantiate(binary, info);
-    alt.log("end wasm init instance");
-    wasmInstance.then((webassemblyInstance) => {
-      receiveInstance(webassemblyInstance['instance']);
-    }, function(reason) {
-      err('failed to asynchronously prepare wasm: ' + reason);
-      abort(reason);
-    });
+      var binary;
+      if (dotnetWasmRuntimeConfig) {
+        binary = new Uint8Array(alt.File.read(dotnetWasmRuntimeConfig, 'binary'));
+      } else {
+        binary = new Uint8Array(alt.File.read('/client/dotnet.wasm', 'binary'));
+      }
+      alt.log("start  WebAssembly.instantiate(binary, info);");
+      alt.log(binary.length);
+      WebAssembly.instantiate(binary, info).then((webassemblyInstance) => {
+        receiveInstance(webassemblyInstance['instance']);
+        alt.log("end wasm init instance");
+      }, function(reason) {
+        err('failed to asynchronously prepare wasm: ' + reason);
+        abort(reason);
+      });
     return {};
   }
 };
@@ -140,6 +133,16 @@ var Module = {
 var dateNow = function() {
   return Date.now();
 };
+
+var setInterval = function(func, value) {
+    return alt.setInterval(func, 100);
+};
+
+var clearInterval = alt.clearInterval;
+
+var setTimeout = alt.setTimeout;
+
+var clearTimeout = alt.clearTimeout;
 
 // Copyright 2010 The Emscripten Authors.  All rights reserved.
 // Emscripten is available under two separate licenses, the MIT license and the
@@ -10879,11 +10882,7 @@ if (Module['preInit']) {
 
   noExitRuntime = true;
 
-  alt.log("start run runtime");
-
 run();
-
-alt.log("end run runtime");
 
 
 
