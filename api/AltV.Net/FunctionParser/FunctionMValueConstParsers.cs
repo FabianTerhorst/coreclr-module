@@ -509,11 +509,22 @@ namespace AltV.Net.FunctionParser
         {
             // Types doesn't match
             if (mValue.type != MValueConst.Type.Dict) return null;
-            var args = typeInfo?.GenericArguments ?? type.GetGenericArguments();
-            if (args.Length != 2) return null;
-            var keyType = args[0];
-            if (keyType != FunctionTypes.String) return null;
-            var valueType = args[1];
+
+            Type keyType;
+            Type valueType;
+            if (type == FunctionTypes.Obj)
+            {
+                keyType = FunctionTypes.String;
+                valueType = FunctionTypes.Obj;
+            }
+            else
+            {
+                var args = typeInfo?.GenericArguments ?? type.GetGenericArguments();
+                if (args.Length != 2) return null;
+                keyType = args[0];
+                if (keyType != FunctionTypes.String) return null;
+                valueType = args[1];
+            }
 
             var length = AltNative.MValueNative.MValueConst_GetDictSize(mValue.nativePointer);
             var keyPointers = new IntPtr[length];
