@@ -2,16 +2,30 @@ using WebAssembly;
 
 namespace AltV.Net.Client.Elements.Entities
 {
-    public class Player
+    public class Player : Entity, IPlayer
     {
-        private static JSObject player;
-
-        private static JSObject prototype;
-
-        internal static void Init(JSObject alt)
+        public static Player Local()
         {
-            player = (JSObject) alt.GetObjectProperty("Player");
-            prototype = (JSObject) player.GetObjectProperty("prototype");
+            return new Player(Alt.Player.Local());
+        }
+
+        public bool IsTalking => (bool) jsObject.GetObjectProperty("isTalking");
+        
+        public int MicLevel => (int) jsObject.GetObjectProperty("micLevel");
+        
+        public string Name => Alt.Player.Name(jsObject);
+
+        public IVehicle Vehicle
+        {
+            get
+            {
+                var vehicleObj = (JSObject) jsObject.GetObjectProperty("vehicle");
+                return vehicleObj == null ? null : new Vehicle(vehicleObj);
+            }
+        }
+
+        internal Player(JSObject jsObject):base(jsObject)
+        {
         }
     }
 }

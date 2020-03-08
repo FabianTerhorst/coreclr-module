@@ -6,9 +6,9 @@ namespace AltV.Net.WebAssembly.Example
 {
     public class Program
     {
-        public static void Main(object alt, object natives)
+        public static void Main(object alt, object natives, object player, object localStorageObj)
         {
-            Alt.Init(alt, natives);
+            Alt.Init(alt, natives, player, localStorageObj);
             Alt.Log($"Hello World, Im a message from C# and this message generated at {DateTime.Now}");
             Alt.OnConnectionComplete += () => { Alt.Log("on connection completed"); };
             Alt.OnDisconnect += () => { Alt.Log("on disconnect"); };
@@ -29,7 +29,7 @@ namespace AltV.Net.WebAssembly.Example
             });
             Alt.Emit("test14");
             Alt.Emit("test15", "bla", "bla2");
-            Alt.EveryTick += () =>
+            Alt.OnEveryTick += () =>
             {
                 Alt.Natives.DrawRect(0.42478, 0, 0.1, 0.1, 0, 140, 183, 175, false);
                 Alt.Natives.DrawRect(0.5, 0, 0.05, 0.1, 0, 0, 0, 175, false);
@@ -39,19 +39,15 @@ namespace AltV.Net.WebAssembly.Example
                 Alt.Natives.DrawRect(0.9105, 0.30, 0.06, 0.035, 0, 0, 0, 175, false);
                 Alt.Natives.DrawRect(0.975, 0.30, 0.06, 0.035, 0, 0, 0, 175, false);
             };
-            Alt.On("connectionComplete", (args) =>
-            {
-                Alt.Log("connectionComplete");
-            });
 
             var localStorage = LocalStorage.Get();
             localStorage.Set("bla", "123");
             Console.WriteLine(localStorage.Get("bla"));
             localStorage.Save();
-            /*Alt.On("disconnect", (args) =>
-            {
-                Alt.Log("disconnect");
-            });*/
+
+            var localPlayer = Player.Local();
+            Console.WriteLine(localPlayer.Name);
+            Console.WriteLine(localPlayer.Id);
         }
     }
 }

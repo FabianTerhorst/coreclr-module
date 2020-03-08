@@ -12,6 +12,8 @@ namespace AltV.Net.Client
         public static NativeNatives Natives;
 
         internal static NativeLocalStorage LocalStorage;
+        
+        internal static NativePlayer Player;
 
         private static readonly IDictionary<string, NativeEventHandler<NativeEventDelegate, ServerEventDelegate>>
             NativeServerEventHandlers =
@@ -27,6 +29,10 @@ namespace AltV.Net.Client
         private static NativeEventHandler<DisconnectEventDelegate, DisconnectEventDelegate> _nativeDisconnectHandler;
         
         private static NativeEventHandler<EveryTickEventDelegate, EveryTickEventDelegate> _nativeEveryTickHandler;
+        
+        private static NativeEventHandler<NativeGameEntityCreateEventDelegate, GameEntityCreateEventDelegate> _nativeGameEntityCreateHandler;
+        
+        private static NativeEventHandler<NativeGameEntityDestroyEventDelegate, GameEntityDestroyEventDelegate> _nativeGameEntityDestroyHandler;
 
         public static event ConnectionCompleteEventDelegate OnConnectionComplete
         {
@@ -58,7 +64,7 @@ namespace AltV.Net.Client
             remove => _nativeDisconnectHandler?.Remove(value);
         }
         
-        public static event EveryTickEventDelegate EveryTick
+        public static event EveryTickEventDelegate OnEveryTick
         {
             add
             {
@@ -72,12 +78,43 @@ namespace AltV.Net.Client
             }
             remove => _nativeEveryTickHandler?.Remove(value);
         }
+        
+        public static event GameEntityCreateEventDelegate OnGameEntityCreate
+        {
+            add
+            {
+                if (_nativeGameEntityCreateHandler == null)
+                {
+                    _nativeGameEntityCreateHandler = new GameEntityCreateEventHandler();
+                    _alt.On("gameEntityCreate", _nativeGameEntityCreateHandler.GetNativeEventHandler());
+                }
 
-        public static void Init(object alt, object natives)
+                _nativeGameEntityCreateHandler.Add(value);
+            }
+            remove => _nativeGameEntityCreateHandler?.Remove(value);
+        }
+        
+        public static event GameEntityDestroyEventDelegate OnGameEntityDestroy
+        {
+            add
+            {
+                if (_nativeGameEntityDestroyHandler == null)
+                {
+                    _nativeGameEntityDestroyHandler = new GameEntityDestroyEventHandler();
+                    _alt.On("gameEntityDestroy", _nativeGameEntityDestroyHandler.GetNativeEventHandler());
+                }
+
+                _nativeGameEntityDestroyHandler.Add(value);
+            }
+            remove => _nativeGameEntityDestroyHandler?.Remove(value);
+        }
+
+        public static void Init(object alt, object natives, object player, object localStorage)
         {
             _alt = new NativeAlt((JSObject) alt);
             Natives = new NativeNatives((JSObject) natives);
-            LocalStorage = new NativeLocalStorage((JSObject) alt);
+            LocalStorage = new NativeLocalStorage((JSObject) localStorage);
+            Player = new NativePlayer((JSObject) player);
         }
 
         public static void Log(string message)
