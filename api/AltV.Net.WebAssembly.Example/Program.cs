@@ -48,6 +48,26 @@ namespace AltV.Net.WebAssembly.Example
             var localPlayer = Player.Local();
             Console.WriteLine(localPlayer.Name);
             Console.WriteLine(localPlayer.Id);
+            
+            Console.WriteLine(Alt.GetCursorPos().ToString());
+            Console.WriteLine(Alt.GetLicenseHash());
+            Console.WriteLine(Alt.GetLocale());
+            Console.WriteLine(Alt.Hash("dinghy"));
+            
+            Console.WriteLine(Alt.IsConsoleOpen());
+            Console.WriteLine(Alt.IsInSandbox());
+            Console.WriteLine(Alt.IsMenuOpen());
+            
+            Alt.LogError("This is an error");
+            Alt.LogWarning("This is a warning");
+            
+            Alt.SetMsPerGameMinute(100);
+            Console.WriteLine(Alt.GetMsPerGameMinute());
+            
+            Alt.SetStat("STAMINA", 100);
+            Console.WriteLine(Alt.GetStat("STAMINA"));
+            
+            Alt.SetWeatherCycle(new int[]{7, 2}, new int[]{2, 1});
         }
     }
 }
