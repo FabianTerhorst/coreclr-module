@@ -76,7 +76,7 @@ var Module = {
         for (const key in LocalStorage) {
           localStorageWrapper[key] = LocalStorage[key];
         }
-		var handlingDataWrapper = {};
+		    var handlingDataWrapper = {};
         for (const key in HandlingData) {
           handlingDataWrapper[key] = HandlingData[key];
         }
