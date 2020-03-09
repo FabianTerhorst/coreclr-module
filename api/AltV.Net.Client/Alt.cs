@@ -16,6 +16,8 @@ namespace AltV.Net.Client
         
         internal static NativePlayer Player;
 
+        internal static NativeHandlingData HandlingData;
+
         private static readonly IDictionary<string, NativeEventHandler<NativeEventDelegate, ServerEventDelegate>>
             NativeServerEventHandlers =
                 new Dictionary<string, NativeEventHandler<NativeEventDelegate, ServerEventDelegate>>();
@@ -110,12 +112,13 @@ namespace AltV.Net.Client
             remove => _nativeGameEntityDestroyHandler?.Remove(value);
         }
 
-        public static void Init(object alt, object natives, object player, object localStorage)
+        public static void Init(object alt, object natives, object player, object localStorage, object handlingData)
         {
             _alt = new NativeAlt((JSObject) alt);
             Natives = new NativeNatives((JSObject) natives);
             LocalStorage = new NativeLocalStorage((JSObject) localStorage);
             Player = new NativePlayer((JSObject) player);
+            HandlingData = new NativeHandlingData((JSObject) handlingData);
         }
 
         public static void Log(string message)
