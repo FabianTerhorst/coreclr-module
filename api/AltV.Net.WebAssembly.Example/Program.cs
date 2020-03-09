@@ -6,9 +6,9 @@ namespace AltV.Net.WebAssembly.Example
 {
     public class Program
     {
-        public static void Main(object alt, object natives, object player, object localStorageObj)
+        public static void Main(object alt, object natives, object player, object localStorageObj, object handlingDataObj)
         {
-            Alt.Init(alt, natives, player, localStorageObj);
+            Alt.Init(alt, natives, player, localStorageObj, handlingDataObj);
             Alt.Log($"Hello World, Im a message from C# and this message generated at {DateTime.Now}");
             Alt.OnConnectionComplete += () => { Alt.Log("on connection completed"); };
             Alt.OnDisconnect += () => { Alt.Log("on disconnect"); };
@@ -68,6 +68,14 @@ namespace AltV.Net.WebAssembly.Example
             Console.WriteLine(Alt.GetStat("STAMINA"));
             
             Alt.SetWeatherCycle(new int[]{7, 2}, new int[]{2, 1});
+
+            var obj = HandlingData.GetForModel(0x81794C70);
+            
+            foreach(var prop in obj.GetType().GetProperties())
+            {
+                object value=prop.GetValue(obj);
+                Console.WriteLine("{0}={1}",prop.Name,value);
+            }
         }
     }
 }
