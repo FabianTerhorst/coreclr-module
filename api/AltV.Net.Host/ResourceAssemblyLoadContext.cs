@@ -149,7 +149,7 @@ namespace AltV.Net.Host
 
         protected override Assembly Load(AssemblyName assemblyName)
         {
-            if (!SharedAssemblyNames.Contains(assemblyName.Name)) return null;
+            if (SharedAssemblyNames.Contains(assemblyName.Name)) return null;
             var assemblyPath = resolver.ResolveAssemblyToPath(assemblyName);
             if (assemblyPath == null) return null;
             var assembly = LoadFromAssemblyPath(assemblyPath);
