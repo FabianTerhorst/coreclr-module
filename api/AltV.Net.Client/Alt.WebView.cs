@@ -10,5 +10,9 @@ namespace AltV.Net.Client
             return new WebView(WebView.New(url, isOverlay));
         }
 
+        public static IWebView CreateWebView(string url, uint propHash, string targetTexture)
+        {
+            return new WebView(WebView.New(url, propHash, targetTexture));
+        }
     }
 }

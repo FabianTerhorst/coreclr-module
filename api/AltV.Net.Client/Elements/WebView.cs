@@ -12,7 +12,7 @@ namespace AltV.Net.Client.Elements
     public class WebView : BaseObject, IWebView
     {
         private readonly IDictionary<string, NativeEventHandler<NativeEventDelegate, ServerEventDelegate>>  NativeEventHandlers = new Dictionary<string, NativeEventHandler<NativeEventDelegate, ServerEventDelegate>>();
-        private NativeWebView nativeWebView;
+        private readonly NativeWebView nativeWebView;
 
         public bool IsVisible
         {
@@ -35,20 +35,11 @@ namespace AltV.Net.Client.Elements
             jsObject.Invoke("destroy");
         }
 
-        public void Emit(string eventName, params object[] args)
-        {
-            jsObject.Invoke("emit", eventName, args);
-        }
+        public void Emit(string eventName, params object[] args) => nativeWebView.Emit(eventName, args);
 
-        public void Focus()
-        {
-            jsObject.Invoke("focus");
-        }
+        public void Focus() => nativeWebView.Focus();
 
-        public void Unfocus()
-        {
-            jsObject.Invoke("unfocus");
-        }
+        public void Unfocus() => nativeWebView.Unfocus();
 
         public void On(string eventName, ServerEventDelegate serverEventDelegate)
         {

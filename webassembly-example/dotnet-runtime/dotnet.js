@@ -97,6 +97,7 @@ var Module = {
           webViewWrapper[key] = WebView[key];
         }
 		webViewWrapper["constructor"] = function(url,isOverlay) { return new alt.WebView(url,isOverlay); };
+		webViewWrapper["constructor2"] = function(url,propHash,targetTexture) { return new alt.WebView(url,propHash,targetTexture); };
         var wrapper = {};
         wrapper.alt = altWrapper;
         wrapper.natives = nativesWrapper;
