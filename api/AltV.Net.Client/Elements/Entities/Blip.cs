@@ -1,5 +1,6 @@
 using System.Numerics;
 using WebAssembly;
+using WebAssembly.Core;
 
 namespace AltV.Net.Client.Elements.Entities
 {
@@ -8,7 +9,7 @@ namespace AltV.Net.Client.Elements.Entities
         public int Alpha
         {
             get { return (int)jsObject.GetObjectProperty("alpha"); }
-            set { jsObject.SetObjectProperty("alpha", value); }
+            set { jsObject.SetObjectProperty("x", value); }
         }
         public bool AsMissionCreator
         {
@@ -156,5 +157,9 @@ namespace AltV.Net.Client.Elements.Entities
             set { jsObject.SetObjectProperty("tickVisible", value); }
         }
         public Blip(JSObject jsObject): base(jsObject){}
+        public void Fade(int opacity, int number)
+        {
+            jsObject.Invoke("fade", opacity, number);
+        }
     }
 }
