@@ -38,6 +38,7 @@ namespace AltV.Net.Client
         private static NativeEventHandler<ConnectionCompleteEventDelegate, ConnectionCompleteEventDelegate>
             _nativeConnectionCompleteHandler;
 
+
         private static NativeEventHandler<DisconnectEventDelegate, DisconnectEventDelegate> _nativeDisconnectHandler;
         
         private static NativeEventHandler<EveryTickEventDelegate, EveryTickEventDelegate> _nativeEveryTickHandler;
@@ -45,6 +46,10 @@ namespace AltV.Net.Client
         private static NativeEventHandler<NativeGameEntityCreateEventDelegate, GameEntityCreateEventDelegate> _nativeGameEntityCreateHandler;
         
         private static NativeEventHandler<NativeGameEntityDestroyEventDelegate, GameEntityDestroyEventDelegate> _nativeGameEntityDestroyHandler;
+
+        private static NativeEventHandler<KeyDownEventDelegate, KeyDownEventDelegate> _nativeKeyDownHandler;
+        private static NativeEventHandler<KeyUpEventDelegate, KeyUpEventDelegate> _nativeKeyUpHandler;
+
 
         public static event ConnectionCompleteEventDelegate OnConnectionComplete
         {
@@ -119,6 +124,41 @@ namespace AltV.Net.Client
                 _nativeGameEntityDestroyHandler.Add(value);
             }
             remove => _nativeGameEntityDestroyHandler?.Remove(value);
+        }
+
+        public static event KeyDownEventDelegate OnKeyDown
+        {
+            add
+            {
+                if (_nativeKeyDownHandler == null)
+                {
+                    _nativeKeyDownHandler = new KeyDownEventHandler();
+                    _alt.On("keydown", _nativeKeyDownHandler.GetNativeEventHandler());
+                }
+
+                _nativeKeyDownHandler.Add(value);
+            }
+            remove {
+                _nativeKeyDownHandler?.Remove(value);
+            }
+        }
+
+        public static event KeyUpEventDelegate OnKeyUp
+        {
+            add
+            {
+                if (_nativeKeyUpHandler == null)
+                {
+                    _nativeKeyUpHandler = new KeyUpEventHandler();
+                    _alt.On("keyup", _nativeKeyUpHandler.GetNativeEventHandler());
+                }
+
+                _nativeKeyUpHandler.Add(value);
+            }
+            remove
+            {
+                _nativeKeyUpHandler?.Remove(value);
+            }
         }
 
         public static void Init(object wrapper)

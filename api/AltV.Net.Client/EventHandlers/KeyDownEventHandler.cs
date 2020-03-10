@@ -1,4 +1,5 @@
 using System;
+using AltV.Net.Client.Enums;
 using AltV.Net.Client.Events;
 using Array = WebAssembly.Core.Array;
 
@@ -13,7 +14,7 @@ namespace AltV.Net.Client.EventHandlers
             keyDownEventDelegate = OnKeyDown;
         }
 
-        private void OnKeyDown(int key)
+        private void OnKeyDown(Keys key)
         {
             try
             {
