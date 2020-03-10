@@ -80,10 +80,16 @@ var Module = {
         for (const key in HandlingData) {
           handlingDataWrapper[key] = HandlingData[key];
         }
+        var wrapper = {};
+        wrapper.alt = altWrapper;
+        wrapper.natives = nativesWrapper;
+        wrapper.Player = playerWrapper;
+        wrapper.LocalStorage = localStorageWrapper;
+        wrapper.HandlingData = handlingDataWrapper;
         Module.mono_bindings_init("[WebAssembly.Bindings]WebAssembly.Runtime");
         for (const resourceName in resourceConfig.resources) {
           const resource = resourceConfig.resources[resourceName];
-          BINDING.call_static_method("[" + resource.assembly + "] " + resource.class + ":" + resource.method, [altWrapper, nativesWrapper, playerWrapper, localStorageWrapper, handlingDataWrapper]);
+          BINDING.call_static_method("[" + resource.assembly + "] " + resource.class + ":" + resource.method, [wrapper]);
         }
       },
       function (asset) {

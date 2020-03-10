@@ -6,9 +6,9 @@ namespace AltV.Net.WebAssembly.Example
 {
     public class Program
     {
-        public static void Main(object alt, object natives, object player, object localStorageObj, object handlingDataObj)
+        public static void Main(object wrapper)
         {
-            Alt.Init(alt, natives, player, localStorageObj, handlingDataObj);
+            Alt.Init(wrapper);
             Alt.Log($"Hello World, Im a message from C# and this message generated at {DateTime.Now}");
             Alt.OnConnectionComplete += () => { Alt.Log("on connection completed"); };
             Alt.OnDisconnect += () => { Alt.Log("on disconnect"); };

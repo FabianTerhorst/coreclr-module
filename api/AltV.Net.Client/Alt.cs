@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Numerics;
+using System.Runtime.Serialization.Json;
 using AltV.Net.Client.EventHandlers;
 using AltV.Net.Client.Events;
 using WebAssembly;
 
 namespace AltV.Net.Client
 {
-    public static class Alt
+    public static partial class Alt
     {
         private static NativeAlt _alt;
 
@@ -112,13 +113,19 @@ namespace AltV.Net.Client
             remove => _nativeGameEntityDestroyHandler?.Remove(value);
         }
 
-        public static void Init(object alt, object natives, object player, object localStorage, object handlingData)
+        public static void Init(object wrapper)
         {
-            _alt = new NativeAlt((JSObject) alt);
-            Natives = new NativeNatives((JSObject) natives);
-            LocalStorage = new NativeLocalStorage((JSObject) localStorage);
-            Player = new NativePlayer((JSObject) player);
-            HandlingData = new NativeHandlingData((JSObject) handlingData);
+            var jsWrapper = (JSObject) wrapper;
+            var alt = (JSObject) jsWrapper.GetObjectProperty("alt");
+            var natives = (JSObject) jsWrapper.GetObjectProperty("natives");
+            var localStorage = (JSObject) jsWrapper.GetObjectProperty("LocalStorage");
+            var player = (JSObject) jsWrapper.GetObjectProperty("Player");
+            var handlingData = (JSObject) jsWrapper.GetObjectProperty("HandlingData");
+            _alt = new NativeAlt(alt);
+            Natives = new NativeNatives(natives);
+            LocalStorage = new NativeLocalStorage(localStorage);
+            Player = new NativePlayer(player);
+            HandlingData = new NativeHandlingData(handlingData);
         }
 
         public static void Log(string message)
