@@ -157,9 +157,9 @@ namespace AltV.Net.Client.Elements.Entities
             set { jsObject.SetObjectProperty("tickVisible", value); }
         }
         public Blip(JSObject jsObject): base(jsObject){}
-        public void Fade(int opacity, int number)
+        public void Fade(int opacity, int duration)
         {
-            jsObject.Invoke("fade", opacity, number);
+            jsObject.Invoke("fade", opacity, duration);
         }
     }
 }
