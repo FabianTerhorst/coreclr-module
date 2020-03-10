@@ -8,7 +8,7 @@ namespace AltV.Net.Client.Elements.Entities
         public int Alpha
         {
             get { return (int)jsObject.GetObjectProperty("alpha"); }
-            set { jsObject.SetObjectProperty("x", value); }
+            set { jsObject.SetObjectProperty("alpha", value); }
         }
         public bool AsMissionCreator
         {
