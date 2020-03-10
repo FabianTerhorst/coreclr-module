@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Numerics;
-using System.Runtime.Serialization.Json;
 using AltV.Net.Client.EventHandlers;
 using AltV.Net.Client.Events;
 using WebAssembly;
@@ -18,6 +17,12 @@ namespace AltV.Net.Client
         internal static NativePlayer Player;
 
         internal static NativeHandlingData HandlingData;
+
+        private static NativeAreaBlip AreaBlip;
+        
+        private static NativeRadiusBlip RadiusBlip;
+        
+        private static NativePointBlip PointBlip;
 
         private static readonly IDictionary<string, NativeEventHandler<NativeEventDelegate, ServerEventDelegate>>
             NativeServerEventHandlers =
@@ -116,16 +121,14 @@ namespace AltV.Net.Client
         public static void Init(object wrapper)
         {
             var jsWrapper = (JSObject) wrapper;
-            var alt = (JSObject) jsWrapper.GetObjectProperty("alt");
-            var natives = (JSObject) jsWrapper.GetObjectProperty("natives");
-            var localStorage = (JSObject) jsWrapper.GetObjectProperty("LocalStorage");
-            var player = (JSObject) jsWrapper.GetObjectProperty("Player");
-            var handlingData = (JSObject) jsWrapper.GetObjectProperty("HandlingData");
-            _alt = new NativeAlt(alt);
-            Natives = new NativeNatives(natives);
-            LocalStorage = new NativeLocalStorage(localStorage);
-            Player = new NativePlayer(player);
-            HandlingData = new NativeHandlingData(handlingData);
+            _alt = new NativeAlt((JSObject) jsWrapper.GetObjectProperty("alt"));
+            Natives = new NativeNatives((JSObject) jsWrapper.GetObjectProperty("natives"));
+            LocalStorage = new NativeLocalStorage((JSObject) jsWrapper.GetObjectProperty("LocalStorage"));
+            Player = new NativePlayer((JSObject) jsWrapper.GetObjectProperty("Player"));
+            HandlingData = new NativeHandlingData((JSObject) jsWrapper.GetObjectProperty("HandlingData"));
+            AreaBlip = new NativeAreaBlip((JSObject) jsWrapper.GetObjectProperty("AreaBlip"));
+            RadiusBlip = new NativeRadiusBlip((JSObject) jsWrapper.GetObjectProperty("RadiusBlip"));
+            PointBlip = new NativePointBlip((JSObject) jsWrapper.GetObjectProperty("PointBlip"));
         }
 
         public static void Log(string message)
