@@ -34,5 +34,6 @@ namespace AltV.Net.Client.Elements.Entities
         bool Shrinked { get; set; }
         int Sprite { get; set; }
         bool TickVisible { get; set; }
+        void Fade(int opacity, int number);
     }
 }
