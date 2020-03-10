@@ -19,7 +19,7 @@ namespace AltV.Net.Client.Elements.Entities
         
         public void Remove()
         {
-            jsObject.Invoke("remove");
+            jsObject.Invoke("destroy");
         }
 
         public void SetData(string key, object value)
