@@ -5,7 +5,22 @@
  {
      public class Entity : WorldObject, IEntity
      {
-         public int Id => (int) jsObject.GetObjectProperty("id");
+         private bool idSet;
+         
+         private int id;
+         
+         public int Id
+         {
+             get
+             {
+                 if (idSet) return id;
+                 idSet = true;
+                 id = (int) jsObject.GetObjectProperty("id");
+
+                 return id;
+             }
+         }
+
          public int Model => (int) jsObject.GetObjectProperty("model");
          public int ScriptId => (int) jsObject.GetObjectProperty("scriptID");
 

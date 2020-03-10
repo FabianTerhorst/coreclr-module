@@ -19,9 +19,9 @@ namespace AltV.Net.EntitySync.Benchmarks
         public void Setup()
         {
             AltEntitySync.Init(1, 100,
-                repository =>
+                (threadCount, repository) =>
                 {
-                    mockNetworkLayer = new MockNetworkLayer(repository);
+                    mockNetworkLayer = new MockNetworkLayer(threadCount, repository);
                     return mockNetworkLayer;
                 },
                 (entity, threadCount) => (entity.Id % threadCount), 

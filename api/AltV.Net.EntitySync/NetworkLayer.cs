@@ -16,10 +16,13 @@ namespace AltV.Net.EntitySync
         public abstract event EntityPositionUpdateEventDelegate OnEntityPositionUpdate;
         public abstract event EntityPositionUpdateEventDelegate OnEntityDataUpdate;
 
+        public ulong ThreadCount;
+        
         public IClientRepository ClientRepository;
 
-        public NetworkLayer(IClientRepository clientRepository)
+        public NetworkLayer(ulong threadCount, IClientRepository clientRepository)
         {
+            this.ThreadCount = threadCount;
             this.ClientRepository = clientRepository;
         }
 

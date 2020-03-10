@@ -6,6 +6,8 @@ namespace AltV.Net.Client.Elements.Entities
     public class BaseObject : IBaseObject
     {
         protected readonly JSObject jsObject;
+
+        public JSObject NativeObject => jsObject;
         
         private readonly IDictionary<string, object> data = new Dictionary<string, object>();
 

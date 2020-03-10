@@ -44,11 +44,11 @@ namespace AltV.Net.EntitySync.ServerEvent
         private readonly IDictionary<IClient, Channel<ServerEntityEvent>> serverEventChannels =
             new Dictionary<IClient, Channel<ServerEntityEvent>>();
 
-        public ServerEventNetworkLayer(IClientRepository clientRepository) : base(clientRepository)
+        public ServerEventNetworkLayer(ulong threadCount, IClientRepository clientRepository) : base(threadCount, clientRepository)
         {
             Alt.OnPlayerConnect += (player, reason) =>
             {
-                var playerClient = new PlayerClient(player.Id.ToString(), player);
+                var playerClient = new PlayerClient(threadCount, player.Id.ToString(), player);
                 player.SetEntitySyncClient(playerClient);
                 clientRepository.Add(playerClient);
                 Task.Factory.StartNew(async obj =>

@@ -14,7 +14,7 @@ namespace AltV.Net.EntitySync
 
         public virtual int Dimension { get; set; }
 
-        public ClientDataSnapshot Snapshot { get; } = new ClientDataSnapshot();
+        public ClientDataSnapshot Snapshot { get; }
 
         public virtual bool Exists { get; } = true;
 
@@ -22,8 +22,9 @@ namespace AltV.Net.EntitySync
 
         private bool isPositionOverwritten;
 
-        public Client(string token)
+        public Client(ulong threadCount, string token)
         {
+            Snapshot = new ClientDataSnapshot(threadCount);
             Token = token;
         }
 

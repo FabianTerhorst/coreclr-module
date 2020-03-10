@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using System.Numerics;
+using AltV.Net.Client.Elements.Entities;
+using AltV.Net.Client.Elements.Factories;
+using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Client.EventHandlers;
 using AltV.Net.Client.Events;
 using WebAssembly;
@@ -23,6 +26,8 @@ namespace AltV.Net.Client
         private static NativeRadiusBlip RadiusBlip;
         
         private static NativePointBlip PointBlip;
+
+        private static IBaseObjectPool<IPlayer> PlayerPool;
 
         private static readonly IDictionary<string, NativeEventHandler<NativeEventDelegate, ServerEventDelegate>>
             NativeServerEventHandlers =
@@ -120,11 +125,17 @@ namespace AltV.Net.Client
 
         public static void Init(object wrapper)
         {
+            Init(wrapper, new PlayerFactory());
+        }
+
+        public static void Init(object wrapper, IBaseObjectFactory<IPlayer> playerFactory)
+        {
+            PlayerPool = new BaseObjectPool<IPlayer>(playerFactory);
             var jsWrapper = (JSObject) wrapper;
             _alt = new NativeAlt((JSObject) jsWrapper.GetObjectProperty("alt"));
             Natives = new NativeNatives((JSObject) jsWrapper.GetObjectProperty("natives"));
             LocalStorage = new NativeLocalStorage((JSObject) jsWrapper.GetObjectProperty("LocalStorage"));
-            Player = new NativePlayer((JSObject) jsWrapper.GetObjectProperty("Player"));
+            Player = new NativePlayer((JSObject) jsWrapper.GetObjectProperty("Player"), PlayerPool);
             HandlingData = new NativeHandlingData((JSObject) jsWrapper.GetObjectProperty("HandlingData"));
             AreaBlip = new NativeAreaBlip((JSObject) jsWrapper.GetObjectProperty("AreaBlip"));
             RadiusBlip = new NativeRadiusBlip((JSObject) jsWrapper.GetObjectProperty("RadiusBlip"));
