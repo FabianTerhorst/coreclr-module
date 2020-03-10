@@ -1,13 +1,29 @@
 import * as alt from "alt";
 import * as natives from "natives";
-import resourceConfig from "/client/config.js";
+import {Player, LocalStorage, HandlingData} from "alt";
+import resourceConfig from "@dotnet-runtime-config/config.js";
+
+var dllToResource = new Map();
 
 var filesToLoad = new Set();
 for (const file of resourceConfig.dependencies) {
-  filesToLoad.add(file);
+  if (file.startsWith("@")) {
+    for (var i = 0; i < file.length; i++) {
+      if (file.charAt(i) === "/") {
+        const resourceDllPath = file.substring(i + 1);
+        filesToLoad.add(resourceDllPath);
+        const resourceName = file.substring(1, i);
+        if (dllToResource.has(resourceDllPath)) {
+          throw "A resource with same dll name is already present " + resourceDllPath + " current:" + dllToResource.get(resourceDllPath) + " new:" + resourceName;
+        }
+        dllToResource.set(resourceDllPath, resourceName);
+        break;
+      }
+    }
+  } else {
+    filesToLoad.add(file);
+  }
 }
-
-var dllToResource = new Map();
 
 var debugEnabled = 0;
 
@@ -29,32 +45,14 @@ for (const resourceName in resourceConfig.resources) {
   }
 }
 
-var App = {
-  init: function () {
-    var altWrapper = {};
-    for (const key in alt) {
-      altWrapper[key] = alt[key];
-    }
-    var nativesWrapper = {};
-    for (const key in natives) {
-      nativesWrapper[key] = natives[key];
-    }
-    for (const resourceName in resourceConfig.resources) {
-      const resource = resourceConfig.resources[resourceName];
-      var execute = Module.mono_bind_static_method("[" + resource.assembly + "] " + resource.class + ":" + resource.method);
-      execute(altWrapper, nativesWrapper);
-    }
-  },
-};
-
-var config = config = {
-  vfs_prefix: "/client",
-  deploy_prefix: "/client",
-  enable_debugging: debugEnabled,
+var config = {
+  vfs_prefix: "managed",
+  deploy_prefix: "managed",
+  enable_debugging: /*debugEnabled*/0,
   file_list: Array.from(filesToLoad),
 }
 
-var Module = { 
+var Module = {
 	onRuntimeInitialized: function () {
 		MONO.mono_load_runtime_and_bcl (
 			config.vfs_prefix,
@@ -62,8 +60,58 @@ var Module = {
 			config.enable_debugging,
 			config.file_list,
 			function () {
-				App.init ();
-			}
+				var altWrapper = {};
+        for (const key in alt) {
+          altWrapper[key] = alt[key];
+        }
+        var nativesWrapper = {};
+        for (const key in natives) {
+          nativesWrapper[key] = natives[key];
+        }
+        var playerWrapper = {};
+        for (const key in Player) {
+          playerWrapper[key] = Player[key];
+        }
+        var localStorageWrapper = {};
+        for (const key in LocalStorage) {
+          localStorageWrapper[key] = LocalStorage[key];
+        }
+		    var handlingDataWrapper = {};
+        for (const key in HandlingData) {
+          handlingDataWrapper[key] = HandlingData[key];
+        }
+        Module.mono_bindings_init("[WebAssembly.Bindings]WebAssembly.Runtime");
+        for (const resourceName in resourceConfig.resources) {
+          const resource = resourceConfig.resources[resourceName];
+          BINDING.call_static_method("[" + resource.assembly + "] " + resource.class + ":" + resource.method, [altWrapper, nativesWrapper, playerWrapper, localStorageWrapper, handlingDataWrapper]);
+        }
+      },
+      function (asset) {
+        var resourcePath = asset.substring(8);
+        var result;
+        if (!dllToResource.has(resourcePath)) {
+          result = alt.File.read(asset, 'binary');
+        } else {
+          var resourceName = dllToResource.get(resourcePath);
+          result = alt.File.read("@" + resourceName + "/" + resourcePath, 'binary');
+        }
+
+        var resultFunc = function(resolve, reject) {
+          resolve(result);
+        };
+
+        var promise = new Promise(function(resolve, reject) {
+          resolve({
+            ok: true,
+            url: asset,
+            arrayBuffer: function() { 
+              return new Promise(resultFunc);
+             }
+          });
+        });
+
+        return promise;
+      }
 		)
   },
   print: function(msg) {
@@ -71,9 +119,41 @@ var Module = {
   },
   printErr: function(msg) {
     alt.log(msg);
+  },
+  instantiateWasm: function(info, receiveInstance) {
+    const dotnetWasmRuntimeConfig = resourceConfig.runtime;
+      var binary;
+      if (dotnetWasmRuntimeConfig) {
+        binary = new Uint8Array(alt.File.read(dotnetWasmRuntimeConfig, 'binary'));
+      } else {
+        binary = new Uint8Array(alt.File.read('/client/dotnet.wasm', 'binary'));
+      }
+      alt.log("start  WebAssembly.instantiate(binary, info);");
+      alt.log(binary.length);
+      WebAssembly.instantiate(binary, info).then((webassemblyInstance) => {
+        receiveInstance(webassemblyInstance['instance']);
+        alt.log("end wasm init instance");
+      }, function(reason) {
+        err('failed to asynchronously prepare wasm: ' + reason);
+        abort(reason);
+      });
+    return {};
   }
 };
 
+var dateNow = function() {
+  return Date.now();
+};
+
+var setInterval = function(func, value) {
+    return alt.setInterval(func, 100);
+};
+
+var clearInterval = alt.clearInterval;
+
+var setTimeout = alt.setTimeout;
+
+var clearTimeout = alt.clearTimeout;
 
 // Copyright 2010 The Emscripten Authors.  All rights reserved.
 // Emscripten is available under two separate licenses, the MIT license and the
@@ -222,14 +302,13 @@ if (ENVIRONMENT_IS_SHELL) {
   }
 
   readBinary = function readBinary(f) {
-    /*var data;
+    var data;
     if (typeof readbuffer === 'function') {
       return new Uint8Array(readbuffer(f));
     }
     data = read(f, 'binary');
     assert(typeof data === 'object');
-    return data;*/
-    return new Uint8Array(alt.File.read('/client/dotnet.wasm', 'binary'));
+    return data;
   };
 
   if (typeof scriptArgs != 'undefined') {
@@ -1320,11 +1399,11 @@ function updateGlobalBufferAndViews(buf) {
 }
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 5943088,
+    STACK_BASE = 5943104,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 700208,
-    DYNAMIC_BASE = 5943088,
-    DYNAMICTOP_PTR = 700048;
+    STACK_MAX = 700224,
+    DYNAMIC_BASE = 5943104,
+    DYNAMICTOP_PTR = 700064;
 
 assert(STACK_BASE % 16 === 0, 'stack must start aligned');
 assert(DYNAMIC_BASE % 16 === 0, 'heap must start aligned');
@@ -1716,6 +1795,7 @@ if (!isDataURI(wasmBinaryFile)) {
 }
 
 function getBinary() {
+  alt.log("start get binary");
   try {
     if (wasmBinary) {
       return new Uint8Array(wasmBinary);
@@ -1733,6 +1813,7 @@ function getBinary() {
 }
 
 function getBinaryPromise() {
+  alt.log("start binary promise");
   // if we don't have the binary yet, and have the Fetch api, use that
   // in some environments, like Electron's render process, Fetch api may be present, but have a different context than expected, let's only use it on the Web
   if (!wasmBinary && (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) && typeof fetch === 'function') {
@@ -1748,6 +1829,7 @@ function getBinaryPromise() {
   // Otherwise, getBinary should be able to get it synchronously
   return new Promise(function(resolve, reject) {
     resolve(getBinary());
+    alt.log("got binary promise");
   });
 }
 
@@ -1790,6 +1872,7 @@ function createWasm() {
 
   function instantiateArrayBuffer(receiver) {
     return getBinaryPromise().then(function(binary) {
+      alt.log("start wasm init");
       return WebAssembly.instantiate(binary, info);
     }).then(receiver, function(reason) {
       err('failed to asynchronously prepare wasm: ' + reason);
@@ -1830,6 +1913,7 @@ function createWasm() {
     }
   }
 
+  alt.log("start wasm init async");
   instantiateAsync();
   return {}; // no exports yet; we'll fill them in later
 }
@@ -1855,7 +1939,7 @@ function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
 
 
 
-// STATICTOP = STATIC_BASE + 699184;
+// STATICTOP = STATIC_BASE + 699200;
 /* global initializers */  __ATINIT__.push({ func: function() { ___wasm_call_ctors() } });
 
 
@@ -6691,7 +6775,7 @@ function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
     }
 
   function _emscripten_get_sbrk_ptr() {
-      return 700048;
+      return 700064;
     }
 
   function _emscripten_memcpy_big(dest, src, num) {
@@ -7202,7 +7286,7 @@ function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
     }
 
   
-  var ___tm_timezone=(stringToUTF8("GMT", 700112, 4), 700112);function _gmtime_r(time, tmPtr) {
+  var ___tm_timezone=(stringToUTF8("GMT", 700128, 4), 700128);function _gmtime_r(time, tmPtr) {
       var date = new Date(HEAP32[((time)>>2)]*1000);
       HEAP32[((tmPtr)>>2)]=date.getUTCSeconds();
       HEAP32[(((tmPtr)+(4))>>2)]=date.getUTCMinutes();
@@ -7514,23 +7598,7 @@ function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
   					};
   				} else {
   					fetch_file_cb = function (asset) {
-              var resourcePath = asset.substring(8);
-              var result;
-              if (!dllToResource.has(resourcePath)) {
-                result = alt.File.read(asset, 'binary');
-              } else {
-                var resourceName = dllToResource.get(resourcePath);
-                result = alt.File.read("@" + resourceName + "/" + resourcePath, 'binary');
-              }
-              var promise = new Promise(function(resolve, reject) {
-                resolve({
-                  ok: true,
-                  url: asset,
-                  arrayBuffer: function() { return result; }
-                });
-              });
-
-  						return promise;
+  						return fetch (asset, { credentials: 'same-origin' });
   					}
   				}
   			}
@@ -10690,7 +10758,10 @@ dependenciesFulfilled = function runCaller() {
 
 /** @type {function(Array=)} */
 function run(args) {
+  alt.log("run");
   args = args || arguments_;
+
+  alt.log("run1:" + runDependencies);
 
   if (runDependencies > 0) {
     return;
@@ -10700,9 +10771,12 @@ function run(args) {
 
   preRun();
 
+  alt.log("run2:" + runDependencies);
+
   if (runDependencies > 0) return; // a preRun added a dependency, run will be called later
 
   function doRun() {
+    alt.log("do run:" + calledRun);
     // run may have just been called through dependencies being fulfilled just in this very frame,
     // or while the async setStatus time below was happening
     if (calledRun) return;
@@ -10714,6 +10788,8 @@ function run(args) {
     initRuntime();
 
     preMain();
+
+    alt.log("onRuntimeInitialized");
 
     if (Module['onRuntimeInitialized']) Module['onRuntimeInitialized']();
 
@@ -10818,7 +10894,6 @@ if (Module['preInit']) {
   noExitRuntime = true;
 
 run();
-
 
 
 
