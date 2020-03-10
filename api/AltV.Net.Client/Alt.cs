@@ -155,6 +155,11 @@ namespace AltV.Net.Client
             _alt.Emit(eventName, args);
         }
 
+        public static void EmitServer(string eventName, params object[] args)
+        {
+            _alt.EmitServer(eventName, args);
+        }
+
         public static void OnServer(string eventName, ServerEventDelegate serverEventDelegate)
         {
             if (!NativeServerEventHandlers.TryGetValue(eventName, out var nativeEventHandler))
