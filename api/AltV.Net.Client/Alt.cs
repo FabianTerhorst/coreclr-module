@@ -6,7 +6,7 @@ using WebAssembly;
 
 namespace AltV.Net.Client
 {
-    public static class Alt
+    public static partial class Alt
     {
         private static NativeAlt _alt;
 
@@ -17,6 +17,12 @@ namespace AltV.Net.Client
         internal static NativePlayer Player;
 
         internal static NativeHandlingData HandlingData;
+
+        private static NativeAreaBlip AreaBlip;
+        
+        private static NativeRadiusBlip RadiusBlip;
+        
+        private static NativePointBlip PointBlip;
 
         private static readonly IDictionary<string, NativeEventHandler<NativeEventDelegate, ServerEventDelegate>>
             NativeServerEventHandlers =
@@ -112,13 +118,17 @@ namespace AltV.Net.Client
             remove => _nativeGameEntityDestroyHandler?.Remove(value);
         }
 
-        public static void Init(object alt, object natives, object player, object localStorage, object handlingData)
+        public static void Init(object wrapper)
         {
-            _alt = new NativeAlt((JSObject) alt);
-            Natives = new NativeNatives((JSObject) natives);
-            LocalStorage = new NativeLocalStorage((JSObject) localStorage);
-            Player = new NativePlayer((JSObject) player);
-            HandlingData = new NativeHandlingData((JSObject) handlingData);
+            var jsWrapper = (JSObject) wrapper;
+            _alt = new NativeAlt((JSObject) jsWrapper.GetObjectProperty("alt"));
+            Natives = new NativeNatives((JSObject) jsWrapper.GetObjectProperty("natives"));
+            LocalStorage = new NativeLocalStorage((JSObject) jsWrapper.GetObjectProperty("LocalStorage"));
+            Player = new NativePlayer((JSObject) jsWrapper.GetObjectProperty("Player"));
+            HandlingData = new NativeHandlingData((JSObject) jsWrapper.GetObjectProperty("HandlingData"));
+            AreaBlip = new NativeAreaBlip((JSObject) jsWrapper.GetObjectProperty("AreaBlip"));
+            RadiusBlip = new NativeRadiusBlip((JSObject) jsWrapper.GetObjectProperty("RadiusBlip"));
+            PointBlip = new NativePointBlip((JSObject) jsWrapper.GetObjectProperty("PointBlip"));
         }
 
         public static void Log(string message)
