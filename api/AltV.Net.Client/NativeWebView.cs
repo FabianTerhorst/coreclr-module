@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using WebAssembly;
 using WebAssembly.Core;
+using WebAssembly.Host;
 
 namespace AltV.Net.Client.Elements
 {
@@ -18,7 +19,9 @@ namespace AltV.Net.Client.Elements
         public NativeWebView(JSObject webView)
         {
             this.webView = webView;
-            constructor = (Function)webView.GetObjectProperty("constructor");
+            // will be null in dynamically created webviews
+            constructor = (Function)webView.GetObjectProperty("constructor"); 
+            // Following will be null in Init-Wrapper
             on = (Function)webView.GetObjectProperty("on");
             off = (Function)webView.GetObjectProperty("off");
             emit = (Function)webView.GetObjectProperty("emit");
@@ -26,7 +29,7 @@ namespace AltV.Net.Client.Elements
 
         public JSObject New(string url, bool isOverlay = false)
         {
-            return (JSObject)constructor.Call(webView, url, isOverlay);
+            return (JSObject)constructor.Call(null, url, isOverlay);
         }
 
         public void On(string eventName, object eventHandler)
