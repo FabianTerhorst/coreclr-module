@@ -45,12 +45,38 @@ for (const resourceName in resourceConfig.resources) {
   }
 }
 
+class LiteEvent {
+    
+    constructor() {
+        this.handlers = [];
+    }
+    on(handler) {
+        this.handlers.push(handler);
+    }
+    off(handler) {
+        this.handlers = this.handlers.filter(h => h !== handler);
+    }
+    emit(...args) {
+        this.handlers.slice(0).forEach(h => h(...args));
+    }
+    expose() {
+        return this;
+    }
+    count() {
+        return this.handlers.length;
+    }
+}
+
 var config = {
   vfs_prefix: "managed",
   deploy_prefix: "managed",
   enable_debugging: /*debugEnabled*/0,
   file_list: Array.from(filesToLoad),
 }
+
+var altOnServerWrappers = new Map();
+var altOnClientWrapper = new Map();
+
 
 var Module = {
 	onRuntimeInitialized: function () {
@@ -91,11 +117,24 @@ var Module = {
         var pointBlipWrapper = {};
         for (const key in PointBlip) {
           pointBlipWrapper[key] = PointBlip[key];
-        }
+                }
+      
+
         // wrapping onServer Delegates to allow ellipsis transfer to dotnet
         altWrapper["onServer"] = function (eventName, handlerDelegate) {
-             alt.onServer(eventName, (...args) => { handlerDelegate(args); });
-        };
+            if (!altOnServerWrappers.has(eventName)) {
+                altOnServerWrappers.set(eventName, new LiteEvent());
+                alt.onServer(eventName, (...args) => altOnServerWrappers.get(eventName).emit(args));
+            }
+            var h = altOnServerWrappers.get(eventName);
+            h.on(handlerDelegate);
+        }
+        altWrapper["offServer"] = function (eventName, handlerDelegate) {
+            if (!altOnServerWrappers.has(eventName)) return;
+            var h = altOnServerWrappers.get(eventName);
+            h.off(handlerDelegate);
+        }
+
         var wrapper = {};
         wrapper.alt = altWrapper;
         wrapper.natives = nativesWrapper;
