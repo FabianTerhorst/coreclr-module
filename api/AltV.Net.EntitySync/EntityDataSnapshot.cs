@@ -34,7 +34,7 @@ namespace AltV.Net.EntitySync
                 }
                 else
                 {
-                    if (lastClient.Snapshot.TryGetSnapshotForEntity(entity, out var entitySnapshotFromClient))
+                    if (lastClient.Snapshot.TryGetSnapshotForEntityOnAnySnapshot(entity, out var entitySnapshotFromClient))
                     {
                         entitySnapshotFromClient.Reset(key);
                     }
@@ -62,15 +62,16 @@ namespace AltV.Net.EntitySync
         /// <summary>
         /// Checks which keys have changed for the input data snapshot to stay in sync
         /// </summary>
+        /// <param name="threadIndex"></param>
         /// <param name="networkingClient">The networking client to compare, we need the client not the snapshot to keep reference for possible overflow</param>
         /// <param name="keys"></param>
         /// <returns>the changed keys, returns null when no changes</returns>
-        public void CompareWithClient(LinkedList<string> keys, IClient networkingClient)
+        public void CompareWithClient(ulong threadIndex, LinkedList<string> keys, IClient networkingClient)
         {
             if (Snapshots == null || Snapshots.IsEmpty) return; // entity snapshot should never be null
             lastClients.Add(networkingClient);
             var clientDataSnapshot = networkingClient.Snapshot;
-            if (clientDataSnapshot.TryGetSnapshotForEntity(entity, out var entitySnapshotFromClient)
+            if (clientDataSnapshot.TryGetSnapshotForEntity(entity, threadIndex, out var entitySnapshotFromClient)
             ) // client visited entity before
             {
                 
@@ -122,7 +123,7 @@ namespace AltV.Net.EntitySync
                 {
                     keys.AddLast(key);
                 }
-                clientDataSnapshot.SetSnapshotForEntity(entity,
+                clientDataSnapshot.SetSnapshotForEntity(entity, threadIndex,
                     new DataSnapshot(new ConcurrentDictionary<string, ulong>(Snapshots)));
             }
 

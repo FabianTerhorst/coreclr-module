@@ -14,6 +14,8 @@ namespace AltV.Net.EntitySync
     {
         private bool running = true;
 
+        private readonly ulong threadIndex;
+
         private readonly Thread thread;
 
         private readonly EntityThreadRepository entityThreadRepository;
@@ -41,13 +43,14 @@ namespace AltV.Net.EntitySync
 
         private Vector3 clientPosition = Vector3.Zero;
 
-        public EntityThread(EntityThreadRepository entityThreadRepository,
+        public EntityThread(ulong threadIndex, EntityThreadRepository entityThreadRepository,
             ClientThreadRepository clientThreadRepository,
             SpatialPartition spatialPartition, int syncRate,
             Action<IClient, IEntity, LinkedList<string>> onEntityCreate, Action<IClient, IEntity> onEntityRemove,
             Action<IClient, IEntity, LinkedList<string>> onEntityDataChange,
             Action<IClient, IEntity, Vector3> onEntityPositionChange, Action<IClient, IEntity> onEntityClearCache)
         {
+            this.threadIndex = threadIndex;
             if (spatialPartition == null)
             {
                 throw new ArgumentException("spatialPartition should not be null.");
@@ -214,7 +217,8 @@ namespace AltV.Net.EntitySync
                             var clientToRemove = clientThreadRepository.ClientsToRemove.First;
                             while (clientToRemove != null)
                             {
-                                clientToRemove.Value.Snapshot.CleanupEntities(clientToRemove.Value);
+                                //TODO: client remove should only happen in one thread i think, at least the 
+                                clientToRemove.Value.Snapshot.CleanupEntities(threadIndex, clientToRemove.Value);
                                 clientToRemove = clientToRemove.Next;
                             }
 
@@ -235,7 +239,7 @@ namespace AltV.Net.EntitySync
                                 {
                                     var foundEntity = foundEntities[i];
                                     foundEntity.AddCheck(client);
-                                    foundEntity.DataSnapshot.CompareWithClient(changedEntityDataKeys, client);
+                                    foundEntity.DataSnapshot.CompareWithClient(threadIndex, changedEntityDataKeys, client);
 
                                     if (foundEntity.TryAddClient(client))
                                     {
