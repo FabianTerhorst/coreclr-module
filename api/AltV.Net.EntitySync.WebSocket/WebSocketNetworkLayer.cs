@@ -36,7 +36,7 @@ namespace AltV.Net.EntitySync.WebSocket
         private readonly IDictionary<IClient, Channel<WebSocketEntityEvent>> webSocketWriters =
             new Dictionary<IClient, Channel<WebSocketEntityEvent>>();
 
-        public WebSocketNetworkLayer(IClientRepository clientRepository) : base(clientRepository)
+        public WebSocketNetworkLayer(ulong threadCount, IClientRepository clientRepository) : base(threadCount, clientRepository)
         {
         }
 

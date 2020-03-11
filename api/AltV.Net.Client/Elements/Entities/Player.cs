@@ -4,9 +4,9 @@ namespace AltV.Net.Client.Elements.Entities
 {
     public class Player : Entity, IPlayer
     {
-        public static Player Local()
+        public static IPlayer Local()
         {
-            return new Player(Alt.Player.Local());
+            return Alt.Player.Local();
         }
 
         public bool IsTalking => (bool) jsObject.GetObjectProperty("isTalking");

@@ -1,4 +1,3 @@
-using System;
 using System.Numerics;
 using AltV.Net.Client.Events;
 using WebAssembly;
