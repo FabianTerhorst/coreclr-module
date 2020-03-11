@@ -94,7 +94,7 @@ var Module = {
         }
         // wrapping onServer Delegates to allow ellipsis transfer to dotnet
         altWrapper["onServer"] = function (eventName, handlerDelegate) {
-             alt.onServer(eventName, (args) => { var wrp = []; wrp.push(args); handlerDelegate(wrp); });
+             alt.onServer(eventName, (args) => { handlerDelegate(...args); });
         };
         var wrapper = {};
         wrapper.alt = altWrapper;
