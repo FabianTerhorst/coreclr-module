@@ -12,7 +12,7 @@ namespace AltV.Net.WebAssembly.Example
             Alt.Log($"Hello World, Im a message from C# and this message generated at {DateTime.Now}");
             Alt.OnConnectionComplete += () => { Alt.Log("on connection completed"); };
             Alt.OnDisconnect += () => { Alt.Log("on disconnect"); };
-            Alt.OnServer("test", args => { Alt.Log("test event triggered"); });
+            Alt.OnServer("test", (args) => { Alt.Log("test event triggered "); });
             Alt.On("test14", (args) => { Alt.Log("event fired"); });
             Alt.On("test15", (args) =>
             {

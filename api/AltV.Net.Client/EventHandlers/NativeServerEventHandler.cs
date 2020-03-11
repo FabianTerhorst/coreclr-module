@@ -41,7 +41,7 @@ namespace AltV.Net.Client.EventHandlers
             }
             catch (Exception exception)
             {
-                Console.WriteLine("Exception in event handler:" + exception);
+                Alt.LogError("Exception in event handler:" + exception);
             }
         }
 
