@@ -12,7 +12,7 @@ https://www.nuget.org/packages/AltV.Net.EntitySync.ServerEvent // A optional pac
 
 ```csharp
 AltEntitySync.Init(1, 100,
-   repository => new ServerEventNetworkLayer(repository),
+   (threadCount, repository) => new ServerEventNetworkLayer(threadCount, repository),
    (entity, threadCount) => (entity.Id % threadCount), 
    (entityId, entityType, threadCount) => (entityId % threadCount),
    (threadId) => new LimitedGrid3(50_000, 50_000, 100, 10_000, 10_000, 600),
