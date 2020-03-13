@@ -132,16 +132,16 @@ This is called every time you come in the range of the entity.
 The server assumes you cache the entity depending on the entity.id so make sure to do it.
 
 ```js
-alt.onServer("entitySync:create", (entityId, entityType, position, entityData) => {
+alt.onServer("entitySync:create", (entityId, entityType, position, currEntityData) => {
     alt.log(entityId);
     alt.log(entityType);
     alt.log(position);
     alt.log(entityData);
-    if (entityData) {
+    if (currEntityData) {
       if (!entityData[entityType]) {
          entityData[entityType] = {};
       }
-      entityData[entityType][entityId] = entityData;
+      entityData[entityType][entityId] = currEntityData;
     }
 })
 ```
