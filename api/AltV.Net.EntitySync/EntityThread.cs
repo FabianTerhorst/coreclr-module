@@ -51,52 +51,23 @@ namespace AltV.Net.EntitySync
             Action<IClient, IEntity, Vector3> onEntityPositionChange, Action<IClient, IEntity> onEntityClearCache)
         {
             this.threadIndex = threadIndex;
-            if (spatialPartition == null)
-            {
-                throw new ArgumentException("spatialPartition should not be null.");
-            }
 
-            if (entityThreadRepository == null)
-            {
-                throw new ArgumentException("entityThreadRepository should not be null.");
-            }
-
-            if (onEntityCreate == null)
-            {
-                throw new ArgumentException("onEntityCreate should not be null.");
-            }
-
-            if (onEntityRemove == null)
-            {
-                throw new ArgumentException("onEntityRemove should not be null.");
-            }
-
-            if (onEntityDataChange == null)
-            {
-                throw new ArgumentException("onEntityDataChange should not be null.");
-            }
-
-            if (onEntityPositionChange == null)
-            {
-                throw new ArgumentException("onEntityPositionChange should not be null.");
-            }
-
-            if (onEntityClearCache == null)
-            {
-                throw new ArgumentException("onEntityPositionChange should not be null.");
-            }
-           
-            this.entityThreadRepository = entityThreadRepository;
+            this.entityThreadRepository = entityThreadRepository ??
+                                          throw new ArgumentException("entityThreadRepository should not be null.");
             this.clientThreadRepository = clientThreadRepository;
-            this.spatialPartition = spatialPartition;
+            this.spatialPartition =
+                spatialPartition ?? throw new ArgumentException("spatialPartition should not be null.");
             this.syncRate = syncRate;
-            this.onEntityCreate = onEntityCreate;
-            this.onEntityRemove = onEntityRemove;
-            this.onEntityDataChange = onEntityDataChange;
-            this.onEntityPositionChange = onEntityPositionChange;
-            this.onEntityClearCache = onEntityClearCache;
+            this.onEntityCreate = onEntityCreate ?? throw new ArgumentException("onEntityCreate should not be null.");
+            this.onEntityRemove = onEntityRemove ?? throw new ArgumentException("onEntityRemove should not be null.");
+            this.onEntityDataChange = onEntityDataChange ??
+                                      throw new ArgumentException("onEntityDataChange should not be null.");
+            this.onEntityPositionChange = onEntityPositionChange ??
+                                          throw new ArgumentException("onEntityPositionChange should not be null.");
+            this.onEntityClearCache = onEntityClearCache ??
+                                      throw new ArgumentException("onEntityPositionChange should not be null.");
 
-            thread = new Thread(OnLoop) { IsBackground = true };
+            thread = new Thread(OnLoop) {IsBackground = true};
             thread.Start();
         }
 
@@ -239,7 +210,8 @@ namespace AltV.Net.EntitySync
                                 {
                                     var foundEntity = foundEntities[i];
                                     foundEntity.AddCheck(client);
-                                    foundEntity.DataSnapshot.CompareWithClient(threadIndex, changedEntityDataKeys, client);
+                                    foundEntity.DataSnapshot.CompareWithClient(threadIndex, changedEntityDataKeys,
+                                        client);
 
                                     if (foundEntity.TryAddClient(client))
                                     {

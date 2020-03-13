@@ -10,13 +10,16 @@ namespace AltV.Net.EntitySync
     {
         public abstract event ConnectionConnectEventDelegate OnConnectionConnect;
         public abstract event ConnectionDisconnectEventDelegate OnConnectionDisconnect;
+        
+        public abstract event ClientSubscribeEntityDelegate OnClientSubscribeEntity;
+        public abstract event ClientUnsubscribeEntityDelegate OnClientUnsubscribeEntity;
 
         public abstract event EntityCreateEventDelegate OnEntityCreate;
         public abstract event EntityRemoveEventDelegate OnEntityRemove;
         public abstract event EntityPositionUpdateEventDelegate OnEntityPositionUpdate;
         public abstract event EntityPositionUpdateEventDelegate OnEntityDataUpdate;
 
-        public ulong ThreadCount;
+        public readonly ulong ThreadCount;
         
         public IClientRepository ClientRepository;
 
