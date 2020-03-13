@@ -11,7 +11,7 @@ https://www.nuget.org/packages/AltV.Net.EntitySync.ServerEvent // A optional pac
 ## Configure the Entity Sync
 
 ```csharp
-AltEntitySync.Init(1, 500,
+AltEntitySync.Init(1, 100,
    repository => new ServerEventNetworkLayer(repository),
    (entity, threadCount) => (entity.Id % threadCount), 
    (entityId, entityType, threadCount) => (entityId % threadCount),
@@ -132,13 +132,16 @@ This is called every time you come in the range of the entity.
 The server assumes you cache the entity depending on the entity.id so make sure to do it.
 
 ```js
-alt.onServer("entitySync:create", entity => {
-    alt.log(entity.id);
-    alt.log(entity.type);
-    alt.log(entity.position);
-    alt.log(entity.data);
-    if (entity.data) {
-      entityData[entity.id] = entity.data;
+alt.onServer("entitySync:create", (entityId, entityType, position, entityData) => {
+    alt.log(entityId);
+    alt.log(entityType);
+    alt.log(position);
+    alt.log(entityData);
+    if (entityData) {
+      if (!entityData[entityType]) {
+         entityData[entityType] = {};
+      }
+      entityData[entityType][entityId] = entityData;
     }
 })
 ```
@@ -148,9 +151,15 @@ alt.onServer("entitySync:create", entity => {
 This is called every time you go out of the range of the entity.
 
 ```js
-alt.onServer("entitySync:remove", entityId => {
-    const entityData = entityData[entityId];
+alt.onServer("entitySync:remove", (entityId, entityType) => {
+    const entityData;
+    if (entityData[entityType]) {
+         entityData = entityData[entityType][entityId];
+    } else {
+         entityData = null;
+    }
     alt.log(entityId);
+    alt.log(entityType);
     alt.log(entityData);
 })
 ```
@@ -160,9 +169,15 @@ alt.onServer("entitySync:remove", entityId => {
 This is called very time you update the entity position while you are in the range of the entity.
 
 ```js
-alt.onServer("entitySync:updatePosition", (entityId, position) => {
-    const entityData = entityData[entityId];
+alt.onServer("entitySync:updatePosition", (entityId, entityType, position) => {
+    const entityData;
+    if (entityData[entityType]) {
+         entityData = entityData[entityType][entityId];
+    } else {
+         entityData = null;
+    }
     alt.log(entityId);
+    alt.log(entityType);
     alt.log(entityData);
 })
 ```
@@ -173,13 +188,16 @@ alt.onServer("entitySync:updatePosition", (entityId, position) => {
 This is called every time you update the entity data while you are in the range of the entity.
 
 ```js
-alt.onServer("entitySync:updateData", (entityId, newEntityData) => {
-    let entityData = entityData[entityId];
-    if (!entityData) {
-        entityData = {};
+alt.onServer("entitySync:updateData", (entityId, entityType, newEntityData) => {
+    if (!entityData[entityType]) {
+       entityData[entityType] = {};
+    }
+    let currEntityData = entityData[entityType][entityId];
+    if (!currEntityData) {
+         entityData[entityType][entityId] = {};
     }
     for (const key in newEntityData) {
-        entityData[key] = newEntityData[key];
+        entityData[entityType][entityId][key] = newEntityData[key];
     }
 })
 ```
@@ -189,8 +207,11 @@ alt.onServer("entitySync:updateData", (entityId, newEntityData) => {
 This is called every time you remove a entity on serverside completely and clients still have data in cache of this entity.
 
 ```js
-alt.onServer("entitySync:clearCache", entityId => {
-    delete entityData[entityId];
+alt.onServer("entitySync:clearCache", (entityId, entityType) => {
+    if (!entityData[entityType]) {
+      return;
+    }
+    delete entityData[entityType][entityId];
 })
 ```
 
