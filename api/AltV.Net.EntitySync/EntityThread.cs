@@ -185,15 +185,10 @@ namespace AltV.Net.EntitySync
                     {
                         if (clientThreadRepository.ClientsToRemove.Count != 0)
                         {
-                            var clientToRemove = clientThreadRepository.ClientsToRemove.First;
-                            while (clientToRemove != null)
+                            while (clientThreadRepository.ClientsToRemove.TryDequeue(out var clientToRemove))
                             {
-                                //TODO: client remove should only happen in one thread i think, at least the 
-                                clientToRemove.Value.Snapshot.CleanupEntities(threadIndex, clientToRemove.Value);
-                                clientToRemove = clientToRemove.Next;
+                                clientToRemove.Snapshot.CleanupEntities(threadIndex, clientToRemove);
                             }
-
-                            clientThreadRepository.ClientsToRemove.Clear();
                         }
 
                         foreach (var (_, client) in clientThreadRepository.Clients)
