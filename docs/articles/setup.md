@@ -1,7 +1,7 @@
 # Setup
 You need the following requirements to use the c# module.
 
-* Latest [.NET Core 3.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.0).
+* Latest [.NET Core SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1).
 
 ## Step 1
 
