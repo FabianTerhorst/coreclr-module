@@ -126,6 +126,15 @@ export default class EntityRepository {
         });
     }
 
+    updateEntity(oldPosition, entity) {
+        this.streamingWorker.postMessage({
+            position: playerPosition.getPosition(),
+            dimension: clientRepository.dimension,
+            oldEntityPosition: oldPosition,
+            entityToUpdate: EntityRepository.copyEntityWithoutData(entity)
+        });
+    }
+
     resetWorker() {
         this.streamingWorker.postMessage({
             reset: true

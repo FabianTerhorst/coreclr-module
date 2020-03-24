@@ -59,6 +59,11 @@ export default class WebSocket {
                 const positionChange = obj.positionChange;
                 if (this.entityRepository.entities.has(positionChange.id)) {
                     const entity = this.entityRepository.entities.get(positionChange.id);
+                    const oldPositionForStreamer = {
+                        x: EntityRepository.roundDecimal(entity.position.x, 3),
+                        y: EntityRepository.roundDecimal(entity.position.y, 3),
+                        z: EntityRepository.roundDecimal(entity.position.z, 3)
+                    };
                     const oldPosition = entity.position;
                     entity.position = positionChange.position;
                     alt.emit("positionChange", JSON.stringify({
@@ -66,7 +71,7 @@ export default class WebSocket {
                         oldPosition: oldPosition,
                         newPosition: entity.position
                     }));
-                    this.entityRepository.updateWorker();
+                    this.entityRepository.updateEntity(oldPositionForStreamer, entity)
                     //TODO: update only changed entity
                     //console.log("position changed", entity.id, entity.position);
                 }

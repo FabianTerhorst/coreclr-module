@@ -37,7 +37,7 @@ EXPORT alt::IVehicle*
 Server_CreateVehicle(alt::ICore* server, uint32_t model, position_t pos, rotation_t rot, uint16_t &id);
 EXPORT alt::ICheckpoint*
 Server_CreateCheckpoint(alt::ICore* server, uint8_t type, position_t pos, float radius,
-                        float height, alt::RGBA color);
+                        float height, rgba_t color);
 EXPORT alt::IBlip*
 Server_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, position_t pos);
 EXPORT alt::IBlip*

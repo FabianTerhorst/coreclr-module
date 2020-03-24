@@ -13,7 +13,7 @@ Now you can use the async module.
 
 You can register a async event handler when using AltAsync instead of Alt for registering event handlers like
 
-```csharp
+```cs
 AltAsync.OnPlayerConnect += async (player, reason) => {
   Console.WriteLine($"{player.Name} connected.");
   await DoAsyncStuff(player);
@@ -31,7 +31,7 @@ This doesn't work with all apis
 
 Small example:
 
-```csharp
+```cs
 Position position;
 lock (player) {
   if (player.Exists) {
@@ -63,7 +63,7 @@ To use those apis we have to execute them on main thread. To make this easy for 
 
 Here is a example.
 
-```csharp
+```cs
 var vehicle = await AltAsync.Do(() => Alt.CreateVehicle(VehicleModel.T20, player.Position, player.Rotation));
 ```
 
@@ -72,7 +72,7 @@ AltAsync.Do will execute any code inside of it on the main thread. And will retu
 
 When you need to call multiple apis at once don't do multiple AltAsync.Do when possible. Otherwise it may create a overhead on the main thread.
 
-```csharp
+```cs
 var vehicle = await AltAsync.Do(() => {
   var vehicle = Alt.CreateVehicle(VehicleModel.T20, player.Position, player.Rotation);
   var vehicle2 = Alt.CreateVehicle(VehicleModel.Chimera, player.Position, player.Rotation);

@@ -1,11 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Exceptions;
 using AltV.Net.Native;
 
 namespace AltV.Net
@@ -282,6 +286,7 @@ namespace AltV.Net
 
         public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
+            CheckIfCallIsValid();
             ushort id = default;
             var ptr = AltNative.Server.Server_CreateVehicle(NativePointer, model, pos, rotation, ref id);
             return vehiclePool.Get(ptr, out var vehicle) ? vehicle : null;
@@ -290,12 +295,14 @@ namespace AltV.Net
         public ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height,
             Rgba color)
         {
+            CheckIfCallIsValid();
             var ptr = AltNative.Server.Server_CreateCheckpoint(NativePointer, type, pos, radius, height, color);
             return checkpointPool.Get(ptr, out var checkpoint) ? checkpoint : null;
         }
 
         public IBlip CreateBlip(IPlayer player, byte type, Position pos)
         {
+            CheckIfCallIsValid();
             var ptr = AltNative.Server.Server_CreateBlip(NativePointer, player?.NativePointer ?? IntPtr.Zero,
                 type, pos);
             return blipPool.Get(ptr, out var blip) ? blip : null;
@@ -303,6 +310,7 @@ namespace AltV.Net
 
         public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
         {
+            CheckIfCallIsValid();
             var ptr = AltNative.Server.Server_CreateBlipAttached(NativePointer,
                 player?.NativePointer ?? IntPtr.Zero,
                 type, entityAttach.NativePointer);
@@ -311,6 +319,7 @@ namespace AltV.Net
 
         public IVoiceChannel CreateVoiceChannel(bool spatial, float maxDistance)
         {
+            CheckIfCallIsValid();
             var ptr = AltNative.Server.Server_CreateVoiceChannel(NativePointer,
                 spatial, maxDistance);
             return voiceChannelPool.Get(ptr, out var voiceChannel) ? voiceChannel : null;
@@ -318,36 +327,42 @@ namespace AltV.Net
 
         public IColShape CreateColShapeCylinder(Position pos, float radius, float height)
         {
+            CheckIfCallIsValid();
             var ptr = AltNative.Server.Server_CreateColShapeCylinder(NativePointer, pos, radius, height);
             return colShapePool.Get(ptr, out var colShape) ? colShape : null;
         }
 
         public IColShape CreateColShapeSphere(Position pos, float radius)
         {
+            CheckIfCallIsValid();
             var ptr = AltNative.Server.Server_CreateColShapeSphere(NativePointer, pos, radius);
             return colShapePool.Get(ptr, out var colShape) ? colShape : null;
         }
 
         public IColShape CreateColShapeCircle(Position pos, float radius)
         {
+            CheckIfCallIsValid();
             var ptr = AltNative.Server.Server_CreateColShapeCircle(NativePointer, pos, radius);
             return colShapePool.Get(ptr, out var colShape) ? colShape : null;
         }
 
         public IColShape CreateColShapeCube(Position pos, Position pos2)
         {
+            CheckIfCallIsValid();
             var ptr = AltNative.Server.Server_CreateColShapeCube(NativePointer, pos, pos2);
             return colShapePool.Get(ptr, out var colShape) ? colShape : null;
         }
 
         public IColShape CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z)
         {
+            CheckIfCallIsValid();
             var ptr = AltNative.Server.Server_CreateColShapeRectangle(NativePointer, x1, y1, x2, y2, z);
             return colShapePool.Get(ptr, out var colShape) ? colShape : null;
         }
 
         public void RemoveBlip(IBlip blip)
         {
+            CheckIfCallIsValid();
             if (blip.Exists)
             {
                 AltNative.Server.Server_DestroyBlip(NativePointer, blip.NativePointer);
@@ -356,6 +371,7 @@ namespace AltV.Net
 
         public void RemoveCheckpoint(ICheckpoint checkpoint)
         {
+            CheckIfCallIsValid();
             if (checkpoint.Exists)
             {
                 AltNative.Server.Server_DestroyCheckpoint(NativePointer, checkpoint.NativePointer);
@@ -364,6 +380,7 @@ namespace AltV.Net
 
         public void RemoveVehicle(IVehicle vehicle)
         {
+            CheckIfCallIsValid();
             if (vehicle.Exists)
             {
                 AltNative.Server.Server_DestroyVehicle(NativePointer, vehicle.NativePointer);
@@ -380,6 +397,7 @@ namespace AltV.Net
 
         public void RemoveColShape(IColShape colShape)
         {
+            CheckIfCallIsValid();
             if (colShape.Exists)
             {
                 AltNative.Server.Server_DestroyColShape(NativePointer, colShape.NativePointer);
@@ -759,6 +777,9 @@ namespace AltV.Net
                 case ushort value:
                     CreateMValueUInt(out mValue, value);
                     return;
+                case Vector3 position:
+                    CreateMValueVector3(out mValue, position);
+                    return;
                 default:
                     Alt.Log("can't convert type:" + obj.GetType());
                     mValue = MValueConst.Nil;
@@ -773,6 +794,13 @@ namespace AltV.Net
                 CreateMValue(out var mValue, objects[i]);
                 mValues[i] = mValue;
             }
+        }
+        
+        [Conditional("DEBUG")]
+        public void CheckIfCallIsValid([CallerMemberName] string callerName = "")
+        {
+            if (Alt.Module.IsMainThread()) return;
+            throw new IllegalThreadException(this, callerName);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -228,6 +229,9 @@ namespace AltV.Net.Async
                     return;
                 case ushort value:
                     Alt.Server.CreateMValueUInt(out mValue, value);
+                    return;
+                case Vector3 position:
+                    Alt.Server.CreateMValueVector3(out mValue, position);
                     return;
                 default:
                     Alt.Log("can't convert type:" + obj.GetType());

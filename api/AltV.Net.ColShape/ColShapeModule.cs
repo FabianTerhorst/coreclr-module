@@ -97,16 +97,6 @@ namespace AltV.Net.ColShape
                     ComputeWorldObject(vehicle.Value);
                 }
 
-                if (worldObjectsToRemove.Count != 0)
-                {
-                    worldObjectsToRemove.Clear();
-                }
-
-                if (worldObjectsToReset.Count != 0)
-                {
-                    worldObjectsToReset.Clear();
-                }
-
                 // col shape exit is calculated via bool that gets set to false before each iteration and will set back to true when the entity is inside
                 // when its still false after iteration entity isn't inside anymore
                 lock (colShapes)
@@ -115,6 +105,15 @@ namespace AltV.Net.ColShape
                     {
                         var colShape = colShapes[i];
                         if (colShape.LastChecked.Count == 0) continue;
+                        if (worldObjectsToRemove.Count != 0)
+                        {
+                            worldObjectsToRemove.Clear();
+                        }
+
+                        if (worldObjectsToReset.Count != 0)
+                        {
+                            worldObjectsToReset.Clear();
+                        }
                         using (var colShapeWorldObjects = colShape.LastChecked.GetEnumerator())
                         {
                             while (colShapeWorldObjects.MoveNext())
@@ -197,8 +196,10 @@ namespace AltV.Net.ColShape
                     shape = areaColShapes[j];
                     if (!shape.IsPositionInside(in pos)) continue;
                     shape.SetCheck(worldObject);
-                    shape.AddWorldObject(worldObject);
-                    OnEntityEnterColShape?.Invoke(worldObject, shape);
+                    if (shape.AddWorldObject(worldObject))
+                    {
+                        OnEntityEnterColShape?.Invoke(worldObject, shape);
+                    }
                 }
             }
         }

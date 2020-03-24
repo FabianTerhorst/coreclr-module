@@ -219,7 +219,7 @@ namespace AltV.Net.Example
                             ((MyVehicle) myVehicles[0]).MyData);
                 });
 
-            AltAsync.On("event_name",
+            AltAsync.OnServer("event_name",
                 async delegate(string s, string s1, long i1, string[] arg3, object[] arg4, IMyVehicle arg5,
                     Dictionary<string, object> arg6, IMyVehicle[] myVehicles, string probablyNull, string[] nullArray,
                     Dictionary<string, double> bla)
@@ -294,7 +294,7 @@ namespace AltV.Net.Example
 
             Alt.OnServer("1337", delegate(int int1) { Alt.Log("int1:" + int1); });
 
-            AltAsync.On("1337", delegate(int int1) { Alt.Log("int1:" + int1); });
+            AltAsync.OnServer("1337", delegate(int int1) { Alt.Log("int1:" + int1); });
 
             Alt.Emit("1337", 1);
 
@@ -537,6 +537,7 @@ namespace AltV.Net.Example
 
         public async void MyServerEventHandlerAsync(IMyVehicle vehicle)
         {
+            await Task.Delay(100);
             AltAsync.Log("data-custom-parser: " + vehicle.MyData);
         }
 

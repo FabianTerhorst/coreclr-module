@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -396,5 +397,10 @@ namespace AltV.Net.ColShape.Tests
         }
 
         public byte RearWheel { get; set; }
+
+        public IEnumerable<string> GetAllDataKeys()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
