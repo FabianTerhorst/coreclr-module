@@ -168,7 +168,7 @@ deploy:
   - provider: script
     skip_cleanup: true
     prerelease: true
-    script: ./cdn-linux upload coreclr-module/dev/x64_linux "${TRAVIS_BUILD_NUMBER}"
+    script: echo "alpha upload" && ./cdn-linux upload coreclr-module/dev/x64_linux "${TRAVIS_BUILD_NUMBER}" && echo "alpha uploaded"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$LINUX_ALPHA = true"
