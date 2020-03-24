@@ -18,6 +18,7 @@ namespace AltV.Net.EntitySync
             this.entity = entity;
         }
 
+        //TODO: overflow thread problem, because lastClients isn't thread safe
         public override void OnOverflow(string key)
         {
             HashSet<IClient> clientsToRemove = null;
