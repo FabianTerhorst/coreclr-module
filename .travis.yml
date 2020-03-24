@@ -98,6 +98,7 @@ matrix:
       - mv ./api/AltV.Net.Async/bin/Debug/netcoreapp3.1/publish/AltV.Net.Async.pdb ./api-dlls/AltV.Net.Async.pdb
       - if [ "$LINUX_STABLE" = true ]; then DOTNET_STABLE=true ; fi
       - if [ "$LINUX_BETA" = true ]; then DOTNET_BETA=true ; fi
+      - if [ "$LINUX_ALPHA" = true ]; then DOTNET_ALPHA=true ; fi
       - LINUX_STABLE=false
       - WINDOWS_STABLE=false
       - LINUX_BETA=false
@@ -178,6 +179,13 @@ deploy:
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$DOTNET_BETA = true"
+      tags: true
+  - provider: script
+    skip_cleanup: true
+    script: ./cdn-linux ./upload coreclr-module/dev/x64_linux "${TRAVIS_BUILD_NUMBER}" && ./cdn-linux ./upload coreclr-module/dev/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    on:
+      repo: FabianTerhorst/coreclr-module
+      condition: "$DOTNET_ALPHA = true"
       tags: true
   - provider: releases
     skip_cleanup: true
