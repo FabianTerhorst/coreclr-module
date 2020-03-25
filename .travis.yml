@@ -30,6 +30,7 @@ matrix:
       - cd ..
       - cd runtime
       - echo $TRAVIS_BRANCH
+      - echo $LINUX_ALPHA
       - mkdir build && cd build
       - CXX=/usr/bin/g++-8
       - CC=/usr/bin/gcc-8
