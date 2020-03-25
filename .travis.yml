@@ -103,6 +103,8 @@ matrix:
       - WINDOWS_STABLE=false
       - LINUX_BETA=false
       - WINDOWS_BETA=false
+      - LINUX_ALPHA=false
+      - WINDOWS_ALPHA=false
   - language: csharp
     dist: trusty
     mono: latest
