@@ -29,7 +29,7 @@ matrix:
       - mkdir modules
       - cd ..
       - cd runtime
-      - echo "${TRAVIS_BRANCH}"
+      - echo $TRAVIS_BRANCH
       - mkdir build && cd build
       - CXX=/usr/bin/g++-8
       - CC=/usr/bin/gcc-8
@@ -38,7 +38,7 @@ matrix:
       - cd ..
       - cd ..
       - mv ./runtime/build/src/libcsharp-module.so ./upload/modules/libcsharp-module.so
-      - echo "${TRAVIS_BUILD_NUMBER}"
+      - echo $TRAVIS_BUILD_NUMBER
   - os: windows
     filter_secrets: false
     language: cpp
@@ -60,7 +60,7 @@ matrix:
       - cmake --build . --config Release
       - cd ..
       - cd ..
-      - echo "${TRAVIS_BUILD_NUMBER}"
+      - echo $TRAVIS_BUILD_NUMBER
       - powershell move runtime/build/src/Release/csharp-module.dll upload/modules
       - cd upload && cd modules && ls
       - cd .. && cd ..
