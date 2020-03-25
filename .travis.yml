@@ -22,13 +22,14 @@ matrix:
       - if [ "$LINUX_ALPHA" = true ]; then LINUX_STABLE=false ; fi
       - if [ "$LINUX_ALPHA" = true ]; then LINUX_BETA=false ; fi
       - if [ "$LINUX_ALPHA" = true ]; then WINDOWS_BETA=false ; fi
+      - if [ "$LINUX_ALPHA" = true ]; then WINDOWS_ALPHA=false ; fi
       - chmod +x ./cdn-linux
       - mkdir upload
       - cd upload
       - mkdir modules
       - cd ..
       - cd runtime
-      - echo "$GITHUB_DEPLOY_PRERELEASE"
+      - echo "${TRAVIS_BRANCH}"
       - mkdir build && cd build
       - CXX=/usr/bin/g++-8
       - CC=/usr/bin/gcc-8
@@ -47,6 +48,7 @@ matrix:
       - if [ "$WINDOWS_ALPHA" = true ]; then LINUX_STABLE=false ; fi
       - if [ "$WINDOWS_ALPHA" = true ]; then LINUX_BETA=false ; fi
       - if [ "$WINDOWS_ALPHA" = true ]; then WINDOWS_BETA=false ; fi
+      - if [ "$WINDOWS_ALPHA" = true ]; then LINUX_ALPHA=false ; fi
       - mkdir upload
       - cd upload
       - mkdir modules
