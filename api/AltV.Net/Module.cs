@@ -47,9 +47,6 @@ namespace AltV.Net
             : target.Assemblies;
 
         //For custom defined args event handlers
-        private readonly Dictionary<string, HashSet<Function>> eventBus =
-            new Dictionary<string, HashSet<Function>>();
-
         private readonly Dictionary<string, HashSet<Function>> eventBusClient =
             new Dictionary<string, HashSet<Function>>();
 
@@ -137,6 +134,9 @@ namespace AltV.Net
 
         internal readonly IEventHandler<ColShapeDelegate> ColShapeEventHandler =
             new HashSetEventHandler<ColShapeDelegate>();
+        
+        internal readonly IEventHandler<VehicleDestroyDelegate> VehicleDestroyEventHandler =
+            new HashSetEventHandler<VehicleDestroyDelegate>();
 
         internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
 
@@ -270,31 +270,6 @@ namespace AltV.Net
         {
             if (!assemblyLoadContext.TryGetTarget(out var target)) return null;
             return target.LoadFromNativeImagePath(nativeImagePath, assemblyPath);
-        }
-
-        [Obsolete]
-        public void On(string eventName, Function function)
-        {
-            if (function == null) return;
-            if (eventBus.TryGetValue(eventName, out var eventHandlers))
-            {
-                eventHandlers.Add(function);
-            }
-            else
-            {
-                eventHandlers = new HashSet<Function> {function};
-                eventBus[eventName] = eventHandlers;
-            }
-        }
-
-        [Obsolete]
-        public void Off(string eventName, Function function)
-        {
-            if (function == null) return;
-            if (eventBus.TryGetValue(eventName, out var eventHandlers))
-            {
-                eventHandlers.Remove(function);
-            }
         }
 
         public void OnClient(string eventName, Function function)
@@ -795,22 +770,6 @@ namespace AltV.Net
                 }
             }
 
-            if (eventBus.Count != 0 && eventBus.TryGetValue(name, out var eventHandlers))
-            {
-                if (mValues == null)
-                {
-                    mValues = new MValueConst[length];
-                    for (var i = 0; i < length; i++)
-                    {
-                        mValues[i] = new MValueConst(args[i]);
-                    }
-                }
-                foreach (var eventHandler in eventHandlers)
-                {
-                    eventHandler.Call(player, mValues);
-                }
-            }
-
             object[] argObjects = null;
 
             if (eventBusClientDelegate.Count != 0 &&
@@ -907,26 +866,6 @@ namespace AltV.Net
             if (eventBusServer.Count != 0 && eventBusServer.TryGetValue(name, out var eventHandlersServer))
             {
                 foreach (var eventNameEventHandler in eventHandlersServer)
-                {
-                    try
-                    {
-                        eventNameEventHandler.Call(mValues);
-                    }
-                    catch (TargetInvocationException exception)
-                    {
-                        Alt.Log("exception at event:" + name + ":" + exception.InnerException);
-                    }
-                    catch (Exception exception)
-                    {
-                        Alt.Log("exception at event:" + name + ":" + exception);
-                    }
-                }
-            }
-
-
-            if (eventBus.Count != 0 && eventBus.TryGetValue(name, out var eventNameEventHandlers))
-            {
-                foreach (var eventNameEventHandler in eventNameEventHandlers)
                 {
                     try
                     {
@@ -1133,6 +1072,25 @@ namespace AltV.Net
             }
         }
 
+        public void OnVehicleDestroy(IntPtr vehiclePointer)
+        {
+            if (!VehiclePool.GetOrCreate(vehiclePointer, out var vehicle))
+            {
+                return;
+            }
+
+            OnVehicleDestroyEvent(vehicle);
+        }
+        
+        public virtual void OnVehicleDestroyEvent(IVehicle vehicle)
+        {
+            if (!VehicleDestroyEventHandler.HasEvents()) return;
+            foreach (var eventHandler in VehicleDestroyEventHandler.GetEvents())
+            {
+                eventHandler(vehicle);
+            }
+        }
+        
         public void OnScriptsLoaded(IScript[] scripts)
         {
             foreach (var script in scripts)

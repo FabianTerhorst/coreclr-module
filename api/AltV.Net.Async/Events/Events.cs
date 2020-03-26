@@ -43,4 +43,6 @@ namespace AltV.Net.Async.Events
 
     public delegate Task WeaponDamageAsyncDelegate(IPlayer player, IEntity target, uint weapon, ushort damage,
         Position shotOffset, BodyPart bodyPart);
+    
+    public delegate Task VehicleDestroyAsyncDelegate(IVehicle vehicle);
 }
