@@ -44,6 +44,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnCreateColShapeDelegate = [](auto var) {};
     OnRemoveColShapeDelegate = [](auto var) {};
     OnColShapeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnVehicleDestroyDelegate = [](auto var) {};
 }
 
 bool CSharpResourceImpl::Start() {
