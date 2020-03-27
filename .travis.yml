@@ -270,6 +270,22 @@ deploy:
       repo: FabianTerhorst/coreclr-module
       condition: "$DOTNET_BETA = true"
       tags: true
+  - provider: releases
+    skip_cleanup: true
+    prerelease: true
+    api_key:
+      secure: SHN0O0J2NFHAXP5bIRKufF3u8RqHDSKSNbVNXKnDS5FXJkhwDlHYfL1mF9xIlkAUSNvYvrKaReDAxWwRulKWisZi4JXA4OL96j2Pqiovw7npomDmEQpXLC8TgiH9TvkIFFXr4L5Cm6zzXTVjrI2FA1WiHR2rga1A367dCVX0wdSjsH4qwC3CsNFBhStsbPMQl49U2hHGe+Nl02LkzSqS0QBZ6RZsChF+fzs35512Xvfiz0qXExCIIQpIYbnPAKbNA4vd6/zTkj72xYYsK8pKGKu56ENCPf2uvzfacUDQKrTKLTVVVWlJ8865VfIwjPixfD/dvnD4XZ/mC3SQbAwEE5WjSApOXCs/eL/zKq4Wa3oaJTc0mFf31wCySAQfL3vD51Wu/pjPuixsH1o6JPxWZuGA5KbL7Bi0D3I8T3mD4CJoPwIYbmu/6kwUHbOi/Nd9fb0YraL9k1uX4WzROIpGLbADccr1L7itGVdnhD5vlrp07ETluOxyJZlsB4gNVaSk4MUAppNVlXAi/4UOmEmQYIZRg1akO+4nDN0+nfwzNRSM4chSDBFwDBthqsADErFf5yFGy9JmLHLD2qkeSjqEm/rc1a2zV66nucVmwKHZyPL92GhGkguxsYKFNu/42382W1wHJ47nDCpEQWOVgFgix7xdgSKeZiYvoEs0JgWSjLU=
+    file: 
+      - upload/AltV.Net.Host.dll
+      - upload/AltV.Net.Host.runtimeconfig.json
+      - api-dlls/AltV.Net.dll
+      - api-dlls/AltV.Net.Async.dll
+      - api-dlls/AltV.Net.pdb
+      - api-dlls/AltV.Net.Async.pdb
+    on:
+      repo: FabianTerhorst/coreclr-module
+      condition: "$DOTNET_ALPHA = true"
+      tags: true
   - provider: pages
     skip-cleanup: true
     github-token: $GITHUB_TOKEN
