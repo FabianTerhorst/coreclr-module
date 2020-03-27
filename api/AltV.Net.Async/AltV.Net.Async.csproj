@@ -12,9 +12,12 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.29.0</PackageVersion>
+        <PackageVersion>1.29.1</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Update dependencies</PackageReleaseNotes>
+        <PackageReleaseNotes>Update dependencies
+Add AsyncPlayerRef
+Add AsyncVehicleRef
+Add all other async refs</PackageReleaseNotes>
         <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
