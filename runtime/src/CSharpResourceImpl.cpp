@@ -342,6 +342,11 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             }
         }
             break;
+        case alt::CEvent::Type::VEHICLE_DESTROY: {
+            auto vehicle = ((alt::CVehicleDestroyEvent*) (ev))->GetTarget().Get();
+            OnVehicleDestroyDelegate(vehicle);
+            break;
+        }
     }
     return true;
 }
@@ -588,6 +593,11 @@ void CSharpResourceImpl_SetRemoveColShapeDelegate(CSharpResourceImpl* resource,
 void CSharpResourceImpl_SetColShapeDelegate(CSharpResourceImpl* resource,
                                             ColShapeDelegate_t delegate) {
     resource->OnColShapeDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetVehicleDestroyDelegate(CSharpResourceImpl* resource,
+                                            VehicleDestroyDelegate_t delegate) {
+    resource->OnVehicleDestroyDelegate = delegate;
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files) {
