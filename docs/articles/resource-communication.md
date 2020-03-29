@@ -6,7 +6,7 @@ This article will describe how to communicate between different server resources
 
 Resources can define data that other resources can access while the resource is starting. This data is immutable after resource finished starting and can be accessed from any serverside resource.
 
-```csharp
+```cs
 public class SampleResource : AsyncResource
 {
   public override void OnStart()
@@ -24,7 +24,7 @@ Also any dictionary in dictionary, array in array, ect. endless depth types are 
 
 Functions are also possible to export. Supported function parameters are same types supported by events and exports.
 
-```csharp
+```cs
 public class SampleResource : AsyncResource
 {
   public override void OnStart()
@@ -51,7 +51,7 @@ public class SampleResource : AsyncResource
 Resources can import data that got exported from other resources. Most likely you will define the resource where you import from as ```deps: [ myResource, myResource2 ]``` in your ```resource.cfg``` to make sure the resource is already started when your resource starts.
 You also have to define the resource name where you import data from.
 
-```csharp
+```cs
 public class SampleResource : AsyncResource
 {
   public override void OnStart()
@@ -65,7 +65,7 @@ public class SampleResource : AsyncResource
 
 This works the same with functions that return data. The return type is always the last generic type in ```Func<...>```.
 
-```csharp
+```cs
 public class SampleResource : AsyncResource
 {
   public override void OnStart()
@@ -83,7 +83,7 @@ Another way to communicate with resources is by sending events to them. The ```A
 Every resource will get notified about the event. You can listen explicit for server events via ```Alt.OnServer("eventName", OnServerEvent)```.
 The server event delegate needs to have to following signature.
 
-```csharp
+```cs
 public void OnServerEvent(object[] args)
 {
 }
