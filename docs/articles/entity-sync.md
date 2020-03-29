@@ -15,7 +15,7 @@ AltEntitySync.Init(1, 100,
    (threadCount, repository) => new ServerEventNetworkLayer(threadCount, repository),
    (entity, threadCount) => (entity.Id % threadCount), 
    (entityId, entityType, threadCount) => (entityId % threadCount),
-   (threadId) => new LimitedGrid3(50_000, 50_000, 100, 10_000, 10_000, 600),
+   (threadId) => new LimitedGrid3(50_000, 50_000, 100, 10_000, 10_000, 300),
    new IdProvider());
 ```
 
@@ -35,7 +35,7 @@ The sixth parameter is the Action that returns a new space partitioning algorith
 LimitedGrid3 has following parameters: (int maxX, int maxY, int areaSize, int xOffset, int yOffset, int limit).
 The (int maxX, int maxY) parameters are defining the size of the map the grid is inserting, removing and finding entities in. The default values are defining the default gta 5 map.
 The two offsets (int xOffset, int yOffset) preventing the corrdinates to become negative, because the gta maps goes from -10k to 50k.
-The (int limit) makes sure a client can only have streamed in the amount of entities he can actually render. E.g. the gta 5 client in altv can only create around 600 Objects without stability issues.
+The (int limit) makes sure a client can only have streamed in the amount of entities he can actually render. E.g. the gta 5 client in altv can only create around 300 Objects without stability issues.
 
 The seventh and last parameter is the id provider that increments the entity ids incremental and free's unused ids. The IdProvider is included inside the core package as well.
 
