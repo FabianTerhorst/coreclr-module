@@ -34,7 +34,7 @@ namespace AltV.Net.EntitySync
         internal readonly LinkedList<EntityRemoveDelegate> EntityRemoveCallbacks = new LinkedList<EntityRemoveDelegate>();
 
         public EntitySyncServer(ulong threadCount, int syncRate,
-            Func<IClientRepository, NetworkLayer> createNetworkLayer,
+            Func<ulong, IClientRepository, NetworkLayer> createNetworkLayer,
             Func<IEntity, ulong, ulong> entityThreadId,
             Func<ulong, ulong, ulong, ulong> entityIdAndTypeThreadId,
             Func<ulong, SpatialPartition> createSpatialPartition, IIdProvider<ulong> idProvider)
@@ -57,14 +57,14 @@ namespace AltV.Net.EntitySync
                 entityThreadRepositories[i] = entityThreadRepository;
                 clientThreadRepositories[i] = clientThreadRepository;
                 spatialPartitions[i] = spatialPartition;
-                entityThreads[i] = new EntityThread(entityThreadRepository, clientThreadRepository, spatialPartition, syncRate,
+                entityThreads[i] = new EntityThread(i, entityThreadRepository, clientThreadRepository, spatialPartition, syncRate,
                     OnEntityCreate,
                     OnEntityRemove, OnEntityDataChange, OnEntityPositionChange, OnEntityClearCache);
             }
 
             entityRepository = new EntityRepository(entityThreadRepositories, entityThreadId, entityIdAndTypeThreadId);
             clientRepository = new ClientRepository(clientThreadRepositories);
-            networkLayer = createNetworkLayer(clientRepository);
+            networkLayer = createNetworkLayer(threadCount, clientRepository);
             networkLayer.OnConnectionConnect += OnConnectionConnect;
             networkLayer.OnConnectionDisconnect += OnConnectionDisconnect;
             this.idProvider = idProvider;

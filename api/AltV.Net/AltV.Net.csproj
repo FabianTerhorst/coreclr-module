@@ -13,7 +13,7 @@
         <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge gta5 gtav</PackageTags>
-        <PackageVersion>1.27.3</PackageVersion>
+        <PackageVersion>1.27.4</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>
 Add following methods to IVehicle

@@ -1,7 +1,11 @@
-﻿namespace AltV.Net.Client.Elements.Entities
+﻿using WebAssembly;
+
+namespace AltV.Net.Client.Elements.Entities
 {
     public interface IBaseObject
     {
+        JSObject NativeObject { get; }
+        
         int Type { get; }
         
         bool Exists { get; }

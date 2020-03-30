@@ -11,6 +11,8 @@ namespace AltV.Net.EntitySync.ServerEvent
     {
         public override event ConnectionConnectEventDelegate OnConnectionConnect;
         public override event ConnectionDisconnectEventDelegate OnConnectionDisconnect;
+        public override event ClientSubscribeEntityDelegate OnClientSubscribeEntity;
+        public override event ClientUnsubscribeEntityDelegate OnClientUnsubscribeEntity;
         public override event EntityCreateEventDelegate OnEntityCreate;
         public override event EntityRemoveEventDelegate OnEntityRemove;
         public override event EntityPositionUpdateEventDelegate OnEntityPositionUpdate;
@@ -44,11 +46,12 @@ namespace AltV.Net.EntitySync.ServerEvent
         private readonly IDictionary<IClient, Channel<ServerEntityEvent>> serverEventChannels =
             new Dictionary<IClient, Channel<ServerEntityEvent>>();
 
-        public ServerEventNetworkLayer(IClientRepository clientRepository) : base(clientRepository)
+        public ServerEventNetworkLayer(ulong threadCount, IClientRepository clientRepository) : base(threadCount,
+            clientRepository)
         {
             Alt.OnPlayerConnect += (player, reason) =>
             {
-                var playerClient = new PlayerClient(player.Id.ToString(), player);
+                var playerClient = new PlayerClient(threadCount, player.Id.ToString(), player);
                 player.SetEntitySyncClient(playerClient);
                 clientRepository.Add(playerClient);
                 Task.Factory.StartNew(async obj =>
@@ -71,30 +74,33 @@ namespace AltV.Net.EntitySync.ServerEvent
                                 switch (entityEvent.EventType)
                                 {
                                     case 1:
-                                        IDictionary<string, object> entityDictionary = new Dictionary<string, object>();
-                                        entityDictionary["id"] = entityEvent.Entity.Id;
-                                        entityDictionary["type"] = entityEvent.Entity.Type;
-                                        entityDictionary["position"] = entityEvent.Entity.Position;
                                         if (entityEvent.ChangedData != null)
                                         {
-                                            entityDictionary["data"] = entityEvent.ChangedData;
+                                            currPlayerClient.Emit("entitySync:create", entityEvent.Entity.Id,
+                                                entityEvent.Entity.Type, entityEvent.Entity.Position, entityEvent.ChangedData);
+                                        }
+                                        else
+                                        {
+                                            currPlayerClient.Emit("entitySync:create", entityEvent.Entity.Id,
+                                                entityEvent.Entity.Type, entityEvent.Entity.Position);
                                         }
 
-                                        currPlayerClient.Emit("entitySync:create", entityDictionary);
                                         break;
                                     case 2:
-                                        currPlayerClient.Emit("entitySync:remove", entityEvent.Entity.Id);
+                                        currPlayerClient.Emit("entitySync:remove", entityEvent.Entity.Id,
+                                            entityEvent.Entity.Type);
                                         break;
                                     case 3:
                                         currPlayerClient.Emit("entitySync:updatePosition", entityEvent.Entity.Id,
-                                            entityEvent.Position);
+                                            entityEvent.Entity.Type, entityEvent.Position);
                                         break;
                                     case 4:
                                         currPlayerClient.Emit("entitySync:updateData", entityEvent.Entity.Id,
-                                            entityEvent.ChangedData);
+                                            entityEvent.Entity.Type, entityEvent.ChangedData);
                                         break;
                                     case 5:
-                                        currPlayerClient.Emit("entitySync:clearCache", entityEvent.Entity.Id);
+                                        currPlayerClient.Emit("entitySync:clearCache", entityEvent.Entity.Id,
+                                            entityEvent.Entity.Type);
                                         break;
                                 }
                             }
@@ -161,7 +167,7 @@ namespace AltV.Net.EntitySync.ServerEvent
             {
                 if (!serverEventChannels.TryGetValue(client, out channel)) return;
             }
-            
+
             channel.Writer.TryWrite(new ServerEntityEvent(4, entityDataChange.Entity,
                 Vector3.Zero, entityDataChange.Data));
         }
@@ -173,7 +179,7 @@ namespace AltV.Net.EntitySync.ServerEvent
             {
                 if (!serverEventChannels.TryGetValue(client, out channel)) return;
             }
-            
+
             channel.Writer.TryWrite(new ServerEntityEvent(5, entityClearCache.Entity,
                 Vector3.Zero, null));
         }

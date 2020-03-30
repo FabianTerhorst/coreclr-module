@@ -9,6 +9,8 @@ namespace AltV.Net.EntitySync.Benchmarks
     {
         public override event ConnectionConnectEventDelegate OnConnectionConnect;
         public override event ConnectionDisconnectEventDelegate OnConnectionDisconnect;
+        public override event ClientSubscribeEntityDelegate OnClientSubscribeEntity;
+        public override event ClientUnsubscribeEntityDelegate OnClientUnsubscribeEntity;
         public override event EntityCreateEventDelegate OnEntityCreate;
         public override event EntityRemoveEventDelegate OnEntityRemove;
         public override event EntityPositionUpdateEventDelegate OnEntityPositionUpdate;
@@ -20,12 +22,12 @@ namespace AltV.Net.EntitySync.Benchmarks
         public readonly Channel<EntityDataChangeEvent> DataChangeEventChannel = Channel.CreateUnbounded<EntityDataChangeEvent>();
         public readonly Channel<EntityClearCacheEvent> ClearCacheEventChannel = Channel.CreateUnbounded<EntityClearCacheEvent>();
 
-        public MockNetworkLayer(IClientRepository clientRepository) : base(clientRepository)
+        public MockNetworkLayer(ulong threadCount, IClientRepository clientRepository) : base(threadCount, clientRepository)
         {
-            var a = new Client("a");
+            var a = new Client(threadCount, "a");
             a.Dimension = 0;
             a.Position = new Vector3(0, 0, 0);
-            var b = new Client("b");
+            var b = new Client(threadCount, "b");
             b.Dimension = 0;
             b.Position = new Vector3(100, 100, 100);
             clientRepository.Add(a);

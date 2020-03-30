@@ -68,7 +68,7 @@ namespace AltV.Net.EntitySync.ServerEvent
             }
         }
 
-        public PlayerClient(string token, IPlayer player) : base(token)
+        public PlayerClient(ulong threadCount, string token, IPlayer player) : base(threadCount, token)
         {
             this.player = player;
         }

@@ -6,9 +6,9 @@ namespace AltV.Net.WebAssembly.Example
 {
     public class Program
     {
-        public static void Main(object alt, object natives, object player, object localStorageObj)
+        public static void Main(object wrapper)
         {
-            Alt.Init(alt, natives, player, localStorageObj);
+            Alt.Init(wrapper);
             Alt.Log($"Hello World, Im a message from C# and this message generated at {DateTime.Now}");
             Alt.OnConnectionComplete += () => { Alt.Log("on connection completed"); };
             Alt.OnDisconnect += () => { Alt.Log("on disconnect"); };
@@ -48,6 +48,34 @@ namespace AltV.Net.WebAssembly.Example
             var localPlayer = Player.Local();
             Console.WriteLine(localPlayer.Name);
             Console.WriteLine(localPlayer.Id);
+            
+            Console.WriteLine(Alt.GetCursorPos().ToString());
+            Console.WriteLine(Alt.GetLicenseHash());
+            Console.WriteLine(Alt.GetLocale());
+            Console.WriteLine(Alt.Hash("dinghy"));
+            
+            Console.WriteLine(Alt.IsConsoleOpen());
+            Console.WriteLine(Alt.IsInSandbox());
+            Console.WriteLine(Alt.IsMenuOpen());
+            
+            Alt.LogError("This is an error");
+            Alt.LogWarning("This is a warning");
+            
+            Alt.SetMsPerGameMinute(100);
+            Console.WriteLine(Alt.GetMsPerGameMinute());
+            
+            Alt.SetStat("STAMINA", 100);
+            Console.WriteLine(Alt.GetStat("STAMINA"));
+            
+            Alt.SetWeatherCycle(new int[]{7, 2}, new int[]{2, 1});
+
+            var obj = HandlingData.GetForModel(0x81794C70);
+            
+            foreach(var prop in obj.GetType().GetProperties())
+            {
+                object value=prop.GetValue(obj);
+                Console.WriteLine("{0}={1}",prop.Name,value);
+            }
         }
     }
 }

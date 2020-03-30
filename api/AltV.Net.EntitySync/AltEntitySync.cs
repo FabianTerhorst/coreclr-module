@@ -25,7 +25,7 @@ namespace AltV.Net.EntitySync
         }
 
         public static void Init(ulong threadCount, int syncRate,
-            Func<IClientRepository, NetworkLayer> createNetworkLayer,
+            Func<ulong, IClientRepository, NetworkLayer> createNetworkLayer,
             Func<ulong, SpatialPartition> createSpatialPartition, IIdProvider<ulong> idProvider)
         {
             Init(threadCount, syncRate, createNetworkLayer, (entity, tc) => (entity.Id % tc),
@@ -34,7 +34,7 @@ namespace AltV.Net.EntitySync
         }
 
         public static void Init(ulong threadCount, int syncRate,
-            Func<IClientRepository, NetworkLayer> createNetworkLayer,
+            Func<ulong, IClientRepository, NetworkLayer> createNetworkLayer,
             Func<IEntity, ulong, ulong> entityThreadId,
             Func<ulong, ulong, ulong, ulong> entityIdAndTypeThreadId,
             Func<ulong, SpatialPartition> createSpatialPartition, IIdProvider<ulong> idProvider)

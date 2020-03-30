@@ -18,6 +18,7 @@ export default {
         "@dotnet-runtime-dependencies/Mono.Security.dll",
         "@dotnet-runtime-dependencies/System.Xml.dll",
         "@dotnet-runtime-dependencies/System.Numerics.dll",
+        "@dotnet-runtime-dependencies/System.Numerics.Vectors.dll",
         "@dotnet-runtime-dependencies/System.Core.dll",
         "@dotnet-runtime-dependencies/WebAssembly.Net.WebSockets.dll",
         "@dotnet-runtime-dependencies/System.Memory.dll",

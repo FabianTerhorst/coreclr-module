@@ -58,6 +58,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             }
         }
 
+        //TODO: insert entities sorted by id
         public override void Add(IEntity entity)
         {
             var entityPositionX = entity.Position.X + xOffset;
@@ -96,6 +97,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             }
         }
 
+        //TODO: remove entities thar are sorted by id with binary search
         public override void Remove(IEntity entity)
         {
             var entityPositionX = entity.Position.X + xOffset;
