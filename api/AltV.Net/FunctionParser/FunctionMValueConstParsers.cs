@@ -209,6 +209,10 @@ namespace AltV.Net.FunctionParser
             {
                 return (int) mValue.GetInt();
             }
+            if (mValue.type == MValueConst.Type.Uint)
+            {
+                return (int) mValue.GetUint();
+            }
 
             // Types doesn't match
             return null;
@@ -220,6 +224,10 @@ namespace AltV.Net.FunctionParser
             if (mValue.type == MValueConst.Type.Int)
             {
                 return mValue.GetInt();
+            }
+            if (mValue.type == MValueConst.Type.Uint)
+            {
+                return (int) mValue.GetUint();
             }
 
             // Types doesn't match
@@ -233,6 +241,10 @@ namespace AltV.Net.FunctionParser
             {
                 return (uint) mValue.GetUint();
             }
+            if (mValue.type == MValueConst.Type.Int)
+            {
+                return (uint) mValue.GetInt();
+            }
 
             // Types doesn't match
             return null;
@@ -244,6 +256,10 @@ namespace AltV.Net.FunctionParser
             if (mValue.type == MValueConst.Type.Uint)
             {
                 return mValue.GetUint();
+            }
+            if (mValue.type == MValueConst.Type.Int)
+            {
+                return (ulong) mValue.GetInt();
             }
 
             // Types doesn't match
