@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "devDependencies": {
-    "rollup": "^1.1.0",
-    "rollup-plugin-babel": "^4.3.0",
+    "lodash": "^4.17.15",
+    "rollup": "^1.32.1",
+    "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-babel-minify": "^8.0.0",
-    "rollup-plugin-copy": "^3.0.0",
+    "rollup-plugin-copy": "^3.3.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^4.2.3",
-    "rollup-plugin-string": "^3.0.0",
-    "lodash": ">=4.17.13"
+    "rollup-plugin-string": "^3.0.0"
   },
   "scripts": {
     "createEmptyServerMain": "cd build && echo '' > empty.mjs",
@@ -19,6 +19,6 @@
   "author": "Fabian Terhorst",
   "license": "Apache 2.0",
   "dependencies": {
-    "protobufjs": "^6.8.8"
+    "protobufjs": "^6.8.9"
   }
 }

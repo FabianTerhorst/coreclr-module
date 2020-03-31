@@ -9,6 +9,8 @@ namespace AltV.Net.EntitySync.Example
     {
         public override event ConnectionConnectEventDelegate OnConnectionConnect;
         public override event ConnectionDisconnectEventDelegate OnConnectionDisconnect;
+        public override event ClientSubscribeEntityDelegate OnClientSubscribeEntity;
+        public override event ClientUnsubscribeEntityDelegate OnClientUnsubscribeEntity;
         public override event EntityCreateEventDelegate OnEntityCreate;
         public override event EntityRemoveEventDelegate OnEntityRemove;
         public override event EntityPositionUpdateEventDelegate OnEntityPositionUpdate;

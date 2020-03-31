@@ -68,9 +68,13 @@ namespace AltV.Net.WebAssembly.Example
             
             Alt.SetStat("STAMINA", 100);
             Console.WriteLine(Alt.GetStat("STAMINA"));
-            
-            Alt.SetWeatherCycle(new int[]{7, 2}, new int[]{2, 1});
 
+            Alt.SetWeatherCycle(new int[]{7, 2}, new int[]{2, 1});
+            Alt.Log("Before webview");
+            var myView = Alt.CreateWebView("https://altv.mp/", true);
+            Alt.Log($"MyView is {myView} with url {myView.Url}");
+            Alt.Log(myView == null ? "NULL": "notnull");
+            Alt.Log("After Webview");
             var obj = HandlingData.GetForModel(0x81794C70);
             
             foreach(var prop in obj.GetType().GetProperties())

@@ -8,13 +8,12 @@ namespace AltV.Net.EntitySync
         
         internal readonly IDictionary<string, IClient> Clients = new Dictionary<string, IClient>();
         
-        internal readonly LinkedList<IClient> ClientsToRemove = new LinkedList<IClient>();
+        internal readonly Queue<IClient> ClientsToRemove = new Queue<IClient>();
 
         public void Add(IClient client)
         {
             lock (Mutex)
             {
-                ClientsToRemove.Remove(client);
                 Clients[client.Token] = client;
             }
         }
@@ -30,7 +29,7 @@ namespace AltV.Net.EntitySync
             {
                 if (Clients.Remove(token, out var client))
                 {
-                    ClientsToRemove.AddLast(client);
+                    ClientsToRemove.Enqueue(client);
                     return client;
                 }
             }
@@ -55,21 +54,6 @@ namespace AltV.Net.EntitySync
                 {
                     yield return client;
                 }
-            }
-        }
-        
-        public IEnumerable<IClient> GetAllDeleted()
-        {
-            lock (Mutex)
-            {
-                if (ClientsToRemove.Count == 0) yield break;
-                var clientToRemove = ClientsToRemove.First;
-                while (clientToRemove != null)
-                {
-                    yield return clientToRemove.Value;
-                    clientToRemove = clientToRemove.Next;
-                }
-                ClientsToRemove.Clear();
             }
         }
     }
