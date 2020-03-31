@@ -346,8 +346,8 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
 }
 
 void CSharpResourceImpl::OnCreateBaseObject(alt::Ref<alt::IBaseObject> objectRef) {
-    //objectRef->AddRef();
-    objectRef->AddWeakRef(new BaseObjectWeakReference(objectRef, this));
+    objectRef->AddRef();
+    //objectRef->AddWeakRef(new BaseObjectWeakReference(objectRef, this));
     auto object = objectRef.Get();
     if (object != nullptr) {
         switch (object->GetType()) {
@@ -405,7 +405,7 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::Ref<alt::IBaseObject> objectRef
                 break;
         }
     }
-    //objectRef->RemoveRef();
+    objectRef->RemoveRef();
 }
 
 void CSharpResourceImpl::OnTick() {
