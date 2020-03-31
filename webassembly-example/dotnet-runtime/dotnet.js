@@ -45,12 +45,38 @@ for (const resourceName in resourceConfig.resources) {
   }
 }
 
+class LiteEvent {
+    
+    constructor() {
+        this.handlers = [];
+    }
+    on(handler) {
+        this.handlers.push(handler);
+    }
+    off(handler) {
+        this.handlers = this.handlers.filter(h => h !== handler);
+    }
+    emit(...args) {
+        this.handlers.slice(0).forEach(h => h(...args));
+    }
+    expose() {
+        return this;
+    }
+    count() {
+        return this.handlers.length;
+    }
+}
+
 var config = {
   vfs_prefix: "managed",
   deploy_prefix: "managed",
   enable_debugging: /*debugEnabled*/0,
   file_list: Array.from(filesToLoad),
 }
+
+var altOnServerWrappers = new Map();
+var altOnClientWrapper = new Map();
+
 
 var Module = {
 	onRuntimeInitialized: function () {
@@ -91,13 +117,31 @@ var Module = {
         var pointBlipWrapper = {};
         for (const key in PointBlip) {
           pointBlipWrapper[key] = PointBlip[key];
+                }
+      
+
+        // wrapping onServer Delegates to allow ellipsis transfer to dotnet
+        altWrapper["onServer"] = function (eventName, handlerDelegate) {
+            if (!altOnServerWrappers.has(eventName)) {
+                altOnServerWrappers.set(eventName, new LiteEvent());
+                alt.onServer(eventName, (...args) => altOnServerWrappers.get(eventName).emit(args));
+            }
+            var h = altOnServerWrappers.get(eventName);
+            h.on(handlerDelegate);
         }
+
+        altWrapper["offServer"] = function (eventName, handlerDelegate) {
+            if (!altOnServerWrappers.has(eventName)) return;
+            var h = altOnServerWrappers.get(eventName);
+            h.off(handlerDelegate);
+        }
+
         var webViewWrapper = {};
         for (const key in WebView) {
           webViewWrapper[key] = WebView[key];
         }
-		webViewWrapper["constructor"] = function(url,isOverlay) { return new alt.WebView(url,isOverlay); };
-		webViewWrapper["constructor2"] = function(url,propHash,targetTexture) { return new alt.WebView(url,propHash,targetTexture); };
+	  	  webViewWrapper["constructor"] = function(url,isOverlay) { return new alt.WebView(url,isOverlay); };
+ 		    webViewWrapper["constructor2"] = function(url,propHash,targetTexture) { return new alt.WebView(url,propHash,targetTexture); };
         var wrapper = {};
         wrapper.alt = altWrapper;
         wrapper.natives = nativesWrapper;
@@ -107,7 +151,7 @@ var Module = {
         wrapper.AreaBlip = areaBlipWrapper;
         wrapper.RadiusBlip = radiusBlipWrapper;
         wrapper.PointBlip = pointBlipWrapper;
-		wrapper.WebView = webViewWrapper;
+		    wrapper.WebView = webViewWrapper;
         Module.mono_bindings_init("[WebAssembly.Bindings]WebAssembly.Runtime");
         for (const resourceName in resourceConfig.resources) {
           const resource = resourceConfig.resources[resourceName];
