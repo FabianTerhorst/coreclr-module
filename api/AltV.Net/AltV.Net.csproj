@@ -13,7 +13,7 @@
         <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge gta5 gtav</PackageTags>
-        <PackageVersion>1.29.0</PackageVersion>
+        <PackageVersion>1.29.1-dev</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>Add vehicle destroy event
 Workaround entity pool removal</PackageReleaseNotes>
