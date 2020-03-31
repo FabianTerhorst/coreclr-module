@@ -209,6 +209,10 @@ namespace AltV.Net.FunctionParser
             {
                 return (int) mValue.GetInt();
             }
+            if (mValue.type == MValueConst.Type.Uint)
+            {
+                return (int) mValue.GetUint();
+            }
 
             // Types doesn't match
             return null;
@@ -220,6 +224,10 @@ namespace AltV.Net.FunctionParser
             if (mValue.type == MValueConst.Type.Int)
             {
                 return mValue.GetInt();
+            }
+            if (mValue.type == MValueConst.Type.Uint)
+            {
+                return (int) mValue.GetUint();
             }
 
             // Types doesn't match
@@ -233,6 +241,10 @@ namespace AltV.Net.FunctionParser
             {
                 return (uint) mValue.GetUint();
             }
+            if (mValue.type == MValueConst.Type.Int)
+            {
+                return (uint) mValue.GetInt();
+            }
 
             // Types doesn't match
             return null;
@@ -244,6 +256,10 @@ namespace AltV.Net.FunctionParser
             if (mValue.type == MValueConst.Type.Uint)
             {
                 return mValue.GetUint();
+            }
+            if (mValue.type == MValueConst.Type.Int)
+            {
+                return (ulong) mValue.GetInt();
             }
 
             // Types doesn't match
@@ -509,11 +525,22 @@ namespace AltV.Net.FunctionParser
         {
             // Types doesn't match
             if (mValue.type != MValueConst.Type.Dict) return null;
-            var args = typeInfo?.GenericArguments ?? type.GetGenericArguments();
-            if (args.Length != 2) return null;
-            var keyType = args[0];
-            if (keyType != FunctionTypes.String) return null;
-            var valueType = args[1];
+
+            Type keyType;
+            Type valueType;
+            if (type == FunctionTypes.Obj)
+            {
+                keyType = FunctionTypes.String;
+                valueType = FunctionTypes.Obj;
+            }
+            else
+            {
+                var args = typeInfo?.GenericArguments ?? type.GetGenericArguments();
+                if (args.Length != 2) return null;
+                keyType = args[0];
+                if (keyType != FunctionTypes.String) return null;
+                valueType = args[1];
+            }
 
             var length = AltNative.MValueNative.MValueConst_GetDictSize(mValue.nativePointer);
             var keyPointers = new IntPtr[length];

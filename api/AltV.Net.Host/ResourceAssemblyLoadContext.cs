@@ -24,7 +24,9 @@ namespace AltV.Net.Host
                 {
                     try
                     {
-                        return LoadFromAssemblyPath(dllPath);
+                        var assembly = LoadFromAssemblyPath(dllPath);
+                        CheckAssembly(assembly);
+                        return assembly;
                     }
                     catch (Exception exception)
                     {
@@ -38,7 +40,9 @@ namespace AltV.Net.Host
                 {
                     try
                     {
-                        return LoadFromAssemblyPath(dllPath);
+                        var assembly = LoadFromAssemblyPath(dllPath);
+                        CheckAssembly(assembly);
+                        return assembly;
                     }
                     catch (Exception exception)
                     {
@@ -52,7 +56,9 @@ namespace AltV.Net.Host
                 {
                     try
                     {
-                        return LoadFromAssemblyPath(dllPath);
+                        var assembly = LoadFromAssemblyPath(dllPath);
+                        CheckAssembly(assembly);
+                        return assembly;
                     }
                     catch (Exception exception)
                     {
@@ -67,7 +73,9 @@ namespace AltV.Net.Host
                 {
                     try
                     {
-                        return LoadFromAssemblyPath(dllPath);
+                        var assembly = LoadFromAssemblyPath(dllPath);
+                        CheckAssembly(assembly);
+                        return assembly;
                     }
                     catch (Exception exception)
                     {
@@ -141,16 +149,27 @@ namespace AltV.Net.Host
 
         protected override Assembly Load(AssemblyName assemblyName)
         {
-            if (!SharedAssemblyNames.Contains(assemblyName.Name)) return null;
+            if (SharedAssemblyNames.Contains(assemblyName.Name)) return null;
             var assemblyPath = resolver.ResolveAssemblyToPath(assemblyName);
             if (assemblyPath == null) return null;
-            return LoadFromAssemblyPath(assemblyPath);
+            var assembly = LoadFromAssemblyPath(assemblyPath);
+            CheckAssembly(assembly);
+            return assembly;
         }
 
         protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
         {
             var libraryPath = resolver.ResolveUnmanagedDllToPath(unmanagedDllName);
             return libraryPath != null ? LoadUnmanagedDllFromPath(libraryPath) : IntPtr.Zero;
+        }
+
+        private static void CheckAssembly(Assembly assembly)
+        {
+            if (!assembly.IsCollectible)
+            {
+                Console.WriteLine("WARNING: " + assembly.FullName +
+                                  " is not collectible and will prevent you from dynamically starting and stopping resources.");
+            }
         }
     }
 }

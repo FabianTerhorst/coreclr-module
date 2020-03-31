@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -255,6 +256,11 @@ namespace AltV.Net.ColShape.Tests
         }
 
         public void GetStreamSyncedMetaData(string key, out MValueConst value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<string> GetAllDataKeys()
         {
             throw new NotImplementedException();
         }

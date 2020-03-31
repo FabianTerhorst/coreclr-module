@@ -11,10 +11,12 @@ namespace AltV.Net.EntitySync
 
         void Remove(IEntity entity);
 
+        void Remove(IList<IEntity> entities);
+
         void Update(IEntity entity);
 
         IEnumerable<IEntity> GetAll();
 
-        bool TryGet(ulong id, out IEntity entity);
+        bool TryGet(ulong id, ulong type, out IEntity entity);
     }
 }

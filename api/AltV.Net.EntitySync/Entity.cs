@@ -10,6 +10,8 @@ namespace AltV.Net.EntitySync
         public ulong Id { get; }
         public ulong Type { get; }
 
+        public (ulong, ulong) HashKey { get; }
+
         private Vector3 position;
 
         public Vector3 Position
@@ -81,6 +83,7 @@ namespace AltV.Net.EntitySync
         {
             Id = id;
             Type = type;
+            HashKey = (id, type);
             this.position = position;
             this.dimension = dimension;
             this.range = range;

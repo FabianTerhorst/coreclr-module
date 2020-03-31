@@ -2,6 +2,9 @@ using System.Numerics;
 
 namespace AltV.Net.EntitySync
 {
+    //TODO: make client dirty when position or dimension changes, only check dirty characters in entity thread
+    //TODO: this requires to calculate stream out somehow
+    //TODO: dirty clients can only calculate stream outs and position changes
     /// <summary>
     /// A client is a connected peer that authenticated itself via a token.
     /// In most cases the client contains a IPlayer object and gets the position and exists status out of this.
@@ -14,7 +17,7 @@ namespace AltV.Net.EntitySync
 
         public virtual int Dimension { get; set; }
 
-        public ClientDataSnapshot Snapshot { get; } = new ClientDataSnapshot();
+        public ClientDataSnapshot Snapshot { get; }
 
         public virtual bool Exists { get; } = true;
 
@@ -22,8 +25,9 @@ namespace AltV.Net.EntitySync
 
         private bool isPositionOverwritten;
 
-        public Client(string token)
+        public Client(ulong threadCount, string token)
         {
+            Snapshot = new ClientDataSnapshot(threadCount);
             Token = token;
         }
 

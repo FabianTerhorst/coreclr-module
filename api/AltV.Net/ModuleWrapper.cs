@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
@@ -77,6 +78,14 @@ namespace AltV.Net
             csharpResource.CSharpResourceImpl.SetDelegates(OnStartResource);
 
             _scripts = AssemblyLoader.FindAllTypes<IScript>(assemblyLoadContext.Assemblies);
+            foreach (var script in _scripts)
+            {
+                if (script.GetType().GetInterfaces().Contains(typeof(IResource)))
+                {
+                    throw new InvalidOperationException(
+                        "IScript must not be a IResource for type:" + script.GetType());
+                }
+            }
             _module.OnScriptsLoaded(_scripts);
             _modules = AssemblyLoader.FindAllTypes<IModule>(assemblyLoadContext.Assemblies);
             _module.OnModulesLoaded(_modules);

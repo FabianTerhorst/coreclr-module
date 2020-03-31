@@ -6,7 +6,7 @@ namespace AltV.Net.EntitySync
     {
         public readonly object Mutex = new object();
         
-        internal readonly IDictionary<ulong, IEntity> Entities = new Dictionary<ulong, IEntity>();
+        internal readonly IDictionary<(ulong, ulong), IEntity> Entities = new Dictionary<(ulong, ulong), IEntity>();
 
         internal readonly Queue<(IEntity, byte)> EntitiesQueue = new Queue<(IEntity, byte)>();
 
@@ -14,7 +14,7 @@ namespace AltV.Net.EntitySync
         {
             lock (Mutex)
             {
-                if (!Entities.TryAdd(entity.Id, entity)) return;
+                if (!Entities.TryAdd(entity.HashKey, entity)) return;
                 EntitiesQueue.Enqueue((entity, 0));
             }
         }
@@ -23,8 +23,21 @@ namespace AltV.Net.EntitySync
         {
             lock (Mutex)
             {
-                if (!Entities.Remove(entity.Id, out _)) return;
+                if (!Entities.Remove(entity.HashKey, out _)) return;
                 EntitiesQueue.Enqueue((entity, 1));
+            }
+        }
+
+        public void Remove(IList<IEntity> entities)
+        {
+            lock (Mutex)
+            {
+                for (int i = 0, length = entities.Count; i < length; i++)
+                {
+                    var entity = entities[i];
+                    if (!Entities.Remove(entity.HashKey, out _)) return;
+                    EntitiesQueue.Enqueue((entity, 1));
+                }
             }
         }
 
@@ -36,11 +49,11 @@ namespace AltV.Net.EntitySync
             }
         }
         
-        public bool TryGet(ulong id, out IEntity entity)
+        public bool TryGet(ulong id, ulong type, out IEntity entity)
         {
             lock (Mutex)
             {
-                return Entities.TryGetValue(id, out entity);
+                return Entities.TryGetValue((id, type), out entity);
             }
         }
 

@@ -19,6 +19,8 @@ namespace AltV.Net.EntitySync
         
         private readonly ClientThreadRepository[] clientThreadRepositories;
 
+        private readonly SpatialPartition[] spatialPartitions;
+
         private readonly IEntityRepository entityRepository;
 
         private readonly IClientRepository clientRepository;
@@ -31,9 +33,11 @@ namespace AltV.Net.EntitySync
         
         internal readonly LinkedList<EntityRemoveDelegate> EntityRemoveCallbacks = new LinkedList<EntityRemoveDelegate>();
 
-        public EntitySyncServer(long threadCount, int syncRate,
-            Func<IClientRepository, NetworkLayer> createNetworkLayer,
-            Func<SpatialPartition> createSpatialPartition, IIdProvider<ulong> idProvider)
+        public EntitySyncServer(ulong threadCount, int syncRate,
+            Func<ulong, IClientRepository, NetworkLayer> createNetworkLayer,
+            Func<IEntity, ulong, ulong> entityThreadId,
+            Func<ulong, ulong, ulong, ulong> entityIdAndTypeThreadId,
+            Func<ulong, SpatialPartition> createSpatialPartition, IIdProvider<ulong> idProvider)
         {
             if (threadCount < 1)
             {
@@ -43,21 +47,24 @@ namespace AltV.Net.EntitySync
             entityThreads = new EntityThread[threadCount];
             entityThreadRepositories = new EntityThreadRepository[threadCount];
             clientThreadRepositories = new ClientThreadRepository[threadCount];
+            spatialPartitions = new SpatialPartition[threadCount];
 
-            for (var i = 0; i < threadCount; i++)
+            for (ulong i = 0; i < threadCount; i++)
             {
                 var clientThreadRepository = new ClientThreadRepository();
                 var entityThreadRepository = new EntityThreadRepository();
+                var spatialPartition = createSpatialPartition(i);
                 entityThreadRepositories[i] = entityThreadRepository;
                 clientThreadRepositories[i] = clientThreadRepository;
-                entityThreads[i] = new EntityThread(entityThreadRepository, clientThreadRepository, createSpatialPartition(),syncRate,
+                spatialPartitions[i] = spatialPartition;
+                entityThreads[i] = new EntityThread(i, entityThreadRepository, clientThreadRepository, spatialPartition, syncRate,
                     OnEntityCreate,
                     OnEntityRemove, OnEntityDataChange, OnEntityPositionChange, OnEntityClearCache);
             }
 
-            entityRepository = new EntityRepository(entityThreadRepositories);
+            entityRepository = new EntityRepository(entityThreadRepositories, entityThreadId, entityIdAndTypeThreadId);
             clientRepository = new ClientRepository(clientThreadRepositories);
-            networkLayer = createNetworkLayer(clientRepository);
+            networkLayer = createNetworkLayer(threadCount, clientRepository);
             networkLayer.OnConnectionConnect += OnConnectionConnect;
             networkLayer.OnConnectionDisconnect += OnConnectionDisconnect;
             this.idProvider = idProvider;
@@ -161,6 +168,17 @@ namespace AltV.Net.EntitySync
             AddEntity(entity);
             return entity;
         }
+        
+        public IEntity CreateEntity(ulong id, ulong type, Vector3 position, int dimension, uint range, IDictionary<string, object> data)
+        {
+            if (idProvider != null)
+            {
+                throw new InvalidOperationException("IdProvider needs to be null to use own id management.");
+            }
+            var entity = new Entity(id, type, position, dimension, range, data);
+            AddEntity(entity);
+            return entity;
+        }
 
         public void AddEntity(IEntity entity)
         {
@@ -170,7 +188,7 @@ namespace AltV.Net.EntitySync
         public void RemoveEntity(IEntity entity)
         {
             entityRepository.Remove(entity);
-            idProvider.Free(entity.Id);
+            idProvider?.Free(entity.Id);
         }
         
         public void UpdateEntity(IEntity entity)
@@ -178,14 +196,28 @@ namespace AltV.Net.EntitySync
             entityRepository.Update(entity);
         }
 
-        public bool TryGetEntity(ulong id, out IEntity entity)
+        public bool TryGetEntity(ulong id, ulong type, out IEntity entity)
         {
-            return entityRepository.TryGet(id, out entity);
+            return entityRepository.TryGet(id, type, out entity);
         }
 
         public IEnumerable<IEntity> GetAllEntities()
         {
             return entityRepository.GetAll();
+        }
+
+        public List<IEntity> FindEntities(Vector3 position, int dimension)
+        {
+            var foundEntities = new List<IEntity>();
+            for (int i = 0, length = entityThreads.Length; i < length; i++)
+            {
+                lock (clientThreadRepositories[i].Mutex)
+                {
+                    foundEntities.AddRange(spatialPartitions[i].Find(position, dimension));
+                }
+            }
+
+            return foundEntities;
         }
 
         public void Stop()

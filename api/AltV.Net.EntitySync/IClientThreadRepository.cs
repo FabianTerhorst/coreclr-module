@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace AltV.Net.EntitySync
@@ -14,7 +13,5 @@ namespace AltV.Net.EntitySync
         bool TryGet(string token, out IClient client);
 
         IEnumerable<IClient> GetAll();
-
-        IEnumerable<IClient> GetAllDeleted();
     }
 }

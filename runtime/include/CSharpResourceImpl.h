@@ -252,6 +252,45 @@ public:
     alt::IResource* resource;
 };
 
+class BaseObjectWeakReference : public alt::IWeakRef {
+
+public:
+    alt::Ref<alt::IBaseObject> baseObjectRef;
+    CSharpResourceImpl* cSharpResource;
+
+    BaseObjectWeakReference(alt::Ref<alt::IBaseObject> baseObjectRef, CSharpResourceImpl* cSharpResource) {
+        this->baseObjectRef = baseObjectRef;
+        this->cSharpResource = cSharpResource;
+    }
+
+    void OnDestroy() override {
+        auto object = this->baseObjectRef.Get();
+        if (object != nullptr) {
+            switch (object->GetType()) {
+                case alt::IBaseObject::Type::PLAYER:
+                    this->cSharpResource->OnRemovePlayerDelegate(dynamic_cast<alt::IPlayer*>(object));
+                    break;
+                case alt::IBaseObject::Type::VEHICLE:
+                    this->cSharpResource->OnRemoveVehicleDelegate(dynamic_cast<alt::IVehicle*>(object));
+                    break;
+                case alt::IBaseObject::Type::BLIP:
+                    this->cSharpResource->OnRemoveBlipDelegate(dynamic_cast<alt::IBlip*>(object));
+                    break;
+                case alt::IBaseObject::Type::VOICE_CHANNEL:
+                    this->cSharpResource->OnRemoveVoiceChannelDelegate(dynamic_cast<alt::IVoiceChannel*>(object));
+                    break;
+                case alt::IBaseObject::Type::COLSHAPE:
+                    this->cSharpResource->OnRemoveColShapeDelegate(dynamic_cast<alt::IColShape*>(object));
+                    break;
+                case alt::IBaseObject::Type::CHECKPOINT:
+                    this->cSharpResource->OnRemoveCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+                    break;
+            }
+        }
+        delete this;
+    }
+};
+
 EXPORT void CSharpResourceImpl_SetMainDelegate(CSharpResourceImpl* resource,
                                                MainDelegate_t delegate);
 

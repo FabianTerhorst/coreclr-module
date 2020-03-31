@@ -10,16 +10,22 @@ namespace AltV.Net.EntitySync
     {
         public abstract event ConnectionConnectEventDelegate OnConnectionConnect;
         public abstract event ConnectionDisconnectEventDelegate OnConnectionDisconnect;
+        
+        public abstract event ClientSubscribeEntityDelegate OnClientSubscribeEntity;
+        public abstract event ClientUnsubscribeEntityDelegate OnClientUnsubscribeEntity;
 
         public abstract event EntityCreateEventDelegate OnEntityCreate;
         public abstract event EntityRemoveEventDelegate OnEntityRemove;
         public abstract event EntityPositionUpdateEventDelegate OnEntityPositionUpdate;
         public abstract event EntityPositionUpdateEventDelegate OnEntityDataUpdate;
 
+        public readonly ulong ThreadCount;
+        
         public IClientRepository ClientRepository;
 
-        public NetworkLayer(IClientRepository clientRepository)
+        public NetworkLayer(ulong threadCount, IClientRepository clientRepository)
         {
+            this.ThreadCount = threadCount;
             this.ClientRepository = clientRepository;
         }
 

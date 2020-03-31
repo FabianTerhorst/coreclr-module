@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using AltV.Net.Async.Events;
@@ -36,13 +37,13 @@ namespace AltV.Net.Async
             add => Module.PlayerDeadAsyncEventHandler.Add(value);
             remove => Module.PlayerDeadAsyncEventHandler.Remove(value);
         }
-        
+
         public static event ExplosionAsyncDelegate OnExplosion
         {
             add => Module.ExplosionAsyncEventHandler.Add(value);
             remove => Module.ExplosionAsyncEventHandler.Remove(value);
         }
-        
+
         public static event WeaponDamageAsyncDelegate OnWeaponDamage
         {
             add => Module.WeaponDamageAsyncEventHandler.Add(value);
@@ -96,19 +97,19 @@ namespace AltV.Net.Async
             add => Module.ConsoleCommandAsyncDelegateHandlers.Add(value);
             remove => Module.ConsoleCommandAsyncDelegateHandlers.Remove(value);
         }
-        
+
         public static event MetaDataChangeAsyncDelegate OnMetaDataChange
         {
             add => Module.MetaDataChangeAsyncDelegateHandlers.Add(value);
             remove => Module.MetaDataChangeAsyncDelegateHandlers.Remove(value);
         }
-        
+
         public static event MetaDataChangeAsyncDelegate OnSyncedMetaDataChange
         {
             add => Module.SyncedMetaDataChangeAsyncDelegateHandlers.Add(value);
             remove => Module.SyncedMetaDataChangeAsyncDelegateHandlers.Remove(value);
         }
-        
+
         public static event ColShapeAsyncDelegate OnColShape
         {
             add => Module.ColShapeAsyncDelegateHandlers.Add(value);
@@ -128,7 +129,7 @@ namespace AltV.Net.Async
             var mValues = new MValueConst[size];
             Alt.Server.CreateMValues(mValues, args);
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
-            await AltVAsync.Schedule(() => Alt.Server.TriggerServerEvent(eventNamePtr, mValues));
+            await Do(() => Alt.Server.TriggerServerEvent(eventNamePtr, mValues));
             Marshal.FreeHGlobal(eventNamePtr);
             for (var i = 0; i < size; i++)
             {
@@ -142,11 +143,21 @@ namespace AltV.Net.Async
             var mValues = new MValueConst[size];
             Alt.Server.CreateMValues(mValues, args);
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
-            await AltVAsync.Schedule(() => Alt.Server.TriggerClientEvent(null, eventNamePtr, mValues));
+            await Do(() => Alt.Server.TriggerClientEvent(null, eventNamePtr, mValues));
             Marshal.FreeHGlobal(eventNamePtr);
             for (var i = 0; i < size; i++)
             {
                 mValues[i].Dispose();
+            }
+        }
+
+        [Conditional("DEBUG")]
+        private static void CheckIfAsyncResource()
+        {
+            if (AltVAsync == null)
+            {
+                throw new InvalidOperationException(
+                    "Resource doesn't extends AsyncResource. Please read https://fabianterhorst.github.io/coreclr-module/articles/async.html#setup-async-module");
             }
         }
 
@@ -162,12 +173,26 @@ namespace AltV.Net.Async
 
         public static Task Do(Action action)
         {
+            CheckIfAsyncResource();
             return AltVAsync.Schedule(action);
+        }
+
+        public static Task Do(Action<object> action, object value)
+        {
+            CheckIfAsyncResource();
+            return AltVAsync.Schedule(action, value);
         }
 
         public static Task<TResult> Do<TResult>(Func<TResult> action)
         {
+            CheckIfAsyncResource();
             return AltVAsync.Schedule(action);
+        }
+
+        public static Task<TResult> Do<TResult>(Func<object, TResult> action, object value)
+        {
+            CheckIfAsyncResource();
+            return AltVAsync.Schedule(action, value);
         }
     }
 }

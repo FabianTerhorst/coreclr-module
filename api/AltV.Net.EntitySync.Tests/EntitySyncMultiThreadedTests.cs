@@ -12,12 +12,14 @@ namespace AltV.Net.EntitySync.Tests
         public void Setup()
         {
             AltEntitySync.Init(2, 500,
-                repository =>
+                (threadCount, repository) =>
                 {
-                    mockNetworkLayer = new MockNetworkLayer(repository);
+                    mockNetworkLayer = new MockNetworkLayer(threadCount, repository);
                     return mockNetworkLayer;
                 },
-                () => new Grid(50_000, 50_000, 100, 10_000, 10_000),
+                (entity, threadCount) => (entity.Id % threadCount), 
+                (entityId, entityType, threadCount) => (entityId % threadCount),
+                (id) => new Grid(50_000, 50_000, 100, 10_000, 10_000),
                 new IdProvider());
         }
 
