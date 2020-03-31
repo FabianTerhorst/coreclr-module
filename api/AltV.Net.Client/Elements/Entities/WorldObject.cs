@@ -10,7 +10,7 @@ namespace AltV.Net.Client.Elements.Entities
             get
             {
                 var vector3Obj = (JSObject) jsObject.GetObjectProperty("pos");
-                return new Vector3((float) vector3Obj.GetObjectProperty("x"), (float) vector3Obj.GetObjectProperty("y"),(float) vector3Obj.GetObjectProperty("z"));
+                return new Vector3(System.Convert.ToSingle(vector3Obj.GetObjectProperty("x")), System.Convert.ToSingle(vector3Obj.GetObjectProperty("y")), System.Convert.ToSingle(vector3Obj.GetObjectProperty("z")));
             }
             set
             {

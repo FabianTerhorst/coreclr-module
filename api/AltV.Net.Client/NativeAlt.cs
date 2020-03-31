@@ -172,12 +172,18 @@ namespace AltV.Net.Client
         
         public void Emit(string eventName, params object[] args)
         {
-            emit.Call(alt, eventName, args);
+            object[] argsList = new object[args.Length + 1];
+            argsList[0] = eventName;
+            System.Array.Copy(args, 0, argsList, 1, args.Length);
+            emit.Call(alt, argsList);
         }
         
         public void EmitServer(string eventName, params object[] args)
         {
-            emitServer.Call(alt, eventName, args);
+            object[] argsList = new object[args.Length + 1];
+            argsList[0] = eventName;
+            System.Array.Copy(args, 0, argsList, 1, args.Length);
+            emitServer.Call(alt, argsList);
         }
 
         public void EveryTick(EveryTickEventDelegate everyTickEventDelegate)
