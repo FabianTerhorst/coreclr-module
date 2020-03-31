@@ -14,16 +14,16 @@ uint32_t Vehicle_GetModel(alt::IVehicle* vehicle) {
     return vehicle->GetModel();
 }
 
-void Vehicle_GetPositionCoords2(alt::IVehicle* entity, float* position_x, float* position_y, float* position_z, float* rotation_x, float* rotation_y, float* rotation_z, int* dimension) {
-    auto playerPosition = entity->GetPosition();
-    *position_x = playerPosition.x;
-    *position_y = playerPosition.y;
-    *position_z = playerPosition.z;
-    auto playerRotation = entity->GetRotation();
-    *rotation_x = playerRotation.pitch;
-    *rotation_y = playerRotation.roll;
-    *rotation_z = playerRotation.yaw;
-    *dimension = entity->GetDimension();
+void Vehicle_GetPositionCoords2(alt::IVehicle* vehicle, float* position_x, float* position_y, float* position_z, float* rotation_x, float* rotation_y, float* rotation_z, int* dimension) {
+    auto vehiclePosition = vehicle->GetPosition();
+    *position_x = vehiclePosition.x;
+    *position_y = vehiclePosition.y;
+    *position_z = vehiclePosition.z;
+    auto vehicleRotation = vehicle->GetRotation();
+    *rotation_x = vehicleRotation.pitch;
+    *rotation_y = vehicleRotation.roll;
+    *rotation_z = vehicleRotation.yaw;
+    *dimension = vehicle->GetDimension();
 }
 
 
