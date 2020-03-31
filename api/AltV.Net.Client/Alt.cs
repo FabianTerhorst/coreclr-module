@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Numerics;
+using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Pools;
@@ -26,6 +27,8 @@ namespace AltV.Net.Client
         private static NativeRadiusBlip RadiusBlip;
         
         private static NativePointBlip PointBlip;
+
+        private static NativeWebView WebView;
 
         private static IBaseObjectPool<IPlayer> PlayerPool;
 
@@ -140,6 +143,7 @@ namespace AltV.Net.Client
             AreaBlip = new NativeAreaBlip((JSObject) jsWrapper.GetObjectProperty("AreaBlip"));
             RadiusBlip = new NativeRadiusBlip((JSObject) jsWrapper.GetObjectProperty("RadiusBlip"));
             PointBlip = new NativePointBlip((JSObject) jsWrapper.GetObjectProperty("PointBlip"));
+            WebView = new NativeWebView((JSObject)jsWrapper.GetObjectProperty("WebView"));
         }
 
         public static void Log(string message)
