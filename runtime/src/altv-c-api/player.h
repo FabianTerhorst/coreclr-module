@@ -51,6 +51,7 @@ EXPORT void Player_SetModel(alt::IPlayer* player, uint32_t model);
 EXPORT void Player_GetPosition(alt::IPlayer* player, position_t &position);
 EXPORT void
 Player_GetPositionCoords(alt::IPlayer* player, float* position_x, float* position_y, float* position_z, int* dimension);
+EXPORT void Player_GetPositionCoords2(alt::IPlayer* player, float* position_x, float* position_y, float* position_z, float* rotation_x, float* rotation_y, float* rotation_z, int* dimension);
 EXPORT void Player_SetPosition(alt::IPlayer* player, position_t pos);
 EXPORT void Player_GetRotation(alt::IPlayer* player, rotation_t &rotation);
 EXPORT void Player_SetRotation(alt::IPlayer* player, rotation_t rot);
