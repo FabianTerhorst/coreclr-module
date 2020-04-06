@@ -115,12 +115,6 @@ namespace AltV.Net.Async
             add => Module.ColShapeAsyncDelegateHandlers.Add(value);
             remove => Module.ColShapeAsyncDelegateHandlers.Remove(value);
         }
-        
-        public static event VehicleDestroyAsyncDelegate OnVehicleDestroy
-        {
-            add => Module.VehicleDestroyAsyncDelegateHandlers.Add(value);
-            remove => Module.VehicleDestroyAsyncDelegateHandlers.Remove(value);
-        }
 
         public static async void Log(string message)
         {

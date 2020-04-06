@@ -151,11 +151,5 @@ namespace AltV.Net
             add => Module.ColShapeEventHandler.Add(value);
             remove => Module.ColShapeEventHandler.Remove(value);
         }
-        
-        public static event VehicleDestroyDelegate OnVehicleDestroy
-        {
-            add => Module.VehicleDestroyEventHandler.Add(value);
-            remove => Module.VehicleDestroyEventHandler.Remove(value);
-        }
     }
 }
