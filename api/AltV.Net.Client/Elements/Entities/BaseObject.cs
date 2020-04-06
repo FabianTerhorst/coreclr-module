@@ -19,7 +19,8 @@ namespace AltV.Net.Client.Elements.Entities
             this.jsObject = jsObject;
         }
         
-        public void Remove()
+        // Overwritten in WebView
+        public virtual void Remove()
         {
             jsObject.Invoke("destroy");
         }

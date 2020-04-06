@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Numerics;
+using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Pools;
@@ -27,7 +28,10 @@ namespace AltV.Net.Client
         
         private static NativePointBlip PointBlip;
 
+        private static NativeWebView WebView;
+
         private static IBaseObjectPool<IPlayer> PlayerPool;
+
 
         private static readonly IDictionary<string, NativeEventHandler<NativeEventDelegate, ServerEventDelegate>>
             NativeServerEventHandlers =
@@ -40,6 +44,7 @@ namespace AltV.Net.Client
         private static NativeEventHandler<ConnectionCompleteEventDelegate, ConnectionCompleteEventDelegate>
             _nativeConnectionCompleteHandler;
 
+
         private static NativeEventHandler<DisconnectEventDelegate, DisconnectEventDelegate> _nativeDisconnectHandler;
         
         private static NativeEventHandler<EveryTickEventDelegate, EveryTickEventDelegate> _nativeEveryTickHandler;
@@ -47,6 +52,10 @@ namespace AltV.Net.Client
         private static NativeEventHandler<NativeGameEntityCreateEventDelegate, GameEntityCreateEventDelegate> _nativeGameEntityCreateHandler;
         
         private static NativeEventHandler<NativeGameEntityDestroyEventDelegate, GameEntityDestroyEventDelegate> _nativeGameEntityDestroyHandler;
+
+        private static NativeEventHandler<KeyDownEventDelegate, KeyDownEventDelegate> _nativeKeyDownHandler;
+        private static NativeEventHandler<KeyUpEventDelegate, KeyUpEventDelegate> _nativeKeyUpHandler;
+
 
         public static event ConnectionCompleteEventDelegate OnConnectionComplete
         {
@@ -123,6 +132,41 @@ namespace AltV.Net.Client
             remove => _nativeGameEntityDestroyHandler?.Remove(value);
         }
 
+        public static event KeyDownEventDelegate OnKeyDown
+        {
+            add
+            {
+                if (_nativeKeyDownHandler == null)
+                {
+                    _nativeKeyDownHandler = new KeyDownEventHandler();
+                    _alt.On("keydown", _nativeKeyDownHandler.GetNativeEventHandler());
+                }
+
+                _nativeKeyDownHandler.Add(value);
+            }
+            remove {
+                _nativeKeyDownHandler?.Remove(value);
+            }
+        }
+
+        public static event KeyUpEventDelegate OnKeyUp
+        {
+            add
+            {
+                if (_nativeKeyUpHandler == null)
+                {
+                    _nativeKeyUpHandler = new KeyUpEventHandler();
+                    _alt.On("keyup", _nativeKeyUpHandler.GetNativeEventHandler());
+                }
+
+                _nativeKeyUpHandler.Add(value);
+            }
+            remove
+            {
+                _nativeKeyUpHandler?.Remove(value);
+            }
+        }
+
         public static void Init(object wrapper)
         {
             Init(wrapper, new PlayerFactory());
@@ -140,6 +184,7 @@ namespace AltV.Net.Client
             AreaBlip = new NativeAreaBlip((JSObject) jsWrapper.GetObjectProperty("AreaBlip"));
             RadiusBlip = new NativeRadiusBlip((JSObject) jsWrapper.GetObjectProperty("RadiusBlip"));
             PointBlip = new NativePointBlip((JSObject) jsWrapper.GetObjectProperty("PointBlip"));
+            WebView = new NativeWebView((JSObject)jsWrapper.GetObjectProperty("WebView"));
         }
 
         public static void Log(string message)
@@ -160,6 +205,11 @@ namespace AltV.Net.Client
         public static void Emit(string eventName, params object[] args)
         {
             _alt.Emit(eventName, args);
+        }
+
+        public static void EmitServer(string eventName, params object[] args)
+        {
+            _alt.EmitServer(eventName, args);
         }
 
         public static void OnServer(string eventName, ServerEventDelegate serverEventDelegate)

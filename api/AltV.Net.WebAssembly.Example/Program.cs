@@ -12,7 +12,9 @@ namespace AltV.Net.WebAssembly.Example
             Alt.Log($"Hello World, Im a message from C# and this message generated at {DateTime.Now}");
             Alt.OnConnectionComplete += () => { Alt.Log("on connection completed"); };
             Alt.OnDisconnect += () => { Alt.Log("on disconnect"); };
-            Alt.OnServer("test", args => { Alt.Log("test event triggered"); });
+            Alt.OnServer("test", (args) => { Alt.Log($"test event triggered {args?.Length} args"); });
+            Alt.OnServer("test1", (args) => { Alt.Log($"test1 event triggered {args?.Length} args"); });
+            Alt.OnServer("test2", (args) => { Alt.Log($"test2 event triggered {args?.Length} args"); });
             Alt.On("test14", (args) => { Alt.Log("event fired"); });
             Alt.On("test15", (args) =>
             {
@@ -66,9 +68,13 @@ namespace AltV.Net.WebAssembly.Example
             
             Alt.SetStat("STAMINA", 100);
             Console.WriteLine(Alt.GetStat("STAMINA"));
-            
-            Alt.SetWeatherCycle(new int[]{7, 2}, new int[]{2, 1});
 
+            Alt.SetWeatherCycle(new int[]{7, 2}, new int[]{2, 1});
+            Alt.Log("Before webview");
+            var myView = Alt.CreateWebView("https://altv.mp/", true);
+            Alt.Log($"MyView is {myView} with url {myView.Url}");
+            Alt.Log(myView == null ? "NULL": "notnull");
+            Alt.Log("After Webview");
             var obj = HandlingData.GetForModel(0x81794C70);
             
             foreach(var prop in obj.GetType().GetProperties())
