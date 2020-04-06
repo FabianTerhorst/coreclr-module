@@ -119,6 +119,15 @@ namespace AltV.Net.Async
         public static Task RemoveAllWeaponsAsync(this IPlayer player) =>
             AltVAsync.Schedule(player.RemoveAllWeapons);
 
+        public static Task SetMaxHealthAsync(this IPlayer player, ushort maxhealth) =>
+            AltVAsync.Schedule(() => player.MaxHealth = maxhealth);
+
+        public static Task SetMaxArmorAsync(this IPlayer player, ushort maxarmor) =>
+            AltVAsync.Schedule(() => player.MaxArmor = maxarmor);
+
+        public static Task SetCurrentWeaponAsync(this IPlayer player, uint weapon) =>
+            AltVAsync.Schedule(() => player.CurrentWeapon = weapon);
+
         public static async Task KickAsync(this IPlayer player, string reason)
         {
             var reasonPtr = AltNative.StringUtils.StringToHGlobalUtf8(reason);

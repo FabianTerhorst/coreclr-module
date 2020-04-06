@@ -33,6 +33,19 @@ void Player_GetPositionCoords(alt::IPlayer* player, float *position_x, float *po
     *dimension = player->GetDimension();
 }
 
+void Player_GetPositionCoords2(alt::IPlayer* player, float* position_x, float* position_y, float* position_z,float *rotation_x,float *rotation_y,float *rotation_z,int* dimension) {
+    auto playerPosition = player->GetPosition();
+    *position_x = playerPosition.x;
+    *position_y = playerPosition.y;
+    *position_z = playerPosition.z;
+    auto playerRotation = player->GetRotation();
+    *rotation_x = playerRotation.pitch;
+    *rotation_y = playerRotation.roll;
+    *rotation_z = playerRotation.yaw;
+    *dimension = player->GetDimension();
+}
+
+
 void Player_SetPosition(alt::IPlayer* player, position_t pos) {
     alt::Position position;
     position.x = pos.x;

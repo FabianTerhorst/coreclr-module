@@ -23,6 +23,7 @@ extern "C"
 EXPORT uint16_t Vehicle_GetID(alt::IVehicle* vehicle);
 EXPORT alt::IPlayer* Vehicle_GetNetworkOwner(alt::IVehicle* vehicle);
 EXPORT uint32_t Vehicle_GetModel(alt::IVehicle* vehicle);
+EXPORT void Vehicle_GetPositionCoords2(alt::IVehicle* vehicle, float* position_x, float* position_y, float* position_z, float* rotation_x, float* rotation_y, float* rotation_z, int* dimension);
 EXPORT void Vehicle_GetPosition(alt::IVehicle* vehicle, position_t &position);
 EXPORT void Vehicle_SetPosition(alt::IVehicle* vehicle, position_t pos);
 EXPORT void Vehicle_GetRotation(alt::IVehicle* vehicle, rotation_t &rotation);

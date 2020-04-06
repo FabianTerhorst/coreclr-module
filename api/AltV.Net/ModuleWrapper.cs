@@ -318,5 +318,10 @@ namespace AltV.Net
         {
             _module.OnColShape(colShapePointer, targetEntityPointer, entityType, state);
         }
+        
+        public static void OnVehicleDestroy(IntPtr vehiclePointer)
+        {
+            _module.OnVehicleDestroy(vehiclePointer);
+        }
     }
 }
