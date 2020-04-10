@@ -36,6 +36,8 @@
       href: vehicle_create.md
     - name: Give player a weapon
       href: player_giveweapon.md
+    - name: Voice chat
+      href: voice.md
 - name: Player Events
   href: player_events.md
   items:
