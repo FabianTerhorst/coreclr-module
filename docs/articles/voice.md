@@ -70,8 +70,8 @@ namespace AltV.Wiki
 # How use the Voice now?
 #### Open your Alt:V and go to the Header-Point called ,,Settings".
 #### Here you can change your Voice-PushToTalk Buttons & more.
-![Voice_1](../images/voice_1.png)
+![Voice_1](../images/voice_1.PNG)
 _________________________________________
 #### Now you can Join a Server which Supports Voice & Play.
 #### If you press your Setted Hotkey, your local player will move his mouth if Voice Activition was Successful.
-![Voice_2](../images/voice_2.png)
+![Voice_2](../images/voice_2.PNG)
