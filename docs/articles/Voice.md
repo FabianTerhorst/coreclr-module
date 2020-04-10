@@ -2,7 +2,6 @@
 
 ### Note : 
 ______________________________
-- Events have to be created in a IScript Class! Otherwise it won´t work!
 - You can´t use the Alt:V Voice without editing your Server.cfg!
 
 # Before we start...
@@ -68,8 +67,8 @@ namespace AltV.Wiki
 # How use the Voice now?
 #### Open your Alt:V and go to the Header-Point called ,,Settings".
 #### Here you can change your Voice-PushToTalk Buttons & more.
-![GitHub Logo](https://www.venox-reallife.com/AltV/Wiki/Voice/Voice_1.PNG)
+![GitHub Logo](https://github.com/FabianTerhorst/coreclr-module/tree/master/docs/images/Voice_1.PNG)
 _________________________________________
 #### Now you can Join a Server which Supports Voice & Play.
 #### If you press your Setted Hotkey, your local player will move his mouth if Voice Activition was Successful.
-![GitHub Logo](https://www.venox-reallife.com/AltV/Wiki/Voice/Voice_2.PNG)
+![GitHub Logo](https://github.com/FabianTerhorst/coreclr-module/tree/master/docs/images/Voice_2.PNG)
