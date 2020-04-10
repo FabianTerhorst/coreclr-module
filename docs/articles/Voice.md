@@ -26,7 +26,10 @@ language: en
 voice: {} //  <---- We add this to our server.cfg File
 
 description: 'alt:V Sample Server'
-modules: [ node-module ]
+modules: [ 
+	csharp-module
+	node-module
+]
 resources: []
 ```
 
@@ -50,7 +53,7 @@ namespace AltV.Wiki
         public void PlayerConnect(IPlayer player, string reason)
         {
             /* If a Player Connects... he will be added to our Voice Channel. */
-            channel?.AddPlayer(player);
+            channel.AddPlayer(player);
         }
 
         /* We declare & Create our Event Handler. */
@@ -59,7 +62,7 @@ namespace AltV.Wiki
         public void OnPlayerDisconnect(IPlayer client, string reason)
         {
             /* If a Player Disconnects... he will be removed from our Voice Channel. */
-            channel?.RemovePlayer(client);
+            channel.RemovePlayer(client);
         }
     }
 }
