@@ -9,6 +9,10 @@ namespace AltV.Net.EntitySync
         void Remove(IEntity entity);
 
         void Update(IEntity entity);
+        
+        void UpdateData(IEntity entity, string key, object value);
+
+        void ResetData(IEntity entity, string key);
 
         bool TryGet(ulong id, ulong type, out IEntity entity);
 

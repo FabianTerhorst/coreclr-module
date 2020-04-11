@@ -9,6 +9,8 @@ namespace AltV.Net.EntitySync
         internal readonly IDictionary<(ulong, ulong), IEntity> Entities = new Dictionary<(ulong, ulong), IEntity>();
 
         internal readonly Queue<(IEntity, byte)> EntitiesQueue = new Queue<(IEntity, byte)>();
+        
+        internal readonly Queue<(IEntity, string, object, bool)> EntitiesDataQueue = new Queue<(IEntity, string, object, bool)>();
 
         public void Add(IEntity entity)
         {
@@ -48,7 +50,23 @@ namespace AltV.Net.EntitySync
                 EntitiesQueue.Enqueue((entity, 2));
             }
         }
-        
+
+        public void UpdateData(IEntity entity, string key, object value)
+        {
+            lock (Mutex)
+            {
+                EntitiesDataQueue.Enqueue((entity, key, value, true));
+            }
+        }
+
+        public void ResetData(IEntity entity, string key)
+        {
+            lock (Mutex)
+            {
+                EntitiesDataQueue.Enqueue((entity, key, null, false));
+            }
+        }
+
         public bool TryGet(ulong id, ulong type, out IEntity entity)
         {
             lock (Mutex)

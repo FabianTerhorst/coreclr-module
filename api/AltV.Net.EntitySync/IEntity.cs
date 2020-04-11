@@ -27,6 +27,10 @@ namespace AltV.Net.EntitySync
         uint RangeSquared { get; }
         
         EntityDataSnapshot DataSnapshot { get; }
+        
+        IDictionary<string, object> Data { get; }
+        
+        IDictionary<string, object> ThreadLocalData { get; }
 
         void SetData(string key, object value);
 
@@ -52,5 +56,11 @@ namespace AltV.Net.EntitySync
 
         ValueTuple<bool, bool, bool> TrySetPropertiesComputing(out Vector3 currNewPosition, out uint currNewRange,
             out int currNewDimension);
+
+        void SetThreadLocalData(string key, object value);
+
+        void ResetThreadLocalData(string key);
+
+        bool TryGetThreadLocalData(string key, out object value);
     }
 }

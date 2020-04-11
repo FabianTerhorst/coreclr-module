@@ -133,6 +133,10 @@ namespace AltV.Net.EntitySync
                                 {
                                     case 0:
                                         spatialPartition.Add(entityToChange);
+                                        foreach (var (key, _) in entityToChange.ThreadLocalData)
+                                        {
+                                            entityToChange.DataSnapshot.Update(key);
+                                        }
                                         break;
                                     case 1:
                                         spatialPartition.Remove(entityToChange);
@@ -174,6 +178,23 @@ namespace AltV.Net.EntitySync
                                         }
 
                                         break;
+                                }
+                            }
+                        }
+
+                        if (entityThreadRepository.EntitiesDataQueue.Count != 0)
+                        {
+                            while (entityThreadRepository.EntitiesDataQueue.TryDequeue(out var entityDataQueueResult))
+                            {
+                                var (entityWithChangedData, changedDataKey, changedDataValue, notDeleted) = entityDataQueueResult;
+                                entityWithChangedData.DataSnapshot.Update(changedDataKey);
+                                if (notDeleted)
+                                {
+                                    entityWithChangedData.SetThreadLocalData(changedDataKey, changedDataValue);
+                                }
+                                else
+                                {
+                                    entityWithChangedData.ResetData(changedDataKey);
                                 }
                             }
                         }

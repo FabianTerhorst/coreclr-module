@@ -1,8 +1,8 @@
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace AltV.Net.EntitySync
 {
+    //TODO: set value to -1 on overflow so let it stay at -1 until next thread checks it, but we need snapshot per thread for that and snapshot queue per thread for it
     /// <summary>
     /// Saves the state of the entity data
     /// </summary>
@@ -35,7 +35,8 @@ namespace AltV.Net.EntitySync
                 }
                 else
                 {
-                    if (lastClient.Snapshot.TryGetSnapshotForEntityOnAnySnapshot(entity, out var entitySnapshotFromClient))
+                    if (lastClient.Snapshot.TryGetSnapshotForEntityOnAnySnapshot(entity,
+                        out var entitySnapshotFromClient))
                     {
                         entitySnapshotFromClient.Reset(key);
                     }
@@ -69,15 +70,17 @@ namespace AltV.Net.EntitySync
         /// <returns>the changed keys, returns null when no changes</returns>
         public void CompareWithClient(ulong threadIndex, LinkedList<string> keys, IClient networkingClient)
         {
-            if (Snapshots == null || Snapshots.IsEmpty) return; // entity snapshot should never be null
+            if (Snapshots == null || Snapshots.Count == 0)
+                return; // entity snapshot should never be null
             lastClients.Add(networkingClient);
             var clientDataSnapshot = networkingClient.Snapshot;
             if (clientDataSnapshot.TryGetSnapshotForEntity(entity, threadIndex, out var entitySnapshotFromClient)
             ) // client visited entity before
             {
-                
                 //changedKeys = Compare(entitySnapshotFromClient);
+
                 #region Compare
+
                 var missing = false;
                 foreach (var (key, value) in Snapshots)
                 {
@@ -92,13 +95,14 @@ namespace AltV.Net.EntitySync
                     {
                         missing = true;
 
+                        // This key got removed, we need to tell it the player, because this key isn't inside entitySnapshotFromClient.Snapshots anymore
                         keys.AddLast(key);
                     }
                 }
 
-                if (missing || Snapshots.Count != entitySnapshotFromClient.Snapshots.Count
-                ) // snapshot contains at least one removed key or has a different size, we need to notify the player about that
+                if (missing || Snapshots.Count != entitySnapshotFromClient.Snapshots.Count)
                 {
+                    // snapshot contains at least one removed key or has a different size, we need to notify the player about that
                     //TODO: is the removed key also just a changed key, because then we have to deliver a null mvalue as well, yeah why not
                     foreach (var (key, _) in entitySnapshotFromClient.Snapshots)
                     {
@@ -108,8 +112,10 @@ namespace AltV.Net.EntitySync
                         }
                     }
                 }
+
                 #endregion
 
+                if (keys.Count == 0) return;
                 // Here we align client and entity snapshot with same data
                 entitySnapshotFromClient.Snapshots.Clear();
                 foreach (var (key, value) in Snapshots)
@@ -124,8 +130,9 @@ namespace AltV.Net.EntitySync
                 {
                     keys.AddLast(key);
                 }
+
                 clientDataSnapshot.SetSnapshotForEntity(entity, threadIndex,
-                    new DataSnapshot(new ConcurrentDictionary<string, ulong>(Snapshots)));
+                    new DataSnapshot(new Dictionary<string, ulong>(Snapshots)));
             }
 
             //return changedKeys;
@@ -170,62 +177,62 @@ namespace AltV.Net.EntitySync
             }
         }*/
 
-        
-         /*private IEnumerable<string> Compare(DataSnapshot dataSnapshot)
+
+        /*private IEnumerable<string> Compare(DataSnapshot dataSnapshot)
+       {
+           var missing = false;
+           //TODO: do we need to create a buffer for the hash sets?
+           HashSet<string> changedKeys = null;
+           foreach (var (key, value) in Snapshots)
+           {
+               if (dataSnapshot.Snapshots.TryGetValue(key, out var snapShotValue))
+               {
+                   if (snapShotValue < value)
+                   {
+                       if (changedKeys == null)
+                       {
+                           changedKeys = new HashSet<string>();
+                       }
+
+                       changedKeys.Add(key);
+                   }
+               }
+               else
+               {
+                   missing = true;
+                   if (changedKeys == null)
+                   {
+                       changedKeys = new HashSet<string>();
+                   }
+
+                   changedKeys.Add(key);
+               }
+           }
+
+           if (missing || Snapshots.Count != dataSnapshot.Snapshots.Count
+           ) // snapshot contains at least one removed key or has a different size, we need to notify the player about that
+           {
+               //TODO: is the removed key also just a changed key, because then we have to deliver a null mvalue as well, yeah why not
+               foreach (var (key, _) in dataSnapshot.Snapshots)
+               {
+                   if (!Snapshots.ContainsKey(key))
+                   {
+                       if (changedKeys == null)
+                       {
+                           changedKeys = new HashSet<string>();
+                       }
+
+                       changedKeys.Add(key);
+                   }
+               }
+           }
+
+           return changedKeys;
+       }*/
+
+        public HashSet<IClient> GetLastClients()
         {
-            var missing = false;
-            //TODO: do we need to create a buffer for the hash sets?
-            HashSet<string> changedKeys = null;
-            foreach (var (key, value) in Snapshots)
-            {
-                if (dataSnapshot.Snapshots.TryGetValue(key, out var snapShotValue))
-                {
-                    if (snapShotValue < value)
-                    {
-                        if (changedKeys == null)
-                        {
-                            changedKeys = new HashSet<string>();
-                        }
-
-                        changedKeys.Add(key);
-                    }
-                }
-                else
-                {
-                    missing = true;
-                    if (changedKeys == null)
-                    {
-                        changedKeys = new HashSet<string>();
-                    }
-
-                    changedKeys.Add(key);
-                }
-            }
-
-            if (missing || Snapshots.Count != dataSnapshot.Snapshots.Count
-            ) // snapshot contains at least one removed key or has a different size, we need to notify the player about that
-            {
-                //TODO: is the removed key also just a changed key, because then we have to deliver a null mvalue as well, yeah why not
-                foreach (var (key, _) in dataSnapshot.Snapshots)
-                {
-                    if (!Snapshots.ContainsKey(key))
-                    {
-                        if (changedKeys == null)
-                        {
-                            changedKeys = new HashSet<string>();
-                        }
-
-                        changedKeys.Add(key);
-                    }
-                }
-            }
-
-            return changedKeys;
-        }*/
-
-         public HashSet<IClient> GetLastClients()
-         {
-             return lastClients;
-         }
+            return lastClients;
+        }
     }
 }
