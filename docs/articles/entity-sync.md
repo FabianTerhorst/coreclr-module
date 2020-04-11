@@ -152,7 +152,7 @@ This is called every time you go out of the range of the entity.
 
 ```js
 alt.onServer("entitySync:remove", (entityId, entityType) => {
-    const entityData;
+    let entityData;
     if (entityData[entityType]) {
          entityData = entityData[entityType][entityId];
     } else {
@@ -170,7 +170,7 @@ This is called very time you update the entity position while you are in the ran
 
 ```js
 alt.onServer("entitySync:updatePosition", (entityId, entityType, position) => {
-    const entityData;
+    let entityData;
     if (entityData[entityType]) {
          entityData = entityData[entityType][entityId];
     } else {
