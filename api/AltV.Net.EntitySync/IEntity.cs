@@ -44,12 +44,6 @@ namespace AltV.Net.EntitySync
 
         bool RemoveClient(IClient client);
 
-        void AddCheck(IClient client);
-
-        void RemoveCheck(IClient client);
-
-        IDictionary<IClient, bool> GetLastCheckedClients();
-
         HashSet<IClient> GetClients();
 
         byte[] Serialize(IEnumerable<string> changedKeys);

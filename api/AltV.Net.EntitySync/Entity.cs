@@ -67,11 +67,6 @@ namespace AltV.Net.EntitySync
         /// </summary>
         private readonly HashSet<IClient> clients = new HashSet<IClient>();
 
-        /// <summary>
-        /// List of clients that had the entity created last time, so we can calculate when a client is not in range anymore.
-        /// </summary>
-        private readonly IDictionary<IClient, bool> lastCheckedClients = new Dictionary<IClient, bool>();
-
         public Entity(ulong type, Vector3 position, int dimension, uint range) : this(
             AltEntitySync.IdProvider.GetNext(), type,
             position, dimension, range, new Dictionary<string, object>())
@@ -158,23 +153,7 @@ namespace AltV.Net.EntitySync
 
         public bool RemoveClient(IClient client)
         {
-            lastCheckedClients.Remove(client);
             return clients.Remove(client);
-        }
-
-        public void AddCheck(IClient client)
-        {
-            lastCheckedClients[client] = true;
-        }
-
-        public void RemoveCheck(IClient client)
-        {
-            lastCheckedClients[client] = false;
-        }
-
-        public IDictionary<IClient, bool> GetLastCheckedClients()
-        {
-            return lastCheckedClients;
         }
 
         public HashSet<IClient> GetClients()
