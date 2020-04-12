@@ -355,8 +355,8 @@ namespace AltV.Net.EntitySync.SpatialPartitions
         {
             if (dimension > 0) return dimension == otherDimension;
             if (dimension < 0) return otherDimension == 0 || dimension == otherDimension;
-            if (dimension == 0) return otherDimension == 0;
-            return false;
+            // dimension = 0
+            return otherDimension == 0;
         }
 
         //TODO: check if we can find a better way to pass a position and e.g. improve performance of this method by return type ect.
@@ -385,7 +385,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             {
                 var entity = areaEntities[j];
                 if (Vector3.DistanceSquared(entity.Position, position) > entity.RangeSquared ||
-                    !CanSeeOtherDimension(entity.Dimension, dimension)) continue;
+                    !CanSeeOtherDimension(dimension, entity.Dimension)) continue;
                 entities.Add(entity);
             }
 

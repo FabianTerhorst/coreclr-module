@@ -33,6 +33,20 @@ namespace AltV.Net.EntitySync.Tests
                 Assert.AreEqual(entity, enumerator.Current);
             }
         }
+        
+        
+        [Test]
+        public void DimensionTest()
+        {
+            var position = GetRandomVector3();
+            var entity = new Entity(1, position, 0, 1);
+            grid3.Add(entity);
+            using (var enumerator = grid3.Find(position, -1).GetEnumerator())
+            {
+                Assert.True(enumerator.MoveNext());
+                Assert.AreEqual(entity, enumerator.Current);
+            }
+        }
 
         private static Vector3 GetRandomVector3()
         {
