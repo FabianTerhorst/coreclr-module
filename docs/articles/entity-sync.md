@@ -170,15 +170,15 @@ This is called very time you update the entity position while you are in the ran
 
 ```js
 alt.onServer("entitySync:updatePosition", (entityId, entityType, position) => {
-    let entityData;
+    let currEntityData;
     if (entityData[entityType]) {
-         entityData = entityData[entityType][entityId];
+         currEntityData = entityData[entityType][entityId];
     } else {
-         entityData = null;
+         currEntityData = null;
     }
     alt.log(entityId);
     alt.log(entityType);
-    alt.log(entityData);
+    alt.log(currEntityData);
 })
 ```
 
