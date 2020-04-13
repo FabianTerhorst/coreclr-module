@@ -134,12 +134,20 @@ namespace AltV.Net
             remove => Module.ConsoleCommandEventHandler.Remove(value);
         }
 
+        /// <summary>
+        /// Event that is invoked when the meta data of an entity has changed.
+        /// </summary>
+        /// <remarks>Meta data is accessible across different serverside resources.</remarks>
         public static event MetaDataChangeDelegate OnMetaDataChange
         {
             add => Module.MetaDataChangeEventHandler.Add(value);
             remove => Module.MetaDataChangeEventHandler.Remove(value);
         }
 
+        /// <summary>
+        /// Event that is invoked when the synced meta data of an entity has changed.
+        /// </summary>
+        /// <remarks>Synced meta data is accessible across different serverside resources and to all clients without range limitation.</remarks>
         public static event MetaDataChangeDelegate OnSyncedMetaDataChange
         {
             add => Module.SyncedMetaDataChangeEventHandler.Add(value);
