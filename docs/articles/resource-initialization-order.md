@@ -15,7 +15,34 @@ public override IEntityFactory<IPlayer> GetPlayerFactory()
 
 This could be an example, where a constructor argument is needed. Now, consider the case where your player - and thus your player factory - needs a constructor value which is also used by other components later on in the initialization process.
 
-Then you probably would like to know which initialization order the alt:V follows, to provide the correct instances and values to all of your code.
+Then you probably would like to know which initialization order the alt:V follows, to provide the correct instances and values to all of your components.
+
+For example, for the example above, you would have to create the value in the constructor and save it to a class variable like this:
+
+```csharp
+class MyResource : Resource
+{
+    private string mySecret;
+
+    public MyResource()
+    {
+        mySecret = "1234";
+    }
+    
+    public override IEntityFactory<IPlayer> GetPlayerFactory()
+    {
+        return new MyPlayerFactory(mySecret);
+    }
+    
+    public override OnStart()
+    {
+        // we could need our secret also here
+        new AnotherComponent(mySecret);
+    }
+    
+    public override OnStop() {}
+}
+```
 
 ## Initialization order
 
@@ -43,7 +70,7 @@ Nothing much to say about it. The literal start of the resource is about to be b
 
 All events known to the public API (`AltV.Net.Alt.On...`) and the method `OnTick(...)` are possible to be called multiple times between `OnStart()` and `OnStop()`, since events can occur multiple times and a tick occurs every few milliseconds.
 
-### 6. `OnStop` override / resource stop OR graceful server shutdown
+### 6. `OnStop` override on resource stop OR graceful server shutdown
 
 The last step is the stop of the alt:V server.
 
