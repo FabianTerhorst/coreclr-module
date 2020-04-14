@@ -123,8 +123,8 @@ matrix:
     - dotnet tool install -g docfx --version "3.0.0-*" --add-source https://www.myget.org/F/docfx-v3/api/v2
     script:
     - cd docs
-    - docfx restore
-    - docfx build
+    - /root/.dotnet/tools/docfx restore
+    - /root/.dotnet/tools/docfx build
     #- $DOCFX_TOOL metadata docs/docfx.json
     #- $DOCFX_TOOL build docs/docfx.json
 deploy:
