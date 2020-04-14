@@ -120,11 +120,12 @@ matrix:
     - DOCS=true
     #- nuget install docfx.console -ExcludeVersion --Version 2.51.0
     #- export DOCFX_TOOL="mono docfx.console/tools/docfx.exe"
+    - export PATH=$PATH:/home/travis/.dotnet/tools
     - dotnet tool install -g docfx --version "3.0.0-*" --add-source https://www.myget.org/F/docfx-v3/api/v2
     script:
     - cd docs
-    - /root/.dotnet/tools/docfx restore
-    - /root/.dotnet/tools/docfx build
+    - docfx restore
+    - docfx build
     #- $DOCFX_TOOL metadata docs/docfx.json
     #- $DOCFX_TOOL build docs/docfx.json
 deploy:
