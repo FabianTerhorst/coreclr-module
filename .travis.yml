@@ -113,7 +113,7 @@ matrix:
     - LINUX_BETA=false
     - WINDOWS_BETA=false
     - DOCS=true
-    - nuget install docfx.console -ExcludeVersion
+    - nuget install docfx.console -ExcludeVersion --Version 2.51.0
     - export DOCFX_TOOL="mono docfx.console/tools/docfx.exe"
     script:
     - $DOCFX_TOOL metadata docs/docfx.json
