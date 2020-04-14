@@ -109,7 +109,7 @@ matrix:
     #sudo: required
     language: csharp
     #dotnet: 3.1.101
-    mono: none
+    #mono: none
     git:
       depth: false
     before_script:
