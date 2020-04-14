@@ -19,11 +19,15 @@ Given that the used variable `player` is the same across different serverside re
 // Resource A
 AltV.Net.Entities.IPlayer player;
 player.SetData("test", 123);
-player.GetData<int>("test"); // return 123
+if (player.GetData<int>("test", out var value)) {
+ // value contains 123
+}
 
 // Resource B
 AltV.Net.Entities.IPlayer player;
-player.GetData<int>("test"); // returns nothing, as there is nothing set within the current resource
+if (player.GetData<int>("test", out var value)) {
+ // this scope will not be executed at all / value contains nothing/is the default datatype T (int here)
+}
 ```
 
 ## `MetaData` access level
@@ -38,11 +42,15 @@ Given are the same conditions as above.
 // Resource A
 AltV.Net.Entities.IPlayer player;
 player.SetMetaData("test", 123);
-player.GetMetaData<int>("test"); // returns 123
+if (player.GetMetaData<int>("test", out var value)) {
+    // value contains 123
+}
 
 // Resource B
 AltV.Net.Entities.IPlayer player;
-player.GetMetaData<int>("test"); // returns 123
+if (player.GetMetaData<int>("test", out var value)) {
+    // value contains 123
+}
 ```
 
 ## Server- and clientside data
