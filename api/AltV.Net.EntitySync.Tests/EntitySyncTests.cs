@@ -71,7 +71,7 @@ namespace AltV.Net.EntitySync.Tests
             var clearCacheResult = clearCacheTask.Result;
 
             Assert.AreSame(clearCacheResult.Entity, entity);
-            Assert.AreEqual(0, entity.GetClients().Count);
+            //Assert.AreEqual(0, entity.GetClients().Count);
             Assert.AreEqual(0, mockNetworkLayer.a.GetEntities(0).Count);
             Assert.AreEqual(0, mockNetworkLayer.a.GetLastCheckedEntities(0).Count);
         }

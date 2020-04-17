@@ -43,6 +43,11 @@ namespace AltV.Net.EntitySync
             {
                 throw new ArgumentException("threadCount must be >= 1");
             }
+            
+            if (syncRate < 0)
+            {
+                throw new ArgumentException("syncRate must be >= 0");
+            }
 
             entityThreads = new EntityThread[threadCount];
             entityThreadRepositories = new EntityThreadRepository[threadCount];
