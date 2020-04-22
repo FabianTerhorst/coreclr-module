@@ -43,6 +43,11 @@ namespace AltV.Net.EntitySync
             {
                 throw new ArgumentException("threadCount must be >= 1");
             }
+            
+            if (syncRate < 0)
+            {
+                throw new ArgumentException("syncRate must be >= 0");
+            }
 
             entityThreads = new EntityThread[threadCount];
             entityThreadRepositories = new EntityThreadRepository[threadCount];
@@ -89,7 +94,7 @@ namespace AltV.Net.EntitySync
                 while (changedKey != null)
                 {
                     var key = changedKey.Value;
-                    if (entity.TryGetData(key, out var value))
+                    if (entity.TryGetThreadLocalData(key, out var value))
                     {
                         data[key] = value;
                     }
@@ -134,7 +139,7 @@ namespace AltV.Net.EntitySync
                 while (changedKey != null)
                 {
                     var key = changedKey.Value;
-                    if (entity.TryGetData(key, out var value))
+                    if (entity.TryGetThreadLocalData(key, out var value))
                     {
                         data[key] = value;
                     }
@@ -194,6 +199,16 @@ namespace AltV.Net.EntitySync
         public void UpdateEntity(IEntity entity)
         {
             entityRepository.Update(entity);
+        }
+        
+        public void UpdateEntityData(IEntity entity, string key, object value)
+        {
+            entityRepository.UpdateData(entity, key, value);
+        }
+        
+        public void ResetEntityData(IEntity entity, string key)
+        {
+            entityRepository.ResetData(entity, key);
         }
 
         public bool TryGetEntity(ulong id, ulong type, out IEntity entity)

@@ -22,12 +22,16 @@ namespace AltV.Net.EntitySync.Tests
         public readonly Channel<EntityDataChangeEvent> DataChangeEventChannel = Channel.CreateUnbounded<EntityDataChangeEvent>();
         public readonly Channel<EntityClearCacheEvent> ClearCacheEventChannel = Channel.CreateUnbounded<EntityClearCacheEvent>();
 
+        public readonly Client a;
+
+        public readonly Client b;
+
         public MockNetworkLayer(ulong threadCount, IClientRepository clientRepository) : base(threadCount, clientRepository)
         {
-            var a = new Client(threadCount, "a");
+            a = new Client(threadCount, "a");
             a.Dimension = 0;
             a.Position = new Vector3(0, 0, 0);
-            var b = new Client(threadCount, "b");
+            b = new Client(threadCount, "b");
             b.Dimension = 0;
             b.Position = new Vector3(100, 100, 100);
             clientRepository.Add(a);

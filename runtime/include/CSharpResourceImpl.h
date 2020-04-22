@@ -9,7 +9,6 @@
 #include <altv-cpp-api/SDK.h>
 #include <altv-cpp-api/events/CMetaDataChangeEvent.h>
 #include <altv-cpp-api/events/CSyncedMetaDataChangeEvent.h>
-#include <altv-cpp-api/events/CVehicleDestroyEvent.h>
 
 #ifdef _WIN32
 #define RESOURCES_PATH "\\resources\\"
@@ -149,8 +148,6 @@ typedef void (* WeaponDamageDelegate_t)(alt::IPlayer* source, void* target, alt:
 typedef void (* ExplosionDelegate_t)(alt::IPlayer* source, alt::CExplosionEvent::ExplosionType explosionType,
                                      position_t position, uint32_t explosionFX);
 
-typedef void (* VehicleDestroyDelegate_t)(alt::IVehicle* vehicle);
-
 class CSharpResourceImpl : public alt::IResource::Impl {
     bool OnEvent(const alt::CEvent* ev) override;
 
@@ -248,8 +245,6 @@ public:
     RemoveColShapeDelegate_t OnRemoveColShapeDelegate = nullptr;
 
     ColShapeDelegate_t OnColShapeDelegate = nullptr;
-
-    VehicleDestroyDelegate_t OnVehicleDestroyDelegate = nullptr;
 
     alt::Array<CustomInvoker*>* invokers;
     CoreClr* coreClr;
@@ -403,6 +398,3 @@ EXPORT void CSharpResourceImpl_SetRemoveColShapeDelegate(CSharpResourceImpl* res
 
 EXPORT void CSharpResourceImpl_SetColShapeDelegate(CSharpResourceImpl* resource,
                                                    ColShapeDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetVehicleDestroyDelegate(CSharpResourceImpl* resource,
-                                                   VehicleDestroyDelegate_t delegate);

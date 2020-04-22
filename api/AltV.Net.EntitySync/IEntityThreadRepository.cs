@@ -15,6 +15,10 @@ namespace AltV.Net.EntitySync
 
         void Update(IEntity entity);
 
+        void UpdateData(IEntity entity, string key, object value);
+        
+        void ResetData(IEntity entity, string key);
+
         IEnumerable<IEntity> GetAll();
 
         bool TryGet(ulong id, ulong type, out IEntity entity);

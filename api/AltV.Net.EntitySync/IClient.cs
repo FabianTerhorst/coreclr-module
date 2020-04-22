@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Numerics;
 
 namespace AltV.Net.EntitySync
@@ -20,6 +21,22 @@ namespace AltV.Net.EntitySync
 
         public void ResetPositionOverride();
 
-        //TODO: save streamed in entities in client i think
+        /// <summary>
+        /// Tries to add a entity to the list of entities that this client got created.
+        /// </summary>
+        /// <param name="threadIndex"></param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public bool TryAddEntity(ulong threadIndex, IEntity entity);
+
+        bool RemoveEntity(ulong threadIndex, IEntity entity);
+
+        void AddCheck(ulong threadIndex, IEntity entity);
+
+        void RemoveCheck(ulong threadIndex, IEntity entity);
+
+        IDictionary<IEntity, bool> GetLastCheckedEntities(ulong threadIndex);
+
+        HashSet<IEntity> GetEntities(ulong threadIndex);
     }
 }

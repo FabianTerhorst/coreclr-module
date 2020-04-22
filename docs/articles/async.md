@@ -78,3 +78,21 @@ var vehicle = await AltAsync.Do(() => {
   var vehicle2 = Alt.CreateVehicle(VehicleModel.Chimera, player.Position, player.Rotation);
 });
 ```
+
+## Threadsafe methods from `AltV.Net.Alt`
+
+### Entity pools
+
+The `AltV.Net.Async.AltAsync` class does not provide methods to interact with entity pools/lists. If you are using an `AsyncResource`, the methods for entity pooling on `AltV.Net.Alt` are overwritten and are threadsafe to use. This includes the following methods:
+
+```csharp
+public override IBaseEntityPool GetBaseEntityPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool);
+public override IBaseObjectPool<IBlip> GetBlipPool(IBaseObjectFactory<IBlip> blipFactory);
+public override IBaseObjectPool<ICheckpoint> GetCheckpointPool(IBaseObjectFactory<ICheckpoint> checkpointFactory);
+public override IBaseObjectPool<IColShape> GetColShapePool(IBaseObjectFactory<IColShape> colShapeFactory);
+public override IEntityPool<IPlayer> GetPlayerPool(IEntityFactory<IPlayer> playerFactory);
+public override IEntityPool<IVehicle> GetVehiclePool(IEntityFactory<IVehicle> vehicleFactory);
+public override IBaseObjectPool<IVoiceChannel> GetVoiceChannelPool(IBaseObjectFactory<IVoiceChannel> voiceChannelFactory);
+```
+
+as they are overwritten in the `AsyncResource` class.

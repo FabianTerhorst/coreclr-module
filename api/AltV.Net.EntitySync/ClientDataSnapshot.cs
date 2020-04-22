@@ -1,4 +1,4 @@
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace AltV.Net.EntitySync
 {
@@ -8,14 +8,14 @@ namespace AltV.Net.EntitySync
     public class ClientDataSnapshot
     {
         // Snapshots of all entities the client visited
-        private readonly ConcurrentDictionary<IEntity, DataSnapshot>[] snapshots;
+        private readonly Dictionary<IEntity, DataSnapshot>[] snapshots;
 
         public ClientDataSnapshot(ulong threadCount)
         {
-            snapshots = new ConcurrentDictionary<IEntity, DataSnapshot>[threadCount];
+            snapshots = new Dictionary<IEntity, DataSnapshot>[threadCount];
             for (ulong i = 0; i < threadCount; i++)
             {
-                snapshots[i] = new ConcurrentDictionary<IEntity, DataSnapshot>();
+                snapshots[i] = new Dictionary<IEntity, DataSnapshot>();
             }
         }
 

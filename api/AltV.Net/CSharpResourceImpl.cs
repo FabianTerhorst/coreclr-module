@@ -166,10 +166,6 @@ namespace AltV.Net
             AltNative.Resource.ColShapeDelegate onColShape = ModuleWrapper.OnColShape;
             handles.AddFirst(GCHandle.Alloc(onColShape));
             AltNative.Resource.CSharpResourceImpl_SetColShapeDelegate(NativePointer, onColShape);
-            
-            AltNative.Resource.ColShapeDelegate onVehicleDestroy = ModuleWrapper.OnColShape;
-            handles.AddFirst(GCHandle.Alloc(onColShape));
-            AltNative.Resource.CSharpResourceImpl_SetColShapeDelegate(NativePointer, onColShape);
         }
 
         public IntPtr CreateInvoker(MValueFunctionCallback function)

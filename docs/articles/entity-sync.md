@@ -11,11 +11,11 @@ https://www.nuget.org/packages/AltV.Net.EntitySync.ServerEvent // A optional pac
 ## Configure the Entity Sync
 
 ```csharp
-AltEntitySync.Init(1, 500,
-   repository => new ServerEventNetworkLayer(repository),
+AltEntitySync.Init(1, 100,
+   (threadCount, repository) => new ServerEventNetworkLayer(threadCount, repository),
    (entity, threadCount) => (entity.Id % threadCount), 
    (entityId, entityType, threadCount) => (entityId % threadCount),
-   (threadId) => new LimitedGrid3(50_000, 50_000, 100, 10_000, 10_000, 600),
+   (threadId) => new LimitedGrid3(50_000, 50_000, 100, 10_000, 10_000, 300),
    new IdProvider());
 ```
 
@@ -35,7 +35,7 @@ The sixth parameter is the Action that returns a new space partitioning algorith
 LimitedGrid3 has following parameters: (int maxX, int maxY, int areaSize, int xOffset, int yOffset, int limit).
 The (int maxX, int maxY) parameters are defining the size of the map the grid is inserting, removing and finding entities in. The default values are defining the default gta 5 map.
 The two offsets (int xOffset, int yOffset) preventing the corrdinates to become negative, because the gta maps goes from -10k to 50k.
-The (int limit) makes sure a client can only have streamed in the amount of entities he can actually render. E.g. the gta 5 client in altv can only create around 600 Objects without stability issues.
+The (int limit) makes sure a client can only have streamed in the amount of entities he can actually render. E.g. the gta 5 client in altv can only create around 300 Objects without stability issues.
 
 The seventh and last parameter is the id provider that increments the entity ids incremental and free's unused ids. The IdProvider is included inside the core package as well.
 
@@ -132,13 +132,16 @@ This is called every time you come in the range of the entity.
 The server assumes you cache the entity depending on the entity.id so make sure to do it.
 
 ```js
-alt.onServer("entitySync:create", entity => {
-    alt.log(entity.id);
-    alt.log(entity.type);
-    alt.log(entity.position);
-    alt.log(entity.data);
-    if (entity.data) {
-      entityData[entity.id] = entity.data;
+alt.onServer("entitySync:create", (entityId, entityType, position, currEntityData) => {
+    alt.log(entityId);
+    alt.log(entityType);
+    alt.log(position);
+    alt.log(entityData);
+    if (currEntityData) {
+      if (!entityData[entityType]) {
+         entityData[entityType] = {};
+      }
+      entityData[entityType][entityId] = currEntityData;
     }
 })
 ```
@@ -148,9 +151,15 @@ alt.onServer("entitySync:create", entity => {
 This is called every time you go out of the range of the entity.
 
 ```js
-alt.onServer("entitySync:remove", entityId => {
-    const entityData = entityData[entityId];
+alt.onServer("entitySync:remove", (entityId, entityType) => {
+    let entityData;
+    if (entityData[entityType]) {
+         entityData = entityData[entityType][entityId];
+    } else {
+         entityData = null;
+    }
     alt.log(entityId);
+    alt.log(entityType);
     alt.log(entityData);
 })
 ```
@@ -160,10 +169,16 @@ alt.onServer("entitySync:remove", entityId => {
 This is called very time you update the entity position while you are in the range of the entity.
 
 ```js
-alt.onServer("entitySync:updatePosition", (entityId, position) => {
-    const entityData = entityData[entityId];
+alt.onServer("entitySync:updatePosition", (entityId, entityType, position) => {
+    let currEntityData;
+    if (entityData[entityType]) {
+         currEntityData = entityData[entityType][entityId];
+    } else {
+         currEntityData = null;
+    }
     alt.log(entityId);
-    alt.log(entityData);
+    alt.log(entityType);
+    alt.log(currEntityData);
 })
 ```
 
@@ -173,13 +188,16 @@ alt.onServer("entitySync:updatePosition", (entityId, position) => {
 This is called every time you update the entity data while you are in the range of the entity.
 
 ```js
-alt.onServer("entitySync:updateData", (entityId, newEntityData) => {
-    let entityData = entityData[entityId];
-    if (!entityData) {
-        entityData = {};
+alt.onServer("entitySync:updateData", (entityId, entityType, newEntityData) => {
+    if (!entityData[entityType]) {
+       entityData[entityType] = {};
+    }
+    let currEntityData = entityData[entityType][entityId];
+    if (!currEntityData) {
+         entityData[entityType][entityId] = {};
     }
     for (const key in newEntityData) {
-        entityData[key] = newEntityData[key];
+        entityData[entityType][entityId][key] = newEntityData[key];
     }
 })
 ```
@@ -189,8 +207,11 @@ alt.onServer("entitySync:updateData", (entityId, newEntityData) => {
 This is called every time you remove a entity on serverside completely and clients still have data in cache of this entity.
 
 ```js
-alt.onServer("entitySync:clearCache", entityId => {
-    delete entityData[entityId];
+alt.onServer("entitySync:clearCache", (entityId, entityType) => {
+    if (!entityData[entityType]) {
+      return;
+    }
+    delete entityData[entityType][entityId];
 })
 ```
 

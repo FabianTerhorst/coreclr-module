@@ -20,7 +20,6 @@ namespace AltV.Net
         MetaDataChange,
         SyncedMetaDataChange,
         ColShape,
-        WeaponDamage,
-        VehicleDestroy
+        WeaponDamage
     }
 }

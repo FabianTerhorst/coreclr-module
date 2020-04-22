@@ -20,6 +20,8 @@
       href: resource-communication.md
     - name: Entity factories
       href: entity-factories.md
+    - name: Entity data
+      href: entity-data.md
     - name: Async
       href: async.md
     - name: ColShapes example
@@ -36,6 +38,10 @@
       href: vehicle_create.md
     - name: Give player a weapon
       href: player_giveweapon.md
+    - name: Voice chat
+      href: voice.md
+    - name: Resource initialization order
+      href: resource-initialization-order.md
 - name: Player Events
   href: player_events.md
   items:

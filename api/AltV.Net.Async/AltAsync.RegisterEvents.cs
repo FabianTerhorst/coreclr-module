@@ -8,12 +8,14 @@ namespace AltV.Net.Async
     {
         public static void RegisterEvents(object target)
         {
+#pragma warning disable 612, 618
             ModuleScriptMethodIndexer.Index(target,
                 new[]
                 {
-                    typeof(AsyncServerEventAttribute), typeof(AsyncClientEventAttribute),
+                    typeof(AsyncEventAttribute), typeof(AsyncServerEventAttribute), typeof(AsyncClientEventAttribute),
                     typeof(AsyncScriptEventAttribute)
                 },
+#pragma warning restore 612, 618
                 (baseEvent, eventMethod, eventMethodDelegate) =>
                 {
                     switch (baseEvent)
@@ -250,24 +252,15 @@ namespace AltV.Net.Async
                                             return currScriptFunction.CallAsync();
                                         };
                                     break;
-                                case ScriptEventType.VehicleDestroy:
-                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[]
-                                        {
-                                            typeof(IVehicle)
-                                        });
-                                    if (scriptFunction == null) return;
-                                    OnVehicleDestroy +=
-                                        vehicle =>
-                                        {
-                                            var currScriptFunction = scriptFunction.Clone();
-                                            currScriptFunction.Set(vehicle);
-                                            return currScriptFunction.CallAsync();
-                                        };
-                                    break;
                             }
 
                             break;
+#pragma warning disable 612, 618
+                        case AsyncEventAttribute @event:
+                            var eventName = @event.Name ?? eventMethod.Name;
+                            Module.On(eventName, Function.Create(eventMethodDelegate));
+                            break;
+#pragma warning restore 612, 618
                         case AsyncServerEventAttribute @event:
                             var serverEventName = @event.Name ?? eventMethod.Name;
                             Module.OnServer(serverEventName, Function.Create(eventMethodDelegate));

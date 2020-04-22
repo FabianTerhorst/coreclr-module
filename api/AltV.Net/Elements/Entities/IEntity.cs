@@ -32,6 +32,7 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Set synced meta data of the entity.
         /// </summary>
+        /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
@@ -40,16 +41,18 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Get synced meta data of the entity.
         /// </summary>
+        /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>
         /// <param name="key"></param>
         /// <param name="result"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool GetSyncedMetaData<T>(string key, out T result);
-        
+
         /// <summary>
         /// Set synced meta data of the entity.
         /// </summary>
+        /// <remarks>Stream synced meta data is accessible across different serverside resources and across all clients within the streaming range of the clients.</remarks>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
@@ -58,6 +61,7 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Get synced meta data of the entity.
         /// </summary>
+        /// <remarks>Stream synced meta data is accessible across different serverside resources and across all clients within the streaming range of the clients.</remarks>
         /// <param name="key"></param>
         /// <param name="result"></param>
         /// <typeparam name="T"></typeparam>
@@ -65,20 +69,71 @@ namespace AltV.Net.Elements.Entities
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool GetStreamSyncedMetaData<T>(string key, out T result);
 
+        /// <summary>
+        /// Sets the synced meta data of an entity.
+        /// </summary>
+        /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
         void SetSyncedMetaData(string key, in MValueConst value);
 
+        /// <summary>
+        /// Gets the synced meta data of an entity.
+        /// </summary>
+        /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
         void GetSyncedMetaData(string key, out MValueConst value);
-        
+
+        /// <summary>
+        /// Set synced meta data of the entity.
+        /// </summary>
+        /// <remarks>Stream synced meta data is accessible across different serverside resources and across all clients within the streaming range of the clients.</remarks>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
         void SetStreamSyncedMetaData(string key, in MValueConst value);
 
+        /// <summary>
+        /// Get synced meta data of the entity.
+        /// </summary>
+        /// <remarks>Stream synced meta data is accessible across different serverside resources and across all clients within the streaming range of the clients.</remarks>
+        /// <param name="key"></param>
+        /// <param name="result"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
         void GetStreamSyncedMetaData(string key, out MValueConst value);
         
+        /// <summary>
+        /// Checks if a synced meta data key is set on an entity.
+        /// </summary>
+        /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>
+        /// <param name="key"></param>
+        /// <returns></returns>
         bool HasSyncedMetaData(string key);
-        
+
+        /// <summary>
+        /// Deletes synced meta data from an entity.
+        /// </summary>
+        /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>
+        /// <param name="key"></param>
         void DeleteSyncedMetaData(string key);
-        
+
+        /// <summary>
+        /// Checks if a stream synced meta data key is set on an entity.
+        /// </summary>
+        /// <remarks>Stream synced meta data is accessible across different serverside resources and across all clients within the streaming range of the clients.</remarks>
+        /// <param name="key"></param>
+        /// <returns></returns>
         bool HasStreamSyncedMetaData(string key);
-        
+
+        /// <summary>
+        /// Deletes stream synced meta data from an entity.
+        /// </summary>
+        /// <remarks>Stream synced meta data is accessible across different serverside resources and across all clients within the streaming range of the clients.</remarks>
+        /// <param name="key"></param>
+        /// <returns></returns>
         void DeleteStreamSyncedMetaData(string key);
     }
 
