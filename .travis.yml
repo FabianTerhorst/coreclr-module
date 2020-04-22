@@ -1,5 +1,5 @@
 env:
-  - GITHUB_DEPLOY_PRERELEASE=$(if echo $TRAVIS_TAG | grep -q "\-" ; then echo true; else echo false; fi) WINDOWS_BETA=$(if [ "$GITHUB_DEPLOY_PRERELEASE" = true ] && [ "$TRAVIS_OS_NAME" = "windows" ] ; then echo true; else echo false; fi) LINUX_BETA=$(if [ "$GITHUB_DEPLOY_PRERELEASE" = true ] && [ "$TRAVIS_OS_NAME" = "linux" ] ; then echo true; else echo false; fi) WINDOWS_STABLE=$(if [ "$GITHUB_DEPLOY_PRERELEASE" = false ] && [ "$TRAVIS_OS_NAME" = "windows" ] ; then echo true; else echo false; fi) LINUX_STABLE=$(if [ "$GITHUB_DEPLOY_PRERELEASE" = false ] && [ "$TRAVIS_OS_NAME" = "linux" ] ; then echo true; else echo false; fi)
+  - RC=$(if echo $TRAVIS_TAG | grep -q "\-rc" ; then echo true; else echo false; fi) ALPHA=$(if echo $TRAVIS_TAG | grep -q "\-dev" ; then echo true; else echo false; fi) WINDOWS_ALPHA=$(if [ "$ALPHA" = true ] && [ "$TRAVIS_OS_NAME" = "windows" ] ; then echo true; else echo false; fi) LINUX_ALPHA=$(if [ "$ALPHA" = true ] && [ "$TRAVIS_OS_NAME" = "linux" ] ; then echo true; else echo false; fi) WINDOWS_BETA=$(if [ "$RC" = true ] && [ "$TRAVIS_OS_NAME" = "windows" ] ; then echo true; else echo false; fi) LINUX_BETA=$(if [ "$RC" = true ] && [ "$TRAVIS_OS_NAME" = "linux" ] ; then echo true; else echo false; fi) WINDOWS_STABLE=$(if [ "$WINDOWS_BETA" = false ] && [ "$WINDOWS_ALPHA" = false ] && [ "$TRAVIS_OS_NAME" = "windows" ] ; then echo true; else echo false; fi)  LINUX_STABLE=$(if [ "$LINUX_BETA" = false ] && [ "$LINUX_ALPHA" = false ] && [ "$TRAVIS_OS_NAME" = "linux" ] ; then echo true; else echo false; fi)
 #branches:
 #  only:
 #    - master
@@ -17,18 +17,15 @@ matrix:
         - gcc-8
         - g++-8
     script:
-      - LINUX_ALPHA=$(if [ "$TRAVIS_BRANCH" = "alpha" ] ; then echo true; else echo false; fi)
-      - if [ "$LINUX_ALPHA" = true ]; then WINDOWS_STABLE=false ; fi
-      - if [ "$LINUX_ALPHA" = true ]; then LINUX_STABLE=false ; fi
-      - if [ "$LINUX_ALPHA" = true ]; then LINUX_BETA=false ; fi
-      - if [ "$LINUX_ALPHA" = true ]; then WINDOWS_BETA=false ; fi
       - chmod +x ./cdn-linux
       - mkdir upload
       - cd upload
       - mkdir modules
       - cd ..
       - cd runtime
-      - echo "$GITHUB_DEPLOY_PRERELEASE"
+      - echo $TRAVIS_BRANCH
+      - echo $LINUX_ALPHA
+      - echo $LINUX_BETA
       - mkdir build && cd build
       - CXX=/usr/bin/g++-8
       - CC=/usr/bin/gcc-8
@@ -37,16 +34,11 @@ matrix:
       - cd ..
       - cd ..
       - mv ./runtime/build/src/libcsharp-module.so ./upload/modules/libcsharp-module.so
-      - echo "${TRAVIS_BUILD_NUMBER}"
+      - echo $TRAVIS_BUILD_NUMBER
   - os: windows
     filter_secrets: false
     language: cpp
     script:
-      - WINDOWS_ALPHA=$(if [ "$TRAVIS_BRANCH" = "alpha" ] ; then echo true; else echo false; fi)
-      - if [ "$WINDOWS_ALPHA" = true ]; then WINDOWS_STABLE=false ; fi
-      - if [ "$WINDOWS_ALPHA" = true ]; then LINUX_STABLE=false ; fi
-      - if [ "$WINDOWS_ALPHA" = true ]; then LINUX_BETA=false ; fi
-      - if [ "$WINDOWS_ALPHA" = true ]; then WINDOWS_BETA=false ; fi
       - mkdir upload
       - cd upload
       - mkdir modules
@@ -58,7 +50,7 @@ matrix:
       - cmake --build . --config Release
       - cd ..
       - cd ..
-      - echo "${TRAVIS_BUILD_NUMBER}"
+      - echo $TRAVIS_BUILD_NUMBER
       - powershell move runtime/build/src/Release/csharp-module.dll upload/modules
       - cd upload && cd modules && ls
       - cd .. && cd ..
@@ -98,18 +90,16 @@ matrix:
       - mv ./api/AltV.Net.Async/bin/Debug/netcoreapp3.1/publish/AltV.Net.Async.pdb ./api-dlls/AltV.Net.Async.pdb
       - if [ "$LINUX_STABLE" = true ]; then DOTNET_STABLE=true ; fi
       - if [ "$LINUX_BETA" = true ]; then DOTNET_BETA=true ; fi
+      - if [ "$LINUX_ALPHA" = true ]; then DOTNET_ALPHA=true ; fi
       - LINUX_STABLE=false
       - WINDOWS_STABLE=false
       - LINUX_BETA=false
       - WINDOWS_BETA=false
+      - LINUX_ALPHA=false
+      - WINDOWS_ALPHA=false
   - language: csharp
     dist: trusty
     mono: latest
-    #dist: bionic
-    #sudo: required
-    language: csharp
-    #dotnet: 3.1.101
-    #mono: none
     git:
       depth: false
     before_script:
@@ -117,15 +107,12 @@ matrix:
     - WINDOWS_STABLE=false
     - LINUX_BETA=false
     - WINDOWS_BETA=false
+    - LINUX_ALPHA=false
+    - WINDOWS_ALPHA=false
     - DOCS=true
-    - nuget install docfx.console -ExcludeVersion -Version 2.51.0
+    - nuget install docfx.console -ExcludeVersion
     - export DOCFX_TOOL="mono docfx.console/tools/docfx.exe"
-    #- export PATH=$PATH:/home/travis/.dotnet/tools
-    #- dotnet tool install -g docfx --version "3.0.0-*" --add-source https://www.myget.org/F/docfx-v3/api/v2
     script:
-    #- cd docs
-    #- docfx restore
-    #- docfx build
     - $DOCFX_TOOL metadata docs/docfx.json
     - $DOCFX_TOOL build docs/docfx.json
 deploy:
@@ -177,7 +164,7 @@ deploy:
   - provider: script
     skip_cleanup: true
     prerelease: true
-    script: ./cdn-linux upload coreclr-module/dev/x64_linux "${TRAVIS_BUILD_NUMBER}"
+    script: echo "alpha upload" && ./cdn-linux upload coreclr-module/dev/x64_linux "${TRAVIS_BUILD_NUMBER}" && echo "alpha uploaded"
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$LINUX_ALPHA = true"
@@ -188,6 +175,13 @@ deploy:
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$DOTNET_BETA = true"
+      tags: true
+  - provider: script
+    skip_cleanup: true
+    script: ./cdn-linux ./upload coreclr-module/dev/x64_linux "${TRAVIS_BUILD_NUMBER}" && ./cdn-linux ./upload coreclr-module/dev/x64_win32 "${TRAVIS_BUILD_NUMBER}"
+    on:
+      repo: FabianTerhorst/coreclr-module
+      condition: "$DOTNET_ALPHA = true"
       tags: true
   - provider: releases
     skip_cleanup: true
@@ -275,6 +269,22 @@ deploy:
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$DOTNET_BETA = true"
+      tags: true
+  - provider: releases
+    skip_cleanup: true
+    prerelease: true
+    api_key:
+      secure: SHN0O0J2NFHAXP5bIRKufF3u8RqHDSKSNbVNXKnDS5FXJkhwDlHYfL1mF9xIlkAUSNvYvrKaReDAxWwRulKWisZi4JXA4OL96j2Pqiovw7npomDmEQpXLC8TgiH9TvkIFFXr4L5Cm6zzXTVjrI2FA1WiHR2rga1A367dCVX0wdSjsH4qwC3CsNFBhStsbPMQl49U2hHGe+Nl02LkzSqS0QBZ6RZsChF+fzs35512Xvfiz0qXExCIIQpIYbnPAKbNA4vd6/zTkj72xYYsK8pKGKu56ENCPf2uvzfacUDQKrTKLTVVVWlJ8865VfIwjPixfD/dvnD4XZ/mC3SQbAwEE5WjSApOXCs/eL/zKq4Wa3oaJTc0mFf31wCySAQfL3vD51Wu/pjPuixsH1o6JPxWZuGA5KbL7Bi0D3I8T3mD4CJoPwIYbmu/6kwUHbOi/Nd9fb0YraL9k1uX4WzROIpGLbADccr1L7itGVdnhD5vlrp07ETluOxyJZlsB4gNVaSk4MUAppNVlXAi/4UOmEmQYIZRg1akO+4nDN0+nfwzNRSM4chSDBFwDBthqsADErFf5yFGy9JmLHLD2qkeSjqEm/rc1a2zV66nucVmwKHZyPL92GhGkguxsYKFNu/42382W1wHJ47nDCpEQWOVgFgix7xdgSKeZiYvoEs0JgWSjLU=
+    file: 
+      - upload/AltV.Net.Host.dll
+      - upload/AltV.Net.Host.runtimeconfig.json
+      - api-dlls/AltV.Net.dll
+      - api-dlls/AltV.Net.Async.dll
+      - api-dlls/AltV.Net.pdb
+      - api-dlls/AltV.Net.Async.pdb
+    on:
+      repo: FabianTerhorst/coreclr-module
+      condition: "$DOTNET_ALPHA = true"
       tags: true
   - provider: pages
     skip-cleanup: true
