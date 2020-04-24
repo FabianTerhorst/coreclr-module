@@ -49,6 +49,24 @@ namespace AltV.Net.EntitySync
             }
             entityThreadRepositories[entityThreadId(entity, threadCount)].Update(entity);
         }
+        
+        public void UpdateData(IEntity entity, string key, object value)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentException("Entity must not be null.");
+            }
+            entityThreadRepositories[entityThreadId(entity, threadCount)].UpdateData(entity, key, value);
+        }
+        
+        public void ResetData(IEntity entity, string key)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentException("Entity must not be null.");
+            }
+            entityThreadRepositories[entityThreadId(entity, threadCount)].ResetData(entity, key);
+        }
 
         public bool TryGet(ulong id, ulong type, out IEntity entity)
         {

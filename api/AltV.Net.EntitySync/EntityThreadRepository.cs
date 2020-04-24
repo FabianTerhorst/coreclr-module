@@ -1,70 +1,84 @@
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading.Channels;
 
 namespace AltV.Net.EntitySync
 {
     public class EntityThreadRepository : IEntityThreadRepository
     {
-        public readonly object Mutex = new object();
-        
-        internal readonly IDictionary<(ulong, ulong), IEntity> Entities = new Dictionary<(ulong, ulong), IEntity>();
+        private readonly ConcurrentDictionary<(ulong, ulong), IEntity> entities =
+            new ConcurrentDictionary<(ulong, ulong), IEntity>();
 
-        internal readonly Queue<(IEntity, byte)> EntitiesQueue = new Queue<(IEntity, byte)>();
+        private readonly Channel<(IEntity, byte)> entitiesChannel =
+            Channel.CreateUnbounded<(IEntity, byte)>(new UnboundedChannelOptions {SingleReader = true});
+
+        internal readonly ChannelReader<(IEntity, byte)> EntitiesChannelReader;
+
+        private readonly ChannelWriter<(IEntity, byte)> entitiesChannelWriter;
+
+        private readonly Channel<(IEntity, string, object, bool)> entitiesDataChannel =
+            Channel.CreateUnbounded<(IEntity, string, object, bool)>(new UnboundedChannelOptions {SingleReader = true});
+
+        internal readonly ChannelReader<(IEntity, string, object, bool)> EntitiesDataChannelReader;
+
+        private readonly ChannelWriter<(IEntity, string, object, bool)> entitiesDataChannelWriter;
+
+        public EntityThreadRepository()
+        {
+            EntitiesDataChannelReader = entitiesDataChannel.Reader;
+            entitiesDataChannelWriter = entitiesDataChannel.Writer;
+
+            EntitiesChannelReader = entitiesChannel.Reader;
+            entitiesChannelWriter = entitiesChannel.Writer;
+        }
 
         public void Add(IEntity entity)
         {
-            lock (Mutex)
-            {
-                if (!Entities.TryAdd(entity.HashKey, entity)) return;
-                EntitiesQueue.Enqueue((entity, 0));
-            }
+            if (!entities.TryAdd(entity.HashKey, entity)) return;
+            entitiesChannelWriter.TryWrite((entity, 0));
         }
 
         public void Remove(IEntity entity)
         {
-            lock (Mutex)
-            {
-                if (!Entities.Remove(entity.HashKey, out _)) return;
-                EntitiesQueue.Enqueue((entity, 1));
-            }
+            if (!entities.Remove(entity.HashKey, out _)) return;
+            entitiesChannelWriter.TryWrite((entity, 1));
         }
 
         public void Remove(IList<IEntity> entities)
         {
-            lock (Mutex)
+            for (int i = 0, length = entities.Count; i < length; i++)
             {
-                for (int i = 0, length = entities.Count; i < length; i++)
-                {
-                    var entity = entities[i];
-                    if (!Entities.Remove(entity.HashKey, out _)) return;
-                    EntitiesQueue.Enqueue((entity, 1));
-                }
+                var entity = entities[i];
+                if (!this.entities.Remove(entity.HashKey, out _)) return;
+                entitiesChannelWriter.TryWrite((entity, 1));
             }
         }
 
         public void Update(IEntity entity)
         {
-            lock (Mutex)
-            {
-                EntitiesQueue.Enqueue((entity, 2));
-            }
+            entitiesChannelWriter.TryWrite((entity, 2));
         }
-        
+
+        public void UpdateData(IEntity entity, string key, object value)
+        {
+            entitiesDataChannelWriter.TryWrite((entity, key, value, true));
+        }
+
+        public void ResetData(IEntity entity, string key)
+        {
+            entitiesDataChannelWriter.TryWrite((entity, key, null, false));
+        }
+
         public bool TryGet(ulong id, ulong type, out IEntity entity)
         {
-            lock (Mutex)
-            {
-                return Entities.TryGetValue((id, type), out entity);
-            }
+            return entities.TryGetValue((id, type), out entity);
         }
 
         public IEnumerable<IEntity> GetAll()
         {
-            lock (Mutex)
+            foreach (var (_, entity) in entities)
             {
-                foreach (var (_, entity) in Entities)
-                {
-                    yield return entity;
-                }
+                yield return entity;
             }
         }
     }

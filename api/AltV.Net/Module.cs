@@ -47,6 +47,9 @@ namespace AltV.Net
             : target.Assemblies;
 
         //For custom defined args event handlers
+        private readonly Dictionary<string, HashSet<Function>> eventBus =
+            new Dictionary<string, HashSet<Function>>();
+
         private readonly Dictionary<string, HashSet<Function>> eventBusClient =
             new Dictionary<string, HashSet<Function>>();
 
@@ -134,9 +137,6 @@ namespace AltV.Net
 
         internal readonly IEventHandler<ColShapeDelegate> ColShapeEventHandler =
             new HashSetEventHandler<ColShapeDelegate>();
-        
-        internal readonly IEventHandler<VehicleDestroyDelegate> VehicleDestroyEventHandler =
-            new HashSetEventHandler<VehicleDestroyDelegate>();
 
         internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
 
@@ -270,6 +270,31 @@ namespace AltV.Net
         {
             if (!assemblyLoadContext.TryGetTarget(out var target)) return null;
             return target.LoadFromNativeImagePath(nativeImagePath, assemblyPath);
+        }
+
+        [Obsolete]
+        public void On(string eventName, Function function)
+        {
+            if (function == null) return;
+            if (eventBus.TryGetValue(eventName, out var eventHandlers))
+            {
+                eventHandlers.Add(function);
+            }
+            else
+            {
+                eventHandlers = new HashSet<Function> {function};
+                eventBus[eventName] = eventHandlers;
+            }
+        }
+
+        [Obsolete]
+        public void Off(string eventName, Function function)
+        {
+            if (function == null) return;
+            if (eventBus.TryGetValue(eventName, out var eventHandlers))
+            {
+                eventHandlers.Remove(function);
+            }
         }
 
         public void OnClient(string eventName, Function function)
@@ -454,18 +479,7 @@ namespace AltV.Net
         {
             foreach (var @delegate in CheckpointEventHandler.GetEvents())
             {
-                try
-                {
-                    @delegate(checkpoint, entity, state);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnCheckPointEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnCheckPointEvent" + ":" + exception);
-                }
+                @delegate(checkpoint, entity, state);
             }
         }
 
@@ -490,18 +504,7 @@ namespace AltV.Net
         {
             foreach (var @delegate in ResourceStartEventHandler.GetEvents())
             {
-                try
-                {
-                    @delegate(resource);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnResourceStartEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnResourceStartEvent" + ":" + exception);
-                }
+                @delegate(resource);
             }
         }
 
@@ -516,18 +519,7 @@ namespace AltV.Net
         {
             foreach (var @delegate in ResourceStopEventHandler.GetEvents())
             {
-                try
-                {
-                    @delegate(resource);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnResourceStopEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnResourceStopEvent" + ":" + exception);
-                }
+                @delegate(resource);
             }
         }
 
@@ -542,18 +534,7 @@ namespace AltV.Net
         {
             foreach (var @delegate in ResourceErrorEventHandler.GetEvents())
             {
-                try
-                {
-                    @delegate(resource);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnResourceErrorEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnResourceErrorEvent" + ":" + exception);
-                }
+                @delegate(resource);
             }
         }
 
@@ -561,18 +542,7 @@ namespace AltV.Net
         {
             foreach (var @delegate in PlayerConnectEventHandler.GetEvents())
             {
-                try
-                {
-                    @delegate(player, reason);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerConnectEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerConnectEvent" + ":" + exception);
-                }
+                @delegate(player, reason);
             }
         }
 
@@ -595,18 +565,7 @@ namespace AltV.Net
         {
             foreach (var @delegate in PlayerDamageEventHandler.GetEvents())
             {
-                try
-                {
-                    @delegate(player, attacker, weapon, damage);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerDamageEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerDamageEvent" + ":" + exception);
-                }
+                @delegate(player, attacker, weapon, damage);
             }
         }
 
@@ -627,18 +586,7 @@ namespace AltV.Net
         {
             foreach (var @delegate in PlayerDeadEventHandler.GetEvents())
             {
-                try
-                {
-                    @delegate(player, killer, weapon);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerDeathEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerDeathEvent" + ":" + exception);
-                }
+                @delegate(player, killer, weapon);
             }
         }
 
@@ -657,18 +605,7 @@ namespace AltV.Net
         {
             foreach (var @delegate in ExplosionEventHandler.GetEvents())
             {
-                try
-                {
-                    @delegate(sourcePlayer, explosionType, position, explosionFx);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnExplosionEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnExplosionEvent" + ":" + exception);
-                }
+                @delegate(sourcePlayer, explosionType, position, explosionFx);
             }
         }
 
@@ -690,18 +627,7 @@ namespace AltV.Net
         {
             foreach (var @delegate in WeaponDamageEventHandler.GetEvents())
             {
-                try
-                {
-                    @delegate(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnWeaponDamageEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnWeaponDamageEvent" + ":" + exception);
-                }
+                @delegate(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
             }
         }
 
@@ -725,18 +651,7 @@ namespace AltV.Net
         {
             foreach (var @delegate in PlayerChangeVehicleSeatEventHandler.GetEvents())
             {
-                try
-                {
-                    @delegate(vehicle, player, oldSeat, newSeat);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerChangeVehicleSeatEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerChangeVehicleSeatEvent" + ":" + exception);
-                }
+                @delegate(vehicle, player, oldSeat, newSeat);
             }
         }
 
@@ -759,18 +674,7 @@ namespace AltV.Net
         {
             foreach (var @delegate in PlayerEnterVehicleEventHandler.GetEvents())
             {
-                try
-                {
-                    @delegate(vehicle, player, seat);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerEnterVehicleEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerEnterVehicleEvent" + ":" + exception);
-                }
+                @delegate(vehicle, player, seat);
             }
         }
 
@@ -793,18 +697,7 @@ namespace AltV.Net
         {
             foreach (var @delegate in PlayerLeaveVehicleEventHandler.GetEvents())
             {
-                try
-                {
-                    @delegate(vehicle, player, seat);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerLeaveVehicleEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerLeaveVehicleEvent" + ":" + exception);
-                }
+                @delegate(vehicle, player, seat);
             }
         }
 
@@ -822,18 +715,7 @@ namespace AltV.Net
         {
             foreach (var @delegate in PlayerDisconnectEventHandler.GetEvents())
             {
-                try
-                {
-                    @delegate(player, reason);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerDisconnectEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerDisconnectEvent" + ":" + exception);
-                }
+                @delegate(player, reason);
             }
         }
 
@@ -851,18 +733,7 @@ namespace AltV.Net
         {
             foreach (var @delegate in PlayerRemoveEventHandler.GetEvents())
             {
-                try
-                {
-                    @delegate(player);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerRemoveEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnPlayerRemoveEvent" + ":" + exception);
-                }
+                @delegate(player);
             }
         }
 
@@ -880,18 +751,7 @@ namespace AltV.Net
         {
             foreach (var @delegate in VehicleRemoveEventHandler.GetEvents())
             {
-                try
-                {
-                    @delegate(vehicle);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnVehicleRemoveEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnVehicleRemoveEvent" + ":" + exception);
-                }
+                @delegate(vehicle);
             }
         }
 
@@ -915,18 +775,7 @@ namespace AltV.Net
                 }
                 foreach (var parserEventHandler in parserEventHandlers)
                 {
-                    try
-                    {
-                        parserEventHandler.Call(player, mValues);
-                    }
-                    catch (TargetInvocationException exception)
-                    {
-                        Alt.Log("exception at event:" + name + ":" + exception.InnerException);
-                    }
-                    catch (Exception exception)
-                    {
-                        Alt.Log("exception at event:" + name + ":" + exception);
-                    }
+                    parserEventHandler.Call(player, mValues);
                 }
             }
 
@@ -942,18 +791,23 @@ namespace AltV.Net
                 }
                 foreach (var eventHandler in eventHandlersClient)
                 {
-                    try
+                    eventHandler.Call(player, mValues);
+                }
+            }
+
+            if (eventBus.Count != 0 && eventBus.TryGetValue(name, out var eventHandlers))
+            {
+                if (mValues == null)
+                {
+                    mValues = new MValueConst[length];
+                    for (var i = 0; i < length; i++)
                     {
-                        eventHandler.Call(player, mValues);
+                        mValues[i] = new MValueConst(args[i]);
                     }
-                    catch (TargetInvocationException exception)
-                    {
-                        Alt.Log("exception at event:" + name + ":" + exception.InnerException);
-                    }
-                    catch (Exception exception)
-                    {
-                        Alt.Log("exception at event:" + name + ":" + exception);
-                    }
+                }
+                foreach (var eventHandler in eventHandlers)
+                {
+                    eventHandler.Call(player, mValues);
                 }
             }
 
@@ -978,18 +832,7 @@ namespace AltV.Net
 
                 foreach (var eventHandler in eventDelegates)
                 {
-                    try
-                    {
-                        eventHandler(player, argObjects);
-                    }
-                    catch (TargetInvocationException exception)
-                    {
-                        Alt.Log("exception at event:" + name + ":" + exception.InnerException);
-                    }
-                    catch (Exception exception)
-                    {
-                        Alt.Log("exception at event:" + name + ":" + exception);
-                    }
+                    eventHandler(player, argObjects);
                 }
             }
 
@@ -1015,18 +858,7 @@ namespace AltV.Net
 
                 foreach (var eventHandler in PlayerClientEventEventHandler.GetEvents())
                 {
-                    try
-                    {
-                        eventHandler(player, name, argObjects);
-                    }
-                    catch (TargetInvocationException exception)
-                    {
-                        Alt.Log("exception at event:" + name + ":" + exception.InnerException);
-                    }
-                    catch (Exception exception)
-                    {
-                        Alt.Log("exception at event:" + name + ":" + exception);
-                    }
+                    eventHandler(player, name, argObjects);
                 }
             }
 
@@ -1042,18 +874,7 @@ namespace AltV.Net
                 }
                 foreach (var eventHandler in PlayerClientCustomEventEventHandler.GetEvents())
                 {
-                    try
-                    {
-                        eventHandler(player, name, mValues);
-                    }
-                    catch (TargetInvocationException exception)
-                    {
-                        Alt.Log("exception at event:" + name + ":" + exception.InnerException);
-                    }
-                    catch (Exception exception)
-                    {
-                        Alt.Log("exception at event:" + name + ":" + exception);
-                    }
+                    eventHandler(player, name, mValues);
                 }
             }
 
@@ -1079,9 +900,17 @@ namespace AltV.Net
             {
                 foreach (var parserEventHandler in parserEventHandlers)
                 {
+                    parserEventHandler.Call(mValues);
+                }
+            }
+
+            if (eventBusServer.Count != 0 && eventBusServer.TryGetValue(name, out var eventHandlersServer))
+            {
+                foreach (var eventNameEventHandler in eventHandlersServer)
+                {
                     try
                     {
-                        parserEventHandler.Call(mValues);
+                        eventNameEventHandler.Call(mValues);
                     }
                     catch (TargetInvocationException exception)
                     {
@@ -1094,9 +923,10 @@ namespace AltV.Net
                 }
             }
 
-            if (eventBusServer.Count != 0 && eventBusServer.TryGetValue(name, out var eventHandlersServer))
+
+            if (eventBus.Count != 0 && eventBus.TryGetValue(name, out var eventNameEventHandlers))
             {
-                foreach (var eventNameEventHandler in eventHandlersServer)
+                foreach (var eventNameEventHandler in eventNameEventHandlers)
                 {
                     try
                     {
@@ -1125,18 +955,7 @@ namespace AltV.Net
 
                 foreach (var eventHandler in eventDelegates)
                 {
-                    try
-                    {
-                        eventHandler(argObjects);
-                    }
-                    catch (TargetInvocationException exception)
-                    {
-                        Alt.Log("exception at event:" + name + ":" + exception.InnerException);
-                    }
-                    catch (Exception exception)
-                    {
-                        Alt.Log("exception at event:" + name + ":" + exception);
-                    }
+                    eventHandler(argObjects);
                 }
             }
 
@@ -1153,18 +972,7 @@ namespace AltV.Net
 
                 foreach (var eventHandler in ServerEventEventHandler.GetEvents())
                 {
-                    try
-                    {
-                        eventHandler(name, argObjects);
-                    }
-                    catch (TargetInvocationException exception)
-                    {
-                        Alt.Log("exception at event:" + name + ":" + exception.InnerException);
-                    }
-                    catch (Exception exception)
-                    {
-                        Alt.Log("exception at event:" + name + ":" + exception);
-                    }
+                    eventHandler(name, argObjects);
                 }
             }
 
@@ -1172,18 +980,7 @@ namespace AltV.Net
             {
                 foreach (var eventHandler in ServerCustomEventEventHandler.GetEvents())
                 {
-                    try
-                    {
-                        eventHandler(name, mValues);
-                    }
-                    catch (TargetInvocationException exception)
-                    {
-                        Alt.Log("exception at event:" + name + ":" + exception.InnerException);
-                    }
-                    catch (Exception exception)
-                    {
-                        Alt.Log("exception at event:" + name + ":" + exception);
-                    }
+                    eventHandler(name, mValues);
                 }
             }
 
@@ -1260,18 +1057,7 @@ namespace AltV.Net
             {
                 foreach (var eventHandler in ConsoleCommandEventHandler.GetEvents())
                 {
-                    try
-                    {
-                        eventHandler(name, args);
-                    }
-                    catch (TargetInvocationException exception)
-                    {
-                        Alt.Log("exception at event:" + "OnConsoleCommand" + ":" + exception.InnerException);
-                    }
-                    catch (Exception exception)
-                    {
-                        Alt.Log("exception at event:" + "OnConsoleCommand" + ":" + exception);
-                    }
+                    eventHandler(name, args);
                 }
             }
 
@@ -1298,18 +1084,7 @@ namespace AltV.Net
             if (!MetaDataChangeEventHandler.HasEvents()) return;
             foreach (var eventHandler in MetaDataChangeEventHandler.GetEvents())
             {
-                try
-                {
-                    eventHandler(entity, key, value);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnMetaDataChangeEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnMetaDataChangeEvent" + ":" + exception);
-                }
+                eventHandler(entity, key, value);
             }
         }
 
@@ -1329,18 +1104,7 @@ namespace AltV.Net
             if (!SyncedMetaDataChangeEventHandler.HasEvents()) return;
             foreach (var eventHandler in SyncedMetaDataChangeEventHandler.GetEvents())
             {
-                try
-                {
-                    eventHandler(entity, key, value);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnSyncedMetaDataChangeEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnSyncedMetaDataChangeEvent" + ":" + exception);
-                }
+                eventHandler(entity, key, value);
             }
         }
 
@@ -1365,51 +1129,10 @@ namespace AltV.Net
             if (!ColShapeEventHandler.HasEvents()) return;
             foreach (var eventHandler in ColShapeEventHandler.GetEvents())
             {
-                try
-                {
-                    eventHandler(colShape, entity, state);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnColShapeEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnColShapeEvent" + ":" + exception);
-                }
+                eventHandler(colShape, entity, state);
             }
         }
 
-        public void OnVehicleDestroy(IntPtr vehiclePointer)
-        {
-            if (!VehiclePool.GetOrCreate(vehiclePointer, out var vehicle))
-            {
-                return;
-            }
-
-            OnVehicleDestroyEvent(vehicle);
-        }
-        
-        public virtual void OnVehicleDestroyEvent(IVehicle vehicle)
-        {
-            if (!VehicleDestroyEventHandler.HasEvents()) return;
-            foreach (var eventHandler in VehicleDestroyEventHandler.GetEvents())
-            {
-                try
-                {
-                    eventHandler(vehicle);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("exception at event:" + "OnVehicleDestroyEvent" + ":" + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("exception at event:" + "OnVehicleDestroyEvent" + ":" + exception);
-                }
-            }
-        }
-        
         public void OnScriptsLoaded(IScript[] scripts)
         {
             foreach (var script in scripts)

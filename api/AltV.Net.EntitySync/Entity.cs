@@ -54,17 +54,18 @@ namespace AltV.Net.EntitySync
 
         private readonly IDictionary<string, object> data;
 
+        private readonly IDictionary<string, object> threadLocalData;
+
+        public IDictionary<string, object> Data => data;
+
+        public IDictionary<string, object> ThreadLocalData => threadLocalData;
+
         public EntityDataSnapshot DataSnapshot { get; }
 
         /// <summary>
         /// List of clients that have the entity created.
         /// </summary>
         private readonly HashSet<IClient> clients = new HashSet<IClient>();
-
-        /// <summary>
-        /// List of clients that had the entity created last time, so we can calculate when a client is not in range anymore.
-        /// </summary>
-        private readonly IDictionary<IClient, bool> lastCheckedClients = new Dictionary<IClient, bool>();
 
         public Entity(ulong type, Vector3 position, int dimension, uint range) : this(
             AltEntitySync.IdProvider.GetNext(), type,
@@ -90,28 +91,25 @@ namespace AltV.Net.EntitySync
             RangeSquared = range * range;
             this.data = data;
             DataSnapshot = new EntityDataSnapshot(this);
-            foreach (var (key, _) in data)
-            {
-                DataSnapshot.Update(key);
-            }
+            threadLocalData = new Dictionary<string, object>(data);
         }
 
         public void SetData(string key, object value)
         {
             lock (data)
             {
-                DataSnapshot.Update(key);
                 data[key] = value;
             }
+            AltEntitySync.EntitySyncServer.UpdateEntityData(this, key, value);
         }
 
         public void ResetData(string key)
         {
             lock (data)
             {
-                DataSnapshot.Update(key);
                 data.Remove(key);
             }
+            AltEntitySync.EntitySyncServer.ResetEntityData(this, key);
         }
 
         public bool TryGetData(string key, out object value)
@@ -155,23 +153,7 @@ namespace AltV.Net.EntitySync
 
         public bool RemoveClient(IClient client)
         {
-            lastCheckedClients.Remove(client);
             return clients.Remove(client);
-        }
-
-        public void AddCheck(IClient client)
-        {
-            lastCheckedClients[client] = true;
-        }
-
-        public void RemoveCheck(IClient client)
-        {
-            lastCheckedClients[client] = false;
-        }
-
-        public IDictionary<IClient, bool> GetLastCheckedClients()
-        {
-            return lastCheckedClients;
         }
 
         public HashSet<IClient> GetClients()
@@ -254,6 +236,21 @@ namespace AltV.Net.EntitySync
 
                 return ValueTuple.Create(newPositionFound, newRangeFound, newDimensionFound);
             }
+        }
+
+        public void SetThreadLocalData(string key, object value)
+        {
+            threadLocalData[key] = value;
+        }
+
+        public void ResetThreadLocalData(string key)
+        {
+            threadLocalData.Remove(key);
+        }
+
+        public bool TryGetThreadLocalData(string key, out object value)
+        {
+            return threadLocalData.TryGetValue(key, out value);
         }
 
         public virtual byte[] Serialize(IEnumerable<string> changedKeys)

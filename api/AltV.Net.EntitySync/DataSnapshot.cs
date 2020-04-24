@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace AltV.Net.EntitySync
 {
@@ -9,14 +8,14 @@ namespace AltV.Net.EntitySync
     public class DataSnapshot
     {
         // snapshot versions for each data key
-        public readonly ConcurrentDictionary<string, ulong> Snapshots;
+        public readonly IDictionary<string, ulong> Snapshots;
 
         public DataSnapshot()
         {
-            Snapshots = new ConcurrentDictionary<string, ulong>();
+            Snapshots = new Dictionary<string, ulong>();
         }
 
-        public DataSnapshot(ConcurrentDictionary<string, ulong> snapshots)
+        public DataSnapshot(IDictionary<string, ulong> snapshots)
         {
             Snapshots = snapshots;
         }

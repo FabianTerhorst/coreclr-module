@@ -50,6 +50,4 @@ namespace AltV.Net.Events
 
     public delegate void WeaponDamageDelegate(IPlayer player, IEntity target, uint weapon, ushort damage,
         Position shotOffset, BodyPart bodyPart);
-    
-    public delegate void VehicleDestroyDelegate(IVehicle vehicle);
 }

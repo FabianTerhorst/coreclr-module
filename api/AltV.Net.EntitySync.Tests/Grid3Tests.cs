@@ -34,6 +34,31 @@ namespace AltV.Net.EntitySync.Tests
             }
         }
 
+        [Test]
+        public void NegativeDimensionTest()
+        {
+            var position = GetRandomVector3();
+            var entity = new Entity(1, position, 0, 1);
+            grid3.Add(entity);
+            using (var enumerator = grid3.Find(position, -1).GetEnumerator())
+            {
+                Assert.True(enumerator.MoveNext());
+                Assert.AreEqual(entity, enumerator.Current);
+            }
+        }
+        
+        [Test]
+        public void PrivateDimensionTest()
+        {
+            var position = GetRandomVector3();
+            var entity = new Entity(1, position, 0, 1);
+            grid3.Add(entity);
+            using (var enumerator = grid3.Find(position, 1).GetEnumerator())
+            {
+                Assert.False(enumerator.MoveNext());
+            }
+        }
+
         private static Vector3 GetRandomVector3()
         {
             return new Vector3((float) GetRandomNumber(0, 49_899), (float) GetRandomNumber(0, 49_899),

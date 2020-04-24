@@ -68,7 +68,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
                 var entityClientDistance = Vector3.DistanceSquared(gridEntity.Entity.Position, position);
                 
                 if (entityClientDistance <= gridEntity.Entity.RangeSquared &&
-                    CanSeeOtherDimension(gridEntity.Entity.Dimension, dimension))
+                    CanSeeOtherDimension(dimension, gridEntity.Entity.Dimension))
                 {
                     sortedList.Add(entityClientDistance, gridEntity.Entity);
                 }
