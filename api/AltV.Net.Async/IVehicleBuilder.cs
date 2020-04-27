@@ -37,6 +37,8 @@ namespace AltV.Net.Async
         IVehicleBuilder BodyAdditionalHealth(uint value);
         IVehicleBuilder HealthData(string value);
         IVehicleBuilder DamageData(string value);
+        IVehicleBuilder Appearance(string value);
+        IVehicleBuilder ScriptData(string value);
 
         Task<IVehicle> Build();
     }

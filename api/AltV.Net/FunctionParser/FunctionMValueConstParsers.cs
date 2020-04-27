@@ -273,6 +273,14 @@ namespace AltV.Net.FunctionParser
             {
                 return (float) mValue.GetDouble();
             }
+            if (mValue.type == MValueConst.Type.Int)
+            {
+                return Convert.ToSingle(mValue.GetInt());
+            }
+            if (mValue.type == MValueConst.Type.Uint)
+            {
+                return Convert.ToSingle(mValue.GetUint());
+            }
 
             // Types doesn't match
             return null;
@@ -284,6 +292,14 @@ namespace AltV.Net.FunctionParser
             if (mValue.type == MValueConst.Type.Double)
             {
                 return mValue.GetDouble();
+            }
+            if (mValue.type == MValueConst.Type.Int)
+            {
+                return Convert.ToDouble(mValue.GetInt());
+            }
+            if (mValue.type == MValueConst.Type.Uint)
+            {
+                return Convert.ToDouble(mValue.GetUint());
             }
 
             // Types doesn't match
