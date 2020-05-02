@@ -10,7 +10,7 @@ namespace AltV.Net.Interactions
         private static readonly float Tolerance = 0.013F; //0.01318359375F;
 
         // x-index, y-index, col shapes
-        protected readonly List<IInteraction>[][] entityAreas;
+        protected List<IInteraction>[][] entityAreas;
 
         protected readonly int maxX;
 
@@ -88,13 +88,36 @@ namespace AltV.Net.Interactions
                 return;
             }
 
+            var currEntityAreas = entityAreas;// ?? new List<IInteraction>[][0];//TODO: set new List<IInteraction>[][0] as initial value for entityAreas
+            if (currEntityAreas.Length < stoppingXIndex + 1)
+            {
+                Array.Resize(ref currEntityAreas, stoppingXIndex + 1);
+                entityAreas = currEntityAreas;
+            }
             // Now fill all areas from min {x, y} to max {x, y}
             for (var j = startingXIndex; j <= stoppingXIndex; j++)
             {
                 var xArr = entityAreas[j];
+                if (xArr == null)
+                {
+                    xArr = new List<IInteraction>[0];
+                    entityAreas[j] = xArr;
+                }
+                if (xArr.Length < stoppingYIndex + 1)
+                {
+                    Array.Resize(ref xArr, stoppingYIndex + 1);
+                    entityAreas[j] = xArr;
+                }
+
                 for (var i = startingYIndex; i <= stoppingYIndex; i++)
                 {
-                    xArr[i].Add(entity);
+                    var arr = xArr[i];
+                    if (arr == null)
+                    {
+                        arr = new List<IInteraction>();
+                        xArr[i] = arr;
+                    }
+                    arr.Add(entity);
                 }
             }
         }

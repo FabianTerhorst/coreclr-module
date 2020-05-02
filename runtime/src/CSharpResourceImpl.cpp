@@ -216,7 +216,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             shotOffset.x = eventShotOffset[0];
             shotOffset.y = eventShotOffset[1];
             shotOffset.z = eventShotOffset[2];
-            OnWeaponDamageDelegate(weaponDamageEvent->GetSource().Get(), GetEntityPointer(targetEntity),
+            OnWeaponDamageDelegate(ev, weaponDamageEvent->GetSource().Get(), GetEntityPointer(targetEntity),
                                    targetEntity->GetType(), weaponDamageEvent->GetWeaponHash(),
                                    weaponDamageEvent->GetDamageValue(), shotOffset, weaponDamageEvent->GetBodyPart());
         }

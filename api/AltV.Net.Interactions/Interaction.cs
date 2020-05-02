@@ -13,10 +13,10 @@ namespace AltV.Net.Interactions
         //TODO: update RangeSquared when range changed
         public uint RangeSquared { get; private set; }
 
-        public Interaction(ulong entityType, ulong entityId, Vector3 position, int dimension, uint range)
+        public Interaction(ulong type, ulong id, Vector3 position, int dimension, uint range)
         {
-            Type = entityType;
-            Id = entityId;
+            Type = type;
+            Id = id;
             Position = position;
             Dimension = dimension;
             Range = range;

@@ -40,7 +40,7 @@ namespace AltV.Net.Interactions.Tests
         [TearDown]
         public void Cleanup()
         {
-            AltInteractions.Init();
+            AltInteractions.Dispose();
         }
     }
 }

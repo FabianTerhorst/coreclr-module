@@ -250,10 +250,10 @@ namespace AltV.Net.Async
             });
         }
 
-        public override void OnWeaponDamageEvent(IPlayer sourcePlayer, IEntity targetEntity, uint weapon, ushort damage,
+        public override void OnWeaponDamageEvent(IntPtr eventPointer, IPlayer sourcePlayer, IEntity targetEntity, uint weapon, ushort damage,
             Position shotOffset, BodyPart bodyPart)
         {
-            base.OnWeaponDamageEvent(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
+            base.OnWeaponDamageEvent(eventPointer, sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
             if (!WeaponDamageAsyncEventHandler.HasEvents()) return;
             var sourceReference = new PlayerRef(sourcePlayer);
             switch (targetEntity)

@@ -3,7 +3,28 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <PackageVersion>1.0.0-dev-preview</PackageVersion>
+        <Authors>FabianTerhorst</Authors>
+        <Description>AltV .NET Core Interactions</Description>
+        <Copyright>FabianTerhorst</Copyright>
+        <PackageProjectUrl>https://github.com/FabianTerhorst/coreclr-module</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>altv gta bridge gta5 gtav</PackageTags>
+        <PackageLicenseFile>license.txt</PackageLicenseFile>
+        <PackageReleaseNotes>
+            Initial commit
+        </PackageReleaseNotes>
+        <PackageIcon>icon.png</PackageIcon>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="license\license.txt" Pack="true" PackagePath="" />
+        <None Include="icon.png" Pack="true" PackagePath="\" />
+        <None Include="package\**" Pack="True" PackagePath="build\" />
+    </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\AltV.Net.EntitySync\AltV.Net.EntitySync.csproj" />
