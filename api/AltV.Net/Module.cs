@@ -608,8 +608,8 @@ namespace AltV.Net
                 @delegate(sourcePlayer, explosionType, position, explosionFx);
             }
         }
-
-        public void OnWeaponDamage(IntPtr playerPointer, IntPtr entityPointer, BaseObjectType entityType, uint weapon,
+        
+        public void OnWeaponDamage(IntPtr eventPointer, IntPtr playerPointer, IntPtr entityPointer, BaseObjectType entityType, uint weapon,
             ushort damage, Position shotOffset, BodyPart bodyPart)
         {
             if (!PlayerPool.GetOrCreate(playerPointer, out var sourcePlayer))
@@ -619,15 +619,24 @@ namespace AltV.Net
 
             BaseEntityPool.GetOrCreate(entityPointer, entityType, out var targetEntity);
 
-            OnWeaponDamageEvent(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
+            OnWeaponDamageEvent(eventPointer, sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
         }
 
-        public virtual void OnWeaponDamageEvent(IPlayer sourcePlayer, IEntity targetEntity, uint weapon, ushort damage,
+        public virtual void OnWeaponDamageEvent(IntPtr eventPointer, IPlayer sourcePlayer, IEntity targetEntity, uint weapon, ushort damage,
             Position shotOffset, BodyPart bodyPart)
         {
+            var cancel = false;
             foreach (var @delegate in WeaponDamageEventHandler.GetEvents())
             {
-                @delegate(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart);
+                if (!@delegate(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart))
+                {
+                    cancel = true;
+                }
+            }
+
+            if (cancel)
+            {
+                AltNative.Event.Event_Cancel(eventPointer);
             }
         }
 

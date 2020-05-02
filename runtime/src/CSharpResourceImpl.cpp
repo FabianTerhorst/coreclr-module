@@ -18,7 +18,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnPlayerDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
     OnPlayerDeathDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnExplosionDelegate = [](auto var, auto var2, auto var3, auto var4) {};
-    OnWeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7) {};;
+    OnWeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7, auto var8) {};
     OnPlayerDisconnectDelegate = [](auto var, auto var2) {};
     OnPlayerRemoveDelegate = [](auto var) {};
     OnVehicleRemoveDelegate = [](auto var) {};
@@ -216,7 +216,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             shotOffset.x = eventShotOffset[0];
             shotOffset.y = eventShotOffset[1];
             shotOffset.z = eventShotOffset[2];
-            OnWeaponDamageDelegate(weaponDamageEvent->GetSource().Get(), GetEntityPointer(targetEntity),
+            OnWeaponDamageDelegate(ev, weaponDamageEvent->GetSource().Get(), GetEntityPointer(targetEntity),
                                    targetEntity->GetType(), weaponDamageEvent->GetWeaponHash(),
                                    weaponDamageEvent->GetDamageValue(), shotOffset, weaponDamageEvent->GetBodyPart());
         }

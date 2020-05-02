@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AltV.Net.Interactions\AltV.Net.Interactions.csproj" />
+      <PackageReference Include="BenchmarkDotNet" Version="0.12.0" />
+      <PackageReference Include="nunit" Version="3.12.0" />
+      <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+    </ItemGroup>
+
+</Project>

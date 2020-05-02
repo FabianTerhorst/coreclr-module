@@ -129,7 +129,7 @@ namespace AltV.Net.Native
             internal delegate void ExplosionDelegate(IntPtr playerPointer, ExplosionType explosionType,
                 Position position, uint explosionFx);
 
-            internal delegate void WeaponDamageDelegate(IntPtr playerPointer, IntPtr entityPointer,
+            internal delegate void WeaponDamageDelegate(IntPtr eventPointer, IntPtr playerPointer, IntPtr entityPointer,
                 BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]

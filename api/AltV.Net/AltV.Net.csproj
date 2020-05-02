@@ -13,16 +13,9 @@
         <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge gta5 gtav</PackageTags>
-        <PackageVersion>1.27.4</PackageVersion>
+        <PackageVersion>1.30.0-alpha</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>
-Add following methods to IVehicle
-Improve external function calls
-        bool IsWheelDetached(byte wheelId);
-        void SetWheelDetached(byte wheelId, bool state);
-        bool IsWheelOnFire(byte wheelId);
-        void SetWheelOnFire(byte wheelId, bool state);
-   Fix Action&lt;*&gt; exports</PackageReleaseNotes>
+        <PackageReleaseNotes>Weapon damage event is now cancellable</PackageReleaseNotes>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <PackageIcon>icon.png</PackageIcon>
         <IncludeSymbols>true</IncludeSymbols>

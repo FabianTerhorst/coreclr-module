@@ -253,7 +253,12 @@ namespace AltV.Net
                                             scriptFunction.Set(damage);
                                             scriptFunction.Set(shotOffset);
                                             scriptFunction.Set(damageOffset);
-                                            scriptFunction.Call();
+                                            if (scriptFunction.Call() is bool value)
+                                            {
+                                                return value;
+                                            }
+
+                                            return true;
                                         };
                                     break;
                                 default:

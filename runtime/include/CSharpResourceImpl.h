@@ -141,7 +141,7 @@ typedef void (* MetaChangeDelegate_t)(void* entity, alt::IBaseObject::Type type,
 typedef void (* ColShapeDelegate_t)(void* colShape, void* entity, alt::IBaseObject::Type baseObjectType,
                                     bool state);
 
-typedef void (* WeaponDamageDelegate_t)(alt::IPlayer* source, void* target, alt::IBaseObject::Type targetBaseObjectType,
+typedef void (* WeaponDamageDelegate_t)(const alt::CEvent* event, alt::IPlayer* source, void* target, alt::IBaseObject::Type targetBaseObjectType,
                                         uint32_t weaponHash, uint16_t damageValue, position_t shotOffset,
                                         alt::CWeaponDamageEvent::BodyPart bodyPart);
 
