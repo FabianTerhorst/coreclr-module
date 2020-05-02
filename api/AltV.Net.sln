@@ -58,6 +58,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.Client", "AltV.Net
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.EntitySync.Entities", "AltV.Net.EntitySync.Entities\AltV.Net.EntitySync.Entities.csproj", "{6C9138A2-7FCD-4AFF-93C5-F97891371BB9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.Interactions", "AltV.Net.Interactions\AltV.Net.Interactions.csproj", "{E4D809B8-82CF-42BA-973E-934C0E48B921}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.Interactions.Tests", "AltV.Net.Interactions.Tests\AltV.Net.Interactions.Tests.csproj", "{7549B28A-9E6A-4D2D-ABDD-1914B106C9BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -239,5 +243,17 @@ Global
 		{6C9138A2-7FCD-4AFF-93C5-F97891371BB9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6C9138A2-7FCD-4AFF-93C5-F97891371BB9}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
 		{6C9138A2-7FCD-4AFF-93C5-F97891371BB9}.Testing|Any CPU.Build.0 = Debug|Any CPU
+		{E4D809B8-82CF-42BA-973E-934C0E48B921}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4D809B8-82CF-42BA-973E-934C0E48B921}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4D809B8-82CF-42BA-973E-934C0E48B921}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4D809B8-82CF-42BA-973E-934C0E48B921}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4D809B8-82CF-42BA-973E-934C0E48B921}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4D809B8-82CF-42BA-973E-934C0E48B921}.Testing|Any CPU.Build.0 = Debug|Any CPU
+		{7549B28A-9E6A-4D2D-ABDD-1914B106C9BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7549B28A-9E6A-4D2D-ABDD-1914B106C9BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7549B28A-9E6A-4D2D-ABDD-1914B106C9BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7549B28A-9E6A-4D2D-ABDD-1914B106C9BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7549B28A-9E6A-4D2D-ABDD-1914B106C9BD}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
+		{7549B28A-9E6A-4D2D-ABDD-1914B106C9BD}.Testing|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal

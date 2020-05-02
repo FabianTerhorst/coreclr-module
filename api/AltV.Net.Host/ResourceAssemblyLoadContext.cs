@@ -24,7 +24,7 @@ namespace AltV.Net.Host
                 {
                     try
                     {
-                        var assembly = LoadFromAssemblyPath(dllPath);
+                        var assembly = LoadFromPathAsStream(dllPath);
                         CheckAssembly(assembly);
                         return assembly;
                     }
@@ -40,7 +40,7 @@ namespace AltV.Net.Host
                 {
                     try
                     {
-                        var assembly = LoadFromAssemblyPath(dllPath);
+                        var assembly = LoadFromPathAsStream(dllPath);
                         CheckAssembly(assembly);
                         return assembly;
                     }
@@ -56,7 +56,7 @@ namespace AltV.Net.Host
                 {
                     try
                     {
-                        var assembly = LoadFromAssemblyPath(dllPath);
+                        var assembly = LoadFromPathAsStream(dllPath);
                         CheckAssembly(assembly);
                         return assembly;
                     }
@@ -73,7 +73,7 @@ namespace AltV.Net.Host
                 {
                     try
                     {
-                        var assembly = LoadFromAssemblyPath(dllPath);
+                        var assembly = LoadFromPathAsStream(dllPath);
                         CheckAssembly(assembly);
                         return assembly;
                     }
@@ -152,8 +152,25 @@ namespace AltV.Net.Host
             if (SharedAssemblyNames.Contains(assemblyName.Name)) return null;
             var assemblyPath = resolver.ResolveAssemblyToPath(assemblyName);
             if (assemblyPath == null) return null;
-            var assembly = LoadFromAssemblyPath(assemblyPath);
+            var assembly = LoadFromPathAsStream(assemblyPath);
             CheckAssembly(assembly);
+            return assembly;
+        }
+
+        private Assembly LoadFromPathAsStream(string path)
+        {
+            using var assemblyStream = new MemoryStream(File.ReadAllBytes(path));
+            Stream assemblySymbols = null;
+
+            var symbolsPath = Path.ChangeExtension(path, ".pdb");
+            if (File.Exists(symbolsPath))
+            {
+                // Found a symbol next to the dll to load it
+                assemblySymbols = new MemoryStream(File.ReadAllBytes(symbolsPath));
+            }
+
+            var assembly = LoadFromStream(assemblyStream, assemblySymbols);
+            assemblySymbols?.Dispose();
             return assembly;
         }
 

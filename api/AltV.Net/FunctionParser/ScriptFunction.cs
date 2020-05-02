@@ -127,19 +127,20 @@ namespace AltV.Net.FunctionParser
             args[index] = value;
         }
 
-        public void Call()
+        public object Call()
         {
             valid = true;
             currentIndex = 0;
-            if (!valid) return;
+            if (!valid) return null;
             try
             {
                 //@delegate.DynamicInvoke(args);
-                functionParserMethodInfo.Invoke(target, args);
+                return functionParserMethodInfo.Invoke(target, args);
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
+                return null;
             }
         }
 

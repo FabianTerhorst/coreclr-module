@@ -48,6 +48,6 @@ namespace AltV.Net.Events
     public delegate void ExplosionDelegate(IPlayer player, ExplosionType explosionType, Position position,
         uint explosionFx);
 
-    public delegate void WeaponDamageDelegate(IPlayer player, IEntity target, uint weapon, ushort damage,
+    public delegate bool WeaponDamageDelegate(IPlayer player, IEntity target, uint weapon, ushort damage,
         Position shotOffset, BodyPart bodyPart);
 }

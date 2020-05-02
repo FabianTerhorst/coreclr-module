@@ -109,9 +109,9 @@ namespace AltV.Net
             }
 
             Alt.Server.Resource.CSharpResourceImpl.Dispose();
-            
+
             AppDomain.CurrentDomain.UnhandledException -= OnUnhandledException;
-            
+
             _module.Dispose();
 
             _modules = new IModule[0];
@@ -171,10 +171,10 @@ namespace AltV.Net
             _module.OnExplosion(playerPointer, explosionType, position, explosionFx);
         }
 
-        public static void OnWeaponDamage(IntPtr playerPointer, IntPtr entityPointer,
+        public static void OnWeaponDamage(IntPtr eventPointer, IntPtr playerPointer, IntPtr entityPointer,
             BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart)
         {
-            _module.OnWeaponDamage(playerPointer, entityPointer, entityType, weapon, damage, shotOffset, bodyPart);
+            _module.OnWeaponDamage(eventPointer, playerPointer, entityPointer, entityType, weapon, damage, shotOffset, bodyPart);
         }
 
         public static void OnPlayerChangeVehicleSeat(IntPtr vehiclePointer, IntPtr playerPointer, byte oldSeat,
@@ -291,7 +291,8 @@ namespace AltV.Net
         }
 
         public static void OnConsoleCommand(string name,
-            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] string[] args, int argsSize)
+            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
+            string[] args, int argsSize)
         {
             if (args == null)
             {
