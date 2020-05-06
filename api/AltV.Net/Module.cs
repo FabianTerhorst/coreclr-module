@@ -628,7 +628,7 @@ namespace AltV.Net
             var cancel = false;
             foreach (var @delegate in WeaponDamageEventHandler.GetEvents())
             {
-                if (@delegate(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart))
+                if (!@delegate(sourcePlayer, targetEntity, weapon, damage, shotOffset, bodyPart))
                 {
                     cancel = true;
                 }
