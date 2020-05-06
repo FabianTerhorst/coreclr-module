@@ -23,6 +23,8 @@ public class AltV_Wiki : IScript
             player?.SendChatMessage("You hitted a Player in his Pelvis! Why you did that ?!");
             target?.SendChatMessage("You got hitted by a " + weaponModel + " in your Pelvis :(");
         }
+        
+        return true; // return false will cancel the event and player won't receive damage.
     }
 }
 ```
