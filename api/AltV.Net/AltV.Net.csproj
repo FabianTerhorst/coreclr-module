@@ -13,7 +13,7 @@
         <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge gta5 gtav</PackageTags>
-        <PackageVersion>1.30.0-alpha</PackageVersion>
+        <PackageVersion>1.31.1</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>Weapon damage event is now cancellable</PackageReleaseNotes>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
