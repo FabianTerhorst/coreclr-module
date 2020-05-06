@@ -491,6 +491,68 @@ namespace AltV.Net
             AltNative.Server.Server_RestartResource(NativePointer, namePtr);
             Marshal.FreeHGlobal(namePtr);
         }
+        
+        public void GetMetaData(string key, out MValueConst value)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            value = new MValueConst(AltNative.Server.Server_GetMetaData(NativePointer, stringPtr));
+            Marshal.FreeHGlobal(stringPtr);
+        }
+
+        public void SetMetaData(string key, object value)
+        {
+            CreateMValue(out var mValue, value);
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Server.Server_SetMetaData(NativePointer, stringPtr, mValue.nativePointer);
+            Marshal.FreeHGlobal(stringPtr);
+            mValue.Dispose();
+        }
+
+        public bool HasMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            var result = AltNative.Server.Server_HasMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+            return result;
+        }
+
+        public void DeleteMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Server.Server_DeleteMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+        }
+        
+        public void GetSyncedMetaData(string key, out MValueConst value)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            value = new MValueConst(AltNative.Server.Server_GetSyncedMetaData(NativePointer, stringPtr));
+            Marshal.FreeHGlobal(stringPtr);
+        }
+
+        public void SetSyncedMetaData(string key, object value)
+        {
+            CreateMValue(out var mValue, value);
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Server.Server_SetSyncedMetaData(NativePointer, stringPtr, mValue.nativePointer);
+            Marshal.FreeHGlobal(stringPtr);
+            mValue.Dispose();
+        }
+
+        public bool HasSyncedMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            var result = AltNative.Server.Server_HasSyncedMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+            return result;
+        }
+
+        public void DeleteSyncedMetaData(string key)
+        {
+            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+            AltNative.Server.Server_DeleteSyncedMetaData(NativePointer, stringPtr);
+            Marshal.FreeHGlobal(stringPtr);
+        }
 
         public void CreateMValueNil(out MValueConst mValue)
         {
