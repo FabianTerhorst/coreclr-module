@@ -52,7 +52,7 @@ Otherwise the server would end up crashing by accessing the player position of a
 Note: locking the player when its already locked will end up in a deadlock. Never do this E.g. ```lock (player) { lock (player) {  } }```
 Locks also work accross method calls so be careful.
 ```if (player.Exists) {```
-This if check is optional, because not checking it won't crash the server, but will throw a exception when the player doesn't esists anymore.
+This if check is optional, because not checking it won't crash the server, but will throw a exception when the player doesn't exist anymore.
 ```position = player.Position```
 Here we assign the position to the value we declared above. This is essential because no heavy calculations should happen inside a lock statement and the assign makes it possible to use the player position outside the lock statement for e.g. distance calculatione.
 
