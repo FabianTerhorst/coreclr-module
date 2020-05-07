@@ -54,7 +54,7 @@ namespace AltV.Net.Enums
         DoubleBarrelShotgun = 4019527611,
         SweeperShotgun = 317205821,
         AssaultRifle = 3220176749,
-        AussaultRifleMkII = 961495388,
+        AssaultRifleMkII = 961495388,
         CarbineRifle = 2210333304,
         CarbineRifleMkII = 4208062921,
         AdvancedRifle = 2937143193,
