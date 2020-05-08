@@ -14,20 +14,11 @@ namespace AltV.Net.Async
 {
     public class AsyncModule : Module
     {
-        private readonly Dictionary<string, HashSet<Function>> asyncEventBus =
-            new Dictionary<string, HashSet<Function>>();
-
         private readonly Dictionary<string, HashSet<Function>> asyncEventBusClient =
             new Dictionary<string, HashSet<Function>>();
 
         private readonly Dictionary<string, HashSet<Function>> asyncEventBusServer =
             new Dictionary<string, HashSet<Function>>();
-
-        private readonly Dictionary<string, HashSet<ClientEventAsyncDelegate>> asyncEventBusClientDelegate =
-            new Dictionary<string, HashSet<ClientEventAsyncDelegate>>();
-
-        private readonly Dictionary<string, HashSet<ServerEventAsyncDelegate>> asyncEventBusServerDelegate =
-            new Dictionary<string, HashSet<ServerEventAsyncDelegate>>();
 
         internal readonly AsyncEventHandler<CheckpointAsyncDelegate> CheckpointAsyncEventHandler =
             new AsyncEventHandler<CheckpointAsyncDelegate>();
@@ -80,6 +71,9 @@ namespace AltV.Net.Async
 
         internal readonly AsyncEventHandler<ColShapeAsyncDelegate> ColShapeAsyncDelegateHandlers =
             new AsyncEventHandler<ColShapeAsyncDelegate>();
+        
+        internal readonly AsyncEventHandler<VehicleDestroyAsyncDelegate> VehicleDestroyAsyncDelegateHandlers =
+            new AsyncEventHandler<VehicleDestroyAsyncDelegate>();
 
         public AsyncModule(IServer server, AssemblyLoadContext assemblyLoadContext, INativeResource moduleResource,
             IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
@@ -388,62 +382,6 @@ namespace AltV.Net.Async
             base.OnClientEventEvent(player, name, args, mValues, objects);
             var length = args.Length;
 
-            if (asyncEventBus.Count != 0 && asyncEventBus.TryGetValue(name, out var eventHandlers))
-            {
-                if (mValues == null)
-                {
-                    mValues = new MValueConst[length];
-                    for (var i = 0; i < length; i++)
-                    {
-                        mValues[i] = new MValueConst(args[i]);
-                    }
-                }
-
-                if (objects == null)
-                {
-                    objects = new object[length];
-                    for (var i = 0; i < length; i++)
-                    {
-                        objects[i] = mValues[i].ToObject();
-                    }
-                }
-
-                Task.Factory.StartNew(async obj =>
-                    {
-                        var (taskPlayer, taskObjects, taskEventHandlers, taskName, playerRef) =
-                            (ValueTuple<IPlayer, object[], HashSet<Function>, string, PlayerRef>) obj;
-
-                        foreach (var eventHandler in taskEventHandlers)
-                        {
-                            try
-                            {
-                                var invokeValues = eventHandler.CalculateInvokeValues(taskPlayer, taskObjects);
-                                if (invokeValues != null)
-                                {
-                                    var task = eventHandler.InvokeTaskOrNull(invokeValues);
-                                    if (task != null)
-                                    {
-                                        await task;
-                                    }
-                                }
-                                else
-                                {
-                                    AltAsync.Log("Wrong function params for " + taskName);
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                AltAsync.Log($"Execution of {taskName} threw an error: {e}");
-                            }
-                        }
-
-                        playerRef.Dispose();
-                    },
-                    new ValueTuple<IPlayer, object[], HashSet<Function>, string, PlayerRef>(player, objects,
-                        eventHandlers,
-                        name, new PlayerRef(player)));
-            }
-
             if (asyncEventBusClient.Count != 0 && asyncEventBusClient.TryGetValue(name, out var eventHandlersClient))
             {
                 if (mValues == null)
@@ -496,42 +434,6 @@ namespace AltV.Net.Async
                     new ValueTuple<IPlayer, object[], HashSet<Function>, string, PlayerRef>(player, objects,
                         eventHandlersClient,
                         name, new PlayerRef(player)));
-            }
-
-            if (asyncEventBusClientDelegate.Count != 0 &&
-                asyncEventBusClientDelegate.TryGetValue(name, out var eventDelegates))
-            {
-                if (mValues == null)
-                {
-                    mValues = new MValueConst[length];
-                    for (var i = 0; i < length; i++)
-                    {
-                        mValues[i] = new MValueConst(args[i]);
-                    }
-                }
-
-                if (objects == null)
-                {
-                    objects = new object[length];
-                    for (var i = 0; i < length; i++)
-                    {
-                        objects[i] = mValues[i].ToObject();
-                    }
-                }
-
-                Task.Factory.StartNew(obj =>
-                    {
-                        var (taskPlayer, taskObjects, taskEventHandlers, playerRef) =
-                            (ValueTuple<IPlayer, object[], HashSet<ClientEventAsyncDelegate>, PlayerRef>) obj;
-                        foreach (var eventHandler in taskEventHandlers)
-                        {
-                            AsyncEventHandler<ClientEventAsyncDelegate>.ExecuteEventAsyncWithoutTask(eventHandler,
-                                @delegate => @delegate(taskPlayer, taskObjects));
-                        }
-                        playerRef.Dispose();
-                    },
-                    new ValueTuple<IPlayer, object[], HashSet<ClientEventAsyncDelegate>, PlayerRef>(player, objects,
-                        eventDelegates, new PlayerRef(player)));
             }
 
             if (PlayerClientEventAsyncEventHandler.HasEvents())
@@ -624,96 +526,6 @@ namespace AltV.Net.Async
                         }
                     }
                 }, new ValueTuple<object[], HashSet<Function>, string>(objects, eventHandlersServer, name));
-            }
-
-            if (asyncEventBus.Count != 0 && asyncEventBus.TryGetValue(name, out var eventHandlers))
-            {
-                if (mValues == null)
-                {
-                    mValues = new MValueConst[length];
-                    for (var i = 0; i < length; i++)
-                    {
-                        mValues[i] = new MValueConst(args[i]);
-                    }
-                }
-
-                if (objects == null)
-                {
-                    objects = new object[length];
-                    for (var i = 0; i < length; i++)
-                    {
-                        objects[i] = mValues[i].ToObject();
-                    }
-                }
-
-                Task.Factory.StartNew(async obj =>
-                {
-                    try
-                    {
-                        var (taskObjects, taskEventHandlers, taskName) =
-                            (ValueTuple<object[], HashSet<Function>, string>) obj;
-                        foreach (var eventHandler in taskEventHandlers)
-                        {
-                            var invokeValues = eventHandler.CalculateInvokeValues(taskObjects);
-                            if (invokeValues != null)
-                            {
-                                try
-                                {
-                                    var task = eventHandler.InvokeTaskOrNull(invokeValues);
-                                    if (task != null)
-                                    {
-                                        await task;
-                                    }
-                                }
-                                catch (Exception e)
-                                {
-                                    AltAsync.Log($"Execution of {taskName} threw an error: {e}");
-                                }
-                            }
-                            else
-                            {
-                                AltAsync.Log("Wrong function params for " + taskName);
-                            }
-                        }
-                    }
-                    catch (Exception exception)
-                    {
-                        Console.WriteLine($"Execution of async events threw an error: {exception}");
-                    }
-                }, new ValueTuple<object[], HashSet<Function>, string>(objects, eventHandlers, name));
-            }
-
-            if (asyncEventBusServerDelegate.Count != 0 &&
-                asyncEventBusServerDelegate.TryGetValue(name, out var eventDelegates))
-            {
-                if (mValues == null)
-                {
-                    mValues = new MValueConst[length];
-                    for (var i = 0; i < length; i++)
-                    {
-                        mValues[i] = new MValueConst(args[i]);
-                    }
-                }
-
-                if (objects == null)
-                {
-                    objects = new object[length];
-                    for (var i = 0; i < length; i++)
-                    {
-                        objects[i] = mValues[i].ToObject();
-                    }
-                }
-
-                Task.Factory.StartNew(obj =>
-                {
-                    var (taskObjects, taskEventHandlers, taskName) =
-                        (ValueTuple<object[], HashSet<ServerEventAsyncDelegate>, string>) obj;
-                    foreach (var eventHandler in taskEventHandlers)
-                    {
-                        AsyncEventHandler<ServerEventAsyncDelegate>.ExecuteEventAsyncWithoutTask(eventHandler,
-                            @delegate => @delegate(taskObjects));
-                    }
-                }, new ValueTuple<object[], HashSet<ServerEventAsyncDelegate>, string>(objects, eventDelegates, name));
             }
         }
 
@@ -826,29 +638,17 @@ namespace AltV.Net.Async
             }
         }
 
-        [Obsolete]
-        public new void On(string eventName, Function function)
+        public override void OnVehicleDestroyEvent(IVehicle vehicle)
         {
-            if (function == null) return;
-            if (asyncEventBus.TryGetValue(eventName, out var eventHandlersForEvent))
+            base.OnVehicleDestroyEvent(vehicle);
+            if (!VehicleDestroyAsyncDelegateHandlers.HasEvents()) return;
+            var vehicleReference = new VehicleRef(vehicle);
+            Task.Run(async () =>
             {
-                eventHandlersForEvent.Add(function);
-            }
-            else
-            {
-                eventHandlersForEvent = new HashSet<Function> {function};
-                asyncEventBus[eventName] = eventHandlersForEvent;
-            }
-        }
-
-        [Obsolete]
-        public new void Off(string eventName, Function function)
-        {
-            if (function == null) return;
-            if (asyncEventBus.TryGetValue(eventName, out var eventHandlers))
-            {
-                eventHandlers.Remove(function);
-            }
+                await VehicleDestroyAsyncDelegateHandlers.CallAsync(@delegate =>
+                    @delegate(vehicle));
+                vehicleReference.Dispose();
+            });
         }
 
         public new void OnClient(string eventName, Function function)
@@ -894,56 +694,6 @@ namespace AltV.Net.Async
             if (asyncEventBusClient.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Remove(function);
-            }
-        }
-
-        [Obsolete]
-        public void OnClient(string eventName, ClientEventAsyncDelegate eventDelegate)
-        {
-            if (eventDelegate == null) return;
-            if (asyncEventBusClientDelegate.TryGetValue(eventName, out var eventHandlersForEvent))
-            {
-                eventHandlersForEvent.Add(eventDelegate);
-            }
-            else
-            {
-                eventHandlersForEvent = new HashSet<ClientEventAsyncDelegate> {eventDelegate};
-                asyncEventBusClientDelegate[eventName] = eventHandlersForEvent;
-            }
-        }
-
-        [Obsolete]
-        public void OffClient(string eventName, ClientEventAsyncDelegate eventDelegate)
-        {
-            if (eventDelegate == null) return;
-            if (asyncEventBusClientDelegate.TryGetValue(eventName, out var eventHandlers))
-            {
-                eventHandlers.Remove(eventDelegate);
-            }
-        }
-
-        [Obsolete]
-        public void OnServer(string eventName, ServerEventAsyncDelegate eventDelegate)
-        {
-            if (eventDelegate == null) return;
-            if (asyncEventBusServerDelegate.TryGetValue(eventName, out var eventHandlersForEvent))
-            {
-                eventHandlersForEvent.Add(eventDelegate);
-            }
-            else
-            {
-                eventHandlersForEvent = new HashSet<ServerEventAsyncDelegate> {eventDelegate};
-                asyncEventBusServerDelegate[eventName] = eventHandlersForEvent;
-            }
-        }
-
-        [Obsolete]
-        public void OffServer(string eventName, ServerEventAsyncDelegate serverEventDelegate)
-        {
-            if (serverEventDelegate == null) return;
-            if (asyncEventBusServerDelegate.TryGetValue(eventName, out var eventHandlers))
-            {
-                eventHandlers.Remove(serverEventDelegate);
             }
         }
 

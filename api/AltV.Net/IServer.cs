@@ -118,6 +118,22 @@ namespace AltV.Net
 
         void RestartResource(string name);
 
+        void SetMetaData(string key, object value);
+
+        bool HasMetaData(string key);
+
+        void DeleteMetaData(string key);
+
+        void GetMetaData(string key, out MValueConst value);
+        
+        void SetSyncedMetaData(string key, object value);
+
+        bool HasSyncedMetaData(string key);
+
+        void DeleteSyncedMetaData(string key);
+
+        void GetSyncedMetaData(string key, out MValueConst value);
+
         void CreateMValueNil(out MValueConst mValue);
 
         void CreateMValueBool(out MValueConst mValue, bool value);

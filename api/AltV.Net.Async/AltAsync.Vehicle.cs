@@ -220,7 +220,7 @@ namespace AltV.Net.Async
         public static Task<bool> IsRoofOpenAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.RoofOpened);
 
-        public static Task SetRoofOpenAsync(this IVehicle vehicle, bool roofOpen) =>
+        public static Task SetRoofOpenedAsync(this IVehicle vehicle, bool roofOpen) =>
             AltVAsync.Schedule(() => vehicle.RoofOpened = roofOpen);
 
         public static Task<byte> GetDoorStateAsync(this IVehicle vehicle, byte doorId) =>
@@ -310,6 +310,18 @@ namespace AltV.Net.Async
 
         public static Task SetWheelsAsync(this IVehicle vehicle, byte type, byte variation) =>
             AltVAsync.Schedule(() => vehicle.SetWheels(type, variation));
+        
+        public static Task SetRearWheelAsync(this IVehicle vehicle, byte variation) =>
+            AltVAsync.Schedule(() => vehicle.RearWheel = variation);
+
+        public static Task SetLiveryAsync(this IVehicle vehicle, byte livery) =>
+            AltVAsync.Schedule(() => vehicle.Livery = livery);
+
+        public static Task SetRoofLiveryAsync(this IVehicle vehicle, byte roofLivery) =>
+            AltVAsync.Schedule(() => vehicle.RoofLivery = roofLivery);
+
+        public static Task SetLightsMultiplierAsync(this IVehicle vehicle, float multiplier) =>
+            AltVAsync.Schedule(() => vehicle.LightsMultiplier = multiplier);
 
         public static Task<bool> IsExtraOnAsync(this IVehicle vehicle, byte extraId) =>
             AltVAsync.Schedule(() => vehicle.IsExtraOn(extraId));

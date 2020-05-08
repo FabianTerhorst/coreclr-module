@@ -89,12 +89,13 @@ namespace AltV.Net.Elements.Entities
         byte WheelType { get; }
 
         /// <summary>
-        /// The wheel variation
+        /// The wheel variation, for e.g. bikes only this getter works, RearWheel won't.
+        /// For most other vehicles this is the FrontWheel variation getter.
         /// </summary>
         byte WheelVariation { get; }
         
         /// <summary>
-        /// Rear wheel variation
+        /// Rear wheel variation.
         /// </summary>
         byte RearWheel { get; set; }
 
