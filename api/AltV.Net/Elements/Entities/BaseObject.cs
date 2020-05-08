@@ -227,6 +227,7 @@ namespace AltV.Net.Elements.Entities
                 ++refCount;
             }
 
+            Alt.Module.CountUpRefForCurrentThread(this);
             InternalAddRef();
             return true;
         }
@@ -242,6 +243,7 @@ namespace AltV.Net.Elements.Entities
                 --refCount;
             }
 
+            Alt.Module.CountDownRefForCurrentThread(this);
             InternalRemoveRef();
             return true;
         }
