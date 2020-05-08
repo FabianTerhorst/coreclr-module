@@ -207,6 +207,8 @@ EXPORT bool Vehicle_IsManualEngineControl(alt::IVehicle* vehicle);
 EXPORT void Vehicle_GetScriptDataBase64(alt::IVehicle* vehicle, const char*&base64);
 EXPORT void Vehicle_LoadScriptDataFromBase64(alt::IVehicle* vehicle, const char* base64);
 
+EXPORT void Vehicle_GetPositionCoords2(alt::IVehicle* vehicle, float* position_x, float* position_y, float* position_z, float* rotation_x, float* rotation_y, float* rotation_z, int* dimension);
+
 #ifdef __cplusplus
 }
 #endif
