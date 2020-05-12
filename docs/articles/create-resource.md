@@ -103,4 +103,4 @@ server.cfg
 altv-server.exe
 ```
 
-For creating scripts that can be created multiple times see: [Create script](https://fabianterhorst.github.io/coreclr-module/articles/create-script.html).
+For creating scripts that can be created multiple times see: [Create script](create-script.md).
