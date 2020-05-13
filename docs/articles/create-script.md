@@ -1,6 +1,6 @@
 # Create Script
 
-Make sure you have [created a resource](https://fabianterhorst.github.io/coreclr-module/articles/create-resource.html) before.
+Make sure you have [created a resource](create-resource.md) before.
 
 Classes that extend IScript are getting auto initiaized.
 

@@ -1,8 +1,8 @@
 # Events
 
-For custom events see [Custom Events](https://fabianterhorst.github.io/coreclr-module/articles/custom-events.html).
+For custom events see [Custom Events](custom-events.md).
 
-Events can be registered via [scripts](https://fabianterhorst.github.io/coreclr-module/articles/create-script.html) or dynamically via event delegates.
+Events can be registered via [scripts](create-script.md) or dynamically via event delegates.
 This documentation is registering events via delegates dynamically.
 
 To add for example a player connect event handler dynamically you can just add the delegate that will be called when a player connects.
@@ -43,4 +43,4 @@ Alt.OnPlayerEvent += (player, name, args) => {
 };
 ```
 
-For automated arguments validating you can use [Custom Events](https://fabianterhorst.github.io/coreclr-module/articles/custom-events.html).
+For automated arguments validating you can use [Custom Events](custom-events.md).
