@@ -128,7 +128,7 @@ namespace AltV.Net.Native
             internal delegate void MetaChangeDelegate(IntPtr entityPointer, BaseObjectType entityType, string key,
                 IntPtr value);
 
-            internal delegate void ExplosionDelegate(IntPtr playerPointer, ExplosionType explosionType,
+            internal delegate void ExplosionDelegate(IntPtr eventPointer, IntPtr playerPointer, ExplosionType explosionType,
                 Position position, uint explosionFx);
 
             internal delegate void WeaponDamageDelegate(IntPtr eventPointer, IntPtr playerPointer, IntPtr entityPointer,

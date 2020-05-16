@@ -5,17 +5,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.7.0" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="0Harmony, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>0Harmony.dll</HintPath>
-      </Reference>
+      <PackageReference Include="Lib.Harmony" Version="2.0.1" />
     </ItemGroup>
-
 </Project>
