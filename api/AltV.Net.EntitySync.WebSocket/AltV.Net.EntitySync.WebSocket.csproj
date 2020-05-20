@@ -12,7 +12,7 @@
 
     <ItemGroup>
       <PackageReference Include="System.Threading.Channels" Version="4.7.0" />
-      <PackageReference Include="VIEApps.Components.WebSockets" Version="10.3.2004.24" />
+      <PackageReference Include="VIEApps.Components.WebSockets" Version="10.3.2005.1" />
     </ItemGroup>
 
 </Project>
