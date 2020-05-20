@@ -230,10 +230,10 @@ namespace AltV.Net.Async
             }
         }
 
-        public override void OnExplosionEvent(IPlayer sourcePlayer, ExplosionType explosionType, Position position,
+        public override void OnExplosionEvent(IntPtr eventPointer, IPlayer sourcePlayer, ExplosionType explosionType, Position position,
             uint explosionFx)
         {
-            base.OnExplosionEvent(sourcePlayer, explosionType, position, explosionFx);
+            base.OnExplosionEvent(eventPointer, sourcePlayer, explosionType, position, explosionFx);
             if (!ExplosionAsyncEventHandler.HasEvents()) return;
             var sourceReference = new PlayerRef(sourcePlayer);
             Task.Run(async () =>

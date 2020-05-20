@@ -25,7 +25,7 @@ namespace AltV.Net.Example
             {
                 currentTraceSize = size;
             };
-            
+
             Alt.OnConsoleCommand += (name, args) =>
             {
                 Console.WriteLine("Command name: " + name);

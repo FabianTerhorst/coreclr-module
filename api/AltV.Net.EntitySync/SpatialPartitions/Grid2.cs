@@ -414,9 +414,9 @@ namespace AltV.Net.EntitySync.SpatialPartitions
         */
         protected static bool CanSeeOtherDimension(int dimension, int otherDimension)
         {
-            if (dimension > 0) return dimension == otherDimension;
-            if (dimension < 0) return otherDimension == 0 || dimension == otherDimension;
-            return otherDimension == 0;
+            if (dimension > 0) return dimension == otherDimension || otherDimension == int.MinValue;
+            if (dimension < 0) return otherDimension == 0 || dimension == otherDimension || otherDimension == int.MinValue;
+            return otherDimension == 0 || otherDimension == int.MinValue;
         }
 
         public override IList<IEntity> Find(Vector3 position, int dimension)

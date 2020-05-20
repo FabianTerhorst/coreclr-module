@@ -165,10 +165,10 @@ namespace AltV.Net
             _module.OnPlayerDeath(playerPointer, killerEntityPointer, killerBaseObjectType, weapon);
         }
 
-        public static void OnExplosion(IntPtr playerPointer, ExplosionType explosionType,
+        public static void OnExplosion(IntPtr eventPointer, IntPtr playerPointer, ExplosionType explosionType,
             Position position, uint explosionFx)
         {
-            _module.OnExplosion(playerPointer, explosionType, position, explosionFx);
+            _module.OnExplosion(eventPointer, playerPointer, explosionType, position, explosionFx);
         }
 
         public static void OnWeaponDamage(IntPtr eventPointer, IntPtr playerPointer, IntPtr entityPointer,

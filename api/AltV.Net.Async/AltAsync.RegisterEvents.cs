@@ -265,6 +265,23 @@ namespace AltV.Net.Async
                                             return currScriptFunction.CallAsync();
                                         };
                                     break;
+                                case ScriptEventType.Explosion:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IPlayer), typeof(ExplosionType), typeof(Position), typeof(uint)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnExplosion += (player, explosionType, position, explosionFx) =>
+                                    {
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(player);
+                                        currScriptFunction.Set(explosionType);
+                                        currScriptFunction.Set(position);
+                                        currScriptFunction.Set(explosionFx);
+                                        return currScriptFunction.CallAsync();
+                                    };
+                                    break;
                             }
 
                             break;

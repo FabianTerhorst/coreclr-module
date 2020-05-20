@@ -585,24 +585,28 @@ namespace AltV.Net
             }
         }
 
-        public void OnExplosion(IntPtr playerPointer, ExplosionType explosionType, Position position, uint explosionFx)
+        public void OnExplosion(IntPtr eventPointer, IntPtr playerPointer, ExplosionType explosionType, Position position, uint explosionFx)
         {
             if (!PlayerPool.GetOrCreate(playerPointer, out var sourcePlayer))
             {
                 return;
             }
 
-            OnExplosionEvent(sourcePlayer, explosionType, position, explosionFx);
+            OnExplosionEvent(eventPointer, sourcePlayer, explosionType, position, explosionFx);
         }
 
-        public virtual void OnExplosionEvent(IPlayer sourcePlayer, ExplosionType explosionType, Position position,
+        public virtual void OnExplosionEvent(IntPtr eventPointer, IPlayer sourcePlayer, ExplosionType explosionType, Position position,
             uint explosionFx)
         {
+            var cancel = false;
             foreach (var @delegate in ExplosionEventHandler.GetEvents())
             {
                 try
                 {
-                    @delegate(sourcePlayer, explosionType, position, explosionFx);
+                    if (!@delegate(sourcePlayer, explosionType, position, explosionFx))
+                    {
+                        cancel = true;
+                    }
                 }
                 catch (TargetInvocationException exception)
                 {
@@ -612,6 +616,11 @@ namespace AltV.Net
                 {
                     Alt.Log("exception at event:" + "OnExplosionEvent" + ":" + exception);
                 }
+            }
+            
+            if (cancel)
+            {
+                AltNative.Event.Event_Cancel(eventPointer);
             }
         }
         

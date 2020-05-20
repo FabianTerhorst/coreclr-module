@@ -17,7 +17,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnResourceErrorDelegate = [](auto var) {};
     OnPlayerDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
     OnPlayerDeathDelegate = [](auto var, auto var2, auto var3, auto var4) {};
-    OnExplosionDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnExplosionDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
     OnWeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7, auto var8) {};
     OnPlayerDisconnectDelegate = [](auto var, auto var2) {};
     OnPlayerRemoveDelegate = [](auto var) {};
@@ -204,7 +204,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             position.x = eventPosition.x;
             position.y = eventPosition.y;
             position.z = eventPosition.z;
-            OnExplosionDelegate(explosionEvent->GetSource().Get(), explosionEvent->GetExplosionType(), position,
+            OnExplosionDelegate(explosionEvent, explosionEvent->GetSource().Get(), explosionEvent->GetExplosionType(), position,
                                 explosionEvent->GetExplosionFX());
         }
             break;
