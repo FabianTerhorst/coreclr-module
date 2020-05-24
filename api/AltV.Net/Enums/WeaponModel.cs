@@ -2,7 +2,7 @@ namespace AltV.Net.Enums
 {
     public enum WeaponModel : uint
     {
-        	CombatPdw = 171789620,
+       	CombatPdw = 171789620,
 	HeaySniperMk2 = 177293209,
 	HeavySniper = 205991906,
 	SniperRifle = 100416529,
@@ -86,16 +86,16 @@ namespace AltV.Net.Enums
 	HeayPistol = 3523564046,
 	Macineistol = 3675956304,
 	ComatMgMk2 = 3686625920,
-	MarsmaPistol = 3696079510,
+	MarksmaPistol = 3696079510,
 	Machete = 3713923289,
-	Swichblade = 3756226112,
+	Switchblade = 3756226112,
 	Assulthotgun = 3800352039,
 	DbSotgun = 4019527611,
 	AssultSmg = 4024951519,
 	Hatchet = 4191993645,
 	Bottle = 4192643659,
-	CarineifleMk2 = 4208062921,
-	Parchute = 4222310262,
-	SmoeGrenade = 4256991824
+	CarabineRifleMk2 = 4208062921,
+	Parachute = 4222310262,
+	SmokeGrenade = 4256991824
     }
 }
