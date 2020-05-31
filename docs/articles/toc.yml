@@ -42,6 +42,8 @@
       href: voice.md
     - name: Resource initialization order
       href: resource-initialization-order.md
+    - name: Loop all players, vehicles, ...
+      href: loop-all.md
 - name: Player Events
   href: player_events.md
   items:
