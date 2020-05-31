@@ -17,7 +17,7 @@ namespace AltV.Net.Async.Elements.Pools
             return AltAsync.Do(() => Player.GetId(entityPointer)).Result;
         }
 
-        public override async Task Foreach(IAsyncBaseObjectCallback<IPlayer> asyncBaseObjectCallback)
+        public override async Task ForEach(IAsyncBaseObjectCallback<IPlayer> asyncBaseObjectCallback)
         {
             foreach (var entity in GetAllEntities())
             {
@@ -29,7 +29,7 @@ namespace AltV.Net.Async.Elements.Pools
             }
         }
 
-        public override void Foreach(IBaseObjectCallback<IPlayer> baseObjectCallback)
+        public override void ForEach(IBaseObjectCallback<IPlayer> baseObjectCallback)
         {
             foreach (var entity in GetAllEntities())
             {

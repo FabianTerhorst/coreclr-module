@@ -11,7 +11,7 @@ namespace AltV.Net.Async.Elements.Pools
         {
         }
         
-        public override async Task Foreach(IAsyncBaseObjectCallback<ICheckpoint> asyncBaseObjectCallback)
+        public override async Task ForEach(IAsyncBaseObjectCallback<ICheckpoint> asyncBaseObjectCallback)
         {
             foreach (var baseObject in GetAllObjects())
             {
@@ -23,7 +23,7 @@ namespace AltV.Net.Async.Elements.Pools
             }
         }
         
-        public override void Foreach(IBaseObjectCallback<ICheckpoint> baseObjectCallback)
+        public override void ForEach(IBaseObjectCallback<ICheckpoint> baseObjectCallback)
         {
             foreach (var baseObject in GetAllObjects())
             {

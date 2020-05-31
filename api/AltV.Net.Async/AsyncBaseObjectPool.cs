@@ -93,9 +93,9 @@ namespace AltV.Net.Async
             return arr;
         }
 
-        public abstract void Foreach(IBaseObjectCallback<TBaseObject> baseObjectCallback);
+        public abstract void ForEach(IBaseObjectCallback<TBaseObject> baseObjectCallback);
 
-        public abstract Task Foreach(IAsyncBaseObjectCallback<TBaseObject> asyncBaseObjectCallback);
+        public abstract Task ForEach(IAsyncBaseObjectCallback<TBaseObject> asyncBaseObjectCallback);
 
         public virtual void OnAdd(TBaseObject entity)
         {

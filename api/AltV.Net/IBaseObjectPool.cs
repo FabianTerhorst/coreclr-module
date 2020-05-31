@@ -17,7 +17,7 @@ namespace AltV.Net
         bool GetOrCreate(IntPtr entityPointer, out TBaseObject entity);
         ICollection<TBaseObject> GetAllObjects();
         KeyValuePair<IntPtr, TBaseObject>[] GetObjectsArray();
-        void Foreach(IBaseObjectCallback<TBaseObject> baseObjectCallback);
-        Task Foreach(IAsyncBaseObjectCallback<TBaseObject> asyncBaseObjectCallback);
+        void ForEach(IBaseObjectCallback<TBaseObject> baseObjectCallback);
+        Task ForEach(IAsyncBaseObjectCallback<TBaseObject> asyncBaseObjectCallback);
     }
 }

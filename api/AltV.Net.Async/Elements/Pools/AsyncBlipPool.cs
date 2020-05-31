@@ -11,7 +11,7 @@ namespace AltV.Net.Async.Elements.Pools
         {
         }
 
-        public override async Task Foreach(IAsyncBaseObjectCallback<IBlip> asyncBaseObjectCallback)
+        public override async Task ForEach(IAsyncBaseObjectCallback<IBlip> asyncBaseObjectCallback)
         {
             foreach (var baseObject in GetAllObjects())
             {
@@ -23,7 +23,7 @@ namespace AltV.Net.Async.Elements.Pools
             }
         }
         
-        public override void Foreach(IBaseObjectCallback<IBlip> baseObjectCallback)
+        public override void ForEach(IBaseObjectCallback<IBlip> baseObjectCallback)
         {
             foreach (var baseObject in GetAllObjects())
             {

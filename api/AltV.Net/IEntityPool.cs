@@ -30,9 +30,9 @@ namespace AltV.Net
 
         KeyValuePair<IntPtr, TEntity>[] GetEntitiesArray();
 
-        void Foreach(IBaseObjectCallback<TEntity> baseObjectCallback);
+        void ForEach(IBaseObjectCallback<TEntity> baseObjectCallback);
         
-        Task Foreach(IAsyncBaseObjectCallback<TEntity> asyncBaseObjectCallback);
+        Task ForEach(IAsyncBaseObjectCallback<TEntity> asyncBaseObjectCallback);
 
         void OnAdd(TEntity entity);
 

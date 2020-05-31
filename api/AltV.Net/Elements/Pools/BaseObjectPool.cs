@@ -91,7 +91,7 @@ namespace AltV.Net.Elements.Pools
             return arr;
         }
         
-        public void Foreach(IBaseObjectCallback<TBaseObject> baseObjectCallback)
+        public void ForEach(IBaseObjectCallback<TBaseObject> baseObjectCallback)
         {
             foreach (var entity in entities.Values)
             {
@@ -99,7 +99,7 @@ namespace AltV.Net.Elements.Pools
             }
         }
 
-        public async Task Foreach(IAsyncBaseObjectCallback<TBaseObject> asyncBaseObjectCallback)
+        public async Task ForEach(IAsyncBaseObjectCallback<TBaseObject> asyncBaseObjectCallback)
         {
             foreach (var entity in entities.Values)
             {

@@ -153,9 +153,9 @@ namespace AltV.Net.Async
             return entities.ToArray();
         }
 
-        public abstract void Foreach(IBaseObjectCallback<TEntity> baseObjectCallback);
+        public abstract void ForEach(IBaseObjectCallback<TEntity> baseObjectCallback);
 
-        public abstract Task Foreach(IAsyncBaseObjectCallback<TEntity> asyncBaseObjectCallback);
+        public abstract Task ForEach(IAsyncBaseObjectCallback<TEntity> asyncBaseObjectCallback);
 
         public virtual void OnAdd(TEntity entity)
         {

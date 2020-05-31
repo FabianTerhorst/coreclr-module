@@ -11,7 +11,7 @@ namespace AltV.Net.Async.Elements.Pools
         {
         }
         
-        public override async Task Foreach(IAsyncBaseObjectCallback<IColShape> asyncBaseObjectCallback)
+        public override async Task ForEach(IAsyncBaseObjectCallback<IColShape> asyncBaseObjectCallback)
         {
             foreach (var baseObject in GetAllObjects())
             {
@@ -23,7 +23,7 @@ namespace AltV.Net.Async.Elements.Pools
             }
         }
         
-        public override void Foreach(IBaseObjectCallback<IColShape> baseObjectCallback)
+        public override void ForEach(IBaseObjectCallback<IColShape> baseObjectCallback)
         {
             foreach (var baseObject in GetAllObjects())
             {

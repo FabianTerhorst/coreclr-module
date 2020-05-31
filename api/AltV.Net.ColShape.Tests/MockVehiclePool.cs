@@ -85,12 +85,12 @@ namespace AltV.Net.ColShape.Tests
             throw new NotImplementedException();
         }
 
-        public void Foreach(IBaseObjectCallback<IVehicle> baseObjectCallback)
+        public void ForEach(IBaseObjectCallback<IVehicle> baseObjectCallback)
         {
             throw new NotImplementedException();
         }
 
-        public Task Foreach(IAsyncBaseObjectCallback<IVehicle> asyncBaseObjectCallback)
+        public Task ForEach(IAsyncBaseObjectCallback<IVehicle> asyncBaseObjectCallback)
         {
             throw new NotImplementedException();
         }

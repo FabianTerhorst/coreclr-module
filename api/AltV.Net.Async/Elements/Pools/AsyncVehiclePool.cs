@@ -17,7 +17,7 @@ namespace AltV.Net.Async.Elements.Pools
             return AltAsync.Do(() => Vehicle.GetId(entityPointer)).Result;
         }
 
-        public override async Task Foreach(IAsyncBaseObjectCallback<IVehicle> asyncBaseObjectCallback)
+        public override async Task ForEach(IAsyncBaseObjectCallback<IVehicle> asyncBaseObjectCallback)
         {
             foreach (var entity in GetAllEntities())
             {
@@ -29,7 +29,7 @@ namespace AltV.Net.Async.Elements.Pools
             }
         }
 
-        public override void Foreach(IBaseObjectCallback<IVehicle> baseObjectCallback)
+        public override void ForEach(IBaseObjectCallback<IVehicle> baseObjectCallback)
         {
             foreach (var entity in GetAllEntities())
             {

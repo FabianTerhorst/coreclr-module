@@ -88,12 +88,12 @@ namespace AltV.Net.ColShape.Tests
             throw new NotImplementedException();
         }
 
-        public void Foreach(IBaseObjectCallback<IPlayer> baseObjectCallback)
+        public void ForEach(IBaseObjectCallback<IPlayer> baseObjectCallback)
         {
             throw new NotImplementedException();
         }
 
-        public Task Foreach(IAsyncBaseObjectCallback<IPlayer> asyncBaseObjectCallback)
+        public Task ForEach(IAsyncBaseObjectCallback<IPlayer> asyncBaseObjectCallback)
         {
             throw new NotImplementedException();
         }
