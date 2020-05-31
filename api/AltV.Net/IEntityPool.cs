@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Pools;
 
 namespace AltV.Net
 {
@@ -27,6 +29,10 @@ namespace AltV.Net
         ICollection<TEntity> GetAllEntities();
 
         KeyValuePair<IntPtr, TEntity>[] GetEntitiesArray();
+
+        void Foreach(IBaseObjectCallback<TEntity> baseObjectCallback);
+        
+        Task Foreach(IAsyncBaseObjectCallback<TEntity> asyncBaseObjectCallback);
 
         void OnAdd(TEntity entity);
 

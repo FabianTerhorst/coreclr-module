@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Pools;
 
 namespace AltV.Net.ColShape.Tests
 {
@@ -82,6 +84,16 @@ namespace AltV.Net.ColShape.Tests
         }
 
         public void OnRemove(IPlayer entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Foreach(IBaseObjectCallback<IPlayer> baseObjectCallback)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Foreach(IAsyncBaseObjectCallback<IPlayer> asyncBaseObjectCallback)
         {
             throw new NotImplementedException();
         }
