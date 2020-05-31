@@ -402,3 +402,7 @@ alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value) {
     alt::MValueConst mValue = core->CreateMValueRGBA(rgba);
     return new alt::MValueConst(mValue);
 }
+
+bool Core_IsDebug(alt::ICore* core) {
+    return core->IsDebug();
+}

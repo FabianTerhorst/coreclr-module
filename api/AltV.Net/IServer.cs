@@ -11,6 +11,8 @@ namespace AltV.Net
         int NetTime { get; }
 
         string RootDirectory { get; }
+        
+        bool IsDebug { get; }
 
         INativeResource Resource { get; }
         

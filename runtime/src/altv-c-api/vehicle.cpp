@@ -117,6 +117,10 @@ alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle) {
     return vehicle->GetDriver().Get();
 }
 
+bool Vehicle_IsDestroyed(alt::IVehicle* vehicle) {
+    return vehicle->IsDestroyed();
+}
+
 uint8_t Vehicle_GetMod(alt::IVehicle* vehicle, uint8_t category) {
     return vehicle->GetMod(category);
 }

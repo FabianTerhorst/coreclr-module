@@ -45,6 +45,7 @@ EXPORT void Vehicle_AddRef(alt::IVehicle* vehicle);
 EXPORT void Vehicle_RemoveRef(alt::IVehicle* vehicle);
 // Vehicle
 EXPORT alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle);
+EXPORT bool Vehicle_IsDestroyed(alt::IVehicle* vehicle);
 EXPORT uint8_t Vehicle_GetMod(alt::IVehicle* vehicle, uint8_t category);
 EXPORT uint8_t Vehicle_GetModsCount(alt::IVehicle* vehicle, uint8_t category);
 EXPORT bool Vehicle_SetMod(alt::IVehicle* vehicle, uint8_t category, uint8_t id);

@@ -12,6 +12,8 @@ namespace AltV.Net
 
         public static IServer Core => Module.Server;
 
+        public static bool IsDebug => Server.IsDebug;
+
         public static void Emit(string eventName, params object[] args) => Server.TriggerServerEvent(eventName, args);
 
         public static void EmitAllClients(string eventName, params object[] args) =>

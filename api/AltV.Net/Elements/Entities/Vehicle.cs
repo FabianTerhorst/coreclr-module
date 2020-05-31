@@ -176,6 +176,15 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public bool IsDestroyed
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Vehicle.Vehicle_IsDestroyed(NativePointer);
+            }
+        }
+
         public byte ModKit
         {
             get

@@ -60,6 +60,36 @@ namespace AltV.Net
 
         public bool IsStarted => AltNative.Resource.Resource_IsStarted(NativePointer);
 
+        private string[] dependencies;
+        
+        public string[] Dependencies
+        {
+            get
+            {
+                if (dependencies != null) return dependencies;
+                var size = AltNative.Resource.Resource_GetDependenciesSize(NativePointer);
+                var strings = new string[size];
+                AltNative.Resource.Resource_GetDependencies(NativePointer, strings, size);
+                dependencies = strings;
+                return strings;
+            }
+        }
+
+        private string[] dependants;
+        
+        public string[] Dependants
+        {
+            get
+            {
+                if (dependants != null) return dependants;
+                var size = AltNative.Resource.Resource_GetDependantsSize(NativePointer);
+                var strings = new string[size];
+                AltNative.Resource.Resource_GetDependants(NativePointer, strings, size);
+                dependants = strings;
+                return strings;
+            }
+        }
+
         internal NativeResource(IntPtr corePointer, IntPtr nativePointer)
         {
             this.corePointer = corePointer;
