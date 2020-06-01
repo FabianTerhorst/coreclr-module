@@ -10,6 +10,11 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         IPlayer Driver { get; }
+        
+        /// <summary>
+        /// Gets if the vehicle is destroyed.
+        /// </summary>
+        bool IsDestroyed { get; }
 
         /// <summary>
         /// Get or set mod kit of the vehicle.

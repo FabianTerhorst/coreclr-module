@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Elements.Pools
@@ -88,6 +89,22 @@ namespace AltV.Net.Elements.Pools
             }
 
             return arr;
+        }
+        
+        public void ForEach(IBaseObjectCallback<TBaseObject> baseObjectCallback)
+        {
+            foreach (var entity in entities.Values)
+            {
+                baseObjectCallback.OnBaseObject(entity);
+            }
+        }
+
+        public async Task ForEach(IAsyncBaseObjectCallback<TBaseObject> asyncBaseObjectCallback)
+        {
+            foreach (var entity in entities.Values)
+            {
+                await asyncBaseObjectCallback.OnBaseObject(entity);
+            }
         }
 
         public virtual void OnAdd(TBaseObject entity)

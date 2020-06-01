@@ -2,7 +2,6 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 using AltV.Net.Data;
-using AltV.Net.Elements.Args;
 
 namespace AltV.Net.Native
 {
@@ -207,6 +206,9 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr Core_CreateMValueByteArray(IntPtr core, ulong size, IntPtr data);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Core_IsDebug(IntPtr core);
         }
     }
 }

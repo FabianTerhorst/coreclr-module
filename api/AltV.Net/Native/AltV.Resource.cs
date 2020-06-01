@@ -22,6 +22,18 @@ namespace AltV.Net.Native
             internal static extern IntPtr Resource_GetExport(IntPtr resource, IntPtr key);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern int Resource_GetDependenciesSize(IntPtr core);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Resource_GetDependencies(IntPtr core, string[] dependencies, int size);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern int Resource_GetDependantsSize(IntPtr core);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Resource_GetDependants(IntPtr core, string[] dependants, int size);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Resource_SetExport(IntPtr core, IntPtr resource, IntPtr key, IntPtr val);
             
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
