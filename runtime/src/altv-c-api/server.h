@@ -93,6 +93,7 @@ EXPORT alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvok
 EXPORT alt::MValueConst* Core_CreateMValueVector3(alt::ICore* core, position_t value);
 EXPORT alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value);
 EXPORT alt::MValueConst* Core_CreateMValueByteArray(alt::ICore* core, uint64_t size, const void* data);
+EXPORT bool Core_IsDebug(alt::ICore* core);
 
 #ifdef __cplusplus
 }

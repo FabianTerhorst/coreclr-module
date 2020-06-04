@@ -6,7 +6,15 @@ namespace AltV.Net.Mock2.Example
     {
         static void Main(string[] args)
         {
-            new Mock();
+            try
+            {
+                new Mock();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
+
             Console.WriteLine("Hello World!");
         }
     }

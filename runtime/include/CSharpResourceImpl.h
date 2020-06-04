@@ -146,7 +146,7 @@ typedef void (* WeaponDamageDelegate_t)(const alt::CEvent* event, alt::IPlayer* 
                                         uint32_t weaponHash, uint16_t damageValue, position_t shotOffset,
                                         alt::CWeaponDamageEvent::BodyPart bodyPart);
 
-typedef void (* ExplosionDelegate_t)(alt::IPlayer* source, alt::CExplosionEvent::ExplosionType explosionType,
+typedef void (* ExplosionDelegate_t)(const alt::CEvent* event, alt::IPlayer* source, alt::CExplosionEvent::ExplosionType explosionType,
                                      position_t position, uint32_t explosionFX);
 
 typedef void (* VehicleDestroyDelegate_t)(alt::IVehicle* vehicle);

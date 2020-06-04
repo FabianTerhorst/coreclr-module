@@ -267,5 +267,7 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+
+        public bool IsDestroyed { get; }
     }
 }

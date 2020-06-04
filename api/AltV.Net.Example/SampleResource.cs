@@ -25,7 +25,7 @@ namespace AltV.Net.Example
             {
                 currentTraceSize = size;
             };
-            
+
             Alt.OnConsoleCommand += (name, args) =>
             {
                 Console.WriteLine("Command name: " + name);
@@ -414,7 +414,9 @@ namespace AltV.Net.Example
             
             Alt.CreateCheckpoint(CheckpointType.Cyclinder, Position.Zero, 50f, 50f, Rgba.Zero);
 
-            Alt.CreateVehicle(VehicleModel.Adder, Position.Zero, Rotation.Zero);
+            var vehicle5 = Alt.CreateVehicle(VehicleModel.Adder, Position.Zero, Rotation.Zero);
+            
+            Alt.Emit("eventNameWithEntity", null, vehicle5);
         }
         
         public static void OnOptionalAndParamArray(int test, params object[] args) {

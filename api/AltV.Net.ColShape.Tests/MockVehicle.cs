@@ -402,5 +402,7 @@ namespace AltV.Net.ColShape.Tests
         {
             throw new NotImplementedException();
         }
+
+        public bool IsDestroyed { get; }
     }
 }

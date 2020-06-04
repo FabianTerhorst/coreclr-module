@@ -46,6 +46,8 @@ namespace AltV.Net
 
         private string rootDirectory;
 
+        private bool? isDebug;
+
         public string RootDirectory
         {
             get
@@ -56,6 +58,16 @@ namespace AltV.Net
                 rootDirectory = Marshal.PtrToStringUTF8(ptr);
 
                 return rootDirectory;
+            }
+        }
+
+        public bool IsDebug
+        {
+            get
+            {
+                if (isDebug.HasValue) return isDebug.Value;
+                isDebug = AltNative.Server.Core_IsDebug(NativePointer);
+                return isDebug.Value;
             }
         }
 
@@ -491,7 +503,7 @@ namespace AltV.Net
             AltNative.Server.Server_RestartResource(NativePointer, namePtr);
             Marshal.FreeHGlobal(namePtr);
         }
-        
+
         public void GetMetaData(string key, out MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
@@ -522,7 +534,7 @@ namespace AltV.Net
             AltNative.Server.Server_DeleteMetaData(NativePointer, stringPtr);
             Marshal.FreeHGlobal(stringPtr);
         }
-        
+
         public void GetSyncedMetaData(string key, out MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
@@ -857,7 +869,7 @@ namespace AltV.Net
                 mValues[i] = mValue;
             }
         }
-        
+
         [Conditional("DEBUG")]
         public void CheckIfCallIsValid([CallerMemberName] string callerName = "")
         {

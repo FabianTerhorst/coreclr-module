@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Pools;
 
 namespace AltV.Net.ColShape.Tests
 {
@@ -79,6 +81,16 @@ namespace AltV.Net.ColShape.Tests
         }
 
         public void OnRemove(IVehicle entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ForEach(IBaseObjectCallback<IVehicle> baseObjectCallback)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task ForEach(IAsyncBaseObjectCallback<IVehicle> asyncBaseObjectCallback)
         {
             throw new NotImplementedException();
         }

@@ -277,6 +277,27 @@ namespace AltV.Net
                                     scriptFunction.Call();
                                 };
                             break;
+                        case ScriptEventType.Explosion:
+                            scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                new[]
+                                {
+                                    typeof(IPlayer), typeof(ExplosionType), typeof(Position), typeof(uint)
+                                });
+                            if (scriptFunction == null) return;
+                            OnExplosion += (player, explosionType, position, explosionFx) =>
+                                {
+                                    scriptFunction.Set(player);
+                                    scriptFunction.Set(explosionType);
+                                    scriptFunction.Set(position);
+                                    scriptFunction.Set(explosionFx);
+                                    if (scriptFunction.Call() is bool value)
+                                    {
+                                        return value;
+                                    }
+
+                                    return true;
+                                };
+                            break;
                         case ServerEventAttribute @event:
                             var serverEventName = @event.Name ?? eventMethod.Name;
                             Module.OnServer(serverEventName, Function.Create(eventMethodDelegate));

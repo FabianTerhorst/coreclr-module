@@ -21,6 +21,10 @@ EXPORT uint64_t Resource_GetExportsCount(alt::IResource* resource);
 EXPORT void Resource_GetExports(alt::IResource* resource, const char* keys[],
                          alt::MValueConst* values[]);
 EXPORT alt::MValueConst* Resource_GetExport(alt::IResource* resource, const char* key);
+EXPORT int Resource_GetDependenciesSize(alt::IResource* resource);
+EXPORT void Resource_GetDependencies(alt::IResource* resource, const char* dependencies[], int size);
+EXPORT int Resource_GetDependantsSize(alt::IResource* resource);
+EXPORT void Resource_GetDependants(alt::IResource* resource, const char* dependencies[], int size);
 EXPORT void Resource_SetExport(alt::ICore* core, alt::IResource* resource, const char* key, alt::MValueConst* val);
 EXPORT void Resource_SetExports(alt::ICore* core, alt::IResource* resource, alt::MValueConst* val[], const char* keys[], int size);
 EXPORT void Resource_GetPath(alt::IResource* resource, const char*&text);

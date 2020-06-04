@@ -18,6 +18,10 @@ namespace AltV.Net
         string Type { get; }
 
         bool IsStarted { get; }
+        
+        string[] Dependencies { get; }
+        
+        string[] Dependants { get; }
 
         void SetExport(string key, object value);
         

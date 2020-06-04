@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace AltV.Net
 {
+//TODO: support own object based event names in altv with a custom object to eventName resolver as well
+//TODO: like Alt.On(VehicleEvents.VehicleLock)
+//TODO: Alt.EventNameResolver = (eventName) {
     /// <summary>
     /// Receives host delegates from host when starting the resource to communicate with host
     /// </summary>

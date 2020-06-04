@@ -86,6 +86,11 @@ namespace AltV.Net.FunctionParser
             {
                 return true;
             }
+            
+            if (typeInfo?.IsEntity == true)
+            {
+                return true;
+            }
 
             switch (baseObjectType)
             {

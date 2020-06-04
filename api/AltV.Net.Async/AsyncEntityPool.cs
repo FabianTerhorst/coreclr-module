@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Pools;
 
@@ -151,6 +152,10 @@ namespace AltV.Net.Async
         {
             return entities.ToArray();
         }
+
+        public abstract void ForEach(IBaseObjectCallback<TEntity> baseObjectCallback);
+
+        public abstract Task ForEach(IAsyncBaseObjectCallback<TEntity> asyncBaseObjectCallback);
 
         public virtual void OnAdd(TEntity entity)
         {

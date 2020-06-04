@@ -13,9 +13,9 @@
         <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge gta5 gtav</PackageTags>
-        <PackageVersion>1.33.1-dev</PackageVersion>
+        <PackageVersion>1.36.2-dev</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Improvements and optimizations</PackageReleaseNotes>
+        <PackageReleaseNotes>Add Foreach methods to secure iterate all entities</PackageReleaseNotes>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <PackageIcon>icon.png</PackageIcon>
         <IncludeSymbols>true</IncludeSymbols>
