@@ -209,10 +209,9 @@ namespace AltV.Net.Elements.Entities
             lock (this)
             {
                 if (!Exists) return false;
+                Alt.Module.CountUpRefForCurrentThread(this);
+                InternalAddRef();
             }
-
-            Alt.Module.CountUpRefForCurrentThread(this);
-            InternalAddRef();
             return true;
         }
 
@@ -224,10 +223,9 @@ namespace AltV.Net.Elements.Entities
             lock (this)
             {
                 if (!Exists) return false;
+                Alt.Module.CountDownRefForCurrentThread(this);
+                InternalRemoveRef();
             }
-
-            Alt.Module.CountDownRefForCurrentThread(this);
-            InternalRemoveRef();
             return true;
         }
     }
