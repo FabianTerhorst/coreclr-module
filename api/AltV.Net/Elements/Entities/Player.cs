@@ -579,14 +579,6 @@ namespace AltV.Net.Elements.Entities
             Alt.Server.TriggerClientEvent(this, eventName, args);
         }
 
-        public ReadOnlyPlayer Copy()
-        {
-            CheckIfEntityExists();
-            var readOnlyPlayer = ReadOnlyPlayer.Empty;
-            AltNative.Player.Player_Copy(NativePointer, ref readOnlyPlayer);
-            return readOnlyPlayer;
-        }
-
         protected override void InternalAddRef()
         {
             AltNative.Player.Player_AddRef(NativePointer);

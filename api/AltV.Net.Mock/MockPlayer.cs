@@ -110,11 +110,6 @@ namespace AltV.Net.Mock
             }
         }
 
-        public ReadOnlyPlayer Copy()
-        {
-            return ReadOnlyPlayer.Empty;
-        }
-
         public override void Remove()
         {
             throw new NotImplementedException();

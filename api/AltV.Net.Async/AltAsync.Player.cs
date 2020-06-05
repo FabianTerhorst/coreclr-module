@@ -156,8 +156,5 @@ namespace AltV.Net.Async
                 mValues[i].Dispose();
             }
         }
-
-        public static Task<ReadOnlyPlayer> CopyAsync(this IPlayer player) =>
-            AltVAsync.Schedule(player.Copy);
     }
 }
