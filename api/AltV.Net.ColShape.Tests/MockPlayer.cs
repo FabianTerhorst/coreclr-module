@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Refs;
 
 namespace AltV.Net.ColShape.Tests
 {
@@ -256,6 +257,11 @@ namespace AltV.Net.ColShape.Tests
         }
 
         public IEnumerable<string> GetAllDataKeys()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool TryCreateRef(out PlayerRef playerRef)
         {
             throw new NotImplementedException();
         }

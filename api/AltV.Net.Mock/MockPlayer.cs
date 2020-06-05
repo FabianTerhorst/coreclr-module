@@ -1,6 +1,7 @@
 using System;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Refs;
 
 namespace AltV.Net.Mock
 {
@@ -111,6 +112,11 @@ namespace AltV.Net.Mock
         }
 
         public override void Remove()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool TryCreateRef(out PlayerRef playerRef)
         {
             throw new NotImplementedException();
         }
