@@ -1,6 +1,7 @@
 using System;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Refs;
 
 namespace AltV.Net.Mock
 {
@@ -110,12 +111,12 @@ namespace AltV.Net.Mock
             }
         }
 
-        public ReadOnlyPlayer Copy()
+        public override void Remove()
         {
-            return ReadOnlyPlayer.Empty;
+            throw new NotImplementedException();
         }
 
-        public override void Remove()
+        public bool TryCreateRef(out PlayerRef playerRef)
         {
             throw new NotImplementedException();
         }

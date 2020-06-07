@@ -228,12 +228,6 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_GetIP(IntPtr player, ref IntPtr ip);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Player_Copy(IntPtr player, ref ReadOnlyPlayer player_struct);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Player_Copy_Dispose(ref ReadOnlyPlayer player_struct);
         }
     }
 }

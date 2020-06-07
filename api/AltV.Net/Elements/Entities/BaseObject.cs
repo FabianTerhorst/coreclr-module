@@ -15,23 +15,8 @@ namespace AltV.Net.Elements.Entities
         private readonly ConcurrentDictionary<string, object> data = new ConcurrentDictionary<string, object>();
 
         public IntPtr NativePointer { get; }
-        private bool exists;
 
-        public bool Exists
-        {
-            get
-            {
-                if (exists)
-                {
-                    return true;
-                }
-
-                return refCount != 0;
-            }
-            set => exists = value;
-        }
-
-        private ulong refCount = 0;
+        public bool Exists { get; set; }
 
         public BaseObjectType Type { get; }
 
@@ -52,7 +37,7 @@ namespace AltV.Net.Elements.Entities
 
             NativePointer = nativePointer;
             Type = type;
-            exists = true;
+            Exists = true;
         }
 
         public void SetMetaData(string key, object value)
@@ -224,11 +209,9 @@ namespace AltV.Net.Elements.Entities
             lock (this)
             {
                 if (!Exists) return false;
-                ++refCount;
+                Alt.Module.CountUpRefForCurrentThread(this);
+                InternalAddRef();
             }
-
-            Alt.Module.CountUpRefForCurrentThread(this);
-            InternalAddRef();
             return true;
         }
 
@@ -239,12 +222,10 @@ namespace AltV.Net.Elements.Entities
         {
             lock (this)
             {
-                if (refCount == 0) return false;
-                --refCount;
+                if (!Exists) return false;
+                Alt.Module.CountDownRefForCurrentThread(this);
+                InternalRemoveRef();
             }
-
-            Alt.Module.CountDownRefForCurrentThread(this);
-            InternalRemoveRef();
             return true;
         }
     }

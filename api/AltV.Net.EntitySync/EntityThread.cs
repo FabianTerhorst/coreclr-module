@@ -71,7 +71,7 @@ namespace AltV.Net.EntitySync
             thread.Start();
         }
 
-        public void OnLoop()
+        private void OnLoop()
         {
             while (running)
             {
@@ -148,7 +148,7 @@ namespace AltV.Net.EntitySync
                         }
                         else
                         {
-                            entityWithChangedData.ResetData(changedDataKey);
+                            entityWithChangedData.ResetThreadLocalData(changedDataKey);
                         }
                     }
 

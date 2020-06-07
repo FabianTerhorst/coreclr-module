@@ -1,5 +1,6 @@
 using System;
 using AltV.Net.Data;
+using AltV.Net.Elements.Refs;
 using AltV.Net.Enums;
 
 namespace AltV.Net.Elements.Entities
@@ -248,7 +249,7 @@ namespace AltV.Net.Elements.Entities
         /// <returns></returns>
         byte GetCurrentWeaponTintIndex();
 
-        ReadOnlyPlayer Copy();
+        bool TryCreateRef(out PlayerRef playerRef);
     }
 
     public static class PlayerExtensions

@@ -34,6 +34,25 @@ namespace AltV.Net.Elements.Pools
             }
         }
 
+        public bool Get(IntPtr entityPointer, BaseObjectType baseObjectType, out IEntity entity)
+        {
+            bool result;
+            switch (baseObjectType)
+            {
+                case BaseObjectType.Player:
+                    result = playerPool.Get(entityPointer, out var player);
+                    entity = player;
+                    return result;
+                case BaseObjectType.Vehicle:
+                    result = vehiclePool.Get(entityPointer, out var vehicle);
+                    entity = vehicle;
+                    return result;
+                default:
+                    entity = default;
+                    return false;
+            }
+        }
+
         public bool GetOrCreate(IntPtr entityPointer, BaseObjectType baseObjectType, ushort entityId, out IEntity entity)
         {
             bool result;
