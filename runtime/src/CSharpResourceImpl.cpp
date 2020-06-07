@@ -388,7 +388,7 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::Ref<alt::IBaseObject> objectRef
 }
 
 void CSharpResourceImpl::OnRemoveBaseObject(alt::Ref<alt::IBaseObject> objectRef) {
-    auto object = objectRef.Get();
+    /*auto object = objectRef.Get();
     if (object != nullptr) {
         switch (object->GetType()) {
             case alt::IBaseObject::Type::PLAYER:
@@ -410,7 +410,7 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::Ref<alt::IBaseObject> objectRef
                 OnRemoveCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
                 break;
         }
-    }
+    }*/
     //objectRef->RemoveRef();
 }
 
