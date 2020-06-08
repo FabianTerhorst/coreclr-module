@@ -132,17 +132,29 @@ This is called every time you come in the range of the entity.
 The server assumes you cache the entity depending on the entity.id so make sure to do it.
 
 ```js
-alt.onServer("entitySync:create", (entityId, entityType, position, currEntityData) => {
+alt.onServer("entitySync:create", (entityId, entityType, position, newEntityData) => {
     alt.log(entityId);
     alt.log(entityType);
     alt.log(position);
-    alt.log(entityData);
-    if (currEntityData) {
-      if (!entityData[entityType]) {
-         entityData[entityType] = {};
-      }
-      entityData[entityType][entityId] = currEntityData;
+    alt.log(newEntityData);
+    if (newEntityData) {
+       if (!entityData[entityType]) {
+          entityData[entityType] = {};
+       }
+       if (!entityData[entityType][entityId]) {
+            entityData[entityType][entityId] = {};
+       }
+       for (const key in newEntityData) {
+           entityData[entityType][entityId][key] = newEntityData[key];
+       }
     }
+    let currentEntityData;
+    if (entityData[entityType] && entityData[entityType][entityId]) {
+      currentEntityData = entityData[entityType][entityId];
+    } else {
+      currentEntityData = null;
+    }
+    alt.log(currentEntityData);
 })
 ```
 
@@ -152,11 +164,11 @@ This is called every time you go out of the range of the entity.
 
 ```js
 alt.onServer("entitySync:remove", (entityId, entityType) => {
-    let entityData;
+    let currentEntityData;
     if (entityData[entityType]) {
-         entityData = entityData[entityType][entityId];
+         currentEntityData = entityData[entityType][entityId];
     } else {
-         entityData = null;
+         currentEntityData = null;
     }
     alt.log(entityId);
     alt.log(entityType);
@@ -192,13 +204,15 @@ alt.onServer("entitySync:updateData", (entityId, entityType, newEntityData) => {
     if (!entityData[entityType]) {
        entityData[entityType] = {};
     }
-    let currEntityData = entityData[entityType][entityId];
-    if (!currEntityData) {
+    if (!entityData[entityType][entityId]) {
          entityData[entityType][entityId] = {};
     }
-    for (const key in newEntityData) {
-        entityData[entityType][entityId][key] = newEntityData[key];
+    if (newEntityData) {
+       for (const key in newEntityData) {
+           entityData[entityType][entityId][key] = newEntityData[key];
+       }
     }
+    let currentEntityData = entityData[entityType][entityId];
 })
 ```
 
