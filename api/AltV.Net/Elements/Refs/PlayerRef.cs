@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Elements.Refs
@@ -12,13 +13,23 @@ namespace AltV.Net.Elements.Refs
         public PlayerRef(IPlayer player)
         {
             this.player = player.AddRef() ? player : null;
+        }
+
+        [Conditional("DEBUG")]
+        public void DebugCountUp()
+        {
             Alt.Module.CountUpRefForCurrentThread(player);
+        }
+
+        [Conditional("DEBUG")]
+        public void DebugCountDown()
+        {
+            Alt.Module.CountDownRefForCurrentThread(player);
         }
 
         public void Dispose()
         {
             player?.RemoveRef();
-            Alt.Module.CountDownRefForCurrentThread(player);
         }
     }
 }
