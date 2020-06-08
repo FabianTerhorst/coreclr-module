@@ -17,19 +17,20 @@ namespace AltV.Net.Elements.Entities
         public IntPtr NativePointer { get; }
 
         private bool exists;
-        
-        public bool Exists {	
-            get	
-            {	
-                if (exists)	
-                {	
-                    return true;	
-                }	
 
-                return refCount != 0;	
-            }	
-            set => exists = value;	
-        }	
+        public bool Exists
+        {
+            get
+            {
+                if (exists)
+                {
+                    return true;
+                }
+
+                return refCount != 0;
+            }
+            set => exists = value;
+        }
 
         private ulong refCount = 0;
 
@@ -226,7 +227,7 @@ namespace AltV.Net.Elements.Entities
             {
                 if (!Exists) return false;
                 ++refCount;
-                Alt.Module.CountUpRefForCurrentThread(this);
+                //Alt.Module.CountUpRefForCurrentThread(this);
                 InternalAddRef();
             }
             return true;
@@ -241,7 +242,7 @@ namespace AltV.Net.Elements.Entities
             {
                 if (refCount == 0) return false;
                 --refCount;
-                Alt.Module.CountDownRefForCurrentThread(this);
+                //Alt.Module.CountDownRefForCurrentThread(this);
                 InternalRemoveRef();
             }
             return true;
