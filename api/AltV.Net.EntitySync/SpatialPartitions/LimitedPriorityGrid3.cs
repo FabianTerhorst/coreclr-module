@@ -61,7 +61,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
             var areaEntities = entityAreas[xIndex][yIndex];
 
-            sortedList.Clear();
+            sortedList.ClearSize();
 
             for (int j = 0, innerLength = areaEntities.Count; j < innerLength; j++)
             {

@@ -39,12 +39,23 @@ namespace AltV.Net.EntitySync.Tests
                 var currSet = new HashSet<IEntity>();
                 while (enumerator.MoveNext())
                 {
-                    currSet.Add(enumerator.Current);
+                    Assert.True(currSet.Add(enumerator.Current));
                 }
                 Assert.True(currSet.Contains(entity));
                 Assert.True(currSet.Contains(entity2));
                 Assert.True(currSet.Contains(entity3));
                 Assert.False(currSet.Contains(entity4));
+            }
+            
+            using (var enumerator = grid2.Find(new Vector3(position.X, position.Y, position.Z + 1), 0).GetEnumerator())
+            {
+                var currSet = new HashSet<IEntity>();
+                while (enumerator.MoveNext())
+                {
+                    Assert.True(currSet.Add(enumerator.Current));
+                }
+                Assert.True(currSet.Contains(entity));
+                Assert.True(currSet.Contains(entity4));
             }
         }
 

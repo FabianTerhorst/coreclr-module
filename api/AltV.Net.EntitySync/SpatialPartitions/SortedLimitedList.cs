@@ -376,6 +376,13 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             _size = 0;
         }
 
+        public void ClearSize()
+        {
+            // clear does not change the capacity
+            version++;
+            _size = 0;
+        }
+
         bool IDictionary.Contains(object key)
         {
             if (IsCompatibleKey(key))
@@ -505,6 +512,15 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             if (index < 0 || index >= _size)
                 throw new ArgumentOutOfRangeException(nameof(index), index, "SR.ArgumentOutOfRange_Index");
             return values[index];
+        }
+        
+        private TValue GetByIndexAndClear(int index)
+        {
+            if (index < 0 || index >= _size)
+                throw new ArgumentOutOfRangeException(nameof(index), index, "SR.ArgumentOutOfRange_Index");
+            var result = values[index];
+            values[index] = default;
+            return result;
         }
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
@@ -1184,7 +1200,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             {
                 get
                 {
-                    return _dict.GetByIndex(index);
+                    return _dict.GetByIndexAndClear(index);
                 }
                 set
                 {

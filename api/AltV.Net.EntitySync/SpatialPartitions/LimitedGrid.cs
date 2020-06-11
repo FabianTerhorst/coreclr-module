@@ -61,7 +61,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
             var gridEntity = entityAreas[xIndex][yIndex];
 
-            sortedList.Clear();
+            sortedList.ClearSize();
 
             while (gridEntity != null)
             {
