@@ -14,13 +14,15 @@ namespace AltV.Net.EntitySync.Example
         public override event EntityCreateEventDelegate OnEntityCreate;
         public override event EntityRemoveEventDelegate OnEntityRemove;
         public override event EntityPositionUpdateEventDelegate OnEntityPositionUpdate;
-        public override event EntityPositionUpdateEventDelegate OnEntityDataUpdate;
+        public override event EntityDataUpdateEventDelegate OnEntityDataUpdate;
+        public override event EntityNetOwnerUpdateEventDelegate OnEntityNetOwnerUpdate;
 
         public readonly Channel<EntityCreateEvent> CreateEventChannel = Channel.CreateUnbounded<EntityCreateEvent>();
         public readonly Channel<EntityRemoveEvent> RemoveEventChannel = Channel.CreateUnbounded<EntityRemoveEvent>();
         public readonly Channel<EntityPositionUpdateEvent> PositionUpdateEventChannel = Channel.CreateUnbounded<EntityPositionUpdateEvent>();
         public readonly Channel<EntityDataChangeEvent> DataChangeEventChannel = Channel.CreateUnbounded<EntityDataChangeEvent>();
         public readonly Channel<EntityClearCacheEvent> ClearCacheEventChannel = Channel.CreateUnbounded<EntityClearCacheEvent>();
+        public readonly Channel<EntityNetOwnerChangeEvent> EntityNetOwnerEventChannel = Channel.CreateUnbounded<EntityNetOwnerChangeEvent>();
 
         public MockNetworkLayer(ulong threadCount, IClientRepository clientRepository) : base(threadCount, clientRepository)
         {
@@ -62,6 +64,12 @@ namespace AltV.Net.EntitySync.Example
         {
             ClearCacheEventChannel.Writer.TryWrite(entityClearCache);
             Console.WriteLine("SendEvent EntityClearCacheEvent");
+        }
+
+        public override void SendEvent(IClient client, in EntityNetOwnerChangeEvent entityNetOwnerChange)
+        {
+            EntityNetOwnerEventChannel.Writer.TryWrite(entityNetOwnerChange);
+            Console.WriteLine("SendEvent EntityNetOwnerChangeEvent");
         }
     }
 }

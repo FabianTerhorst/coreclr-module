@@ -50,6 +50,14 @@ namespace AltV.Net.EntitySync
 
         private uint newRange;
 
+        public IClient TempNetOwner { get; set; } = null;
+
+        public IClient NetOwner { get; set; } = null;
+        
+        public float TempNetOwnerRange { get; set; } = float.MaxValue;
+
+        public float LastStreamInRange { get; set; } = -1;
+
         private readonly object propertiesMutex = new object();
 
         private readonly IDictionary<string, object> data;

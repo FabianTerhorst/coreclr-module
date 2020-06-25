@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Threading;
 using AltV.Net.EntitySync.SpatialPartitions;
 using NUnit.Framework;
 
@@ -21,7 +22,8 @@ namespace AltV.Net.EntitySync.Tests
                 },
                 (entity, threadCount) => (entity.Id % threadCount),
                 (entityId, entityType, threadCount) => (entityId % threadCount),
-                (id) => new Grid2(50_000, 50_000, 100, 10_000, 10_000),
+                //TODO: replace back to Grid2 when all grids have net owner support
+                (id) => new LimitedGrid3(50_000, 50_000, 100, 10_000, 10_000, 10000)/*new Grid2(50_000, 50_000, 100, 10_000, 10_000)*/,
                 new IdProvider());
         }
 
@@ -297,6 +299,71 @@ namespace AltV.Net.EntitySync.Tests
             Assert.False(AltEntitySync.TryGetEntity(entity2.Id, 0, out _));
             AltEntitySync.RemoveEntity(entity);
             Assert.False(AltEntitySync.TryGetEntity(entity.Id, 1, out _));
+        }
+
+        [Test]
+        public void NetOwnerTest()
+        {
+            var readerCreate = mockNetworkLayer.CreateEventChannel.Reader;
+            var readerNetOwnerChange = mockNetworkLayer.NetOwnerChangeEventChannel.Reader;
+            var readAsyncCreate = readerCreate.ReadAsync();
+            var entity2 = new Entity(0, Vector3.Zero, 0, 2);
+            AltEntitySync.AddEntity(entity2);
+            var createTask = readAsyncCreate.AsTask();
+            createTask.Wait();
+            Assert.True(readerCreate.TryRead(out var clientCCreateEvent));
+            var readAsyncNetOwnerChange = readerNetOwnerChange.ReadAsync();
+            var netOwnerChangeTask = readAsyncNetOwnerChange.AsTask();
+            netOwnerChangeTask.Wait();
+            Assert.AreEqual(mockNetworkLayer.a, netOwnerChangeTask.Result.Item1);
+            Assert.True(netOwnerChangeTask.Result.Item2.State);
+            Assert.AreEqual(entity2, netOwnerChangeTask.Result.Item2.Entity);
+            readAsyncNetOwnerChange = readerNetOwnerChange.ReadAsync();
+            netOwnerChangeTask = readAsyncNetOwnerChange.AsTask();
+            entity2.Position = new Vector3(1, 1, 1);
+            netOwnerChangeTask.Wait();
+            Assert.AreEqual(mockNetworkLayer.a, netOwnerChangeTask.Result.Item1);
+            Assert.False(netOwnerChangeTask.Result.Item2.State);
+            Assert.AreEqual(entity2, netOwnerChangeTask.Result.Item2.Entity);
+            readAsyncNetOwnerChange = readerNetOwnerChange.ReadAsync();
+            netOwnerChangeTask = readAsyncNetOwnerChange.AsTask();
+            netOwnerChangeTask.Wait();
+            Assert.AreEqual(mockNetworkLayer.c, netOwnerChangeTask.Result.Item1);
+            Assert.True(netOwnerChangeTask.Result.Item2.State);
+            Assert.AreEqual(entity2, netOwnerChangeTask.Result.Item2.Entity);
+            readAsyncNetOwnerChange = readerNetOwnerChange.ReadAsync();
+            netOwnerChangeTask = readAsyncNetOwnerChange.AsTask();
+            entity2.Position = new Vector3(0, 0, 0);
+            netOwnerChangeTask.Wait();
+            Assert.AreEqual(mockNetworkLayer.c, netOwnerChangeTask.Result.Item1);
+            Assert.False(netOwnerChangeTask.Result.Item2.State);
+            Assert.AreEqual(entity2, netOwnerChangeTask.Result.Item2.Entity);
+            readAsyncNetOwnerChange = readerNetOwnerChange.ReadAsync();
+            netOwnerChangeTask = readAsyncNetOwnerChange.AsTask();
+            netOwnerChangeTask.Wait();
+            Assert.AreEqual(mockNetworkLayer.a, netOwnerChangeTask.Result.Item1);
+            Assert.True(netOwnerChangeTask.Result.Item2.State);
+            Assert.AreEqual(entity2, netOwnerChangeTask.Result.Item2.Entity);
+            readAsyncNetOwnerChange = readerNetOwnerChange.ReadAsync();
+            netOwnerChangeTask = readAsyncNetOwnerChange.AsTask();
+            mockNetworkLayer.ClientRepository.Remove(mockNetworkLayer.a);
+            netOwnerChangeTask.Wait();
+            Assert.AreEqual(mockNetworkLayer.c, netOwnerChangeTask.Result.Item1);
+            Assert.True(netOwnerChangeTask.Result.Item2.State);
+            Assert.AreEqual(entity2, netOwnerChangeTask.Result.Item2.Entity);
+            readAsyncNetOwnerChange = readerNetOwnerChange.ReadAsync();
+            netOwnerChangeTask = readAsyncNetOwnerChange.AsTask();
+            mockNetworkLayer.ClientRepository.Add(mockNetworkLayer.a);
+            netOwnerChangeTask.Wait();
+            Assert.AreEqual(mockNetworkLayer.c, netOwnerChangeTask.Result.Item1);
+            Assert.False(netOwnerChangeTask.Result.Item2.State);
+            Assert.AreEqual(entity2, netOwnerChangeTask.Result.Item2.Entity);
+            readAsyncNetOwnerChange = readerNetOwnerChange.ReadAsync();
+            netOwnerChangeTask = readAsyncNetOwnerChange.AsTask();
+            netOwnerChangeTask.Wait();
+            Assert.AreEqual(mockNetworkLayer.a, netOwnerChangeTask.Result.Item1);
+            Assert.True(netOwnerChangeTask.Result.Item2.State);
+            Assert.AreEqual(entity2, netOwnerChangeTask.Result.Item2.Entity);
         }
     }
 }

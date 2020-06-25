@@ -41,6 +41,8 @@ namespace AltV.Net.EntitySync
 
         private readonly Action<IClient, IEntity> onEntityClearCache;
 
+        private readonly Action<IClient, IEntity, bool> onEntityNetOwnerChange;
+
         private Vector3 clientPosition = Vector3.Zero;
 
         public EntityThread(ulong threadIndex, EntityThreadRepository entityThreadRepository,
@@ -48,7 +50,8 @@ namespace AltV.Net.EntitySync
             SpatialPartition spatialPartition, int syncRate,
             Action<IClient, IEntity, LinkedList<string>> onEntityCreate, Action<IClient, IEntity> onEntityRemove,
             Action<IClient, IEntity, LinkedList<string>> onEntityDataChange,
-            Action<IClient, IEntity, Vector3> onEntityPositionChange, Action<IClient, IEntity> onEntityClearCache)
+            Action<IClient, IEntity, Vector3> onEntityPositionChange, Action<IClient, IEntity> onEntityClearCache,
+            Action<IClient, IEntity, bool> onEntityNetOwnerChange)
         {
             this.threadIndex = threadIndex;
 
@@ -66,6 +69,8 @@ namespace AltV.Net.EntitySync
                                           throw new ArgumentException("onEntityPositionChange should not be null.");
             this.onEntityClearCache = onEntityClearCache ??
                                       throw new ArgumentException("onEntityPositionChange should not be null.");
+            this.onEntityNetOwnerChange = onEntityNetOwnerChange ??
+                                          throw new ArgumentException("onEntityNetOwnerChange should not be null.");
 
             thread = new Thread(OnLoop) {IsBackground = true};
             thread.Start();
@@ -164,6 +169,17 @@ namespace AltV.Net.EntitySync
                                 foreach (var entityFromRemovedClient in clientToRemove.GetEntities(threadIndex))
                                 {
                                     entityFromRemovedClient.RemoveClient(clientToRemove);
+                                    
+                                    if (entityFromRemovedClient.NetOwner == clientToRemove)
+                                    {
+                                        entityFromRemovedClient.NetOwner = null;
+                                    }
+                                        
+                                    if (entityFromRemovedClient.TempNetOwner == clientToRemove)
+                                    {
+                                        entityFromRemovedClient.TempNetOwner = null;
+                                        entityFromRemovedClient.TempNetOwnerRange = float.MaxValue;
+                                    }
                                 }
                             }
                         }
@@ -188,7 +204,23 @@ namespace AltV.Net.EntitySync
                                     }
                                     else
                                     {
-                                        entitiesToRemoveFromClient.AddLast(lastCheckedEntity);
+                                        entitiesToRemoveFromClient.AddLast(lastCheckedEntity); 
+                                        //TODO: is this required? because net owner can't fight in iteration anymore anyway, so it won't even be required
+                                        //TODO: unless the distance can't be resetted on each iteration which will make it unreachable when no one is close enough
+                                        //TODO: only reset when the net owner was really this client
+                                        
+                                        //TODO: where to reset temp net owner values
+                                        if (lastCheckedEntity.NetOwner == client)
+                                        {
+                                            lastCheckedEntity.NetOwner = null;
+                                        }
+                                        
+                                        if (lastCheckedEntity.TempNetOwner == client)
+                                        {
+                                            lastCheckedEntity.TempNetOwner = null;
+                                            lastCheckedEntity.TempNetOwnerRange = float.MaxValue;
+                                        }
+
                                         onEntityRemove(client, lastCheckedEntity);
                                     }
                                 }
@@ -225,11 +257,13 @@ namespace AltV.Net.EntitySync
                                 for (int i = 0, length = foundEntities.Count; i < length; i++)
                                 {
                                     var foundEntity = foundEntities[i];
+
                                     client.AddCheck(threadIndex, foundEntity);
                                     foundEntity.DataSnapshot.CompareWithClient(threadIndex, changedEntityDataKeys,
                                         client);
                                     // We add client to entity here so we can remove it from the client when the entity got removed
                                     foundEntity.TryAddClient(client);
+                                    
                                     if (client.TryAddEntity(threadIndex, foundEntity))
                                     {
                                         if (changedEntityDataKeys.Count == 0)
@@ -242,10 +276,33 @@ namespace AltV.Net.EntitySync
                                             changedEntityDataKeys.Clear();
                                         }
                                     }
-                                    else if (changedEntityDataKeys.Count != 0)
+                                    else
                                     {
-                                        onEntityDataChange(client, foundEntity, changedEntityDataKeys);
-                                        changedEntityDataKeys.Clear();
+                                        // Net Owner
+                                        var lastStreamInRange = foundEntity.LastStreamInRange;
+                                        if (foundEntity.NetOwner != client && foundEntity.TempNetOwner == client)
+                                        {
+                                            var lastNetOwner = foundEntity.NetOwner;
+                                            if (lastNetOwner != null)
+                                            {
+                                                onEntityNetOwnerChange(foundEntity.NetOwner, foundEntity, false);
+                                            }
+
+                                            foundEntity.NetOwner = client;
+                                            foundEntity.TempNetOwnerRange = float.MaxValue;
+                                            foundEntity.TempNetOwner = null;
+                                            onEntityNetOwnerChange(client, foundEntity, true);
+                                        } else if (foundEntity.TempNetOwnerRange > lastStreamInRange)
+                                        {
+                                            foundEntity.TempNetOwner = client;
+                                            foundEntity.TempNetOwnerRange = lastStreamInRange;
+                                        }
+
+                                        if (changedEntityDataKeys.Count != 0)
+                                        {
+                                            onEntityDataChange(client, foundEntity, changedEntityDataKeys);
+                                            changedEntityDataKeys.Clear();
+                                        }
                                     }
                                 }
                             }
