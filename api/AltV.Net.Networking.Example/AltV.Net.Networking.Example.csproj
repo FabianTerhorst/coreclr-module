@@ -4,7 +4,16 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <OutputType>Exe</OutputType>
         <PackageVersion>1.0.0-dev-preview</PackageVersion>
-    </PropertyGroup>
+    
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
 
     <ItemGroup>
       <ProjectReference Include="..\AltV.Net.NetworkingEntity\AltV.Net.NetworkingEntity.csproj" />
