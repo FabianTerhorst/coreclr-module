@@ -11,7 +11,7 @@ https://www.nuget.org/packages/AltV.Net.EntitySync.ServerEvent // A optional pac
 ## Configure the Entity Sync
 
 ```csharp
-AltEntitySync.Init(1, 100,
+AltEntitySync.Init(1, 100, false,
    (threadCount, repository) => new ServerEventNetworkLayer(threadCount, repository),
    (entity, threadCount) => (entity.Id % threadCount), 
    (entityId, entityType, threadCount) => (entityId % threadCount),
@@ -25,19 +25,21 @@ The first parameter is the thread count, this describes the number of thats that
 
 The second parameter is the sync rate, it describes the interval in which each sync thread calculates the streamed entities.
 
-The third parameter is the Action that returns a new NetworkLayer for a repository. The ServerEventNetworkLayer is part of the second nuget package.
+The third parameter is a bool with that you can enable net owner calculations and events.
 
-The fourth parameter defines the thread the entity shoud use.
+The fourth parameter is the Action that returns a new NetworkLayer for a repository. The ServerEventNetworkLayer is part of the second nuget package.
 
-The fifth parameter defines the thread a entityId + entityType should use.
+The fifth parameter defines the thread the entity shoud use.
 
-The sixth parameter is the Action that returns a new space partitioning algorithm for each specific sync thread id. The LimitedGrid3 is one of the algorithms that comes included in the core.
+The sixth parameter defines the thread a entityId + entityType should use.
+
+The seventh parameter is the Action that returns a new space partitioning algorithm for each specific sync thread id. The LimitedGrid3 is one of the algorithms that comes included in the core.
 LimitedGrid3 has following parameters: (int maxX, int maxY, int areaSize, int xOffset, int yOffset, int limit).
 The (int maxX, int maxY) parameters are defining the size of the map the grid is inserting, removing and finding entities in. The default values are defining the default gta 5 map.
 The two offsets (int xOffset, int yOffset) preventing the corrdinates to become negative, because the gta maps goes from -10k to 50k.
 The (int limit) makes sure a client can only have streamed in the amount of entities he can actually render. E.g. the gta 5 client in altv can only create around 300 Objects without stability issues.
 
-The seventh and last parameter is the id provider that increments the entity ids incremental and free's unused ids. The IdProvider is included inside the core package as well.
+The eight and last parameter is the id provider that increments the entity ids incremental and free's unused ids. The IdProvider is included inside the core package as well.
 
 ## Add Entities
 
@@ -120,6 +122,15 @@ if (entity.TryGetData("my-data", out int data)) {
 
 }
 ```
+
+## Get entity net owner
+
+This is always null when third parameter is false, otherwise its the closest player to the entity.
+
+```csharp
+entity.NetOwner
+```
+
 
 ## ServerEventNetworkLayer
 
@@ -226,6 +237,16 @@ alt.onServer("entitySync:clearCache", (entityId, entityType) => {
       return;
     }
     delete entityData[entityType][entityId];
+})
+```
+
+### Entity net owner
+
+This is called when you set the third parameter to true and the current client becomes the net owner of the entity by beeing the closest player to the entity.
+
+```js
+alt.onServer("entitySync:netOwner", (entityId, entityType, isNetOwner) => {
+    //...
 })
 ```
 
