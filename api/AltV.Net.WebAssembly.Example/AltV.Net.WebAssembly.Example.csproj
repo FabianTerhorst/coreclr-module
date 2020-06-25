@@ -5,7 +5,15 @@
     <RootNamespace>AltV.Net.WebAssembly.Example</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <NoStdLib>true</NoStdLib>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <ProjectReference Include="..\AltV.Net.Client\AltV.Net.Client.csproj" />
