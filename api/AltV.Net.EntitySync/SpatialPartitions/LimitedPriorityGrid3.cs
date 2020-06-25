@@ -71,6 +71,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
                 if (entityClientDistance <= entity.RangeSquared &&
                     CanSeeOtherDimension(dimension, entity.Dimension))
                 {
+                    areaEntity.LastStreamInRange = entityClientDistance;
                     if (((IPriorityEntity) entity).IsHighPriority)
                     {
                         sortedList.Add(0, areaEntity);
