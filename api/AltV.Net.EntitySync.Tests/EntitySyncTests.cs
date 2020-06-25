@@ -22,9 +22,7 @@ namespace AltV.Net.EntitySync.Tests
                 },
                 (entity, threadCount) => (entity.Id % threadCount),
                 (entityId, entityType, threadCount) => (entityId % threadCount),
-                //TODO: replace back to Grid2 when all grids have net owner support
-                (id) => new LimitedGrid3(50_000, 50_000, 100, 10_000, 10_000,
-                    10000) /*new Grid2(50_000, 50_000, 100, 10_000, 10_000)*/,
+                (id) => new Grid2(50_000, 50_000, 100, 10_000, 10_000),
                 new IdProvider());
         }
 
@@ -197,28 +195,25 @@ namespace AltV.Net.EntitySync.Tests
             var readAsyncCreate = mockNetworkLayer.CreateEventChannel.Reader.ReadAsync();
             var entity = new Entity(1, Vector3.One, 0, 2);
             AltEntitySync.AddEntity(entity);
+            // Two clients in range
             var createTask = readAsyncCreate.AsTask();
+            createTask.Wait();
+            readAsyncCreate = mockNetworkLayer.CreateEventChannel.Reader.ReadAsync();
+            createTask = readAsyncCreate.AsTask();
             createTask.Wait();
             var createResult = createTask.Result;
             Assert.AreSame(createResult.Entity, entity);
 
             var readAsyncRemove = mockNetworkLayer.RemoveEventChannel.Reader.ReadAsync();
-
-            if (mockNetworkLayer.ClientRepository.TryGet("a", out var client))
-            {
-                client.SetPositionOverride(new Vector3(10, 10, 10));
-            }
+            
+            mockNetworkLayer.a.SetPositionOverride(new Vector3(10, 10, 10));
 
             var removeTask = readAsyncRemove.AsTask();
             removeTask.Wait();
             var removeResult = removeTask.Result;
             Assert.AreSame(removeResult.Entity, entity);
-
-
-            if (mockNetworkLayer.ClientRepository.TryGet("a", out client))
-            {
-                client.ResetPositionOverride();
-            }
+            
+            mockNetworkLayer.a.ResetPositionOverride();
 
             readAsyncCreate = mockNetworkLayer.CreateEventChannel.Reader.ReadAsync();
             createTask = readAsyncCreate.AsTask();
@@ -229,10 +224,7 @@ namespace AltV.Net.EntitySync.Tests
 
             readAsyncRemove = mockNetworkLayer.RemoveEventChannel.Reader.ReadAsync();
 
-            if (mockNetworkLayer.ClientRepository.TryGet("a", out client))
-            {
-                client.SetPositionOverride(new Vector3(100, 100, 100));
-            }
+            mockNetworkLayer.a.SetPositionOverride(new Vector3(100, 100, 100));
 
             removeTask = readAsyncRemove.AsTask();
             removeTask.Wait();
