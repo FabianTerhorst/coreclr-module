@@ -205,11 +205,7 @@ namespace AltV.Net.EntitySync
                                     else
                                     {
                                         entitiesToRemoveFromClient.AddLast(lastCheckedEntity); 
-                                        //TODO: is this required? because net owner can't fight in iteration anymore anyway, so it won't even be required
-                                        //TODO: unless the distance can't be resetted on each iteration which will make it unreachable when no one is close enough
-                                        //TODO: only reset when the net owner was really this client
                                         
-                                        //TODO: where to reset temp net owner values
                                         if (lastCheckedEntity.NetOwner == client)
                                         {
                                             lastCheckedEntity.NetOwner = null;

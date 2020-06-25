@@ -1,5 +1,4 @@
 using System;
-using System.Net.Mail;
 using System.Numerics;
 using System.Threading.Channels;
 using AltV.Net.EntitySync.Events;
