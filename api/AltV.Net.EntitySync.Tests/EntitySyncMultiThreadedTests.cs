@@ -26,6 +26,9 @@ namespace AltV.Net.EntitySync.Tests
         [Test]
         public void MultiAddTest()
         {
+            mockNetworkLayer.ClientRepository.Remove(mockNetworkLayer.b);
+            mockNetworkLayer.ClientRepository.Remove(mockNetworkLayer.c);
+            
             var readAsyncCreate = mockNetworkLayer.CreateEventChannel.Reader.ReadAsync();
             var entityA = new Entity(1, Vector3.Zero, 0, 2);
             AltEntitySync.AddEntity(entityA);
@@ -33,7 +36,7 @@ namespace AltV.Net.EntitySync.Tests
             createTask.Wait();
             var createResult = createTask.Result;
             Assert.AreSame(createResult.Entity, entityA);
-            
+
             readAsyncCreate = mockNetworkLayer.CreateEventChannel.Reader.ReadAsync();
             var entityB = new Entity(1, Vector3.Zero, 0, 2);
             AltEntitySync.AddEntity(entityB);
@@ -56,6 +59,9 @@ namespace AltV.Net.EntitySync.Tests
             removeTask.Wait();
             removeResult = removeTask.Result;
             Assert.AreSame(removeResult.Entity, entityB);
+            
+            mockNetworkLayer.ClientRepository.Add(mockNetworkLayer.b);
+            mockNetworkLayer.ClientRepository.Add(mockNetworkLayer.c);
         }
     }
 }
