@@ -81,13 +81,13 @@ namespace AltV.Net.EntitySync.ServerEvent
                                         if (entityEvent.ChangedData != null)
                                         {
                                             currPlayerClient.Emit("entitySync:create", entityEvent.Entity.Id,
-                                                    entityEvent.Entity.Type, entityEvent.Entity.Position,
-                                                    entityEvent.ChangedData);
+                                                entityEvent.Entity.Type, entityEvent.Entity.Position,
+                                                entityEvent.ChangedData);
                                         }
                                         else
                                         {
                                             currPlayerClient.Emit("entitySync:create", entityEvent.Entity.Id,
-                                                    entityEvent.Entity.Type, entityEvent.Entity.Position);
+                                                entityEvent.Entity.Type, entityEvent.Entity.Position);
                                         }
 
                                         break;

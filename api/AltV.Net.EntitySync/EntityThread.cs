@@ -158,7 +158,7 @@ namespace AltV.Net.EntitySync
                     }
 
                     //TODO: when the id provider add / remove doesn't work use the idprovider inside this loop only
-                    
+
                     lock (clientThreadRepository.Mutex)
                     {
                         if (clientThreadRepository.ClientsToRemove.Count != 0)
@@ -169,12 +169,12 @@ namespace AltV.Net.EntitySync
                                 foreach (var entityFromRemovedClient in clientToRemove.GetEntities(threadIndex))
                                 {
                                     entityFromRemovedClient.RemoveClient(clientToRemove);
-                                    
+
                                     if (entityFromRemovedClient.NetOwner == clientToRemove)
                                     {
                                         entityFromRemovedClient.NetOwner = null;
                                     }
-                                        
+
                                     if (entityFromRemovedClient.TempNetOwner == clientToRemove)
                                     {
                                         entityFromRemovedClient.TempNetOwner = null;
@@ -204,13 +204,13 @@ namespace AltV.Net.EntitySync
                                     }
                                     else
                                     {
-                                        entitiesToRemoveFromClient.AddLast(lastCheckedEntity); 
-                                        
+                                        entitiesToRemoveFromClient.AddLast(lastCheckedEntity);
+
                                         if (lastCheckedEntity.NetOwner == client)
                                         {
                                             lastCheckedEntity.NetOwner = null;
                                         }
-                                        
+
                                         if (lastCheckedEntity.TempNetOwner == client)
                                         {
                                             lastCheckedEntity.TempNetOwner = null;
@@ -259,7 +259,7 @@ namespace AltV.Net.EntitySync
                                         client);
                                     // We add client to entity here so we can remove it from the client when the entity got removed
                                     foundEntity.TryAddClient(client);
-                                    
+
                                     if (client.TryAddEntity(threadIndex, foundEntity))
                                     {
                                         if (changedEntityDataKeys.Count == 0)
@@ -288,7 +288,8 @@ namespace AltV.Net.EntitySync
                                             foundEntity.TempNetOwnerRange = float.MaxValue;
                                             foundEntity.TempNetOwner = null;
                                             onEntityNetOwnerChange(client, foundEntity, true);
-                                        } else if (foundEntity.TempNetOwnerRange > lastStreamInRange)
+                                        }
+                                        else if (foundEntity.TempNetOwnerRange > lastStreamInRange)
                                         {
                                             foundEntity.TempNetOwner = client;
                                             foundEntity.TempNetOwnerRange = lastStreamInRange;

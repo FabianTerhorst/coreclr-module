@@ -23,7 +23,8 @@ namespace AltV.Net.EntitySync.Tests
                 (entity, threadCount) => (entity.Id % threadCount),
                 (entityId, entityType, threadCount) => (entityId % threadCount),
                 //TODO: replace back to Grid2 when all grids have net owner support
-                (id) => new LimitedGrid3(50_000, 50_000, 100, 10_000, 10_000, 10000)/*new Grid2(50_000, 50_000, 100, 10_000, 10_000)*/,
+                (id) => new LimitedGrid3(50_000, 50_000, 100, 10_000, 10_000,
+                    10000) /*new Grid2(50_000, 50_000, 100, 10_000, 10_000)*/,
                 new IdProvider());
         }
 
@@ -289,12 +290,14 @@ namespace AltV.Net.EntitySync.Tests
             {
                 Assert.AreSame(entity2, foundEntity2);
             }
+
             var entity = new Entity(1, Vector3.Zero, 0, 2);
             AltEntitySync.AddEntity(entity);
             if (AltEntitySync.TryGetEntity(entity.Id, 1, out var foundEntity))
             {
                 Assert.AreSame(entity, foundEntity);
             }
+
             AltEntitySync.RemoveEntity(entity2);
             Assert.False(AltEntitySync.TryGetEntity(entity2.Id, 0, out _));
             AltEntitySync.RemoveEntity(entity);
