@@ -8,7 +8,7 @@ public class AltV_Wiki : IScript
 {
     /* We declare & Create our Event Handler. */
     [ScriptEvent(ScriptEventType.WeaponDamage)]
-    public static void WeaponDamage(IPlayer player, IPlayer target, uint weapon, ushort dmg, Position offset, BodyPart bodypart)
+    public static bool WeaponDamage(IPlayer player, IPlayer target, uint weapon, ushort dmg, Position offset, BodyPart bodypart)
     {
 
         /* We Convert the Weapon uint to a regular WeaponModel Enum. */
