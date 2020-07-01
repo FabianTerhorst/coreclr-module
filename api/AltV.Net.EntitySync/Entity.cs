@@ -44,6 +44,8 @@ namespace AltV.Net.EntitySync
             set => SetRangeInternal(value);
         }
 
+        public uint MigrationDistance { get; }
+
         public uint RangeSquared { get; private set; }
 
         private bool rangeState = false;
@@ -53,7 +55,9 @@ namespace AltV.Net.EntitySync
         public IClient TempNetOwner { get; set; } = null;
 
         public IClient NetOwner { get; set; } = null;
-        
+
+        public float NetOwnerRange { get; set; } = float.MaxValue;
+
         public float TempNetOwnerRange { get; set; } = float.MaxValue;
 
         public float LastStreamInRange { get; set; } = -1;
@@ -77,18 +81,36 @@ namespace AltV.Net.EntitySync
 
         public Entity(ulong type, Vector3 position, int dimension, uint range) : this(
             AltEntitySync.IdProvider.GetNext(), type,
-            position, dimension, range, new Dictionary<string, object>())
+            position, dimension, range, range / 2, new Dictionary<string, object>())
+        {
+        }
+
+        public Entity(ulong type, Vector3 position, int dimension, uint range, uint migrationDistance) : this(
+            AltEntitySync.IdProvider.GetNext(), type,
+            position, dimension, range, migrationDistance, new Dictionary<string, object>())
         {
         }
 
         public Entity(ulong type, Vector3 position, int dimension, uint range, IDictionary<string, object> data) : this(
             AltEntitySync.IdProvider.GetNext(), type,
-            position, dimension, range, data)
+            position, dimension, range, range / 2, data)
+        {
+        }
+
+        public Entity(ulong type, Vector3 position, int dimension, uint range, uint migrationDistance,
+            IDictionary<string, object> data) : this(
+            AltEntitySync.IdProvider.GetNext(), type,
+            position, dimension, range, migrationDistance, data)
         {
         }
 
         internal Entity(ulong id, ulong type, Vector3 position, int dimension, uint range,
-            IDictionary<string, object> data)
+            IDictionary<string, object> data) : this(id, type, position, dimension, range, range / 2, data)
+        {
+        }
+
+        internal Entity(ulong id, ulong type, Vector3 position, int dimension, uint range,
+            uint migrationDistance, IDictionary<string, object> data)
         {
             Id = id;
             Type = type;
@@ -100,6 +122,13 @@ namespace AltV.Net.EntitySync
             this.data = data;
             DataSnapshot = new EntityDataSnapshot(this);
             threadLocalData = new Dictionary<string, object>(data);
+            if (migrationDistance > range)
+            {
+                throw new ArgumentException("MigrationDistance should not be larger then range:" + migrationDistance +
+                                            "<=" + range + " = false");
+            }
+
+            MigrationDistance = migrationDistance;
         }
 
         public void SetData(string key, object value)
@@ -108,6 +137,7 @@ namespace AltV.Net.EntitySync
             {
                 data[key] = value;
             }
+
             AltEntitySync.EntitySyncServer.UpdateEntityData(this, key, value);
         }
 
@@ -117,6 +147,7 @@ namespace AltV.Net.EntitySync
             {
                 data.Remove(key);
             }
+
             AltEntitySync.EntitySyncServer.ResetEntityData(this, key);
         }
 
@@ -176,6 +207,7 @@ namespace AltV.Net.EntitySync
                 positionState = true;
                 newPosition = currNewPosition;
             }
+
             AltEntitySync.EntitySyncServer.UpdateEntity(this);
         }
 
@@ -186,6 +218,7 @@ namespace AltV.Net.EntitySync
                 dimensionState = true;
                 newDimension = currNewDimension;
             }
+
             AltEntitySync.EntitySyncServer.UpdateEntity(this);
         }
 
@@ -196,17 +229,19 @@ namespace AltV.Net.EntitySync
                 rangeState = true;
                 newRange = currNewRange;
             }
+
             AltEntitySync.EntitySyncServer.UpdateEntity(this);
         }
 
-        public (bool, bool, bool) TrySetPropertiesComputing(out Vector3 currNewPosition, out uint currNewRange, out int currNewDimension)
+        public (bool, bool, bool) TrySetPropertiesComputing(out Vector3 currNewPosition, out uint currNewRange,
+            out int currNewDimension)
         {
             lock (propertiesMutex)
             {
                 var newPositionFound = positionState;
                 var newRangeFound = rangeState;
                 var newDimensionFound = dimensionState;
-                
+
                 if (!positionState)
                 {
                     currNewPosition = default;
@@ -217,7 +252,7 @@ namespace AltV.Net.EntitySync
                     positionState = false;
                     position = newPosition;
                 }
-                
+
                 if (!rangeState)
                 {
                     currNewRange = default;
@@ -229,7 +264,7 @@ namespace AltV.Net.EntitySync
                     range = newRange;
                     RangeSquared = range * range;
                 }
-                
+
                 if (!dimensionState)
                 {
                     currNewDimension = default;

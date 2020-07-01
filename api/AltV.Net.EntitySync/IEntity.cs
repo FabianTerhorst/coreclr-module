@@ -30,7 +30,11 @@ namespace AltV.Net.EntitySync
 
         IClient NetOwner { get; set; }
         
+        float NetOwnerRange { get; set; }
+        
         float TempNetOwnerRange { get; set; }
+        
+        uint MigrationDistance { get; }
         
         float LastStreamInRange { get; set; }
         

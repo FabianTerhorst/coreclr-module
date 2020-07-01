@@ -176,6 +176,7 @@ namespace AltV.Net.EntitySync
                                     if (entityFromRemovedClient.NetOwner == clientToRemove)
                                     {
                                         entityFromRemovedClient.NetOwner = null;
+                                        entityFromRemovedClient.NetOwnerRange = float.MaxValue;
                                     }
 
                                     if (entityFromRemovedClient.TempNetOwner == clientToRemove)
@@ -213,6 +214,7 @@ namespace AltV.Net.EntitySync
                                         if (lastCheckedEntity.NetOwner == client)
                                         {
                                             lastCheckedEntity.NetOwner = null;
+                                            lastCheckedEntity.NetOwnerRange = float.MaxValue;
                                         }
 
                                         if (lastCheckedEntity.TempNetOwner == client)
@@ -285,23 +287,62 @@ namespace AltV.Net.EntitySync
                                         if (!netOwnerEvents) continue;
                                         // Net Owner
                                         var lastStreamInRange = foundEntity.LastStreamInRange;
-                                        if (foundEntity.NetOwner != client && foundEntity.TempNetOwner == client)
+                                        if (foundEntity.NetOwner == null)
                                         {
-                                            var lastNetOwner = foundEntity.NetOwner;
-                                            if (lastNetOwner != null)
+                                            // If net owner is null, we need closest player
+                                            if (foundEntity.TempNetOwner == client)
                                             {
-                                                onEntityNetOwnerChange(foundEntity.NetOwner, foundEntity, false);
-                                            }
+                                                var lastNetOwner = foundEntity.NetOwner;
+                                                if (lastNetOwner != null)
+                                                {
+                                                    onEntityNetOwnerChange(foundEntity.NetOwner, foundEntity, false);
+                                                }
 
-                                            foundEntity.NetOwner = client;
-                                            foundEntity.TempNetOwnerRange = float.MaxValue;
-                                            foundEntity.TempNetOwner = null;
-                                            onEntityNetOwnerChange(client, foundEntity, true);
+                                                foundEntity.NetOwner = client;
+                                                foundEntity.NetOwnerRange = lastStreamInRange;
+                                                foundEntity.TempNetOwnerRange = float.MaxValue;
+                                                foundEntity.TempNetOwner = null;
+                                                onEntityNetOwnerChange(client, foundEntity, true);
+                                            }
+                                            else if (foundEntity.TempNetOwnerRange > lastStreamInRange)
+                                            {
+                                                foundEntity.TempNetOwner = client;
+                                                foundEntity.TempNetOwnerRange = lastStreamInRange;
+                                            }
                                         }
-                                        else if (foundEntity.TempNetOwnerRange > lastStreamInRange)
+                                        else
                                         {
-                                            foundEntity.TempNetOwner = client;
-                                            foundEntity.TempNetOwnerRange = lastStreamInRange;
+                                            // If net owner is not null, we need closest player but with migration distance
+                                            // And we need to update own range to entity
+                                            if (foundEntity.NetOwner == client)
+                                            {
+                                                foundEntity.NetOwnerRange = lastStreamInRange;
+                                                if (foundEntity.TempNetOwnerRange > lastStreamInRange)
+                                                {
+                                                    foundEntity.TempNetOwner = client;
+                                                    foundEntity.TempNetOwnerRange = lastStreamInRange;
+                                                }
+                                            }
+                                            else if (foundEntity.TempNetOwner == client)
+                                            {
+                                                var lastNetOwner = foundEntity.NetOwner;
+                                                if (lastNetOwner != null)
+                                                {
+                                                    onEntityNetOwnerChange(foundEntity.NetOwner, foundEntity, false);
+                                                }
+
+                                                foundEntity.NetOwner = client;
+                                                foundEntity.NetOwnerRange = lastStreamInRange;
+                                                foundEntity.TempNetOwnerRange = float.MaxValue;
+                                                foundEntity.TempNetOwner = null;
+                                                onEntityNetOwnerChange(client, foundEntity, true);
+                                            }
+                                            else if (foundEntity.NetOwnerRange > foundEntity.MigrationDistance
+                                                     && foundEntity.TempNetOwnerRange > lastStreamInRange)
+                                            {
+                                                foundEntity.TempNetOwner = client;
+                                                foundEntity.TempNetOwnerRange = lastStreamInRange;
+                                            }
                                         }
                                     }
                                 }
