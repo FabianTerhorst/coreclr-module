@@ -28,6 +28,7 @@ public class MyResource: Resource
       // (some code from you)
     }
 }
+```
 
 Now the interaction package setup is done and ready to be used.
 
