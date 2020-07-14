@@ -12,7 +12,7 @@ Next you need to init the interactions package. The best place to do this is whe
 
 Note: It doesn't matter if your resource is a async resource. The code below is just for illustrating how to do it in general.
 ```csharp
-public MyResource: Resource
+public class MyResource: Resource
 {
     public override void OnStart()
     {
