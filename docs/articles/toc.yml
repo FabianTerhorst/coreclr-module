@@ -44,6 +44,8 @@
       href: resource-initialization-order.md
     - name: Loop all players, vehicles, ...
       href: loop-all.md
+    - name: Interactions
+      href: interactions.md
 - name: Player Events
   href: player_events.md
   items:
