@@ -11,7 +11,7 @@ namespace AltV.Net.EntitySync.Example
         
         public static void Main(string[] args)
         {
-            AltEntitySync.Init(1, 100, false,
+            AltEntitySync.Init(1, 100, _ => false,
                 (threadCount, repository) =>
                 {
                     mockNetworkLayer = new MockNetworkLayer(threadCount, repository);
