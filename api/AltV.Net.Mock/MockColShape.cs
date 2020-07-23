@@ -11,7 +11,9 @@ namespace AltV.Net.Mock
         }
 
         public ColShapeType ColShapeType { get; }
-        
+
+        public bool IsPlayersOnly { get; set; }
+
         public bool IsEntityIn(IEntity entity)
         {
             throw new NotImplementedException();

@@ -672,3 +672,7 @@ void Vehicle_GetPositionCoords2(alt::IVehicle* vehicle, float* position_x, float
     *rotation_z = vehicleRotation.yaw;
     *dimension = vehicle->GetDimension();
 }
+
+void Vehicle_SetNetworkOwner(alt::IVehicle* vehicle, alt::IPlayer* networkOwnerPlayer, bool disableMigration) {
+    vehicle->SetNetworkOwner(networkOwnerPlayer, disableMigration);
+}

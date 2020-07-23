@@ -400,3 +400,7 @@ void Player_GetPositionCoords2(alt::IPlayer* player, float* position_x, float* p
     *rotation_z = playerRotation.yaw;
     *dimension = player->GetDimension();
 }
+
+void Player_SetNetworkOwner(alt::IPlayer* player, alt::IPlayer* networkOwnerPlayer, bool disableMigration) {
+    player->SetNetworkOwner(networkOwnerPlayer, disableMigration);
+}

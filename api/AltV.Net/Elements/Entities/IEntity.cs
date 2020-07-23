@@ -30,6 +30,13 @@ namespace AltV.Net.Elements.Entities
         uint Model { get; }
 
         /// <summary>
+        /// Set the net owner of the current entity.
+        /// </summary>
+        /// <param name="player">The player that is the net owner of this entity</param>
+        /// <param name="disableMigration">Setting this true will prevent other players getting network owner.</param>
+        void SetNetworkOwner(IPlayer player, bool disableMigration);
+
+        /// <summary>
         /// Set synced meta data of the entity.
         /// </summary>
         /// <remarks>Synced meta data is accessible across different serverside resources and across all clients.</remarks>

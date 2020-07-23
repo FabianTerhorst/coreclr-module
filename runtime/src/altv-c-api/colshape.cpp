@@ -67,3 +67,11 @@ bool ColShape_IsPlayerIn(alt::IColShape* colShape, alt::IPlayer* player) {
 bool ColShape_IsVehicleIn(alt::IColShape* colShape, alt::IVehicle* vehicle) {
     return colShape->IsEntityIn(vehicle);
 }
+
+void ColShape_SetPlayersOnly(alt::IColShape* colShape, bool state) {
+    colShape->SetPlayersOnly(state);
+}
+
+bool ColShape_IsPlayersOnly(alt::IColShape* colShape) {
+    return colShape->IsPlayersOnly();
+}

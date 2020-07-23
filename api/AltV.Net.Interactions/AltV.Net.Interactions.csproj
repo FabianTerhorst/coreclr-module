@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <PackageVersion>1.0.0-dev-preview</PackageVersion>
+        <PackageVersion>1.1.0-dev-preview</PackageVersion>
         <Authors>FabianTerhorst</Authors>
         <Description>AltV .NET Core Interactions</Description>
         <Copyright>FabianTerhorst</Copyright>

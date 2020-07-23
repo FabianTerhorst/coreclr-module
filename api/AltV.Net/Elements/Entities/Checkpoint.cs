@@ -46,6 +46,20 @@ namespace AltV.Net.Elements.Entities
                 return AltNative.Checkpoint.Checkpoint_GetColShapeType(NativePointer);
             }
         }
+        
+        public bool IsPlayersOnly
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Checkpoint.Checkpoint_IsPlayersOnly(NativePointer);
+            }
+            set
+            {
+                CheckIfEntityExists();
+                AltNative.Checkpoint.Checkpoint_SetPlayersOnly(NativePointer, value); 
+            }
+        }
 
         public override void GetMetaData(string key, out MValueConst value)
         {

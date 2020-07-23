@@ -6,6 +6,11 @@ namespace AltV.Net.Elements.Entities
         /// Returns the ColShape type
         /// </summary>
         ColShapeType ColShapeType { get; }
+        
+        /// <summary>
+        /// Sets / Gets if the ColShape only triggers for players
+        /// </summary>
+        bool IsPlayersOnly { get; set; }
 		
         /// <summary>
         /// Returns if the entity is inside the ColShape
