@@ -13,7 +13,8 @@ namespace AltV.Net.EntitySync.WebSocket
         public override event EntityCreateEventDelegate OnEntityCreate;
         public override event EntityRemoveEventDelegate OnEntityRemove;
         public override event EntityPositionUpdateEventDelegate OnEntityPositionUpdate;
-        public override event EntityPositionUpdateEventDelegate OnEntityDataUpdate;
+        public override event EntityDataUpdateEventDelegate OnEntityDataUpdate;
+        public override event EntityNetOwnerUpdateEventDelegate OnEntityNetOwnerUpdate;
 
         //TODO: save here dictionary of websockets / client i think
 
@@ -65,6 +66,11 @@ namespace AltV.Net.EntitySync.WebSocket
         }
 
         public override void SendEvent(IClient client, in EntityClearCacheEvent entityClearCache)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void SendEvent(IClient client, in EntityNetOwnerChangeEvent entityNetOwnerChange)
         {
             throw new System.NotImplementedException();
         }
