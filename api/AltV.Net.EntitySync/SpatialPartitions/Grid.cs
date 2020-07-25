@@ -398,8 +398,10 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             for (int j = 0, innerLength = areaEntities.Length; j < innerLength; j++)
             {
                 var entity = areaEntities[j];
-                if (Vector3.DistanceSquared(entity.Position, position) > entity.RangeSquared ||
+                var distance = Vector3.DistanceSquared(entity.Position, position);
+                if (distance > entity.RangeSquared ||
                     !CanSeeOtherDimension(dimension, entity.Dimension)) continue;
+                entity.LastStreamInRange = distance;
                 entities.Add(entity);
             }
 

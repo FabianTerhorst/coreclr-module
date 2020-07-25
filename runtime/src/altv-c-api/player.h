@@ -145,6 +145,8 @@ EXPORT void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct);
 EXPORT void Player_Copy_Dispose(player_struct_t* player_struct);
 
 EXPORT void Player_GetPositionCoords2(alt::IPlayer* player, float* position_x, float* position_y, float* position_z, float* rotation_x, float* rotation_y, float* rotation_z, int* dimension);
+
+EXPORT void Player_SetNetworkOwner(alt::IPlayer* player, alt::IPlayer* networkOwnerPlayer, bool disableMigration);
 #ifdef __cplusplus
 }
 #endif

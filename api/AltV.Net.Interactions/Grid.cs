@@ -5,6 +5,27 @@ using System.Numerics;
 
 namespace AltV.Net.Interactions
 {
+    //TODO: use another array for negative values then we don't need a offset
+    //TODO: we would need to switch between the two arrays on border, or better have a method giving back correct array depending on positive negative
+    /*
+     - - - - - + + + + + + + + + + + + + + + + + + + + + + +
+     - - - - - + + + + + + + + + + + + + + + + + + + + + + +
+     - - - - - + + + + + + + + + + + + + + + + + + + + + + +
+     - - - - - + + + + + + + + + + + + + + + + + + + + + + +
+     - - - - - + + + + + + + + + + + + + + + + + + + + + + +
+     - - - - - + + + + + + + + + + + + + + + + + + + + + + + 
+     - - - - - + + + + + + + + + + + + + + + + + + + + + + +
+     - - - - - + + + + + + + + + + + + + + + + + + + + + + +
+     - - - - - + + + + + + + + + + + + + + + + + + + + + + +
+     - - - - - + + + + + + + + + + + + + + + + + + + + + + +
+     - - - - - + + + + + + + + + + + + + + + + + + + + + + +
+     - - - - - + + + + + + + + + + + + + + + + + + + + + + + 
+     - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     */
     public class Grid
     {
         private static readonly float Tolerance = 0.013F; //0.01318359375F;
@@ -273,15 +294,47 @@ namespace AltV.Net.Interactions
                     xArr[i].RemoveAt(k);
                 }
             }
-
+            
+            var currEntityAreas = entityAreas;// ?? new List<IInteraction>[][0];//TODO: set new List<IInteraction>[][0] as initial value for entityAreas
+            if (currEntityAreas.Length < newStoppingXIndex + 1)
+            {
+                Array.Resize(ref currEntityAreas, newStoppingXIndex + 1);
+                entityAreas = currEntityAreas;
+            }
+            // Now fill all areas from min {x, y} to max {x, y}
             for (var j = newStartingXIndex; j <= newStoppingXIndex; j++)
+            {
+                var xArr = entityAreas[j];
+                if (xArr == null)
+                {
+                    xArr = new List<IInteraction>[0];
+                    entityAreas[j] = xArr;
+                }
+                if (xArr.Length < newStoppingYIndex + 1)
+                {
+                    Array.Resize(ref xArr, newStoppingYIndex + 1);
+                    entityAreas[j] = xArr;
+                }
+
+                for (var i = newStartingYIndex; i <= newStoppingYIndex; i++)
+                {
+                    var arr = xArr[i];
+                    if (arr == null)
+                    {
+                        arr = new List<IInteraction>();
+                        xArr[i] = arr;
+                    }
+                    arr.Add(entity);
+                }
+            }
+            /*for (var j = newStartingXIndex; j <= newStoppingXIndex; j++)
             {
                 var xArr = entityAreas[j];
                 for (var i = newStartingYIndex; i <= newStoppingYIndex; i++)
                 {
                     xArr[i].Add(entity);
                 }
-            }
+            }*/
         }
 
         public void UpdateEntityRange(IInteraction entity, uint range)
@@ -356,14 +409,47 @@ namespace AltV.Net.Interactions
                 }
             }
 
+            var currEntityAreas = entityAreas;// ?? new List<IInteraction>[][0];//TODO: set new List<IInteraction>[][0] as initial value for entityAreas
+            if (currEntityAreas.Length < newStoppingXIndex + 1)
+            {
+                Array.Resize(ref currEntityAreas, newStoppingXIndex + 1);
+                entityAreas = currEntityAreas;
+            }
+            // Now fill all areas from min {x, y} to max {x, y}
             for (var j = newStartingXIndex; j <= newStoppingXIndex; j++)
+            {
+                var xArr = entityAreas[j];
+                if (xArr == null)
+                {
+                    xArr = new List<IInteraction>[0];
+                    entityAreas[j] = xArr;
+                }
+                if (xArr.Length < newStoppingYIndex + 1)
+                {
+                    Array.Resize(ref xArr, newStoppingYIndex + 1);
+                    entityAreas[j] = xArr;
+                }
+
+                for (var i = newStartingYIndex; i <= newStoppingYIndex; i++)
+                {
+                    var arr = xArr[i];
+                    if (arr == null)
+                    {
+                        arr = new List<IInteraction>();
+                        xArr[i] = arr;
+                    }
+                    arr.Add(entity);
+                }
+            }
+
+            /*for (var j = newStartingXIndex; j <= newStoppingXIndex; j++)
             {
                 var xArr = entityAreas[j];
                 for (var i = newStartingYIndex; i <= newStoppingYIndex; i++)
                 {
                     xArr[i].Add(entity);
                 }
-            }
+            }*/
         }
 
         public void UpdateEntityDimension(IInteraction entity, int dimension)
@@ -393,7 +479,7 @@ namespace AltV.Net.Interactions
 
             var yIndex = (int) Math.Floor(posY / areaSize);
 
-            if (xIndex < 0 || yIndex < 0 || xIndex >= maxXAreaIndex || yIndex >= maxYAreaIndex) return null;
+            if (xIndex < 0 || yIndex < 0/* || xIndex >= maxXAreaIndex || yIndex >= maxYAreaIndex*/) return null;
 
             var areaEntities = entityAreas[xIndex][yIndex];
             
@@ -406,7 +492,7 @@ namespace AltV.Net.Interactions
                     !CanSeeOtherDimension(dimension, entity.Dimension)) continue;
                 entities.Add(entity);
             }
-
+            
             return entities;
         }
     }

@@ -114,6 +114,11 @@ namespace AltV.Net.Mock
             return true;
         }
 
+        public void SetNetworkOwner(IPlayer player, bool disableMigration)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool HasData(string key)
         {
             throw new NotImplementedException();

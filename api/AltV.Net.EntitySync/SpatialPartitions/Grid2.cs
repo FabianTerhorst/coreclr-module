@@ -442,10 +442,13 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
             while (gridEntity != null)
             {
-                if (Vector3.DistanceSquared(gridEntity.Entity.Position, position) <= gridEntity.Entity.RangeSquared &&
+                var currDistance = Vector3.DistanceSquared(gridEntity.Entity.Position, position);
+                if (currDistance <= gridEntity.Entity.RangeSquared &&
                     CanSeeOtherDimension(dimension, gridEntity.Entity.Dimension))
                 {
-                    entities.Add(gridEntity.Entity);
+                    var entity = gridEntity.Entity;
+                    entity.LastStreamInRange = currDistance;
+                    entities.Add(entity);
                 }
 
                 gridEntity = gridEntity.Next;

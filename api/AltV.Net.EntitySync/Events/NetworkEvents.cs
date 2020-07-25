@@ -20,4 +20,7 @@ namespace AltV.Net.EntitySync.Events
 
     public delegate void EntityDataUpdateEventDelegate(IClient client,
         in EntityDataChangeEvent entityDataChange);
+
+    public delegate void EntityNetOwnerUpdateEventDelegate(IClient client,
+        in EntityNetOwnerChangeEvent entityNetOwnerChange);
 }

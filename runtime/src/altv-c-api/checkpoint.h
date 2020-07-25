@@ -38,6 +38,8 @@ EXPORT void Checkpoint_GetColor(alt::ICheckpoint* checkpoint, rgba_t &color);
 EXPORT bool Checkpoint_IsPlayerIn(alt::ICheckpoint* checkpoint, alt::IPlayer* player);
 EXPORT bool Checkpoint_IsVehicleIn(alt::ICheckpoint* checkpoint, alt::IVehicle* vehicle);
 EXPORT uint8_t Checkpoint_GetColShapeType(alt::ICheckpoint* checkpoint);
+EXPORT void Checkpoint_SetPlayersOnly(alt::ICheckpoint* checkpoint, bool state);
+EXPORT bool Checkpoint_IsPlayersOnly(alt::ICheckpoint* checkpoint);
 #ifdef __cplusplus
 }
 #endif

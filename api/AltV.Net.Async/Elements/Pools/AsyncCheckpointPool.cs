@@ -16,10 +16,10 @@ namespace AltV.Net.Async.Elements.Pools
             foreach (var baseObject in GetAllObjects())
             {
                 using var baseObjectRefRef = new CheckpointRef(baseObject);
-                if (baseObjectRefRef.Exists)
-                {
-                    await asyncBaseObjectCallback.OnBaseObject(baseObject);
-                }
+                if (!baseObjectRefRef.Exists) continue;
+                baseObjectRefRef.DebugCountUp();
+                await asyncBaseObjectCallback.OnBaseObject(baseObject);
+                baseObjectRefRef.DebugCountDown();
             }
         }
         
@@ -28,10 +28,10 @@ namespace AltV.Net.Async.Elements.Pools
             foreach (var baseObject in GetAllObjects())
             {
                 using var baseObjectRef = new CheckpointRef(baseObject);
-                if (baseObjectRef.Exists)
-                {
-                    baseObjectCallback.OnBaseObject(baseObject);
-                }
+                if (!baseObjectRef.Exists) continue;
+                baseObjectRef.DebugCountUp();
+                baseObjectCallback.OnBaseObject(baseObject);
+                baseObjectRef.DebugCountDown();
             }
         }
     }

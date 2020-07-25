@@ -22,10 +22,10 @@ namespace AltV.Net.Async.Elements.Pools
             foreach (var entity in GetAllEntities())
             {
                 using var entityRef = new PlayerRef(entity);
-                if (entityRef.Exists)
-                {
-                    await asyncBaseObjectCallback.OnBaseObject(entity);
-                }
+                if (!entityRef.Exists) continue;
+                entityRef.DebugCountUp();
+                await asyncBaseObjectCallback.OnBaseObject(entity);
+                entityRef.DebugCountDown();
             }
         }
 
@@ -34,10 +34,10 @@ namespace AltV.Net.Async.Elements.Pools
             foreach (var entity in GetAllEntities())
             {
                 using var entityRef = new PlayerRef(entity);
-                if (entityRef.Exists)
-                {
-                    baseObjectCallback.OnBaseObject(entity);
-                }
+                if (!entityRef.Exists) continue;
+                entityRef.DebugCountUp();
+                baseObjectCallback.OnBaseObject(entity);
+                entityRef.DebugCountDown();
             }
         }
     }

@@ -579,6 +579,7 @@ namespace AltV.Net.Example
             using (var reference = new PlayerRef(player))
             {
                 if (!reference.Exists) return;
+                reference.DebugCountUp();
                 //TODO: how to prevent player exists check to happen here inside
                 //TODO: maybe create a PlayerRef struct from player native pointer and do all calls inside that struct
                 
@@ -586,6 +587,8 @@ namespace AltV.Net.Example
                 //TODO: possible by adding addref and removeref methods to player class and counting the int up in them
                 player.Position = Position.Zero;
                 player.Rotation = Rotation.Zero;
+                
+                reference.DebugCountDown();
             }
             
             await player.SetPositionAsync(new Position(1, 2, 3));

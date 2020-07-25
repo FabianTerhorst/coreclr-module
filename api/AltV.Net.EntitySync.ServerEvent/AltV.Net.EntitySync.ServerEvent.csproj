@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <PackageVersion>1.3.0-dev-preview</PackageVersion>
+        <PackageVersion>1.7.0-dev-preview</PackageVersion>
         <Authors>AltMp</Authors>
         <Description>AltV .NET Core Entity Sync</Description>
         <Copyright>AltMp</Copyright>
@@ -11,9 +11,7 @@
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge gta5 gtav</PackageTags>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>
-            Initial commit
-        </PackageReleaseNotes>
+        <PackageReleaseNotes>Add net owner.</PackageReleaseNotes>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <PackageIcon>icon.png</PackageIcon>
         <IncludeSymbols>true</IncludeSymbols>

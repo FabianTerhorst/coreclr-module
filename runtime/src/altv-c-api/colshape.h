@@ -35,6 +35,8 @@ EXPORT uint8_t ColShape_GetColShapeType(alt::IColShape* colShape);
 //EXPORT bool ColShape_IsEntityIn(alt::IColShape* colShape, alt::IEntity* entity);
 EXPORT bool ColShape_IsPlayerIn(alt::IColShape* colShape, alt::IPlayer* player);
 EXPORT bool ColShape_IsVehicleIn(alt::IColShape* colShape, alt::IVehicle* vehicle);
+EXPORT void ColShape_SetPlayersOnly(alt::IColShape* colShape, bool state);
+EXPORT bool ColShape_IsPlayersOnly(alt::IColShape* colShape);
 #ifdef __cplusplus
 }
 #endif

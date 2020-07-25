@@ -210,6 +210,8 @@ EXPORT void Vehicle_LoadScriptDataFromBase64(alt::IVehicle* vehicle, const char*
 
 EXPORT void Vehicle_GetPositionCoords2(alt::IVehicle* vehicle, float* position_x, float* position_y, float* position_z, float* rotation_x, float* rotation_y, float* rotation_z, int* dimension);
 
+EXPORT void Vehicle_SetNetworkOwner(alt::IVehicle* vehicle, alt::IPlayer* networkOwnerPlayer, bool disableMigration);
+
 #ifdef __cplusplus
 }
 #endif

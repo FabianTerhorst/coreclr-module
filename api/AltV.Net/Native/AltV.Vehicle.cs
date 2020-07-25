@@ -81,7 +81,7 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr Vehicle_GetDriver(IntPtr vehicle);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool Vehicle_IsDestroyed(IntPtr vehicle);
 
@@ -465,6 +465,10 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_LoadScriptDataFromBase64(IntPtr vehicle, string base64);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetNetworkOwner(IntPtr vehicle, IntPtr networkOwnerPlayer,
+                bool disableMigration);
         }
     }
 }

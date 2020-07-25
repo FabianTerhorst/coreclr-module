@@ -62,6 +62,12 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern ColShapeType Checkpoint_GetColShapeType(IntPtr checkpoint);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Checkpoint_SetPlayersOnly(IntPtr checkpoint, bool state);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Checkpoint_IsPlayersOnly(IntPtr checkpoint);
         }
     }
 }

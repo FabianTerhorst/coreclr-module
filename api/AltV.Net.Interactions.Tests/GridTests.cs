@@ -6,12 +6,13 @@ namespace AltV.Net.Interactions.Tests
 {
     public class GridTests
     {
-        private Grid grid;
+        private Grid grid, smallGrid;
         
         [SetUp]
         public void Setup()
         {
             grid = new Grid(50_000, 50_000, 100, 10_000, 10_000);
+            smallGrid = new Grid(100, 100, 10, 100, 100);
         }
 
         [Test]
@@ -21,6 +22,19 @@ namespace AltV.Net.Interactions.Tests
             var entity = new Interaction(1, 1, position, 0, 1);
             grid.Add(entity);
             using (var enumerator = grid.Find(position, 0).GetEnumerator())
+            {
+                Assert.True(enumerator.MoveNext());
+                Assert.AreEqual(entity, enumerator.Current);
+            }
+        }
+
+        [Test]
+        public void AddAutoExpandTest()
+        {
+            var position = new Vector3(200, 200, 200);
+            var entity = new Interaction(1, 1, position, 0, 1);
+            smallGrid.Add(entity);
+            using (var enumerator = smallGrid.Find(position, 0).GetEnumerator())
             {
                 Assert.True(enumerator.MoveNext());
                 Assert.AreEqual(entity, enumerator.Current);

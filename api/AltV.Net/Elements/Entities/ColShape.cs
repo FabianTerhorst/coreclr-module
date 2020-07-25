@@ -38,6 +38,20 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public bool IsPlayersOnly
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.ColShape.ColShape_IsPlayersOnly(NativePointer);
+            }
+            set
+            {
+                CheckIfEntityExists();
+                AltNative.ColShape.ColShape_SetPlayersOnly(NativePointer, value); 
+            }
+        }
+
         public override void GetMetaData(string key, out MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);

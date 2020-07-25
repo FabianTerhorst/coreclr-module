@@ -26,6 +26,18 @@ namespace AltV.Net.EntitySync
         
         uint RangeSquared { get; }
         
+        IClient TempNetOwner { get; set; }
+
+        IClient NetOwner { get; set; }
+        
+        float NetOwnerRange { get; set; }
+        
+        float TempNetOwnerRange { get; set; }
+        
+        uint MigrationDistance { get; }
+        
+        float LastStreamInRange { get; set; }
+        
         EntityDataSnapshot DataSnapshot { get; }
         
         IDictionary<string, object> Data { get; }

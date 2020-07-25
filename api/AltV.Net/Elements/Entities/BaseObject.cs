@@ -16,7 +16,23 @@ namespace AltV.Net.Elements.Entities
 
         public IntPtr NativePointer { get; }
 
-        public bool Exists { get; set; }
+        private bool exists;
+
+        public bool Exists
+        {
+            get
+            {
+                if (exists)
+                {
+                    return true;
+                }
+
+                return refCount != 0;
+            }
+            set => exists = value;
+        }
+
+        private ulong refCount = 0;
 
         public BaseObjectType Type { get; }
 
@@ -37,7 +53,7 @@ namespace AltV.Net.Elements.Entities
 
             NativePointer = nativePointer;
             Type = type;
-            Exists = true;
+            exists = true;
         }
 
         public void SetMetaData(string key, object value)
@@ -209,7 +225,8 @@ namespace AltV.Net.Elements.Entities
             lock (this)
             {
                 if (!Exists) return false;
-                Alt.Module.CountUpRefForCurrentThread(this);
+                ++refCount;
+                //Alt.Module.CountUpRefForCurrentThread(this);
                 InternalAddRef();
             }
             return true;
@@ -222,8 +239,9 @@ namespace AltV.Net.Elements.Entities
         {
             lock (this)
             {
-                if (!Exists) return false;
-                Alt.Module.CountDownRefForCurrentThread(this);
+                if (refCount == 0) return false;
+                --refCount;
+                //Alt.Module.CountDownRefForCurrentThread(this);
                 InternalRemoveRef();
             }
             return true;

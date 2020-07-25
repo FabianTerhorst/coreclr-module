@@ -78,6 +78,12 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public override void SetNetworkOwner(IPlayer player, bool disableMigration)
+        {
+            CheckIfEntityExists();
+            AltNative.Vehicle.Vehicle_SetNetworkOwner(NativePointer, player.NativePointer, disableMigration);
+        }
+
         public override void GetMetaData(string key, out MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
