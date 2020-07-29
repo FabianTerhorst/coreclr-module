@@ -1,0 +1,76 @@
+$icon-container-width: 72px;
+
+/* Alerts */
+.alert {
+    position: relative;
+    background-color: #fff;
+    border: none;
+    border: 1px solid $info-color;
+    border-radius: 0;
+    padding: 16px;
+    margin: 48px 0;
+
+    &::before {
+        position: absolute;
+        content: '';
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        left: 0;
+        top: 0;
+        font-family: 'Material Icons';
+        font-size: 24px;
+        width: $icon-container-width;
+        height: 100%;
+        color: #fff;
+        z-index: 1;
+    }
+
+    &-warning {
+        border-color: $warning-color;
+    }
+
+    &-danger {
+        border-color: $error-color;
+    }
+
+    &-info h5 {
+        color: $info-color;
+    }
+
+    &-warning h5 {
+        color: $warning-color; 
+    }
+
+    &-danger h5 {
+        color: $error-color;
+    }
+
+    &-info::before {
+        content: '\e88e';
+        background-color: $info-color;
+    }
+
+    &-warning::before {
+        content: '\e002';
+        background-color: $warning-color;
+    }
+
+    &-danger::before {
+        content: '\e000';
+        background-color: $error-color;
+    }
+
+    h5 {
+        text-transform: uppercase;
+        font-weight: bold;
+        margin-top: 0;
+        margin-left: $icon-container-width;
+    }
+
+    p {
+        margin-top: 8px;
+        margin-left: $icon-container-width;
+        color: $darkgray;
+    }
+}

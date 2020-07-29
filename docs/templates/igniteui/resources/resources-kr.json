@@ -1,0 +1,16 @@
+{
+    "hljs": {
+        "copyCode": "코드 복사",
+        "codeCopied": "복사됨"
+    },
+    "sideaffix": {
+        "title": "이 항목에"
+    },
+    "noteBlocks": {
+        "note": "참고",
+        "warning": "경고",
+        "tip": "힌트",
+        "important": "중요",
+        "caution": "주의"
+    }
+}

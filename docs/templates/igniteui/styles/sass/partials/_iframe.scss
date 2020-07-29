@@ -1,0 +1,20 @@
+.sample-container {
+    position: relative;
+    &.loading::before {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        content: '';
+        background-image: url('../../images/loading.svg');
+        background-color: white;
+        background-repeat: no-repeat;
+        background-position: center center;
+        z-index: 9999;
+        backface-visibility: hidden;
+    }
+}

@@ -1,0 +1,84 @@
+.docs-search {
+    background: white;
+    vertical-align: middle;
+}
+
+.docs-search > .search-query {
+    font-size: 14px;
+    border: 0;
+    width: 120%;
+    color: #555;
+}
+
+.docs-search > .search-query:focus {
+    outline: 0;
+}
+
+.search-results-frame {
+    clear: both;
+    display: table;
+    width: 100%;
+}
+j .search-results.ng-hide {
+    display: none;
+}
+
+.search-results-container {
+    padding-bottom: 1em;
+    border-top: 1px solid #111;
+    background: rgba(25, 25, 25, 0.5);
+}
+
+.search-results-container .search-results-group {
+    padding-top: 50px !important;
+    padding: 10px;
+}
+
+.search-results-group-heading {
+    font-family: 'Open Sans';
+    padding-left: 10px;
+    color: white;
+}
+
+.search-close {
+    position: absolute;
+    left: 50%;
+    margin-left: -100px;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    background: #333;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    width: 200px;
+    box-shadow: 0 0 10px #111;
+}
+
+#search {
+    display: none;
+}
+
+/* Search results display*/
+#search-results {
+    max-width: 960px !important;
+    margin-top: 120px;
+    margin-bottom: 115px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.8;
+    display: none;
+}
+
+#search-results > .search-list {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+}
+
+#search-results p {
+    text-align: center;
+}
+
+#search-results .sr-items {
+    font-size: 24px;
+}

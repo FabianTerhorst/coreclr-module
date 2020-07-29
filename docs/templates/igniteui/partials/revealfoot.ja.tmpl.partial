@@ -1,0 +1,128 @@
+<!-------
+FOOTER
+-------->
+<!-- FOOTER -->
+<footer class="ui-footer ui-footer--clearfix bg-gradient--primary text-white" data-footer-theme="reveal">
+	<h2>さまざまなリソースへのリンク</h2>
+	<div class="ui-footer__wrap ui-footer--clearfix ui-footer__icons">
+		<a class="ui-footer__icon-link link--opacity-highlight" href="https://www.facebook.com/IGJapan" target="_blank">
+			<img class="b-lazy loading" src="https://static.infragistics.com/marketing/reveal/facebook-icon.svg" alt="Facebook" width="20" height="20" data-was-processed="true" />
+		</a>
+		<a class="ui-footer__icon-link link--opacity-highlight" href="https://twitter.com/IGJP" target="_blank">
+			<img class="b-lazy loading" src="https://download.infragistics.com/marketing/reveal/twitter-icon.svg" alt="Twitter" width="20" height="20" data-was-processed="true" />
+		</a>
+		<a class="ui-footer__icon-link link--opacity-highlight" href="https://www.youtube.com/playlist?list=PLZ4rRHIJepBt-USWdh-9BimHh-GjPAGUH" target="_blank">
+			<img class="b-lazy loading" src="https://static.infragistics.com/marketing/reveal/youtube-icon.svg" alt="Youtube" width="20" height="20" data-was-processed="true" />
+		</a>
+	</div>
+	<div class="ui-footer__wrap ui-footer__wrap--newsletter ui-footer--clearfix" style="max-width: 750px;">
+		<div class="ui-footer__col-one-fourth ui-footer__col-block">
+			<div class="ui-footer__menu">
+				<ul class="ui-footer__menu-list">
+					<li class="ui-footer__menu-list-item">
+						<div class="ui-footer__category">
+							<span>製品ヘルプ</span>
+						</div>
+						<ul>
+							<li>
+								<a class="menu__link" href="https://www.revealbi.io/jp/help/developer">
+									<span>開発者ガイド</span>
+								</a>
+							</li>
+							<li>
+								<a class="menu__link" href="https://static.infragistics.com/marketing/reveal/business-teams-reveal-architecture-and-security.pdf?v=201903141130">
+									<span>アーキテクチャガイド（英語）</span>
+								</a>
+							</li>
+							<li>
+								<a class="menu__link" href="https://www.revealbi.io/help">
+									<span>アプリヘルプ（英語）</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- Column 2 -->
+		<div class="ui-footer__col-one-fourth ui-footer__col-block">
+			<div class="ui-footer__menu">
+				<ul class="ui-footer__menu-list">
+					<li class="ui-footer__menu-list-item">
+						<div class="ui-footer__category">
+							<span>リソース</span>
+						</div>
+						<ul>
+							<li>
+								<a class="menu__link" href="https://jp.infragistics.com/my-account/submit-support-request">
+									<span>サポート</span>
+								</a>
+							</li>
+							<li>
+								<a class="menu__link" href="https://blogs.jp.infragistics.com/archive/category/Reveal">
+									<span>Blog</span>
+								</a>
+							</li>
+							<li>
+								<span>
+									<a class="menu__link" href="https://jp.infragistics.com/support/feature-request">機能要望</a>
+								</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- Column 3 -->
+		<div class="ui-footer__col-one-fourth ui-footer__col-block">
+			<div class="ui-footer__menu"></div>
+		</div>
+		<!-- Column 4 -->
+		<div class="ui-footer__col-one-fourth ui-footer__col-block">
+			<div class="ui-footer__menu">
+				<ul class="ui-footer__menu-list">
+					<li class="ui-footer__menu-list-item">
+						<div class="ui-footer__category">
+							<span>会社情報</span>
+						</div>
+						<ul>
+							<li>
+								<a class="menu__link" href="https://www.revealbi.io/jp/about-us">
+									<span>会社概要</span>
+								</a>
+							</li>
+							<li>
+								<span>
+									<a class="menu__link" href="https://www.revealbi.io/jp/about-us#request-demo">お問い合わせ</a>
+								</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</footer>
+<!------
+Branded Footer
+-------->
+<footer id="footer" class="container-fluid footer" data-footer-theme="reveal">
+	<span class="small d-block">powered by</span>
+	<a class="link--opacity-highlight8" href="https://jp.infragistics.com">
+		<img class="logo" src="https://download.infragistics.com/marketing/Website/General/Infragistics-horizontal.svg" alt="Infragistics" />
+	</a>
+	<ul class="list-inline list-inline--piped font-weight-light mb-0 pb-2 small">
+		<li class="list-inline-item">
+			<a href="https://jp.infragistics.com/legal/privacy">プライバシーポリシー</a>
+		</li>
+		<li class="list-inline-item">
+			<a href="https://www.infragistics.com/legal/cookie-policy">クッキーポリシー（英語）</a>
+		</li>
+		<li class="list-inline-item">
+			<a href="https://jp.infragistics.com/legal/terms-of-use">利用条件</a>
+		</li>
+	</ul>
+	<div class="container-fluid footer footer-copyright">
+		<span id="copyright" class="m-0">© Copyright 2020 INFRAGISTICS. All Rights Reserved.</span>
+	</div>
+</footer>

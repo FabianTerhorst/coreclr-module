@@ -1,0 +1,13 @@
+{{!Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See LICENSE file in the project root for full license information.}}
+
+<div class="github-btn-wrapper" hidden> 
+    <div class="dash-separator"></div>
+    <div class="github-btn">
+        <span>{{_gitHubBtnLbl}}</span>
+
+        <a target="_blank" href="{{_repoUrl}}{{path}}">
+            <img src="{{_rel}}/styles/images/github.svg"/>
+            <span>GitHub</span>
+        </a>
+    </div>
+</div>
