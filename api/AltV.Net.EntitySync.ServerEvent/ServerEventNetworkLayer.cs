@@ -16,7 +16,8 @@ namespace AltV.Net.EntitySync.ServerEvent
         public override event EntityCreateEventDelegate OnEntityCreate;
         public override event EntityRemoveEventDelegate OnEntityRemove;
         public override event EntityPositionUpdateEventDelegate OnEntityPositionUpdate;
-        public override event EntityPositionUpdateEventDelegate OnEntityDataUpdate;
+        public override event EntityDataUpdateEventDelegate OnEntityDataUpdate;
+        public override event EntityNetOwnerUpdateEventDelegate OnEntityNetOwnerUpdate;
 
         private readonly struct ServerEntityEvent
         {
@@ -28,17 +29,20 @@ namespace AltV.Net.EntitySync.ServerEvent
 
             public readonly IDictionary<string, object> ChangedData;
 
+            public readonly bool NetOwner;
+
             public ServerEntityEvent(byte eventType, IEntity entity, Vector3 position,
-                IDictionary<string, object> changedData)
+                IDictionary<string, object> changedData, bool netOwner)
             {
                 EventType = eventType;
                 Entity = entity;
                 Position = position;
                 ChangedData = changedData;
+                NetOwner = netOwner;
             }
 
             public ServerEntityEvent(byte eventType, IEntity entity) : this(eventType,
-                entity, Vector3.Zero, null)
+                entity, Vector3.Zero, null, false)
             {
             }
         }
@@ -77,7 +81,8 @@ namespace AltV.Net.EntitySync.ServerEvent
                                         if (entityEvent.ChangedData != null)
                                         {
                                             currPlayerClient.Emit("entitySync:create", entityEvent.Entity.Id,
-                                                entityEvent.Entity.Type, entityEvent.Entity.Position, entityEvent.ChangedData);
+                                                entityEvent.Entity.Type, entityEvent.Entity.Position,
+                                                entityEvent.ChangedData);
                                         }
                                         else
                                         {
@@ -101,6 +106,10 @@ namespace AltV.Net.EntitySync.ServerEvent
                                     case 5:
                                         currPlayerClient.Emit("entitySync:clearCache", entityEvent.Entity.Id,
                                             entityEvent.Entity.Type);
+                                        break;
+                                    case 6:
+                                        currPlayerClient.Emit("entitySync:netOwner", entityEvent.Entity.Id,
+                                            entityEvent.Entity.Type, entityEvent.NetOwner);
                                         break;
                                 }
                             }
@@ -134,7 +143,8 @@ namespace AltV.Net.EntitySync.ServerEvent
                 if (!serverEventChannels.TryGetValue(client, out channel)) return;
             }
 
-            channel.Writer.TryWrite(new ServerEntityEvent(1, entityCreate.Entity, Vector3.Zero, entityCreate.Data));
+            channel.Writer.TryWrite(new ServerEntityEvent(1, entityCreate.Entity, Vector3.Zero, entityCreate.Data,
+                false));
         }
 
         public override void SendEvent(IClient client, in EntityRemoveEvent entityRemove)
@@ -157,7 +167,7 @@ namespace AltV.Net.EntitySync.ServerEvent
             }
 
             channel.Writer.TryWrite(new ServerEntityEvent(3, entityPositionUpdate.Entity,
-                entityPositionUpdate.Position, null));
+                entityPositionUpdate.Position, null, false));
         }
 
         public override void SendEvent(IClient client, in EntityDataChangeEvent entityDataChange)
@@ -169,7 +179,7 @@ namespace AltV.Net.EntitySync.ServerEvent
             }
 
             channel.Writer.TryWrite(new ServerEntityEvent(4, entityDataChange.Entity,
-                Vector3.Zero, entityDataChange.Data));
+                Vector3.Zero, entityDataChange.Data, false));
         }
 
         public override void SendEvent(IClient client, in EntityClearCacheEvent entityClearCache)
@@ -181,7 +191,19 @@ namespace AltV.Net.EntitySync.ServerEvent
             }
 
             channel.Writer.TryWrite(new ServerEntityEvent(5, entityClearCache.Entity,
-                Vector3.Zero, null));
+                Vector3.Zero, null, false));
+        }
+
+        public override void SendEvent(IClient client, in EntityNetOwnerChangeEvent entityNetOwnerChange)
+        {
+            Channel<ServerEntityEvent> channel;
+            lock (serverEventChannels)
+            {
+                if (!serverEventChannels.TryGetValue(client, out channel)) return;
+            }
+
+            channel.Writer.TryWrite(new ServerEntityEvent(6, entityNetOwnerChange.Entity, Vector3.Zero, null,
+                entityNetOwnerChange.State));
         }
     }
 }
