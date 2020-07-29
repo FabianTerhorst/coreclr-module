@@ -27,8 +27,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\AltV.Net.EntitySync\AltV.Net.EntitySync.csproj" />
-      <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+        <ProjectReference Include="..\AltV.Net.EntitySync\AltV.Net.EntitySync.csproj" />
+        <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />
     </ItemGroup>
 
     <ItemGroup>

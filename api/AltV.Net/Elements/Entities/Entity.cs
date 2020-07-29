@@ -72,6 +72,11 @@ namespace AltV.Net.Elements.Entities
             return true;
         }
 
+        public void ResetNetworkOwner()
+        {
+            SetNetworkOwner(null, false);
+        }
+
         protected Entity(IntPtr nativePointer, BaseObjectType type, ushort id) : base(nativePointer, type)
         {
             Id = id;

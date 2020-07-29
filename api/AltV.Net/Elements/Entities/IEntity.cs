@@ -34,7 +34,12 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <param name="player">The player that is the net owner of this entity</param>
         /// <param name="disableMigration">Setting this true will prevent other players getting network owner.</param>
-        void SetNetworkOwner(IPlayer player, bool disableMigration);
+        void SetNetworkOwner(IPlayer player, bool disableMigration = true);
+
+        /// <summary>
+        /// Resets the net owner of the current entity and set it to default calculations.
+        /// </summary>
+        public void ResetNetworkOwner();
 
         /// <summary>
         /// Set synced meta data of the entity.
