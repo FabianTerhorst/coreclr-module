@@ -56,8 +56,6 @@ namespace AltV.Net.EntitySync
 
         private readonly IDictionary<string, object> threadLocalData;
 
-        public IDictionary<string, object> Data => data;
-
         public IDictionary<string, object> ThreadLocalData => threadLocalData;
 
         public EntityDataSnapshot DataSnapshot { get; }
