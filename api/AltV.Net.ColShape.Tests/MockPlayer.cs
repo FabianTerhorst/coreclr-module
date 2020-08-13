@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Refs;
 
 namespace AltV.Net.ColShape.Tests
 {
@@ -19,6 +20,16 @@ namespace AltV.Net.ColShape.Tests
         public Position EntityAimOffset { get; }
         public bool IsFlashlightActive { get; }
         public string Ip { get; }
+
+        public void ResetNetworkOwner()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetNetworkOwner(IPlayer player, bool disableMigration)
+        {
+            throw new NotImplementedException();
+        }
 
         public bool HasData(string key)
         {
@@ -220,11 +231,6 @@ namespace AltV.Net.ColShape.Tests
             throw new NotImplementedException();
         }
 
-        public ReadOnlyPlayer Copy()
-        {
-            throw new NotImplementedException();
-        }
-
         public void OnRemove()
         {
             throw new NotImplementedException();
@@ -261,6 +267,11 @@ namespace AltV.Net.ColShape.Tests
         }
 
         public IEnumerable<string> GetAllDataKeys()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool TryCreateRef(out PlayerRef playerRef)
         {
             throw new NotImplementedException();
         }

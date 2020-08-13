@@ -33,6 +33,11 @@ namespace AltV.Net.Mock
             Exists = true;
         }
 
+        public void ResetNetworkOwner()
+        {
+            throw new NotImplementedException();
+        }
+
         public void SetPosition(float x, float y, float z)
         {
             Position = new Position(x, y, z);
@@ -112,6 +117,11 @@ namespace AltV.Net.Mock
 
             result = cast;
             return true;
+        }
+
+        public void SetNetworkOwner(IPlayer player, bool disableMigration)
+        {
+            throw new NotImplementedException();
         }
 
         public bool HasData(string key)

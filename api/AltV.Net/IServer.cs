@@ -11,6 +11,8 @@ namespace AltV.Net
         int NetTime { get; }
 
         string RootDirectory { get; }
+        
+        bool IsDebug { get; }
 
         INativeResource Resource { get; }
         
@@ -117,6 +119,22 @@ namespace AltV.Net
         void StopResource(string name);
 
         void RestartResource(string name);
+
+        void SetMetaData(string key, object value);
+
+        bool HasMetaData(string key);
+
+        void DeleteMetaData(string key);
+
+        void GetMetaData(string key, out MValueConst value);
+        
+        void SetSyncedMetaData(string key, object value);
+
+        bool HasSyncedMetaData(string key);
+
+        void DeleteSyncedMetaData(string key);
+
+        void GetSyncedMetaData(string key, out MValueConst value);
 
         void CreateMValueNil(out MValueConst mValue);
 

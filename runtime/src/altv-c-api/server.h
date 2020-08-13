@@ -66,6 +66,14 @@ EXPORT void* Server_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type);
 EXPORT void Server_StartResource(alt::ICore* server, const char* text);
 EXPORT void Server_StopResource(alt::ICore* server, const char* text);
 EXPORT void Server_RestartResource(alt::ICore* server, const char* text);
+EXPORT alt::MValueConst* Server_GetMetaData(alt::ICore* core, const char* key);
+EXPORT void Server_SetMetaData(alt::ICore* core, const char* key, alt::MValueConst* val);
+EXPORT bool Server_HasMetaData(alt::ICore* core, const char* key);
+EXPORT void Server_DeleteMetaData(alt::ICore* core, const char* key);
+EXPORT alt::MValueConst* Server_GetSyncedMetaData(alt::ICore* core, const char* key);
+EXPORT void Server_SetSyncedMetaData(alt::ICore* core, const char* key, alt::MValueConst* val);
+EXPORT bool Server_HasSyncedMetaData(alt::ICore* core, const char* key);
+EXPORT void Server_DeleteSyncedMetaData(alt::ICore* core, const char* key);
 EXPORT alt::MValueConst* Core_CreateMValueNil(alt::ICore* core);
 EXPORT alt::MValueConst* Core_CreateMValueBool(alt::ICore* core, bool value);
 EXPORT alt::MValueConst* Core_CreateMValueInt(alt::ICore* core, int64_t value);
@@ -85,6 +93,7 @@ EXPORT alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvok
 EXPORT alt::MValueConst* Core_CreateMValueVector3(alt::ICore* core, position_t value);
 EXPORT alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value);
 EXPORT alt::MValueConst* Core_CreateMValueByteArray(alt::ICore* core, uint64_t size, const void* data);
+EXPORT bool Core_IsDebug(alt::ICore* core);
 
 #ifdef __cplusplus
 }

@@ -74,6 +74,12 @@ namespace AltV.Net.Example
         public void MyEvent(IPlayer player)
         {
         }
+        
+        [ServerEvent("eventNameWithEntity")]
+        public void MyEvent2(IPlayer player, IEntity entity)
+        {
+            Console.WriteLine("eventNameWithEntity:" + entity.Id + " " + (player == null));
+        }
 
         [ServerEvent]
         public void MyEventName(string message)

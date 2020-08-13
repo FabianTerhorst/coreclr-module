@@ -1,0 +1,142 @@
+::selection {
+    color: #fff;
+    background: $igblue;
+}
+
+html,
+.root {
+    font-size: 16px;
+    line-height: 24px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body,
+.article {
+    font-family: 'aktiv-grotesk', sans-serif;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin: auto;
+    color: #585858;
+    overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.text-break {
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+h1 mark,
+h2 mark,
+h3 mark,
+h4 mark,
+h5 mark,
+h6 mark {
+    padding: 0;
+}
+
+h1,
+.h1 {
+    font-size: 4.25rem;
+    line-height: 4.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 3rem;
+    font-weight: 400;
+}
+
+h2,
+.h2 {
+    font-size: 2.625rem;
+    line-height: 3rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+    color: $black;
+}
+
+h3,
+.h3 {
+    font-size: 2rem;
+    line-height: 3rem;
+    margin-top: 2rem;
+    margin-bottom: 0rem;
+    font-weight: 300;
+    position: relative;
+}
+
+h4,
+.h4 {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0rem;
+}
+
+h5,
+.h5 {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0rem;
+}
+
+p,
+ul,
+ol,
+pre,
+table,
+blockquote {
+    margin-top: 0rem;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+    &.highlight {
+        font-weight: 400;
+        color: #333;
+    }
+}
+p {
+    line-height: 2rem;
+}
+
+ul ul,
+ol ol,
+ul ol,
+ol ul {
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+}
+
+/* Let's make sure all's aligned */
+hr,
+.hr {
+    border: 1px solid;
+    margin: -1px 0;
+}
+
+hr {
+    border-color: #cccccc;
+}
+
+// a, b, i, strong, em, small, code {
+//   line-height: 0;
+// }
+
+sub,
+sup {
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sup {
+    top: -0.5em;
+}
+
+sub {
+    bottom: -0.25em;
+}

@@ -10,9 +10,7 @@ namespace AltV.Net
     {
         public static void RegisterEvents(object target)
         {
-#pragma warning disable 612, 618
-            ModuleScriptMethodIndexer.Index(target, new[] {typeof(EventAttribute), typeof(ServerEventAttribute), typeof(ClientEventAttribute), typeof(ScriptEventAttribute)},
-#pragma warning restore 612, 618
+            ModuleScriptMethodIndexer.Index(target, new[] { typeof(ServerEventAttribute), typeof(ClientEventAttribute), typeof(ScriptEventAttribute)},
                 (baseEvent, eventMethod, eventMethodDelegate) =>
                 {
                     switch (baseEvent)
@@ -264,14 +262,42 @@ namespace AltV.Net
                                 default:
                                     throw new ArgumentOutOfRangeException();
                             }
+                            break;
+                        case ScriptEventType.VehicleDestroy:
+                            scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                new[]
+                                {
+                                    typeof(IVehicle)
+                                });
+                            if (scriptFunction == null) return;
+                            OnVehicleDestroy +=
+                                vehicle =>
+                                {
+                                    scriptFunction.Set(vehicle);
+                                    scriptFunction.Call();
+                                };
+                            break;
+                        case ScriptEventType.Explosion:
+                            scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                new[]
+                                {
+                                    typeof(IPlayer), typeof(ExplosionType), typeof(Position), typeof(uint)
+                                });
+                            if (scriptFunction == null) return;
+                            OnExplosion += (player, explosionType, position, explosionFx) =>
+                                {
+                                    scriptFunction.Set(player);
+                                    scriptFunction.Set(explosionType);
+                                    scriptFunction.Set(position);
+                                    scriptFunction.Set(explosionFx);
+                                    if (scriptFunction.Call() is bool value)
+                                    {
+                                        return value;
+                                    }
 
+                                    return true;
+                                };
                             break;
-#pragma warning disable 612, 618
-                        case EventAttribute @event:
-                            var eventName = @event.Name ?? eventMethod.Name;
-                            Module.On(eventName, Function.Create(eventMethodDelegate));
-                            break;
-#pragma warning restore 612, 618
                         case ServerEventAttribute @event:
                             var serverEventName = @event.Name ?? eventMethod.Name;
                             Module.OnServer(serverEventName, Function.Create(eventMethodDelegate));

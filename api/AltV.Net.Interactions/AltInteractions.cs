@@ -81,11 +81,15 @@ namespace AltV.Net.Interactions
                                 }
 
                                 var interactionPosition = new Vector3(x, y, z);
-                                foreach (var interaction in _spatialPartition.Find(interactionPosition, currDimension))
+                                var foundInteractions = _spatialPartition.Find(interactionPosition, currDimension);
+                                if (foundInteractions != null)
                                 {
-                                    if (interaction.OnInteraction(player, interactionPosition, currDimension))
+                                    foreach (var interaction in foundInteractions)
                                     {
-                                        break;
+                                        if (interaction.OnInteraction(player, interactionPosition, currDimension))
+                                        {
+                                            break;
+                                        }
                                     }
                                 }
 

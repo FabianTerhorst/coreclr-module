@@ -14,6 +14,16 @@ namespace AltV.Net.ColShape.Tests
         public bool Exists { get; }
         public BaseObjectType Type { get; }
 
+        public void SetNetworkOwner(IPlayer player, bool disableMigration)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ResetNetworkOwner()
+        {
+            throw new NotImplementedException();
+        }
+
         public bool HasData(string key)
         {
             throw new NotImplementedException();
@@ -402,5 +412,7 @@ namespace AltV.Net.ColShape.Tests
         {
             throw new NotImplementedException();
         }
+
+        public bool IsDestroyed { get; }
     }
 }

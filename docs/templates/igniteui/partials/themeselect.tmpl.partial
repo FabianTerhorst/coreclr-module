@@ -1,0 +1,65 @@
+   <div class="themes-container">
+        <div class="theme-select-wrapper theme-wrapper-hide">
+            <div>
+                <h5>Theming</h5>	
+            </div>	
+
+            <div class="theme-item theme-item--active" data-theme="default-theme">	
+                <div class="theme-switch__colors">	
+                    <span class="theme-switch__color theme-switch__color--primary default-theme__color--primary"></span>	
+                    <span class="theme-switch__color theme-switch__color--secondary default-theme__color--secondary"></span>	
+                </div>	
+                <span class="theme-item-label">Light</span>	
+            </div>	
+
+            <div class="theme-item" data-theme="dark-theme">	
+                <div class="theme-switch__colors">	
+                    <span class="theme-switch__color theme-switch__color--primary dark-theme__color--primary"></span>	
+                    <span class="theme-switch__color theme-switch__color--secondary dark-theme__color--secondary"></span>	
+                </div>	
+                <span class="theme-item-label">Dark</span>	
+            </div>
+        </div>
+        <div class="theme-widget-wrapper theme-wrapper-hide">
+            <igniteui-theming-widget theme-url="{environment:themeApiUrl}"></igniteui-theming-widget>
+        </div>
+
+        <div class="theme-switch__more" onblur="closeContainer()">
+            <i class="material-icons">more_horiz</i>
+            <div class="theme-switch__drop-down">
+
+                <div class="theme-item" data-theme="default-theme">
+                    <div class="theme-switch__colors">
+                        <span class="theme-switch__color theme-switch__color--primary default-theme__color--primary"></span>
+                        <span class="theme-switch__color theme-switch__color--secondary default-theme__color--secondary"></span>
+                    </div>
+                    <span class="theme-item-label">Angular Light</span>
+                </div>
+
+                <div class="theme-item" data-theme="default-theme">
+                    <div class="theme-switch__colors">
+                        <span class="theme-switch__color theme-switch__color--primary default-theme__color--primary"></span>
+                        <span class="theme-switch__color theme-switch__color--secondary default-theme__color--secondary"></span>
+                    </div>
+                    <span class="theme-item-label">Angular Light</span>
+                </div>
+
+                <div class="theme-item" data-theme="default-theme">
+                    <div class="theme-switch__colors">
+                        <span class="theme-switch__color theme-switch__color--primary default-theme__color--primary"></span>
+                        <span class="theme-switch__color theme-switch__color--secondary default-theme__color--secondary"></span>
+                    </div>
+                    <span class="theme-item-label">Angular Light</span>
+                </div>
+
+                <div class="theme-item" data-theme="default-theme">
+                    <div class="theme-switch__colors">
+                        <span class="theme-switch__color theme-switch__color--primary default-theme__color--primary"></span>
+                        <span class="theme-switch__color theme-switch__color--secondary default-theme__color--secondary"></span>
+                    </div>
+                    <span class="theme-item-label">Angular Light</span>
+                </div>
+
+            </div>
+        </div>
+    </div>

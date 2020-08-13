@@ -14,6 +14,7 @@ namespace AltV.Net.Elements.Entities
 
         public abstract uint Model { get; set; }
 
+        public abstract void SetNetworkOwner(IPlayer player, bool disableMigration);
         public abstract void SetSyncedMetaData(string key, in MValueConst value);
         public abstract void GetSyncedMetaData(string key, out MValueConst value);
         public abstract bool HasSyncedMetaData(string key);
@@ -69,6 +70,11 @@ namespace AltV.Net.Elements.Entities
 
             result = cast;
             return true;
+        }
+
+        public void ResetNetworkOwner()
+        {
+            SetNetworkOwner(null, false);
         }
 
         protected Entity(IntPtr nativePointer, BaseObjectType type, ushort id) : base(nativePointer, type)

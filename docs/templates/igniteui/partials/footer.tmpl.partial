@@ -1,0 +1,26 @@
+<div id="footer-container">
+    {{{_appFooter}}}
+    {{^_appFooter}}
+    
+    {{#_isLangEn}} 
+        {{#_isReveal}}
+            {{>partials/revealfoot}}
+        {{/_isReveal}}
+        {{^_isReveal}}
+            {{>partials/infrafoot}}
+        {{/_isReveal}}
+    {{/_isLangEn}} 
+    
+    {{#_isLangJa}}
+        {{#_isReveal}}
+            {{>partials/revealfoot.ja}}
+        {{/_isReveal}}
+        {{^_isReveal}}
+            {{>partials/infrafoot.ja}}
+        {{/_isReveal}}
+    {{/_isLangJa}}
+
+    {{#_isLangKr}}
+        {{>partials/infrafoot.kr}}
+    {{/_isLangKr}}
+</div>

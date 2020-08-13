@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Pools;
 
 namespace AltV.Net
 {
@@ -11,6 +13,8 @@ namespace AltV.Net
         public static IServer Server => Module.Server;
 
         public static IServer Core => Module.Server;
+
+        public static bool IsDebug => Server.IsDebug;
 
         public static void Emit(string eventName, params object[] args) => Server.TriggerServerEvent(eventName, args);
 
@@ -48,6 +52,42 @@ namespace AltV.Net
             Module.VoiceChannelPool.GetObjectsArray();
 
         public static KeyValuePair<IntPtr, IColShape>[] GetColShapesArray() => Module.ColShapePool.GetObjectsArray();
+
+        public static void ForEachPlayers(IBaseObjectCallback<IPlayer> baseObjectCallback) =>
+            Module.PlayerPool.ForEach(baseObjectCallback);
+
+        public static Task ForEachPlayers(IAsyncBaseObjectCallback<IPlayer> baseObjectCallback) =>
+            Module.PlayerPool.ForEach(baseObjectCallback);
+
+        public static void ForEachVehicles(IBaseObjectCallback<IVehicle> baseObjectCallback) =>
+            Module.VehiclePool.ForEach(baseObjectCallback);
+
+        public static Task ForEachVehicles(IAsyncBaseObjectCallback<IVehicle> baseObjectCallback) =>
+            Module.VehiclePool.ForEach(baseObjectCallback);
+
+        public static void ForEachBlips(IBaseObjectCallback<IBlip> baseObjectCallback) =>
+            Module.BlipPool.ForEach(baseObjectCallback);
+
+        public static Task ForEachBlips(IAsyncBaseObjectCallback<IBlip> baseObjectCallback) =>
+            Module.BlipPool.ForEach(baseObjectCallback);
+
+        public static void ForEachCheckpoints(IBaseObjectCallback<ICheckpoint> baseObjectCallback) =>
+            Module.CheckpointPool.ForEach(baseObjectCallback);
+
+        public static Task ForEachCheckpoints(IAsyncBaseObjectCallback<ICheckpoint> baseObjectCallback) =>
+            Module.CheckpointPool.ForEach(baseObjectCallback);
+
+        public static void ForEachVoiceChannels(IBaseObjectCallback<IVoiceChannel> baseObjectCallback) =>
+            Module.VoiceChannelPool.ForEach(baseObjectCallback);
+
+        public static Task ForEachVoiceChannels(IAsyncBaseObjectCallback<IVoiceChannel> baseObjectCallback) =>
+            Module.VoiceChannelPool.ForEach(baseObjectCallback);
+        
+        public static void ForEachColShapes(IBaseObjectCallback<IColShape> baseObjectCallback) =>
+            Module.ColShapePool.ForEach(baseObjectCallback);
+
+        public static Task ForEachColShapes(IAsyncBaseObjectCallback<IColShape> baseObjectCallback) =>
+            Module.ColShapePool.ForEach(baseObjectCallback);
 
         public static uint Hash(string stringToHash) => Server.Hash(stringToHash);
 

@@ -1,0 +1,12 @@
+{{!Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See LICENSE file in the project root for
+full license information.}}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+<script type="text/javascript" src="{{_rel}}styles/bundles/docfx-bundle.min.js?checksum={{_docFXBundleChecksum}}"></script>
+<script type="text/javascript" src="https://infragistics.com/assets/modern/scripts/jquery-migrate.min.js"></script>
+<script type="text/javascript" src="https://infragistics.com/assets/modern/scripts/plugins.nav.js"></script>
+<script type="text/javascript" src="https://infragistics.com/assets/modern/scripts/navigation.js"></script>
+<script type="text/javascript" src="{{_rel}}styles/bundles/scripts-bundle.min.js?checksum={{_scriptsBundleChecksum}}"></script>
+<script src="https://use.typekit.net/zhy2hpz.js"></script>
+<script>try { Typekit.load({ async: true }); } catch (e) { }</script>

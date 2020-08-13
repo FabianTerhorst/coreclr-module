@@ -17,7 +17,8 @@ namespace AltV.Net.EntitySync
         public abstract event EntityCreateEventDelegate OnEntityCreate;
         public abstract event EntityRemoveEventDelegate OnEntityRemove;
         public abstract event EntityPositionUpdateEventDelegate OnEntityPositionUpdate;
-        public abstract event EntityPositionUpdateEventDelegate OnEntityDataUpdate;
+        public abstract event EntityDataUpdateEventDelegate OnEntityDataUpdate;
+        public abstract event EntityNetOwnerUpdateEventDelegate OnEntityNetOwnerUpdate;
 
         public readonly ulong ThreadCount;
         
@@ -34,5 +35,6 @@ namespace AltV.Net.EntitySync
         public abstract void SendEvent(IClient client, in EntityPositionUpdateEvent entityPositionUpdate);
         public abstract void SendEvent(IClient client, in EntityDataChangeEvent entityDataChange);
         public abstract void SendEvent(IClient client, in EntityClearCacheEvent entityClearCache);
+        public abstract void SendEvent(IClient client, in EntityNetOwnerChangeEvent entityNetOwnerChange);
     }
 }

@@ -35,6 +35,30 @@ alt::MValueConst* Resource_GetExport(alt::IResource* resource, const char* key) 
     return new alt::MValueConst(value);
 }
 
+int Resource_GetDependenciesSize(alt::IResource* resource) {
+    return resource->GetDependencies().GetSize();
+}
+
+void Resource_GetDependencies(alt::IResource* resource, const char* dependencies[], int size) {
+
+    if (resource->GetDependencies().GetSize() != size) return;
+    for (uint64_t i = 0, length = resource->GetDependencies().GetSize(); i < length; i++) {
+        dependencies[i] = resource->GetDependencies()[i].CStr();
+    }
+}
+
+int Resource_GetDependantsSize(alt::IResource* resource) {
+    return resource->GetDependants().GetSize();
+}
+
+void Resource_GetDependants(alt::IResource* resource, const char* dependencies[], int size) {
+
+    if (resource->GetDependants().GetSize() != size) return;
+    for (uint64_t i = 0, length = resource->GetDependants().GetSize(); i < length; i++) {
+        dependencies[i] = resource->GetDependants()[i].CStr();
+    }
+}
+
 void Resource_SetExport(alt::ICore* core, alt::IResource* resource, const char* key, alt::MValueConst* val) {
     alt::MValueDict dict = resource->GetExports();
     if (dict.Get() == nullptr) {

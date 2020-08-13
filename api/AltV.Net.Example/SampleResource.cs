@@ -25,7 +25,7 @@ namespace AltV.Net.Example
             {
                 currentTraceSize = size;
             };
-            
+
             Alt.OnConsoleCommand += (name, args) =>
             {
                 Console.WriteLine("Command name: " + name);
@@ -414,7 +414,9 @@ namespace AltV.Net.Example
             
             Alt.CreateCheckpoint(CheckpointType.Cyclinder, Position.Zero, 50f, 50f, Rgba.Zero);
 
-            Alt.CreateVehicle(VehicleModel.Adder, Position.Zero, Rotation.Zero);
+            var vehicle5 = Alt.CreateVehicle(VehicleModel.Adder, Position.Zero, Rotation.Zero);
+            
+            Alt.Emit("eventNameWithEntity", null, vehicle5);
         }
         
         public static void OnOptionalAndParamArray(int test, params object[] args) {
@@ -577,6 +579,7 @@ namespace AltV.Net.Example
             using (var reference = new PlayerRef(player))
             {
                 if (!reference.Exists) return;
+                reference.DebugCountUp();
                 //TODO: how to prevent player exists check to happen here inside
                 //TODO: maybe create a PlayerRef struct from player native pointer and do all calls inside that struct
                 
@@ -584,6 +587,8 @@ namespace AltV.Net.Example
                 //TODO: possible by adding addref and removeref methods to player class and counting the int up in them
                 player.Position = Position.Zero;
                 player.Rotation = Rotation.Zero;
+                
+                reference.DebugCountDown();
             }
             
             await player.SetPositionAsync(new Position(1, 2, 3));

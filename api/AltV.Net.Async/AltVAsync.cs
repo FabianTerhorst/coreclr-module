@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -7,8 +6,7 @@ namespace AltV.Net.Async
 {
     internal class AltVAsync
     {
-        private readonly TaskFactory taskFactory;
-        private readonly TickScheduler scheduler;
+        private readonly ITickScheduler scheduler;
         private readonly Thread mainThread;
         internal Thread TickThread;
 
@@ -23,9 +21,6 @@ namespace AltV.Net.Async
             }
 
             scheduler = tickSchedulerFactory.Create(mainThread);
-            taskFactory = new TaskFactory(
-                CancellationToken.None, TaskCreationOptions.DenyChildAttach,
-                TaskContinuationOptions.None, scheduler);
             AltAsync.Setup(this);
             TickDelegate = FirstTick;
         }
@@ -38,7 +33,8 @@ namespace AltV.Net.Async
 
         internal Task Schedule(Action action)
         {
-            if (Thread.CurrentThread == mainThread)
+            var currThread = Thread.CurrentThread;
+            if (currThread == mainThread || currThread == TickThread)
             {
                 try
                 {
@@ -51,12 +47,13 @@ namespace AltV.Net.Async
                 }
             }
 
-            return taskFactory.StartNew(action);
+            return scheduler.ScheduleTask(action);
         }
-        
+
         internal Task Schedule(Action<object> action, object value)
         {
-            if (Thread.CurrentThread == mainThread)
+            var currThread = Thread.CurrentThread;
+            if (currThread == mainThread || currThread == TickThread)
             {
                 try
                 {
@@ -69,12 +66,13 @@ namespace AltV.Net.Async
                 }
             }
 
-            return taskFactory.StartNew(action, value);
+            return scheduler.ScheduleTask(action, value);
         }
 
         internal Task<TResult> Schedule<TResult>(Func<TResult> action)
         {
-            if (Thread.CurrentThread == mainThread)
+            var currThread = Thread.CurrentThread;
+            if (currThread == mainThread || currThread == TickThread)
             {
                 try
                 {
@@ -86,12 +84,13 @@ namespace AltV.Net.Async
                 }
             }
 
-            return taskFactory.StartNew(action);
+            return scheduler.ScheduleTask(action);
         }
-        
+
         internal Task<TResult> Schedule<TResult>(Func<object, TResult> action, object value)
         {
-            if (Thread.CurrentThread == mainThread)
+            var currThread = Thread.CurrentThread;
+            if (currThread == mainThread || currThread == TickThread)
             {
                 try
                 {
@@ -103,7 +102,31 @@ namespace AltV.Net.Async
                 }
             }
 
-            return taskFactory.StartNew(action, value);
+            return scheduler.ScheduleTask(action, value);
+        }
+
+        internal void ScheduleNoneTask(Action action)
+        {
+            var currThread = Thread.CurrentThread;
+            if (currThread == mainThread || currThread == TickThread)
+            {
+                action();
+                return;
+            }
+
+            scheduler.Schedule(action);
+        }
+
+        internal void ScheduleNoneTask(Action<object> action, object value)
+        {
+            var currThread = Thread.CurrentThread;
+            if (currThread == mainThread || currThread == TickThread)
+            {
+                action(value);
+                return;
+            }
+
+            scheduler.Schedule(action, value);
         }
     }
 }

@@ -15,6 +15,7 @@ namespace AltV.Net.Elements.Entities
         private readonly ConcurrentDictionary<string, object> data = new ConcurrentDictionary<string, object>();
 
         public IntPtr NativePointer { get; }
+
         private bool exists;
 
         public bool Exists
@@ -225,9 +226,9 @@ namespace AltV.Net.Elements.Entities
             {
                 if (!Exists) return false;
                 ++refCount;
+                //Alt.Module.CountUpRefForCurrentThread(this);
+                InternalAddRef();
             }
-
-            InternalAddRef();
             return true;
         }
 
@@ -240,9 +241,9 @@ namespace AltV.Net.Elements.Entities
             {
                 if (refCount == 0) return false;
                 --refCount;
+                //Alt.Module.CountDownRefForCurrentThread(this);
+                InternalRemoveRef();
             }
-
-            InternalRemoveRef();
             return true;
         }
     }

@@ -78,6 +78,12 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public override void SetNetworkOwner(IPlayer player, bool disableMigration)
+        {
+            CheckIfEntityExists();
+            AltNative.Vehicle.Vehicle_SetNetworkOwner(NativePointer, player?.NativePointer ?? IntPtr.Zero, disableMigration);
+        }
+
         public override void GetMetaData(string key, out MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
@@ -173,6 +179,15 @@ namespace AltV.Net.Elements.Entities
                 var entityPointer = AltNative.Vehicle.Vehicle_GetDriver(NativePointer);
                 if (entityPointer == IntPtr.Zero) return null;
                 return Alt.Module.PlayerPool.GetOrCreate(entityPointer, out var player) ? player : null;
+            }
+        }
+
+        public bool IsDestroyed
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Vehicle.Vehicle_IsDestroyed(NativePointer);
             }
         }
 

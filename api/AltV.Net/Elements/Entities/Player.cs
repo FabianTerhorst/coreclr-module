@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
+using AltV.Net.Elements.Refs;
 using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Entities
@@ -99,6 +100,12 @@ namespace AltV.Net.Elements.Entities
                 AltNative.Player.Player_GetIP(NativePointer, ref ptr);
                 return Marshal.PtrToStringUTF8(ptr);
             }
+        }
+
+        public override void SetNetworkOwner(IPlayer player, bool disableMigration)
+        {
+            CheckIfEntityExists();
+            AltNative.Player.Player_SetNetworkOwner(NativePointer, player?.NativePointer ?? IntPtr.Zero, disableMigration);
         }
 
         public override void GetMetaData(string key, out MValueConst value)
@@ -579,14 +586,6 @@ namespace AltV.Net.Elements.Entities
             Alt.Server.TriggerClientEvent(this, eventName, args);
         }
 
-        public ReadOnlyPlayer Copy()
-        {
-            CheckIfEntityExists();
-            var readOnlyPlayer = ReadOnlyPlayer.Empty;
-            AltNative.Player.Player_Copy(NativePointer, ref readOnlyPlayer);
-            return readOnlyPlayer;
-        }
-
         protected override void InternalAddRef()
         {
             AltNative.Player.Player_AddRef(NativePointer);
@@ -595,6 +594,12 @@ namespace AltV.Net.Elements.Entities
         protected override void InternalRemoveRef()
         {
             AltNative.Player.Player_RemoveRef(NativePointer);
+        }
+
+        public bool TryCreateRef(out PlayerRef playerRef)
+        {
+            playerRef = new PlayerRef(this);
+            return playerRef.Exists;
         }
     }
 }

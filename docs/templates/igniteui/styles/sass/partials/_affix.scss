@@ -1,0 +1,125 @@
+.sideaffix {
+    margin-top: 20px; 
+    max-height: 100%;
+    overflow: hidden;
+    top: 127px;
+    font-size: 13px;
+    z-index: 2;
+    &.shiftup {
+        bottom: 70px;
+    }
+    div.contribution {
+        margin-bottom: 20px;
+    }
+    div.contribution>ul>li>a.contribution-link {
+        padding: 6px 10px;
+        font-weight: bold;
+        font-size: 14px;
+    }
+    div.contribution>ul>li>a.contribution-link:hover {
+        background-color: #ffffff;
+    }
+    ul.nav>li>a:focus {
+        background: none;
+    }
+    ::-webkit-scrollbar {
+        width: 2px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #888; 
+    }
+}
+
+.docfx-affix {
+    position: fixed;
+    right: 0;
+    z-index: 1;
+}
+
+.affix {
+    height: 65%;
+    overflow: auto;
+}
+
+.affix h5 {
+    font-size: 14px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.affix>ul.level1 {
+    overflow: hidden; // height: calc(100% - 100px);
+}
+
+.affix ul>li>a {
+    padding: 8px;
+    color: #585858;
+    font-weight: bold;
+    &:hover {
+        background: none;
+        color: $igblue;
+        &::before {
+            background-color: rgba(0, 0, 0, .38);
+        }
+    }
+    &::before {
+        position: absolute;
+        content: '';
+        font-size: 14px;
+        width: 2px;
+        top: 6px;
+        bottom: 6px;
+        left: 0;
+        background-color: $igblue;
+    }
+}
+
+.affix ul>li.active:hover>a {
+    color: #585858;
+    
+}
+
+.affix>ul>li.active:last-child {
+    margin-bottom: 24px;
+}
+
+.affix ul ul>li {
+    a {
+        position: relative;
+        padding: 8px;
+        margin-left: 8px;
+        font-weight: 300;
+    }
+    &.active:hover a,
+    &.active a {
+        color: $igblue;
+        font-weight: 400;
+    }
+    &:hover a::before,
+    &.active:hover a::before {
+        background: none;
+    }
+}
+
+.affix ul ul>li>a::before {
+    content: '';
+    background: none;
+    &::hover {
+        background: none;
+    }
+}
+
+.affix ul>li>a::before,
+.affix ul ul {
+    display: none;
+}
+
+.affix ul>li.active>ul,
+.affix ul>li.active>a:before,
+.affix ul>li>a:hover:before {
+    display: block; // white-space: nowrap;
+}

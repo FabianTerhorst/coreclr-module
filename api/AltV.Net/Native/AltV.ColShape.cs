@@ -47,9 +47,15 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool ColShape_IsPlayerIn(IntPtr colShape, IntPtr player);
-
+            
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool ColShape_IsVehicleIn(IntPtr colShape, IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void ColShape_SetPlayersOnly(IntPtr colShape, bool state);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool ColShape_IsPlayersOnly(IntPtr colShape);
         }
     }
 }

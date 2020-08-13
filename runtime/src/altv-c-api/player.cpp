@@ -388,3 +388,19 @@ void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
 void Player_Copy_Dispose(player_struct_t* player_struct) {
     delete[] player_struct->name;
 }
+
+void Player_GetPositionCoords2(alt::IPlayer* player, float* position_x, float* position_y, float* position_z,float *rotation_x,float *rotation_y,float *rotation_z,int* dimension) {
+    auto playerPosition = player->GetPosition();
+    *position_x = playerPosition.x;
+    *position_y = playerPosition.y;
+    *position_z = playerPosition.z;
+    auto playerRotation = player->GetRotation();
+    *rotation_x = playerRotation.pitch;
+    *rotation_y = playerRotation.roll;
+    *rotation_z = playerRotation.yaw;
+    *dimension = player->GetDimension();
+}
+
+void Player_SetNetworkOwner(alt::IPlayer* player, alt::IPlayer* networkOwnerPlayer, bool disableMigration) {
+    player->SetNetworkOwner(networkOwnerPlayer, disableMigration);
+}

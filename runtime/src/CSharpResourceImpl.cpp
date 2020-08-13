@@ -17,7 +17,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnResourceErrorDelegate = [](auto var) {};
     OnPlayerDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
     OnPlayerDeathDelegate = [](auto var, auto var2, auto var3, auto var4) {};
-    OnExplosionDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnExplosionDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
     OnWeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7, auto var8) {};
     OnPlayerDisconnectDelegate = [](auto var, auto var2) {};
     OnPlayerRemoveDelegate = [](auto var) {};
@@ -44,6 +44,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnCreateColShapeDelegate = [](auto var) {};
     OnRemoveColShapeDelegate = [](auto var) {};
     OnColShapeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnVehicleDestroyDelegate = [](auto var) {};
 }
 
 bool CSharpResourceImpl::Start() {
@@ -203,7 +204,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             position.x = eventPosition.x;
             position.y = eventPosition.y;
             position.z = eventPosition.z;
-            OnExplosionDelegate(explosionEvent->GetSource().Get(), explosionEvent->GetExplosionType(), position,
+            OnExplosionDelegate(explosionEvent, explosionEvent->GetSource().Get(), explosionEvent->GetExplosionType(), position,
                                 explosionEvent->GetExplosionFX());
         }
             break;
@@ -341,13 +342,18 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             }
         }
             break;
+        case alt::CEvent::Type::VEHICLE_DESTROY: {
+            auto vehicle = ((alt::CVehicleDestroyEvent*) (ev))->GetTarget().Get();
+            OnVehicleDestroyDelegate(vehicle);
+            break;
+        }
     }
     return true;
 }
 
 void CSharpResourceImpl::OnCreateBaseObject(alt::Ref<alt::IBaseObject> objectRef) {
-    //objectRef->AddRef();
-    objectRef->AddWeakRef(new BaseObjectWeakReference(objectRef, this));
+    objectRef->AddRef();
+    //objectRef->AddWeakRef(new BaseObjectWeakReference(objectRef, this));
     auto object = objectRef.Get();
     if (object != nullptr) {
         switch (object->GetType()) {
@@ -405,7 +411,7 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::Ref<alt::IBaseObject> objectRef
                 break;
         }
     }
-    //objectRef->RemoveRef();
+    objectRef->RemoveRef();
 }
 
 void CSharpResourceImpl::OnTick() {
@@ -587,6 +593,11 @@ void CSharpResourceImpl_SetRemoveColShapeDelegate(CSharpResourceImpl* resource,
 void CSharpResourceImpl_SetColShapeDelegate(CSharpResourceImpl* resource,
                                             ColShapeDelegate_t delegate) {
     resource->OnColShapeDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetVehicleDestroyDelegate(CSharpResourceImpl* resource,
+                                                  VehicleDestroyDelegate_t delegate) {
+    resource->OnVehicleDestroyDelegate = delegate;
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files) {

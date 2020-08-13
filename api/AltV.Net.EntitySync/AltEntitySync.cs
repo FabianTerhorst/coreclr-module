@@ -24,16 +24,16 @@ namespace AltV.Net.EntitySync
             remove => EntitySyncServer.EntityRemoveCallbacks.Remove(value);
         }
 
-        public static void Init(ulong threadCount, int syncRate,
+        public static void Init(ulong threadCount, int syncRate, Func<ulong, bool> netOwnerEvents,
             Func<ulong, IClientRepository, NetworkLayer> createNetworkLayer,
             Func<ulong, SpatialPartition> createSpatialPartition, IIdProvider<ulong> idProvider)
         {
-            Init(threadCount, syncRate, createNetworkLayer, (entity, tc) => (entity.Id % tc),
+            Init(threadCount, syncRate, netOwnerEvents, createNetworkLayer, (entity, tc) => (entity.Id % tc),
                 (entityId, entityType, tc) => (entityId % tc), createSpatialPartition,
                 idProvider);
         }
-
-        public static void Init(ulong threadCount, int syncRate,
+        
+        public static void Init(ulong threadCount, int syncRate, Func<ulong, bool> netOwnerEvents,
             Func<ulong, IClientRepository, NetworkLayer> createNetworkLayer,
             Func<IEntity, ulong, ulong> entityThreadId,
             Func<ulong, ulong, ulong, ulong> entityIdAndTypeThreadId,
@@ -41,7 +41,7 @@ namespace AltV.Net.EntitySync
         {
             IdProvider = idProvider;
             EntitySyncServer =
-                new EntitySyncServer(threadCount, syncRate, createNetworkLayer, entityThreadId, entityIdAndTypeThreadId,
+                new EntitySyncServer(threadCount, syncRate, netOwnerEvents, createNetworkLayer, entityThreadId, entityIdAndTypeThreadId,
                     createSpatialPartition, idProvider);
         }
 

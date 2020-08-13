@@ -45,6 +45,7 @@ EXPORT void Vehicle_AddRef(alt::IVehicle* vehicle);
 EXPORT void Vehicle_RemoveRef(alt::IVehicle* vehicle);
 // Vehicle
 EXPORT alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle);
+EXPORT bool Vehicle_IsDestroyed(alt::IVehicle* vehicle);
 EXPORT uint8_t Vehicle_GetMod(alt::IVehicle* vehicle, uint8_t category);
 EXPORT uint8_t Vehicle_GetModsCount(alt::IVehicle* vehicle, uint8_t category);
 EXPORT bool Vehicle_SetMod(alt::IVehicle* vehicle, uint8_t category, uint8_t id);
@@ -206,6 +207,10 @@ EXPORT bool Vehicle_IsManualEngineControl(alt::IVehicle* vehicle);
 
 EXPORT void Vehicle_GetScriptDataBase64(alt::IVehicle* vehicle, const char*&base64);
 EXPORT void Vehicle_LoadScriptDataFromBase64(alt::IVehicle* vehicle, const char* base64);
+
+EXPORT void Vehicle_GetPositionCoords2(alt::IVehicle* vehicle, float* position_x, float* position_y, float* position_z, float* rotation_x, float* rotation_y, float* rotation_z, int* dimension);
+
+EXPORT void Vehicle_SetNetworkOwner(alt::IVehicle* vehicle, alt::IPlayer* networkOwnerPlayer, bool disableMigration);
 
 #ifdef __cplusplus
 }

@@ -117,6 +117,10 @@ alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle) {
     return vehicle->GetDriver().Get();
 }
 
+bool Vehicle_IsDestroyed(alt::IVehicle* vehicle) {
+    return vehicle->IsDestroyed();
+}
+
 uint8_t Vehicle_GetMod(alt::IVehicle* vehicle, uint8_t category) {
     return vehicle->GetMod(category);
 }
@@ -655,4 +659,20 @@ void Vehicle_GetScriptDataBase64(alt::IVehicle* vehicle, const char*&base64) {
 
 void Vehicle_LoadScriptDataFromBase64(alt::IVehicle* vehicle, const char* base64) {
     vehicle->LoadScriptDataFromBase64(base64);
+}
+
+void Vehicle_GetPositionCoords2(alt::IVehicle* vehicle, float* position_x, float* position_y, float* position_z, float* rotation_x, float* rotation_y, float* rotation_z, int* dimension) {
+    auto vehiclePosition = vehicle->GetPosition();
+    *position_x = vehiclePosition.x;
+    *position_y = vehiclePosition.y;
+    *position_z = vehiclePosition.z;
+    auto vehicleRotation = vehicle->GetRotation();
+    *rotation_x = vehicleRotation.pitch;
+    *rotation_y = vehicleRotation.roll;
+    *rotation_z = vehicleRotation.yaw;
+    *dimension = vehicle->GetDimension();
+}
+
+void Vehicle_SetNetworkOwner(alt::IVehicle* vehicle, alt::IPlayer* networkOwnerPlayer, bool disableMigration) {
+    vehicle->SetNetworkOwner(networkOwnerPlayer, disableMigration);
 }

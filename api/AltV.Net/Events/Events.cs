@@ -45,9 +45,11 @@ namespace AltV.Net.Events
 
     public delegate void ColShapeDelegate(IColShape colShape, IEntity targetEntity, bool state);
 
-    public delegate void ExplosionDelegate(IPlayer player, ExplosionType explosionType, Position position,
+    public delegate bool ExplosionDelegate(IPlayer player, ExplosionType explosionType, Position position,
         uint explosionFx);
 
     public delegate bool WeaponDamageDelegate(IPlayer player, IEntity target, uint weapon, ushort damage,
         Position shotOffset, BodyPart bodyPart);
+    
+    public delegate void VehicleDestroyDelegate(IVehicle vehicle);
 }

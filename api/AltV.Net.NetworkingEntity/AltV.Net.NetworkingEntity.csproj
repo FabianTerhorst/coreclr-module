@@ -31,10 +31,10 @@
 
     <ItemGroup>
       <PackageReference Include="System.Threading.Channels" Version="4.7.0" />
-      <PackageReference Include="VIEApps.Components.WebSockets" Version="10.3.2002.3" />
-      <PackageReference Include="Google.Protobuf" Version="3.11.3" />
-      <PackageReference Include="Grpc" Version="2.26.0" />
-      <PackageReference Include="Grpc.Tools" Version="2.26.0" PrivateAssets="All" />
+      <PackageReference Include="VIEApps.Components.WebSockets" Version="10.3.2005.1" />
+      <PackageReference Include="Google.Protobuf" Version="3.12.0" />
+      <PackageReference Include="Grpc" Version="2.29.0" />
+      <PackageReference Include="Grpc.Tools" Version="2.29.0" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup>

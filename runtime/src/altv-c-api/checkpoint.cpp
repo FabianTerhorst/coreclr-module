@@ -83,3 +83,11 @@ bool Checkpoint_IsVehicleIn(alt::ICheckpoint* checkpoint, alt::IVehicle* vehicle
 uint8_t Checkpoint_GetColShapeType(alt::ICheckpoint* checkpoint) {
     return (uint8_t) checkpoint->GetColshapeType();
 }
+
+void Checkpoint_SetPlayersOnly(alt::ICheckpoint* checkpoint, bool state) {
+    checkpoint->SetPlayersOnly(state);
+}
+
+bool Checkpoint_IsPlayersOnly(alt::ICheckpoint* checkpoint) {
+    return checkpoint->IsPlayersOnly();
+}

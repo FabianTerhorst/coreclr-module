@@ -226,13 +226,15 @@ void Server_GetVehicles(alt::ICore* server, alt::IVehicle* vehicles[], uint64_t 
 }
 
 void* Server_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type) {
-    auto entity = core->GetEntityByID(id);
+    auto entityRef = core->GetEntityByID(id);
+    auto entity = entityRef.Get();
+    if (entity == nullptr) return nullptr;
     type = (uint8_t) entity->GetType();
     switch (entity->GetType()) {
         case alt::IBaseObject::Type::PLAYER:
-            return dynamic_cast<alt::IPlayer*>(entity.Get());
+            return dynamic_cast<alt::IPlayer*>(entity);
         case alt::IBaseObject::Type::VEHICLE:
-            return dynamic_cast<alt::IVehicle*>(entity.Get());
+            return dynamic_cast<alt::IVehicle*>(entity);
     }
     return nullptr;
 }
@@ -247,6 +249,40 @@ void Server_StopResource(alt::ICore* server, const char* text) {
 
 void Server_RestartResource(alt::ICore* server, const char* text) {
     server->RestartResource(text);
+}
+
+alt::MValueConst* Server_GetMetaData(alt::ICore* core, const char* key) {
+    return new alt::MValueConst(core->GetMetaData(key));
+}
+
+void Server_SetMetaData(alt::ICore* core, const char* key, alt::MValueConst* val) {
+    if (val == nullptr) return;
+    core->SetMetaData(key, val->Get()->Clone());
+}
+
+bool Server_HasMetaData(alt::ICore* core, const char* key) {
+    return core->HasMetaData(key);
+}
+
+void Server_DeleteMetaData(alt::ICore* core, const char* key) {
+    core->DeleteMetaData(key);
+}
+
+alt::MValueConst* Server_GetSyncedMetaData(alt::ICore* core, const char* key) {
+    return new alt::MValueConst(core->GetSyncedMetaData(key));
+}
+
+void Server_SetSyncedMetaData(alt::ICore* core, const char* key, alt::MValueConst* val) {
+    if (val == nullptr) return;
+    core->SetSyncedMetaData(key, val->Get()->Clone());
+}
+
+bool Server_HasSyncedMetaData(alt::ICore* core, const char* key) {
+    return core->HasSyncedMetaData(key);
+}
+
+void Server_DeleteSyncedMetaData(alt::ICore* core, const char* key) {
+    core->DeleteSyncedMetaData(key);
 }
 
 alt::MValueConst* Core_CreateMValueNil(alt::ICore* core) {
@@ -365,4 +401,8 @@ alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value) {
     rgba.a = value.a;
     alt::MValueConst mValue = core->CreateMValueRGBA(rgba);
     return new alt::MValueConst(mValue);
+}
+
+bool Core_IsDebug(alt::ICore* core) {
+    return core->IsDebug();
 }

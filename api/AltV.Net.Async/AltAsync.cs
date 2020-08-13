@@ -116,6 +116,12 @@ namespace AltV.Net.Async
             remove => Module.ColShapeAsyncDelegateHandlers.Remove(value);
         }
 
+        public static event VehicleDestroyAsyncDelegate OnVehicleDestroy
+        {
+            add => Module.VehicleDestroyAsyncDelegateHandlers.Add(value);
+            remove => Module.VehicleDestroyAsyncDelegateHandlers.Remove(value);
+        }
+
         public static async void Log(string message)
         {
             var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);
@@ -193,6 +199,18 @@ namespace AltV.Net.Async
         {
             CheckIfAsyncResource();
             return AltVAsync.Schedule(action, value);
+        }
+
+        public static void RunOnMainThread(Action action)
+        {
+            CheckIfAsyncResource();
+            AltVAsync.ScheduleNoneTask(action);
+        }
+
+        public static void RunOnMainThread(Action<object> action, object value)
+        {
+            CheckIfAsyncResource();
+            AltVAsync.ScheduleNoneTask(action, value);
         }
     }
 }

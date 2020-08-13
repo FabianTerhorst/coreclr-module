@@ -62,6 +62,17 @@ namespace AltV.Net
             remove => Module.ExplosionEventHandler.Remove(value);
         }
 
+        /// <summary>
+        /// Weapon damage event handler
+        /// <example>
+        /// <code>
+        /// Alt.OnWeaponDamage += (player, target, weapon, damage, shotOffset, bodyPart) => {
+        ///   Console.WriteLine($"{player.Name} got damaged.");
+        ///   return true; // return false will cancel the weapon damage event and player won't receive damage.
+        /// };
+        /// </code>
+        /// </example>
+        /// </summary>
         public static event WeaponDamageDelegate OnWeaponDamage
         {
             add => Module.WeaponDamageEventHandler.Add(value);
@@ -158,6 +169,12 @@ namespace AltV.Net
         {
             add => Module.ColShapeEventHandler.Add(value);
             remove => Module.ColShapeEventHandler.Remove(value);
+        }
+        
+        public static event VehicleDestroyDelegate OnVehicleDestroy
+        {
+            add => Module.VehicleDestroyEventHandler.Add(value);
+            remove => Module.VehicleDestroyEventHandler.Remove(value);
         }
     }
 }
