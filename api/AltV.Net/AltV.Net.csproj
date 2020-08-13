@@ -13,7 +13,7 @@
         <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge gta5 gtav</PackageTags>
-        <PackageVersion>1.38.0-dev</PackageVersion>
+        <PackageVersion>1.38.2-rc</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>Add IEntity.SetNetworkingOwner(IPlayer, disableMigration)</PackageReleaseNotes>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
