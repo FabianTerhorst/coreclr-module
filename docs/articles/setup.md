@@ -19,4 +19,4 @@ server.cfg
 altv-server.exe (altv-server on linux)
 ```
 
-Now you are ready for creating your [first c# resource](https://fabianterhorst.github.io/coreclr-module/articles/create-resource.html).
+Now you are ready for creating your [first c# resource](create-resource.md).

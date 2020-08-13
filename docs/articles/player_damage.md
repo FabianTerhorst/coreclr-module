@@ -8,7 +8,7 @@ public class AltV_Wiki : IScript
 {
     /* We declare & Create our Event Handler. */
     [ScriptEvent(ScriptEventType.WeaponDamage)]
-    public static void WeaponDamage(IPlayer player, IPlayer target, uint weapon, ushort dmg, Position offset, BodyPart bodypart)
+    public static bool WeaponDamage(IPlayer player, IPlayer target, uint weapon, ushort dmg, Position offset, BodyPart bodypart)
     {
 
         /* We Convert the Weapon uint to a regular WeaponModel Enum. */
@@ -23,6 +23,8 @@ public class AltV_Wiki : IScript
             player?.SendChatMessage("You hitted a Player in his Pelvis! Why you did that ?!");
             target?.SendChatMessage("You got hitted by a " + weaponModel + " in your Pelvis :(");
         }
+        
+        return true; // return false will cancel the event and player won't receive damage.
     }
 }
 ```
