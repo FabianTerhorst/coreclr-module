@@ -4,7 +4,7 @@ namespace AltV.Net.Async
 {
     public class DefaultTickSchedulerFactory : ITickSchedulerFactory
     {
-        public TickScheduler Create(Thread mainThread)
+        public ITickScheduler Create(Thread mainThread)
         {
             return new QueueTickScheduler(mainThread);
         }

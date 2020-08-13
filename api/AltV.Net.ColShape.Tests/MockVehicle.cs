@@ -19,6 +19,11 @@ namespace AltV.Net.ColShape.Tests
             throw new NotImplementedException();
         }
 
+        public void ResetNetworkOwner()
+        {
+            throw new NotImplementedException();
+        }
+
         public bool HasData(string key)
         {
             throw new NotImplementedException();

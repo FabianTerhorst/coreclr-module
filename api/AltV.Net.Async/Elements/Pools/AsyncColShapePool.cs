@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using AltV.Net.Async.Elements.Refs;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Pools;
 using AltV.Net.Elements.Refs;
@@ -15,7 +16,7 @@ namespace AltV.Net.Async.Elements.Pools
         {
             foreach (var baseObject in GetAllObjects())
             {
-                using var baseObjectRefRef = new ColShapeRef(baseObject);
+                using var baseObjectRefRef = new AsyncColShapeRef(baseObject);
                 if (!baseObjectRefRef.Exists) continue;
                 baseObjectRefRef.DebugCountUp();
                 await asyncBaseObjectCallback.OnBaseObject(baseObject);

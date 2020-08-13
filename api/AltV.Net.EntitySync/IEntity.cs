@@ -39,9 +39,7 @@ namespace AltV.Net.EntitySync
         float LastStreamInRange { get; set; }
         
         EntityDataSnapshot DataSnapshot { get; }
-        
-        IDictionary<string, object> Data { get; }
-        
+
         IDictionary<string, object> ThreadLocalData { get; }
 
         void SetData(string key, object value);

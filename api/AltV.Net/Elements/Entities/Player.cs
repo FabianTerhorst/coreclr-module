@@ -105,7 +105,7 @@ namespace AltV.Net.Elements.Entities
         public override void SetNetworkOwner(IPlayer player, bool disableMigration)
         {
             CheckIfEntityExists();
-            AltNative.Player.Player_SetNetworkOwner(NativePointer, player.NativePointer, disableMigration);
+            AltNative.Player.Player_SetNetworkOwner(NativePointer, player?.NativePointer ?? IntPtr.Zero, disableMigration);
         }
 
         public override void GetMetaData(string key, out MValueConst value)

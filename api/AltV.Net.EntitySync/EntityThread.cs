@@ -6,6 +6,7 @@ using AltV.Net.EntitySync.SpatialPartitions;
 
 namespace AltV.Net.EntitySync
 {
+    //TODO: add aabb thread, add abstract entitythread class with constructor
     /// <summary>
     /// The entity thread checks in a endless loop if entities should be created or removed for all clients.
     /// And it delivers the results via the provided action callbacks.

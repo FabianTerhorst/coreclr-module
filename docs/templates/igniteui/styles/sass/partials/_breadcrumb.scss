@@ -1,0 +1,37 @@
+.breadcrumb{
+    margin: 0;
+    padding: 4px;
+    background-color: transparent;
+    color: #ddd;
+    white-space: nowrap;
+    font-size: .8rem;
+    align-self: center;
+
+    a {
+        color: #ccc;
+
+        &:hover,
+        &:focus {
+            color: #fff;
+        }
+    }
+}
+#breadcrumb{
+    align-self: center;
+}
+
+.breadcrumb:before {
+    content: '\00a0- ';
+    color: #fff;
+    font-size: 1rem;
+} 
+
+.breadcrumb > li + li:before {
+    content: '\00a0/';
+}
+
+.breadcrumb{
+    @media screen  and (max-width: 768px) {
+        display: none;
+    }
+}
