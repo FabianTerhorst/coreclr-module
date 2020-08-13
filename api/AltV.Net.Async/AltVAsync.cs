@@ -33,7 +33,8 @@ namespace AltV.Net.Async
 
         internal Task Schedule(Action action)
         {
-            if (Thread.CurrentThread == mainThread)
+            var currThread = Thread.CurrentThread;
+            if (currThread == mainThread || currThread == TickThread)
             {
                 try
                 {
@@ -51,7 +52,8 @@ namespace AltV.Net.Async
 
         internal Task Schedule(Action<object> action, object value)
         {
-            if (Thread.CurrentThread == mainThread)
+            var currThread = Thread.CurrentThread;
+            if (currThread == mainThread || currThread == TickThread)
             {
                 try
                 {
@@ -69,7 +71,8 @@ namespace AltV.Net.Async
 
         internal Task<TResult> Schedule<TResult>(Func<TResult> action)
         {
-            if (Thread.CurrentThread == mainThread)
+            var currThread = Thread.CurrentThread;
+            if (currThread == mainThread || currThread == TickThread)
             {
                 try
                 {
@@ -86,7 +89,8 @@ namespace AltV.Net.Async
 
         internal Task<TResult> Schedule<TResult>(Func<object, TResult> action, object value)
         {
-            if (Thread.CurrentThread == mainThread)
+            var currThread = Thread.CurrentThread;
+            if (currThread == mainThread || currThread == TickThread)
             {
                 try
                 {
@@ -103,7 +107,8 @@ namespace AltV.Net.Async
 
         internal void ScheduleNoneTask(Action action)
         {
-            if (Thread.CurrentThread == mainThread)
+            var currThread = Thread.CurrentThread;
+            if (currThread == mainThread || currThread == TickThread)
             {
                 action();
                 return;
@@ -114,7 +119,8 @@ namespace AltV.Net.Async
 
         internal void ScheduleNoneTask(Action<object> action, object value)
         {
-            if (Thread.CurrentThread == mainThread)
+            var currThread = Thread.CurrentThread;
+            if (currThread == mainThread || currThread == TickThread)
             {
                 action(value);
                 return;
