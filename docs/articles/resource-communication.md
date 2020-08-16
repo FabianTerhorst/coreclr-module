@@ -2,7 +2,7 @@
 
 This article will describe how to communicate between different server resources.
 
-## Exports
+## Export data
 
 Resources can define data that other resources can access while the resource is starting. This data is immutable after resource finished starting and can be accessed from any serverside resource.
 
@@ -46,7 +46,7 @@ public class SampleResource : AsyncResource
 }
 ```
 
-## Imports
+## Import data
 
 Resources can import data that got exported from other resources. Most likely you will define the resource where you import from as ```deps: [ myResource, myResource2 ]``` in your ```resource.cfg``` to make sure the resource is already started when your resource starts.
 You also have to define the resource name where you import data from.
