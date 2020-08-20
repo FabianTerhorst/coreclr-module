@@ -191,12 +191,6 @@ namespace AltV.Net.Native
             internal static extern float Player_GetMoveSpeed(IntPtr player);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern uint Player_GetWeapon(IntPtr player);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern ushort Player_GetAmmo(IntPtr player);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_GetAimPos(IntPtr player, ref Position aimPosition);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]

@@ -379,24 +379,6 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public uint Weapon
-        {
-            get
-            {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_GetWeapon(NativePointer);
-            }
-        }
-
-        public ushort Ammo
-        {
-            get
-            {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_GetAmmo(NativePointer);
-            }
-        }
-
         public Position AimPosition
         {
             get

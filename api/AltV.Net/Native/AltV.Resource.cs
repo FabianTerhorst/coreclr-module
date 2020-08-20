@@ -23,21 +23,22 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern int Resource_GetDependenciesSize(IntPtr core);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Resource_GetDependencies(IntPtr core, string[] dependencies, int size);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern int Resource_GetDependantsSize(IntPtr core);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Resource_GetDependants(IntPtr core, string[] dependants, int size);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Resource_SetExport(IntPtr core, IntPtr resource, IntPtr key, IntPtr val);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Resource_SetExports(IntPtr core, IntPtr resource, IntPtr[] values, IntPtr[] keys, int size);
+            internal static extern void Resource_SetExports(IntPtr core, IntPtr resource, IntPtr[] values,
+                IntPtr[] keys, int size);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Resource_GetPath(IntPtr resourcePointer, ref IntPtr text);
@@ -132,19 +133,30 @@ namespace AltV.Net.Native
 
             internal delegate void ColShapeDelegate(IntPtr colShapePointer, IntPtr targetEntityPointer,
                 BaseObjectType entityType, bool state);
-            
+
             internal delegate void VehicleDestroyDelegate(IntPtr vehiclePointer);
 
-            internal delegate void ConsoleCommandDelegate(string name, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] string[] args, int argsSize);
+            internal delegate void ConsoleCommandDelegate(string name,
+                [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
+                string[] args, int argsSize);
 
             internal delegate void MetaChangeDelegate(IntPtr entityPointer, BaseObjectType entityType, string key,
                 IntPtr value);
 
-            internal delegate void ExplosionDelegate(IntPtr eventPointer, IntPtr playerPointer, ExplosionType explosionType,
-                Position position, uint explosionFx);
+            internal delegate void ExplosionDelegate(IntPtr eventPointer, IntPtr playerPointer,
+                ExplosionType explosionType,
+                Position position, uint explosionFx, IntPtr targetEntityPointer, BaseObjectType targetEntityType);
 
             internal delegate void WeaponDamageDelegate(IntPtr eventPointer, IntPtr playerPointer, IntPtr entityPointer,
                 BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart);
+
+            internal delegate void FireDelegate(IntPtr eventPointer, IntPtr playerPointer,
+                [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
+                FireInfo[] fires, int length);
+
+            internal delegate void StartProjectileDelegate(IntPtr eventPointer, IntPtr sourcePlayerPointer, Position startPosition, Position direction, uint ammoHash, uint weaponHash);
+
+            internal delegate void PlayerWeaponChangeDelegate(IntPtr eventPointer, IntPtr targetPlayerPointer, uint oldWeapon, uint newWeapon);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetMainDelegate(IntPtr resource,
@@ -289,10 +301,22 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetColShapeDelegate(IntPtr resource,
                 ColShapeDelegate @delegate);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetVehicleDestroyDelegate(IntPtr resource,
                 VehicleDestroyDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetFireDelegate(IntPtr resource,
+                FireDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetStartProjectileDelegate(IntPtr resource,
+                StartProjectileDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPlayerWeaponChangeDelegate(IntPtr resource,
+                PlayerWeaponChangeDelegate @delegate);
         }
     }
 }

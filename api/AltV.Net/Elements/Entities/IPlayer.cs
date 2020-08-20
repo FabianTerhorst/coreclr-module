@@ -92,16 +92,6 @@ namespace AltV.Net.Elements.Entities
         float MoveSpeed { get; }
 
         /// <summary>
-        /// Returns the current weapon the player is holding
-        /// </summary>
-        uint Weapon { get; }
-
-        /// <summary>
-        /// Returns the ammo in the current weapon the player is holding
-        /// </summary>
-        ushort Ammo { get; }
-
-        /// <summary>
         /// Returns the World Position of where the player is currently aiming
         /// </summary>
         Position AimPosition { get; }

@@ -74,6 +74,15 @@ namespace AltV.Net.Async
 
         internal readonly AsyncEventHandler<VehicleDestroyAsyncDelegate> VehicleDestroyAsyncDelegateHandlers =
             new AsyncEventHandler<VehicleDestroyAsyncDelegate>();
+        
+        internal readonly AsyncEventHandler<FireAsyncDelegate> FireAsyncDelegateHandlers =
+            new AsyncEventHandler<FireAsyncDelegate>();
+        
+        internal readonly AsyncEventHandler<StartProjectileAsyncDelegate> StartProjectileAsyncDelegateHandlers =
+            new AsyncEventHandler<StartProjectileAsyncDelegate>();
+        
+        internal readonly AsyncEventHandler<PlayerWeaponChangeAsyncDelegate> PlayerWeaponChangeAsyncDelegateHandlers =
+            new AsyncEventHandler<PlayerWeaponChangeAsyncDelegate>();
 
         public AsyncModule(IServer server, AssemblyLoadContext assemblyLoadContext, INativeResource moduleResource,
             IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
@@ -172,18 +181,22 @@ namespace AltV.Net.Async
 
         public override void OnExplosionEvent(IntPtr eventPointer, IPlayer sourcePlayer, ExplosionType explosionType,
             Position position,
-            uint explosionFx)
+            uint explosionFx, IEntity targetEntity)
         {
-            base.OnExplosionEvent(eventPointer, sourcePlayer, explosionType, position, explosionFx);
+            base.OnExplosionEvent(eventPointer, sourcePlayer, explosionType, position, explosionFx, targetEntity);
             if (!ExplosionAsyncEventHandler.HasEvents()) return;
             var sourceReference = new PlayerRef(sourcePlayer);
+            var targetEntityReference = new BaseObjectRef(targetEntity);
             Task.Run(async () =>
             {
                 sourceReference.DebugCountUp();
+                targetEntityReference.DebugCountUp();
                 await ExplosionAsyncEventHandler.CallAsync(@delegate =>
-                    @delegate(sourcePlayer, explosionType, position, explosionFx));
+                    @delegate(sourcePlayer, explosionType, position, explosionFx, targetEntity));
                 sourceReference.DebugCountDown();
+                targetEntityReference.DebugCountDown();
                 sourceReference.Dispose();
+                targetEntityReference.Dispose();
             });
         }
 
@@ -546,6 +559,52 @@ namespace AltV.Net.Async
                     @delegate(vehicle));
                 vehicleReference.DebugCountDown();
                 vehicleReference.Dispose();
+            });
+        }
+
+        public override void OnFireEvent(IntPtr eventPointer, IPlayer player, FireInfo[] fires)
+        {
+            base.OnFireEvent(eventPointer, player, fires);
+            if (!FireAsyncDelegateHandlers.HasEvents()) return;
+            var playerRef = new PlayerRef(player);
+            Task.Run(async () =>
+            {
+                playerRef.DebugCountUp();
+                await FireAsyncDelegateHandlers.CallAsync(@delegate =>
+                    @delegate(player, fires));
+                playerRef.DebugCountDown();
+                playerRef.Dispose();
+            });
+        }
+
+        public override void OnStartProjectileEvent(IntPtr eventPointer, IPlayer player, Position startPosition, Position direction,
+            uint ammoHash, uint weaponHash)
+        {
+            base.OnStartProjectileEvent(eventPointer, player, startPosition, direction, ammoHash, weaponHash);
+            if (!StartProjectileAsyncDelegateHandlers.HasEvents()) return;
+            var playerRef = new PlayerRef(player);
+            Task.Run(async () =>
+            {
+                playerRef.DebugCountUp();
+                await StartProjectileAsyncDelegateHandlers.CallAsync(@delegate =>
+                    @delegate(player, startPosition, direction, ammoHash, weaponHash));
+                playerRef.DebugCountDown();
+                playerRef.Dispose();
+            });
+        }
+
+        public override void OnPlayerWeaponChangeEvent(IntPtr eventPointer, IPlayer player, uint oldWeapon, uint newWeapon)
+        {
+            base.OnPlayerWeaponChangeEvent(eventPointer, player, oldWeapon, newWeapon);
+            if (!PlayerWeaponChangeAsyncDelegateHandlers.HasEvents()) return;
+            var playerRef = new PlayerRef(player);
+            Task.Run(async () =>
+            {
+                playerRef.DebugCountUp();
+                await PlayerWeaponChangeAsyncDelegateHandlers.CallAsync(@delegate =>
+                    @delegate(player, oldWeapon, newWeapon));
+                playerRef.DebugCountDown();
+                playerRef.Dispose();
             });
         }
 
