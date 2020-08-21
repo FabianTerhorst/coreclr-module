@@ -21,7 +21,7 @@ Alt.OnPlayerDead += (player, killer, weapon) => {
 
 ```csharp 
     // We create our IScript class
-    public class AltV_Wiki : IScript
+    public class MyScriptClass : IScript
     {
         // We declare and create our event handler
         [ScriptEvent(ScriptEventType.PlayerDead)]
