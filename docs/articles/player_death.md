@@ -1,7 +1,6 @@
-# OnPlayerDeath
+# Player death event
 
 This is called when a player dies.
-
 
 | Parameter | Description  |
 |-----------|--------------|
