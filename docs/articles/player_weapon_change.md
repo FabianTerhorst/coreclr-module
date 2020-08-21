@@ -18,7 +18,7 @@ Alt.OnPlayerWeaponChange += (player, oldWeapon, newWeapon) => {
 # IScript event handler
 ```csharp
     // We create our IScript class
-    public class AltV_Wiki : IScript
+    public class MyScriptClass : IScript
     {
         // We declare & Create our Event Handler. 
         [ScriptEvent(ScriptEventType.PlayerWeaponChange)]
