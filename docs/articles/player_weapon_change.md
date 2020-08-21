@@ -1,5 +1,5 @@
 # CreateVehicle
-This is a little example how to use a Weapon-Switch Event.
+The player weapon change event gets called when the player weapon changed.
 
 | Parameter | Description  |
 |-----------|--------------|
