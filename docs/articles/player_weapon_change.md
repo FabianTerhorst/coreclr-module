@@ -20,7 +20,7 @@ Alt.OnPlayerWeaponChange += (player, oldWeapon, newWeapon) => {
     // We create our IScript class
     public class MyScriptClass : IScript
     {
-        // We declare & Create our Event Handler. 
+        // We declare and create our event handler. 
         [ScriptEvent(ScriptEventType.PlayerWeaponChange)]
         public bool OnPlayerWeaponChange(IPlayer player, uint oldWeapon, uint newWeapon)
         {
