@@ -291,6 +291,7 @@ deploy:
     github-token: $GITHUB_TOKEN
     target-branch: gh-pages
     local-dir: docs/_site
+    fqdn: csharp.altv.mp
     keep-history: true
     on:
       condition: "$DOCS = true"
