@@ -2,11 +2,11 @@
 
 This is called when a player dies.
 
-```
-player: The player that got killed
-killer: The player that killed the player (other player, hisself, null)
-weapon: The weapon that was used or a other reason https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs
-```
+
+| Parameter | Description  |
+|-----------|--------------|
+| player    | The player that got killed |
+| weapon    | The weapon that was used or a other reason https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs |
 
 ## Normal event handler
 
