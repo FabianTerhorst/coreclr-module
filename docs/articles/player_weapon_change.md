@@ -7,7 +7,7 @@ This is a little example how to use a Weapon-Switch Event.
 | oldweapon | The weapon that was used https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Enums/WeaponModel.cs |
 | newWeapon | The weapon that was used https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Enums/WeaponModel.cs |
 
-## Normal event handler
+# Normal event handler
 
 ```csharp
 Alt.OnPlayerWeaponChange += (player, oldWeapon, newWeapon) => {
@@ -15,8 +15,8 @@ Alt.OnPlayerWeaponChange += (player, oldWeapon, newWeapon) => {
 }
 ```
 
-## IScript event handler
-# First Example
+# IScript event handler
+#### First Example
 ```csharp
     // We create our IScript class
     public class AltV_Wiki : IScript
@@ -33,7 +33,7 @@ Alt.OnPlayerWeaponChange += (player, oldWeapon, newWeapon) => {
 ```
 
 
-# Second Example
+#### Second Example
 We fill his old Weapon with new Ammo
 ```csharp
 namespace VenoXV.Wiki
@@ -54,7 +54,7 @@ namespace VenoXV.Wiki
 ```
 
 
-# Third Example
+#### Third Example
 We will cancel the Weapon-Switch. 
 ```csharp
     // We create our IScript class 
