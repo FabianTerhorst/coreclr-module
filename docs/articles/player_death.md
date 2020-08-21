@@ -1,4 +1,4 @@
-# Player death event
+# Player dead event
 
 This is called when a player dies.
 
@@ -25,7 +25,7 @@ Alt.OnPlayerDead += (player, killer, weapon) => {
     {
         // We declare and create our event handler
         [ScriptEvent(ScriptEventType.PlayerDead)]
-        public static void OnPlayerDeath(IPlayer player, IPlayer killer, uint weapon)
+        public static void OnPlayerDead(IPlayer player, IPlayer killer, uint weapon)
         {
             // If you killed yourself then it should notify you
             if (killer == player) {
