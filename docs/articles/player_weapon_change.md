@@ -1,9 +1,9 @@
-# CreateVehicle
+# PlayerWeaponChange
 The player weapon change event gets called when the player weapon changed.
 
 | Parameter | Description  |
 |-----------|--------------|
-| player    | The player that switched his weapon |
+| player    | The player that got his weapons changed |
 | oldweapon | The weapon that was used https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Enums/WeaponModel.cs |
 | newWeapon | The weapon that was used https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Enums/WeaponModel.cs |
 
