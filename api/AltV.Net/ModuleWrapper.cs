@@ -166,9 +166,9 @@ namespace AltV.Net
         }
 
         public static void OnExplosion(IntPtr eventPointer, IntPtr playerPointer, ExplosionType explosionType,
-            Position position, uint explosionFx)
+            Position position, uint explosionFx, IntPtr targetEntityPointer, BaseObjectType targetEntityType)
         {
-            _module.OnExplosion(eventPointer, playerPointer, explosionType, position, explosionFx);
+            _module.OnExplosion(eventPointer, playerPointer, explosionType, position, explosionFx, targetEntityPointer, targetEntityType);
         }
 
         public static void OnWeaponDamage(IntPtr eventPointer, IntPtr playerPointer, IntPtr entityPointer,
@@ -294,11 +294,7 @@ namespace AltV.Net
             [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
             string[] args, int argsSize)
         {
-            if (args == null)
-            {
-                args = new string[0];
-            }
-
+            args ??= new string[0];
             _module.OnConsoleCommand(name, args);
         }
 
@@ -323,6 +319,24 @@ namespace AltV.Net
         public static void OnVehicleDestroy(IntPtr vehiclePointer)
         {
             _module.OnVehicleDestroy(vehiclePointer);
+        }
+        
+        public static void OnFire(IntPtr eventPointer, IntPtr playerPointer,
+            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
+            FireInfo[] fires, int length)
+        {
+            fires ??= new FireInfo[0];
+            _module.OnFire(eventPointer, playerPointer, fires);
+        }
+        
+        public static void OnStartProjectile(IntPtr eventPointer, IntPtr sourcePlayerPointer, Position startPosition, Position direction, uint ammoHash, uint weaponHash)
+        {
+            _module.OnStartProjectile(eventPointer, sourcePlayerPointer, startPosition, direction, ammoHash, weaponHash);
+        }
+        
+        public static void OnPlayerWeaponChange(IntPtr eventPointer, IntPtr targetPlayerPointer, uint oldWeapon, uint newWeapon)
+        {
+            _module.OnPlayerWeaponChange(eventPointer, targetPlayerPointer, oldWeapon, newWeapon);
         }
     }
 }

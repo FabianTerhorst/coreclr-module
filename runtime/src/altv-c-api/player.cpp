@@ -274,14 +274,6 @@ float Player_GetMoveSpeed(alt::IPlayer* player) {
     return player->GetMoveSpeed();
 }
 
-uint32_t Player_GetWeapon(alt::IPlayer* player) {
-    return player->GetWeapon();
-}
-
-uint16_t Player_GetAmmo(alt::IPlayer* player) {
-    return player->GetAmmo();
-}
-
 void Player_GetAimPos(alt::IPlayer* player, position_t &aimPosition) {
     auto playerAimPosition = player->GetAimPos();
     aimPosition.x = playerAimPosition.x;

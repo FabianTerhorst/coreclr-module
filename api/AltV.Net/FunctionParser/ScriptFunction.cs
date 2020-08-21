@@ -8,6 +8,12 @@ namespace AltV.Net.FunctionParser
 {
     public class ScriptFunction
     {
+        private static void WrongReturnType(MethodInfo methodInfo, Type expected, Type got)
+        {
+            Console.WriteLine(
+                $"{methodInfo.DeclaringType?.FullName}.{methodInfo.Name}({string.Join(", ", methodInfo.GetParameters().Select(m => $"{m.ParameterType.FullName} {m.Name}"))}): Expected {expected} return type, but got {got}");
+        }
+
         private static void WrongType(MethodInfo methodInfo, Type expected, Type got)
         {
             Console.WriteLine(
@@ -33,7 +39,7 @@ namespace AltV.Net.FunctionParser
             }
         }
 
-        public static ScriptFunction Create(Delegate @delegate, Type[] types)
+        public static ScriptFunction Create(Delegate @delegate, Type[] types, bool isAsync = false)
         {
             var parameters = @delegate.Method.GetParameters();
             if (parameters.Length != types.Length)
@@ -69,6 +75,12 @@ namespace AltV.Net.FunctionParser
                 return null;
             }
 
+            if (isAsync && @delegate.Method.ReturnType != typeof(Task<>))
+            {
+                WrongReturnType(@delegate.Method, typeof(Task<>), @delegate.Method.ReturnType);
+                return null;
+            }
+
             return new ScriptFunction(@delegate, scriptFunctionParameters);
         }
 
@@ -94,8 +106,9 @@ namespace AltV.Net.FunctionParser
             this.scriptFunctionParameters = scriptFunctionParameters;
             this.target = @delegate.Target;
         }
-        
-        private ScriptFunction(Delegate @delegate, ScriptFunctionParameter[] scriptFunctionParameters, FunctionParserMethodInfo functionParserMethodInfo)
+
+        private ScriptFunction(Delegate @delegate, ScriptFunctionParameter[] scriptFunctionParameters,
+            FunctionParserMethodInfo functionParserMethodInfo)
         {
             args = new object[scriptFunctionParameters.Length];
             this.@delegate = @delegate;

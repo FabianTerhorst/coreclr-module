@@ -22,6 +22,9 @@ namespace AltV.Net
         ColShape,
         WeaponDamage,
         VehicleDestroy,
-        Explosion
+        Explosion,
+        Fire,
+        StartProjectile,
+        PlayerWeaponChange
     }
 }

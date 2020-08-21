@@ -170,11 +170,29 @@ namespace AltV.Net
             add => Module.ColShapeEventHandler.Add(value);
             remove => Module.ColShapeEventHandler.Remove(value);
         }
-        
+
         public static event VehicleDestroyDelegate OnVehicleDestroy
         {
             add => Module.VehicleDestroyEventHandler.Add(value);
             remove => Module.VehicleDestroyEventHandler.Remove(value);
+        }
+
+        public static event FireDelegate OnFire
+        {
+            add => Module.FireEventHandler.Add(value);
+            remove => Module.FireEventHandler.Remove(value);
+        }
+
+        public static event StartProjectileDelegate OnStartProjectile
+        {
+            add => Module.StartProjectileEventHandler.Add(value);
+            remove => Module.StartProjectileEventHandler.Remove(value);
+        }
+
+        public static event PlayerWeaponChangeDelegate OnPlayerWeaponChange
+        {
+            add => Module.PlayerWeaponChangeEventHandler.Add(value);
+            remove => Module.PlayerWeaponChangeEventHandler.Remove(value);
         }
     }
 }
