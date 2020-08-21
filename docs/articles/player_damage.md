@@ -1,27 +1,39 @@
 # WeaponDamage 
-This event will be called if a player do any damage by a Weapon to a other player.
-##### Note : Events have to be created in a IScript Class! Otherwise it won´t work!
+
+## Normal event handler
 
 ```csharp
-/* We create our IScript class */
+Alt.OnWeaponDamage += (player, target, weapon, damage, offset, bodypart) => {
+    // ...
+    return true; // return false will cancel the event and player won't receive damage.
+}
+```
+
+## IScript event hanlder
+
+This event will be called if a player do any damage by a Weapon to a other player.
+##### Note : ScriptEvents have to be created in a IScript Class! Otherwise it won´t work!
+
+```csharp
+// We create our IScript class
 public class AltV_Wiki : IScript
 {
-    /* We declare & Create our Event Handler. */
+    // We declare & create our event handler
     [ScriptEvent(ScriptEventType.WeaponDamage)]
-    public static bool WeaponDamage(IPlayer player, IPlayer target, uint weapon, ushort dmg, Position offset, BodyPart bodypart)
+    public static bool WeaponDamage(IPlayer player, IEntity target, uint weapon, ushort damage, Position offset, BodyPart bodypart)
     {
+        // We convert the weapon uint to a regular WeaponModel enum
+        AltV.Net.Enums.WeaponModel weaponModel = (AltV.Net.Enums.WeaponModel) weapon;
+        if (target is IPlayer targetPlayer) {
+            player?.SendChatMessage("You hitted " + targetPlayer?.Name + " and gave him " + damage + " damage! Weapon: " + weaponModel);
+            targetPlayer?.SendChatMessage(player?.Name + " hitted you and gave you " + damage + " damage! Weapon: " + weaponModel);
 
-        /* We Convert the Weapon uint to a regular WeaponModel Enum. */
-        AltV.Net.Enums.WeaponModel weaponModel = (AltV.Net.Enums.WeaponModel)weapon;
-        /* We notify the player. */
-        player?.SendChatMessage("You hitted " + target?.Name + " and gave him " + dmg + " damage! Weapon: " + weaponModel);
-        target?.SendChatMessage(player?.Name + " hitted you and gave you " + dmg + " damage! Weapon: " + weaponModel);
-
-        /* We check if the BodyPart is his Pelvis ... */
-        if (bodypart == BodyPart.Pelvis)
-        {
-            player?.SendChatMessage("You hitted a Player in his Pelvis! Why you did that ?!");
-            target?.SendChatMessage("You got hitted by a " + weaponModel + " in your Pelvis :(");
+            // We check if the hitted body part was the head
+            if (bodypart == BodyPart.Head)
+            {
+                player?.SendChatMessage("You hitted a Player in " + bodypart);
+                targetPlayer?.SendChatMessage("You got hitted by a " + weaponModel + " in " + bodypart);
+            }
         }
         
         return true; // return false will cancel the event and player won't receive damage.
