@@ -25,7 +25,7 @@ Alt.OnPlayerWeaponChange += (player, oldWeapon, newWeapon) => {
         public bool OnPlayerWeaponChange(IPlayer player, uint oldWeapon, uint newWeapon)
         {
             // We notify the player that he changed his weapon.
-            player.SendChatMessage("You changed your Weapon from " + (AltV.Net.Enums.WeaponModel)oldWeapon + " to " + (AltV.Net.Enums.WeaponModel)newWeapon);
+            player.SendChatMessage("You changed your Weapon from " + (WeaponModel)oldWeapon + " to " + (WeaponModel)newWeapon);
             return true; // return false if you wanna cancel it.
         }
     }
