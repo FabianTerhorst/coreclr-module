@@ -56,13 +56,24 @@
       }
     ],
     "dest": "_site",
+    "globalMetadata": {
+      "_disableAffix": "true",
+      "_enableSearch": "true",
+      "_gitContribute": {
+        "repo": "https://github.com/FabianTerhorst/coreclr-module",
+        "branch": "master",
+        "apiSpecFolder": "docs"
+      }
+    },
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
       "default",
       "templates/darkfx"
     ],
-    "postProcessors": [],
+    "postProcessors": [
+      "ExtractSearchIndex"
+    ],
     "markdownEngineName": "markdig",
     "noLangKeyword": false,
     "keepFileLink": false,
