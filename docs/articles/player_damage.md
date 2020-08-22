@@ -9,7 +9,7 @@ Alt.OnWeaponDamage += (player, target, weapon, damage, offset, bodypart) => {
 }
 ```
 
-## IScript event hanlder
+## IScript event handler
 
 This event will be called if a player do any damage by a Weapon to a other player.
 ##### Note : ScriptEvents have to be created in a IScript Class! Otherwise it won´t work!
