@@ -57,3 +57,5 @@
       href: player_connect.md
     - name: Disconnect
       href: player_disconnect.md
+    - name: Weapon change
+      href: player_weapon_change.md
