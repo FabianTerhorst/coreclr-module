@@ -60,10 +60,9 @@
       "_disableAffix": "true",
       "_enableSearch": "true",
       "_gitContribute": {
-        "repo": "https://github.com/FabianTerhorst/coreclr-module",
-        "branch": "master",
-        "apiSpecFolder": "docs"
-      }
+        "branch": "master"
+      },
+      "_gitUrlPattern": "github"
     },
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
