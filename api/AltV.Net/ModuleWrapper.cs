@@ -322,7 +322,7 @@ namespace AltV.Net
         }
         
         public static void OnFire(IntPtr eventPointer, IntPtr playerPointer,
-            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
+            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 3)]
             FireInfo[] fires, int length)
         {
             fires ??= new FireInfo[0];
