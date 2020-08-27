@@ -216,6 +216,7 @@ namespace AltV.Net.EntitySync
                                         {
                                             lastCheckedEntity.NetOwner = null;
                                             lastCheckedEntity.NetOwnerRange = float.MaxValue;
+                                            onEntityNetOwnerChange(client, lastCheckedEntity, true);
                                         }
 
                                         if (lastCheckedEntity.TempNetOwner == client)
