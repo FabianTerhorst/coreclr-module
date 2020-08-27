@@ -687,5 +687,20 @@ namespace AltV.Net.Enums
         Asbo = 0x42ACA95F,
         Kanjo = 0x18619B7E,
         Imorgon = 0xBC7C0A00,
+        Club = 0x82E47E85,
+        Coquette4 = 0x98F65A5E,
+        Dukes3 = 0x7F3415E3,
+        Gauntlet5 = 0x817AFAAD,
+        Glendale2 = 0xC98BBAD6,
+        Landstalker2 = 0xCE0B9F22,
+        Manana2 = 0x665F785D,
+        Openwheel1 = 0x58F77553,
+        Openwheel2 = 0x4669D038,
+        Penumbra2 = 0xDA5EC7DA,
+        Peyote3 = 0x4201A843,
+        Seminole2 = 0x94114926,
+        Tigon = 0xAF0B8D48,
+        Yosemite3 = 0x0409D787,
+        Youga3 = 0x6B73A9BE
     }
 }

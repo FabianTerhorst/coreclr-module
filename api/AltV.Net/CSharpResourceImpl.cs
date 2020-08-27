@@ -170,6 +170,18 @@ namespace AltV.Net
             AltNative.Resource.VehicleDestroyDelegate onVehicleDestroy = ModuleWrapper.OnVehicleDestroy;
             handles.AddFirst(GCHandle.Alloc(onVehicleDestroy));
             AltNative.Resource.CSharpResourceImpl_SetVehicleDestroyDelegate(NativePointer, onVehicleDestroy);
+            
+            AltNative.Resource.FireDelegate onFire = ModuleWrapper.OnFire;
+            handles.AddFirst(GCHandle.Alloc(onFire));
+            AltNative.Resource.CSharpResourceImpl_SetFireDelegate(NativePointer, onFire);
+            
+            AltNative.Resource.StartProjectileDelegate onStartProjectile = ModuleWrapper.OnStartProjectile;
+            handles.AddFirst(GCHandle.Alloc(onStartProjectile));
+            AltNative.Resource.CSharpResourceImpl_SetStartProjectileDelegate(NativePointer, onStartProjectile);
+            
+            AltNative.Resource.PlayerWeaponChangeDelegate onPlayerWeaponChange = ModuleWrapper.OnPlayerWeaponChange;
+            handles.AddFirst(GCHandle.Alloc(onPlayerWeaponChange));
+            AltNative.Resource.CSharpResourceImpl_SetPlayerWeaponChangeDelegate(NativePointer, onPlayerWeaponChange);
         }
 
         public IntPtr CreateInvoker(MValueFunctionCallback function)

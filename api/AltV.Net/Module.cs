@@ -130,6 +130,15 @@ namespace AltV.Net
 
         internal readonly IEventHandler<VehicleDestroyDelegate> VehicleDestroyEventHandler =
             new HashSetEventHandler<VehicleDestroyDelegate>();
+        
+        internal readonly IEventHandler<FireDelegate> FireEventHandler =
+            new HashSetEventHandler<FireDelegate>();
+        
+        internal readonly IEventHandler<StartProjectileDelegate> StartProjectileEventHandler =
+            new HashSetEventHandler<StartProjectileDelegate>();
+        
+        internal readonly IEventHandler<PlayerWeaponChangeDelegate> PlayerWeaponChangeEventHandler =
+            new HashSetEventHandler<PlayerWeaponChangeDelegate>();
 
         internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
 
@@ -598,7 +607,7 @@ namespace AltV.Net
         }
 
         public void OnExplosion(IntPtr eventPointer, IntPtr playerPointer, ExplosionType explosionType,
-            Position position, uint explosionFx)
+            Position position, uint explosionFx, IntPtr targetEntityPointer, BaseObjectType targetEntityType)
         {
             if (!PlayerPool.Get(playerPointer, out var sourcePlayer))
             {
@@ -607,19 +616,21 @@ namespace AltV.Net
                 return;
             }
 
-            OnExplosionEvent(eventPointer, sourcePlayer, explosionType, position, explosionFx);
+            BaseEntityPool.Get(targetEntityPointer, targetEntityType, out var targetEntity);
+
+            OnExplosionEvent(eventPointer, sourcePlayer, explosionType, position, explosionFx, targetEntity);
         }
 
         public virtual void OnExplosionEvent(IntPtr eventPointer, IPlayer sourcePlayer, ExplosionType explosionType,
             Position position,
-            uint explosionFx)
+            uint explosionFx, IEntity targetEntity)
         {
             var cancel = false;
             foreach (var @delegate in ExplosionEventHandler.GetEvents())
             {
                 try
                 {
-                    if (!@delegate(sourcePlayer, explosionType, position, explosionFx))
+                    if (!@delegate(sourcePlayer, explosionType, position, explosionFx, targetEntity))
                     {
                         cancel = true;
                     }
@@ -1342,6 +1353,126 @@ namespace AltV.Net
                 {
                     Alt.Log("exception at event:" + "OnVehicleDestroyEvent" + ":" + exception);
                 }
+            }
+        }
+        
+        public void OnFire(IntPtr eventPointer, IntPtr playerPointer, FireInfo[] fires)
+        {
+            if (!PlayerPool.Get(playerPointer, out var player))
+            {
+                Console.WriteLine("OnFire Invalid player " + playerPointer);
+                return;
+            }
+
+            OnFireEvent(eventPointer, player, fires);
+        }
+
+        public virtual void OnFireEvent(IntPtr eventPointer, IPlayer player, FireInfo[] fires)
+        {
+            if (!FireEventHandler.HasEvents()) return;
+            var cancel = false;
+            foreach (var @delegate in FireEventHandler.GetEvents())
+            {
+                try
+                {
+                    if (!@delegate(player, fires))
+                    {
+                        cancel = true;
+                    }
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnFireEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnFireEvent" + ":" + exception);
+                }
+            }
+
+            if (cancel)
+            {
+                AltNative.Event.Event_Cancel(eventPointer);
+            }
+        }
+
+        public void OnStartProjectile(IntPtr eventPointer, IntPtr sourcePlayerPointer, Position startPosition, Position direction, uint ammoHash, uint weaponHash)
+        {
+            if (!PlayerPool.Get(sourcePlayerPointer, out var player))
+            {
+                Console.WriteLine("OnStartProjectile Invalid player " + sourcePlayerPointer);
+                return;
+            }
+
+            OnStartProjectileEvent(eventPointer, player, startPosition, direction, ammoHash, weaponHash);
+        }
+
+        public virtual void OnStartProjectileEvent(IntPtr eventPointer, IPlayer player, Position startPosition, Position direction, uint ammoHash, uint weaponHash)
+        {
+            if (!StartProjectileEventHandler.HasEvents()) return;
+            var cancel = false;
+            foreach (var @delegate in StartProjectileEventHandler.GetEvents())
+            {
+                try
+                {
+                    if (!@delegate(player, startPosition, direction, ammoHash, weaponHash))
+                    {
+                        cancel = true;
+                    }
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnStartProjectileEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnStartProjectileEvent" + ":" + exception);
+                }
+            }
+
+            if (cancel)
+            {
+                AltNative.Event.Event_Cancel(eventPointer);
+            }
+        }
+
+        public void OnPlayerWeaponChange(IntPtr eventPointer, IntPtr targetPlayerPointer, uint oldWeapon, uint newWeapon)
+        {
+            if (!PlayerPool.Get(targetPlayerPointer, out var player))
+            {
+                Console.WriteLine("OnPlayerWeaponChange Invalid player " + targetPlayerPointer);
+                return;
+            }
+
+            OnPlayerWeaponChangeEvent(eventPointer, player, oldWeapon, newWeapon);
+        }
+
+        public virtual void OnPlayerWeaponChangeEvent(IntPtr eventPointer, IPlayer player, uint oldWeapon, uint newWeapon)
+        {
+            if (!PlayerWeaponChangeEventHandler.HasEvents()) return;
+            var cancel = false;
+            foreach (var @delegate in PlayerWeaponChangeEventHandler.GetEvents())
+            {
+                try
+                {
+                    if (!@delegate(player, oldWeapon, newWeapon))
+                    {
+                        cancel = true;
+                    }
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerWeaponChangeEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerWeaponChangeEvent" + ":" + exception);
+                }
+            }
+
+            if (cancel)
+            {
+                AltNative.Event.Event_Cancel(eventPointer);
             }
         }
 

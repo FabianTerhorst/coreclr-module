@@ -281,15 +281,16 @@ namespace AltV.Net
                             scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                 new[]
                                 {
-                                    typeof(IPlayer), typeof(ExplosionType), typeof(Position), typeof(uint)
+                                    typeof(IPlayer), typeof(ExplosionType), typeof(Position), typeof(uint), typeof(IEntity)
                                 });
                             if (scriptFunction == null) return;
-                            OnExplosion += (player, explosionType, position, explosionFx) =>
+                            OnExplosion += (player, explosionType, position, explosionFx, targetEntity) =>
                                 {
                                     scriptFunction.Set(player);
                                     scriptFunction.Set(explosionType);
                                     scriptFunction.Set(position);
                                     scriptFunction.Set(explosionFx);
+                                    scriptFunction.Set(targetEntity);
                                     if (scriptFunction.Call() is bool value)
                                     {
                                         return value;
@@ -297,6 +298,67 @@ namespace AltV.Net
 
                                     return true;
                                 };
+                            break;
+                        case ScriptEventType.Fire:
+                            scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                new[]
+                                {
+                                    typeof(IPlayer), typeof(FireInfo[])
+                                });
+                            if (scriptFunction == null) return;
+                            OnFire += (player, fireInfos) =>
+                            {
+                                scriptFunction.Set(player);
+                                scriptFunction.Set(fireInfos);
+                                if (scriptFunction.Call() is bool value)
+                                {
+                                    return value;
+                                }
+
+                                return true;
+                            };
+                            break;
+                        case ScriptEventType.StartProjectile:
+                            scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                new[]
+                                {
+                                    typeof(IPlayer), typeof(Position), typeof(Position), typeof(uint), typeof(uint)
+                                });
+                            if (scriptFunction == null) return;
+                            OnStartProjectile += (player, startPosition, direction, ammoHash, weaponHash) =>
+                            {
+                                scriptFunction.Set(player);
+                                scriptFunction.Set(startPosition);
+                                scriptFunction.Set(direction);
+                                scriptFunction.Set(ammoHash);
+                                scriptFunction.Set(weaponHash);
+                                if (scriptFunction.Call() is bool value)
+                                {
+                                    return value;
+                                }
+
+                                return true;
+                            };
+                            break;
+                        case ScriptEventType.PlayerWeaponChange:
+                            scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                new[]
+                                {
+                                    typeof(IPlayer), typeof(uint), typeof(uint)
+                                });
+                            if (scriptFunction == null) return;
+                            OnPlayerWeaponChange += (player, oldWeapon, newWeapon) =>
+                            {
+                                scriptFunction.Set(player);
+                                scriptFunction.Set(oldWeapon);
+                                scriptFunction.Set(newWeapon);
+                                if (scriptFunction.Call() is bool value)
+                                {
+                                    return value;
+                                }
+
+                                return true;
+                            };
                             break;
                         case ServerEventAttribute @event:
                             var serverEventName = @event.Name ?? eventMethod.Name;

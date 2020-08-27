@@ -61,12 +61,6 @@ namespace AltV.Net.Async
         public static Task<float> GetMoveSpeedAsync(this IPlayer player) =>
             AltVAsync.Schedule(() => player.MoveSpeed);
 
-        public static Task<uint> GetWeaponAsync(this IPlayer player) =>
-            AltVAsync.Schedule(() => player.Weapon);
-
-        public static Task<ushort> GetAmmoAsync(this IPlayer player) =>
-            AltVAsync.Schedule(() => player.Ammo);
-
         public static Task<Position> GetAimPositionAsync(this IPlayer player) =>
             AltVAsync.Schedule(() => player.AimPosition);
 
