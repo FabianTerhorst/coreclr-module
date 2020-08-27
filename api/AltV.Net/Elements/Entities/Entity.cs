@@ -72,9 +72,9 @@ namespace AltV.Net.Elements.Entities
             return true;
         }
 
-        public void ResetNetworkOwner()
+        public void ResetNetworkOwner(bool disableMigration = false)
         {
-            SetNetworkOwner(null, false);
+            SetNetworkOwner(null, disableMigration);
         }
 
         protected Entity(IntPtr nativePointer, BaseObjectType type, ushort id) : base(nativePointer, type)
