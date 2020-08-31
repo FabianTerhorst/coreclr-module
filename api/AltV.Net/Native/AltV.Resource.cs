@@ -151,7 +151,7 @@ namespace AltV.Net.Native
                 BaseObjectType entityType, uint weapon, ushort damage, Position shotOffset, BodyPart bodyPart);
 
             internal delegate void FireDelegate(IntPtr eventPointer, IntPtr playerPointer,
-                [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
+                [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 3)]
                 FireInfo[] fires, int length);
 
             internal delegate void StartProjectileDelegate(IntPtr eventPointer, IntPtr sourcePlayerPointer, Position startPosition, Position direction, uint ammoHash, uint weaponHash);
