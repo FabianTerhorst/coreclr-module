@@ -208,6 +208,10 @@ deploy:
     file: 
       - upload/AltV.Net.Host.dll
       - upload/AltV.Net.Host.runtimeconfig.json
+      - api-dlls/AltV.Net.dll
+      - api-dlls/AltV.Net.Async.dll
+      - api-dlls/AltV.Net.pdb
+      - api-dlls/AltV.Net.Async.pdb
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$DOTNET_STABLE = true"
