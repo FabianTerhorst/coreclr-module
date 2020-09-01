@@ -2,7 +2,6 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 using AltV.Net.Data;
-using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Native
@@ -154,9 +153,11 @@ namespace AltV.Net.Native
                 [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 3)]
                 FireInfo[] fires, int length);
 
-            internal delegate void StartProjectileDelegate(IntPtr eventPointer, IntPtr sourcePlayerPointer, Position startPosition, Position direction, uint ammoHash, uint weaponHash);
+            internal delegate void StartProjectileDelegate(IntPtr eventPointer, IntPtr sourcePlayerPointer,
+                Position startPosition, Position direction, uint ammoHash, uint weaponHash);
 
-            internal delegate void PlayerWeaponChangeDelegate(IntPtr eventPointer, IntPtr targetPlayerPointer, uint oldWeapon, uint newWeapon);
+            internal delegate void PlayerWeaponChangeDelegate(IntPtr eventPointer, IntPtr targetPlayerPointer,
+                uint oldWeapon, uint newWeapon);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetMainDelegate(IntPtr resource,
