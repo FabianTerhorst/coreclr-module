@@ -8,9 +8,9 @@ The second way sends data to a specific player directly via ```player.Emit(event
 
 args expects a ```object[]```.
 
-Supported arguments types inside the array are ```object```, ```byte```, ```bool```, ```int```, ```long```, ```uint```, ```ulong```, ```float```, ```double```, ```string```, ```IPlayer``` (or any types extending IPlayer), ```IVehicle``` (or any types extending IVehicle),
+Supported arguments types inside the array are ```object```, ```bool```, ```int```, ```long```, ```uint```, ```ulong```, ```float```, ```double```, ```string```, ```IPlayer``` (or any types extending IPlayer), ```IVehicle``` (or any types extending IVehicle),
 ```Vector3```, ```Rotation```, ```Position```, ```IBlip``` (or any types extending IBlip), ```IVoiceChannel``` (or any types extending IVoiceChannel), ```IColShape``` (or any types extending IColShape), ```ICheckpoint``` (or any types extending ICheckpoint)
-```Dictionary<string, (any type listed here)```, ```Alt.Function```, any type listed here as array e.g. int[].
+```Dictionary<string, (any type listed here)```, ```Alt.Function```, any type listed here and byte as array e.g. int[].
 Also any dictionary in dictionary, array in array, ect. endless depth types are supported, because they are resolved recursively.
 
 ## Clientside
