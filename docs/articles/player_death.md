@@ -5,13 +5,13 @@ This is called when a player dies.
 | Parameter | Description  |
 |-----------|--------------|
 | player    | The player that got killed |
-| entity    | The entity who killed the player |
+| killer    | The killer who killed the player |
 | weapon    | The weapon that was used or a other reason https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs |
 
 ## Normal event handler
 
 ```csharp
-Alt.OnPlayerDead += (player, entity, weapon) => {
+Alt.OnPlayerDead += (player, killer, weapon) => {
     // ...
 }
 ```
