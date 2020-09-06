@@ -4,13 +4,13 @@ This is called everytime a player deals damage to another entity with a weapon.
 | Parameter | Description  |
 |-----------|--------------|
 | player    | The player that got killed |
-| killer    | The killer who got hitted by a Player |
+| target    | The target who got hitted by a Player |
 | weapon    | The weapon that was used or a other reason https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs |
 
 ## Normal event handler
 
 ```csharp
-Alt.OnWeaponDamage += (player, killer, weapon, damage, offset, bodypart) => {
+Alt.OnWeaponDamage += (player, target, weapon, damage, offset, bodypart) => {
     // ...
     return true; // return false will cancel the event and player won't receive damage.
 }
