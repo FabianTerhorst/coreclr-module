@@ -26,10 +26,10 @@ Alt.OnPlayerDead += (player, killer, weapon) => {
     {
         // We declare and create our event handler
         [ScriptEvent(ScriptEventType.PlayerDead)]
-        public static void OnPlayerDead(IPlayer player, IEntity entity, uint weapon)
+        public static void OnPlayerDead(IPlayer player, IEntity killer, uint weapon)
         {
             // Event will be called only if the killer is a player.
-            if (!(entity is IPlayer killer)) return;
+            if (!(killer is IPlayer killerPlayer)) return;
             // If you killed yourself then it should notify you
             if (killer == player) {
                 player.SendChatMessage("You killed yourself");
