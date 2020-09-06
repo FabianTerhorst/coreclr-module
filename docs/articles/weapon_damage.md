@@ -1,4 +1,11 @@
 # WeaponDamage 
+This is called everytime a player deals damage to another entity with a weapon.
+
+| Parameter | Description  |
+|-----------|--------------|
+| player    | The player that got killed |
+| target    | The target who got hitted by a Player |
+| weapon    | The weapon that was used or a other reason https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs |
 
 ## Normal event handler
 
@@ -16,13 +23,13 @@ This event will be called if a player do any damage by a Weapon to a other playe
 
 ```csharp
 // We create our IScript class
-public class AltV_Wiki : IScript
+public class MyScriptClass : IScript
 {
-    // We declare & create our event handler
+    // We declare and create our event handler
     [ScriptEvent(ScriptEventType.WeaponDamage)]
     public static bool WeaponDamage(IPlayer player, IEntity target, uint weapon, ushort damage, Position offset, BodyPart bodypart)
     {
-        // We convert the weapon uint to a regular WeaponModel enum
+        // We convert the weapon uint to a regular weaponmodel enum
         AltV.Net.Enums.WeaponModel weaponModel = (AltV.Net.Enums.WeaponModel) weapon;
         if (target is IPlayer targetPlayer) {
             player?.SendChatMessage("You hitted " + targetPlayer?.Name + " and gave him " + damage + " damage! Weapon: " + weaponModel);
