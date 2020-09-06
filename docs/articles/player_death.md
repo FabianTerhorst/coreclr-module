@@ -30,14 +30,14 @@ Alt.OnPlayerDead += (player, killer, weapon) => {
         {
             if ((killer is IPlayer killerPlayer)){
                 // If you killed yourself then it should notify you
-                if (killer == player) {
+                if (killerPlayer == player) {
                     player.SendChatMessage("You killed yourself");
                 }
                 else
                 {
                     // We notify the killer and the player.
-                    killer.SendChatMessage("You killed " + player.Name);
-                    player.SendChatMessage(killer?.Name + " killed you!");
+                    killerPlayer.SendChatMessage("You killed " + player.Name);
+                    player.SendChatMessage(killerPlayer?.Name + " killed you!");
                 }
             }
             else if((killer is IVehicle vehicle)){
