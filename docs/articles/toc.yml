@@ -52,7 +52,7 @@
     - name: Death
       href: player_death.md
     - name: Weapon damage
-      href: player_damage.md
+      href: weapon_damage.md
     - name: Connect
       href: player_connect.md
     - name: Disconnect
