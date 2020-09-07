@@ -17,7 +17,14 @@ namespace AltV.Net.Async
 
             public void Run()
             {
-                action();
+                try
+                {
+                    action();
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception);
+                }
             }
         }
         
@@ -35,7 +42,14 @@ namespace AltV.Net.Async
 
             public void Run()
             {
-                action(state);
+                try
+                {
+                    action(state);
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception);
+                }
             }
         }
         
@@ -56,7 +70,14 @@ namespace AltV.Net.Async
 
             public void Run()
             {
-                result.SetResult(func(state));
+                try
+                {
+                    result.SetResult(func(state));
+                }
+                catch (Exception exception)
+                {
+                    result.SetException(exception);
+                }
             }
         }
         
@@ -74,7 +95,14 @@ namespace AltV.Net.Async
 
             public void Run()
             {
-                result.SetResult(func());
+                try
+                {
+                    result.SetResult(func());
+                }
+                catch (Exception exception)
+                {
+                    result.SetException(exception);
+                }
             }
         }
         
@@ -92,8 +120,15 @@ namespace AltV.Net.Async
 
             public void Run()
             {
-                action();
-                result.SetResult(true);
+                try
+                {
+                    action();
+                    result.SetResult(true);
+                }
+                catch (Exception exception)
+                {
+                    result.SetException(exception);
+                }
             }
         }
         
@@ -114,8 +149,15 @@ namespace AltV.Net.Async
 
             public void Run()
             {
-                action(state);
-                result.SetResult(true);
+                try
+                {
+                    action(state);
+                    result.SetResult(true);
+                }
+                catch (Exception exception)
+                {
+                    result.SetException(exception);
+                }
             }
         }
 
