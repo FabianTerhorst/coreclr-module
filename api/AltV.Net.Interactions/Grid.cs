@@ -464,10 +464,9 @@ namespace AltV.Net.Interactions
         */
         protected static bool CanSeeOtherDimension(int dimension, int otherDimension)
         {
-            if (dimension > 0) return dimension == otherDimension;
-            if (dimension < 0) return otherDimension == 0 || dimension == otherDimension;
-            // dimension = 0
-            return otherDimension == 0;
+            if (dimension > 0) return dimension == otherDimension || otherDimension == int.MinValue;
+            if (dimension < 0) return otherDimension == 0 || dimension == otherDimension || otherDimension == int.MinValue;
+            return otherDimension == 0 || otherDimension == int.MinValue;
         }
         
         public IList<IInteraction> Find(Vector3 position, int dimension)

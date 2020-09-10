@@ -19,7 +19,7 @@ namespace AltV.Net.ColShape.Tests
             throw new NotImplementedException();
         }
 
-        public void ResetNetworkOwner()
+        public void ResetNetworkOwner(bool disableMigration = false)
         {
             throw new NotImplementedException();
         }

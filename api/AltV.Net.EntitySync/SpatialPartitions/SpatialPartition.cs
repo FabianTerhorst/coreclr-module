@@ -3,6 +3,11 @@ using System.Numerics;
 
 namespace AltV.Net.EntitySync.SpatialPartitions
 {
+    //TODO: add another algorithm for area grids
+    //TODO: that algorithm has a min and max area size and has multiple depths of areas with each deps having more or less areas depending on there size
+    //TODO: this is needed to support global entities and entities with a large range
+    
+    //TODO: use e.g. aabb checks instead of distance for none limited grids
     public abstract class SpatialPartition
     {
         public abstract void Add(IEntity entity);
