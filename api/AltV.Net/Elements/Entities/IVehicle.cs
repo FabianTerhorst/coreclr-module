@@ -287,7 +287,7 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Sets the Roof state
         /// </summary>
-        bool RoofOpened { get; set; }
+        byte RoofState { get; set; }
 
         /// <summary>
         /// If the flamethrower is active
