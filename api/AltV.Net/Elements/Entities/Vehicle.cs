@@ -674,17 +674,17 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public bool RoofOpened
+        public byte RoofState
         {
             get
             {
                 CheckIfEntityExists();
-                return AltNative.Vehicle.Vehicle_IsRoofOpened(NativePointer);
+                return AltNative.Vehicle.Vehicle_GetRoofState(NativePointer);
             }
             set
             {
                 CheckIfEntityExists();
-                AltNative.Vehicle.Vehicle_SetRoofOpened(NativePointer, value);
+                AltNative.Vehicle.Vehicle_SetRoofState(NativePointer, value);
             }
         }
 
