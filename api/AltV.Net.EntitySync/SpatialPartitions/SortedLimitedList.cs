@@ -379,7 +379,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
         public void ClearSize()
         {
             // clear does not change the capacity
-            version++;
+            //version++;
             _size = 0;
         }
 

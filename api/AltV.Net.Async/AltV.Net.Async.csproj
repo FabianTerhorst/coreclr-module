@@ -12,9 +12,9 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.38.4</PackageVersion>
+        <PackageVersion>1.42.0-dev</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Update dependencies</PackageReleaseNotes>
+        <PackageReleaseNotes>https://github.com/FabianTerhorst/coreclr-module/releases</PackageReleaseNotes>
         <PackageIcon>icon.png</PackageIcon>
         <IncludeSymbols>true</IncludeSymbols>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>

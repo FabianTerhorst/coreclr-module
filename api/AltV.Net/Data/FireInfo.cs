@@ -1,7 +1,6 @@
 using System.Runtime.InteropServices;
-using AltV.Net.Data;
 
-namespace AltV.Net
+namespace AltV.Net.Data
 {
     [StructLayout(LayoutKind.Sequential)]  
     public readonly struct FireInfo

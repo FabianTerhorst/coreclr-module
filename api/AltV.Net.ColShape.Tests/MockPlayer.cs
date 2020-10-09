@@ -21,7 +21,7 @@ namespace AltV.Net.ColShape.Tests
         public bool IsFlashlightActive { get; }
         public string Ip { get; }
 
-        public void ResetNetworkOwner()
+        public void ResetNetworkOwner(bool disableMigration = false)
         {
             throw new NotImplementedException();
         }

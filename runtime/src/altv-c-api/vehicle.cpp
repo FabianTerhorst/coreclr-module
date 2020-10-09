@@ -453,12 +453,12 @@ bool Vehicle_IsNightlightOn(alt::IVehicle* vehicle) {
     return vehicle->IsNightlightOn();
 }
 
-bool Vehicle_IsRoofOpened(alt::IVehicle* vehicle) {
-    return vehicle->IsRoofOpened();
+uint8_t Vehicle_GetRoofState(alt::IVehicle* vehicle) {
+    return vehicle->GetRoofState();
 }
 
-void Vehicle_SetRoofOpened(alt::IVehicle* vehicle, bool state) {
-    vehicle->SetRoofOpened(state);
+void Vehicle_SetRoofState(alt::IVehicle* vehicle, uint8_t state) {
+    vehicle->SetRoofState(state);
 }
 
 bool Vehicle_IsFlamethrowerActive(alt::IVehicle* vehicle) {
