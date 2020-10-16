@@ -1,9 +1,11 @@
-# PlayerConnect event
+# Player connect event
 
-This event will be called on a player connect.
+This is called when a player connects.
 
-player: the player that connected
-reason: null for now, might contain favorites, masterlist, directconnect in the future
+| Parameter | Description  |
+|-----------|--------------|
+| player    | The player that connected |
+| reason    | The reason with that the player connected |
 
 ## Normal event handler
 
