@@ -1,6 +1,6 @@
-# Player dead event
+# Player leave vehicle event
 
-This is called when a player dies.
+This is called when a player leaves a vehicle.
 
 | Parameter | Description  |
 |-----------|--------------|
