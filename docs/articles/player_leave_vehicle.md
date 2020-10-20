@@ -4,9 +4,9 @@ This is called when a player dies.
 
 | Parameter | Description  |
 |-----------|--------------|
-| vehicle   | The vehicle that the player entered |
-| player    | The player who is entering a vehicle |
-| seat      | The seat where the player entered |
+| vehicle   | The vehicle that the player left |
+| player    | The player who is leaving his current vehicle |
+| seat      | The seat where the player left |
 
 ## Normal event handler
 
@@ -25,7 +25,7 @@ Alt.OnPlayerLeaveVehicle += (vehicle, player, seat) => {
     public class MyScriptClass : IScript
     {
          // We declare and create our event handler
-        [ScriptEvent(ScriptEventType.PlayerEnterVehicle)]
+        [ScriptEvent(ScriptEventType.PlayerLeaveVehicle)]
         public static void OnPlayerLeaveVehicle(IVehicle vehicle, IPlayer player, byte seat)
         {
             // Simple output.
