@@ -310,10 +310,10 @@ namespace AltV.Net.Native
             internal static extern bool Vehicle_IsNightlightOn(IntPtr vehicle);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern byte Vehicle_GetRoofState(IntPtr vehicle);
+            internal static extern bool Vehicle_IsRoofOpened(IntPtr vehicle);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Vehicle_SetRoofState(IntPtr vehicle, byte state);
+            internal static extern void Vehicle_SetRoofOpened(IntPtr vehicle, bool state);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool Vehicle_IsFlamethrowerActive(IntPtr vehicle);

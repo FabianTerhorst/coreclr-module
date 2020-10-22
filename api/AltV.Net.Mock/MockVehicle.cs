@@ -113,7 +113,7 @@ namespace AltV.Net.Mock
 
         public bool IsDaylightOn { get; }
         public bool IsNightlightOn { get; }
-        public byte RoofState { get; set; }
+        public bool RoofOpened { get; set; }
         public bool IsFlamethrowerActive { get; }
         public string State { get; set; }
         public int EngineHealth { get; set; }

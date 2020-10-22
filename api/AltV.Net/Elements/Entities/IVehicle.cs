@@ -287,7 +287,7 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Sets the Roof state
         /// </summary>
-        byte RoofState { get; set; }
+        bool RoofOpened { get; set; }
 
         /// <summary>
         /// If the flamethrower is active
@@ -702,19 +702,5 @@ namespace AltV.Net.Elements.Entities
         /// <returns>The number plate style</returns>
         public static NumberPlateStyle GetNumberPlateStyle(this IVehicle vehicle) =>
             (NumberPlateStyle) vehicle.NumberplateIndex;
-
-        /// <summary>
-        /// Gets the current roof state
-        /// </summary>
-        /// <param name="vehicle">The vehicle</param>
-        /// <returns>The roof state</returns>
-        public static VehicleRoofState GetRoofState(this IVehicle vehicle) => (VehicleRoofState) vehicle.RoofState;
-        
-        /// <summary>
-        /// Sets the roof state
-        /// </summary>
-        /// <param name="vehicle">The vehicle</param>
-        /// <param name="state">The new roof state</param>
-        public static void SetRoofState(this IVehicle vehicle, VehicleRoofState state) => vehicle.RoofState = (byte) state;
     }
 }

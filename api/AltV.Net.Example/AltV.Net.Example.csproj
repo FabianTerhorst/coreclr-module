@@ -25,7 +25,6 @@
       <ProjectReference Include="..\AltV.Net.BenchmarkRunners\AltV.Net.BenchmarkRunners.csproj" />
       <ProjectReference Include="..\AltV.Net.Benchmarks\AltV.Net.Benchmarks.csproj" />
       <ProjectReference Include="..\AltV.Net.ColShape\AltV.Net.ColShape.csproj" />
-      <ProjectReference Include="..\AltV.Net.Interactions\AltV.Net.Interactions.csproj" />
       <ProjectReference Include="..\AltV.Net.Resources.Chat.Api\AltV.Net.Resources.Chat.Api.csproj" />
       <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />
     </ItemGroup>

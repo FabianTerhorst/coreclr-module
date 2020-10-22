@@ -5,13 +5,8 @@ using System.Numerics;
 
 namespace AltV.Net.EntitySync
 {
-    //TODO: we need data entities
-    //TODO: data entities dont call a normal create or remove event
-    //TODO: they call create(type, id, data), clearData(type, id, data), updateData(type, id, data)
     public class Entity : IEntity
     {
-        //TODO: add aabb minX,minY, maxX, maxY caching so we can compute distance even faster
-        //TODO: doesnt help with sorted, aabb probably can also compute distance
         public ulong Id { get; }
         public ulong Type { get; }
 

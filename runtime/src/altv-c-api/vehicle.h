@@ -134,8 +134,8 @@ EXPORT void Vehicle_SetWindowOpened(alt::IVehicle* vehicle, uint8_t windowId, bo
 EXPORT bool Vehicle_IsDaylightOn(alt::IVehicle* vehicle);
 EXPORT bool Vehicle_IsNightlightOn(alt::IVehicle* vehicle);
 
-EXPORT uint8_t Vehicle_GetRoofState(alt::IVehicle* vehicle);
-EXPORT void Vehicle_SetRoofState(alt::IVehicle* vehicle, uint8_t state);
+EXPORT bool Vehicle_IsRoofOpened(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetRoofOpened(alt::IVehicle* vehicle, bool state);
 
 EXPORT bool Vehicle_IsFlamethrowerActive(alt::IVehicle* vehicle);
 

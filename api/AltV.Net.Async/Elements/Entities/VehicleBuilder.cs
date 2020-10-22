@@ -156,9 +156,9 @@ namespace AltV.Net.Async.Elements.Entities
             return this;
         }
 
-        public IVehicleBuilder RoofState(byte value)
+        public IVehicleBuilder RoofOpened(bool value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetRoofState(ptr, value));
+            Add(ptr => AltNative.Vehicle.Vehicle_SetRoofOpened(ptr, value));
             return this;
         }
 

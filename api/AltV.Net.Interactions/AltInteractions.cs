@@ -49,69 +49,59 @@ namespace AltV.Net.Interactions
                 {
                     while (InteractionChannel.Reader.TryRead(out var interactionEvent))
                     {
-                        try
+                        switch (interactionEvent.EventType)
                         {
-                            switch (interactionEvent.EventType)
+                            case 0:
+                                _spatialPartition.Add((IInteraction) interactionEvent.Data);
+                                break;
+                            case 1:
+                                _spatialPartition.Remove((IInteraction) interactionEvent.Data);
+                                break;
+                            case 2:
                             {
-                                case 0:
-                                    _spatialPartition.Add((IInteraction) interactionEvent.Data);
-                                    break;
-                                case 1:
-                                    _spatialPartition.Remove((IInteraction) interactionEvent.Data);
-                                    break;
-                                case 2:
+                                var player = (IPlayer) interactionEvent.Data;
+                                float x;
+                                float y;
+                                float z;
+                                int currDimension;
+                                lock (player)
                                 {
-                                    var player = (IPlayer) interactionEvent.Data;
-                                    float x;
-                                    float y;
-                                    float z;
-                                    int currDimension;
-                                    lock (player)
+                                    if (player.Exists)
                                     {
-                                        if (player.Exists)
+                                        unsafe
                                         {
-                                            unsafe
-                                            {
-                                                Player_GetPositionCoords(player.NativePointer.ToPointer(), &x, &y, &z,
-                                                    &currDimension);
-                                            }
+                                            Player_GetPositionCoords(player.NativePointer.ToPointer(), &x, &y, &z,
+                                                &currDimension);
                                         }
-                                        else
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+
+                                var interactionPosition = new Vector3(x, y, z);
+                                var foundInteractions = _spatialPartition.Find(interactionPosition, currDimension);
+                                if (foundInteractions != null)
+                                {
+                                    foreach (var interaction in foundInteractions)
+                                    {
+                                        if (interaction.OnInteraction(player, interactionPosition, currDimension))
                                         {
                                             break;
                                         }
                                     }
-
-                                    var interactionPosition = new Vector3(x, y, z);
-                                    var interactions = _spatialPartition.Find(interactionPosition,
-                                        currDimension);
-                                    //TODO: return sorted by range
-                                    if (interactions != null)
-                                    {
-                                        foreach (var interaction in interactions)
-                                        {
-                                            if (interaction.OnInteraction(player, interactionPosition, currDimension))
-                                            {
-                                                break;
-                                            }
-                                        }
-                                    }
-
-                                    break;
                                 }
-                                case 3:
-                                {
-                                    var (interactionPosition, currDimension, callback) =
-                                        ((Vector3, int, TaskCompletionSource<IInteraction[]>)) interactionEvent.Data;
-                                    callback.SetResult(_spatialPartition.Find(interactionPosition, currDimension)
-                                        .ToArray());
-                                    break;
-                                }
+
+                                break;
                             }
-                        }
-                        catch (Exception exception)
-                        {
-                            Console.Write(exception);
+                            case 3:
+                            {
+                                var (interactionPosition, currDimension, callback) =
+                                    ((Vector3, int, TaskCompletionSource<IInteraction[]>)) interactionEvent.Data;
+                                callback.SetResult(_spatialPartition.Find(interactionPosition, currDimension).ToArray());
+                                break;
+                            }
                         }
                     }
                 }

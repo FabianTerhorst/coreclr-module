@@ -33,7 +33,7 @@ namespace AltV.Net.Mock
             Exists = true;
         }
 
-        public void ResetNetworkOwner(bool disableMigration = false)
+        public void ResetNetworkOwner()
         {
             throw new NotImplementedException();
         }

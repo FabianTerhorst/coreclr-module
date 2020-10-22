@@ -19,7 +19,7 @@ namespace AltV.Net.ColShape.Tests
             throw new NotImplementedException();
         }
 
-        public void ResetNetworkOwner(bool disableMigration = false)
+        public void ResetNetworkOwner()
         {
             throw new NotImplementedException();
         }
@@ -218,7 +218,7 @@ namespace AltV.Net.ColShape.Tests
 
         public bool IsDaylightOn { get; }
         public bool IsNightlightOn { get; }
-        public byte RoofState { get; set; }
+        public bool RoofOpened { get; set; }
         public bool IsFlamethrowerActive { get; }
         public string State { get; set; }
         public int EngineHealth { get; set; }

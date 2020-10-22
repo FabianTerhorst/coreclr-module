@@ -39,7 +39,7 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Resets the net owner of the current entity and set it to default calculations.
         /// </summary>
-        public void ResetNetworkOwner(bool disableMigration = false);
+        public void ResetNetworkOwner();
 
         /// <summary>
         /// Set synced meta data of the entity.
