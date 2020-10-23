@@ -75,11 +75,11 @@ namespace AltV.Net.FunctionParser
                 return null;
             }
 
-            if (isAsync && @delegate.Method.ReturnType != typeof(Task<>))
+            /*if (isAsync && typeof(Task).IsAssignableFrom(@delegate.Method.ReturnType))
             {
-                WrongReturnType(@delegate.Method, typeof(Task<>), @delegate.Method.ReturnType);
+                WrongReturnType(@delegate.Method, typeof(Task), @delegate.Method.ReturnType);
                 return null;
-            }
+            }*/
 
             return new ScriptFunction(@delegate, scriptFunctionParameters);
         }
