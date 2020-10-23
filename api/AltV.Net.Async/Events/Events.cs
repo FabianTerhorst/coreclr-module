@@ -39,10 +39,16 @@ namespace AltV.Net.Async.Events
     public delegate Task ColShapeAsyncDelegate(IColShape colShape, IEntity targetEntity, bool state);
     
     public delegate Task ExplosionAsyncDelegate(IPlayer player, ExplosionType explosionType, Position position,
-        uint explosionFx);
+        uint explosionFx, IEntity target);
 
     public delegate Task WeaponDamageAsyncDelegate(IPlayer player, IEntity target, uint weapon, ushort damage,
         Position shotOffset, BodyPart bodyPart);
     
     public delegate Task VehicleDestroyAsyncDelegate(IVehicle vehicle);
+    
+    public delegate Task FireAsyncDelegate(IPlayer player, FireInfo[] fireInfos);
+    
+    public delegate Task StartProjectileAsyncDelegate(IPlayer player, Position startPosition, Position direction, uint ammoHash, uint weaponHash);
+    
+    public delegate Task PlayerWeaponChangeAsyncDelegate(IPlayer player, uint oldWeapon, uint newWeapon);
 }

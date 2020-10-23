@@ -414,5 +414,35 @@ namespace AltV.Net.ColShape.Tests
         }
 
         public bool IsDestroyed { get; }
+
+        public bool GetSyncedMetaData(string key, out int value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GetSyncedMetaData(string key, out uint value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GetSyncedMetaData(string key, out float value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GetStreamSyncedMetaData(string key, out int value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GetStreamSyncedMetaData(string key, out uint value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GetStreamSyncedMetaData(string key, out float value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -17,8 +17,9 @@ void CSharpResourceImpl::ResetDelegates() {
     OnResourceErrorDelegate = [](auto var) {};
     OnPlayerDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
     OnPlayerDeathDelegate = [](auto var, auto var2, auto var3, auto var4) {};
-    OnExplosionDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
-    OnWeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7, auto var8) {};
+    OnExplosionDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7) {};
+    OnWeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7,
+                                auto var8) {};
     OnPlayerDisconnectDelegate = [](auto var, auto var2) {};
     OnPlayerRemoveDelegate = [](auto var) {};
     OnVehicleRemoveDelegate = [](auto var) {};
@@ -45,6 +46,9 @@ void CSharpResourceImpl::ResetDelegates() {
     OnRemoveColShapeDelegate = [](auto var) {};
     OnColShapeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnVehicleDestroyDelegate = [](auto var) {};
+    OnFireDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnStartProjectileDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
+    OnPlayerWeaponChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
 }
 
 bool CSharpResourceImpl::Start() {
@@ -193,19 +197,31 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
         }
             break;
         case alt::CEvent::Type::FIRE_EVENT: {
-            //auto fireEvent = ((alt::CFireEvent*) (ev));
-            //TODO: implement when implemented in cpp sdk
+            auto fireEvent = ((alt::CFireEvent*) (ev));
+            auto source = fireEvent->GetSource().Get();
+            auto fires = fireEvent->GetFires();
+            int length = fires.GetSize();
+            if (length == 0) {
+                OnFireDelegate(fireEvent, source, nullptr, 0);
+            } else {
+                auto fireArray = new alt::CFireEvent::FireInfo[length];
+                for (int i = 0; i < length; ++i) {
+                    auto const fire = fires[i];
+                    fireArray[i] = fire;
+                }
+                OnFireDelegate(fireEvent, source, fireArray, length);
+            }
         }
             break;
         case alt::CEvent::Type::EXPLOSION_EVENT: {
             auto explosionEvent = ((alt::CExplosionEvent*) (ev));
             auto eventPosition = explosionEvent->GetPosition();
-            position_t position = {};
-            position.x = eventPosition.x;
-            position.y = eventPosition.y;
-            position.z = eventPosition.z;
-            OnExplosionDelegate(explosionEvent, explosionEvent->GetSource().Get(), explosionEvent->GetExplosionType(), position,
-                                explosionEvent->GetExplosionFX());
+            auto targetEntity = explosionEvent->GetTarget().Get();
+            position_t position = {eventPosition.x, eventPosition.y, eventPosition.z};
+            OnExplosionDelegate(explosionEvent, explosionEvent->GetSource().Get(), explosionEvent->GetExplosionType(),
+                                position,
+                                explosionEvent->GetExplosionFX(), GetEntityPointer(targetEntity),
+                                GetEntityType(targetEntity));
         }
             break;
         case alt::CEvent::Type::WEAPON_DAMAGE_EVENT: {
@@ -213,10 +229,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             auto targetEntity = weaponDamageEvent->GetTarget().Get();
             if (targetEntity == nullptr) return true;
             auto eventShotOffset = weaponDamageEvent->GetShotOffset();
-            position_t shotOffset = {};
-            shotOffset.x = eventShotOffset[0];
-            shotOffset.y = eventShotOffset[1];
-            shotOffset.z = eventShotOffset[2];
+            position_t shotOffset = {eventShotOffset[0], eventShotOffset[1], eventShotOffset[2]};
             OnWeaponDamageDelegate(ev, weaponDamageEvent->GetSource().Get(), GetEntityPointer(targetEntity),
                                    targetEntity->GetType(), weaponDamageEvent->GetWeaponHash(),
                                    weaponDamageEvent->GetDamageValue(), shotOffset, weaponDamageEvent->GetBodyPart());
@@ -345,6 +358,23 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
         case alt::CEvent::Type::VEHICLE_DESTROY: {
             auto vehicle = ((alt::CVehicleDestroyEvent*) (ev))->GetTarget().Get();
             OnVehicleDestroyDelegate(vehicle);
+            break;
+        }
+        case alt::CEvent::Type::START_PROJECTILE_EVENT: {
+            auto startProjectileEvent = ((alt::CStartProjectileEvent*) (ev));
+            auto startPosition = startProjectileEvent->GetStartPosition();
+            position_t startPositionStruct = {startPosition.x, startPosition.y, startPosition.z};
+            auto direction = startProjectileEvent->GetDirection();
+            position_t directionStruct = {direction[0], direction[1], direction[2]};
+            OnStartProjectileDelegate(startProjectileEvent, startProjectileEvent->GetSource().Get(), startPositionStruct, directionStruct,
+                                      startProjectileEvent->GetAmmoHash(), startProjectileEvent->GetWeaponHash());
+            break;
+        }
+        case alt::CEvent::Type::PLAYER_WEAPON_CHANGE: {
+            auto playerWeaponChangeEvent = ((alt::CPlayerWeaponChangeEvent*) (ev));
+            OnPlayerWeaponChangeDelegate(playerWeaponChangeEvent, playerWeaponChangeEvent->GetTarget().Get(),
+                                         playerWeaponChangeEvent->GetOldWeapon(),
+                                         playerWeaponChangeEvent->GetNewWeapon());
             break;
         }
     }
@@ -600,6 +630,21 @@ void CSharpResourceImpl_SetVehicleDestroyDelegate(CSharpResourceImpl* resource,
     resource->OnVehicleDestroyDelegate = delegate;
 }
 
+void CSharpResourceImpl_SetFireDelegate(CSharpResourceImpl* resource,
+                                        FireDelegate_t delegate) {
+    resource->OnFireDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetStartProjectileDelegate(CSharpResourceImpl* resource,
+                                                   StartProjectileDelegate_t delegate) {
+    resource->OnStartProjectileDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerWeaponChangeDelegate(CSharpResourceImpl* resource,
+                                                      PlayerWeaponChangeDelegate_t delegate) {
+    resource->OnPlayerWeaponChangeDelegate = delegate;
+}
+
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files) {
     info->type = "js";
     return true;
@@ -637,4 +682,11 @@ void* CSharpResourceImpl::GetEntityPointer(alt::IEntity* entity) {
         }
     }
     return nullptr;
+}
+
+alt::IBaseObject::Type CSharpResourceImpl::GetEntityType(alt::IEntity* entity) {
+    if (entity != nullptr) {
+        return entity->GetType();
+    }
+    return alt::IBaseObject::Type::PLAYER;// 0
 }

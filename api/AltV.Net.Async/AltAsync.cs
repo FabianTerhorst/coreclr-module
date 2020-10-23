@@ -121,6 +121,24 @@ namespace AltV.Net.Async
             add => Module.VehicleDestroyAsyncDelegateHandlers.Add(value);
             remove => Module.VehicleDestroyAsyncDelegateHandlers.Remove(value);
         }
+        
+        public static event FireAsyncDelegate OnFire
+        {
+            add => Module.FireAsyncDelegateHandlers.Add(value);
+            remove => Module.FireAsyncDelegateHandlers.Remove(value);
+        }
+
+        public static event StartProjectileAsyncDelegate OnStartProjectile
+        {
+            add => Module.StartProjectileAsyncDelegateHandlers.Add(value);
+            remove => Module.StartProjectileAsyncDelegateHandlers.Remove(value);
+        }
+
+        public static event PlayerWeaponChangeAsyncDelegate OnPlayerWeaponChange
+        {
+            add => Module.PlayerWeaponChangeAsyncDelegateHandlers.Add(value);
+            remove => Module.PlayerWeaponChangeAsyncDelegateHandlers.Remove(value);
+        }
 
         public static async void Log(string message)
         {

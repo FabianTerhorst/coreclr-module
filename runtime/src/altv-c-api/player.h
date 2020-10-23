@@ -121,9 +121,6 @@ EXPORT void Player_SetMaxArmor(alt::IPlayer* player, uint16_t armor);
 
 EXPORT float Player_GetMoveSpeed(alt::IPlayer* player);
 
-EXPORT uint32_t Player_GetWeapon(alt::IPlayer* player);
-EXPORT uint16_t Player_GetAmmo(alt::IPlayer* player);
-
 EXPORT void Player_GetAimPos(alt::IPlayer* player, position_t &aimPosition);
 EXPORT void Player_GetHeadRotation(alt::IPlayer* player, rotation_t &headRotation);
 
