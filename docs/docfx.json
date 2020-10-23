@@ -68,7 +68,7 @@
     "fileMetadataFiles": [],
     "template": [
       "default",
-      "templates/darkfx"
+      "templates/discordfx"
     ],
     "postProcessors": [
       "ExtractSearchIndex"
