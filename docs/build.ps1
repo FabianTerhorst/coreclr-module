@@ -74,7 +74,7 @@ try
 {
     LogWrap "Downloading DocFx package" {
         if(Test-Path "./docfx/docfx.exe") { return -0x1 }
-        FetchAndDownloadRelease "dotnet/docfx" "docfx.zip" "v2.51" 2>$null
+        FetchAndDownloadRelease "dotnet/docfx" "docfx.zip" 2>$null
     }
     LogWrap "Extracting DocFx package" {
         if(Test-Path "./docfx/docfx.exe") { return -0x1 }
@@ -90,10 +90,10 @@ try
     } $true
 
     LogWrap "Generating project metadata" {
-        return -0x1
+        ./docfx/docfx metadata "docfx.json"
     }
 
-    ./docfx/docfx "docfx.json" --serve -p $port
+    ./docfx/docfx build "docfx.json" --serve -p $port
 }
 finally
 {
