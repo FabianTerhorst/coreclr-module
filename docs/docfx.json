@@ -7,9 +7,13 @@
             "api/**.csproj"
           ],
           "exclude": [
+            "api/AltV.Net.CodeGen*/**.csproj",
+            "api/AltV.Net.Client/**.csproj",
+            "api/AltV.Net.WebAssembly*/**.csproj",
+            "api/AltV.Net*Example/**.csproj",
+            "api/AltV.Net*Tests/**.csproj",
             "**/obj/**",
-            "**/bin/**",
-            "_site/**"
+            "**/bin/**"
           ],
           "cwd": ".."
         }
