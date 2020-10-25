@@ -1,4 +1,5 @@
 # Build results
+_site/
 api/**
 !api/**.md
 _site/
@@ -8,4 +9,5 @@ output.json
 
 # Others
 docfx/
+plugins/
 templates/
