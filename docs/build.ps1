@@ -1,12 +1,18 @@
 param(
     [Switch] $disableChecks = $false,
-    [Switch] $debug = $false,
-    [string] $port = "8080"
+    [string] $port = "8080",
+    [Switch] $clearCache = $false
 )
 
 function Cleanup() {
-    if($debug) { return }
     Remove-Item -Path 'docfx.zip' -Force 2>&1 > $null
+    Remove-Item -Path 'docfx-tmpls-discordfx.zip' -Force 2>&1 > $null
+    if($clearCache) {
+        Remove-Item -Path '_site' -Recurse -Force 2>&1 > $null
+        Remove-Item -Path 'obj' -Recurse -Force 2>&1 > $null
+        Remove-Item -Path 'api/**.yml' -Force 2>&1 > $null
+        Remove-Item -Path 'api/.manifest' -Force 2>&1 > $null
+    }
 }
 
 function GetAssemblyVersion([string] $file) {
@@ -70,6 +76,11 @@ function LogWrap([string] $msg, [ScriptBlock] $action, [boolean] $disResult=$fal
     }
 }
 
+if($clearCache) {
+    Cleanup
+    exit
+}
+
 try
 {
     LogWrap "Downloading DocFx package" {
@@ -81,12 +92,23 @@ try
         ExtractArchive "docfx.zip" 2>$null
     }
 
+    LogWrap "Downloading DocFx DiscordFX package" {
+        if(Test-Path "./templates/discordfx") { return -0x1 }
+        FetchAndDownloadRelease "Lhoerion/DiscordFX" "docfx-tmpls-discordfx.zip" 2>&1 6>$null
+    }
+    LogWrap "Extracting DocFx DiscordFX package" {
+        if(Test-Path "./templates/discordfx") { return -0x1 }
+        ExtractArchive "docfx-tmpls-discordfx.zip" "templates/" 2>&1 6>$null
+    }
+
     LogWrap "Tools version" {
         $dotnetVersion=dotnet --version
         $docfxVer=GetAssemblyVersion "./docfx/docfx.exe"
+        $themeVer=cat "./templates/discordfx/version.txt"
         Write-Host -NoNewline -ForegroundColor "green" "done`n"
         Write-Host ".NET Core v$dotnetVersion"
         Write-Host "DocFx v$docfxVer"
+        Write-Host "DocFx DiscordFX v$themeVer"
     } $true
 
     LogWrap "Generating project metadata" {
