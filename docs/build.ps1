@@ -1,17 +1,16 @@
 param(
-    [Switch] $disableChecks = $false,
     [string] $port = "8080",
-    [Switch] $clearCache = $false
+    [Switch] $cleanOnly = $false
 )
 
-function Cleanup() {
+function PostCleanup() {
     Remove-Item -Path 'docfx.zip' -Force 2>&1 > $null
     Remove-Item -Path 'docfx-tmpls-discordfx.zip' -Force 2>&1 > $null
-    if($clearCache) {
-        Remove-Item -Path '_site' -Recurse -Force 2>&1 > $null
-        Remove-Item -Path 'obj' -Recurse -Force 2>&1 > $null
-        Remove-Item -Path 'api/**.yml' -Force 2>&1 > $null
-        Remove-Item -Path 'api/.manifest' -Force 2>&1 > $null
+    if($cleanOnly) {
+        Remove-Item -Path './_site/' -Recurse -Force 2>&1 > $null
+        Remove-Item -Path './obj/' -Recurse -Force 2>&1 > $null
+        Remove-Item -Path './api/**.yml' -Force 2>&1 > $null
+        Remove-Item -Path './api/.manifest' -Force 2>&1 > $null
     }
 }
 
@@ -76,20 +75,17 @@ function LogWrap([string] $msg, [ScriptBlock] $action, [boolean] $disResult=$fal
     }
 }
 
-if($clearCache) {
-    Cleanup
-    exit
-}
-
 try
 {
+    if($cleanOnly) { exit }
+    
     LogWrap "Downloading DocFx package" {
         if(Test-Path "./docfx/docfx.exe") { return -0x1 }
         FetchAndDownloadRelease "dotnet/docfx" "docfx.zip" 2>$null
     }
     LogWrap "Extracting DocFx package" {
         if(Test-Path "./docfx/docfx.exe") { return -0x1 }
-        ExtractArchive "docfx.zip" 2>$null
+        ExtractArchive "docfx.zip" "./docfx/" 2>$null
     }
 
     LogWrap "Downloading DocFx DiscordFX package" {
@@ -98,7 +94,7 @@ try
     }
     LogWrap "Extracting DocFx DiscordFX package" {
         if(Test-Path "./templates/discordfx") { return -0x1 }
-        ExtractArchive "docfx-tmpls-discordfx.zip" "templates/" 2>&1 6>$null
+        ExtractArchive "docfx-tmpls-discordfx.zip" "./templates/" 2>&1 6>$null
     }
 
     LogWrap "Tools version" {
@@ -119,5 +115,5 @@ try
 }
 finally
 {
-    Cleanup
+    PostCleanup
 }
