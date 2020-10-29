@@ -4,7 +4,6 @@ api/**
 !api/**.md
 _site/
 [Oo]bj/
-output.json
 **.zip
 
 # Others
