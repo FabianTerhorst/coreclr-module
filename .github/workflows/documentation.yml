@@ -6,8 +6,9 @@ on:
     paths:
       - 'docs/api/**.md'
       - 'docs/articles/**.md'
+      - 'docs/apidoc/**.md'
       - 'docs/images/**'
-      - 'docs/*.json'
+      - 'docs/docfx.json'
       - 'docs/filterConfig.yml'
       - 'docs/index.md'
       - 'docs/toc.yml'
