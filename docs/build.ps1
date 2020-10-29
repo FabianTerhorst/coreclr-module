@@ -1,12 +1,13 @@
 param(
     [string] $port = "8080",
+    [Switch] $cleanMetadata = $false,
     [Switch] $cleanOnly = $false
 )
 
 function PostCleanup() {
     Remove-Item -Path 'docfx.zip' -Force 2>&1 > $null
     Remove-Item -Path 'docfx-tmpls-discordfx.zip' -Force 2>&1 > $null
-    if($cleanOnly) {
+    if($cleanMetadata) {
         Remove-Item -Path './_site/' -Recurse -Force 2>&1 > $null
         Remove-Item -Path './obj/' -Recurse -Force 2>&1 > $null
         Remove-Item -Path './api/**.yml' -Force 2>&1 > $null
