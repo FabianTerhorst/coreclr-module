@@ -1,5 +1,5 @@
 - name: Getting Started
-  href: intro.md
+  href: index.md
   items:
     - name: Setup
       href: setup.md
