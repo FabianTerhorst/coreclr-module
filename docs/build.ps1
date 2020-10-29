@@ -1,7 +1,7 @@
 param(
-    [string] $port = "8080",
-    [Switch] $cleanMetadata = $false,
-    [Switch] $cleanOnly = $false
+    [string] $port="8080",
+    [Switch] $cleanMetadata=$false,
+    [Switch] $cleanOnly=$false
 )
 
 function PostCleanup() {
