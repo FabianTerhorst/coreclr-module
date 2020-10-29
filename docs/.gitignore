@@ -1,9 +1,12 @@
-###############
-#    folder   #
-###############
-/**/DROP/
-/**/TEMP/
-/**/packages/
-/**/bin/
-/**/obj/
-_site
+# Build results
+_site/
+api/**
+!api/**.md
+_site/
+[Oo]bj/
+**.zip
+
+# Others
+docfx/
+plugins/
+templates/
