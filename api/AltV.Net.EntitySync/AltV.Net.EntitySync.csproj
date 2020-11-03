@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-        <PackageVersion>1.7.0-dev-preview</PackageVersion>
+        <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+        <PackageVersion>1.8.0-dev-preview</PackageVersion>
         <Authors>AltMp</Authors>
         <Description>AltV .NET Core Entity Sync</Description>
         <Copyright>AltMp</Copyright>
