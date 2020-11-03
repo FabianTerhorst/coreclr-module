@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using AltV.Net.Data;
@@ -35,42 +36,132 @@ namespace AltV.Net.FunctionParser
 
         public static object ParseBool(object value, Type type, FunctionTypeInfo typeInfo)
         {
-            return value is bool ? value : null;
+            switch (value)
+            {
+                case bool _:
+                    return value;
+                case string stringValue:
+                    switch (stringValue)
+                    {
+                        case "true":
+                            return true;
+                        case "false":
+                            return false;
+                    }
+
+                    break;
+            }
+
+            return null;
         }
 
         public static object ParseInt(object value, Type type, FunctionTypeInfo typeInfo)
         {
-            return value is long l ? (int) l : default;
+            unchecked
+            {
+                return value switch
+                {
+                    long longValue => (int) longValue,
+                    ulong ulongValue => (int) ulongValue,
+                    double doubleValue => (int) doubleValue,
+                    string stringValue when int.TryParse(stringValue, out var intValue) => intValue,
+                    bool boolValue => boolValue ? 1 : 0,
+                    _ => default
+                };
+            }
         }
 
         public static object ParseLong(object value, Type type, FunctionTypeInfo typeInfo)
         {
-            return value is long ? value : null;
+            unchecked
+            {
+                return value switch
+                {
+                    long longValue => longValue,
+                    ulong ulongValue => (long) ulongValue,
+                    double doubleValue => (long) doubleValue,
+                    string stringValue when long.TryParse(stringValue, out var longValue) => longValue,
+                    bool boolValue => boolValue ? 1L : 0L,
+                    _ => default
+                };
+            }
         }
 
         public static object ParseUInt(object value, Type type, FunctionTypeInfo typeInfo)
         {
-            return value is ulong ul ? (uint) ul : default;
+            unchecked
+            {
+                return value switch
+                {
+                    long longValue => (uint) longValue,
+                    ulong ulongValue => (uint) ulongValue,
+                    double doubleValue => (uint) doubleValue,
+                    string stringValue when uint.TryParse(stringValue, out var uintValue) => uintValue,
+                    bool boolValue => boolValue ? (uint) 1 : (uint) 0,
+                    _ => default
+                };
+            }
         }
 
         public static object ParseULong(object value, Type type, FunctionTypeInfo typeInfo)
         {
-            return value is ulong ? value : null;
+            unchecked
+            {
+                return value switch
+                {
+                    long longValue => (ulong) longValue,
+                    ulong ulongValue => ulongValue,
+                    double doubleValue => (ulong) doubleValue,
+                    string stringValue when ulong.TryParse(stringValue, out var ulongValue) => ulongValue,
+                    bool boolValue => boolValue ? (ulong) 1L : (ulong) 0L,
+                    _ => default
+                };
+            }
         }
 
         public static object ParseFloat(object value, Type type, FunctionTypeInfo typeInfo)
         {
-            return value is double d ? (float) d : default;
+            unchecked
+            {
+                return value switch
+                {
+                    long longValue => (float) longValue,
+                    ulong ulongValue => (float) ulongValue,
+                    double doubleValue => (float) doubleValue,
+                    string stringValue when float.TryParse(stringValue, out var floatValue) => floatValue,
+                    bool boolValue => boolValue ? (float) 1.0 : (float) 0.0,
+                    _ => default
+                };
+            }
         }
 
         public static object ParseDouble(object value, Type type, FunctionTypeInfo typeInfo)
         {
-            return value is double ? value : null;
+            unchecked
+            {
+                return value switch
+                {
+                    long longValue => (double) longValue,
+                    ulong ulongValue => (double) ulongValue,
+                    double doubleValue => (double) doubleValue,
+                    string stringValue when double.TryParse(stringValue, out var doubleValue) => doubleValue,
+                    bool boolValue => boolValue ? (double) 1.0 : (double) 0.0,
+                    _ => default
+                };
+            }
         }
 
         public static object ParseString(object value, Type type, FunctionTypeInfo typeInfo)
         {
-            return value is string ? value : null;
+            return value switch
+            {
+                long longValue => longValue.ToString(CultureInfo.InvariantCulture),
+                ulong ulongValue => ulongValue.ToString(CultureInfo.InvariantCulture),
+                double doubleValue =>doubleValue.ToString(CultureInfo.InvariantCulture),
+                string stringValue => stringValue,
+                bool boolValue => boolValue ? "true" : "false",
+                _ => default
+            };
         }
 
         public static object ParseEntity(object value, Type type, FunctionTypeInfo typeInfo)
