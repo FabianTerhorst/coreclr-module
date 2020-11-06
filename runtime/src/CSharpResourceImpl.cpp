@@ -177,6 +177,13 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                                        entity->GetID(),
                                        damageEvent->GetWeapon(),
                                        damageEvent->GetDamage());
+            } else {
+                OnPlayerDamageDelegate(damageEvent->GetTarget().Get(),
+                                       nullptr,
+                                       alt::IBaseObject::Type::PLAYER,
+                                       0,
+                                       damageEvent->GetWeapon(),
+                                       damageEvent->GetDamage());
             }
         }
             break;
