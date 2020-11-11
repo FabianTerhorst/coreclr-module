@@ -21,6 +21,21 @@ namespace AltV.Net.ColShape.Tests
         public bool IsFlashlightActive { get; }
         public string Ip { get; }
 
+        bool IPlayer.RemoveWeapon(uint weapon)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasWeaponComponent(uint weapon, uint weaponComponent)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte GetWeaponTintIndex(uint weapon)
+        {
+            throw new NotImplementedException();
+        }
+
         public void ResetNetworkOwner()
         {
             throw new NotImplementedException();
