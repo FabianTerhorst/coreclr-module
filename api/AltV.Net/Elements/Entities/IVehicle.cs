@@ -6,18 +6,18 @@ namespace AltV.Net.Elements.Entities
     public interface IVehicle : IEntity
     {
         /// <summary>
-        /// Get the current driver of the vehicle.
+        /// Get the current driver of the 
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         IPlayer Driver { get; }
-        
+
         /// <summary>
         /// Gets if the vehicle is destroyed.
         /// </summary>
         bool IsDestroyed { get; }
 
         /// <summary>
-        /// Get or set mod kit of the vehicle.
+        /// Get or set mod kit of the 
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         byte ModKit { get; set; }
@@ -33,7 +33,7 @@ namespace AltV.Net.Elements.Entities
         bool IsPrimaryColorRgb { get; }
 
         /// <summary>
-        /// Get or set primary color of the vehicle.
+        /// Get or set primary color of the 
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         byte PrimaryColor { get; set; }
@@ -98,7 +98,7 @@ namespace AltV.Net.Elements.Entities
         /// For most other vehicles this is the FrontWheel variation getter.
         /// </summary>
         byte WheelVariation { get; }
-        
+
         /// <summary>
         /// Rear wheel variation.
         /// </summary>
@@ -112,13 +112,13 @@ namespace AltV.Net.Elements.Entities
         byte SpecialDarkness { get; set; }
 
         /// <summary>
-        /// Get or set number plate index of the vehicle.
+        /// Get or set number plate index of the 
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         uint NumberplateIndex { get; set; }
 
         /// <summary>
-        /// Get or set number plate text of the vehicle.
+        /// Get or set number plate text of the 
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         string NumberplateText { get; set; }
@@ -287,7 +287,7 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Sets the Roof state
         /// </summary>
-        bool RoofOpened { get; set; }
+        byte RoofState { get; set; }
 
         /// <summary>
         /// If the flamethrower is active
@@ -353,21 +353,21 @@ namespace AltV.Net.Elements.Entities
         /// <param name="wheelId">Wheel Id</param>
         /// <returns>True if the wheel is detached</returns>
         bool IsWheelDetached(byte wheelId);
-        
+
         /// <summary>
         /// Sets the detached state of the given wheel
         /// </summary>
         /// <param name="wheelId">Wheel Id</param>
         /// <param name="state">True when it should be detached, False when it should be attached</param>
         void SetWheelDetached(byte wheelId, bool state);
-        
+
         /// <summary>
         /// Returns if the wheel is on fire
         /// </summary>
         /// <param name="wheelId">Wheel Id</param>
         /// <returns>True if the wheel is on fire</returns>
         bool IsWheelOnFire(byte wheelId);
-        
+
         /// <summary>
         /// Sets the fire state of the given wheel
         /// </summary>
@@ -545,162 +545,155 @@ namespace AltV.Net.Elements.Entities
         /// Removes the vehicle entity
         /// </summary>
         void Remove();
-    }
 
-    public static class VehicleEnumExtensions
-    {
         /// <summary>
         /// Returns the current mod of the vehicle in the category
         /// </summary>
-        /// <param name="vehicle">The current vehicle</param>
         /// <param name="category">Mod category</param>
         /// <returns></returns>
-        public static byte GetMod(this IVehicle vehicle, VehicleModType category) => vehicle.GetMod((byte) category);
+        public byte GetModExt(VehicleModType category) => GetMod((byte) category);
 
         /// <summary>
         /// Returns the amount of mods available in a category
         /// </summary>
-        /// <param name="vehicle">The vehicle</param>
         /// <param name="category">The mod type</param>
         /// <returns></returns>
-        public static byte GetModsCount(this IVehicle vehicle, VehicleModType category) =>
-            vehicle.GetModsCount((byte) category);
+        public byte GetModsCountExt(VehicleModType category) =>
+            GetModsCount((byte) category);
 
         /// <summary>
         /// Sets a vehicles mod into a category
         /// </summary>
-        /// <param name="vehicle">The vehicle</param>
         /// <param name="category">The mod category</param>
         /// <param name="id">The mod id</param>
         /// <returns></returns>
-        public static bool SetMod(this IVehicle vehicle, VehicleModType category, byte id) =>
-            vehicle.SetMod((byte) category, id);
+        public bool SetModExt(VehicleModType category, byte id) =>
+            SetMod((byte) category, id);
 
         /// <summary>
         /// Sets a vehicles part damage
         /// </summary>
-        /// <param name="vehicle">The vehicle</param>
         /// <param name="part">The vehicle part</param>
         /// <param name="damage">The damage</param>
-        public static void SetPartDamageLevel(this IVehicle vehicle, VehiclePart part, byte damage) =>
-            vehicle.SetPartDamageLevel((byte) part, damage);
-
-        /// <summary>
-        /// Get the amount of bullet holes in a part
-        /// </summary>
-        /// <param name="vehicle">The vehicle</param>
-        /// <param name="part">The vehicle part</param>
-        /// <returns>Amount of bullet holes</returns>
-        public static byte GetPartBulletHoles(this IVehicle vehicle, VehiclePart part) =>
-            vehicle.GetPartBulletHoles((byte) part);
-
-        /// <summary>
-        /// Sets the amount of bullet holes in a vehicles part
-        /// </summary>
-        /// <param name="vehicle">The vehicle</param>
-        /// <param name="part">The part</param>
-        /// <param name="shootsCount">The amount of bullets</param>
-        public static void SetPartBulletHoles(this IVehicle vehicle, VehiclePart part, byte shootsCount) =>
-            vehicle.SetPartBulletHoles((byte) part, shootsCount);
-
-        /// <summary>
-        /// Gets the vehicles bumper damage level
-        /// </summary>
-        /// <param name="vehicle">The vehicle</param>
-        /// <param name="bumper">The bumper</param>
-        /// <returns>Enum of VehicleBumperDamage</returns>
-        public static VehicleBumperDamage GetBumperDamageLevel(this IVehicle vehicle, VehicleBumper bumper) =>
-            (VehicleBumperDamage) vehicle.GetBumperDamageLevel((byte) bumper);
-
-        /// <summary>
-        /// Sets the vehicles bumper damage level
-        /// </summary>
-        /// <param name="vehicle">The vehicle</param>
-        /// <param name="bumper">The bumper (Front/Rear)</param>
-        /// <param name="damageLevel">The Bumper damage level</param>
-        public static void SetBumperDamageLevel(this IVehicle vehicle, VehicleBumper bumper,
-            VehicleBumperDamage damageLevel) => vehicle.SetBumperDamageLevel((byte) bumper, (byte) damageLevel);
+        public void SetPartDamageLevelExt(VehiclePart part, byte damage) =>
+            SetPartDamageLevel((byte) part, damage);
 
         /// <summary>
         /// Gets the damage level of a vehicle part
         /// </summary>
-        /// <param name="vehicle">The vehicle</param>
         /// <param name="part">The part</param>
         /// <returns>The VehiclePart damage level</returns>
-        public static VehiclePartDamage GetPartDamageLevel(this IVehicle vehicle, VehiclePart part) =>
-            (VehiclePartDamage) vehicle.GetPartDamageLevel((byte) part);
+        public VehiclePartDamage GetPartDamageLevelExt(VehiclePart part) =>
+            (VehiclePartDamage) GetPartDamageLevel((byte) part);
+
+        /// <summary>
+        /// Get the amount of bullet holes in a part
+        /// </summary>
+        /// <param name="part">The vehicle part</param>
+        /// <returns>Amount of bullet holes</returns>
+        public byte GetPartBulletHolesExt(VehiclePart part) =>
+            GetPartBulletHoles((byte) part);
+
+        /// <summary>
+        /// Sets the amount of bullet holes in a vehicles part
+        /// </summary>
+        /// <param name="part">The part</param>
+        /// <param name="shootsCount">The amount of bullets</param>
+        public void SetPartBulletHolesExt(VehiclePart part, byte shootsCount) =>
+            SetPartBulletHoles((byte) part, shootsCount);
+
+        /// <summary>
+        /// Gets the vehicles bumper damage level
+        /// </summary>
+        /// <param name="bumper">The bumper</param>
+        /// <returns>Enum of VehicleBumperDamage</returns>
+        public VehicleBumperDamage GetBumperDamageLevelExt(VehicleBumper bumper) =>
+            (VehicleBumperDamage) GetBumperDamageLevel((byte) bumper);
+
+        /// <summary>
+        /// Sets the vehicles bumper damage level
+        /// </summary>
+        /// <param name="bumper">The bumper (Front/Rear)</param>
+        /// <param name="damageLevel">The Bumper damage level</param>
+        public void SetBumperDamageLevelExt(VehicleBumper bumper,
+            VehicleBumperDamage damageLevel) => SetBumperDamageLevel((byte) bumper, (byte) damageLevel);
 
         /// <summary>
         /// Sets the damage level of a vehicle part
         /// </summary>
-        /// <param name="vehicle">The vehicle</param>
         /// <param name="part">The vehicle part</param>
         /// <param name="damage">The damage level</param>
-        public static void SetPartDamageLevel(this IVehicle vehicle, VehiclePart part, VehiclePartDamage damage) =>
-            vehicle.SetPartDamageLevel((byte) part, (byte) damage);
+        public void SetPartDamageLevelExt(VehiclePart part, VehiclePartDamage damage) =>
+            SetPartDamageLevel((byte) part, (byte) damage);
 
         /// <summary>
         /// Returns the current door state of a vehicles door
         /// </summary>
-        /// <param name="vehicle">The vehicle</param>
         /// <param name="door">The door</param>
         /// <returns>The door state</returns>
-        public static VehicleDoorState GetDoorState(this IVehicle vehicle, VehicleDoor door) =>
-            (VehicleDoorState) vehicle.GetDoorState((byte) door);
+        public VehicleDoorState GetDoorStateExt(VehicleDoor door) =>
+            (VehicleDoorState) GetDoorState((byte) door);
 
         /// <summary>
         /// Sets a vehicles door to a state
         /// </summary>
-        /// <param name="vehicle">The vehicle</param>
         /// <param name="door">The door</param>
         /// <param name="state">The state</param>
-        public static void SetDoorState(this IVehicle vehicle, VehicleDoor door, VehicleDoorState state) =>
-            vehicle.SetDoorState((byte) door, (byte) state);
+        public void SetDoorStateExt(VehicleDoor door, VehicleDoorState state) =>
+            SetDoorState((byte) door, (byte) state);
 
         /// <summary>
         /// Sets the current radio station
         /// </summary>
-        /// <param name="vehicle">The vehicle</param>
         /// <param name="radioStation">The radio station</param>
-        public static void SetRadioStation(this IVehicle vehicle, RadioStation radioStation) =>
-            vehicle.RadioStation = (uint) radioStation;
+        public void SetRadioStationExt(RadioStation radioStation) =>
+            RadioStation = (uint) radioStation;
 
         /// <summary>
         /// Gets the current radio station
         /// </summary>
-        /// <param name="vehicle">The vehicle</param>
         /// <returns>The radio station</returns>
-        public static RadioStation GetRadioStation(this IVehicle vehicle) => (RadioStation) vehicle.RadioStation;
+        public RadioStation GetRadioStationExt() => (RadioStation) RadioStation;
 
         /// <summary>
         /// Sets the current window tint
         /// </summary>
-        /// <param name="vehicle">The vehicle</param>
         /// <param name="windowTint">The window tint</param>
-        public static void SetWindowTint(this IVehicle vehicle, WindowTint windowTint) =>
-            vehicle.WindowTint = (byte) windowTint;
+        public void SetWindowTintExt(WindowTint windowTint) =>
+            WindowTint = (byte) windowTint;
 
         /// <summary>
         /// Gets the current window tint
         /// </summary>
-        /// <param name="vehicle">The vehicle</param>
         /// <returns>The window tint</returns>
-        public static WindowTint GetWindowTint(this IVehicle vehicle) => (WindowTint) vehicle.WindowTint;
+        public WindowTint GetWindowTintExt() => (WindowTint) WindowTint;
 
         /// <summary>
         /// Sets the current number plate style
         /// </summary>
-        /// <param name="vehicle">The vehicle</param>
         /// <param name="numberPlateStyle">The number plate style</param>
-        public static void SetNumberPlateStyle(this IVehicle vehicle, NumberPlateStyle numberPlateStyle) =>
-            vehicle.NumberplateIndex = (uint) numberPlateStyle;
+        public void SetNumberPlateStyleExt(NumberPlateStyle numberPlateStyle) =>
+            NumberplateIndex = (uint) numberPlateStyle;
 
         /// <summary>
         /// Gets the current number plate style
         /// </summary>
-        /// <param name="vehicle">The vehicle</param>
         /// <returns>The number plate style</returns>
-        public static NumberPlateStyle GetNumberPlateStyle(this IVehicle vehicle) =>
-            (NumberPlateStyle) vehicle.NumberplateIndex;
+        public NumberPlateStyle GetNumberPlateStyleExt() =>
+            (NumberPlateStyle) NumberplateIndex;
+
+        /// <summary>
+        /// Sets the current roof state
+        /// </summary>
+        /// <param name="roofState">The roof state</param>
+        public void SetRoofStateExt(VehicleRoofState roofState) =>
+            RoofState = (byte) roofState;
+
+        /// <summary>
+        /// Gets the current roof state
+        /// </summary>
+        /// <returns>The roof state</returns>
+        public VehicleRoofState GetRoofStateExt() =>
+            (VehicleRoofState) RoofState;
     }
 }
