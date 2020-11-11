@@ -186,7 +186,7 @@ namespace AltV.Net.Elements.Entities
         /// Removes the weapon by hash
         /// </summary>
         /// <param name="weapon"></param>
-        void RemoveWeapon(uint weapon);
+        bool RemoveWeapon(uint weapon);
 
         /// <summary>
         /// Removes all player weapons
@@ -221,6 +221,14 @@ namespace AltV.Net.Elements.Entities
         void RemoveWeaponComponent(uint weapon, uint weaponComponent);
 
         /// <summary>
+        /// Checks if a weapon has a component
+        /// </summary>
+        /// <param name="weapon">Weapon hash</param>
+        /// <param name="weaponComponent">Weapon Component hash</param>
+        /// <returns></returns>
+        bool HasWeaponComponent(uint weapon, uint weaponComponent);
+
+        /// <summary>
         /// Gets the current weapon components for the weapon in hand
         /// </summary>
         /// <param name="weaponComponents">Array of component hashes</param>
@@ -232,6 +240,12 @@ namespace AltV.Net.Elements.Entities
         /// <param name="weapon">Weapon hash</param>
         /// <param name="tintIndex">tintIndex</param>
         void SetWeaponTintIndex(uint weapon, byte tintIndex);
+        
+        /// <summary>
+        /// Gets the weapon tint of a weapon
+        /// </summary>
+        /// <param name="weapon">Weapon hash</param>
+        byte GetWeaponTintIndex(uint weapon);
 
         /// <summary>
         /// Returns weapon tint of current weapon
