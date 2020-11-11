@@ -94,6 +94,8 @@ EXPORT alt::MValueConst* Core_CreateMValueVector3(alt::ICore* core, position_t v
 EXPORT alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value);
 EXPORT alt::MValueConst* Core_CreateMValueByteArray(alt::ICore* core, uint64_t size, const void* data);
 EXPORT bool Core_IsDebug(alt::ICore* core);
+EXPORT void Core_GetVersion(alt::ICore* core, const char*&value, uint64_t &size);
+EXPORT void Core_GetBranch(alt::ICore* core, const char*&value, uint64_t &size);
 
 #ifdef __cplusplus
 }

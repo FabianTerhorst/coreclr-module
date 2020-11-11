@@ -8,6 +8,10 @@ namespace AltV.Net
 {
     public interface IServer
     {
+        string Version { get; }
+        
+        string Branch { get; }
+        
         int NetTime { get; }
 
         string RootDirectory { get; }
