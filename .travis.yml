@@ -62,7 +62,7 @@ matrix:
     #    channel: latest/beta
     sudo: required
     language: csharp
-    dotnet: 3.1.101
+    dotnet: 5.0.101
     mono: none
     script:
       - mkdir upload
