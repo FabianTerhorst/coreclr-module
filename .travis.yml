@@ -72,14 +72,14 @@ matrix:
       - dotnet --version
       - cd api
       - cd AltV.Net.Host
-      - dotnet publish -c Release
+      - dotnet publish -c Release -f netcoreapp3.1
       - dotnet pack -c Release
       - cd ..
       - cd AltV.Net
-      - dotnet publish -c Debug
+      - dotnet publish -c Debug -f netcoreapp3.1
       - cd ..
       - cd AltV.Net.Async
-      - dotnet publish -c Debug
+      - dotnet publish -c Debug -f netcoreapp3.1
       - cd ..
       - cd ..
       - mv ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/publish/AltV.Net.Host.dll ./upload/AltV.Net.Host.dll
