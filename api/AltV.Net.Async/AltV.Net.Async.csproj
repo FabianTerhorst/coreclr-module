@@ -12,7 +12,7 @@
         <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.40.1</PackageVersion>
+        <PackageVersion>1.43.1-dev</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>Update dependencies</PackageReleaseNotes>
         <PackageIcon>icon.png</PackageIcon>
@@ -32,7 +32,7 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-      <PackageReference Include="System.Threading.Channels" Version="4.7.0" />
+      <PackageReference Include="System.Threading.Channels" Version="5.0.0" />
     </ItemGroup>
 
 </Project>
