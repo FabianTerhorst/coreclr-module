@@ -217,6 +217,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                     fireArray[i] = fire;
                 }
                 OnFireDelegate(fireEvent, source, fireArray, length);
+                delete[] fireArray;
             }
         }
             break;
