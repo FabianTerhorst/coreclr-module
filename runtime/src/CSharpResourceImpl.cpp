@@ -217,6 +217,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                     fireArray[i] = fire;
                 }
                 OnFireDelegate(fireEvent, source, fireArray, length);
+                delete[] fireArray;
             }
         }
             break;
@@ -373,7 +374,8 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             position_t startPositionStruct = {startPosition.x, startPosition.y, startPosition.z};
             auto direction = startProjectileEvent->GetDirection();
             position_t directionStruct = {direction[0], direction[1], direction[2]};
-            OnStartProjectileDelegate(startProjectileEvent, startProjectileEvent->GetSource().Get(), startPositionStruct, directionStruct,
+            OnStartProjectileDelegate(startProjectileEvent, startProjectileEvent->GetSource().Get(),
+                                      startPositionStruct, directionStruct,
                                       startProjectileEvent->GetAmmoHash(), startProjectileEvent->GetWeaponHash());
             break;
         }
