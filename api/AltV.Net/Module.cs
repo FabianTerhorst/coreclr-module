@@ -275,6 +275,11 @@ namespace AltV.Net
             if (!assemblyLoadContext.TryGetTarget(out var target)) return null;
             return target.LoadFromNativeImagePath(nativeImagePath, assemblyPath);
         }
+        
+        public WeakReference<AssemblyLoadContext> GetAssemblyLoadContext()
+        {
+            return assemblyLoadContext;
+        }
 
         public void OnClient(string eventName, Function function)
         {

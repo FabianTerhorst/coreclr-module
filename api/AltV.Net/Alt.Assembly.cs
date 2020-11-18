@@ -1,12 +1,16 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Runtime.Loader;
 
 namespace AltV.Net
 {
     public partial class Alt
     {
         public static IEnumerable<Assembly> Assemblies => Module.Assemblies;
+        
+        public static WeakReference<AssemblyLoadContext> AssemblyLoadContext => Module.GetAssemblyLoadContext();
 
         public static Assembly LoadAssemblyFromName(AssemblyName assemblyName) =>
             Module.LoadAssemblyFromName(assemblyName);
