@@ -10,6 +10,8 @@ namespace AltV.Net.EntitySync
 
         ulong Type { get; }
 
+        bool Exists { get; }
+
         (ulong, ulong) HashKey { get; }
 
         // set position update flag to true in entity when updating position
@@ -62,6 +64,8 @@ namespace AltV.Net.EntitySync
             out int currNewDimension);
 
         void SetThreadLocalData(string key, object value);
+        
+        void SetExistsInternal(bool state);
 
         void ResetThreadLocalData(string key);
 
