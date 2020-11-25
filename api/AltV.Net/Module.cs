@@ -276,6 +276,11 @@ namespace AltV.Net
             return target.LoadFromNativeImagePath(nativeImagePath, assemblyPath);
         }
 
+        public AssemblyLoadContext GetAssemblyLoadContext()
+        {
+            return !assemblyLoadContext.TryGetTarget(out var target) ? null : target;
+        }
+
         public void OnClient(string eventName, Function function)
         {
             if (function == null) return;
