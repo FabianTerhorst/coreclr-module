@@ -444,5 +444,8 @@ namespace AltV.Net.ColShape.Tests
         {
             throw new NotImplementedException();
         }
+
+        public IVehicle Attached { get; }
+        public IVehicle AttachedTo { get; }
     }
 }

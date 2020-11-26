@@ -83,6 +83,15 @@ namespace AltV.Net.Async
         
         internal readonly AsyncEventHandler<PlayerWeaponChangeAsyncDelegate> PlayerWeaponChangeAsyncDelegateHandlers =
             new AsyncEventHandler<PlayerWeaponChangeAsyncDelegate>();
+        
+        internal readonly AsyncEventHandler<NetOwnerChangeAsyncDelegate> NetOwnerChangeAsyncEventHandler =
+            new AsyncEventHandler<NetOwnerChangeAsyncDelegate>();
+        
+        internal readonly AsyncEventHandler<VehicleAttachAsyncDelegate> VehicleAttachAsyncEventHandler =
+            new AsyncEventHandler<VehicleAttachAsyncDelegate>();
+        
+        internal readonly AsyncEventHandler<VehicleDetachAsyncDelegate> VehicleDetachAsyncEventHandler =
+            new AsyncEventHandler<VehicleDetachAsyncDelegate>();
 
         public AsyncModule(IServer server, AssemblyLoadContext assemblyLoadContext, INativeResource moduleResource,
             IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
@@ -605,6 +614,67 @@ namespace AltV.Net.Async
                     @delegate(player, oldWeapon, newWeapon));
                 playerRef.DebugCountDown();
                 playerRef.Dispose();
+            });
+        }
+
+        public override void OnNetOwnerChangeEvent(IEntity targetEntity, IPlayer oldPlayer, IPlayer newPlayer)
+        {
+            base.OnNetOwnerChangeEvent(targetEntity, oldPlayer, newPlayer);
+            if (!NetOwnerChangeAsyncEventHandler.HasEvents()) return;
+            var targetEntityRef = new BaseObjectRef(targetEntity);
+            var oldPlayerRef = new BaseObjectRef(oldPlayer);
+            var newPlayerRef = new BaseObjectRef(newPlayer);
+            Task.Run(async () =>
+            {
+                targetEntityRef.DebugCountUp();
+                oldPlayerRef.DebugCountUp();
+                newPlayerRef.DebugCountUp();
+                await NetOwnerChangeAsyncEventHandler.CallAsync(@delegate =>
+                    @delegate(targetEntity, oldPlayer, newPlayer));
+                newPlayerRef.DebugCountDown();
+                oldPlayerRef.DebugCountDown();
+                targetEntityRef.DebugCountDown();
+                newPlayerRef.Dispose();
+                oldPlayerRef.Dispose();
+                targetEntityRef.Dispose();
+            });
+        }
+
+        public override void OnVehicleAttachEvent(IVehicle targetVehicle, IVehicle attachedVehicle)
+        {
+            base.OnVehicleAttachEvent(targetVehicle, attachedVehicle);
+            if (!VehicleAttachAsyncEventHandler.HasEvents()) return;
+            var targetVehicleRef = new BaseObjectRef(targetVehicle);
+            var attachedVehicleRef = new BaseObjectRef(attachedVehicle);
+            Task.Run(async () =>
+            {
+                targetVehicleRef.DebugCountUp();
+                attachedVehicleRef.DebugCountUp();
+                await VehicleAttachAsyncEventHandler.CallAsync(@delegate =>
+                    @delegate(targetVehicle, attachedVehicle));
+                targetVehicleRef.DebugCountDown();
+                attachedVehicleRef.DebugCountDown();
+                attachedVehicleRef.Dispose();
+                targetVehicleRef.Dispose();
+            });
+        }
+
+        public override void OnVehicleDetachEvent(IVehicle targetVehicle, IVehicle detachedVehicle)
+        {
+            base.OnVehicleDetachEvent(targetVehicle, detachedVehicle);
+            if (!VehicleDetachAsyncEventHandler.HasEvents()) return;
+            var targetVehicleRef = new BaseObjectRef(targetVehicle);
+            var detachedVehicleRef = new BaseObjectRef(detachedVehicle);
+            Task.Run(async () =>
+            {
+                targetVehicleRef.DebugCountUp();
+                detachedVehicleRef.DebugCountUp();
+                await VehicleDetachAsyncEventHandler.CallAsync(@delegate =>
+                    @delegate(targetVehicle, detachedVehicle));
+                targetVehicleRef.DebugCountDown();
+                detachedVehicleRef.DebugCountDown();
+                detachedVehicleRef.Dispose();
+                targetVehicleRef.Dispose();
             });
         }
 

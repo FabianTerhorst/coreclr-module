@@ -25,6 +25,9 @@ namespace AltV.Net
         Explosion,
         Fire,
         StartProjectile,
-        PlayerWeaponChange
+        PlayerWeaponChange,
+        NetOwnerChange,
+        VehicleAttach,
+        VehicleDetach
     }
 }
