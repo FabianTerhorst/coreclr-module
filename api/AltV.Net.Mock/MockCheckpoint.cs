@@ -16,5 +16,7 @@ namespace AltV.Net.Mock
         public float Height { get; set; }
         public float Radius { get; set; }
         public Rgba Color { get; set; }
+
+        public Position NextPosition { get; set; }
     }
 }

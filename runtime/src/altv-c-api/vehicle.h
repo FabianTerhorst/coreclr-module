@@ -212,6 +212,9 @@ EXPORT void Vehicle_GetPositionCoords2(alt::IVehicle* vehicle, float* position_x
 
 EXPORT void Vehicle_SetNetworkOwner(alt::IVehicle* vehicle, alt::IPlayer* networkOwnerPlayer, bool disableMigration);
 
+EXPORT alt::IVehicle* Vehicle_GetAttached(alt::IVehicle* vehicle);
+EXPORT alt::IVehicle* Vehicle_GetAttachedTo(alt::IVehicle* vehicle);
+
 #ifdef __cplusplus
 }
 #endif

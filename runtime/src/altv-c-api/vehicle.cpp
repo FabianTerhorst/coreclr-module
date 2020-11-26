@@ -676,3 +676,11 @@ void Vehicle_GetPositionCoords2(alt::IVehicle* vehicle, float* position_x, float
 void Vehicle_SetNetworkOwner(alt::IVehicle* vehicle, alt::IPlayer* networkOwnerPlayer, bool disableMigration) {
     vehicle->SetNetworkOwner(networkOwnerPlayer, disableMigration);
 }
+
+alt::IVehicle* Vehicle_GetAttached(alt::IVehicle* vehicle) {
+    return vehicle->GetAttached().Get();
+}
+
+alt::IVehicle* Vehicle_GetAttachedTo(alt::IVehicle* vehicle) {
+    return vehicle->GetAttachedTo().Get();
+}

@@ -269,5 +269,8 @@ namespace AltV.Net.Mock
         }
 
         public bool IsDestroyed { get; }
+
+        public IVehicle Attached { get; }
+        public IVehicle AttachedTo { get; }
     }
 }

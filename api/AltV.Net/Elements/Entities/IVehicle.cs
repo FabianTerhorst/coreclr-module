@@ -149,6 +149,16 @@ namespace AltV.Net.Elements.Entities
         byte RoofLivery { get; set; }
 
         string AppearanceData { get; set; }
+        
+        /// <summary>
+        /// Gets the vehicle that is attached on this vehicle
+        /// </summary>
+        IVehicle Attached { get; }
+        
+        /// <summary>
+        /// Gets the vehicle that this vehicle is attached to
+        /// </summary>
+        IVehicle AttachedTo { get; }
 
         /// <summary>
         /// Current mod in category
