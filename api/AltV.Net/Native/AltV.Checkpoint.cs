@@ -46,13 +46,25 @@ namespace AltV.Net.Native
             internal static extern byte Checkpoint_GetCheckpointType(IntPtr checkpoint);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Checkpoint_SetCheckpointType(IntPtr checkpoint, byte type);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern float Checkpoint_GetHeight(IntPtr checkpoint);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Checkpoint_SetHeight(IntPtr checkpoint, float height);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern float Checkpoint_GetRadius(IntPtr checkpoint);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Checkpoint_SetRadius(IntPtr checkpoint, float radius);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Checkpoint_GetColor(IntPtr checkpoint, ref Rgba color);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Checkpoint_SetColor(IntPtr checkpoint, Rgba color);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool Checkpoint_IsPlayerIn(IntPtr checkpoint, IntPtr player);
@@ -62,12 +74,18 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern ColShapeType Checkpoint_GetColShapeType(IntPtr checkpoint);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Checkpoint_SetPlayersOnly(IntPtr checkpoint, bool state);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool Checkpoint_IsPlayersOnly(IntPtr checkpoint);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Checkpoint_GetNextPosition(IntPtr checkpoint, ref Position pos);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Checkpoint_SetNextPosition(IntPtr checkpoint, Position pos);
         }
     }
 }

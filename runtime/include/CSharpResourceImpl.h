@@ -13,6 +13,9 @@
 #include <altv-cpp-api/events/CFireEvent.h>
 #include <altv-cpp-api/events/CStartProjectileEvent.h>
 #include <altv-cpp-api/events/CPlayerWeaponChangeEvent.h>
+#include <altv-cpp-api/events/CNetOwnerChangeEvent.h>
+#include <altv-cpp-api/events/CVehicleAttachEvent.h>
+#include <altv-cpp-api/events/CVehicleDetachEvent.h>
 
 #ifdef _WIN32
 #define RESOURCES_PATH "\\resources\\"
@@ -167,6 +170,12 @@ typedef void (* StartProjectileDelegate_t)(const alt::CEvent* event, alt::IPlaye
 typedef void (* PlayerWeaponChangeDelegate_t)(const alt::CEvent* event, alt::IPlayer* target, uint32_t oldWeapon,
                                               uint32_t newWeapon);
 
+typedef void (* NetOwnerChangeDelegate_t)(const alt::CEvent* event, void* target, alt::IBaseObject::Type targetType, alt::IPlayer* oldNetOwner, alt::IPlayer* newNetOwner);
+
+typedef void (* VehicleAttachDelegate_t)(const alt::CEvent* event, alt::IVehicle* target, alt::IVehicle* attached);
+
+typedef void (* VehicleDetachDelegate_t)(const alt::CEvent* event, alt::IVehicle* target, alt::IVehicle* detached);
+
 class CSharpResourceImpl : public alt::IResource::Impl {
     bool OnEvent(const alt::CEvent* ev) override;
 
@@ -274,6 +283,12 @@ public:
     StartProjectileDelegate_t OnStartProjectileDelegate = nullptr;
 
     PlayerWeaponChangeDelegate_t OnPlayerWeaponChangeDelegate = nullptr;
+
+    NetOwnerChangeDelegate_t OnNetOwnerChangeDelegate = nullptr;
+
+    VehicleAttachDelegate_t OnVehicleAttachDelegate = nullptr;
+
+    VehicleDetachDelegate_t OnVehicleDetachDelegate = nullptr;
 
     alt::Array<CustomInvoker*>* invokers;
     CoreClr* coreClr;
@@ -439,3 +454,12 @@ EXPORT void CSharpResourceImpl_SetStartProjectileDelegate(CSharpResourceImpl* re
 
 EXPORT void CSharpResourceImpl_SetPlayerWeaponChangeDelegate(CSharpResourceImpl* resource,
                                                              PlayerWeaponChangeDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetNetOwnerChangeDelegate(CSharpResourceImpl* resource,
+                                                         NetOwnerChangeDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetVehicleAttachDelegate(CSharpResourceImpl* resource,
+                                                 VehicleAttachDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetVehicleDetachDelegate(CSharpResourceImpl* resource,
+                                                 VehicleDetachDelegate_t delegate);

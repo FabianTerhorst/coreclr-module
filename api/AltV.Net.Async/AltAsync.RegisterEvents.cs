@@ -331,6 +331,49 @@ namespace AltV.Net.Async
                                         return scriptFunction.CallAsync();
                                     };
                                     break;
+                                 case ScriptEventType.NetOwnerChange:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IEntity), typeof(IPlayer), typeof(IPlayer)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnNetworkOwnerChange += (targetEntity, oldNetOwner, newNetOwner) =>
+                                    {
+                                        scriptFunction.Set(targetEntity);
+                                        scriptFunction.Set(oldNetOwner);
+                                        scriptFunction.Set(newNetOwner);
+                                        return scriptFunction.CallAsync();
+                                    };
+                                    break;
+                                case ScriptEventType.VehicleAttach:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IVehicle), typeof(IVehicle)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnVehicleAttach += (targetVehicle, attachedVehicle) =>
+                                    {
+                                        scriptFunction.Set(targetVehicle);
+                                        scriptFunction.Set(attachedVehicle);
+                                        return scriptFunction.CallAsync();
+                                    };
+                                    break;
+                                case ScriptEventType.VehicleDetach:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IVehicle), typeof(IVehicle)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnVehicleDetach += (targetVehicle, detachedVehicle) =>
+                                    {
+                                        scriptFunction.Set(targetVehicle);
+                                        scriptFunction.Set(detachedVehicle);
+                                        return scriptFunction.CallAsync();
+                                    };
+                                    break;
                             }
 
                             break;

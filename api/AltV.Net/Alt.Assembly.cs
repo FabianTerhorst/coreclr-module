@@ -10,7 +10,7 @@ namespace AltV.Net
     {
         public static IEnumerable<Assembly> Assemblies => Module.Assemblies;
         
-        public static WeakReference<AssemblyLoadContext> AssemblyLoadContext => new(Module.GetAssemblyLoadContext());
+        public static WeakReference<AssemblyLoadContext> AssemblyLoadContext => Module.GetAssemblyLoadContext();
 
         public static Assembly LoadAssemblyFromName(AssemblyName assemblyName) =>
             Module.LoadAssemblyFromName(assemblyName);
