@@ -11,7 +11,7 @@ https://www.nuget.org/packages/AltV.Net.EntitySync.ServerEvent // A optional pac
 ## Configure the Entity Sync
 
 ```csharp
-AltEntitySync.Init(1, 100, false,
+AltEntitySync.Init(1, 100, (threadId) => false,
    (threadCount, repository) => new ServerEventNetworkLayer(threadCount, repository),
    (entity, threadCount) => (entity.Id % threadCount), 
    (entityId, entityType, threadCount) => (entityId % threadCount),
