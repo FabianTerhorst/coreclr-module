@@ -242,6 +242,9 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_SetNetworkOwner(IntPtr player, IntPtr networkOwnerPlayer,
                 bool disableMigration);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_ClearBloodDamage(IntPtr player);
         }
     }
 }

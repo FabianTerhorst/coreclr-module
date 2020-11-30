@@ -590,6 +590,11 @@ namespace AltV.Net.Elements.Entities
             AltNative.Player.Player_RemoveRef(NativePointer);
         }
 
+        public void ClearBloodDamage()
+        {
+            AltNative.Player.Player_ClearBloodDamage(NativePointer);
+        }
+
         public bool TryCreateRef(out PlayerRef playerRef)
         {
             playerRef = new PlayerRef(this);

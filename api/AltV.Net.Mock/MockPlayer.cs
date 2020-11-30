@@ -135,5 +135,10 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+
+        public void ClearBloodDamage()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

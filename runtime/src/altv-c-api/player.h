@@ -146,6 +146,8 @@ EXPORT void Player_GetIP(alt::IPlayer* player, const char*&ip);
 EXPORT void Player_GetPositionCoords2(alt::IPlayer* player, float* position_x, float* position_y, float* position_z, float* rotation_x, float* rotation_y, float* rotation_z, int* dimension);
 
 EXPORT void Player_SetNetworkOwner(alt::IPlayer* player, alt::IPlayer* networkOwnerPlayer, bool disableMigration);
+
+EXPORT void Player_ClearBloodDamage(alt::IPlayer* player);
 #ifdef __cplusplus
 }
 #endif

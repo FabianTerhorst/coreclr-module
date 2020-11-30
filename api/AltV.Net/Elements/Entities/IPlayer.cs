@@ -253,6 +253,11 @@ namespace AltV.Net.Elements.Entities
         /// <returns></returns>
         byte GetCurrentWeaponTintIndex();
 
+        /// <summary>
+        /// Clears the blood damage of the player
+        /// </summary>
+        void ClearBloodDamage();
+        
         bool TryCreateRef(out PlayerRef playerRef);
     }
 
