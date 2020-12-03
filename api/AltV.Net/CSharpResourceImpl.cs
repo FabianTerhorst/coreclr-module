@@ -184,15 +184,15 @@ namespace AltV.Net
             AltNative.Resource.CSharpResourceImpl_SetPlayerWeaponChangeDelegate(NativePointer, onPlayerWeaponChange);
             
             AltNative.Resource.NetOwnerChangeDelegate onNetOwnerChange = ModuleWrapper.OnNetOwnerChange;
-            handles.AddFirst(GCHandle.Alloc(onPlayerWeaponChange));
+            handles.AddFirst(GCHandle.Alloc(onNetOwnerChange));
             AltNative.Resource.CSharpResourceImpl_SetNetOwnerChangeDelegate(NativePointer, onNetOwnerChange);
             
             AltNative.Resource.VehicleAttachDelegate onVehicleAttach = ModuleWrapper.OnVehicleAttach;
-            handles.AddFirst(GCHandle.Alloc(onPlayerWeaponChange));
+            handles.AddFirst(GCHandle.Alloc(onVehicleAttach));
             AltNative.Resource.CSharpResourceImpl_SetVehicleAttachDelegate(NativePointer, onVehicleAttach);
             
             AltNative.Resource.VehicleDetachDelegate onVehicleDetach = ModuleWrapper.OnVehicleDetach;
-            handles.AddFirst(GCHandle.Alloc(onPlayerWeaponChange));
+            handles.AddFirst(GCHandle.Alloc(onVehicleDetach));
             AltNative.Resource.CSharpResourceImpl_SetVehicleDetachDelegate(NativePointer, onVehicleDetach);
         }
 
