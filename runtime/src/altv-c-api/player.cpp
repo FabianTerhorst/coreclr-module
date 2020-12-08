@@ -404,3 +404,7 @@ void Player_GetPositionCoords2(alt::IPlayer* player, float* position_x, float* p
 void Player_SetNetworkOwner(alt::IPlayer* player, alt::IPlayer* networkOwnerPlayer, bool disableMigration) {
     player->SetNetworkOwner(networkOwnerPlayer, disableMigration);
 }
+
+void Player_ClearBloodDamage(alt::IPlayer* player) {
+    player->ClearBloodDamage();
+}

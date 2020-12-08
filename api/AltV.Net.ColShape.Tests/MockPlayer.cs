@@ -320,5 +320,10 @@ namespace AltV.Net.ColShape.Tests
         {
             throw new NotImplementedException();
         }
+
+        public void ClearBloodDamage()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
