@@ -134,8 +134,8 @@ EXPORT void Vehicle_SetWindowOpened(alt::IVehicle* vehicle, uint8_t windowId, bo
 EXPORT bool Vehicle_IsDaylightOn(alt::IVehicle* vehicle);
 EXPORT bool Vehicle_IsNightlightOn(alt::IVehicle* vehicle);
 
-EXPORT bool Vehicle_IsRoofOpened(alt::IVehicle* vehicle);
-EXPORT void Vehicle_SetRoofOpened(alt::IVehicle* vehicle, bool state);
+EXPORT uint8_t Vehicle_GetRoofState(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetRoofState(alt::IVehicle* vehicle, uint8_t state);
 
 EXPORT bool Vehicle_IsFlamethrowerActive(alt::IVehicle* vehicle);
 
@@ -211,6 +211,9 @@ EXPORT void Vehicle_LoadScriptDataFromBase64(alt::IVehicle* vehicle, const char*
 EXPORT void Vehicle_GetPositionCoords2(alt::IVehicle* vehicle, float* position_x, float* position_y, float* position_z, float* rotation_x, float* rotation_y, float* rotation_z, int* dimension);
 
 EXPORT void Vehicle_SetNetworkOwner(alt::IVehicle* vehicle, alt::IPlayer* networkOwnerPlayer, bool disableMigration);
+
+EXPORT alt::IVehicle* Vehicle_GetAttached(alt::IVehicle* vehicle);
+EXPORT alt::IVehicle* Vehicle_GetAttachedTo(alt::IVehicle* vehicle);
 
 #ifdef __cplusplus
 }

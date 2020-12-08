@@ -49,6 +49,9 @@ void CSharpResourceImpl::ResetDelegates() {
     OnFireDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnStartProjectileDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
     OnPlayerWeaponChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnNetOwnerChangeDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
+    OnVehicleAttachDelegate = [](auto var, auto var2, auto var3) {};
+    OnVehicleDetachDelegate = [](auto var, auto var2, auto var3) {};
 }
 
 bool CSharpResourceImpl::Start() {
@@ -177,6 +180,13 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                                        entity->GetID(),
                                        damageEvent->GetWeapon(),
                                        damageEvent->GetDamage());
+            } else {
+                OnPlayerDamageDelegate(damageEvent->GetTarget().Get(),
+                                       nullptr,
+                                       alt::IBaseObject::Type::PLAYER,
+                                       0,
+                                       damageEvent->GetWeapon(),
+                                       damageEvent->GetDamage());
             }
         }
             break;
@@ -210,6 +220,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                     fireArray[i] = fire;
                 }
                 OnFireDelegate(fireEvent, source, fireArray, length);
+                delete[] fireArray;
             }
         }
             break;
@@ -366,7 +377,8 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             position_t startPositionStruct = {startPosition.x, startPosition.y, startPosition.z};
             auto direction = startProjectileEvent->GetDirection();
             position_t directionStruct = {direction[0], direction[1], direction[2]};
-            OnStartProjectileDelegate(startProjectileEvent, startProjectileEvent->GetSource().Get(), startPositionStruct, directionStruct,
+            OnStartProjectileDelegate(startProjectileEvent, startProjectileEvent->GetSource().Get(),
+                                      startPositionStruct, directionStruct,
                                       startProjectileEvent->GetAmmoHash(), startProjectileEvent->GetWeaponHash());
             break;
         }
@@ -375,6 +387,33 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             OnPlayerWeaponChangeDelegate(playerWeaponChangeEvent, playerWeaponChangeEvent->GetTarget().Get(),
                                          playerWeaponChangeEvent->GetOldWeapon(),
                                          playerWeaponChangeEvent->GetNewWeapon());
+            break;
+        }
+        case alt::CEvent::Type::NETOWNER_CHANGE: {
+            auto netOwnerChangeEvent = ((alt::CNetOwnerChangeEvent*) (ev));
+            auto target = netOwnerChangeEvent->GetTarget().Get();
+            auto targetPointer = GetEntityPointer(target);
+            if (target != nullptr && targetPointer != nullptr) {
+                OnNetOwnerChangeDelegate(netOwnerChangeEvent,
+                                         targetPointer,
+                                         target->GetType(),
+                                         netOwnerChangeEvent->GetOldOwner().Get(),
+                                         netOwnerChangeEvent->GetNewOwner().Get());
+            }
+            break;
+        }
+        case alt::CEvent::Type::VEHICLE_ATTACH: {
+            auto vehicleAttachEvent = ((alt::CVehicleAttachEvent*) (ev));
+            OnVehicleAttachDelegate(vehicleAttachEvent,
+                                    vehicleAttachEvent->GetTarget().Get(),
+                                    vehicleAttachEvent->GetAttached().Get());
+            break;
+        }
+        case alt::CEvent::Type::VEHICLE_DETACH: {
+            auto vehicleDetachEvent = ((alt::CVehicleDetachEvent*) (ev));
+            OnVehicleDetachDelegate(vehicleDetachEvent,
+                                    vehicleDetachEvent->GetTarget().Get(),
+                                    vehicleDetachEvent->GetDetached().Get());
             break;
         }
     }
@@ -643,6 +682,21 @@ void CSharpResourceImpl_SetStartProjectileDelegate(CSharpResourceImpl* resource,
 void CSharpResourceImpl_SetPlayerWeaponChangeDelegate(CSharpResourceImpl* resource,
                                                       PlayerWeaponChangeDelegate_t delegate) {
     resource->OnPlayerWeaponChangeDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetNetOwnerChangeDelegate(CSharpResourceImpl* resource,
+                                                      NetOwnerChangeDelegate_t delegate) {
+    resource->OnNetOwnerChangeDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetVehicleAttachDelegate(CSharpResourceImpl* resource,
+                                                      VehicleAttachDelegate_t delegate) {
+    resource->OnVehicleAttachDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetVehicleDetachDelegate(CSharpResourceImpl* resource,
+                                                      VehicleDetachDelegate_t delegate) {
+    resource->OnVehicleDetachDelegate = delegate;
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files) {

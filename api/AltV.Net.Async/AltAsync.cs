@@ -140,6 +140,24 @@ namespace AltV.Net.Async
             remove => Module.PlayerWeaponChangeAsyncDelegateHandlers.Remove(value);
         }
 
+        public static event NetOwnerChangeAsyncDelegate OnNetworkOwnerChange
+        {
+            add => Module.NetOwnerChangeAsyncEventHandler.Add(value);
+            remove => Module.NetOwnerChangeAsyncEventHandler.Remove(value);
+        }
+        
+        public static event VehicleAttachAsyncDelegate OnVehicleAttach
+        {
+            add => Module.VehicleAttachAsyncEventHandler.Add(value);
+            remove => Module.VehicleAttachAsyncEventHandler.Remove(value);
+        }
+        
+        public static event VehicleDetachAsyncDelegate OnVehicleDetach
+        {
+            add => Module.VehicleDetachAsyncEventHandler.Add(value);
+            remove => Module.VehicleDetachAsyncEventHandler.Remove(value);
+        }
+        
         public static async void Log(string message)
         {
             var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);

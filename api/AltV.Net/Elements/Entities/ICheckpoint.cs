@@ -5,23 +5,28 @@ namespace AltV.Net.Elements.Entities
     public interface ICheckpoint : IColShape
     {
         /// <summary>
-        /// Returns the checkpoint type
+        /// Gets or sets the checkpoint type
         /// </summary>
-        byte CheckpointType { get; }
+        byte CheckpointType { get; set; }
         
         /// <summary>
-        /// Gets the height
+        /// Gets or sets the height
         /// </summary>
-        float Height { get; }
+        float Height { get; set; }
         
         /// <summary>
-        /// Gets the radius
+        /// Gets or sets the radius
         /// </summary>
-        float Radius { get; }
+        float Radius { get; set; }
         
         /// <summary>
-        /// Obtains the color in Rgba format
+        /// Gets or sets the color in Rgba format
         /// </summary>
-        Rgba Color { get; }
+        Rgba Color { get; set; }
+        
+        /// <summary>
+        /// Sets or gets the next checkpoint position
+        /// </summary>
+        Position NextPosition { get; set; }
     }
 }

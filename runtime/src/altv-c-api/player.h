@@ -92,14 +92,16 @@ EXPORT void Player_SetDateTime(alt::IPlayer* player, int day, int month, int yea
 EXPORT void Player_SetWeather(alt::IPlayer* player, uint32_t weather);
 
 EXPORT void Player_GiveWeapon(alt::IPlayer* player, uint32_t weapon, int32_t ammo, bool selectWeapon);
-EXPORT void Player_RemoveWeapon(alt::IPlayer* player, uint32_t weapon);
+EXPORT bool Player_RemoveWeapon(alt::IPlayer* player, uint32_t weapon);
 EXPORT void Player_RemoveAllWeapons(alt::IPlayer* player);
 
 EXPORT void Player_AddWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_t component);
 EXPORT void Player_RemoveWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_t component);
+EXPORT bool Player_HasWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_t component);
 EXPORT void Player_GetCurrentWeaponComponents(alt::IPlayer* player, alt::Array<uint32_t> &weaponComponents);
 
 EXPORT void Player_SetWeaponTintIndex(alt::IPlayer* player, uint32_t weapon, uint8_t tintIndex);
+EXPORT uint8_t Player_GetWeaponTintIndex(alt::IPlayer* player, uint32_t weapon);
 EXPORT uint8_t Player_GetCurrentWeaponTintIndex(alt::IPlayer* player);
 
 EXPORT uint32_t Player_GetCurrentWeapon(alt::IPlayer* player);
@@ -138,12 +140,14 @@ EXPORT void Player_Kick(alt::IPlayer* player, const char* reason);
 EXPORT uint32_t Player_GetPing(alt::IPlayer* player);
 EXPORT void Player_GetIP(alt::IPlayer* player, const char*&ip);
 
-EXPORT void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct);
-EXPORT void Player_Copy_Dispose(player_struct_t* player_struct);
+//EXPORT void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct);
+//EXPORT void Player_Copy_Dispose(player_struct_t* player_struct);
 
 EXPORT void Player_GetPositionCoords2(alt::IPlayer* player, float* position_x, float* position_y, float* position_z, float* rotation_x, float* rotation_y, float* rotation_z, int* dimension);
 
 EXPORT void Player_SetNetworkOwner(alt::IPlayer* player, alt::IPlayer* networkOwnerPlayer, bool disableMigration);
+
+EXPORT void Player_ClearBloodDamage(alt::IPlayer* player);
 #ifdef __cplusplus
 }
 #endif

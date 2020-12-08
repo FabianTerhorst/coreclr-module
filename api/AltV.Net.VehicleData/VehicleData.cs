@@ -1,11 +1,6 @@
-using System;
-using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Pipelines;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AltV.Net.VehicleData
 {
@@ -15,140 +10,50 @@ namespace AltV.Net.VehicleData
         {
         }
 
-        public async Task<List<VehicleModel>> Parse(string path)
+        public readonly struct ModKit
         {
-            var result = new List<VehicleModel>();
-            await using var stream = File.OpenRead(path);
-            var reader = PipeReader.Create(stream);
+            public readonly ushort Id;
+            public readonly string Name;
+            public readonly Dictionary<byte, byte[]> Mods;
 
-            while (true)
+            public ModKit(ushort id, string name, Dictionary<byte, byte[]> mods)
             {
-                var read = await reader.ReadAsync(); // read from the pipe
-
-                var buffer = read.Buffer;
-
-                if (buffer.Length < 4) // not enough bytes for header
-                {
-                    if (read.IsCompleted)
-                        break; // can not read the amount of required bytes
-                    continue;
-                }
-
-                var headerSequence = buffer.Slice(buffer.Start, 4);
-                if (!ProcessHeaderSequence(headerSequence))
-                {
-                    return result;
-                }
-
-                reader.AdvanceTo(headerSequence.End, buffer.End); //advance our position in the pipe
-                break; // done with header
-            }
-
-            do
-            {
-            } while (true);
-
-            /*while (true)
-            {
-                ReadResult read = await reader.ReadAsync();
-                ReadOnlySequence<byte> buffer = read.Buffer;
-                if (readHeader)
-                {
-                    readHeader = false;
-                    //SequenceReader<byte> sequenceReader = new SequenceReader<byte>(buffer);
-                }
-
-
-                while (TryReadLine(ref buffer, out ReadOnlySequence<byte> sequence))
-                {
-                    var videogame = ProcessSequence(sequence);
-                    result.Add(videogame);
-                }
-
-                reader.AdvanceTo(buffer.Start, buffer.End);
-                if (read.IsCompleted)
-                {
-                    break;
-                }
-            }
-
-            return result;*/
-        }
-
-        [StructLayout(LayoutKind.Explicit)]
-        private readonly struct Header
-        {
-            [FieldOffset(0)]
-            private readonly char versionNameOne;
-            [FieldOffset(1)]
-            private readonly char versionNameTwo;
-            [FieldOffset(2)]
-            private readonly ushort versionNumber;
-
-            public Header(char versionNameOne, char versionNameTwo, ushort versionNumber)
-            {
-                this.versionNameOne = versionNameOne;
-                this.versionNameTwo = versionNameTwo;
-                this.versionNumber = versionNumber;
+                Id = id;
+                Name = name;
+                Mods = mods;
             }
         }
 
-        public bool ProcessHeaderSequence(ReadOnlySequence<byte> sequence)
+        public List<ModKit> Parse(string fileName)
         {
-            //MemoryMarshal.Read<Header>(sequence);
-            var versionNameSequence = sequence.Slice(sequence.Start, 2);
-            Span<byte> versionNameSpan = stackalloc byte[2];
-            versionNameSequence.CopyTo(versionNameSpan);
-            if (versionNameSpan[0] != 'V' || versionNameSpan[1] != 'E')
+            var modKits = new List<ModKit>();
+            using var reader = new BinaryReader(File.Open(fileName, FileMode.Open));
+            var version = reader.ReadUInt16();
+            var stream = reader.BaseStream;
+            while (stream.Position < stream.Length)
             {
-                return false;
-            }
-            var versionNumberSequence = sequence.Slice(versionNameSequence.End, 2);
-            Span<byte> versionNumberSpan = stackalloc byte[2];
-            versionNumberSequence.CopyTo(versionNumberSpan);
-            if (BitConverter.ToUInt16(versionNumberSpan) != 2)
-            {
-                return false;
+                var modKitId = reader.ReadUInt16();
+                var nameLen = reader.ReadUInt16();
+                var name = Encoding.UTF8.GetString(reader.ReadBytes(nameLen));
+                var modsCount = reader.ReadByte();
+                var mods = new Dictionary<byte, byte[]>();
+                for (var i = 0; i < modsCount; i++)
+                {
+                    var category = reader.ReadByte();
+                    var count = reader.ReadByte();
+                    var components = new byte[count];
+                    for (var j = 0; j < count; j++)
+                    {
+                        components[i] = reader.ReadByte();
+                    }
+
+                    mods[category] = components;
+                }
+                var modKit = new ModKit(modKitId, name, mods);
+                modKits.Add(modKit);
             }
 
-            return true;
+            return modKits;
         }
-
-        /*public async Task<List<VehicleModel>> Parse(string path)
-        {
-            var result = new List<VehicleModel>();
-            await using var stream = File.OpenRead(path);
-            var reader = new BinaryReader(stream);
-            // Read header
-            var versionString = reader.ReadChars(2);
-            var versionNumber = reader.ReadUInt16();
-            if (versionString[0] != 'V' || versionString[1] != 'E') return result; // invalid header
-            if (versionNumber != 2) return result; // outdated
-            while (true)
-            {
-                ReadOnlySequence<byte> buffer = read.Buffer;
-                if (readHeader)
-                {
-                    readHeader = false;
-                    //SequenceReader<byte> sequenceReader = new SequenceReader<byte>(buffer);
-                }
-                
-                
-                
-                while (TryReadLine(ref buffer, out ReadOnlySequence<byte> sequence))
-                {
-                    var videogame = ProcessSequence(sequence);
-                    result.Add(videogame);
-                }
-            
-                reader.AdvanceTo(buffer.Start, buffer.End);
-                if (read.IsCompleted)
-                {
-                    break;
-                }
-            }
-
-            return result;
-        }*/
     }
 }

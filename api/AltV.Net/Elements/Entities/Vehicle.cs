@@ -81,7 +81,8 @@ namespace AltV.Net.Elements.Entities
         public override void SetNetworkOwner(IPlayer player, bool disableMigration)
         {
             CheckIfEntityExists();
-            AltNative.Vehicle.Vehicle_SetNetworkOwner(NativePointer, player?.NativePointer ?? IntPtr.Zero, disableMigration);
+            AltNative.Vehicle.Vehicle_SetNetworkOwner(NativePointer, player?.NativePointer ?? IntPtr.Zero,
+                disableMigration);
         }
 
         public override void GetMetaData(string key, out MValueConst value)
@@ -97,7 +98,7 @@ namespace AltV.Net.Elements.Entities
             AltNative.Vehicle.Vehicle_SetMetaData(NativePointer, stringPtr, value.nativePointer);
             Marshal.FreeHGlobal(stringPtr);
         }
-        
+
         public override bool HasMetaData(string key)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
@@ -126,7 +127,7 @@ namespace AltV.Net.Elements.Entities
             value = new MValueConst(AltNative.Vehicle.Vehicle_GetSyncedMetaData(NativePointer, stringPtr));
             Marshal.FreeHGlobal(stringPtr);
         }
-        
+
         public override bool HasSyncedMetaData(string key)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
@@ -141,7 +142,7 @@ namespace AltV.Net.Elements.Entities
             AltNative.Vehicle.Vehicle_DeleteSyncedMetaData(NativePointer, stringPtr);
             Marshal.FreeHGlobal(stringPtr);
         }
-        
+
         public override void SetStreamSyncedMetaData(string key, in MValueConst value)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
@@ -155,7 +156,7 @@ namespace AltV.Net.Elements.Entities
             value = new MValueConst(AltNative.Vehicle.Vehicle_GetStreamSyncedMetaData(NativePointer, stringPtr));
             Marshal.FreeHGlobal(stringPtr);
         }
-        
+
         public override bool HasStreamSyncedMetaData(string key)
         {
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
@@ -390,7 +391,7 @@ namespace AltV.Net.Elements.Entities
                 return AltNative.Vehicle.Vehicle_GetWheelVariation(NativePointer);
             }
         }
-        
+
         public byte RearWheel
         {
             get
@@ -674,17 +675,17 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public bool RoofOpened
+        public byte RoofState
         {
             get
             {
                 CheckIfEntityExists();
-                return AltNative.Vehicle.Vehicle_IsRoofOpened(NativePointer);
+                return AltNative.Vehicle.Vehicle_GetRoofState(NativePointer);
             }
             set
             {
                 CheckIfEntityExists();
-                AltNative.Vehicle.Vehicle_SetRoofOpened(NativePointer, value);
+                AltNative.Vehicle.Vehicle_SetRoofState(NativePointer, value);
             }
         }
 
@@ -1028,6 +1029,28 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public IVehicle Attached
+        {
+            get
+            {
+                CheckIfEntityExists();
+                var entityPointer = AltNative.Vehicle.Vehicle_GetAttached(NativePointer);
+                if (entityPointer == IntPtr.Zero) return null;
+                return Alt.Module.VehiclePool.GetOrCreate(entityPointer, out var vehicle) ? vehicle : null;
+            }
+        }
+
+        public IVehicle AttachedTo
+        {
+            get
+            {
+                CheckIfEntityExists();
+                var entityPointer = AltNative.Vehicle.Vehicle_GetAttachedTo(NativePointer);
+                if (entityPointer == IntPtr.Zero) return null;
+                return Alt.Module.VehiclePool.GetOrCreate(entityPointer, out var vehicle) ? vehicle : null;
+            }
+        }
+
         public Vehicle(uint model, Position position, Rotation rotation) : this(
             Alt.Module.Server.CreateVehicleEntity(out var id, model, position, rotation), id)
         {
@@ -1099,7 +1122,7 @@ namespace AltV.Net.Elements.Entities
         {
             Alt.RemoveVehicle(this);
         }
-        
+
         protected override void InternalAddRef()
         {
             AltNative.Vehicle.Vehicle_AddRef(NativePointer);

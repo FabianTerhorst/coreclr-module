@@ -42,6 +42,38 @@ namespace AltV.Net
 
         private readonly INativeResourcePool nativeResourcePool;
 
+        private string version;
+
+        private string branch;
+
+        public string Version
+        {
+            get
+            {
+                if (version != null) return version;
+                var ptr = IntPtr.Zero;
+                ulong size = 0;
+                AltNative.Server.Core_GetVersion(NativePointer, ref ptr, ref size);
+                version = Marshal.PtrToStringUTF8(ptr, (int) size);
+
+                return version;
+            }
+        }
+
+        public string Branch
+        {
+            get
+            {
+                if (branch != null) return branch;
+                var ptr = IntPtr.Zero;
+                ulong size = 0;
+                AltNative.Server.Core_GetBranch(NativePointer, ref ptr, ref size);
+                branch = Marshal.PtrToStringUTF8(ptr, (int) size);
+
+                return branch;
+            }
+        }
+
         public int NetTime => AltNative.Server.Server_GetNetTime(NativePointer);
 
         private string rootDirectory;

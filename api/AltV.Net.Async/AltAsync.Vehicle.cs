@@ -217,11 +217,11 @@ namespace AltV.Net.Async
         public static Task SetStateAsync(this IVehicle vehicle, string state) =>
             AltVAsync.Schedule(() => vehicle.State = state);
 
-        public static Task<bool> IsRoofOpenAsync(this IVehicle vehicle) =>
-            AltVAsync.Schedule(() => vehicle.RoofOpened);
+        public static Task<byte> GetRoofStateAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(() => vehicle.RoofState);
 
-        public static Task SetRoofOpenedAsync(this IVehicle vehicle, bool roofOpen) =>
-            AltVAsync.Schedule(() => vehicle.RoofOpened = roofOpen);
+        public static Task SetRoofStateAsync(this IVehicle vehicle, byte roofState) =>
+            AltVAsync.Schedule(() => vehicle.RoofState = roofState);
 
         public static Task<byte> GetDoorStateAsync(this IVehicle vehicle, byte doorId) =>
             AltVAsync.Schedule(() => vehicle.GetDoorState(doorId));
@@ -230,10 +230,10 @@ namespace AltV.Net.Async
             AltVAsync.Schedule(() => vehicle.SetDoorState(doorId, state));
 
         public static Task<VehicleDoorState> GetDoorStateAsync(this IVehicle vehicle, VehicleDoor door) =>
-            AltVAsync.Schedule(() => vehicle.GetDoorState(door));
+            AltVAsync.Schedule(() => vehicle.GetDoorStateExt(door));
 
         public static Task SetDoorStateAsync(this IVehicle vehicle, VehicleDoor door, VehicleDoorState state) =>
-            AltVAsync.Schedule(() => vehicle.SetDoorState(door, state));
+            AltVAsync.Schedule(() => vehicle.SetDoorStateExt(door, state));
 
         public static Task<bool> IsWindowOpenedAsync(this IVehicle vehicle, byte windowId) =>
             AltVAsync.Schedule(() => vehicle.IsWindowOpened(windowId));

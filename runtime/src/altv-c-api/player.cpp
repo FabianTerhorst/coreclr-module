@@ -189,8 +189,8 @@ void Player_GiveWeapon(alt::IPlayer* player, uint32_t weapon, int32_t ammo, bool
     player->GiveWeapon(weapon, ammo, selectWeapon);
 }
 
-void Player_RemoveWeapon(alt::IPlayer* player, uint32_t weapon) {
-    player->RemoveWeapon(weapon);
+bool Player_RemoveWeapon(alt::IPlayer* player, uint32_t weapon) {
+    return player->RemoveWeapon(weapon);
 }
 
 void Player_RemoveAllWeapons(alt::IPlayer* player) {
@@ -205,6 +205,10 @@ void Player_RemoveWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_
     player->RemoveWeaponComponent(weapon, component);
 }
 
+bool Player_HasWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_t component) {
+    return player->HasWeaponComponent(weapon, component);
+}
+
 void Player_GetCurrentWeaponComponents(alt::IPlayer* player, alt::Array<uint32_t> &weaponComponents) {
     auto currWeaponComponents = player->GetCurrentWeaponComponents();
     alt::Array<uint32_t> values;
@@ -216,6 +220,10 @@ void Player_GetCurrentWeaponComponents(alt::IPlayer* player, alt::Array<uint32_t
 
 void Player_SetWeaponTintIndex(alt::IPlayer* player, uint32_t weapon, uint8_t tintIndex) {
     player->SetWeaponTintIndex(weapon, tintIndex);
+}
+
+uint8_t Player_GetWeaponTintIndex(alt::IPlayer* player, uint32_t weapon) {
+    return player->GetWeaponTintIndex(weapon);
 }
 
 uint8_t Player_GetCurrentWeaponTintIndex(alt::IPlayer* player) {
@@ -395,4 +403,8 @@ void Player_GetPositionCoords2(alt::IPlayer* player, float* position_x, float* p
 
 void Player_SetNetworkOwner(alt::IPlayer* player, alt::IPlayer* networkOwnerPlayer, bool disableMigration) {
     player->SetNetworkOwner(networkOwnerPlayer, disableMigration);
+}
+
+void Player_ClearBloodDamage(alt::IPlayer* player) {
+    player->ClearBloodDamage();
 }

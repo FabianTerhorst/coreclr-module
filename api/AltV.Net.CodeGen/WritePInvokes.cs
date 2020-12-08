@@ -107,13 +107,35 @@ namespace AltV.Net.CodeGen
             throw new ArgumentException("No csharp type found for:" + cType + " param:" + name);
         }
 
+        private static string TransformParameterName(string parameterName)
+        {
+            var splitParamName = parameterName.Split("_");
+            if (splitParamName.Length < 2) return parameterName;
+
+            var newParamName = "";
+            for (int i = 0, length = splitParamName.Length; i < length; i++)
+            {
+                if (i > 0)
+                {
+                    newParamName += splitParamName[i].FirstCharToUpper();
+                }
+                else
+                {
+                    newParamName += splitParamName[i];
+                }
+            }
+
+            return newParamName;
+        }
+
+
         public static string Write(ParseExports.CMethod[] methods)
         {
             var fullFile = new StringBuilder();
             foreach (var method in methods)
             {
                 var template = $@"[DllImport(DllName, CallingConvention = NativeCallingConvention)]
-internal static extern {TypeToCSharp(method.ReturnType)} {method.Name}({string.Join(", ", method.Params.Select(param => TypeToCSharp(param.Type, param.Name) + " " + param.Name).ToArray())});";
+internal static extern {TypeToCSharp(method.ReturnType)} {method.Name}({string.Join(", ", method.Params.Select(param => TypeToCSharp(param.Type, param.Name) + " " + TransformParameterName(param.Name)).ToArray())});";
                 template += Environment.NewLine;
                 fullFile.Append(template);
             }

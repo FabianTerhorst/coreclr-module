@@ -42,6 +42,21 @@ namespace AltV.Net.Mock
         public ulong HardwareIdExHash { get; }
         public string AuthToken { get; }
 
+        bool IPlayer.RemoveWeapon(uint weapon)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasWeaponComponent(uint weapon, uint weaponComponent)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte GetWeaponTintIndex(uint weapon)
+        {
+            throw new NotImplementedException();
+        }
+
         public void AddWeaponComponent(uint weapon, uint weaponComponent)
         {
             throw new NotImplementedException();
@@ -117,6 +132,11 @@ namespace AltV.Net.Mock
         }
 
         public bool TryCreateRef(out PlayerRef playerRef)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ClearBloodDamage()
         {
             throw new NotImplementedException();
         }

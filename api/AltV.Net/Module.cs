@@ -139,6 +139,15 @@ namespace AltV.Net
         
         internal readonly IEventHandler<PlayerWeaponChangeDelegate> PlayerWeaponChangeEventHandler =
             new HashSetEventHandler<PlayerWeaponChangeDelegate>();
+        
+        internal readonly IEventHandler<NetOwnerChangeDelegate> NetOwnerChangeEventHandler =
+            new HashSetEventHandler<NetOwnerChangeDelegate>();
+        
+        internal readonly IEventHandler<VehicleAttachDelegate> VehicleAttachEventHandler =
+            new HashSetEventHandler<VehicleAttachDelegate>();
+        
+        internal readonly IEventHandler<VehicleDetachDelegate> VehicleDetachEventHandler =
+            new HashSetEventHandler<VehicleDetachDelegate>();
 
         internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
 
@@ -183,6 +192,7 @@ namespace AltV.Net
         [Conditional("DEBUG")]
         public void CountUpRefForCurrentThread(IBaseObject baseObject)
         {
+            if (baseObject == null) return;
             var currThread = Thread.CurrentThread.ManagedThreadId;
             lock (threadRefCount)
             {
@@ -204,6 +214,7 @@ namespace AltV.Net
         [Conditional("DEBUG")]
         public void CountDownRefForCurrentThread(IBaseObject baseObject)
         {
+            if (baseObject == null) return;
             var currThread = Thread.CurrentThread.ManagedThreadId;
             lock (threadRefCount)
             {
@@ -274,6 +285,11 @@ namespace AltV.Net
         {
             if (!assemblyLoadContext.TryGetTarget(out var target)) return null;
             return target.LoadFromNativeImagePath(nativeImagePath, assemblyPath);
+        }
+        
+        public WeakReference<AssemblyLoadContext> GetAssemblyLoadContext()
+        {
+            return assemblyLoadContext;
         }
 
         public void OnClient(string eventName, Function function)
@@ -1473,6 +1489,114 @@ namespace AltV.Net
             if (cancel)
             {
                 AltNative.Event.Event_Cancel(eventPointer);
+            }
+        }
+        
+        public void OnNetOwnerChange(IntPtr eventPointer, IntPtr targetEntityPointer, BaseObjectType targetEntityType, IntPtr oldNetOwnerPointer, IntPtr newNetOwnerPointer)
+        {
+            if (!BaseEntityPool.Get(targetEntityPointer, targetEntityType, out var targetEntity))
+            {
+                Console.WriteLine("OnNetOwnerChange Invalid targetEntity " + targetEntity);
+                return;
+            }
+
+            PlayerPool.Get(oldNetOwnerPointer, out var oldPlayer);
+            PlayerPool.Get(newNetOwnerPointer, out var newPlayer);
+
+            OnNetOwnerChangeEvent(targetEntity, oldPlayer, newPlayer);
+        }
+
+        public virtual void OnNetOwnerChangeEvent(IEntity targetEntity, IPlayer oldPlayer, IPlayer newPlayer)
+        {
+            if (!NetOwnerChangeEventHandler.HasEvents()) return;
+            foreach (var @delegate in NetOwnerChangeEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(targetEntity, oldPlayer, newPlayer);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnNetOwnerChangeEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnNetOwnerChangeEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public void OnVehicleAttach(IntPtr eventPointer, IntPtr targetPointer, IntPtr attachedPointer)
+        {
+            if (!VehiclePool.Get(targetPointer, out var targetVehicle))
+            {
+                Console.WriteLine("OnVehicleAttach Invalid targetVehicle " + targetVehicle);
+                return;
+            }
+            
+            if (!VehiclePool.Get(attachedPointer, out var attachedVehicle))
+            {
+                Console.WriteLine("OnVehicleAttach Invalid attachedVehicle " + attachedPointer);
+                return;
+            }
+
+            OnVehicleAttachEvent(targetVehicle, attachedVehicle);
+        }
+
+        public virtual void OnVehicleAttachEvent(IVehicle targetVehicle, IVehicle attachedVehicle)
+        {
+            if (!VehicleAttachEventHandler.HasEvents()) return;
+            foreach (var @delegate in VehicleAttachEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(targetVehicle, attachedVehicle);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnVehicleAttachEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnVehicleAttachEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public void OnVehicleDetach(IntPtr eventPointer, IntPtr targetPointer, IntPtr detachedPointer)
+        {
+            if (!VehiclePool.Get(targetPointer, out var targetVehicle))
+            {
+                Console.WriteLine("OnVehicleAttach Invalid targetVehicle " + targetVehicle);
+                return;
+            }
+            
+            if (!VehiclePool.Get(detachedPointer, out var detachedVehicle))
+            {
+                Console.WriteLine("OnVehicleDetach Invalid detachedPointer " + detachedPointer);
+                return;
+            }
+
+            OnVehicleDetachEvent(targetVehicle, detachedVehicle);
+        }
+
+        public virtual void OnVehicleDetachEvent(IVehicle targetVehicle, IVehicle detachedVehicle)
+        {
+            if (!VehicleDetachEventHandler.HasEvents()) return;
+            foreach (var @delegate in VehicleDetachEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(targetVehicle, detachedVehicle);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnVehicleDetachEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnVehicleDetachEvent" + ":" + exception);
+                }
             }
         }
 

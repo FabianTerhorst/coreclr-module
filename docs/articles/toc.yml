@@ -1,5 +1,5 @@
 - name: Getting Started
-  href: intro.md
+  href: index.md
   items:
     - name: Setup
       href: setup.md
@@ -52,8 +52,14 @@
     - name: Death
       href: player_death.md
     - name: Weapon damage
-      href: player_damage.md
+      href: weapon_damage.md
     - name: Connect
       href: player_connect.md
     - name: Disconnect
       href: player_disconnect.md
+    - name: Weapon change
+      href: player_weapon_change.md
+    - name: Enter vehicle
+      href: player_enter_vehicle.md
+    - name: Leave vehicle
+      href: player_leave_vehicle.md

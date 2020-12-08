@@ -27,6 +27,11 @@ namespace AltV.Net.Native
             internal static extern void Player_GetPosition(IntPtr player, ref Position position);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void
+                Player_GetPositionCoords(IntPtr player, ref float positionX, ref float positionY,
+                    ref float positionZ, ref int dimension);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_SetPosition(IntPtr player, Position pos);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
@@ -130,7 +135,7 @@ namespace AltV.Net.Native
             internal static extern void Player_GiveWeapon(IntPtr player, uint weapon, int ammo, bool selectWeapon);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Player_RemoveWeapon(IntPtr player, uint weapon);
+            internal static extern bool Player_RemoveWeapon(IntPtr player, uint weapon);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_RemoveAllWeapons(IntPtr player);
@@ -142,11 +147,17 @@ namespace AltV.Net.Native
             internal static extern void Player_RemoveWeaponComponent(IntPtr player, uint weapon, uint component);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Player_HasWeaponComponent(IntPtr player, uint weapon, uint component);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void
                 Player_GetCurrentWeaponComponents(IntPtr player, ref UIntArray weaponComponents);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_SetWeaponTintIndex(IntPtr player, uint weapon, byte tintIndex);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern byte Player_GetWeaponTintIndex(IntPtr player, uint weapon);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern byte Player_GetCurrentWeaponTintIndex(IntPtr player);
@@ -222,9 +233,18 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_GetIP(IntPtr player, ref IntPtr ip);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_GetPositionCoords2(IntPtr player, ref float positionX,
+                ref float positionY, ref float positionZ, ref float rotationX, ref float rotationY,
+                ref float rotationZ, ref int dimension);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_SetNetworkOwner(IntPtr player, IntPtr networkOwnerPlayer,
+                bool disableMigration);
             
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Player_SetNetworkOwner(IntPtr player, IntPtr networkOwnerPlayer, bool disableMigration);
+            internal static extern void Player_ClearBloodDamage(IntPtr player);
         }
     }
 }

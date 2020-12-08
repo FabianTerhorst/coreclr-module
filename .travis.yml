@@ -62,7 +62,7 @@ matrix:
     #    channel: latest/beta
     sudo: required
     language: csharp
-    dotnet: 3.1.101
+    dotnet: 5.0
     mono: none
     script:
       - mkdir upload
@@ -72,14 +72,14 @@ matrix:
       - dotnet --version
       - cd api
       - cd AltV.Net.Host
-      - dotnet publish -c Release
+      - dotnet publish -c Release -f netcoreapp3.1
       - dotnet pack -c Release
       - cd ..
       - cd AltV.Net
-      - dotnet publish -c Debug
+      - dotnet publish -c Debug -f netcoreapp3.1
       - cd ..
       - cd AltV.Net.Async
-      - dotnet publish -c Debug
+      - dotnet publish -c Debug -f netcoreapp3.1
       - cd ..
       - cd ..
       - mv ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/publish/AltV.Net.Host.dll ./upload/AltV.Net.Host.dll
@@ -208,6 +208,10 @@ deploy:
     file: 
       - upload/AltV.Net.Host.dll
       - upload/AltV.Net.Host.runtimeconfig.json
+      - api-dlls/AltV.Net.dll
+      - api-dlls/AltV.Net.Async.dll
+      - api-dlls/AltV.Net.pdb
+      - api-dlls/AltV.Net.Async.pdb
     on:
       repo: FabianTerhorst/coreclr-module
       condition: "$DOTNET_STABLE = true"
@@ -291,6 +295,7 @@ deploy:
     github-token: $GITHUB_TOKEN
     target-branch: gh-pages
     local-dir: docs/_site
+    fqdn: csharp.altv.mp
     keep-history: true
     on:
       condition: "$DOCS = true"
