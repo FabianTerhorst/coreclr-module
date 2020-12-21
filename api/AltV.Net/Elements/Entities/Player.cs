@@ -68,6 +68,20 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public override bool Visible
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Player.Player_GetVisible(NativePointer);
+            }
+            set
+            {
+                CheckIfEntityExists();
+                AltNative.Player.Player_SetVisible(NativePointer, value);
+            }
+        }
+
         public override int Dimension
         {
             get

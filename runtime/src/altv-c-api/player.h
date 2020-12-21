@@ -70,6 +70,8 @@ EXPORT bool Player_HasStreamSyncedMetaData(alt::IPlayer* player, const char* key
 EXPORT void Player_DeleteStreamSyncedMetaData(alt::IPlayer* player, const char* key);
 EXPORT void Player_AddRef(alt::IPlayer* player);
 EXPORT void Player_RemoveRef(alt::IPlayer* player);
+EXPORT bool Player_GetVisible(alt::IPlayer* player);
+EXPORT void Player_SetVisible(alt::IPlayer* player, bool state);
 // Player
 EXPORT bool Player_IsConnected(alt::IPlayer* player);
 EXPORT void Player_Spawn(alt::IPlayer* player, alt::Position pos, uint32_t delayMs);
