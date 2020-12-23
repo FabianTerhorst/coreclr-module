@@ -41,6 +41,12 @@ namespace AltV.Net.Native
             internal static extern void Player_SetRotation(IntPtr player, Rotation rot);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Player_GetVisible(IntPtr player);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_SetVisible(IntPtr player, bool state);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern int Player_GetDimension(IntPtr player);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]

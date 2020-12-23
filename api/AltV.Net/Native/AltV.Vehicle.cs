@@ -32,6 +32,12 @@ namespace AltV.Net.Native
             internal static extern void Vehicle_SetRotation(IntPtr vehicle, Rotation rot);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_GetVisible(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetVisible(IntPtr vehicle, bool state);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern int Vehicle_GetDimension(IntPtr vehicle);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
