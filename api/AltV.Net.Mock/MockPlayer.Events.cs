@@ -28,7 +28,7 @@ namespace AltV.Net.Mock
             }
             if (((MockDecorator<IPlayer, IPlayer>) player).GetMock() is MockPlayer mockPlayer)
             {
-                mockPlayer.IsDead = true;
+                //mockPlayer.IsDead = true;
             }
 
             Alt.Module.OnPlayerDeath(player.NativePointer, killer?.NativePointer ?? IntPtr.Zero, killer?.Type ?? BaseObjectType.Undefined, weapon);
@@ -38,9 +38,9 @@ namespace AltV.Net.Mock
         {
             if (((MockDecorator<IPlayer, IPlayer>) player).GetMock() is MockPlayer mockPlayer)
             {
-                mockPlayer.IsInVehicle = true;
-                mockPlayer.Vehicle = vehicle;
-                mockPlayer.Seat = seat;
+                //mockPlayer.IsInVehicle = true;
+                //mockPlayer.Vehicle = vehicle;
+                //mockPlayer.Seat = seat;
             }
 
             Alt.Module.OnPlayerEnterVehicle(vehicle.NativePointer, player.NativePointer, seat);
@@ -54,9 +54,9 @@ namespace AltV.Net.Mock
             }
             if (((MockDecorator<IPlayer, IPlayer>) player).GetMock() is MockPlayer mockPlayer)
             {
-                mockPlayer.IsInVehicle = false;
-                mockPlayer.Vehicle = null;
-                mockPlayer.Seat = 0;
+                //mockPlayer.IsInVehicle = false;
+                //mockPlayer.Vehicle = null;
+                //mockPlayer.Seat = 0;
             }
 
             Alt.Module.OnPlayerLeaveVehicle(vehicle.NativePointer, player.NativePointer, seat);
@@ -71,7 +71,7 @@ namespace AltV.Net.Mock
             var oldSeat = player.Seat;
             if (((MockDecorator<IPlayer, IPlayer>) player).GetMock() is MockPlayer mockPlayer)
             {
-                mockPlayer.Seat = seat;
+                //mockPlayer.Seat = seat;
             }
 
             Alt.Module.OnPlayerChangeVehicleSeat(vehicle.NativePointer, player.NativePointer, oldSeat, seat);

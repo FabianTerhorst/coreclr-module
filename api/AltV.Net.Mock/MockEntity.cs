@@ -7,17 +7,16 @@ using AltV.Net.Native;
 
 namespace AltV.Net.Mock
 {
-    public abstract class MockEntity : IEntity
+    public abstract class MockEntity : Entity
     {
         public IntPtr NativePointer { get; }
-        public IPlayer NetworkOwner { get; }
         public bool Exists { get; }
         public ushort Id { get; }
         public BaseObjectType Type { get; }
-        public Position Position { get; set; }
-        public Rotation Rotation { get; set; }
-        public int Dimension { get; set; }
-        public uint Model { get; set; }
+        public override Position Position { get; set; }
+        public override Rotation Rotation { get; set; }
+        public override int Dimension { get; set; }
+        public override uint Model { get; set; }
 
         private readonly Dictionary<string, object> data = new Dictionary<string, object>();
 
@@ -25,7 +24,7 @@ namespace AltV.Net.Mock
 
         private readonly Dictionary<string, MValueConst> syncedMetaData = new Dictionary<string, MValueConst>();
 
-        public MockEntity(IntPtr nativePointer, BaseObjectType baseObjectType, ushort id)
+        public MockEntity(IntPtr nativePointer, BaseObjectType baseObjectType, ushort id):base(nativePointer, baseObjectType, id)
         {
             NativePointer = nativePointer;
             Type = baseObjectType;
@@ -119,11 +118,6 @@ namespace AltV.Net.Mock
             return true;
         }
 
-        public void SetNetworkOwner(IPlayer player, bool disableMigration)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool HasData(string key)
         {
             throw new NotImplementedException();
@@ -134,72 +128,12 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public bool HasMetaData(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteMetaData(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool HasSyncedMetaData(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteSyncedMetaData(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool HasStreamSyncedMetaData(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteStreamSyncedMetaData(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetMetaData(string key, in MValueConst value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetMetaData(string key, out MValueConst value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetSyncedMetaData(string key, in MValueConst value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetSyncedMetaData(string key, out MValueConst value)
-        {
-            throw new NotImplementedException();
-        }
-
         public void SetStreamSyncedMetaData(string key, object value)
         {
             throw new NotImplementedException();
         }
 
         public bool GetStreamSyncedMetaData<T>(string key, out T result)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetStreamSyncedMetaData(string key, in MValueConst value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetStreamSyncedMetaData(string key, out MValueConst value)
         {
             throw new NotImplementedException();
         }
