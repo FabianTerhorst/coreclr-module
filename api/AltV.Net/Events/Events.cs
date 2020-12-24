@@ -58,4 +58,10 @@ namespace AltV.Net.Events
     public delegate bool StartProjectileDelegate(IPlayer player, Position startPosition, Position direction, uint ammoHash, uint weaponHash);
     
     public delegate bool PlayerWeaponChangeDelegate(IPlayer player, uint oldWeapon, uint newWeapon);
+    
+    public delegate void NetOwnerChangeDelegate(IEntity target, IPlayer oldNetOwner, IPlayer newNetOwner);
+    
+    public delegate void VehicleAttachDelegate(IVehicle target, IVehicle attachedVehicle);
+    
+    public delegate void VehicleDetachDelegate(IVehicle target, IVehicle detachedVehicle);
 }

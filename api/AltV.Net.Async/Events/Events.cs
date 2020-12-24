@@ -51,4 +51,10 @@ namespace AltV.Net.Async.Events
     public delegate Task StartProjectileAsyncDelegate(IPlayer player, Position startPosition, Position direction, uint ammoHash, uint weaponHash);
     
     public delegate Task PlayerWeaponChangeAsyncDelegate(IPlayer player, uint oldWeapon, uint newWeapon);
+    
+    public delegate Task NetOwnerChangeAsyncDelegate(IEntity target, IPlayer oldNetOwner, IPlayer newNetOwner);
+    
+    public delegate Task VehicleAttachAsyncDelegate(IVehicle target, IVehicle attachedVehicle);
+    
+    public delegate Task VehicleDetachAsyncDelegate(IVehicle target, IVehicle detachedVehicle);
 }

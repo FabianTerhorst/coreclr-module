@@ -6,7 +6,6 @@
 #pragma clang diagnostic ignored "-Wswitch"
 #endif
 
-#include <altv-cpp-api/SDK.h>
 #include <CSharpResourceImpl.h>
 
 #ifdef __clang__

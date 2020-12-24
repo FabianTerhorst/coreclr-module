@@ -406,3 +406,15 @@ alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value) {
 bool Core_IsDebug(alt::ICore* core) {
     return core->IsDebug();
 }
+
+void Core_GetVersion(alt::ICore* core, const char*&value, uint64_t &size) {
+    auto version = core->GetVersion();
+    value = version.GetData();
+    size = version.GetSize();
+}
+
+void Core_GetBranch(alt::ICore* core, const char*&value, uint64_t &size) {
+    auto version = core->GetBranch();
+    value = version.GetData();
+    size = version.GetSize();
+}

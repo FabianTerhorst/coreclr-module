@@ -194,5 +194,23 @@ namespace AltV.Net
             add => Module.PlayerWeaponChangeEventHandler.Add(value);
             remove => Module.PlayerWeaponChangeEventHandler.Remove(value);
         }
+        
+        public static event NetOwnerChangeDelegate OnNetworkOwnerChange
+        {
+            add => Module.NetOwnerChangeEventHandler.Add(value);
+            remove => Module.NetOwnerChangeEventHandler.Remove(value);
+        }
+        
+        public static event VehicleAttachDelegate OnVehicleAttach
+        {
+            add => Module.VehicleAttachEventHandler.Add(value);
+            remove => Module.VehicleAttachEventHandler.Remove(value);
+        }
+        
+        public static event VehicleDetachDelegate OnVehicleDetach
+        {
+            add => Module.VehicleDetachEventHandler.Add(value);
+            remove => Module.VehicleDetachEventHandler.Remove(value);
+        }
     }
 }

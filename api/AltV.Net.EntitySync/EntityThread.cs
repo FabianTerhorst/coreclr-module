@@ -92,6 +92,7 @@ namespace AltV.Net.EntitySync
                         switch (state)
                         {
                             case 0:
+                                entityToChange.SetExistsInternal(true);
                                 spatialPartition.Add(entityToChange);
                                 foreach (var (key, _) in entityToChange.ThreadLocalData)
                                 {
@@ -100,6 +101,7 @@ namespace AltV.Net.EntitySync
 
                                 break;
                             case 1:
+                                entityToChange.SetExistsInternal(false);
                                 spatialPartition.Remove(entityToChange);
                                 foreach (var client in entityToChange.GetClients())
                                 {
@@ -117,29 +119,32 @@ namespace AltV.Net.EntitySync
 
                                 break;
                             case 2:
-                                // Check if position state is new position so we can set the new position to the entity internal position
-                                var (hasNewPosition, hasNewRange, hasNewDimension) =
-                                    entityToChange.TrySetPropertiesComputing(
-                                        out var newPosition,
-                                        out var newRange, out var newDimension);
-
-                                if (hasNewPosition)
+                                if (entityToChange.Exists)
                                 {
-                                    spatialPartition.UpdateEntityPosition(entityToChange, newPosition);
-                                    foreach (var entityClient in entityToChange.GetClients())
+                                    // Check if position state is new position so we can set the new position to the entity internal position
+                                    var (hasNewPosition, hasNewRange, hasNewDimension) =
+                                        entityToChange.TrySetPropertiesComputing(
+                                            out var newPosition,
+                                            out var newRange, out var newDimension);
+
+                                    if (hasNewPosition)
                                     {
-                                        onEntityPositionChange(entityClient, entityToChange, newPosition);
+                                        spatialPartition.UpdateEntityPosition(entityToChange, newPosition);
+                                        foreach (var entityClient in entityToChange.GetClients())
+                                        {
+                                            onEntityPositionChange(entityClient, entityToChange, newPosition);
+                                        }
                                     }
-                                }
 
-                                if (hasNewRange)
-                                {
-                                    spatialPartition.UpdateEntityRange(entityToChange, newRange);
-                                }
+                                    if (hasNewRange)
+                                    {
+                                        spatialPartition.UpdateEntityRange(entityToChange, newRange);
+                                    }
 
-                                if (hasNewDimension)
-                                {
-                                    spatialPartition.UpdateEntityDimension(entityToChange, newDimension);
+                                    if (hasNewDimension)
+                                    {
+                                        spatialPartition.UpdateEntityDimension(entityToChange, newDimension);
+                                    }
                                 }
 
                                 break;

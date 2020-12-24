@@ -338,5 +338,20 @@ namespace AltV.Net
         {
             _module.OnPlayerWeaponChange(eventPointer, targetPlayerPointer, oldWeapon, newWeapon);
         }
+
+        public static void OnNetOwnerChange(IntPtr eventPointer, IntPtr targetEntityPointer, BaseObjectType targetEntityType, IntPtr oldNetOwnerPointer, IntPtr newNetOwnerPointer)
+        {
+            _module.OnNetOwnerChange(eventPointer, targetEntityPointer, targetEntityType, oldNetOwnerPointer, newNetOwnerPointer);
+        }
+
+        public static void OnVehicleAttach(IntPtr eventPointer, IntPtr targetPointer, IntPtr attachedPointer)
+        {
+            _module.OnVehicleAttach(eventPointer, targetPointer, attachedPointer);
+        }
+
+        public static void OnVehicleDetach(IntPtr eventPointer, IntPtr targetPointer, IntPtr detachedPointer)
+        {
+            _module.OnVehicleDetach(eventPointer, targetPointer, detachedPointer);
+        }
     }
 }

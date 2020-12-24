@@ -20,6 +20,10 @@ namespace AltV.Net.EntitySync
             set => SetPositionInternal(value);
         }
 
+        private bool exists = false;
+        
+        public bool Exists => exists;
+
         private bool positionState = false;
 
         private Vector3 newPosition;
@@ -309,6 +313,11 @@ namespace AltV.Net.EntitySync
             }
 
             return m.ToArray();
+        }
+
+        public void SetExistsInternal(bool state)
+        {
+            exists = state;
         }
 
         public override int GetHashCode()

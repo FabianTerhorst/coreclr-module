@@ -33,6 +33,10 @@ namespace AltV.Net.Mock
 
         public string RootDirectory => "";
 
+        public string Branch => "";
+
+        public string Version => "";
+
         public INativeResource Resource => new NativeResource(IntPtr.Zero, IntPtr.Zero);
 
         internal MockServer(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,

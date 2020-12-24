@@ -68,6 +68,20 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public override bool Visible
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Player.Player_GetVisible(NativePointer);
+            }
+            set
+            {
+                CheckIfEntityExists();
+                AltNative.Player.Player_SetVisible(NativePointer, value);
+            }
+        }
+
         public override int Dimension
         {
             get
@@ -510,10 +524,10 @@ namespace AltV.Net.Elements.Entities
             AltNative.Player.Player_GiveWeapon(NativePointer, weapon, ammo, selectWeapon);
         }
 
-        public void RemoveWeapon(uint weapon)
+        public bool RemoveWeapon(uint weapon)
         {
             CheckIfEntityExists();
-            AltNative.Player.Player_RemoveWeapon(NativePointer, weapon);
+            return AltNative.Player.Player_RemoveWeapon(NativePointer, weapon);
         }
 
         public void RemoveAllWeapons()
@@ -534,6 +548,12 @@ namespace AltV.Net.Elements.Entities
             AltNative.Player.Player_RemoveWeaponComponent(NativePointer, weapon, weaponComponent);
         }
 
+        public bool HasWeaponComponent(uint weapon, uint weaponComponent)
+        {
+            CheckIfEntityExists();
+            return AltNative.Player.Player_HasWeaponComponent(NativePointer, weapon, weaponComponent);
+        }
+
         public void GetCurrentWeaponComponents(out uint[] weaponComponents)
         {
             CheckIfEntityExists();
@@ -546,6 +566,12 @@ namespace AltV.Net.Elements.Entities
         {
             CheckIfEntityExists();
             AltNative.Player.Player_SetWeaponTintIndex(NativePointer, weapon, tintIndex);
+        }
+
+        public byte GetWeaponTintIndex(uint weapon)
+        {
+            CheckIfEntityExists();
+            return AltNative.Player.Player_GetWeaponTintIndex(NativePointer, weapon);
         }
 
         public byte GetCurrentWeaponTintIndex()
@@ -576,6 +602,11 @@ namespace AltV.Net.Elements.Entities
         protected override void InternalRemoveRef()
         {
             AltNative.Player.Player_RemoveRef(NativePointer);
+        }
+
+        public void ClearBloodDamage()
+        {
+            AltNative.Player.Player_ClearBloodDamage(NativePointer);
         }
 
         public bool TryCreateRef(out PlayerRef playerRef)

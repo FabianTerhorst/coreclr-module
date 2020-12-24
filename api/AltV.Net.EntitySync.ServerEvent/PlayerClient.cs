@@ -10,9 +10,16 @@ namespace AltV.Net.EntitySync.ServerEvent
         private const string DllName = "csharp-module";
         private const CallingConvention NativeCallingConvention = CallingConvention.Cdecl;
 
+#if NET5_0
+        [SuppressGCTransition]
         [DllImport(DllName, CallingConvention = NativeCallingConvention)]
         private static extern unsafe void Player_GetPositionCoords(void* player, float* positionX, float* positionY,
             float* positionZ, int* dimension);
+        #else
+        [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+        private static extern unsafe void Player_GetPositionCoords(void* player, float* positionX, float* positionY,
+            float* positionZ, int* dimension);
+#endif
 
         private readonly IPlayer player;
 
