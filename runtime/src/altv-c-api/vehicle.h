@@ -217,6 +217,8 @@ EXPORT void Vehicle_SetNetworkOwner(alt::IVehicle* vehicle, alt::IPlayer* networ
 EXPORT alt::IVehicle* Vehicle_GetAttached(alt::IVehicle* vehicle);
 EXPORT alt::IVehicle* Vehicle_GetAttachedTo(alt::IVehicle* vehicle);
 
+EXPORT void Vehicle_Repair(alt::IVehicle* vehicle);
+
 #ifdef __cplusplus
 }
 #endif

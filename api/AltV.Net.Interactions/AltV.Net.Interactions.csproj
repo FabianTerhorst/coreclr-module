@@ -1,9 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <PackageVersion>1.1.0-dev-preview</PackageVersion>
+        <PackageVersion>1.2.0</PackageVersion>
         <Authors>FabianTerhorst</Authors>
         <Description>AltV .NET Core Interactions</Description>
         <Copyright>FabianTerhorst</Copyright>
@@ -19,6 +18,8 @@
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <TargetFrameworks>net5.0;netcoreapp3.1</TargetFrameworks>
+        <LangVersion>default</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>

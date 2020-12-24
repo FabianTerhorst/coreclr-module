@@ -170,6 +170,44 @@ namespace AltV.Net.FunctionParser
 
                 return array;
             }
+            
+            if (type == FunctionTypes.Vector3)
+            {
+                var array = new Vector3[length];
+                for (var i = 0; i < length; i++)
+                {
+                    var currMValue = mValues[i];
+                    if (currMValue.type == MValueConst.Type.Vector3)
+                    {
+                        array[i] = currMValue.GetVector3();
+                    }
+                    else
+                    {
+                        array[i] = Position.Zero;
+                    }
+                }
+
+                return array;
+            }
+            
+            if (type == FunctionTypes.Position)
+            {
+                var array = new Position[length];
+                for (var i = 0; i < length; i++)
+                {
+                    var currMValue = mValues[i];
+                    if (currMValue.type == MValueConst.Type.Vector3)
+                    {
+                        array[i] = currMValue.GetVector3();
+                    }
+                    else
+                    {
+                        array[i] = Position.Zero;
+                    }
+                }
+
+                return array;
+            }
 
             
             var typeArray = typeInfo != null ? typeInfo.CreateArrayOfType(length, type) : Array.CreateInstance(type, length);
@@ -357,6 +395,8 @@ namespace AltV.Net.FunctionParser
                     return ParseDictionary(in mValue, type, typeInfo);
                 case MValueConst.Type.Function:
                     return ParseFunction(in mValue, type, typeInfo);
+                case MValueConst.Type.Vector3:
+                    return ParseVector3(in mValue, type, typeInfo);
                 default:
                     return null;
             }
@@ -489,6 +529,23 @@ namespace AltV.Net.FunctionParser
                     //TODO: validate type somehow
                     obj = ParseFunction(in mValue, type, typeInfo);
                     return true;
+                case MValueConst.Type.Vector3:
+                    if (type == FunctionTypes.Obj || type == FunctionTypes.Vector3)
+                    {
+                        obj = mValue.GetVector3();
+                        return true;
+                    } else if (type == FunctionTypes.Position)
+                    {
+                        obj = (Position) mValue.GetVector3();
+                        return true;
+                    } else if (type == FunctionTypes.Rotation)
+                    {
+                        obj = (Rotation) mValue.GetVector3();
+                        return true;
+                    }
+
+                    obj = GetDefault(type, typeInfo);
+                    return false;
                 default:
                     obj = GetDefault(type, typeInfo);
                     return false;
@@ -764,6 +821,63 @@ namespace AltV.Net.FunctionParser
                     else
                     {
                         dict[strings[i]] = null;
+                    }
+                }
+
+                return dict;
+            }
+            
+            if (valueType == FunctionTypes.Vector3)
+            {
+                var dict = new Dictionary<string, Vector3>();
+                for (ulong i = 0; i < length; i++)
+                {
+                    currMValue = valueArray[i];
+                    if (currMValue.type == MValueConst.Type.Vector3)
+                    {
+                        dict[strings[i]] = currMValue.GetVector3();
+                    }
+                    else
+                    {
+                        dict[strings[i]] = Position.Zero;
+                    }
+                }
+
+                return dict;
+            }
+            
+            if (valueType == FunctionTypes.Position)
+            {
+                var dict = new Dictionary<string, Position>();
+                for (ulong i = 0; i < length; i++)
+                {
+                    currMValue = valueArray[i];
+                    if (currMValue.type == MValueConst.Type.Vector3)
+                    {
+                        dict[strings[i]] = currMValue.GetVector3();
+                    }
+                    else
+                    {
+                        dict[strings[i]] = Position.Zero;
+                    }
+                }
+
+                return dict;
+            }
+            
+            if (valueType == FunctionTypes.Rotation)
+            {
+                var dict = new Dictionary<string, Rotation>();
+                for (ulong i = 0; i < length; i++)
+                {
+                    currMValue = valueArray[i];
+                    if (currMValue.type == MValueConst.Type.Vector3)
+                    {
+                        dict[strings[i]] = currMValue.GetVector3();
+                    }
+                    else
+                    {
+                        dict[strings[i]] = Position.Zero;
                     }
                 }
 
