@@ -486,6 +486,9 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr Vehicle_GetAttachedTo(IntPtr vehicle);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_Repair(IntPtr vehicle);
         }
     }
 }

@@ -692,3 +692,7 @@ alt::IVehicle* Vehicle_GetAttached(alt::IVehicle* vehicle) {
 alt::IVehicle* Vehicle_GetAttachedTo(alt::IVehicle* vehicle) {
     return vehicle->GetAttachedTo().Get();
 }
+
+void Vehicle_Repair(alt::IVehicle* vehicle) {
+    vehicle->SetFixed();
+}

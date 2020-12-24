@@ -112,13 +112,13 @@ namespace AltV.Net.Elements.Entities
         byte SpecialDarkness { get; set; }
 
         /// <summary>
-        /// Get or set number plate index of the 
+        /// Get or set number plate index of the vehicle
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         uint NumberplateIndex { get; set; }
 
         /// <summary>
-        /// Get or set number plate text of the 
+        /// Get or set number plate text of the vehicle
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         string NumberplateText { get; set; }
@@ -555,6 +555,11 @@ namespace AltV.Net.Elements.Entities
         /// Removes the vehicle entity
         /// </summary>
         void Remove();
+
+        /// <summary>
+        /// Repairs the vehicle
+        /// </summary>
+        void Repair();
 
         /// <summary>
         /// Returns the current mod of the vehicle in the category
