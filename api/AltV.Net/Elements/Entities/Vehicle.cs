@@ -1132,6 +1132,12 @@ namespace AltV.Net.Elements.Entities
             AltNative.Vehicle.Vehicle_GetNeonActive(NativePointer, ref left, ref right, ref front, ref back);
         }
 
+        public void Repair()
+        {
+            CheckIfEntityExists();
+            AltNative.Vehicle.Vehicle_Repair(NativePointer);
+        }
+
         public void Remove()
         {
             Alt.RemoveVehicle(this);
