@@ -35,7 +35,7 @@ namespace AltV.Net.Async
 
             stringBuilder.Append(message);
 
-            Console.WriteLine(message);
+            Console.WriteLine(stringBuilder.ToString());
         }
     }
 }
