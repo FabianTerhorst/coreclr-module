@@ -6,30 +6,37 @@ You first have to create a custom class that implements the callback interface.
 
 There are two callback interfaces to implement.
 
-1. ```IAsyncBaseObjectCallback``` which is for calling async code in it.
+1. ```IBaseObjectCallback``` is used for none async code.
+The loop execution also blocks the execution on the main thread.
+You should also not use async code within the callback (or at least lock usage of entities). 
+
+2. ```IAsyncBaseObjectCallback``` which is for calling async code in it.
 The callback gets executed inside of an own task and therefore is awaitable.
 Use this callback class either when you have to execute asynchronous code inside the loop or when the loop call itself gets executed asynchronously (not in main thread).
 The entity object parameter by using this callback class is validated and it is safe to be used outside of the main thread without need of using lock statements.
-
-2. ```IBaseObjectCallback``` is used for none async code.
-The loop execution also blocks the execution on the main thread.
-You should also not use async code within the callback (or at least lock usage of entities). 
+Remember that you have to inherit your resource class from ```AsyncResource``` (AltAsync package) instead of ```Resource```, otherwise you don't have entity validation.
 
 Technically both callbacks, no mather the interface can be called in async code. ```IAsyncBaseObjectCallback``` will result in returning a Task and uses async safe entity references (like ```AsyncPlayerRef``` instead of ```PlayerRef``` when iterating over players).
 
 This example is for IPlayer's but can be used for ```IVehicle```, ```IBlip```, ```ICheckpoint```, ```IColShape``` and ```IVoiceChannel``` as well.
 
 ```csharp
-class MyPlayerCallback: IBaseObjectCallback<IPlayer>
+class MyPlayerCallback
+    : IBaseObjectCallback<IPlayer>
 {
-    public void OnBaseObject(IPlayer player) {
+    public void OnBaseObject(IPlayer player)
+    {
+        // do something
         CheckPlayerPosition(player.Position);
     }
 }
 
-class MyPlayerSaveToDBCallback: IAsyncBaseObjectCallback<IPlayer>
+class MyPlayerSaveToDBCallback
+    : IAsyncBaseObjectCallback<IPlayer>
 {
-    public async Task OnBaseObject(IPlayer player) {
+    public async Task OnBaseObject(IPlayer player)
+    {
+        // do something
         var dbPlayer = await LoadPlayerFromDb(player.Id);
         await SavePlayer(dbPlayer);
     }
@@ -66,37 +73,37 @@ Just keep in mind that using classes is better in performance than using lambda 
 
 ```csharp
 public class FunctionCallback<T>
-	: IBaseObjectCallback<T>
-	where T : IBaseObject
+    : IBaseObjectCallback<T>
+    where T : IBaseObject
 {
-	private readonly Action<T> _callback;
+    private readonly Action<T> _callback;
 
-	public FunctionCallback(Action<T> callback)
-	{
-		_callback = callback;
-	}
+    public FunctionCallback(Action<T> callback)
+    {
+        _callback = callback;
+    }
 
-	public void OnBaseObject(T baseObject)
-	{
-		_callback(baseObject);
-	}
+    public void OnBaseObject(T baseObject)
+    {
+        _callback(baseObject);
+    }
 }
 
 public class AsyncFunctionCallback<T>
-	: IAsyncBaseObjectCallback<T>
-	where T : IBaseObject
+    : IAsyncBaseObjectCallback<T>
+    where T : IBaseObject
 {
-	private readonly Func<T, Task> _callback;
+    private readonly Func<T, Task> _callback;
 
-	public AsyncFunctionCallback(Func<T, Task> callback)
-	{
-		_callback = callback;
-	}
+    public AsyncFunctionCallback(Func<T, Task> callback)
+    {
+        _callback = callback;
+    }
 
-	public Task OnBaseObject(T baseObject)
-	{
-		return _callback(baseObject);
-	}
+    public Task OnBaseObject(T baseObject)
+    {
+        return _callback(baseObject);
+    }
 }
 ```
 
@@ -104,7 +111,7 @@ Usage:
 ```csharp
 var callback = new FunctionCallback<IPlayer>(player => {
     // do something
-    Alt.Log(player.Name);
+    CheckPlayerPosition(player.Position);
 });
 
 Alt.ForEachPlayers(callback);
@@ -113,7 +120,20 @@ Alt.ForEachPlayers(callback);
 ```csharp
 var asyncCallback = new AsyncFunctionCallback<IPlayer>(async (player) => {
     // do something
+    var dbPlayer = await LoadPlayerFromDb(player.Id);
+    await SavePlayer(dbPlayer);
+});
+
+Alt.ForEachPlayers(asyncCallback);
+```
+
+If you need entity validation without having the need for using await statement you can do this:
+
+```csharp
+var asyncCallback = new AsyncFunctionCallback<IPlayer>(async (player) => {
+    // do something
     Alt.Log(player.Name);
+    await Task.CompletedTask; // you need at least one await statement in async methods
 });
 
 Alt.ForEachPlayers(asyncCallback);
