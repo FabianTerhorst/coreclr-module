@@ -6,15 +6,15 @@ You first have to create a custom class that implements the callback interface.
 
 There are two callback interfaces to implement.
 
-1. ```IAsyncBaseObjectCallback``` which is for calling async code in it.
+1. ```IBaseObjectCallback``` is used for none async code.
+The loop execution also blocks the execution on the main thread.
+You should also not use async code within the callback (or at least lock usage of entities). 
+
+2. ```IAsyncBaseObjectCallback``` which is for calling async code in it.
 The callback gets executed inside of an own task and therefore is awaitable.
 Use this callback class either when you have to execute asynchronous code inside the loop or when the loop call itself gets executed asynchronously (not in main thread).
 The entity object parameter by using this callback class is validated and it is safe to be used outside of the main thread without need of using lock statements.
 Remember that you have to inherit your resource class from ```AsyncResource``` (AltAsync package) instead of ```Resource```, otherwise you don't have entity validation.
-
-2. ```IBaseObjectCallback``` is used for none async code.
-The loop execution also blocks the execution on the main thread.
-You should also not use async code within the callback (or at least lock usage of entities). 
 
 Technically both callbacks, no mather the interface can be called in async code. ```IAsyncBaseObjectCallback``` will result in returning a Task and uses async safe entity references (like ```AsyncPlayerRef``` instead of ```PlayerRef``` when iterating over players).
 
@@ -26,6 +26,7 @@ class MyPlayerCallback
 {
     public void OnBaseObject(IPlayer player)
     {
+        // do something
         CheckPlayerPosition(player.Position);
     }
 }
@@ -35,6 +36,7 @@ class MyPlayerSaveToDBCallback
 {
     public async Task OnBaseObject(IPlayer player)
     {
+        // do something
         var dbPlayer = await LoadPlayerFromDb(player.Id);
         await SavePlayer(dbPlayer);
     }
@@ -109,11 +111,23 @@ Usage:
 ```csharp
 var callback = new FunctionCallback<IPlayer>(player => {
     // do something
-    Alt.Log(player.Name);
+    CheckPlayerPosition(player.Position);
 });
 
 Alt.ForEachPlayers(callback);
 ```
+
+```csharp
+var asyncCallback = new AsyncFunctionCallback<IPlayer>(async (player) => {
+    // do something
+    var dbPlayer = await LoadPlayerFromDb(player.Id);
+    await SavePlayer(dbPlayer);
+});
+
+Alt.ForEachPlayers(asyncCallback);
+```
+
+If you need entity validation without having the need for using await statement you can do this:
 
 ```csharp
 var asyncCallback = new AsyncFunctionCallback<IPlayer>(async (player) => {
