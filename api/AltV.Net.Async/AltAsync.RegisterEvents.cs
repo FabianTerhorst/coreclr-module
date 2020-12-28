@@ -141,6 +141,20 @@ namespace AltV.Net.Async
                                         return currScriptFunction.CallAsync();
                                     };
                                     break;
+                                case ScriptEventType.PlayerEnteringVehicle:
+                                    scriptFunction =
+                                        ScriptFunction.Create(eventMethodDelegate,
+                                            new[] {typeof(IVehicle), typeof(IPlayer), typeof(byte)}, true);
+                                    if (scriptFunction == null) return;
+                                    OnPlayerEnteringVehicle += (vehicle, player, seat) =>
+                                    {
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(vehicle);
+                                        currScriptFunction.Set(player);
+                                        currScriptFunction.Set(seat);
+                                        return currScriptFunction.CallAsync();
+                                    };
+                                    break;
                                 case ScriptEventType.PlayerLeaveVehicle:
                                     scriptFunction =
                                         ScriptFunction.Create(eventMethodDelegate,
