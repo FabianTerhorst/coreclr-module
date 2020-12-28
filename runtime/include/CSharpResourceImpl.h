@@ -16,6 +16,7 @@
 #include <altv-cpp-api/events/CNetOwnerChangeEvent.h>
 #include <altv-cpp-api/events/CVehicleAttachEvent.h>
 #include <altv-cpp-api/events/CVehicleDetachEvent.h>
+#include <altv-cpp-api/events/CPlayerEnteringVehicleEvent.h>
 
 #ifdef _WIN32
 #define RESOURCES_PATH "\\resources\\"
@@ -111,6 +112,8 @@ typedef void (* PlayerChangeVehicleSeatDelegate_t)(alt::IVehicle* vehicle, alt::
                                                    uint8_t newSeat);
 
 typedef void (* PlayerEnterVehicleDelegate_t)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t seat);
+
+typedef void (* PlayerEnteringVehicleDelegate_t)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t seat);
 
 typedef void (* PlayerLeaveVehicleDelegate_t)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t seat);
 
@@ -235,6 +238,8 @@ public:
     PlayerChangeVehicleSeatDelegate_t OnPlayerChangeVehicleSeatDelegate = nullptr;
 
     PlayerEnterVehicleDelegate_t OnPlayerEnterVehicleDelegate = nullptr;
+
+    PlayerEnteringVehicleDelegate_t OnPlayerEnteringVehicleDelegate = nullptr;
 
     PlayerLeaveVehicleDelegate_t OnPlayerLeaveVehicleDelegate = nullptr;
 
@@ -391,6 +396,9 @@ EXPORT void CSharpResourceImpl_SetPlayerChangeVehicleSeatDelegate(CSharpResource
 
 EXPORT void CSharpResourceImpl_SetPlayerEnterVehicleDelegate(CSharpResourceImpl* resource,
                                                              PlayerEnterVehicleDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPlayerEnteringVehicleDelegate(CSharpResourceImpl* resource,
+                                                                PlayerEnteringVehicleDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetPlayerLeaveVehicleDelegate(CSharpResourceImpl* resource,
                                                              PlayerLeaveVehicleDelegate_t delegate);

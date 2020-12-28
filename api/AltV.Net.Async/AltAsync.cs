@@ -61,6 +61,12 @@ namespace AltV.Net.Async
             add => Module.PlayerEnterVehicleAsyncEventHandler.Add(value);
             remove => Module.PlayerEnterVehicleAsyncEventHandler.Remove(value);
         }
+        
+        public static event PlayerEnteringVehicleAsyncDelegate OnPlayerEnteringVehicle
+        {
+            add => Module.PlayerEnteringVehicleAsyncEventHandler.Add(value);
+            remove => Module.PlayerEnteringVehicleAsyncEventHandler.Remove(value);
+        }
 
         public static event PlayerLeaveVehicleAsyncDelegate OnPlayerLeaveVehicle
         {

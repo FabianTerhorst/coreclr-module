@@ -95,6 +95,8 @@ namespace AltV.Net.Native
 
             internal delegate void PlayerEnterVehicleDelegate(IntPtr vehiclePointer, IntPtr playerPointer, byte seat);
 
+            internal delegate void PlayerEnteringVehicleDelegate(IntPtr vehiclePointer, IntPtr playerPointer, byte seat);
+
             internal delegate void PlayerLeaveVehicleDelegate(IntPtr vehiclePointer, IntPtr playerPointer, byte seat);
 
             internal delegate void PlayerDisconnectDelegate(IntPtr playerPointer, string reason);
@@ -239,6 +241,10 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerEnterVehicleDelegate(IntPtr resource,
                 PlayerEnterVehicleDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPlayerEnteringVehicleDelegate(IntPtr resource,
+                PlayerEnteringVehicleDelegate @delegate);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerLeaveVehicleDelegate(IntPtr resource,

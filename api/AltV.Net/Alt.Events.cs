@@ -108,6 +108,12 @@ namespace AltV.Net
             add => Module.PlayerEnterVehicleEventHandler.Add(value);
             remove => Module.PlayerEnterVehicleEventHandler.Remove(value);
         }
+        
+        public static event PlayerEnteringVehicleDelegate OnPlayerEnteringVehicle
+        {
+            add => Module.PlayerEnteringVehicleEventHandler.Add(value);
+            remove => Module.PlayerEnteringVehicleEventHandler.Remove(value);
+        }
 
         public static event PlayerLeaveVehicleDelegate OnPlayerLeaveVehicle
         {

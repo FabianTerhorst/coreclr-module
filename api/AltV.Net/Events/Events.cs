@@ -33,6 +33,8 @@ namespace AltV.Net.Events
 
     public delegate void PlayerEnterVehicleDelegate(IVehicle vehicle, IPlayer player, byte seat);
 
+    public delegate void PlayerEnteringVehicleDelegate(IVehicle vehicle, IPlayer player, byte seat);
+
     public delegate void PlayerLeaveVehicleDelegate(IVehicle vehicle, IPlayer player, byte seat);
 
     public delegate void ServerEventEventDelegate(string eventName, object[] args);
