@@ -26,6 +26,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnServerEventDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerChangeVehicleSeatDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnPlayerEnterVehicleDelegate = [](auto var, auto var2, auto var3) {};
+    OnPlayerEnteringVehicleDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerLeaveVehicleDelegate = [](auto var, auto var2, auto var3) {};
     OnStopDelegate = []() {};
     OnTickDelegate = []() {};
@@ -316,6 +317,13 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                                          enterEvent->GetSeat());
         }
             break;
+        case alt::CEvent::Type::PLAYER_ENTERING_VEHICLE: {
+            auto enteringEvent = (alt::CPlayerEnteringVehicleEvent*) ev;
+            OnPlayerEnteringVehicleDelegate(enteringEvent->GetTarget().Get(),
+										    enteringEvent->GetPlayer().Get(),
+								            enteringEvent->GetSeat());
+        }
+                                                    break;
         case alt::CEvent::Type::PLAYER_LEAVE_VEHICLE: {
             auto leaveEvent = (alt::CPlayerLeaveVehicleEvent*) ev;
             OnPlayerLeaveVehicleDelegate(leaveEvent->GetTarget().Get(),
@@ -577,6 +585,11 @@ void CSharpResourceImpl_SetPlayerChangeVehicleSeatDelegate(CSharpResourceImpl* r
 void CSharpResourceImpl_SetPlayerEnterVehicleDelegate(CSharpResourceImpl* resource,
                                                       PlayerEnterVehicleDelegate_t delegate) {
     resource->OnPlayerEnterVehicleDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerEnteringVehicleDelegate(CSharpResourceImpl* resource,
+													     PlayerEnteringVehicleDelegate_t delegate) {
+    resource->OnPlayerEnteringVehicleDelegate = delegate;
 }
 
 void CSharpResourceImpl_SetPlayerLeaveVehicleDelegate(CSharpResourceImpl* resource,
