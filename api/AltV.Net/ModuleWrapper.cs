@@ -188,6 +188,11 @@ namespace AltV.Net
             _module.OnPlayerEnterVehicle(vehiclePointer, playerPointer, seat);
         }
 
+        public static void OnPlayerEnteringVehicle(IntPtr vehiclePointer, IntPtr playerPointer, byte seat)
+        {
+            _module.OnPlayerEnteringVehicle(vehiclePointer, playerPointer, seat);
+        }
+
         public static void OnPlayerLeaveVehicle(IntPtr vehiclePointer, IntPtr playerPointer, byte seat)
         {
             _module.OnPlayerLeaveVehicle(vehiclePointer, playerPointer, seat);

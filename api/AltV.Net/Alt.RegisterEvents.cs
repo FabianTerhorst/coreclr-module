@@ -127,6 +127,19 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                case ScriptEventType.PlayerEnteringVehicle:
+                                    scriptFunction =
+                                        ScriptFunction.Create(eventMethodDelegate,
+                                            new[] {typeof(IVehicle), typeof(IPlayer), typeof(byte)});
+                                    if (scriptFunction == null) return;
+                                    OnPlayerEnteringVehicle += (vehicle, player, seat) =>
+                                    {
+                                        scriptFunction.Set(vehicle);
+                                        scriptFunction.Set(player);
+                                        scriptFunction.Set(seat);
+                                        scriptFunction.Call();
+                                    };
+                                    break;
                                 case ScriptEventType.PlayerLeaveVehicle:
                                     scriptFunction =
                                         ScriptFunction.Create(eventMethodDelegate,

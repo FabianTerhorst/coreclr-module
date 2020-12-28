@@ -98,6 +98,10 @@ namespace AltV.Net
             AltNative.Resource.PlayerEnterVehicleDelegate onPlayerEnterVehicle = ModuleWrapper.OnPlayerEnterVehicle;
             handles.AddFirst(GCHandle.Alloc(onPlayerEnterVehicle));
             AltNative.Resource.CSharpResourceImpl_SetPlayerEnterVehicleDelegate(NativePointer, onPlayerEnterVehicle);
+            
+            AltNative.Resource.PlayerEnteringVehicleDelegate onPlayerEnteringVehicle = ModuleWrapper.OnPlayerEnteringVehicle;
+            handles.AddFirst(GCHandle.Alloc(onPlayerEnteringVehicle));
+            AltNative.Resource.CSharpResourceImpl_SetPlayerEnteringVehicleDelegate(NativePointer, onPlayerEnteringVehicle);
 
             AltNative.Resource.PlayerLeaveVehicleDelegate onPlayerLeaveVehicle = ModuleWrapper.OnPlayerLeaveVehicle;
             handles.AddFirst(GCHandle.Alloc(onPlayerLeaveVehicle));
