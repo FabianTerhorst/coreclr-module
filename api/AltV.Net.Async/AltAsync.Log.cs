@@ -5,8 +5,8 @@ namespace AltV.Net.Async
 {
     public static partial class AltAsync
     {
-        private const string HourWithZero = "[";
-        private const string HourWithoutZero = "[0";
+        private const string HourWithZero = "[0";
+        private const string HourWithoutZero = "[";
 
         private const string NumberWithZero = ":0";
         private const string NumberWithoutZero = ":";
@@ -35,7 +35,7 @@ namespace AltV.Net.Async
 
             stringBuilder.Append(message);
 
-            Console.WriteLine(message);
+            Console.WriteLine(stringBuilder.ToString());
         }
     }
 }
