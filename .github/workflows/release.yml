@@ -17,9 +17,9 @@ jobs:
           dotnet build AltV.Net -c Release
           dotnet build AltV.Net.Async -c Release
       - run: |
-          mkdir -p modules/linux
-          mkdir -p modules/windows
-          mkdir apis
+          mkdir -p ./modules/linux
+          mkdir -p ./modules/windows
+          mkdir ./apis
           cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.dll ./modules/linux
           cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.runtimeconfig.json ./modules/linux
           cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.dll ./modules/windows
@@ -97,8 +97,7 @@ jobs:
         shell: bash
         run: |
           filename=$(echo "${{ matrix.config.name }}" | sed -e 's/\(.*\)/\L\1/')
-          cd modules/$filename
-          tar -cvf ../../$filename.tar *
+          tar -cvf ./$filename.tar modules/$filename/modules
           echo "::set-output name=art_name::$filename"
       - uses: actions/upload-artifact@v2
         with:
@@ -166,9 +165,9 @@ jobs:
           tar -xvf ./linux.tar
           tar -xvf ./windows.tar
       - run: |
-          zip -r ./csharp-module-linux.zip ./modules/linux/
-          zip -r ./csharp-module-win.zip ./modules/win/
-          zip -r ./csharp-module-api.zip ./apis/
+          (cd ./modules/linux && zip -r ../../csharp-module-linux.zip *)
+          (cd ./modules/windows && zip -r ../../csharp-module-win.zip *)
+          (cd ./apis && zip -r ../csharp-module-api.zip *)
       - run: ls -l -R ./
       - shell: bash
         run: echo "##[set-output name=branch;]$(git ls-remote --heads origin | grep $GITHUB_SHA | sed "s/.*\///")"
