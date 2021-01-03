@@ -199,11 +199,15 @@ jobs:
       - name: Build
         working-directory: ./api
         run: |
-          dotnet build AltV.Net.Host -c Release --no-restore
           dotnet build AltV.Net -c Release --no-restore
           dotnet build AltV.Net.Async -c Release --no-restore
-    - name: Publish FluentEmail.Core
-      uses: brandedoutcast/publish-nuget@v2.5.2
-      with:
-          PROJECT_FILE_PATH: src/FluentEmail.Core/FluentEmail.Core.csproj
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      - name: Publish AltV.Net
+        uses: brandedoutcast/publish-nuget@v2.5.5
+        with:
+            PROJECT_FILE_PATH: api/AltV.Net/AltV.Net.csproj
+            # NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      - name: Publish AltV.Net.Async
+        uses: brandedoutcast/publish-nuget@v2.5.5
+        with:
+            PROJECT_FILE_PATH: api/AltV.Net.Async/AltV.Net.Async.csproj
+            # NUGET_KEY: ${{secrets.NUGET_API_KEY}}
