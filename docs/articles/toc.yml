@@ -63,3 +63,5 @@
       href: player_enter_vehicle.md
     - name: Leave vehicle
       href: player_leave_vehicle.md
+- name: Internal Information
+  href: internal_information.md
