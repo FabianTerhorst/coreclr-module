@@ -20,28 +20,29 @@ jobs:
       - name: Build
         working-directory: ./api
         run: |
-          dotnet build AltV.Net.Host -c Release
-          dotnet build AltV.Net -c Release
-          dotnet build AltV.Net -c Debug
-          dotnet build AltV.Net.Async -c Release
-          dotnet build AltV.Net.Async -c Debug
+          dotnet publish AltV.Net.Host -c Release -f netcoreapp3.1
+          dotnet publish AltV.Net.Host -c Release -f netcoreapp3.1
+          dotnet publish AltV.Net -c Release -f netcoreapp3.1
+          dotnet publish AltV.Net -c Debug -f netcoreapp3.1
+          dotnet publish AltV.Net.Async -c Release -f netcoreapp3.1
+          dotnet publish AltV.Net.Async -c Debug -f netcoreapp3.1
       - run: |
           mkdir -p ./modules/linux
           mkdir -p ./modules/windows
           mkdir -p ./modules/api-release
           mkdir -p ./modules/api-debug
-          cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.dll ./modules/linux
-          cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.runtimeconfig.json ./modules/linux
-          cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.dll ./modules/windows
-          cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.runtimeconfig.json ./modules/windows
-          cp ./api/AltV.Net/bin/Release/netcoreapp3.1/AltV.Net.dll ./modules/api-release
-          cp ./api/AltV.Net/bin/Release/netcoreapp3.1/AltV.Net.pdb ./modules/api-release
-          cp ./api/AltV.Net.Async/bin/Release/netcoreapp3.1/AltV.Net.Async.dll ./modules/api-release
-          cp ./api/AltV.Net.Async/bin/Release/netcoreapp3.1/AltV.Net.Async.pdb ./modules/api-release
-          cp ./api/AltV.Net/bin/Debug/netcoreapp3.1/AltV.Net.dll ./modules/api-debug
-          cp ./api/AltV.Net/bin/Debug/netcoreapp3.1/AltV.Net.pdb ./modules/api-debug
-          cp ./api/AltV.Net.Async/bin/Debug/netcoreapp3.1/AltV.Net.Async.dll ./modules/api-debug
-          cp ./api/AltV.Net.Async/bin/Debug/netcoreapp3.1/AltV.Net.Async.pdb ./modules/api-debug
+          cp ./api/AltV.Net.Host/bin/Release/*/publish/AltV.Net.Host.dll ./modules/linux
+          cp ./api/AltV.Net.Host/bin/Release/*/publish/AltV.Net.Host.runtimeconfig.json ./modules/linux
+          cp ./api/AltV.Net.Host/bin/Release/*/publish/AltV.Net.Host.dll ./modules/windows
+          cp ./api/AltV.Net.Host/bin/Release/*/publish/AltV.Net.Host.runtimeconfig.json ./modules/windows
+          cp ./api/AltV.Net/bin/Release/*/publish/AltV.Net.dll ./modules/api-release
+          cp ./api/AltV.Net/bin/Release/*/publish/AltV.Net.pdb ./modules/api-release
+          cp ./api/AltV.Net.Async/bin/Release/*/publish/AltV.Net.Async.dll ./modules/api-release
+          cp ./api/AltV.Net.Async/bin/Release/*/publish/AltV.Net.Async.pdb ./modules/api-release
+          cp ./api/AltV.Net/bin/Debug/*/publish/AltV.Net.dll ./modules/api-debug
+          cp ./api/AltV.Net/bin/Debug/*/publish/AltV.Net.pdb ./modules/api-debug
+          cp ./api/AltV.Net.Async/bin/Debug/*/publish/AltV.Net.Async.dll ./modules/api-debug
+          cp ./api/AltV.Net.Async/bin/Debug/*/publish/AltV.Net.Async.pdb ./modules/api-debug
           echo '${{ steps.build_info.outputs.branch }}/${{ steps.build_info.outputs.version }}' > ./modules/build_info.txt
       - name: Pack files
         run: |
