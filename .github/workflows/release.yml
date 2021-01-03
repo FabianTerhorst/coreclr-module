@@ -20,12 +20,12 @@ jobs:
       - name: Build
         working-directory: ./api
         run: |
-          dotnet publish AltV.Net.Host -c Release -f netcoreapp3.1
-          dotnet publish AltV.Net.Host -c Release -f netcoreapp3.1
-          dotnet publish AltV.Net -c Release -f netcoreapp3.1
-          dotnet publish AltV.Net -c Debug -f netcoreapp3.1
-          dotnet publish AltV.Net.Async -c Release -f netcoreapp3.1
-          dotnet publish AltV.Net.Async -c Debug -f netcoreapp3.1
+          dotnet publish AltV.Net.Host -c Release -f net5.0
+          dotnet publish AltV.Net.Host -c Release -f net5.0
+          dotnet publish AltV.Net -c Release -f net5.0
+          dotnet publish AltV.Net -c Debug -f net5.0
+          dotnet publish AltV.Net.Async -c Release -f net5.0
+          dotnet publish AltV.Net.Async -c Debug -f net5.0
       - run: |
           mkdir -p ./modules/linux
           mkdir -p ./modules/windows
@@ -93,9 +93,6 @@ jobs:
       - working-directory: ./runtime
         shell: bash
         run: cmake --build build --config Release
-      - working-directory: ./runtime
-        shell: bash
-        run: ls -l -R ./build
       - if: ${{ runner.os == 'Linux' }}
         shell: bash
         run: |
@@ -126,10 +123,6 @@ jobs:
         uses: actions/setup-dotnet@v1.7.2
         with:
           dotnet-version: 5.0.101
-      - working-directory: ./api
-        run: |
-          dotnet build AltV.Net -c Release
-          dotnet build AltV.Net.Async -c Release
       - uses: rohith/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net/AltV.Net.csproj
