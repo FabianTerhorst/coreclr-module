@@ -91,13 +91,13 @@ jobs:
           cp ./runtime/build/src/libcsharp-module.so ./modules/linux/modules
       - if: ${{ runner.os == 'Windows' }}
         run: |
-          mkdir -p modules/win/modules/
-          cp ./runtime/build/src/Release/csharp-module.dll ./modules/win/modules
+          mkdir -p modules/windows/modules/
+          cp ./runtime/build/src/Release/csharp-module.dll ./modules/windows/modules
       - id: create_archive
         shell: bash
         run: |
           filename=$(echo "${{ matrix.config.name }}" | sed -e 's/\(.*\)/\L\1/')
-          tar -cvf ./$filename.tar modules
+          tar -cvf ./$filename.tar modules/$filename/modules
           echo "::set-output name=art_name::$filename"
       - uses: actions/upload-artifact@v2
         with:
@@ -199,6 +199,4 @@ jobs:
           asset_name: csharp-module-api.zip
           asset_content_type: application/zip
       - if: ${{ always() }}
-        uses: c-hive/gha-remove-artifacts@v1
-        with:
-          age: '1 minute'
+        uses: c-hive/gha-remove-artifacts@v1.2.0
