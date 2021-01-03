@@ -112,17 +112,19 @@ jobs:
           dotnet-version: 5.0.101
       - working-directory: ./api
         run: |
-          dotnet pack AltV.Net -c Release
-          dotnet pack AltV.Net.Async -c Release
+          dotnet build AltV.Net -c Release --no-restore
+          dotnet build AltV.Net.Async -c Release --no-restore
       - uses: rohith/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net/AltV.Net.csproj
+          # NUGET_KEY: ${{secrets.NUGET_API_KEY}}
       - uses: rohith/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Async/AltV.Net.Async.csproj
+          # NUGET_KEY: ${{secrets.NUGET_API_KEY}}
   build-dummy:
     runs-on: ubuntu-latest
-    needs: build-module
+    needs: build-nuget
     steps:
       - uses: actions/checkout@v1
       - uses: actions/download-artifact@v2
@@ -187,27 +189,3 @@ jobs:
         uses: c-hive/gha-remove-artifacts@v1
         with:
           age: '1 minute'
-  build-nuget:
-    runs-on: ubuntu-latest
-    needs: build-dummy
-    steps:
-      - uses: actions/checkout@v1
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1.7.2
-        with:
-          dotnet-version: 5.0.101
-      - name: Build
-        working-directory: ./api
-        run: |
-          dotnet build AltV.Net -c Release --no-restore
-          dotnet build AltV.Net.Async -c Release --no-restore
-      - name: Publish AltV.Net
-        uses: brandedoutcast/publish-nuget@v2.5.5
-        with:
-            PROJECT_FILE_PATH: api/AltV.Net/AltV.Net.csproj
-            # NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-      - name: Publish AltV.Net.Async
-        uses: brandedoutcast/publish-nuget@v2.5.5
-        with:
-            PROJECT_FILE_PATH: api/AltV.Net.Async/AltV.Net.Async.csproj
-            # NUGET_KEY: ${{secrets.NUGET_API_KEY}}
