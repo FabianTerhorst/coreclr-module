@@ -53,7 +53,6 @@ jobs:
               os: windows-2016,
               cc: cl,
               cxx: cl,
-              # args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 15 2017" -A x64 -T host=x64
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 15 2017" -A x64 -T host=x64
             }
 
@@ -117,10 +116,12 @@ jobs:
       - uses: rohith/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net/AltV.Net.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           # NUGET_KEY: ${{secrets.NUGET_API_KEY}}
       - uses: rohith/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Async/AltV.Net.Async.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           # NUGET_KEY: ${{secrets.NUGET_API_KEY}}
   build-dummy:
     runs-on: ubuntu-latest
