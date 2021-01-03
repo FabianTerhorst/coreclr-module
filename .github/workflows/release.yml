@@ -129,6 +129,7 @@ jobs:
   build-cdn:
     runs-on: ubuntu-latest
     needs: build-nuget
+    steps:
   build-dummy:
     runs-on: ubuntu-latest
     needs: build-cdn
