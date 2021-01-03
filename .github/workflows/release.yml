@@ -1,0 +1,209 @@
+on:
+  push:
+    # tags: v*
+    branches: master
+jobs:
+  build-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: 5.0.101
+      - name: Build
+        working-directory: ./api
+        run: |
+          dotnet build AltV.Net.Host -c Release --no-restore
+          dotnet build AltV.Net -c Release --no-restore
+          dotnet build AltV.Net.Async -c Release --no-restore
+      - run: |
+          mkdir -p modules/linux
+          mkdir -p modules/win
+          mkdir apis
+          cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.dll ./modules/linux
+          cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.runtimeconfig.json ./modules/linux
+          cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.dll ./modules/win
+          cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.runtimeconfig.json ./modules/win
+          cp ./api/AltV.Net/bin/Release/netcoreapp3.1/AltV.Net.dll ./apis
+          cp ./api/AltV.Net/bin/Release/netcoreapp3.1/AltV.Net.pdb ./apis
+          cp ./api/AltV.Net.Async/bin/Release/netcoreapp3.1/AltV.Net.Async.dll ./apis
+          cp ./api/AltV.Net.Async/bin/Release/netcoreapp3.1/AltV.Net.Async.pdb ./apis
+      - name: Pack files
+        run: |
+          tar -cvf ./apis.tar modules apis
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: apis
+          path: ./apis.tar
+  build-module:
+    continue-on-error: true
+    strategy:
+      matrix:
+        config:
+          - {
+              name: Linux,
+              os: ubuntu-18.04,
+              cc: gcc-8,
+              cxx: g++-8,
+              args: -DCMAKE_BUILD_TYPE=RelWithDebInfo
+            }
+          - {
+              name: Windows,
+              os: windows-2016,
+              cc: cl,
+              cxx: cl,
+              # args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 15 2017" -A x64 -T host=x64
+              args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 15 2017" -A x64 -T host=x64
+            }
+
+    runs-on: ${{ matrix.config.os }}
+    needs: build-api
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: true
+      # - working-directory: ./runtime
+      #   run: |
+      #     mkdir build
+      #     cd build
+      #     cmake ${{ matrix.config.args }} ..
+      - working-directory: ./runtime
+        shell: cmake -P {0}
+        run: |
+          set(ENV{CC} ${{ matrix.config.cc }})
+          set(ENV{CXX} ${{ matrix.config.cxx }})
+          file(MAKE_DIRECTORY build)
+          execute_process(
+            COMMAND cmake .. ${{ matrix.config.args }}
+            RESULT_VARIABLE result
+            WORKING_DIRECTORY build
+          )
+          if (NOT result EQUAL 0)
+            message(FATAL_ERROR "Bad exit status")
+          endif()
+      - working-directory: ./runtime
+        run: cmake --build build --config Release
+      - working-directory: ./runtime
+        shell: bash
+        run: ls -l -R ./build
+      - if: ${{ runner.os == 'Linux' }}
+        run: |
+          mkdir -p modules/linux/modules/
+          cp ./runtime/build/src/libcsharp-module.so ./modules/linux/modules
+      - if: ${{ runner.os == 'Windows' }}
+        run: |
+          mkdir -p modules/win/modules/
+          cp ./runtime/build/src/Release/csharp-module.dll ./modules/win/modules
+      - run: |
+          tar -cvf ./${{ matrix.config.name }}.tar modules
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.config.name }}
+          path: ./${{ matrix.config.name }}.tar
+  build-nuget:
+    runs-on: ubuntu-latest
+    needs: build-module
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: 5.0.101
+      - working-directory: ./api
+        run: |
+          dotnet pack AltV.Net -c Release
+          dotnet pack AltV.Net.Async -c Release
+      - uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: ./api/AltV.Net/AltV.Net.csproj
+      - uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: ./api/AltV.Net.Async/AltV.Net.Async.csproj
+  build-dummy:
+    runs-on: ubuntu-latest
+    needs: build-module
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/download-artifact@v2
+        with:
+          name: apis
+          path: ./
+      - uses: actions/download-artifact@v2
+        with:
+          name: linux
+          path: ./
+      - uses: actions/download-artifact@v2
+        with:
+          name: windows
+          path: ./
+      - run: |
+          tar -xvf ./apis.tar
+          tar -xvf ./linux.tar
+          tar -xvf ./windows.tar
+      - run: |
+          zip -r ./csharp-module-linux.zip ./modules/linux/
+          zip -r ./csharp-module-win.zip ./modules/win/
+          zip -r ./csharp-module-api.zip ./apis/
+      - run: ls -l -R ./
+      - shell: bash
+        run: echo "##[set-output name=branch;]$(git ls-remote --heads origin | grep $GITHUB_SHA  | sed "s/.*\///")"
+        id: extract_branch
+      - id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: true
+          prerelease: ${{ steps.extract_branch.outputs.branch != 'master' }}
+      - id: upload-release-asset 
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./csharp-module-linux.zip
+          asset_name: csharp-module-linux.zip
+          asset_content_type: application/zip
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./csharp-module-win.zip
+          asset_name: csharp-module-win.zip
+          asset_content_type: application/zip
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./csharp-module-api.zip
+          asset_name: csharp-module-api.zip
+          asset_content_type: application/zip
+      - if: ${{ always() }}
+        uses: c-hive/gha-remove-artifacts@v1
+        with:
+          age: '1 minute'
+  build-nuget:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: 5.0.101
+      - name: Build
+        working-directory: ./api
+        run: |
+          dotnet build AltV.Net.Host -c Release --no-restore
+          dotnet build AltV.Net -c Release --no-restore
+          dotnet build AltV.Net.Async -c Release --no-restore
+    - name: Publish FluentEmail.Core
+      uses: brandedoutcast/publish-nuget@v2.5.2
+      with:
+          PROJECT_FILE_PATH: src/FluentEmail.Core/FluentEmail.Core.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
