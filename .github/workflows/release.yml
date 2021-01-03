@@ -1,6 +1,9 @@
 on:
   push:
-    tags: v*
+    tags:
+      - master/v*
+      - dev/v*
+      - alpha/v*
 jobs:
   build-api:
     runs-on: ubuntu-latest
@@ -19,23 +22,23 @@ jobs:
       - run: |
           mkdir -p ./modules/linux
           mkdir -p ./modules/windows
-          mkdir ./apis
+          mkdir ./api
           cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.dll ./modules/linux
           cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.runtimeconfig.json ./modules/linux
           cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.dll ./modules/windows
           cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.runtimeconfig.json ./modules/windows
-          cp ./api/AltV.Net/bin/Release/netcoreapp3.1/AltV.Net.dll ./apis
-          cp ./api/AltV.Net/bin/Release/netcoreapp3.1/AltV.Net.pdb ./apis
-          cp ./api/AltV.Net.Async/bin/Release/netcoreapp3.1/AltV.Net.Async.dll ./apis
-          cp ./api/AltV.Net.Async/bin/Release/netcoreapp3.1/AltV.Net.Async.pdb ./apis
+          cp ./api/AltV.Net/bin/Release/netcoreapp3.1/AltV.Net.dll ./api
+          cp ./api/AltV.Net/bin/Release/netcoreapp3.1/AltV.Net.pdb ./api
+          cp ./api/AltV.Net.Async/bin/Release/netcoreapp3.1/AltV.Net.Async.dll ./api
+          cp ./api/AltV.Net.Async/bin/Release/netcoreapp3.1/AltV.Net.Async.pdb ./api
       - name: Pack files
         run: |
-          tar -cvf ./apis.tar modules apis
+          tar -cvf ./api.tar modules api
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: Typings
-          path: ./apis.tar
+          name: csharp-module-api
+          path: ./api.tar
   build-module:
     runs-on: ${{ matrix.config.os }}
     needs: build-api
@@ -43,29 +46,23 @@ jobs:
       matrix:
         config:
           - {
-              name: Linux,
+              name: linux,
               os: ubuntu-18.04,
               cc: gcc-8,
               cxx: g++-8,
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo
             }
           - {
-              name: Windows,
+              name: windows,
               os: windows-2016,
               cc: cl,
               cxx: cl,
-              # args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 15 2017" -A x64 -T host=x64
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -A x64 -T host=x64
             }
     steps:
       - uses: actions/checkout@v1
         with:
-          submodules: true
-      # - working-directory: ./runtime
-      #   run: |
-      #     mkdir build
-      #     cd build
-      #     cmake ${{ matrix.config.args }} ..
+          submodules: recursive
       - working-directory: ./runtime
         shell: cmake -P {0}
         run: |
@@ -96,17 +93,21 @@ jobs:
       - id: create_archive
         shell: bash
         run: |
-          filename=$(echo "${{ matrix.config.name }}" | sed -e 's/\(.*\)/\L\1/')
+          # filename=$(echo "${{ matrix.config.name }}" | sed -e 's/\(.*\)/\L\1/')
+          filename=$(echo "${{ matrix.config.name }}")
           tar -cvf ./$filename.tar modules/$filename/modules
           echo "::set-output name=art_name::$filename"
       - uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.config.name }}
+          name: csharp-module-${{ matrix.config.name }}
           path: ./${{ steps.create_archive.outputs.art_name }}.tar
       - if: ${{ failure() }}
-        uses: c-hive/gha-remove-artifacts@v1.2.0
+        uses: geekyeggo/delete-artifact@v1
         with:
-          age: '0'
+          name: |
+            csharp-module-api
+            csharp-module-linux
+            csharp-module-windows
   build-nuget:
     runs-on: ubuntu-latest
     needs: build-module
@@ -140,9 +141,12 @@ jobs:
     steps:
       - run: echo "Not implemented yet"
       - if: ${{ failure() }}
-        uses: c-hive/gha-remove-artifacts@v1.2.0
+        uses: geekyeggo/delete-artifact@v1
         with:
-          age: '0'
+          name: |
+            csharp-module-api
+            csharp-module-linux
+            csharp-module-windows
   build-dummy:
     runs-on: ubuntu-latest
     needs: build-cdn
@@ -150,24 +154,24 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/download-artifact@v2
         with:
-          name: Typings
+          name: csharp-module-api
           path: ./
       - uses: actions/download-artifact@v2
         with:
-          name: Linux
+          name: csharp-module-linux
           path: ./
       - uses: actions/download-artifact@v2
         with:
-          name: Windows
+          name: csharp-module-windows
           path: ./
       - run: |
-          tar -xvf ./apis.tar
+          tar -xvf ./api.tar
           tar -xvf ./linux.tar
           tar -xvf ./windows.tar
       - run: |
           (cd ./modules/linux && zip -r ../../csharp-module-linux.zip *)
           (cd ./modules/windows && zip -r ../../csharp-module-win.zip *)
-          (cd ./apis && zip -r ../csharp-module-api.zip *)
+          (cd ./api && zip -r ../csharp-module-api.zip *)
       - run: ls -l -R ./
       - shell: bash
         run: echo "##[set-output name=branch;]$(git ls-remote --heads origin | grep $GITHUB_SHA | sed "s/.*\///")"
@@ -207,6 +211,9 @@ jobs:
           asset_name: csharp-module-api.zip
           asset_content_type: application/zip
       - if: ${{ always() }}
-        uses: c-hive/gha-remove-artifacts@v1.2.0
+        uses: geekyeggo/delete-artifact@v1
         with:
-          age: '0'
+          name: |
+            csharp-module-api
+            csharp-module-linux
+            csharp-module-windows
