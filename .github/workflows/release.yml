@@ -83,15 +83,18 @@ jobs:
             message(FATAL_ERROR "Bad exit status")
           endif()
       - working-directory: ./runtime
+        shell: bash
         run: cmake --build build --config Release
       - working-directory: ./runtime
         shell: bash
         run: ls -l -R ./build
       - if: ${{ runner.os == 'Linux' }}
+        shell: bash
         run: |
           mkdir -p modules/linux/modules/
           cp ./runtime/build/src/libcsharp-module.so ./modules/linux/modules
       - if: ${{ runner.os == 'Windows' }}
+        shell: bash
         run: |
           mkdir -p modules/windows/modules/
           cp ./runtime/build/src/Release/csharp-module.dll ./modules/windows/modules
@@ -147,8 +150,6 @@ jobs:
           build_info=$(cat ./modules/build_info.txt)
           echo "##[set-output name=branch;]${build_info%%/*}"
           echo "##[set-output name=version;]${build_info#*/}"
-          echo ${build_info%%/*}
-          echo ${build_info#*/}
           npm i @altmp/upload-tool@latest
       # - run: npx alt-upload linux coreclr-module/$BRANCH/x64_linux $VERSION
       #   working-directory: ./modules
