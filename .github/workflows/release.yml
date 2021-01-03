@@ -143,6 +143,7 @@ jobs:
           path: ./
       - id: build_info
         run: |
+          tar -xvf ./api.tar
           build_info=$(cat ./modules/build_info.txt)
           echo "##[set-output name=branch;]${build_info%%/*}"
           echo "##[set-output name=version;]${build_info#*/}"
