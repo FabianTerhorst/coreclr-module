@@ -34,10 +34,11 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: API
+          name: Typings
           path: ./apis.tar
   build-module:
-    continue-on-error: true
+    runs-on: ${{ matrix.config.os }}
+    needs: build-api
     strategy:
       matrix:
         config:
@@ -56,8 +57,6 @@ jobs:
               # args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 15 2017" -A x64 -T host=x64
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -A x64 -T host=x64
             }
-    runs-on: ${{ matrix.config.os }}
-    needs: build-api
     steps:
       - uses: actions/checkout@v1
         with:
@@ -95,7 +94,7 @@ jobs:
           mkdir -p modules/win/modules/
           cp ./runtime/build/src/Release/csharp-module.dll ./modules/win/modules
       - run: |
-          tar -cvf ./${{ matrix.config.name }}.tar modules
+          tar -cvf ./$(echo "${{ matrix.config.name }}" | sed -e 's/\(.*\)/\L\1/').tar modules
       - uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.config.name }}
@@ -127,14 +126,17 @@ jobs:
           # NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-  build-dummy:
+  build-cdn:
     runs-on: ubuntu-latest
     needs: build-nuget
+  build-dummy:
+    runs-on: ubuntu-latest
+    needs: build-cdn
     steps:
       - uses: actions/checkout@v1
       - uses: actions/download-artifact@v2
         with:
-          name: API
+          name: Typings
           path: ./
       - uses: actions/download-artifact@v2
         with:
