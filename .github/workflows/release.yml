@@ -94,6 +94,7 @@ jobs:
           mkdir -p modules/win/modules/
           cp ./runtime/build/src/Release/csharp-module.dll ./modules/win/modules
       - id: create_archive
+        shell: bash
         run: |
           filename=$(echo "${{ matrix.config.name }}" | sed -e 's/\(.*\)/\L\1/')
           tar -cvf ./$pkgname.tar modules
