@@ -1,9 +1,6 @@
 on:
   push:
-    tags:
-      - master/v*
-      - dev/v*
-      - alpha/v*
+    tags: v*
 jobs:
   build-api:
     runs-on: ubuntu-latest
