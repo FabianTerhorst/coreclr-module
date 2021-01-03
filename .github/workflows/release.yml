@@ -98,14 +98,7 @@ jobs:
         with:
           name: csharp-module-${{ matrix.config.name }}
           path: ./${{ steps.create_archive.outputs.art_name }}.tar
-      - if: ${{ failure() }}
-        uses: geekyeggo/delete-artifact@v1
-        with:
-          name: |
-            csharp-module-api
-            csharp-module-linux
-            csharp-module-windows
-  build-nuget:
+  deploy-nuget:
     runs-on: ubuntu-latest
     needs: build-module
     steps:
@@ -132,21 +125,48 @@ jobs:
           # NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-  build-cdn:
+  deploy-cdn:
     runs-on: ubuntu-latest
-    needs: build-nuget
+    needs: deploy-nuget
     steps:
-      - run: echo "Not implemented yet"
-      - if: ${{ failure() }}
-        uses: geekyeggo/delete-artifact@v1
+      - uses: actions/download-artifact@v2
         with:
-          name: |
-            csharp-module-api
-            csharp-module-linux
-            csharp-module-windows
-  build-dummy:
+          name: csharp-module-api
+          path: ./
+      - run: exit 1
+      # - uses: actions/download-artifact@v2
+      #   with:
+      #     name: csharp-module-linux
+      #     path: ./
+      # - uses: actions/download-artifact@v2
+      #   with:
+      #     name: csharp-module-windows
+      #     path: ./
+      # - run: |
+      #     branch=$(git ls-remote --heads origin | grep $GITHUB_SHA | sed "s/.*\///")
+      #     branch=$([[ $branch == 'master' ]] && echo "release" || [[ $branch == 'dev' ]] && echo "rc" || [[ $branch == 'alpha' ]] && echo "dev")
+      #     version=${GITHUB_REF#refs/*/v}
+      #     echo "##[set-output name=branch;]$branch"
+      #     echo "##[set-output name=version;]$version"
+      #   id: versioning
+      # - run: npm i @altmp/upload-tool@latest
+      # - run: npx alt-upload linux csharp-module/${{ steps.versioning.outputs.branch }}/x64_linux ${{ steps.versioning.outputs.version }}
+      #   working-directory: ./modules
+      #   env:
+      #     CI_UPLOAD_URL: ${{ secrets.CI_UPLOAD_URL }}
+      #     CI_DEPLOY_TOKEN: ${{ secrets.CI_DEPLOY_TOKEN }}
+      #     BRANCH: ${{ steps.version.outputs.BRANCH }}
+      #     VERSION: ${{ steps.version.outputs.VERSION }}
+      # - run: npx alt-upload windows csharp-module/${{ steps.versioning.outputs.branch }}/x64_win32 ${{ steps.versioning.outputs.version }}
+      #   working-directory: ./modules
+      #   env:
+      #     CI_UPLOAD_URL: ${{ secrets.CI_UPLOAD_URL }}
+      #     CI_DEPLOY_TOKEN: ${{ secrets.CI_DEPLOY_TOKEN }}
+      #     BRANCH: ${{ steps.versioning.outputs.branch }}
+      #     VERSION: ${{ steps.versioning.outputs.version }}
+  create-release:
     runs-on: ubuntu-latest
-    needs: build-cdn
+    needs: deploy-cdn
     steps:
       - uses: actions/checkout@v1
       - uses: actions/download-artifact@v2
@@ -170,9 +190,8 @@ jobs:
           (cd ./modules/windows && zip -r ../../csharp-module-win.zip *)
           (cd ./modules/api && zip -r ../../csharp-module-api.zip *)
       - run: ls -l -R ./
-      - shell: bash
+      - id: versioning
         run: echo "##[set-output name=branch;]$(git ls-remote --heads origin | grep $GITHUB_SHA | sed "s/.*\///")"
-        id: extract_branch
       - id: create_release
         uses: actions/create-release@v1
         env:
@@ -181,7 +200,7 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           draft: true
-          prerelease: ${{ steps.extract_branch.outputs.branch != 'master' }}
+          prerelease: ${{ steps.versioning.outputs.branch != 'master' }}
       - id: upload-release-asset 
         uses: actions/upload-release-asset@v1.0.1
         env:
@@ -207,8 +226,12 @@ jobs:
           asset_path: ./csharp-module-api.zip
           asset_name: csharp-module-api.zip
           asset_content_type: application/zip
-      - if: ${{ always() }}
-        uses: geekyeggo/delete-artifact@v1
+  cleanup:
+    runs-on: ubuntu-latest
+    needs: create-release
+    if: ${{ always() }}
+    steps:
+      - uses: geekyeggo/delete-artifact@v1
         with:
           name: |
             csharp-module-api
