@@ -127,14 +127,14 @@ jobs:
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net/AltV.Net.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
-          # NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
       - uses: rohith/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Async/AltV.Net.Async.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
-          # NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
   deploy-cdn:
@@ -151,7 +151,7 @@ jobs:
           build_info=$(cat ./modules/build_info.txt)
           echo "##[set-output name=branch;]${build_info%%/*}"
           echo "##[set-output name=version;]${build_info#*/}"
-          npm i @altmp/upload-tool@latest
+      - run: npm i @altmp/upload-tool@latest
       - run: npx alt-upload linux coreclr-module/$BRANCH/x64_linux $VERSION
         working-directory: ./modules
         env:
@@ -192,8 +192,10 @@ jobs:
           (cd ./modules/windows && zip -r ../../csharp-module-win.zip *)
           (cd ./modules/api-release && zip -r ../../csharp-module-api-release.zip *)
           (cd ./modules/api-debug && zip -r ../../csharp-module-api-debug.zip *)
-      - id: versioning
-        run: echo "##[set-output name=branch;]$(git ls-remote --heads origin | grep $GITHUB_SHA | sed "s/.*\///")"
+      - id: build_info
+        run: |
+          build_info=$(cat ./modules/build_info.txt)
+          echo "##[set-output name=branch;]${build_info%%/*}"
       - id: create_release
         uses: actions/create-release@v1
         env:
@@ -202,7 +204,7 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           draft: true
-          prerelease: ${{ steps.versioning.outputs.branch != 'master' }}
+          prerelease: ${{ steps.build_info.outputs.branch != 'release' }}
       - id: upload-release-asset 
         uses: actions/upload-release-asset@v1.0.1
         env:
