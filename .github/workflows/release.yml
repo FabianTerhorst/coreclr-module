@@ -19,18 +19,18 @@ jobs:
       - run: |
           mkdir -p ./modules/linux
           mkdir -p ./modules/windows
-          mkdir ./api
+          mkdir -p ./modules/api
           cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.dll ./modules/linux
           cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.runtimeconfig.json ./modules/linux
           cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.dll ./modules/windows
           cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.runtimeconfig.json ./modules/windows
-          cp ./api/AltV.Net/bin/Release/netcoreapp3.1/AltV.Net.dll ./api
-          cp ./api/AltV.Net/bin/Release/netcoreapp3.1/AltV.Net.pdb ./api
-          cp ./api/AltV.Net.Async/bin/Release/netcoreapp3.1/AltV.Net.Async.dll ./api
-          cp ./api/AltV.Net.Async/bin/Release/netcoreapp3.1/AltV.Net.Async.pdb ./api
+          cp ./api/AltV.Net/bin/Release/netcoreapp3.1/AltV.Net.dll ./modules/api
+          cp ./api/AltV.Net/bin/Release/netcoreapp3.1/AltV.Net.pdb ./modules/api
+          cp ./api/AltV.Net.Async/bin/Release/netcoreapp3.1/AltV.Net.Async.dll ./modules/api
+          cp ./api/AltV.Net.Async/bin/Release/netcoreapp3.1/AltV.Net.Async.pdb ./modules/api
       - name: Pack files
         run: |
-          tar -cvf ./api.tar modules api
+          tar -cvf ./api.tar modules
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -168,7 +168,7 @@ jobs:
       - run: |
           (cd ./modules/linux && zip -r ../../csharp-module-linux.zip *)
           (cd ./modules/windows && zip -r ../../csharp-module-win.zip *)
-          (cd ./api && zip -r ../csharp-module-api.zip *)
+          (cd ./modules/api && zip -r ../../csharp-module-api.zip *)
       - run: ls -l -R ./
       - shell: bash
         run: echo "##[set-output name=branch;]$(git ls-remote --heads origin | grep $GITHUB_SHA | sed "s/.*\///")"
