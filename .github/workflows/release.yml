@@ -192,7 +192,6 @@ jobs:
           (cd ./modules/windows && zip -r ../../csharp-module-win.zip *)
           (cd ./modules/api-release && zip -r ../../csharp-module-api-release.zip *)
           (cd ./modules/api-debug && zip -r ../../csharp-module-api-debug.zip *)
-      - run: ls -l -R ./
       - id: versioning
         run: echo "##[set-output name=branch;]$(git ls-remote --heads origin | grep $GITHUB_SHA | sed "s/.*\///")"
       - id: create_release
