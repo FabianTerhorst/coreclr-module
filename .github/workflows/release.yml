@@ -152,20 +152,20 @@ jobs:
           echo "##[set-output name=branch;]${build_info%%/*}"
           echo "##[set-output name=version;]${build_info#*/}"
           npm i @altmp/upload-tool@latest
-      # - run: npx alt-upload linux coreclr-module/$BRANCH/x64_linux $VERSION
-      #   working-directory: ./modules
-      #   env:
-      #     CI_UPLOAD_URL: ${{ secrets.CI_UPLOAD_URL }}
-      #     CI_DEPLOY_TOKEN: ${{ secrets.CI_DEPLOY_TOKEN }}
-      #     BRANCH: ${{ steps.build_info.outputs.branch }}
-      #     VERSION: ${{ steps.build_info.outputs.version }}
-      # - run: npx alt-upload windows coreclr-module/$BRANCH/x64_win32 $VERSION
-      #   working-directory: ./modules
-      #   env:
-      #     CI_UPLOAD_URL: ${{ secrets.CI_UPLOAD_URL }}
-      #     CI_DEPLOY_TOKEN: ${{ secrets.CI_DEPLOY_TOKEN }}
-      #     BRANCH: ${{ steps.build_info.outputs.branch }}
-      #     VERSION: ${{ steps.build_info.outputs.version }}
+      - run: npx alt-upload linux coreclr-module/$BRANCH/x64_linux $VERSION
+        working-directory: ./modules
+        env:
+          CI_UPLOAD_URL: ${{ secrets.CI_UPLOAD_URL }}
+          CI_DEPLOY_TOKEN: ${{ secrets.CI_DEPLOY_TOKEN }}
+          BRANCH: ${{ steps.build_info.outputs.branch }}
+          VERSION: ${{ steps.build_info.outputs.version }}
+      - run: npx alt-upload windows coreclr-module/$BRANCH/x64_win32 $VERSION
+        working-directory: ./modules
+        env:
+          CI_UPLOAD_URL: ${{ secrets.CI_UPLOAD_URL }}
+          CI_DEPLOY_TOKEN: ${{ secrets.CI_DEPLOY_TOKEN }}
+          BRANCH: ${{ steps.build_info.outputs.branch }}
+          VERSION: ${{ steps.build_info.outputs.version }}
   create-release:
     runs-on: ubuntu-latest
     needs: deploy-cdn
