@@ -97,7 +97,7 @@ jobs:
         shell: bash
         run: |
           filename=$(echo "${{ matrix.config.name }}" | sed -e 's/\(.*\)/\L\1/')
-          tar -cvf ./$pkgname.tar modules
+          tar -cvf ./$filename.tar modules
           echo "::set-output name=art_name::$filename"
       - uses: actions/upload-artifact@v2
         with:
