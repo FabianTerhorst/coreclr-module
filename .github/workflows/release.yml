@@ -22,19 +22,26 @@ jobs:
         run: |
           dotnet build AltV.Net.Host -c Release
           dotnet build AltV.Net -c Release
+          dotnet build AltV.Net -c Debug
           dotnet build AltV.Net.Async -c Release
+          dotnet build AltV.Net.Async -c Debug
       - run: |
           mkdir -p ./modules/linux
           mkdir -p ./modules/windows
-          mkdir -p ./modules/api
+          mkdir -p ./modules/api-release
+          mkdir -p ./modules/api-debug
           cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.dll ./modules/linux
           cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.runtimeconfig.json ./modules/linux
           cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.dll ./modules/windows
           cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.runtimeconfig.json ./modules/windows
-          cp ./api/AltV.Net/bin/Release/netcoreapp3.1/AltV.Net.dll ./modules/api
-          cp ./api/AltV.Net/bin/Release/netcoreapp3.1/AltV.Net.pdb ./modules/api
-          cp ./api/AltV.Net.Async/bin/Release/netcoreapp3.1/AltV.Net.Async.dll ./modules/api
-          cp ./api/AltV.Net.Async/bin/Release/netcoreapp3.1/AltV.Net.Async.pdb ./modules/api
+          cp ./api/AltV.Net/bin/Release/netcoreapp3.1/AltV.Net.dll ./modules/api-release
+          cp ./api/AltV.Net/bin/Release/netcoreapp3.1/AltV.Net.pdb ./modules/api-release
+          cp ./api/AltV.Net.Async/bin/Release/netcoreapp3.1/AltV.Net.Async.dll ./modules/api-release
+          cp ./api/AltV.Net.Async/bin/Release/netcoreapp3.1/AltV.Net.Async.pdb ./modules/api-release
+          cp ./api/AltV.Net/bin/Debug/netcoreapp3.1/AltV.Net.dll ./modules/api-debug
+          cp ./api/AltV.Net/bin/Debug/netcoreapp3.1/AltV.Net.pdb ./modules/api-debug
+          cp ./api/AltV.Net.Async/bin/Debug/netcoreapp3.1/AltV.Net.Async.dll ./modules/api-debug
+          cp ./api/AltV.Net.Async/bin/Debug/netcoreapp3.1/AltV.Net.Async.pdb ./modules/api-debug
           echo '${{ steps.build_info.outputs.branch }}/${{ steps.build_info.outputs.version }}' > ./modules/build_info.txt
       - name: Pack files
         run: |
@@ -189,7 +196,8 @@ jobs:
       - run: |
           (cd ./modules/linux && zip -r ../../csharp-module-linux.zip *)
           (cd ./modules/windows && zip -r ../../csharp-module-win.zip *)
-          (cd ./modules/api && zip -r ../../csharp-module-api.zip *)
+          (cd ./modules/api-release && zip -r ../../csharp-module-api-release.zip *)
+          (cd ./modules/api-debug && zip -r ../../csharp-module-api-debug.zip *)
       - run: ls -l -R ./
       - id: versioning
         run: echo "##[set-output name=branch;]$(git ls-remote --heads origin | grep $GITHUB_SHA | sed "s/.*\///")"
@@ -224,8 +232,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./csharp-module-api.zip
-          asset_name: csharp-module-api.zip
+          asset_path: ./csharp-module-api-release.zip
+          asset_name: csharp-module-api-release.zip
+          asset_content_type: application/zip
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./csharp-module-api-debug.zip
+          asset_name: csharp-module-api-debug.zip
           asset_content_type: application/zip
   cleanup:
     runs-on: ubuntu-latest
@@ -235,6 +251,7 @@ jobs:
       - uses: geekyeggo/delete-artifact@v1
         with:
           name: |
-            csharp-module-api
             csharp-module-linux
             csharp-module-windows
+            csharp-module-api-release
+            csharp-module-api-debug
