@@ -133,23 +133,22 @@ jobs:
         with:
           name: csharp-module-api
           path: ./
-      - run: exit 1
-      # - uses: actions/download-artifact@v2
-      #   with:
-      #     name: csharp-module-linux
-      #     path: ./
-      # - uses: actions/download-artifact@v2
-      #   with:
-      #     name: csharp-module-windows
-      #     path: ./
-      # - run: |
-      #     branch=$(git ls-remote --heads origin | grep $GITHUB_SHA | sed "s/.*\///")
-      #     branch=$([[ $branch == 'master' ]] && echo "release" || [[ $branch == 'dev' ]] && echo "rc" || [[ $branch == 'alpha' ]] && echo "dev")
-      #     version=${GITHUB_REF#refs/*/v}
-      #     echo "##[set-output name=branch;]$branch"
-      #     echo "##[set-output name=version;]$version"
-      #   id: versioning
-      # - run: npm i @altmp/upload-tool@latest
+      - uses: actions/download-artifact@v2
+        with:
+          name: csharp-module-linux
+          path: ./
+      - uses: actions/download-artifact@v2
+        with:
+          name: csharp-module-windows
+          path: ./
+      - run: |
+          branch=$(git ls-remote --heads origin | grep $GITHUB_SHA | sed "s/.*\///")
+          branch=$([[ $branch == 'master' ]] && echo "release" || [[ $branch == 'dev' ]] && echo "rc" || [[ $branch == 'alpha' ]] && echo "dev")
+          version=${GITHUB_REF#refs/*/v}
+          echo "##[set-output name=branch;]$branch"
+          echo "##[set-output name=version;]$version"
+        id: versioning
+      - run: npm i @altmp/upload-tool@latest
       # - run: npx alt-upload linux csharp-module/${{ steps.versioning.outputs.branch }}/x64_linux ${{ steps.versioning.outputs.version }}
       #   working-directory: ./modules
       #   env:
