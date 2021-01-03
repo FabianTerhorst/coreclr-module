@@ -18,12 +18,12 @@ jobs:
           dotnet build AltV.Net.Async -c Release
       - run: |
           mkdir -p modules/linux
-          mkdir -p modules/win
+          mkdir -p modules/windows
           mkdir apis
           cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.dll ./modules/linux
           cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.runtimeconfig.json ./modules/linux
-          cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.dll ./modules/win
-          cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.runtimeconfig.json ./modules/win
+          cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.dll ./modules/windows
+          cp ./api/AltV.Net.Host/bin/Release/netcoreapp3.1/AltV.Net.Host.runtimeconfig.json ./modules/windows
           cp ./api/AltV.Net/bin/Release/netcoreapp3.1/AltV.Net.dll ./apis
           cp ./api/AltV.Net/bin/Release/netcoreapp3.1/AltV.Net.pdb ./apis
           cp ./api/AltV.Net.Async/bin/Release/netcoreapp3.1/AltV.Net.Async.dll ./apis
@@ -97,7 +97,8 @@ jobs:
         shell: bash
         run: |
           filename=$(echo "${{ matrix.config.name }}" | sed -e 's/\(.*\)/\L\1/')
-          tar -cvf ./$filename.tar modules/$filename/modules
+          cd modules/$filename
+          tar -cvf ../../$filename.tar *
           echo "::set-output name=art_name::$filename"
       - uses: actions/upload-artifact@v2
         with:
