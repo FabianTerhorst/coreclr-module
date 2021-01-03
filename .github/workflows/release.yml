@@ -10,6 +10,13 @@ jobs:
         uses: actions/setup-dotnet@v1.7.2
         with:
           dotnet-version: 5.0.101
+      - id: build_info
+        run: |
+          branch=$(git ls-remote --heads origin | grep $GITHUB_SHA | sed "s/.*\///")
+          branch=$([[ $branch == 'master' ]] && echo "release" || [[ $branch == 'dev' ]] && echo "rc" || [[ $branch == 'alpha' ]] && echo "dev")
+          version=${GITHUB_REF#refs/*/v}
+          echo "##[set-output name=branch;]$branch"
+          echo "##[set-output name=version;]$version"
       - name: Build
         working-directory: ./api
         run: |
@@ -28,6 +35,7 @@ jobs:
           cp ./api/AltV.Net/bin/Release/netcoreapp3.1/AltV.Net.pdb ./modules/api
           cp ./api/AltV.Net.Async/bin/Release/netcoreapp3.1/AltV.Net.Async.dll ./modules/api
           cp ./api/AltV.Net.Async/bin/Release/netcoreapp3.1/AltV.Net.Async.pdb ./modules/api
+          echo '${{ steps.build_info.outputs.branch }}/${{ steps.build_info.outputs.version }}' > ./modules/build_info.txt
       - name: Pack files
         run: |
           tar -cvf ./api.tar modules
@@ -133,36 +141,28 @@ jobs:
         with:
           name: csharp-module-api
           path: ./
-      - uses: actions/download-artifact@v2
-        with:
-          name: csharp-module-linux
-          path: ./
-      - uses: actions/download-artifact@v2
-        with:
-          name: csharp-module-windows
-          path: ./
-      - run: |
-          branch=$(git ls-remote --heads origin | grep $GITHUB_SHA | sed "s/.*\///")
-          branch=$([[ $branch == 'master' ]] && echo "release" || [[ $branch == 'dev' ]] && echo "rc" || [[ $branch == 'alpha' ]] && echo "dev")
-          version=${GITHUB_REF#refs/*/v}
-          echo "##[set-output name=branch;]$branch"
-          echo "##[set-output name=version;]$version"
-        id: versioning
-      - run: npm i @altmp/upload-tool@latest
-      # - run: npx alt-upload linux csharp-module/${{ steps.versioning.outputs.branch }}/x64_linux ${{ steps.versioning.outputs.version }}
+      - id: build_info
+        run: |
+          build_info=$(cat build_info.txt)
+          echo "##[set-output name=branch;]${build_info%%/*}"
+          echo "##[set-output name=version;]${build_info#*/}"
+          echo ${build_info%%/*}
+          echo ${build_info#*/}
+          npm i @altmp/upload-tool@latest
+      # - run: npx alt-upload linux coreclr-module/$BRANCH/x64_linux $VERSION
       #   working-directory: ./modules
       #   env:
       #     CI_UPLOAD_URL: ${{ secrets.CI_UPLOAD_URL }}
       #     CI_DEPLOY_TOKEN: ${{ secrets.CI_DEPLOY_TOKEN }}
-      #     BRANCH: ${{ steps.version.outputs.BRANCH }}
-      #     VERSION: ${{ steps.version.outputs.VERSION }}
-      # - run: npx alt-upload windows csharp-module/${{ steps.versioning.outputs.branch }}/x64_win32 ${{ steps.versioning.outputs.version }}
+      #     BRANCH: ${{ steps.build_info.outputs.branch }}
+      #     VERSION: ${{ steps.build_info.outputs.version }}
+      # - run: npx alt-upload windows coreclr-module/$BRANCH/x64_win32 $VERSION
       #   working-directory: ./modules
       #   env:
       #     CI_UPLOAD_URL: ${{ secrets.CI_UPLOAD_URL }}
       #     CI_DEPLOY_TOKEN: ${{ secrets.CI_DEPLOY_TOKEN }}
-      #     BRANCH: ${{ steps.versioning.outputs.branch }}
-      #     VERSION: ${{ steps.versioning.outputs.version }}
+      #     BRANCH: ${{ steps.build_info.outputs.branch }}
+      #     VERSION: ${{ steps.build_info.outputs.version }}
   create-release:
     runs-on: ubuntu-latest
     needs: deploy-cdn
