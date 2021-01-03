@@ -13,9 +13,9 @@ jobs:
       - name: Build
         working-directory: ./api
         run: |
-          dotnet build AltV.Net.Host -c Release --no-restore
-          dotnet build AltV.Net -c Release --no-restore
-          dotnet build AltV.Net.Async -c Release --no-restore
+          dotnet build AltV.Net.Host -c Release
+          dotnet build AltV.Net -c Release
+          dotnet build AltV.Net.Async -c Release
       - run: |
           mkdir -p modules/linux
           mkdir -p modules/win
@@ -112,8 +112,8 @@ jobs:
           dotnet-version: 5.0.101
       - working-directory: ./api
         run: |
-          dotnet build AltV.Net -c Release --no-restore
-          dotnet build AltV.Net.Async -c Release --no-restore
+          dotnet build AltV.Net -c Release
+          dotnet build AltV.Net.Async -c Release
       - uses: rohith/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net/AltV.Net.csproj
