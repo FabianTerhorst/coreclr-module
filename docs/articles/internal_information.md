@@ -9,7 +9,7 @@ This section provides a high-level overview about the internal structure of the 
 
 ## Initialization of csharp-module
 
-When the `altv-server` is starting it checks `modules` part of the `server.cfg` configuration file. When there's the csharp-module specified, the server loads the `csharp-module.dll` from the `modules` folder.
+When the `altv-server` is starting it checks `modules` part of the `server.cfg` configuration file. When there's the csharp-module specified, the server loads the "csharp-module.dll" / "libcsharp-module.so" / "csharp-module.so" (depending on operating system) from the `modules` folder.
 
 In the csharp-module is a function [`altMain`](https://github.com/FabianTerhorst/coreclr-module/blob/master/runtime/src/altv.cpp) defined, which starts the .NET runtime and registers itself as script runtime for `csharp` resources. That's the reason you have to specify `type: csharp` in the `resource.cfg`, so the altv-server knows that it should load this resource with the csharp-module.
 
@@ -21,7 +21,7 @@ The main initialization is now done and we are waiting until a resource of type 
 
 Summary:
 
-* `altv-server` calls `csharp-module.dll`
+* `altv-server` calls platform dependent csharp-module
 * `csharp-module` acts as custom .NET host, starts .NET runtime with `AltV.Net.Host.dll`
 * `AltV.Net.Host` initializes delegates which can be executed from `csharp-module`
 
@@ -29,7 +29,7 @@ Summary:
 
 For every C# resource the `csharp-module` creates a [`CSharpResourceImpl`](https://github.com/FabianTerhorst/coreclr-module/blob/master/runtime/src/CSharpResourceImpl.cpp). When the resource is started by the server, the class triggers `AltV.Net.Host` with the previous initialized `ExecuteResource` delegate.
 
-There a [custom](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net.Host/ResourceAssemblyLoadContext.cs) [`AssemblyLoadContext`](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.loader.assemblyloadcontext) is created, which is responsible for loading and resolving assemblies like the resource and their dependencies. The load context loads the files just from the resource folder which it is created for.
+There a [custom](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net.Host/ResourceAssemblyLoadContext.cs) [`AssemblyLoadContext`](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.loader.assemblyloadcontext) is created, which is responsible for loading and resolving assemblies like the resource and their dependencies. The load context loads the files just from the resource folder which it is created for and is isolated from other resources.
 
 In the end the resource assembly is loaded and the `AltV.Net.dll` assembly is initialized by calling the [`ModuleWrapper#MainWithAssembly`](https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/ModuleWrapper.cs) among others. 
 
