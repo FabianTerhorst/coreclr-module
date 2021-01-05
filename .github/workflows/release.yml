@@ -1,6 +1,8 @@
 on:
   push:
-    tags: v*
+    tags:
+      - '*.*.*'
+      - '*.*.*-*'
 jobs:
   build-api:
     runs-on: ubuntu-latest
@@ -16,7 +18,7 @@ jobs:
         run: |
           branch=$(git ls-remote --heads origin | grep $GITHUB_SHA | sed "s/.*\///")
           branch=$([[ $branch == 'master' ]] && echo "release" || [[ $branch == 'dev' ]] && echo "rc" || [[ $branch == 'alpha' ]] && echo "dev")
-          version=${GITHUB_REF#refs/*/v}
+          version=${GITHUB_REF##*/}
           echo "##[set-output name=branch;]$branch"
           echo "##[set-output name=version;]$version"
       - name: Build
@@ -108,7 +110,6 @@ jobs:
       - id: create_archive
         shell: bash
         run: |
-          # filename=$(echo "${{ matrix.config.name }}" | sed -e 's/\(.*\)/\L\1/')
           filename=$(echo "${{ matrix.config.name }}")
           tar -cvf ./$filename.tar modules/$filename/modules
           echo "::set-output name=art_name::$filename"
@@ -127,6 +128,9 @@ jobs:
         uses: actions/setup-dotnet@v1.7.2
         with:
           dotnet-version: 5.0.101
+      - run: |
+          echo "$(echo "`cat ./api/AltV.Net/AltV.Net.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net/AltV.Net.csproj
+          echo "$(echo "`cat ./api/AltV.Net/AltV.Net.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net/AltV.Net.csproj
       - uses: rohith/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net/AltV.Net.csproj
@@ -154,7 +158,7 @@ jobs:
           tar -xvf ./api.tar
           build_info=$(cat ./modules/build_info.txt)
           echo "##[set-output name=branch;]${build_info%%/*}"
-          echo "##[set-output name=version;]${build_info#*/}"
+          echo "##[set-output name=version;]${build_info##*/}"
       - run: npm i @altmp/upload-tool@latest
       - run: npx alt-upload linux coreclr-module/$BRANCH/x64_linux $VERSION
         working-directory: ./modules
@@ -199,7 +203,7 @@ jobs:
         run: |
           build_info=$(cat ./modules/build_info.txt)
           echo "##[set-output name=branch;]${build_info%%/*}"
-          echo "##[set-output name=version;]${build_info#*/}"
+          echo "##[set-output name=version;]${build_info##*/}"
       - id: create_release
         uses: actions/create-release@v1
         env:
