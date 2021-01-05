@@ -2,11 +2,10 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>AltV.Net.Resources.Chat</RootNamespace>
         <PackageVersion>1.0.0-dev-preview</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>Initial commit</PackageReleaseNotes>
-        <AssemblyName>AltV.Net.Resources.Chat</AssemblyName>
-        <RootNamespace>AltV.Net.Resources.Chat</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
