@@ -7,8 +7,8 @@
         <Authors>AltMp</Authors>
         <Description>AltV .NET Core Server Mock Api</Description>
         <Copyright>AltMp</Copyright>
-        <PackageProjectUrl>https://github.com/altmp-csharp/docs</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/FabianTerhorst/coreclr-module</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge mock</PackageTags>
         <PackageVersion>1.17.2-alpha</PackageVersion>
@@ -17,7 +17,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="license\license.txt" Pack="true" PackagePath="" />
+        <None Include="license\license.txt">
+            <Pack>true</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
