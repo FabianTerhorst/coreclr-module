@@ -170,7 +170,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy-cdn
     steps:
-      - uses: actions/checkout@v1
       - uses: actions/download-artifact@v2
         with:
           name: csharp-module-api
@@ -196,13 +195,14 @@ jobs:
         run: |
           build_info=$(cat ./modules/build_info.txt)
           echo "##[set-output name=branch;]${build_info%%/*}"
+          echo "##[set-output name=version;]${build_info#*/}"
       - id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ steps.build_info.outputs.version }}
+          release_name: Version ${{ steps.build_info.outputs.version }}
           draft: true
           prerelease: ${{ steps.build_info.outputs.branch != 'release' }}
       - id: upload-release-asset 
