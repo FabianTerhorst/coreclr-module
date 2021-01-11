@@ -163,9 +163,12 @@ jobs:
         with:
           name: csharp-module-windows
           path: ./
+      - run: |
+          tar -xvf ./api.tar
+          tar -xvf ./linux.tar
+          tar -xvf ./windows.tar
       - id: build_info
         run: |
-          tar -xvf ./api.tar
           build_info=$(cat ./modules/build_info.txt)
           echo "##[set-output name=branch;]${build_info%%/*}"
           echo "##[set-output name=version;]${build_info##*/}"
@@ -204,16 +207,16 @@ jobs:
           tar -xvf ./api.tar
           tar -xvf ./linux.tar
           tar -xvf ./windows.tar
-      - run: |
-          (cd ./modules/linux && zip -r ../../csharp-module-linux.zip *)
-          (cd ./modules/windows && zip -r ../../csharp-module-win.zip *)
-          (cd ./modules/api-release && zip -r ../../csharp-module-api-release.zip *)
-          (cd ./modules/api-debug && zip -r ../../csharp-module-api-debug.zip *)
       - id: build_info
         run: |
           build_info=$(cat ./modules/build_info.txt)
           echo "##[set-output name=branch;]${build_info%%/*}"
           echo "##[set-output name=version;]${build_info##*/}"
+      - run: |
+          (cd ./modules/linux && zip -r ../../csharp-module-linux.zip *)
+          (cd ./modules/windows && zip -r ../../csharp-module-win.zip *)
+          (cd ./modules/api-release && zip -r ../../csharp-module-api-release.zip *)
+          (cd ./modules/api-debug && zip -r ../../csharp-module-api-debug.zip *)
       - id: create_release
         uses: actions/create-release@v1
         env:
