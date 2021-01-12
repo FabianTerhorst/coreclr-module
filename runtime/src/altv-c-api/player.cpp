@@ -123,6 +123,14 @@ void Player_RemoveRef(alt::IPlayer* player) {
     player->RemoveRef();
 }
 
+bool Player_GetVisible(alt::IPlayer* player) {
+    return player->GetVisible();
+}
+
+void Player_SetVisible(alt::IPlayer* player, bool state) {
+    player->SetVisible(state);
+}
+
 // Player
 
 bool Player_IsConnected(alt::IPlayer* player) {

@@ -43,6 +43,8 @@ EXPORT bool Vehicle_HasStreamSyncedMetaData(alt::IVehicle* vehicle, const char* 
 EXPORT void Vehicle_DeleteStreamSyncedMetaData(alt::IVehicle* vehicle, const char* key);
 EXPORT void Vehicle_AddRef(alt::IVehicle* vehicle);
 EXPORT void Vehicle_RemoveRef(alt::IVehicle* vehicle);
+EXPORT bool Vehicle_GetVisible(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetVisible(alt::IVehicle* vehicle, bool state);
 // Vehicle
 EXPORT alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle);
 EXPORT bool Vehicle_IsDestroyed(alt::IVehicle* vehicle);
@@ -214,6 +216,8 @@ EXPORT void Vehicle_SetNetworkOwner(alt::IVehicle* vehicle, alt::IPlayer* networ
 
 EXPORT alt::IVehicle* Vehicle_GetAttached(alt::IVehicle* vehicle);
 EXPORT alt::IVehicle* Vehicle_GetAttachedTo(alt::IVehicle* vehicle);
+
+EXPORT void Vehicle_Repair(alt::IVehicle* vehicle);
 
 #ifdef __cplusplus
 }

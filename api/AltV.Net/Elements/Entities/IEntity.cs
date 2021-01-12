@@ -30,6 +30,12 @@ namespace AltV.Net.Elements.Entities
         uint Model { get; }
 
         /// <summary>
+        /// Get or set visibility of the entity.
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        bool Visible { get; set; }
+
+        /// <summary>
         /// Set the net owner of the current entity.
         /// </summary>
         /// <param name="player">The player that is the net owner of this entity</param>

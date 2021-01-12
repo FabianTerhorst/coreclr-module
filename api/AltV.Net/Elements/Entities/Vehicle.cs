@@ -64,6 +64,20 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public override bool Visible
+        {
+            get
+            {
+                CheckIfEntityExists();
+                return AltNative.Vehicle.Vehicle_GetVisible(NativePointer);
+            }
+            set
+            {
+                CheckIfEntityExists();
+                AltNative.Vehicle.Vehicle_SetVisible(NativePointer, value);
+            }
+        }
+
         public override int Dimension
         {
             get
@@ -1116,6 +1130,12 @@ namespace AltV.Net.Elements.Entities
         {
             CheckIfEntityExists();
             AltNative.Vehicle.Vehicle_GetNeonActive(NativePointer, ref left, ref right, ref front, ref back);
+        }
+
+        public void Repair()
+        {
+            CheckIfEntityExists();
+            AltNative.Vehicle.Vehicle_Repair(NativePointer);
         }
 
         public void Remove()

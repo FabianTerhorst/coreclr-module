@@ -92,6 +92,9 @@ namespace AltV.Net
         internal readonly IEventHandler<PlayerEnterVehicleDelegate> PlayerEnterVehicleEventHandler =
             new HashSetEventHandler<PlayerEnterVehicleDelegate>();
 
+        internal readonly IEventHandler<PlayerEnteringVehicleDelegate> PlayerEnteringVehicleEventHandler =
+            new HashSetEventHandler<PlayerEnteringVehicleDelegate>();
+
         internal readonly IEventHandler<PlayerLeaveVehicleDelegate> PlayerLeaveVehicleEventHandler =
             new HashSetEventHandler<PlayerLeaveVehicleDelegate>();
 
@@ -786,6 +789,44 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnPlayerEnterVehicleEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public void OnPlayerEnteringVehicle(IntPtr vehiclePointer, IntPtr playerPointer, byte seat)
+        {
+            if (!VehiclePool.Get(vehiclePointer, out var vehicle))
+            {
+                Console.WriteLine("OnPlayerEnteringVehicle Invalid vehicle " + vehiclePointer + " " + playerPointer + 
+                                  " " + seat);
+                return;
+            }
+
+            if (!PlayerPool.Get(playerPointer, out var player))
+            {
+                Console.WriteLine("OnPlayerEnteringVehicle Invalid player " + vehiclePointer + " " + playerPointer + 
+                                  " " + seat);
+                return;
+            }
+
+            OnPlayerEnteringVehicleEvent(vehicle, player, seat);
+        }
+
+        public virtual void OnPlayerEnteringVehicleEvent(IVehicle vehicle, IPlayer player, byte seat)
+        {
+            foreach (var @delegate in PlayerEnteringVehicleEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(vehicle, player, seat);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerEnteringVehicleEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerEnteringVehicleEvent" + ":" + exception);
                 }
             }
         }

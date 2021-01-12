@@ -111,6 +111,14 @@ void Vehicle_RemoveRef(alt::IVehicle* vehicle) {
     vehicle->RemoveRef();
 }
 
+bool Vehicle_GetVisible(alt::IVehicle* vehicle) {
+    return vehicle->GetVisible();
+}
+
+void Vehicle_SetVisible(alt::IVehicle* vehicle, bool state) {
+    vehicle->SetVisible(state);
+}
+
 // Vehicle
 
 alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle) {
@@ -683,4 +691,8 @@ alt::IVehicle* Vehicle_GetAttached(alt::IVehicle* vehicle) {
 
 alt::IVehicle* Vehicle_GetAttachedTo(alt::IVehicle* vehicle) {
     return vehicle->GetAttachedTo().Get();
+}
+
+void Vehicle_Repair(alt::IVehicle* vehicle) {
+    vehicle->SetFixed();
 }

@@ -45,6 +45,9 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<PlayerEnterVehicleAsyncDelegate> PlayerEnterVehicleAsyncEventHandler =
             new AsyncEventHandler<PlayerEnterVehicleAsyncDelegate>();
 
+        internal readonly AsyncEventHandler<PlayerEnteringVehicleAsyncDelegate> PlayerEnteringVehicleAsyncEventHandler =
+            new AsyncEventHandler<PlayerEnteringVehicleAsyncDelegate>();
+
         internal readonly AsyncEventHandler<PlayerLeaveVehicleAsyncDelegate> PlayerLeaveVehicleAsyncEventHandler =
             new AsyncEventHandler<PlayerLeaveVehicleAsyncDelegate>();
 
@@ -261,6 +264,25 @@ namespace AltV.Net.Async
                 playerReference.DebugCountUp();
                 vehicleReference.DebugCountUp();
                 await PlayerEnterVehicleAsyncEventHandler.CallAsync(@delegate =>
+                    @delegate(vehicle, player, seat));
+                vehicleReference.DebugCountDown();
+                playerReference.DebugCountDown();
+                vehicleReference.Dispose();
+                playerReference.Dispose();
+            });
+        }
+
+        public override void OnPlayerEnteringVehicleEvent(IVehicle vehicle, IPlayer player, byte seat)
+        {
+            base.OnPlayerEnteringVehicleEvent(vehicle, player, seat);
+            if (!PlayerEnteringVehicleAsyncEventHandler.HasEvents()) return;
+            var playerReference = new PlayerRef(player);
+            var vehicleReference = new VehicleRef(vehicle);
+            Task.Run(async () =>
+            {
+                playerReference.DebugCountUp();
+                vehicleReference.DebugCountUp();
+                await PlayerEnteringVehicleAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(vehicle, player, seat));
                 vehicleReference.DebugCountDown();
                 playerReference.DebugCountDown();

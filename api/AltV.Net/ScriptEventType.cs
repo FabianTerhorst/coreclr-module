@@ -11,6 +11,7 @@ namespace AltV.Net
         VehicleRemove,
         PlayerChangeVehicleSeat,
         PlayerEnterVehicle,
+        PlayerEnteringVehicle,
         PlayerLeaveVehicle,
         PlayerEvent,
         PlayerCustomEvent,
