@@ -8,13 +8,13 @@
         <Authors>AltMp</Authors>
         <Description>AltV .NET Core Async Server Api</Description>
         <Copyright>AltMp</Copyright>
-        <PackageProjectUrl>https://github.com/altmp-csharp/docs</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/altmp-csharp/docs</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/FabianTerhorst/coreclr-module</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.48.1</PackageVersion>
+        <PackageVersion>1.0.0</PackageVersion>
+        <PackageReleaseNotes>No changelog provided</PackageReleaseNotes>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Update dependencies</PackageReleaseNotes>
         <PackageIcon>icon.png</PackageIcon>
         <IncludeSymbols>true</IncludeSymbols>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -22,8 +22,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="license\license.txt" Pack="true" PackagePath="" />
-        <None Include="icon.png" Pack="true" PackagePath="\" />
+        <None Include="license\license.txt">
+            <Pack>true</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+        <None Include="icon.png">
+            <Pack>true</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
