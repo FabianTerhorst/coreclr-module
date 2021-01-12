@@ -269,5 +269,4 @@ jobs:
           name: |
             csharp-module-linux
             csharp-module-windows
-            csharp-module-api-release
-            csharp-module-api-debug
+            csharp-module-api
