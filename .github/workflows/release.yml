@@ -1,0 +1,272 @@
+on:
+  push:
+    tags:
+      - '*.*.*'
+      - '*.*.*-*'
+jobs:
+  build-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: recursive
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: 5.0.101
+      - id: build_info
+        run: |
+          branch=$(git ls-remote --heads origin | grep $GITHUB_SHA | sed "s/.*\///")
+          branch=$([[ $branch == 'master' ]] && echo "release" || [[ $branch == 'dev' ]] && echo "rc" || [[ $branch == 'alpha' ]] && echo "dev" || echo "$branch")
+          version=${GITHUB_REF##*/}
+          echo "##[set-output name=branch;]$branch"
+          echo "##[set-output name=version;]$version"
+      - name: Build
+        working-directory: ./api
+        run: |
+          dotnet publish AltV.Net.Host -c Release -f net5.0
+          dotnet publish AltV.Net.Host -c Release -f net5.0
+          dotnet publish AltV.Net -c Release -f net5.0
+          dotnet publish AltV.Net -c Debug -f net5.0
+          dotnet publish AltV.Net.Async -c Release -f net5.0
+          dotnet publish AltV.Net.Async -c Debug -f net5.0
+      - run: |
+          mkdir -p ./modules/linux
+          mkdir -p ./modules/windows
+          mkdir -p ./modules/api-release
+          mkdir -p ./modules/api-debug
+          cp ./api/AltV.Net.Host/bin/Release/*/publish/AltV.Net.Host.dll ./modules/linux
+          cp ./api/AltV.Net.Host/bin/Release/*/publish/AltV.Net.Host.runtimeconfig.json ./modules/linux
+          cp ./api/AltV.Net.Host/bin/Release/*/publish/AltV.Net.Host.dll ./modules/windows
+          cp ./api/AltV.Net.Host/bin/Release/*/publish/AltV.Net.Host.runtimeconfig.json ./modules/windows
+          cp ./api/AltV.Net/bin/Release/*/publish/AltV.Net.dll ./modules/api-release
+          cp ./api/AltV.Net/bin/Release/*/publish/AltV.Net.pdb ./modules/api-release
+          cp ./api/AltV.Net.Async/bin/Release/*/publish/AltV.Net.Async.dll ./modules/api-release
+          cp ./api/AltV.Net.Async/bin/Release/*/publish/AltV.Net.Async.pdb ./modules/api-release
+          cp ./api/AltV.Net/bin/Debug/*/publish/AltV.Net.dll ./modules/api-debug
+          cp ./api/AltV.Net/bin/Debug/*/publish/AltV.Net.pdb ./modules/api-debug
+          cp ./api/AltV.Net.Async/bin/Debug/*/publish/AltV.Net.Async.dll ./modules/api-debug
+          cp ./api/AltV.Net.Async/bin/Debug/*/publish/AltV.Net.Async.pdb ./modules/api-debug
+          echo '${{ steps.build_info.outputs.branch }}/${{ steps.build_info.outputs.version }}' > ./modules/build_info.txt
+      - name: Pack files
+        run: |
+          tar -cvf ./api.tar modules
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: csharp-module-api
+          path: ./api.tar
+  build-module:
+    runs-on: ${{ matrix.config.os }}
+    needs: build-api
+    strategy:
+      matrix:
+        config:
+          - {
+              name: linux,
+              os: ubuntu-18.04,
+              cc: gcc-8,
+              cxx: g++-8,
+              args: -DCMAKE_BUILD_TYPE=RelWithDebInfo
+            }
+          - {
+              name: windows,
+              os: windows-2016,
+              cc: cl,
+              cxx: cl,
+              args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -A x64 -T host=x64
+            }
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: recursive
+      - working-directory: ./runtime
+        shell: cmake -P {0}
+        run: |
+          set(ENV{CC} ${{ matrix.config.cc }})
+          set(ENV{CXX} ${{ matrix.config.cxx }})
+          file(MAKE_DIRECTORY build)
+          execute_process(
+            COMMAND cmake .. ${{ matrix.config.args }}
+            RESULT_VARIABLE result
+            WORKING_DIRECTORY build
+          )
+          if (NOT result EQUAL 0)
+            message(FATAL_ERROR "Bad exit status")
+          endif()
+      - working-directory: ./runtime
+        shell: bash
+        run: cmake --build build --config Release
+      - if: ${{ runner.os == 'Linux' }}
+        shell: bash
+        run: |
+          mkdir -p modules/linux/modules/
+          cp ./runtime/build/src/libcsharp-module.so ./modules/linux/modules
+      - if: ${{ runner.os == 'Windows' }}
+        shell: bash
+        run: |
+          mkdir -p modules/windows/modules/
+          cp ./runtime/build/src/Release/csharp-module.dll ./modules/windows/modules
+      - id: create_archive
+        shell: bash
+        run: |
+          filename=$(echo "${{ matrix.config.name }}")
+          tar -cvf ./$filename.tar modules/$filename/modules
+          echo "::set-output name=art_name::$filename"
+      - uses: actions/upload-artifact@v2
+        with:
+          name: csharp-module-${{ matrix.config.name }}
+          path: ./${{ steps.create_archive.outputs.art_name }}.tar
+  deploy-nuget:
+    runs-on: ubuntu-latest
+    needs: build-module
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: recursive
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: 5.0.101
+      - run: |
+          echo "$(echo "`cat ./api/AltV.Net/AltV.Net.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net/AltV.Net.csproj
+          echo "$(echo "`cat ./api/AltV.Net/AltV.Net.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net/AltV.Net.csproj
+          echo "$(echo "`cat ./api/AltV.Net.Async/AltV.Net.Async.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.Async/AltV.Net.Async.csproj
+          echo "$(echo "`cat ./api/AltV.Net.Async/AltV.Net.Async.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.Async/AltV.Net.Async.csproj
+      - uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: ./api/AltV.Net/AltV.Net.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          INCLUDE_SYMBOLS: true
+          TAG_COMMIT: false
+      - uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: ./api/AltV.Net.Async/AltV.Net.Async.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          INCLUDE_SYMBOLS: true
+          TAG_COMMIT: false
+  deploy-cdn:
+    runs-on: ubuntu-latest
+    needs: deploy-nuget
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: csharp-module-api
+          path: ./
+      - uses: actions/download-artifact@v2
+        with:
+          name: csharp-module-linux
+          path: ./
+      - uses: actions/download-artifact@v2
+        with:
+          name: csharp-module-windows
+          path: ./
+      - run: |
+          tar -xvf ./api.tar
+          tar -xvf ./linux.tar
+          tar -xvf ./windows.tar
+      - id: build_info
+        run: |
+          build_info=$(cat ./modules/build_info.txt)
+          echo "##[set-output name=branch;]${build_info%%/*}"
+          echo "##[set-output name=version;]${build_info##*/}"
+      - run: npm i @altmp/upload-tool@latest
+      - run: npx alt-upload linux coreclr-module/$BRANCH/x64_linux $VERSION
+        working-directory: ./modules
+        env:
+          CI_UPLOAD_URL: ${{ secrets.CI_UPLOAD_URL }}
+          CI_DEPLOY_TOKEN: ${{ secrets.CI_DEPLOY_TOKEN }}
+          BRANCH: ${{ steps.build_info.outputs.branch }}
+          VERSION: ${{ steps.build_info.outputs.version }}
+      - run: npx alt-upload windows coreclr-module/$BRANCH/x64_win32 $VERSION
+        working-directory: ./modules
+        env:
+          CI_UPLOAD_URL: ${{ secrets.CI_UPLOAD_URL }}
+          CI_DEPLOY_TOKEN: ${{ secrets.CI_DEPLOY_TOKEN }}
+          BRANCH: ${{ steps.build_info.outputs.branch }}
+          VERSION: ${{ steps.build_info.outputs.version }}
+  create-release:
+    runs-on: ubuntu-latest
+    needs: deploy-cdn
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: csharp-module-api
+          path: ./
+      - uses: actions/download-artifact@v2
+        with:
+          name: csharp-module-linux
+          path: ./
+      - uses: actions/download-artifact@v2
+        with:
+          name: csharp-module-windows
+          path: ./
+      - run: |
+          tar -xvf ./api.tar
+          tar -xvf ./linux.tar
+          tar -xvf ./windows.tar
+      - id: build_info
+        run: |
+          build_info=$(cat ./modules/build_info.txt)
+          echo "##[set-output name=branch;]${build_info%%/*}"
+          echo "##[set-output name=version;]${build_info##*/}"
+      - run: |
+          (cd ./modules/linux && zip -r ../../csharp-module-linux.zip *)
+          (cd ./modules/windows && zip -r ../../csharp-module-win.zip *)
+          (cd ./modules/api-release && zip -r ../../csharp-module-api-release.zip *)
+          (cd ./modules/api-debug && zip -r ../../csharp-module-api-debug.zip *)
+      - id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.build_info.outputs.version }}
+          release_name: Version ${{ steps.build_info.outputs.version }}
+          draft: true
+          prerelease: ${{ steps.build_info.outputs.branch != 'release' }}
+      - id: upload-release-asset 
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./csharp-module-linux.zip
+          asset_name: csharp-module-linux.zip
+          asset_content_type: application/zip
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./csharp-module-win.zip
+          asset_name: csharp-module-win.zip
+          asset_content_type: application/zip
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./csharp-module-api-release.zip
+          asset_name: csharp-module-api-release.zip
+          asset_content_type: application/zip
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./csharp-module-api-debug.zip
+          asset_name: csharp-module-api-debug.zip
+          asset_content_type: application/zip
+  cleanup:
+    runs-on: ubuntu-latest
+    needs: create-release
+    if: ${{ always() }}
+    steps:
+      - uses: geekyeggo/delete-artifact@v1
+        with:
+          name: |
+            csharp-module-linux
+            csharp-module-windows
+            csharp-module-api
