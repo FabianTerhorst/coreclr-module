@@ -1,5 +1,6 @@
 # Introduction
-Checkpoints are very similiar to Colshapes. The main difference is that Colshapes are only available on clientside.
+Checkpoints are very similiar to Colshapes. The main difference is that Checkpoints are displayed on clients (e.g. as arrow), while colshapes are invisible and designed for detecting collisions. Important to know is that the internal streaming of checkpoints are not optimized like entity sync is, so you should not have too much checkpoints at the same time (recommended limit is between 60 and 80).
+
 With checkpoints you are able to detect appearing or disappearing entities of an area, specified by position, radius and height.
 The specified checkpoint type defines the shape of the checkpoint (there are 3 shapes available: Cylinder, Rings, Arrows). Typically checkpoints are used for by parkour racings or driving/flying tutorials.
 
