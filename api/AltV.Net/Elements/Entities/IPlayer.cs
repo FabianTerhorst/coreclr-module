@@ -262,6 +262,10 @@ namespace AltV.Net.Elements.Entities
         /// Gets the player clothes
         /// </summary>
         Cloth GetClothes(byte component);
+
+        /// <summary>
+        /// Gets the player clothes
+        /// </summary>
         void GetClothes(byte component, ref Cloth cloth);
 
         /// <summary>
@@ -273,6 +277,10 @@ namespace AltV.Net.Elements.Entities
         /// Gets the player dlc clothes
         /// </summary>
         DlcCloth GetDlcClothes(byte component);
+
+        /// <summary>
+        /// Gets the player dlc clothes
+        /// </summary>
         void GetDlcClothes(byte component, ref DlcCloth cloth);
 
         /// <summary>
@@ -284,6 +292,10 @@ namespace AltV.Net.Elements.Entities
         /// Gets the player props
         /// </summary>
         Prop GetProps(byte component);
+
+        /// <summary>
+        /// Gets the player props
+        /// </summary>
         void GetProps(byte component, ref Prop prop);
 
         /// <summary>
@@ -295,6 +307,10 @@ namespace AltV.Net.Elements.Entities
         /// Gets the player dlc props
         /// </summary>
         DlcProp GetDlcProps(byte component);
+
+        /// <summary>
+        /// Gets the player dlc props
+        /// </summary>
         void GetDlcProps(byte component, ref DlcProp prop);
 
         /// <summary>

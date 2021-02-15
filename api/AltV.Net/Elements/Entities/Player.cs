@@ -663,6 +663,7 @@ namespace AltV.Net.Elements.Entities
             AltNative.Player.Player_GetDlcProps(NativePointer, component, ref prop);
             return prop;
         }
+        
         public void GetDlcProps(byte component, ref DlcProp prop)
         {
             AltNative.Player.Player_GetDlcProps(NativePointer, component, ref prop);

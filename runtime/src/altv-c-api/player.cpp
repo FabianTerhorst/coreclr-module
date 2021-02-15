@@ -423,6 +423,7 @@ void Player_GetClothes(alt::IPlayer* player, uint8_t component, cloth_t& cloth) 
     cloth.texture = clothes.textureId;
     cloth.palette = clothes.textureId;
 }
+
 void Player_SetClothes(alt::IPlayer* player, uint8_t component, uint16_t drawable, uint8_t texture, uint8_t palette) {
     player->SetClothes(component, drawable, texture, palette);
 }
@@ -434,6 +435,7 @@ void Player_GetDlcClothes(alt::IPlayer* player, uint8_t component, dlccloth_t& c
     cloth.texture = clothes.textureId;
     cloth.palette = clothes.textureId;
 }
+
 void Player_SetDlcClothes(alt::IPlayer* player, uint8_t component, uint16_t drawable, uint8_t texture, uint8_t palette, uint32_t dlc) {
     player->SetDlcClothes(component, drawable, texture, palette, dlc);
 }
@@ -443,6 +445,7 @@ void Player_GetProps(alt::IPlayer* player, uint8_t component, prop_t& prop) {
     prop.drawable = props.drawableId;
     prop.texture = props.textureId;
 }
+
 void Player_SetProps(alt::IPlayer* player, uint8_t component, uint16_t drawable, uint8_t texture) {
     player->SetProps(component, drawable, texture);
 }
@@ -453,6 +456,7 @@ void Player_GetDlcProps(alt::IPlayer* player, uint8_t component, dlcprop_t& prop
     prop.drawable = props.drawableId;
     prop.texture = props.textureId;
 }
+
 void Player_SetDlcProps(alt::IPlayer* player, uint8_t component, uint16_t drawable, uint8_t texture, uint32_t dlc) {
     player->SetDlcProps(component, drawable, texture, dlc);
 }
