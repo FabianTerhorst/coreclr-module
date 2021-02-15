@@ -215,6 +215,7 @@ namespace AltV.Net
         {
             var passwordPtr = AltNative.StringUtils.StringToHGlobalUtf8(password);
             AltNative.Server.Core_SetPassword(NativePointer, passwordPtr);
+            Marshal.FreeHGlobal(passwordPtr);
         }
 
         public void TriggerServerEvent(string eventName, MValueConst[] args)

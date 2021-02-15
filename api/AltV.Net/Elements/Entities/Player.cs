@@ -611,7 +611,8 @@ namespace AltV.Net.Elements.Entities
 
         public bool IsEntityInStreamingRange(IEntity entity)
         {
-            return AltNative.Player.Player_IsEntityInStreamingRange(NativePointer, entity?.NativePointer ?? IntPtr.Zero);
+            if(entity == null) return false;
+            return AltNative.Player.Player_IsEntityInStreamingRange(NativePointer, entity.NativePointer);
         }
 
         public bool TryCreateRef(out PlayerRef playerRef)
