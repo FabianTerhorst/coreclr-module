@@ -6,14 +6,16 @@ namespace AltV.Net.Data
     [StructLayout(LayoutKind.Sequential)]
     public struct Prop : IEquatable<Prop>
     {
+        public static Prop Zero = new Prop(0, 0);
+        
+        public ushort Drawable;
+        public byte Texture;
+
         public Prop(ushort drawable, byte texture)
         {
             Drawable = drawable;
             Texture = texture;
         }
-
-        public ushort Drawable;
-        public byte Texture;
 
         public override string ToString()
         {

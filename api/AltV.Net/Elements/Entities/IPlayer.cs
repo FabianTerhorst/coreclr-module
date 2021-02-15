@@ -257,6 +257,50 @@ namespace AltV.Net.Elements.Entities
         /// Clears the blood damage of the player
         /// </summary>
         void ClearBloodDamage();
+
+        /// <summary>
+        /// Gets the player clothes
+        /// </summary>
+        Cloth GetClothes(byte component);
+        void GetClothes(byte component, ref Cloth cloth);
+
+        /// <summary>
+        /// Sets the player clothes
+        /// </summary>
+        void SetClothes(byte component, ushort drawable, byte texture, byte palette);
+
+        /// <summary>
+        /// Gets the player dlc clothes
+        /// </summary>
+        DlcCloth GetDlcClothes(byte component);
+        void GetDlcClothes(byte component, ref DlcCloth cloth);
+
+        /// <summary>
+        /// Gets the player clothes
+        /// </summary>
+        void SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc);
+
+        /// <summary>
+        /// Gets the player props
+        /// </summary>
+        Prop GetProps(byte component);
+        void GetProps(byte component, ref Prop prop);
+
+        /// <summary>
+        /// Sets the player props
+        /// </summary>
+        void SetProps(byte component, ushort drawable, byte texture);
+
+        /// <summary>
+        /// Gets the player dlc props
+        /// </summary>
+        DlcProp GetDlcProps(byte component);
+        void GetDlcProps(byte component, ref DlcProp prop);
+
+        /// <summary>
+        /// Sets the player dlc props
+        /// </summary>
+        void SetDlcProps(byte component, ushort drawable, byte texture, uint dlc);
         
         bool TryCreateRef(out PlayerRef playerRef);
     }

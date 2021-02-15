@@ -6,18 +6,20 @@ namespace AltV.Net.Data
     [StructLayout(LayoutKind.Sequential)]
     public struct DlcCloth : IEquatable<DlcCloth>
     {
-        public DlcCloth(uint dlc, ushort drawable, byte texture, byte palette)
-        {
-            Dlc = dlc;
-            Drawable = drawable;
-            Texture = texture;
-            Palette = palette;
-        }
+        public static DlcCloth Zero = new DlcCloth(0, 0, 0, 0);
 
         public uint Dlc;
         public ushort Drawable;
         public byte Texture;
         public byte Palette;
+
+        public DlcCloth(ushort drawable, byte texture, byte palette, uint dlc)
+        {
+            Drawable = drawable;
+            Texture = texture;
+            Palette = palette;
+            Dlc = dlc;
+        }
 
         public override string ToString()
         {

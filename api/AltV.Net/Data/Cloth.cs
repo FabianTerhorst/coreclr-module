@@ -6,16 +6,18 @@ namespace AltV.Net.Data
     [StructLayout(LayoutKind.Sequential)]
     public struct Cloth : IEquatable<Cloth>
     {
+        public static Cloth Zero = new Cloth(0, 0, 0);
+
+        public ushort Drawable;
+        public byte Texture;
+        public byte Palette;
+
         public Cloth(ushort drawable, byte texture, byte palette)
         {
             Drawable = drawable;
             Texture = texture;
             Palette = palette;
         }
-
-        public ushort Drawable;
-        public byte Texture;
-        public byte Palette;
 
         public override string ToString()
         {

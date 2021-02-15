@@ -6,16 +6,18 @@ namespace AltV.Net.Data
     [StructLayout(LayoutKind.Sequential)]
     public struct DlcProp : IEquatable<DlcProp>
     {
-        public DlcProp(uint dlc, ushort drawable, byte texture)
-        {
-            Dlc = dlc;
-            Drawable = drawable;
-            Texture = texture;
-        }
+        public static DlcProp Zero = new DlcProp(0, 0, 0);
 
         public uint Dlc;
         public ushort Drawable;
         public byte Texture;
+
+        public DlcProp(ushort drawable, byte texture, uint dlc)
+        {
+            Drawable = drawable;
+            Texture = texture;
+            Dlc = dlc;
+        }
 
         public override string ToString()
         {
