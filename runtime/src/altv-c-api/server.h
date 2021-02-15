@@ -96,6 +96,7 @@ EXPORT alt::MValueConst* Core_CreateMValueByteArray(alt::ICore* core, uint64_t s
 EXPORT bool Core_IsDebug(alt::ICore* core);
 EXPORT void Core_GetVersion(alt::ICore* core, const char*&value, uint64_t &size);
 EXPORT void Core_GetBranch(alt::ICore* core, const char*&value, uint64_t &size);
+EXPORT void Core_SetPassword(alt::ICore* core, const char* value);
 
 #ifdef __cplusplus
 }

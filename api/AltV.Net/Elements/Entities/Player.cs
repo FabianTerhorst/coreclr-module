@@ -609,6 +609,12 @@ namespace AltV.Net.Elements.Entities
             AltNative.Player.Player_ClearBloodDamage(NativePointer);
         }
 
+        public bool IsEntityInStreamingRange(IEntity entity)
+        {
+            if(entity == null) return false;
+            return AltNative.Player.Player_IsEntityInStreamingRange(NativePointer, entity.NativePointer);
+        }
+
         public bool TryCreateRef(out PlayerRef playerRef)
         {
             playerRef = new PlayerRef(this);

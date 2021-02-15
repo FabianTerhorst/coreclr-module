@@ -150,6 +150,8 @@ EXPORT void Player_GetPositionCoords2(alt::IPlayer* player, float* position_x, f
 EXPORT void Player_SetNetworkOwner(alt::IPlayer* player, alt::IPlayer* networkOwnerPlayer, bool disableMigration);
 
 EXPORT void Player_ClearBloodDamage(alt::IPlayer* player);
+
+EXPORT bool Player_IsEntityInStreamingRange(alt::IPlayer* player, alt::IEntity* entity);
 #ifdef __cplusplus
 }
 #endif
