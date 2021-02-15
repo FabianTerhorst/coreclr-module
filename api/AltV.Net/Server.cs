@@ -211,6 +211,12 @@ namespace AltV.Net
             return hash;
         }
 
+        public void SetPassword(string password)
+        {
+            var passwordPtr = AltNative.StringUtils.StringToHGlobalUtf8(password);
+            AltNative.Server.Core_SetPassword(NativePointer, passwordPtr);
+        }
+
         public void TriggerServerEvent(string eventName, MValueConst[] args)
         {
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
