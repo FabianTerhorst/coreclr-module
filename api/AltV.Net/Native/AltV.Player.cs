@@ -251,6 +251,9 @@ namespace AltV.Net.Native
             
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_ClearBloodDamage(IntPtr player);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Player_IsEntityInStreamingRange(IntPtr player, IntPtr entity);
         }
     }
 }
