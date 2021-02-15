@@ -50,6 +50,8 @@ namespace AltV.Net
 
         uint Hash(string hash);
 
+        void SetPassword(string password);
+
         void TriggerServerEvent(string eventName, MValueConst[] args);
 
         void TriggerServerEvent(IntPtr eventNamePtr, MValueConst[] args);

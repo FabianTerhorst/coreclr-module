@@ -166,6 +166,8 @@ EXPORT void Player_SetProps(alt::IPlayer* player, uint8_t component, uint16_t dr
 
 EXPORT void Player_GetDlcProps(alt::IPlayer* player, uint8_t component, dlcprop_t& prop);
 EXPORT void Player_SetDlcProps(alt::IPlayer* player, uint8_t component, uint16_t drawable, uint8_t texture, uint32_t dlc);
+
+EXPORT bool Player_IsEntityInStreamingRange(alt::IPlayer* player, alt::IEntity* entity);
 #ifdef __cplusplus
 }
 #endif

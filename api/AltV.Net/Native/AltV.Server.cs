@@ -215,6 +215,9 @@ namespace AltV.Net.Native
             
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool Core_GetBranch(IntPtr core, ref IntPtr data, ref ulong size);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Core_SetPassword(IntPtr core, IntPtr value);
         }
     }
 }

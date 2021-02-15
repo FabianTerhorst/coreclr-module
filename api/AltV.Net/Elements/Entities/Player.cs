@@ -672,6 +672,12 @@ namespace AltV.Net.Elements.Entities
         {
             AltNative.Player.Player_SetDlcProps(NativePointer, component, drawable, texture, dlc);
         }
+        
+        public bool IsEntityInStreamingRange(IEntity entity)
+        {
+            if(entity == null) return false;
+            return AltNative.Player.Player_IsEntityInStreamingRange(NativePointer, entity.NativePointer);
+        }
 
         public bool TryCreateRef(out PlayerRef playerRef)
         {

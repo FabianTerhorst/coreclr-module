@@ -301,6 +301,11 @@ namespace AltV.Net.Elements.Entities
         /// Sets the player dlc props
         /// </summary>
         void SetDlcProps(byte component, ushort drawable, byte texture, uint dlc);
+
+        /// <summary>
+        /// Returns if the entity is in the streaming range of the player
+        /// </summary>
+        bool IsEntityInStreamingRange(IEntity entity);
         
         bool TryCreateRef(out PlayerRef playerRef);
     }

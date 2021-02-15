@@ -275,6 +275,9 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_SetDlcProps(IntPtr player, byte component, ushort drawable, byte texture, uint dlc);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Player_IsEntityInStreamingRange(IntPtr player, IntPtr entity);
         }
     }
 }

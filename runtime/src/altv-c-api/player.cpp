@@ -456,3 +456,7 @@ void Player_GetDlcProps(alt::IPlayer* player, uint8_t component, dlcprop_t& prop
 void Player_SetDlcProps(alt::IPlayer* player, uint8_t component, uint16_t drawable, uint8_t texture, uint32_t dlc) {
     player->SetDlcProps(component, drawable, texture, dlc);
 }
+
+bool Player_IsEntityInStreamingRange(alt::IPlayer* player, alt::IEntity* entity) {
+    return player->IsEntityInStreamingRange(entity);
+}
