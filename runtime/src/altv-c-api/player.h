@@ -9,6 +9,10 @@
 #include <altv-cpp-api/SDK.h>
 #include "position.h"
 #include "rotation.h"
+#include "cloth.h"
+#include "dlc_cloth.h"
+#include "prop.h"
+#include "dlc_prop.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -150,6 +154,18 @@ EXPORT void Player_GetPositionCoords2(alt::IPlayer* player, float* position_x, f
 EXPORT void Player_SetNetworkOwner(alt::IPlayer* player, alt::IPlayer* networkOwnerPlayer, bool disableMigration);
 
 EXPORT void Player_ClearBloodDamage(alt::IPlayer* player);
+
+EXPORT void Player_GetClothes(alt::IPlayer* player, uint8_t component, cloth_t& cloth);
+EXPORT void Player_SetClothes(alt::IPlayer* player, uint8_t component, uint16_t drawable, uint8_t texture, uint8_t palette);
+
+EXPORT void Player_GetDlcClothes(alt::IPlayer* player, uint8_t component, dlccloth_t& cloth);
+EXPORT void Player_SetDlcClothes(alt::IPlayer* player, uint8_t component, uint16_t drawable, uint8_t texture, uint8_t palette, uint32_t dlc);
+
+EXPORT void Player_GetProps(alt::IPlayer* player, uint8_t component, prop_t& prop);
+EXPORT void Player_SetProps(alt::IPlayer* player, uint8_t component, uint16_t drawable, uint8_t texture);
+
+EXPORT void Player_GetDlcProps(alt::IPlayer* player, uint8_t component, dlcprop_t& prop);
+EXPORT void Player_SetDlcProps(alt::IPlayer* player, uint8_t component, uint16_t drawable, uint8_t texture, uint32_t dlc);
 #ifdef __cplusplus
 }
 #endif
