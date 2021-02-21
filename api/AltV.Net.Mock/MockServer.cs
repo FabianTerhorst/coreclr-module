@@ -552,6 +552,11 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public void SetPassword(string password)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool IsDebug { get; }
     }
 }
