@@ -16,7 +16,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="license\license.txt" Pack="true" PackagePath="" />
+        <None Include="license\license.txt">
+            <Pack>true</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
     </ItemGroup>
 
     <ItemGroup>

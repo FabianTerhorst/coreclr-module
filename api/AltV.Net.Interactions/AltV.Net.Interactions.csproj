@@ -23,9 +23,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="license\license.txt" Pack="true" PackagePath="" />
-        <None Include="icon.png" Pack="true" PackagePath="\" />
-        <None Include="package\**" Pack="True" PackagePath="build\" />
+        <None Include="license\license.txt">
+            <Pack>true</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+        <None Include="icon.png">
+            <Pack>true</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
     </ItemGroup>
 
     <ItemGroup>

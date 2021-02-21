@@ -257,6 +257,11 @@ namespace AltV.Net.Elements.Entities
         /// Clears the blood damage of the player
         /// </summary>
         void ClearBloodDamage();
+
+        /// <summary>
+        /// Returns if the entity is in the streaming range of the player
+        /// </summary>
+        bool IsEntityInStreamingRange(IEntity entity);
         
         bool TryCreateRef(out PlayerRef playerRef);
     }

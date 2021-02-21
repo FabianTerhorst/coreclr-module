@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <Configurations>Debug;Release;Testing;Linux</Configurations>
+        <Configurations>$(Configurations);Testing;Linux</Configurations>
         <Platforms>AnyCPU</Platforms>
         <RootNamespace>AltV.Net.Example</RootNamespace>
     </PropertyGroup>

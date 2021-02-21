@@ -418,3 +418,7 @@ void Core_GetBranch(alt::ICore* core, const char*&value, uint64_t &size) {
     value = version.GetData();
     size = version.GetSize();
 }
+
+void Core_SetPassword(alt::ICore* core, const char* value) {
+    core->SetPassword(value);
+}

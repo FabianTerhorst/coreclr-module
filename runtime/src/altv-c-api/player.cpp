@@ -416,3 +416,7 @@ void Player_SetNetworkOwner(alt::IPlayer* player, alt::IPlayer* networkOwnerPlay
 void Player_ClearBloodDamage(alt::IPlayer* player) {
     player->ClearBloodDamage();
 }
+
+bool Player_IsEntityInStreamingRange(alt::IPlayer* player, alt::IEntity* entity) {
+    return player->IsEntityInStreamingRange(entity);
+}
