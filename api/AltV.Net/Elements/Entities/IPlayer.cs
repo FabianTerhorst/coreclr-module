@@ -259,6 +259,66 @@ namespace AltV.Net.Elements.Entities
         void ClearBloodDamage();
 
         /// <summary>
+        /// Gets the player clothes
+        /// </summary>
+        Cloth GetClothes(byte component);
+
+        /// <summary>
+        /// Gets the player clothes
+        /// </summary>
+        void GetClothes(byte component, ref Cloth cloth);
+
+        /// <summary>
+        /// Sets the player clothes
+        /// </summary>
+        void SetClothes(byte component, ushort drawable, byte texture, byte palette);
+
+        /// <summary>
+        /// Gets the player dlc clothes
+        /// </summary>
+        DlcCloth GetDlcClothes(byte component);
+
+        /// <summary>
+        /// Gets the player dlc clothes
+        /// </summary>
+        void GetDlcClothes(byte component, ref DlcCloth cloth);
+
+        /// <summary>
+        /// Gets the player clothes
+        /// </summary>
+        void SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc);
+
+        /// <summary>
+        /// Gets the player props
+        /// </summary>
+        Prop GetProps(byte component);
+
+        /// <summary>
+        /// Gets the player props
+        /// </summary>
+        void GetProps(byte component, ref Prop prop);
+
+        /// <summary>
+        /// Sets the player props
+        /// </summary>
+        void SetProps(byte component, ushort drawable, byte texture);
+
+        /// <summary>
+        /// Gets the player dlc props
+        /// </summary>
+        DlcProp GetDlcProps(byte component);
+
+        /// <summary>
+        /// Gets the player dlc props
+        /// </summary>
+        void GetDlcProps(byte component, ref DlcProp prop);
+
+        /// <summary>
+        /// Sets the player dlc props
+        /// </summary>
+        void SetDlcProps(byte component, ushort drawable, byte texture, uint dlc);
+
+        /// <summary>
         /// Returns if the entity is in the streaming range of the player
         /// </summary>
         bool IsEntityInStreamingRange(IEntity entity);

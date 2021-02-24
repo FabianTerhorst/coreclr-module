@@ -609,6 +609,71 @@ namespace AltV.Net.Elements.Entities
             AltNative.Player.Player_ClearBloodDamage(NativePointer);
         }
 
+        public Cloth GetClothes(byte component)
+        {
+            var cloth = Cloth.Zero;
+            AltNative.Player.Player_GetClothes(NativePointer, component, ref cloth);
+            return cloth;
+        }
+        public void GetClothes(byte component, ref Cloth cloth)
+        {
+            AltNative.Player.Player_GetClothes(NativePointer, component, ref cloth);
+        }
+
+        public void SetClothes(byte component, ushort drawable, byte texture, byte palette)
+        {
+            AltNative.Player.Player_SetClothes(NativePointer, component, drawable, texture, palette);
+        }
+
+        public DlcCloth GetDlcClothes(byte component)
+        {
+            var cloth = DlcCloth.Zero;
+            AltNative.Player.Player_GetDlcClothes(NativePointer, component, ref cloth);
+            return cloth;
+        }
+        public void GetDlcClothes(byte component, ref DlcCloth cloth)
+        {
+            AltNative.Player.Player_GetDlcClothes(NativePointer, component, ref cloth);
+        }
+
+        public void SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc)
+        {
+            AltNative.Player.Player_SetDlcClothes(NativePointer, component, drawable, texture, palette, dlc);
+        }
+
+        public Prop GetProps(byte component)
+        {
+            var prop = Prop.Zero;
+            AltNative.Player.Player_GetProps(NativePointer, component, ref prop);
+            return prop;
+        }
+        public void GetProps(byte component, ref Prop prop)
+        {
+            AltNative.Player.Player_GetProps(NativePointer, component, ref prop);
+        }
+
+        public void SetProps(byte component, ushort drawable, byte texture)
+        {
+            AltNative.Player.Player_SetProps(NativePointer, component, drawable, texture);
+        }
+
+        public DlcProp GetDlcProps(byte component)
+        {
+            var prop = DlcProp.Zero;
+            AltNative.Player.Player_GetDlcProps(NativePointer, component, ref prop);
+            return prop;
+        }
+        
+        public void GetDlcProps(byte component, ref DlcProp prop)
+        {
+            AltNative.Player.Player_GetDlcProps(NativePointer, component, ref prop);
+        }
+
+        public void SetDlcProps(byte component, ushort drawable, byte texture, uint dlc)
+        {
+            AltNative.Player.Player_SetDlcProps(NativePointer, component, drawable, texture, dlc);
+        }
+        
         public bool IsEntityInStreamingRange(IEntity entity)
         {
             if(entity == null) return false;
