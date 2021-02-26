@@ -1,7 +1,8 @@
 # Introduction
-Checkpoints are very similiar to Colshapes. The main difference is that Colshapes are only available on clientside.
+Checkpoints are very similiar to Colshapes. The main difference is that Checkpoints are displayed on clients (e.g. as arrow), while colshapes are invisible and designed for detecting collisions. Important to know is that the internal streaming of checkpoints is not optimized and you should use them as less as possible.
+
 With checkpoints you are able to detect appearing or disappearing entities of an area, specified by position, radius and height.
-The specified checkpoint type defines the shape of the checkpoint (there are 3 shapes available: Cylinder, Rings, Arrows). Typically checkpoints are used for by parkour racings or driving/flying tutorials.
+The specified checkpoint type defines the shape of the checkpoint (there are 3 shapes available: Cylinder, Rings, Arrows). Typical usages of checkpoints are parkour racings or driving/flying tutorials.
 
 alt:V offers full API support for creating Checkpoints on serverside.
 

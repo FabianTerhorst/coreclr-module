@@ -701,6 +701,27 @@ namespace AltV.Net.Enums
         Seminole2 = 0x94114926,
         Tigon = 0xAF0B8D48,
         Yosemite3 = 0x0409D787,
-        Youga3 = 0x6B73A9BE
+        Youga3 = 0x6B73A9BE,
+        Alkonost = 3929093893,   
+        Annihilator2 = 295054921,
+        Avisa = 2588363614,      
+        Brioso2 = 1429622905,    
+        Dinghy5 = 3314393930,
+        Italirsx = 3145241962,
+        Kosatka = 1336872304,
+        Longfin = 1861786828,
+        Manchez2 = 1086534307,
+        Patrolboat = 4018222598,
+        Seasparrow2 = 1229411063,
+        Seasparrow3 = 1593933419,
+        Slamtruck = 3249056020,
+        Squaddie = 4192631813,
+        Toreador = 1455990255,
+        Verus = 298565713,
+        Vetir = 2014313426,
+        Veto = 3437611258,
+        Veto2 = 2802050217,
+        Weevil = 1644055914,
+        Winky = 4084658662
     }
 }
