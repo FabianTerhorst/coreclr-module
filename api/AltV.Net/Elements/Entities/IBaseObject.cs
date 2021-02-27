@@ -121,14 +121,11 @@ namespace AltV.Net.Elements.Entities
         bool AddRef();
 
         bool RemoveRef();
-    }
 
-    public static class BaseObjectExtensions
-    {
-        public static bool GetMetaData(this IBaseObject baseObject, string key, out int result)
+        bool GetMetaData(string key, out int result)
         {
-            baseObject.CheckIfEntityExists();
-            baseObject.GetMetaData(key, out var mValue);
+            CheckIfEntityExists();
+            GetMetaData(key, out MValueConst mValue);
             using (mValue)
             {
                 if (mValue.type != MValueConst.Type.Int)
@@ -143,10 +140,10 @@ namespace AltV.Net.Elements.Entities
             return true;
         }
 
-        public static bool GetMetaData(this IBaseObject baseObject, string key, out uint result)
+        bool GetMetaData(string key, out uint result)
         {
-            baseObject.CheckIfEntityExists();
-            baseObject.GetMetaData(key, out var mValue);
+            CheckIfEntityExists();
+            GetMetaData(key, out MValueConst mValue);
             using (mValue)
             {
                 if (mValue.type != MValueConst.Type.Uint)
@@ -161,10 +158,10 @@ namespace AltV.Net.Elements.Entities
             return true;
         }
 
-        public static bool GetMetaData(this IBaseObject baseObject, string key, out float result)
+        bool GetMetaData(string key, out float result)
         {
-            baseObject.CheckIfEntityExists();
-            baseObject.GetMetaData(key, out var mValue);
+            CheckIfEntityExists();
+            GetMetaData(key, out MValueConst mValue);
             using (mValue)
             {
                 if (mValue.type != MValueConst.Type.Double)

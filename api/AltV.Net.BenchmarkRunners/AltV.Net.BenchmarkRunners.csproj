@@ -1,9 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <Configurations>Debug;Release;Testing;Linux</Configurations>
+        <Configurations>$(Configurations);Testing;Linux</Configurations>
         <Platforms>AnyCPU</Platforms>
-        <AssemblyName>AltV.Net.BenchmarkRunners</AssemblyName>
         <RootNamespace>AltV.Net.BenchmarkRunners</RootNamespace>
     </PropertyGroup>
 

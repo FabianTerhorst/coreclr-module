@@ -5,8 +5,8 @@ namespace AltV.Net
 {
     public static partial class Alt
     {
-        private const string HourWithZero = "[";
-        private const string HourWithoutZero = "[0";
+        private const string HourWithZero = "[0";
+        private const string HourWithoutZero = "[";
 
         private const string NumberWithZero = ":0";
         private const string NumberWithoutZero = ":";

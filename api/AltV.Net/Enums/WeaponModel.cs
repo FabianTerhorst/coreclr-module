@@ -93,6 +93,9 @@ namespace AltV.Net.Enums
         Flare = 1233104067,
         JerryCan = 883325847,
         Parachute = 4222310262,
-        FireExtinguisher = 101631238
+        FireExtinguisher = 101631238,
+        GadgetPistol = 1470379660,
+        MilitaryRifle = 2636060646,
+        CombatShotgun = 94989220  
     }
 }
