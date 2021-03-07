@@ -255,7 +255,7 @@ namespace AltV.Net.Host
 
             if (weakLoadContext.IsAlive)
             {
-                Console.WriteLine("Resource " + resourcePath + " leaked!");
+                Console.WriteLine("Resource " + resourcePath + " memory leak found!");
             }
 
             return 0;
