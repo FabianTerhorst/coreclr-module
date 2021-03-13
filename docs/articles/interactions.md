@@ -155,3 +155,5 @@ AltInteractions.TriggerInteractions(player);
 
 When you returns false from a interaction you allow other interactions that might be in range as well to also call OnInteraction.
 When you return true, no other interaction will trigger.
+
+The OnInteraction method is triggered inside a async context. It should be none blocking to not block other interactions since they run in the same task. When you need to use await inside it start a new task with Task.Run. Make sure to use the altv.net apis inside the async context correctly.
