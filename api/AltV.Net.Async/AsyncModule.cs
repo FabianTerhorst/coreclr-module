@@ -740,7 +740,7 @@ namespace AltV.Net.Async
         public new void OffServer(string eventName, Function function)
         {
             if (function == null) return;
-            if (asyncEventBusClient.TryGetValue(eventName, out var eventHandlers))
+            if (asyncEventBusServer.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Remove(function);
             }
