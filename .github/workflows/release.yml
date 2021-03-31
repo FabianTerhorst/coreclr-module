@@ -96,8 +96,8 @@ jobs:
           - {
               name: linux,
               os: ubuntu-18.04,
-              cc: gcc-8,
-              cxx: g++-8,
+              cc: gcc-9,
+              cxx: g++-9,
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo,
               nethost: nethost-linux,
             }
