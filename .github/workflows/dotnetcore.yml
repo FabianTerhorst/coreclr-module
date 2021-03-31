@@ -21,13 +21,13 @@ jobs:
       working-directory: ./api
       run: |
         cd C:\"Program Files"\dotnet\packs\
-        ls -l
+        dir /s /b /o:gn
         cd C:\"Program Files"\dotnet\packs\Microsoft.NETCore.App.Host.windows-x64\
-        ls -l
+        dir /s /b /o:gn
         cd C:\P"Program Files"\dotnet\packs\Microsoft.NETCore.App.Host.windows-x64\5.0.4\runtimes\
-        ls -l
+        dir /s /b /o:gn
         cd C:\"Program Files"\dotnet\packs\Microsoft.NETCore.App.Host.windows-x64\5.0.4\runtimes\windows-x64\native\
-        ls -l
+        dir /s /b /o:gn
         dotnet build --configuration Release
   build:
 
