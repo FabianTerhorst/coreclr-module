@@ -116,7 +116,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: ${{ matrix.config.nethost }}
-          path: ./runtime/nethost.tar
+          path: ./runtime
       - working-directory: ./runtime
         shell: cmake -P {0}
         run: |
