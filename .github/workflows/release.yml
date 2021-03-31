@@ -18,7 +18,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: nethost-linux
-          path: ./libnethost-linux.tar
+          path: ./libnethost.tar
   fetch-nethost-windows:
     runs-on: windows-2016
     steps:
@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: nethost-windows
-          path: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.4\runtimes\win-x64\native\libnethost-windows.tar
+          path: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.4\runtimes\win-x64\native\libnethost.tar
   build-api:
     runs-on: ubuntu-latest
     steps:
