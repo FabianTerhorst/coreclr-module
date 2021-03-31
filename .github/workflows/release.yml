@@ -111,6 +111,16 @@ jobs:
       - uses: actions/checkout@v1
         with:
           submodules: recursive
+      - if: ${{ runner.os == 'Linux' }}
+        uses: actions/download-artifact@v2
+        with:
+          name: nethost-linux
+          path: ./runtime
+      - if: ${{ runner.os == 'Windows' }}
+        uses: actions/download-artifact@v2
+        with:
+          name: nethost-windows
+          path: ./runtime
       - working-directory: ./runtime
         shell: cmake -P {0}
         run: |
