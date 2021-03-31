@@ -308,6 +308,8 @@ jobs:
       - uses: geekyeggo/delete-artifact@v1
         with:
           name: |
+            nethost-linux
+            nethost-windows
             csharp-module-linux
             csharp-module-windows
             csharp-module-api
