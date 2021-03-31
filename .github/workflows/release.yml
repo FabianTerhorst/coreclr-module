@@ -27,8 +27,8 @@ jobs:
         with:
           dotnet-version: 5.0.x
         run: |
-          cd /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.windows-x64/5.0.4/runtimes/windows-x64/native
-          tar -cvf ./nethost-windows.tar nethost.a
+          cd C:\"Program Files"\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.4\runtimes\win-x64\native\
+          tar -cvf ./nethost-windows.tar nethost.lib
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
