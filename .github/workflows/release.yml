@@ -108,9 +108,6 @@ jobs:
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -A x64 -T host=x64
             }
     steps:
-      - uses: actions/checkout@v1
-        with:
-          submodules: recursive
       - if: ${{ runner.os == 'Linux' }}
         uses: actions/download-artifact@v2
         with:
@@ -121,6 +118,9 @@ jobs:
         with:
           name: nethost-windows
           path: ./runtime
+      - uses: actions/checkout@v1
+        with:
+          submodules: recursive
       - working-directory: ./runtime
         shell: cmake -P {0}
         run: |
