@@ -98,25 +98,21 @@ jobs:
               os: ubuntu-18.04,
               cc: gcc-8,
               cxx: g++-8,
-              args: -DCMAKE_BUILD_TYPE=RelWithDebInfo
+              args: -DCMAKE_BUILD_TYPE=RelWithDebInfo,
+              nethost: nethost-linux
             }
           - {
               name: windows,
               os: windows-2016,
               cc: cl,
               cxx: cl,
-              args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -A x64 -T host=x64
+              args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -A x64 -T host=x64,
+              nethost: nethost-windows
             }
     steps:
-      - if: ${{ runner.os == 'Linux' }}
         uses: actions/download-artifact@v2
         with:
-          name: nethost-linux
-          path: ./runtime
-      - if: ${{ runner.os == 'Windows' }}
-        uses: actions/download-artifact@v2
-        with:
-          name: nethost-windows
+          name: ${{ matrix.config.nethost }}
           path: ./runtime
       - uses: actions/checkout@v1
         with:
