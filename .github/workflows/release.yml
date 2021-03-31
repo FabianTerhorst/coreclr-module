@@ -13,7 +13,7 @@ jobs:
           dotnet-version: 5.0.x
       - name: Copy nethost
         run: |
-          tar -cvf ./libnethost-linux.tar /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.4/runtimes/linux-x64/native/libnethost.a
+          tar -cvf ./libnethost.tar /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.4/runtimes/linux-x64/native/libnethost.a
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -29,7 +29,7 @@ jobs:
       - name: Copy nethost
         working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.4\runtimes\win-x64\native\
         run: |
-          tar -cvf ./libnethost-windows.tar libnethost.lib
+          tar -cvf ./libnethost.tar libnethost.lib
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -133,7 +133,8 @@ jobs:
           endif()
       - working-directory: ./runtime
         shell: bash
-        run: tar xvf nethost.tar
+        run: |
+          tar xvf libnethost.tar
       - working-directory: ./runtime
         shell: bash
         run: cmake --build build --config Release
