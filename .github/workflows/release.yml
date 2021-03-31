@@ -11,6 +11,7 @@ jobs:
         uses: actions/setup-dotnet@v1.7.2
         with:
           dotnet-version: 5.0.x
+      - name: Copy nethost
         run: |
           cd /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.4/runtimes/linux-x64/native
           tar -cvf ./libnethost-linux.tar libnethost.a
@@ -26,6 +27,7 @@ jobs:
         uses: actions/setup-dotnet@v1.7.2
         with:
           dotnet-version: 5.0.x
+      - name: Copy nethost
         run: |
           cd C:\"Program Files"\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.4\runtimes\win-x64\native\
           tar -cvf ./nethost-windows.tar nethost.lib
