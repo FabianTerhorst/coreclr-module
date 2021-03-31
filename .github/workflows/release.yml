@@ -19,7 +19,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: nethost-linux
-          path: ./libnethost.tar
+          path: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.4/runtimes/linux-x64/native/libnethost.tar
   fetch-nethost-windows:
     runs-on: windows-2016
     steps:
