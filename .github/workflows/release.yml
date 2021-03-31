@@ -4,6 +4,36 @@ on:
       - '*.*.*'
       - '*.*.*-*'
 jobs:
+  fetch-nethost-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: 5.0.x
+        run: |
+          cd /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.4/runtimes/linux-x64/native
+          tar -cvf ./libnethost-linux.tar libnethost.a
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: nethost-linux
+          path: ./libnethost-linux.tar
+  fetch-nethost-windows:
+    runs-on: windows-2016
+    steps:
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: 5.0.x
+        run: |
+          cd /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.windows-x64/5.0.4/runtimes/windows-x64/native
+          tar -cvf ./nethost-windows.tar nethost.a
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: nethost-windows
+          path: ./nethost-windows.tar
   build-api:
     runs-on: ubuntu-latest
     steps:
