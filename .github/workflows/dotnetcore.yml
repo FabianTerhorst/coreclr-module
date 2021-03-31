@@ -24,7 +24,7 @@ jobs:
         tree /f
         cd C:\"Program Files"\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\
         tree /f
-        cd C:\P"Program Files"\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.4\runtimes\
+        cd C:\"Program Files"\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.4\runtimes\
         tree /f
         cd C:\"Program Files"\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.4\runtimes\win-x64\native\
         tree /f
