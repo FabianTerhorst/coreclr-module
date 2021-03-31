@@ -20,7 +20,8 @@ jobs:
     - name: Build with dotnet
       working-directory: ./api
       run: |
-        cd /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.4/runtimes/linux-x64/native
+        cd /usr/share/dotnet/packs
+        cd /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.windows-x64/5.0.4/runtimes/windows-x64/native
         ls -l
         dotnet build --configuration Release
   build:
