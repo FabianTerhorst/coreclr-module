@@ -113,10 +113,6 @@ jobs:
       - uses: actions/checkout@v1
         with:
           submodules: recursive
-      - uses: actions/download-artifact@v2
-        with:
-          name: ${{ matrix.config.nethost }}
-          path: ./runtime/nethost.tar
       - working-directory: ./runtime
         shell: cmake -P {0}
         run: |
