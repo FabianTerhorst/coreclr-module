@@ -99,7 +99,7 @@ jobs:
               cc: gcc-8,
               cxx: g++-8,
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo,
-              nethost: nethost-linux
+              nethost: nethost-linux,
             }
           - {
               name: windows,
@@ -107,16 +107,16 @@ jobs:
               cc: cl,
               cxx: cl,
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -A x64 -T host=x64,
-              nethost: nethost-windows
+              nethost: nethost-windows,
             }
     steps:
-        uses: actions/download-artifact@v2
-        with:
-          name: ${{ matrix.config.nethost }}
-          path: ./runtime
       - uses: actions/checkout@v1
         with:
           submodules: recursive
+      - uses: actions/download-artifact@v2
+        with:
+          name: ${{ matrix.config.nethost }}
+          path: ./runtime/nethost.tar
       - working-directory: ./runtime
         shell: cmake -P {0}
         run: |
