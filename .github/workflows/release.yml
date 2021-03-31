@@ -133,6 +133,9 @@ jobs:
           endif()
       - working-directory: ./runtime
         shell: bash
+        run: tar xvf nethost.tar
+      - working-directory: ./runtime
+        shell: bash
         run: cmake --build build --config Release
       - if: ${{ runner.os == 'Linux' }}
         shell: bash
