@@ -7,6 +7,22 @@ on:
     - '.github/workflows/dotnetcore.yml'
 
 jobs:
+  buildwindows:
+
+    runs-on: windows-2016
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Build with dotnet
+      working-directory: ./api
+      run: |
+        cd /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.4/runtimes/linux-x64/native
+        ls -l
+        dotnet build --configuration Release
   build:
 
     runs-on: ubuntu-latest
