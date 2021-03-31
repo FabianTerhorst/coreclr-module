@@ -29,12 +29,12 @@ jobs:
       - name: Copy nethost
         working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.4\runtimes\win-x64\native\
         run: |
-          tar -cvf ./nethost-windows.tar nethost.lib
+          tar -cvf ./libnethost-windows.tar libnethost.lib
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: nethost-windows
-          path: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.4\runtimes\win-x64\native\nethost-windows.tar
+          path: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.4\runtimes\win-x64\native\libnethost-windows.tar
   build-api:
     runs-on: ubuntu-latest
     steps:
