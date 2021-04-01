@@ -28,6 +28,7 @@ CoreClr::CoreClr(alt::ICore* core) {
     _shutdownCoreCLR = nullptr;
     _createDelegate = nullptr;
     _executeAssembly = nullptr;*/
+    get_hostfxr_path(nullptr, 0, nullptr);
 #ifdef _WIN32
     char pf[MAX_PATH];
     SHGetSpecialFolderPath(
