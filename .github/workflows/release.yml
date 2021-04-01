@@ -136,6 +136,8 @@ jobs:
         shell: bash
         run: |
           tar xvf libnethost.tar
+          ls -l
+          pwd
       - working-directory: ./runtime
         shell: bash
         run: cmake --build build --config Release
