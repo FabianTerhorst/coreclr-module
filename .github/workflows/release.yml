@@ -125,9 +125,6 @@ jobs:
           ls -l
           pwd
       - working-directory: ./runtime
-        shell: bash
-        run: cmake --build build --config Release
-      - working-directory: ./runtime
         shell: cmake -P {0}
         run: |
           set(ENV{CC} ${{ matrix.config.cc }})
@@ -141,6 +138,9 @@ jobs:
           if (NOT result EQUAL 0)
             message(FATAL_ERROR "Bad exit status")
           endif()
+      - working-directory: ./runtime
+        shell: bash
+        run: cmake --build build --config Release
       - if: ${{ runner.os == 'Linux' }}
         shell: bash
         run: |
