@@ -118,20 +118,6 @@ jobs:
         with:
           name: ${{ matrix.config.nethost }}
           path: ./runtime/nethost
-      - working-directory: ./runtime
-        shell: cmake -P {0}
-        run: |
-          set(ENV{CC} ${{ matrix.config.cc }})
-          set(ENV{CXX} ${{ matrix.config.cxx }})
-          file(MAKE_DIRECTORY build)
-          execute_process(
-            COMMAND cmake .. ${{ matrix.config.args }}
-            RESULT_VARIABLE result
-            WORKING_DIRECTORY build
-          )
-          if (NOT result EQUAL 0)
-            message(FATAL_ERROR "Bad exit status")
-          endif()
       - working-directory: ./runtime/nethost/lib
         shell: bash
         run: |
@@ -146,6 +132,20 @@ jobs:
       - working-directory: ./runtime
         shell: bash
         run: cmake --build build --config Release
+      - working-directory: ./runtime
+        shell: cmake -P {0}
+        run: |
+          set(ENV{CC} ${{ matrix.config.cc }})
+          set(ENV{CXX} ${{ matrix.config.cxx }})
+          file(MAKE_DIRECTORY build)
+          execute_process(
+            COMMAND cmake .. ${{ matrix.config.args }}
+            RESULT_VARIABLE result
+            WORKING_DIRECTORY build
+          )
+          if (NOT result EQUAL 0)
+            message(FATAL_ERROR "Bad exit status")
+          endif()
       - if: ${{ runner.os == 'Linux' }}
         shell: bash
         run: |
