@@ -21,8 +21,8 @@ if(UNIX AND NOT APPLE)
             )
 else()
     target_link_libraries(${TARGET_NAME} PRIVATE
-            ${CMAKE_CURRENT_SOURCE_DIR}/nethost/libnethost.lib
-            #${CMAKE_CURRENT_SOURCE_DIR}/nethost/nethost.lib
+            #${CMAKE_CURRENT_SOURCE_DIR}/nethost/libnethost.lib
+            ${CMAKE_CURRENT_SOURCE_DIR}/nethost/nethost.lib
             )
     #target_compile_options(${TARGET_NAME} PRIVATE)# -I/home/parallels/Desktop/clang_7.0.1/include/c++/v1  -stdlib=libc++ -I$ENV{PROGRAMFILES}/LLVM/lib/clang/7.0.1/include -nodefaultlibs
 endif()
