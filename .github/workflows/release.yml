@@ -117,7 +117,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: ${{ matrix.config.nethost }}
-          path: ./runtime/nethost
+          path: ./runtime/nethost/lib
       - working-directory: ./runtime/nethost/lib
         shell: bash
         run: |
