@@ -132,12 +132,17 @@ jobs:
           if (NOT result EQUAL 0)
             message(FATAL_ERROR "Bad exit status")
           endif()
-      - working-directory: ./runtime/nethost
+      - working-directory: ./runtime/nethost/lib
         shell: bash
         run: |
           tar xvf libnethost.tar
           ls -l
           pwd
+      - working-directory: ./runtime/nethost/include
+        shell: bash
+        run: |
+          mv ../lib/nethost.h .
+          ls -l
       - working-directory: ./runtime
         shell: bash
         run: cmake --build build --config Release
