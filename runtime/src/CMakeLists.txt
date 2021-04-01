@@ -23,10 +23,11 @@ else()
     target_link_libraries(${TARGET_NAME} PRIVATE
             ${CMAKE_CURRENT_SOURCE_DIR}/nethost/libnethost.lib
             )
-    target_compile_options(${TARGET_NAME} PRIVATE)# -I/home/parallels/Desktop/clang_7.0.1/include/c++/v1  -stdlib=libc++ -I$ENV{PROGRAMFILES}/LLVM/lib/clang/7.0.1/include -nodefaultlibs
+    #target_compile_options(${TARGET_NAME} PRIVATE)# -I/home/parallels/Desktop/clang_7.0.1/include/c++/v1  -stdlib=libc++ -I$ENV{PROGRAMFILES}/LLVM/lib/clang/7.0.1/include -nodefaultlibs
 endif()
 
 target_compile_definitions(${TARGET_NAME} PRIVATE ALT_SERVER_API=true)
+target_compile_definitions(${TARGET_NAME} PRIVATE NETHOST_USE_AS_STATIC=true)
 
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "csharp-module")
 
