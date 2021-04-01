@@ -14,7 +14,7 @@ jobs:
       - name: Copy nethost
         working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.4/runtimes/linux-x64/native/
         run: |
-          tar -cvf ./libnethost.tar libnethost.a
+          tar -cvf ./libnethost.tar .
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -30,7 +30,7 @@ jobs:
       - name: Copy nethost
         working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.4\runtimes\win-x64\native\
         run: |
-          tar -cvf ./libnethost.tar libnethost.lib
+          tar -cvf ./libnethost.tar .
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -117,7 +117,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: ${{ matrix.config.nethost }}
-          path: ./runtime
+          path: ./runtime/nethost
       - working-directory: ./runtime
         shell: cmake -P {0}
         run: |
@@ -132,7 +132,7 @@ jobs:
           if (NOT result EQUAL 0)
             message(FATAL_ERROR "Bad exit status")
           endif()
-      - working-directory: ./runtime
+      - working-directory: ./runtime/nethost
         shell: bash
         run: |
           tar xvf libnethost.tar
