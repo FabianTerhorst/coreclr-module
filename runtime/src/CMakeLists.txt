@@ -16,9 +16,9 @@ if(UNIX AND NOT APPLE)
     target_compile_options(${TARGET_NAME} PRIVATE -std=c++17 -static)
     target_link_libraries(${TARGET_NAME} -lstdc++ -static-libstdc++)
     # target_link_libraries(${TARGET_NAME} -static-libgcc -static-libstdc++)
-    target_link_libraries(${TARGET_NAME} libnethost.a)
+    target_link_libraries(${TARGET_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/../nethost/libnethost.a)
 else()
-    target_link_libraries(${TARGET_NAME} libnethost.lib)
+    target_link_libraries(${TARGET_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/../nethost/libnethost.lib)
     target_compile_options(${TARGET_NAME} PRIVATE)# -I/home/parallels/Desktop/clang_7.0.1/include/c++/v1  -stdlib=libc++ -I$ENV{PROGRAMFILES}/LLVM/lib/clang/7.0.1/include -nodefaultlibs
 endif()
 
