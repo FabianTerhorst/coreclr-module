@@ -36,7 +36,7 @@ CoreClr::CoreClr(alt::ICore* core) {
         std::cout << "invalid get_hostfxr_path" << std::to_string(rc) << std::endl;
     } else {
 #if defined(_WIN32)
-        std::wcout << std::wstring(buffer2) << std::endl;
+        std::wcout << std::wstring(buffer) << std::endl;
 #else
         std::cout << std::string(buffer) << std::endl;
 #endif
