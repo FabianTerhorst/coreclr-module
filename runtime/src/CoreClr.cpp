@@ -28,7 +28,17 @@ CoreClr::CoreClr(alt::ICore* core) {
     _shutdownCoreCLR = nullptr;
     _createDelegate = nullptr;
     _executeAssembly = nullptr;*/
-    get_hostfxr_path(nullptr, 0, nullptr);
+
+    char_t buffer[256];//MAX_PATH
+    size_t buffer_size = sizeof(buffer) / sizeof(char_t);
+    int rc = get_hostfxr_path(buffer, &buffer_size, nullptr);
+    if (rc != 0) {
+        std::cout << "invalid get_hostfxr_path" << std::to_string(rc) << std::endl;
+    } else {
+        std::cout << buffer << std::endl;
+    }
+
+    // Load hostfxr and get desired exports
 #ifdef _WIN32
     char pf[MAX_PATH];
     SHGetSpecialFolderPath(
