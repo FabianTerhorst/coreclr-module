@@ -19,16 +19,7 @@ jobs:
         dotnet-version: 5.0.x
     - name: Build with dotnet
       working-directory: ./api
-      run: |
-        cd C:\"Program Files"\dotnet\packs\
-        tree /f
-        cd C:\"Program Files"\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\
-        tree /f
-        cd C:\"Program Files"\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.4\runtimes\
-        tree /f
-        cd C:\"Program Files"\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.4\runtimes\win-x64\native\
-        tree /f
-        dotnet build --configuration Release
+      run: dotnet build --configuration Release
   build:
 
     runs-on: ubuntu-latest
@@ -41,7 +32,4 @@ jobs:
         dotnet-version: 5.0.x
     - name: Build with dotnet
       working-directory: ./api
-      run: |
-        cd /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.4/runtimes/linux-x64/native
-        ls -l
-        dotnet build --configuration Release
+      run: dotnet build --configuration Release
