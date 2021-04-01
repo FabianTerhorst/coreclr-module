@@ -35,7 +35,7 @@ CoreClr::CoreClr(alt::ICore* core) {
     if (rc != 0) {
         std::cout << "invalid get_hostfxr_path" << std::to_string(rc) << std::endl;
     } else {
-        std::cout << buffer << std::endl;
+        std::cout << std::string(buffer) << std::endl;
     }
 
     // Load hostfxr and get desired exports
