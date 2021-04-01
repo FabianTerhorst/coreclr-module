@@ -104,7 +104,7 @@ jobs:
             }
           - {
               name: windows,
-              os: windows-2016,
+              os: windows-latest,
               cc: cl,
               cxx: cl,
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -A x64 -T host=x64,
