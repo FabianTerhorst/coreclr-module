@@ -27,6 +27,19 @@ namespace AltV.Net.Interactions.Tests
                 Assert.AreEqual(entity, enumerator.Current);
             }
         }
+        
+        [Test]
+        public void RemoveTest()
+        {
+            var position = GetRandomVector3();
+            var entity = new Interaction(1, 1, position, 0, 1);
+            grid.Add(entity);
+            grid.Remove(entity);
+            using (var enumerator = grid.Find(position, 0).GetEnumerator())
+            {
+                Assert.False(enumerator.MoveNext());
+            }
+        }
 
         [Test]
         public void AddAutoExpandTest()

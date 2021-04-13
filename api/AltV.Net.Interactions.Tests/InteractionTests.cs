@@ -24,6 +24,19 @@ namespace AltV.Net.Interactions.Tests
             Assert.AreEqual(1, interactions.Length);
             Assert.AreEqual(entity, interactions[0]);
         }
+        
+        [Test]
+        public void RemoveTest()
+        {
+            var position = GetRandomVector3();
+            var entity = new Interaction(1, 1, position, 0, 1);
+            AltInteractions.AddInteraction(entity);
+            AltInteractions.RemoveInteraction(entity);
+            var task = AltInteractions.FindInteractions(position, 0);
+            task.Wait();
+            var interactions = task.Result;
+            Assert.AreEqual(0, interactions.Length);
+        }
 
         private static Vector3 GetRandomVector3()
         {
