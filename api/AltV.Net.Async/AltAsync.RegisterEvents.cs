@@ -350,7 +350,7 @@ namespace AltV.Net.Async
                                         new[]
                                         {
                                             typeof(IEntity), typeof(IPlayer), typeof(IPlayer)
-                                        });
+                                        }, true);
                                     if (scriptFunction == null) return;
                                     OnNetworkOwnerChange += (targetEntity, oldNetOwner, newNetOwner) =>
                                     {
@@ -365,7 +365,7 @@ namespace AltV.Net.Async
                                         new[]
                                         {
                                             typeof(IVehicle), typeof(IVehicle)
-                                        });
+                                        }, true);
                                     if (scriptFunction == null) return;
                                     OnVehicleAttach += (targetVehicle, attachedVehicle) =>
                                     {
@@ -379,7 +379,7 @@ namespace AltV.Net.Async
                                         new[]
                                         {
                                             typeof(IVehicle), typeof(IVehicle)
-                                        });
+                                        }, true);
                                     if (scriptFunction == null) return;
                                     OnVehicleDetach += (targetVehicle, detachedVehicle) =>
                                     {
