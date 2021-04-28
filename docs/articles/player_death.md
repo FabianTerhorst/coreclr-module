@@ -26,25 +26,20 @@ Alt.OnPlayerDead += (player, killer, weapon) => {
     {
         // We declare and create our event handler
         [ScriptEvent(ScriptEventType.PlayerDead)]
-        public static void OnPlayerDead(IPlayer player, IEntity killer, uint weapon)
+        public static void OnPlayerDead(IPlayer player, IEntity attacker, uint weapon)
         {
-            if ((killer is IPlayer killerPlayer)){
-                // If you killed yourself then it should notify you
-                if (killerPlayer == player) {
-                    player.SendChatMessage("You killed yourself");
-                }
-                else
-                {
-                    // We notify the killer and the player.
-                    killerPlayer.SendChatMessage("You killed " + player.Name);
-                    player.SendChatMessage(killerPlayer?.Name + " killed you!");
-                }
-            }
-            else if((killer is IVehicle vehicle)){
-                player.SendChatMessage("You got killed by a " + (VehicleModel)vehicle.model);
-            }
-            // We spawn the dead player after 1000ms at (0, 0, 72)
-            player.Spawn(new Position(0, 0, 72), 1000);
+            
+            string deathReason = attacker switch
+            {
+                IPlayer attackerPlayer when attackerPlayer == player => "yourself!",
+                IPlayer killerPlayer => killerPlayer?.Name,
+                IVehicle vehicle => "a " + ((VehicleModel)vehicle?.Model),
+                _ => "world caused damage."
+            };
+            
+            player?.SendChatMessage("You got killed by " + deathReason);
+            
+            player?.Spawn(new Vector3(0, 0, 72), 1000); // <= We spawn the dead player after 1000ms.
         }
     }
 ```
