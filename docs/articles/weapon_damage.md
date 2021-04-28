@@ -37,7 +37,7 @@ public class MyScriptClass : IScript
             case IPlayer victim:
                 string aimLevel = bodyPart switch
                 {
-                    BodyPart.Head => "is very solid & awesome!",
+                    BodyPart.Head => "very solid & awesome!",
                     BodyPart.Chest => "mysterious like a chest...",
                     BodyPart.Pelvis => "evil!",
                     _ => "very bad..."
