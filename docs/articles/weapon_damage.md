@@ -35,7 +35,7 @@ public class MyScriptClass : IScript
         switch (target)
         {
             case IPlayer victim:
-                player?.SendChatMessage("You shot " + victim.Name + " in his " + (BodyPart)bodyPart + " with a " + (WeaponModel)weapon + "!");
+                player?.SendChatMessage("You shot " + victim.Name + " in his " + (BodyPart)bodyPart + "!");
                 return true;
             default:
                     return false; // <= return false will cancel the event and player won't receive damage.
