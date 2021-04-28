@@ -27,20 +27,20 @@ public class MyScriptClass : IScript
 {
     // We declare and create our event handler
     [ScriptEvent(ScriptEventType.PlayerDamage)]
-    public static void PlayerDamage(IPlayer receiver, IEntity entity, uint weapon, ushort damage)
+    public static void PlayerDamage(IPlayer player, IEntity attacker, uint weapon, ushort damage)
     {
         // We create a switch-statement where we check the type of our IEntity.
-        switch (entity)
+        switch (attacker)
         {
             case IPlayer sender:
-                receiver.SendChatMessage("You received damage by " + sender.Name + ".");
-                receiver.SendChatMessage("His weapon was a " + (WeaponModel)weapon + ".");
+                player.SendChatMessage("You received damage by " + sender.Name + ".");
+                player.SendChatMessage("His weapon was a " + (WeaponModel)weapon + ".");
                 return;
             case IVehicle sender:
-                receiver.SendChatMessage("You received damage by a " + (VehicleModel)sender.Model);
+                player.SendChatMessage("You received damage by a " + (VehicleModel)sender.Model);
                 return;
             default:
-                receiver.SendChatMessage("You received damage.");
+                player.SendChatMessage("You received damage.");
                 return;
         }
     }
