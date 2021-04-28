@@ -35,10 +35,17 @@ public class MyScriptClass : IScript
         switch (target)
         {
             case IPlayer victim:
-                player?.SendChatMessage("You shot " + victim.Name + " in his " + (BodyPart)bodyPart + "!");
+                string aimLevel = bodyPart switch
+                {
+                    BodyPart.Head => "is very solid & awesome!",
+                    BodyPart.Chest => "mysterious like a chest...",
+                    BodyPart.Pelvis => "evil!",
+                    _ => "very bad..."
+                };
+                player?.SendChatMessage("You shot " + victim.Name + "! Your aim is " + aimLevel);
                 return true;
             default:
-                    return false; // <= return false will cancel the event and player won't receive damage.
+                return false; // <= return false will cancel the event and player won't receive damage.
         }
     }
 }
