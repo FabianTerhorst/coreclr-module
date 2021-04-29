@@ -5,8 +5,8 @@ This is a example how to create a collision sphere & call it.
 | Parameter | Description  |
 |-----------|--------------|
 | shape     | The colshape which got triggered. |
-| entity    | The entity who triggered the colshape |
-| state     | The entering status ( true = entered, false = left ) |
+| entity    | The entity who triggered the colshape. |
+| state     | The entering status ( true = entered, false = left ). |
 
 ## Normal event handler
 
@@ -58,23 +58,23 @@ Here are some ColShape Types you could need in future.
 ColShape in a Circle form.
 ```csharp
 //Parameter : (Vector3 pos, float Radius)
-Alt.CreateColShapeCircle(new Vector3(0, 0, 0), 1.0f); //Creates a ColShape in a form of a Circle.
+Alt.CreateColShapeCircle(new Vector3(0, 0, 0), 1.0f); // Creates a colshape in a form of a circle.
 ```
 
 ColShape in a Cube form.
 ```csharp
 //Parameter : (Vector3 pos1, Position pos2)
-Alt.CreateColShapeCube(new Vector3(0, 0, 0), new Position(0, 0, 0)); // Creates a ColShape in a form of a Cube.
+Alt.CreateColShapeCube(new Vector3(0, 0, 0), new Vector3(0, 0, 0)); // Creates a colshape in a form of a cube.
 ```
 
 ColShape in a Cylinder form.
 ```csharp
 //Parameter : (Vector3 pos, float radius, float height)
-Alt.CreateColShapeCylinder(new Vector3(0, 0, 0), 1.0f, 100f); //Creates a ColShape in a form of a Cylinder.
+Alt.CreateColShapeCylinder(new Vector3(0, 0, 0), 1.0f, 100f); // Creates a colshape in a form of a cylinder.
 ```
 
 ColShape in a Rectangle form.
 ```csharp
 //Parameter : (float x1, float y1, float x2, float y2, float height)
-Alt.CreateColShapeRectangle(0.0f, 0.0f, 0.0f, 0.0f, 10f); // Creates a ColShape in a form of a Rectangle.
+Alt.CreateColShapeRectangle(0.0f, 0.0f, 0.0f, 0.0f, 10f); // Creates a colshape in a form of a rectangle.
 ```
