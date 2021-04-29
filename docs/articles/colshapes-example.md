@@ -1,10 +1,6 @@
 # ColShape Example
 
-This is a Example how to create a Collision sphere & Call it. This is a shape that has a position and a radius.
-ColShape Event handler have to be Created in a IScript Class! Otherwise it won´t work.
-
-# ColShape Example
-This is a example how to create a collision sphere & call it.
+This is a example how to create a Collision sphere & call it.
 
 | Parameter | Description  |
 |-----------|--------------|
