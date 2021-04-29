@@ -19,7 +19,7 @@ Alt.OnColShape += (shape, entity, state) => {
 
 ## IScript event handler
 
-##### Note : ScriptEvents have to be created in a IScript Class! Otherwise it won´t work!
+##### Note : ScriptEvents have to be created in a IScript class! Otherwise it won't work!
 
 ```csharp
 // We declare & create our colsphere.
@@ -52,7 +52,7 @@ public class MyScriptClass : IScript
 ```
 
 # ColShape Type´s
-Here are some ColShape Types you could need in future.
+Here are all colshape types.
 
 
 ColShape in a Circle form.

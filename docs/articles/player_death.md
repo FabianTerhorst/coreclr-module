@@ -18,7 +18,7 @@ Alt.OnPlayerDead += (player, killer, weapon) => {
 
 ## IScript event handler
 
-##### Note : ScriptEvents have to be created in a IScript Class! Otherwise it won´t work!
+##### Note : ScriptEvents have to be created in a IScript class! Otherwise it won't work!
 
 ```csharp 
     // We create our IScript class
