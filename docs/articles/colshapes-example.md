@@ -1,6 +1,6 @@
 # ColShape Example
 
-This is a example how to create a Collision sphere & call it.
+This is a example how to create a collision sphere & call it.
 
 | Parameter | Description  |
 |-----------|--------------|
@@ -22,9 +22,8 @@ Alt.OnColShape += (shape, entity, state) => {
 ##### Note : ScriptEvents have to be created in a IScript Class! Otherwise it won´t work!
 
 ```csharp
-// We declare & create our colSphere.
-IColShape col = Alt.CreateColShapeSphere(new Position(0, 0, 0), 3.0f); 
-col.SetData("IS_FREEROAM_COLSHAPE", true); // We setting Data to our ColSphere.
+// We declare & create our colsphere.
+IColShape col = Alt.CreateColShapeSphere(new Vector3(0, 0, 0), 3.0f); 
 
 // We create our IScript class
 public class MyScriptClass : IScript
@@ -33,9 +32,6 @@ public class MyScriptClass : IScript
     [ScriptEvent(ScriptEventType.ColShape)] 
     public static void OnEntityColshapeHit(IColShape shape, IEntity entity, bool state)
     {
-        // If the ColSphere is the ColSphere we declared then it should do this :
-        if (!shape.GetData("IS_FREEROAM_COLSHAPE", out bool result)) return;
-        
         // We create our switch statement.
         string stateMsg = state switch
         {
@@ -61,20 +57,20 @@ Here are some ColShape Types you could need in future.
 
 ColShape in a Circle form.
 ```csharp
-//Parameter : (Position pos, float Radius)
-Alt.CreateColShapeCircle(new Position(0, 0, 0), 1.0f); //Creates a ColShape in a form of a Circle.
+//Parameter : (Vector3 pos, float Radius)
+Alt.CreateColShapeCircle(new Vector3(0, 0, 0), 1.0f); //Creates a ColShape in a form of a Circle.
 ```
 
 ColShape in a Cube form.
 ```csharp
-//Parameter : (Position pos1, Position pos2)
-Alt.CreateColShapeCube(new Position(0, 0, 0), new Position(0, 0, 0)); // Creates a ColShape in a form of a Cube.
+//Parameter : (Vector3 pos1, Position pos2)
+Alt.CreateColShapeCube(new Vector3(0, 0, 0), new Position(0, 0, 0)); // Creates a ColShape in a form of a Cube.
 ```
 
 ColShape in a Cylinder form.
 ```csharp
-//Parameter : (Position pos, float radius, float height)
-Alt.CreateColShapeCylinder(new Position(0, 0, 0), 1.0f, 100f); //Creates a ColShape in a form of a Cylinder.
+//Parameter : (Vector3 pos, float radius, float height)
+Alt.CreateColShapeCylinder(new Vector3(0, 0, 0), 1.0f, 100f); //Creates a ColShape in a form of a Cylinder.
 ```
 
 ColShape in a Rectangle form.
