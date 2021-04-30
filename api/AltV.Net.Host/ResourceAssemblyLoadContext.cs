@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Loader;
+using System.Diagnostics;
 
 namespace AltV.Net.Host
 {
@@ -198,6 +199,21 @@ namespace AltV.Net.Host
                 Console.WriteLine("WARNING: " + assembly.FullName +
                                   " is not collectible and will prevent you from dynamically starting and stopping resources.");
             }
+
+            if (!assembly.IsOptimized())
+            {
+                Console.WriteLine("WARNING: " + assembly.FullName +
+                                  " is not optimized and might not provide best possible runtime performance.");
+            }
+        }
+    }
+
+    internal static class AssemblyExtensions
+    {
+        public static bool IsOptimized(this Assembly asm)
+        {
+            var att = asm.GetCustomAttribute<DebuggableAttribute>();
+            return att == null || att.IsJITOptimizerDisabled == false;
         }
     }
 }
