@@ -307,9 +307,10 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnFire += (player, fireInfos) =>
                                     {
-                                        scriptFunction.Set(player);
-                                        scriptFunction.Set(fireInfos);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(player);
+                                        currScriptFunction.Set(fireInfos);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                 case ScriptEventType.StartProjectile:
@@ -322,12 +323,13 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnStartProjectile += (player, startPosition, direction, ammoHash, weaponHash) =>
                                     {
-                                        scriptFunction.Set(player);
-                                        scriptFunction.Set(startPosition);
-                                        scriptFunction.Set(direction);
-                                        scriptFunction.Set(ammoHash);
-                                        scriptFunction.Set(weaponHash);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(player);
+                                        currScriptFunction.Set(startPosition);
+                                        currScriptFunction.Set(direction);
+                                        currScriptFunction.Set(ammoHash);
+                                        currScriptFunction.Set(weaponHash);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                 case ScriptEventType.PlayerWeaponChange:
@@ -339,10 +341,11 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnPlayerWeaponChange += (player, oldWeapon, newWeapon) =>
                                     {
-                                        scriptFunction.Set(player);
-                                        scriptFunction.Set(oldWeapon);
-                                        scriptFunction.Set(newWeapon);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(player);
+                                        currScriptFunction.Set(oldWeapon);
+                                        currScriptFunction.Set(newWeapon);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                  case ScriptEventType.NetOwnerChange:
@@ -354,10 +357,11 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnNetworkOwnerChange += (targetEntity, oldNetOwner, newNetOwner) =>
                                     {
-                                        scriptFunction.Set(targetEntity);
-                                        scriptFunction.Set(oldNetOwner);
-                                        scriptFunction.Set(newNetOwner);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(targetEntity);
+                                        currScriptFunction.Set(oldNetOwner);
+                                        currScriptFunction.Set(newNetOwner);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                 case ScriptEventType.VehicleAttach:
@@ -369,9 +373,10 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnVehicleAttach += (targetVehicle, attachedVehicle) =>
                                     {
-                                        scriptFunction.Set(targetVehicle);
-                                        scriptFunction.Set(attachedVehicle);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(targetVehicle);
+                                        currScriptFunction.Set(attachedVehicle);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                                 case ScriptEventType.VehicleDetach:
@@ -383,9 +388,10 @@ namespace AltV.Net.Async
                                     if (scriptFunction == null) return;
                                     OnVehicleDetach += (targetVehicle, detachedVehicle) =>
                                     {
-                                        scriptFunction.Set(targetVehicle);
-                                        scriptFunction.Set(detachedVehicle);
-                                        return scriptFunction.CallAsync();
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(targetVehicle);
+                                        currScriptFunction.Set(detachedVehicle);
+                                        return currScriptFunction.CallAsync();
                                     };
                                     break;
                             }
