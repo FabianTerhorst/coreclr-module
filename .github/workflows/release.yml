@@ -4,6 +4,38 @@ on:
       - '*.*.*'
       - '*.*.*-*'
 jobs:
+  fetch-nethost-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: 5.0.x
+      - name: Copy nethost
+        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.4/runtimes/linux-x64/native/
+        run: |
+          tar -cvf ./libnethost.tar .
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: nethost-linux
+          path: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.4/runtimes/linux-x64/native/libnethost.tar
+  fetch-nethost-windows:
+    runs-on: windows-2016
+    steps:
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: 5.0.x
+      - name: Copy nethost
+        working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.4\runtimes\win-x64\native\
+        run: |
+          tar -cvf ./libnethost.tar .
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: nethost-windows
+          path: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.4\runtimes\win-x64\native\libnethost.tar
   build-api:
     runs-on: ubuntu-latest
     steps:
@@ -58,28 +90,42 @@ jobs:
           path: ./api.tar
   build-module:
     runs-on: ${{ matrix.config.os }}
-    needs: build-api
+    needs: ${{ matrix.config.build_module_needs }}
     strategy:
       matrix:
         config:
           - {
               name: linux,
               os: ubuntu-18.04,
-              cc: gcc-8,
-              cxx: g++-8,
-              args: -DCMAKE_BUILD_TYPE=RelWithDebInfo
+              cc: gcc-9,
+              cxx: g++-9,
+              args: -DCMAKE_BUILD_TYPE=RelWithDebInfo,
+              nethost: nethost-linux,
+              build_module_needs: [build-api, fetch-nethost-linux]
             }
           - {
               name: windows,
               os: windows-latest,
               cc: cl,
               cxx: cl,
-              args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -A x64 -T host=x64
+              args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -A x64 -T host=x64,
+              nethost: nethost-windows,
+              build_module_needs: [build-api, fetch-nethost-windows]
             }
     steps:
       - uses: actions/checkout@v1
         with:
           submodules: recursive
+      - uses: actions/download-artifact@v2
+        with:
+          name: ${{ matrix.config.nethost }}
+          path: ./runtime/src/nethost
+      - working-directory: ./runtime/src/nethost
+        shell: bash
+        run: |
+          tar xvf libnethost.tar
+          ls -l
+          pwd
       - working-directory: ./runtime
         shell: cmake -P {0}
         run: |
@@ -267,6 +313,8 @@ jobs:
       - uses: geekyeggo/delete-artifact@v1
         with:
           name: |
+            nethost-linux
+            nethost-windows
             csharp-module-linux
             csharp-module-windows
             csharp-module-api
