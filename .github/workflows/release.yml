@@ -90,7 +90,7 @@ jobs:
           path: ./api.tar
   build-module:
     runs-on: ${{ matrix.config.os }}
-    needs: build-api
+    needs: ${{ matrix.config.build_module_needs }}
     strategy:
       matrix:
         config:
@@ -101,6 +101,7 @@ jobs:
               cxx: g++-9,
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo,
               nethost: nethost-linux,
+              build_module_needs: [build-api, fetch-nethost-linux]
             }
           - {
               name: windows,
@@ -109,6 +110,7 @@ jobs:
               cxx: cl,
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -A x64 -T host=x64,
               nethost: nethost-windows,
+              build_module_needs: [build-api, fetch-nethost-windows]
             }
     steps:
       - uses: actions/checkout@v1
