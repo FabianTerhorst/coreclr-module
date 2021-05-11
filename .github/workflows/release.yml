@@ -10,32 +10,32 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1.7.2
         with:
-          dotnet-version: 5.0.x
+          dotnet-version: 5.0.202
       - name: Copy nethost
-        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.4/runtimes/linux-x64/native/
+        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.5/runtimes/linux-x64/native/
         run: |
           tar -cvf ./libnethost.tar .
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: nethost-linux
-          path: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.4/runtimes/linux-x64/native/libnethost.tar
+          path: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.5/runtimes/linux-x64/native/libnethost.tar
   fetch-nethost-windows:
     runs-on: windows-2016
     steps:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1.7.2
         with:
-          dotnet-version: 5.0.x
+          dotnet-version: 5.0.202
       - name: Copy nethost
-        working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.4\runtimes\win-x64\native\
+        working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.5\runtimes\win-x64\native\
         run: |
           tar -cvf ./libnethost.tar .
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: nethost-windows
-          path: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.4\runtimes\win-x64\native\libnethost.tar
+          path: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.5\runtimes\win-x64\native\libnethost.tar
   build-api:
     runs-on: ubuntu-latest
     steps:
@@ -90,7 +90,7 @@ jobs:
           path: ./api.tar
   build-module:
     runs-on: ${{ matrix.config.os }}
-    needs: ${{ matrix.config.build_module_needs }}
+    needs: [build-api, fetch-nethost-linux, fetch-nethost-windows]
     strategy:
       matrix:
         config:
@@ -101,7 +101,6 @@ jobs:
               cxx: g++-9,
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo,
               nethost: nethost-linux,
-              build_module_needs: [build-api, fetch-nethost-linux]
             }
           - {
               name: windows,
@@ -110,7 +109,6 @@ jobs:
               cxx: cl,
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -A x64 -T host=x64,
               nethost: nethost-windows,
-              build_module_needs: [build-api, fetch-nethost-windows]
             }
     steps:
       - uses: actions/checkout@v1
