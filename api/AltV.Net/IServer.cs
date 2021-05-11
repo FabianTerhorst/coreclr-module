@@ -190,5 +190,9 @@ namespace AltV.Net
         void CreateMValue(out MValueConst mValue, object obj);
 
         void CreateMValues(MValueConst[] mValues, object[] objects);
+
+        bool FileExists(string path);
+
+        string FileRead(string path);
     }
 }

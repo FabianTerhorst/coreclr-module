@@ -558,5 +558,15 @@ namespace AltV.Net.Mock
         }
 
         public bool IsDebug { get; }
+
+        public bool FileExists(string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string FileRead(string path)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

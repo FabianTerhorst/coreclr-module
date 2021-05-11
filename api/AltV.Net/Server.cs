@@ -935,5 +935,23 @@ namespace AltV.Net
             if (Alt.Module.IsMainThread()) return;
             throw new IllegalThreadException(this, callerName);
         }
+
+        public bool FileExists(string path)
+        {
+            var valuePtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
+            var result = AltNative.Server.Server_FileExists(NativePointer, valuePtr);
+            Marshal.FreeHGlobal(valuePtr);
+            return result;
+        }
+
+        public string FileRead(string path)
+        {
+            var valuePtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
+            var ptr = IntPtr.Zero;
+            AltNative.Server.Server_FileRead(NativePointer, valuePtr, ref ptr);
+            var result = Marshal.PtrToStringUTF8(ptr);
+            Marshal.FreeHGlobal(valuePtr);
+            return result;
+        }
     }
 }
