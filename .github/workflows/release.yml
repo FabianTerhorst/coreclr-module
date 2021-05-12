@@ -37,6 +37,7 @@ jobs:
           name: nethost-windows
           path: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.5\runtimes\win-x64\native\libnethost.tar
   build-api:
+    needs: [fetch-nethost-linux, fetch-nethost-windows]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
