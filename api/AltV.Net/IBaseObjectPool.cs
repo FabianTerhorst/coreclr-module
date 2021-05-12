@@ -19,5 +19,6 @@ namespace AltV.Net
         KeyValuePair<IntPtr, TBaseObject>[] GetObjectsArray();
         void ForEach(IBaseObjectCallback<TBaseObject> baseObjectCallback);
         Task ForEach(IAsyncBaseObjectCallback<TBaseObject> asyncBaseObjectCallback);
+        void Dispose();
     }
 }

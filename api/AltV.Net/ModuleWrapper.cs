@@ -108,6 +108,13 @@ namespace AltV.Net
                 module.OnStop();
             }
 
+            _module.BlipPool.Dispose();
+            _module.CheckpointPool.Dispose();
+            _module.PlayerPool.Dispose();
+            _module.VehiclePool.Dispose();
+            _module.ColShapePool.Dispose();
+            _module.VoiceChannelPool.Dispose();
+
             Alt.Server.Resource.CSharpResourceImpl.Dispose();
 
             AppDomain.CurrentDomain.UnhandledException -= OnUnhandledException;
