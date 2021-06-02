@@ -457,7 +457,6 @@ void thread_proc(struct thread_user_data* userData) {
         std::stringstream stream;
         stream << "Run App failed: " << std::hex << std::showbase << rc;
         alt::ICore::Instance().LogError(stream.str());
-
     }
     delete userData;
 }
