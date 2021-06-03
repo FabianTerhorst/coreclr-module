@@ -680,6 +680,21 @@ namespace AltV.Net.Elements.Entities
             return AltNative.Player.Player_IsEntityInStreamingRange(NativePointer, entity.NativePointer);
         }
 
+        public void AttachToEntity(IEntity entity, ushort otherBone, ushort ownBone, Position position, Rotation rotation, bool collision, bool noFixedRotation)
+        {
+            if(entity == null) return;
+            
+            if(entity.Type == BaseObjectType.Player) 
+                AltNative.Player.Player_AttachToEntity_Player(NativePointer, entity.NativePointer, otherBone, ownBone, position, rotation, collision, noFixedRotation);
+            if(entity.Type == BaseObjectType.Vehicle)
+                AltNative.Player.Player_AttachToEntity_Vehicle(NativePointer, entity.NativePointer, otherBone, ownBone, position, rotation, collision, noFixedRotation);
+        }
+
+        public void Detach()
+        {
+            AltNative.Player.Player_Detach(NativePointer);
+        }
+
         public bool TryCreateRef(out PlayerRef playerRef)
         {
             playerRef = new PlayerRef(this);

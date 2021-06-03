@@ -206,5 +206,15 @@ namespace AltV.Net.Elements.Entities
         /// <param name="key"></param>
         /// <returns></returns>
         void DeleteStreamSyncedMetaData(string key);
+
+        /// <summary>
+        /// Attaches the entity to another entity.
+        /// </summary>
+        void AttachToEntity(IEntity entity, ushort otherBone, ushort ownBone, Position position, Rotation rotation, bool collision, bool noFixedRotation);
+
+        /// <summary>
+        /// Detaches the entity from its attached entity.
+        /// </summary>
+        void Detach();
     }
 }

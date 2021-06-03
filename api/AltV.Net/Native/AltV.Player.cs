@@ -278,6 +278,15 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool Player_IsEntityInStreamingRange(IntPtr player, IntPtr entity);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Player_AttachToEntity_Player(IntPtr player, IntPtr entity, ushort otherBone, ushort ownBone, Position pos, Rotation rot, bool collision, bool noFixedRot);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Player_AttachToEntity_Vehicle(IntPtr player, IntPtr entity, ushort otherBone, ushort ownBone, Position pos, Rotation rot, bool collision, bool noFixedRot);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Player_Detach(IntPtr player);
         }
     }
 }
