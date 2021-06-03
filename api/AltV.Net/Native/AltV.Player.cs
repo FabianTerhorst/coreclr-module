@@ -277,7 +277,10 @@ namespace AltV.Net.Native
             internal static extern void Player_SetDlcProps(IntPtr player, byte component, ushort drawable, byte texture, uint dlc);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Player_IsEntityInStreamingRange(IntPtr player, IntPtr entity);
+            internal static extern bool Player_IsEntityInStreamingRange_Player(IntPtr player, IntPtr entity);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Player_IsEntityInStreamingRange_Vehicle(IntPtr player, IntPtr entity);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern bool Player_AttachToEntity_Player(IntPtr player, IntPtr entity, ushort otherBone, ushort ownBone, Position pos, Rotation rot, bool collision, bool noFixedRot);
