@@ -489,6 +489,12 @@ namespace AltV.Net.Native
             
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_Repair(IntPtr vehicle);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_AttachToEntity(IntPtr vehicle, IntPtr entity, ushort otherBone, ushort ownBone, Position pos, Rotation rot, bool collision, bool noFixedRot);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Vehicle_Detach(IntPtr vehicle);
         }
     }
 }

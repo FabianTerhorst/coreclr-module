@@ -464,3 +464,15 @@ void Player_SetDlcProps(alt::IPlayer* player, uint8_t component, uint16_t drawab
 bool Player_IsEntityInStreamingRange(alt::IPlayer* player, alt::IEntity* entity) {
     return player->IsEntityInStreamingRange(entity);
 }
+
+void Player_AttachToEntity(alt::IPlayer* player, alt::IEntity* entity, uint16_t otherBone, uint16_t ownBone, position_t pos, rotation_t rot, bool collision, bool noFixedRot)
+{
+    alt::Position position{pos.x, pos.y, pos.z};
+    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
+    player->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
+}
+
+void Player_Detach(alt::IPlayer* player)
+{
+    player->Detach();
+}

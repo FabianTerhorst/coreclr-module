@@ -696,3 +696,15 @@ alt::IVehicle* Vehicle_GetAttachedTo(alt::IVehicle* vehicle) {
 void Vehicle_Repair(alt::IVehicle* vehicle) {
     vehicle->SetFixed();
 }
+
+void Vehicle_AttachToEntity(alt::IVehicle* vehicle, alt::IEntity* entity, uint16_t otherBone, uint16_t ownBone, position_t pos, rotation_t rot, bool collision, bool noFixedRot)
+{
+    alt::Position position{pos.x, pos.y, pos.z};
+    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
+    vehicle->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
+}
+
+void Vehicle_Detach(alt::IVehicle* vehicle)
+{
+    vehicle->Detach();
+}
