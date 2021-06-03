@@ -683,7 +683,11 @@ namespace AltV.Net.Elements.Entities
         public void AttachToEntity(IEntity entity, ushort otherBone, ushort ownBone, Position position, Rotation rotation, bool collision, bool noFixedRotation)
         {
             if(entity == null) return;
-            AltNative.Player.Player_AttachToEntity(NativePointer, entity.NativePointer, otherBone, ownBone, position, rotation, collision, noFixedRotation);
+            
+            if(entity.Type == BaseObjectType.Player) 
+                AltNative.Player.Player_AttachToEntity_Player(NativePointer, entity.NativePointer, otherBone, ownBone, position, rotation, collision, noFixedRotation);
+            if(entity.Type == BaseObjectType.Vehicle)
+                AltNative.Player.Player_AttachToEntity_Vehicle(NativePointer, entity.NativePointer, otherBone, ownBone, position, rotation, collision, noFixedRotation);
         }
 
         public void Detach()

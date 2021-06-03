@@ -465,7 +465,14 @@ bool Player_IsEntityInStreamingRange(alt::IPlayer* player, alt::IEntity* entity)
     return player->IsEntityInStreamingRange(entity);
 }
 
-void Player_AttachToEntity(alt::IPlayer* player, alt::IEntity* entity, uint16_t otherBone, uint16_t ownBone, position_t pos, rotation_t rot, bool collision, bool noFixedRot)
+void Player_AttachToEntity_Player(alt::IPlayer* player, alt::IPlayer* entity, uint16_t otherBone, uint16_t ownBone, position_t pos, rotation_t rot, bool collision, bool noFixedRot)
+{
+    alt::Position position{pos.x, pos.y, pos.z};
+    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
+    player->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
+}
+
+void Player_AttachToEntity_Vehicle(alt::IPlayer* player, alt::IVehicle* entity, uint16_t otherBone, uint16_t ownBone, position_t pos, rotation_t rot, bool collision, bool noFixedRot)
 {
     alt::Position position{pos.x, pos.y, pos.z};
     alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};

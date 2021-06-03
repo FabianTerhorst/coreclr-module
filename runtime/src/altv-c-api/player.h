@@ -169,7 +169,8 @@ EXPORT void Player_SetDlcProps(alt::IPlayer* player, uint8_t component, uint16_t
 
 EXPORT bool Player_IsEntityInStreamingRange(alt::IPlayer* player, alt::IEntity* entity);
 
-EXPORT void Player_AttachToEntity(alt::IPlayer* player, alt::IEntity* entity, uint16_t otherBone, uint16_t ownBone, position_t pos, rotation_t rot, bool collision, bool noFixedRot);
+EXPORT void Player_AttachToEntity_Player(alt::IPlayer* player, alt::IPlayer* entity, uint16_t otherBone, uint16_t ownBone, position_t pos, rotation_t rot, bool collision, bool noFixedRot);
+EXPORT void Player_AttachToEntity_Vehicle(alt::IPlayer* player, alt::IVehicle* entity, uint16_t otherBone, uint16_t ownBone, position_t pos, rotation_t rot, bool collision, bool noFixedRot);
 EXPORT void Player_Detach(alt::IPlayer* player);
 
 #ifdef __cplusplus
