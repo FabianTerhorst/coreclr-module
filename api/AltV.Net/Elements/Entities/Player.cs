@@ -677,7 +677,13 @@ namespace AltV.Net.Elements.Entities
         public bool IsEntityInStreamingRange(IEntity entity)
         {
             if(entity == null) return false;
-            return AltNative.Player.Player_IsEntityInStreamingRange(NativePointer, entity.NativePointer);
+
+            if(entity.Type == BaseObjectType.Player) 
+                return AltNative.Player.Player_IsEntityInStreamingRange_Player(NativePointer, entity.NativePointer);
+            if(entity.Type == BaseObjectType.Vehicle)
+                return AltNative.Player.Player_IsEntityInStreamingRange_Vehicle(NativePointer, entity.NativePointer);
+
+            return false;
         }
 
         public void AttachToEntity(IEntity entity, ushort otherBone, ushort ownBone, Position position, Rotation rotation, bool collision, bool noFixedRotation)
