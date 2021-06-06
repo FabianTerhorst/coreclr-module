@@ -90,6 +90,8 @@ namespace AltV.Net.EntitySync
         public static void Stop()
         {
             EntitySyncServer.Stop();
+            EntitySyncServer = null;
+            IdProvider = null;
         }
     }
 }
