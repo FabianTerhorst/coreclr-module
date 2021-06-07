@@ -187,6 +187,12 @@ namespace AltV.Net.Elements.Entities
             SetNetworkOwner(null, false);
         }
 
+        public abstract void AttachToEntity(IEntity entity, ushort otherBone, ushort ownBone, Position position,
+            Rotation rotation,
+            bool collision, bool noFixedRotation);
+
+        public abstract void Detach();
+
         protected Entity(IntPtr nativePointer, BaseObjectType type, ushort id) : base(nativePointer, type)
         {
             Id = id;
