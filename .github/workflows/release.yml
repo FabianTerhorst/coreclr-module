@@ -178,14 +178,14 @@ jobs:
           echo "$(echo "`cat ./api/AltV.Net/AltV.Net.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net/AltV.Net.csproj
           echo "$(echo "`cat ./api/AltV.Net.Async/AltV.Net.Async.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.Async/AltV.Net.Async.csproj
           echo "$(echo "`cat ./api/AltV.Net.Async/AltV.Net.Async.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.Async/AltV.Net.Async.csproj
-      - uses: brandedoutcast/publish-nuget@v2.5.5
+      - uses: waldosax/publish-nuget@95f8e50d8df92e9bafae7188c5345a3534774d94
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net/AltV.Net.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-      - uses: brandedoutcast/publish-nuget@v2.5.5
+      - uses: waldosax/publish-nuget@95f8e50d8df92e9bafae7188c5345a3534774d94
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Async/AltV.Net.Async.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
