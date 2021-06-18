@@ -18,7 +18,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 var entityPointer = AltNative.Vehicle.Vehicle_GetNetworkOwner(NativePointer);
                 if (entityPointer == IntPtr.Zero) return null;
-                return Alt.Module.PlayerPool.GetOrCreate(entityPointer, out var player) ? player : null;
+                return Alt.Module.PlayerPool.Get(entityPointer, out var player) ? player : null;
             }
         }
 
@@ -193,7 +193,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 var entityPointer = AltNative.Vehicle.Vehicle_GetDriver(NativePointer);
                 if (entityPointer == IntPtr.Zero) return null;
-                return Alt.Module.PlayerPool.GetOrCreate(entityPointer, out var player) ? player : null;
+                return Alt.Module.PlayerPool.Get(entityPointer, out var player) ? player : null;
             }
         }
 
@@ -1050,7 +1050,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 var entityPointer = AltNative.Vehicle.Vehicle_GetAttached(NativePointer);
                 if (entityPointer == IntPtr.Zero) return null;
-                return Alt.Module.VehiclePool.GetOrCreate(entityPointer, out var vehicle) ? vehicle : null;
+                return Alt.Module.VehiclePool.Get(entityPointer, out var vehicle) ? vehicle : null;
             }
         }
 
@@ -1061,7 +1061,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 var entityPointer = AltNative.Vehicle.Vehicle_GetAttachedTo(NativePointer);
                 if (entityPointer == IntPtr.Zero) return null;
-                return Alt.Module.VehiclePool.GetOrCreate(entityPointer, out var vehicle) ? vehicle : null;
+                return Alt.Module.VehiclePool.Get(entityPointer, out var vehicle) ? vehicle : null;
             }
         }
 

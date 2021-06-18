@@ -93,7 +93,7 @@ namespace AltV.Net.Elements.Entities
                 var entityType = BaseObjectType.Undefined;
                 var entityPointer = AltNative.Blip.Blip_AttachedTo(NativePointer, ref entityType);
                 if (entityPointer == IntPtr.Zero) return null;
-                return Alt.Module.BaseEntityPool.GetOrCreate(entityPointer, entityType, out var entity) ? entity : null;
+                return Alt.Module.BaseEntityPool.Get(entityPointer, entityType, out var entity) ? entity : null;
             }
         }
 
