@@ -10,34 +10,41 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1.7.2
         with:
-          dotnet-version: 5.0.203
+          dotnet-version: 5.0.202
+      - name: check nethost
+        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64
+        run: |
+          ls -l
       - name: Copy nethost
-        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.6/runtimes/linux-x64/native/
+        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.7/runtimes/linux-x64/native/
         run: |
           tar -cvf ./libnethost.tar .
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: nethost-linux
-          path: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.6/runtimes/linux-x64/native/libnethost.tar
+          path: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.7/runtimes/linux-x64/native/libnethost.tar
   fetch-nethost-windows:
     runs-on: windows-2016
     steps:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1.7.2
         with:
-          dotnet-version: 5.0.203
+          dotnet-version: 5.0.202
+      - name: Check nethost
+        working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64
+        run: |
+          dir
       - name: Copy nethost
-        working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.6\runtimes\win-x64\native\
+        working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.7\runtimes\win-x64\native\
         run: |
           tar -cvf ./libnethost.tar .
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: nethost-windows
-          path: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.6\runtimes\win-x64\native\libnethost.tar
+          path: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.7\runtimes\win-x64\native\libnethost.tar
   build-api:
-    needs: [fetch-nethost-linux, fetch-nethost-windows]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -46,7 +53,7 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1.7.2
         with:
-          dotnet-version: 5.0.203
+          dotnet-version: 5.0.101
       - id: build_info
         run: |
           branch=$(git ls-remote --heads origin | grep $GITHUB_SHA | sed "s/.*\///")
@@ -172,20 +179,20 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1.7.2
         with:
-          dotnet-version: 5.0.203
+          dotnet-version: 5.0.101
       - run: |
           echo "$(echo "`cat ./api/AltV.Net/AltV.Net.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net/AltV.Net.csproj
           echo "$(echo "`cat ./api/AltV.Net/AltV.Net.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net/AltV.Net.csproj
           echo "$(echo "`cat ./api/AltV.Net.Async/AltV.Net.Async.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.Async/AltV.Net.Async.csproj
           echo "$(echo "`cat ./api/AltV.Net.Async/AltV.Net.Async.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.Async/AltV.Net.Async.csproj
-      - uses: waldosax/publish-nuget@95f8e50d8df92e9bafae7188c5345a3534774d94 # todo: Change it back to brandedoutcast/publish-nuget after merge
+      - uses: rohith/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net/AltV.Net.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-      - uses: waldosax/publish-nuget@95f8e50d8df92e9bafae7188c5345a3534774d94 # todo: Change it back to brandedoutcast/publish-nuget after merge
+      - uses: rohith/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Async/AltV.Net.Async.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>

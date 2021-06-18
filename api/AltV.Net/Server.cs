@@ -500,6 +500,7 @@ namespace AltV.Net
 
         public IEnumerable<IPlayer> GetPlayers()
         {
+            CheckIfCallIsValid();
             var playerCount = AltNative.Server.Server_GetPlayerCount(NativePointer);
             var pointers = new IntPtr[playerCount];
             AltNative.Server.Server_GetPlayers(NativePointer, pointers, playerCount);
@@ -514,6 +515,7 @@ namespace AltV.Net
 
         public IEnumerable<IVehicle> GetVehicles()
         {
+            CheckIfCallIsValid();
             var vehicleCount = AltNative.Server.Server_GetVehicleCount(NativePointer);
             var pointers = new IntPtr[vehicleCount];
             AltNative.Server.Server_GetVehicles(NativePointer, pointers, vehicleCount);
@@ -528,6 +530,7 @@ namespace AltV.Net
 
         public IEntity GetEntityById(ushort id)
         {
+            CheckIfCallIsValid();
             var type = (byte) BaseObjectType.Undefined;
             var entityPointer = AltNative.Server.Server_GetEntityById(NativePointer, id, ref type);
             if (entityPointer == IntPtr.Zero) return null;
@@ -544,6 +547,7 @@ namespace AltV.Net
 
         public void StartResource(string name)
         {
+            CheckIfCallIsValid();
             var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
             AltNative.Server.Server_StartResource(NativePointer, namePtr);
             Marshal.FreeHGlobal(namePtr);
@@ -551,6 +555,7 @@ namespace AltV.Net
 
         public void StopResource(string name)
         {
+            CheckIfCallIsValid();
             var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
             AltNative.Server.Server_StopResource(NativePointer, namePtr);
             Marshal.FreeHGlobal(namePtr);
@@ -558,6 +563,7 @@ namespace AltV.Net
 
         public void RestartResource(string name)
         {
+            CheckIfCallIsValid();
             var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
             AltNative.Server.Server_RestartResource(NativePointer, namePtr);
             Marshal.FreeHGlobal(namePtr);
@@ -565,6 +571,7 @@ namespace AltV.Net
 
         public void GetMetaData(string key, out MValueConst value)
         {
+            CheckIfCallIsValid();
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
             value = new MValueConst(AltNative.Server.Server_GetMetaData(NativePointer, stringPtr));
             Marshal.FreeHGlobal(stringPtr);
@@ -572,6 +579,7 @@ namespace AltV.Net
 
         public void SetMetaData(string key, object value)
         {
+            CheckIfCallIsValid();
             CreateMValue(out var mValue, value);
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
             AltNative.Server.Server_SetMetaData(NativePointer, stringPtr, mValue.nativePointer);
@@ -581,6 +589,7 @@ namespace AltV.Net
 
         public bool HasMetaData(string key)
         {
+            CheckIfCallIsValid();
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
             var result = AltNative.Server.Server_HasMetaData(NativePointer, stringPtr);
             Marshal.FreeHGlobal(stringPtr);
@@ -589,6 +598,7 @@ namespace AltV.Net
 
         public void DeleteMetaData(string key)
         {
+            CheckIfCallIsValid();
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
             AltNative.Server.Server_DeleteMetaData(NativePointer, stringPtr);
             Marshal.FreeHGlobal(stringPtr);
@@ -596,6 +606,7 @@ namespace AltV.Net
 
         public void GetSyncedMetaData(string key, out MValueConst value)
         {
+            CheckIfCallIsValid();
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
             value = new MValueConst(AltNative.Server.Server_GetSyncedMetaData(NativePointer, stringPtr));
             Marshal.FreeHGlobal(stringPtr);
@@ -603,6 +614,7 @@ namespace AltV.Net
 
         public void SetSyncedMetaData(string key, object value)
         {
+            CheckIfCallIsValid();
             CreateMValue(out var mValue, value);
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
             AltNative.Server.Server_SetSyncedMetaData(NativePointer, stringPtr, mValue.nativePointer);
@@ -612,6 +624,7 @@ namespace AltV.Net
 
         public bool HasSyncedMetaData(string key)
         {
+            CheckIfCallIsValid();
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
             var result = AltNative.Server.Server_HasSyncedMetaData(NativePointer, stringPtr);
             Marshal.FreeHGlobal(stringPtr);
@@ -620,6 +633,7 @@ namespace AltV.Net
 
         public void DeleteSyncedMetaData(string key)
         {
+            CheckIfCallIsValid();
             var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
             AltNative.Server.Server_DeleteSyncedMetaData(NativePointer, stringPtr);
             Marshal.FreeHGlobal(stringPtr);
