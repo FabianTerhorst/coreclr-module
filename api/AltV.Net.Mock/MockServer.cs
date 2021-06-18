@@ -552,6 +552,21 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public void SetPassword(string password)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool IsDebug { get; }
+
+        public bool FileExists(string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string FileRead(string path)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

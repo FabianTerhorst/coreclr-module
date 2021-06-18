@@ -1138,6 +1138,21 @@ namespace AltV.Net.Elements.Entities
             AltNative.Vehicle.Vehicle_Repair(NativePointer);
         }
 
+        public override void AttachToEntity(IEntity entity, ushort otherBone, ushort ownBone, Position position, Rotation rotation, bool collision, bool noFixedRotation)
+        {
+            if(entity == null) return;
+
+            if(entity.Type == BaseObjectType.Player) 
+                AltNative.Vehicle.Vehicle_AttachToEntity_Player(NativePointer, entity.NativePointer, otherBone, ownBone, position, rotation, collision, noFixedRotation);
+            if(entity.Type == BaseObjectType.Vehicle)
+                AltNative.Vehicle.Vehicle_AttachToEntity_Vehicle(NativePointer, entity.NativePointer, otherBone, ownBone, position, rotation, collision, noFixedRotation);
+        }
+
+        public override void Detach()
+        {
+            AltNative.Vehicle.Vehicle_Detach(NativePointer);
+        }
+
         public void Remove()
         {
             Alt.RemoveVehicle(this);

@@ -295,9 +295,9 @@ namespace AltV.Net
             return assemblyLoadContext;
         }
 
-        public void OnClient(string eventName, Function function)
+        public Function OnClient(string eventName, Function function)
         {
-            if (function == null) return;
+            if (function == null) return null;
             if (eventBusClient.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Add(function);
@@ -307,6 +307,8 @@ namespace AltV.Net
                 eventHandlers = new HashSet<Function> {function};
                 eventBusClient[eventName] = eventHandlers;
             }
+
+            return function;
         }
 
         public void OffClient(string eventName, Function function)
@@ -318,9 +320,9 @@ namespace AltV.Net
             }
         }
 
-        public void OnServer(string eventName, Function function)
+        public Function OnServer(string eventName, Function function)
         {
-            if (function == null) return;
+            if (function == null) return null;
             if (eventBusServer.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Add(function);
@@ -330,6 +332,8 @@ namespace AltV.Net
                 eventHandlers = new HashSet<Function> {function};
                 eventBusServer[eventName] = eventHandlers;
             }
+
+            return function;
         }
 
         public void OffServer(string eventName, Function function)

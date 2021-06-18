@@ -24,7 +24,7 @@ namespace AltV.Net.EntitySync
             remove => EntitySyncServer.EntityRemoveCallbacks.Remove(value);
         }
 
-        public static void Init(ulong threadCount, int syncRate, Func<ulong, bool> netOwnerEvents,
+        public static void Init(ulong threadCount, Func<ulong, int> syncRate, Func<ulong, bool> netOwnerEvents,
             Func<ulong, IClientRepository, NetworkLayer> createNetworkLayer,
             Func<ulong, SpatialPartition> createSpatialPartition, IIdProvider<ulong> idProvider)
         {
@@ -33,7 +33,7 @@ namespace AltV.Net.EntitySync
                 idProvider);
         }
         
-        public static void Init(ulong threadCount, int syncRate, Func<ulong, bool> netOwnerEvents,
+        public static void Init(ulong threadCount, Func<ulong, int> syncRate, Func<ulong, bool> netOwnerEvents,
             Func<ulong, IClientRepository, NetworkLayer> createNetworkLayer,
             Func<IEntity, ulong, ulong> entityThreadId,
             Func<ulong, ulong, ulong, ulong> entityIdAndTypeThreadId,
@@ -90,6 +90,8 @@ namespace AltV.Net.EntitySync
         public static void Stop()
         {
             EntitySyncServer.Stop();
+            EntitySyncServer = null;
+            IdProvider = null;
         }
     }
 }

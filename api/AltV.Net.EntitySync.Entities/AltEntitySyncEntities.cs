@@ -7,7 +7,7 @@ namespace AltV.Net.EntitySync.Entities
     {
         public void OnScriptsStarted(IScript[] scripts)
         {
-            AltEntitySync.Init(5, 100, _ => false,
+            AltEntitySync.Init(5, (id) => 100, _ => false,
                 (repository, threadCount) => new ServerEventNetworkLayer(repository, threadCount),
                 (entity, threadCount) => entity.Type,
                 (entityId, entityType, threadCount) => entityType,

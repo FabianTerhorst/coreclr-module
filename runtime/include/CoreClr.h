@@ -28,6 +28,7 @@
 
 #include <coreclr/hostfxr.h>
 #include <coreclr/coreclr_delegates.h>
+#include <coreclr/nethost.h>
 
 // Host name
 #ifdef _WIN32

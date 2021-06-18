@@ -119,7 +119,7 @@ namespace AltV.Net.Example
                 Alt.Log("myData: " + myVehicle?.MyData);
                 Console.WriteLine("inside invoke2");
             });
-            
+
             Console.WriteLine("vehicleTestDone");
 
             Alt.OnPlayerConnect += OnPlayerConnect;

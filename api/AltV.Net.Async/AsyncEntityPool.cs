@@ -164,5 +164,17 @@ namespace AltV.Net.Async
         public virtual void OnRemove(TEntity entity)
         {
         }
+
+        public void Dispose()
+        {
+            foreach (var entity in entities.Values)
+            {
+                if (!(entity is IInternalBaseObject internalEntity)) continue;
+                internalEntity.ClearData();
+                entity.OnRemove();
+                OnRemove(entity);
+            }
+            entities.Clear();
+        }
     }
 }

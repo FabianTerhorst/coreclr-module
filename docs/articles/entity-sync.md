@@ -11,7 +11,7 @@ https://www.nuget.org/packages/AltV.Net.EntitySync.ServerEvent // A optional pac
 ## Configure the Entity Sync
 
 ```csharp
-AltEntitySync.Init(1, 100, false,
+AltEntitySync.Init(1, (threadId) => 100, (threadId) => false,
    (threadCount, repository) => new ServerEventNetworkLayer(threadCount, repository),
    (entity, threadCount) => (entity.Id % threadCount), 
    (entityId, entityType, threadCount) => (entityId % threadCount),
@@ -23,7 +23,7 @@ Now breakdown the parameters of the Init function:
 
 The first parameter is the thread count, this describes the number of thats that will run in parallel to calculate the streamed entities.
 
-The second parameter is the sync rate, it describes the interval in which each sync thread calculates the streamed entities.
+The second parameter is the sync rate, it describes the interval in which each sync thread calculates the streamed entities and can be configured per thread id.
 
 The third parameter is a bool with that you can enable net owner calculations and events.
 

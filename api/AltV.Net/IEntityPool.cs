@@ -37,5 +37,7 @@ namespace AltV.Net
         void OnAdd(TEntity entity);
 
         void OnRemove(TEntity entity);
+        
+        void Dispose();
     }
 }

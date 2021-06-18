@@ -5,8 +5,8 @@ namespace AltV.Net
 {
     public static partial class Alt
     {
-        private const string HourWithZero = "[";
-        private const string HourWithoutZero = "[0";
+        private const string HourWithZero = "[0";
+        private const string HourWithoutZero = "[";
 
         private const string NumberWithZero = ":0";
         private const string NumberWithoutZero = ":";
@@ -36,6 +36,26 @@ namespace AltV.Net
             stringBuilder.Append(message);
 
             Console.WriteLine(stringBuilder.ToString());
+        }
+
+        public static void LogInfo(string message)
+        {
+            Alt.Server.LogInfo(message);
+        }
+        
+        public static void LogDebug(string message)
+        {
+            Alt.Server.LogDebug(message);
+        }
+        
+        public static void LogWarning(string message)
+        {
+            Alt.Server.LogWarning(message);
+        }
+        
+        public static void LogError(string message)
+        {
+            Alt.Server.LogError(message);
         }
     }
 }

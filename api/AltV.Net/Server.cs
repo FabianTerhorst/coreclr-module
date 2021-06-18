@@ -211,6 +211,13 @@ namespace AltV.Net
             return hash;
         }
 
+        public void SetPassword(string password)
+        {
+            var passwordPtr = AltNative.StringUtils.StringToHGlobalUtf8(password);
+            AltNative.Server.Core_SetPassword(NativePointer, passwordPtr);
+            Marshal.FreeHGlobal(passwordPtr);
+        }
+
         public void TriggerServerEvent(string eventName, MValueConst[] args)
         {
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
@@ -927,6 +934,24 @@ namespace AltV.Net
         {
             if (Alt.Module.IsMainThread()) return;
             throw new IllegalThreadException(this, callerName);
+        }
+
+        public bool FileExists(string path)
+        {
+            var valuePtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
+            var result = AltNative.Server.Server_FileExists(NativePointer, valuePtr);
+            Marshal.FreeHGlobal(valuePtr);
+            return result;
+        }
+
+        public string FileRead(string path)
+        {
+            var valuePtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
+            var ptr = IntPtr.Zero;
+            AltNative.Server.Server_FileRead(NativePointer, valuePtr, ref ptr);
+            var result = Marshal.PtrToStringUTF8(ptr);
+            Marshal.FreeHGlobal(valuePtr);
+            return result;
         }
     }
 }

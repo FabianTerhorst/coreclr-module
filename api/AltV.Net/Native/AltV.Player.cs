@@ -251,6 +251,45 @@ namespace AltV.Net.Native
             
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Player_ClearBloodDamage(IntPtr player);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_GetClothes(IntPtr player, byte component, ref Cloth cloth);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_SetClothes(IntPtr player, byte component, ushort drawable, byte texture, byte palette);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_GetDlcClothes(IntPtr player, byte component, ref DlcCloth cloth);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_SetDlcClothes(IntPtr player, byte component, ushort drawable, byte texture, byte palette, uint dlc);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_GetProps(IntPtr player, byte component, ref Prop prop);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_SetProps(IntPtr player, byte component, ushort drawable, byte texture);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_GetDlcProps(IntPtr player, byte component, ref DlcProp prop);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Player_SetDlcProps(IntPtr player, byte component, ushort drawable, byte texture, uint dlc);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Player_IsEntityInStreamingRange_Player(IntPtr player, IntPtr entity);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Player_IsEntityInStreamingRange_Vehicle(IntPtr player, IntPtr entity);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Player_AttachToEntity_Player(IntPtr player, IntPtr entity, ushort otherBone, ushort ownBone, Position pos, Rotation rot, bool collision, bool noFixedRot);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Player_AttachToEntity_Vehicle(IntPtr player, IntPtr entity, ushort otherBone, ushort ownBone, Position pos, Rotation rot, bool collision, bool noFixedRot);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern bool Player_Detach(IntPtr player);
         }
     }
 }

@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
-        <PackageVersion>1.8.0-dev-preview</PackageVersion>
+        <PackageVersion>1.11.0</PackageVersion>
         <Authors>AltMp</Authors>
         <Description>AltV .NET Core Entity Sync</Description>
         <Copyright>AltMp</Copyright>
@@ -20,9 +20,14 @@
     </PropertyGroup>
 
      <ItemGroup>
-        <None Include="license\license.txt" Pack="true" PackagePath="" />
-        <None Include="icon.png" Pack="true" PackagePath="\" />
-        <None Include="package\**" Pack="True" PackagePath="build\" />
+        <None Include="license\license.txt">
+            <Pack>true</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+        <None Include="icon.png">
+            <Pack>true</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
     </ItemGroup>
 
      <ItemGroup>

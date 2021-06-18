@@ -4,8 +4,22 @@ on:
   push:
     paths:
     - 'api/**.cs'
+    - '.github/workflows/dotnetcore.yml'
 
 jobs:
+  buildwindows:
+
+    runs-on: windows-2016
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Build with dotnet
+      working-directory: ./api
+      run: dotnet build --configuration Release
   build:
 
     runs-on: ubuntu-latest
@@ -15,7 +29,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.100
+        dotnet-version: 5.0.x
     - name: Build with dotnet
       working-directory: ./api
       run: dotnet build --configuration Release
