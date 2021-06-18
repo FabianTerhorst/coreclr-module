@@ -6,6 +6,8 @@ using AltV.Net.EntitySync.SpatialPartitions;
 
 namespace AltV.Net.EntitySync
 {
+    //TODO: only send position in update when position changed since last time in range of entity
+    
     //TODO: add aabb thread, add abstract entitythread class with constructor
     /// <summary>
     /// The entity thread checks in a endless loop if entities should be created or removed for all clients.

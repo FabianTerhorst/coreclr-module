@@ -51,5 +51,9 @@ namespace AltV.Net
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool,
             INativeResourcePool resourcePool);
+
+        IScript[] GetScripts();
+
+        IModule[] GetModules();
     }
 }

@@ -3,7 +3,8 @@ using System.Numerics;
 
 namespace AltV.Net.EntitySync.Entities
 {
-    //TODO: add entity events to entity sync that only trigger one time for each entity on stream in
+    //TODO: add entity events to entity sync that only trigger one time for each entity on stream in,
+    //TODO: maybe that can be done by data and then resetData and setData on method call with method and parameters, maybe doesnt even work
     public class BlipEntity : Entity
     {
         private int Sprite

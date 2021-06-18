@@ -18,7 +18,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 var entityPointer = AltNative.Player.Player_GetNetworkOwner(NativePointer);
                 if (entityPointer == IntPtr.Zero) return null;
-                return Alt.Module.PlayerPool.GetOrCreate(entityPointer, out var player) ? player : null;
+                return Alt.Module.PlayerPool.Get(entityPointer, out var player) ? player : null;
             }
         }
 
@@ -431,7 +431,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 var entityPointer = AltNative.Player.Player_GetVehicle(NativePointer);
                 if (entityPointer == IntPtr.Zero) return null;
-                return Alt.Module.VehiclePool.GetOrCreate(entityPointer, out var vehicle) ? vehicle : null;
+                return Alt.Module.VehiclePool.Get(entityPointer, out var vehicle) ? vehicle : null;
             }
         }
 
@@ -457,7 +457,7 @@ namespace AltV.Net.Elements.Entities
                 var type = BaseObjectType.Undefined;
                 var entityPointer = AltNative.Player.Player_GetEntityAimingAt(NativePointer, ref type);
                 if (entityPointer == IntPtr.Zero) return null;
-                return Alt.Module.BaseEntityPool.GetOrCreate(entityPointer, type, out var entity) ? entity : null;
+                return Alt.Module.BaseEntityPool.Get(entityPointer, type, out var entity) ? entity : null;
             }
         }
 

@@ -15,6 +15,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
         protected readonly int maxY;
 
+        //TODO: evaluate if float is needed because of calculations
         protected readonly int areaSize;
 
         protected readonly int xOffset;
