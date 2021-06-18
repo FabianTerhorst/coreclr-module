@@ -52,7 +52,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
     [Serializable]
     [System.Runtime.CompilerServices.TypeForwardedFrom("System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")]
     public class SortedLimitedList<TKey, TValue> :
-        IDictionary<TKey, TValue>, IDictionary, IReadOnlyDictionary<TKey, TValue> where TKey : notnull
+        IDictionary<TKey, TValue>, IDictionary, IReadOnlyDictionary<TKey, TValue>, IList<TValue> where TKey : notnull
     {
         private TKey[] keys; // Do not rename (binary serialization)
         private TValue[] values; // Do not rename (binary serialization)
@@ -1233,6 +1233,53 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             {
                 throw new NotSupportedException("SR.NotSupported_SortedListNestedWrite");
             }
+        }
+
+
+        // IList implementation
+        
+        IEnumerator<TValue> IEnumerable<TValue>.GetEnumerator()
+        {
+            // Only used for testing
+            return Values.GetEnumerator();
+        }
+
+        public void Add(TValue item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Contains(TValue item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CopyTo(TValue[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(TValue item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsReadOnly => throw new NotImplementedException();
+        
+        public int IndexOf(TValue item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Insert(int index, TValue item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TValue this[int index]
+        {
+            get => GetByIndex(index);
+            set => throw new NotImplementedException();
         }
     }
 }

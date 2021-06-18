@@ -1,10 +1,12 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Factories;
 using AltV.Net.ResourceLoaders;
 
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
@@ -25,29 +27,58 @@ namespace AltV.Net
         private static void OnStartResource(IntPtr serverPointer, IntPtr resourcePointer, string resourceName,
             string entryPoint)
         {
-            foreach (var module in _modules)
-            {
-                module.OnScriptsStarted(_scripts);
-            }
-
             _resource.OnStart();
         }
 
+        //TODO: optimize assembly looping with single assembly loop otherwise module startup time is to slow for large projects,
+        //TODO: also can we reduce iterations by some assembies, e.g. only assemblies interested for us
+        //TODO: make optional resource startup time improvements for specifying IScript and IModules manually in IResource so module doesnt has to search them
         public static void MainWithAssembly(IntPtr serverPointer, IntPtr resourcePointer,
             AssemblyLoadContext assemblyLoadContext)
         {
-            if (!AssemblyLoader.FindType(assemblyLoadContext.Assemblies, out _resource))
+            var defaultResource = !AssemblyLoader.FindType(assemblyLoadContext.Assemblies, out _resource);
+            if (defaultResource)
             {
-                return;
-            }
+                var altVNetAsyncAssembly = assemblyLoadContext.LoadFromAssemblyName(new AssemblyName("AltV.Net.Async"));
+                try
+                {
+                    foreach (var type in altVNetAsyncAssembly.GetTypes())
+                    {
+                        if (type.Name != "DefaultAsyncResource") continue;
+                        var constructor =
+                            type.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public,
+                                null,
+                                Type.EmptyTypes, null);
+                        _resource = (IResource) constructor?.Invoke(null);
+                        break;
+                    }
+                }
+                catch
+                {
+                    // ignored
+                }
 
-            var playerFactory = _resource.GetPlayerFactory();
-            var vehicleFactory = _resource.GetVehicleFactory();
-            var blipFactory = _resource.GetBlipFactory();
-            var checkpointFactory = _resource.GetCheckpointFactory();
-            var voiceChannelFactory = _resource.GetVoiceChannelFactory();
-            var colShapeFactory = _resource.GetColShapeFactory();
-            var nativeResourceFactory = _resource.GetNativeResourceFactory();
+                _resource ??= new DefaultResource();
+            }
+            
+            //var entityFactories = AssemblyLoader.FindAllTypesWithAttribute<IEntityFactory<IEntity>, EntityFactoryAttribute>(assemblyLoadContext.Assemblies);
+            //var baseObjectFactories = AssemblyLoader.FindAllTypesWithAttribute<IBaseObjectFactory<IBaseObject>, EntityFactoryAttribute>(assemblyLoadContext.Assemblies);
+            
+            //TODO: when resource has entity factories overwritten dont loop assemblies because of performance
+            
+            //TODO: when not default resource and entity factory was found and none default resource has entity factory overwritten by not returning null throw exception
+
+            //TODO: check
+            
+            //TODO: do the same with the pools
+
+            var playerFactory = _resource.GetPlayerFactory() ?? new PlayerFactory();
+            var vehicleFactory = _resource.GetVehicleFactory() ?? new VehicleFactory();
+            var blipFactory = _resource.GetBlipFactory() ?? new BlipFactory();
+            var checkpointFactory = _resource.GetCheckpointFactory() ?? new CheckpointFactory();
+            var voiceChannelFactory = _resource.GetVoiceChannelFactory() ?? new VoiceChannelFactory();
+            var colShapeFactory = _resource.GetColShapeFactory() ?? new ColShapeFactory();
+            var nativeResourceFactory = _resource.GetNativeResourceFactory() ?? new NativeResourceFactory();
             var playerPool = _resource.GetPlayerPool(playerFactory);
             var vehiclePool = _resource.GetVehiclePool(vehicleFactory);
             var blipPool = _resource.GetBlipPool(blipFactory);
@@ -86,9 +117,14 @@ namespace AltV.Net
                         "IScript must not be a IResource for type:" + script.GetType());
                 }
             }
+
             _module.OnScriptsLoaded(_scripts);
             _modules = AssemblyLoader.FindAllTypes<IModule>(assemblyLoadContext.Assemblies);
             _module.OnModulesLoaded(_modules);
+            foreach (var module in _modules)
+            {
+                module.OnScriptsStarted(_scripts);
+            }
 
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
         }
