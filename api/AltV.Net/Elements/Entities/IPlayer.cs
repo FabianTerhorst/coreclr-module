@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Refs;
 using AltV.Net.Enums;
@@ -388,5 +389,23 @@ namespace AltV.Net.Elements.Entities
         /// <param name="weaponModel">The weapon to remove</param>
         public static void RemoveWeapon(this IPlayer player, WeaponModel weaponModel) =>
             player.RemoveWeapon((uint) weaponModel);
+
+        /// <summary>
+        /// Returns the forward vector of the player.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        public static Vector3 GetForwardVector(this IPlayer player)
+        {
+            var z = player.Rotation.Yaw * (Math.PI / 180.0);
+            var x = player.Rotation.Pitch * (Math.PI / 180.0);
+            var num = Math.Abs(Math.Cos(x));
+
+            return new Vector3(
+                (float) (-Math.Sin(z) * num),
+                (float) (Math.Cos(z) * num),
+                (float) Math.Sin(x)
+            );
+        }
     }
 }
