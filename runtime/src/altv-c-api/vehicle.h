@@ -171,6 +171,8 @@ EXPORT void Vehicle_SetWheelOnFire(alt::IVehicle* vehicle, uint8_t wheelId, bool
 EXPORT float Vehicle_GetWheelHealth(alt::IVehicle* vehicle, uint8_t wheelId);
 EXPORT void Vehicle_SetWheelHealth(alt::IVehicle* vehicle, uint8_t wheelId, float health);
 
+EXPORT void Vehicle_SetWheelFixed(alt::IVehicle* vehicle, uint8_t wheelId);
+
 EXPORT uint8_t Vehicle_GetRepairsCount(alt::IVehicle* vehicle);
 
 EXPORT uint32_t Vehicle_GetBodyHealth(alt::IVehicle* vehicle);

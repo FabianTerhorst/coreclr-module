@@ -398,7 +398,11 @@ namespace AltV.Net.Elements.Entities
         /// <param name="wheelId">Wheel Id</param>
         /// <param name="health">Health</param>
         void SetWheelHealth(byte wheelId, float health);
-
+        /// <summary>
+        /// Fix the wheel
+        /// </summary>
+        /// <param name="wheelId">Wheel Id</param>
+        void SetWheelFixed(byte wheelId);
         /// <summary>
         /// The amount of repairs
         /// </summary>
