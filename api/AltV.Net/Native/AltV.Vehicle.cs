@@ -380,6 +380,8 @@ namespace AltV.Net.Native
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Vehicle_SetWheelHealth(IntPtr vehicle, byte wheelId, float health);
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Vehicle_SetWheelFixed(IntPtr vehicle, byte wheelId);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern byte Vehicle_GetRepairsCount(IntPtr vehicle);

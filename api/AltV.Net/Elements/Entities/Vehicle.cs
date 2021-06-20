@@ -839,6 +839,12 @@ namespace AltV.Net.Elements.Entities
             AltNative.Vehicle.Vehicle_SetWheelHealth(NativePointer, wheelId, health);
         }
 
+        public void SetWheelFixed(byte wheelId)
+        {
+            CheckIfEntityExists();
+            AltNative.Vehicle.Vehicle_SetWheelFixed(NativePointer, wheelId);
+        }
+
         public byte RepairsCount
         {
             get
