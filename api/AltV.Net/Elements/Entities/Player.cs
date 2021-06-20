@@ -673,7 +673,12 @@ namespace AltV.Net.Elements.Entities
         {
             AltNative.Player.Player_SetDlcProps(NativePointer, component, drawable, texture, dlc);
         }
-        
+
+        public void ClearProps(byte component)
+        {
+            AltNative.Player.Player_ClearProps(NativePointer, component);
+        }
+
         public bool IsEntityInStreamingRange(IEntity entity)
         {
             if(entity == null) return false;
