@@ -676,6 +676,7 @@ namespace AltV.Net.Elements.Entities
 
         public void ClearProps(byte component)
         {
+            CheckIfEntityExists();
             AltNative.Player.Player_ClearProps(NativePointer, component);
         }
 
