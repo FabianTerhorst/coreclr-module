@@ -26,3 +26,4 @@ jobs:
           token: ${{ secrets.PAT_TOKEN }}
           repository: altmp/altv-docs
           event-type: Update C# documentation
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
