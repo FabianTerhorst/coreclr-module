@@ -16,7 +16,7 @@ function PostCleanup() {
 }
 
 function GetAssemblyVersion([string] $file) {
-    if(-not (Test-Path -Path $file)) { throw "Cannot find path $file because it does not exist." }
+    if(-not (Test-Path -Path $file)) { throw "Cannot find path $file, because it does not exist." }
     $ver=(Get-Item -Path $file | Select-Object -ExpandProperty VersionInfo).FileVersion.Split('.')
     if($ver.Length -lt 4) {
         $ver -Join '.'
@@ -28,13 +28,12 @@ function GetAssemblyVersion([string] $file) {
 function FetchAndDownloadRelease([string] $repo, [string] $file, [string] $tag=$null) {
     $global:ProgressPreference='SilentlyContinue'
     if(-not $tag) {
-        $tag=(Invoke-WebRequest -UseBasicParsing "https://api.github.com/repos/$repo/releases" | ConvertFrom-Json)[0].tag_name
+        $tag=((Invoke-WebRequest -UseBasicParsing "https://api.github.com/repos/$repo/releases" | ConvertFrom-Json) | Where-Object { -not $_.prerelease } | Select-Object -First 1 -ExpandProperty "tag_name")
     }
     Invoke-WebRequest -UseBasicParsing "https://github.com/$repo/releases/download/$tag/$file" -OutFile $file
     $global:ProgressPreference='Continue'
     return ([int]$? - 1)
 }
-
 
 function ExtractArchive([string] $path, [string] $dest) {
     if(-not (Test-Path -Path $path)) { throw "Cannot find path $path because it does not exist." }
@@ -82,7 +81,7 @@ try
     
     LogWrap "Downloading DocFx package" {
         if(Test-Path "./docfx/docfx.exe") { return -0x1 }
-        FetchAndDownloadRelease "dotnet/docfx" "docfx.zip" 2>$null
+        FetchAndDownloadRelease "dotnet/docfx" "docfx.zip" "v2.56.7" 2>$null
     }
     LogWrap "Extracting DocFx package" {
         if(Test-Path "./docfx/docfx.exe") { return -0x1 }
