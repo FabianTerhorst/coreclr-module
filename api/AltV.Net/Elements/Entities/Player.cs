@@ -606,59 +606,70 @@ namespace AltV.Net.Elements.Entities
 
         public void ClearBloodDamage()
         {
+            CheckIfEntityExists();
             AltNative.Player.Player_ClearBloodDamage(NativePointer);
         }
 
         public Cloth GetClothes(byte component)
         {
+            CheckIfEntityExists();
             var cloth = Cloth.Zero;
             AltNative.Player.Player_GetClothes(NativePointer, component, ref cloth);
             return cloth;
         }
         public void GetClothes(byte component, ref Cloth cloth)
         {
+            CheckIfEntityExists();
             AltNative.Player.Player_GetClothes(NativePointer, component, ref cloth);
         }
 
         public void SetClothes(byte component, ushort drawable, byte texture, byte palette)
         {
+            CheckIfEntityExists();
             AltNative.Player.Player_SetClothes(NativePointer, component, drawable, texture, palette);
         }
 
         public DlcCloth GetDlcClothes(byte component)
         {
+            CheckIfEntityExists();
             var cloth = DlcCloth.Zero;
             AltNative.Player.Player_GetDlcClothes(NativePointer, component, ref cloth);
             return cloth;
         }
         public void GetDlcClothes(byte component, ref DlcCloth cloth)
         {
+            CheckIfEntityExists();
             AltNative.Player.Player_GetDlcClothes(NativePointer, component, ref cloth);
         }
 
         public void SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc)
         {
+            CheckIfEntityExists();
             AltNative.Player.Player_SetDlcClothes(NativePointer, component, drawable, texture, palette, dlc);
         }
 
         public Prop GetProps(byte component)
         {
+            CheckIfEntityExists();
             var prop = Prop.Zero;
             AltNative.Player.Player_GetProps(NativePointer, component, ref prop);
             return prop;
         }
         public void GetProps(byte component, ref Prop prop)
         {
+            CheckIfEntityExists();
             AltNative.Player.Player_GetProps(NativePointer, component, ref prop);
         }
 
         public void SetProps(byte component, ushort drawable, byte texture)
         {
+            CheckIfEntityExists();
             AltNative.Player.Player_SetProps(NativePointer, component, drawable, texture);
         }
 
         public DlcProp GetDlcProps(byte component)
         {
+            CheckIfEntityExists();
             var prop = DlcProp.Zero;
             AltNative.Player.Player_GetDlcProps(NativePointer, component, ref prop);
             return prop;
@@ -666,16 +677,25 @@ namespace AltV.Net.Elements.Entities
         
         public void GetDlcProps(byte component, ref DlcProp prop)
         {
+            CheckIfEntityExists();
             AltNative.Player.Player_GetDlcProps(NativePointer, component, ref prop);
         }
 
         public void SetDlcProps(byte component, ushort drawable, byte texture, uint dlc)
         {
+            CheckIfEntityExists();
             AltNative.Player.Player_SetDlcProps(NativePointer, component, drawable, texture, dlc);
         }
-        
+
+        public void ClearProps(byte component)
+        {
+            CheckIfEntityExists();
+            AltNative.Player.Player_ClearProps(NativePointer, component);
+        }
+
         public bool IsEntityInStreamingRange(IEntity entity)
         {
+            CheckIfEntityExists();
             if(entity == null) return false;
 
             if(entity.Type == BaseObjectType.Player) 
@@ -688,6 +708,7 @@ namespace AltV.Net.Elements.Entities
 
         public override void AttachToEntity(IEntity entity, ushort otherBone, ushort ownBone, Position position, Rotation rotation, bool collision, bool noFixedRotation)
         {
+            CheckIfEntityExists();
             if(entity == null) return;
             
             if(entity.Type == BaseObjectType.Player) 
@@ -698,6 +719,7 @@ namespace AltV.Net.Elements.Entities
 
         public override void Detach()
         {
+            CheckIfEntityExists();
             AltNative.Player.Player_Detach(NativePointer);
         }
 

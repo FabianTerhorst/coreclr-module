@@ -320,6 +320,11 @@ namespace AltV.Net.Elements.Entities
         void SetDlcProps(byte component, ushort drawable, byte texture, uint dlc);
 
         /// <summary>
+        /// Clear the player props
+        /// </summary>
+        void ClearProps(byte component);
+
+        /// <summary>
         /// Returns if the entity is in the streaming range of the player
         /// </summary>
         bool IsEntityInStreamingRange(IEntity entity);
