@@ -339,8 +339,8 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <param name="player">The player</param>
         /// <param name="dateTime">The DateTime object</param>
-        public static void SetDateTime(this IPlayer player, DateTime dateTime) => player.SetDateTime(dateTime.Day,
-            dateTime.Month, dateTime.Year, dateTime.Hour, dateTime.Minute, dateTime.Second);
+        public static void SetDateTime(this IPlayer player, DateTime dateTime) => player.SetDateTime(dateTime.Day - 1,
+            dateTime.Month - 1, dateTime.Year, dateTime.Hour, dateTime.Minute, dateTime.Second);
 
         /// <summary>
         /// Sets the players current weather
