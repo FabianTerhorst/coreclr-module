@@ -48,6 +48,10 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void Server_TriggerClientEvent(IntPtr server, IntPtr target, IntPtr ev,
                 IntPtr[] args, int size);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void Server_TriggerClientEventForAll(IntPtr server, IntPtr ev,
+                IntPtr[] args, int size);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern IntPtr Server_CreateVehicle(IntPtr server, uint model, Position pos, Rotation rot,
