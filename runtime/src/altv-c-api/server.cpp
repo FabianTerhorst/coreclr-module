@@ -70,6 +70,21 @@ Server_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* 
     server->TriggerClientEvent(target, ev, mValues);
 }
 
+void
+Server_TriggerClientEventForAll(alt::ICore* server, const char* ev, alt::MValueConst* args[],
+    int size) {
+    alt::Array<alt::MValueConst> mValues = alt::Array<alt::MValueConst>(size);
+    for (int i = 0; i < size; i++) {
+        if (args[i] == nullptr) {
+            mValues[i] = server->CreateMValueNil();
+        }
+        else {
+            mValues[i] = *args[i];
+        }
+    }
+    server->TriggerClientEventForAll(ev, mValues);
+}
+
 alt::IVehicle*
 Server_CreateVehicle(alt::ICore* server, uint32_t model, position_t pos, rotation_t rot, uint16_t &id) {
     alt::Position position;
