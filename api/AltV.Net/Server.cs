@@ -234,7 +234,7 @@ namespace AltV.Net
                 mValuePointers[i] = args[i].nativePointer;
             }
 
-            AltNative.Server.Server_TriggerServerEvent(NativePointer, eventNamePtr, mValuePointers, size);
+            TriggerServerEvent(eventNamePtr, mValuePointers);
         }
 
         public void TriggerServerEvent(string eventName, IntPtr[] args)
@@ -244,6 +244,7 @@ namespace AltV.Net
             Marshal.FreeHGlobal(eventNamePtr);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void TriggerServerEvent(IntPtr eventNamePtr, IntPtr[] args)
         {
             AltNative.Server.Server_TriggerServerEvent(NativePointer, eventNamePtr, args, args.Length);
@@ -294,6 +295,7 @@ namespace AltV.Net
             Marshal.FreeHGlobal(eventNamePtr);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, IntPtr[] args)
         {
             AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero,
