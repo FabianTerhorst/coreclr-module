@@ -54,6 +54,11 @@ namespace AltV.Net.EntitySync
         {
             EntitySyncServer.RemoveEntity(entity);
         }
+        
+        public static void RemoveEntity(ulong id, ulong type)
+        {
+            EntitySyncServer.RemoveEntity(id, type);
+        }
 
         public static bool TryGetEntity(ulong id, ulong type, out IEntity entity)
         {

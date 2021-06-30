@@ -11,6 +11,8 @@ namespace AltV.Net.EntitySync
 
         void Remove(IEntity entity);
 
+        void Remove(ulong id, ulong type);
+
         void Remove(IList<IEntity> entities);
 
         void Update(IEntity entity);
