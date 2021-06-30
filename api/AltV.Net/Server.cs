@@ -284,9 +284,7 @@ namespace AltV.Net
                 mValuePointers[i] = args[i].nativePointer;
             }
 
-            AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero,
-                eventNamePtr,
-                mValuePointers, args.Length);
+            TriggerClientEvent(player, eventNamePtr, mValuePointers);
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, MValueConst[] args)
