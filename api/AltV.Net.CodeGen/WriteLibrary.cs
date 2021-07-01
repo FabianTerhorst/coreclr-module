@@ -1,16 +1,17 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace AltV.Net.CodeGen
 {
-    public static class WritePInvokes
+    public static class WriteLibrary
     {
-        //TODO: add a dictionary for unsafe code to generate headers for that as well
+        private const string Quote = "\"";
+        
         private static readonly IDictionary<string, string> CToCSharpTypes = new Dictionary<string, string>
         {
-            ["alt::IPlayer*"] = "IntPtr",
+            ["alt::IPlayer*"] = "nint",
             ["int8_t"] = "sbyte",
             ["uint8_t"] = "byte",
             ["int16_t"] = "short",
@@ -21,7 +22,7 @@ namespace AltV.Net.CodeGen
             ["uint64_t"] = "ulong",
             ["void"] = "void",
             ["uint16_t&"] = "ref ushort",
-            ["position_t&"] = "ref Position",
+            ["position_t&"] = "Position*",
             ["position_t"] = "Position",
             ["alt::Position"] = "Position",
             ["rotation_t&"] = "ref Rotation",
@@ -29,51 +30,57 @@ namespace AltV.Net.CodeGen
             ["alt::Rotation"] = "Rotation",
             ["cloth_t&"] = "ref Cloth",
             ["cloth_t"] = "Cloth",
-            ["const char*"] = "IntPtr",
+            ["dlccloth_t&"] = "ref DlcCloth",
+            ["dlccloth_t"] = "DlcCloth",
+            ["prop_t&"] = "ref Prop",
+            ["prop_t"] = "Prop",
+            ["dlcprop_t&"] = "ref DlcProp",
+            ["dlcprop_t"] = "DlcProp",
+            ["const char*"] = "nint",
             ["alt::MValue&"] = "ref MValue",
             ["alt::MValue*"] = "ref MValue",
             ["bool"] = "bool",
-            ["const char*&"] = "ref IntPtr",
+            ["const char*&"] = "ref nint",
             ["int"] = "int",
             ["int*"] = "ref int",
             ["alt::Array<uint32_t>&"] = "ref UIntArray",
             ["alt::Array<uint32_t>*"] = "ref UIntArray",
             ["float"] = "float",
             ["float*"] = "ref float",
-            ["alt::IVehicle*"] = "IntPtr",
-            ["void*"] = "IntPtr",
+            ["alt::IVehicle*"] = "nint",
+            ["void*"] = "nint",
             ["alt::IBaseObject::Type&"] = "ref BaseObjectType",
             ["player_struct_t*"] = "ref ReadOnlyPlayer",
             ["rgba_t&"] = "ref Rgba",
             ["alt::RGBA"] = "Rgba",
             ["bool*"] = "ref bool",
-            ["alt::IColShape*"] = "IntPtr",
+            ["alt::IColShape*"] = "nint",
             ["alt::ColShapeType"] = "ColShapeType",
-            ["alt::IEntity*"] = "IntPtr",
-            ["alt::IVoiceChannel*"] = "IntPtr",
-            ["alt::IBlip*"] = "IntPtr",
-            ["alt::IResource*"] = "IntPtr",
+            ["alt::IEntity*"] = "nint",
+            ["alt::IVoiceChannel*"] = "nint",
+            ["alt::IBlip*"] = "nint",
+            ["alt::IResource*"] = "nint",
             ["alt::Array<alt::String>&"] = "ref StringArray",
-            ["alt::MValue::List&"] = "ref MValueArray",
+            ["alt::MValue::List&"] = "ref MValueWriter2.MValueArray",
             ["const alt::MValue&"] = "ref MValue",
             ["const char**"] = "string[]",
-            ["alt::IResource::Impl*"] = "IntPtr",
-            ["CSharpResourceImpl*"] = "IntPtr",
-            ["alt::MValueFunction::Invoker*"] = "IntPtr",
-            ["MValueFunctionCallback"] = "MValue.Function",
-            ["CustomInvoker*"] = "IntPtr",
+            ["alt::IResource::Impl*"] = "nint",
+            ["CSharpResourceImpl*"] = "nint",
+            ["alt::MValueFunction::Invoker*"] = "nint",
+            ["MValueFunctionCallback"] = "MValueFunctionCallback",//"MValue.Function",
+            ["CustomInvoker*"] = "nint",
             ["double"] = "double",
             ["alt::MValue[]"] = "MValue[]",
             ["alt::MValueList&"] = "ref MValue", //no c# representation for MValue list memory layout yet
             ["const alt::MValueList&"] = "ref MValue", //no c# representation for MValue list memory layout yet
             ["alt::MValueDict&"] = "ref MValue", //no c# representation for MValue dictionary memory layout yet
-            ["alt::ICheckpoint*"] = "IntPtr",
+            ["alt::ICheckpoint*"] = "nint",
             ["uint64_t&"] = "ref ulong",
             ["alt::MValueFunction&"] =
                 "ref MValue", //no c# representation for MValue function memory layout yet, this is only in commented code and not required
-            ["alt::ICore*"] = "IntPtr",
+            ["alt::ICore*"] = "nint",
             ["alt::CEvent::Type"] = "ushort",
-            ["alt::CEvent*"] = "IntPtr",
+            ["alt::CEvent*"] = "nint",
             ["alt::EventCallback"] = "AltV.Net.Server.EventCallback",
             ["alt::TickCallback"] = "AltV.Net.Server.TickCallback",
             ["alt::CommandCallback"] = "AltV.Net.Server.CommandCallback",
@@ -83,18 +90,18 @@ namespace AltV.Net.CodeGen
             ["alt::Array<alt::IVehicle*>&"] = "ref VehiclePointerArray",
             ["alt::Array<alt::StringView>*"] = "ref StringViewArray",
             ["alt::Array<alt::String>*"] = "ref StringArray",
-            ["alt::Array<alt::MValue>*"] = "ref MValueArray",
-            ["alt::MValueConst*"] = "IntPtr",
-            ["alt::MValueConst*[]"] = "IntPtr[]",
-            ["const char*[]"] = "IntPtr[]",
-            ["alt::MValue*[]"] = "IntPtr[]",
-            ["alt::IPlayer*[]"] = "IntPtr[]",
-            ["alt::IVehicle*[]"] = "IntPtr[]",
-            ["char[]"] = "IntPtr",
+            ["alt::Array<alt::MValue>*"] = "ref MValueWriter2.MValueArray",
+            ["alt::MValueConst*"] = "nint",
+            ["alt::MValueConst*[]"] = "nint[]",
+            ["const char*[]"] = "nint[]",
+            ["alt::MValue*[]"] = "nint[]",
+            ["alt::IPlayer*[]"] = "nint[]",
+            ["alt::IVehicle*[]"] = "nint[]",
+            ["char[]"] = "nint",
             ["uint8_t&"] = "ref byte",
             ["rgba_t"] = "Rgba",
-            ["void*"] = "IntPtr",
-            ["const void*"] = "IntPtr"
+            ["void*"] = "nint",
+            ["const void*"] = "nint"
         };
 
         private static string TypeToCSharp(string cType, string name = null)
@@ -130,17 +137,60 @@ namespace AltV.Net.CodeGen
             return newParamName;
         }
 
-
         public static string Write(ParseExports.CMethod[] methods)
         {
             var fullFile = new StringBuilder();
+            var properties = new StringBuilder();
+            var exports = new StringBuilder();
+            var imports = new StringBuilder();
+            imports.Append($@"using System;
+using System.Runtime.InteropServices;
+using System.Security;
+using AltV.Net.Data;
+using AltV.Net.Native;
+using AltV.Net.Elements.Args;
+using AltV.Net.Elements.Entities;");
+
+            fullFile.Append(imports);
+            
             foreach (var method in methods)
             {
-                var template = $@"[DllImport(DllName, CallingConvention = NativeCallingConvention)]
-internal static extern {TypeToCSharp(method.ReturnType)} {method.Name}({string.Join(", ", method.Params.Select(param => TypeToCSharp(param.Type, param.Name) + " " + TransformParameterName(param.Name)).ToArray())});";
+                var template = $@"    public delegate* unmanaged[Cdecl]<{string.Join(", ", method.Params.Select(param => TypeToCSharp(param.Type, param.Name)).ToArray())}, {TypeToCSharp(method.ReturnType)}> {method.Name} {{ get; }}";
                 template += Environment.NewLine;
-                fullFile.Append(template);
+                properties.Append(template);
+
+                var exportTemplate = $@"        {method.Name} = (delegate* unmanaged[Cdecl]<{string.Join(", ", method.Params.Select(param => TypeToCSharp(param.Type, param.Name)).ToArray())}, {TypeToCSharp(method.ReturnType)}>) NativeLibrary.GetExport(handle, {Quote}{method.Name}{Quote});";
+                exportTemplate += Environment.NewLine;
+                exports.Append(exportTemplate);
             }
+
+            var interfaceFile = new StringBuilder();
+
+            var interfaceTemplate = $@"
+public unsafe interface ILibrary
+{{
+{properties}
+}}";
+            interfaceTemplate += Environment.NewLine;
+
+            fullFile.Append(interfaceTemplate);
+
+            var implementationFile = new StringBuilder();
+
+            var implementationTemplate = $@"
+public unsafe class Library : ILibrary
+{{
+    private const string DllName = {Quote}csharp-module{Quote};
+
+{properties}
+    public Library() 
+    {{
+        var handle = NativeLibrary.Load(DllName);
+{exports}
+    }}
+}}";
+            
+            fullFile.Append(implementationTemplate);
 
             return fullFile.ToString();
         }

@@ -132,7 +132,7 @@ namespace AltV.Net.CodeGen
             } while (commaIndex != -1);
 
 
-            return new CMethod {ReturnType = methodReturnType, Name = methodName, Params = methodParameters.ToArray()};
+            return new CMethod {ReturnType = methodReturnType, Name = methodName.Replace("\n", "").Replace("\r", ""), Params = methodParameters.ToArray()};
         }
 
         private static string RemoveComments(string text)

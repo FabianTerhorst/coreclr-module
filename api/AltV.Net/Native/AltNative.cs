@@ -29,7 +29,7 @@ namespace AltV.Net.Native
 
         //[DllImport(DllName, CallingConvention = NativeCallingConvention)]
         //internal static extern void FreeMValueArray(ref MValueArray array);
-        
+
         [DllImport(DllName, CallingConvention = NativeCallingConvention)]
         internal static extern void FreeCharArray(IntPtr charArray);
     }

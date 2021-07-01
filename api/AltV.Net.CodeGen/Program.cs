@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -21,7 +22,7 @@ namespace AltV.Net.CodeGen
             }
 
             Directory.CreateDirectory(genDirectory);
-            try
+            /*try
             {
                 foreach (var file in files)
                 {
@@ -32,6 +33,29 @@ namespace AltV.Net.CodeGen
                     File.WriteAllText(
                         genDirectory + GetAltNativeFileName(Path.GetFileName(file)),
                         methodsOutput);
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }*/
+            
+            try
+            {
+                var methods = new List<ParseExports.CMethod>();
+                foreach (var file in files)
+                {
+                    if (!file.EndsWith(".h")) continue;
+                    methods.AddRange(ParseExports.Parse(File.ReadAllText(file)));
+                }
+                
+                var methodsOutput = WriteLibrary.Write(methods.ToArray());
+                if (methodsOutput.Length != 0)
+                {
+                    File.WriteAllText(
+                        genDirectory + "Library.cs",
+                        methodsOutput);
+                    //Console.WriteLine(methodsOutput);
                 }
             }
             catch (Exception exception)
