@@ -84,7 +84,7 @@ void Checkpoint_GetColor(alt::ICheckpoint* checkpoint, rgba_t &color) {
     color.a = checkpointColor.a;
 }
 
-void Checkpoint_SetColor(alt::ICheckpoint* checkpoint, rgba_t &color) {
+void Checkpoint_SetColor(alt::ICheckpoint* checkpoint, rgba_t color) {
     alt::RGBA newColor;
     newColor.r = color.r;
     newColor.g = color.g;
