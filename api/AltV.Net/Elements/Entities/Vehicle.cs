@@ -1071,13 +1071,13 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public Vehicle(uint model, Position position, Rotation rotation) : this(
-            Alt.Module.Server.CreateVehicleEntity(out var id, model, position, rotation), id)
+        public Vehicle(IServer server, uint model, Position position, Rotation rotation) : this(
+            server, server.CreateVehicleEntity(out var id, model, position, rotation), id)
         {
             Alt.Module.VehiclePool.Add(this);
         }
 
-        public Vehicle(IntPtr nativePointer, ushort id) : base(nativePointer, BaseObjectType.Vehicle, id)
+        public Vehicle(IServer server, IntPtr nativePointer, ushort id) : base(server, nativePointer, BaseObjectType.Vehicle, id)
         {
         }
 

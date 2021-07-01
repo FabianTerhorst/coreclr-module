@@ -16,9 +16,12 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckIfEntityExists();
-                var entityPointer = AltNative.Player.Player_GetNetworkOwner(NativePointer);
-                if (entityPointer == IntPtr.Zero) return null;
-                return Alt.Module.PlayerPool.Get(entityPointer, out var player) ? player : null;
+                unsafe
+                {
+                    var entityPointer = Server.Library.Player_GetNetworkOwner(NativePointer);
+                    if (entityPointer == IntPtr.Zero) return null;
+                    return Alt.Module.PlayerPool.Get(entityPointer, out var player) ? player : null;
+                }
             }
         }
 
@@ -27,12 +30,18 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckIfEntityExists();
-                return AltNative.Player.Player_GetModel(NativePointer);
+                unsafe
+                {
+                    return Server.Library.Player_GetModel(NativePointer);
+                }
             }
             set
             {
                 CheckIfEntityExists();
-                AltNative.Player.Player_SetModel(NativePointer, value);
+                unsafe
+                {
+                    Server.Library.Player_SetModel(NativePointer, value);
+                }
             }
         }
 
@@ -41,9 +50,12 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckIfEntityExists();
-                var position = Position.Zero;
-                AltNative.Player.Player_GetPosition(NativePointer, ref position);
-                return position;
+                unsafe
+                {
+                    var position = Position.Zero;
+                    Server.Library.Player_GetPosition(NativePointer, &position);
+                    return position;
+                }
             }
             set
             {
@@ -490,7 +502,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public Player(IntPtr nativePointer, ushort id) : base(nativePointer, BaseObjectType.Player, id)
+        public Player(IServer server, IntPtr nativePointer, ushort id) : base(server, nativePointer, BaseObjectType.Player, id)
         {
         }
 

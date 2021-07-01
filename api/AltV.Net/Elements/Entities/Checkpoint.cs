@@ -164,7 +164,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public Checkpoint(IntPtr nativePointer) : base(nativePointer, BaseObjectType.Checkpoint)
+        public Checkpoint(IServer server, IntPtr nativePointer) : base(server, nativePointer, BaseObjectType.Checkpoint)
         {
         }
 

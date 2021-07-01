@@ -90,7 +90,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public ColShape(IntPtr nativePointer) : base(nativePointer, BaseObjectType.ColShape)
+        public ColShape(IServer server, IntPtr nativePointer) : base(server, nativePointer, BaseObjectType.ColShape)
         {
         }
 

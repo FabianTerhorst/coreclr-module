@@ -46,6 +46,8 @@ namespace AltV.Net
 
         private string branch;
 
+        public ILibrary Library { get; }
+
         public string Version
         {
             get
@@ -125,6 +127,7 @@ namespace AltV.Net
             this.voiceChannelPool = voiceChannelPool;
             this.colShapePool = colShapePool;
             this.nativeResourcePool = nativeResourcePool;
+            this.Library = new Library();//TODO: make overridable
             Resource = resource;
         }
 
@@ -341,7 +344,7 @@ namespace AltV.Net
             ushort id = default;
             var ptr = AltNative.Server.Server_CreateVehicle(NativePointer, model, pos, rotation, ref id);
             if (ptr == IntPtr.Zero) return null;
-            vehiclePool.Create(ptr, id, out var vehicle);
+            vehiclePool.Create(this, ptr, id, out var vehicle);
             return vehicle;
         }
 
@@ -351,7 +354,7 @@ namespace AltV.Net
             CheckIfCallIsValid();
             var ptr = AltNative.Server.Server_CreateCheckpoint(NativePointer, type, pos, radius, height, color);
             if (ptr == IntPtr.Zero) return null;
-            checkpointPool.Create(ptr, out var checkpoint);
+            checkpointPool.Create(this, ptr, out var checkpoint);
             return checkpoint;
         }
 
@@ -361,7 +364,7 @@ namespace AltV.Net
             var ptr = AltNative.Server.Server_CreateBlip(NativePointer, player?.NativePointer ?? IntPtr.Zero,
                 type, pos);
             if (ptr == IntPtr.Zero) return null;
-            blipPool.Create(ptr, out var blip);
+            blipPool.Create(this, ptr, out var blip);
             return blip;
         }
 
@@ -372,7 +375,7 @@ namespace AltV.Net
                 player?.NativePointer ?? IntPtr.Zero,
                 type, entityAttach.NativePointer);
             if (ptr == IntPtr.Zero) return null;
-            blipPool.Create(ptr, out var blip);
+            blipPool.Create(this, ptr, out var blip);
             return blip;
         }
 
@@ -382,7 +385,7 @@ namespace AltV.Net
             var ptr = AltNative.Server.Server_CreateVoiceChannel(NativePointer,
                 spatial, maxDistance);
             if (ptr == IntPtr.Zero) return null;
-            voiceChannelPool.Create(ptr, out var voiceChannel);
+            voiceChannelPool.Create(this, ptr, out var voiceChannel);
             return voiceChannel;
         }
 
@@ -391,7 +394,7 @@ namespace AltV.Net
             CheckIfCallIsValid();
             var ptr = AltNative.Server.Server_CreateColShapeCylinder(NativePointer, pos, radius, height);
             if (ptr == IntPtr.Zero) return null;
-            colShapePool.Create(ptr, out var colShape);
+            colShapePool.Create(this, ptr, out var colShape);
             return colShape;
         }
 
@@ -400,7 +403,7 @@ namespace AltV.Net
             CheckIfCallIsValid();
             var ptr = AltNative.Server.Server_CreateColShapeSphere(NativePointer, pos, radius);
             if (ptr == IntPtr.Zero) return null;
-            colShapePool.Create(ptr, out var colShape);
+            colShapePool.Create(this, ptr, out var colShape);
             return colShape;
         }
 
@@ -409,7 +412,7 @@ namespace AltV.Net
             CheckIfCallIsValid();
             var ptr = AltNative.Server.Server_CreateColShapeCircle(NativePointer, pos, radius);
             if (ptr == IntPtr.Zero) return null;
-            colShapePool.Create(ptr, out var colShape);
+            colShapePool.Create(this, ptr, out var colShape);
             return colShape;
         }
 
@@ -418,7 +421,7 @@ namespace AltV.Net
             CheckIfCallIsValid();
             var ptr = AltNative.Server.Server_CreateColShapeCube(NativePointer, pos, pos2);
             if (ptr == IntPtr.Zero) return null;
-            colShapePool.Create(ptr, out var colShape);
+            colShapePool.Create(this, ptr, out var colShape);
             return colShape;
         }
 
@@ -427,7 +430,7 @@ namespace AltV.Net
             CheckIfCallIsValid();
             var ptr = AltNative.Server.Server_CreateColShapeRectangle(NativePointer, x1, y1, x2, y2, z);
             if (ptr == IntPtr.Zero) return null;
-            colShapePool.Create(ptr, out var colShape);
+            colShapePool.Create(this, ptr, out var colShape);
             return colShape;
         }
 
@@ -506,7 +509,7 @@ namespace AltV.Net
             AltNative.Server.Server_GetPlayers(NativePointer, pointers, playerCount);
             foreach (var playerPointer in pointers)
             {
-                if (playerPool.GetOrCreate(playerPointer, out var vehicle))
+                if (playerPool.GetOrCreate(this, playerPointer, out var vehicle))
                 {
                     yield return vehicle;
                 }
@@ -521,7 +524,7 @@ namespace AltV.Net
             AltNative.Server.Server_GetVehicles(NativePointer, pointers, vehicleCount);
             foreach (var vehiclePointer in pointers)
             {
-                if (vehiclePool.GetOrCreate(vehiclePointer, out var vehicle))
+                if (vehiclePool.GetOrCreate(this, vehiclePointer, out var vehicle))
                 {
                     yield return vehicle;
                 }
@@ -537,9 +540,9 @@ namespace AltV.Net
             switch (type)
             {
                 case (byte) BaseObjectType.Player:
-                    return playerPool.GetOrCreate(entityPointer, out var player) ? player : null;
+                    return playerPool.GetOrCreate(this, entityPointer, out var player) ? player : null;
                 case (byte) BaseObjectType.Vehicle:
-                    return vehiclePool.GetOrCreate(entityPointer, out var vehicle) ? vehicle : null;
+                    return vehiclePool.GetOrCreate(this, entityPointer, out var vehicle) ? vehicle : null;
                 default:
                     return null;
             }

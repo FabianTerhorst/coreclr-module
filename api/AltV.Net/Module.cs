@@ -1198,7 +1198,7 @@ namespace AltV.Net
 
         public void OnCreatePlayer(IntPtr playerPointer, ushort playerId)
         {
-            PlayerPool.Create(playerPointer, playerId);
+            PlayerPool.Create(Server, playerPointer, playerId);
         }
 
         public void OnRemovePlayer(IntPtr playerPointer)
@@ -1208,17 +1208,17 @@ namespace AltV.Net
 
         public void OnCreateVehicle(IntPtr vehiclePointer, ushort vehicleId)
         {
-            VehiclePool.Create(vehiclePointer, vehicleId);
+            VehiclePool.Create(Server, vehiclePointer, vehicleId);
         }
 
         public void OnCreateVoiceChannel(IntPtr channelPointer)
         {
-            VoiceChannelPool.Create(channelPointer);
+            VoiceChannelPool.Create(Server, channelPointer);
         }
 
         public void OnCreateColShape(IntPtr colShapePointer)
         {
-            ColShapePool.Create(colShapePointer);
+            ColShapePool.Create(Server, colShapePointer);
         }
 
         public void OnRemoveVehicle(IntPtr vehiclePointer)
@@ -1228,7 +1228,7 @@ namespace AltV.Net
 
         public void OnCreateBlip(IntPtr blipPointer)
         {
-            BlipPool.Create(blipPointer);
+            BlipPool.Create(Server, blipPointer);
         }
 
         public void OnRemoveBlip(IntPtr blipPointer)
@@ -1238,7 +1238,7 @@ namespace AltV.Net
 
         public void OnCreateCheckpoint(IntPtr checkpointPointer)
         {
-            CheckpointPool.Create(checkpointPointer);
+            CheckpointPool.Create(Server, checkpointPointer);
         }
 
         public void OnRemoveCheckpoint(IntPtr checkpointPointer)

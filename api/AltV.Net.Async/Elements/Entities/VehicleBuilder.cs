@@ -235,7 +235,7 @@ namespace AltV.Net.Async.Elements.Entities
             });
             enumerator.Dispose();
             Dispose();
-            Alt.Module.VehiclePool.Create(vehiclePtr, id, out var vehicle);
+            Alt.Module.VehiclePool.Create(Alt.Server, vehiclePtr, id, out var vehicle);
             return vehicle;
         }
 

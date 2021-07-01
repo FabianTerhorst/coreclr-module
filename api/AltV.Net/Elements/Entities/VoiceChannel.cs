@@ -61,7 +61,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public VoiceChannel(IntPtr nativePointer) : base(nativePointer, BaseObjectType.VoiceChannel)
+        public VoiceChannel(IServer server, IntPtr nativePointer) : base(server, nativePointer, BaseObjectType.VoiceChannel)
         {
         }
 

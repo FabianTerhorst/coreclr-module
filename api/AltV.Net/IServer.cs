@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Native;
 
 namespace AltV.Net
 {
@@ -11,6 +12,8 @@ namespace AltV.Net
         string Version { get; }
         
         string Branch { get; }
+        
+        public ILibrary Library { get; }
         
         int NetTime { get; }
 

@@ -5,7 +5,7 @@ namespace AltV.Net.Mock
 {
     public class MockBlip : MockWorldObject, IBlip
     {
-        public MockBlip(IntPtr nativePointer) : base(nativePointer, BaseObjectType.Blip)
+        public MockBlip(IServer server, IntPtr nativePointer) : base(server, nativePointer, BaseObjectType.Blip)
         {
         }
 

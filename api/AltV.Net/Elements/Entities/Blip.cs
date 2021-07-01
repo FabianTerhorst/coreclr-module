@@ -142,7 +142,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public Blip(IntPtr nativePointer) : base(nativePointer, BaseObjectType.Blip)
+        public Blip(IServer server, IntPtr nativePointer) : base(server, nativePointer, BaseObjectType.Blip)
         {
         }
         
