@@ -19,7 +19,7 @@ namespace AltV.Net
         public static void Emit(string eventName, params object[] args) => Server.TriggerServerEvent(eventName, args);
 
         public static void EmitAllClients(string eventName, params object[] args) =>
-            Server.TriggerClientEvent(null, eventName, args);
+            Server.TriggerClientEventForAll(eventName, args);
 
         public static void Log(string message) => Server.LogInfo(message);
 
