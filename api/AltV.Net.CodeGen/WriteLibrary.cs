@@ -150,16 +150,17 @@ using AltV.Net.Data;
 using AltV.Net.Native;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;");
+            imports.Append(Environment.NewLine);
 
             fullFile.Append(imports);
             
             foreach (var method in methods)
             {
-                var template = $@"    public delegate* unmanaged[Cdecl]<{string.Join(", ", method.Params.Select(param => TypeToCSharp(param.Type, param.Name)).ToArray())}, {TypeToCSharp(method.ReturnType)}> {method.Name} {{ get; }}";
+                var template = $@"        public delegate* unmanaged[Cdecl]<{string.Join(", ", method.Params.Select(param => TypeToCSharp(param.Type, param.Name)).ToArray())}, {TypeToCSharp(method.ReturnType)}> {method.Name} {{ get; }}";
                 template += Environment.NewLine;
                 properties.Append(template);
 
-                var exportTemplate = $@"        {method.Name} = (delegate* unmanaged[Cdecl]<{string.Join(", ", method.Params.Select(param => TypeToCSharp(param.Type, param.Name)).ToArray())}, {TypeToCSharp(method.ReturnType)}>) NativeLibrary.GetExport(handle, {Quote}{method.Name}{Quote});";
+                var exportTemplate = $@"            {method.Name} = (delegate* unmanaged[Cdecl]<{string.Join(", ", method.Params.Select(param => TypeToCSharp(param.Type, param.Name)).ToArray())}, {TypeToCSharp(method.ReturnType)}>) NativeLibrary.GetExport(handle, {Quote}{method.Name}{Quote});";
                 exportTemplate += Environment.NewLine;
                 exports.Append(exportTemplate);
             }
@@ -167,10 +168,12 @@ using AltV.Net.Elements.Entities;");
             var interfaceFile = new StringBuilder();
 
             var interfaceTemplate = $@"
-public unsafe interface ILibrary
+namespace AltV.Net.Native
 {{
+    public unsafe interface ILibrary
+    {{
 {properties}
-}}";
+    }}";
             interfaceTemplate += Environment.NewLine;
 
             fullFile.Append(interfaceTemplate);
@@ -178,18 +181,19 @@ public unsafe interface ILibrary
             var implementationFile = new StringBuilder();
 
             var implementationTemplate = $@"
-public unsafe class Library : ILibrary
-{{
-    private const string DllName = {Quote}csharp-module{Quote};
+    public unsafe class Library : ILibrary
+    {{
+        private const string DllName = {Quote}csharp-module{Quote};
 
 {properties}
-    public Library() 
-    {{
-        var handle = NativeLibrary.Load(DllName);
+        public Library() 
+        {{
+            var handle = NativeLibrary.Load(DllName);
 {exports}
+        }}
     }}
 }}";
-            
+
             fullFile.Append(implementationTemplate);
 
             return fullFile.ToString();
