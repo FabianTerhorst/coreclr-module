@@ -9,7 +9,13 @@ namespace AltV.Net.Elements.Entities
 {
     public class Player : Entity, IPlayer
     {
-        public static ushort GetId(IntPtr playerPointer) => AltNative.Player.Player_GetID(playerPointer);
+        public static ushort GetId(IntPtr playerPointer)
+        {
+            unsafe
+            {
+                return Alt.Server.Library.Player_GetID(playerPointer);
+            }
+        }
 
         public override IPlayer NetworkOwner
         {

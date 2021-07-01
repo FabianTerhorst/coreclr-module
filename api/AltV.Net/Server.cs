@@ -301,7 +301,7 @@ namespace AltV.Net
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, IntPtr[] args)
         {
-            AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero,
+            AltNative.Server.Server_TriggerClientEvent(NativePointer, player.NativePointer,
                 eventNamePtr, args, args.Length);
         }
 
@@ -314,6 +314,7 @@ namespace AltV.Net
 
         public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, params object[] args)
         {
+            if (player == null) throw new ArgumentException("player should not be null.");
             if (args == null) throw new ArgumentException("Arguments array should not be null.");
             var size = args.Length;
             var mValues = new MValueConst[size];
@@ -327,6 +328,7 @@ namespace AltV.Net
 
         public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)
         {
+            if (player == null) throw new ArgumentException("player should not be null.");
             if (args == null) throw new ArgumentException("Arguments array should not be null.");
             var size = args.Length;
             var mValues = new MValueConst[size];
