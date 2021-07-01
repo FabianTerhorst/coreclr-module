@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
@@ -78,14 +79,20 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckIfEntityExists();
-                var rotation = Rotation.Zero;
-                AltNative.Player.Player_GetRotation(NativePointer, ref rotation);
-                return rotation;
+                unsafe
+                {
+                    var rotation = Rotation.Zero;
+                    Server.Library.Player_GetRotation(NativePointer, &rotation);
+                    return rotation;
+                }
             }
             set
             {
                 CheckIfEntityExists();
-                AltNative.Player.Player_SetRotation(NativePointer, value);
+                unsafe
+                {
+                    Server.Library.Player_SetRotation(NativePointer, value);
+                }
             }
         }
 
@@ -94,12 +101,18 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckIfEntityExists();
-                return AltNative.Player.Player_GetVisible(NativePointer);
+                unsafe
+                {
+                    return Server.Library.Player_GetVisible(NativePointer);
+                }
             }
             set
             {
                 CheckIfEntityExists();
-                AltNative.Player.Player_SetVisible(NativePointer, value);
+                unsafe
+                {
+                    Server.Library.Player_SetVisible(NativePointer, value);
+                }
             }
         }
 
@@ -108,12 +121,18 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckIfEntityExists();
-                return AltNative.Player.Player_GetDimension(NativePointer);
+                unsafe
+                {
+                    return Server.Library.Player_GetDimension(NativePointer);
+                }
             }
             set
             {
                 CheckIfEntityExists();
-                AltNative.Player.Player_SetDimension(NativePointer, value);
+                unsafe
+                {
+                    Server.Library.Player_SetDimension(NativePointer, value);
+                }
             }
         }
 
@@ -122,7 +141,10 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckIfEntityExists();
-                return AltNative.Player.Player_GetPing(NativePointer);
+                unsafe
+                {
+                    return Server.Library.Player_GetPing(NativePointer);
+                }
             }
         }
 
@@ -131,111 +153,156 @@ namespace AltV.Net.Elements.Entities
             get
             {
                 CheckIfEntityExists();
-                var ptr = IntPtr.Zero;
-                AltNative.Player.Player_GetIP(NativePointer, ref ptr);
-                return Marshal.PtrToStringUTF8(ptr);
+                unsafe
+                {
+                    var ptr = IntPtr.Zero;
+                    Server.Library.Player_GetIP(NativePointer, &ptr);
+                    return Marshal.PtrToStringUTF8(ptr);
+                }
             }
         }
 
         public override void SetNetworkOwner(IPlayer player, bool disableMigration)
         {
             CheckIfEntityExists();
-            AltNative.Player.Player_SetNetworkOwner(NativePointer, player?.NativePointer ?? IntPtr.Zero, disableMigration);
+            unsafe
+            {
+                Server.Library.Player_SetNetworkOwner(NativePointer, player?.NativePointer ?? IntPtr.Zero, disableMigration);
+            }
         }
 
         public override void GetMetaData(string key, out MValueConst value)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            value = new MValueConst(AltNative.Player.Player_GetMetaData(NativePointer, stringPtr));
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                value = new MValueConst(Server.Library.Player_GetMetaData(NativePointer, stringPtr));
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
 
         public override void SetMetaData(string key, in MValueConst value)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Player.Player_SetMetaData(NativePointer, stringPtr, value.nativePointer);
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Server.Library.Player_SetMetaData(NativePointer, stringPtr, value.nativePointer);
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
 
         public override bool HasMetaData(string key)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            var result = AltNative.Player.Player_HasMetaData(NativePointer, stringPtr);
-            Marshal.FreeHGlobal(stringPtr);
-            return result;
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var result = Server.Library.Player_HasMetaData(NativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+                return result;
+            }
         }
 
         public override void DeleteMetaData(string key)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Player.Player_DeleteMetaData(NativePointer, stringPtr);
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Server.Library.Player_DeleteMetaData(NativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
 
         public override void SetSyncedMetaData(string key, in MValueConst value)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Player.Player_SetSyncedMetaData(NativePointer, stringPtr, value.nativePointer);
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Server.Library.Player_SetSyncedMetaData(NativePointer, stringPtr, value.nativePointer);
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
 
         public override void GetSyncedMetaData(string key, out MValueConst value)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            value = new MValueConst(AltNative.Player.Player_GetSyncedMetaData(NativePointer, stringPtr));
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                value = new MValueConst(Server.Library.Player_GetSyncedMetaData(NativePointer, stringPtr));
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
         
         public override bool HasSyncedMetaData(string key)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            var result = AltNative.Player.Player_HasSyncedMetaData(NativePointer, stringPtr);
-            Marshal.FreeHGlobal(stringPtr);
-            return result;
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var result = Server.Library.Player_HasSyncedMetaData(NativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+                return result;
+            }
         }
 
         public override void DeleteSyncedMetaData(string key)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Player.Player_DeleteSyncedMetaData(NativePointer, stringPtr);
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Server.Library.Player_DeleteSyncedMetaData(NativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
         
         public override void SetStreamSyncedMetaData(string key, in MValueConst value)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Player.Player_SetStreamSyncedMetaData(NativePointer, stringPtr, value.nativePointer);
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Server.Library.Player_SetStreamSyncedMetaData(NativePointer, stringPtr, value.nativePointer);
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
 
         public override void GetStreamSyncedMetaData(string key, out MValueConst value)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            value = new MValueConst(AltNative.Player.Player_GetStreamSyncedMetaData(NativePointer, stringPtr));
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                value = new MValueConst(Server.Library.Player_GetStreamSyncedMetaData(NativePointer, stringPtr));
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
         
         public override bool HasStreamSyncedMetaData(string key)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            var result = AltNative.Player.Player_HasStreamSyncedMetaData(NativePointer, stringPtr);
-            Marshal.FreeHGlobal(stringPtr);
-            return result;
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var result = Server.Library.Player_HasStreamSyncedMetaData(NativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+                return result;
+            }
         }
 
         public override void DeleteStreamSyncedMetaData(string key)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Player.Player_DeleteStreamSyncedMetaData(NativePointer, stringPtr);
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Server.Library.Player_DeleteStreamSyncedMetaData(NativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
 
         public bool IsConnected
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_IsConnected(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_IsConnected(NativePointer);
+                }
             }
         }
 
@@ -243,16 +310,19 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                var ptr = IntPtr.Zero;
-                AltNative.Player.Player_GetName(NativePointer, ref ptr);
-                return Marshal.PtrToStringUTF8(ptr);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var ptr = IntPtr.Zero;
+                    Server.Library.Player_GetName(NativePointer, &ptr);
+                    return Marshal.PtrToStringUTF8(ptr);
+                }
             }
             /*set
             {
                 CheckIfEntityExists();
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
-                AltNative.Player.Player_SetName(NativePointer, stringPtr);
+                Server.Library.Player_SetName(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
             }*/
         }
@@ -261,8 +331,11 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_GetSocialID(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_GetSocialID(NativePointer);
+                }
             }
         }
 
@@ -270,8 +343,11 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_GetHwidHash(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_GetHwidHash(NativePointer);
+                }
             }
         }
 
@@ -279,8 +355,11 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_GetHwidExHash(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_GetHwidExHash(NativePointer);
+                }
             }
         }
 
@@ -288,10 +367,13 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                var ptr = IntPtr.Zero;
-                AltNative.Player.Player_GetAuthToken(NativePointer, ref ptr);
-                return Marshal.PtrToStringUTF8(ptr);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var ptr = IntPtr.Zero;
+                    Server.Library.Player_GetAuthToken(NativePointer, &ptr);
+                    return Marshal.PtrToStringUTF8(ptr);
+                }
             }
         }
 
@@ -299,13 +381,19 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_GetHealth(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_GetHealth(NativePointer);
+                }
             }
             set
             {
-                CheckIfEntityExists();
-                AltNative.Player.Player_SetHealth(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Player_SetHealth(NativePointer, value);
+                }
             }
         }
 
@@ -313,13 +401,19 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_GetMaxHealth(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_GetMaxHealth(NativePointer);
+                }
             }
             set
             {
-                CheckIfEntityExists();
-                AltNative.Player.Player_SetMaxHealth(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Player_SetMaxHealth(NativePointer, value);
+                }
             }
         }
 
@@ -327,8 +421,11 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_IsDead(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_IsDead(NativePointer);
+                }
             }
         }
 
@@ -336,8 +433,11 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_IsJumping(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_IsJumping(NativePointer);
+                }
             }
         }
 
@@ -345,8 +445,11 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_IsInRagdoll(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_IsInRagdoll(NativePointer);
+                }
             }
         }
 
@@ -354,8 +457,11 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_IsAiming(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_IsAiming(NativePointer);
+                }
             }
         }
 
@@ -363,8 +469,11 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_IsShooting(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_IsShooting(NativePointer);
+                }
             }
         }
 
@@ -372,8 +481,11 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_IsReloading(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_IsReloading(NativePointer);
+                }
             }
         }
 
@@ -381,13 +493,19 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_GetArmor(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_GetArmor(NativePointer);
+                }
             }
             set
             {
-                CheckIfEntityExists();
-                AltNative.Player.Player_SetArmor(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Player_SetArmor(NativePointer, value);
+                }
             }
         }
 
@@ -395,13 +513,19 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_GetMaxArmor(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_GetMaxArmor(NativePointer);
+                }
             }
             set
             {
-                CheckIfEntityExists();
-                AltNative.Player.Player_SetMaxArmor(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Player_SetMaxArmor(NativePointer, value);
+                }
             }
         }
 
@@ -409,8 +533,11 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_GetMoveSpeed(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_GetMoveSpeed(NativePointer);
+                }
             }
         }
 
@@ -418,10 +545,13 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                var position = Position.Zero;
-                AltNative.Player.Player_GetAimPos(NativePointer, ref position);
-                return position;
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var position = Position.Zero;
+                    Server.Library.Player_GetAimPos(NativePointer, &position);
+                    return position;
+                }
             }
         }
 
@@ -429,10 +559,13 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                var rotation = Rotation.Zero;
-                AltNative.Player.Player_GetHeadRotation(NativePointer, ref rotation);
-                return rotation;
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var rotation = Rotation.Zero;
+                    Server.Library.Player_GetHeadRotation(NativePointer, &rotation);
+                    return rotation;
+                }
             }
         }
 
@@ -440,8 +573,11 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_IsInVehicle(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_IsInVehicle(NativePointer);
+                }
             }
         }
 
@@ -449,10 +585,13 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                var entityPointer = AltNative.Player.Player_GetVehicle(NativePointer);
-                if (entityPointer == IntPtr.Zero) return null;
-                return Alt.Module.VehiclePool.Get(entityPointer, out var vehicle) ? vehicle : null;
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var entityPointer = Server.Library.Player_GetVehicle(NativePointer);
+                    if (entityPointer == IntPtr.Zero) return null;
+                    return Alt.Module.VehiclePool.Get(entityPointer, out var vehicle) ? vehicle : null;
+                }
             }
         }
 
@@ -460,13 +599,19 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_GetCurrentWeapon(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_GetCurrentWeapon(NativePointer);
+                }
             }
             set
             {
-                CheckIfEntityExists();
-                AltNative.Player.Player_SetCurrentWeapon(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Player_SetCurrentWeapon(NativePointer, value);
+                }
             }
         }
 
@@ -474,11 +619,14 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                var type = BaseObjectType.Undefined;
-                var entityPointer = AltNative.Player.Player_GetEntityAimingAt(NativePointer, ref type);
-                if (entityPointer == IntPtr.Zero) return null;
-                return Alt.Module.BaseEntityPool.Get(entityPointer, type, out var entity) ? entity : null;
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var type = BaseObjectType.Undefined;
+                    var entityPointer = Server.Library.Player_GetEntityAimingAt(NativePointer, &type);
+                    if (entityPointer == IntPtr.Zero) return null;
+                    return Alt.Module.BaseEntityPool.Get(entityPointer, type, out var entity) ? entity : null;
+                }
             }
         }
 
@@ -486,10 +634,13 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                var position = Position.Zero;
-                AltNative.Player.Player_GetEntityAimOffset(NativePointer, ref position);
-                return position;
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var position = Position.Zero;
+                    Server.Library.Player_GetEntityAimOffset(NativePointer, &position);
+                    return position;
+                }
             }
         }
 
@@ -497,8 +648,11 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_IsFlashlightActive(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_IsFlashlightActive(NativePointer);
+                }
             }
         }
 
@@ -506,8 +660,11 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Player.Player_GetSeat(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_GetSeat(NativePointer);
+                }
             }
         }
 
@@ -517,96 +674,141 @@ namespace AltV.Net.Elements.Entities
 
         public void Spawn(Position position, uint delayMs)
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_Spawn(NativePointer, position, delayMs);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Player_Spawn(NativePointer, position, delayMs);
+            }
         }
 
         public void Despawn()
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_Despawn(NativePointer);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Player_Despawn(NativePointer);
+            }
         }
 
         public void SetDateTime(int day, int month, int year, int hour, int minute, int second)
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_SetDateTime(NativePointer, day, month, year, hour, minute, second);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Player_SetDateTime(NativePointer, day, month, year, hour, minute, second);
+            }
         }
 
         public void SetWeather(uint weather)
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_SetWeather(NativePointer, weather);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Player_SetWeather(NativePointer, weather);
+            }
         }
 
         public void GiveWeapon(uint weapon, int ammo, bool selectWeapon)
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_GiveWeapon(NativePointer, weapon, ammo, selectWeapon);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Player_GiveWeapon(NativePointer, weapon, ammo, selectWeapon);
+            }
         }
 
         public bool RemoveWeapon(uint weapon)
         {
-            CheckIfEntityExists();
-            return AltNative.Player.Player_RemoveWeapon(NativePointer, weapon);
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Server.Library.Player_RemoveWeapon(NativePointer, weapon);
+            }
         }
 
         public void RemoveAllWeapons()
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_RemoveAllWeapons(NativePointer);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Player_RemoveAllWeapons(NativePointer);
+            }
         }
 
         public void AddWeaponComponent(uint weapon, uint weaponComponent)
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_AddWeaponComponent(NativePointer, weapon, weaponComponent);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Player_AddWeaponComponent(NativePointer, weapon, weaponComponent);
+            }
         }
 
         public void RemoveWeaponComponent(uint weapon, uint weaponComponent)
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_RemoveWeaponComponent(NativePointer, weapon, weaponComponent);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Player_RemoveWeaponComponent(NativePointer, weapon, weaponComponent);
+            }
         }
 
         public bool HasWeaponComponent(uint weapon, uint weaponComponent)
         {
-            CheckIfEntityExists();
-            return AltNative.Player.Player_HasWeaponComponent(NativePointer, weapon, weaponComponent);
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Server.Library.Player_HasWeaponComponent(NativePointer, weapon, weaponComponent);
+            }
         }
 
         public void GetCurrentWeaponComponents(out uint[] weaponComponents)
         {
-            CheckIfEntityExists();
-            var array = UIntArray.Nil;
-            AltNative.Player.Player_GetCurrentWeaponComponents(NativePointer, ref array);
-            weaponComponents = array.ToArrayAndFree();
+            unsafe
+            {
+                CheckIfEntityExists();
+                var array = UIntArray.Nil;
+                Server.Library.Player_GetCurrentWeaponComponents(NativePointer, &array);
+                weaponComponents = array.ToArrayAndFree();
+            }
         }
 
         public void SetWeaponTintIndex(uint weapon, byte tintIndex)
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_SetWeaponTintIndex(NativePointer, weapon, tintIndex);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Player_SetWeaponTintIndex(NativePointer, weapon, tintIndex);
+            }
         }
 
         public byte GetWeaponTintIndex(uint weapon)
         {
-            CheckIfEntityExists();
-            return AltNative.Player.Player_GetWeaponTintIndex(NativePointer, weapon);
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Server.Library.Player_GetWeaponTintIndex(NativePointer, weapon);
+            }
         }
 
         public byte GetCurrentWeaponTintIndex()
         {
-            CheckIfEntityExists();
-            return AltNative.Player.Player_GetCurrentWeaponTintIndex(NativePointer);
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Server.Library.Player_GetCurrentWeaponTintIndex(NativePointer);
+            }
         }
 
         public void Kick(string reason)
         {
-            CheckIfEntityExists();
-            var reasonPtr = AltNative.StringUtils.StringToHGlobalUtf8(reason);
-            AltNative.Player.Player_Kick(NativePointer, reasonPtr);
-            Marshal.FreeHGlobal(reasonPtr);
+            unsafe
+            {
+                CheckIfEntityExists();
+                var reasonPtr = AltNative.StringUtils.StringToHGlobalUtf8(reason);
+                Server.Library.Player_Kick(NativePointer, reasonPtr);
+                Marshal.FreeHGlobal(reasonPtr);
+            }
         }
 
         public void Emit(string eventName, params object[] args)
@@ -617,131 +819,196 @@ namespace AltV.Net.Elements.Entities
 
         protected override void InternalAddRef()
         {
-            AltNative.Player.Player_AddRef(NativePointer);
+            unsafe
+            {
+                Server.Library.Player_AddRef(NativePointer);
+            }
         }
 
         protected override void InternalRemoveRef()
         {
-            AltNative.Player.Player_RemoveRef(NativePointer);
+            unsafe
+            {
+                Server.Library.Player_RemoveRef(NativePointer);
+            }
         }
 
         public void ClearBloodDamage()
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_ClearBloodDamage(NativePointer);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Player_ClearBloodDamage(NativePointer);
+            }
         }
 
         public Cloth GetClothes(byte component)
         {
-            CheckIfEntityExists();
-            var cloth = Cloth.Zero;
-            AltNative.Player.Player_GetClothes(NativePointer, component, ref cloth);
-            return cloth;
+            unsafe
+            {
+                CheckIfEntityExists();
+                var cloth = Cloth.Zero;
+                Server.Library.Player_GetClothes(NativePointer, component, &cloth);
+                return cloth;
+            }
         }
         public void GetClothes(byte component, ref Cloth cloth)
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_GetClothes(NativePointer, component, ref cloth);
+            unsafe
+            {
+                CheckIfEntityExists();
+                var currCloth = Cloth.Zero;
+                Server.Library.Player_GetClothes(NativePointer, component, &currCloth);
+                cloth = currCloth;
+            }
         }
 
         public void SetClothes(byte component, ushort drawable, byte texture, byte palette)
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_SetClothes(NativePointer, component, drawable, texture, palette);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Player_SetClothes(NativePointer, component, drawable, texture, palette);
+            }
         }
 
         public DlcCloth GetDlcClothes(byte component)
         {
-            CheckIfEntityExists();
-            var cloth = DlcCloth.Zero;
-            AltNative.Player.Player_GetDlcClothes(NativePointer, component, ref cloth);
-            return cloth;
+            unsafe
+            {
+                CheckIfEntityExists();
+                var cloth = DlcCloth.Zero;
+                Server.Library.Player_GetDlcClothes(NativePointer, component, &cloth);
+                return cloth;
+            }
         }
         public void GetDlcClothes(byte component, ref DlcCloth cloth)
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_GetDlcClothes(NativePointer, component, ref cloth);
+            unsafe
+            {
+                CheckIfEntityExists();
+                var currCloth = DlcCloth.Zero;
+                Server.Library.Player_GetDlcClothes(NativePointer, component, &currCloth);
+                cloth = currCloth;
+            }
         }
 
         public void SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc)
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_SetDlcClothes(NativePointer, component, drawable, texture, palette, dlc);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Player_SetDlcClothes(NativePointer, component, drawable, texture, palette, dlc);
+            }
         }
 
         public Prop GetProps(byte component)
         {
-            CheckIfEntityExists();
-            var prop = Prop.Zero;
-            AltNative.Player.Player_GetProps(NativePointer, component, ref prop);
-            return prop;
+            unsafe
+            {
+                CheckIfEntityExists();
+                var prop = Prop.Zero;
+                Server.Library.Player_GetProps(NativePointer, component, &prop);
+                return prop;
+            }
         }
         public void GetProps(byte component, ref Prop prop)
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_GetProps(NativePointer, component, ref prop);
+            unsafe
+            {
+                CheckIfEntityExists();
+                var currProp = Prop.Zero;
+                Server.Library.Player_GetProps(NativePointer, component, &currProp);
+                prop = currProp;
+            }
         }
 
         public void SetProps(byte component, ushort drawable, byte texture)
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_SetProps(NativePointer, component, drawable, texture);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Player_SetProps(NativePointer, component, drawable, texture);
+            }
         }
 
         public DlcProp GetDlcProps(byte component)
         {
-            CheckIfEntityExists();
-            var prop = DlcProp.Zero;
-            AltNative.Player.Player_GetDlcProps(NativePointer, component, ref prop);
-            return prop;
+            unsafe
+            {
+                CheckIfEntityExists();
+                var prop = DlcProp.Zero;
+                Server.Library.Player_GetDlcProps(NativePointer, component, &prop);
+                return prop;
+            }
         }
         
         public void GetDlcProps(byte component, ref DlcProp prop)
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_GetDlcProps(NativePointer, component, ref prop);
+            unsafe
+            {
+                CheckIfEntityExists();
+                var currProp = DlcProp.Zero;
+                Server.Library.Player_GetDlcProps(NativePointer, component, &currProp);
+                prop = currProp;
+            }
         }
 
         public void SetDlcProps(byte component, ushort drawable, byte texture, uint dlc)
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_SetDlcProps(NativePointer, component, drawable, texture, dlc);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Player_SetDlcProps(NativePointer, component, drawable, texture, dlc);
+            }
         }
 
         public void ClearProps(byte component)
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_ClearProps(NativePointer, component);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Player_ClearProps(NativePointer, component);
+            }
         }
 
         public bool IsEntityInStreamingRange(IEntity entity)
         {
-            CheckIfEntityExists();
-            if(entity == null) return false;
+            unsafe
+            {
+                CheckIfEntityExists();
+                if(entity == null) return false;
 
-            if(entity.Type == BaseObjectType.Player) 
-                return AltNative.Player.Player_IsEntityInStreamingRange_Player(NativePointer, entity.NativePointer);
-            if(entity.Type == BaseObjectType.Vehicle)
-                return AltNative.Player.Player_IsEntityInStreamingRange_Vehicle(NativePointer, entity.NativePointer);
+                if(entity.Type == BaseObjectType.Player) 
+                    return Server.Library.Player_IsEntityInStreamingRange_Player(NativePointer, entity.NativePointer);
+                if(entity.Type == BaseObjectType.Vehicle)
+                    return Server.Library.Player_IsEntityInStreamingRange_Vehicle(NativePointer, entity.NativePointer);
 
-            return false;
+                return false;
+            }
         }
 
         public override void AttachToEntity(IEntity entity, ushort otherBone, ushort ownBone, Position position, Rotation rotation, bool collision, bool noFixedRotation)
         {
-            CheckIfEntityExists();
-            if(entity == null) return;
+            unsafe
+            {
+                CheckIfEntityExists();
+                if(entity == null) return;
             
-            if(entity.Type == BaseObjectType.Player) 
-                AltNative.Player.Player_AttachToEntity_Player(NativePointer, entity.NativePointer, otherBone, ownBone, position, rotation, collision, noFixedRotation);
-            if(entity.Type == BaseObjectType.Vehicle)
-                AltNative.Player.Player_AttachToEntity_Vehicle(NativePointer, entity.NativePointer, otherBone, ownBone, position, rotation, collision, noFixedRotation);
+                if(entity.Type == BaseObjectType.Player) 
+                    Server.Library.Player_AttachToEntity_Player(NativePointer, entity.NativePointer, otherBone, ownBone, position, rotation, collision, noFixedRotation);
+                if(entity.Type == BaseObjectType.Vehicle)
+                    Server.Library.Player_AttachToEntity_Vehicle(NativePointer, entity.NativePointer, otherBone, ownBone, position, rotation, collision, noFixedRotation);
+            }
         }
 
         public override void Detach()
         {
-            CheckIfEntityExists();
-            AltNative.Player.Player_Detach(NativePointer);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Player_Detach(NativePointer);
+            }
         }
 
         public bool TryCreateRef(out PlayerRef playerRef)
