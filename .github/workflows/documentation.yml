@@ -3,22 +3,26 @@ on:
   push:
     branches:
       - master
-    paths:
-      - 'docs/api/**.md'
-      - 'docs/articles/**.md'
-      - 'docs/apidoc/**.md'
-      - 'docs/images/**'
-      - 'docs/docfx.json'
-      - 'docs/filterConfig.yml'
-      - 'docs/index.md'
-      - 'docs/toc.yml'
-      - 'api/**.cs'
-      - '!docs/build.*'
-      - '!docs/.gitignore'
+    tags:
+      - '*.*.*'
+      - '*.*.*-*'
+    # paths:
+    #   - 'docs/api/**.md'
+    #   - 'docs/articles/**.md'
+    #   - 'docs/apidoc/**.md'
+    #   - 'docs/images/**'
+    #   - 'docs/docfx.json'
+    #   - 'docs/filterConfig.yml'
+    #   - 'docs/index.md'
+    #   - 'docs/toc.yml'
+    #   - 'api/**.cs'
+    #   - '!docs/build.*'
+    #   - '!docs/.gitignore'
 jobs:
   docs:
     name: Update documentation
     runs-on: ubuntu-latest
+    if: "(contains(github.event.ref, '/tags/') && github.event.created) || contains(github.event.head_commit.message, 'Update documentation')"
     steps:
       - name: Dispatch event to altv-docs repo
         uses: peter-evans/repository-dispatch@v1.1.2
