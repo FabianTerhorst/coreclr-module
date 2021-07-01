@@ -7,11 +7,10 @@ using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 public unsafe interface ILibrary
 {
-    public delegate* unmanaged[Cdecl]<ref UIntArray, void> FreeUIntArray { get; }
-    public delegate* unmanaged[Cdecl]<ref PlayerPointerArray, void> FreePlayerPointerArray { get; }
-    public delegate* unmanaged[Cdecl]<ref StringViewArray, void> FreeStringViewArray { get; }
-    public delegate* unmanaged[Cdecl]<ref StringArray, void> FreeStringArray { get; }
-    public delegate* unmanaged[Cdecl]<ref MValueWriter2.MValueArray, void> FreeMValueArray { get; }
+    public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
+    public delegate* unmanaged[Cdecl]<PlayerPointerArray*, void> FreePlayerPointerArray { get; }
+    public delegate* unmanaged[Cdecl]<StringViewArray*, void> FreeStringViewArray { get; }
+    public delegate* unmanaged[Cdecl]<StringArray*, void> FreeStringArray { get; }
     public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
     public delegate* unmanaged[Cdecl]<nint, Position*, void> Blip_GetPosition { get; }
     public delegate* unmanaged[Cdecl]<nint, Position, void> Blip_SetPosition { get; }
@@ -25,7 +24,7 @@ public unsafe interface ILibrary
     public delegate* unmanaged[Cdecl]<nint, void> Blip_RemoveRef { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Blip_IsGlobal { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Blip_IsAttached { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref BaseObjectType, nint> Blip_AttachedTo { get; }
+    public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetType { get; }
     public delegate* unmanaged[Cdecl]<nint, ushort, void> Blip_SetSprite { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetColor { get; }
@@ -47,7 +46,7 @@ public unsafe interface ILibrary
     public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetHeight { get; }
     public delegate* unmanaged[Cdecl]<nint, float> Checkpoint_GetRadius { get; }
     public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetRadius { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref Rgba, void> Checkpoint_GetColor { get; }
+    public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Checkpoint_GetColor { get; }
     public delegate* unmanaged[Cdecl]<nint, Rgba, void> Checkpoint_SetColor { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, bool> Checkpoint_IsPlayerIn { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, bool> Checkpoint_IsVehicleIn { get; }
@@ -79,15 +78,15 @@ public unsafe interface ILibrary
     public delegate* unmanaged[Cdecl]<nint, long> MValueConst_GetInt { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong> MValueConst_GetUInt { get; }
     public delegate* unmanaged[Cdecl]<nint, double> MValueConst_GetDouble { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, ref ulong, bool> MValueConst_GetString { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, ulong*, bool> MValueConst_GetString { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong> MValueConst_GetListSize { get; }
     public delegate* unmanaged[Cdecl]<nint, nint[], bool> MValueConst_GetList { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong> MValueConst_GetDictSize { get; }
     public delegate* unmanaged[Cdecl]<nint, nint[], nint[], bool> MValueConst_GetDict { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref BaseObjectType, nint> MValueConst_GetEntity { get; }
+    public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> MValueConst_GetEntity { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, nint[], ulong, nint> MValueConst_CallFunction { get; }
     public delegate* unmanaged[Cdecl]<nint, Position*, void> MValueConst_GetVector3 { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref Rgba, void> MValueConst_GetRGBA { get; }
+    public delegate* unmanaged[Cdecl]<nint, Rgba*, void> MValueConst_GetRGBA { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong, nint, void> MValueConst_GetByteArray { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong> MValueConst_GetByteArraySize { get; }
     public delegate* unmanaged[Cdecl]<nint, void> MValueConst_AddRef { get; }
@@ -99,9 +98,9 @@ public unsafe interface ILibrary
     public delegate* unmanaged[Cdecl]<nint, uint> Player_GetModel { get; }
     public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetModel { get; }
     public delegate* unmanaged[Cdecl]<nint, Position*, void> Player_GetPosition { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref float, ref float, ref float, ref int, void> Player_GetPositionCoords { get; }
+    public delegate* unmanaged[Cdecl]<nint, float*, float*, float*, int*, void> Player_GetPositionCoords { get; }
     public delegate* unmanaged[Cdecl]<nint, Position, void> Player_SetPosition { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref Rotation, void> Player_GetRotation { get; }
+    public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Player_GetRotation { get; }
     public delegate* unmanaged[Cdecl]<nint, Rotation, void> Player_SetRotation { get; }
     public delegate* unmanaged[Cdecl]<nint, int> Player_GetDimension { get; }
     public delegate* unmanaged[Cdecl]<nint, int, void> Player_SetDimension { get; }
@@ -124,11 +123,11 @@ public unsafe interface ILibrary
     public delegate* unmanaged[Cdecl]<nint, bool> Player_IsConnected { get; }
     public delegate* unmanaged[Cdecl]<nint, Position, uint, void> Player_Spawn { get; }
     public delegate* unmanaged[Cdecl]<nint, void> Player_Despawn { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Player_GetName { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Player_GetName { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetSocialID { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetHwidHash { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetHwidExHash { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Player_GetAuthToken { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Player_GetAuthToken { get; }
     public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetHealth { get; }
     public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetHealth { get; }
     public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxHealth { get; }
@@ -141,7 +140,7 @@ public unsafe interface ILibrary
     public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_AddWeaponComponent { get; }
     public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveWeaponComponent { get; }
     public delegate* unmanaged[Cdecl]<nint, uint, uint, bool> Player_HasWeaponComponent { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref UIntArray, void> Player_GetCurrentWeaponComponents { get; }
+    public delegate* unmanaged[Cdecl]<nint, UIntArray*, void> Player_GetCurrentWeaponComponents { get; }
     public delegate* unmanaged[Cdecl]<nint, uint, byte, void> Player_SetWeaponTintIndex { get; }
     public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_GetWeaponTintIndex { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Player_GetCurrentWeaponTintIndex { get; }
@@ -159,26 +158,26 @@ public unsafe interface ILibrary
     public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxArmor { get; }
     public delegate* unmanaged[Cdecl]<nint, float> Player_GetMoveSpeed { get; }
     public delegate* unmanaged[Cdecl]<nint, Position*, void> Player_GetAimPos { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref Rotation, void> Player_GetHeadRotation { get; }
+    public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Player_GetHeadRotation { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Player_IsInVehicle { get; }
     public delegate* unmanaged[Cdecl]<nint, nint> Player_GetVehicle { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Player_GetSeat { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref BaseObjectType, nint> Player_GetEntityAimingAt { get; }
+    public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Player_GetEntityAimingAt { get; }
     public delegate* unmanaged[Cdecl]<nint, Position*, void> Player_GetEntityAimOffset { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Player_IsFlashlightActive { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, void> Player_Kick { get; }
     public delegate* unmanaged[Cdecl]<nint, uint> Player_GetPing { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Player_GetIP { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref float, ref float, ref float, ref float, ref float, ref float, ref int, void> Player_GetPositionCoords2 { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Player_GetIP { get; }
+    public delegate* unmanaged[Cdecl]<nint, float*, float*, float*, float*, float*, float*, int*, void> Player_GetPositionCoords2 { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, bool, void> Player_SetNetworkOwner { get; }
     public delegate* unmanaged[Cdecl]<nint, void> Player_ClearBloodDamage { get; }
-    public delegate* unmanaged[Cdecl]<nint, byte, ref Cloth, void> Player_GetClothes { get; }
+    public delegate* unmanaged[Cdecl]<nint, byte, Cloth*, void> Player_GetClothes { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, void> Player_SetClothes { get; }
-    public delegate* unmanaged[Cdecl]<nint, byte, ref DlcCloth, void> Player_GetDlcClothes { get; }
+    public delegate* unmanaged[Cdecl]<nint, byte, DlcCloth*, void> Player_GetDlcClothes { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, uint, void> Player_SetDlcClothes { get; }
-    public delegate* unmanaged[Cdecl]<nint, byte, ref Prop, void> Player_GetProps { get; }
+    public delegate* unmanaged[Cdecl]<nint, byte, Prop*, void> Player_GetProps { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, void> Player_SetProps { get; }
-    public delegate* unmanaged[Cdecl]<nint, byte, ref DlcProp, void> Player_GetDlcProps { get; }
+    public delegate* unmanaged[Cdecl]<nint, byte, DlcProp*, void> Player_GetDlcProps { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, uint, void> Player_SetDlcProps { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, void> Player_ClearProps { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, bool> Player_IsEntityInStreamingRange_Player { get; }
@@ -195,10 +194,10 @@ public unsafe interface ILibrary
     public delegate* unmanaged[Cdecl]<nint, nint[], int, void> Resource_GetDependants { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, void> Resource_SetExport { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void> Resource_SetExports { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Resource_GetPath { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Resource_GetName { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Resource_GetMain { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Resource_GetType { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetPath { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetName { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetMain { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetType { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Resource_IsStarted { get; }
     public delegate* unmanaged[Cdecl]<nint, void> Resource_Start { get; }
     public delegate* unmanaged[Cdecl]<nint, void> Resource_Stop { get; }
@@ -213,10 +212,10 @@ public unsafe interface ILibrary
     public delegate* unmanaged[Cdecl]<nint, AltV.Net.Server.TickCallback, void> Server_SubscribeTick { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, AltV.Net.Server.CommandCallback, bool> Server_SubscribeCommand { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, bool> Server_FileExists { get; }
-    public delegate* unmanaged[Cdecl]<nint, nint, ref nint, void> Server_FileRead { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint, nint*, void> Server_FileRead { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Server_TriggerServerEvent { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Server_TriggerClientEvent { get; }
-    public delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ref ushort, nint> Server_CreateVehicle { get; }
+    public delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint> Server_CreateVehicle { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, Position, float, float, Rgba, nint> Server_CreateCheckpoint { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, byte, Position, nint> Server_CreateBlip { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, byte, nint, nint> Server_CreateBlipAttached { get; }
@@ -233,12 +232,12 @@ public unsafe interface ILibrary
     public delegate* unmanaged[Cdecl]<nint, nint, void> Server_DestroyVoiceChannel { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, void> Server_DestroyColShape { get; }
     public delegate* unmanaged[Cdecl]<nint, int> Server_GetNetTime { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Server_GetRootDirectory { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Server_GetRootDirectory { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong> Server_GetPlayerCount { get; }
     public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Server_GetPlayers { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong> Server_GetVehicleCount { get; }
     public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Server_GetVehicles { get; }
-    public delegate* unmanaged[Cdecl]<nint, ushort, ref byte, nint> Server_GetEntityById { get; }
+    public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Server_GetEntityById { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, void> Server_StartResource { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, void> Server_StopResource { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, void> Server_RestartResource { get; }
@@ -268,15 +267,15 @@ public unsafe interface ILibrary
     public delegate* unmanaged[Cdecl]<nint, Rgba, nint> Core_CreateMValueRgba { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong, nint, nint> Core_CreateMValueByteArray { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Core_IsDebug { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, ref ulong, void> Core_GetVersion { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, ref ulong, void> Core_GetBranch { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void> Core_GetVersion { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void> Core_GetBranch { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, void> Core_SetPassword { get; }
     public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
     public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetNetworkOwner { get; }
     public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetModel { get; }
     public delegate* unmanaged[Cdecl]<nint, Position*, void> Vehicle_GetPosition { get; }
     public delegate* unmanaged[Cdecl]<nint, Position, void> Vehicle_SetPosition { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref Rotation, void> Vehicle_GetRotation { get; }
+    public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Vehicle_GetRotation { get; }
     public delegate* unmanaged[Cdecl]<nint, Rotation, void> Vehicle_SetRotation { get; }
     public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetDimension { get; }
     public delegate* unmanaged[Cdecl]<nint, int, void> Vehicle_SetDimension { get; }
@@ -306,12 +305,12 @@ public unsafe interface ILibrary
     public delegate* unmanaged[Cdecl]<nint, byte, bool> Vehicle_SetModKit { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Vehicle_IsPrimaryColorRGB { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetPrimaryColor { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref Rgba, void> Vehicle_GetPrimaryColorRGB { get; }
+    public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Vehicle_GetPrimaryColorRGB { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetPrimaryColor { get; }
     public delegate* unmanaged[Cdecl]<nint, Rgba, void> Vehicle_SetPrimaryColorRGB { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Vehicle_IsSecondaryColorRGB { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSecondaryColor { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref Rgba, void> Vehicle_GetSecondaryColorRGB { get; }
+    public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Vehicle_GetSecondaryColorRGB { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetSecondaryColor { get; }
     public delegate* unmanaged[Cdecl]<nint, Rgba, void> Vehicle_SetSecondaryColorRGB { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetPearlColor { get; }
@@ -323,7 +322,7 @@ public unsafe interface ILibrary
     public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetDashboardColor { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetDashboardColor { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Vehicle_IsTireSmokeColorCustom { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref Rgba, void> Vehicle_GetTireSmokeColor { get; }
+    public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Vehicle_GetTireSmokeColor { get; }
     public delegate* unmanaged[Cdecl]<nint, Rgba, void> Vehicle_SetTireSmokeColor { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelType { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelVariation { get; }
@@ -336,7 +335,7 @@ public unsafe interface ILibrary
     public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetSpecialDarkness { get; }
     public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetNumberplateIndex { get; }
     public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetNumberplateIndex { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Vehicle_GetNumberplateText { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetNumberplateText { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, void> Vehicle_SetNumberplateText { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWindowTint { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetWindowTint { get; }
@@ -345,15 +344,15 @@ public unsafe interface ILibrary
     public delegate* unmanaged[Cdecl]<nint, byte, bool> Vehicle_IsExtraOn { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, bool, void> Vehicle_ToggleExtra { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Vehicle_IsNeonActive { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref bool, ref bool, ref bool, ref bool, void> Vehicle_GetNeonActive { get; }
+    public delegate* unmanaged[Cdecl]<nint, bool*, bool*, bool*, bool*, void> Vehicle_GetNeonActive { get; }
     public delegate* unmanaged[Cdecl]<nint, bool, bool, bool, bool, void> Vehicle_SetNeonActive { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref Rgba, void> Vehicle_GetNeonColor { get; }
+    public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Vehicle_GetNeonColor { get; }
     public delegate* unmanaged[Cdecl]<nint, Rgba, void> Vehicle_SetNeonColor { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetLivery { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetLivery { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetRoofLivery { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetRoofLivery { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Vehicle_GetAppearanceDataBase64 { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetAppearanceDataBase64 { get; }
     public delegate* unmanaged[Cdecl]<nint, string, void> Vehicle_LoadAppearanceDataFromBase64 { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Vehicle_IsEngineOn { get; }
     public delegate* unmanaged[Cdecl]<nint, bool, void> Vehicle_SetEngineOn { get; }
@@ -377,7 +376,7 @@ public unsafe interface ILibrary
     public delegate* unmanaged[Cdecl]<nint, bool> Vehicle_IsFlamethrowerActive { get; }
     public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetLightsMultiplier { get; }
     public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetLightsMultiplier { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Vehicle_GetGameStateBase64 { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetGameStateBase64 { get; }
     public delegate* unmanaged[Cdecl]<nint, string, void> Vehicle_LoadGameStateFromBase64 { get; }
     public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetEngineHealth { get; }
     public delegate* unmanaged[Cdecl]<nint, int, void> Vehicle_SetEngineHealth { get; }
@@ -400,7 +399,7 @@ public unsafe interface ILibrary
     public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyHealth { get; }
     public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetBodyAdditionalHealth { get; }
     public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyAdditionalHealth { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Vehicle_GetHealthDataBase64 { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetHealthDataBase64 { get; }
     public delegate* unmanaged[Cdecl]<nint, string, void> Vehicle_LoadHealthDataFromBase64 { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetPartDamageLevel { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetPartDamageLevel { get; }
@@ -419,13 +418,13 @@ public unsafe interface ILibrary
     public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetArmoredWindowShootCount { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetBumperDamageLevel { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetBumperDamageLevel { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Vehicle_GetDamageDataBase64 { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetDamageDataBase64 { get; }
     public delegate* unmanaged[Cdecl]<nint, string, void> Vehicle_LoadDamageDataFromBase64 { get; }
     public delegate* unmanaged[Cdecl]<nint, bool, void> Vehicle_SetManualEngineControl { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Vehicle_IsManualEngineControl { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Vehicle_GetScriptDataBase64 { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetScriptDataBase64 { get; }
     public delegate* unmanaged[Cdecl]<nint, string, void> Vehicle_LoadScriptDataFromBase64 { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref float, ref float, ref float, ref float, ref float, ref float, ref int, void> Vehicle_GetPositionCoords2 { get; }
+    public delegate* unmanaged[Cdecl]<nint, float*, float*, float*, float*, float*, float*, int*, void> Vehicle_GetPositionCoords2 { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, bool, void> Vehicle_SetNetworkOwner { get; }
     public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetAttached { get; }
     public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetAttachedTo { get; }
@@ -454,11 +453,10 @@ public unsafe class Library : ILibrary
 {
     private const string DllName = "csharp-module";
 
-    public delegate* unmanaged[Cdecl]<ref UIntArray, void> FreeUIntArray { get; }
-    public delegate* unmanaged[Cdecl]<ref PlayerPointerArray, void> FreePlayerPointerArray { get; }
-    public delegate* unmanaged[Cdecl]<ref StringViewArray, void> FreeStringViewArray { get; }
-    public delegate* unmanaged[Cdecl]<ref StringArray, void> FreeStringArray { get; }
-    public delegate* unmanaged[Cdecl]<ref MValueWriter2.MValueArray, void> FreeMValueArray { get; }
+    public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
+    public delegate* unmanaged[Cdecl]<PlayerPointerArray*, void> FreePlayerPointerArray { get; }
+    public delegate* unmanaged[Cdecl]<StringViewArray*, void> FreeStringViewArray { get; }
+    public delegate* unmanaged[Cdecl]<StringArray*, void> FreeStringArray { get; }
     public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
     public delegate* unmanaged[Cdecl]<nint, Position*, void> Blip_GetPosition { get; }
     public delegate* unmanaged[Cdecl]<nint, Position, void> Blip_SetPosition { get; }
@@ -472,7 +470,7 @@ public unsafe class Library : ILibrary
     public delegate* unmanaged[Cdecl]<nint, void> Blip_RemoveRef { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Blip_IsGlobal { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Blip_IsAttached { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref BaseObjectType, nint> Blip_AttachedTo { get; }
+    public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetType { get; }
     public delegate* unmanaged[Cdecl]<nint, ushort, void> Blip_SetSprite { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetColor { get; }
@@ -494,7 +492,7 @@ public unsafe class Library : ILibrary
     public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetHeight { get; }
     public delegate* unmanaged[Cdecl]<nint, float> Checkpoint_GetRadius { get; }
     public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetRadius { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref Rgba, void> Checkpoint_GetColor { get; }
+    public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Checkpoint_GetColor { get; }
     public delegate* unmanaged[Cdecl]<nint, Rgba, void> Checkpoint_SetColor { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, bool> Checkpoint_IsPlayerIn { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, bool> Checkpoint_IsVehicleIn { get; }
@@ -526,15 +524,15 @@ public unsafe class Library : ILibrary
     public delegate* unmanaged[Cdecl]<nint, long> MValueConst_GetInt { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong> MValueConst_GetUInt { get; }
     public delegate* unmanaged[Cdecl]<nint, double> MValueConst_GetDouble { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, ref ulong, bool> MValueConst_GetString { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, ulong*, bool> MValueConst_GetString { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong> MValueConst_GetListSize { get; }
     public delegate* unmanaged[Cdecl]<nint, nint[], bool> MValueConst_GetList { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong> MValueConst_GetDictSize { get; }
     public delegate* unmanaged[Cdecl]<nint, nint[], nint[], bool> MValueConst_GetDict { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref BaseObjectType, nint> MValueConst_GetEntity { get; }
+    public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> MValueConst_GetEntity { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, nint[], ulong, nint> MValueConst_CallFunction { get; }
     public delegate* unmanaged[Cdecl]<nint, Position*, void> MValueConst_GetVector3 { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref Rgba, void> MValueConst_GetRGBA { get; }
+    public delegate* unmanaged[Cdecl]<nint, Rgba*, void> MValueConst_GetRGBA { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong, nint, void> MValueConst_GetByteArray { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong> MValueConst_GetByteArraySize { get; }
     public delegate* unmanaged[Cdecl]<nint, void> MValueConst_AddRef { get; }
@@ -546,9 +544,9 @@ public unsafe class Library : ILibrary
     public delegate* unmanaged[Cdecl]<nint, uint> Player_GetModel { get; }
     public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetModel { get; }
     public delegate* unmanaged[Cdecl]<nint, Position*, void> Player_GetPosition { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref float, ref float, ref float, ref int, void> Player_GetPositionCoords { get; }
+    public delegate* unmanaged[Cdecl]<nint, float*, float*, float*, int*, void> Player_GetPositionCoords { get; }
     public delegate* unmanaged[Cdecl]<nint, Position, void> Player_SetPosition { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref Rotation, void> Player_GetRotation { get; }
+    public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Player_GetRotation { get; }
     public delegate* unmanaged[Cdecl]<nint, Rotation, void> Player_SetRotation { get; }
     public delegate* unmanaged[Cdecl]<nint, int> Player_GetDimension { get; }
     public delegate* unmanaged[Cdecl]<nint, int, void> Player_SetDimension { get; }
@@ -571,11 +569,11 @@ public unsafe class Library : ILibrary
     public delegate* unmanaged[Cdecl]<nint, bool> Player_IsConnected { get; }
     public delegate* unmanaged[Cdecl]<nint, Position, uint, void> Player_Spawn { get; }
     public delegate* unmanaged[Cdecl]<nint, void> Player_Despawn { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Player_GetName { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Player_GetName { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetSocialID { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetHwidHash { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetHwidExHash { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Player_GetAuthToken { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Player_GetAuthToken { get; }
     public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetHealth { get; }
     public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetHealth { get; }
     public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxHealth { get; }
@@ -588,7 +586,7 @@ public unsafe class Library : ILibrary
     public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_AddWeaponComponent { get; }
     public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveWeaponComponent { get; }
     public delegate* unmanaged[Cdecl]<nint, uint, uint, bool> Player_HasWeaponComponent { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref UIntArray, void> Player_GetCurrentWeaponComponents { get; }
+    public delegate* unmanaged[Cdecl]<nint, UIntArray*, void> Player_GetCurrentWeaponComponents { get; }
     public delegate* unmanaged[Cdecl]<nint, uint, byte, void> Player_SetWeaponTintIndex { get; }
     public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_GetWeaponTintIndex { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Player_GetCurrentWeaponTintIndex { get; }
@@ -606,26 +604,26 @@ public unsafe class Library : ILibrary
     public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxArmor { get; }
     public delegate* unmanaged[Cdecl]<nint, float> Player_GetMoveSpeed { get; }
     public delegate* unmanaged[Cdecl]<nint, Position*, void> Player_GetAimPos { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref Rotation, void> Player_GetHeadRotation { get; }
+    public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Player_GetHeadRotation { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Player_IsInVehicle { get; }
     public delegate* unmanaged[Cdecl]<nint, nint> Player_GetVehicle { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Player_GetSeat { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref BaseObjectType, nint> Player_GetEntityAimingAt { get; }
+    public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Player_GetEntityAimingAt { get; }
     public delegate* unmanaged[Cdecl]<nint, Position*, void> Player_GetEntityAimOffset { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Player_IsFlashlightActive { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, void> Player_Kick { get; }
     public delegate* unmanaged[Cdecl]<nint, uint> Player_GetPing { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Player_GetIP { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref float, ref float, ref float, ref float, ref float, ref float, ref int, void> Player_GetPositionCoords2 { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Player_GetIP { get; }
+    public delegate* unmanaged[Cdecl]<nint, float*, float*, float*, float*, float*, float*, int*, void> Player_GetPositionCoords2 { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, bool, void> Player_SetNetworkOwner { get; }
     public delegate* unmanaged[Cdecl]<nint, void> Player_ClearBloodDamage { get; }
-    public delegate* unmanaged[Cdecl]<nint, byte, ref Cloth, void> Player_GetClothes { get; }
+    public delegate* unmanaged[Cdecl]<nint, byte, Cloth*, void> Player_GetClothes { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, void> Player_SetClothes { get; }
-    public delegate* unmanaged[Cdecl]<nint, byte, ref DlcCloth, void> Player_GetDlcClothes { get; }
+    public delegate* unmanaged[Cdecl]<nint, byte, DlcCloth*, void> Player_GetDlcClothes { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, uint, void> Player_SetDlcClothes { get; }
-    public delegate* unmanaged[Cdecl]<nint, byte, ref Prop, void> Player_GetProps { get; }
+    public delegate* unmanaged[Cdecl]<nint, byte, Prop*, void> Player_GetProps { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, void> Player_SetProps { get; }
-    public delegate* unmanaged[Cdecl]<nint, byte, ref DlcProp, void> Player_GetDlcProps { get; }
+    public delegate* unmanaged[Cdecl]<nint, byte, DlcProp*, void> Player_GetDlcProps { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, uint, void> Player_SetDlcProps { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, void> Player_ClearProps { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, bool> Player_IsEntityInStreamingRange_Player { get; }
@@ -642,10 +640,10 @@ public unsafe class Library : ILibrary
     public delegate* unmanaged[Cdecl]<nint, nint[], int, void> Resource_GetDependants { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, void> Resource_SetExport { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void> Resource_SetExports { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Resource_GetPath { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Resource_GetName { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Resource_GetMain { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Resource_GetType { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetPath { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetName { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetMain { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetType { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Resource_IsStarted { get; }
     public delegate* unmanaged[Cdecl]<nint, void> Resource_Start { get; }
     public delegate* unmanaged[Cdecl]<nint, void> Resource_Stop { get; }
@@ -660,10 +658,10 @@ public unsafe class Library : ILibrary
     public delegate* unmanaged[Cdecl]<nint, AltV.Net.Server.TickCallback, void> Server_SubscribeTick { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, AltV.Net.Server.CommandCallback, bool> Server_SubscribeCommand { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, bool> Server_FileExists { get; }
-    public delegate* unmanaged[Cdecl]<nint, nint, ref nint, void> Server_FileRead { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint, nint*, void> Server_FileRead { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Server_TriggerServerEvent { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Server_TriggerClientEvent { get; }
-    public delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ref ushort, nint> Server_CreateVehicle { get; }
+    public delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint> Server_CreateVehicle { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, Position, float, float, Rgba, nint> Server_CreateCheckpoint { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, byte, Position, nint> Server_CreateBlip { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, byte, nint, nint> Server_CreateBlipAttached { get; }
@@ -680,12 +678,12 @@ public unsafe class Library : ILibrary
     public delegate* unmanaged[Cdecl]<nint, nint, void> Server_DestroyVoiceChannel { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, void> Server_DestroyColShape { get; }
     public delegate* unmanaged[Cdecl]<nint, int> Server_GetNetTime { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Server_GetRootDirectory { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Server_GetRootDirectory { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong> Server_GetPlayerCount { get; }
     public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Server_GetPlayers { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong> Server_GetVehicleCount { get; }
     public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Server_GetVehicles { get; }
-    public delegate* unmanaged[Cdecl]<nint, ushort, ref byte, nint> Server_GetEntityById { get; }
+    public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Server_GetEntityById { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, void> Server_StartResource { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, void> Server_StopResource { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, void> Server_RestartResource { get; }
@@ -715,15 +713,15 @@ public unsafe class Library : ILibrary
     public delegate* unmanaged[Cdecl]<nint, Rgba, nint> Core_CreateMValueRgba { get; }
     public delegate* unmanaged[Cdecl]<nint, ulong, nint, nint> Core_CreateMValueByteArray { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Core_IsDebug { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, ref ulong, void> Core_GetVersion { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, ref ulong, void> Core_GetBranch { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void> Core_GetVersion { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void> Core_GetBranch { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, void> Core_SetPassword { get; }
     public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
     public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetNetworkOwner { get; }
     public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetModel { get; }
     public delegate* unmanaged[Cdecl]<nint, Position*, void> Vehicle_GetPosition { get; }
     public delegate* unmanaged[Cdecl]<nint, Position, void> Vehicle_SetPosition { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref Rotation, void> Vehicle_GetRotation { get; }
+    public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Vehicle_GetRotation { get; }
     public delegate* unmanaged[Cdecl]<nint, Rotation, void> Vehicle_SetRotation { get; }
     public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetDimension { get; }
     public delegate* unmanaged[Cdecl]<nint, int, void> Vehicle_SetDimension { get; }
@@ -753,12 +751,12 @@ public unsafe class Library : ILibrary
     public delegate* unmanaged[Cdecl]<nint, byte, bool> Vehicle_SetModKit { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Vehicle_IsPrimaryColorRGB { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetPrimaryColor { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref Rgba, void> Vehicle_GetPrimaryColorRGB { get; }
+    public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Vehicle_GetPrimaryColorRGB { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetPrimaryColor { get; }
     public delegate* unmanaged[Cdecl]<nint, Rgba, void> Vehicle_SetPrimaryColorRGB { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Vehicle_IsSecondaryColorRGB { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSecondaryColor { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref Rgba, void> Vehicle_GetSecondaryColorRGB { get; }
+    public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Vehicle_GetSecondaryColorRGB { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetSecondaryColor { get; }
     public delegate* unmanaged[Cdecl]<nint, Rgba, void> Vehicle_SetSecondaryColorRGB { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetPearlColor { get; }
@@ -770,7 +768,7 @@ public unsafe class Library : ILibrary
     public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetDashboardColor { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetDashboardColor { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Vehicle_IsTireSmokeColorCustom { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref Rgba, void> Vehicle_GetTireSmokeColor { get; }
+    public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Vehicle_GetTireSmokeColor { get; }
     public delegate* unmanaged[Cdecl]<nint, Rgba, void> Vehicle_SetTireSmokeColor { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelType { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelVariation { get; }
@@ -783,7 +781,7 @@ public unsafe class Library : ILibrary
     public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetSpecialDarkness { get; }
     public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetNumberplateIndex { get; }
     public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetNumberplateIndex { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Vehicle_GetNumberplateText { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetNumberplateText { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, void> Vehicle_SetNumberplateText { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWindowTint { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetWindowTint { get; }
@@ -792,15 +790,15 @@ public unsafe class Library : ILibrary
     public delegate* unmanaged[Cdecl]<nint, byte, bool> Vehicle_IsExtraOn { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, bool, void> Vehicle_ToggleExtra { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Vehicle_IsNeonActive { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref bool, ref bool, ref bool, ref bool, void> Vehicle_GetNeonActive { get; }
+    public delegate* unmanaged[Cdecl]<nint, bool*, bool*, bool*, bool*, void> Vehicle_GetNeonActive { get; }
     public delegate* unmanaged[Cdecl]<nint, bool, bool, bool, bool, void> Vehicle_SetNeonActive { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref Rgba, void> Vehicle_GetNeonColor { get; }
+    public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Vehicle_GetNeonColor { get; }
     public delegate* unmanaged[Cdecl]<nint, Rgba, void> Vehicle_SetNeonColor { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetLivery { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetLivery { get; }
     public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetRoofLivery { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetRoofLivery { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Vehicle_GetAppearanceDataBase64 { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetAppearanceDataBase64 { get; }
     public delegate* unmanaged[Cdecl]<nint, string, void> Vehicle_LoadAppearanceDataFromBase64 { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Vehicle_IsEngineOn { get; }
     public delegate* unmanaged[Cdecl]<nint, bool, void> Vehicle_SetEngineOn { get; }
@@ -824,7 +822,7 @@ public unsafe class Library : ILibrary
     public delegate* unmanaged[Cdecl]<nint, bool> Vehicle_IsFlamethrowerActive { get; }
     public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetLightsMultiplier { get; }
     public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetLightsMultiplier { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Vehicle_GetGameStateBase64 { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetGameStateBase64 { get; }
     public delegate* unmanaged[Cdecl]<nint, string, void> Vehicle_LoadGameStateFromBase64 { get; }
     public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetEngineHealth { get; }
     public delegate* unmanaged[Cdecl]<nint, int, void> Vehicle_SetEngineHealth { get; }
@@ -847,7 +845,7 @@ public unsafe class Library : ILibrary
     public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyHealth { get; }
     public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetBodyAdditionalHealth { get; }
     public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyAdditionalHealth { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Vehicle_GetHealthDataBase64 { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetHealthDataBase64 { get; }
     public delegate* unmanaged[Cdecl]<nint, string, void> Vehicle_LoadHealthDataFromBase64 { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetPartDamageLevel { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetPartDamageLevel { get; }
@@ -866,13 +864,13 @@ public unsafe class Library : ILibrary
     public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetArmoredWindowShootCount { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetBumperDamageLevel { get; }
     public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetBumperDamageLevel { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Vehicle_GetDamageDataBase64 { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetDamageDataBase64 { get; }
     public delegate* unmanaged[Cdecl]<nint, string, void> Vehicle_LoadDamageDataFromBase64 { get; }
     public delegate* unmanaged[Cdecl]<nint, bool, void> Vehicle_SetManualEngineControl { get; }
     public delegate* unmanaged[Cdecl]<nint, bool> Vehicle_IsManualEngineControl { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref nint, void> Vehicle_GetScriptDataBase64 { get; }
+    public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetScriptDataBase64 { get; }
     public delegate* unmanaged[Cdecl]<nint, string, void> Vehicle_LoadScriptDataFromBase64 { get; }
-    public delegate* unmanaged[Cdecl]<nint, ref float, ref float, ref float, ref float, ref float, ref float, ref int, void> Vehicle_GetPositionCoords2 { get; }
+    public delegate* unmanaged[Cdecl]<nint, float*, float*, float*, float*, float*, float*, int*, void> Vehicle_GetPositionCoords2 { get; }
     public delegate* unmanaged[Cdecl]<nint, nint, bool, void> Vehicle_SetNetworkOwner { get; }
     public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetAttached { get; }
     public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetAttachedTo { get; }
@@ -898,11 +896,10 @@ public unsafe class Library : ILibrary
     public Library() 
     {
         var handle = NativeLibrary.Load(DllName);
-        FreeUIntArray = (delegate* unmanaged[Cdecl]<ref UIntArray, void>) NativeLibrary.GetExport(handle, "FreeUIntArray");
-        FreePlayerPointerArray = (delegate* unmanaged[Cdecl]<ref PlayerPointerArray, void>) NativeLibrary.GetExport(handle, "FreePlayerPointerArray");
-        FreeStringViewArray = (delegate* unmanaged[Cdecl]<ref StringViewArray, void>) NativeLibrary.GetExport(handle, "FreeStringViewArray");
-        FreeStringArray = (delegate* unmanaged[Cdecl]<ref StringArray, void>) NativeLibrary.GetExport(handle, "FreeStringArray");
-        FreeMValueArray = (delegate* unmanaged[Cdecl]<ref MValueWriter2.MValueArray, void>) NativeLibrary.GetExport(handle, "FreeMValueArray");
+        FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) NativeLibrary.GetExport(handle, "FreeUIntArray");
+        FreePlayerPointerArray = (delegate* unmanaged[Cdecl]<PlayerPointerArray*, void>) NativeLibrary.GetExport(handle, "FreePlayerPointerArray");
+        FreeStringViewArray = (delegate* unmanaged[Cdecl]<StringViewArray*, void>) NativeLibrary.GetExport(handle, "FreeStringViewArray");
+        FreeStringArray = (delegate* unmanaged[Cdecl]<StringArray*, void>) NativeLibrary.GetExport(handle, "FreeStringArray");
         FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeCharArray");
         Blip_GetPosition = (delegate* unmanaged[Cdecl]<nint, Position*, void>) NativeLibrary.GetExport(handle, "Blip_GetPosition");
         Blip_SetPosition = (delegate* unmanaged[Cdecl]<nint, Position, void>) NativeLibrary.GetExport(handle, "Blip_SetPosition");
@@ -916,7 +913,7 @@ public unsafe class Library : ILibrary
         Blip_RemoveRef = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Blip_RemoveRef");
         Blip_IsGlobal = (delegate* unmanaged[Cdecl]<nint, bool>) NativeLibrary.GetExport(handle, "Blip_IsGlobal");
         Blip_IsAttached = (delegate* unmanaged[Cdecl]<nint, bool>) NativeLibrary.GetExport(handle, "Blip_IsAttached");
-        Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, ref BaseObjectType, nint>) NativeLibrary.GetExport(handle, "Blip_AttachedTo");
+        Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) NativeLibrary.GetExport(handle, "Blip_AttachedTo");
         Blip_GetType = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetType");
         Blip_SetSprite = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Blip_SetSprite");
         Blip_SetColor = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetColor");
@@ -938,7 +935,7 @@ public unsafe class Library : ILibrary
         Checkpoint_SetHeight = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetHeight");
         Checkpoint_GetRadius = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Checkpoint_GetRadius");
         Checkpoint_SetRadius = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetRadius");
-        Checkpoint_GetColor = (delegate* unmanaged[Cdecl]<nint, ref Rgba, void>) NativeLibrary.GetExport(handle, "Checkpoint_GetColor");
+        Checkpoint_GetColor = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) NativeLibrary.GetExport(handle, "Checkpoint_GetColor");
         Checkpoint_SetColor = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetColor");
         Checkpoint_IsPlayerIn = (delegate* unmanaged[Cdecl]<nint, nint, bool>) NativeLibrary.GetExport(handle, "Checkpoint_IsPlayerIn");
         Checkpoint_IsVehicleIn = (delegate* unmanaged[Cdecl]<nint, nint, bool>) NativeLibrary.GetExport(handle, "Checkpoint_IsVehicleIn");
@@ -970,15 +967,15 @@ public unsafe class Library : ILibrary
         MValueConst_GetInt = (delegate* unmanaged[Cdecl]<nint, long>) NativeLibrary.GetExport(handle, "MValueConst_GetInt");
         MValueConst_GetUInt = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "MValueConst_GetUInt");
         MValueConst_GetDouble = (delegate* unmanaged[Cdecl]<nint, double>) NativeLibrary.GetExport(handle, "MValueConst_GetDouble");
-        MValueConst_GetString = (delegate* unmanaged[Cdecl]<nint, ref nint, ref ulong, bool>) NativeLibrary.GetExport(handle, "MValueConst_GetString");
+        MValueConst_GetString = (delegate* unmanaged[Cdecl]<nint, nint*, ulong*, bool>) NativeLibrary.GetExport(handle, "MValueConst_GetString");
         MValueConst_GetListSize = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "MValueConst_GetListSize");
         MValueConst_GetList = (delegate* unmanaged[Cdecl]<nint, nint[], bool>) NativeLibrary.GetExport(handle, "MValueConst_GetList");
         MValueConst_GetDictSize = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "MValueConst_GetDictSize");
         MValueConst_GetDict = (delegate* unmanaged[Cdecl]<nint, nint[], nint[], bool>) NativeLibrary.GetExport(handle, "MValueConst_GetDict");
-        MValueConst_GetEntity = (delegate* unmanaged[Cdecl]<nint, ref BaseObjectType, nint>) NativeLibrary.GetExport(handle, "MValueConst_GetEntity");
+        MValueConst_GetEntity = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) NativeLibrary.GetExport(handle, "MValueConst_GetEntity");
         MValueConst_CallFunction = (delegate* unmanaged[Cdecl]<nint, nint, nint[], ulong, nint>) NativeLibrary.GetExport(handle, "MValueConst_CallFunction");
         MValueConst_GetVector3 = (delegate* unmanaged[Cdecl]<nint, Position*, void>) NativeLibrary.GetExport(handle, "MValueConst_GetVector3");
-        MValueConst_GetRGBA = (delegate* unmanaged[Cdecl]<nint, ref Rgba, void>) NativeLibrary.GetExport(handle, "MValueConst_GetRGBA");
+        MValueConst_GetRGBA = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) NativeLibrary.GetExport(handle, "MValueConst_GetRGBA");
         MValueConst_GetByteArray = (delegate* unmanaged[Cdecl]<nint, ulong, nint, void>) NativeLibrary.GetExport(handle, "MValueConst_GetByteArray");
         MValueConst_GetByteArraySize = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "MValueConst_GetByteArraySize");
         MValueConst_AddRef = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "MValueConst_AddRef");
@@ -990,9 +987,9 @@ public unsafe class Library : ILibrary
         Player_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Player_GetModel");
         Player_SetModel = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Player_SetModel");
         Player_GetPosition = (delegate* unmanaged[Cdecl]<nint, Position*, void>) NativeLibrary.GetExport(handle, "Player_GetPosition");
-        Player_GetPositionCoords = (delegate* unmanaged[Cdecl]<nint, ref float, ref float, ref float, ref int, void>) NativeLibrary.GetExport(handle, "Player_GetPositionCoords");
+        Player_GetPositionCoords = (delegate* unmanaged[Cdecl]<nint, float*, float*, float*, int*, void>) NativeLibrary.GetExport(handle, "Player_GetPositionCoords");
         Player_SetPosition = (delegate* unmanaged[Cdecl]<nint, Position, void>) NativeLibrary.GetExport(handle, "Player_SetPosition");
-        Player_GetRotation = (delegate* unmanaged[Cdecl]<nint, ref Rotation, void>) NativeLibrary.GetExport(handle, "Player_GetRotation");
+        Player_GetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation*, void>) NativeLibrary.GetExport(handle, "Player_GetRotation");
         Player_SetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation, void>) NativeLibrary.GetExport(handle, "Player_SetRotation");
         Player_GetDimension = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Player_GetDimension");
         Player_SetDimension = (delegate* unmanaged[Cdecl]<nint, int, void>) NativeLibrary.GetExport(handle, "Player_SetDimension");
@@ -1015,11 +1012,11 @@ public unsafe class Library : ILibrary
         Player_IsConnected = (delegate* unmanaged[Cdecl]<nint, bool>) NativeLibrary.GetExport(handle, "Player_IsConnected");
         Player_Spawn = (delegate* unmanaged[Cdecl]<nint, Position, uint, void>) NativeLibrary.GetExport(handle, "Player_Spawn");
         Player_Despawn = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Player_Despawn");
-        Player_GetName = (delegate* unmanaged[Cdecl]<nint, ref nint, void>) NativeLibrary.GetExport(handle, "Player_GetName");
+        Player_GetName = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Player_GetName");
         Player_GetSocialID = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Player_GetSocialID");
         Player_GetHwidHash = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Player_GetHwidHash");
         Player_GetHwidExHash = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Player_GetHwidExHash");
-        Player_GetAuthToken = (delegate* unmanaged[Cdecl]<nint, ref nint, void>) NativeLibrary.GetExport(handle, "Player_GetAuthToken");
+        Player_GetAuthToken = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Player_GetAuthToken");
         Player_GetHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetHealth");
         Player_SetHealth = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Player_SetHealth");
         Player_GetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetMaxHealth");
@@ -1032,7 +1029,7 @@ public unsafe class Library : ILibrary
         Player_AddWeaponComponent = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) NativeLibrary.GetExport(handle, "Player_AddWeaponComponent");
         Player_RemoveWeaponComponent = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) NativeLibrary.GetExport(handle, "Player_RemoveWeaponComponent");
         Player_HasWeaponComponent = (delegate* unmanaged[Cdecl]<nint, uint, uint, bool>) NativeLibrary.GetExport(handle, "Player_HasWeaponComponent");
-        Player_GetCurrentWeaponComponents = (delegate* unmanaged[Cdecl]<nint, ref UIntArray, void>) NativeLibrary.GetExport(handle, "Player_GetCurrentWeaponComponents");
+        Player_GetCurrentWeaponComponents = (delegate* unmanaged[Cdecl]<nint, UIntArray*, void>) NativeLibrary.GetExport(handle, "Player_GetCurrentWeaponComponents");
         Player_SetWeaponTintIndex = (delegate* unmanaged[Cdecl]<nint, uint, byte, void>) NativeLibrary.GetExport(handle, "Player_SetWeaponTintIndex");
         Player_GetWeaponTintIndex = (delegate* unmanaged[Cdecl]<nint, uint, byte>) NativeLibrary.GetExport(handle, "Player_GetWeaponTintIndex");
         Player_GetCurrentWeaponTintIndex = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_GetCurrentWeaponTintIndex");
@@ -1050,26 +1047,26 @@ public unsafe class Library : ILibrary
         Player_SetMaxArmor = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Player_SetMaxArmor");
         Player_GetMoveSpeed = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Player_GetMoveSpeed");
         Player_GetAimPos = (delegate* unmanaged[Cdecl]<nint, Position*, void>) NativeLibrary.GetExport(handle, "Player_GetAimPos");
-        Player_GetHeadRotation = (delegate* unmanaged[Cdecl]<nint, ref Rotation, void>) NativeLibrary.GetExport(handle, "Player_GetHeadRotation");
+        Player_GetHeadRotation = (delegate* unmanaged[Cdecl]<nint, Rotation*, void>) NativeLibrary.GetExport(handle, "Player_GetHeadRotation");
         Player_IsInVehicle = (delegate* unmanaged[Cdecl]<nint, bool>) NativeLibrary.GetExport(handle, "Player_IsInVehicle");
         Player_GetVehicle = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Player_GetVehicle");
         Player_GetSeat = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_GetSeat");
-        Player_GetEntityAimingAt = (delegate* unmanaged[Cdecl]<nint, ref BaseObjectType, nint>) NativeLibrary.GetExport(handle, "Player_GetEntityAimingAt");
+        Player_GetEntityAimingAt = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) NativeLibrary.GetExport(handle, "Player_GetEntityAimingAt");
         Player_GetEntityAimOffset = (delegate* unmanaged[Cdecl]<nint, Position*, void>) NativeLibrary.GetExport(handle, "Player_GetEntityAimOffset");
         Player_IsFlashlightActive = (delegate* unmanaged[Cdecl]<nint, bool>) NativeLibrary.GetExport(handle, "Player_IsFlashlightActive");
         Player_Kick = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Player_Kick");
         Player_GetPing = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Player_GetPing");
-        Player_GetIP = (delegate* unmanaged[Cdecl]<nint, ref nint, void>) NativeLibrary.GetExport(handle, "Player_GetIP");
-        Player_GetPositionCoords2 = (delegate* unmanaged[Cdecl]<nint, ref float, ref float, ref float, ref float, ref float, ref float, ref int, void>) NativeLibrary.GetExport(handle, "Player_GetPositionCoords2");
+        Player_GetIP = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Player_GetIP");
+        Player_GetPositionCoords2 = (delegate* unmanaged[Cdecl]<nint, float*, float*, float*, float*, float*, float*, int*, void>) NativeLibrary.GetExport(handle, "Player_GetPositionCoords2");
         Player_SetNetworkOwner = (delegate* unmanaged[Cdecl]<nint, nint, bool, void>) NativeLibrary.GetExport(handle, "Player_SetNetworkOwner");
         Player_ClearBloodDamage = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Player_ClearBloodDamage");
-        Player_GetClothes = (delegate* unmanaged[Cdecl]<nint, byte, ref Cloth, void>) NativeLibrary.GetExport(handle, "Player_GetClothes");
+        Player_GetClothes = (delegate* unmanaged[Cdecl]<nint, byte, Cloth*, void>) NativeLibrary.GetExport(handle, "Player_GetClothes");
         Player_SetClothes = (delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, void>) NativeLibrary.GetExport(handle, "Player_SetClothes");
-        Player_GetDlcClothes = (delegate* unmanaged[Cdecl]<nint, byte, ref DlcCloth, void>) NativeLibrary.GetExport(handle, "Player_GetDlcClothes");
+        Player_GetDlcClothes = (delegate* unmanaged[Cdecl]<nint, byte, DlcCloth*, void>) NativeLibrary.GetExport(handle, "Player_GetDlcClothes");
         Player_SetDlcClothes = (delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, uint, void>) NativeLibrary.GetExport(handle, "Player_SetDlcClothes");
-        Player_GetProps = (delegate* unmanaged[Cdecl]<nint, byte, ref Prop, void>) NativeLibrary.GetExport(handle, "Player_GetProps");
+        Player_GetProps = (delegate* unmanaged[Cdecl]<nint, byte, Prop*, void>) NativeLibrary.GetExport(handle, "Player_GetProps");
         Player_SetProps = (delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, void>) NativeLibrary.GetExport(handle, "Player_SetProps");
-        Player_GetDlcProps = (delegate* unmanaged[Cdecl]<nint, byte, ref DlcProp, void>) NativeLibrary.GetExport(handle, "Player_GetDlcProps");
+        Player_GetDlcProps = (delegate* unmanaged[Cdecl]<nint, byte, DlcProp*, void>) NativeLibrary.GetExport(handle, "Player_GetDlcProps");
         Player_SetDlcProps = (delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, uint, void>) NativeLibrary.GetExport(handle, "Player_SetDlcProps");
         Player_ClearProps = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Player_ClearProps");
         Player_IsEntityInStreamingRange_Player = (delegate* unmanaged[Cdecl]<nint, nint, bool>) NativeLibrary.GetExport(handle, "Player_IsEntityInStreamingRange_Player");
@@ -1086,10 +1083,10 @@ public unsafe class Library : ILibrary
         Resource_GetDependants = (delegate* unmanaged[Cdecl]<nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Resource_GetDependants");
         Resource_SetExport = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, void>) NativeLibrary.GetExport(handle, "Resource_SetExport");
         Resource_SetExports = (delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void>) NativeLibrary.GetExport(handle, "Resource_SetExports");
-        Resource_GetPath = (delegate* unmanaged[Cdecl]<nint, ref nint, void>) NativeLibrary.GetExport(handle, "Resource_GetPath");
-        Resource_GetName = (delegate* unmanaged[Cdecl]<nint, ref nint, void>) NativeLibrary.GetExport(handle, "Resource_GetName");
-        Resource_GetMain = (delegate* unmanaged[Cdecl]<nint, ref nint, void>) NativeLibrary.GetExport(handle, "Resource_GetMain");
-        Resource_GetType = (delegate* unmanaged[Cdecl]<nint, ref nint, void>) NativeLibrary.GetExport(handle, "Resource_GetType");
+        Resource_GetPath = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Resource_GetPath");
+        Resource_GetName = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Resource_GetName");
+        Resource_GetMain = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Resource_GetMain");
+        Resource_GetType = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Resource_GetType");
         Resource_IsStarted = (delegate* unmanaged[Cdecl]<nint, bool>) NativeLibrary.GetExport(handle, "Resource_IsStarted");
         Resource_Start = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Resource_Start");
         Resource_Stop = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Resource_Stop");
@@ -1104,10 +1101,10 @@ public unsafe class Library : ILibrary
         Server_SubscribeTick = (delegate* unmanaged[Cdecl]<nint, AltV.Net.Server.TickCallback, void>) NativeLibrary.GetExport(handle, "Server_SubscribeTick");
         Server_SubscribeCommand = (delegate* unmanaged[Cdecl]<nint, nint, AltV.Net.Server.CommandCallback, bool>) NativeLibrary.GetExport(handle, "Server_SubscribeCommand");
         Server_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, bool>) NativeLibrary.GetExport(handle, "Server_FileExists");
-        Server_FileRead = (delegate* unmanaged[Cdecl]<nint, nint, ref nint, void>) NativeLibrary.GetExport(handle, "Server_FileRead");
+        Server_FileRead = (delegate* unmanaged[Cdecl]<nint, nint, nint*, void>) NativeLibrary.GetExport(handle, "Server_FileRead");
         Server_TriggerServerEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Server_TriggerServerEvent");
         Server_TriggerClientEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Server_TriggerClientEvent");
-        Server_CreateVehicle = (delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ref ushort, nint>) NativeLibrary.GetExport(handle, "Server_CreateVehicle");
+        Server_CreateVehicle = (delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint>) NativeLibrary.GetExport(handle, "Server_CreateVehicle");
         Server_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Position, float, float, Rgba, nint>) NativeLibrary.GetExport(handle, "Server_CreateCheckpoint");
         Server_CreateBlip = (delegate* unmanaged[Cdecl]<nint, nint, byte, Position, nint>) NativeLibrary.GetExport(handle, "Server_CreateBlip");
         Server_CreateBlipAttached = (delegate* unmanaged[Cdecl]<nint, nint, byte, nint, nint>) NativeLibrary.GetExport(handle, "Server_CreateBlipAttached");
@@ -1124,12 +1121,12 @@ public unsafe class Library : ILibrary
         Server_DestroyVoiceChannel = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Server_DestroyVoiceChannel");
         Server_DestroyColShape = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Server_DestroyColShape");
         Server_GetNetTime = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Server_GetNetTime");
-        Server_GetRootDirectory = (delegate* unmanaged[Cdecl]<nint, ref nint, void>) NativeLibrary.GetExport(handle, "Server_GetRootDirectory");
+        Server_GetRootDirectory = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Server_GetRootDirectory");
         Server_GetPlayerCount = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Server_GetPlayerCount");
         Server_GetPlayers = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) NativeLibrary.GetExport(handle, "Server_GetPlayers");
         Server_GetVehicleCount = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Server_GetVehicleCount");
         Server_GetVehicles = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) NativeLibrary.GetExport(handle, "Server_GetVehicles");
-        Server_GetEntityById = (delegate* unmanaged[Cdecl]<nint, ushort, ref byte, nint>) NativeLibrary.GetExport(handle, "Server_GetEntityById");
+        Server_GetEntityById = (delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint>) NativeLibrary.GetExport(handle, "Server_GetEntityById");
         Server_StartResource = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Server_StartResource");
         Server_StopResource = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Server_StopResource");
         Server_RestartResource = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Server_RestartResource");
@@ -1159,15 +1156,15 @@ public unsafe class Library : ILibrary
         Core_CreateMValueRgba = (delegate* unmanaged[Cdecl]<nint, Rgba, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueRgba");
         Core_CreateMValueByteArray = (delegate* unmanaged[Cdecl]<nint, ulong, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueByteArray");
         Core_IsDebug = (delegate* unmanaged[Cdecl]<nint, bool>) NativeLibrary.GetExport(handle, "Core_IsDebug");
-        Core_GetVersion = (delegate* unmanaged[Cdecl]<nint, ref nint, ref ulong, void>) NativeLibrary.GetExport(handle, "Core_GetVersion");
-        Core_GetBranch = (delegate* unmanaged[Cdecl]<nint, ref nint, ref ulong, void>) NativeLibrary.GetExport(handle, "Core_GetBranch");
+        Core_GetVersion = (delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void>) NativeLibrary.GetExport(handle, "Core_GetVersion");
+        Core_GetBranch = (delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void>) NativeLibrary.GetExport(handle, "Core_GetBranch");
         Core_SetPassword = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_SetPassword");
         Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetID");
         Vehicle_GetNetworkOwner = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetNetworkOwner");
         Vehicle_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Vehicle_GetModel");
         Vehicle_GetPosition = (delegate* unmanaged[Cdecl]<nint, Position*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetPosition");
         Vehicle_SetPosition = (delegate* unmanaged[Cdecl]<nint, Position, void>) NativeLibrary.GetExport(handle, "Vehicle_SetPosition");
-        Vehicle_GetRotation = (delegate* unmanaged[Cdecl]<nint, ref Rotation, void>) NativeLibrary.GetExport(handle, "Vehicle_GetRotation");
+        Vehicle_GetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetRotation");
         Vehicle_SetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation, void>) NativeLibrary.GetExport(handle, "Vehicle_SetRotation");
         Vehicle_GetDimension = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Vehicle_GetDimension");
         Vehicle_SetDimension = (delegate* unmanaged[Cdecl]<nint, int, void>) NativeLibrary.GetExport(handle, "Vehicle_SetDimension");
@@ -1197,12 +1194,12 @@ public unsafe class Library : ILibrary
         Vehicle_SetModKit = (delegate* unmanaged[Cdecl]<nint, byte, bool>) NativeLibrary.GetExport(handle, "Vehicle_SetModKit");
         Vehicle_IsPrimaryColorRGB = (delegate* unmanaged[Cdecl]<nint, bool>) NativeLibrary.GetExport(handle, "Vehicle_IsPrimaryColorRGB");
         Vehicle_GetPrimaryColor = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetPrimaryColor");
-        Vehicle_GetPrimaryColorRGB = (delegate* unmanaged[Cdecl]<nint, ref Rgba, void>) NativeLibrary.GetExport(handle, "Vehicle_GetPrimaryColorRGB");
+        Vehicle_GetPrimaryColorRGB = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetPrimaryColorRGB");
         Vehicle_SetPrimaryColor = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetPrimaryColor");
         Vehicle_SetPrimaryColorRGB = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) NativeLibrary.GetExport(handle, "Vehicle_SetPrimaryColorRGB");
         Vehicle_IsSecondaryColorRGB = (delegate* unmanaged[Cdecl]<nint, bool>) NativeLibrary.GetExport(handle, "Vehicle_IsSecondaryColorRGB");
         Vehicle_GetSecondaryColor = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetSecondaryColor");
-        Vehicle_GetSecondaryColorRGB = (delegate* unmanaged[Cdecl]<nint, ref Rgba, void>) NativeLibrary.GetExport(handle, "Vehicle_GetSecondaryColorRGB");
+        Vehicle_GetSecondaryColorRGB = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetSecondaryColorRGB");
         Vehicle_SetSecondaryColor = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetSecondaryColor");
         Vehicle_SetSecondaryColorRGB = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) NativeLibrary.GetExport(handle, "Vehicle_SetSecondaryColorRGB");
         Vehicle_GetPearlColor = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetPearlColor");
@@ -1214,7 +1211,7 @@ public unsafe class Library : ILibrary
         Vehicle_GetDashboardColor = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetDashboardColor");
         Vehicle_SetDashboardColor = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetDashboardColor");
         Vehicle_IsTireSmokeColorCustom = (delegate* unmanaged[Cdecl]<nint, bool>) NativeLibrary.GetExport(handle, "Vehicle_IsTireSmokeColorCustom");
-        Vehicle_GetTireSmokeColor = (delegate* unmanaged[Cdecl]<nint, ref Rgba, void>) NativeLibrary.GetExport(handle, "Vehicle_GetTireSmokeColor");
+        Vehicle_GetTireSmokeColor = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetTireSmokeColor");
         Vehicle_SetTireSmokeColor = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) NativeLibrary.GetExport(handle, "Vehicle_SetTireSmokeColor");
         Vehicle_GetWheelType = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetWheelType");
         Vehicle_GetWheelVariation = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetWheelVariation");
@@ -1227,7 +1224,7 @@ public unsafe class Library : ILibrary
         Vehicle_SetSpecialDarkness = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetSpecialDarkness");
         Vehicle_GetNumberplateIndex = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Vehicle_GetNumberplateIndex");
         Vehicle_SetNumberplateIndex = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Vehicle_SetNumberplateIndex");
-        Vehicle_GetNumberplateText = (delegate* unmanaged[Cdecl]<nint, ref nint, void>) NativeLibrary.GetExport(handle, "Vehicle_GetNumberplateText");
+        Vehicle_GetNumberplateText = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetNumberplateText");
         Vehicle_SetNumberplateText = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Vehicle_SetNumberplateText");
         Vehicle_GetWindowTint = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetWindowTint");
         Vehicle_SetWindowTint = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetWindowTint");
@@ -1236,15 +1233,15 @@ public unsafe class Library : ILibrary
         Vehicle_IsExtraOn = (delegate* unmanaged[Cdecl]<nint, byte, bool>) NativeLibrary.GetExport(handle, "Vehicle_IsExtraOn");
         Vehicle_ToggleExtra = (delegate* unmanaged[Cdecl]<nint, byte, bool, void>) NativeLibrary.GetExport(handle, "Vehicle_ToggleExtra");
         Vehicle_IsNeonActive = (delegate* unmanaged[Cdecl]<nint, bool>) NativeLibrary.GetExport(handle, "Vehicle_IsNeonActive");
-        Vehicle_GetNeonActive = (delegate* unmanaged[Cdecl]<nint, ref bool, ref bool, ref bool, ref bool, void>) NativeLibrary.GetExport(handle, "Vehicle_GetNeonActive");
+        Vehicle_GetNeonActive = (delegate* unmanaged[Cdecl]<nint, bool*, bool*, bool*, bool*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetNeonActive");
         Vehicle_SetNeonActive = (delegate* unmanaged[Cdecl]<nint, bool, bool, bool, bool, void>) NativeLibrary.GetExport(handle, "Vehicle_SetNeonActive");
-        Vehicle_GetNeonColor = (delegate* unmanaged[Cdecl]<nint, ref Rgba, void>) NativeLibrary.GetExport(handle, "Vehicle_GetNeonColor");
+        Vehicle_GetNeonColor = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetNeonColor");
         Vehicle_SetNeonColor = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) NativeLibrary.GetExport(handle, "Vehicle_SetNeonColor");
         Vehicle_GetLivery = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetLivery");
         Vehicle_SetLivery = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetLivery");
         Vehicle_GetRoofLivery = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetRoofLivery");
         Vehicle_SetRoofLivery = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetRoofLivery");
-        Vehicle_GetAppearanceDataBase64 = (delegate* unmanaged[Cdecl]<nint, ref nint, void>) NativeLibrary.GetExport(handle, "Vehicle_GetAppearanceDataBase64");
+        Vehicle_GetAppearanceDataBase64 = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetAppearanceDataBase64");
         Vehicle_LoadAppearanceDataFromBase64 = (delegate* unmanaged[Cdecl]<nint, string, void>) NativeLibrary.GetExport(handle, "Vehicle_LoadAppearanceDataFromBase64");
         Vehicle_IsEngineOn = (delegate* unmanaged[Cdecl]<nint, bool>) NativeLibrary.GetExport(handle, "Vehicle_IsEngineOn");
         Vehicle_SetEngineOn = (delegate* unmanaged[Cdecl]<nint, bool, void>) NativeLibrary.GetExport(handle, "Vehicle_SetEngineOn");
@@ -1268,7 +1265,7 @@ public unsafe class Library : ILibrary
         Vehicle_IsFlamethrowerActive = (delegate* unmanaged[Cdecl]<nint, bool>) NativeLibrary.GetExport(handle, "Vehicle_IsFlamethrowerActive");
         Vehicle_GetLightsMultiplier = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Vehicle_GetLightsMultiplier");
         Vehicle_SetLightsMultiplier = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Vehicle_SetLightsMultiplier");
-        Vehicle_GetGameStateBase64 = (delegate* unmanaged[Cdecl]<nint, ref nint, void>) NativeLibrary.GetExport(handle, "Vehicle_GetGameStateBase64");
+        Vehicle_GetGameStateBase64 = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetGameStateBase64");
         Vehicle_LoadGameStateFromBase64 = (delegate* unmanaged[Cdecl]<nint, string, void>) NativeLibrary.GetExport(handle, "Vehicle_LoadGameStateFromBase64");
         Vehicle_GetEngineHealth = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Vehicle_GetEngineHealth");
         Vehicle_SetEngineHealth = (delegate* unmanaged[Cdecl]<nint, int, void>) NativeLibrary.GetExport(handle, "Vehicle_SetEngineHealth");
@@ -1291,7 +1288,7 @@ public unsafe class Library : ILibrary
         Vehicle_SetBodyHealth = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Vehicle_SetBodyHealth");
         Vehicle_GetBodyAdditionalHealth = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Vehicle_GetBodyAdditionalHealth");
         Vehicle_SetBodyAdditionalHealth = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Vehicle_SetBodyAdditionalHealth");
-        Vehicle_GetHealthDataBase64 = (delegate* unmanaged[Cdecl]<nint, ref nint, void>) NativeLibrary.GetExport(handle, "Vehicle_GetHealthDataBase64");
+        Vehicle_GetHealthDataBase64 = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetHealthDataBase64");
         Vehicle_LoadHealthDataFromBase64 = (delegate* unmanaged[Cdecl]<nint, string, void>) NativeLibrary.GetExport(handle, "Vehicle_LoadHealthDataFromBase64");
         Vehicle_GetPartDamageLevel = (delegate* unmanaged[Cdecl]<nint, byte, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetPartDamageLevel");
         Vehicle_SetPartDamageLevel = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetPartDamageLevel");
@@ -1310,13 +1307,13 @@ public unsafe class Library : ILibrary
         Vehicle_SetArmoredWindowShootCount = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetArmoredWindowShootCount");
         Vehicle_GetBumperDamageLevel = (delegate* unmanaged[Cdecl]<nint, byte, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetBumperDamageLevel");
         Vehicle_SetBumperDamageLevel = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetBumperDamageLevel");
-        Vehicle_GetDamageDataBase64 = (delegate* unmanaged[Cdecl]<nint, ref nint, void>) NativeLibrary.GetExport(handle, "Vehicle_GetDamageDataBase64");
+        Vehicle_GetDamageDataBase64 = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetDamageDataBase64");
         Vehicle_LoadDamageDataFromBase64 = (delegate* unmanaged[Cdecl]<nint, string, void>) NativeLibrary.GetExport(handle, "Vehicle_LoadDamageDataFromBase64");
         Vehicle_SetManualEngineControl = (delegate* unmanaged[Cdecl]<nint, bool, void>) NativeLibrary.GetExport(handle, "Vehicle_SetManualEngineControl");
         Vehicle_IsManualEngineControl = (delegate* unmanaged[Cdecl]<nint, bool>) NativeLibrary.GetExport(handle, "Vehicle_IsManualEngineControl");
-        Vehicle_GetScriptDataBase64 = (delegate* unmanaged[Cdecl]<nint, ref nint, void>) NativeLibrary.GetExport(handle, "Vehicle_GetScriptDataBase64");
+        Vehicle_GetScriptDataBase64 = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetScriptDataBase64");
         Vehicle_LoadScriptDataFromBase64 = (delegate* unmanaged[Cdecl]<nint, string, void>) NativeLibrary.GetExport(handle, "Vehicle_LoadScriptDataFromBase64");
-        Vehicle_GetPositionCoords2 = (delegate* unmanaged[Cdecl]<nint, ref float, ref float, ref float, ref float, ref float, ref float, ref int, void>) NativeLibrary.GetExport(handle, "Vehicle_GetPositionCoords2");
+        Vehicle_GetPositionCoords2 = (delegate* unmanaged[Cdecl]<nint, float*, float*, float*, float*, float*, float*, int*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetPositionCoords2");
         Vehicle_SetNetworkOwner = (delegate* unmanaged[Cdecl]<nint, nint, bool, void>) NativeLibrary.GetExport(handle, "Vehicle_SetNetworkOwner");
         Vehicle_GetAttached = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetAttached");
         Vehicle_GetAttachedTo = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetAttachedTo");

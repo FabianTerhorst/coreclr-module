@@ -22,9 +22,9 @@ void FreeStringArray(alt::Array<alt::String>* array) {
     array->~Array<alt::String>();
 }
 
-void FreeMValueArray(alt::Array<alt::MValue>* array) {
+/*void FreeMValueArray(alt::Array<alt::MValue>* array) {
     array->~Array<alt::MValue>();
-}
+}*/
 
 void FreePlayerPointerArray(alt::Array<alt::IPlayer*>* array) {
     array->~Array<alt::IPlayer*>();
