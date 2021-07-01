@@ -10,8 +10,8 @@
 
 using alt::Array;
 
-void FreeUIntArray(alt::Array<uint16_t>* array) {
-    array->~Array<uint16_t>();
+void FreeUIntArray(alt::Array<uint32_t>* array) {
+    array->~Array<uint32_t>();
 }
 
 void FreeStringViewArray(alt::Array<alt::StringView>* array) {
