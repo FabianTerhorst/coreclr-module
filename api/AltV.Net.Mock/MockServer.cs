@@ -178,6 +178,11 @@ namespace AltV.Net.Mock
             TriggerClientEvent(player, Marshal.PtrToStringUTF8(eventNamePtr), ref args);
         }*/
 
+        public void TriggerClientEventForAll(string eventName, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
         public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
@@ -500,6 +505,31 @@ namespace AltV.Net.Mock
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventForAll(IntPtr eventNamePtr, MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventForAll(string eventName, MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventForAll(IntPtr eventNamePtr, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventForAll(string eventName, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerClientEventForAll(IntPtr eventNamePtr, params object[] args)
         {
             throw new NotImplementedException();
         }

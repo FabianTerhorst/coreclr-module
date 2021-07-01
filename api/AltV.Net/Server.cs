@@ -338,6 +338,63 @@ namespace AltV.Net
             }
         }
 
+        public void TriggerClientEventForAll(IntPtr eventNamePtr, MValueConst[] args)
+        {
+            var size = args.Length;
+            var mValuePointers = new IntPtr[size];
+            for (var i = 0; i < size; i++)
+            {
+                mValuePointers[i] = args[i].nativePointer;
+            }
+
+            AltNative.Server.Server_TriggerClientEventForAll(NativePointer, eventNamePtr, mValuePointers, args.Length);
+        }
+
+        public void TriggerClientEventForAll(string eventName, MValueConst[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerClientEventForAll(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        public void TriggerClientEventForAll(IntPtr eventNamePtr, IntPtr[] args)
+        {
+            AltNative.Server.Server_TriggerClientEventForAll(NativePointer, eventNamePtr, args, args.Length);
+        }
+
+        public void TriggerClientEventForAll(string eventName, IntPtr[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerClientEventForAll(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        public void TriggerClientEventForAll(IntPtr eventNamePtr, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerClientEventForAll(eventNamePtr, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+
+        public void TriggerClientEventForAll(string eventName, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerClientEventForAll(eventName, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+        
         public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
             CheckIfCallIsValid();
