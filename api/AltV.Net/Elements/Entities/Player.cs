@@ -66,7 +66,10 @@ namespace AltV.Net.Elements.Entities
             set
             {
                 CheckIfEntityExists();
-                AltNative.Player.Player_SetPosition(NativePointer, value);
+                unsafe
+                {
+                    Server.Library.Player_SetPosition(NativePointer, value);
+                }
             }
         }
 
