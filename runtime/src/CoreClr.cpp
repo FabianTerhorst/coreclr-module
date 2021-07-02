@@ -42,6 +42,40 @@ CoreClr::CoreClr(alt::ICore* core) {
 #else
         core->LogInfo(std::string(buffer));
 #endif
+
+#ifdef _WIN32
+        std::wstring bufferWString(buffer);
+        _coreClrLib = LoadLibraryEx(std::string(bufferWString.begin(), bufferWString.end()).c_str(), nullptr, 0);
+        if (_coreClrLib == nullptr) {
+            core->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll"));
+            return;
+        }
+
+        _initializeFxr = (hostfxr_initialize_for_runtime_config_fn) GetProcAddress(_coreClrLib, "hostfxr_initialize_for_runtime_config");
+        _getDelegate = (hostfxr_get_runtime_delegate_fn) GetProcAddress(_coreClrLib, "hostfxr_get_runtime_delegate");
+        _runApp = (hostfxr_run_app_fn) GetProcAddress(_coreClrLib, "hostfxr_run_app");
+        _initForCmd = (hostfxr_initialize_for_dotnet_command_line_fn)  GetProcAddress(_coreClrLib, "hostfxr_initialize_for_dotnet_command_line");
+        _closeFxr = (hostfxr_close_fn) GetProcAddress(_coreClrLib, "hostfxr_close");
+#else
+    _coreClrLib = dlopen(buffer, RTLD_NOW | RTLD_LOCAL);
+    if (_coreClrLib == nullptr) {
+        core->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll [") + fullPath + "]: " + dlerror());
+        return;
+    }
+    _initializeFxr = (hostfxr_initialize_for_runtime_config_fn) dlsym(_coreClrLib,
+                                                                      "hostfxr_initialize_for_runtime_config");
+    _getDelegate = (hostfxr_get_runtime_delegate_fn) dlsym(_coreClrLib, "hostfxr_get_runtime_delegate");
+    _runApp = (hostfxr_run_app_fn) dlsym(_coreClrLib, "hostfxr_run_app");
+    _initForCmd = (hostfxr_initialize_for_dotnet_command_line_fn) dlsym(_coreClrLib,
+                                                                        "hostfxr_initialize_for_dotnet_command_line");
+    _closeFxr = (hostfxr_close_fn) dlsym(_coreClrLib, "hostfxr_close");
+#endif
+        if (_initializeFxr == nullptr || _getDelegate == nullptr || _closeFxr == nullptr || _runApp == nullptr ||
+            _initForCmd == nullptr) {
+            core->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll methods"));
+            return;
+        }
+        return;
     }
 
     // Load hostfxr and get desired exports
