@@ -59,7 +59,7 @@ CoreClr::CoreClr(alt::ICore* core) {
 #else
     _coreClrLib = dlopen(buffer, RTLD_NOW | RTLD_LOCAL);
     if (_coreClrLib == nullptr) {
-        core->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll [") + fullPath + "]: " + dlerror());
+        core->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll [") + std::string(buffer) + "]: " + dlerror());
         return;
     }
     _initializeFxr = (hostfxr_initialize_for_runtime_config_fn) dlsym(_coreClrLib,
