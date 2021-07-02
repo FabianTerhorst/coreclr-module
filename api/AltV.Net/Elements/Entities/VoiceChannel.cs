@@ -9,46 +9,67 @@ namespace AltV.Net.Elements.Entities
     {
         public void AddPlayer(IPlayer player)
         {
-            CheckIfEntityExists();
-            AltNative.VoiceChannel.VoiceChannel_AddPlayer(NativePointer, player.NativePointer);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.VoiceChannel_AddPlayer(NativePointer, player.NativePointer);
+            }
         }
 
         public void RemovePlayer(IPlayer player)
         {
-            CheckIfEntityExists();
-            AltNative.VoiceChannel.VoiceChannel_RemovePlayer(NativePointer, player.NativePointer);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.VoiceChannel_RemovePlayer(NativePointer, player.NativePointer);
+            }
         }
 
         public void MutePlayer(IPlayer player)
         {
-            CheckIfEntityExists();
-            AltNative.VoiceChannel.VoiceChannel_MutePlayer(NativePointer, player.NativePointer);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.VoiceChannel_MutePlayer(NativePointer, player.NativePointer);
+            }
         }
 
         public void UnmutePlayer(IPlayer player)
         {
-            CheckIfEntityExists();
-            AltNative.VoiceChannel.VoiceChannel_UnmutePlayer(NativePointer, player.NativePointer);
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.VoiceChannel_UnmutePlayer(NativePointer, player.NativePointer);
+            }
         }
 
         public bool HasPlayer(IPlayer player)
         {
-            CheckIfEntityExists();
-            return AltNative.VoiceChannel.VoiceChannel_HasPlayer(NativePointer, player.NativePointer);
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Server.Library.VoiceChannel_HasPlayer(NativePointer, player.NativePointer);
+            }
         }
 
         public bool IsPlayerMuted(IPlayer player)
         {
-            CheckIfEntityExists();
-            return AltNative.VoiceChannel.VoiceChannel_IsPlayerMuted(NativePointer, player.NativePointer);
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Server.Library.VoiceChannel_IsPlayerMuted(NativePointer, player.NativePointer);
+            }
         }
 
         public bool IsSpatial
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.VoiceChannel.VoiceChannel_IsSpatial(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.VoiceChannel_IsSpatial(NativePointer);
+                }
             }
         }
 
@@ -56,8 +77,11 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.VoiceChannel.VoiceChannel_GetMaxDistance(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.VoiceChannel_GetMaxDistance(NativePointer);
+                }
             }
         }
 
@@ -67,31 +91,43 @@ namespace AltV.Net.Elements.Entities
 
         public override void GetMetaData(string key, out MValueConst value)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            value = new MValueConst(AltNative.VoiceChannel.VoiceChannel_GetMetaData(NativePointer, stringPtr));
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                value = new MValueConst(Server.Library.VoiceChannel_GetMetaData(NativePointer, stringPtr));
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
 
         public override void SetMetaData(string key, in MValueConst value)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.VoiceChannel.VoiceChannel_SetMetaData(NativePointer, stringPtr, value.nativePointer);
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Server.Library.VoiceChannel_SetMetaData(NativePointer, stringPtr, value.nativePointer);
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
         
         public override bool HasMetaData(string key)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            var result = AltNative.VoiceChannel.VoiceChannel_HasMetaData(NativePointer, stringPtr);
-            Marshal.FreeHGlobal(stringPtr);
-            return result;
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var result = Server.Library.VoiceChannel_HasMetaData(NativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+                return result;
+            }
         }
 
         public override void DeleteMetaData(string key)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.VoiceChannel.VoiceChannel_DeleteMetaData(NativePointer, stringPtr);
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Server.Library.VoiceChannel_DeleteMetaData(NativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
 
         public void Remove()
@@ -101,12 +137,18 @@ namespace AltV.Net.Elements.Entities
         
         protected override void InternalAddRef()
         {
-            AltNative.VoiceChannel.VoiceChannel_AddRef(NativePointer);
+            unsafe
+            {
+                Server.Library.VoiceChannel_AddRef(NativePointer);
+            }
         }
 
         protected override void InternalRemoveRef()
         {
-            AltNative.VoiceChannel.VoiceChannel_RemoveRef(NativePointer);
+            unsafe
+            {
+                Server.Library.VoiceChannel_RemoveRef(NativePointer);
+            }
         }
     }
 }

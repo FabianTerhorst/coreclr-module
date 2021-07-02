@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
@@ -39,7 +37,7 @@ namespace AltV.Net.Mock
 
         public string Version => "";
 
-        public INativeResource Resource => new NativeResource(IntPtr.Zero, IntPtr.Zero);
+        public INativeResource Resource => new NativeResource(null, IntPtr.Zero, IntPtr.Zero);
 
         internal MockServer(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
@@ -316,22 +314,22 @@ namespace AltV.Net.Mock
 
         public INativeResource GetResource(string name)
         {
-            return new NativeResource(IntPtr.Zero, IntPtr.Zero);
+            return new NativeResource(null, IntPtr.Zero, IntPtr.Zero);
         }
 
         public INativeResource GetResource(IntPtr resourcePointer)
         {
-            return new NativeResource(IntPtr.Zero, IntPtr.Zero);
+            return new NativeResource(null, IntPtr.Zero, IntPtr.Zero);
         }
 
-        public IEnumerable<IPlayer> GetPlayers()
+        public IPlayer[] GetPlayers()
         {
-            return new List<IPlayer>();
+            return Array.Empty<IPlayer>();
         }
 
-        public IEnumerable<IVehicle> GetVehicles()
+        public IVehicle[] GetVehicles()
         {
-            return new List<IVehicle>();
+            return Array.Empty<IVehicle>();
         }
 
         public void CreateMValueVector3(out MValueConst mValue, Position value)

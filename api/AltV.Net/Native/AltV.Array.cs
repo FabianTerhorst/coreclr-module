@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AltV.Net.Elements.Args;
 
@@ -56,7 +57,7 @@ namespace AltV.Net.Native
     }*/
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct StringViewArray : IDisposable
+    public struct StringViewArray
     {
         public IntPtr data; // Array of StringView's
         public ulong size;
@@ -94,15 +95,10 @@ namespace AltV.Net.Native
             offset += StringView.Size;
             return value;
         }
-
-        public void Dispose()
-        {
-            AltNative.FreeStringViewArray(ref this);
-        }
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    public struct StringArray : IDisposable
+    /*[StructLayout(LayoutKind.Sequential)]
+    public struct StringArray
     {
         public IntPtr data; // Array of StringView's
         public ulong size;
@@ -147,15 +143,10 @@ namespace AltV.Net.Native
             size--;
             offset += StringView.Size;
         }
-
-        public void Dispose()
-        {
-            AltNative.FreeStringArray(ref this);
-        }
-    }
+    }*/
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct UIntArray : IDisposable
+    public struct UIntArray
     {
         public IntPtr data; // Array of uint's
         public ulong size;
@@ -170,7 +161,7 @@ namespace AltV.Net.Native
             capacity = 0
         };
 
-        public uint[] ToArrayAndFree()
+        public uint[] ToArray()
         {
             var value = data;
             var values = new uint[size];
@@ -181,8 +172,6 @@ namespace AltV.Net.Native
                 values[i] = ReadUInt32(buffer, data, 0);
                 value += UInt32Size;
             }
-
-            Dispose();
 
             size = 0;
 
@@ -202,14 +191,9 @@ namespace AltV.Net.Native
             Marshal.Copy(new IntPtr(ptr.ToInt32() + ofs), buffer, 0, 4);
             return BitConverter.ToUInt32(buffer, 0);
         }
-
-        public void Dispose()
-        {
-            AltNative.FreeUIntArray(ref this);
-        }
     }
 
-    [StructLayout(LayoutKind.Sequential)]
+    /*[StructLayout(LayoutKind.Sequential)]
     public struct PlayerPointerArray : IDisposable
     {
         public IntPtr data; // Array of player pointers
@@ -245,5 +229,5 @@ namespace AltV.Net.Native
         {
             AltNative.FreePlayerPointerArray(ref this);
         }
-    }
+    }*/
 }

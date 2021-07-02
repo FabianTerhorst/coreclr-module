@@ -11,9 +11,6 @@ namespace AltV.Net.Native
     public unsafe interface ILibrary
     {
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
-        public delegate* unmanaged[Cdecl]<PlayerPointerArray*, void> FreePlayerPointerArray { get; }
-        public delegate* unmanaged[Cdecl]<StringViewArray*, void> FreeStringViewArray { get; }
-        public delegate* unmanaged[Cdecl]<StringArray*, void> FreeStringArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, Position*, void> Blip_GetPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, void> Blip_SetPosition { get; }
@@ -458,9 +455,6 @@ namespace AltV.Net.Native
         private const string DllName = "csharp-module";
 
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
-        public delegate* unmanaged[Cdecl]<PlayerPointerArray*, void> FreePlayerPointerArray { get; }
-        public delegate* unmanaged[Cdecl]<StringViewArray*, void> FreeStringViewArray { get; }
-        public delegate* unmanaged[Cdecl]<StringArray*, void> FreeStringArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, Position*, void> Blip_GetPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, void> Blip_SetPosition { get; }
@@ -902,9 +896,6 @@ namespace AltV.Net.Native
         {
             var handle = NativeLibrary.Load(DllName);
             FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) NativeLibrary.GetExport(handle, "FreeUIntArray");
-            FreePlayerPointerArray = (delegate* unmanaged[Cdecl]<PlayerPointerArray*, void>) NativeLibrary.GetExport(handle, "FreePlayerPointerArray");
-            FreeStringViewArray = (delegate* unmanaged[Cdecl]<StringViewArray*, void>) NativeLibrary.GetExport(handle, "FreeStringViewArray");
-            FreeStringArray = (delegate* unmanaged[Cdecl]<StringArray*, void>) NativeLibrary.GetExport(handle, "FreeStringArray");
             FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeCharArray");
             Blip_GetPosition = (delegate* unmanaged[Cdecl]<nint, Position*, void>) NativeLibrary.GetExport(handle, "Blip_GetPosition");
             Blip_SetPosition = (delegate* unmanaged[Cdecl]<nint, Position, void>) NativeLibrary.GetExport(handle, "Blip_SetPosition");

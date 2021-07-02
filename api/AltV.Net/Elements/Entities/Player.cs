@@ -769,7 +769,8 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 var array = UIntArray.Nil;
                 Server.Library.Player_GetCurrentWeaponComponents(NativePointer, &array);
-                weaponComponents = array.ToArrayAndFree();
+                weaponComponents = array.ToArray();
+                Server.Library.FreeUIntArray(&array);
             }
         }
 

@@ -129,9 +129,9 @@ namespace AltV.Net
 
         IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation);
 
-        IEnumerable<IPlayer> GetPlayers();
+        IPlayer[] GetPlayers();
 
-        IEnumerable<IVehicle> GetVehicles();
+        IVehicle[] GetVehicles();
 
         IEntity GetEntityById(ushort id);
 

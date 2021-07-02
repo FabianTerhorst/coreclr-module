@@ -93,7 +93,7 @@ namespace AltV.Net.CodeGen
             ["alt::Array<alt::MValue>*"] = "MValueWriter2.MValueArray*",
             ["alt::MValueConst*"] = "nint",
             ["alt::MValueConst*[]"] = "nint[]",
-            ["const char*[]"] = "nint[]",
+            ["const char*[]"] = "nint[]",//string[]
             ["alt::MValue*[]"] = "nint[]",
             ["alt::IPlayer*[]"] = "nint[]",
             ["alt::IVehicle*[]"] = "nint[]",

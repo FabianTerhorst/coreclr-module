@@ -12,15 +12,21 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                var position = Position.Zero;
-                AltNative.ColShape.ColShape_GetPosition(NativePointer, ref position);
-                return position;
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var position = Position.Zero;
+                    Server.Library.ColShape_GetPosition(NativePointer, &position);
+                    return position;
+                }
             }
             set
             {
-                CheckIfEntityExists();
-                AltNative.ColShape.ColShape_SetPosition(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.ColShape_SetPosition(NativePointer, value);
+                }
             }
         }
 
@@ -28,13 +34,19 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.ColShape.ColShape_GetDimension(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.ColShape_GetDimension(NativePointer);
+                }
             }
             set
             {
-                CheckIfEntityExists();
-                AltNative.ColShape.ColShape_SetDimension(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.ColShape_SetDimension(NativePointer, value);
+                }
             }
         }
 
@@ -42,51 +54,72 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.ColShape.ColShape_IsPlayersOnly(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.ColShape_IsPlayersOnly(NativePointer);
+                }
             }
             set
             {
-                CheckIfEntityExists();
-                AltNative.ColShape.ColShape_SetPlayersOnly(NativePointer, value); 
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.ColShape_SetPlayersOnly(NativePointer, value);
+                }
             }
         }
 
         public override void GetMetaData(string key, out MValueConst value)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            value = new MValueConst(AltNative.ColShape.ColShape_GetMetaData(NativePointer, stringPtr));
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                value = new MValueConst(Server.Library.ColShape_GetMetaData(NativePointer, stringPtr));
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
 
         public override void SetMetaData(string key, in MValueConst value)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.ColShape.ColShape_SetMetaData(NativePointer, stringPtr, value.nativePointer);
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Server.Library.ColShape_SetMetaData(NativePointer, stringPtr, value.nativePointer);
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
         
         public override bool HasMetaData(string key)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            var result = AltNative.ColShape.ColShape_HasMetaData(NativePointer, stringPtr);
-            Marshal.FreeHGlobal(stringPtr);
-            return result;
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var result = Server.Library.ColShape_HasMetaData(NativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+                return result;
+            }
         }
 
         public override void DeleteMetaData(string key)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.ColShape.ColShape_DeleteMetaData(NativePointer, stringPtr);
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Server.Library.ColShape_DeleteMetaData(NativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
 
         public ColShapeType ColShapeType
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.ColShape.ColShape_GetColShapeType(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return (ColShapeType) Server.Library.ColShape_GetColShapeType(NativePointer);
+                }
             }
         }
 
@@ -102,9 +135,17 @@ namespace AltV.Net.Elements.Entities
             switch (entity)
             {
                 case IPlayer player:
-                    return AltNative.ColShape.ColShape_IsPlayerIn(NativePointer, player.NativePointer);
+                    unsafe
+                    {
+                        return Server.Library.ColShape_IsPlayerIn(NativePointer, player.NativePointer);
+                    }
+
                 case IVehicle vehicle:
-                    return AltNative.ColShape.ColShape_IsVehicleIn(NativePointer, vehicle.NativePointer);
+                    unsafe
+                    {
+                        return Server.Library.ColShape_IsVehicleIn(NativePointer, vehicle.NativePointer);
+                    }
+
                 default:
                     return false;
             }
@@ -112,24 +153,30 @@ namespace AltV.Net.Elements.Entities
 
         public bool IsPlayerIn(IPlayer player)
         {
-            CheckIfEntityExists();
-            if (!player.Exists)
+            unsafe
             {
-                throw new EntityRemovedException(player);
-            }
+                CheckIfEntityExists();
+                if (!player.Exists)
+                {
+                    throw new EntityRemovedException(player);
+                }
 
-            return AltNative.ColShape.ColShape_IsPlayerIn(NativePointer, player.NativePointer);
+                return Server.Library.ColShape_IsPlayerIn(NativePointer, player.NativePointer);
+            }
         }
 
         public bool IsVehicleIn(IVehicle vehicle)
         {
-            CheckIfEntityExists();
-            if (!vehicle.Exists)
+            unsafe
             {
-                throw new EntityRemovedException(vehicle);
-            }
+                CheckIfEntityExists();
+                if (!vehicle.Exists)
+                {
+                    throw new EntityRemovedException(vehicle);
+                }
 
-            return AltNative.ColShape.ColShape_IsVehicleIn(NativePointer, vehicle.NativePointer);
+                return Server.Library.ColShape_IsVehicleIn(NativePointer, vehicle.NativePointer);
+            }
         }
         
         public void Remove()
@@ -139,12 +186,18 @@ namespace AltV.Net.Elements.Entities
         
         protected override void InternalAddRef()
         {
-            AltNative.ColShape.ColShape_AddRef(NativePointer);
+            unsafe
+            {
+                Server.Library.ColShape_AddRef(NativePointer);
+            }
         }
 
         protected override void InternalRemoveRef()
         {
-            AltNative.ColShape.ColShape_RemoveRef(NativePointer);
+            unsafe
+            {
+                Server.Library.ColShape_RemoveRef(NativePointer);
+            }
         }
     }
 }

@@ -670,7 +670,10 @@ namespace AltV.Net
 
             if (cancel)
             {
-                AltNative.Event.Event_Cancel(eventPointer);
+                unsafe
+                {
+                    Alt.Server.Library.Event_Cancel(eventPointer);
+                }
             }
         }
 
@@ -716,7 +719,10 @@ namespace AltV.Net
 
             if (cancel)
             {
-                AltNative.Event.Event_Cancel(eventPointer);
+                unsafe
+                {
+                    Alt.Server.Library.Event_Cancel(eventPointer);
+                }
             }
         }
 
@@ -1453,7 +1459,10 @@ namespace AltV.Net
 
             if (cancel)
             {
-                AltNative.Event.Event_Cancel(eventPointer);
+                unsafe
+                {
+                    Alt.Server.Library.Event_Cancel(eventPointer);
+                }
             }
         }
 
@@ -1493,7 +1502,10 @@ namespace AltV.Net
 
             if (cancel)
             {
-                AltNative.Event.Event_Cancel(eventPointer);
+                unsafe
+                {
+                    Alt.Server.Library.Event_Cancel(eventPointer);
+                }
             }
         }
 
@@ -1533,7 +1545,10 @@ namespace AltV.Net
 
             if (cancel)
             {
-                AltNative.Event.Event_Cancel(eventPointer);
+                unsafe
+                {
+                    Alt.Server.Library.Event_Cancel(eventPointer);
+                }
             }
         }
         
@@ -1672,14 +1687,17 @@ namespace AltV.Net
 
         public void SetExport(string key, Function function)
         {
-            if (function == null) return;
-            functionExports[key] = function;
-            MValueFunctionCallback callDelegate = function.Call;
-            functionExportHandles.AddFirst(GCHandle.Alloc(callDelegate));
-            Alt.Server.CreateMValueFunction(out var mValue,
-                AltNative.MValueNative.Invoker_Create(ModuleResource.ResourceImplPtr, callDelegate));
-            ModuleResource.SetExport(key, in mValue);
-            mValue.Dispose();
+            unsafe
+            {
+                if (function == null) return;
+                functionExports[key] = function;
+                MValueFunctionCallback callDelegate = function.Call;
+                functionExportHandles.AddFirst(GCHandle.Alloc(callDelegate));
+                Server.CreateMValueFunction(out var mValue,
+                    Server.Library.Invoker_Create(ModuleResource.ResourceImplPtr, callDelegate));
+                ModuleResource.SetExport(key, in mValue);
+                mValue.Dispose();
+            }
         }
 
         public void Dispose()

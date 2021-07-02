@@ -12,15 +12,21 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                var position = Position.Zero;
-                AltNative.Blip.Blip_GetPosition(NativePointer, ref position);
-                return position;
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var position = Position.Zero;
+                    Server.Library.Blip_GetPosition(NativePointer, &position);
+                    return position;
+                }
             }
             set
             {
-                CheckIfEntityExists();
-                AltNative.Blip.Blip_SetPosition(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetPosition(NativePointer, value);
+                }
             }
         }
 
@@ -28,51 +34,72 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Blip.Blip_GetDimension(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetDimension(NativePointer);
+                }
             }
             set
             {
-                CheckIfEntityExists();
-                AltNative.Blip.Blip_SetDimension(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetDimension(NativePointer, value);
+                }
             }
         }
 
         public override void GetMetaData(string key, out MValueConst value)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            value = new MValueConst(AltNative.Blip.Blip_GetMetaData(NativePointer, stringPtr));
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                value = new MValueConst(Server.Library.Blip_GetMetaData(NativePointer, stringPtr));
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
 
         public override void SetMetaData(string key, in MValueConst value)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Blip.Blip_SetMetaData(NativePointer, stringPtr, value.nativePointer);
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Server.Library.Blip_SetMetaData(NativePointer, stringPtr, value.nativePointer);
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
         
         public override bool HasMetaData(string key)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            var result = AltNative.Blip.Blip_HasMetaData(NativePointer, stringPtr);
-            Marshal.FreeHGlobal(stringPtr);
-            return result;
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var result = Server.Library.Blip_HasMetaData(NativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+                return result;
+            }
         }
 
         public override void DeleteMetaData(string key)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Blip.Blip_DeleteMetaData(NativePointer, stringPtr);
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Server.Library.Blip_DeleteMetaData(NativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
 
         public bool IsGlobal
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Blip.Blip_IsGlobal(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_IsGlobal(NativePointer);
+                }
             }
         }
 
@@ -80,8 +107,11 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Blip.Blip_IsAttached(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_IsAttached(NativePointer);
+                }
             }
         }
 
@@ -89,11 +119,14 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                var entityType = BaseObjectType.Undefined;
-                var entityPointer = AltNative.Blip.Blip_AttachedTo(NativePointer, ref entityType);
-                if (entityPointer == IntPtr.Zero) return null;
-                return Alt.Module.BaseEntityPool.Get(entityPointer, entityType, out var entity) ? entity : null;
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var entityType = BaseObjectType.Undefined;
+                    var entityPointer = Server.Library.Blip_AttachedTo(NativePointer, &entityType);
+                    if (entityPointer == IntPtr.Zero) return null;
+                    return Alt.Module.BaseEntityPool.Get(entityPointer, entityType, out var entity) ? entity : null;
+                }
             }
         }
 
@@ -101,8 +134,11 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Blip.Blip_GetType(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetType(NativePointer);
+                }
             }
         }
 
@@ -110,8 +146,11 @@ namespace AltV.Net.Elements.Entities
         {
             set
             {
-                CheckIfEntityExists();
-                AltNative.Blip.Blip_SetSprite(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetSprite(NativePointer, value);
+                }
             }
         }
 
@@ -119,8 +158,11 @@ namespace AltV.Net.Elements.Entities
         {
             set
             {
-                CheckIfEntityExists();
-                AltNative.Blip.Blip_SetColor(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetColor(NativePointer, value);
+                }
             }
         }
 
@@ -128,8 +170,11 @@ namespace AltV.Net.Elements.Entities
         {
             set
             {
-                CheckIfEntityExists();
-                AltNative.Blip.Blip_SetRoute(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetRoute(NativePointer, value);
+                }
             }
         }
 
@@ -137,8 +182,11 @@ namespace AltV.Net.Elements.Entities
         {
             set
             {
-                CheckIfEntityExists();
-                AltNative.Blip.Blip_SetRouteColor(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetRouteColor(NativePointer, value);
+                }
             }
         }
 
@@ -153,12 +201,18 @@ namespace AltV.Net.Elements.Entities
         
         protected override void InternalAddRef()
         {
-            AltNative.Blip.Blip_AddRef(NativePointer);
+            unsafe
+            {
+                Server.Library.Blip_AddRef(NativePointer);
+            }
         }
 
         protected override void InternalRemoveRef()
         {
-            AltNative.Blip.Blip_RemoveRef(NativePointer);
+            unsafe
+            {
+                Server.Library.Blip_RemoveRef(NativePointer);
+            }
         }
     }
 }

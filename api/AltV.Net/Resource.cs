@@ -3,6 +3,7 @@ using System.Runtime.Loader;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Factories;
 using AltV.Net.Elements.Pools;
+using AltV.Net.Native;
 
 namespace AltV.Net
 {
@@ -103,6 +104,11 @@ namespace AltV.Net
         }
 
         public virtual INativeResourceFactory GetNativeResourceFactory()
+        {
+            return null;
+        }
+
+        public ILibrary GetLibrary()
         {
             return null;
         }
