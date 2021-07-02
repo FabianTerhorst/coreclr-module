@@ -734,9 +734,9 @@ namespace AltV.Net
                 switch (type)
                 {
                     case (byte) BaseObjectType.Player:
-                        return playerPool.GetOrCreate(this, entityPointer, out var player) ? player : null;
+                        return playerPool.Get(entityPointer, out var player) ? player : null;
                     case (byte) BaseObjectType.Vehicle:
-                        return vehiclePool.GetOrCreate(this, entityPointer, out var vehicle) ? vehicle : null;
+                        return vehiclePool.Get(entityPointer, out var vehicle) ? vehicle : null;
                     default:
                         return null;
                 }
