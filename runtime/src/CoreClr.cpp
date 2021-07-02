@@ -57,7 +57,7 @@ CoreClr::CoreClr(alt::ICore* core) {
         _initForCmd = (hostfxr_initialize_for_dotnet_command_line_fn)  GetProcAddress(_coreClrLib, "hostfxr_initialize_for_dotnet_command_line");
         _closeFxr = (hostfxr_close_fn) GetProcAddress(_coreClrLib, "hostfxr_close");
 #else
-    _coreClrLib = dlopen(buffer, RTLD_NOW | RTLD_LOCAL);
+    _coreClrLib = dlopen(std::string(buffer).c_str(), RTLD_NOW | RTLD_LOCAL);
     if (_coreClrLib == nullptr) {
         core->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll [") + std::string(buffer) + "]: " + dlerror());
         return;
