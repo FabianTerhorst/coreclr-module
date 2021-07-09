@@ -30,6 +30,8 @@ namespace AltV.Net.EntitySync.Tests
 
         public readonly Client c;
 
+        public readonly Client dummy;
+
         public MockNetworkLayer(ulong threadCount, IClientRepository clientRepository) : base(threadCount, clientRepository)
         {
             a = new Client(threadCount, "a");
@@ -41,9 +43,22 @@ namespace AltV.Net.EntitySync.Tests
             c = new Client(threadCount, "c");
             c.Dimension = 0;
             c.Position = new Vector3(1, 1, 1);
+            dummy = new Client(threadCount, "dummy");
+            dummy.Dimension = 0;
+            dummy.Position = new Vector3(1000, 1000, 1000);
             clientRepository.Add(a);
             clientRepository.Add(b);
             clientRepository.Add(c);
+        }
+
+        public void AddDummyClient()
+        {
+            ClientRepository.Add(dummy);
+        }
+        
+        public void RemoveDummyClient()
+        {
+            ClientRepository.Remove(dummy);
         }
 
         public override void SendEvent(IClient client, in EntityCreateEvent entityCreate)

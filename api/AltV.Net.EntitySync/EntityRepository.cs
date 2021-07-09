@@ -40,6 +40,11 @@ namespace AltV.Net.EntitySync
             }
             entityThreadRepositories[entityThreadId(entity, threadCount)].Remove(entity);
         }
+        
+        public void Remove(ulong id, ulong type)
+        {
+            entityThreadRepositories[entityIdAndTypeThreadId(id, type, threadCount)].Remove(id, type);
+        }
 
         public void Update(IEntity entity)
         {

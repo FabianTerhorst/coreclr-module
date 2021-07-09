@@ -201,6 +201,12 @@ namespace AltV.Net.EntitySync
             idProvider?.Free(entity.Id);
         }
         
+        public void RemoveEntity(ulong id, ulong type)
+        {
+            entityRepository.Remove(id, type);
+            idProvider?.Free(id);
+        }
+        
         public void UpdateEntity(IEntity entity)
         {
             entityRepository.Update(entity);

@@ -234,7 +234,7 @@ namespace AltV.Net
                 mValuePointers[i] = args[i].nativePointer;
             }
 
-            AltNative.Server.Server_TriggerServerEvent(NativePointer, eventNamePtr, mValuePointers, size);
+            TriggerServerEvent(eventNamePtr, mValuePointers);
         }
 
         public void TriggerServerEvent(string eventName, IntPtr[] args)
@@ -244,6 +244,7 @@ namespace AltV.Net
             Marshal.FreeHGlobal(eventNamePtr);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void TriggerServerEvent(IntPtr eventNamePtr, IntPtr[] args)
         {
             AltNative.Server.Server_TriggerServerEvent(NativePointer, eventNamePtr, args, args.Length);
@@ -284,9 +285,7 @@ namespace AltV.Net
                 mValuePointers[i] = args[i].nativePointer;
             }
 
-            AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero,
-                eventNamePtr,
-                mValuePointers, args.Length);
+            TriggerClientEvent(player, eventNamePtr, mValuePointers);
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, MValueConst[] args)
@@ -296,6 +295,7 @@ namespace AltV.Net
             Marshal.FreeHGlobal(eventNamePtr);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, IntPtr[] args)
         {
             AltNative.Server.Server_TriggerClientEvent(NativePointer, player?.NativePointer ?? IntPtr.Zero,
@@ -335,6 +335,63 @@ namespace AltV.Net
             }
         }
 
+        public void TriggerClientEventForAll(IntPtr eventNamePtr, MValueConst[] args)
+        {
+            var size = args.Length;
+            var mValuePointers = new IntPtr[size];
+            for (var i = 0; i < size; i++)
+            {
+                mValuePointers[i] = args[i].nativePointer;
+            }
+
+            AltNative.Server.Server_TriggerClientEventForAll(NativePointer, eventNamePtr, mValuePointers, args.Length);
+        }
+
+        public void TriggerClientEventForAll(string eventName, MValueConst[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerClientEventForAll(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        public void TriggerClientEventForAll(IntPtr eventNamePtr, IntPtr[] args)
+        {
+            AltNative.Server.Server_TriggerClientEventForAll(NativePointer, eventNamePtr, args, args.Length);
+        }
+
+        public void TriggerClientEventForAll(string eventName, IntPtr[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerClientEventForAll(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        public void TriggerClientEventForAll(IntPtr eventNamePtr, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerClientEventForAll(eventNamePtr, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+
+        public void TriggerClientEventForAll(string eventName, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerClientEventForAll(eventName, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+        
         public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
             CheckIfCallIsValid();
