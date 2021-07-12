@@ -549,7 +549,7 @@ void Vehicle_SetWheelHealth(alt::IVehicle* vehicle, uint8_t wheelId, float healt
     vehicle->SetWheelHealth(wheelId, health);
 }
 
-void SetWheelFixed(alt::IVehicle* vehicle, uint8_t wheelId) {
+void Vehicle_SetWheelFixed(alt::IVehicle* vehicle, uint8_t wheelId) {
     vehicle->SetWheelFixed(wheelId);
 }
 

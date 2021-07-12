@@ -670,7 +670,10 @@ namespace AltV.Net
 
             if (cancel)
             {
-                AltNative.Event.Event_Cancel(eventPointer);
+                unsafe
+                {
+                    Alt.Server.Library.Event_Cancel(eventPointer);
+                }
             }
         }
 
@@ -716,7 +719,10 @@ namespace AltV.Net
 
             if (cancel)
             {
-                AltNative.Event.Event_Cancel(eventPointer);
+                unsafe
+                {
+                    Alt.Server.Library.Event_Cancel(eventPointer);
+                }
             }
         }
 
@@ -1198,7 +1204,7 @@ namespace AltV.Net
 
         public void OnCreatePlayer(IntPtr playerPointer, ushort playerId)
         {
-            PlayerPool.Create(playerPointer, playerId);
+            PlayerPool.Create(Server, playerPointer, playerId);
         }
 
         public void OnRemovePlayer(IntPtr playerPointer)
@@ -1208,17 +1214,17 @@ namespace AltV.Net
 
         public void OnCreateVehicle(IntPtr vehiclePointer, ushort vehicleId)
         {
-            VehiclePool.Create(vehiclePointer, vehicleId);
+            VehiclePool.Create(Server, vehiclePointer, vehicleId);
         }
 
         public void OnCreateVoiceChannel(IntPtr channelPointer)
         {
-            VoiceChannelPool.Create(channelPointer);
+            VoiceChannelPool.Create(Server, channelPointer);
         }
 
         public void OnCreateColShape(IntPtr colShapePointer)
         {
-            ColShapePool.Create(colShapePointer);
+            ColShapePool.Create(Server, colShapePointer);
         }
 
         public void OnRemoveVehicle(IntPtr vehiclePointer)
@@ -1228,7 +1234,7 @@ namespace AltV.Net
 
         public void OnCreateBlip(IntPtr blipPointer)
         {
-            BlipPool.Create(blipPointer);
+            BlipPool.Create(Server, blipPointer);
         }
 
         public void OnRemoveBlip(IntPtr blipPointer)
@@ -1238,7 +1244,7 @@ namespace AltV.Net
 
         public void OnCreateCheckpoint(IntPtr checkpointPointer)
         {
-            CheckpointPool.Create(checkpointPointer);
+            CheckpointPool.Create(Server, checkpointPointer);
         }
 
         public void OnRemoveCheckpoint(IntPtr checkpointPointer)
@@ -1453,7 +1459,10 @@ namespace AltV.Net
 
             if (cancel)
             {
-                AltNative.Event.Event_Cancel(eventPointer);
+                unsafe
+                {
+                    Alt.Server.Library.Event_Cancel(eventPointer);
+                }
             }
         }
 
@@ -1493,7 +1502,10 @@ namespace AltV.Net
 
             if (cancel)
             {
-                AltNative.Event.Event_Cancel(eventPointer);
+                unsafe
+                {
+                    Alt.Server.Library.Event_Cancel(eventPointer);
+                }
             }
         }
 
@@ -1533,7 +1545,10 @@ namespace AltV.Net
 
             if (cancel)
             {
-                AltNative.Event.Event_Cancel(eventPointer);
+                unsafe
+                {
+                    Alt.Server.Library.Event_Cancel(eventPointer);
+                }
             }
         }
         
@@ -1672,14 +1687,17 @@ namespace AltV.Net
 
         public void SetExport(string key, Function function)
         {
-            if (function == null) return;
-            functionExports[key] = function;
-            MValueFunctionCallback callDelegate = function.Call;
-            functionExportHandles.AddFirst(GCHandle.Alloc(callDelegate));
-            Alt.Server.CreateMValueFunction(out var mValue,
-                AltNative.MValueNative.Invoker_Create(ModuleResource.ResourceImplPtr, callDelegate));
-            ModuleResource.SetExport(key, in mValue);
-            mValue.Dispose();
+            unsafe
+            {
+                if (function == null) return;
+                functionExports[key] = function;
+                MValueFunctionCallback callDelegate = function.Call;
+                functionExportHandles.AddFirst(GCHandle.Alloc(callDelegate));
+                Server.CreateMValueFunction(out var mValue,
+                    Server.Library.Invoker_Create(ModuleResource.ResourceImplPtr, callDelegate));
+                ModuleResource.SetExport(key, in mValue);
+                mValue.Dispose();
+            }
         }
 
         public void Dispose()

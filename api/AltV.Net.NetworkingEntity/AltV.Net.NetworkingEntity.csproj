@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>net5.0</TargetFramework>
         <PackageVersion>1.10.0-dev-preview</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>update dependencies</PackageReleaseNotes>
@@ -37,10 +37,10 @@
 
     <ItemGroup>
       <PackageReference Include="System.Threading.Channels" Version="5.0.0" />
-      <PackageReference Include="VIEApps.Components.WebSockets" Version="10.3.2010.1" />
-      <PackageReference Include="Google.Protobuf" Version="3.12.0" />
-      <PackageReference Include="Grpc" Version="2.29.0" />
-      <PackageReference Include="Grpc.Tools" Version="2.29.0" PrivateAssets="All" />
+      <PackageReference Include="VIEApps.Components.WebSockets" Version="10.4.2106.2" />
+      <PackageReference Include="Google.Protobuf" Version="3.17.3" />
+      <PackageReference Include="Grpc" Version="2.38.1" />
+      <PackageReference Include="Grpc.Tools" Version="2.38.1" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup>

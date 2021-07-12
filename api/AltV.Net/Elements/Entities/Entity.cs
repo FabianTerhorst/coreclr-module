@@ -193,7 +193,7 @@ namespace AltV.Net.Elements.Entities
 
         public abstract void Detach();
 
-        protected Entity(IntPtr nativePointer, BaseObjectType type, ushort id) : base(nativePointer, type)
+        protected Entity(IServer server, IntPtr nativePointer, BaseObjectType type, ushort id) : base(server, nativePointer, type)
         {
             Id = id;
         }

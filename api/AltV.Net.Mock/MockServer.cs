@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
@@ -12,6 +10,8 @@ namespace AltV.Net.Mock
     public class MockServer : IServer
     {
         public IntPtr NativePointer { get; }
+
+        public ILibrary Library { get; }
 
         private readonly IBaseBaseObjectPool baseBaseObjectPool;
 
@@ -37,7 +37,7 @@ namespace AltV.Net.Mock
 
         public string Version => "";
 
-        public INativeResource Resource => new NativeResource(IntPtr.Zero, IntPtr.Zero);
+        public INativeResource Resource => new NativeResource(null, IntPtr.Zero, IntPtr.Zero);
 
         internal MockServer(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
@@ -184,7 +184,7 @@ namespace AltV.Net.Mock
         public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
-            vehiclePool.Create(ptr, entityId, out var vehicle);
+            vehiclePool.Create(this, ptr, entityId, out var vehicle);
             vehicle.Position = pos;
             if (vehicle is MockVehicle mockVehicle)
             {
@@ -208,7 +208,7 @@ namespace AltV.Net.Mock
             Rgba color)
         {
             var ptr = MockEntities.GetNextPtrNoId();
-            checkpointPool.Create(ptr, out var checkpoint);
+            checkpointPool.Create(this, ptr, out var checkpoint);
             if (checkpoint is MockCheckpoint mockCheckpoint)
             {
                 mockCheckpoint.Position = pos;
@@ -224,7 +224,7 @@ namespace AltV.Net.Mock
         public IBlip CreateBlip(IPlayer player, byte type, Position pos)
         {
             var ptr = MockEntities.GetNextPtrNoId();
-            blipPool.Create(ptr, out var blip);
+            blipPool.Create(this, ptr, out var blip);
             if (blip is MockBlip mockBlip)
             {
                 mockBlip.Position = pos;
@@ -237,7 +237,7 @@ namespace AltV.Net.Mock
         public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
         {
             var ptr = MockEntities.GetNextPtrNoId();
-            blipPool.Create(ptr, out var blip);
+            blipPool.Create(this, ptr, out var blip);
             if (blip is MockBlip mockBlip)
             {
                 mockBlip.BlipType = type;
@@ -251,7 +251,7 @@ namespace AltV.Net.Mock
         public IVoiceChannel CreateVoiceChannel(bool spatial, float maxDistance)
         {
             var ptr = MockEntities.GetNextPtrNoId();
-            voiceChannelPool.Create(ptr, out var voiceChannel);
+            voiceChannelPool.Create(this, ptr, out var voiceChannel);
             if (voiceChannel is MockVoiceChannel mockVoiceChannel)
             {
                 mockVoiceChannel.IsSpatial = spatial;
@@ -314,22 +314,22 @@ namespace AltV.Net.Mock
 
         public INativeResource GetResource(string name)
         {
-            return new NativeResource(IntPtr.Zero, IntPtr.Zero);
+            return new NativeResource(null, IntPtr.Zero, IntPtr.Zero);
         }
 
         public INativeResource GetResource(IntPtr resourcePointer)
         {
-            return new NativeResource(IntPtr.Zero, IntPtr.Zero);
+            return new NativeResource(null, IntPtr.Zero, IntPtr.Zero);
         }
 
-        public IEnumerable<IPlayer> GetPlayers()
+        public IPlayer[] GetPlayers()
         {
-            return new List<IPlayer>();
+            return Array.Empty<IPlayer>();
         }
 
-        public IEnumerable<IVehicle> GetVehicles()
+        public IVehicle[] GetVehicles()
         {
-            return new List<IVehicle>();
+            return Array.Empty<IVehicle>();
         }
 
         public void CreateMValueVector3(out MValueConst mValue, Position value)

@@ -86,13 +86,18 @@ namespace AltV.Net.Async
         {
             lock (player)
             {
-                if (!player.Exists)
+                unsafe
                 {
-                    return false;
-                }
+                    if (!player.Exists)
+                    {
+                        return false;
+                    }
 
-                AltNative.Player.Player_GetPosition(player.NativePointer, ref position);
-                return true;
+                    var pos = Position.Zero;
+                    Alt.Server.Library.Player_GetPosition(player.NativePointer, &pos);
+                    position = pos;
+                    return true;
+                }
             }
         }
 

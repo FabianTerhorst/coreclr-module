@@ -7,7 +7,16 @@ namespace AltV.Net.Events
     {
         private readonly IntPtr nativePointer;
 
-        public bool IsCanceled => AltNative.Event.Event_WasCancelled(nativePointer);
+        public bool IsCanceled
+        {
+            get
+            {
+                unsafe
+                {
+                    return Alt.Server.Library.Event_WasCancelled(nativePointer) == 1;
+                }
+            }
+        }
 
         public Event(IntPtr nativePointer)
         {
@@ -16,7 +25,10 @@ namespace AltV.Net.Events
 
         public void Cancel()
         {
-            AltNative.Event.Event_Cancel(nativePointer);
+            unsafe
+            {
+                Alt.Server.Library.Event_Cancel(nativePointer);
+            }
         }
     }
 }

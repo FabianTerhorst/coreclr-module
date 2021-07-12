@@ -1,4 +1,4 @@
-using System;
+/*using System;
 
 namespace AltV.Net.Native
 {
@@ -27,4 +27,4 @@ namespace AltV.Net.Native
             
         }
     }
-}
+}*/

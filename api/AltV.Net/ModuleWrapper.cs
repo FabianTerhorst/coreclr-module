@@ -7,6 +7,7 @@ using System.Runtime.Loader;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Factories;
+using AltV.Net.Native;
 using AltV.Net.ResourceLoaders;
 
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
@@ -72,6 +73,7 @@ namespace AltV.Net
             
             //TODO: do the same with the pools
 
+            var library = _resource.GetLibrary() ?? new Library();
             var playerFactory = _resource.GetPlayerFactory() ?? new PlayerFactory();
             var vehicleFactory = _resource.GetVehicleFactory() ?? new VehicleFactory();
             var blipFactory = _resource.GetBlipFactory() ?? new BlipFactory();
@@ -90,8 +92,8 @@ namespace AltV.Net
             var baseObjectPool =
                 _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool,
                     colShapePool);
-            nativeResourcePool.GetOrCreate(serverPointer, resourcePointer, out var csharpResource);
-            var server = new Server(serverPointer, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool,
+            nativeResourcePool.GetOrCreate(library, serverPointer, resourcePointer, out var csharpResource);
+            var server = new Server(serverPointer, library, csharpResource, baseObjectPool, entityPool, playerPool, vehiclePool,
                 blipPool,
                 checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
             _module = _resource.GetModule(server, assemblyLoadContext, csharpResource, baseObjectPool, entityPool,

@@ -5,9 +5,9 @@ namespace AltV.Net.Example
 {
     public class MyVehicleFactory : IEntityFactory<IVehicle>
     {
-        public IVehicle Create(IntPtr vehiclePointer, ushort id)
+        public IVehicle Create(IServer server, IntPtr vehiclePointer, ushort id)
         {
-            return new MyVehicle(vehiclePointer, id);
+            return new MyVehicle(server, vehiclePointer, id);
         }
     }
 }

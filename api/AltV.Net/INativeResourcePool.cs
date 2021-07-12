@@ -1,9 +1,10 @@
 using System;
+using AltV.Net.Native;
 
 namespace AltV.Net
 {
     public interface INativeResourcePool
     {
-        bool GetOrCreate(IntPtr corePointer, IntPtr resourcePointer, out INativeResource resource);
+        bool GetOrCreate(ILibrary library, IntPtr corePointer, IntPtr resourcePointer, out INativeResource resource);
     }
 }

@@ -170,7 +170,7 @@ namespace AltV.Net.FunctionParser
 
                 return array;
             }
-            
+
             if (type == FunctionTypes.Vector3)
             {
                 var array = new Vector3[length];
@@ -189,7 +189,7 @@ namespace AltV.Net.FunctionParser
 
                 return array;
             }
-            
+
             if (type == FunctionTypes.Position)
             {
                 var array = new Position[length];
@@ -209,9 +209,11 @@ namespace AltV.Net.FunctionParser
                 return array;
             }
 
-            
-            var typeArray = typeInfo != null ? typeInfo.CreateArrayOfType(length, type) : Array.CreateInstance(type, length);
-            
+
+            var typeArray = typeInfo != null
+                ? typeInfo.CreateArrayOfType(length, type)
+                : Array.CreateInstance(type, length);
+
             for (var i = 0; i < length; i++)
             {
                 var currMValue = mValues[i];
@@ -247,6 +249,7 @@ namespace AltV.Net.FunctionParser
             {
                 return (int) mValue.GetInt();
             }
+
             if (mValue.type == MValueConst.Type.Uint)
             {
                 return (int) mValue.GetUint();
@@ -263,6 +266,7 @@ namespace AltV.Net.FunctionParser
             {
                 return mValue.GetInt();
             }
+
             if (mValue.type == MValueConst.Type.Uint)
             {
                 return (int) mValue.GetUint();
@@ -279,6 +283,7 @@ namespace AltV.Net.FunctionParser
             {
                 return (uint) mValue.GetUint();
             }
+
             if (mValue.type == MValueConst.Type.Int)
             {
                 return (uint) mValue.GetInt();
@@ -295,6 +300,7 @@ namespace AltV.Net.FunctionParser
             {
                 return mValue.GetUint();
             }
+
             if (mValue.type == MValueConst.Type.Int)
             {
                 return (ulong) mValue.GetInt();
@@ -311,10 +317,12 @@ namespace AltV.Net.FunctionParser
             {
                 return (float) mValue.GetDouble();
             }
+
             if (mValue.type == MValueConst.Type.Int)
             {
                 return Convert.ToSingle(mValue.GetInt());
             }
+
             if (mValue.type == MValueConst.Type.Uint)
             {
                 return Convert.ToSingle(mValue.GetUint());
@@ -331,10 +339,12 @@ namespace AltV.Net.FunctionParser
             {
                 return mValue.GetDouble();
             }
+
             if (mValue.type == MValueConst.Type.Int)
             {
                 return Convert.ToDouble(mValue.GetInt());
             }
+
             if (mValue.type == MValueConst.Type.Uint)
             {
                 return Convert.ToDouble(mValue.GetUint());
@@ -490,7 +500,7 @@ namespace AltV.Net.FunctionParser
                         {
                             return true;
                         }
-                        
+
                         obj = ParseArray(in mValue, type, typeInfo);
                         return true;
                     }
@@ -534,11 +544,13 @@ namespace AltV.Net.FunctionParser
                     {
                         obj = mValue.GetVector3();
                         return true;
-                    } else if (type == FunctionTypes.Position)
+                    }
+                    else if (type == FunctionTypes.Position)
                     {
                         obj = (Position) mValue.GetVector3();
                         return true;
-                    } else if (type == FunctionTypes.Rotation)
+                    }
+                    else if (type == FunctionTypes.Rotation)
                     {
                         obj = (Rotation) mValue.GetVector3();
                         return true;
@@ -559,8 +571,8 @@ namespace AltV.Net.FunctionParser
             if (mValue.type != MValueConst.Type.List) return null;
             var mValueList = mValue.GetList();
             var elementType = typeInfo?.ElementType ?? (
-                                  type.GetElementType() ??
-                                  type); // Object has no element type so we have to use the same type again
+                type.GetElementType() ??
+                type); // Object has no element type so we have to use the same type again
             var array = CreateArray(elementType, mValueList, typeInfo);
             for (int i = 0, length = mValueList.Length; i < length; i++)
             {
@@ -615,28 +627,32 @@ namespace AltV.Net.FunctionParser
                 valueType = args[1];
             }
 
-            var length = AltNative.MValueNative.MValueConst_GetDictSize(mValue.nativePointer);
-            var keyPointers = new IntPtr[length];
-            var pointerValues = new IntPtr[length];
-            AltNative.MValueNative.MValueConst_GetDict(mValue.nativePointer, keyPointers, pointerValues);
-
-            var strings = new string[length];
-            var valueArray = new MValueConst[length];
-            for (ulong i = 0; i < length; i++)
+            unsafe
             {
-                strings[i] = Marshal.PtrToStringUTF8(keyPointers[i]);
-                AltNative.FreeCharArray(keyPointers[i]);
-                valueArray[i] = new MValueConst(pointerValues[i]);
+                var length = Alt.Server.Library.MValueConst_GetDictSize(mValue.nativePointer);
+                var keyPointers = new IntPtr[length];
+                var pointerValues = new IntPtr[length];
+                Alt.Server.Library.MValueConst_GetDict(mValue.nativePointer, keyPointers, pointerValues);
+
+
+                var strings = new string[length];
+                var valueArray = new MValueConst[length];
+                for (ulong i = 0; i < length; i++)
+                {
+                    strings[i] = Marshal.PtrToStringUTF8(keyPointers[i]);
+                    Alt.Server.Library.FreeCharArray(keyPointers[i]);
+                    valueArray[i] = new MValueConst(pointerValues[i]);
+                }
+
+                var dictionary = CreateDictionary(typeInfo, keyType, valueType, length, strings, valueArray);
+
+                for (ulong i = 0; i < length; i++)
+                {
+                    valueArray[i].Dispose();
+                }
+
+                return dictionary;
             }
-
-            var dictionary = CreateDictionary(typeInfo, keyType, valueType, length, strings, valueArray);
-
-            for (ulong i = 0; i < length; i++)
-            {
-                valueArray[i].Dispose();
-            }
-
-            return dictionary;
         }
 
         private static object CreateDictionary(FunctionTypeInfo typeInfo, Type keyType, Type valueType, ulong length,
@@ -826,7 +842,7 @@ namespace AltV.Net.FunctionParser
 
                 return dict;
             }
-            
+
             if (valueType == FunctionTypes.Vector3)
             {
                 var dict = new Dictionary<string, Vector3>();
@@ -845,7 +861,7 @@ namespace AltV.Net.FunctionParser
 
                 return dict;
             }
-            
+
             if (valueType == FunctionTypes.Position)
             {
                 var dict = new Dictionary<string, Position>();
@@ -864,7 +880,7 @@ namespace AltV.Net.FunctionParser
 
                 return dict;
             }
-            
+
             if (valueType == FunctionTypes.Rotation)
             {
                 var dict = new Dictionary<string, Rotation>();
@@ -923,7 +939,7 @@ namespace AltV.Net.FunctionParser
             // Types doesn't match
             return null;
         }
-        
+
         public static object ParsePosition(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
@@ -935,7 +951,7 @@ namespace AltV.Net.FunctionParser
             // Types doesn't match
             return null;
         }
-        
+
         public static object ParseRotation(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
@@ -947,7 +963,7 @@ namespace AltV.Net.FunctionParser
             // Types doesn't match
             return null;
         }
-        
+
         public static object ParseVector3(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
@@ -959,7 +975,7 @@ namespace AltV.Net.FunctionParser
             // Types doesn't match
             return null;
         }
-        
+
         public static object ParseRgba(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
@@ -971,7 +987,7 @@ namespace AltV.Net.FunctionParser
             // Types doesn't match
             return null;
         }
-        
+
         public static object ParseByteArray(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
@@ -1003,16 +1019,16 @@ namespace AltV.Net.FunctionParser
                            type == FunctionTypes.Blip || type.GetInterfaces().Contains(FunctionTypes.Blip);
                 case BaseObjectType.Player:
                     return typeInfo?.IsPlayer ?? type == FunctionTypes.Player ||
-                           type.GetInterfaces().Contains(FunctionTypes.Player);
+                        type.GetInterfaces().Contains(FunctionTypes.Player);
                 case BaseObjectType.Vehicle:
                     return typeInfo?.IsVehicle ?? type == FunctionTypes.Vehicle ||
-                           type.GetInterfaces().Contains(FunctionTypes.Vehicle);
+                        type.GetInterfaces().Contains(FunctionTypes.Vehicle);
                 case BaseObjectType.ColShape:
                     return typeInfo?.IsColShape ?? type == FunctionTypes.ColShape ||
-                           type.GetInterfaces().Contains(FunctionTypes.ColShape);
+                        type.GetInterfaces().Contains(FunctionTypes.ColShape);
                 case BaseObjectType.Checkpoint:
                     return typeInfo?.IsCheckpoint ?? type == FunctionTypes.Checkpoint ||
-                           type.GetInterfaces().Contains(FunctionTypes.Checkpoint);
+                        type.GetInterfaces().Contains(FunctionTypes.Checkpoint);
                 default:
                     return false;
             }

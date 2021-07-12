@@ -31,211 +31,400 @@ namespace AltV.Net.Async.Elements.Entities
 
         public IVehicleBuilder ModKit(byte value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetModKit(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetModKit(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder PrimaryColor(byte value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetPrimaryColor(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetPrimaryColor(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder PrimaryColorRgb(Rgba value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetPrimaryColorRGB(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetPrimaryColorRGB(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder SecondaryColor(byte value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetSecondaryColor(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetSecondaryColor(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder SecondaryColorRgb(Rgba value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetSecondaryColorRGB(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetSecondaryColorRGB(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder PearlColor(byte value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetPearlColor(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetPearlColor(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder WheelColor(byte value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetWheelColor(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetWheelColor(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder InteriorColor(byte value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetInteriorColor(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetInteriorColor(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder DashboardColor(byte value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetDashboardColor(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetDashboardColor(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder TireSmokeColor(Rgba value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetTireSmokeColor(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetTireSmokeColor(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder CustomTires(bool value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetCustomTires(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetCustomTires(ptr, value ? (byte) 1 : (byte) 0);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder SpecialDarkness(byte value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetSpecialDarkness(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetSpecialDarkness(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder NumberplateIndex(uint value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetNumberplateIndex(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetNumberplateIndex(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder NumberplateText(string value)
         {
             var valuePtr = StringToHGlobalUtf8(value);
-            Add(ptr => AltNative.Vehicle.Vehicle_SetNumberplateText(ptr, valuePtr));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetNumberplateText(ptr, valuePtr);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder WindowTint(byte value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetWindowTint(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetWindowTint(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder DirtLevel(byte value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetDirtLevel(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetDirtLevel(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder NeonColor(Rgba value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetNeonColor(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetNeonColor(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder EngineOn(bool value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetEngineOn(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetEngineOn(ptr, value ? (byte) 1 : (byte) 0);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder HeadlightColor(byte value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetHeadlightColor(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetHeadlightColor(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder SirenActive(bool value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetSirenActive(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetSirenActive(ptr, value ? (byte) 1 : (byte) 0);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder LockState(VehicleLockState value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetLockState(ptr, (byte) value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetLockState(ptr, (byte) value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder RoofState(byte value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetRoofState(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetRoofState(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder State(string value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_LoadGameStateFromBase64(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_LoadGameStateFromBase64(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder EngineHealth(int value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetEngineHealth(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetEngineHealth(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder PetrolTankHealth(int value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetPetrolTankHealth(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetPetrolTankHealth(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder BodyHealth(uint value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetBodyHealth(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetBodyHealth(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder BodyAdditionalHealth(uint value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_SetBodyAdditionalHealth(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetBodyAdditionalHealth(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder HealthData(string value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_LoadHealthDataFromBase64(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_LoadHealthDataFromBase64(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder DamageData(string value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_LoadDamageDataFromBase64(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_LoadDamageDataFromBase64(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder Appearance(string value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_LoadAppearanceDataFromBase64(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_LoadAppearanceDataFromBase64(ptr, value);
+                }
+            });
             return this;
         }
 
         public IVehicleBuilder ScriptData(string value)
         {
-            Add(ptr => AltNative.Vehicle.Vehicle_LoadScriptDataFromBase64(ptr, value));
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_LoadScriptDataFromBase64(ptr, value);
+                }
+            });
             return this;
         }
 
         public async Task<IVehicle> Build()
         {
-            ushort id = default;
             var enumerator = functions.Values.GetEnumerator();
-            var vehiclePtr = await AltAsync.AltVAsync.Schedule(() =>
+            var (vehiclePtr, vehicleId) = await AltAsync.AltVAsync.Schedule(() =>
             {
-                var ptr = AltNative.Server.Server_CreateVehicle(((Server) Alt.Server).NativePointer, model,
-                    position, rotation,
-                    ref id);
-
-                while (enumerator.MoveNext())
+                unsafe
                 {
-                    enumerator.Current(ptr);
-                }
+                    ushort id = default;
+                    var ptr = Alt.Server.Library.Server_CreateVehicle(((Server) Alt.Server).NativePointer, model,
+                        position, rotation,
+                        &id);
 
-                return ptr;
+                    while (enumerator.MoveNext())
+                    {
+                        enumerator.Current(ptr);
+                    }
+
+                    return (ptr, id);
+                }
             });
             enumerator.Dispose();
             Dispose();
-            Alt.Module.VehiclePool.Create(vehiclePtr, id, out var vehicle);
+            Alt.Module.VehiclePool.Create(Alt.Server, vehiclePtr, vehicleId, out var vehicle);
             return vehicle;
         }
 

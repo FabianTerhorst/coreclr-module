@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Native;
 
 namespace AltV.Net
 {
@@ -11,6 +12,8 @@ namespace AltV.Net
         string Version { get; }
         
         string Branch { get; }
+        
+        public ILibrary Library { get; }
         
         int NetTime { get; }
 
@@ -126,9 +129,9 @@ namespace AltV.Net
 
         IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation);
 
-        IEnumerable<IPlayer> GetPlayers();
+        IPlayer[] GetPlayers();
 
-        IEnumerable<IVehicle> GetVehicles();
+        IVehicle[] GetVehicles();
 
         IEntity GetEntityById(ushort id);
 

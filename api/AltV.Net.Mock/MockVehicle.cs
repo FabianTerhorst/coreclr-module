@@ -5,7 +5,7 @@ namespace AltV.Net.Mock
 {
     public class MockVehicle: Vehicle
     {   
-        public MockVehicle(IntPtr nativePointer, ushort id): base(nativePointer, id)
+        public MockVehicle(IServer server, IntPtr nativePointer, ushort id): base(server, nativePointer, id)
         {
         }
     }

@@ -15,17 +15,17 @@ namespace AltV.Net.Elements.Pools
             this.vehiclePool = vehiclePool;
         }
 
-        public bool GetOrCreate(IntPtr entityPointer, BaseObjectType baseObjectType, out IEntity entity)
+        public bool GetOrCreate(IServer server, IntPtr entityPointer, BaseObjectType baseObjectType, out IEntity entity)
         {
             bool result;
             switch (baseObjectType)
             {
                 case BaseObjectType.Player:
-                    result = playerPool.GetOrCreate(entityPointer, out var player);
+                    result = playerPool.GetOrCreate(server, entityPointer, out var player);
                     entity = player;
                     return result;
                 case BaseObjectType.Vehicle:
-                    result = vehiclePool.GetOrCreate(entityPointer, out var vehicle);
+                    result = vehiclePool.GetOrCreate(server, entityPointer, out var vehicle);
                     entity = vehicle;
                     return result;
                 default:
@@ -53,17 +53,17 @@ namespace AltV.Net.Elements.Pools
             }
         }
 
-        public bool GetOrCreate(IntPtr entityPointer, BaseObjectType baseObjectType, ushort entityId, out IEntity entity)
+        public bool GetOrCreate(IServer server, IntPtr entityPointer, BaseObjectType baseObjectType, ushort entityId, out IEntity entity)
         {
             bool result;
             switch (baseObjectType)
             {
                 case BaseObjectType.Player:
-                    result = playerPool.GetOrCreate(entityPointer, entityId, out var player);
+                    result = playerPool.GetOrCreate(server, entityPointer, entityId, out var player);
                     entity = player;
                     return result;
                 case BaseObjectType.Vehicle:
-                    result = vehiclePool.GetOrCreate(entityPointer, entityId, out var vehicle);
+                    result = vehiclePool.GetOrCreate(server, entityPointer, entityId, out var vehicle);
                     entity = vehicle;
                     return result;
                 default:

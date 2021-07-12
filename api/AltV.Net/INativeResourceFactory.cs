@@ -1,9 +1,10 @@
 using System;
+using AltV.Net.Native;
 
 namespace AltV.Net
 {
     public interface INativeResourceFactory
     {
-        INativeResource Create(IntPtr corePointer, IntPtr resourcePointer);
+        INativeResource Create(ILibrary library, IntPtr corePointer, IntPtr resourcePointer);
     }
 }

@@ -27,6 +27,8 @@ namespace AltV.Net.CodeGen
             ["rotation_t&"] = "ref Rotation",
             ["rotation_t"] = "Rotation",
             ["alt::Rotation"] = "Rotation",
+            ["cloth_t&"] = "ref Cloth",
+            ["cloth_t"] = "Cloth",
             ["const char*"] = "IntPtr",
             ["alt::MValue&"] = "ref MValue",
             ["alt::MValue*"] = "ref MValue",
