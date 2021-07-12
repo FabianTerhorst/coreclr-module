@@ -103,7 +103,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    return Server.Library.Player_GetVisible(NativePointer);
+                    return Server.Library.Player_GetVisible(NativePointer) == 1;
                 }
             }
             set
@@ -111,7 +111,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    Server.Library.Player_SetVisible(NativePointer, value);
+                    Server.Library.Player_SetVisible(NativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }
@@ -167,7 +167,7 @@ namespace AltV.Net.Elements.Entities
             CheckIfEntityExists();
             unsafe
             {
-                Server.Library.Player_SetNetworkOwner(NativePointer, player?.NativePointer ?? IntPtr.Zero, disableMigration);
+                Server.Library.Player_SetNetworkOwner(NativePointer, player?.NativePointer ?? IntPtr.Zero, disableMigration ? (byte) 1 : (byte) 0);
             }
         }
 
@@ -198,7 +198,7 @@ namespace AltV.Net.Elements.Entities
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
                 var result = Server.Library.Player_HasMetaData(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
-                return result;
+                return result == 1;
             }
         }
 
@@ -239,7 +239,7 @@ namespace AltV.Net.Elements.Entities
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
                 var result = Server.Library.Player_HasSyncedMetaData(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
-                return result;
+                return result == 1;
             }
         }
 
@@ -280,7 +280,7 @@ namespace AltV.Net.Elements.Entities
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
                 var result = Server.Library.Player_HasStreamSyncedMetaData(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
-                return result;
+                return result == 1;
             }
         }
 
@@ -301,7 +301,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Player_IsConnected(NativePointer);
+                    return Server.Library.Player_IsConnected(NativePointer) == 1;
                 }
             }
         }
@@ -424,7 +424,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Player_IsDead(NativePointer);
+                    return Server.Library.Player_IsDead(NativePointer) == 1;
                 }
             }
         }
@@ -436,7 +436,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Player_IsJumping(NativePointer);
+                    return Server.Library.Player_IsJumping(NativePointer) == 1;
                 }
             }
         }
@@ -448,7 +448,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Player_IsInRagdoll(NativePointer);
+                    return Server.Library.Player_IsInRagdoll(NativePointer) == 1;
                 }
             }
         }
@@ -460,7 +460,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Player_IsAiming(NativePointer);
+                    return Server.Library.Player_IsAiming(NativePointer) == 1;
                 }
             }
         }
@@ -472,7 +472,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Player_IsShooting(NativePointer);
+                    return Server.Library.Player_IsShooting(NativePointer) == 1;
                 }
             }
         }
@@ -484,7 +484,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Player_IsReloading(NativePointer);
+                    return Server.Library.Player_IsReloading(NativePointer) == 1;
                 }
             }
         }
@@ -576,7 +576,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Player_IsInVehicle(NativePointer);
+                    return Server.Library.Player_IsInVehicle(NativePointer) == 1;
                 }
             }
         }
@@ -651,7 +651,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Player_IsFlashlightActive(NativePointer);
+                    return Server.Library.Player_IsFlashlightActive(NativePointer) == 1;
                 }
             }
         }
@@ -713,7 +713,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Player_GiveWeapon(NativePointer, weapon, ammo, selectWeapon);
+                Server.Library.Player_GiveWeapon(NativePointer, weapon, ammo, selectWeapon ? (byte) 1 : (byte) 0);
             }
         }
 
@@ -722,7 +722,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Player_RemoveWeapon(NativePointer, weapon);
+                return Server.Library.Player_RemoveWeapon(NativePointer, weapon) == 1;
             }
         }
 
@@ -758,7 +758,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Player_HasWeaponComponent(NativePointer, weapon, weaponComponent);
+                return Server.Library.Player_HasWeaponComponent(NativePointer, weapon, weaponComponent) == 1;
             }
         }
 
@@ -981,9 +981,9 @@ namespace AltV.Net.Elements.Entities
                 if(entity == null) return false;
 
                 if(entity.Type == BaseObjectType.Player) 
-                    return Server.Library.Player_IsEntityInStreamingRange_Player(NativePointer, entity.NativePointer);
+                    return Server.Library.Player_IsEntityInStreamingRange_Player(NativePointer, entity.NativePointer) == 1;
                 if(entity.Type == BaseObjectType.Vehicle)
-                    return Server.Library.Player_IsEntityInStreamingRange_Vehicle(NativePointer, entity.NativePointer);
+                    return Server.Library.Player_IsEntityInStreamingRange_Vehicle(NativePointer, entity.NativePointer) == 1;
 
                 return false;
             }
@@ -997,9 +997,9 @@ namespace AltV.Net.Elements.Entities
                 if(entity == null) return;
             
                 if(entity.Type == BaseObjectType.Player) 
-                    Server.Library.Player_AttachToEntity_Player(NativePointer, entity.NativePointer, otherBone, ownBone, position, rotation, collision, noFixedRotation);
+                    Server.Library.Player_AttachToEntity_Player(NativePointer, entity.NativePointer, otherBone, ownBone, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
                 if(entity.Type == BaseObjectType.Vehicle)
-                    Server.Library.Player_AttachToEntity_Vehicle(NativePointer, entity.NativePointer, otherBone, ownBone, position, rotation, collision, noFixedRotation);
+                    Server.Library.Player_AttachToEntity_Vehicle(NativePointer, entity.NativePointer, otherBone, ownBone, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
             }
         }
 

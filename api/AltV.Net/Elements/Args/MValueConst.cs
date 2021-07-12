@@ -78,7 +78,7 @@ namespace AltV.Net.Elements.Args
         {
             unsafe
             {
-                return Alt.Server.Library.MValueConst_GetBool(nativePointer);
+                return Alt.Server.Library.MValueConst_GetBool(nativePointer) == 1;
             }
         }
 
@@ -295,7 +295,7 @@ namespace AltV.Net.Elements.Args
                         if (size == 0) return new Dictionary<string, MValueConst>();
                         var keyPointers = new IntPtr[size];
                         var mValuePointers = new IntPtr[size];
-                        if (!Alt.Server.Library.MValueConst_GetDict(nativePointer, keyPointers, mValuePointers))
+                        if (Alt.Server.Library.MValueConst_GetDict(nativePointer, keyPointers, mValuePointers) == 0)
                             return null;
 
                         var dictionary = new Dictionary<string, object>();

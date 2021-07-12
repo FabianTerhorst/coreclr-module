@@ -60,10 +60,7 @@ uint8_t ColShape_GetColShapeType(alt::IColShape* colShape) {
     return colShape->IsEntityIn(entity);
 }*/
 
-#include <iostream>
-
 bool ColShape_IsPlayerIn(alt::IColShape* colShape, alt::IPlayer* player) {
-    std::cout << colShape->IsEntityIn(player) << std::endl;
     return colShape->IsEntityIn(player);
 }
 

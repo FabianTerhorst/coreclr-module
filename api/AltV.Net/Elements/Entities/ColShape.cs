@@ -57,7 +57,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.ColShape_IsPlayersOnly(NativePointer);
+                    return Server.Library.ColShape_IsPlayersOnly(NativePointer) == 1;
                 }
             }
             set
@@ -65,7 +65,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.ColShape_SetPlayersOnly(NativePointer, value);
+                    Server.Library.ColShape_SetPlayersOnly(NativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }
@@ -97,7 +97,7 @@ namespace AltV.Net.Elements.Entities
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
                 var result = Server.Library.ColShape_HasMetaData(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
-                return result;
+                return result == 1;
             }
         }
 
@@ -137,13 +137,13 @@ namespace AltV.Net.Elements.Entities
                 case IPlayer player:
                     unsafe
                     {
-                        return Server.Library.ColShape_IsPlayerIn(NativePointer, player.NativePointer);
+                        return Server.Library.ColShape_IsPlayerIn(NativePointer, player.NativePointer) == 1;
                     }
 
                 case IVehicle vehicle:
                     unsafe
                     {
-                        return Server.Library.ColShape_IsVehicleIn(NativePointer, vehicle.NativePointer);
+                        return Server.Library.ColShape_IsVehicleIn(NativePointer, vehicle.NativePointer) == 1;
                     }
 
                 default:
@@ -161,7 +161,7 @@ namespace AltV.Net.Elements.Entities
                     throw new EntityRemovedException(player);
                 }
 
-                return Server.Library.ColShape_IsPlayerIn(NativePointer, player.NativePointer);
+                return Server.Library.ColShape_IsPlayerIn(NativePointer, player.NativePointer) == 1;
             }
         }
 
@@ -175,7 +175,7 @@ namespace AltV.Net.Elements.Entities
                     throw new EntityRemovedException(vehicle);
                 }
 
-                return Server.Library.ColShape_IsVehicleIn(NativePointer, vehicle.NativePointer);
+                return Server.Library.ColShape_IsVehicleIn(NativePointer, vehicle.NativePointer) == 1;
             }
         }
         

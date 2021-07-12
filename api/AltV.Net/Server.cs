@@ -120,7 +120,7 @@ namespace AltV.Net
                 unsafe
                 {
                     if (isDebug.HasValue) return isDebug.Value;
-                    isDebug = Library.Core_IsDebug(NativePointer);
+                    isDebug = Library.Core_IsDebug(NativePointer) == 1;
                     return isDebug.Value;
                 }
             }
@@ -522,7 +522,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 var ptr = Library.Server_CreateVoiceChannel(NativePointer,
-                    spatial, maxDistance);
+                    spatial ? (byte) 1 : (byte) 0, maxDistance);
                 if (ptr == IntPtr.Zero) return null;
                 voiceChannelPool.Create(this, ptr, out var voiceChannel);
                 return voiceChannel;
@@ -808,7 +808,7 @@ namespace AltV.Net
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
                 var result = Library.Server_HasMetaData(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
-                return result;
+                return result == 1;
             }
         }
 
@@ -855,7 +855,7 @@ namespace AltV.Net
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
                 var result = Library.Server_HasSyncedMetaData(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
-                return result;
+                return result == 1;
             }
         }
 
@@ -883,7 +883,7 @@ namespace AltV.Net
             unsafe
             {
                 mValue = new MValueConst(MValueConst.Type.Bool,
-                    Library.Core_CreateMValueBool(NativePointer, value));
+                    Library.Core_CreateMValueBool(NativePointer, value ? (byte) 1 : (byte) 0));
             }
         }
 
@@ -1249,7 +1249,7 @@ namespace AltV.Net
                 var valuePtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
                 var result = Library.Server_FileExists(NativePointer, valuePtr);
                 Marshal.FreeHGlobal(valuePtr);
-                return result;
+                return result == 1;
             }
         }
 

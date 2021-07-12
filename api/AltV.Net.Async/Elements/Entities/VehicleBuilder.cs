@@ -155,7 +155,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetCustomTires(ptr, value);
+                    Alt.Server.Library.Vehicle_SetCustomTires(ptr, value ? (byte) 1 : (byte) 0);
                 }
             });
             return this;
@@ -240,7 +240,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetEngineOn(ptr, value);
+                    Alt.Server.Library.Vehicle_SetEngineOn(ptr, value ? (byte) 1 : (byte) 0);
                 }
             });
             return this;
@@ -264,7 +264,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetSirenActive(ptr, value);
+                    Alt.Server.Library.Vehicle_SetSirenActive(ptr, value ? (byte) 1 : (byte) 0);
                 }
             });
             return this;

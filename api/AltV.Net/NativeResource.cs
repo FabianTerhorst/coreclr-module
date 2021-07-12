@@ -96,7 +96,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    return library.Resource_IsStarted(NativePointer);
+                    return library.Resource_IsStarted(NativePointer) == 1;
                 }
             }
         }

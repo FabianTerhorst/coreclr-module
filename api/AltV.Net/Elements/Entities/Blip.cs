@@ -77,7 +77,7 @@ namespace AltV.Net.Elements.Entities
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
                 var result = Server.Library.Blip_HasMetaData(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
-                return result;
+                return result == 1;
             }
         }
 
@@ -98,7 +98,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Blip_IsGlobal(NativePointer);
+                    return Server.Library.Blip_IsGlobal(NativePointer) == 1;
                 }
             }
         }
@@ -110,7 +110,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Blip_IsAttached(NativePointer);
+                    return Server.Library.Blip_IsAttached(NativePointer) == 1;
                 }
             }
         }
@@ -173,7 +173,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Blip_SetRoute(NativePointer, value);
+                    Server.Library.Blip_SetRoute(NativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }

@@ -48,7 +48,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.VoiceChannel_HasPlayer(NativePointer, player.NativePointer);
+                return Server.Library.VoiceChannel_HasPlayer(NativePointer, player.NativePointer) == 1;
             }
         }
 
@@ -57,7 +57,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.VoiceChannel_IsPlayerMuted(NativePointer, player.NativePointer);
+                return Server.Library.VoiceChannel_IsPlayerMuted(NativePointer, player.NativePointer) == 1;
             }
         }
 
@@ -68,7 +68,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.VoiceChannel_IsSpatial(NativePointer);
+                    return Server.Library.VoiceChannel_IsSpatial(NativePointer) == 1;
                 }
             }
         }
@@ -116,7 +116,7 @@ namespace AltV.Net.Elements.Entities
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
                 var result = Server.Library.VoiceChannel_HasMetaData(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
-                return result;
+                return result == 1;
             }
         }
 

@@ -13,7 +13,7 @@ namespace AltV.Net.Events
             {
                 unsafe
                 {
-                    return Alt.Server.Library.Event_WasCancelled(nativePointer);
+                    return Alt.Server.Library.Event_WasCancelled(nativePointer) == 1;
                 }
             }
         }
