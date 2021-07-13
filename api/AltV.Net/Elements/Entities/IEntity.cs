@@ -210,7 +210,7 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Attaches the entity to another entity.
         /// </summary>
-        void AttachToEntity(IEntity entity, ushort otherBone, ushort ownBone, Position position, Rotation rotation, bool collision, bool noFixedRotation);
+        void AttachToEntity(IEntity entity, short otherBone, short ownBone, Position position, Rotation rotation, bool collision, bool noFixedRotation);
 
         /// <summary>
         /// Detaches the entity from its attached entity.

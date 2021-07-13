@@ -187,7 +187,7 @@ namespace AltV.Net.Elements.Entities
             SetNetworkOwner(null, false);
         }
 
-        public abstract void AttachToEntity(IEntity entity, ushort otherBone, ushort ownBone, Position position,
+        public abstract void AttachToEntity(IEntity entity, short otherBone, short ownBone, Position position,
             Rotation rotation,
             bool collision, bool noFixedRotation);
 

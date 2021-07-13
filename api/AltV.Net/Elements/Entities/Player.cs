@@ -989,7 +989,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public override void AttachToEntity(IEntity entity, ushort otherBone, ushort ownBone, Position position, Rotation rotation, bool collision, bool noFixedRotation)
+        public override void AttachToEntity(IEntity entity, short otherBone, short ownBone, Position position, Rotation rotation, bool collision, bool noFixedRotation)
         {
             unsafe
             {
