@@ -172,8 +172,8 @@ EXPORT void Player_ClearProps(alt::IPlayer* player, uint8_t component);
 EXPORT uint8_t Player_IsEntityInStreamingRange_Player(alt::IPlayer* player, alt::IPlayer* entity);
 EXPORT uint8_t Player_IsEntityInStreamingRange_Vehicle(alt::IPlayer* player, alt::IVehicle* entity);
 
-EXPORT void Player_AttachToEntity_Player(alt::IPlayer* player, alt::IPlayer* entity, uint16_t otherBone, uint16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
-EXPORT void Player_AttachToEntity_Vehicle(alt::IPlayer* player, alt::IVehicle* entity, uint16_t otherBone, uint16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
+EXPORT void Player_AttachToEntity_Player(alt::IPlayer* player, alt::IPlayer* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
+EXPORT void Player_AttachToEntity_Vehicle(alt::IPlayer* player, alt::IVehicle* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
 EXPORT void Player_Detach(alt::IPlayer* player);
 
 #ifdef __cplusplus

@@ -126,8 +126,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_ClearProps { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Player_IsEntityInStreamingRange_Player { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Player_IsEntityInStreamingRange_Vehicle { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, ushort, ushort, Position, Rotation, byte, byte, void> Player_AttachToEntity_Player { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, ushort, ushort, Position, Rotation, byte, byte, void> Player_AttachToEntity_Vehicle { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Player_AttachToEntity_Player { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Player_AttachToEntity_Vehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetNetworkOwner { get; }
@@ -288,8 +288,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetAttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Repair { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, ushort, ushort, Position, Rotation, byte, byte, void> Vehicle_AttachToEntity_Player { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, ushort, ushort, Position, Rotation, byte, byte, void> Vehicle_AttachToEntity_Vehicle { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Vehicle_AttachToEntity_Player { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Vehicle_AttachToEntity_Vehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, Position*, void> ColShape_GetPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, void> ColShape_SetPosition { get; }
@@ -570,8 +570,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_ClearProps { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Player_IsEntityInStreamingRange_Player { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Player_IsEntityInStreamingRange_Vehicle { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, ushort, ushort, Position, Rotation, byte, byte, void> Player_AttachToEntity_Player { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, ushort, ushort, Position, Rotation, byte, byte, void> Player_AttachToEntity_Vehicle { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Player_AttachToEntity_Player { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Player_AttachToEntity_Vehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetNetworkOwner { get; }
@@ -732,8 +732,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetAttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Repair { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, ushort, ushort, Position, Rotation, byte, byte, void> Vehicle_AttachToEntity_Player { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, ushort, ushort, Position, Rotation, byte, byte, void> Vehicle_AttachToEntity_Vehicle { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Vehicle_AttachToEntity_Player { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Vehicle_AttachToEntity_Vehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, Position*, void> ColShape_GetPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, void> ColShape_SetPosition { get; }
@@ -1011,8 +1011,8 @@ namespace AltV.Net.Native
             Player_ClearProps = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Player_ClearProps");
             Player_IsEntityInStreamingRange_Player = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Player_IsEntityInStreamingRange_Player");
             Player_IsEntityInStreamingRange_Vehicle = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Player_IsEntityInStreamingRange_Vehicle");
-            Player_AttachToEntity_Player = (delegate* unmanaged[Cdecl]<nint, nint, ushort, ushort, Position, Rotation, byte, byte, void>) NativeLibrary.GetExport(handle, "Player_AttachToEntity_Player");
-            Player_AttachToEntity_Vehicle = (delegate* unmanaged[Cdecl]<nint, nint, ushort, ushort, Position, Rotation, byte, byte, void>) NativeLibrary.GetExport(handle, "Player_AttachToEntity_Vehicle");
+            Player_AttachToEntity_Player = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void>) NativeLibrary.GetExport(handle, "Player_AttachToEntity_Player");
+            Player_AttachToEntity_Vehicle = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void>) NativeLibrary.GetExport(handle, "Player_AttachToEntity_Vehicle");
             Player_Detach = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Player_Detach");
             Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetID");
             Vehicle_GetNetworkOwner = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetNetworkOwner");
@@ -1173,8 +1173,8 @@ namespace AltV.Net.Native
             Vehicle_GetAttached = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetAttached");
             Vehicle_GetAttachedTo = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetAttachedTo");
             Vehicle_Repair = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Vehicle_Repair");
-            Vehicle_AttachToEntity_Player = (delegate* unmanaged[Cdecl]<nint, nint, ushort, ushort, Position, Rotation, byte, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_AttachToEntity_Player");
-            Vehicle_AttachToEntity_Vehicle = (delegate* unmanaged[Cdecl]<nint, nint, ushort, ushort, Position, Rotation, byte, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_AttachToEntity_Vehicle");
+            Vehicle_AttachToEntity_Player = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_AttachToEntity_Player");
+            Vehicle_AttachToEntity_Vehicle = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_AttachToEntity_Vehicle");
             Vehicle_Detach = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Vehicle_Detach");
             ColShape_GetPosition = (delegate* unmanaged[Cdecl]<nint, Position*, void>) NativeLibrary.GetExport(handle, "ColShape_GetPosition");
             ColShape_SetPosition = (delegate* unmanaged[Cdecl]<nint, Position, void>) NativeLibrary.GetExport(handle, "ColShape_SetPosition");

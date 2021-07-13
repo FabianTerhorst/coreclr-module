@@ -99,6 +99,7 @@ namespace AltV.Net.CodeGen
             ["alt::IVehicle*[]"] = "nint[]",
             ["char[]"] = "nint",
             ["uint8_t&"] = "byte*",
+            ["uint8_t*"] = "byte*",
             ["rgba_t"] = "Rgba",
             ["void*"] = "nint",
             ["const void*"] = "nint"

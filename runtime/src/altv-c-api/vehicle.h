@@ -221,8 +221,8 @@ EXPORT alt::IVehicle* Vehicle_GetAttachedTo(alt::IVehicle* vehicle);
 
 EXPORT void Vehicle_Repair(alt::IVehicle* vehicle);
 
-EXPORT void Vehicle_AttachToEntity_Player(alt::IVehicle* vehicle, alt::IPlayer* entity, uint16_t otherBone, uint16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
-EXPORT void Vehicle_AttachToEntity_Vehicle(alt::IVehicle* vehicle, alt::IVehicle* entity, uint16_t otherBone, uint16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
+EXPORT void Vehicle_AttachToEntity_Player(alt::IVehicle* vehicle, alt::IPlayer* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
+EXPORT void Vehicle_AttachToEntity_Vehicle(alt::IVehicle* vehicle, alt::IVehicle* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
 EXPORT void Vehicle_Detach(alt::IVehicle* vehicle);
 
 #ifdef __cplusplus

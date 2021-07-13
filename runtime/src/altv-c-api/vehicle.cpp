@@ -345,7 +345,12 @@ uint8_t Vehicle_IsNeonActive(alt::IVehicle* vehicle) {
 }
 
 void Vehicle_GetNeonActive(alt::IVehicle* vehicle, uint8_t* left, uint8_t* right, uint8_t* front, uint8_t* back) {
-    vehicle->GetNeonActive(left, right, front, back);
+    bool bLeft, bRight, bFront, bBack;
+    vehicle->GetNeonActive(&bLeft, &bRight, &bFront, &bBack);
+    *left = bLeft;
+    *right = bRight;
+    *front = bFront;
+    *back = bBack;
 }
 
 void Vehicle_SetNeonActive(alt::IVehicle* vehicle, uint8_t left, uint8_t right, uint8_t front, uint8_t back) {
@@ -701,14 +706,14 @@ void Vehicle_Repair(alt::IVehicle* vehicle) {
     vehicle->SetFixed();
 }
 
-void Vehicle_AttachToEntity_Player(alt::IVehicle* vehicle, alt::IPlayer* entity, uint16_t otherBone, uint16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot)
+void Vehicle_AttachToEntity_Player(alt::IVehicle* vehicle, alt::IPlayer* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot)
 {
     alt::Position position{pos.x, pos.y, pos.z};
     alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
     vehicle->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
 }
 
-void Vehicle_AttachToEntity_Vehicle(alt::IVehicle* vehicle, alt::IVehicle* entity, uint16_t otherBone, uint16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot)
+void Vehicle_AttachToEntity_Vehicle(alt::IVehicle* vehicle, alt::IVehicle* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot)
 {
     alt::Position position{pos.x, pos.y, pos.z};
     alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
