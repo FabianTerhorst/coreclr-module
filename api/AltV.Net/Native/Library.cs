@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security;
 using AltV.Net.Data;
@@ -892,9 +893,16 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
 
-        public Library() 
+        public Library()
         {
-            var handle = NativeLibrary.Load(DllName);
+            const DllImportSearchPath dllImportSearchPath = DllImportSearchPath.LegacyBehavior
+                                                            | DllImportSearchPath.AssemblyDirectory
+                                                            | DllImportSearchPath.SafeDirectories
+                                                            | DllImportSearchPath.System32
+                                                            | DllImportSearchPath.UserDirectories
+                                                            | DllImportSearchPath.ApplicationDirectory
+                                                            | DllImportSearchPath.UseDllDirectoryForDependencies;
+            var handle = NativeLibrary.Load(DllName, Assembly.GetExecutingAssembly(), dllImportSearchPath);
             Checkpoint_GetPosition = (delegate* unmanaged[Cdecl]<nint, Position*, void>) NativeLibrary.GetExport(handle, "Checkpoint_GetPosition");
             Checkpoint_SetPosition = (delegate* unmanaged[Cdecl]<nint, Position, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetPosition");
             Checkpoint_GetDimension = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Checkpoint_GetDimension");

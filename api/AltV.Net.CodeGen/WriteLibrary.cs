@@ -145,6 +145,7 @@ namespace AltV.Net.CodeGen
             var exports = new StringBuilder();
             var imports = new StringBuilder();
             imports.Append($@"using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security;
 using AltV.Net.Data;
@@ -189,7 +190,14 @@ namespace AltV.Net.Native
 {properties}
         public Library() 
         {{
-            var handle = NativeLibrary.Load(DllName);
+            const DllImportSearchPath dllImportSearchPath = DllImportSearchPath.LegacyBehavior
+                                                            | DllImportSearchPath.AssemblyDirectory
+                                                            | DllImportSearchPath.SafeDirectories
+                                                            | DllImportSearchPath.System32
+                                                            | DllImportSearchPath.UserDirectories
+                                                            | DllImportSearchPath.ApplicationDirectory
+                                                            | DllImportSearchPath.UseDllDirectoryForDependencies;
+            var handle = NativeLibrary.Load(DllName, Assembly.GetExecutingAssembly(), dllImportSearchPath);
 {exports}
         }}
     }}
