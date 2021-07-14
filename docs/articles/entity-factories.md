@@ -12,7 +12,7 @@ public class MyPlayer : Player
 {
   public bool LoggedIn { get; set; }
   
-  public MyPlayer(IntPtr nativePointer, ushort id) : base(nativePointer, id)
+  public MyPlayer(IServer server, IntPtr nativePointer, ushort id) : base(server, nativePointer, id)
   {
     LoggedIn = false;
   }
@@ -30,9 +30,9 @@ You only need to override the ```IPlayer Create(IntPtr playerPointer, ushort id)
 ```csharp
 public class MyPlayerFactory : IEntityFactory<IPlayer>
 {
-  public IPlayer Create(IntPtr playerPointer, ushort id)
+  public IPlayer Create(IServer server, IntPtr playerPointer, ushort id)
   {
-    return new MyPlayer(playerPointer, id);
+    return new MyPlayer(server, playerPointer, id);
   }
 }
 ```
