@@ -5,9 +5,9 @@ namespace AltV.Net.Elements.Factories
 {
     public class VehicleFactory : IEntityFactory<IVehicle>
     {
-        public IVehicle Create(IntPtr vehiclePointer, ushort id)
+        public IVehicle Create(IServer server, IntPtr vehiclePointer, ushort id)
         {
-            return new Vehicle(vehiclePointer, id);
+            return new Vehicle(server, vehiclePointer, id);
         }
     }
 }

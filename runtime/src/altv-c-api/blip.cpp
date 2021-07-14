@@ -34,7 +34,7 @@ void Blip_SetMetaData(alt::IBlip* blip, const char* key, alt::MValueConst* val) 
     blip->SetMetaData(key, val->Get()->Clone());
 }
 
-bool Blip_HasMetaData(alt::IBlip* blip, const char* key) {
+uint8_t Blip_HasMetaData(alt::IBlip* blip, const char* key) {
     return blip->HasMetaData(key);
 }
 
@@ -52,11 +52,11 @@ void Blip_RemoveRef(alt::IBlip* blip) {
 
 // Blip
 
-bool Blip_IsGlobal(alt::IBlip* blip) {
+uint8_t Blip_IsGlobal(alt::IBlip* blip) {
     return blip->IsGlobal();
 }
 
-bool Blip_IsAttached(alt::IBlip* blip) {
+uint8_t Blip_IsAttached(alt::IBlip* blip) {
     return blip->IsAttached();
 }
 
@@ -88,7 +88,7 @@ void Blip_SetColor(alt::IBlip* blip, uint8_t color) {
     //blip->SetColor(color);
 }
 
-void Blip_SetRoute(alt::IBlip* blip, bool state) {
+void Blip_SetRoute(alt::IBlip* blip, uint8_t state) {
     //blip->SetRoute(state);
 }
 

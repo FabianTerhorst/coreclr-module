@@ -6,9 +6,9 @@ namespace AltV.Net.Example
     [EntityFactory(BaseObjectType.Player)]
     public class MyPlayerFactory : IEntityFactory<IPlayer>
     {
-        public IPlayer Create(IntPtr playerPointer, ushort id)
+        public IPlayer Create(IServer server, IntPtr playerPointer, ushort id)
         {
-            return new MyPlayer(playerPointer, id);
+            return new MyPlayer(server, playerPointer, id);
         }
     }
 }

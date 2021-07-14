@@ -5,6 +5,6 @@ namespace AltV.Net
 {
     public interface IEntityFactory<out TEntity> where TEntity : IEntity
     {
-        TEntity Create(IntPtr entityPointer, ushort id);
+        TEntity Create(IServer server, IntPtr entityPointer, ushort id);
     }
 }

@@ -14,6 +14,8 @@ namespace AltV.Net.Elements.Entities
     {
         private readonly ConcurrentDictionary<string, object> data = new ConcurrentDictionary<string, object>();
 
+        public IServer Server;
+        
         public IntPtr NativePointer { get; }
 
         private bool exists;
@@ -44,13 +46,14 @@ namespace AltV.Net.Elements.Entities
         protected abstract void InternalAddRef();
         protected abstract void InternalRemoveRef();
 
-        protected BaseObject(IntPtr nativePointer, BaseObjectType type)
+        protected BaseObject(IServer server, IntPtr nativePointer, BaseObjectType type)
         {
             if (nativePointer == IntPtr.Zero)
             {
                 throw new BaseObjectRemovedException(this);
             }
 
+            Server = server;
             NativePointer = nativePointer;
             Type = type;
             exists = true;

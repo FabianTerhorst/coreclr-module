@@ -407,31 +407,34 @@ namespace AltV.Net.Elements.Args
 
         public void BeginObject()
         {
-            //CheckObject();
-            readableMValue.GetNext(out MValueConst mValue);
-
-            if (mValue.type != MValueConst.Type.Dict)
+            unsafe
             {
-                throw new InvalidDataException("Expected object but got " + mValue.type);
-            }
+                //CheckObject();
+                readableMValue.GetNext(out MValueConst mValue);
 
-            var size = AltNative.MValueNative.MValueConst_GetDictSize(mValue.nativePointer);
-            var stringArrayPtr = new IntPtr[size];
-            var valueArrayPtr = new IntPtr[size];
-            AltNative.MValueNative.MValueConst_GetDict(mValue.nativePointer, stringArrayPtr, valueArrayPtr);
-            var keyArray = new string[size];
-            var valueArray = new MValueConst[size];
-            for (ulong i = 0; i < size; i++)
-            {
-                var keyPointer = stringArrayPtr[i];
-                keyArray[i] = Marshal.PtrToStringUTF8(keyPointer);
-                AltNative.FreeCharArray(keyPointer);
-                valueArray[i] = new MValueConst(valueArrayPtr[i]);
-            }
+                if (mValue.type != MValueConst.Type.Dict)
+                {
+                    throw new InvalidDataException("Expected object but got " + mValue.type);
+                }
 
-            readableMValue = new MValueObjectReader(keyArray, valueArray);
-            currents.Push(readableMValue);
-            insideObject = true;
+                var size = Alt.Server.Library.MValueConst_GetDictSize(mValue.nativePointer);
+                var stringArrayPtr = new IntPtr[size];
+                var valueArrayPtr = new IntPtr[size];
+                Alt.Server.Library.MValueConst_GetDict(mValue.nativePointer, stringArrayPtr, valueArrayPtr);
+                var keyArray = new string[size];
+                var valueArray = new MValueConst[size];
+                for (ulong i = 0; i < size; i++)
+                {
+                    var keyPointer = stringArrayPtr[i];
+                    keyArray[i] = Marshal.PtrToStringUTF8(keyPointer);
+                    Alt.Server.Library.FreeCharArray(keyPointer);
+                    valueArray[i] = new MValueConst(valueArrayPtr[i]);
+                }
+
+                readableMValue = new MValueObjectReader(keyArray, valueArray);
+                currents.Push(readableMValue);
+                insideObject = true;
+            }
         }
 
         public void EndObject()
@@ -443,20 +446,23 @@ namespace AltV.Net.Elements.Args
 
         public void BeginArray()
         {
-            //CheckArray();
-            readableMValue.GetNext(out MValueConst mValue);
-
-            if (mValue.type != MValueConst.Type.List)
+            unsafe
             {
-                throw new InvalidDataException("Expected array but got " + mValue.type);
-            }
+                //CheckArray();
+                readableMValue.GetNext(out MValueConst mValue);
 
-            var size = AltNative.MValueNative.MValueConst_GetListSize(mValue.nativePointer);
-            var valueArrayRef = new IntPtr[size];
-            AltNative.MValueNative.MValueConst_GetList(mValue.nativePointer, valueArrayRef);
-            readableMValue = new MValueArrayReader(MValueConst.CreateFrom(valueArrayRef));
-            currents.Push(readableMValue);
-            insideObject = true;
+                if (mValue.type != MValueConst.Type.List)
+                {
+                    throw new InvalidDataException("Expected array but got " + mValue.type);
+                }
+
+                var size = Alt.Server.Library.MValueConst_GetListSize(mValue.nativePointer);
+                var valueArrayRef = new IntPtr[size];
+                Alt.Server.Library.MValueConst_GetList(mValue.nativePointer, valueArrayRef);
+                readableMValue = new MValueArrayReader(MValueConst.CreateFrom(valueArrayRef));
+                currents.Push(readableMValue);
+                insideObject = true;
+            }
         }
 
         public void EndArray()

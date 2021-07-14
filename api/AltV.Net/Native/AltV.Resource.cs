@@ -12,61 +12,6 @@ namespace AltV.Net.Native
         [SuppressUnmanagedCodeSecurity]
         internal static class Resource
         {
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern ulong Resource_GetExportsCount(IntPtr resource);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Resource_GetExports(IntPtr resource, IntPtr[] keys, IntPtr[] values);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Resource_GetExport(IntPtr resource, IntPtr key);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern int Resource_GetDependenciesSize(IntPtr core);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Resource_GetDependencies(IntPtr core, string[] dependencies, int size);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern int Resource_GetDependantsSize(IntPtr core);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Resource_GetDependants(IntPtr core, string[] dependants, int size);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Resource_SetExport(IntPtr core, IntPtr resource, IntPtr key, IntPtr val);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Resource_SetExports(IntPtr core, IntPtr resource, IntPtr[] values,
-                IntPtr[] keys, int size);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Resource_GetPath(IntPtr resourcePointer, ref IntPtr text);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Resource_GetName(IntPtr resourcePointer, ref IntPtr text);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Resource_GetMain(IntPtr resourcePointer, ref IntPtr text);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Resource_GetType(IntPtr resourcePointer, ref IntPtr text);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern bool Resource_IsStarted(IntPtr resourcePointer);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Resource_Start(IntPtr resourcePointer);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern void Resource_Stop(IntPtr resourcePointer);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Resource_GetImpl(IntPtr resourcePointer);
-
-            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
-            internal static extern IntPtr Resource_GetCSharpImpl(IntPtr resourcePointer);
-
             internal delegate void MainDelegate(IntPtr serverPointer, IntPtr resourcePointer, string resourceName,
                 string entryPoint);
 

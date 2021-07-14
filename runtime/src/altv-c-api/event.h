@@ -19,7 +19,7 @@ extern "C"
 {
 #endif
 EXPORT void Event_Cancel(alt::CEvent* event);
-EXPORT bool Event_WasCancelled(alt::CEvent* event);
+EXPORT uint8_t Event_WasCancelled(alt::CEvent* event);
 #ifdef __cplusplus
 }
 #endif

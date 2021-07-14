@@ -15,18 +15,28 @@ namespace AltV.Net.ColShape.Tests
         {
             this.players = players;
         }
-        
-        public void Create(IntPtr entityPointer, ushort id)
+
+        public void Create(IServer server, IntPtr entityPointer, ushort id)
         {
             throw new NotImplementedException();
         }
 
-        public void Create(IntPtr entityPointer, ushort id, out IPlayer entity)
+        public void Create(IServer server, IntPtr entityPointer, ushort id, out IPlayer entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Create(IntPtr entityPointer, out IPlayer entity)
+        public void Create(IServer server, IntPtr entityPointer, out IPlayer entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GetOrCreate(IServer server, IntPtr entityPointer, ushort entityId, out IPlayer entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GetOrCreate(IServer server, IntPtr entityPointer, out IPlayer entity)
         {
             throw new NotImplementedException();
         }
@@ -47,16 +57,6 @@ namespace AltV.Net.ColShape.Tests
         }
 
         public bool Get(IntPtr entityPointer, out IPlayer entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetOrCreate(IntPtr entityPointer, ushort entityId, out IPlayer entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetOrCreate(IntPtr entityPointer, out IPlayer entity)
         {
             throw new NotImplementedException();
         }

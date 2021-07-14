@@ -24,7 +24,7 @@ namespace AltV.Net.Mock
 
         private readonly Dictionary<string, MValueConst> syncedMetaData = new Dictionary<string, MValueConst>();
 
-        public MockEntity(IntPtr nativePointer, BaseObjectType baseObjectType, ushort id):base(nativePointer, baseObjectType, id)
+        public MockEntity(IServer server, IntPtr nativePointer, BaseObjectType baseObjectType, ushort id):base(server, nativePointer, baseObjectType, id)
         {
             NativePointer = nativePointer;
             Type = baseObjectType;

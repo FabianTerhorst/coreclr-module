@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>net5.0</TargetFramework>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
@@ -13,7 +13,7 @@
 
     <ItemGroup>
       <PackageReference Include="System.Threading.Channels" Version="5.0.0" />
-      <PackageReference Include="VIEApps.Components.WebSockets" Version="10.3.2010.1" />
+      <PackageReference Include="VIEApps.Components.WebSockets" Version="10.4.2106.2" />
     </ItemGroup>
 
 </Project>

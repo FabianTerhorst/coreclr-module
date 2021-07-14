@@ -127,14 +127,18 @@ namespace AltV.Net.Async
 
         public static async Task<string> GetNumberplateTextAsync(this IVehicle vehicle)
         {
-            var ptr = IntPtr.Zero;
-            await AltVAsync.Schedule(
+            var returnPtr = await AltVAsync.Schedule(
                 () =>
                 {
-                    vehicle.CheckIfEntityExists();
-                    AltNative.Vehicle.Vehicle_GetNumberplateText(vehicle.NativePointer, ref ptr);
+                    unsafe
+                    {
+                        var ptr = IntPtr.Zero;
+                        vehicle.CheckIfEntityExists();
+                        Alt.Server.Library.Vehicle_GetNumberplateText(vehicle.NativePointer, &ptr);
+                        return ptr;
+                    }
                 });
-            return ptr == IntPtr.Zero ? string.Empty : Marshal.PtrToStringUTF8(ptr);
+            return returnPtr == IntPtr.Zero ? string.Empty : Marshal.PtrToStringUTF8(returnPtr);
         }
 
         public static async Task SetNumberplateTextAsync(this IVehicle vehicle, string numberPlateText)
@@ -142,8 +146,11 @@ namespace AltV.Net.Async
             var numberPlateTextPtr = AltNative.StringUtils.StringToHGlobalUtf8(numberPlateText);
             await AltVAsync.Schedule(() =>
             {
-                vehicle.CheckIfEntityExists();
-                AltNative.Vehicle.Vehicle_SetNumberplateText(vehicle.NativePointer, numberPlateTextPtr);
+                unsafe
+                {
+                    vehicle.CheckIfEntityExists();
+                    Alt.Server.Library.Vehicle_SetNumberplateText(vehicle.NativePointer, numberPlateTextPtr);
+                }
             });
             Marshal.FreeHGlobal(numberPlateTextPtr);
         }

@@ -32,14 +32,14 @@ typedef struct {
     float move_speed;
     const char* name;
     uint16_t health;
-    bool is_in_ragdoll;
-    bool is_dead;
-    bool is_shooting;
-    bool is_aiming;
-    bool is_in_vehicle;
-    bool is_jumping;
-    bool is_reloading;
-    bool is_connected;
+    uint8_t is_in_ragdoll;
+    uint8_t is_dead;
+    uint8_t is_shooting;
+    uint8_t is_aiming;
+    uint8_t is_in_vehicle;
+    uint8_t is_jumping;
+    uint8_t is_reloading;
+    uint8_t is_connected;
     alt::IVehicle* vehicle;
 } player_struct_t;
 
@@ -62,22 +62,22 @@ EXPORT int32_t Player_GetDimension(alt::IPlayer* player);
 EXPORT void Player_SetDimension(alt::IPlayer* player, int32_t dimension);
 EXPORT alt::MValueConst* Player_GetMetaData(alt::IPlayer* player, const char* key);
 EXPORT void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val);
-EXPORT bool Player_HasMetaData(alt::IPlayer* player, const char* key);
+EXPORT uint8_t Player_HasMetaData(alt::IPlayer* player, const char* key);
 EXPORT void Player_DeleteMetaData(alt::IPlayer* player, const char* key);
 EXPORT alt::MValueConst* Player_GetSyncedMetaData(alt::IPlayer* player, const char* key);
 EXPORT void Player_SetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val);
-EXPORT bool Player_HasSyncedMetaData(alt::IPlayer* player, const char* key);
+EXPORT uint8_t Player_HasSyncedMetaData(alt::IPlayer* player, const char* key);
 EXPORT void Player_DeleteSyncedMetaData(alt::IPlayer* player, const char* key);
 EXPORT alt::MValueConst* Player_GetStreamSyncedMetaData(alt::IPlayer* player, const char* key);
 EXPORT void Player_SetStreamSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val);
-EXPORT bool Player_HasStreamSyncedMetaData(alt::IPlayer* player, const char* key);
+EXPORT uint8_t Player_HasStreamSyncedMetaData(alt::IPlayer* player, const char* key);
 EXPORT void Player_DeleteStreamSyncedMetaData(alt::IPlayer* player, const char* key);
 EXPORT void Player_AddRef(alt::IPlayer* player);
 EXPORT void Player_RemoveRef(alt::IPlayer* player);
-EXPORT bool Player_GetVisible(alt::IPlayer* player);
-EXPORT void Player_SetVisible(alt::IPlayer* player, bool state);
+EXPORT uint8_t Player_GetVisible(alt::IPlayer* player);
+EXPORT void Player_SetVisible(alt::IPlayer* player, uint8_t state);
 // Player
-EXPORT bool Player_IsConnected(alt::IPlayer* player);
+EXPORT uint8_t Player_IsConnected(alt::IPlayer* player);
 EXPORT void Player_Spawn(alt::IPlayer* player, alt::Position pos, uint32_t delayMs);
 EXPORT void Player_Despawn(alt::IPlayer* player);
 
@@ -97,13 +97,13 @@ EXPORT void Player_SetMaxHealth(alt::IPlayer* player, uint16_t maxHealth);
 EXPORT void Player_SetDateTime(alt::IPlayer* player, int day, int month, int year, int hour, int minute, int second);
 EXPORT void Player_SetWeather(alt::IPlayer* player, uint32_t weather);
 
-EXPORT void Player_GiveWeapon(alt::IPlayer* player, uint32_t weapon, int32_t ammo, bool selectWeapon);
-EXPORT bool Player_RemoveWeapon(alt::IPlayer* player, uint32_t weapon);
+EXPORT void Player_GiveWeapon(alt::IPlayer* player, uint32_t weapon, int32_t ammo, uint8_t selectWeapon);
+EXPORT uint8_t Player_RemoveWeapon(alt::IPlayer* player, uint32_t weapon);
 EXPORT void Player_RemoveAllWeapons(alt::IPlayer* player);
 
 EXPORT void Player_AddWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_t component);
 EXPORT void Player_RemoveWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_t component);
-EXPORT bool Player_HasWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_t component);
+EXPORT uint8_t Player_HasWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_t component);
 EXPORT void Player_GetCurrentWeaponComponents(alt::IPlayer* player, alt::Array<uint32_t> &weaponComponents);
 
 EXPORT void Player_SetWeaponTintIndex(alt::IPlayer* player, uint32_t weapon, uint8_t tintIndex);
@@ -113,13 +113,13 @@ EXPORT uint8_t Player_GetCurrentWeaponTintIndex(alt::IPlayer* player);
 EXPORT uint32_t Player_GetCurrentWeapon(alt::IPlayer* player);
 EXPORT void Player_SetCurrentWeapon(alt::IPlayer* player, uint32_t weapon);
 
-EXPORT bool Player_IsDead(alt::IPlayer* player);
+EXPORT uint8_t Player_IsDead(alt::IPlayer* player);
 
-EXPORT bool Player_IsJumping(alt::IPlayer* player);
-EXPORT bool Player_IsInRagdoll(alt::IPlayer* player);
-EXPORT bool Player_IsAiming(alt::IPlayer* player);
-EXPORT bool Player_IsShooting(alt::IPlayer* player);
-EXPORT bool Player_IsReloading(alt::IPlayer* player);
+EXPORT uint8_t Player_IsJumping(alt::IPlayer* player);
+EXPORT uint8_t Player_IsInRagdoll(alt::IPlayer* player);
+EXPORT uint8_t Player_IsAiming(alt::IPlayer* player);
+EXPORT uint8_t Player_IsShooting(alt::IPlayer* player);
+EXPORT uint8_t Player_IsReloading(alt::IPlayer* player);
 
 EXPORT uint16_t Player_GetArmor(alt::IPlayer* player);
 EXPORT void Player_SetArmor(alt::IPlayer* player, uint16_t armor);
@@ -132,14 +132,14 @@ EXPORT float Player_GetMoveSpeed(alt::IPlayer* player);
 EXPORT void Player_GetAimPos(alt::IPlayer* player, position_t &aimPosition);
 EXPORT void Player_GetHeadRotation(alt::IPlayer* player, rotation_t &headRotation);
 
-EXPORT bool Player_IsInVehicle(alt::IPlayer* player);
+EXPORT uint8_t Player_IsInVehicle(alt::IPlayer* player);
 EXPORT alt::IVehicle* Player_GetVehicle(alt::IPlayer* player);
 EXPORT uint8_t Player_GetSeat(alt::IPlayer* player);
 
 EXPORT void* Player_GetEntityAimingAt(alt::IPlayer* player, alt::IBaseObject::Type &type);
 EXPORT void Player_GetEntityAimOffset(alt::IPlayer* player, position_t &position);
 
-EXPORT bool Player_IsFlashlightActive(alt::IPlayer* player);
+EXPORT uint8_t Player_IsFlashlightActive(alt::IPlayer* player);
 
 EXPORT void Player_Kick(alt::IPlayer* player, const char* reason);
 
@@ -151,7 +151,7 @@ EXPORT void Player_GetIP(alt::IPlayer* player, const char*&ip);
 
 EXPORT void Player_GetPositionCoords2(alt::IPlayer* player, float* position_x, float* position_y, float* position_z, float* rotation_x, float* rotation_y, float* rotation_z, int* dimension);
 
-EXPORT void Player_SetNetworkOwner(alt::IPlayer* player, alt::IPlayer* networkOwnerPlayer, bool disableMigration);
+EXPORT void Player_SetNetworkOwner(alt::IPlayer* player, alt::IPlayer* networkOwnerPlayer, uint8_t disableMigration);
 
 EXPORT void Player_ClearBloodDamage(alt::IPlayer* player);
 
@@ -169,11 +169,11 @@ EXPORT void Player_SetDlcProps(alt::IPlayer* player, uint8_t component, uint16_t
 
 EXPORT void Player_ClearProps(alt::IPlayer* player, uint8_t component);
 
-EXPORT bool Player_IsEntityInStreamingRange_Player(alt::IPlayer* player, alt::IPlayer* entity);
-EXPORT bool Player_IsEntityInStreamingRange_Vehicle(alt::IPlayer* player, alt::IVehicle* entity);
+EXPORT uint8_t Player_IsEntityInStreamingRange_Player(alt::IPlayer* player, alt::IPlayer* entity);
+EXPORT uint8_t Player_IsEntityInStreamingRange_Vehicle(alt::IPlayer* player, alt::IVehicle* entity);
 
-EXPORT void Player_AttachToEntity_Player(alt::IPlayer* player, alt::IPlayer* entity, uint16_t otherBone, uint16_t ownBone, position_t pos, rotation_t rot, bool collision, bool noFixedRot);
-EXPORT void Player_AttachToEntity_Vehicle(alt::IPlayer* player, alt::IVehicle* entity, uint16_t otherBone, uint16_t ownBone, position_t pos, rotation_t rot, bool collision, bool noFixedRot);
+EXPORT void Player_AttachToEntity_Player(alt::IPlayer* player, alt::IPlayer* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
+EXPORT void Player_AttachToEntity_Vehicle(alt::IPlayer* player, alt::IVehicle* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
 EXPORT void Player_Detach(alt::IPlayer* player);
 
 #ifdef __cplusplus

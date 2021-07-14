@@ -6,7 +6,7 @@ namespace AltV.Net.Mock
 {
     public class MockColShape : MockWorldObject, IColShape
     {
-        public MockColShape(IntPtr nativePointer) : base(nativePointer, BaseObjectType.ColShape)
+        public MockColShape(IServer server, IntPtr nativePointer) : base(server, nativePointer, BaseObjectType.ColShape)
         {
         }
 

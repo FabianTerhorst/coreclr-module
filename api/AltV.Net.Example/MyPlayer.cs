@@ -7,7 +7,7 @@ namespace AltV.Net.Example
     {
         public int MyData { get; set; }
 
-        public MyPlayer(IntPtr nativePointer, ushort id) : base(nativePointer, id)
+        public MyPlayer(IServer server, IntPtr nativePointer, ushort id) : base(server, nativePointer, id)
         {
             MyData = 6;
         }

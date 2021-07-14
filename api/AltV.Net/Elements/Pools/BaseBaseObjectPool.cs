@@ -64,33 +64,33 @@ namespace AltV.Net.Elements.Pools
             }
         }
 
-        public bool GetOrCreate(IntPtr entityPointer, BaseObjectType baseObjectType, out IBaseObject entity)
+        public bool GetOrCreate(IServer server, IntPtr entityPointer, BaseObjectType baseObjectType, out IBaseObject entity)
         {
             bool result;
             switch (baseObjectType)
             {
                 case BaseObjectType.Player:
-                    result = playerPool.GetOrCreate(entityPointer, out var player);
+                    result = playerPool.GetOrCreate(server, entityPointer, out var player);
                     entity = player;
                     return result;
                 case BaseObjectType.Vehicle:
-                    result = vehiclePool.GetOrCreate(entityPointer, out var vehicle);
+                    result = vehiclePool.GetOrCreate(server, entityPointer, out var vehicle);
                     entity = vehicle;
                     return result;
                 case BaseObjectType.Blip:
-                    result = blipPool.GetOrCreate(entityPointer, out var blip);
+                    result = blipPool.GetOrCreate(server, entityPointer, out var blip);
                     entity = blip;
                     return result;
                 case BaseObjectType.Checkpoint:
-                    result = checkpointPool.GetOrCreate(entityPointer, out var checkpoint);
+                    result = checkpointPool.GetOrCreate(server, entityPointer, out var checkpoint);
                     entity = checkpoint;
                     return result;
                 case BaseObjectType.VoiceChannel:
-                    result = voiceChannelPool.GetOrCreate(entityPointer, out var voiceChannel);
+                    result = voiceChannelPool.GetOrCreate(server, entityPointer, out var voiceChannel);
                     entity = voiceChannel;
                     return result;
                 case BaseObjectType.ColShape:
-                    result = colShapePool.GetOrCreate(entityPointer, out var colShape);
+                    result = colShapePool.GetOrCreate(server, entityPointer, out var colShape);
                     entity = colShape;
                     return result;
                 default:
@@ -99,34 +99,34 @@ namespace AltV.Net.Elements.Pools
             }
         }
 
-        public bool GetOrCreate(IntPtr entityPointer, BaseObjectType baseObjectType, ushort entityId,
+        public bool GetOrCreate(IServer server, IntPtr entityPointer, BaseObjectType baseObjectType, ushort entityId,
             out IBaseObject entity)
         {
             bool result;
             switch (baseObjectType)
             {
                 case BaseObjectType.Player:
-                    result = playerPool.GetOrCreate(entityPointer, entityId, out var player);
+                    result = playerPool.GetOrCreate(server, entityPointer, entityId, out var player);
                     entity = player;
                     return result;
                 case BaseObjectType.Vehicle:
-                    result = vehiclePool.GetOrCreate(entityPointer, entityId, out var vehicle);
+                    result = vehiclePool.GetOrCreate(server, entityPointer, entityId, out var vehicle);
                     entity = vehicle;
                     return result;
                 case BaseObjectType.Blip:
-                    result = blipPool.GetOrCreate(entityPointer, out var blip);
+                    result = blipPool.GetOrCreate(server, entityPointer, out var blip);
                     entity = blip;
                     return result;
                 case BaseObjectType.Checkpoint:
-                    result = checkpointPool.GetOrCreate(entityPointer, out var checkpoint);
+                    result = checkpointPool.GetOrCreate(server, entityPointer, out var checkpoint);
                     entity = checkpoint;
                     return result;
                 case BaseObjectType.VoiceChannel:
-                    result = voiceChannelPool.GetOrCreate(entityPointer, out var voiceChannel);
+                    result = voiceChannelPool.GetOrCreate(server, entityPointer, out var voiceChannel);
                     entity = voiceChannel;
                     return result;
                 case BaseObjectType.ColShape:
-                    result = colShapePool.GetOrCreate(entityPointer, out var colShape);
+                    result = colShapePool.GetOrCreate(server, entityPointer, out var colShape);
                     entity = colShape;
                     return result;
                 default:

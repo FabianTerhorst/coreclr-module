@@ -8,7 +8,7 @@ namespace AltV.Net.Elements.Entities
         public abstract Position Position { get; set; }
         public abstract int Dimension { get; set; }
 
-        protected WorldObject(IntPtr nativePointer, BaseObjectType type) : base(nativePointer, type)
+        protected WorldObject(IServer server, IntPtr nativePointer, BaseObjectType type) : base(server, nativePointer, type)
         {
         }
 

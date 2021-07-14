@@ -27,8 +27,8 @@ EXPORT void Server_LogColored(alt::ICore* server, const char* str);
 //EXPORT uint32_t Server_Hash(alt::ICore* server, const char* str);
 EXPORT void Server_SubscribeEvent(alt::ICore* server, alt::CEvent::Type ev, alt::EventCallback cb);
 EXPORT void Server_SubscribeTick(alt::ICore* server, alt::TickCallback cb);
-EXPORT bool Server_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb);
-EXPORT bool Server_FileExists(alt::ICore* server, const char* path);
+EXPORT uint8_t Server_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb);
+EXPORT uint8_t Server_FileExists(alt::ICore* server, const char* path);
 EXPORT void Server_FileRead(alt::ICore* server, const char* path, const char*&text);
 EXPORT void Server_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size);
 EXPORT void
@@ -45,7 +45,7 @@ Server_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, positi
 EXPORT alt::IBlip*
 Server_CreateBlipAttached(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo);
 EXPORT alt::IResource* Server_GetResource(alt::ICore* server, const char* resourceName);
-EXPORT alt::IVoiceChannel* Server_CreateVoiceChannel(alt::ICore* server, bool spatial, float maxDistance);
+EXPORT alt::IVoiceChannel* Server_CreateVoiceChannel(alt::ICore* server, uint8_t spatial, float maxDistance);
 EXPORT alt::IColShape*
 Server_CreateColShapeCylinder(alt::ICore* server, position_t pos, float radius, float height);
 EXPORT alt::IColShape* Server_CreateColShapeSphere(alt::ICore* server, position_t pos, float radius);
@@ -70,14 +70,14 @@ EXPORT void Server_StopResource(alt::ICore* server, const char* text);
 EXPORT void Server_RestartResource(alt::ICore* server, const char* text);
 EXPORT alt::MValueConst* Server_GetMetaData(alt::ICore* core, const char* key);
 EXPORT void Server_SetMetaData(alt::ICore* core, const char* key, alt::MValueConst* val);
-EXPORT bool Server_HasMetaData(alt::ICore* core, const char* key);
+EXPORT uint8_t Server_HasMetaData(alt::ICore* core, const char* key);
 EXPORT void Server_DeleteMetaData(alt::ICore* core, const char* key);
 EXPORT alt::MValueConst* Server_GetSyncedMetaData(alt::ICore* core, const char* key);
 EXPORT void Server_SetSyncedMetaData(alt::ICore* core, const char* key, alt::MValueConst* val);
-EXPORT bool Server_HasSyncedMetaData(alt::ICore* core, const char* key);
+EXPORT uint8_t Server_HasSyncedMetaData(alt::ICore* core, const char* key);
 EXPORT void Server_DeleteSyncedMetaData(alt::ICore* core, const char* key);
 EXPORT alt::MValueConst* Core_CreateMValueNil(alt::ICore* core);
-EXPORT alt::MValueConst* Core_CreateMValueBool(alt::ICore* core, bool value);
+EXPORT alt::MValueConst* Core_CreateMValueBool(alt::ICore* core, uint8_t value);
 EXPORT alt::MValueConst* Core_CreateMValueInt(alt::ICore* core, int64_t value);
 EXPORT alt::MValueConst* Core_CreateMValueUInt(alt::ICore* core, uint64_t value);
 EXPORT alt::MValueConst* Core_CreateMValueDouble(alt::ICore* core, double value);
@@ -95,7 +95,7 @@ EXPORT alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvok
 EXPORT alt::MValueConst* Core_CreateMValueVector3(alt::ICore* core, position_t value);
 EXPORT alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value);
 EXPORT alt::MValueConst* Core_CreateMValueByteArray(alt::ICore* core, uint64_t size, const void* data);
-EXPORT bool Core_IsDebug(alt::ICore* core);
+EXPORT uint8_t Core_IsDebug(alt::ICore* core);
 EXPORT void Core_GetVersion(alt::ICore* core, const char*&value, uint64_t &size);
 EXPORT void Core_GetBranch(alt::ICore* core, const char*&value, uint64_t &size);
 EXPORT void Core_SetPassword(alt::ICore* core, const char* value);
