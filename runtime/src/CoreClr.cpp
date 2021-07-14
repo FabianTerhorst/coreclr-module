@@ -36,12 +36,6 @@ CoreClr::CoreClr(alt::ICore* core) {
     if (rc != 0) {
         core->LogError("invalid get_hostfxr_path " + std::to_string(rc));
     } else {
-#if defined(_WIN32)
-        std::wstring wStr(buffer);
-        core->LogInfo(std::string(wStr.begin(), wStr.end()));
-#else
-        core->LogInfo(std::string(buffer));
-#endif
 
 #ifdef _WIN32
         std::wstring bufferWString(buffer);
