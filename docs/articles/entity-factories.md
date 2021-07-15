@@ -66,13 +66,13 @@ public class MyVehicle : Vehicle
         public int MyData { get; set; }
 
         // This constructor is used for creation via constructor
-        public MyVehicle(uint model, Position position, Rotation rotation) : base(model, position, rotation)
+        public MyVehicle(IServer server, uint model, Position position, Rotation rotation) : base(server, model, position, rotation)
         {
             MyData = 7;
         }
 
         // This constructor is used for creation via entity factory
-        public MyVehicle(IntPtr nativePointer, ushort id) : base(nativePointer, id)
+        public MyVehicle(IServer server, IntPtr nativePointer, ushort id) : base(server, nativePointer, id)
         {
             MyData = 6;
         }
