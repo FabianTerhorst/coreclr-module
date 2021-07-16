@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Refs;
 using AltV.Net.Enums;
@@ -257,6 +258,76 @@ namespace AltV.Net.Elements.Entities
         /// Clears the blood damage of the player
         /// </summary>
         void ClearBloodDamage();
+
+        /// <summary>
+        /// Gets the player clothes
+        /// </summary>
+        Cloth GetClothes(byte component);
+
+        /// <summary>
+        /// Gets the player clothes
+        /// </summary>
+        void GetClothes(byte component, ref Cloth cloth);
+
+        /// <summary>
+        /// Sets the player clothes
+        /// </summary>
+        void SetClothes(byte component, ushort drawable, byte texture, byte palette);
+
+        /// <summary>
+        /// Gets the player dlc clothes
+        /// </summary>
+        DlcCloth GetDlcClothes(byte component);
+
+        /// <summary>
+        /// Gets the player dlc clothes
+        /// </summary>
+        void GetDlcClothes(byte component, ref DlcCloth cloth);
+
+        /// <summary>
+        /// Gets the player clothes
+        /// </summary>
+        void SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc);
+
+        /// <summary>
+        /// Gets the player props
+        /// </summary>
+        Prop GetProps(byte component);
+
+        /// <summary>
+        /// Gets the player props
+        /// </summary>
+        void GetProps(byte component, ref Prop prop);
+
+        /// <summary>
+        /// Sets the player props
+        /// </summary>
+        void SetProps(byte component, ushort drawable, byte texture);
+
+        /// <summary>
+        /// Gets the player dlc props
+        /// </summary>
+        DlcProp GetDlcProps(byte component);
+
+        /// <summary>
+        /// Gets the player dlc props
+        /// </summary>
+        void GetDlcProps(byte component, ref DlcProp prop);
+
+        /// <summary>
+        /// Sets the player dlc props
+        /// </summary>
+        void SetDlcProps(byte component, ushort drawable, byte texture, uint dlc);
+
+        /// <summary>
+        /// Clear the player props
+        /// </summary>
+        void ClearProps(byte component);
+
+        /// <summary>
+        /// Returns if the entity is in the streaming range of the player
+        /// </summary>
+        bool IsEntityInStreamingRange(IEntity entity);
         
         bool TryCreateRef(out PlayerRef playerRef);
     }
@@ -268,8 +339,8 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <param name="player">The player</param>
         /// <param name="dateTime">The DateTime object</param>
-        public static void SetDateTime(this IPlayer player, DateTime dateTime) => player.SetDateTime(dateTime.Day,
-            dateTime.Month, dateTime.Year, dateTime.Hour, dateTime.Minute, dateTime.Second);
+        public static void SetDateTime(this IPlayer player, DateTime dateTime) => player.SetDateTime(dateTime.Day - 1,
+            dateTime.Month - 1, dateTime.Year, dateTime.Hour, dateTime.Minute, dateTime.Second);
 
         /// <summary>
         /// Sets the players current weather
@@ -323,5 +394,23 @@ namespace AltV.Net.Elements.Entities
         /// <param name="weaponModel">The weapon to remove</param>
         public static void RemoveWeapon(this IPlayer player, WeaponModel weaponModel) =>
             player.RemoveWeapon((uint) weaponModel);
+
+        /// <summary>
+        /// Returns the forward vector of the player.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        public static Vector3 GetForwardVector(this IPlayer player)
+        {
+            var z = player.Rotation.Yaw * (Math.PI / 180.0);
+            var x = player.Rotation.Pitch * (Math.PI / 180.0);
+            var num = Math.Abs(Math.Cos(x));
+
+            return new Vector3(
+                (float) (-Math.Sin(z) * num),
+                (float) (Math.Cos(z) * num),
+                (float) Math.Sin(x)
+            );
+        }
     }
 }

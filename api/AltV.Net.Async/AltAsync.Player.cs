@@ -18,14 +18,18 @@ namespace AltV.Net.Async
 
         public static async Task<string> GetNameAsync(this IPlayer player)
         {
-            var ptr = IntPtr.Zero;
-            await AltVAsync.Schedule(
+            var resultPtr = await AltVAsync.Schedule(
                 () =>
                 {
-                    player.CheckIfEntityExists();
-                    AltNative.Player.Player_GetName(player.NativePointer, ref ptr);
+                    var ptr = IntPtr.Zero;
+                    unsafe
+                    {
+                        player.CheckIfEntityExists();
+                        Alt.Server.Library.Player_GetName(player.NativePointer, &ptr);
+                    }
+                    return ptr;
                 });
-            return ptr == IntPtr.Zero ? string.Empty : Marshal.PtrToStringUTF8(ptr);
+            return resultPtr == IntPtr.Zero ? string.Empty : Marshal.PtrToStringUTF8(resultPtr);
         }
 
         public static Task<ushort> GetHealthAsync(this IPlayer player) =>
@@ -74,9 +78,12 @@ namespace AltV.Net.Async
         {
             return await AltVAsync.Schedule(() =>
                 {
-                    player.CheckIfEntityExists();
-                    var vehiclePtr = AltNative.Player.Player_GetVehicle(player.NativePointer);
-                    return Alt.Module.VehiclePool.Get(vehiclePtr, out var vehicle) ? vehicle : null;
+                    unsafe
+                    {
+                        player.CheckIfEntityExists();
+                        var vehiclePtr = Alt.Server.Library.Player_GetVehicle(player.NativePointer);
+                        return Alt.Module.VehiclePool.Get(vehiclePtr, out var vehicle) ? vehicle : null;
+                    }
                 });
         }
 
@@ -125,8 +132,11 @@ namespace AltV.Net.Async
             var reasonPtr = AltNative.StringUtils.StringToHGlobalUtf8(reason);
             await AltVAsync.Schedule(() =>
             {
-                player.CheckIfEntityExists();
-                AltNative.Player.Player_Kick(player.NativePointer, reasonPtr);
+                unsafe
+                {
+                    player.CheckIfEntityExists();
+                    Alt.Server.Library.Player_Kick(player.NativePointer, reasonPtr);
+                }
             });
             Marshal.FreeHGlobal(reasonPtr);
         }

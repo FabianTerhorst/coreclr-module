@@ -20,14 +20,14 @@ namespace AltV.Net.Async
             this.entityFactory = entityFactory;
         }
 
-        public void Create(IntPtr entityPointer)
+        public void Create(IServer server, IntPtr entityPointer)
         {
-            Add(entityFactory.Create(entityPointer));
+            Add(entityFactory.Create(server, entityPointer));
         }
 
-        public void Create(IntPtr entityPointer, out TBaseObject entity)
+        public void Create(IServer server, IntPtr entityPointer, out TBaseObject entity)
         {
-            entity = entityFactory.Create(entityPointer);
+            entity = entityFactory.Create(server, entityPointer);
             Add(entity);
         }
         
@@ -61,7 +61,7 @@ namespace AltV.Net.Async
             return entities.TryGetValue(entityPointer, out entity) && entity.Exists;
         }
 
-        public bool GetOrCreate(IntPtr entityPointer, out TBaseObject entity)
+        public bool GetOrCreate(IServer server, IntPtr entityPointer, out TBaseObject entity)
         {
             if (entityPointer == IntPtr.Zero)
             {
@@ -71,7 +71,7 @@ namespace AltV.Net.Async
 
             if (entities.TryGetValue(entityPointer, out entity)) return entity.Exists;
 
-            Create(entityPointer, out entity);
+            Create(server, entityPointer, out entity);
 
             return entity.Exists;
         }
@@ -103,6 +103,18 @@ namespace AltV.Net.Async
 
         public virtual void OnRemove(TBaseObject entity)
         {
+        }
+
+        public void Dispose()
+        {
+            foreach (var entity in entities.Values)
+            {
+                if (!(entity is IInternalBaseObject internalEntity)) continue;
+                internalEntity.ClearData();
+                entity.OnRemove();
+                OnRemove(entity);
+            }
+            entities.Clear();
         }
     }
 }

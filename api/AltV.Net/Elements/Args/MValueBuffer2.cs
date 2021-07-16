@@ -312,31 +312,34 @@ namespace AltV.Net.Elements.Args
 
         public bool GetNext(out MValueConst[] valuesList)
         {
-            if (size == 0)
+            unsafe
             {
-                valuesList = default;
-                return false;
+                if (size == 0)
+                {
+                    valuesList = default;
+                    return false;
+                }
+
+                var mValue = values[position++];
+                size--;
+                if (mValue.type != MValueConst.Type.List)
+                {
+                    valuesList = default;
+                    return false;
+                }
+
+
+                var listSize = Alt.Server.Library.MValueConst_GetListSize(mValue.nativePointer);
+                var valueArrayRef = new IntPtr[listSize];
+                valuesList = new MValueConst[listSize];
+                Alt.Server.Library.MValueConst_GetList(mValue.nativePointer, valueArrayRef);
+                for (ulong i = 0; i < listSize; i++)
+                {
+                    valuesList[i] = new MValueConst(valueArrayRef[i]);
+                }
+
+                return true;
             }
-
-            var mValue = values[position++];
-            size--;
-            if (mValue.type != MValueConst.Type.List)
-            {
-                valuesList = default;
-                return false;
-            }
-
-
-            var listSize = AltNative.MValueNative.MValueConst_GetListSize(mValue.nativePointer);
-            var valueArrayRef = new IntPtr[listSize];
-            valuesList = new MValueConst[listSize];
-            AltNative.MValueNative.MValueConst_GetList(mValue.nativePointer, valueArrayRef);
-            for (ulong i = 0; i < listSize; i++)
-            {
-                valuesList[i] = new MValueConst(valueArrayRef[i]);
-            }
-
-            return true;
         }
 
         public void SkipValue()

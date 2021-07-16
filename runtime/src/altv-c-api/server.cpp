@@ -32,11 +32,11 @@ void Server_SubscribeTick(alt::ICore* server, alt::TickCallback cb) {
     return server->SubscribeTick(cb);
 }
 
-bool Server_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb) {
+uint8_t Server_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb) {
     return server->SubscribeCommand(cmd, cb);
 }
 
-bool Server_FileExists(alt::ICore* server, const char* path) {
+uint8_t Server_FileExists(alt::ICore* server, const char* path) {
     return server->FileExists(path);
 }
 
@@ -68,6 +68,21 @@ Server_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* 
         }
     }
     server->TriggerClientEvent(target, ev, mValues);
+}
+
+void
+Server_TriggerClientEventForAll(alt::ICore* server, const char* ev, alt::MValueConst* args[],
+    int size) {
+    alt::Array<alt::MValueConst> mValues = alt::Array<alt::MValueConst>(size);
+    for (int i = 0; i < size; i++) {
+        if (args[i] == nullptr) {
+            mValues[i] = server->CreateMValueNil();
+        }
+        else {
+            mValues[i] = *args[i];
+        }
+    }
+    server->TriggerClientEventForAll(ev, mValues);
 }
 
 alt::IVehicle*
@@ -120,7 +135,7 @@ alt::IResource* Server_GetResource(alt::ICore* server, const char* resourceName)
     return server->GetResource(resourceName);
 }
 
-alt::IVoiceChannel* Server_CreateVoiceChannel(alt::ICore* server, bool spatial, float maxDistance) {
+alt::IVoiceChannel* Server_CreateVoiceChannel(alt::ICore* server, uint8_t spatial, float maxDistance) {
     return server->CreateVoiceChannel(spatial, maxDistance).Get();
 }
 
@@ -260,7 +275,7 @@ void Server_SetMetaData(alt::ICore* core, const char* key, alt::MValueConst* val
     core->SetMetaData(key, val->Get()->Clone());
 }
 
-bool Server_HasMetaData(alt::ICore* core, const char* key) {
+uint8_t Server_HasMetaData(alt::ICore* core, const char* key) {
     return core->HasMetaData(key);
 }
 
@@ -277,7 +292,7 @@ void Server_SetSyncedMetaData(alt::ICore* core, const char* key, alt::MValueCons
     core->SetSyncedMetaData(key, val->Get()->Clone());
 }
 
-bool Server_HasSyncedMetaData(alt::ICore* core, const char* key) {
+uint8_t Server_HasSyncedMetaData(alt::ICore* core, const char* key) {
     return core->HasSyncedMetaData(key);
 }
 
@@ -290,7 +305,7 @@ alt::MValueConst* Core_CreateMValueNil(alt::ICore* core) {
     return new alt::MValueConst(mValue);
 }
 
-alt::MValueConst* Core_CreateMValueBool(alt::ICore* core, bool value) {
+alt::MValueConst* Core_CreateMValueBool(alt::ICore* core, uint8_t value) {
     auto mValue = core->CreateMValueBool(value);
     return new alt::MValueConst(mValue);
 }
@@ -403,7 +418,7 @@ alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value) {
     return new alt::MValueConst(mValue);
 }
 
-bool Core_IsDebug(alt::ICore* core) {
+uint8_t Core_IsDebug(alt::ICore* core) {
     return core->IsDebug();
 }
 
@@ -417,4 +432,8 @@ void Core_GetBranch(alt::ICore* core, const char*&value, uint64_t &size) {
     auto version = core->GetBranch();
     value = version.GetData();
     size = version.GetSize();
+}
+
+void Core_SetPassword(alt::ICore* core, const char* value) {
+    core->SetPassword(value);
 }

@@ -34,7 +34,7 @@ void ColShape_SetMetaData(alt::IColShape* colShape, const char* key, alt::MValue
     colShape->SetMetaData(key, val->Get()->Clone());
 }
 
-bool ColShape_HasMetaData(alt::IColShape* colShape, const char* key) {
+uint8_t ColShape_HasMetaData(alt::IColShape* colShape, const char* key) {
     return colShape->HasMetaData(key);
 }
 
@@ -56,22 +56,22 @@ uint8_t ColShape_GetColShapeType(alt::IColShape* colShape) {
     return (uint8_t) colShape->GetColshapeType();
 }
 
-/*bool ColShape_IsEntityIn(alt::IColShape* colShape, alt::IEntity* entity) {
+/*uint8_t ColShape_IsEntityIn(alt::IColShape* colShape, alt::IEntity* entity) {
     return colShape->IsEntityIn(entity);
 }*/
 
-bool ColShape_IsPlayerIn(alt::IColShape* colShape, alt::IPlayer* player) {
+uint8_t ColShape_IsPlayerIn(alt::IColShape* colShape, alt::IPlayer* player) {
     return colShape->IsEntityIn(player);
 }
 
-bool ColShape_IsVehicleIn(alt::IColShape* colShape, alt::IVehicle* vehicle) {
+uint8_t ColShape_IsVehicleIn(alt::IColShape* colShape, alt::IVehicle* vehicle) {
     return colShape->IsEntityIn(vehicle);
 }
 
-void ColShape_SetPlayersOnly(alt::IColShape* colShape, bool state) {
+void ColShape_SetPlayersOnly(alt::IColShape* colShape, uint8_t state) {
     colShape->SetPlayersOnly(state);
 }
 
-bool ColShape_IsPlayersOnly(alt::IColShape* colShape) {
+uint8_t ColShape_IsPlayersOnly(alt::IColShape* colShape) {
     return colShape->IsPlayersOnly();
 }

@@ -5,9 +5,9 @@ namespace AltV.Net.Elements.Factories
 {
     public class VoiceChannelFactory : IBaseObjectFactory<IVoiceChannel>
     {
-        public IVoiceChannel Create(IntPtr channelPointer)
+        public IVoiceChannel Create(IServer server, IntPtr channelPointer)
         {
-            return new VoiceChannel(channelPointer);
+            return new VoiceChannel(server, channelPointer);
         }
     }
 }

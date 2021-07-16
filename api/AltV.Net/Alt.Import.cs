@@ -199,32 +199,35 @@ namespace AltV.Net
                 mValueArgs[i] = mValueElement.nativePointer;
             }
             
-            result = new MValueConst(AltNative.MValueNative.MValue_CallFunction(mValue.nativePointer, mValueArgs, length));
+            result = new MValueConst(Alt.Server.Library.MValue_CallFunction(mValue.nativePointer, mValueArgs, length));
             for (ulong i = 0;i < length;i++)
             {
-                AltNative.MValueNative.MValueConst_Delete(mValueArgs[i]);
+                Alt.Server.Library.MValueConst_Delete(mValueArgs[i]);
             }
         }*/
         
         private static object ImportCall(in MValueConst mValue, object[] args)
         {
-            var length = (ulong) args.Length;
-            var mValueArgs = new IntPtr[length];
-            for (uint i = 0; i < length; i++)
+            unsafe
             {
-                Alt.Server.CreateMValue(out var mValueElement, args[i]);
-                mValueArgs[i] = mValueElement.nativePointer;
-            }
+                var length = (ulong) args.Length;
+                var mValueArgs = new IntPtr[length];
+                for (uint i = 0; i < length; i++)
+                {
+                    Alt.Server.CreateMValue(out var mValueElement, args[i]);
+                    mValueArgs[i] = mValueElement.nativePointer;
+                }
 
-            var result = new MValueConst(AltNative.MValueNative.MValueConst_CallFunction(Alt.Server.NativePointer, mValue.nativePointer, mValueArgs, length));
-            var resultObj = result.ToObject();
-            result.Dispose();
-            for (ulong i = 0;i < length;i++)
-            {
-                AltNative.MValueNative.MValueConst_Delete(mValueArgs[i]);
-            }
+                var result = new MValueConst(Alt.Server.Library.MValueConst_CallFunction(Alt.Server.NativePointer, mValue.nativePointer, mValueArgs, length));
+                var resultObj = result.ToObject();
+                result.Dispose();
+                for (ulong i = 0;i < length;i++)
+                {
+                    Alt.Server.Library.MValueConst_Delete(mValueArgs[i]);
+                }
 
-            return resultObj;
+                return resultObj;
+            }
         }
 
         public static bool Import(string resourceName, string key, out Action value)

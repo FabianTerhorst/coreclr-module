@@ -5,6 +5,6 @@ namespace AltV.Net
 {
     public interface IBaseObjectFactory<out TBaseObject> where TBaseObject : IBaseObject
     {
-        TBaseObject Create(IntPtr baseObjectPointer);
+        TBaseObject Create(IServer server, IntPtr baseObjectPointer);
     }
 }

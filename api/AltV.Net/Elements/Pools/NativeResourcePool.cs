@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Pools
 {
@@ -14,7 +15,7 @@ namespace AltV.Net.Elements.Pools
             this.resourceFactory = resourceFactory;
         }
 
-        public bool GetOrCreate(IntPtr corePointer, IntPtr resourcePointer, out INativeResource resource)
+        public bool GetOrCreate(ILibrary library, IntPtr corePointer, IntPtr resourcePointer, out INativeResource resource)
         {
             if (resourcePointer == IntPtr.Zero)
             {
@@ -24,7 +25,7 @@ namespace AltV.Net.Elements.Pools
 
             if (resources.TryGetValue(resourcePointer, out resource)) return true;
 
-            resource = resourceFactory.Create(corePointer, resourcePointer);
+            resource = resourceFactory.Create(library, corePointer, resourcePointer);
             resources[resourcePointer] = resource;
 
             return true;

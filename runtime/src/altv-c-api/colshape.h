@@ -26,17 +26,17 @@ EXPORT int32_t ColShape_GetDimension(alt::IColShape* colShape);
 EXPORT void ColShape_SetDimension(alt::IColShape* colShape, int32_t dimension);
 EXPORT alt::MValueConst* ColShape_GetMetaData(alt::IColShape* colShape, const char* key);
 EXPORT void ColShape_SetMetaData(alt::IColShape* colShape, const char* key, alt::MValueConst* val);
-EXPORT bool ColShape_HasMetaData(alt::IColShape* colShape, const char* key);
+EXPORT uint8_t ColShape_HasMetaData(alt::IColShape* colShape, const char* key);
 EXPORT void ColShape_DeleteMetaData(alt::IColShape* colShape, const char* key);
 EXPORT void ColShape_AddRef(alt::IColShape* colShape);
 EXPORT void ColShape_RemoveRef(alt::IColShape* colShape);
 // ColShape
 EXPORT uint8_t ColShape_GetColShapeType(alt::IColShape* colShape);
-//EXPORT bool ColShape_IsEntityIn(alt::IColShape* colShape, alt::IEntity* entity);
-EXPORT bool ColShape_IsPlayerIn(alt::IColShape* colShape, alt::IPlayer* player);
-EXPORT bool ColShape_IsVehicleIn(alt::IColShape* colShape, alt::IVehicle* vehicle);
-EXPORT void ColShape_SetPlayersOnly(alt::IColShape* colShape, bool state);
-EXPORT bool ColShape_IsPlayersOnly(alt::IColShape* colShape);
+//EXPORT uint8_t ColShape_IsEntityIn(alt::IColShape* colShape, alt::IEntity* entity);
+EXPORT uint8_t ColShape_IsPlayerIn(alt::IColShape* colShape, alt::IPlayer* player);
+EXPORT uint8_t ColShape_IsVehicleIn(alt::IColShape* colShape, alt::IVehicle* vehicle);
+EXPORT void ColShape_SetPlayersOnly(alt::IColShape* colShape, uint8_t state);
+EXPORT uint8_t ColShape_IsPlayersOnly(alt::IColShape* colShape);
 #ifdef __cplusplus
 }
 #endif

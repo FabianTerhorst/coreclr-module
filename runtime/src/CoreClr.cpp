@@ -7,6 +7,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <fstream>
+#include <sstream>
 
 std::mutex mtx;             // mutex for critical section
 std::condition_variable cv; // condition variable for critical section
@@ -28,6 +29,50 @@ CoreClr::CoreClr(alt::ICore* core) {
     _shutdownCoreCLR = nullptr;
     _createDelegate = nullptr;
     _executeAssembly = nullptr;*/
+
+    char_t buffer[256];//MAX_PATH
+    size_t buffer_size = sizeof(buffer) / sizeof(char_t);
+    int rc = get_hostfxr_path(buffer, &buffer_size, nullptr);
+    if (rc != 0) {
+        core->LogError("invalid get_hostfxr_path " + std::to_string(rc));
+    } else {
+
+#ifdef _WIN32
+        std::wstring bufferWString(buffer);
+        _coreClrLib = LoadLibraryEx(std::string(bufferWString.begin(), bufferWString.end()).c_str(), nullptr, 0);
+        if (_coreClrLib == nullptr) {
+            core->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll"));
+            return;
+        }
+
+        _initializeFxr = (hostfxr_initialize_for_runtime_config_fn) GetProcAddress(_coreClrLib, "hostfxr_initialize_for_runtime_config");
+        _getDelegate = (hostfxr_get_runtime_delegate_fn) GetProcAddress(_coreClrLib, "hostfxr_get_runtime_delegate");
+        _runApp = (hostfxr_run_app_fn) GetProcAddress(_coreClrLib, "hostfxr_run_app");
+        _initForCmd = (hostfxr_initialize_for_dotnet_command_line_fn)  GetProcAddress(_coreClrLib, "hostfxr_initialize_for_dotnet_command_line");
+        _closeFxr = (hostfxr_close_fn) GetProcAddress(_coreClrLib, "hostfxr_close");
+#else
+    _coreClrLib = dlopen(std::string(buffer).c_str(), RTLD_NOW | RTLD_LOCAL);
+    if (_coreClrLib == nullptr) {
+        core->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll [") + std::string(buffer) + "]: " + dlerror());
+        return;
+    }
+    _initializeFxr = (hostfxr_initialize_for_runtime_config_fn) dlsym(_coreClrLib,
+                                                                      "hostfxr_initialize_for_runtime_config");
+    _getDelegate = (hostfxr_get_runtime_delegate_fn) dlsym(_coreClrLib, "hostfxr_get_runtime_delegate");
+    _runApp = (hostfxr_run_app_fn) dlsym(_coreClrLib, "hostfxr_run_app");
+    _initForCmd = (hostfxr_initialize_for_dotnet_command_line_fn) dlsym(_coreClrLib,
+                                                                        "hostfxr_initialize_for_dotnet_command_line");
+    _closeFxr = (hostfxr_close_fn) dlsym(_coreClrLib, "hostfxr_close");
+#endif
+        if (_initializeFxr == nullptr || _getDelegate == nullptr || _closeFxr == nullptr || _runApp == nullptr ||
+            _initForCmd == nullptr) {
+            core->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll methods"));
+            return;
+        }
+        return;
+    }
+
+    // Load hostfxr and get desired exports
 #ifdef _WIN32
     char pf[MAX_PATH];
     SHGetSpecialFolderPath(
@@ -438,19 +483,21 @@ void thread_proc(struct thread_user_data* userData) {
     int rc = userData->runApp(userData->cxt);
     if (rc != 0) {
         userData->closeFxr(userData->cxt);
-        std::cerr << "Run App failed: " << std::hex << std::showbase << rc << std::endl;
+        std::stringstream stream;
+        stream << "Run App failed: " << std::hex << std::showbase << rc;
+        alt::ICore::Instance().LogError(stream.str());
     }
     delete userData;
 }
 
 void CoreClr::GenerateRuntimeConfigText(std::ofstream* outfile) {
     if (version == nullptr) {
-        std::cerr << "Unknown coreclr version" << std::endl;
+        core->LogError("Unknown coreclr version");
         return;
     }
     semver_t sem_ver;
     if (semver_parse_version(version, &sem_ver) != 0) {
-        std::cerr << "Couldn't parse coreclr version" << std::endl;
+        core->LogError("Couldn't parse coreclr version");
         return;
     }
     auto minor_version = std::to_string(sem_ver.major) + alt::String(".") + std::to_string(sem_ver.minor);
@@ -498,11 +545,11 @@ void CoreClr::CreateManagedHost() {
     rc = _initForCmd(1, args, nullptr, &cxt);
     if (rc != 0) {
         if (rc == 0x80008094) {
-            std::cerr
-                    << "Make sure you have AltV.Net.Host.dll and AltV.Net.Host.runtimeconfig.json in the folder of the altv-server executable or binary."
-                    << std::endl;
+            core->LogError("Make sure you have AltV.Net.Host.dll and AltV.Net.Host.runtimeconfig.json in the folder of the altv-server executable or binary.");
         }
-        std::cerr << "Init for cmd failed: " << std::hex << std::showbase << rc << std::endl;
+        std::stringstream stream;
+        stream << "Init for cmd failed: " << std::hex << std::showbase << rc;
+        core->LogError(stream.str());
         _closeFxr(cxt);
         if (result) {
             DeleteRuntimeConfigFile();

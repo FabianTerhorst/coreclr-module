@@ -27,7 +27,7 @@ void MValueConst_RemoveRef(alt::MValueConst* mValueConst) {
     (*mValueConst)->RemoveRef();
 }
 
-bool MValueConst_GetBool(alt::MValueConst* mValueConst) {
+uint8_t MValueConst_GetBool(alt::MValueConst* mValueConst) {
     auto mValue = mValueConst->Get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::BOOL) {
         return dynamic_cast<const alt::IMValueBool*>(mValue)->Value();
@@ -59,7 +59,7 @@ double MValueConst_GetDouble(alt::MValueConst* mValueConst) {
     return 0.0;
 }
 
-bool MValueConst_GetString(alt::MValueConst* mValueConst, const char*&value, uint64_t &size) {
+uint8_t MValueConst_GetString(alt::MValueConst* mValueConst, const char*&value, uint64_t &size) {
     auto mValue = mValueConst->Get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::STRING) {
         auto stringView = dynamic_cast<const alt::IMValueString*>(mValue)->Value();
@@ -80,7 +80,7 @@ uint64_t MValueConst_GetListSize(alt::MValueConst* mValueConst) {
     return 0;
 }
 
-bool MValueConst_GetList(alt::MValueConst* mValueConst, alt::MValueConst* values[]) {
+uint8_t MValueConst_GetList(alt::MValueConst* mValueConst, alt::MValueConst* values[]) {
     auto mValue = mValueConst->Get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::LIST) {
         auto list = dynamic_cast<const alt::IMValueList*>(mValue);
@@ -103,7 +103,7 @@ uint64_t MValueConst_GetDictSize(alt::MValueConst* mValueConst) {
     return 0;
 }
 
-bool MValueConst_GetDict(alt::MValueConst* mValueConst, const char* keys[],
+uint8_t MValueConst_GetDict(alt::MValueConst* mValueConst, const char* keys[],
                          alt::MValueConst* values[]) {
     auto mValue = mValueConst->Get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::DICT) {

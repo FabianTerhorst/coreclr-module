@@ -34,7 +34,7 @@ void Checkpoint_SetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::
     checkpoint->SetMetaData(key, val->Get()->Clone());
 }
 
-bool Checkpoint_HasMetaData(alt::ICheckpoint* checkpoint, const char* key) {
+uint8_t Checkpoint_HasMetaData(alt::ICheckpoint* checkpoint, const char* key) {
     return checkpoint->HasMetaData(key);
 }
 
@@ -84,7 +84,7 @@ void Checkpoint_GetColor(alt::ICheckpoint* checkpoint, rgba_t &color) {
     color.a = checkpointColor.a;
 }
 
-void Checkpoint_SetColor(alt::ICheckpoint* checkpoint, rgba_t &color) {
+void Checkpoint_SetColor(alt::ICheckpoint* checkpoint, rgba_t color) {
     alt::RGBA newColor;
     newColor.r = color.r;
     newColor.g = color.g;
@@ -93,11 +93,11 @@ void Checkpoint_SetColor(alt::ICheckpoint* checkpoint, rgba_t &color) {
     checkpoint->SetColor(newColor);
 }
 
-bool Checkpoint_IsPlayerIn(alt::ICheckpoint* checkpoint, alt::IPlayer* player) {
+uint8_t Checkpoint_IsPlayerIn(alt::ICheckpoint* checkpoint, alt::IPlayer* player) {
     return checkpoint->IsEntityIn(player);
 }
 
-bool Checkpoint_IsVehicleIn(alt::ICheckpoint* checkpoint, alt::IVehicle* vehicle) {
+uint8_t Checkpoint_IsVehicleIn(alt::ICheckpoint* checkpoint, alt::IVehicle* vehicle) {
     return checkpoint->IsEntityIn(vehicle);
 }
 
@@ -105,11 +105,11 @@ uint8_t Checkpoint_GetColShapeType(alt::ICheckpoint* checkpoint) {
     return (uint8_t) checkpoint->GetColshapeType();
 }
 
-void Checkpoint_SetPlayersOnly(alt::ICheckpoint* checkpoint, bool state) {
+void Checkpoint_SetPlayersOnly(alt::ICheckpoint* checkpoint, uint8_t state) {
     checkpoint->SetPlayersOnly(state);
 }
 
-bool Checkpoint_IsPlayersOnly(alt::ICheckpoint* checkpoint) {
+uint8_t Checkpoint_IsPlayersOnly(alt::ICheckpoint* checkpoint) {
     return checkpoint->IsPlayersOnly();
 }
 

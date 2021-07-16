@@ -1,31 +1,35 @@
 name: .NET Core
+
 on:
   push:
     paths:
     - 'api/**.cs'
     - '.github/workflows/dotnetcore.yml'
+
 jobs:
-  build:
-    runs-on: ${{ matrix.config.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-          - {
-              name: linux,
-              os: ubuntu-20.04,
-            }
-          - {
-              name: windows,
-              os: windows-2016,
-            }
+  buildwindows:
+
+    runs-on: windows-2016
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v1
+    - uses: actions/checkout@v1
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1.7.2
+      uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.101
-    - name: Build API
+        dotnet-version: 5.0.x
+    - name: Build with dotnet
+      working-directory: ./api
+      run: dotnet build --configuration Release
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Build with dotnet
       working-directory: ./api
       run: dotnet build --configuration Release

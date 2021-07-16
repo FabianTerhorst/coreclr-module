@@ -15,23 +15,26 @@ namespace AltV.Net.FunctionParser
 
         public object Call(params object[] args)
         {
-            var length = (ulong) args.Length;
-            var mValues = new IntPtr[length];
-            for (ulong i = 0; i < length; i++)
+            unsafe
             {
-                Alt.Server.CreateMValue(out var mValueElement, args[i]);
-                mValues[i] = mValueElement.nativePointer;
-            }
+                var length = (ulong) args.Length;
+                var mValues = new IntPtr[length];
+                for (ulong i = 0; i < length; i++)
+                {
+                    Alt.Server.CreateMValue(out var mValueElement, args[i]);
+                    mValues[i] = mValueElement.nativePointer;
+                }
 
-            var result =
-                new MValueConst(AltNative.MValueNative.MValueConst_CallFunction(Alt.Server.NativePointer, nativePointer,
-                    mValues, length)).ToObject();
-            for (ulong i = 0; i < length; i++)
-            {
-                AltNative.MValueNative.MValueConst_Delete(mValues[i]);
-            }
+                var result =
+                    new MValueConst(Alt.Server.Library.MValueConst_CallFunction(Alt.Server.NativePointer, nativePointer,
+                        mValues, length)).ToObject();
+                for (ulong i = 0; i < length; i++)
+                {
+                    Alt.Server.Library.MValueConst_Delete(mValues[i]);
+                }
 
-            return result;
+                return result;
+            }
         }
     }
 }

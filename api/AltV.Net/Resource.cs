@@ -3,6 +3,7 @@ using System.Runtime.Loader;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Factories;
 using AltV.Net.Elements.Pools;
+using AltV.Net.Native;
 
 namespace AltV.Net
 {
@@ -74,37 +75,42 @@ namespace AltV.Net
         
         public virtual IEntityFactory<IPlayer> GetPlayerFactory()
         {
-            return new PlayerFactory();
+            return null;
         }
 
         public virtual IEntityFactory<IVehicle> GetVehicleFactory()
         {
-            return new VehicleFactory();
+            return null;
         }
 
         public virtual IBaseObjectFactory<IBlip> GetBlipFactory()
         {
-            return new BlipFactory();
+            return null;
         }
 
         public virtual IBaseObjectFactory<ICheckpoint> GetCheckpointFactory()
         {
-            return new CheckpointFactory();
+            return null;
         }
 
         public virtual IBaseObjectFactory<IVoiceChannel> GetVoiceChannelFactory()
         {
-            return new VoiceChannelFactory();
+            return null;
         }
         
         public virtual IBaseObjectFactory<IColShape> GetColShapeFactory()
         {
-            return new ColShapeFactory();
+            return null;
         }
 
         public virtual INativeResourceFactory GetNativeResourceFactory()
         {
-            return new NativeResourceFactory();
+            return null;
+        }
+
+        public ILibrary GetLibrary()
+        {
+            return null;
         }
 
         public virtual Module GetModule(IServer server, 
@@ -119,6 +125,16 @@ namespace AltV.Net
         {
             return new Module(server, assemblyLoadContext, cSharpNativeResource, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool,
                 blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
+        }
+
+        public IScript[] GetScripts()
+        {
+            return null;
+        }
+
+        public IModule[] GetModules()
+        {
+            return null;
         }
     }
 }

@@ -5,7 +5,7 @@ namespace AltV.Net.ColShape.Tests
 {
     public class MockPlayer : Player
     {
-        public MockPlayer():base(IntPtr.Zero, 0)
+        public MockPlayer(IServer server):base(server, IntPtr.Zero, 0)
         {
             Exists = true;
         }

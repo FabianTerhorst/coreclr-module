@@ -12,10 +12,10 @@ namespace AltV.Net.Mock
             this.playerFactory = playerFactory;
         }
 
-        public IPlayer Create(IntPtr entityPointer, ushort id)
+        public IPlayer Create(IServer server, IntPtr entityPointer, ushort id)
         {
-            return MockDecorator<TEntity, IPlayer>.Create((TEntity) playerFactory.Create(entityPointer, id),
-                new MockPlayer(entityPointer, id));
+            return MockDecorator<TEntity, IPlayer>.Create((TEntity) playerFactory.Create(server, entityPointer, id),
+                new MockPlayer(server, entityPointer, id));
         }
     }
 }

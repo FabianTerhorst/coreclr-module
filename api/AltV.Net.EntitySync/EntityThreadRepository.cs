@@ -43,6 +43,12 @@ namespace AltV.Net.EntitySync
             if (!entities.Remove(entity.HashKey, out _)) return;
             entitiesChannelWriter.TryWrite((entity, 1));
         }
+        
+        public void Remove(ulong id, ulong type)
+        {
+            if (!entities.Remove((id, type), out var entity)) return;
+            entitiesChannelWriter.TryWrite((entity, 1));
+        }
 
         public void Remove(IList<IEntity> entities)
         {

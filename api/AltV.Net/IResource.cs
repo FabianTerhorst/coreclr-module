@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.Loader;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Native;
 
 namespace AltV.Net
 {
@@ -38,6 +39,7 @@ namespace AltV.Net
         IBaseObjectFactory<IVoiceChannel> GetVoiceChannelFactory();
         IBaseObjectFactory<IColShape> GetColShapeFactory();
         INativeResourceFactory GetNativeResourceFactory();
+        ILibrary GetLibrary();
 
         Module GetModule(IServer server,
             AssemblyLoadContext assemblyLoadContext,
@@ -51,5 +53,9 @@ namespace AltV.Net
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool,
             INativeResourcePool resourcePool);
+
+        IScript[] GetScripts();
+
+        IModule[] GetModules();
     }
 }

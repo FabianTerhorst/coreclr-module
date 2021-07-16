@@ -31,7 +31,7 @@ EXPORT void Resource_GetPath(alt::IResource* resource, const char*&text);
 EXPORT void Resource_GetName(alt::IResource* resource, const char*&text);
 EXPORT void Resource_GetMain(alt::IResource* resource, const char*&text);
 EXPORT void Resource_GetType(alt::IResource* resource, const char*&text);
-EXPORT bool Resource_IsStarted(alt::IResource* resource);
+EXPORT uint8_t Resource_IsStarted(alt::IResource* resource);
 EXPORT void Resource_Start(alt::IResource* resource);
 EXPORT void Resource_Stop(alt::IResource* resource);
 EXPORT alt::IResource::Impl* Resource_GetImpl(alt::IResource* resource);

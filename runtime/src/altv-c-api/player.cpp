@@ -73,7 +73,7 @@ void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValueConst*
     player->SetMetaData(key, val->Get()->Clone());
 }
 
-bool Player_HasMetaData(alt::IPlayer* player, const char* key) {
+uint8_t Player_HasMetaData(alt::IPlayer* player, const char* key) {
     return player->HasMetaData(key);
 }
 
@@ -90,7 +90,7 @@ void Player_SetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValue
     player->SetSyncedMetaData(key, val->Get()->Clone());
 }
 
-bool Player_HasSyncedMetaData(alt::IPlayer* player, const char* key) {
+uint8_t Player_HasSyncedMetaData(alt::IPlayer* player, const char* key) {
     return player->HasSyncedMetaData(key);
 }
 
@@ -107,7 +107,7 @@ void Player_SetStreamSyncedMetaData(alt::IPlayer* player, const char* key, alt::
     player->SetStreamSyncedMetaData(key, val->Get()->Clone());
 }
 
-bool Player_HasStreamSyncedMetaData(alt::IPlayer* player, const char* key) {
+uint8_t Player_HasStreamSyncedMetaData(alt::IPlayer* player, const char* key) {
     return player->HasStreamSyncedMetaData(key);
 }
 
@@ -123,17 +123,17 @@ void Player_RemoveRef(alt::IPlayer* player) {
     player->RemoveRef();
 }
 
-bool Player_GetVisible(alt::IPlayer* player) {
+uint8_t Player_GetVisible(alt::IPlayer* player) {
     return player->GetVisible();
 }
 
-void Player_SetVisible(alt::IPlayer* player, bool state) {
+void Player_SetVisible(alt::IPlayer* player, uint8_t state) {
     player->SetVisible(state);
 }
 
 // Player
 
-bool Player_IsConnected(alt::IPlayer* player) {
+uint8_t Player_IsConnected(alt::IPlayer* player) {
     return player->IsConnected();
 }
 
@@ -193,11 +193,11 @@ void Player_SetWeather(alt::IPlayer* player, uint32_t weather) {
     player->SetWeather(weather);
 }
 
-void Player_GiveWeapon(alt::IPlayer* player, uint32_t weapon, int32_t ammo, bool selectWeapon) {
+void Player_GiveWeapon(alt::IPlayer* player, uint32_t weapon, int32_t ammo, uint8_t selectWeapon) {
     player->GiveWeapon(weapon, ammo, selectWeapon);
 }
 
-bool Player_RemoveWeapon(alt::IPlayer* player, uint32_t weapon) {
+uint8_t Player_RemoveWeapon(alt::IPlayer* player, uint32_t weapon) {
     return player->RemoveWeapon(weapon);
 }
 
@@ -213,7 +213,7 @@ void Player_RemoveWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_
     player->RemoveWeaponComponent(weapon, component);
 }
 
-bool Player_HasWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_t component) {
+uint8_t Player_HasWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_t component) {
     return player->HasWeaponComponent(weapon, component);
 }
 
@@ -246,27 +246,27 @@ void Player_SetCurrentWeapon(alt::IPlayer* player, uint32_t weapon) {
     player->SetCurrentWeapon(weapon);
 }
 
-bool Player_IsDead(alt::IPlayer* player) {
+uint8_t Player_IsDead(alt::IPlayer* player) {
     return player->IsDead();
 }
 
-bool Player_IsJumping(alt::IPlayer* player) {
+uint8_t Player_IsJumping(alt::IPlayer* player) {
     return player->IsJumping();
 }
 
-bool Player_IsInRagdoll(alt::IPlayer* player) {
+uint8_t Player_IsInRagdoll(alt::IPlayer* player) {
     return player->IsInRagdoll();
 }
 
-bool Player_IsAiming(alt::IPlayer* player) {
+uint8_t Player_IsAiming(alt::IPlayer* player) {
     return player->IsAiming();
 }
 
-bool Player_IsShooting(alt::IPlayer* player) {
+uint8_t Player_IsShooting(alt::IPlayer* player) {
     return player->IsShooting();
 }
 
-bool Player_IsReloading(alt::IPlayer* player) {
+uint8_t Player_IsReloading(alt::IPlayer* player) {
     return player->IsReloading();
 }
 
@@ -304,7 +304,7 @@ void Player_GetHeadRotation(alt::IPlayer* player, rotation_t &headRotation) {
     headRotation.yaw = playerHeadRotation.yaw;
 }
 
-bool Player_IsInVehicle(alt::IPlayer* player) {
+uint8_t Player_IsInVehicle(alt::IPlayer* player) {
     return player->IsInVehicle();
 }
 
@@ -339,7 +339,7 @@ void Player_GetEntityAimOffset(alt::IPlayer* player, position_t &position) {
     position.z = offset.z;
 }
 
-bool Player_IsFlashlightActive(alt::IPlayer* player) {
+uint8_t Player_IsFlashlightActive(alt::IPlayer* player) {
     return player->IsFlashlightActive();
 }
 
@@ -409,10 +409,85 @@ void Player_GetPositionCoords2(alt::IPlayer* player, float* position_x, float* p
     *dimension = player->GetDimension();
 }
 
-void Player_SetNetworkOwner(alt::IPlayer* player, alt::IPlayer* networkOwnerPlayer, bool disableMigration) {
+void Player_SetNetworkOwner(alt::IPlayer* player, alt::IPlayer* networkOwnerPlayer, uint8_t disableMigration) {
     player->SetNetworkOwner(networkOwnerPlayer, disableMigration);
 }
 
 void Player_ClearBloodDamage(alt::IPlayer* player) {
     player->ClearBloodDamage();
+}
+
+void Player_GetClothes(alt::IPlayer* player, uint8_t component, cloth_t& cloth) {
+    auto clothes = player->GetClothes(component);
+    cloth.drawable = clothes.drawableId;
+    cloth.texture = clothes.textureId;
+    cloth.palette = clothes.textureId;
+}
+
+void Player_SetClothes(alt::IPlayer* player, uint8_t component, uint16_t drawable, uint8_t texture, uint8_t palette) {
+    player->SetClothes(component, drawable, texture, palette);
+}
+
+void Player_GetDlcClothes(alt::IPlayer* player, uint8_t component, dlccloth_t& cloth) {
+    auto clothes = player->GetDlcClothes(component);
+    cloth.dlc = clothes.dlc;
+    cloth.drawable = clothes.drawableId;
+    cloth.texture = clothes.textureId;
+    cloth.palette = clothes.textureId;
+}
+
+void Player_SetDlcClothes(alt::IPlayer* player, uint8_t component, uint16_t drawable, uint8_t texture, uint8_t palette, uint32_t dlc) {
+    player->SetDlcClothes(component, drawable, texture, palette, dlc);
+}
+
+void Player_GetProps(alt::IPlayer* player, uint8_t component, prop_t& prop) {
+    auto props = player->GetProps(component);
+    prop.drawable = props.drawableId;
+    prop.texture = props.textureId;
+}
+
+void Player_SetProps(alt::IPlayer* player, uint8_t component, uint16_t drawable, uint8_t texture) {
+    player->SetProps(component, drawable, texture);
+}
+
+void Player_GetDlcProps(alt::IPlayer* player, uint8_t component, dlcprop_t& prop) {
+    auto props = player->GetDlcProps(component);
+    prop.dlc = props.dlc;
+    prop.drawable = props.drawableId;
+    prop.texture = props.textureId;
+}
+
+void Player_SetDlcProps(alt::IPlayer* player, uint8_t component, uint16_t drawable, uint8_t texture, uint32_t dlc) {
+    player->SetDlcProps(component, drawable, texture, dlc);
+}
+
+void Player_ClearProps(alt::IPlayer* player, uint8_t component) {
+    player->ClearProps(component);
+}
+
+uint8_t Player_IsEntityInStreamingRange_Player(alt::IPlayer* player, alt::IPlayer* entity) {
+    return player->IsEntityInStreamingRange(entity);
+}
+
+uint8_t Player_IsEntityInStreamingRange_Vehicle(alt::IPlayer* player, alt::IVehicle* entity) {
+    return player->IsEntityInStreamingRange(entity);
+}
+
+void Player_AttachToEntity_Player(alt::IPlayer* player, alt::IPlayer* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot)
+{
+    alt::Position position{pos.x, pos.y, pos.z};
+    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
+    player->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
+}
+
+void Player_AttachToEntity_Vehicle(alt::IPlayer* player, alt::IVehicle* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot)
+{
+    alt::Position position{pos.x, pos.y, pos.z};
+    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
+    player->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
+}
+
+void Player_Detach(alt::IPlayer* player)
+{
+    player->Detach();
 }

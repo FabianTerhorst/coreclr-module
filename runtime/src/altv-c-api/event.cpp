@@ -4,6 +4,6 @@ void Event_Cancel(alt::CEvent* event) {
     event->Cancel();
 }
 
-bool Event_WasCancelled(alt::CEvent* event) {
+uint8_t Event_WasCancelled(alt::CEvent* event) {
     return event->WasCancelled();
 }

@@ -9,7 +9,7 @@ void VoiceChannel_SetMetaData(alt::IVoiceChannel* channel, const char* key, alt:
     channel->SetMetaData(key, val->Get()->Clone());
 }
 
-bool VoiceChannel_HasMetaData(alt::IVoiceChannel* voiceChannel, const char* key) {
+uint8_t VoiceChannel_HasMetaData(alt::IVoiceChannel* voiceChannel, const char* key) {
     return voiceChannel->HasMetaData(key);
 }
 
@@ -41,19 +41,19 @@ void VoiceChannel_UnmutePlayer(alt::IVoiceChannel* channel, alt::IPlayer* player
     channel->UnmutePlayer(player);
 }
 
-bool VoiceChannel_IsPlayerConnected(alt::IVoiceChannel* channel, alt::IPlayer* player) {
+uint8_t VoiceChannel_IsPlayerConnected(alt::IVoiceChannel* channel, alt::IPlayer* player) {
     return channel->HasPlayer(player);
 }
 
-bool VoiceChannel_HasPlayer(alt::IVoiceChannel* channel, alt::IPlayer* player) {
+uint8_t VoiceChannel_HasPlayer(alt::IVoiceChannel* channel, alt::IPlayer* player) {
     return channel->HasPlayer(player);
 }
 
-bool VoiceChannel_IsPlayerMuted(alt::IVoiceChannel* channel, alt::IPlayer* player) {
+uint8_t VoiceChannel_IsPlayerMuted(alt::IVoiceChannel* channel, alt::IPlayer* player) {
     return channel->IsPlayerMuted(player);
 }
 
-bool VoiceChannel_IsSpatial(alt::IVoiceChannel* channel) {
+uint8_t VoiceChannel_IsSpatial(alt::IVoiceChannel* channel) {
     return channel->IsSpatial();
 }
 

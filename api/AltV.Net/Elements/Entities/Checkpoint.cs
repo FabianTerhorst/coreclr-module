@@ -12,15 +12,21 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                var position = Position.Zero;
-                AltNative.Checkpoint.Checkpoint_GetPosition(NativePointer, ref position);
-                return position;
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var position = Position.Zero;
+                    Server.Library.Checkpoint_GetPosition(NativePointer, &position);
+                    return position;
+                }
             }
             set
             {
-                CheckIfEntityExists();
-                AltNative.Checkpoint.Checkpoint_SetPosition(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Checkpoint_SetPosition(NativePointer, value);
+                }
             }
         }
 
@@ -28,13 +34,19 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Checkpoint.Checkpoint_GetDimension(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Checkpoint_GetDimension(NativePointer);
+                }
             }
             set
             {
-                CheckIfEntityExists();
-                AltNative.Checkpoint.Checkpoint_SetDimension(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Checkpoint_SetDimension(NativePointer, value);
+                }
             }
         }
 
@@ -42,8 +54,11 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Checkpoint.Checkpoint_GetColShapeType(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return (ColShapeType) Server.Library.Checkpoint_GetColShapeType(NativePointer);
+                }
             }
         }
         
@@ -51,56 +66,80 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Checkpoint.Checkpoint_IsPlayersOnly(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Checkpoint_IsPlayersOnly(NativePointer) == 1;
+                }
             }
             set
             {
-                CheckIfEntityExists();
-                AltNative.Checkpoint.Checkpoint_SetPlayersOnly(NativePointer, value); 
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Checkpoint_SetPlayersOnly(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
             }
         }
 
         public override void GetMetaData(string key, out MValueConst value)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            value = new MValueConst(AltNative.Checkpoint.Checkpoint_GetMetaData(NativePointer, stringPtr));
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                value = new MValueConst(Server.Library.Checkpoint_GetMetaData(NativePointer, stringPtr));
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
 
         public override void SetMetaData(string key, in MValueConst value)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Checkpoint.Checkpoint_SetMetaData(NativePointer, stringPtr, value.nativePointer);
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Server.Library.Checkpoint_SetMetaData(NativePointer, stringPtr, value.nativePointer);
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
 
         public override bool HasMetaData(string key)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            var result = AltNative.Checkpoint.Checkpoint_HasMetaData(NativePointer, stringPtr);
-            Marshal.FreeHGlobal(stringPtr);
-            return result;
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var result = Server.Library.Checkpoint_HasMetaData(NativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+                return result == 1;
+            }
         }
 
         public override void DeleteMetaData(string key)
         {
-            var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-            AltNative.Checkpoint.Checkpoint_DeleteMetaData(NativePointer, stringPtr);
-            Marshal.FreeHGlobal(stringPtr);
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Server.Library.Checkpoint_DeleteMetaData(NativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+            }
         }
         
         public byte CheckpointType
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Checkpoint.Checkpoint_GetCheckpointType(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Checkpoint_GetCheckpointType(NativePointer);
+                }
             }
             set
             {
-                CheckIfEntityExists();
-                AltNative.Checkpoint.Checkpoint_SetCheckpointType(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Checkpoint_SetCheckpointType(NativePointer, value);
+                }
             }
         }
 
@@ -108,13 +147,19 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Checkpoint.Checkpoint_GetHeight(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Checkpoint_GetHeight(NativePointer);
+                }
             }
             set
             {
-                CheckIfEntityExists();
-                AltNative.Checkpoint.Checkpoint_SetHeight(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Checkpoint_SetHeight(NativePointer, value);
+                }
             }
         }
 
@@ -122,13 +167,19 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                return AltNative.Checkpoint.Checkpoint_GetRadius(NativePointer);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Checkpoint_GetRadius(NativePointer);
+                }
             }
             set
             {
-                CheckIfEntityExists();
-                AltNative.Checkpoint.Checkpoint_SetRadius(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Checkpoint_SetRadius(NativePointer, value);
+                }
             }
         }
 
@@ -136,15 +187,21 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                var color = Rgba.Zero;
-                AltNative.Checkpoint.Checkpoint_GetColor(NativePointer, ref color);
-                return color;
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var color = Rgba.Zero;
+                    Server.Library.Checkpoint_GetColor(NativePointer, &color);
+                    return color;
+                }
             }
             set
             {
-                CheckIfEntityExists();
-                AltNative.Checkpoint.Checkpoint_SetColor(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Checkpoint_SetColor(NativePointer, value);
+                }
             }
         }
 
@@ -152,42 +209,54 @@ namespace AltV.Net.Elements.Entities
         {
             get
             {
-                CheckIfEntityExists();
-                var position = Position.Zero;
-                AltNative.Checkpoint.Checkpoint_GetNextPosition(NativePointer, ref position);
-                return position;
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var position = Position.Zero;
+                    Server.Library.Checkpoint_GetNextPosition(NativePointer, &position);
+                    return position;
+                }
             }
             set
             {
-                CheckIfEntityExists();
-                AltNative.Checkpoint.Checkpoint_SetNextPosition(NativePointer, value);
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Checkpoint_SetNextPosition(NativePointer, value);
+                }
             }
         }
 
-        public Checkpoint(IntPtr nativePointer) : base(nativePointer, BaseObjectType.Checkpoint)
+        public Checkpoint(IServer server, IntPtr nativePointer) : base(server, nativePointer, BaseObjectType.Checkpoint)
         {
         }
 
         public bool IsPlayerIn(IPlayer player)
         {
-            CheckIfEntityExists();
-            if (!player.Exists)
+            unsafe
             {
-                throw new EntityRemovedException(player);
-            }
+                CheckIfEntityExists();
+                if (!player.Exists)
+                {
+                    throw new EntityRemovedException(player);
+                }
 
-            return AltNative.Checkpoint.Checkpoint_IsPlayerIn(NativePointer, player.NativePointer);
+                return Server.Library.Checkpoint_IsPlayerIn(NativePointer, player.NativePointer) == 1;
+            }
         }
 
         public bool IsVehicleIn(IVehicle vehicle)
         {
-            CheckIfEntityExists();
-            if (!vehicle.Exists)
+            unsafe
             {
-                throw new EntityRemovedException(vehicle);
-            }
+                CheckIfEntityExists();
+                if (!vehicle.Exists)
+                {
+                    throw new EntityRemovedException(vehicle);
+                }
 
-            return AltNative.Checkpoint.Checkpoint_IsVehicleIn(NativePointer, vehicle.NativePointer);
+                return Server.Library.Checkpoint_IsVehicleIn(NativePointer, vehicle.NativePointer) == 1;
+            }
         }
         
         public bool IsEntityIn(IEntity entity)
@@ -198,9 +267,17 @@ namespace AltV.Net.Elements.Entities
             switch (entity)
             {
                 case IPlayer player:
-                    return AltNative.Checkpoint.Checkpoint_IsPlayerIn(NativePointer, player.NativePointer);
+                    unsafe
+                    {
+                        return Server.Library.Checkpoint_IsPlayerIn(NativePointer, player.NativePointer) == 1;
+                    }
+
                 case IVehicle vehicle:
-                    return AltNative.Checkpoint.Checkpoint_IsVehicleIn(NativePointer, vehicle.NativePointer);
+                    unsafe
+                    {
+                        return Server.Library.Checkpoint_IsVehicleIn(NativePointer, vehicle.NativePointer) == 1;
+                    }
+
                 default:
                     return false;
             }
@@ -213,12 +290,18 @@ namespace AltV.Net.Elements.Entities
         
         protected override void InternalAddRef()
         {
-            AltNative.Checkpoint.Checkpoint_AddRef(NativePointer);
+            unsafe
+            {
+                Server.Library.Checkpoint_AddRef(NativePointer);
+            }
         }
 
         protected override void InternalRemoveRef()
         {
-            AltNative.Checkpoint.Checkpoint_RemoveRef(NativePointer);
+            unsafe
+            {
+                Server.Library.Checkpoint_RemoveRef(NativePointer);
+            }
         }
     }
 }

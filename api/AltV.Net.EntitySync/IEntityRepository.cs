@@ -8,6 +8,8 @@ namespace AltV.Net.EntitySync
 
         void Remove(IEntity entity);
 
+        void Remove(ulong id, ulong type);
+
         void Update(IEntity entity);
         
         void UpdateData(IEntity entity, string key, object value);

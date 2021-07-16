@@ -13,7 +13,7 @@ namespace AltV.Net.EntitySync.Tests
         [SetUp]
         public void Setup()
         {
-            AltEntitySync.Init(1, 100, _ => true,
+            AltEntitySync.Init(1, (id) => 100, _ => true,
                 (threadCount, repository) =>
                 {
                     mockNetworkLayer = new MockNetworkLayer(threadCount, repository);
@@ -420,6 +420,33 @@ namespace AltV.Net.EntitySync.Tests
             Assert.AreEqual(client, changeEvent.Item1);
             Assert.True(changeEvent.Item2.State);
             Assert.AreEqual(entity2, changeEvent.Item2.Entity);
+        }
+        
+        
+        [Test]
+        public void RemoveClientTest()
+        {
+            var readAsyncCreate = mockNetworkLayer.CreateEventChannel.Reader.ReadAsync();
+            var data = new Dictionary<string, object>();
+            data["bla"] = 1337;
+            var entity = new Entity(1, new Vector3(1000, 1000, 1000), 0, 2, data);
+            AltEntitySync.AddEntity(entity);
+            mockNetworkLayer.AddDummyClient();
+            var createTask = readAsyncCreate.AsTask();
+            createTask.Wait();
+            var createResult = createTask.Result;
+            Assert.AreSame(createResult.Entity, entity);
+            Assert.AreEqual(1, entity.GetClients().Count);
+            Assert.AreEqual(1, entity.DataSnapshot.GetLastClients().Count);
+
+            mockNetworkLayer.RemoveDummyClient();
+            
+            Thread.Sleep(100);
+
+            Assert.AreEqual(0, entity.DataSnapshot.GetLastClients().Count);
+            Assert.AreEqual(0, entity.GetClients().Count);
+            
+            AltEntitySync.RemoveEntity(entity);
         }
     }
 }

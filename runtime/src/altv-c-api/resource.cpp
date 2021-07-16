@@ -92,7 +92,7 @@ void Resource_GetType(alt::IResource* resource, const char*&text) {
     text = resource->GetType().CStr();
 }
 
-bool Resource_IsStarted(alt::IResource* resource) {
+uint8_t Resource_IsStarted(alt::IResource* resource) {
     return resource->IsStarted();
 }
 

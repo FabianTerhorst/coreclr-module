@@ -700,9 +700,9 @@ namespace AltV.Net.Async
             });
         }
 
-        public new void OnClient(string eventName, Function function)
+        public new Function OnClient(string eventName, Function function)
         {
-            if (function == null) return;
+            if (function == null) return null;
             if (asyncEventBusClient.TryGetValue(eventName, out var eventHandlersForEvent))
             {
                 eventHandlersForEvent.Add(function);
@@ -712,6 +712,8 @@ namespace AltV.Net.Async
                 eventHandlersForEvent = new HashSet<Function> {function};
                 asyncEventBusClient[eventName] = eventHandlersForEvent;
             }
+
+            return function;
         }
 
         public new void OffClient(string eventName, Function function)
@@ -723,9 +725,9 @@ namespace AltV.Net.Async
             }
         }
 
-        public new void OnServer(string eventName, Function function)
+        public new Function OnServer(string eventName, Function function)
         {
-            if (function == null) return;
+            if (function == null) return null;
             if (asyncEventBusServer.TryGetValue(eventName, out var eventHandlersForEvent))
             {
                 eventHandlersForEvent.Add(function);
@@ -735,12 +737,14 @@ namespace AltV.Net.Async
                 eventHandlersForEvent = new HashSet<Function> {function};
                 asyncEventBusServer[eventName] = eventHandlersForEvent;
             }
+
+            return function;
         }
 
         public new void OffServer(string eventName, Function function)
         {
             if (function == null) return;
-            if (asyncEventBusClient.TryGetValue(eventName, out var eventHandlers))
+            if (asyncEventBusServer.TryGetValue(eventName, out var eventHandlers))
             {
                 eventHandlers.Remove(function);
             }

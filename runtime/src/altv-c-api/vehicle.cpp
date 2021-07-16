@@ -61,7 +61,7 @@ void Vehicle_SetMetaData(alt::IVehicle* entity, const char* key, alt::MValueCons
     entity->SetMetaData(key, val->Get()->Clone());
 }
 
-bool Vehicle_HasMetaData(alt::IVehicle* vehicle, const char* key) {
+uint8_t Vehicle_HasMetaData(alt::IVehicle* vehicle, const char* key) {
     return vehicle->HasMetaData(key);
 }
 
@@ -78,7 +78,7 @@ void Vehicle_SetSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MVal
     entity->SetSyncedMetaData(key, val->Get()->Clone());
 }
 
-bool Vehicle_HasSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
+uint8_t Vehicle_HasSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
     return vehicle->HasSyncedMetaData(key);
 }
 
@@ -95,7 +95,7 @@ void Vehicle_SetStreamSyncedMetaData(alt::IVehicle* entity, const char* key, alt
     entity->SetStreamSyncedMetaData(key, val->Get()->Clone());
 }
 
-bool Vehicle_HasStreamSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
+uint8_t Vehicle_HasStreamSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
     return vehicle->HasStreamSyncedMetaData(key);
 }
 
@@ -111,11 +111,11 @@ void Vehicle_RemoveRef(alt::IVehicle* vehicle) {
     vehicle->RemoveRef();
 }
 
-bool Vehicle_GetVisible(alt::IVehicle* vehicle) {
+uint8_t Vehicle_GetVisible(alt::IVehicle* vehicle) {
     return vehicle->GetVisible();
 }
 
-void Vehicle_SetVisible(alt::IVehicle* vehicle, bool state) {
+void Vehicle_SetVisible(alt::IVehicle* vehicle, uint8_t state) {
     vehicle->SetVisible(state);
 }
 
@@ -125,7 +125,7 @@ alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle) {
     return vehicle->GetDriver().Get();
 }
 
-bool Vehicle_IsDestroyed(alt::IVehicle* vehicle) {
+uint8_t Vehicle_IsDestroyed(alt::IVehicle* vehicle) {
     return vehicle->IsDestroyed();
 }
 
@@ -137,7 +137,7 @@ uint8_t Vehicle_GetModsCount(alt::IVehicle* vehicle, uint8_t category) {
     return vehicle->GetModsCount(category);
 }
 
-bool Vehicle_SetMod(alt::IVehicle* vehicle, uint8_t category, uint8_t id) {
+uint8_t Vehicle_SetMod(alt::IVehicle* vehicle, uint8_t category, uint8_t id) {
     return vehicle->SetMod(category, id);
 }
 
@@ -149,11 +149,11 @@ uint8_t Vehicle_GetModKit(alt::IVehicle* vehicle) {
     return vehicle->GetModKit();
 }
 
-bool Vehicle_SetModKit(alt::IVehicle* vehicle, uint8_t id) {
+uint8_t Vehicle_SetModKit(alt::IVehicle* vehicle, uint8_t id) {
     return vehicle->SetModKit(id);
 }
 
-bool Vehicle_IsPrimaryColorRGB(alt::IVehicle* vehicle) {
+uint8_t Vehicle_IsPrimaryColorRGB(alt::IVehicle* vehicle) {
     return vehicle->IsPrimaryColorRGB();
 }
 
@@ -182,7 +182,7 @@ void Vehicle_SetPrimaryColorRGB(alt::IVehicle* vehicle, rgba_t primaryColor) {
     vehicle->SetPrimaryColorRGB(color);
 }
 
-bool Vehicle_IsSecondaryColorRGB(alt::IVehicle* vehicle) {
+uint8_t Vehicle_IsSecondaryColorRGB(alt::IVehicle* vehicle) {
     return vehicle->IsSecondaryColorRGB();
 }
 
@@ -243,7 +243,7 @@ void Vehicle_SetDashboardColor(alt::IVehicle* vehicle, uint8_t color) {
     vehicle->SetDashboardColor(color);
 }
 
-bool Vehicle_IsTireSmokeColorCustom(alt::IVehicle* vehicle) {
+uint8_t Vehicle_IsTireSmokeColorCustom(alt::IVehicle* vehicle) {
     return vehicle->IsTireSmokeColorCustom();
 }
 
@@ -284,11 +284,11 @@ void Vehicle_SetRearWheels(alt::IVehicle* vehicle, uint8_t variation) {
     vehicle->SetRearWheels(variation);
 }
 
-bool Vehicle_GetCustomTires(alt::IVehicle* vehicle) {
+uint8_t Vehicle_GetCustomTires(alt::IVehicle* vehicle) {
     return vehicle->GetCustomTires();
 }
 
-void Vehicle_SetCustomTires(alt::IVehicle* vehicle, bool state) {
+void Vehicle_SetCustomTires(alt::IVehicle* vehicle, uint8_t state) {
     return vehicle->SetCustomTires(state);
 }
 
@@ -332,23 +332,28 @@ void Vehicle_SetDirtLevel(alt::IVehicle* vehicle, uint8_t level) {
     vehicle->SetDirtLevel(level);
 }
 
-bool Vehicle_IsExtraOn(alt::IVehicle* vehicle, uint8_t extraID) {
+uint8_t Vehicle_IsExtraOn(alt::IVehicle* vehicle, uint8_t extraID) {
     return vehicle->IsExtraOn(extraID);
 }
 
-void Vehicle_ToggleExtra(alt::IVehicle* vehicle, uint8_t extraID, bool state) {
+void Vehicle_ToggleExtra(alt::IVehicle* vehicle, uint8_t extraID, uint8_t state) {
     vehicle->ToggleExtra(extraID, state);
 }
 
-bool Vehicle_IsNeonActive(alt::IVehicle* vehicle) {
+uint8_t Vehicle_IsNeonActive(alt::IVehicle* vehicle) {
     return vehicle->IsNeonActive();
 }
 
-void Vehicle_GetNeonActive(alt::IVehicle* vehicle, bool* left, bool* right, bool* front, bool* back) {
-    vehicle->GetNeonActive(left, right, front, back);
+void Vehicle_GetNeonActive(alt::IVehicle* vehicle, uint8_t* left, uint8_t* right, uint8_t* front, uint8_t* back) {
+    bool bLeft, bRight, bFront, bBack;
+    vehicle->GetNeonActive(&bLeft, &bRight, &bFront, &bBack);
+    *left = bLeft;
+    *right = bRight;
+    *front = bFront;
+    *back = bBack;
 }
 
-void Vehicle_SetNeonActive(alt::IVehicle* vehicle, bool left, bool right, bool front, bool back) {
+void Vehicle_SetNeonActive(alt::IVehicle* vehicle, uint8_t left, uint8_t right, uint8_t front, uint8_t back) {
     vehicle->SetNeonActive(left, right, front, back);
 }
 
@@ -393,15 +398,15 @@ void Vehicle_LoadAppearanceDataFromBase64(alt::IVehicle* vehicle, const char* ba
     vehicle->LoadAppearanceDataFromBase64(base64);
 }
 
-bool Vehicle_IsEngineOn(alt::IVehicle* vehicle) {
+uint8_t Vehicle_IsEngineOn(alt::IVehicle* vehicle) {
     return vehicle->IsEngineOn();
 }
 
-void Vehicle_SetEngineOn(alt::IVehicle* vehicle, bool state) {
+void Vehicle_SetEngineOn(alt::IVehicle* vehicle, uint8_t state) {
     vehicle->SetEngineOn(state);
 }
 
-bool Vehicle_IsHandbrakeActive(alt::IVehicle* vehicle) {
+uint8_t Vehicle_IsHandbrakeActive(alt::IVehicle* vehicle) {
     return vehicle->IsHandbrakeActive();
 }
 
@@ -421,11 +426,11 @@ void Vehicle_SetRadioStationIndex(alt::IVehicle* vehicle, uint32_t stationIndex)
     vehicle->SetRadioStationIndex(stationIndex);
 }
 
-bool Vehicle_IsSirenActive(alt::IVehicle* vehicle) {
+uint8_t Vehicle_IsSirenActive(alt::IVehicle* vehicle) {
     return vehicle->IsSirenActive();
 }
 
-void Vehicle_SetSirenActive(alt::IVehicle* vehicle, bool state) {
+void Vehicle_SetSirenActive(alt::IVehicle* vehicle, uint8_t state) {
     vehicle->SetSirenActive(state);
 }
 
@@ -445,19 +450,19 @@ void Vehicle_SetDoorState(alt::IVehicle* vehicle, uint8_t doorId, uint8_t state)
     vehicle->SetDoorState(doorId, state);
 }
 
-bool Vehicle_IsWindowOpened(alt::IVehicle* vehicle, uint8_t windowId) {
+uint8_t Vehicle_IsWindowOpened(alt::IVehicle* vehicle, uint8_t windowId) {
     return vehicle->IsWindowOpened(windowId);
 }
 
-void Vehicle_SetWindowOpened(alt::IVehicle* vehicle, uint8_t windowId, bool state) {
+void Vehicle_SetWindowOpened(alt::IVehicle* vehicle, uint8_t windowId, uint8_t state) {
     vehicle->SetWindowOpened(windowId, state);
 }
 
-bool Vehicle_IsDaylightOn(alt::IVehicle* vehicle) {
+uint8_t Vehicle_IsDaylightOn(alt::IVehicle* vehicle) {
     return vehicle->IsDaylightOn();
 }
 
-bool Vehicle_IsNightlightOn(alt::IVehicle* vehicle) {
+uint8_t Vehicle_IsNightlightOn(alt::IVehicle* vehicle) {
     return vehicle->IsNightlightOn();
 }
 
@@ -469,7 +474,7 @@ void Vehicle_SetRoofState(alt::IVehicle* vehicle, uint8_t state) {
     vehicle->SetRoofState(state);
 }
 
-bool Vehicle_IsFlamethrowerActive(alt::IVehicle* vehicle) {
+uint8_t Vehicle_IsFlamethrowerActive(alt::IVehicle* vehicle) {
     return vehicle->IsFlamethrowerActive();
 }
 
@@ -509,35 +514,35 @@ uint8_t Vehicle_GetWheelsCount(alt::IVehicle* vehicle) {
     return vehicle->GetWheelsCount();
 }
 
-bool Vehicle_IsWheelBurst(alt::IVehicle* vehicle, uint8_t wheelId) {
+uint8_t Vehicle_IsWheelBurst(alt::IVehicle* vehicle, uint8_t wheelId) {
     return vehicle->IsWheelBurst(wheelId);
 }
 
-void Vehicle_SetWheelBurst(alt::IVehicle* vehicle, uint8_t wheelId, bool state) {
+void Vehicle_SetWheelBurst(alt::IVehicle* vehicle, uint8_t wheelId, uint8_t state) {
     vehicle->SetWheelBurst(wheelId, state);
 }
 
-bool Vehicle_DoesWheelHasTire(alt::IVehicle* vehicle, uint8_t wheelId) {
+uint8_t Vehicle_DoesWheelHasTire(alt::IVehicle* vehicle, uint8_t wheelId) {
     return vehicle->DoesWheelHasTire(wheelId);
 }
 
-void Vehicle_SetWheelHasTire(alt::IVehicle* vehicle, uint8_t wheelId, bool state) {
+void Vehicle_SetWheelHasTire(alt::IVehicle* vehicle, uint8_t wheelId, uint8_t state) {
     vehicle->SetWheelHasTire(wheelId, state);
 }
 
-bool Vehicle_IsWheelDetached(alt::IVehicle* vehicle, uint8_t wheelId) {
+uint8_t Vehicle_IsWheelDetached(alt::IVehicle* vehicle, uint8_t wheelId) {
     return vehicle->IsWheelDetached(wheelId);
 }
 
-void Vehicle_SetWheelDetached(alt::IVehicle* vehicle, uint8_t wheelId, bool state) {
+void Vehicle_SetWheelDetached(alt::IVehicle* vehicle, uint8_t wheelId, uint8_t state) {
     vehicle->SetWheelDetached(wheelId, state);
 }
 
-bool Vehicle_IsWheelOnFire(alt::IVehicle* vehicle, uint8_t wheelId) {
+uint8_t Vehicle_IsWheelOnFire(alt::IVehicle* vehicle, uint8_t wheelId) {
     return vehicle->IsWheelOnFire(wheelId);
 }
 
-void Vehicle_SetWheelOnFire(alt::IVehicle* vehicle, uint8_t wheelId, bool state) {
+void Vehicle_SetWheelOnFire(alt::IVehicle* vehicle, uint8_t wheelId, uint8_t state) {
     vehicle->SetWheelOnFire(wheelId, state);
 }
 
@@ -547,6 +552,10 @@ float Vehicle_GetWheelHealth(alt::IVehicle* vehicle, uint8_t wheelId) {
 
 void Vehicle_SetWheelHealth(alt::IVehicle* vehicle, uint8_t wheelId, float health) {
     vehicle->SetWheelHealth(wheelId, health);
+}
+
+void Vehicle_SetWheelFixed(alt::IVehicle* vehicle, uint8_t wheelId) {
+    vehicle->SetWheelFixed(wheelId);
 }
 
 uint8_t Vehicle_GetRepairsCount(alt::IVehicle* vehicle) {
@@ -593,31 +602,31 @@ void Vehicle_SetPartBulletHoles(alt::IVehicle* vehicle, uint8_t partId, uint8_t 
     vehicle->SetPartBulletHoles(partId, shootsCount);
 }
 
-bool Vehicle_IsLightDamaged(alt::IVehicle* vehicle, uint8_t lightId) {
+uint8_t Vehicle_IsLightDamaged(alt::IVehicle* vehicle, uint8_t lightId) {
     return vehicle->IsLightDamaged(lightId);
 }
 
-void Vehicle_SetLightDamaged(alt::IVehicle* vehicle, uint8_t lightId, bool isDamaged) {
+void Vehicle_SetLightDamaged(alt::IVehicle* vehicle, uint8_t lightId, uint8_t isDamaged) {
     vehicle->SetLightDamaged(lightId, isDamaged);
 }
 
-bool Vehicle_IsWindowDamaged(alt::IVehicle* vehicle, uint8_t windowId) {
+uint8_t Vehicle_IsWindowDamaged(alt::IVehicle* vehicle, uint8_t windowId) {
     return vehicle->IsWindowDamaged(windowId);
 }
 
-void Vehicle_SetWindowDamaged(alt::IVehicle* vehicle, uint8_t windowId, bool isDamaged) {
+void Vehicle_SetWindowDamaged(alt::IVehicle* vehicle, uint8_t windowId, uint8_t isDamaged) {
     vehicle->SetWindowDamaged(windowId, isDamaged);
 }
 
-bool Vehicle_IsSpecialLightDamaged(alt::IVehicle* vehicle, uint8_t specialLightId) {
+uint8_t Vehicle_IsSpecialLightDamaged(alt::IVehicle* vehicle, uint8_t specialLightId) {
     return vehicle->IsSpecialLightDamaged(specialLightId);
 }
 
-void Vehicle_SetSpecialLightDamaged(alt::IVehicle* vehicle, uint8_t specialLightId, bool isDamaged) {
+void Vehicle_SetSpecialLightDamaged(alt::IVehicle* vehicle, uint8_t specialLightId, uint8_t isDamaged) {
     vehicle->SetSpecialLightDamaged(specialLightId, isDamaged);
 }
 
-bool Vehicle_HasArmoredWindows(alt::IVehicle* vehicle) {
+uint8_t Vehicle_HasArmoredWindows(alt::IVehicle* vehicle) {
     return vehicle->HasArmoredWindows();
 }
 
@@ -653,11 +662,11 @@ void Vehicle_LoadDamageDataFromBase64(alt::IVehicle* vehicle, const char* base64
     vehicle->LoadDamageDataFromBase64(base64);
 }
 
-void Vehicle_SetManualEngineControl(alt::IVehicle* vehicle, bool state) {
+void Vehicle_SetManualEngineControl(alt::IVehicle* vehicle, uint8_t state) {
     vehicle->SetManualEngineControl(state);
 }
 
-bool Vehicle_IsManualEngineControl(alt::IVehicle* vehicle) {
+uint8_t Vehicle_IsManualEngineControl(alt::IVehicle* vehicle) {
     return vehicle->IsManualEngineControl();
 }
 
@@ -681,7 +690,7 @@ void Vehicle_GetPositionCoords2(alt::IVehicle* vehicle, float* position_x, float
     *dimension = vehicle->GetDimension();
 }
 
-void Vehicle_SetNetworkOwner(alt::IVehicle* vehicle, alt::IPlayer* networkOwnerPlayer, bool disableMigration) {
+void Vehicle_SetNetworkOwner(alt::IVehicle* vehicle, alt::IPlayer* networkOwnerPlayer, uint8_t disableMigration) {
     vehicle->SetNetworkOwner(networkOwnerPlayer, disableMigration);
 }
 
@@ -695,4 +704,23 @@ alt::IVehicle* Vehicle_GetAttachedTo(alt::IVehicle* vehicle) {
 
 void Vehicle_Repair(alt::IVehicle* vehicle) {
     vehicle->SetFixed();
+}
+
+void Vehicle_AttachToEntity_Player(alt::IVehicle* vehicle, alt::IPlayer* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot)
+{
+    alt::Position position{pos.x, pos.y, pos.z};
+    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
+    vehicle->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
+}
+
+void Vehicle_AttachToEntity_Vehicle(alt::IVehicle* vehicle, alt::IVehicle* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot)
+{
+    alt::Position position{pos.x, pos.y, pos.z};
+    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
+    vehicle->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
+}
+
+void Vehicle_Detach(alt::IVehicle* vehicle)
+{
+    vehicle->Detach();
 }

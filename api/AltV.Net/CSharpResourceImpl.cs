@@ -11,12 +11,15 @@ namespace AltV.Net
     /// </summary>
     public class CSharpResourceImpl : IDisposable
     {
+        private readonly ILibrary library;
+        
         internal readonly IntPtr NativePointer;
 
-        private readonly LinkedList<GCHandle> handles = new LinkedList<GCHandle>();
+        private readonly LinkedList<GCHandle> handles = new ();
 
-        internal CSharpResourceImpl(IntPtr nativePointer)
+        internal CSharpResourceImpl(ILibrary library, IntPtr nativePointer)
         {
+            this.library = library;
             NativePointer = nativePointer;
         }
         
@@ -202,12 +205,18 @@ namespace AltV.Net
 
         public IntPtr CreateInvoker(MValueFunctionCallback function)
         {
-            return AltNative.MValueNative.Invoker_Create(NativePointer, function);
+            unsafe
+            {
+                return library.Invoker_Create(NativePointer, function);
+            }
         }
 
         public void DestroyInvoker(IntPtr invoker)
         {
-            AltNative.MValueNative.Invoker_Destroy(NativePointer, invoker);
+            unsafe
+            {
+                library.Invoker_Destroy(NativePointer, invoker);
+            }
         }
 
         public void Dispose()

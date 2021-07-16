@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>net5.0</TargetFramework>
         <Configurations>$(Configurations);Testing;Linux</Configurations>
         <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
@@ -24,6 +24,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
+      <PackageReference Include="BenchmarkDotNet" Version="0.13.0" />
     </ItemGroup>
 </Project>
