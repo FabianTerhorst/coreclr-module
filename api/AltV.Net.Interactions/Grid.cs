@@ -464,6 +464,7 @@ namespace AltV.Net.Interactions
         */
         protected static bool CanSeeOtherDimension(int dimension, int otherDimension)
         {
+            if (otherDimension == AltV.Net.Data.Dimension.GlobalDimension) return true;
             if (dimension > 0) return dimension == otherDimension;
             if (dimension < 0) return otherDimension == 0 || dimension == otherDimension;
             // dimension = 0
