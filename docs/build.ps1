@@ -4,116 +4,110 @@ param(
     [Switch] $cleanOnly=$false
 )
 
-function PostCleanup() {
-    Remove-Item -Path 'docfx.zip' -Force 2>&1 > $null
-    Remove-Item -Path 'docfx-tmpls-discordfx.zip' -Force 2>&1 > $null
-    if($cleanMetadata) {
-        Remove-Item -Path './_site/' -Recurse -Force 2>&1 > $null
-        Remove-Item -Path './obj/' -Recurse -Force 2>&1 > $null
-        Remove-Item -Path './api/**.yml' -Force 2>&1 > $null
-        Remove-Item -Path './api/.manifest' -Force 2>&1 > $null
-    }
+$requiredRepos=[Ordered]@{}
+$requiredPackages=[Ordered]@{
+    "docfx.zip"=@{
+        "repo"="dotnet/docfx";
+        "version"=$null;
+        "predicate"="./docfx/docfx.exe";
+        "dest"="./docfx/";
+        "name"="DocFx";
+    };
+    "docfx-plugins-extractsearchindex.zip"=@{
+        "repo"="Lhoerion/DocFx.Plugins.ExtractSearchIndex";
+        "version"=$null;
+        "predicate"="./templates/docfx-plugins-extractsearchindex/";
+        "dest"="./templates/";
+        "name"="DocFx ExtractSearchIndex";
+    };
+    "docfx-tmpls-discordfx.zip"=@{
+        "repo"="Lhoerion/DiscordFX";
+        "version"=$null;
+        "predicate"="./templates/discordfx/";
+        "dest"="./templates/";
+        "name"="DocFx DiscordFX";
+    };
 }
 
-function GetAssemblyVersion([string] $file) {
-    if(-not (Test-Path -Path $file)) { throw "Cannot find path $file, because it does not exist." }
-    $ver=(Get-Item -Path $file | Select-Object -ExpandProperty VersionInfo).FileVersion.Split('.')
-    if($ver.Length -lt 4) {
-        $ver -Join '.'
-    } else {
-        ($ver | Select -SkipLast 1) -Join '.'
-    }
-}
-
-function FetchAndDownloadRelease([string] $repo, [string] $file, [string] $tag=$null) {
-    $global:ProgressPreference='SilentlyContinue'
-    if(-not $tag) {
-        $tag=((Invoke-WebRequest -UseBasicParsing "https://api.github.com/repos/$repo/releases" | ConvertFrom-Json) | Where-Object { -not $_.prerelease } | Select-Object -First 1 -ExpandProperty "tag_name")
-    }
-    Invoke-WebRequest -UseBasicParsing "https://github.com/$repo/releases/download/$tag/$file" -OutFile $file
-    $global:ProgressPreference='Continue'
-    return ([int]$? - 1)
-}
-
-function ExtractArchive([string] $path, [string] $dest) {
-    if(-not (Test-Path -Path $path)) { throw "Cannot find path $path because it does not exist." }
-    $file=Get-Item -Path $path
-    if(!$dest) {
-        $dest=$file.FullName.Substring(0, $file.FullName.LastIndexOf('.'))
-    }
-    $global:ProgressPreference='SilentlyContinue'
-    Expand-Archive -Path $file -DestinationPath $dest -Force
-    $global:ProgressPreference='Continue'
-    return ([int]$? - 1)
-}
-
-function LogWrap([string] $msg, [ScriptBlock] $action, [boolean] $disResult=$false) {
-    Write-Host -NoNewline "$msg . . . "
-    try {
-        $errcode, $msg=Invoke-Command -ScriptBlock $action
-    } catch {
-        $err=$true
-        $errcode=1
-        $msg=$_
-    }
-    if(-not $err) {
-        if(-not ($errcode -is [int])) {
-            $errcode=$LastExitCode
-        }
-        if(-not $msg) {
-            $msg=$Error[0].Exception.Message
-        }
-    }
-    if(-not $disResult -and $errcode -eq 0x0) {
-        Write-Host -NoNewline -ForegroundColor 'green' "done`n"
-    } elseif($errcode -eq -0x1) {
-        Write-Host -NoNewline -ForegroundColor 'yellow' "skipped`n"
-    } elseif($errcode -gt 0x0) {
-        Write-Host -NoNewline -ForegroundColor 'red' "failed"
-        Write-Host -ForegroundColor 'red' " with code $($errcode):`n$($msg)"
-        exit
-    }
-}
+$global:ProgressPreference='SilentlyContinue'
+Invoke-WebRequest -UseBasicParsing "https://raw.githubusercontent.com/altmp/altv-docs/master/common.ps1" -OutFile "./common.ps1" 2>&1 >$null
+$global:ProgressPreference='Continue'
+if($err -ne $null -or -not (Test-Path "./common.ps1")) { throw "Script common.ps1 not found." }
+. "./common.ps1" $true
 
 try
 {
+    $cwd=(Get-Location).Path
+    $tmpd="${env:TMP}/altv-docs"
+    New-Item -ItemType "Directory" -Path "$tmpd" 2>&1 >$null
+
     if($cleanOnly) { exit }
-    
-    LogWrap "Downloading DocFx package" {
-        if(Test-Path "./docfx/docfx.exe") { return -0x1 }
-        FetchAndDownloadRelease "dotnet/docfx" "docfx.zip" "v2.56.7" 2>$null
-    }
-    LogWrap "Extracting DocFx package" {
-        if(Test-Path "./docfx/docfx.exe") { return -0x1 }
-        ExtractArchive "docfx.zip" "./docfx/" 2>$null
+
+    foreach($el in $requiredRepos.GetEnumerator()) {
+        Run-Task "Checkout $($el.Value["name"]) repository" {
+            if(Test-Path $el.Key) {
+                Set-Location -Path $el.Key
+                git fetch --depth 1 "origin" $el.Value["ref"]
+                if((git status -s -b) -like "*``[*behind *``]") {
+                    git clean -d -x -f
+                    git reset --hard "FETCH_HEAD"
+                    Set-Location $cwd
+                    Exit-Task (0x0)
+                } else {
+                    Set-Location $cwd
+                    Exit-Task (-0x1)
+                }
+            }
+            New-Item -ItemType "directory" -Path $el.Key -Force
+            Set-Location -Path $el.Key
+            git init
+            git remote add "origin" $el.Value["repo"]
+            git fetch --depth 1 "origin" $el.Value["ref"]
+            git merge "FETCH_HEAD"
+            git reset --hard "HEAD"
+            git branch --set-upstream-to "origin/$($el.Value["ref"])" master
+            Set-Location $cwd
+        }
     }
 
-    LogWrap "Downloading DocFx DiscordFX package" {
-        if(Test-Path "./templates/discordfx") { return -0x1 }
-        FetchAndDownloadRelease "Lhoerion/DiscordFX" "docfx-tmpls-discordfx.zip" 2>&1 6>$null
-    }
-    LogWrap "Extracting DocFx DiscordFX package" {
-        if(Test-Path "./templates/discordfx") { return -0x1 }
-        ExtractArchive "docfx-tmpls-discordfx.zip" "./templates/" 2>&1 6>$null
-    }
-
-    LogWrap "Tools version" {
-        $dotnetVersion=dotnet --version
-        $docfxVer=GetAssemblyVersion "./docfx/docfx.exe"
-        $themeVer=cat "./templates/discordfx/version.txt"
-        Write-Host -NoNewline -ForegroundColor "green" "done`n"
-        Write-Host ".NET Core v$dotnetVersion"
-        Write-Host "DocFx v$docfxVer"
-        Write-Host "DocFx DiscordFX v$themeVer"
-    } $true
-
-    LogWrap "Generating project metadata" {
-        ./docfx/docfx metadata "docfx.json"
+    foreach($el in $requiredPackages.GetEnumerator()) {
+        Run-Task "Downloading $($el.Value["name"]) package" {
+            if(Test-Path $el.Value["predicate"]) { Exit-Task (-0x1) }
+            FetchAndDownloadRelease $el.Value["repo"] "$tmpd/" $el.Key $el.Value["version"]
+        }
+        Run-Task "Extracting $($el.Value["name"]) package" {
+            if(Test-Path $el.Value["predicate"]) { Exit-Task (-0x1) }
+            ExtractArchive "$tmpd/$($el.Key)" $el.Value["dest"]
+        }
     }
 
-    ./docfx/docfx build "docfx.json" --serve -p $port
+    Run-Task "Tools version" {
+        Set-Location $cwd
+        $tools=[Ordered]@{
+            "Node.js"=(node -v);
+            "Yarn/npm"=GetNodePackageVersion;
+            "Visual Studio"=GetVisualStudioVersion;
+            "DocFx"=GetAssemblyVersion "./docfx/docfx.exe";
+            "DocFx TypeScriptReference"=GetAssemblyVersion "./templates/docfx-plugins-typescriptreference/plugins/DocFx.*.dll";
+            "DocFx ExtractSearchIndex"=GetAssemblyVersion "./templates/docfx-plugins-extractsearchindex/plugins/DocFx.*.dll";
+            "TypeDoc"=GetNodePackageVersion "typedoc";
+            "type2docfx"=GetNodePackageVersion "type2docfx";
+        }
+        Write-Information -Tags "Output" -MessageData ($tools | Format-Table | Out-String)
+    }
+
+    Run-Task "Generating project metadata" {
+        if(IsVisualStudioInstalled) {
+            ./docfx/docfx metadata "./coreclr-module/docs/docfx.json" --intermediateFolder "$tmpd/obj/"
+        } else {
+            Exit-Task (-0x1)
+        }
+    }
+
+    ./docfx/docfx build "docfx.json" --intermediateFolder "$tmpd/obj/" --serve -p $port
 }
 finally
 {
+    Set-Location $cwd
     PostCleanup
 }
