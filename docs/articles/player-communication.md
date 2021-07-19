@@ -12,28 +12,3 @@ Supported arguments types inside the array are ```byte[]```, ```object```, ```bo
 ```Vector3```, ```Rotation```, ```Position```, ```IBlip``` (or any types extending IBlip), ```IVoiceChannel``` (or any types extending IVoiceChannel), ```IColShape``` (or any types extending IColShape), ```ICheckpoint``` (or any types extending ICheckpoint)
 ```Dictionary<string, (any type listed here)```, ```Alt.Function```, any type listed here as array e.g. int[].
 Also any dictionary in dictionary, array in array, ect. endless depth types are supported, because they are resolved recursively.
-
-## Clientside
-
-To catch the event inside clientside javascript.
-
-```js
-import * as alt from "alt";
-
-alt.onServer(eventName, (args) => {
-
-});
-// or
-alt.onServer(eventName, (arg1, arg2) => {
-
-});
-// ect.
-```
-
-To send events to server from clientside javascript.
-
-```js
-import * as alt from "alt";
-
-alt.emitServer(eventName, args);
-```
