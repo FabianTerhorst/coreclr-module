@@ -722,6 +722,24 @@ namespace AltV.Net.Enums
         Veto = 3437611258,
         Veto2 = 2802050217,
         Weevil = 1644055914,
-        Winky = 4084658662
+        Winky = 4084658662,
+        Freightcar2 = 3186376089,
+        Calico = 3101054893,
+        Comet6 = 2568944644,
+        Cypher = 1755697647,
+        Dominator7 = 426742808,
+        Dominator8 = 736672010,
+        Euros = 2038480341,
+        Futo2 = 2787736776,
+        Growler = 1304459735,
+        Jester4 = 2712905841,
+        Previon = 1416471345,
+        Remus = 1377217886,
+        Rt3000 = 3842363289,
+        Sultan3 = 4003946083,
+        Tailgater2 = 3050505892,
+        Vectre = 2754593701,
+        Warrener2 = 579912970,
+        Zr350 = 2436313176
     }
 }
