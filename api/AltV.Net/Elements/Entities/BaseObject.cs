@@ -48,15 +48,15 @@ namespace AltV.Net.Elements.Entities
 
         protected BaseObject(IServer server, IntPtr nativePointer, BaseObjectType type)
         {
+            Type = type;
+            Server = server;
+            NativePointer = nativePointer;
+            exists = true;
+            
             if (nativePointer == IntPtr.Zero)
             {
                 throw new BaseObjectRemovedException(this);
             }
-
-            Server = server;
-            NativePointer = nativePointer;
-            Type = type;
-            exists = true;
         }
 
         public void SetMetaData(string key, object value)
