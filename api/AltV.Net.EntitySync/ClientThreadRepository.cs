@@ -37,6 +37,28 @@ namespace AltV.Net.EntitySync
             return null;
         }
 
+        public void Replace(IClient client, IClient oldClient)
+        {
+            lock (Mutex)
+            {
+                ClientsToRemove.Enqueue(oldClient);
+                Clients[client.Token] = client;
+            }
+        }
+        
+        public void Replace(IClient client)
+        {
+            lock (Mutex)
+            {
+                if (Clients.Remove(client.Token, out var oldClient))
+                {
+                    ClientsToRemove.Enqueue(oldClient);
+                }
+
+                Clients[client.Token] = client;
+            }
+        }
+
         public bool TryGet(string token, out IClient client)
         {
             lock (Mutex)
