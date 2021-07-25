@@ -48,9 +48,9 @@ namespace AltV.Net.Elements.Entities
 
         protected BaseObject(IServer server, IntPtr nativePointer, BaseObjectType type)
         {
-            Type = type;
             Server = server;
             NativePointer = nativePointer;
+            Type = type;
             
             if (nativePointer == IntPtr.Zero)
             {
