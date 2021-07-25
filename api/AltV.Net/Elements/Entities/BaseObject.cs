@@ -51,12 +51,13 @@ namespace AltV.Net.Elements.Entities
             Type = type;
             Server = server;
             NativePointer = nativePointer;
-            exists = true;
             
             if (nativePointer == IntPtr.Zero)
             {
                 throw new BaseObjectRemovedException(this);
             }
+            
+            exists = true;
         }
 
         public void SetMetaData(string key, object value)
