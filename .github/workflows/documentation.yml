@@ -5,7 +5,6 @@ on:
       - master
     tags:
       - '*.*.*'
-      - '*.*.*-*'
     # paths:
     #   - 'docs/api/**.md'
     #   - 'docs/articles/**.md'
