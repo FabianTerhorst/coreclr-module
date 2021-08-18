@@ -50,18 +50,19 @@ namespace AltV.Net.Async
                                     break;
                                 case ScriptEventType.PlayerDamage:
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] {typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(ushort)}, true);
+                                        new[] {typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(ushort), typeof(ushort)}, true);
                                     if (scriptFunction == null) return;
                                     OnPlayerDamage += (player, attacker,
                                         oldHealth, oldArmor,
                                         oldMaxHealth, oldMaxArmor,
-                                        weapon, damage) =>
+                                        weapon, healthDamage, armourDamage) =>
                                     {
                                         var currScriptFunction = scriptFunction.Clone();
                                         currScriptFunction.Set(player);
                                         currScriptFunction.Set(attacker);
                                         currScriptFunction.Set(weapon);
-                                        currScriptFunction.Set(damage);
+                                        currScriptFunction.Set(healthDamage);
+                                        currScriptFunction.Set(armourDamage);
                                         return currScriptFunction.CallAsync();
                                     };
                                     break;

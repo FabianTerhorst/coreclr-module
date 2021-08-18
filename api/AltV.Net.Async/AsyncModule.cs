@@ -168,9 +168,9 @@ namespace AltV.Net.Async
             });
         }
 
-        public override void OnPlayerDamageEvent(IPlayer player, IEntity entity, uint weapon, ushort damage)
+        public override void OnPlayerDamageEvent(IPlayer player, IEntity entity, uint weapon, ushort healthDamage, ushort armourDamage)
         {
-            base.OnPlayerDamageEvent(player, entity, weapon, damage);
+            base.OnPlayerDamageEvent(player, entity, weapon, healthDamage, armourDamage);
             if (!PlayerDamageAsyncEventHandler.HasEvents()) return;
             var oldHealth = player.Health;
             var oldArmor = player.Armor;
@@ -183,7 +183,7 @@ namespace AltV.Net.Async
                 playerReference.DebugCountUp();
                 entityReference.DebugCountUp();
                 await PlayerDamageAsyncEventHandler.CallAsync(@delegate =>
-                    @delegate(player, entity, oldHealth, oldArmor, oldMaxHealth, oldMaxArmor, weapon, damage));
+                    @delegate(player, entity, oldHealth, oldArmor, oldMaxHealth, oldMaxArmor, weapon, healthDamage, armourDamage));
                 entityReference.DebugCountDown();
                 playerReference.DebugCountDown();
                 playerReference.Dispose();

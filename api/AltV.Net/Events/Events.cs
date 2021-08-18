@@ -13,7 +13,7 @@ namespace AltV.Net.Events
     
     public delegate void ResourceEventDelegate(INativeResource resource);
 
-    public delegate void PlayerDamageDelegate(IPlayer player, IEntity attacker, uint weapon, ushort damage);
+    public delegate void PlayerDamageDelegate(IPlayer player, IEntity attacker, uint weapon, ushort healthDamage, ushort armourDamage);
 
     public delegate void PlayerDeadDelegate(IPlayer player, IEntity killer, uint weapon);
 

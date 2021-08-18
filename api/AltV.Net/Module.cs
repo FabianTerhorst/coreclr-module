@@ -561,28 +561,28 @@ namespace AltV.Net
 
         public void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer,
             BaseObjectType attackerBaseObjectType,
-            ushort attackerEntityId, uint weapon, ushort damage)
+            ushort attackerEntityId, uint weapon, ushort healthDamage, ushort armourDamage)
         {
             if (!PlayerPool.Get(playerPointer, out var player))
             {
                 Console.WriteLine("OnPlayerDamage Invalid player " + playerPointer + " " + attackerEntityPointer + " " +
-                                  attackerBaseObjectType + " " + attackerEntityId + " " + weapon + " " + damage);
+                                  attackerBaseObjectType + " " + attackerEntityId + " " + weapon + " " + healthDamage + " " + armourDamage);
                 return;
             }
 
             BaseEntityPool.Get(attackerEntityPointer, attackerBaseObjectType,
                 out var attacker);
 
-            OnPlayerDamageEvent(player, attacker, weapon, damage);
+            OnPlayerDamageEvent(player, attacker, weapon, healthDamage, armourDamage);
         }
 
-        public virtual void OnPlayerDamageEvent(IPlayer player, IEntity attacker, uint weapon, ushort damage)
+        public virtual void OnPlayerDamageEvent(IPlayer player, IEntity attacker, uint weapon, ushort healthDamage, ushort armourDamage)
         {
             foreach (var @delegate in PlayerDamageEventHandler.GetEvents())
             {
                 try
                 {
-                    @delegate(player, attacker, weapon, damage);
+                    @delegate(player, attacker, weapon, healthDamage, armourDamage);
                 }
                 catch (TargetInvocationException exception)
                 {
