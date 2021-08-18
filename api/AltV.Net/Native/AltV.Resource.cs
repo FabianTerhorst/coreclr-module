@@ -29,7 +29,7 @@ namespace AltV.Net.Native
 
             internal delegate void PlayerDamageDelegate(IntPtr playerPointer, IntPtr attackerEntityPointer,
                 BaseObjectType attackerBaseObjectType,
-                ushort attackerEntityId, uint weapon, ushort damage);
+                ushort attackerEntityId, uint weapon, ushort healthDamage, ushort armourDamage);
 
             internal delegate void PlayerDeathDelegate(IntPtr playerPointer, IntPtr killerEntityPointer,
                 BaseObjectType killerBaseObjectType, uint weapon);

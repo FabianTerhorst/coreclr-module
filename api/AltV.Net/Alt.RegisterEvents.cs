@@ -46,14 +46,15 @@ namespace AltV.Net
                                     break;
                                 case ScriptEventType.PlayerDamage:
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] {typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(ushort)});
+                                        new[] {typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(ushort), typeof(ushort)});
                                     if (scriptFunction == null) return;
-                                    OnPlayerDamage += (player, attacker, weapon, damage) =>
+                                    OnPlayerDamage += (player, attacker, weapon, healthDamage, armourDamage) =>
                                     {
                                         scriptFunction.Set(player);
                                         scriptFunction.Set(attacker);
                                         scriptFunction.Set(weapon);
-                                        scriptFunction.Set(damage);
+                                        scriptFunction.Set(healthDamage);
+                                        scriptFunction.Set(armourDamage);
                                         scriptFunction.Call();
                                     };
                                     break;

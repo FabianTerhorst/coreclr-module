@@ -15,7 +15,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnResourceStartDelegate = [](auto var) {};
     OnResourceStopDelegate = [](auto var) {};
     OnResourceErrorDelegate = [](auto var) {};
-    OnPlayerDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
+    OnPlayerDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7) {};
     OnPlayerDeathDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnExplosionDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7) {};
     OnWeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7,
@@ -180,14 +180,16 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                                        entity->GetType(),
                                        entity->GetID(),
                                        damageEvent->GetWeapon(),
-                                       damageEvent->GetDamage());
+                                       damageEvent->GetHealthDamage(),
+                                       damageEvent->GetArmourDamage());
             } else {
                 OnPlayerDamageDelegate(damageEvent->GetTarget().Get(),
                                        nullptr,
                                        alt::IBaseObject::Type::PLAYER,
                                        0,
                                        damageEvent->GetWeapon(),
-                                       damageEvent->GetDamage());
+                                       damageEvent->GetHealthDamage(),
+                                       damageEvent->GetArmourDamage());
             }
         }
             break;

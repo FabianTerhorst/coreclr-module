@@ -198,10 +198,10 @@ namespace AltV.Net
 
         public static void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer,
             BaseObjectType attackerBaseObjectType,
-            ushort attackerEntityId, uint weapon, ushort damage)
+            ushort attackerEntityId, uint weapon, ushort healthDamage, ushort armourDamage)
         {
             _module.OnPlayerDamage(playerPointer, attackerEntityPointer, attackerBaseObjectType, attackerEntityId,
-                weapon, damage);
+                weapon, healthDamage, armourDamage);
         }
 
         public static void OnPlayerDeath(IntPtr playerPointer, IntPtr killerEntityPointer,

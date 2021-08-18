@@ -97,7 +97,7 @@ typedef void (* ResourceEventDelegate_t)(alt::IResource* resource);
 
 typedef void (* PlayerDamageDelegate_t)(alt::IPlayer* player, void* attacker,
                                         alt::IBaseObject::Type attackerType, uint16_t attackerId, uint32_t weapon,
-                                        uint16_t damage);
+                                        uint16_t healthDamage, uint16_t armourDamage);
 
 typedef void (* PlayerDeathDelegate_t)(alt::IPlayer* player, void* killer, alt::IBaseObject::Type killerType,
                                        uint32_t weapon);
