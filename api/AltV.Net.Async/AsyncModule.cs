@@ -95,6 +95,9 @@ namespace AltV.Net.Async
         
         internal readonly AsyncEventHandler<VehicleDetachAsyncDelegate> VehicleDetachAsyncEventHandler =
             new AsyncEventHandler<VehicleDetachAsyncDelegate>();
+        
+        internal readonly AsyncEventHandler<VehicleDamageAsyncDelegate> VehicleDamageAsyncEventHandler =
+            new AsyncEventHandler<VehicleDamageAsyncDelegate>();
 
         public AsyncModule(IServer server, AssemblyLoadContext assemblyLoadContext, INativeResource moduleResource,
             IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
@@ -696,6 +699,26 @@ namespace AltV.Net.Async
                 targetVehicleRef.DebugCountDown();
                 detachedVehicleRef.DebugCountDown();
                 detachedVehicleRef.Dispose();
+                targetVehicleRef.Dispose();
+            });
+        }
+
+        public override void OnVehicleDamageEvent(IVehicle targetVehicle, IEntity sourceEntity, uint bodyHealthDamage,
+            uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash)
+        {
+            base.OnVehicleDamageEvent(targetVehicle, sourceEntity, bodyHealthDamage, additionalBodyHealthDamage, engineHealthDamage, petrolTankDamage, weaponHash);
+            if (!VehicleDamageAsyncEventHandler.HasEvents()) return;
+            var targetVehicleRef = new BaseObjectRef(targetVehicle);
+            var sourceEntityRef = new BaseObjectRef(sourceEntity);
+            Task.Run(async () =>
+            {
+                targetVehicleRef.DebugCountUp();
+                sourceEntityRef.DebugCountUp();
+                await VehicleDamageAsyncEventHandler.CallAsync(@delegate =>
+                    @delegate(targetVehicle, sourceEntity, bodyHealthDamage, additionalBodyHealthDamage, engineHealthDamage, petrolTankDamage, weaponHash));
+                targetVehicleRef.DebugCountDown();
+                sourceEntityRef.DebugCountDown();
+                sourceEntityRef.Dispose();
                 targetVehicleRef.Dispose();
             });
         }

@@ -395,6 +395,28 @@ namespace AltV.Net.Async
                                         return currScriptFunction.CallAsync();
                                     };
                                     break;
+                                case ScriptEventType.VehicleDamage:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(uint),
+                                            typeof(uint), typeof(uint), typeof(uint)
+                                        }, true);
+                                    if (scriptFunction == null) return;
+                                    OnVehicleDamage +=
+                                        (vehicle, targetEntity, bodyHealthDamage, additionalBodyHealthDamage, engineHealthDamage, petrolTankDamage, weaponHash) =>
+                                        {
+                                            var currScriptFunction = scriptFunction.Clone();
+                                            currScriptFunction.Set(vehicle);
+                                            currScriptFunction.Set(targetEntity);
+                                            currScriptFunction.Set(bodyHealthDamage);
+                                            currScriptFunction.Set(additionalBodyHealthDamage);
+                                            currScriptFunction.Set(engineHealthDamage);
+                                            currScriptFunction.Set(petrolTankDamage);
+                                            currScriptFunction.Set(weaponHash);
+                                            return currScriptFunction.CallAsync();
+                                        };
+                                    break;
                             }
 
                             break;

@@ -416,6 +416,26 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                case ScriptEventType.VehicleDamage:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(uint),
+                                            typeof(uint), typeof(uint), typeof(uint)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnVehicleDamage +=
+                                        (vehicle, targetEntity, bodyHealthDamage, additionalBodyHealthDamage, engineHealthDamage, petrolTankDamage, weaponHash) =>
+                                        {
+                                            scriptFunction.Set(vehicle);
+                                            scriptFunction.Set(targetEntity);
+                                            scriptFunction.Set(bodyHealthDamage);
+                                            scriptFunction.Set(additionalBodyHealthDamage);
+                                            scriptFunction.Set(engineHealthDamage);
+                                            scriptFunction.Set(petrolTankDamage);
+                                            scriptFunction.Set(weaponHash);
+                                        };
+                                    break;
                                 default:
                                     throw new ArgumentOutOfRangeException();
                             }

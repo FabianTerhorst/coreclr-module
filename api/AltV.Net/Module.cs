@@ -151,6 +151,9 @@ namespace AltV.Net
         
         internal readonly IEventHandler<VehicleDetachDelegate> VehicleDetachEventHandler =
             new HashSetEventHandler<VehicleDetachDelegate>();
+        
+        internal readonly IEventHandler<VehicleDamageDelegate> VehicleDamageEventHandler =
+            new HashSetEventHandler<VehicleDamageDelegate>();
 
         internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
 
@@ -1656,6 +1659,43 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnVehicleDetachEvent" + ":" + exception);
+                }
+            }
+        }
+        
+        public void OnVehicleDamage(IntPtr eventPointer, IntPtr vehiclePointer, IntPtr entityPointer,
+            BaseObjectType entityType, uint bodyHealthDamage, uint additionalBodyHealthDamage,
+            uint engineHealthDamage, uint petrolTankDamage, uint weaponHash)
+        {
+            if (!VehiclePool.Get(vehiclePointer, out var targetVehicle))
+            {
+                Console.WriteLine("OnVehicleDamage Invalid vehicle " + vehiclePointer + " " + entityPointer + " " + entityType + " " + bodyHealthDamage +
+                                  " " + additionalBodyHealthDamage + " " + engineHealthDamage + " " + petrolTankDamage + " " + weaponHash);
+                return;
+            }
+
+            BaseEntityPool.Get(entityPointer, entityType, out var sourceEntity);
+
+            OnVehicleDamageEvent(targetVehicle, sourceEntity, bodyHealthDamage, additionalBodyHealthDamage,
+                engineHealthDamage, petrolTankDamage, weaponHash);
+        }
+
+        public virtual void OnVehicleDamageEvent(IVehicle targetVehicle, IEntity sourceEntity, uint bodyHealthDamage,
+            uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash)
+        {
+            foreach (var @delegate in VehicleDamageEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(targetVehicle, sourceEntity, bodyHealthDamage, additionalBodyHealthDamage, engineHealthDamage, petrolTankDamage, weaponHash);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnWeaponDamageEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnWeaponDamageEvent" + ":" + exception);
                 }
             }
         }
