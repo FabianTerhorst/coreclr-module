@@ -158,5 +158,11 @@ namespace AltV.Net.Async
                 mValues[i].Dispose();
             }
         }
+
+        public static Task<bool> GetVisibleAsync(this IPlayer player) =>
+            AltVAsync.Schedule(() => player.Visible);
+
+        public static Task GetVisibleAsync(this IPlayer player, bool visibility) =>
+            AltVAsync.Schedule(() => player.Visible = visibility);
     }
 }
