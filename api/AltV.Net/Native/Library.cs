@@ -65,6 +65,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, void> Player_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetStreamed { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsConnected { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, uint, void> Player_Spawn { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Despawn { get; }
@@ -155,6 +157,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetStreamed { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetDriver { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsDestroyed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetMod { get; }
@@ -509,6 +513,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, void> Player_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetStreamed { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsConnected { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, uint, void> Player_Spawn { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Despawn { get; }
@@ -599,6 +605,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetStreamed { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetDriver { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsDestroyed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetMod { get; }
@@ -957,6 +965,8 @@ namespace AltV.Net.Native
             Player_RemoveRef = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Player_RemoveRef");
             Player_GetVisible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_GetVisible");
             Player_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Player_SetVisible");
+            Player_GetStreamed = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_GetStreamed");
+            Player_SetStreamed = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Player_SetStreamed");
             Player_IsConnected = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsConnected");
             Player_Spawn = (delegate* unmanaged[Cdecl]<nint, Position, uint, void>) NativeLibrary.GetExport(handle, "Player_Spawn");
             Player_Despawn = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Player_Despawn");
@@ -1047,6 +1057,8 @@ namespace AltV.Net.Native
             Vehicle_RemoveRef = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Vehicle_RemoveRef");
             Vehicle_GetVisible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetVisible");
             Vehicle_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetVisible");
+            Vehicle_GetStreamed = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetStreamed");
+            Vehicle_SetStreamed = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetStreamed");
             Vehicle_GetDriver = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetDriver");
             Vehicle_IsDestroyed = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_IsDestroyed");
             Vehicle_GetMod = (delegate* unmanaged[Cdecl]<nint, byte, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetMod");

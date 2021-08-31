@@ -45,6 +45,8 @@ EXPORT void Vehicle_AddRef(alt::IVehicle* vehicle);
 EXPORT void Vehicle_RemoveRef(alt::IVehicle* vehicle);
 EXPORT uint8_t Vehicle_GetVisible(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetVisible(alt::IVehicle* vehicle, uint8_t state);
+EXPORT uint8_t Vehicle_GetStreamed(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetStreamed(alt::IVehicle* vehicle, uint8_t state);
 // Vehicle
 EXPORT alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle);
 EXPORT uint8_t Vehicle_IsDestroyed(alt::IVehicle* vehicle);
