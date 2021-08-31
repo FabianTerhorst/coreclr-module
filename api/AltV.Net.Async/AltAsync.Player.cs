@@ -164,5 +164,11 @@ namespace AltV.Net.Async
 
         public static Task GetVisibleAsync(this IPlayer player, bool visibility) =>
             AltVAsync.Schedule(() => player.Visible = visibility);
+        
+        public static Task<bool> GetStreamedAsync(this IPlayer player) =>
+            AltVAsync.Schedule(() => player.Streamed);
+
+        public static Task SetStreamedAsync(this IPlayer player, bool isStreamed) =>
+            AltVAsync.Schedule(() => player.Streamed = isStreamed);
     }
 }

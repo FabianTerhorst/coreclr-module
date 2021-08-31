@@ -379,5 +379,11 @@ namespace AltV.Net.Async
 
         public static Task GetVisibleAsync(this IVehicle vehicle, bool visibility) =>
             AltVAsync.Schedule(() => vehicle.Visible = visibility);
+        
+        public static Task<bool> GetStreamedAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(() => vehicle.Streamed);
+
+        public static Task SetStreamedAsync(this IVehicle vehicle, bool isStreamed) =>
+            AltVAsync.Schedule(() => vehicle.Streamed = isStreamed);
     }
 }
