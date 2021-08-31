@@ -1691,11 +1691,11 @@ namespace AltV.Net
                 }
                 catch (TargetInvocationException exception)
                 {
-                    Alt.Log("exception at event:" + "OnWeaponDamageEvent" + ":" + exception.InnerException);
+                    Alt.Log("exception at event:" + "OnVehicleDamageEvent" + ":" + exception.InnerException);
                 }
                 catch (Exception exception)
                 {
-                    Alt.Log("exception at event:" + "OnWeaponDamageEvent" + ":" + exception);
+                    Alt.Log("exception at event:" + "OnVehicleDamageEvent" + ":" + exception);
                 }
             }
         }
