@@ -66,4 +66,6 @@ namespace AltV.Net.Events
     public delegate void VehicleAttachDelegate(IVehicle target, IVehicle attachedVehicle);
     
     public delegate void VehicleDetachDelegate(IVehicle target, IVehicle detachedVehicle);
+    
+    public delegate void VehicleDamageDelegate(IVehicle target, IEntity attacker, uint bodyHealthDamage, uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash);
 }

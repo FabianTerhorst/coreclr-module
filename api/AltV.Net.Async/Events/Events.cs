@@ -59,4 +59,6 @@ namespace AltV.Net.Async.Events
     public delegate Task VehicleAttachAsyncDelegate(IVehicle target, IVehicle attachedVehicle);
     
     public delegate Task VehicleDetachAsyncDelegate(IVehicle target, IVehicle detachedVehicle);
+    
+    public delegate Task VehicleDamageAsyncDelegate(IVehicle target, IEntity attacker, uint bodyHealthDamage, uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash);
 }

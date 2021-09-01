@@ -119,6 +119,14 @@ void Vehicle_SetVisible(alt::IVehicle* vehicle, uint8_t state) {
     vehicle->SetVisible(state);
 }
 
+uint8_t Vehicle_GetStreamed(alt::IVehicle* vehicle) {
+    return vehicle->GetStreamed();
+}
+
+void Vehicle_SetStreamed(alt::IVehicle* vehicle, uint8_t state) {
+    vehicle->SetStreamed(state);
+}
+
 // Vehicle
 
 alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle) {

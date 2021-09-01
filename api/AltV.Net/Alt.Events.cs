@@ -218,5 +218,11 @@ namespace AltV.Net
             add => Module.VehicleDetachEventHandler.Add(value);
             remove => Module.VehicleDetachEventHandler.Remove(value);
         }
+        
+        public static event VehicleDamageDelegate OnVehicleDamage
+        {
+            add => Module.VehicleDamageEventHandler.Add(value);
+            remove => Module.VehicleDamageEventHandler.Remove(value);
+        }
     }
 }

@@ -179,6 +179,9 @@ typedef void (* VehicleAttachDelegate_t)(const alt::CEvent* event, alt::IVehicle
 
 typedef void (* VehicleDetachDelegate_t)(const alt::CEvent* event, alt::IVehicle* target, alt::IVehicle* detached);
 
+typedef void (* VehicleDamageDelegate_t)(const alt::CEvent* event, alt::IVehicle* target, void* attacker, alt::IBaseObject::Type attackerBaseObjectType,
+    uint32_t bodyHealthDamage, uint32_t additionalBodyHealthDamage, uint32_t engineHealthDamage, uint32_t petrolTankDamage, uint32_t weaponHash);
+
 class CSharpResourceImpl : public alt::IResource::Impl {
     bool OnEvent(const alt::CEvent* ev) override;
 
@@ -294,6 +297,8 @@ public:
     VehicleAttachDelegate_t OnVehicleAttachDelegate = nullptr;
 
     VehicleDetachDelegate_t OnVehicleDetachDelegate = nullptr;
+
+    VehicleDamageDelegate_t OnVehicleDamageDelegate = nullptr;
 
     alt::Array<CustomInvoker*>* invokers;
     CoreClr* coreClr;
@@ -471,3 +476,6 @@ EXPORT void CSharpResourceImpl_SetVehicleAttachDelegate(CSharpResourceImpl* reso
 
 EXPORT void CSharpResourceImpl_SetVehicleDetachDelegate(CSharpResourceImpl* resource,
                                                  VehicleDetachDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetVehicleDamageDelegate(CSharpResourceImpl* resource,
+    VehicleDamageDelegate_t delegate);

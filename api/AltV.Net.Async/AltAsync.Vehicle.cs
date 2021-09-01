@@ -373,5 +373,17 @@ namespace AltV.Net.Async
             AltVAsync.Schedule(() => vehicle.ScriptData = text);
 
         public static Task RemoveAsync(this IVehicle vehicle) => AltVAsync.Schedule(vehicle.Remove);
+
+        public static Task<bool> GetVisibleAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(() => vehicle.Visible);
+
+        public static Task GetVisibleAsync(this IVehicle vehicle, bool visibility) =>
+            AltVAsync.Schedule(() => vehicle.Visible = visibility);
+        
+        public static Task<bool> GetStreamedAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(() => vehicle.Streamed);
+
+        public static Task SetStreamedAsync(this IVehicle vehicle, bool isStreamed) =>
+            AltVAsync.Schedule(() => vehicle.Streamed = isStreamed);
     }
 }

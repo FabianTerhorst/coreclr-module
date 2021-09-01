@@ -76,6 +76,8 @@ EXPORT void Player_AddRef(alt::IPlayer* player);
 EXPORT void Player_RemoveRef(alt::IPlayer* player);
 EXPORT uint8_t Player_GetVisible(alt::IPlayer* player);
 EXPORT void Player_SetVisible(alt::IPlayer* player, uint8_t state);
+EXPORT uint8_t Player_GetStreamed(alt::IPlayer* player);
+EXPORT void Player_SetStreamed(alt::IPlayer* player, uint8_t state);
 // Player
 EXPORT uint8_t Player_IsConnected(alt::IPlayer* player);
 EXPORT void Player_Spawn(alt::IPlayer* player, alt::Position pos, uint32_t delayMs);

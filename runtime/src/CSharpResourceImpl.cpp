@@ -53,6 +53,8 @@ void CSharpResourceImpl::ResetDelegates() {
     OnNetOwnerChangeDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
     OnVehicleAttachDelegate = [](auto var, auto var2, auto var3) {};
     OnVehicleDetachDelegate = [](auto var, auto var2, auto var3) {};
+    OnVehicleDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7,
+        auto var8, auto var9) {};
 }
 
 bool CSharpResourceImpl::Start() {
@@ -426,6 +428,21 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                                     vehicleDetachEvent->GetDetached().Get());
             break;
         }
+        case alt::CEvent::Type::VEHICLE_DAMAGE: {
+            auto vehicleDamageEvent = ((alt::CVehicleDamageEvent*)(ev));
+            auto damager = vehicleDamageEvent->GetDamager().Get();
+            auto damagerPointer = GetEntityPointer(damager);
+            OnVehicleDamageDelegate(vehicleDamageEvent,
+                vehicleDamageEvent->GetTarget().Get(),
+                damagerPointer,
+                damager->GetType(),
+                vehicleDamageEvent->GetBodyHealthDamage(),
+                vehicleDamageEvent->GetBodyAdditionalHealthDamage(),
+                vehicleDamageEvent->GetEngineHealthDamage(),
+                vehicleDamageEvent->GetPetrolTankHealthDamage(),
+                vehicleDamageEvent->GetDamagedWith());
+            break;
+        }
     }
     return true;
 }
@@ -712,6 +729,11 @@ void CSharpResourceImpl_SetVehicleAttachDelegate(CSharpResourceImpl* resource,
 void CSharpResourceImpl_SetVehicleDetachDelegate(CSharpResourceImpl* resource,
                                                       VehicleDetachDelegate_t delegate) {
     resource->OnVehicleDetachDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetVehicleDamageDelegate(CSharpResourceImpl* resource,
+                                                      VehicleDamageDelegate_t delegate) {
+    resource->OnVehicleDamageDelegate = delegate;
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files) {

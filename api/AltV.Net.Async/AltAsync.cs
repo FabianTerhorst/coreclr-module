@@ -164,6 +164,12 @@ namespace AltV.Net.Async
             remove => Module.VehicleDetachAsyncEventHandler.Remove(value);
         }
         
+        public static event VehicleDamageAsyncDelegate OnVehicleDamage
+        {
+            add => Module.VehicleDamageAsyncEventHandler.Add(value);
+            remove => Module.VehicleDamageAsyncEventHandler.Remove(value);
+        }
+        
         public static async void Log(string message)
         {
             var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);
