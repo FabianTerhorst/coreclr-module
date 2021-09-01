@@ -420,7 +420,7 @@ namespace AltV.Net
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[]
                                         {
-                                            typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(uint),
+                                            typeof(IVehicle), typeof(IEntity), typeof(uint), typeof(uint),
                                             typeof(uint), typeof(uint), typeof(uint)
                                         });
                                     if (scriptFunction == null) return;

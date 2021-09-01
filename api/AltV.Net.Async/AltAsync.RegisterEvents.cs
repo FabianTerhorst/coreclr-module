@@ -399,7 +399,7 @@ namespace AltV.Net.Async
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[]
                                         {
-                                            typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(uint),
+                                            typeof(IVehicle), typeof(IEntity), typeof(uint), typeof(uint),
                                             typeof(uint), typeof(uint), typeof(uint)
                                         }, true);
                                     if (scriptFunction == null) return;
