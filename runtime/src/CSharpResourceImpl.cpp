@@ -429,7 +429,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             break;
         }
         case alt::CEvent::Type::VEHICLE_DAMAGE: {
-            auto vehicleDamageEvent = ((alt::CVehicleDamageEvent*)(ev));
+	    auto vehicleDamageEvent = ((alt::CVehicleDamageEvent*) (ev));
             auto damager = vehicleDamageEvent->GetDamager().Get();
             auto damagerPointer = GetEntityPointer(damager);
             OnVehicleDamageDelegate(vehicleDamageEvent,
