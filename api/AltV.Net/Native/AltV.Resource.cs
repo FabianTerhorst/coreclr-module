@@ -4,6 +4,7 @@ using System.Security;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Events;
 
 namespace AltV.Net.Native
 {
@@ -29,7 +30,7 @@ namespace AltV.Net.Native
 
             internal delegate void PlayerDamageDelegate(IntPtr playerPointer, IntPtr attackerEntityPointer,
                 BaseObjectType attackerBaseObjectType,
-                ushort attackerEntityId, uint weapon, ushort damage);
+                ushort attackerEntityId, uint weapon, ushort healthDamage, ushort armourDamage);
 
             internal delegate void PlayerDeathDelegate(IntPtr playerPointer, IntPtr killerEntityPointer,
                 BaseObjectType killerBaseObjectType, uint weapon);
@@ -110,6 +111,8 @@ namespace AltV.Net.Native
             internal delegate void VehicleAttachDelegate(IntPtr eventPointer, IntPtr targetPointer, IntPtr attachedPointer);
             
             internal delegate void VehicleDetachDelegate(IntPtr eventPointer, IntPtr targetPointer, IntPtr detachedPointer);
+            
+            internal delegate void VehicleDamageDelegate(IntPtr eventPointer, IntPtr targetPointer, IntPtr sourcePointer, BaseObjectType sourceType, uint bodyHealthDamage, uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetMainDelegate(IntPtr resource,
@@ -286,6 +289,10 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetVehicleDetachDelegate(IntPtr resource,
                 VehicleDetachDelegate @delegate);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetVehicleDamageDelegate(IntPtr resource,
+                VehicleDamageDelegate @delegate);
         }
     }
 }

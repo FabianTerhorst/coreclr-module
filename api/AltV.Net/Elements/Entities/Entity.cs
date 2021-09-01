@@ -15,6 +15,8 @@ namespace AltV.Net.Elements.Entities
         public abstract uint Model { get; set; }
 
         public abstract bool Visible { get; set; }
+        
+        public abstract bool Streamed { get; set; }
 
         public abstract void SetNetworkOwner(IPlayer player, bool disableMigration);
         public abstract void SetSyncedMetaData(string key, in MValueConst value);

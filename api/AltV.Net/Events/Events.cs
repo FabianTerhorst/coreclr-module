@@ -13,7 +13,7 @@ namespace AltV.Net.Events
     
     public delegate void ResourceEventDelegate(INativeResource resource);
 
-    public delegate void PlayerDamageDelegate(IPlayer player, IEntity attacker, uint weapon, ushort damage);
+    public delegate void PlayerDamageDelegate(IPlayer player, IEntity attacker, uint weapon, ushort healthDamage, ushort armourDamage);
 
     public delegate void PlayerDeadDelegate(IPlayer player, IEntity killer, uint weapon);
 
@@ -66,4 +66,6 @@ namespace AltV.Net.Events
     public delegate void VehicleAttachDelegate(IVehicle target, IVehicle attachedVehicle);
     
     public delegate void VehicleDetachDelegate(IVehicle target, IVehicle detachedVehicle);
+    
+    public delegate void VehicleDamageDelegate(IVehicle target, IEntity attacker, uint bodyHealthDamage, uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash);
 }

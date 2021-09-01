@@ -131,6 +131,14 @@ void Player_SetVisible(alt::IPlayer* player, uint8_t state) {
     player->SetVisible(state);
 }
 
+uint8_t Player_GetStreamed(alt::IPlayer* player) {
+    return player->GetStreamed();
+}
+
+void Player_SetStreamed(alt::IPlayer* player, uint8_t state) {
+    player->SetStreamed(state);
+}
+
 // Player
 
 uint8_t Player_IsConnected(alt::IPlayer* player) {

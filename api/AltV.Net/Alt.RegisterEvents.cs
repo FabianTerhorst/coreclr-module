@@ -46,14 +46,15 @@ namespace AltV.Net
                                     break;
                                 case ScriptEventType.PlayerDamage:
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] {typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(ushort)});
+                                        new[] {typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(ushort), typeof(ushort)});
                                     if (scriptFunction == null) return;
-                                    OnPlayerDamage += (player, attacker, weapon, damage) =>
+                                    OnPlayerDamage += (player, attacker, weapon, healthDamage, armourDamage) =>
                                     {
                                         scriptFunction.Set(player);
                                         scriptFunction.Set(attacker);
                                         scriptFunction.Set(weapon);
-                                        scriptFunction.Set(damage);
+                                        scriptFunction.Set(healthDamage);
+                                        scriptFunction.Set(armourDamage);
                                         scriptFunction.Call();
                                     };
                                     break;
@@ -414,6 +415,26 @@ namespace AltV.Net
                                         scriptFunction.Set(detachedVehicle);
                                         scriptFunction.Call();
                                     };
+                                    break;
+                                case ScriptEventType.VehicleDamage:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IVehicle), typeof(IEntity), typeof(uint), typeof(uint),
+                                            typeof(uint), typeof(uint), typeof(uint)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnVehicleDamage +=
+                                        (vehicle, targetEntity, bodyHealthDamage, additionalBodyHealthDamage, engineHealthDamage, petrolTankDamage, weaponHash) =>
+                                        {
+                                            scriptFunction.Set(vehicle);
+                                            scriptFunction.Set(targetEntity);
+                                            scriptFunction.Set(bodyHealthDamage);
+                                            scriptFunction.Set(additionalBodyHealthDamage);
+                                            scriptFunction.Set(engineHealthDamage);
+                                            scriptFunction.Set(petrolTankDamage);
+                                            scriptFunction.Set(weaponHash);
+                                        };
                                     break;
                                 default:
                                     throw new ArgumentOutOfRangeException();

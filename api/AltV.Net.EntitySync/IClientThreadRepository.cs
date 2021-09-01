@@ -10,6 +10,10 @@ namespace AltV.Net.EntitySync
         
         IClient Remove(string token);
 
+        void Replace(IClient client);
+        
+        void Replace(IClient client, IClient oldClient);
+
         bool TryGet(string token, out IClient client);
 
         IEnumerable<IClient> GetAll();

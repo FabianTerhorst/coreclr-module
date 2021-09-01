@@ -13,11 +13,12 @@ namespace AltV.Net.Mock
             Alt.Module.OnRemovePlayer(player.NativePointer);
         }
 
-        public static void Damage(this IPlayer player, IEntity attacker, uint weapon, byte damage)
+        public static void Damage(this IPlayer player, IEntity attacker, uint weapon, byte healthDamage, byte armourDamage)
         {
-            player.Health -= damage;
+            player.Health -= healthDamage;
+            player.Armor -= armourDamage;
 
-            Alt.Module.OnPlayerDamage(player.NativePointer, attacker?.NativePointer ?? IntPtr.Zero, attacker?.Type ?? BaseObjectType.Undefined, attacker?.Id ?? 0, weapon, damage);
+            Alt.Module.OnPlayerDamage(player.NativePointer, attacker?.NativePointer ?? IntPtr.Zero, attacker?.Type ?? BaseObjectType.Undefined, attacker?.Id ?? 0, weapon, healthDamage, armourDamage);
         }
 
         public static void Death(this IPlayer player, IEntity killer, uint weapon)
