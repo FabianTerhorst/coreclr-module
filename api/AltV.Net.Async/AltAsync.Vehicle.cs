@@ -293,10 +293,61 @@ namespace AltV.Net.Async
         public static Task<bool> IsWindowDamaged(this IVehicle vehicle, byte windowId) =>
             AltVAsync.Schedule(() => vehicle.IsWindowDamaged(windowId));
 
-        // TODO: Add: SetLightDamaged, IsLightDamaged, SetPartBulletHoles, GetPartBulletHoles, SetPartDamageLevel, GetPartDamageLevel
-        // TODO: GetArmoredWindowHealth, SetArmoredWindowHealth, GetArmoredWindowShootCount, SetArmoredWindowShootCount
-        // TODO: GetBumperDamageLevel, SetBumperDamageLevel
+        public static Task<bool> IsLightDamagedAsync(this IVehicle vehicle, byte lightId) =>
+            AltVAsync.Schedule(() => vehicle.IsLightDamaged(lightId));
+        
+        public static Task SetLightDamagedAsync(this IVehicle vehicle, byte lightId, bool isDamaged) =>
+            AltVAsync.Schedule(() => vehicle.SetLightDamaged(lightId, isDamaged));
+        
+        public static Task<byte> GetPartBulletHolesAsync(this IVehicle vehicle, byte partId) =>
+            AltVAsync.Schedule(() => vehicle.GetPartBulletHoles(partId));
 
+        public static Task SetPartBulletHolesAsync(this IVehicle vehicle, byte partId, byte shootsCount) =>
+            AltVAsync.Schedule(() => vehicle.SetPartBulletHoles(partId, shootsCount));
+        
+        public static Task<byte> GetPartBulletHolesExtAsync(this IVehicle vehicle, VehiclePart part) =>
+            AltVAsync.Schedule(() => vehicle.GetPartBulletHolesExt(part));
+        
+        public static Task SetPartBulletHolesExtAsync(this IVehicle vehicle, VehiclePart part, byte shootsCount) =>
+            AltVAsync.Schedule(() => vehicle.SetPartBulletHolesExt(part, shootsCount));
+
+        public static Task<byte> GetPartDamageLevelAsync(this IVehicle vehicle, byte partId) =>
+            AltVAsync.Schedule(() => vehicle.GetPartDamageLevel(partId));
+
+        public static Task SetPartDamageLevelAsync(this IVehicle vehicle, byte partId, byte damage) =>
+            AltVAsync.Schedule(() => vehicle.SetPartDamageLevel(partId, damage));
+        
+        public static Task<VehiclePartDamage> GetPartDamageLevelExtAsync(this IVehicle vehicle, VehiclePart part) =>
+            AltVAsync.Schedule(() => vehicle.GetPartDamageLevelExt(part));
+
+        public static Task SetPartDamageLevelExtAsync(this IVehicle vehicle, VehiclePart part, byte damage) =>
+            AltVAsync.Schedule(() => vehicle.SetPartDamageLevelExt(part, damage));
+
+        public static Task<float> GetArmoredWindowHealthAsync(this IVehicle vehicle, byte windowId) =>
+            AltVAsync.Schedule(() => vehicle.GetArmoredWindowHealth(windowId));
+
+        public static Task SetArmoredWindowHealthAsync(this IVehicle vehicle, byte windowId, float health) =>
+            AltVAsync.Schedule(() => vehicle.SetArmoredWindowHealth(windowId, health));
+
+        public static Task<byte> GetArmoredWindowShootCountAsync(this IVehicle vehicle, byte windowId) =>
+            AltVAsync.Schedule(() => vehicle.GetArmoredWindowShootCount(windowId));
+
+        public static Task SetArmoredWindowShootCountAsync(this IVehicle vehicle, byte windowId, byte count) =>
+            AltVAsync.Schedule(() => vehicle.SetArmoredWindowShootCount(windowId, count));
+
+        public static Task<byte> GetBumperDamageLevelAsync(this IVehicle vehicle, byte bumperId) =>
+            AltVAsync.Schedule(() => vehicle.GetBumperDamageLevel(bumperId));
+
+        public static Task SetBumperDamageLevelAsync(this IVehicle vehicle, byte bumperId, byte damageLevel) =>
+            AltVAsync.Schedule(() => vehicle.SetBumperDamageLevel(bumperId, damageLevel));
+
+        public static Task<VehicleBumperDamage> GetBumperDamageLevelExtAsync(this IVehicle vehicle, VehicleBumper bumper) =>
+            AltVAsync.Schedule(() => vehicle.GetBumperDamageLevelExt(bumper));
+
+        public static Task SetBumperDamageLevelExtAsync(this IVehicle vehicle, VehicleBumper bumper,
+            VehicleBumperDamage bumperDamage) =>
+            AltVAsync.Schedule(() => vehicle.SetBumperDamageLevelExt(bumper, bumperDamage));
+        
         public static Task<string> GetDamageDataAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.DamageData);
 
@@ -321,15 +372,27 @@ namespace AltV.Net.Async
         public static Task SetRearWheelAsync(this IVehicle vehicle, byte variation) =>
             AltVAsync.Schedule(() => vehicle.RearWheel = variation);
 
+        public static Task<byte> GetRearWheelAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(() => vehicle.RearWheel);
+        
         public static Task SetLiveryAsync(this IVehicle vehicle, byte livery) =>
             AltVAsync.Schedule(() => vehicle.Livery = livery);
+
+        public static Task<byte> GetLiveryAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(() => vehicle.Livery);
 
         public static Task SetRoofLiveryAsync(this IVehicle vehicle, byte roofLivery) =>
             AltVAsync.Schedule(() => vehicle.RoofLivery = roofLivery);
 
+        public static Task<byte> GetRoofLiveryAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(() => vehicle.RoofLivery);
+        
         public static Task SetLightsMultiplierAsync(this IVehicle vehicle, float multiplier) =>
             AltVAsync.Schedule(() => vehicle.LightsMultiplier = multiplier);
 
+        public static Task<float> GetLightsMultiplierAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(() => vehicle.LightsMultiplier);
+        
         public static Task<bool> IsExtraOnAsync(this IVehicle vehicle, byte extraId) =>
             AltVAsync.Schedule(() => vehicle.IsExtraOn(extraId));
 
@@ -344,8 +407,7 @@ namespace AltV.Net.Async
                 return new Tuple<bool, bool, bool, bool>(left, right, front, back);
             });
 
-        public static Task
-            SetNeonActiveAsync(this IVehicle vehicle, bool left, bool right, bool front, bool back) =>
+        public static Task SetNeonActiveAsync(this IVehicle vehicle, bool left, bool right, bool front, bool back) =>
             AltVAsync.Schedule(() => vehicle.SetNeonActive(left, right, front, back));
 
         public static Task<string> GetAppearanceDataAsync(this IVehicle vehicle) =>
@@ -372,7 +434,8 @@ namespace AltV.Net.Async
         public static Task SetScriptDataAsync(this IVehicle vehicle, string text) =>
             AltVAsync.Schedule(() => vehicle.ScriptData = text);
 
-        public static Task RemoveAsync(this IVehicle vehicle) => AltVAsync.Schedule(vehicle.Remove);
+        public static Task RemoveAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(vehicle.Remove);
 
         public static Task<bool> GetVisibleAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.Visible);
@@ -385,5 +448,55 @@ namespace AltV.Net.Async
 
         public static Task SetStreamedAsync(this IVehicle vehicle, bool isStreamed) =>
             AltVAsync.Schedule(() => vehicle.Streamed = isStreamed);
+
+        public static Task IsDestroyedAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(() => vehicle.IsDestroyed);
+
+        public static Task<IVehicle> AttachedAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(() => vehicle.Attached);
+
+        public static Task<IVehicle> AttachedToAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(() => vehicle.AttachedTo);
+
+        public static Task AttachToEntityAsync(this IVehicle vehicle, IEntity entity, short otherBone, short ownBone,
+            Position position, Rotation rotation, bool collision, bool noFixedRotation) =>
+            AltVAsync.Schedule(() =>
+                vehicle.AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRotation));
+
+        public static Task DetachAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(vehicle.Detach);
+
+        public static Task<bool> DoesWheelHasTireAsync(this IVehicle vehicle, byte wheelId) =>
+            AltVAsync.Schedule(() => vehicle.DoesWheelHasTire(wheelId));
+
+        public static Task<float> GetWheelHealthAsync(this IVehicle vehicle, byte wheelId) =>
+            AltVAsync.Schedule(() => vehicle.GetWheelHealth(wheelId));
+
+        public static Task SetWheelHealthAsync(this IVehicle vehicle, byte wheelId, float health) =>
+            AltVAsync.Schedule(() => vehicle.SetWheelHealth(wheelId, health));
+
+        public static Task RepairAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(vehicle.Repair);
+
+        public static Task<bool> IsWheelBurstAsync(this IVehicle vehicle, byte wheelId) =>
+            AltVAsync.Schedule(() => vehicle.IsWheelBurst(wheelId));
+
+        public static Task SetWheelBurstAsync(this IVehicle vehicle, byte wheelId, bool state) =>
+            AltVAsync.Schedule(() => vehicle.SetWheelBurst(wheelId, state));
+
+        public static Task<bool> IsWheelDetachedAsync(this IVehicle vehicle, byte wheelId) =>
+            AltVAsync.Schedule(() => vehicle.IsWheelDetached(wheelId));
+
+        public static Task SetWheelDetachedAsync(this IVehicle vehicle, byte wheelId, bool state) =>
+            AltVAsync.Schedule(() => vehicle.SetWheelDetached(wheelId, state));
+
+        public static Task<bool> IsWheelOnFireAsync(this IVehicle vehicle, byte wheelId) =>
+            AltVAsync.Schedule(() => vehicle.IsWheelOnFire(wheelId));
+
+        public static Task SetWheelOnFireAsync(this IVehicle vehicle, byte wheelId, bool state) =>
+            AltVAsync.Schedule(() => vehicle.SetWheelOnFire(wheelId, state));
+
+        public static Task SetWheelHasTireAsync(this IVehicle vehicle, byte wheelId, bool state) =>
+            AltVAsync.Schedule(() => vehicle.SetWheelHasTire(wheelId, state));
     }
 }
