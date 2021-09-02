@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
+using AltV.Net.Enums;
 using AltV.Net.Native;
 
 namespace AltV.Net.Async
@@ -170,5 +171,103 @@ namespace AltV.Net.Async
 
         public static Task SetStreamedAsync(this IPlayer player, bool isStreamed) =>
             AltVAsync.Schedule(() => player.Streamed = isStreamed);
+
+        public static Task<string> GetAuthTokenAsync(this IPlayer player) =>
+            AltVAsync.Schedule(() => player.AuthToken);
+        
+        public static Task<uint> GetCurrentWeaponAsync(this IPlayer player) =>
+            AltVAsync.Schedule(() => player.CurrentWeapon);
+
+        public static Task<IEntity> GetEntityAimingAtAsync(this IPlayer player) =>
+            AltVAsync.Schedule(() => player.EntityAimingAt);
+
+        public static Task<Position> GetEntityAimOffsetAsync(this IPlayer player) =>
+            AltVAsync.Schedule(() => player.EntityAimOffset);
+
+        public static Task<ulong> GetHardwareIdHashAsync(this IPlayer player) =>
+            AltVAsync.Schedule(() => player.HardwareIdHash);
+
+        public static Task<ulong> GetHardwareIdExHashAsync(this IPlayer player) =>
+            AltVAsync.Schedule(() => player.HardwareIdExHash);
+
+        public static Task<string> GetIpAsync(this IPlayer player) =>
+            AltVAsync.Schedule(() => player.Ip);
+
+        public static Task<bool> IsFlashlightActiveAsync(this IPlayer player) =>
+            AltVAsync.Schedule(() => player.IsFlashlightActive);
+
+        public static Task<ushort> GetMaxArmorAsync(this IPlayer player) =>
+            AltVAsync.Schedule(() => player.MaxArmor);
+        
+        public static Task<ushort> GetMaxHealthAsync(this IPlayer player) =>
+            AltVAsync.Schedule(() => player.MaxHealth);
+
+        public static Task<ulong> GetSocialClubIdAsync(this IPlayer player) =>
+            AltVAsync.Schedule(() => player.SocialClubId);
+
+        public static Task AddWeaponComponentAsync(this IPlayer player, uint weapon, uint weaponComponent) =>
+            AltVAsync.Schedule(() => player.AddWeaponComponent(weapon, weaponComponent));
+
+        public static Task AddWeaponComponentAsync(this IPlayer player, WeaponModel weaponModel, uint weaponComponent) =>
+            AltVAsync.Schedule(() => player.AddWeaponComponent(weaponModel, weaponComponent));
+
+        public static Task AttachToEntityAsync(this IPlayer player, IEntity entity, short otherBone, short ownBone,
+            Position position, Rotation rotation, bool collision, bool noFixedRotation) =>
+            AltVAsync.Schedule(() =>
+                player.AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRotation));
+
+        public static Task ClearBloodDamageAsync(this IPlayer player) =>
+            AltVAsync.Schedule(player.ClearBloodDamage);
+
+        public static Task ClearPropsAsync(this IPlayer player, byte component) =>
+            AltVAsync.Schedule(() => player.ClearProps(component));
+
+        public static Task DetachAsync(this IPlayer player) =>
+            AltVAsync.Schedule(player.Detach);
+
+        public static Task<Cloth> GetClothesAsync(this IPlayer player, byte component) =>
+            AltVAsync.Schedule(() => player.GetClothes(component));
+
+        public static Task<byte> GetCurrentWeaponTintIndexAsync(this IPlayer player) =>
+            AltVAsync.Schedule(player.GetCurrentWeaponTintIndex);
+
+        public static Task<DlcCloth> GetDlcClothesAsync(this IPlayer player, byte component) =>
+            AltVAsync.Schedule(() => player.GetDlcClothes(component));
+
+        public static Task<DlcProp> GetDlcPropsAsync(this IPlayer player, byte component) =>
+            AltVAsync.Schedule(() => player.GetDlcProps(component));
+
+        public static Task<Prop> GetPropsAsync(this IPlayer player, byte component) =>
+            AltVAsync.Schedule(() => player.GetProps(component));
+
+        public static Task<byte> GetWeaponTintIndexAsync(this IPlayer player, uint weapon) =>
+            AltVAsync.Schedule(() => player.GetWeaponTintIndex(weapon));
+
+        public static Task<bool> IsEntityInStreamingRangeAsync(this IPlayer player, IEntity entity) =>
+            AltVAsync.Schedule(() => player.IsEntityInStreamingRange(entity));
+
+        public static Task RemoveWeaponComponentAsync(this IPlayer player, uint weapon, uint weaponComponent) =>
+            AltVAsync.Schedule(() => player.RemoveWeaponComponent(weapon, weaponComponent));
+
+        public static Task SetClothesAsync(this IPlayer player, byte component, ushort drawable, byte texture,
+            byte palette) =>
+            AltVAsync.Schedule(() => player.SetClothes(component, drawable, texture, palette));
+
+        public static Task SetDlcClothesAsync(this IPlayer player, byte component, ushort drawable, byte texture,
+            byte palette, uint dlc) =>
+            AltVAsync.Schedule(() => player.SetDlcClothes(component, drawable, texture, palette, dlc));
+
+        public static Task SetPropsAsync(this IPlayer player, byte component, ushort drawable, byte texture) =>
+            AltVAsync.Schedule(() => player.SetProps(component, drawable, texture));
+        
+        public static Task SetDlcPropsAsync(this IPlayer player, byte component, ushort drawable, byte texture,
+            uint dlc) =>
+            AltVAsync.Schedule(() => player.SetDlcProps(component, drawable, texture, dlc));
+
+        public static Task SetWeaponTintIndexAsync(this IPlayer player, uint weapon, byte tintIndex) =>
+            AltVAsync.Schedule(() => player.SetWeaponTintIndex(weapon, tintIndex));
+        
+        public static Task SetWeaponTintIndexAsync(this IPlayer player, WeaponModel weaponModel, byte tintIndex) =>
+            AltVAsync.Schedule(() => player.SetWeaponTintIndex(weaponModel, tintIndex));
     }
 }
