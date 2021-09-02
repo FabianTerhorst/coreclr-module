@@ -281,16 +281,16 @@ namespace AltV.Net.Async
         public static Task<bool> HasArmoredWindowsAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.HasArmoredWindows);
 
-        public static Task SetSpecialLightDamaged(this IVehicle vehicle, byte specialLightId, bool isDamaged) =>
+        public static Task SetSpecialLightDamagedAsync(this IVehicle vehicle, byte specialLightId, bool isDamaged) =>
             AltVAsync.Schedule(() => vehicle.SetSpecialLightDamaged(specialLightId, isDamaged));
 
-        public static Task<bool> IsSpecialLightDamaged(this IVehicle vehicle, byte specialLightId) =>
+        public static Task<bool> IsSpecialLightDamagedAsync(this IVehicle vehicle, byte specialLightId) =>
             AltVAsync.Schedule(() => vehicle.IsSpecialLightDamaged(specialLightId));
 
-        public static Task SetWindowDamaged(this IVehicle vehicle, byte windowId, bool isDamaged) =>
+        public static Task SetWindowDamagedAsync(this IVehicle vehicle, byte windowId, bool isDamaged) =>
             AltVAsync.Schedule(() => vehicle.SetWindowDamaged(windowId, isDamaged));
 
-        public static Task<bool> IsWindowDamaged(this IVehicle vehicle, byte windowId) =>
+        public static Task<bool> IsWindowDamagedAsync(this IVehicle vehicle, byte windowId) =>
             AltVAsync.Schedule(() => vehicle.IsWindowDamaged(windowId));
 
         public static Task<bool> IsLightDamagedAsync(this IVehicle vehicle, byte lightId) =>
