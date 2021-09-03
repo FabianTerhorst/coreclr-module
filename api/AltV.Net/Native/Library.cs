@@ -132,6 +132,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Player_AttachToEntity_Player { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Player_AttachToEntity_Vehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Detach { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetInvincible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetInvincible { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetNetworkOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetModel { get; }
@@ -580,6 +582,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Player_AttachToEntity_Player { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Player_AttachToEntity_Vehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Detach { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetInvincible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetInvincible { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetNetworkOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetModel { get; }
@@ -1032,6 +1036,8 @@ namespace AltV.Net.Native
             Player_AttachToEntity_Player = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void>) NativeLibrary.GetExport(handle, "Player_AttachToEntity_Player");
             Player_AttachToEntity_Vehicle = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void>) NativeLibrary.GetExport(handle, "Player_AttachToEntity_Vehicle");
             Player_Detach = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Player_Detach");
+            Player_GetInvincible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_GetInvincible");
+            Player_SetInvincible = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Player_SetInvincible");
             Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetID");
             Vehicle_GetNetworkOwner = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetNetworkOwner");
             Vehicle_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Vehicle_GetModel");

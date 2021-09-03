@@ -1032,6 +1032,26 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public bool Invincible
+        {
+            get
+            {
+                CheckIfEntityExists();
+                unsafe
+                {
+                    return Server.Library.Player_GetInvincible(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                CheckIfEntityExists();
+                unsafe
+                {
+                    Server.Library.Player_SetInvincible(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
         public bool TryCreateRef(out PlayerRef playerRef)
         {
             playerRef = new PlayerRef(this);
