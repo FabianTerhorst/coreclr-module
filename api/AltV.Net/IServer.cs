@@ -91,6 +91,18 @@ namespace AltV.Net
         
         void TriggerClientEventForAll(string eventName, params object[] args);
 
+        void TriggerClientEventForSome(IEnumerable<IPlayer> clients, IntPtr eventNamePtr, MValueConst[] args);
+
+        void TriggerClientEventForSome(IEnumerable<IPlayer> clients, string eventName, MValueConst[] args);
+
+        void TriggerClientEventForSome(IEnumerable<IPlayer> clients, IntPtr eventNamePtr, IntPtr[] args);
+
+        void TriggerClientEventForSome(IEnumerable<IPlayer> clients, string eventName, IntPtr[] args);
+
+        void TriggerClientEventForSome(IEnumerable<IPlayer> clients, IntPtr eventNamePtr, params object[] args);
+        
+        void TriggerClientEventForSome(IEnumerable<IPlayer> clients, string eventName, params object[] args);
+
         IVehicle CreateVehicle(uint model, Position pos, Rotation rotation);
 
         ICheckpoint CreateCheckpoint(byte type, Position pos, float radius, float height, Rgba color);
