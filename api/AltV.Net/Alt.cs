@@ -21,7 +21,7 @@ namespace AltV.Net
         public static void EmitAllClients(string eventName, params object[] args) =>
             Server.TriggerClientEventForAll(eventName, args);
 
-        public static void EmitClients(IEnumerable<IPlayer> clients, string eventName, params object[] args) =>
+        public static void EmitClients(IPlayer[] clients, string eventName, params object[] args) =>
             Server.TriggerClientEventForSome(clients, eventName, args);
         
         public static void Log(string message) => Server.LogInfo(message);

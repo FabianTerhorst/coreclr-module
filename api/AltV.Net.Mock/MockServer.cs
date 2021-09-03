@@ -182,32 +182,32 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
-        public void TriggerClientEventForSome(IEnumerable<IPlayer> clients, IntPtr eventNamePtr, MValueConst[] args)
+        public void TriggerClientEventForSome(IPlayer[] clients, IntPtr eventNamePtr, MValueConst[] args)
         {
             throw new NotImplementedException();
         }
 
-        public void TriggerClientEventForSome(IEnumerable<IPlayer> clients, string eventName, MValueConst[] args)
+        public void TriggerClientEventForSome(IPlayer[] clients, string eventName, MValueConst[] args)
         {
             throw new NotImplementedException();
         }
 
-        public void TriggerClientEventForSome(IEnumerable<IPlayer> clients, IntPtr eventNamePtr, IntPtr[] args)
+        public void TriggerClientEventForSome(IPlayer[] clients, IntPtr eventNamePtr, IntPtr[] args)
         {
             throw new NotImplementedException();
         }
 
-        public void TriggerClientEventForSome(IEnumerable<IPlayer> clients, string eventName, IntPtr[] args)
+        public void TriggerClientEventForSome(IPlayer[] clients, string eventName, IntPtr[] args)
         {
             throw new NotImplementedException();
         }
 
-        public void TriggerClientEventForSome(IEnumerable<IPlayer> clients, IntPtr eventNamePtr, params object[] args)
+        public void TriggerClientEventForSome(IPlayer[] clients, IntPtr eventNamePtr, params object[] args)
         {
             throw new NotImplementedException();
         }
 
-        public void TriggerClientEventForSome(IEnumerable<IPlayer> clients, string eventName, params object[] args)
+        public void TriggerClientEventForSome(IPlayer[] clients, string eventName, params object[] args)
         {
             throw new NotImplementedException();
         }
