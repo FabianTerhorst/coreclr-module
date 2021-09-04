@@ -97,11 +97,6 @@ Server_TriggerClientEventForSome(alt::ICore* server, alt::IPlayer* targets[], in
             mValues[i] = *args[i];
         }
     }
-    /*alt::Array<alt::RefBase<alt::RefStore<alt::IPlayer>>> clients = alt::Array<alt::RefBase<alt::RefStore<alt::IPlayer>>>(targetsSize);
-    for (int i = 0; i < targetsSize; i++)
-    {
-        clients[i] = targets[i];
-    }*/
     alt::Array<alt::Ref<alt::IPlayer>> clients(targetsSize);
     for (int i = 0; i < targetsSize; i++)
     {
