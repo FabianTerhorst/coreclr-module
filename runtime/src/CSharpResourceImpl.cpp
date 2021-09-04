@@ -429,18 +429,30 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             break;
         }
         case alt::CEvent::Type::VEHICLE_DAMAGE: {
-	    auto vehicleDamageEvent = ((alt::CVehicleDamageEvent*) (ev));
+            auto vehicleDamageEvent = ((alt::CVehicleDamageEvent*) (ev));
             auto damager = vehicleDamageEvent->GetDamager().Get();
-            auto damagerPointer = GetEntityPointer(damager);
-            OnVehicleDamageDelegate(vehicleDamageEvent,
-                vehicleDamageEvent->GetTarget().Get(),
-                damagerPointer,
-                damager->GetType(),
-                vehicleDamageEvent->GetBodyHealthDamage(),
-                vehicleDamageEvent->GetBodyAdditionalHealthDamage(),
-                vehicleDamageEvent->GetEngineHealthDamage(),
-                vehicleDamageEvent->GetPetrolTankHealthDamage(),
-                vehicleDamageEvent->GetDamagedWith());
+            auto damagerPtr = GetEntityPointer(damager);
+            if (damager != nullptr && damagerPtr != nullptr) {
+                OnVehicleDamageDelegate(vehicleDamageEvent,
+					vehicleDamageEvent->GetTarget().Get(),
+                    damagerPtr,
+                    damager->GetType(),
+                    vehicleDamageEvent->GetBodyHealthDamage(),
+                    vehicleDamageEvent->GetBodyAdditionalHealthDamage(),
+                    vehicleDamageEvent->GetEngineHealthDamage(),
+                    vehicleDamageEvent->GetPetrolTankHealthDamage(),
+                    vehicleDamageEvent->GetDamagedWith());
+            } else {
+                OnVehicleDamageDelegate(vehicleDamageEvent,
+                    vehicleDamageEvent->GetTarget().Get(),
+                    nullptr,
+                    (alt::IBaseObject::Type)0,
+                    vehicleDamageEvent->GetBodyHealthDamage(),
+                    vehicleDamageEvent->GetBodyAdditionalHealthDamage(),
+                    vehicleDamageEvent->GetEngineHealthDamage(),
+                    vehicleDamageEvent->GetPetrolTankHealthDamage(),
+                    vehicleDamageEvent->GetDamagedWith());
+            }
             break;
         }
     }
