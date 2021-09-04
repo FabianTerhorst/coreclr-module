@@ -35,6 +35,8 @@ EXPORT void
 Server_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* ev, alt::MValueConst* args[], int size);
 EXPORT void
 Server_TriggerClientEventForAll(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size);
+EXPORT void
+Server_TriggerClientEventForSome(alt::ICore* server, alt::IPlayer* targets[], int targetsSize, const char* ev, alt::MValueConst* args[], int argsSize);
 EXPORT alt::IVehicle*
 Server_CreateVehicle(alt::ICore* server, uint32_t model, position_t pos, rotation_t rot, uint16_t &id);
 EXPORT alt::ICheckpoint*

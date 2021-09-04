@@ -178,6 +178,9 @@ EXPORT void Player_AttachToEntity_Player(alt::IPlayer* player, alt::IPlayer* ent
 EXPORT void Player_AttachToEntity_Vehicle(alt::IPlayer* player, alt::IVehicle* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
 EXPORT void Player_Detach(alt::IPlayer* player);
 
+EXPORT uint8_t Player_GetInvincible(alt::IPlayer* player);
+EXPORT void Player_SetInvincible(alt::IPlayer* player, uint8_t state);
+
 #ifdef __cplusplus
 }
 #endif

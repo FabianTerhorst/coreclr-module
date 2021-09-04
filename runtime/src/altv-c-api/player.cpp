@@ -499,3 +499,12 @@ void Player_Detach(alt::IPlayer* player)
 {
     player->Detach();
 }
+
+uint8_t Player_GetInvincible(alt::IPlayer* player)
+{
+    return player->GetInvincible();
+}
+
+void Player_SetInvincible(alt::IPlayer* player, uint8_t state) {
+    player->SetInvincible(state);
+}

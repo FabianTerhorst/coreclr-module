@@ -132,6 +132,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Player_AttachToEntity_Player { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Player_AttachToEntity_Vehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Detach { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetInvincible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetInvincible { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetNetworkOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetModel { get; }
@@ -395,6 +397,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Server_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Server_TriggerClientEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Server_TriggerClientEventForAll { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Server_TriggerClientEventForSome { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint> Server_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Position, float, float, Rgba, nint> Server_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, Position, nint> Server_CreateBlip { get; }
@@ -580,6 +583,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Player_AttachToEntity_Player { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Player_AttachToEntity_Vehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Detach { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetInvincible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetInvincible { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetNetworkOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetModel { get; }
@@ -843,6 +848,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Server_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Server_TriggerClientEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Server_TriggerClientEventForAll { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Server_TriggerClientEventForSome { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint> Server_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Position, float, float, Rgba, nint> Server_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, Position, nint> Server_CreateBlip { get; }
@@ -1032,6 +1038,8 @@ namespace AltV.Net.Native
             Player_AttachToEntity_Player = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void>) NativeLibrary.GetExport(handle, "Player_AttachToEntity_Player");
             Player_AttachToEntity_Vehicle = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void>) NativeLibrary.GetExport(handle, "Player_AttachToEntity_Vehicle");
             Player_Detach = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Player_Detach");
+            Player_GetInvincible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_GetInvincible");
+            Player_SetInvincible = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Player_SetInvincible");
             Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetID");
             Vehicle_GetNetworkOwner = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetNetworkOwner");
             Vehicle_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Vehicle_GetModel");
@@ -1295,6 +1303,7 @@ namespace AltV.Net.Native
             Server_TriggerServerEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Server_TriggerServerEvent");
             Server_TriggerClientEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Server_TriggerClientEvent");
             Server_TriggerClientEventForAll = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Server_TriggerClientEventForAll");
+            Server_TriggerClientEventForSome = (delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Server_TriggerClientEventForSome");
             Server_CreateVehicle = (delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint>) NativeLibrary.GetExport(handle, "Server_CreateVehicle");
             Server_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Position, float, float, Rgba, nint>) NativeLibrary.GetExport(handle, "Server_CreateCheckpoint");
             Server_CreateBlip = (delegate* unmanaged[Cdecl]<nint, nint, byte, Position, nint>) NativeLibrary.GetExport(handle, "Server_CreateBlip");

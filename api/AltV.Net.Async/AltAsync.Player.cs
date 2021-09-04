@@ -269,5 +269,11 @@ namespace AltV.Net.Async
         
         public static Task SetWeaponTintIndexAsync(this IPlayer player, WeaponModel weaponModel, byte tintIndex) =>
             AltVAsync.Schedule(() => player.SetWeaponTintIndex(weaponModel, tintIndex));
+
+        public static Task<bool> GetInvincibleAsync(this IPlayer player) =>
+            AltVAsync.Schedule(() => player.Invincible);
+
+        public static Task SetInvincibleAsync(this IPlayer player, bool isInvincible) =>
+            AltVAsync.Schedule(() => player.Invincible = isInvincible);
     }
 }
