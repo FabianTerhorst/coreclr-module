@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -457,6 +458,76 @@ namespace AltV.Net
             var mValues = new MValueConst[size];
             CreateMValues(mValues, args);
             TriggerClientEventForAll(eventName, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+
+        public void TriggerClientEventForSome(IPlayer[] clients, IntPtr eventNamePtr, MValueConst[] args)
+        {
+            var size = args.Length;
+            var mValuePointers = new IntPtr[size];
+            for (var i = 0; i < size; i++)
+            {
+                mValuePointers[i] = args[i].nativePointer;
+            }
+
+            TriggerClientEventForSome(clients, eventNamePtr, mValuePointers);
+        }
+
+        public void TriggerClientEventForSome(IPlayer[] clients, string eventName, MValueConst[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerClientEventForSome(clients, eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void TriggerClientEventForSome(IPlayer[] clients, IntPtr eventNamePtr, IntPtr[] args)
+        {
+            unsafe
+            {
+                var size = clients.Length;
+                var clPtrs = new IntPtr[size];
+                for (var i = 0; i < size; i++)
+                {
+                    clPtrs[i] = clients[i].NativePointer;
+                }
+                Library.Server_TriggerClientEventForSome(NativePointer, clPtrs, size,
+                    eventNamePtr, args, args.Length);
+            }
+        }
+
+        public void TriggerClientEventForSome(IPlayer[] clients, string eventName, IntPtr[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerClientEventForSome(clients, eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        public void TriggerClientEventForSome(IPlayer[] clients, IntPtr eventNamePtr, params object[] args)
+        {
+            if (clients == null) throw new ArgumentException("players should not be null.");
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerClientEventForSome(clients, eventNamePtr, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+
+        public void TriggerClientEventForSome(IPlayer[] clients, string eventName, params object[] args)
+        {
+            if (clients == null) throw new ArgumentException("players should not be null.");
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerClientEventForSome(clients, eventName, mValues);
             for (var i = 0; i < size; i++)
             {
                 mValues[i].Dispose();
