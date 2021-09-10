@@ -336,6 +336,8 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool Invincible { get; set; }
+
+        void SetIntoVehicle(IVehicle vehicle, byte seat);
     }
 
     public static class PlayerExtensions
