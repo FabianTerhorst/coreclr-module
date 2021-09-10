@@ -1052,6 +1052,16 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public void SetIntoVehicle(IVehicle vehicle, byte seat)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                vehicle.CheckIfEntityExists();
+                Server.Library.Player_SetIntoVehicle(NativePointer, vehicle.NativePointer, seat);
+            }
+        }
+
         public bool TryCreateRef(out PlayerRef playerRef)
         {
             playerRef = new PlayerRef(this);

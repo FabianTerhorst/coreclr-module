@@ -181,6 +181,8 @@ EXPORT void Player_Detach(alt::IPlayer* player);
 EXPORT uint8_t Player_GetInvincible(alt::IPlayer* player);
 EXPORT void Player_SetInvincible(alt::IPlayer* player, uint8_t state);
 
+EXPORT void Player_SetIntoVehicle(alt::IPlayer* player, alt::IVehicle* vehicle, uint8_t seat);
+
 #ifdef __cplusplus
 }
 #endif
