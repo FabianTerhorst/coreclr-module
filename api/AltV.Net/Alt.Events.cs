@@ -224,5 +224,17 @@ namespace AltV.Net
             add => Module.VehicleDamageEventHandler.Add(value);
             remove => Module.VehicleDamageEventHandler.Remove(value);
         }
+        
+        public static event BaseObjectCreateDelegate OnBaseObjectCreate
+        {
+            add => Module.BaseObjectCreateEventHandler.Add(value);
+            remove => Module.BaseObjectCreateEventHandler.Remove(value);
+        }
+        
+        public static event BaseObjectRemoveDelegate OnBaseObjectRemove
+        {
+            add => Module.BaseObjectRemoveEventHandler.Add(value);
+            remove => Module.BaseObjectRemoveEventHandler.Remove(value);
+        }
     }
 }

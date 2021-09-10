@@ -98,6 +98,12 @@ namespace AltV.Net.Async
         
         internal readonly AsyncEventHandler<VehicleDamageAsyncDelegate> VehicleDamageAsyncEventHandler =
             new AsyncEventHandler<VehicleDamageAsyncDelegate>();
+        
+        internal readonly AsyncEventHandler<BaseObjectCreateAsyncDelegate> BaseObjectCreateAsyncEventHandler =
+            new AsyncEventHandler<BaseObjectCreateAsyncDelegate>();
+        
+        internal readonly AsyncEventHandler<BaseObjectRemoveAsyncDelegate> BaseObjectRemoveAsyncEventHandler =
+            new AsyncEventHandler<BaseObjectRemoveAsyncDelegate>();
 
         public AsyncModule(IServer server, AssemblyLoadContext assemblyLoadContext, INativeResource moduleResource,
             IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
@@ -720,6 +726,34 @@ namespace AltV.Net.Async
                 sourceEntityRef.DebugCountDown();
                 sourceEntityRef.Dispose();
                 targetVehicleRef.Dispose();
+            });
+        }
+
+        public override void OnBaseObjectCreateEvent(IBaseObject baseObject)
+        {
+            base.OnBaseObjectCreateEvent(baseObject);
+            if (!BaseObjectCreateAsyncEventHandler.HasEvents()) return;
+            var baseObjectRef = new BaseObjectRef(baseObject);
+            Task.Run(async () =>
+            {
+                baseObjectRef.DebugCountUp();
+                await BaseObjectCreateAsyncEventHandler.CallAsync(@delegate => @delegate(baseObject));
+                baseObjectRef.DebugCountDown();
+                baseObjectRef.Dispose();
+            });
+        }
+
+        public override void OnBaseObjectRemoveEvent(IBaseObject baseObject)
+        {
+            base.OnBaseObjectRemoveEvent(baseObject);
+            if (!BaseObjectCreateAsyncEventHandler.HasEvents()) return;
+            var baseObjectRef = new BaseObjectRef(baseObject);
+            Task.Run(async () =>
+            {
+                baseObjectRef.DebugCountUp();
+                await BaseObjectRemoveAsyncEventHandler.CallAsync(@delegate => @delegate(baseObject));
+                baseObjectRef.DebugCountDown();
+                baseObjectRef.Dispose();
             });
         }
 

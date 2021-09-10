@@ -154,6 +154,12 @@ namespace AltV.Net
         
         internal readonly IEventHandler<VehicleDamageDelegate> VehicleDamageEventHandler =
             new HashSetEventHandler<VehicleDamageDelegate>();
+        
+        internal readonly IEventHandler<BaseObjectCreateDelegate> BaseObjectCreateEventHandler =
+            new HashSetEventHandler<BaseObjectCreateDelegate>();
+        
+        internal readonly IEventHandler<BaseObjectRemoveDelegate> BaseObjectRemoveEventHandler =
+            new HashSetEventHandler<BaseObjectRemoveDelegate>();
 
         internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
 
@@ -1208,60 +1214,72 @@ namespace AltV.Net
         public void OnCreatePlayer(IntPtr playerPointer, ushort playerId)
         {
             PlayerPool.Create(Server, playerPointer, playerId);
+            OnBaseObjectCreate(playerPointer, BaseObjectType.Player);
         }
 
         public void OnRemovePlayer(IntPtr playerPointer)
         {
+            OnBaseObjectRemove(playerPointer, BaseObjectType.Player);
             PlayerPool.Remove(playerPointer);
         }
 
         public void OnCreateVehicle(IntPtr vehiclePointer, ushort vehicleId)
         {
             VehiclePool.Create(Server, vehiclePointer, vehicleId);
+            OnBaseObjectCreate(vehiclePointer, BaseObjectType.Vehicle);
         }
 
         public void OnCreateVoiceChannel(IntPtr channelPointer)
         {
             VoiceChannelPool.Create(Server, channelPointer);
+            OnBaseObjectCreate(channelPointer, BaseObjectType.VoiceChannel);
         }
 
         public void OnCreateColShape(IntPtr colShapePointer)
         {
             ColShapePool.Create(Server, colShapePointer);
+            OnBaseObjectCreate(colShapePointer, BaseObjectType.ColShape);
         }
 
         public void OnRemoveVehicle(IntPtr vehiclePointer)
         {
+            OnBaseObjectRemove(vehiclePointer, BaseObjectType.Vehicle);
             VehiclePool.Remove(vehiclePointer);
         }
 
         public void OnCreateBlip(IntPtr blipPointer)
         {
             BlipPool.Create(Server, blipPointer);
+            OnBaseObjectCreate(blipPointer, BaseObjectType.Blip);
         }
 
         public void OnRemoveBlip(IntPtr blipPointer)
         {
+            OnBaseObjectRemove(blipPointer, BaseObjectType.Blip);
             BlipPool.Remove(blipPointer);
         }
 
         public void OnCreateCheckpoint(IntPtr checkpointPointer)
         {
             CheckpointPool.Create(Server, checkpointPointer);
+            OnBaseObjectCreate(checkpointPointer, BaseObjectType.Checkpoint);
         }
 
         public void OnRemoveCheckpoint(IntPtr checkpointPointer)
         {
+            OnBaseObjectRemove(checkpointPointer, BaseObjectType.Checkpoint);
             CheckpointPool.Remove(checkpointPointer);
         }
 
         public void OnRemoveVoiceChannel(IntPtr channelPointer)
         {
+            OnBaseObjectRemove(channelPointer, BaseObjectType.VoiceChannel);
             VoiceChannelPool.Remove(channelPointer);
         }
 
         public void OnRemoveColShape(IntPtr colShapePointer)
         {
+            OnBaseObjectRemove(colShapePointer, BaseObjectType.ColShape);
             ColShapePool.Remove(colShapePointer);
         }
 
@@ -1696,6 +1714,66 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnVehicleDamageEvent" + ":" + exception);
+                }
+            }
+        }
+        
+        public void OnBaseObjectCreate(IntPtr baseObjectPointer, BaseObjectType baseObjectType)
+        {
+            if (!BaseBaseObjectPool.Get(baseObjectPointer, baseObjectType, out var baseObject))
+            {
+                Console.WriteLine("OnBaseObjectCreate Invalid baseObject " + baseObjectPointer + " " + baseObjectType);
+                return;
+            }
+
+            OnBaseObjectCreateEvent(baseObject);
+        }
+
+        public virtual void OnBaseObjectCreateEvent(IBaseObject baseObject)
+        {
+            foreach (var @delegate in BaseObjectCreateEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(baseObject);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnBaseObjectCreateEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnBaseObjectCreateEvent" + ":" + exception);
+                }
+            }
+        }
+        
+        public void OnBaseObjectRemove(IntPtr baseObjectPointer, BaseObjectType baseObjectType)
+        {
+            if (!BaseBaseObjectPool.Get(baseObjectPointer, baseObjectType, out var baseObject))
+            {
+                Console.WriteLine("OnBaseObjectRemove Invalid baseObject " + baseObjectPointer + " " + baseObjectType);
+                return;
+            }
+
+            OnBaseObjectRemoveEvent(baseObject);
+        }
+
+        public virtual void OnBaseObjectRemoveEvent(IBaseObject baseObject)
+        {
+            foreach (var @delegate in BaseObjectRemoveEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(baseObject);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnBaseObjectCreateEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnBaseObjectCreateEvent" + ":" + exception);
                 }
             }
         }

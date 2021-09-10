@@ -30,6 +30,8 @@ namespace AltV.Net
         NetOwnerChange,
         VehicleAttach,
         VehicleDetach,
-        VehicleDamage
+        VehicleDamage,
+        BaseObjectCreate,
+        BaseObjectRemove
     }
 }

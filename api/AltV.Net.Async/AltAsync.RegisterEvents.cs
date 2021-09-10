@@ -417,8 +417,35 @@ namespace AltV.Net.Async
                                             return currScriptFunction.CallAsync();
                                         };
                                     break;
+                                case ScriptEventType.BaseObjectCreate:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IBaseObject)
+                                        }, true);
+                                    if (scriptFunction == null) return;
+                                    OnBaseObjectCreate += (baseObject) =>
+                                    {
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(baseObject);
+                                        return currScriptFunction.CallAsync();
+                                    };
+                                    break;
+                                case ScriptEventType.BaseObjectRemove:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IBaseObject)
+                                        }, true);
+                                    if (scriptFunction == null) return;
+                                    OnBaseObjectRemove += (baseObject) =>
+                                    {
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(baseObject);
+                                        return currScriptFunction.CallAsync();
+                                    };
+                                    break;
                             }
-
                             break;
                         case AsyncServerEventAttribute @event:
                             var serverEventName = @event.Name ?? eventMethod.Name;

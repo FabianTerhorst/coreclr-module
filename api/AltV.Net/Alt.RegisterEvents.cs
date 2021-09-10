@@ -436,6 +436,30 @@ namespace AltV.Net
                                             scriptFunction.Set(weaponHash);
                                         };
                                     break;
+                                case ScriptEventType.BaseObjectCreate:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IBaseObject)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnBaseObjectCreate += (baseObject) =>
+                                    {
+                                        scriptFunction.Set(baseObject);
+                                    };
+                                    break;
+                                case ScriptEventType.BaseObjectRemove:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IBaseObject)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnBaseObjectRemove += (baseObject) =>
+                                    {
+                                        scriptFunction.Set(baseObject);
+                                    };
+                                    break;
                                 default:
                                     throw new ArgumentOutOfRangeException();
                             }
