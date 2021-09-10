@@ -508,3 +508,7 @@ uint8_t Player_GetInvincible(alt::IPlayer* player)
 void Player_SetInvincible(alt::IPlayer* player, uint8_t state) {
     player->SetInvincible(state);
 }
+
+void Player_SetIntoVehicle(alt::IPlayer* player, alt::IVehicle* vehicle, uint8_t seat) {
+    player->SetIntoVehicle(vehicle, seat);
+}

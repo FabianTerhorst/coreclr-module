@@ -275,5 +275,8 @@ namespace AltV.Net.Async
 
         public static Task SetInvincibleAsync(this IPlayer player, bool isInvincible) =>
             AltVAsync.Schedule(() => player.Invincible = isInvincible);
+
+        public static Task SetIntoVehicleAsync(this IPlayer player, IVehicle vehicle, byte seat) => 
+            AltVAsync.Schedule(() => player.SetIntoVehicle(vehicle, seat));
     }
 }
