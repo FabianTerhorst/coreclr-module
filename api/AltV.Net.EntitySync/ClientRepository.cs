@@ -31,6 +31,33 @@ namespace AltV.Net.EntitySync
             }
         }
 
+        public void Replace(IClient client)
+        {
+            if (client == null)
+            {
+                throw new ArgumentException("Client must not be null.");
+            }
+            lock (clients)
+            {
+                if (clients.Remove(client.Token, out var oldClient))
+                {
+                    foreach (var clientThreadRepository in clientThreadRepositories)
+                    {
+                        clientThreadRepository.Replace(client, oldClient);
+                    }
+                }
+                else
+                {
+                    foreach (var clientThreadRepository in clientThreadRepositories)
+                    {
+                        clientThreadRepository.Replace(client);
+                    }
+                }
+
+                clients[client.Token] = client;
+            }
+        }
+
         public IClient Remove(IClient client)
         {
             if (client == null)

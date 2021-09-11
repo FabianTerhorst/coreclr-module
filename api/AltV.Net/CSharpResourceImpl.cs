@@ -201,6 +201,10 @@ namespace AltV.Net
             AltNative.Resource.VehicleDetachDelegate onVehicleDetach = ModuleWrapper.OnVehicleDetach;
             handles.AddFirst(GCHandle.Alloc(onVehicleDetach));
             AltNative.Resource.CSharpResourceImpl_SetVehicleDetachDelegate(NativePointer, onVehicleDetach);
+            
+            AltNative.Resource.VehicleDamageDelegate onVehicleDamage = ModuleWrapper.OnVehicleDamage;
+            handles.AddFirst(GCHandle.Alloc(onVehicleDamage));
+            AltNative.Resource.CSharpResourceImpl_SetVehicleDamageDelegate(NativePointer, onVehicleDamage);
         }
 
         public IntPtr CreateInvoker(MValueFunctionCallback function)

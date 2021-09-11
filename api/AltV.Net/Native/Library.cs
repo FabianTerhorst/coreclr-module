@@ -65,6 +65,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, void> Player_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetStreamed { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsConnected { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, uint, void> Player_Spawn { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Despawn { get; }
@@ -130,6 +132,9 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Player_AttachToEntity_Player { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Player_AttachToEntity_Vehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Detach { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetInvincible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetInvincible { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Player_SetIntoVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetNetworkOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetModel { get; }
@@ -155,6 +160,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetStreamed { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetDriver { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsDestroyed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetMod { get; }
@@ -391,6 +398,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Server_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Server_TriggerClientEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Server_TriggerClientEventForAll { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Server_TriggerClientEventForSome { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint> Server_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Position, float, float, Rgba, nint> Server_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, Position, nint> Server_CreateBlip { get; }
@@ -509,6 +517,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, void> Player_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetStreamed { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsConnected { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, uint, void> Player_Spawn { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Despawn { get; }
@@ -574,6 +584,9 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Player_AttachToEntity_Player { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Player_AttachToEntity_Vehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_Detach { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetInvincible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetInvincible { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Player_SetIntoVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetNetworkOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetModel { get; }
@@ -599,6 +612,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetStreamed { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetDriver { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsDestroyed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetMod { get; }
@@ -835,6 +850,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Server_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Server_TriggerClientEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Server_TriggerClientEventForAll { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void> Server_TriggerClientEventForSome { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint> Server_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Position, float, float, Rgba, nint> Server_CreateCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, Position, nint> Server_CreateBlip { get; }
@@ -957,6 +973,8 @@ namespace AltV.Net.Native
             Player_RemoveRef = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Player_RemoveRef");
             Player_GetVisible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_GetVisible");
             Player_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Player_SetVisible");
+            Player_GetStreamed = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_GetStreamed");
+            Player_SetStreamed = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Player_SetStreamed");
             Player_IsConnected = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsConnected");
             Player_Spawn = (delegate* unmanaged[Cdecl]<nint, Position, uint, void>) NativeLibrary.GetExport(handle, "Player_Spawn");
             Player_Despawn = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Player_Despawn");
@@ -1022,6 +1040,9 @@ namespace AltV.Net.Native
             Player_AttachToEntity_Player = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void>) NativeLibrary.GetExport(handle, "Player_AttachToEntity_Player");
             Player_AttachToEntity_Vehicle = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void>) NativeLibrary.GetExport(handle, "Player_AttachToEntity_Vehicle");
             Player_Detach = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Player_Detach");
+            Player_GetInvincible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_GetInvincible");
+            Player_SetInvincible = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Player_SetInvincible");
+            Player_SetIntoVehicle = (delegate* unmanaged[Cdecl]<nint, nint, byte, void>) NativeLibrary.GetExport(handle, "Player_SetIntoVehicle");
             Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetID");
             Vehicle_GetNetworkOwner = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetNetworkOwner");
             Vehicle_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Vehicle_GetModel");
@@ -1047,6 +1068,8 @@ namespace AltV.Net.Native
             Vehicle_RemoveRef = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Vehicle_RemoveRef");
             Vehicle_GetVisible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetVisible");
             Vehicle_SetVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetVisible");
+            Vehicle_GetStreamed = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetStreamed");
+            Vehicle_SetStreamed = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetStreamed");
             Vehicle_GetDriver = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetDriver");
             Vehicle_IsDestroyed = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_IsDestroyed");
             Vehicle_GetMod = (delegate* unmanaged[Cdecl]<nint, byte, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetMod");
@@ -1283,6 +1306,7 @@ namespace AltV.Net.Native
             Server_TriggerServerEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Server_TriggerServerEvent");
             Server_TriggerClientEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Server_TriggerClientEvent");
             Server_TriggerClientEventForAll = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Server_TriggerClientEventForAll");
+            Server_TriggerClientEventForSome = (delegate* unmanaged[Cdecl]<nint, nint[], int, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Server_TriggerClientEventForSome");
             Server_CreateVehicle = (delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint>) NativeLibrary.GetExport(handle, "Server_CreateVehicle");
             Server_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Position, float, float, Rgba, nint>) NativeLibrary.GetExport(handle, "Server_CreateCheckpoint");
             Server_CreateBlip = (delegate* unmanaged[Cdecl]<nint, nint, byte, Position, nint>) NativeLibrary.GetExport(handle, "Server_CreateBlip");

@@ -95,6 +95,9 @@ namespace AltV.Net.Async
         
         internal readonly AsyncEventHandler<VehicleDetachAsyncDelegate> VehicleDetachAsyncEventHandler =
             new AsyncEventHandler<VehicleDetachAsyncDelegate>();
+        
+        internal readonly AsyncEventHandler<VehicleDamageAsyncDelegate> VehicleDamageAsyncEventHandler =
+            new AsyncEventHandler<VehicleDamageAsyncDelegate>();
 
         public AsyncModule(IServer server, AssemblyLoadContext assemblyLoadContext, INativeResource moduleResource,
             IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
@@ -168,9 +171,9 @@ namespace AltV.Net.Async
             });
         }
 
-        public override void OnPlayerDamageEvent(IPlayer player, IEntity entity, uint weapon, ushort damage)
+        public override void OnPlayerDamageEvent(IPlayer player, IEntity entity, uint weapon, ushort healthDamage, ushort armourDamage)
         {
-            base.OnPlayerDamageEvent(player, entity, weapon, damage);
+            base.OnPlayerDamageEvent(player, entity, weapon, healthDamage, armourDamage);
             if (!PlayerDamageAsyncEventHandler.HasEvents()) return;
             var oldHealth = player.Health;
             var oldArmor = player.Armor;
@@ -183,7 +186,7 @@ namespace AltV.Net.Async
                 playerReference.DebugCountUp();
                 entityReference.DebugCountUp();
                 await PlayerDamageAsyncEventHandler.CallAsync(@delegate =>
-                    @delegate(player, entity, oldHealth, oldArmor, oldMaxHealth, oldMaxArmor, weapon, damage));
+                    @delegate(player, entity, oldHealth, oldArmor, oldMaxHealth, oldMaxArmor, weapon, healthDamage, armourDamage));
                 entityReference.DebugCountDown();
                 playerReference.DebugCountDown();
                 playerReference.Dispose();
@@ -696,6 +699,26 @@ namespace AltV.Net.Async
                 targetVehicleRef.DebugCountDown();
                 detachedVehicleRef.DebugCountDown();
                 detachedVehicleRef.Dispose();
+                targetVehicleRef.Dispose();
+            });
+        }
+
+        public override void OnVehicleDamageEvent(IVehicle targetVehicle, IEntity sourceEntity, uint bodyHealthDamage,
+            uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash)
+        {
+            base.OnVehicleDamageEvent(targetVehicle, sourceEntity, bodyHealthDamage, additionalBodyHealthDamage, engineHealthDamage, petrolTankDamage, weaponHash);
+            if (!VehicleDamageAsyncEventHandler.HasEvents()) return;
+            var targetVehicleRef = new BaseObjectRef(targetVehicle);
+            var sourceEntityRef = new BaseObjectRef(sourceEntity);
+            Task.Run(async () =>
+            {
+                targetVehicleRef.DebugCountUp();
+                sourceEntityRef.DebugCountUp();
+                await VehicleDamageAsyncEventHandler.CallAsync(@delegate =>
+                    @delegate(targetVehicle, sourceEntity, bodyHealthDamage, additionalBodyHealthDamage, engineHealthDamage, petrolTankDamage, weaponHash));
+                targetVehicleRef.DebugCountDown();
+                sourceEntityRef.DebugCountDown();
+                sourceEntityRef.Dispose();
                 targetVehicleRef.Dispose();
             });
         }

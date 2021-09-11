@@ -198,10 +198,10 @@ namespace AltV.Net
 
         public static void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer,
             BaseObjectType attackerBaseObjectType,
-            ushort attackerEntityId, uint weapon, ushort damage)
+            ushort attackerEntityId, uint weapon, ushort healthDamage, ushort armourDamage)
         {
             _module.OnPlayerDamage(playerPointer, attackerEntityPointer, attackerBaseObjectType, attackerEntityId,
-                weapon, damage);
+                weapon, healthDamage, armourDamage);
         }
 
         public static void OnPlayerDeath(IntPtr playerPointer, IntPtr killerEntityPointer,
@@ -339,7 +339,7 @@ namespace AltV.Net
         {
             _module.OnVehicleRemove(vehiclePointer);
         }
-
+        
         public static void OnConsoleCommand(string name,
             [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
             string[] args, int argsSize)
@@ -402,6 +402,13 @@ namespace AltV.Net
         public static void OnVehicleDetach(IntPtr eventPointer, IntPtr targetPointer, IntPtr detachedPointer)
         {
             _module.OnVehicleDetach(eventPointer, targetPointer, detachedPointer);
+        }
+
+        public static void OnVehicleDamage(IntPtr eventPointer, IntPtr vehiclePointer, IntPtr entityPointer, BaseObjectType entityType, uint bodyHealthDamage,
+            uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash)
+        {
+            _module.OnVehicleDamage(eventPointer, vehiclePointer, entityPointer, entityType, bodyHealthDamage, additionalBodyHealthDamage,
+                engineHealthDamage, petrolTankDamage, weaponHash);
         }
     }
 }

@@ -330,6 +330,14 @@ namespace AltV.Net.Elements.Entities
         bool IsEntityInStreamingRange(IEntity entity);
         
         bool TryCreateRef(out PlayerRef playerRef);
+        
+        /// <summary>
+        /// Get or set if the player is invincible.
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        bool Invincible { get; set; }
+
+        void SetIntoVehicle(IVehicle vehicle, byte seat);
     }
 
     public static class PlayerExtensions

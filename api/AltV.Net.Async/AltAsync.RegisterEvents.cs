@@ -50,18 +50,19 @@ namespace AltV.Net.Async
                                     break;
                                 case ScriptEventType.PlayerDamage:
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] {typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(ushort)}, true);
+                                        new[] {typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(ushort), typeof(ushort)}, true);
                                     if (scriptFunction == null) return;
                                     OnPlayerDamage += (player, attacker,
                                         oldHealth, oldArmor,
                                         oldMaxHealth, oldMaxArmor,
-                                        weapon, damage) =>
+                                        weapon, healthDamage, armourDamage) =>
                                     {
                                         var currScriptFunction = scriptFunction.Clone();
                                         currScriptFunction.Set(player);
                                         currScriptFunction.Set(attacker);
                                         currScriptFunction.Set(weapon);
-                                        currScriptFunction.Set(damage);
+                                        currScriptFunction.Set(healthDamage);
+                                        currScriptFunction.Set(armourDamage);
                                         return currScriptFunction.CallAsync();
                                     };
                                     break;
@@ -393,6 +394,28 @@ namespace AltV.Net.Async
                                         currScriptFunction.Set(detachedVehicle);
                                         return currScriptFunction.CallAsync();
                                     };
+                                    break;
+                                case ScriptEventType.VehicleDamage:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IVehicle), typeof(IEntity), typeof(uint), typeof(uint),
+                                            typeof(uint), typeof(uint), typeof(uint)
+                                        }, true);
+                                    if (scriptFunction == null) return;
+                                    OnVehicleDamage +=
+                                        (vehicle, targetEntity, bodyHealthDamage, additionalBodyHealthDamage, engineHealthDamage, petrolTankDamage, weaponHash) =>
+                                        {
+                                            var currScriptFunction = scriptFunction.Clone();
+                                            currScriptFunction.Set(vehicle);
+                                            currScriptFunction.Set(targetEntity);
+                                            currScriptFunction.Set(bodyHealthDamage);
+                                            currScriptFunction.Set(additionalBodyHealthDamage);
+                                            currScriptFunction.Set(engineHealthDamage);
+                                            currScriptFunction.Set(petrolTankDamage);
+                                            currScriptFunction.Set(weaponHash);
+                                            return currScriptFunction.CallAsync();
+                                        };
                                     break;
                             }
 

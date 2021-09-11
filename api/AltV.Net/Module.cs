@@ -151,6 +151,9 @@ namespace AltV.Net
         
         internal readonly IEventHandler<VehicleDetachDelegate> VehicleDetachEventHandler =
             new HashSetEventHandler<VehicleDetachDelegate>();
+        
+        internal readonly IEventHandler<VehicleDamageDelegate> VehicleDamageEventHandler =
+            new HashSetEventHandler<VehicleDamageDelegate>();
 
         internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
 
@@ -561,28 +564,28 @@ namespace AltV.Net
 
         public void OnPlayerDamage(IntPtr playerPointer, IntPtr attackerEntityPointer,
             BaseObjectType attackerBaseObjectType,
-            ushort attackerEntityId, uint weapon, ushort damage)
+            ushort attackerEntityId, uint weapon, ushort healthDamage, ushort armourDamage)
         {
             if (!PlayerPool.Get(playerPointer, out var player))
             {
                 Console.WriteLine("OnPlayerDamage Invalid player " + playerPointer + " " + attackerEntityPointer + " " +
-                                  attackerBaseObjectType + " " + attackerEntityId + " " + weapon + " " + damage);
+                                  attackerBaseObjectType + " " + attackerEntityId + " " + weapon + " " + healthDamage + " " + armourDamage);
                 return;
             }
 
             BaseEntityPool.Get(attackerEntityPointer, attackerBaseObjectType,
                 out var attacker);
 
-            OnPlayerDamageEvent(player, attacker, weapon, damage);
+            OnPlayerDamageEvent(player, attacker, weapon, healthDamage, armourDamage);
         }
 
-        public virtual void OnPlayerDamageEvent(IPlayer player, IEntity attacker, uint weapon, ushort damage)
+        public virtual void OnPlayerDamageEvent(IPlayer player, IEntity attacker, uint weapon, ushort healthDamage, ushort armourDamage)
         {
             foreach (var @delegate in PlayerDamageEventHandler.GetEvents())
             {
                 try
                 {
-                    @delegate(player, attacker, weapon, damage);
+                    @delegate(player, attacker, weapon, healthDamage, armourDamage);
                 }
                 catch (TargetInvocationException exception)
                 {
@@ -1656,6 +1659,43 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnVehicleDetachEvent" + ":" + exception);
+                }
+            }
+        }
+        
+        public void OnVehicleDamage(IntPtr eventPointer, IntPtr vehiclePointer, IntPtr entityPointer,
+            BaseObjectType entityType, uint bodyHealthDamage, uint additionalBodyHealthDamage,
+            uint engineHealthDamage, uint petrolTankDamage, uint weaponHash)
+        {
+            if (!VehiclePool.Get(vehiclePointer, out var targetVehicle))
+            {
+                Console.WriteLine("OnVehicleDamage Invalid vehicle " + vehiclePointer + " " + entityPointer + " " + entityType + " " + bodyHealthDamage +
+                                  " " + additionalBodyHealthDamage + " " + engineHealthDamage + " " + petrolTankDamage + " " + weaponHash);
+                return;
+            }
+
+            BaseEntityPool.Get(entityPointer, entityType, out var sourceEntity);
+
+            OnVehicleDamageEvent(targetVehicle, sourceEntity, bodyHealthDamage, additionalBodyHealthDamage,
+                engineHealthDamage, petrolTankDamage, weaponHash);
+        }
+
+        public virtual void OnVehicleDamageEvent(IVehicle targetVehicle, IEntity sourceEntity, uint bodyHealthDamage,
+            uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash)
+        {
+            foreach (var @delegate in VehicleDamageEventHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(targetVehicle, sourceEntity, bodyHealthDamage, additionalBodyHealthDamage, engineHealthDamage, petrolTankDamage, weaponHash);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnVehicleDamageEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnVehicleDamageEvent" + ":" + exception);
                 }
             }
         }

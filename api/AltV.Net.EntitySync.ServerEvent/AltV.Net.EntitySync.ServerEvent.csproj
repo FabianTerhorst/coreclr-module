@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFrameworks>net5.0</TargetFrameworks>
-        <PackageVersion>1.9.0-dev-preview</PackageVersion>
+        <PackageVersion>4.0.0</PackageVersion>
         <Authors>AltMp</Authors>
         <Description>AltV .NET Core Entity Sync</Description>
         <Copyright>AltMp</Copyright>

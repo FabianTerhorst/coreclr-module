@@ -6,12 +6,13 @@ This is called everytime a player receives damage.
 | player    | The player that received damage. |
 | entity    | The entity who gave damage to the player. |
 | weapon    | The weapon that was used or a other reason https://github.com/FabianTerhorst/coreclr-module/blob/master/api/AltV.Net/Data/Weapons.cs |
-| damage    | The damage that the player received. |
+| healthDamage    | The health damage that the player received. |
+| armourDamage    | The armour damage that the player received. |
 
 ## Normal event handler
 
 ```csharp
-    Alt.OnPlayerDamage += (player, attacker, weapon, damage) =>
+    Alt.OnPlayerDamage += (player, attacker, weapon, healthDamage, armourDamage) =>
     {
         // ...
     };
@@ -28,7 +29,7 @@ public class MyScriptClass : IScript
 {
     // We declare and create our event handler
     [ScriptEvent(ScriptEventType.PlayerDamage)]
-    public static void PlayerDamage(IPlayer player, IEntity attacker, uint weapon, ushort damage)
+    public static void PlayerDamage(IPlayer player, IEntity attacker, uint weapon, ushort healthDamage, ushort armourDamage)
     {
         // We create a switch-statement where we check the type of our IEntity.
         switch (attacker)

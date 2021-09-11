@@ -29,6 +29,7 @@ namespace AltV.Net
         PlayerWeaponChange,
         NetOwnerChange,
         VehicleAttach,
-        VehicleDetach
+        VehicleDetach,
+        VehicleDamage
     }
 }

@@ -131,6 +131,14 @@ void Player_SetVisible(alt::IPlayer* player, uint8_t state) {
     player->SetVisible(state);
 }
 
+uint8_t Player_GetStreamed(alt::IPlayer* player) {
+    return player->GetStreamed();
+}
+
+void Player_SetStreamed(alt::IPlayer* player, uint8_t state) {
+    player->SetStreamed(state);
+}
+
 // Player
 
 uint8_t Player_IsConnected(alt::IPlayer* player) {
@@ -490,4 +498,17 @@ void Player_AttachToEntity_Vehicle(alt::IPlayer* player, alt::IVehicle* entity, 
 void Player_Detach(alt::IPlayer* player)
 {
     player->Detach();
+}
+
+uint8_t Player_GetInvincible(alt::IPlayer* player)
+{
+    return player->GetInvincible();
+}
+
+void Player_SetInvincible(alt::IPlayer* player, uint8_t state) {
+    player->SetInvincible(state);
+}
+
+void Player_SetIntoVehicle(alt::IPlayer* player, alt::IVehicle* vehicle, uint8_t seat) {
+    player->SetIntoVehicle(vehicle, seat);
 }

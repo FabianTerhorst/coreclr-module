@@ -97,7 +97,7 @@ typedef void (* ResourceEventDelegate_t)(alt::IResource* resource);
 
 typedef void (* PlayerDamageDelegate_t)(alt::IPlayer* player, void* attacker,
                                         alt::IBaseObject::Type attackerType, uint16_t attackerId, uint32_t weapon,
-                                        uint16_t damage);
+                                        uint16_t healthDamage, uint16_t armourDamage);
 
 typedef void (* PlayerDeathDelegate_t)(alt::IPlayer* player, void* killer, alt::IBaseObject::Type killerType,
                                        uint32_t weapon);
@@ -178,6 +178,9 @@ typedef void (* NetOwnerChangeDelegate_t)(const alt::CEvent* event, void* target
 typedef void (* VehicleAttachDelegate_t)(const alt::CEvent* event, alt::IVehicle* target, alt::IVehicle* attached);
 
 typedef void (* VehicleDetachDelegate_t)(const alt::CEvent* event, alt::IVehicle* target, alt::IVehicle* detached);
+
+typedef void (* VehicleDamageDelegate_t)(const alt::CEvent* event, alt::IVehicle* target, void* attacker, alt::IBaseObject::Type attackerBaseObjectType,
+    uint32_t bodyHealthDamage, uint32_t additionalBodyHealthDamage, uint32_t engineHealthDamage, uint32_t petrolTankDamage, uint32_t weaponHash);
 
 class CSharpResourceImpl : public alt::IResource::Impl {
     bool OnEvent(const alt::CEvent* ev) override;
@@ -294,6 +297,8 @@ public:
     VehicleAttachDelegate_t OnVehicleAttachDelegate = nullptr;
 
     VehicleDetachDelegate_t OnVehicleDetachDelegate = nullptr;
+
+    VehicleDamageDelegate_t OnVehicleDamageDelegate = nullptr;
 
     alt::Array<CustomInvoker*>* invokers;
     CoreClr* coreClr;
@@ -471,3 +476,6 @@ EXPORT void CSharpResourceImpl_SetVehicleAttachDelegate(CSharpResourceImpl* reso
 
 EXPORT void CSharpResourceImpl_SetVehicleDetachDelegate(CSharpResourceImpl* resource,
                                                  VehicleDetachDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetVehicleDamageDelegate(CSharpResourceImpl* resource,
+    VehicleDamageDelegate_t delegate);

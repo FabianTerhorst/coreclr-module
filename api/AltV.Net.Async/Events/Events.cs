@@ -11,7 +11,7 @@ namespace AltV.Net.Async.Events
     public delegate Task PlayerConnectAsyncDelegate(IPlayer player, string reason);
 
     public delegate Task PlayerDamageAsyncDelegate(IPlayer player, IEntity attacker, ushort oldHealth, ushort oldArmor,
-        ushort oldMaxHealth, ushort oldMaxArmor,  uint weapon, ushort damage);
+        ushort oldMaxHealth, ushort oldMaxArmor,  uint weapon, ushort healthDamage, ushort armourDamage);
 
     public delegate Task PlayerDeadAsyncDelegate(IPlayer player, IEntity killer, uint weapon);
 
@@ -59,4 +59,6 @@ namespace AltV.Net.Async.Events
     public delegate Task VehicleAttachAsyncDelegate(IVehicle target, IVehicle attachedVehicle);
     
     public delegate Task VehicleDetachAsyncDelegate(IVehicle target, IVehicle detachedVehicle);
+    
+    public delegate Task VehicleDamageAsyncDelegate(IVehicle target, IEntity attacker, uint bodyHealthDamage, uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash);
 }

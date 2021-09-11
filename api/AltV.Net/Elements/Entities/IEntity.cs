@@ -36,6 +36,12 @@ namespace AltV.Net.Elements.Entities
         bool Visible { get; set; }
 
         /// <summary>
+        /// Get or set if the entity should be streamed.
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        bool Streamed { get; set; }
+
+        /// <summary>
         /// Set the net owner of the current entity.
         /// </summary>
         /// <param name="player">The player that is the net owner of this entity</param>

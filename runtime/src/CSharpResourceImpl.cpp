@@ -15,7 +15,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnResourceStartDelegate = [](auto var) {};
     OnResourceStopDelegate = [](auto var) {};
     OnResourceErrorDelegate = [](auto var) {};
-    OnPlayerDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
+    OnPlayerDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7) {};
     OnPlayerDeathDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnExplosionDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7) {};
     OnWeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7,
@@ -53,6 +53,8 @@ void CSharpResourceImpl::ResetDelegates() {
     OnNetOwnerChangeDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
     OnVehicleAttachDelegate = [](auto var, auto var2, auto var3) {};
     OnVehicleDetachDelegate = [](auto var, auto var2, auto var3) {};
+    OnVehicleDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7,
+        auto var8, auto var9) {};
 }
 
 bool CSharpResourceImpl::Start() {
@@ -180,14 +182,16 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                                        entity->GetType(),
                                        entity->GetID(),
                                        damageEvent->GetWeapon(),
-                                       damageEvent->GetDamage());
+                                       damageEvent->GetHealthDamage(),
+                                       damageEvent->GetArmourDamage());
             } else {
                 OnPlayerDamageDelegate(damageEvent->GetTarget().Get(),
                                        nullptr,
                                        alt::IBaseObject::Type::PLAYER,
                                        0,
                                        damageEvent->GetWeapon(),
-                                       damageEvent->GetDamage());
+                                       damageEvent->GetHealthDamage(),
+                                       damageEvent->GetArmourDamage());
             }
         }
             break;
@@ -422,6 +426,33 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             OnVehicleDetachDelegate(vehicleDetachEvent,
                                     vehicleDetachEvent->GetTarget().Get(),
                                     vehicleDetachEvent->GetDetached().Get());
+            break;
+        }
+        case alt::CEvent::Type::VEHICLE_DAMAGE: {
+            auto vehicleDamageEvent = ((alt::CVehicleDamageEvent*) (ev));
+            auto damager = vehicleDamageEvent->GetDamager().Get();
+            auto damagerPtr = GetEntityPointer(damager);
+            if (damager != nullptr && damagerPtr != nullptr) {
+                OnVehicleDamageDelegate(vehicleDamageEvent,
+					vehicleDamageEvent->GetTarget().Get(),
+                    damagerPtr,
+                    damager->GetType(),
+                    vehicleDamageEvent->GetBodyHealthDamage(),
+                    vehicleDamageEvent->GetBodyAdditionalHealthDamage(),
+                    vehicleDamageEvent->GetEngineHealthDamage(),
+                    vehicleDamageEvent->GetPetrolTankHealthDamage(),
+                    vehicleDamageEvent->GetDamagedWith());
+            } else {
+                OnVehicleDamageDelegate(vehicleDamageEvent,
+                    vehicleDamageEvent->GetTarget().Get(),
+                    nullptr,
+                    (alt::IBaseObject::Type)0,
+                    vehicleDamageEvent->GetBodyHealthDamage(),
+                    vehicleDamageEvent->GetBodyAdditionalHealthDamage(),
+                    vehicleDamageEvent->GetEngineHealthDamage(),
+                    vehicleDamageEvent->GetPetrolTankHealthDamage(),
+                    vehicleDamageEvent->GetDamagedWith());
+            }
             break;
         }
     }
@@ -710,6 +741,11 @@ void CSharpResourceImpl_SetVehicleAttachDelegate(CSharpResourceImpl* resource,
 void CSharpResourceImpl_SetVehicleDetachDelegate(CSharpResourceImpl* resource,
                                                       VehicleDetachDelegate_t delegate) {
     resource->OnVehicleDetachDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetVehicleDamageDelegate(CSharpResourceImpl* resource,
+                                                      VehicleDamageDelegate_t delegate) {
+    resource->OnVehicleDamageDelegate = delegate;
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files) {

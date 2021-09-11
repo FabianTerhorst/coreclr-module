@@ -116,6 +116,26 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public override bool Streamed
+        {
+            get
+            {
+                CheckIfEntityExists();
+                unsafe
+                {
+                    return Server.Library.Player_GetStreamed(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                CheckIfEntityExists();
+                unsafe
+                {
+                    Server.Library.Player_SetStreamed(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
         public override int Dimension
         {
             get
@@ -1009,6 +1029,36 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckIfEntityExists();
                 Server.Library.Player_Detach(NativePointer);
+            }
+        }
+
+        public bool Invincible
+        {
+            get
+            {
+                CheckIfEntityExists();
+                unsafe
+                {
+                    return Server.Library.Player_GetInvincible(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                CheckIfEntityExists();
+                unsafe
+                {
+                    Server.Library.Player_SetInvincible(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public void SetIntoVehicle(IVehicle vehicle, byte seat)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                vehicle.CheckIfEntityExists();
+                Server.Library.Player_SetIntoVehicle(NativePointer, vehicle.NativePointer, seat);
             }
         }
 
