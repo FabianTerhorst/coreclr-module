@@ -1,11 +1,11 @@
 # Setup
 You need the following requirements to use the c# module.
 
-* Latest [.NET Core SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1).
+* Latest [.NET SDK](https://dotnet.microsoft.com/download/dotnet/5.0).
 
 ## Step 1
 
-Download server from https://altv.mp/#/downloads and check c# module and data files. Also make sure to select the operating system where you want to run the server
+Download server from https://altv.mp/#/downloads and check c# module, config and data files. Also make sure to select the operating system where you want to run the server
 
 Your server should now look like this:
 

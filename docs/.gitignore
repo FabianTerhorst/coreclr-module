@@ -5,6 +5,7 @@ api/**
 _site/
 [Oo]bj/
 **.zip
+common.ps1
 
 # Others
 docfx/
