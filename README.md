@@ -1,10 +1,8 @@
-[![nuget](https://img.shields.io/nuget/dt/AltV.Net.svg)](https://www.nuget.org/packages/AltV.Net/)
-
 | Package  | Version |
 | ------------- | ------------- |
-| [**AltV.Net**](/api/AltV.Net)  | [![nuget](https://img.shields.io/nuget/v/AltV.Net.svg)](https://www.nuget.org/packages/AltV.Net/) [![nuget](https://img.shields.io/nuget/vpre/AltV.Net.svg)](https://www.nuget.org/packages/AltV.Net/) |
-| [**AltV.Net.Async**](/api/AltV.Net.Async)  | [![nuget](https://img.shields.io/nuget/v/AltV.Net.Async.svg)](https://www.nuget.org/packages/AltV.Net.Async/) [![nuget](https://img.shields.io/nuget/vpre/AltV.Net.Async.svg)](https://www.nuget.org/packages/AltV.Net.Async/)  |
-| [**AltV.Net.EntitySync**](api/AltV.Net.EntitySync)  | [![nuget](https://img.shields.io/nuget/v/AltV.Net.EntitySync.svg)](https://www.nuget.org/packages/AltV.Net.EntitySync/) [![nuget](https://img.shields.io/nuget/vpre/AltV.Net.EntitySync.svg)](https://www.nuget.org/packages/AltV.Net.EntitySync/)  |
+| [**AltV.Net**](/api/AltV.Net)  | [![nuget](https://img.shields.io/nuget/v/AltV.Net.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net/) [![nuget](https://img.shields.io/nuget/vpre/AltV.Net.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net/) [![nuget](https://img.shields.io/nuget/dt/AltV.Net.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net/) |
+| [**AltV.Net.Async**](/api/AltV.Net.Async)  | [![nuget](https://img.shields.io/nuget/v/AltV.Net.Async.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net.Async/) [![nuget](https://img.shields.io/nuget/vpre/AltV.Net.Async.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net.Async/) [![nuget](https://img.shields.io/nuget/dt/AltV.Net.Async.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net.Async/)  |
+| [**AltV.Net.EntitySync**](api/AltV.Net.EntitySync)  | [![nuget](https://img.shields.io/nuget/v/AltV.Net.EntitySync.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net.EntitySync/) [![nuget](https://img.shields.io/nuget/vpre/AltV.Net.EntitySync.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net.EntitySync/) [![nuget](https://img.shields.io/nuget/dt/AltV.Net.EntitySync.svg?style=for-the-badge)](https://www.nuget.org/packages/AltV.Net.EntitySync/)  |
 
 # alt:V C# module
 
