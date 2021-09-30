@@ -1,4 +1,4 @@
-# alt:V JS module
+# alt:V C# module
 
 Repository containing the C# module for [alt:V multiplayer](https://altv.mp/).
 
