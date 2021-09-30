@@ -44,5 +44,11 @@ namespace AltV.Net.Async
                 entity.GetStreamSyncedMetaData<T>(key, out var value);
                 return value;
             });
+
+        public static Task DeleteSyncedMetaDataAsync(this IEntity entity, string key) =>
+            AltVAsync.Schedule(() => entity.DeleteSyncedMetaData(key));
+        
+        public static Task DeleteStreamSyncedMetaDataAsync(this IEntity entity, string key) =>
+            AltVAsync.Schedule(() => entity.DeleteStreamSyncedMetaData(key));
     }
 }

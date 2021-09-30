@@ -1,1 +1,0 @@
-node_modules/protobufjs/bin/pbjs -t json ./entity.proto -o ./gen/bundle.json

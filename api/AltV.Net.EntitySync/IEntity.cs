@@ -24,7 +24,7 @@ namespace AltV.Net.EntitySync
 
         int Dimension { get; set; }
 
-        uint Range { get; }
+        uint Range { get; set; }
         
         uint RangeSquared { get; }
         
