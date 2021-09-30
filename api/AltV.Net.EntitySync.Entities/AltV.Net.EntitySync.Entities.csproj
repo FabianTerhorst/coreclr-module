@@ -3,12 +3,16 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\AltV.Net.EntitySync.ServerEvent\AltV.Net.EntitySync.ServerEvent.csproj" />
       <ProjectReference Include="..\AltV.Net.EntitySync\AltV.Net.EntitySync.csproj" />
       <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />
+      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup>
