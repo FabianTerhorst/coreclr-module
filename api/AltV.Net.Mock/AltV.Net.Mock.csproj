@@ -14,6 +14,9 @@
         <PackageVersion>1.17.2-alpha</PackageVersion>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageReleaseNotes>Update dependencies</PackageReleaseNotes>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
 
     <ItemGroup>
@@ -25,6 +28,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />
+      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     </ItemGroup>
 
     <PropertyGroup>
