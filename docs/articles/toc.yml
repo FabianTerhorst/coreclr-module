@@ -67,5 +67,12 @@
       href: player_change_vehicle_seat.md
     - name: Player damage
       href: player_damage.md
+- name: Vehicle Events
+  href: vehicle_events.md
+  items:
+    - name: Vehicle Damage
+      href: vehicle_damage.md
+    - name: Vehicle Destroy
+      href: vehicle_destroy.md
 - name: Internal Information
   href: internal_information.md
