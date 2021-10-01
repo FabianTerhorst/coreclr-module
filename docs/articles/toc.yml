@@ -63,6 +63,8 @@
       href: player_enter_vehicle.md
     - name: Leave vehicle
       href: player_leave_vehicle.md
+    - name: Change vehicle seat
+      href: player_change_vehicle_seat.md
     - name: Player damage
       href: player_damage.md
 - name: Internal Information
