@@ -129,3 +129,42 @@ alt.onServer("myEventName", (myClass) => {
    ]
 }
 ```
+
+### Step 5 
+
+To send arrays without keys its the same logic.
+
+```csharp
+public class MyClass3 : IWritable
+{
+    public void OnWrite(IMValueWriter writer)
+    {
+        writer.BeginObject(); // We tell the writer to create a object.
+          writer.Name("myInts"); // We tell the writer the next attribute of the object has the name 'myInts'.
+          writer.BeginArray(); // We tell the writer the value for the attribute 'myInts' is a array.
+            for (int i = 0;i < 3;i++ {
+                writer.Value(i); // We add the value to the array 'myInts'
+            }
+          writer.EndArray(); // We tell the writer we are done creating the array
+        writer.EndObject(); // We tell the writer that we are done creating the object.
+    }
+}
+```
+
+Now you can just send a instance of the class.
+
+```csharp
+player.Emit("myEventName", new MyClass3());
+```
+
+This will result in the following js output
+```js
+alt.onServer("myEventName", (myClass) => {
+    alt.log(JSON.stringify(myClass));
+    alt.log(myClass.myInts.length); // 3
+})
+// Console:
+{
+   "myInts":[0,1,2]
+}
+```
