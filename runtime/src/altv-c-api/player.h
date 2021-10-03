@@ -183,6 +183,10 @@ EXPORT void Player_SetInvincible(alt::IPlayer* player, uint8_t state);
 
 EXPORT void Player_SetIntoVehicle(alt::IPlayer* player, alt::IVehicle* vehicle, uint8_t seat);
 
+EXPORT uint8_t Player_IsSuperJumpEnabled(alt::IPlayer* playere);
+EXPORT uint8_t Player_IsCrouching(alt::IPlayer* player);
+EXPORT uint8_t Player_IsStealthy(alt::IPlayer* player);
+
 #ifdef __cplusplus
 }
 #endif

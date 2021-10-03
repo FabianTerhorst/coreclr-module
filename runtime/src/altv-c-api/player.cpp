@@ -512,3 +512,20 @@ void Player_SetInvincible(alt::IPlayer* player, uint8_t state) {
 void Player_SetIntoVehicle(alt::IPlayer* player, alt::IVehicle* vehicle, uint8_t seat) {
     player->SetIntoVehicle(vehicle, seat);
 }
+
+uint8_t Player_IsSuperJumpEnabled(alt::IPlayer* player)
+{
+    return player->IsSuperJumpEnabled();
+}
+
+uint8_t Player_IsCrouching(alt::IPlayer* player)
+{
+    return player->IsCrouching();
+}
+
+uint8_t Player_IsStealthy(alt::IPlayer* player)
+{
+    return player->IsStealthy();
+}
+
+

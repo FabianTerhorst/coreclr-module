@@ -338,6 +338,24 @@ namespace AltV.Net.Elements.Entities
         bool Invincible { get; set; }
 
         void SetIntoVehicle(IVehicle vehicle, byte seat);
+        
+        /// <summary>
+        /// Gets if the player has super jump enabled.
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        bool IsSuperJumpEnabled { get; }
+        
+        /// <summary>
+        /// Gets if the player is crouching.
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        bool IsCrouching { get; }
+        
+        /// <summary>
+        /// Gets if the player is stealthy.
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        bool IsStealthy { get; }
     }
 
     public static class PlayerExtensions

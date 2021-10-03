@@ -1062,6 +1062,42 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public bool IsSuperJumpEnabled
+        {
+            get
+            {
+                CheckIfEntityExists();
+                unsafe
+                {
+                    return Server.Library.Player_IsSuperJumpEnabled(NativePointer) == 1;
+                }
+            }
+        }
+
+        public bool IsCrouching
+        {
+            get
+            {
+                CheckIfEntityExists();
+                unsafe
+                {
+                    return Server.Library.Player_IsCrouching(NativePointer) == 1;
+                }
+            }
+        }
+
+        public bool IsStealthy
+        {
+            get
+            {
+                CheckIfEntityExists();
+                unsafe
+                {
+                    return Server.Library.Player_IsStealthy(NativePointer) == 1;
+                }
+            }
+        }
+
         public bool TryCreateRef(out PlayerRef playerRef)
         {
             playerRef = new PlayerRef(this);
