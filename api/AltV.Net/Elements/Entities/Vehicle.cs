@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
@@ -1664,6 +1665,20 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public Vector3 Velocity
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var position = Vector3.Zero;
+                    Server.Library.Vehicle_GetVelocity(NativePointer, &position);
+                    return position;
+                }
+            }
+        }
+        
         public void Remove()
         {
             Alt.RemoveVehicle(this);
