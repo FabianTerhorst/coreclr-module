@@ -434,6 +434,7 @@ namespace AltV.Net
                                             scriptFunction.Set(engineHealthDamage);
                                             scriptFunction.Set(petrolTankDamage);
                                             scriptFunction.Set(weaponHash);
+                                            scriptFunction.Call();
                                         };
                                     break;
                                 default:
