@@ -59,6 +59,8 @@
       href: player_disconnect.md
     - name: Weapon change
       href: player_weapon_change.md
+    - name: Entering vehicle
+      href: player_entering_vehicle.md
     - name: Enter vehicle
       href: player_enter_vehicle.md
     - name: Leave vehicle
