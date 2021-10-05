@@ -12,9 +12,6 @@ namespace AltV.Net.Async
 {
     public static partial class AltAsync
     {
-        public static IPlayer ToAsync(this IPlayer player, IAsyncContext asyncContext) =>
-            new AsyncPlayer(player, asyncContext);
-        
         public static Task<bool> IsConnectedAsync(this IPlayer player) =>
             AltVAsync.Schedule(() => player.IsConnected);
 

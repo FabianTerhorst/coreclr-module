@@ -11,9 +11,9 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
+                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
-                    AsyncContext.RunAll();
                     return BaseObject.Position;
                 }
             }
@@ -26,9 +26,9 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
+                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
-                    AsyncContext.RunAll();
                     return BaseObject.Dimension;
                 }
             }

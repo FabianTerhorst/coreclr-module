@@ -6,14 +6,85 @@ namespace AltV.Net.Async.Elements.Entities
     [SuppressMessage("ReSharper", "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
     public class AsyncBlip : AsyncWorldObject<IBlip>, IBlip
     {
-        public bool IsGlobal { get; }
-        public bool IsAttached { get; }
-        public IEntity AttachedTo { get; }
-        public byte BlipType { get; }
-        public ushort Sprite { get; set; }
-        public byte Color { get; set; }
-        public bool Route { get; set; }
-        public byte RouteColor { get; set; }
+        public bool IsGlobal
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    return BaseObject.IsGlobal;
+                }
+            }
+        }
+
+        public bool IsAttached
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    return BaseObject.IsAttached;
+                }
+            }
+        }
+
+        public IEntity AttachedTo
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    return BaseObject.AttachedTo;
+                }
+            }
+        }
+
+        public byte BlipType
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    return BaseObject.BlipType;
+                }
+            }
+        }
+
+        public ushort Sprite
+        {
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.Sprite = value);
+            }
+        }
+
+        public byte Color
+        {
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.Color = value);
+            }
+        }
+
+        public bool Route
+        {
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.Route = value);
+            }
+        }
+
+        public byte RouteColor
+        {
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.RouteColor = value);
+            }
+        }
 
         public AsyncBlip(IBlip blip, IAsyncContext asyncContext):base(blip, asyncContext)
         {
@@ -21,7 +92,7 @@ namespace AltV.Net.Async.Elements.Entities
         
         public void Remove()
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunOnMainThreadBlocking(() => BaseObject.Remove());
         }
     }
 }

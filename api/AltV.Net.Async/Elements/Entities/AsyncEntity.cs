@@ -14,9 +14,9 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
+                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
-                    AsyncContext.RunAll();
                     return BaseObject.NetworkOwner;
                 }
             }
@@ -26,9 +26,9 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
+                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
-                    AsyncContext.RunAll();
                     return BaseObject.Rotation;
                 }
             }
@@ -42,9 +42,9 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
+                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
-                    AsyncContext.RunAll();
                     return BaseObject.Model;
                 }
             }
@@ -54,9 +54,9 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
+                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
-                    AsyncContext.RunAll();
                     return BaseObject.Visible;
                 }
             }
@@ -89,9 +89,9 @@ namespace AltV.Net.Async.Elements.Entities
 
         public bool GetSyncedMetaData<T1>(string key, out T1 result)
         {
+            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                AsyncContext.RunAll();
                 return BaseObject.GetSyncedMetaData(key, out result);
             }
         }
@@ -103,9 +103,9 @@ namespace AltV.Net.Async.Elements.Entities
 
         public bool GetStreamSyncedMetaData<T1>(string key, out T1 result)
         {
+            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                AsyncContext.RunAll();
                 return BaseObject.GetStreamSyncedMetaData(key, out result);
             }
         }
@@ -118,36 +118,36 @@ namespace AltV.Net.Async.Elements.Entities
 
         public void GetSyncedMetaData(string key, out MValueConst value)
         {
+            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                AsyncContext.RunAll();
                 BaseObject.GetSyncedMetaData(key, out value);
             }
         }
 
         public bool GetSyncedMetaData(string key, out int value)
         {
+            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                AsyncContext.RunAll();
                 return BaseObject.GetSyncedMetaData(key, out value);
             }
         }
 
         public bool GetSyncedMetaData(string key, out uint value)
         {
+            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                AsyncContext.RunAll();
                 return BaseObject.GetSyncedMetaData(key, out value);
             }
         }
 
         public bool GetSyncedMetaData(string key, out float value)
         {
+            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                AsyncContext.RunAll();
                 return BaseObject.GetSyncedMetaData(key, out value);
             }
         }
@@ -160,45 +160,45 @@ namespace AltV.Net.Async.Elements.Entities
 
         public void GetStreamSyncedMetaData(string key, out MValueConst value)
         {
+            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                AsyncContext.RunAll();
                 BaseObject.GetStreamSyncedMetaData(key, out value);
             }
         }
 
         public bool GetStreamSyncedMetaData(string key, out int value)
         {
+            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                AsyncContext.RunAll();
                 return BaseObject.GetStreamSyncedMetaData(key, out value);
             }
         }
 
         public bool GetStreamSyncedMetaData(string key, out uint value)
         {
+            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                AsyncContext.RunAll();
                 return BaseObject.GetStreamSyncedMetaData(key, out value);
             }
         }
 
         public bool GetStreamSyncedMetaData(string key, out float value)
         {
+            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                AsyncContext.RunAll();
                 return BaseObject.GetStreamSyncedMetaData(key, out value);
             }
         }
 
         public bool HasSyncedMetaData(string key)
         {
+            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                AsyncContext.RunAll();
                 return BaseObject.HasSyncedMetaData(key);
             }
         }
@@ -210,9 +210,9 @@ namespace AltV.Net.Async.Elements.Entities
 
         public bool HasStreamSyncedMetaData(string key)
         {
+            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                AsyncContext.RunAll();
                 return BaseObject.HasStreamSyncedMetaData(key);
             }
         }

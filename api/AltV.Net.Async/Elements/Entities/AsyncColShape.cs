@@ -6,31 +6,65 @@ namespace AltV.Net.Async.Elements.Entities
     [SuppressMessage("ReSharper", "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
     public class AsyncColShape<TColShape> : AsyncWorldObject<TColShape>, IColShape where TColShape: class, IColShape
     {
-        public ColShapeType ColShapeType { get; }
-        public bool IsPlayersOnly { get; set; }
-        
+        public ColShapeType ColShapeType
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    return BaseObject.ColShapeType;
+                }
+            }
+        }
+
+        public bool IsPlayersOnly
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    return BaseObject.IsPlayersOnly;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.IsPlayersOnly = value);
+            }
+        }
+
         public AsyncColShape(TColShape colShape, IAsyncContext asyncContext):base(colShape, asyncContext)
         {
         }
         
         public bool IsEntityIn(IEntity entity)
         {
-            throw new System.NotImplementedException();
+            lock (BaseObject)
+            {
+                return BaseObject.IsEntityIn(entity);
+            }
         }
 
         public bool IsPlayerIn(IPlayer entity)
         {
-            throw new System.NotImplementedException();
+            lock (BaseObject)
+            {
+                return BaseObject.IsPlayerIn(entity);
+            }
         }
 
         public bool IsVehicleIn(IVehicle entity)
         {
-            throw new System.NotImplementedException();
+            lock (BaseObject)
+            {
+                return BaseObject.IsVehicleIn(entity);
+            }
         }
 
         public void Remove()
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunOnMainThreadBlocking(() => BaseObject.Remove());
         }
     }
 }

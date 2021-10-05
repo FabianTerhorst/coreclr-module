@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using AltV.Net.Async.Elements.Entities;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 
@@ -7,9 +6,6 @@ namespace AltV.Net.Async
 {
     public static partial class AltAsync
     {
-        public static IBlip ToAsync(this IBlip blip, IAsyncContext asyncContext) =>
-            new AsyncBlip(blip, asyncContext);
-        
         public static Task<IBlip> CreateBlip(IPlayer player, byte type, Position pos) =>
             AltVAsync.Schedule(() => Alt.CreateBlip(player, type, pos));
 

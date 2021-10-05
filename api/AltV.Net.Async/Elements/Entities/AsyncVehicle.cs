@@ -265,7 +265,7 @@ namespace AltV.Net.Async.Elements.Entities
         public string ScriptData { get; set; }
         public void Remove()
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunOnMainThreadBlocking(() => BaseObject.Remove());
         }
 
         public void Repair()

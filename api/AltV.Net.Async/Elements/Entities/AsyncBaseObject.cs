@@ -40,9 +40,9 @@ namespace AltV.Net.Async.Elements.Entities
 
         public bool GetMetaData<T>(string key, out T result)
         {
+            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                AsyncContext.RunAll();
                 return BaseObject.GetMetaData(key, out result);
             }
         }
@@ -55,9 +55,9 @@ namespace AltV.Net.Async.Elements.Entities
 
         public void GetMetaData(string key, out MValueConst value)
         {
+            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                AsyncContext.RunAll();
                 BaseObject.GetMetaData(key, out value);
             }
         }
@@ -89,9 +89,9 @@ namespace AltV.Net.Async.Elements.Entities
 
         public bool HasMetaData(string key)
         {
+            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                AsyncContext.RunAll();
                 return BaseObject.HasMetaData(key);
             }
         }

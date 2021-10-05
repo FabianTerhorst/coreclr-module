@@ -10,9 +10,9 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
+                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
-                    AsyncContext.RunAll();
                     return BaseObject.IsSpatial;
                 }
             }
@@ -22,9 +22,9 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
+                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
-                    AsyncContext.RunAll();
                     return BaseObject.MaxDistance;
                 }
             }
@@ -56,18 +56,18 @@ namespace AltV.Net.Async.Elements.Entities
 
         public bool HasPlayer(IPlayer player)
         {
+            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                AsyncContext.RunAll();
                 return BaseObject.HasPlayer(player);
             }
         }
 
         public bool IsPlayerMuted(IPlayer player)
         {
+            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                AsyncContext.RunAll();
                 return BaseObject.IsPlayerMuted(player);
             }
         }
