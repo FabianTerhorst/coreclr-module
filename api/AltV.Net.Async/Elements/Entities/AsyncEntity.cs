@@ -8,11 +8,64 @@ namespace AltV.Net.Async.Elements.Entities
     [SuppressMessage("ReSharper", "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
     public class AsyncEntity<TEntity> : AsyncWorldObject<TEntity>, IEntity where TEntity: class, IEntity
     {
-        public ushort Id { get; }
-        public IPlayer NetworkOwner { get; }
-        public Rotation Rotation { get; set; }
-        public uint Model { get; }
-        public bool Visible { get; set; }
+        public ushort Id => BaseObject.Id;
+
+        public IPlayer NetworkOwner
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    AsyncContext.RunAll();
+                    return BaseObject.NetworkOwner;
+                }
+            }
+        }
+
+        public Rotation Rotation
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    AsyncContext.RunAll();
+                    return BaseObject.Rotation;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.Rotation = value);
+            }
+        }
+
+        public uint Model
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    AsyncContext.RunAll();
+                    return BaseObject.Model;
+                }
+            }
+        }
+
+        public bool Visible
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    AsyncContext.RunAll();
+                    return BaseObject.Visible;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.Visible = value);
+            }
+        }
+
         public bool Streamed { get; set; }
         
         public AsyncEntity(TEntity entity, IAsyncContext asyncContext):base(entity, asyncContext)
@@ -21,113 +74,163 @@ namespace AltV.Net.Async.Elements.Entities
         
         public void SetNetworkOwner(IPlayer player, bool disableMigration = true)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetNetworkOwner(player, disableMigration));
         }
 
         public void ResetNetworkOwner()
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.ResetNetworkOwner());
         }
 
         public void SetSyncedMetaData(string key, object value)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetSyncedMetaData(key, value));
         }
 
         public bool GetSyncedMetaData<T1>(string key, out T1 result)
         {
-            throw new System.NotImplementedException();
+            lock (BaseObject)
+            {
+                AsyncContext.RunAll();
+                return BaseObject.GetSyncedMetaData(key, out result);
+            }
         }
 
         public void SetStreamSyncedMetaData(string key, object value)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetStreamSyncedMetaData(key, value));
         }
 
         public bool GetStreamSyncedMetaData<T1>(string key, out T1 result)
         {
-            throw new System.NotImplementedException();
+            lock (BaseObject)
+            {
+                AsyncContext.RunAll();
+                return BaseObject.GetStreamSyncedMetaData(key, out result);
+            }
         }
 
         public void SetSyncedMetaData(string key, in MValueConst value)
         {
-            throw new System.NotImplementedException();
+            var @const = value;
+            AsyncContext.Enqueue(() => BaseObject.SetSyncedMetaData(key, in @const));
         }
 
         public void GetSyncedMetaData(string key, out MValueConst value)
         {
-            throw new System.NotImplementedException();
+            lock (BaseObject)
+            {
+                AsyncContext.RunAll();
+                BaseObject.GetSyncedMetaData(key, out value);
+            }
         }
 
         public bool GetSyncedMetaData(string key, out int value)
         {
-            throw new System.NotImplementedException();
+            lock (BaseObject)
+            {
+                AsyncContext.RunAll();
+                return BaseObject.GetSyncedMetaData(key, out value);
+            }
         }
 
         public bool GetSyncedMetaData(string key, out uint value)
         {
-            throw new System.NotImplementedException();
+            lock (BaseObject)
+            {
+                AsyncContext.RunAll();
+                return BaseObject.GetSyncedMetaData(key, out value);
+            }
         }
 
         public bool GetSyncedMetaData(string key, out float value)
         {
-            throw new System.NotImplementedException();
+            lock (BaseObject)
+            {
+                AsyncContext.RunAll();
+                return BaseObject.GetSyncedMetaData(key, out value);
+            }
         }
 
         public void SetStreamSyncedMetaData(string key, in MValueConst value)
         {
-            throw new System.NotImplementedException();
+            var @const = value;
+            AsyncContext.Enqueue(() => BaseObject.SetSyncedMetaData(key, in @const));
         }
 
         public void GetStreamSyncedMetaData(string key, out MValueConst value)
         {
-            throw new System.NotImplementedException();
+            lock (BaseObject)
+            {
+                AsyncContext.RunAll();
+                BaseObject.GetStreamSyncedMetaData(key, out value);
+            }
         }
 
         public bool GetStreamSyncedMetaData(string key, out int value)
         {
-            throw new System.NotImplementedException();
+            lock (BaseObject)
+            {
+                AsyncContext.RunAll();
+                return BaseObject.GetStreamSyncedMetaData(key, out value);
+            }
         }
 
         public bool GetStreamSyncedMetaData(string key, out uint value)
         {
-            throw new System.NotImplementedException();
+            lock (BaseObject)
+            {
+                AsyncContext.RunAll();
+                return BaseObject.GetStreamSyncedMetaData(key, out value);
+            }
         }
 
         public bool GetStreamSyncedMetaData(string key, out float value)
         {
-            throw new System.NotImplementedException();
+            lock (BaseObject)
+            {
+                AsyncContext.RunAll();
+                return BaseObject.GetStreamSyncedMetaData(key, out value);
+            }
         }
 
         public bool HasSyncedMetaData(string key)
         {
-            throw new System.NotImplementedException();
+            lock (BaseObject)
+            {
+                AsyncContext.RunAll();
+                return BaseObject.HasSyncedMetaData(key);
+            }
         }
 
         public void DeleteSyncedMetaData(string key)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.DeleteSyncedMetaData(key));
         }
 
         public bool HasStreamSyncedMetaData(string key)
         {
-            throw new System.NotImplementedException();
+            lock (BaseObject)
+            {
+                AsyncContext.RunAll();
+                return BaseObject.HasStreamSyncedMetaData(key);
+            }
         }
 
         public void DeleteStreamSyncedMetaData(string key)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.DeleteStreamSyncedMetaData(key));
         }
 
         public void AttachToEntity(IEntity entity, short otherBone, short ownBone, Position position, Rotation rotation,
             bool collision, bool noFixedRotation)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRotation));
         }
 
         public void Detach()
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.Detach());
         }
     }
 }

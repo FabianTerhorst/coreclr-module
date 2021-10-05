@@ -42,6 +42,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
+                AsyncContext.RunAll();
                 return BaseObject.GetMetaData(key, out result);
             }
         }
@@ -56,6 +57,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
+                AsyncContext.RunAll();
                 BaseObject.GetMetaData(key, out value);
             }
         }
@@ -89,16 +91,14 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
+                AsyncContext.RunAll();
                 return BaseObject.HasMetaData(key);
             }
         }
 
         public void DeleteMetaData(string key)
         {
-            lock (BaseObject)
-            {
-                BaseObject.DeleteMetaData(key);
-            }
+            AsyncContext.Enqueue(() => BaseObject.DeleteMetaData(key));
         }
 
         public void CheckIfEntityExists()
