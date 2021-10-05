@@ -418,6 +418,14 @@ namespace AltV.Net.Example
             
             Alt.Emit("eventNameWithEntity", null, vehicle5);
         }
+
+        public async Task EasyAsync(IPlayer player)
+        {
+            await using (var asyncContext = AsyncContext.Create())
+            {
+                var asyncPlayer = player.ToAsync(asyncContext);
+            }
+        }
         
         public static void OnOptionalAndParamArray(int test, params object[] args) {
             Console.WriteLine($"Event<OnOptionalAndParamArray>({test}, [{string.Join(',', Array.ConvertAll(args ?? new object[] {""}, el => el.ToString()))}])");
