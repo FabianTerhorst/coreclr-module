@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using AltV.Net.Async.Elements.Entities;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
@@ -11,6 +12,9 @@ namespace AltV.Net.Async
 {
     public static partial class AltAsync
     {
+        public static IPlayer ToAsync(this IPlayer player, IAsyncContext asyncContext) =>
+            new AsyncPlayer(player, asyncContext);
+        
         public static Task<bool> IsConnectedAsync(this IPlayer player) =>
             AltVAsync.Schedule(() => player.IsConnected);
 
