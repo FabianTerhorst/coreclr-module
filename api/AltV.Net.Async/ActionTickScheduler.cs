@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AltV.Net.Async
@@ -160,10 +161,37 @@ namespace AltV.Net.Async
                 }
             }
         }
+        
+        private readonly struct ActionContainer7
+        {
+            private readonly Action action;
+
+            private readonly SemaphoreSlim semaphoreSlim;
+
+            public ActionContainer7(Action action, SemaphoreSlim semaphoreSlim)
+            {
+                this.action = action;
+                this.semaphoreSlim = semaphoreSlim;
+            }
+
+            public void Run()
+            {
+                try
+                {
+                    action();
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception);
+                }
+
+                semaphoreSlim.Release();
+            }
+        }
 
         private int runs;
 
-        private readonly ConcurrentQueue<Action> actions = new ConcurrentQueue<Action>();
+        private readonly ConcurrentQueue<Action> actions = new ();
 
         public ActionTickScheduler()
         {
@@ -177,6 +205,12 @@ namespace AltV.Net.Async
         public void Schedule(Action<object> action, object state)
         {
             actions.Enqueue(new ActionContainer2(action, state).Run);
+        }
+        
+        public void ScheduleBlocking(Action action, SemaphoreSlim semaphoreSlim)
+        {
+            actions.Enqueue(new ActionContainer7(action, semaphoreSlim).Run);
+            semaphoreSlim.Wait();
         }
 
         public Task ScheduleTask(Action action)

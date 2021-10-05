@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AltV.Net.Async
@@ -18,5 +19,7 @@ namespace AltV.Net.Async
         void Schedule(Action action);
         
         void Schedule(Action<object> action, object state);
+
+        void ScheduleBlocking(Action action, SemaphoreSlim semaphoreSlim);
     }
 }
