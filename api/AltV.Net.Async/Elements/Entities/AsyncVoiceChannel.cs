@@ -6,46 +6,75 @@ namespace AltV.Net.Async.Elements.Entities
     [SuppressMessage("ReSharper", "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
     public class AsyncVoiceChannel : AsyncBaseObject<IVoiceChannel>, IVoiceChannel
     {
-        public bool IsSpatial { get; }
-        public float MaxDistance { get; }
-        
+        public bool IsSpatial
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    AsyncContext.RunAll();
+                    return BaseObject.IsSpatial;
+                }
+            }
+        }
+
+        public float MaxDistance
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    AsyncContext.RunAll();
+                    return BaseObject.MaxDistance;
+                }
+            }
+        }
+
         public AsyncVoiceChannel(IVoiceChannel voiceChannel, IAsyncContext asyncContext):base(voiceChannel, asyncContext)
         {
         }
 
         public void AddPlayer(IPlayer player)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.AddPlayer(player));
         }
 
         public void RemovePlayer(IPlayer player)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.RemovePlayer(player));
         }
 
         public void MutePlayer(IPlayer player)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.MutePlayer(player));
         }
 
         public void UnmutePlayer(IPlayer player)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.UnmutePlayer(player));
         }
 
         public bool HasPlayer(IPlayer player)
         {
-            throw new System.NotImplementedException();
+            lock (BaseObject)
+            {
+                AsyncContext.RunAll();
+                return BaseObject.HasPlayer(player);
+            }
         }
 
         public bool IsPlayerMuted(IPlayer player)
         {
-            throw new System.NotImplementedException();
+            lock (BaseObject)
+            {
+                AsyncContext.RunAll();
+                return BaseObject.IsPlayerMuted(player);
+            }
         }
         
         public void Remove()
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunOnMainThreadBlocking(() => BaseObject.Remove());
         }
     }
 }
