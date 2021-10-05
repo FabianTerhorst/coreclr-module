@@ -139,6 +139,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsSuperJumpEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsCrouching { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsStealthy { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, void> Player_PlayAmbientSpeech { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetNetworkOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetModel { get; }
@@ -595,6 +596,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsSuperJumpEnabled { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsCrouching { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsStealthy { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, void> Player_PlayAmbientSpeech { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetNetworkOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetModel { get; }
@@ -1055,6 +1057,7 @@ namespace AltV.Net.Native
             Player_IsSuperJumpEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsSuperJumpEnabled");
             Player_IsCrouching = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsCrouching");
             Player_IsStealthy = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsStealthy");
+            Player_PlayAmbientSpeech = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint, void>) NativeLibrary.GetExport(handle, "Player_PlayAmbientSpeech");
             Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetID");
             Vehicle_GetNetworkOwner = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetNetworkOwner");
             Vehicle_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Vehicle_GetModel");

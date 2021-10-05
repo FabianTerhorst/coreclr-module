@@ -187,6 +187,8 @@ EXPORT uint8_t Player_IsSuperJumpEnabled(alt::IPlayer* playere);
 EXPORT uint8_t Player_IsCrouching(alt::IPlayer* player);
 EXPORT uint8_t Player_IsStealthy(alt::IPlayer* player);
 
+EXPORT void Player_PlayAmbientSpeech(alt::IPlayer* player, const char* speechName, const char* speechParam, uint32_t speechDictHash);
+
 #ifdef __cplusplus
 }
 #endif

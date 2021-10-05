@@ -287,5 +287,8 @@ namespace AltV.Net.Async
 
         public static Task<bool> IsStealthyAsync(this IPlayer player) =>
             AltVAsync.Schedule(() => player.IsStealthy);
+
+        public static Task PlayAmbientSpeechAsync(this IPlayer player, string speechName, string speechParam, uint speechDictHash) =>
+            AltVAsync.Schedule(() => player.PlayAmbientSpeech(speechName, speechParam, speechDictHash));
     }
 }

@@ -356,6 +356,12 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool IsStealthy { get; }
+        
+        /// <summary>
+        /// Plays ambient speech
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        void PlayAmbientSpeech(string speechName, string speechParam, uint speechHash);
     }
 
     public static class PlayerExtensions

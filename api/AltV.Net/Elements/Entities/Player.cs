@@ -1098,6 +1098,18 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public void PlayAmbientSpeech(string speechName, string speechParam, uint speechDictHash)
+        {
+            unsafe
+            {
+                var speechNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(speechName);
+                var speechParamPtr = AltNative.StringUtils.StringToHGlobalUtf8(speechParam);
+                Server.Library.Player_PlayAmbientSpeech(NativePointer, speechNamePtr, speechParamPtr, speechDictHash);
+                Marshal.FreeHGlobal(speechNamePtr);
+                Marshal.FreeHGlobal(speechParamPtr);
+            }
+        }
+
         public bool TryCreateRef(out PlayerRef playerRef)
         {
             playerRef = new PlayerRef(this);

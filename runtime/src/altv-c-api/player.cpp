@@ -528,4 +528,8 @@ uint8_t Player_IsStealthy(alt::IPlayer* player)
     return player->IsStealthy();
 }
 
+void Player_PlayAmbientSpeech(alt::IPlayer* player, const char* speechName, const char* speechParam, uint32_t speechDictHash)
+{
+    player->PlayAmbientSpeech(speechName, speechParam, speechDictHash);
+}
 
