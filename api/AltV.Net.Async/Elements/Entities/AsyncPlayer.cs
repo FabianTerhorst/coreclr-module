@@ -1,237 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AltV.Net.Data;
-using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Refs;
 
 namespace AltV.Net.Async.Elements.Entities
 {
-    [SuppressMessage("ReSharper", "InconsistentlySynchronizedField")] // we sometimes use player in lock and sometimes not
-    public class AsyncPlayer : IPlayer
+    [SuppressMessage("ReSharper", "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
+    public class AsyncPlayer : AsyncEntity<IPlayer>, IPlayer
     {
-        private readonly IPlayer player;
-
-        private readonly IAsyncContext asyncContext;
-
-        public AsyncPlayer(IPlayer player, IAsyncContext asyncContext)
-        {
-            this.player = player;
-            this.asyncContext = asyncContext;
-        }
-
-        public IntPtr NativePointer { get; }
-        public bool Exists { get; }
-        public BaseObjectType Type { get; }
-        public void SetMetaData(string key, object value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetMetaData<T>(string key, out T result)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetMetaData(string key, in MValueConst value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetMetaData(string key, out MValueConst value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetData(string key, object value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetData<T>(string key, out T result)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool HasData(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<string> GetAllDataKeys()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteData(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool HasMetaData(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteMetaData(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CheckIfEntityExists()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnRemove()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool AddRef()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool RemoveRef()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Position Position
-        {
-            get
-            {
-                lock (player)
-                {
-                    asyncContext.RunAll();
-                    return player.Position;
-                }
-            }
-            set
-            {
-                asyncContext.Enqueue(() => player.Position = value);
-            }
-        }
-        public int Dimension { get; set; }
-        public ushort Id { get; }
-        public IPlayer NetworkOwner { get; }
-        public Rotation Rotation { get; set; }
         public uint Model { get; set; }
-        public bool Visible { get; set; }
-        public bool Streamed { get; set; }
-        public void SetNetworkOwner(IPlayer player, bool disableMigration = true)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ResetNetworkOwner()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetSyncedMetaData(string key, object value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetSyncedMetaData<T>(string key, out T result)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetStreamSyncedMetaData(string key, object value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetStreamSyncedMetaData<T>(string key, out T result)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetSyncedMetaData(string key, in MValueConst value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetSyncedMetaData(string key, out MValueConst value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetSyncedMetaData(string key, out int value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetSyncedMetaData(string key, out uint value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetSyncedMetaData(string key, out float value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetStreamSyncedMetaData(string key, in MValueConst value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetStreamSyncedMetaData(string key, out MValueConst value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetStreamSyncedMetaData(string key, out int value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetStreamSyncedMetaData(string key, out uint value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetStreamSyncedMetaData(string key, out float value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool HasSyncedMetaData(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteSyncedMetaData(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool HasStreamSyncedMetaData(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteStreamSyncedMetaData(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AttachToEntity(IEntity entity, short otherBone, short ownBone, Position position, Rotation rotation,
-            bool collision, bool noFixedRotation)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Detach()
-        {
-            throw new NotImplementedException();
-        }
-
         public bool IsConnected { get; }
         public string Name { get; }
         public ulong SocialClubId { get; }
@@ -260,6 +38,11 @@ namespace AltV.Net.Async.Elements.Entities
         public byte Seat { get; }
         public uint Ping { get; }
         public string Ip { get; }
+        
+        public AsyncPlayer(IPlayer player, IAsyncContext asyncContext):base(player, asyncContext)
+        {
+        }
+        
         public void Spawn(Position position, uint delayMs = 0)
         {
             throw new NotImplementedException();
