@@ -423,7 +423,24 @@ namespace AltV.Net.Example
         {
             await using (var asyncContext = AsyncContext.Create())
             {
+                if (!player.TryToAsync(asyncContext, out var asyncPlayer))
+                {
+                    // Player got removed
+                    return;
+                }
+                asyncPlayer.Position = new Position(1, 2, 3);
+                Console.WriteLine(asyncPlayer.Position);
+            }
+            
+            await using (var asyncContext = AsyncContext.Create())
+            {
                 var asyncPlayer = player.ToAsync(asyncContext);
+                if (asyncPlayer == null) {
+                    // Player got removed
+                    return;
+                }
+                asyncPlayer.Position = new Position(1, 2, 3);
+                Console.WriteLine(asyncPlayer.Position);
             }
         }
         

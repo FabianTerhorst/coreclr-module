@@ -20,7 +20,7 @@ namespace AltV.Net.Async
 
         bool CheckIfExists(IEntity entity);
 
-        bool CreateRef(IBaseObject baseObject);
+        bool CreateRef(IBaseObject baseObject, bool safe = false);
     }
 
     public class AsyncContext : IAsyncContext
@@ -54,14 +54,15 @@ namespace AltV.Net.Async
             actions.AddLast(action);
         }
 
-        public bool CreateRef(IBaseObject baseObject)
+        public bool CreateRef(IBaseObject baseObject, bool safe)
         {
             if (!createRefAutomatically) return true;
             try
             {
                 if (!baseObject.AddRef())
                 {
-                    if (throwOnExistsCheck)
+                    // Check safe to prevent throw on TryToAsync calls
+                    if (!safe && throwOnExistsCheck)
                     {
                         throw baseObject switch
                         {
