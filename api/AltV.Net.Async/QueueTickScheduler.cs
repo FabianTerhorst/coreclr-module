@@ -39,6 +39,47 @@ namespace AltV.Net.Async
         {
             taskFactory.StartNew(action);
         }
+        
+        public void ScheduleBlocking(Action action, SemaphoreSlim semaphoreSlim)
+        {
+            taskFactory.StartNew(() =>
+            {
+                try
+                {
+                    action();
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception);
+                }
+
+                semaphoreSlim.Release();
+            });
+            semaphoreSlim.Wait();
+        }
+        
+        public void ScheduleBlockingThrows(Action action, SemaphoreSlim semaphoreSlim)
+        {
+            Exception exception = null;
+            taskFactory.StartNew(() =>
+            {
+                try
+                {
+                    action();
+                }
+                catch (Exception innerException)
+                {
+                    exception = innerException;
+                }
+
+                semaphoreSlim.Release();
+            });
+            semaphoreSlim.Wait();
+            if (exception != null)
+            {
+                throw exception;
+            }
+        }
 
         public void Schedule(Action<object> action, object state)
         {

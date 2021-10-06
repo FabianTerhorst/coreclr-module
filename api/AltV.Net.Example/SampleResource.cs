@@ -418,6 +418,50 @@ namespace AltV.Net.Example
             
             Alt.Emit("eventNameWithEntity", null, vehicle5);
         }
+
+        public async Task EasyAsync(IPlayer player)
+        {
+            await using (var asyncContext = AsyncContext.Create())
+            {
+                if (!player.TryToAsync(asyncContext, out var asyncPlayer))
+                {
+                    // Player got removed
+                    return;
+                }
+                asyncPlayer.Position = new Position(1, 2, 3);
+                Console.WriteLine(asyncPlayer.Position);
+            }
+            
+            await using (var asyncContext = AsyncContext.Create())
+            {
+                var asyncPlayer = player.ToAsync(asyncContext);
+                if (asyncPlayer == null) {
+                    // Player got removed, throws by default a exception when AsyncContext Create throwOnExistsCheck isn't set to false
+                    return;
+                }
+                asyncPlayer.Position = new Position(1, 2, 3);
+                Console.WriteLine(asyncPlayer.Position);
+            }
+            
+            await using (var asyncContext = AsyncContext.Create(true, true))
+            {
+                // Default:
+                // will throw exceptions when entities don't exists anymore
+                // will create a ref automatically for a entity that is converted to async
+            }
+            
+            await using (var asyncContext = AsyncContext.Create(false, true))
+            {
+                // won't throw exceptions when entities don't exists anymore
+                // will create a ref automatically for a entity that is converted to async
+            }
+            
+            await using (var asyncContext = AsyncContext.Create(false, false))
+            {
+                // won't throw exceptions when entities don't exists anymore
+                // won't create a ref automatically for a entity that is converted to async
+            }
+        }
         
         public static void OnOptionalAndParamArray(int test, params object[] args) {
             Console.WriteLine($"Event<OnOptionalAndParamArray>({test}, [{string.Join(',', Array.ConvertAll(args ?? new object[] {""}, el => el.ToString()))}])");
