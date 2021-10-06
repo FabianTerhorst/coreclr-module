@@ -38,7 +38,7 @@ namespace AltV.Net.Async.Elements.Entities
             set { AsyncContext.Enqueue(() => BaseObject.Rotation = value); }
         }
 
-        public uint Model
+        public virtual uint Model
         {
             get
             {

@@ -10,7 +10,7 @@ namespace AltV.Net.Async.Elements.Entities
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
     public class AsyncPlayer : AsyncEntity<IPlayer>, IPlayer
     {
-        public uint Model
+        public new uint Model
         {
             get
             {
