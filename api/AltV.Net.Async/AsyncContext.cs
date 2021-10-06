@@ -22,7 +22,7 @@ namespace AltV.Net.Async
 
         bool CreateRef(IBaseObject baseObject);
     }
-    
+
     public class AsyncContext : IAsyncContext
     {
         public static IAsyncContext Create(bool throwOnExistsCheck = true, bool createRefAutomatically = true)
@@ -61,6 +61,16 @@ namespace AltV.Net.Async
             {
                 if (!baseObject.AddRef())
                 {
+                    if (throwOnExistsCheck)
+                    {
+                        throw baseObject switch
+                        {
+                            IEntity entity => new EntityRemovedException(entity),
+                            IWorldObject worldObject => new WorldObjectRemovedException(worldObject),
+                            _ => new BaseObjectRemovedException(baseObject)
+                        };
+                    }
+
                     return false;
                 }
             }
@@ -94,9 +104,10 @@ namespace AltV.Net.Async
             {
                 throw new BaseObjectRemovedException(baseObject);
             }
+
             return false;
         }
-        
+
         public bool CheckIfExists(IWorldObject worldObject)
         {
             if (worldObject.Exists) return true;
@@ -107,7 +118,7 @@ namespace AltV.Net.Async
 
             return false;
         }
-        
+
         public bool CheckIfExists(IEntity entity)
         {
             if (entity.Exists) return true;
@@ -138,7 +149,7 @@ namespace AltV.Net.Async
                 } while (!done && current != null);
             });
         }
-        
+
         public ValueTask DisposeAsync()
         {
             RunAll();
