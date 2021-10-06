@@ -3,7 +3,8 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Async.Elements.Entities
 {
-    [SuppressMessage("ReSharper", "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
+    [SuppressMessage("ReSharper",
+        "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
     public class AsyncVoiceChannel : AsyncBaseObject<IVoiceChannel>, IVoiceChannel
     {
         public bool IsSpatial
@@ -32,7 +33,8 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public AsyncVoiceChannel(IVoiceChannel voiceChannel, IAsyncContext asyncContext):base(voiceChannel, asyncContext)
+        public AsyncVoiceChannel(IVoiceChannel voiceChannel, IAsyncContext asyncContext) : base(voiceChannel,
+            asyncContext)
         {
         }
 
@@ -60,8 +62,8 @@ namespace AltV.Net.Async.Elements.Entities
         {
             AsyncContext.RunAll();
             lock (BaseObject)
-                {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                 return BaseObject.HasPlayer(player);
             }
         }
@@ -70,12 +72,12 @@ namespace AltV.Net.Async.Elements.Entities
         {
             AsyncContext.RunAll();
             lock (BaseObject)
-                {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                 return BaseObject.IsPlayerMuted(player);
             }
         }
-        
+
         public void Remove()
         {
             AsyncContext.RunOnMainThreadBlocking(() => BaseObject.Remove());

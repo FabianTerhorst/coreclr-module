@@ -5,7 +5,8 @@ using AltV.Net.Enums;
 
 namespace AltV.Net.Async.Elements.Entities
 {
-    [SuppressMessage("ReSharper", "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
+    [SuppressMessage("ReSharper",
+        "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
     public class AsyncVehicle : AsyncEntity<IVehicle>, IVehicle
     {
         public IPlayer Driver
@@ -45,10 +46,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.ModKit;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.ModKit = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.ModKit = value); }
         }
 
         public byte ModKitsCount
@@ -88,10 +86,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.PrimaryColor;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.PrimaryColor = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.PrimaryColor = value); }
         }
 
         public Rgba PrimaryColorRgb
@@ -105,10 +100,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.PrimaryColorRgb;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.PrimaryColorRgb = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.PrimaryColorRgb = value); }
         }
 
         public bool IsSecondaryColorRgb
@@ -135,10 +127,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.SecondaryColor;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.SecondaryColor = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.SecondaryColor = value); }
         }
 
         public Rgba SecondaryColorRgb
@@ -152,10 +141,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.SecondaryColorRgb;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.SecondaryColorRgb = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.SecondaryColorRgb = value); }
         }
 
         public byte PearlColor
@@ -169,10 +155,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.PearlColor;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.PearlColor = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.PearlColor = value); }
         }
 
         public byte WheelColor
@@ -186,10 +169,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.WheelColor;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.WheelColor = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.WheelColor = value); }
         }
 
         public byte InteriorColor
@@ -203,10 +183,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.InteriorColor;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.InteriorColor = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.InteriorColor = value); }
         }
 
         public byte DashboardColor
@@ -220,10 +197,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.DashboardColor;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.DashboardColor = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.DashboardColor = value); }
         }
 
         public bool IsTireSmokeColorCustom
@@ -250,10 +224,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.TireSmokeColor;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.TireSmokeColor = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.TireSmokeColor = value); }
         }
 
         public byte WheelType
@@ -293,10 +264,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.RearWheel;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.RearWheel = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.RearWheel = value); }
         }
 
         public bool CustomTires
@@ -310,10 +278,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.CustomTires;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.CustomTires = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.CustomTires = value); }
         }
 
         public byte SpecialDarkness
@@ -327,10 +292,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.SpecialDarkness;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.SpecialDarkness = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.SpecialDarkness = value); }
         }
 
         public uint NumberplateIndex
@@ -344,10 +306,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.NumberplateIndex;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.NumberplateIndex = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.NumberplateIndex = value); }
         }
 
         public string NumberplateText
@@ -361,10 +320,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.NumberplateText;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.NumberplateText = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.NumberplateText = value); }
         }
 
         public byte WindowTint
@@ -378,10 +334,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.WindowTint;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.WindowTint = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.WindowTint = value); }
         }
 
         public byte DirtLevel
@@ -395,10 +348,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.DirtLevel;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.DirtLevel = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.DirtLevel = value); }
         }
 
         public Rgba NeonColor
@@ -412,10 +362,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.NeonColor;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.NeonColor = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.NeonColor = value); }
         }
 
         public byte Livery
@@ -429,10 +376,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Livery;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.Livery = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.Livery = value); }
         }
 
         public byte RoofLivery
@@ -446,10 +390,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.RoofLivery;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.RoofLivery = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.RoofLivery = value); }
         }
 
         public string AppearanceData
@@ -463,10 +404,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.AppearanceData;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.AppearanceData = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.AppearanceData = value); }
         }
 
         public IVehicle Attached
@@ -495,10 +433,10 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public AsyncVehicle(IVehicle vehicle, IAsyncContext asyncContext):base(vehicle, asyncContext)
+        public AsyncVehicle(IVehicle vehicle, IAsyncContext asyncContext) : base(vehicle, asyncContext)
         {
         }
-        
+
         public byte GetMod(byte category)
         {
             AsyncContext.RunAll();
@@ -572,6 +510,7 @@ namespace AltV.Net.Async.Elements.Entities
                     back = false;
                     return;
                 }
+
                 BaseObject.GetNeonActive(ref left, ref right, ref top, ref back);
             }
         }
@@ -592,10 +531,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.EngineOn;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.EngineOn = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.EngineOn = value); }
         }
 
         public bool IsHandbrakeActive
@@ -622,10 +558,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.HeadlightColor;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.HeadlightColor = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.HeadlightColor = value); }
         }
 
         public uint RadioStation
@@ -639,10 +572,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.RadioStation;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.RadioStation = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.RadioStation = value); }
         }
 
         public bool SirenActive
@@ -656,10 +586,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.SirenActive;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.SirenActive = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.SirenActive = value); }
         }
 
         public VehicleLockState LockState
@@ -673,10 +600,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.LockState;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.LockState = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.LockState = value); }
         }
 
         public byte GetDoorState(byte doorId)
@@ -746,10 +670,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.RoofState;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.RoofState = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.RoofState = value); }
         }
 
         public bool IsFlamethrowerActive
@@ -776,10 +697,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.LightsMultiplier;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.LightsMultiplier = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.LightsMultiplier = value); }
         }
 
         public string State
@@ -793,10 +711,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.State;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.State = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.State = value); }
         }
 
         public int EngineHealth
@@ -810,10 +725,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.EngineHealth;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.EngineHealth = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.EngineHealth = value); }
         }
 
         public int PetrolTankHealth
@@ -827,10 +739,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.PetrolTankHealth;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.PetrolTankHealth = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.PetrolTankHealth = value); }
         }
 
         public byte WheelsCount
@@ -949,10 +858,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.BodyHealth;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.BodyHealth = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.BodyHealth = value); }
         }
 
         public uint BodyAdditionalHealth
@@ -966,10 +872,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.BodyAdditionalHealth;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.BodyAdditionalHealth = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.BodyAdditionalHealth = value); }
         }
 
         public string HealthData
@@ -983,10 +886,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.HealthData;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.HealthData = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.HealthData = value); }
         }
 
         public byte GetPartDamageLevel(byte partId)
@@ -1133,10 +1033,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.DamageData;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.DamageData = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.DamageData = value); }
         }
 
         public bool ManualEngineControl
@@ -1150,10 +1047,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.ManualEngineControl;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.ManualEngineControl = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.ManualEngineControl = value); }
         }
 
         public string ScriptData
@@ -1167,10 +1061,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.ScriptData;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.ScriptData = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.ScriptData = value); }
         }
 
         public void Remove()

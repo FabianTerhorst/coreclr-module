@@ -71,6 +71,7 @@ namespace AltV.Net.Async.Elements.Entities
                     value = MValueConst.Nil;
                     return;
                 }
+
                 BaseObject.GetMetaData(key, out value);
             }
         }

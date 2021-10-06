@@ -3,7 +3,8 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Async.Elements.Entities
 {
-    [SuppressMessage("ReSharper", "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
+    [SuppressMessage("ReSharper",
+        "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
     public class AsyncBlip : AsyncWorldObject<IBlip>, IBlip
     {
         public bool IsGlobal
@@ -60,40 +61,28 @@ namespace AltV.Net.Async.Elements.Entities
 
         public ushort Sprite
         {
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.Sprite = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.Sprite = value); }
         }
 
         public byte Color
         {
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.Color = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.Color = value); }
         }
 
         public bool Route
         {
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.Route = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.Route = value); }
         }
 
         public byte RouteColor
         {
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.RouteColor = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.RouteColor = value); }
         }
 
-        public AsyncBlip(IBlip blip, IAsyncContext asyncContext):base(blip, asyncContext)
+        public AsyncBlip(IBlip blip, IAsyncContext asyncContext) : base(blip, asyncContext)
         {
         }
-        
+
         public void Remove()
         {
             AsyncContext.RunOnMainThreadBlocking(() => BaseObject.Remove());

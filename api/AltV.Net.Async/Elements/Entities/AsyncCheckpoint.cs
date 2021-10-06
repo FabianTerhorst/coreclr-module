@@ -4,7 +4,8 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Async.Elements.Entities
 {
-    [SuppressMessage("ReSharper", "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
+    [SuppressMessage("ReSharper",
+        "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
     public class AsyncCheckpoint : AsyncColShape<ICheckpoint>, ICheckpoint
     {
         public byte CheckpointType
@@ -18,10 +19,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.CheckpointType;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.CheckpointType = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.CheckpointType = value); }
         }
 
         public float Height
@@ -35,10 +33,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Height;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.Height = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.Height = value); }
         }
 
         public float Radius
@@ -52,10 +47,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Radius;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.Radius = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.Radius = value); }
         }
 
         public Rgba Color
@@ -69,10 +61,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Color;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.Color = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.Color = value); }
         }
 
         public Position NextPosition
@@ -86,13 +75,10 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.NextPosition;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.NextPosition = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.NextPosition = value); }
         }
 
-        public AsyncCheckpoint(ICheckpoint checkpoint, IAsyncContext asyncContext):base(checkpoint, asyncContext)
+        public AsyncCheckpoint(ICheckpoint checkpoint, IAsyncContext asyncContext) : base(checkpoint, asyncContext)
         {
         }
     }
