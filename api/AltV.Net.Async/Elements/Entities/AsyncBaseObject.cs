@@ -18,7 +18,6 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.Exists;
                 }
             }
