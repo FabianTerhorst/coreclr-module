@@ -7,7 +7,7 @@ namespace AltV.Net.Async.Elements.Entities
 {
     [SuppressMessage("ReSharper",
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
-    public class AsyncVehicle : AsyncEntity<IVehicle>, IVehicle
+    public class AsyncVehicle<TVehicle> : AsyncEntity<TVehicle>, IVehicle where TVehicle: class, IVehicle
     {
         public IPlayer Driver
         {
@@ -433,7 +433,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public AsyncVehicle(IVehicle vehicle, IAsyncContext asyncContext) : base(vehicle, asyncContext)
+        public AsyncVehicle(TVehicle vehicle, IAsyncContext asyncContext) : base(vehicle, asyncContext)
         {
         }
 

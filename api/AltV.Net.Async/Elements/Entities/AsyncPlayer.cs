@@ -8,7 +8,7 @@ namespace AltV.Net.Async.Elements.Entities
 {
     [SuppressMessage("ReSharper",
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
-    public class AsyncPlayer : AsyncEntity<IPlayer>, IPlayer
+    public class AsyncPlayer<TPlayer> : AsyncEntity<TPlayer>, IPlayer where TPlayer: class, IPlayer
     {
         public new uint Model
         {
@@ -374,7 +374,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public AsyncPlayer(IPlayer player, IAsyncContext asyncContext) : base(player, asyncContext)
+        public AsyncPlayer(TPlayer player, IAsyncContext asyncContext) : base(player, asyncContext)
         {
         }
 

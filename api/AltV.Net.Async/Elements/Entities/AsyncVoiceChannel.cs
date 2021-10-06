@@ -5,7 +5,7 @@ namespace AltV.Net.Async.Elements.Entities
 {
     [SuppressMessage("ReSharper",
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
-    public class AsyncVoiceChannel : AsyncBaseObject<IVoiceChannel>, IVoiceChannel
+    public class AsyncVoiceChannel<TVoiceChannel> : AsyncBaseObject<TVoiceChannel>, IVoiceChannel where TVoiceChannel: class, IVoiceChannel
     {
         public bool IsSpatial
         {
@@ -33,7 +33,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public AsyncVoiceChannel(IVoiceChannel voiceChannel, IAsyncContext asyncContext) : base(voiceChannel,
+        public AsyncVoiceChannel(TVoiceChannel voiceChannel, IAsyncContext asyncContext) : base(voiceChannel,
             asyncContext)
         {
         }

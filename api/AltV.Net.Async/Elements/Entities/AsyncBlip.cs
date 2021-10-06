@@ -5,7 +5,7 @@ namespace AltV.Net.Async.Elements.Entities
 {
     [SuppressMessage("ReSharper",
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
-    public class AsyncBlip : AsyncWorldObject<IBlip>, IBlip
+    public class AsyncBlip<TBlip> : AsyncWorldObject<TBlip>, IBlip where TBlip: class, IBlip
     {
         public bool IsGlobal
         {
@@ -79,7 +79,7 @@ namespace AltV.Net.Async.Elements.Entities
             set { AsyncContext.Enqueue(() => BaseObject.RouteColor = value); }
         }
 
-        public AsyncBlip(IBlip blip, IAsyncContext asyncContext) : base(blip, asyncContext)
+        public AsyncBlip(TBlip blip, IAsyncContext asyncContext) : base(blip, asyncContext)
         {
         }
 
