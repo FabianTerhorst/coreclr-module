@@ -13,6 +13,7 @@ namespace AltV.Net.Async.Elements.Entities
                 AsyncContext.RunAll();
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.ColShapeType;
                 }
             }
@@ -25,6 +26,7 @@ namespace AltV.Net.Async.Elements.Entities
                 AsyncContext.RunAll();
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.IsPlayersOnly;
                 }
             }
@@ -41,7 +43,8 @@ namespace AltV.Net.Async.Elements.Entities
         public bool IsEntityIn(IEntity entity)
         {
             lock (BaseObject)
-            {
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                 return BaseObject.IsEntityIn(entity);
             }
         }
@@ -49,7 +52,8 @@ namespace AltV.Net.Async.Elements.Entities
         public bool IsPlayerIn(IPlayer entity)
         {
             lock (BaseObject)
-            {
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                 return BaseObject.IsPlayerIn(entity);
             }
         }
@@ -57,7 +61,8 @@ namespace AltV.Net.Async.Elements.Entities
         public bool IsVehicleIn(IVehicle entity)
         {
             lock (BaseObject)
-            {
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                 return BaseObject.IsVehicleIn(entity);
             }
         }

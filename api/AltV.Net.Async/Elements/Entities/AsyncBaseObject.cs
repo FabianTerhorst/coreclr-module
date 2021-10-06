@@ -6,23 +6,26 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Async.Elements.Entities
 {
-    [SuppressMessage("ReSharper", "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
-    public class AsyncBaseObject<TBase> : IBaseObject where TBase: class, IBaseObject
+    [SuppressMessage("ReSharper",
+        "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
+    public class AsyncBaseObject<TBase> : IBaseObject where TBase : class, IBaseObject
     {
         public IntPtr NativePointer => BaseObject.NativePointer;
+
         public bool Exists
         {
             get
             {
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.Exists;
                 }
             }
         }
 
         public BaseObjectType Type => BaseObject.Type;
-        
+
         protected readonly TBase BaseObject;
 
         protected readonly IAsyncContext AsyncContext;
@@ -32,7 +35,7 @@ namespace AltV.Net.Async.Elements.Entities
             this.BaseObject = baseObject;
             this.AsyncContext = asyncContext;
         }
-        
+
         public void SetMetaData(string key, object value)
         {
             AsyncContext.Enqueue(() => BaseObject.SetMetaData(key, value));
@@ -43,6 +46,12 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext.RunAll();
             lock (BaseObject)
             {
+                if (!AsyncContext.CheckIfExists(BaseObject))
+                {
+                    result = default;
+                    return false;
+                }
+
                 return BaseObject.GetMetaData(key, out result);
             }
         }
@@ -58,6 +67,11 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext.RunAll();
             lock (BaseObject)
             {
+                if (!AsyncContext.CheckIfExists(BaseObject))
+                {
+                    value = MValueConst.Nil;
+                    return;
+                }
                 BaseObject.GetMetaData(key, out value);
             }
         }
@@ -92,6 +106,7 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext.RunAll();
             lock (BaseObject)
             {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                 return BaseObject.HasMetaData(key);
             }
         }

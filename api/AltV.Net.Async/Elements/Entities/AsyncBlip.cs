@@ -13,6 +13,7 @@ namespace AltV.Net.Async.Elements.Entities
                 AsyncContext.RunAll();
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.IsGlobal;
                 }
             }
@@ -25,6 +26,7 @@ namespace AltV.Net.Async.Elements.Entities
                 AsyncContext.RunAll();
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.IsAttached;
                 }
             }
@@ -37,6 +39,7 @@ namespace AltV.Net.Async.Elements.Entities
                 AsyncContext.RunAll();
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.AttachedTo;
                 }
             }
@@ -49,6 +52,7 @@ namespace AltV.Net.Async.Elements.Entities
                 AsyncContext.RunAll();
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.BlipType;
                 }
             }

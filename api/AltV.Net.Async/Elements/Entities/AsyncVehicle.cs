@@ -8,261 +8,1171 @@ namespace AltV.Net.Async.Elements.Entities
     [SuppressMessage("ReSharper", "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
     public class AsyncVehicle : AsyncEntity<IVehicle>, IVehicle
     {
-        public IPlayer Driver { get; }
-        public bool IsDestroyed { get; }
-        public byte ModKit { get; set; }
-        public byte ModKitsCount { get; }
-        public bool IsPrimaryColorRgb { get; }
-        public byte PrimaryColor { get; set; }
-        public Rgba PrimaryColorRgb { get; set; }
-        public bool IsSecondaryColorRgb { get; }
-        public byte SecondaryColor { get; set; }
-        public Rgba SecondaryColorRgb { get; set; }
-        public byte PearlColor { get; set; }
-        public byte WheelColor { get; set; }
-        public byte InteriorColor { get; set; }
-        public byte DashboardColor { get; set; }
-        public bool IsTireSmokeColorCustom { get; }
-        public Rgba TireSmokeColor { get; set; }
-        public byte WheelType { get; }
-        public byte WheelVariation { get; }
-        public byte RearWheel { get; set; }
-        public bool CustomTires { get; set; }
-        public byte SpecialDarkness { get; set; }
-        public uint NumberplateIndex { get; set; }
-        public string NumberplateText { get; set; }
-        public byte WindowTint { get; set; }
-        public byte DirtLevel { get; set; }
-        public Rgba NeonColor { get; set; }
-        public byte Livery { get; set; }
-        public byte RoofLivery { get; set; }
-        public string AppearanceData { get; set; }
-        public IVehicle Attached { get; }
-        public IVehicle AttachedTo { get; }
-        
+        public IPlayer Driver
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.Driver;
+                }
+            }
+        }
+
+        public bool IsDestroyed
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsDestroyed;
+                }
+            }
+        }
+
+        public byte ModKit
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.ModKit;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.ModKit = value);
+            }
+        }
+
+        public byte ModKitsCount
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.ModKitsCount;
+                }
+            }
+        }
+
+        public bool IsPrimaryColorRgb
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsPrimaryColorRgb;
+                }
+            }
+        }
+
+        public byte PrimaryColor
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.PrimaryColor;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.PrimaryColor = value);
+            }
+        }
+
+        public Rgba PrimaryColorRgb
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.PrimaryColorRgb;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.PrimaryColorRgb = value);
+            }
+        }
+
+        public bool IsSecondaryColorRgb
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsSecondaryColorRgb;
+                }
+            }
+        }
+
+        public byte SecondaryColor
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.SecondaryColor;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.SecondaryColor = value);
+            }
+        }
+
+        public Rgba SecondaryColorRgb
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.SecondaryColorRgb;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.SecondaryColorRgb = value);
+            }
+        }
+
+        public byte PearlColor
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.PearlColor;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.PearlColor = value);
+            }
+        }
+
+        public byte WheelColor
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.WheelColor;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.WheelColor = value);
+            }
+        }
+
+        public byte InteriorColor
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.InteriorColor;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.InteriorColor = value);
+            }
+        }
+
+        public byte DashboardColor
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.DashboardColor;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.DashboardColor = value);
+            }
+        }
+
+        public bool IsTireSmokeColorCustom
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsTireSmokeColorCustom;
+                }
+            }
+        }
+
+        public Rgba TireSmokeColor
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.TireSmokeColor;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.TireSmokeColor = value);
+            }
+        }
+
+        public byte WheelType
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.WheelType;
+                }
+            }
+        }
+
+        public byte WheelVariation
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.WheelVariation;
+                }
+            }
+        }
+
+        public byte RearWheel
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.RearWheel;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.RearWheel = value);
+            }
+        }
+
+        public bool CustomTires
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.CustomTires;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.CustomTires = value);
+            }
+        }
+
+        public byte SpecialDarkness
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.SpecialDarkness;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.SpecialDarkness = value);
+            }
+        }
+
+        public uint NumberplateIndex
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.NumberplateIndex;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.NumberplateIndex = value);
+            }
+        }
+
+        public string NumberplateText
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.NumberplateText;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.NumberplateText = value);
+            }
+        }
+
+        public byte WindowTint
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.WindowTint;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.WindowTint = value);
+            }
+        }
+
+        public byte DirtLevel
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.DirtLevel;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.DirtLevel = value);
+            }
+        }
+
+        public Rgba NeonColor
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.NeonColor;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.NeonColor = value);
+            }
+        }
+
+        public byte Livery
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.Livery;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.Livery = value);
+            }
+        }
+
+        public byte RoofLivery
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.RoofLivery;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.RoofLivery = value);
+            }
+        }
+
+        public string AppearanceData
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.AppearanceData;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.AppearanceData = value);
+            }
+        }
+
+        public IVehicle Attached
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.Attached;
+                }
+            }
+        }
+
+        public IVehicle AttachedTo
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.AttachedTo;
+                }
+            }
+        }
+
         public AsyncVehicle(IVehicle vehicle, IAsyncContext asyncContext):base(vehicle, asyncContext)
         {
         }
         
         public byte GetMod(byte category)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetMod(category);
+            }
         }
 
         public byte GetModsCount(byte category)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetModsCount(category);
+            }
         }
 
         public bool SetMod(byte category, byte id)
         {
-            throw new System.NotImplementedException();
+            var result = false;
+            AsyncContext.Enqueue(() => result = BaseObject.SetMod(category, id));
+            return result;
         }
 
         public void SetWheels(byte type, byte variation)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetWheels(type, variation));
         }
 
         public bool IsExtraOn(byte extraId)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return false;
+                return BaseObject.IsExtraOn(extraId);
+            }
         }
 
         public void ToggleExtra(byte extraId, bool state)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.ToggleExtra(extraId, state));
         }
 
-        public bool IsNeonActive { get; }
+        public bool IsNeonActive
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsNeonActive;
+                }
+            }
+        }
+
         public void GetNeonActive(ref bool left, ref bool right, ref bool top, ref bool back)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject))
+                {
+                    left = false;
+                    right = false;
+                    top = false;
+                    back = false;
+                    return;
+                }
+                BaseObject.GetNeonActive(ref left, ref right, ref top, ref back);
+            }
         }
 
         public void SetNeonActive(bool left, bool right, bool top, bool back)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetNeonActive(left, right, top, back));
         }
 
-        public bool EngineOn { get; set; }
-        public bool IsHandbrakeActive { get; }
-        public byte HeadlightColor { get; set; }
-        public uint RadioStation { get; set; }
-        public bool SirenActive { get; set; }
-        public VehicleLockState LockState { get; set; }
+        public bool EngineOn
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.EngineOn;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.EngineOn = value);
+            }
+        }
+
+        public bool IsHandbrakeActive
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsHandbrakeActive;
+                }
+            }
+        }
+
+        public byte HeadlightColor
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.HeadlightColor;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.HeadlightColor = value);
+            }
+        }
+
+        public uint RadioStation
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.RadioStation;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.RadioStation = value);
+            }
+        }
+
+        public bool SirenActive
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.SirenActive;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.SirenActive = value);
+            }
+        }
+
+        public VehicleLockState LockState
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.LockState;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.LockState = value);
+            }
+        }
+
         public byte GetDoorState(byte doorId)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetDoorState(doorId);
+            }
         }
 
         public void SetDoorState(byte doorId, byte state)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetDoorState(doorId, state));
         }
 
         public bool IsWindowOpened(byte windowId)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return false;
+                return BaseObject.IsWindowOpened(windowId);
+            }
         }
 
         public void SetWindowOpened(byte windowId, bool state)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetWindowOpened(windowId, state));
         }
 
-        public bool IsDaylightOn { get; }
-        public bool IsNightlightOn { get; }
-        public byte RoofState { get; set; }
-        public bool IsFlamethrowerActive { get; }
-        public float LightsMultiplier { get; set; }
-        public string State { get; set; }
-        public int EngineHealth { get; set; }
-        public int PetrolTankHealth { get; set; }
-        public byte WheelsCount { get; }
+        public bool IsDaylightOn
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsDaylightOn;
+                }
+            }
+        }
+
+        public bool IsNightlightOn
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsNightlightOn;
+                }
+            }
+        }
+
+        public byte RoofState
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.RoofState;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.RoofState = value);
+            }
+        }
+
+        public bool IsFlamethrowerActive
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsFlamethrowerActive;
+                }
+            }
+        }
+
+        public float LightsMultiplier
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.LightsMultiplier;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.LightsMultiplier = value);
+            }
+        }
+
+        public string State
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.State;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.State = value);
+            }
+        }
+
+        public int EngineHealth
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.EngineHealth;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.EngineHealth = value);
+            }
+        }
+
+        public int PetrolTankHealth
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.PetrolTankHealth;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.PetrolTankHealth = value);
+            }
+        }
+
+        public byte WheelsCount
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.WheelsCount;
+                }
+            }
+        }
+
         public bool IsWheelBurst(byte wheelId)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return false;
+                return BaseObject.IsWheelBurst(wheelId);
+            }
         }
 
         public void SetWheelBurst(byte wheelId, bool state)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetWheelBurst(wheelId, state));
         }
 
         public bool DoesWheelHasTire(byte wheelId)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return false;
+                return BaseObject.DoesWheelHasTire(wheelId);
+            }
         }
 
         public void SetWheelHasTire(byte wheelId, bool state)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetWheelHasTire(wheelId, state));
         }
 
         public bool IsWheelDetached(byte wheelId)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return false;
+                return BaseObject.IsWheelDetached(wheelId);
+            }
         }
 
         public void SetWheelDetached(byte wheelId, bool state)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetWheelDetached(wheelId, state));
         }
 
         public bool IsWheelOnFire(byte wheelId)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return false;
+                return BaseObject.IsWheelOnFire(wheelId);
+            }
         }
 
         public void SetWheelOnFire(byte wheelId, bool state)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetWheelOnFire(wheelId, state));
         }
 
         public float GetWheelHealth(byte wheelId)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetWheelHealth(wheelId);
+            }
         }
 
         public void SetWheelHealth(byte wheelId, float health)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetWheelHealth(wheelId, health));
         }
 
         public void SetWheelFixed(byte wheelId)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetWheelFixed(wheelId));
         }
 
-        public byte RepairsCount { get; }
-        public uint BodyHealth { get; set; }
-        public uint BodyAdditionalHealth { get; set; }
-        public string HealthData { get; set; }
+        public byte RepairsCount
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.RepairsCount;
+                }
+            }
+        }
+
+        public uint BodyHealth
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.BodyHealth;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.BodyHealth = value);
+            }
+        }
+
+        public uint BodyAdditionalHealth
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.BodyAdditionalHealth;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.BodyAdditionalHealth = value);
+            }
+        }
+
+        public string HealthData
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.HealthData;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.HealthData = value);
+            }
+        }
+
         public byte GetPartDamageLevel(byte partId)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetPartDamageLevel(partId);
+            }
         }
 
         public void SetPartDamageLevel(byte partId, byte damage)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetPartDamageLevel(partId, damage));
         }
 
         public byte GetPartBulletHoles(byte partId)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetPartBulletHoles(partId);
+            }
         }
 
         public void SetPartBulletHoles(byte partId, byte shootsCount)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetPartBulletHoles(partId, shootsCount));
         }
 
         public bool IsLightDamaged(byte lightId)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return false;
+                return BaseObject.IsLightDamaged(lightId);
+            }
         }
 
         public void SetLightDamaged(byte lightId, bool isDamaged)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetLightDamaged(lightId, isDamaged));
         }
 
         public bool IsWindowDamaged(byte windowId)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return false;
+                return BaseObject.IsWindowDamaged(windowId);
+            }
         }
 
         public void SetWindowDamaged(byte windowId, bool isDamaged)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetWindowDamaged(windowId, isDamaged));
         }
 
         public bool IsSpecialLightDamaged(byte specialLightId)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return false;
+                return BaseObject.IsSpecialLightDamaged(specialLightId);
+            }
         }
 
         public void SetSpecialLightDamaged(byte specialLightId, bool isDamaged)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetSpecialLightDamaged(specialLightId, isDamaged));
         }
 
-        public bool HasArmoredWindows { get; }
+        public bool HasArmoredWindows
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.HasArmoredWindows;
+                }
+            }
+        }
+
         public float GetArmoredWindowHealth(byte windowId)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetArmoredWindowHealth(windowId);
+            }
         }
 
         public void SetArmoredWindowHealth(byte windowId, float health)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetArmoredWindowHealth(windowId, health));
         }
 
         public byte GetArmoredWindowShootCount(byte windowId)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetArmoredWindowShootCount(windowId);
+            }
         }
 
         public void SetArmoredWindowShootCount(byte windowId, byte count)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetArmoredWindowShootCount(windowId, count));
         }
 
         public byte GetBumperDamageLevel(byte bumperId)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetBumperDamageLevel(bumperId);
+            }
         }
 
         public void SetBumperDamageLevel(byte bumperId, byte damageLevel)
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetPartBulletHoles(bumperId, damageLevel));
         }
 
-        public string DamageData { get; set; }
-        public bool ManualEngineControl { get; set; }
-        public string ScriptData { get; set; }
+        public string DamageData
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.DamageData;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.DamageData = value);
+            }
+        }
+
+        public bool ManualEngineControl
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.ManualEngineControl;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.ManualEngineControl = value);
+            }
+        }
+
+        public string ScriptData
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.ScriptData;
+                }
+            }
+            set
+            {
+                AsyncContext.Enqueue(() => BaseObject.ScriptData = value);
+            }
+        }
+
         public void Remove()
         {
             AsyncContext.RunOnMainThreadBlocking(() => BaseObject.Remove());
@@ -270,7 +1180,7 @@ namespace AltV.Net.Async.Elements.Entities
 
         public void Repair()
         {
-            throw new System.NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.Repair());
         }
     }
 }

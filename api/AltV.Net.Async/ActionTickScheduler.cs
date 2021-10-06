@@ -188,6 +188,36 @@ namespace AltV.Net.Async
                 semaphoreSlim.Release();
             }
         }
+        
+        private struct ActionContainer8
+        {
+            private readonly Action action;
+
+            private readonly SemaphoreSlim semaphoreSlim;
+
+            public Exception Exception;
+
+            public ActionContainer8(Action action, SemaphoreSlim semaphoreSlim, Exception exception)
+            {
+                this.action = action;
+                this.semaphoreSlim = semaphoreSlim;
+                Exception = exception;
+            }
+
+            public void Run()
+            {
+                try
+                {
+                    action();
+                }
+                catch (Exception exception)
+                {
+                    Exception = exception;
+                }
+
+                semaphoreSlim.Release();
+            }
+        }
 
         private int runs;
 
@@ -211,6 +241,17 @@ namespace AltV.Net.Async
         {
             actions.Enqueue(new ActionContainer7(action, semaphoreSlim).Run);
             semaphoreSlim.Wait();
+        }
+        
+        public void ScheduleBlockingThrows(Action action, SemaphoreSlim semaphoreSlim)
+        {
+            var container = new ActionContainer8(action, semaphoreSlim, null);
+            actions.Enqueue(container.Run);
+            semaphoreSlim.Wait();
+            if (container.Exception != null)
+            {
+                throw container.Exception;
+            }
         }
 
         public Task ScheduleTask(Action action)

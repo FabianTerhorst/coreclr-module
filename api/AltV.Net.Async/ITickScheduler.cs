@@ -21,5 +21,7 @@ namespace AltV.Net.Async
         void Schedule(Action<object> action, object state);
 
         void ScheduleBlocking(Action action, SemaphoreSlim semaphoreSlim);
+
+        void ScheduleBlockingThrows(Action action, SemaphoreSlim semaphoreSlim);
     }
 }

@@ -14,6 +14,7 @@ namespace AltV.Net.Async.Elements.Entities
                 AsyncContext.RunAll();
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.CheckpointType;
                 }
             }
@@ -30,6 +31,7 @@ namespace AltV.Net.Async.Elements.Entities
                 AsyncContext.RunAll();
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.Height;
                 }
             }
@@ -46,6 +48,7 @@ namespace AltV.Net.Async.Elements.Entities
                 AsyncContext.RunAll();
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.Radius;
                 }
             }
@@ -62,6 +65,7 @@ namespace AltV.Net.Async.Elements.Entities
                 AsyncContext.RunAll();
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.Color;
                 }
             }
@@ -78,6 +82,7 @@ namespace AltV.Net.Async.Elements.Entities
                 AsyncContext.RunAll();
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.NextPosition;
                 }
             }

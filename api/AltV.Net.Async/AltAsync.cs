@@ -237,6 +237,12 @@ namespace AltV.Net.Async
             CheckIfAsyncResource();
             AltVAsync.ScheduleBlocking(action, semaphoreSlim);
         }
+        
+        public static void RunOnMainThreadBlockingThrows(Action action, SemaphoreSlim semaphoreSlim)
+        {
+            CheckIfAsyncResource();
+            AltVAsync.ScheduleBlockingThrows(action, semaphoreSlim);
+        }
 
         public static Task Do(Action<object> action, object value)
         {

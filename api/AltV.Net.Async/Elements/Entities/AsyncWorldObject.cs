@@ -14,6 +14,7 @@ namespace AltV.Net.Async.Elements.Entities
                 AsyncContext.RunAll();
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.Position;
                 }
             }
@@ -29,6 +30,7 @@ namespace AltV.Net.Async.Elements.Entities
                 AsyncContext.RunAll();
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.Dimension;
                 }
             }

@@ -13,6 +13,7 @@ namespace AltV.Net.Async.Elements.Entities
                 AsyncContext.RunAll();
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.IsSpatial;
                 }
             }
@@ -25,6 +26,7 @@ namespace AltV.Net.Async.Elements.Entities
                 AsyncContext.RunAll();
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.MaxDistance;
                 }
             }
@@ -58,7 +60,8 @@ namespace AltV.Net.Async.Elements.Entities
         {
             AsyncContext.RunAll();
             lock (BaseObject)
-            {
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                 return BaseObject.HasPlayer(player);
             }
         }
@@ -67,7 +70,8 @@ namespace AltV.Net.Async.Elements.Entities
         {
             AsyncContext.RunAll();
             lock (BaseObject)
-            {
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                 return BaseObject.IsPlayerMuted(player);
             }
         }

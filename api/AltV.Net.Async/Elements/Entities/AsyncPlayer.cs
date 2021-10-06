@@ -6,207 +6,631 @@ using AltV.Net.Elements.Refs;
 
 namespace AltV.Net.Async.Elements.Entities
 {
-    [SuppressMessage("ReSharper", "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
+    [SuppressMessage("ReSharper",
+        "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
     public class AsyncPlayer : AsyncEntity<IPlayer>, IPlayer
     {
-        public uint Model { get; set; }
-        public bool IsConnected { get; }
-        public string Name { get; }
-        public ulong SocialClubId { get; }
-        public ulong HardwareIdHash { get; }
-        public ulong HardwareIdExHash { get; }
-        public string AuthToken { get; }
-        public ushort Health { get; set; }
-        public ushort MaxHealth { get; set; }
-        public bool IsDead { get; }
-        public bool IsJumping { get; }
-        public bool IsInRagdoll { get; }
-        public bool IsAiming { get; }
-        public bool IsShooting { get; }
-        public bool IsReloading { get; }
-        public ushort Armor { get; set; }
-        public ushort MaxArmor { get; set; }
-        public float MoveSpeed { get; }
-        public Position AimPosition { get; }
-        public Rotation HeadRotation { get; }
-        public bool IsInVehicle { get; }
-        public IVehicle Vehicle { get; }
-        public uint CurrentWeapon { get; set; }
-        public IEntity EntityAimingAt { get; }
-        public Position EntityAimOffset { get; }
-        public bool IsFlashlightActive { get; }
-        public byte Seat { get; }
-        public uint Ping { get; }
-        public string Ip { get; }
-        
-        public AsyncPlayer(IPlayer player, IAsyncContext asyncContext):base(player, asyncContext)
+        public uint Model
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.Model;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.Model = value); }
+        }
+
+        public bool IsConnected
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsConnected;
+                }
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.Name;
+                }
+            }
+        }
+
+        public ulong SocialClubId
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.SocialClubId;
+                }
+            }
+        }
+
+        public ulong HardwareIdHash
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.HardwareIdHash;
+                }
+            }
+        }
+
+        public ulong HardwareIdExHash
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.HardwareIdExHash;
+                }
+            }
+        }
+
+        public string AuthToken
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.AuthToken;
+                }
+            }
+        }
+
+        public ushort Health
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.Health;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.Health = value); }
+        }
+
+        public ushort MaxHealth
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.MaxHealth;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.MaxHealth = value); }
+        }
+
+        public bool IsDead
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsDead;
+                }
+            }
+        }
+
+        public bool IsJumping
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsJumping;
+                }
+            }
+        }
+
+        public bool IsInRagdoll
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsInRagdoll;
+                }
+            }
+        }
+
+        public bool IsAiming
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsAiming;
+                }
+            }
+        }
+
+        public bool IsShooting
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsShooting;
+                }
+            }
+        }
+
+        public bool IsReloading
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsReloading;
+                }
+            }
+        }
+
+        public ushort Armor
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.Armor;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.Armor = value); }
+        }
+
+        public ushort MaxArmor
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.MaxArmor;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.MaxArmor = value); }
+        }
+
+        public float MoveSpeed
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.MoveSpeed;
+                }
+            }
+        }
+
+        public Position AimPosition
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.AimPosition;
+                }
+            }
+        }
+
+        public Rotation HeadRotation
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.HeadRotation;
+                }
+            }
+        }
+
+        public bool IsInVehicle
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsInVehicle;
+                }
+            }
+        }
+
+        public IVehicle Vehicle
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.Vehicle;
+                }
+            }
+        }
+
+        public uint CurrentWeapon
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.CurrentWeapon;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.CurrentWeapon = value); }
+        }
+
+        public IEntity EntityAimingAt
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.EntityAimingAt;
+                }
+            }
+        }
+
+        public Position EntityAimOffset
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.EntityAimOffset;
+                }
+            }
+        }
+
+        public bool IsFlashlightActive
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsFlashlightActive;
+                }
+            }
+        }
+
+        public byte Seat
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.Seat;
+                }
+            }
+        }
+
+        public uint Ping
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.Ping;
+                }
+            }
+        }
+
+        public string Ip
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.Ip;
+                }
+            }
+        }
+
+        public AsyncPlayer(IPlayer player, IAsyncContext asyncContext) : base(player, asyncContext)
         {
         }
-        
+
         public void Spawn(Position position, uint delayMs = 0)
         {
-            throw new NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.Spawn(position, delayMs));
         }
 
         public void Despawn()
         {
-            throw new NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.Despawn());
         }
 
         public void SetDateTime(int day, int month, int year, int hour, int minute, int second)
         {
-            throw new NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetDateTime(day, month, year, hour, minute, second));
         }
 
         public void SetWeather(uint weather)
         {
-            throw new NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetWeather(weather));
         }
 
         public void GiveWeapon(uint weapon, int ammo, bool selectWeapon)
         {
-            throw new NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.GiveWeapon(weapon, ammo, selectWeapon));
         }
 
         public bool RemoveWeapon(uint weapon)
         {
-            throw new NotImplementedException();
+            bool result = default;
+            AsyncContext.RunOnMainThreadBlocking(() => result = BaseObject.RemoveWeapon(weapon));
+            return result;
         }
 
         public void RemoveAllWeapons()
         {
-            throw new NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.RemoveAllWeapons());
         }
 
         public void Kick(string reason)
         {
-            throw new NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.Kick(reason));
         }
 
         public void Emit(string eventName, params object[] args)
         {
-            throw new NotImplementedException();
+            BaseObject.EmitLocked(eventName, args);
         }
 
         public void AddWeaponComponent(uint weapon, uint weaponComponent)
         {
-            throw new NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.AddWeaponComponent(weapon, weaponComponent));
         }
 
         public void RemoveWeaponComponent(uint weapon, uint weaponComponent)
         {
-            throw new NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.RemoveWeaponComponent(weapon, weaponComponent));
         }
 
         public bool HasWeaponComponent(uint weapon, uint weaponComponent)
         {
-            throw new NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return false;
+                return BaseObject.HasWeaponComponent(weapon, weaponComponent);
+            }
         }
 
         public void GetCurrentWeaponComponents(out uint[] weaponComponents)
         {
-            throw new NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject))
+                {
+                    weaponComponents = Array.Empty<uint>();
+                    return;
+                }
+
+                BaseObject.GetCurrentWeaponComponents(out weaponComponents);
+            }
         }
 
         public void SetWeaponTintIndex(uint weapon, byte tintIndex)
         {
-            throw new NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetWeaponTintIndex(weapon, tintIndex));
         }
 
         public byte GetWeaponTintIndex(uint weapon)
         {
-            throw new NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetWeaponTintIndex(weapon);
+            }
         }
 
         public byte GetCurrentWeaponTintIndex()
         {
-            throw new NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetCurrentWeaponTintIndex();
+            }
         }
 
         public void ClearBloodDamage()
         {
-            throw new NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                BaseObject.ClearBloodDamage();
+            }
         }
 
         public Cloth GetClothes(byte component)
         {
-            throw new NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetClothes(component);
+            }
         }
 
         public void GetClothes(byte component, ref Cloth cloth)
         {
-            throw new NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                BaseObject.GetClothes(component, ref cloth);
+            }
         }
 
         public void SetClothes(byte component, ushort drawable, byte texture, byte palette)
         {
-            throw new NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetClothes(component, drawable, texture, palette));
         }
 
         public DlcCloth GetDlcClothes(byte component)
         {
-            throw new NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetDlcClothes(component);
+            }
         }
 
         public void GetDlcClothes(byte component, ref DlcCloth cloth)
         {
-            throw new NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                BaseObject.GetDlcClothes(component, ref cloth);
+            }
         }
 
         public void SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc)
         {
-            throw new NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetDlcClothes(component, drawable, texture, palette, dlc));
         }
 
         public Prop GetProps(byte component)
         {
-            throw new NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetProps(component);
+            }
         }
 
         public void GetProps(byte component, ref Prop prop)
         {
-            throw new NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                BaseObject.GetProps(component, ref prop);
+            }
         }
 
         public void SetProps(byte component, ushort drawable, byte texture)
         {
-            throw new NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetProps(component, drawable, texture));
         }
 
         public DlcProp GetDlcProps(byte component)
         {
-            throw new NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetDlcProps(component);
+            }
         }
 
         public void GetDlcProps(byte component, ref DlcProp prop)
         {
-            throw new NotImplementedException();
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                BaseObject.GetDlcProps(component, ref prop);
+            }
         }
 
         public void SetDlcProps(byte component, ushort drawable, byte texture, uint dlc)
         {
-            throw new NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetDlcProps(component, drawable, texture, dlc));
         }
 
         public void ClearProps(byte component)
         {
-            throw new NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.ClearProps(component));
         }
 
         public bool IsEntityInStreamingRange(IEntity entity)
         {
-            throw new NotImplementedException();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.IsEntityInStreamingRange(entity);
+            }
         }
 
         public bool TryCreateRef(out PlayerRef playerRef)
         {
-            throw new NotImplementedException();
+            return BaseObject.TryCreateRef(out playerRef);
         }
 
-        public bool Invincible { get; set; }
+        public bool Invincible
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.Invincible;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.Invincible = value); }
+        }
+
         public void SetIntoVehicle(IVehicle vehicle, byte seat)
         {
-            throw new NotImplementedException();
+            AsyncContext.Enqueue(() => BaseObject.SetIntoVehicle(vehicle, seat));
         }
     }
 }

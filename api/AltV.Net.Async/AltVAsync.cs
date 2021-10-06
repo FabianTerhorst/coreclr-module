@@ -61,6 +61,18 @@ namespace AltV.Net.Async
 
             scheduler.ScheduleBlocking(action, semaphoreSlim);
         }
+        
+        internal void ScheduleBlockingThrows(Action action, SemaphoreSlim semaphoreSlim)
+        {
+            var currThread = Thread.CurrentThread;
+            if (currThread == mainThread || currThread == TickThread)
+            {
+                action();
+                return;
+            }
+
+            scheduler.ScheduleBlockingThrows(action, semaphoreSlim);
+        }
 
         internal Task Schedule(Action<object> action, object value)
         {

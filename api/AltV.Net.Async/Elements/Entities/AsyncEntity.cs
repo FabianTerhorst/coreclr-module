@@ -5,8 +5,9 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Async.Elements.Entities
 {
-    [SuppressMessage("ReSharper", "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
-    public class AsyncEntity<TEntity> : AsyncWorldObject<TEntity>, IEntity where TEntity: class, IEntity
+    [SuppressMessage("ReSharper",
+        "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
+    public class AsyncEntity<TEntity> : AsyncWorldObject<TEntity>, IEntity where TEntity : class, IEntity
     {
         public ushort Id => BaseObject.Id;
 
@@ -17,6 +18,7 @@ namespace AltV.Net.Async.Elements.Entities
                 AsyncContext.RunAll();
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.NetworkOwner;
                 }
             }
@@ -29,13 +31,11 @@ namespace AltV.Net.Async.Elements.Entities
                 AsyncContext.RunAll();
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.Rotation;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.Rotation = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.Rotation = value); }
         }
 
         public uint Model
@@ -45,6 +45,7 @@ namespace AltV.Net.Async.Elements.Entities
                 AsyncContext.RunAll();
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.Model;
                 }
             }
@@ -57,21 +58,19 @@ namespace AltV.Net.Async.Elements.Entities
                 AsyncContext.RunAll();
                 lock (BaseObject)
                 {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.Visible;
                 }
             }
-            set
-            {
-                AsyncContext.Enqueue(() => BaseObject.Visible = value);
-            }
+            set { AsyncContext.Enqueue(() => BaseObject.Visible = value); }
         }
 
         public bool Streamed { get; set; }
-        
-        public AsyncEntity(TEntity entity, IAsyncContext asyncContext):base(entity, asyncContext)
+
+        public AsyncEntity(TEntity entity, IAsyncContext asyncContext) : base(entity, asyncContext)
         {
         }
-        
+
         public void SetNetworkOwner(IPlayer player, bool disableMigration = true)
         {
             AsyncContext.Enqueue(() => BaseObject.SetNetworkOwner(player, disableMigration));
@@ -92,6 +91,12 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext.RunAll();
             lock (BaseObject)
             {
+                if (!AsyncContext.CheckIfExists(BaseObject))
+                {
+                    result = default;
+                    return false;
+                }
+
                 return BaseObject.GetSyncedMetaData(key, out result);
             }
         }
@@ -106,6 +111,12 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext.RunAll();
             lock (BaseObject)
             {
+                if (!AsyncContext.CheckIfExists(BaseObject))
+                {
+                    result = default;
+                    return false;
+                }
+
                 return BaseObject.GetStreamSyncedMetaData(key, out result);
             }
         }
@@ -121,6 +132,12 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext.RunAll();
             lock (BaseObject)
             {
+                if (!AsyncContext.CheckIfExists(BaseObject))
+                {
+                    value = MValueConst.Nil;
+                    return;
+                }
+
                 BaseObject.GetSyncedMetaData(key, out value);
             }
         }
@@ -130,6 +147,12 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext.RunAll();
             lock (BaseObject)
             {
+                if (!AsyncContext.CheckIfExists(BaseObject))
+                {
+                    value = default;
+                    return false;
+                }
+
                 return BaseObject.GetSyncedMetaData(key, out value);
             }
         }
@@ -139,6 +162,12 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext.RunAll();
             lock (BaseObject)
             {
+                if (!AsyncContext.CheckIfExists(BaseObject))
+                {
+                    value = default;
+                    return false;
+                }
+
                 return BaseObject.GetSyncedMetaData(key, out value);
             }
         }
@@ -148,6 +177,12 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext.RunAll();
             lock (BaseObject)
             {
+                if (!AsyncContext.CheckIfExists(BaseObject))
+                {
+                    value = default;
+                    return false;
+                }
+
                 return BaseObject.GetSyncedMetaData(key, out value);
             }
         }
@@ -163,6 +198,12 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext.RunAll();
             lock (BaseObject)
             {
+                if (!AsyncContext.CheckIfExists(BaseObject))
+                {
+                    value = MValueConst.Nil;
+                    return;
+                }
+
                 BaseObject.GetStreamSyncedMetaData(key, out value);
             }
         }
@@ -172,6 +213,12 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext.RunAll();
             lock (BaseObject)
             {
+                if (!AsyncContext.CheckIfExists(BaseObject))
+                {
+                    value = default;
+                    return false;
+                }
+
                 return BaseObject.GetStreamSyncedMetaData(key, out value);
             }
         }
@@ -181,6 +228,12 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext.RunAll();
             lock (BaseObject)
             {
+                if (!AsyncContext.CheckIfExists(BaseObject))
+                {
+                    value = default;
+                    return false;
+                }
+
                 return BaseObject.GetStreamSyncedMetaData(key, out value);
             }
         }
@@ -190,6 +243,12 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext.RunAll();
             lock (BaseObject)
             {
+                if (!AsyncContext.CheckIfExists(BaseObject))
+                {
+                    value = default;
+                    return false;
+                }
+
                 return BaseObject.GetStreamSyncedMetaData(key, out value);
             }
         }
@@ -199,6 +258,7 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext.RunAll();
             lock (BaseObject)
             {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                 return BaseObject.HasSyncedMetaData(key);
             }
         }
@@ -213,6 +273,7 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext.RunAll();
             lock (BaseObject)
             {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                 return BaseObject.HasStreamSyncedMetaData(key);
             }
         }
@@ -225,7 +286,8 @@ namespace AltV.Net.Async.Elements.Entities
         public void AttachToEntity(IEntity entity, short otherBone, short ownBone, Position position, Rotation rotation,
             bool collision, bool noFixedRotation)
         {
-            AsyncContext.Enqueue(() => BaseObject.AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRotation));
+            AsyncContext.Enqueue(() =>
+                BaseObject.AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRotation));
         }
 
         public void Detach()
