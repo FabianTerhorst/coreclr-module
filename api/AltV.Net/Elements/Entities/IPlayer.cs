@@ -292,6 +292,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="texture">Texture id of the component</param>
         /// <param name="palette">Palette id of the component</param>
         /// <param name="dlc">Hash of the components dlc pack</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if drawable id is higher then 127</exception>
         void SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc);
 
         /// <summary>
