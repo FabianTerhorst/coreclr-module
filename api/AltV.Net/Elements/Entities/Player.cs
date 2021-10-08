@@ -916,6 +916,9 @@ namespace AltV.Net.Elements.Entities
 
         public void SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc)
         {
+            if (drawable > 127)
+                throw new ArgumentOutOfRangeException(nameof(drawable), "Drawable can't be higher than 127");
+            
             unsafe
             {
                 CheckIfEntityExists();

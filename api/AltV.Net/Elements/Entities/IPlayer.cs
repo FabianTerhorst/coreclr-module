@@ -285,8 +285,13 @@ namespace AltV.Net.Elements.Entities
         void GetDlcClothes(byte component, ref DlcCloth cloth);
 
         /// <summary>
-        /// Gets the player clothes
+        /// Sets the player dlc clothes
         /// </summary>
+        /// <param name="component">Id of the component</param>
+        /// <param name="drawable">Drawable id of the component. Can't be higher then 127</param>
+        /// <param name="texture">Texture id of the component</param>
+        /// <param name="palette">Palette id of the component</param>
+        /// <param name="dlc">Hash of the components dlc pack</param>
         void SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc);
 
         /// <summary>
