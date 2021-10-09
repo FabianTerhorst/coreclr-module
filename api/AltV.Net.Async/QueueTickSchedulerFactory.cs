@@ -2,11 +2,11 @@ using System.Threading;
 
 namespace AltV.Net.Async
 {
-    public class DefaultTickSchedulerFactory : ITickSchedulerFactory
+    public class QueueTickSchedulerFactory : ITickSchedulerFactory
     {
         public ITickScheduler Create(Thread mainThread)
         {
-            return new ActionTickScheduler();
+            return new QueueTickScheduler(mainThread);
         }
     }
 }
