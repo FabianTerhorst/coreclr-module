@@ -279,5 +279,17 @@ namespace AltV.Net.Async
 
         public static Task SetIntoVehicleAsync(this IPlayer player, IVehicle vehicle, byte seat) => 
             AltVAsync.Schedule(() => player.SetIntoVehicle(vehicle, seat));
+
+        public static Task<bool> IsSuperJumpEnabledAsync(this IPlayer player) =>
+            AltVAsync.Schedule(() => player.IsSuperJumpEnabled);
+
+        public static Task<bool> IsCrouchingAsync(this IPlayer player) =>
+            AltVAsync.Schedule(() => player.IsCrouching);
+
+        public static Task<bool> IsStealthyAsync(this IPlayer player) =>
+            AltVAsync.Schedule(() => player.IsStealthy);
+
+        public static Task PlayAmbientSpeechAsync(this IPlayer player, string speechName, string speechParam, uint speechDictHash) =>
+            AltVAsync.Schedule(() => player.PlayAmbientSpeech(speechName, speechParam, speechDictHash));
     }
 }

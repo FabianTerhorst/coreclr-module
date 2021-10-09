@@ -732,3 +732,10 @@ void Vehicle_Detach(alt::IVehicle* vehicle)
 {
     vehicle->Detach();
 }
+
+void Vehicle_GetVelocity(alt::IVehicle* vehicle, position_t &velocity) {
+    auto vehicleVelocity = vehicle->GetVelocity();
+    velocity.x = vehicleVelocity[0];
+    velocity.y = vehicleVelocity[1];
+    velocity.z = vehicleVelocity[2];
+}

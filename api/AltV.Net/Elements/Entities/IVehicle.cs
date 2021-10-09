@@ -1,3 +1,4 @@
+using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Enums;
 
@@ -714,5 +715,10 @@ namespace AltV.Net.Elements.Entities
         /// <returns>The roof state</returns>
         public VehicleRoofState GetRoofStateExt() =>
             (VehicleRoofState) RoofState;
+
+        /// <summary>
+        /// Gets the vehicles velocity
+        /// </summary>
+        Vector3 Velocity { get; }
     }
 }

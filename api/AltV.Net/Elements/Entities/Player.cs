@@ -916,6 +916,9 @@ namespace AltV.Net.Elements.Entities
 
         public void SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc)
         {
+            if (drawable > 127)
+                throw new ArgumentOutOfRangeException(nameof(drawable), "Drawable can't be higher than 127");
+            
             unsafe
             {
                 CheckIfEntityExists();
@@ -1059,6 +1062,54 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 vehicle.CheckIfEntityExists();
                 Server.Library.Player_SetIntoVehicle(NativePointer, vehicle.NativePointer, seat);
+            }
+        }
+
+        public bool IsSuperJumpEnabled
+        {
+            get
+            {
+                CheckIfEntityExists();
+                unsafe
+                {
+                    return Server.Library.Player_IsSuperJumpEnabled(NativePointer) == 1;
+                }
+            }
+        }
+
+        public bool IsCrouching
+        {
+            get
+            {
+                CheckIfEntityExists();
+                unsafe
+                {
+                    return Server.Library.Player_IsCrouching(NativePointer) == 1;
+                }
+            }
+        }
+
+        public bool IsStealthy
+        {
+            get
+            {
+                CheckIfEntityExists();
+                unsafe
+                {
+                    return Server.Library.Player_IsStealthy(NativePointer) == 1;
+                }
+            }
+        }
+
+        public void PlayAmbientSpeech(string speechName, string speechParam, uint speechDictHash)
+        {
+            unsafe
+            {
+                var speechNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(speechName);
+                var speechParamPtr = AltNative.StringUtils.StringToHGlobalUtf8(speechParam);
+                Server.Library.Player_PlayAmbientSpeech(NativePointer, speechNamePtr, speechParamPtr, speechDictHash);
+                Marshal.FreeHGlobal(speechNamePtr);
+                Marshal.FreeHGlobal(speechParamPtr);
             }
         }
 

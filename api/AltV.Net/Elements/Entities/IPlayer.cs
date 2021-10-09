@@ -285,8 +285,14 @@ namespace AltV.Net.Elements.Entities
         void GetDlcClothes(byte component, ref DlcCloth cloth);
 
         /// <summary>
-        /// Gets the player clothes
+        /// Sets the player dlc clothes
         /// </summary>
+        /// <param name="component">Id of the component</param>
+        /// <param name="drawable">Drawable id of the component. Can't be higher then 127</param>
+        /// <param name="texture">Texture id of the component</param>
+        /// <param name="palette">Palette id of the component</param>
+        /// <param name="dlc">Hash of the components dlc pack</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if drawable id is higher then 127</exception>
         void SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc);
 
         /// <summary>
@@ -338,6 +344,30 @@ namespace AltV.Net.Elements.Entities
         bool Invincible { get; set; }
 
         void SetIntoVehicle(IVehicle vehicle, byte seat);
+        
+        /// <summary>
+        /// Gets if the player has super jump enabled.
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        bool IsSuperJumpEnabled { get; }
+        
+        /// <summary>
+        /// Gets if the player is crouching.
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        bool IsCrouching { get; }
+        
+        /// <summary>
+        /// Gets if the player is stealthy.
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        bool IsStealthy { get; }
+        
+        /// <summary>
+        /// Plays ambient speech
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        void PlayAmbientSpeech(string speechName, string speechParam, uint speechHash);
     }
 
     public static class PlayerExtensions
