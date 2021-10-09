@@ -8,7 +8,7 @@ namespace AltV.Net.Async.Elements.Entities
 {
     [SuppressMessage("ReSharper",
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
-    public class AsyncPlayer<TPlayer> : AsyncEntity<TPlayer>, IPlayer where TPlayer: class, IPlayer
+    public class AsyncPlayer<TPlayer> : AsyncEntity<TPlayer>, IPlayer where TPlayer : class, IPlayer
     {
         public new uint Model
         {
@@ -631,6 +631,47 @@ namespace AltV.Net.Async.Elements.Entities
         public void SetIntoVehicle(IVehicle vehicle, byte seat)
         {
             AsyncContext.Enqueue(() => BaseObject.SetIntoVehicle(vehicle, seat));
+        }
+
+        public bool IsSuperJumpEnabled
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsSuperJumpEnabled;
+                }
+            }
+        }
+
+        public bool IsCrouching
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsCrouching;
+                }
+            }
+        }
+
+        public bool IsStealthy
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsStealthy;
+                }
+            }
+        }
+
+        public void PlayAmbientSpeech(string speechName, string speechParam, uint speechHash)
+        {
+            AsyncContext.Enqueue(() => BaseObject.PlayAmbientSpeech(speechName, speechParam, speechHash));
         }
     }
 }

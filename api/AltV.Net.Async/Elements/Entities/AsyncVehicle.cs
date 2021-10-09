@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
@@ -7,7 +8,7 @@ namespace AltV.Net.Async.Elements.Entities
 {
     [SuppressMessage("ReSharper",
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
-    public class AsyncVehicle<TVehicle> : AsyncEntity<TVehicle>, IVehicle where TVehicle: class, IVehicle
+    public class AsyncVehicle<TVehicle> : AsyncEntity<TVehicle>, IVehicle where TVehicle : class, IVehicle
     {
         public IPlayer Driver
         {
@@ -1072,6 +1073,19 @@ namespace AltV.Net.Async.Elements.Entities
         public void Repair()
         {
             AsyncContext.Enqueue(() => BaseObject.Repair());
+        }
+
+        public Vector3 Velocity
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.Velocity;
+                }
+            }
         }
     }
 }
