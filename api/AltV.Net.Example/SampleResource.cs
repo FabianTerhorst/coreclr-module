@@ -21,10 +21,7 @@ namespace AltV.Net.Example
             //benchmarkRunner.Run();
 
             long currentTraceSize = 0;
-            AltTrace.OnTraceFileSizeChange += size =>
-            {
-                currentTraceSize = size;
-            };
+            AltTrace.OnTraceFileSizeChange += size => { currentTraceSize = size; };
 
             Alt.OnConsoleCommand += (name, args) =>
             {
@@ -33,6 +30,7 @@ namespace AltV.Net.Example
                 {
                     Console.WriteLine("arg:" + arg);
                 }
+
                 switch (name)
                 {
                     case "trace_start":
@@ -41,6 +39,7 @@ namespace AltV.Net.Example
                             Console.WriteLine("trace_start {name}");
                             return;
                         }
+
                         AltTrace.Start(args[0]);
                         break;
                     case "trace_stop":
@@ -61,15 +60,15 @@ namespace AltV.Net.Example
                 Console.WriteLine("2:" + string.Join(",", objects[1]));
                 Console.WriteLine("2:" + ((object[])objects[2])[0]);
             });
-            Alt.Emit("array_test", new object[] {new object[] {"test", "test4", new[] {1337}}});
+            Alt.Emit("array_test", new object[] { new object[] { "test", "test4", new[] { 1337 } } });
             Alt.OnServer<object[]>("array_test2", objects =>
             {
                 Console.WriteLine("count2:" + objects.Length);
                 Console.WriteLine("count3:" + ((object[])objects[0])[0]);
             });
-            Alt.Emit("array_test2", new object[] {new object[] {new object[]{1337}}});
-            
-            
+            Alt.Emit("array_test2", new object[] { new object[] { new object[] { 1337 } } });
+
+
             var mValues = new MValueConst[1];
             var mInnerValues = new MValueConst[1];
             Alt.Core.CreateMValueInt(out mInnerValues[0], 5);
@@ -77,11 +76,11 @@ namespace AltV.Net.Example
             Alt.Core.CreateMValueList(out var mValueList, mValues, 1);
             var mValuesListGet = mValueList.GetList();
             for (var i = 0; i < mValuesListGet.Length; i++)
-            { 
+            {
                 Console.WriteLine("val: " + mValuesListGet[i]);
-                mValuesListGet[i].Dispose();   
+                mValuesListGet[i].Dispose();
             }
-            
+
             MValueAdapters.Register(new ConvertibleObject.ConvertibleObjectAdapter());
             Alt.OnServer("convertible_test", delegate(ConvertibleObject convertible)
             {
@@ -101,7 +100,7 @@ namespace AltV.Net.Example
                 Console.WriteLine("key="+ entry.Key + " =" + entry.Value.type);
                 entry.Value.Dispose();
             }*/
-            
+
             //Console.WriteLine("obj:" + mValueFromConvertible.type + " " + mValueFromConvertible.nativePointer);
             //mValueFromConvertible.Dispose();
             Alt.Emit("convertible_test", convertibleObject);
@@ -203,7 +202,7 @@ namespace AltV.Net.Example
                 {
                     Alt.Log("param1:" + s);
                     Alt.Log("param2:" + s1);
-                    Alt.Log("bla:" + ((object[]) arg4[1])[0]);
+                    Alt.Log("bla:" + ((object[])arg4[1])[0]);
                     Alt.Log("myData-2: " + arg5.Position.X + " " + arg5.MyData);
                     Alt.Log("myData-4-veh-array: " + myVehicles[0].Position.X + " " + myVehicles[0].MyData);
                     Alt.Log("myData-3: " + arg6["test"]);
@@ -215,8 +214,8 @@ namespace AltV.Net.Example
             Alt.OnServer<object[]>("entity-array-obj",
                 delegate(object[] myVehicles)
                 {
-                    Alt.Log("entity-array-obj: " + ((MyVehicle) myVehicles[0]).Position.X + " " +
-                            ((MyVehicle) myVehicles[0]).MyData);
+                    Alt.Log("entity-array-obj: " + ((MyVehicle)myVehicles[0]).Position.X + " " +
+                            ((MyVehicle)myVehicles[0]).MyData);
                 });
 
             AltAsync.OnServer("event_name",
@@ -229,7 +228,7 @@ namespace AltV.Net.Example
 
                     AltAsync.Log("async-param1:" + s);
                     AltAsync.Log("async-param2:" + s1);
-                    AltAsync.Log("async-bla:" + ((object[]) arg4[1])[0]);
+                    AltAsync.Log("async-bla:" + ((object[])arg4[1])[0]);
                     AltAsync.Log("exists:" + arg5.Exists);
                     AltAsync.Log("async-myData-2: " + arg5.Position.X + " " + arg5.MyData);
                     AltAsync.Log("async-myData-4: " + myVehicles[0].Position.X + " " + myVehicles[0].MyData);
@@ -239,15 +238,15 @@ namespace AltV.Net.Example
                     AltAsync.Log("async-bla2:" + bla["test"]);
                 });
 
-            Alt.Emit("event_name", "param_string_1", "param_string_2", 1, new[] {"array_1", "array_2"},
-                new object[] {"test", new[] {1337}}, vehicle,
+            Alt.Emit("event_name", "param_string_1", "param_string_2", 1, new[] { "array_1", "array_2" },
+                new object[] { "test", new[] { 1337 } }, vehicle,
                 new Dictionary<string, object>
                 {
                     ["test"] = "test" //,
                     //["test2"] = new Dictionary<string, long> {["test"] = 1},
                     //["test3"] = new Dictionary<string, long> {["test"] = 42}
                 },
-                new[] {(IMyVehicle) vehicle}, null, new string[] {null},
+                new[] { (IMyVehicle)vehicle }, null, new string[] { null },
                 new Dictionary<string, object>
                 {
                     ["test"] = null
@@ -255,7 +254,7 @@ namespace AltV.Net.Example
 
             Alt.OnServer<string[]>("test_string_array", s => { Alt.Log("string-array-entry-0:" + s[0]); });
 
-            Alt.Emit("test_string_array", new object[] {new[] {"bla"}});
+            Alt.Emit("test_string_array", new object[] { new[] { "bla" } });
 
             Alt.OnServer("function_event", delegate(Function.Func func)
             {
@@ -269,7 +268,7 @@ namespace AltV.Net.Example
                 Alt.Log("parameter=" + bla);
                 return 42;
             }));
-            
+
             Alt.OnServer("function_event_action", delegate(Function.Func func)
             {
                 var result = func("parameter1");
@@ -304,7 +303,7 @@ namespace AltV.Net.Example
 
             Alt.Emit("MyServerEvent3", vehicle);
 
-            Alt.Emit("entity-array-obj", new object[] {new[] {vehicle}});
+            Alt.Emit("entity-array-obj", new object[] { new[] { vehicle } });
 
             vehicle.Remove();
 
@@ -318,7 +317,7 @@ namespace AltV.Net.Example
 
             Alt.Emit("MyServerEvent", "test-custom-parser");
 
-            Alt.Emit("MyServerEvent2", new object[] {new[] {"test-custom-parser-array"}});
+            Alt.Emit("MyServerEvent2", new object[] { new[] { "test-custom-parser-array" } });
 
             //dynamic dynamic = new ExpandoObject();
 
@@ -350,7 +349,7 @@ namespace AltV.Net.Example
             try
             {
                 IMyVehicle unused =
-                    new MyVehicle((uint) VehicleModel.Apc, new Position(1, 1, 1), new Rotation(1, 1, 1));
+                    new MyVehicle((uint)VehicleModel.Apc, new Position(1, 1, 1), new Rotation(1, 1, 1));
             }
             catch (BaseObjectRemovedException)
             {
@@ -366,31 +365,33 @@ namespace AltV.Net.Example
 
             Alt.OnColShape += (shape, entity, state) =>
             {
-                Console.WriteLine("collision shape test:" + shape + " " + shape.GetData("bla", out int id1) + " " + id1);
-                Console.WriteLine(" " + shape + " " + shape.GetMetaData("bla", out long id2) + " " + id2 + " " + entity + " " + state);
+                Console.WriteLine("collision shape test:" + shape + " " + shape.GetData("bla", out int id1) + " " +
+                                  id1);
+                Console.WriteLine(" " + shape + " " + shape.GetMetaData("bla", out long id2) + " " + id2 + " " +
+                                  entity + " " + state);
             };
-            
+
             var colShapeCylinder = Alt.CreateColShapeCylinder(new Position(1337, 1337, 1337), 10, 10);
             colShapeCylinder.SetMetaData("bla", 1);
             colShapeCylinder.SetData("bla", 2);
-            
+
             var colShapeCircle = Alt.CreateColShapeCircle(new Position(1337, 1337, 1337), 10);
             colShapeCircle.SetMetaData("bla", 3);
             colShapeCircle.SetData("bla", 4);
-            
+
             AltChat.SendBroadcast("Test");
-            
+
             var vehicle2 = Alt.CreateVehicle(VehicleModel.Adder, new Position(1337, 1337, 1337), Rotation.Zero);
             Alt.OnServer<IVehicle, VehicleModel>("onEnum", OnEnum);
             Alt.Emit("onEnum", vehicle2, VehicleModel.Adder.ToString());
-            
+
             Alt.OnServer("EmptyParams", TestEmptyParams);
             Alt.Emit("EmptyParams", 1, 2, 3);
-            
+
             Alt.Emit("chat:message", "/dynamicArgs2 7");
-            
+
             Alt.Emit("chat:message", "/dynamicArgs2 7 5 test");
-            
+
             Alt.Emit("chat:message", "bla");
             Alt.Emit("chat:message", "/bla");
             Alt.Emit("chat:message", "/bla 5");
@@ -402,25 +403,105 @@ namespace AltV.Net.Example
             Alt.Emit("chat:message", "/defaultParamsCommand test 5");
             Alt.Emit("chat:message", "/defaultParamsCommand test 6 3");
             Alt.Emit("chat:message", "/defaultParamsCommand2 test 6 3");
-            
+
             Alt.Emit("chat:message", "/bladyn 6");
             Alt.Emit("chat:message", "/bladyn 6 test");
             Alt.Emit("chat:message", "/bladyn 6 test test2");
             Alt.Emit("chat:message", "/bladyn 6 test test2 test3");
-            
+
             Alt.OnServer<int, object[]>("onOptionalAndParamArray", OnOptionalAndParamArray);
-            
+
             Alt.Emit("onOptionalAndParamArray", 5, 42, "test");
-            
+
             Alt.CreateCheckpoint(CheckpointType.Cyclinder, Position.Zero, 50f, 50f, Rgba.Zero);
 
             var vehicle5 = Alt.CreateVehicle(VehicleModel.Adder, Position.Zero, Rotation.Zero);
-            
+
             Alt.Emit("eventNameWithEntity", null, vehicle5);
         }
-        
-        public static void OnOptionalAndParamArray(int test, params object[] args) {
-            Console.WriteLine($"Event<OnOptionalAndParamArray>({test}, [{string.Join(',', Array.ConvertAll(args ?? new object[] {""}, el => el.ToString()))}])");
+
+        public async Task EasyAsync(IPlayer player)
+        {
+            await using (var asyncContext = AsyncContext.Create())
+            {
+                if (!player.TryToAsync(asyncContext, out var asyncPlayer))
+                {
+                    // Player got removed
+                    return;
+                }
+
+                asyncPlayer.Position = new Position(1, 2, 3);
+                Console.WriteLine(asyncPlayer.Position);
+            }
+
+            await using (var asyncContext = AsyncContext.Create())
+            {
+                var asyncPlayer = player.ToAsync(asyncContext);
+                if (asyncPlayer == null)
+                {
+                    // Player got removed, throws by default a exception when AsyncContext Create throwOnExistsCheck isn't set to false
+                    return;
+                }
+
+                asyncPlayer.Position = new Position(1, 2, 3);
+                Console.WriteLine(asyncPlayer.Position);
+            }
+
+            await using (var asyncContext = AsyncContext.Create(true, true))
+            {
+                // Default:
+                // will throw exceptions when entities don't exists anymore
+                // will create a ref automatically for a entity that is converted to async
+            }
+
+            await using (var asyncContext = AsyncContext.Create(false, true))
+            {
+                // won't throw exceptions when entities don't exists anymore
+                // will create a ref automatically for a entity that is converted to async
+            }
+
+            await using (var asyncContext = AsyncContext.Create(false, false))
+            {
+                // won't throw exceptions when entities don't exists anymore
+                // won't create a ref automatically for a entity that is converted to async
+            }
+        }
+
+        public async Task EasyAsync(IMyPlayer player)
+        {
+            await using (var asyncContext = AsyncContext.Create())
+            {
+                
+                if (!player.TryToAsync(asyncContext, out var asyncPlayer))
+                {
+                    // Player got removed
+                    return;
+                }
+
+                asyncPlayer.MyData = 5;
+                asyncPlayer.Position = new Position(1, 2, 3);
+                Console.WriteLine(asyncPlayer.Position);
+            }
+
+            await using (var asyncContext = AsyncContext.Create())
+            {
+                var asyncPlayer = player.ToAsync(asyncContext);
+                if (asyncPlayer == null)
+                {
+                    // Player got removed, throws by default a exception when AsyncContext Create throwOnExistsCheck isn't set to false
+                    return;
+                }
+
+                asyncPlayer.MyData = 5;
+                asyncPlayer.Position = new Position(1, 2, 3);
+                Console.WriteLine(asyncPlayer.Position);
+            }
+        }
+
+        public static void OnOptionalAndParamArray(int test, params object[] args)
+        {
+            Console.WriteLine(
+                $"Event<OnOptionalAndParamArray>({test}, [{string.Join(',', Array.ConvertAll(args ?? new object[] { "" }, el => el.ToString()))}])");
         }
 
         public static void TestEmptyParams()
@@ -582,15 +663,15 @@ namespace AltV.Net.Example
                 reference.DebugCountUp();
                 //TODO: how to prevent player exists check to happen here inside
                 //TODO: maybe create a PlayerRef struct from player native pointer and do all calls inside that struct
-                
+
                 //TODO: other way would be make a counter in player that counts up on ref create and down on ref delete
                 //TODO: possible by adding addref and removeref methods to player class and counting the int up in them
                 player.Position = Position.Zero;
                 player.Rotation = Rotation.Zero;
-                
+
                 reference.DebugCountDown();
             }
-            
+
             await player.SetPositionAsync(new Position(1, 2, 3));
             var unused = await player.GetPositionAsync();
             await AltAsync.Do(() => { });
@@ -619,7 +700,7 @@ namespace AltV.Net.Example
             var myCustomPlayer = (MyPlayer)player;
             player.Emit("connect_event");
             player.SetDateTime(DateTime.Now);
-            player.Model = (uint) PedModel.FreemodeMale01;
+            player.Model = (uint)PedModel.FreemodeMale01;
         }
 
         private async Task OnPlayerConnectAsync(IPlayer player, string reason)

@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using AltV.Net.Async.Events;
 using AltV.Net.Elements.Args;
@@ -229,6 +230,18 @@ namespace AltV.Net.Async
         {
             CheckIfAsyncResource();
             return AltVAsync.Schedule(action);
+        }
+        
+        public static void RunOnMainThreadBlocking(Action action, SemaphoreSlim semaphoreSlim)
+        {
+            CheckIfAsyncResource();
+            AltVAsync.ScheduleBlocking(action, semaphoreSlim);
+        }
+        
+        public static void RunOnMainThreadBlockingThrows(Action action, SemaphoreSlim semaphoreSlim)
+        {
+            CheckIfAsyncResource();
+            AltVAsync.ScheduleBlockingThrows(action, semaphoreSlim);
         }
 
         public static Task Do(Action<object> action, object value)
