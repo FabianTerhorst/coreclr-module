@@ -906,6 +906,26 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public bool DriftMode
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Vehicle_IsDriftMode(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Vehicle_SetDriftMode(NativePointer, value ? (byte)1 : (byte)0);
+                }
+            }
+        }
+
         public VehicleLockState LockState
         {
             get
@@ -1650,7 +1670,7 @@ namespace AltV.Net.Elements.Entities
             {
                 if(entity == null) return;
 
-                if(entity.Type == BaseObjectType.Player) 
+                if(entity.Type == BaseObjectType.Player)
                     Server.Library.Vehicle_AttachToEntity_Player(NativePointer, entity.NativePointer, otherBone, ownBone, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
                 if(entity.Type == BaseObjectType.Vehicle)
                     Server.Library.Vehicle_AttachToEntity_Vehicle(NativePointer, entity.NativePointer, otherBone, ownBone, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
@@ -1678,7 +1698,7 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
-        
+
         public void Remove()
         {
             Alt.RemoveVehicle(this);

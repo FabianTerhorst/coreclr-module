@@ -7,7 +7,7 @@ namespace AltV.Net.Elements.Entities
     public interface IVehicle : IEntity
     {
         /// <summary>
-        /// Get the current driver of the 
+        /// Get the current driver of the
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         IPlayer Driver { get; }
@@ -18,7 +18,7 @@ namespace AltV.Net.Elements.Entities
         bool IsDestroyed { get; }
 
         /// <summary>
-        /// Get or set mod kit of the 
+        /// Get or set mod kit of the
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         byte ModKit { get; set; }
@@ -34,7 +34,7 @@ namespace AltV.Net.Elements.Entities
         bool IsPrimaryColorRgb { get; }
 
         /// <summary>
-        /// Get or set primary color of the 
+        /// Get or set primary color of the
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         byte PrimaryColor { get; set; }
@@ -150,12 +150,12 @@ namespace AltV.Net.Elements.Entities
         byte RoofLivery { get; set; }
 
         string AppearanceData { get; set; }
-        
+
         /// <summary>
         /// Gets the vehicle that is attached on this vehicle
         /// </summary>
         IVehicle Attached { get; }
-        
+
         /// <summary>
         /// Gets the vehicle that this vehicle is attached to
         /// </summary>
@@ -251,7 +251,10 @@ namespace AltV.Net.Elements.Entities
         /// Sets or Gets if the siren is active. True = active
         /// </summary>
         bool SirenActive { get; set; }
-
+        /// <summary>
+        /// Sets or Gets if the driftMode is active. True = active
+        /// </summary>
+        bool DriftMode { get; set; }
         /// <summary>
         /// Returns or Sets the LockState of the vehicle
         /// </summary>

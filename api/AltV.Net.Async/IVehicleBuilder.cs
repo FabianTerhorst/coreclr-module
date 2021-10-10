@@ -28,6 +28,7 @@ namespace AltV.Net.Async
         IVehicleBuilder EngineOn(bool value);
         IVehicleBuilder HeadlightColor(byte value);
         IVehicleBuilder SirenActive(bool value);
+        IVehicleBuilder DriftMode(bool value);
         IVehicleBuilder LockState(VehicleLockState value);
         IVehicleBuilder RoofState(byte value);
         IVehicleBuilder State(string value);

@@ -267,6 +267,12 @@ namespace AltV.Net.Async
         public static Task SetSirenActiveAsync(this IVehicle vehicle, bool sirenActive) =>
             AltVAsync.Schedule(() => vehicle.SirenActive = sirenActive);
 
+        public static Task<bool> IsDriftModeAsync(this IVehicle vehicle) =>
+            AltVAsync.Schedule(() => vehicle.DriftMode);
+
+        public static Task SetDriftModeAsync(this IVehicle vehicle, bool enabled) =>
+            AltVAsync.Schedule(() => vehicle.DriftMode = enabled);
+
         public static Task<byte> GetHeadlightColorAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.HeadlightColor);
 
@@ -369,7 +375,7 @@ namespace AltV.Net.Async
 
         public static Task SetWheelsAsync(this IVehicle vehicle, byte type, byte variation) =>
             AltVAsync.Schedule(() => vehicle.SetWheels(type, variation));
-        
+
         public static Task SetRearWheelAsync(this IVehicle vehicle, byte variation) =>
             AltVAsync.Schedule(() => vehicle.RearWheel = variation);
 

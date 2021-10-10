@@ -270,6 +270,18 @@ namespace AltV.Net.Async.Elements.Entities
             return this;
         }
 
+        public IVehicleBuilder DriftMode(bool value)
+        {
+            Add(ptr =>
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Vehicle_SetDriftMode(ptr, value ? (byte)1 : (byte)0);
+                }
+            });
+            return this;
+        }
+
         public IVehicleBuilder LockState(VehicleLockState value)
         {
             Add(ptr =>

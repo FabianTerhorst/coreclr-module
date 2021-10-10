@@ -235,6 +235,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetRadioStationIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsSirenActive { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetSirenActive { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsDriftMode { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetDriftMode { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetLockState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetLockState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetDoorState { get; }
@@ -692,6 +694,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetRadioStationIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsSirenActive { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetSirenActive { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsDriftMode { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetDriftMode { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetLockState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetLockState { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetDoorState { get; }
@@ -1153,6 +1157,8 @@ namespace AltV.Net.Native
             Vehicle_SetRadioStationIndex = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Vehicle_SetRadioStationIndex");
             Vehicle_IsSirenActive = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_IsSirenActive");
             Vehicle_SetSirenActive = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetSirenActive");
+            Vehicle_IsDriftMode = (delegate* unmanaged[Cdecl]<nint, byte>)NativeLibrary.GetExport(handle, "Vehicle_IsDriftMode");
+            Vehicle_SetDriftMode = (delegate* unmanaged[Cdecl]<nint, byte, void>)NativeLibrary.GetExport(handle, "Vehicle_SetDriftMode");
             Vehicle_GetLockState = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetLockState");
             Vehicle_SetLockState = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetLockState");
             Vehicle_GetDoorState = (delegate* unmanaged[Cdecl]<nint, byte, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetDoorState");

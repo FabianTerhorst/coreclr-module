@@ -124,6 +124,9 @@ EXPORT void Vehicle_SetRadioStationIndex(alt::IVehicle* vehicle, uint32_t statio
 EXPORT uint8_t Vehicle_IsSirenActive(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetSirenActive(alt::IVehicle* vehicle, uint8_t state);
 
+EXPORT void Vehicle_SetDriftMode(alt::IVehicle* vehicle, bool state);
+EXPORT bool Vehicle_IsDriftMode(alt::IVehicle* vehicle);
+
 // TODO document available values. Enum?
 EXPORT uint8_t Vehicle_GetLockState(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetLockState(alt::IVehicle* vehicle, uint8_t state);

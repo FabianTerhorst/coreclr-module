@@ -442,6 +442,14 @@ void Vehicle_SetSirenActive(alt::IVehicle* vehicle, uint8_t state) {
     vehicle->SetSirenActive(state);
 }
 
+void Vehicle_SetDriftMode(alt::IVehicle* vehicle, bool state) {
+    vehicle->SetDriftMode(state);
+}
+
+bool Vehicle_IsDriftMode(alt::IVehicle* vehicle) {
+    return vehicle->IsDriftMode();
+}
+
 uint8_t Vehicle_GetLockState(alt::IVehicle* vehicle) {
     return vehicle->GetLockState();
 }
