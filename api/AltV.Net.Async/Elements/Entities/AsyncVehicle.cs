@@ -1087,5 +1087,19 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
+
+        public bool DriftMode
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.DriftMode;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.DriftMode = value); }
+        }
     }
 }
