@@ -720,5 +720,10 @@ namespace AltV.Net.Elements.Entities
         /// Gets the vehicles velocity
         /// </summary>
         Vector3 Velocity { get; }
+        
+        /// <summary>
+        /// Get or set drift mode of the vehicle 
+        /// </summary>
+        public bool DriftMode { get; set; }
     }
 }

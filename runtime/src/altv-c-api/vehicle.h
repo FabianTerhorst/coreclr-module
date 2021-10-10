@@ -229,6 +229,9 @@ EXPORT void Vehicle_Detach(alt::IVehicle* vehicle);
 
 EXPORT void Vehicle_GetVelocity(alt::IVehicle* vehicle, position_t &velocity);
 
+EXPORT void Vehicle_SetDriftMode(alt::IVehicle* vehicle, uint8_t state);
+EXPORT uint8_t Vehicle_IsDriftMode(alt::IVehicle* vehicle);
+
 #ifdef __cplusplus
 }
 #endif
