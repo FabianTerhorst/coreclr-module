@@ -1678,6 +1678,26 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
+
+        public bool DriftMode
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Vehicle_IsDriftMode(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Vehicle_SetDriftMode(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
         
         public void Remove()
         {

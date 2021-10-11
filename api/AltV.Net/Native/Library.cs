@@ -305,6 +305,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Vehicle_AttachToEntity_Vehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetVelocity { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetDriftMode { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsDriftMode { get; }
         public delegate* unmanaged[Cdecl]<nint, Position*, void> ColShape_GetPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, void> ColShape_SetPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, int> ColShape_GetDimension { get; }
@@ -762,6 +764,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Vehicle_AttachToEntity_Vehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetVelocity { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetDriftMode { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsDriftMode { get; }
         public delegate* unmanaged[Cdecl]<nint, Position*, void> ColShape_GetPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, void> ColShape_SetPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, int> ColShape_GetDimension { get; }
@@ -1223,6 +1227,8 @@ namespace AltV.Net.Native
             Vehicle_AttachToEntity_Vehicle = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_AttachToEntity_Vehicle");
             Vehicle_Detach = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Vehicle_Detach");
             Vehicle_GetVelocity = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetVelocity");
+            Vehicle_SetDriftMode = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetDriftMode");
+            Vehicle_IsDriftMode = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_IsDriftMode");
             ColShape_GetPosition = (delegate* unmanaged[Cdecl]<nint, Position*, void>) NativeLibrary.GetExport(handle, "ColShape_GetPosition");
             ColShape_SetPosition = (delegate* unmanaged[Cdecl]<nint, Position, void>) NativeLibrary.GetExport(handle, "ColShape_SetPosition");
             ColShape_GetDimension = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "ColShape_GetDimension");

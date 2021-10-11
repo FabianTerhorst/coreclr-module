@@ -739,3 +739,11 @@ void Vehicle_GetVelocity(alt::IVehicle* vehicle, position_t &velocity) {
     velocity.y = vehicleVelocity[1];
     velocity.z = vehicleVelocity[2];
 }
+
+void Vehicle_SetDriftMode(alt::IVehicle* vehicle, uint8_t state) {
+    vehicle->SetDriftMode(state);
+}
+
+uint8_t Vehicle_IsDriftMode(alt::IVehicle* vehicle) {
+    return vehicle->IsDriftMode();
+}
