@@ -1171,7 +1171,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Vehicle_IsWheelDetached(NativePointer, wheelId) == 1;
+                return Server.Library.Vehicle_IsWheelOnFire(NativePointer, wheelId) == 1;
             }
         }
 
