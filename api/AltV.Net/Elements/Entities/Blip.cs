@@ -145,14 +145,6 @@ namespace AltV.Net.Elements.Entities
 
         public ushort Sprite
         {
-            set
-            {
-                unsafe
-                {
-                    CheckIfEntityExists();
-                    Server.Library.Blip_SetSprite(NativePointer, value);
-                }
-            }
             get
             {
                 unsafe
@@ -161,18 +153,18 @@ namespace AltV.Net.Elements.Entities
                     return Server.Library.Blip_GetSprite(NativePointer);
                 }
             }
-        }
-
-        public byte Color
-        {
             set
             {
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Blip_SetColor(NativePointer, value);
+                    Server.Library.Blip_SetSprite(NativePointer, value);
                 }
             }
+        }
+
+        public byte Color
+        {
             get
             {
                 unsafe
@@ -181,18 +173,18 @@ namespace AltV.Net.Elements.Entities
                     return Server.Library.Blip_GetColor(NativePointer);
                 }
             }
-        }
-
-        public bool Route
-        {
             set
             {
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Blip_SetRoute(NativePointer, value ? (byte) 1 : (byte) 0);
+                    Server.Library.Blip_SetColor(NativePointer, value);
                 }
             }
+        }
+
+        public bool Route
+        {
             get
             {
                 unsafe
@@ -201,18 +193,18 @@ namespace AltV.Net.Elements.Entities
                     return Server.Library.Blip_GetRoute(NativePointer) == 1;
                 }
             }
-        }
-
-        public Rgba RouteColor
-        {
             set
             {
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Blip_SetRouteColor(NativePointer, value);
+                    Server.Library.Blip_SetRoute(NativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
+        }
+
+        public Rgba RouteColor
+        {
             get
             {
                 unsafe
@@ -221,6 +213,14 @@ namespace AltV.Net.Elements.Entities
                     var rgba = Rgba.Zero;
                     Server.Library.Blip_GetRouteColor(NativePointer, &rgba);
                     return rgba;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetRouteColor(NativePointer, value);
                 }
             }
         }
