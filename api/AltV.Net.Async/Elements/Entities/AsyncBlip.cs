@@ -63,7 +63,6 @@ namespace AltV.Net.Async.Elements.Entities
 
         public ushort Sprite
         {
-            set { AsyncContext.Enqueue(() => BaseObject.Sprite = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -73,11 +72,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Sprite;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.Sprite = value); }
         }
 
         public byte Color
         {
-            set { AsyncContext.Enqueue(() => BaseObject.Color = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -87,11 +86,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Color;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.Color = value); }
         }
 
         public bool Route
         {
-            set { AsyncContext.Enqueue(() => BaseObject.Route = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -101,11 +100,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Route;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.Route = value); }
         }
 
         public Rgba RouteColor
         {
-            set { AsyncContext.Enqueue(() => BaseObject.RouteColor = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -115,11 +114,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.RouteColor;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.RouteColor = value); }
         }
 
         public Vector2 ScaleXY 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.ScaleXY = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -129,11 +128,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.ScaleXY;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.ScaleXY = value); }
         }
         
         public short Display 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.Display = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -143,11 +142,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Display;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.Display = value); }
         }
         
         public Rgba SecondaryColor 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.SecondaryColor = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -157,11 +156,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.SecondaryColor;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.SecondaryColor = value); }
         }
         
         public byte Alpha 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.Alpha = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -171,11 +170,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Alpha;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.Alpha = value); }
         }
         
         public ushort FlashTimer 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.FlashTimer = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -185,11 +184,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.FlashTimer;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.FlashTimer = value); }
         }
         
         public ushort FlashInterval 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.FlashInterval = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -199,11 +198,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.FlashInterval;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.FlashInterval = value); }
         }
         
         public bool Friendly 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.Friendly = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -213,11 +212,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Friendly;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.Friendly = value); }
         }
         
         public bool Bright 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.Bright = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -227,11 +226,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Bright;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.Bright = value); }
         }
         
         public ushort Number 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.Number = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -241,11 +240,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Number;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.Number = value); }
         }
         
         public bool ShowCone 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.ShowCone = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -255,11 +254,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.ShowCone;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.ShowCone = value); }
         }
         
         public bool Flashes 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.Flashes = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -269,11 +268,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Flashes;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.Flashes = value); }
         }
         
         public bool FlashesAlternate 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.FlashesAlternate = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -283,11 +282,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.FlashesAlternate;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.FlashesAlternate = value); }
         }
         
         public bool ShortRange 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.ShortRange = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -297,11 +296,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.ShortRange;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.ShortRange = value); }
         }
         
         public ushort Priority
         {
-            set { AsyncContext.Enqueue(() => BaseObject.Priority = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -311,11 +310,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Priority;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.Priority = value); }
         }
         
         public float Rotation 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.Rotation = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -325,11 +324,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Rotation;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.Rotation = value); }
         }
         
         public string GxtName 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.GxtName = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -339,11 +338,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.GxtName;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.GxtName = value); }
         }
         
         public string Name 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.Name = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -353,11 +352,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Name;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.Name = value); }
         }
         
         public bool Pulse 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.Pulse = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -367,11 +366,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Pulse;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.Pulse = value); }
         }
         
         public bool MissionCreator 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.MissionCreator = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -381,11 +380,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.MissionCreator;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.MissionCreator = value); }
         }
         
         public bool TickVisible 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.TickVisible = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -395,11 +394,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.TickVisible;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.TickVisible = value); }
         }
         
         public bool HeadingIndicatorVisible 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.HeadingIndicatorVisible = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -409,11 +408,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.HeadingIndicatorVisible;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.HeadingIndicatorVisible = value); }
         }
         
         public bool OutlineIndicatorVisible 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.OutlineIndicatorVisible = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -423,11 +422,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.OutlineIndicatorVisible;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.OutlineIndicatorVisible = value); }
         }
         
         public bool CrewIndicatorVisible 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.CrewIndicatorVisible = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -437,11 +436,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.CrewIndicatorVisible;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.CrewIndicatorVisible = value); }
         }
         
         public ushort Category 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.Category = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -451,11 +450,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Category;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.Category = value); }
         }
         
         public bool HighDetail 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.HighDetail = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -465,11 +464,11 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.HighDetail;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.HighDetail = value); }
         }
         
         public bool Shrinked 
         {
-            set { AsyncContext.Enqueue(() => BaseObject.Shrinked = value); }
             get
             {
                 AsyncContext.RunAll();
@@ -479,6 +478,7 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Shrinked;
                 }
             }
+            set { AsyncContext.Enqueue(() => BaseObject.Shrinked = value); }
         }
 
         public AsyncBlip(TBlip blip, IAsyncContext asyncContext) : base(blip, asyncContext)
