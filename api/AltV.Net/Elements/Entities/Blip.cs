@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
@@ -152,6 +153,14 @@ namespace AltV.Net.Elements.Entities
                     Server.Library.Blip_SetSprite(NativePointer, value);
                 }
             }
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetSprite(NativePointer);
+                }
+            }
         }
 
         public byte Color
@@ -162,6 +171,14 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     Server.Library.Blip_SetColor(NativePointer, value);
+                }
+            }
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetColor(NativePointer);
                 }
             }
         }
@@ -176,9 +193,17 @@ namespace AltV.Net.Elements.Entities
                     Server.Library.Blip_SetRoute(NativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetRoute(NativePointer) == 1;
+                }
+            }
         }
 
-        public byte RouteColor
+        public Rgba RouteColor
         {
             set
             {
@@ -188,12 +213,563 @@ namespace AltV.Net.Elements.Entities
                     Server.Library.Blip_SetRouteColor(NativePointer, value);
                 }
             }
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var rgba = Rgba.Zero;
+                    Server.Library.Blip_GetRouteColor(NativePointer, &rgba);
+                    return rgba;
+                }
+            }
+        }
+
+        public Vector2 ScaleXY
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var v2 = Vector2.Zero;
+                    Server.Library.Blip_GetScaleXY(NativePointer, &v2);
+                    return v2;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetScaleXY(NativePointer, value);
+                }
+            }
+        }
+
+        public short Display
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetDisplay(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetDisplay(NativePointer, value);
+                }
+            }
+        }
+
+        public Rgba SecondaryColor
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var rgba = Rgba.Zero;
+                    Server.Library.Blip_GetSecondaryColor(NativePointer, &rgba);
+                    return rgba;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetSecondaryColor(NativePointer, value);
+                }
+            }
+        }
+
+        public byte Alpha
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetAlpha(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetAlpha(NativePointer, value);
+                }
+            }
+        }
+
+        public ushort FlashTimer
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetFlashTimer(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetFlashTimer(NativePointer, value);
+                }
+            }
+        }
+
+        public ushort FlashInterval
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetFlashInterval(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetFlashInterval(NativePointer, value);
+                }
+            }
+        }
+
+        public bool Friendly
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetAsFriendly(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetAsFriendly(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+        
+        public bool Bright
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetBright(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetBright(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public ushort Number
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetNumber(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetNumber(NativePointer, value);
+                }
+            }
+        }
+        
+        public bool ShowCone 
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetShowCone(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetShowCone(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+        
+        public bool Flashes 
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetFlashes(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetFlashes(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+        
+        public bool FlashesAlternate 
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetFlashesAlternate(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetFlashesAlternate(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+        
+        public bool ShortRange 
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetAsShortRange(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetAsShortRange(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public ushort Priority
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetPriority(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetPriority(NativePointer, value);
+                }
+            }
+        }
+
+        public float Rotation
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetRotation(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                 CheckIfEntityExists();
+                 Server.Library.Blip_SetRotation(NativePointer, value);
+                }
+            }
+        }
+        
+        public string GxtName 
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var ptr = IntPtr.Zero;
+                    Server.Library.Blip_GetGxtName(NativePointer, &ptr);
+                    return Marshal.PtrToStringUTF8(ptr);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+                    Server.Library.Blip_SetGxtName(NativePointer, stringPtr);
+                    Marshal.FreeHGlobal(stringPtr);
+                }
+            }
+        }
+
+        public string Name 
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var ptr = IntPtr.Zero;
+                    Server.Library.Blip_GetName(NativePointer, &ptr);
+                    return Marshal.PtrToStringUTF8(ptr);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+                    Server.Library.Blip_SetName(NativePointer, stringPtr);
+                    Marshal.FreeHGlobal(stringPtr);
+                }
+            }
+        }
+        
+        public bool Pulse 
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetPulse(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetPulse(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+        
+        public bool MissionCreator 
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetAsMissionCreator(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetAsMissionCreator(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+        
+        public bool TickVisible 
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetTickVisible(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetTickVisible(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+        
+        public bool HeadingIndicatorVisible 
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetHeadingIndicatorVisible(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetHeadingIndicatorVisible(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+        
+        public bool OutlineIndicatorVisible
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetOutlineIndicatorVisible(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetOutlineIndicatorVisible(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+        
+        public bool CrewIndicatorVisible 
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetCrewIndicatorVisible(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetCrewIndicatorVisible(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public ushort Category
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetCategory(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetCategory(NativePointer, value);
+                }
+            }
+        }
+        
+        public bool HighDetail 
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetAsHighDetail(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetAsHighDetail(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+        
+        public bool Shrinked
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Blip_GetShrinked(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Blip_SetShrinked(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
         }
 
         public Blip(IServer server, IntPtr nativePointer) : base(server, nativePointer, BaseObjectType.Blip)
         {
         }
-        
+
+        public void Fade(uint opacity, uint duration)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Blip_Fade(NativePointer, opacity, duration);
+            }
+        }
+
         public void Remove()
         {
             Alt.RemoveBlip(this);
