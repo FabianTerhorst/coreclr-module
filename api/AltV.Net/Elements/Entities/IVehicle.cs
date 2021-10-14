@@ -725,5 +725,80 @@ namespace AltV.Net.Elements.Entities
         /// Get or set drift mode of the vehicle 
         /// </summary>
         public bool DriftMode { get; set; }
+        
+        /// <summary>
+        /// Gets or sets if the vehicle is a train
+        /// </summary>
+        public bool TrainMissionTrain { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the trains track id
+        /// </summary>
+        public sbyte TrainTrackId { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the trains engine
+        /// </summary>
+        public IVehicle TrainEngine { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the trains config index
+        /// </summary>
+        public sbyte TrainConfigIndex { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the trains distance from the engine
+        /// </summary>
+        public float TrainDistanceFromEngine { get; set; }
+        
+        /// <summary>
+        /// Gets or sets if the vehicle is the trains engine
+        /// </summary>
+        public bool TrainIsEngine { get; set; }
+        
+        /// <summary>
+        /// Gets or sets if the vehicle is caboose
+        /// </summary>
+        public bool TrainIsCaboose { get; set; }
+     
+        /// <summary>
+        /// Gets or sets the trains direction
+        /// </summary>
+        public bool TrainDirection { get; set; }
+        
+        /// <summary>
+        /// Gets or sets if the train has passenger carriages
+        /// </summary>
+        public bool TrainPassengerCarriages { get; set; }
+        
+        /// <summary>
+        /// Gets or sets if the train should be rendered derailed
+        /// </summary>
+        public bool TrainRenderDerailed { get; set; }
+        
+        /// <summary>
+        /// Gets or sets if the trains doors should be forced open
+        /// </summary>
+        public bool TrainForceDoorsOpen { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the trains cruise speed
+        /// </summary>
+        public float TrainCruiseSpeed { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the trains carriage config index
+        /// </summary>
+        public sbyte TrainCarriageConfigIndex { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the trains vehicle linked backward vehicle
+        /// </summary>
+        public IVehicle TrainLinkedToBackward { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the trains vehicle linked forward vehicle
+        /// </summary>
+        public IVehicle TrainLinkedToForward { get; set; }
     }
 }
