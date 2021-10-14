@@ -235,7 +235,7 @@ EXPORT uint8_t Vehicle_IsDriftMode(alt::IVehicle* vehicle);
 EXPORT uint8_t Vehicle_IsTrainMissionTrain(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetTrainMissionTrain(alt::IVehicle* vehicle, uint8_t state);
 EXPORT int8_t Vehicle_GetTrainTrackId(alt::IVehicle* vehicle);
-EXPORT void Vehicle_SetTrainTrackid(alt::IVehicle* vehicle, int8_t trackId);
+EXPORT void Vehicle_SetTrainTrackId(alt::IVehicle* vehicle, int8_t trackId);
 EXPORT alt::IVehicle* Vehicle_GetTrainEngineId(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetTrainEngineId(alt::IVehicle* vehicle, alt::IVehicle* entity);
 EXPORT int8_t Vehicle_GetTrainConfigIndex(alt::IVehicle* vehicle);

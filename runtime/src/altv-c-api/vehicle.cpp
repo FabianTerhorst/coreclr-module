@@ -760,7 +760,7 @@ int8_t Vehicle_GetTrainTrackId(alt::IVehicle* vehicle) {
     return vehicle->GetTrainTrackId();
 }
 
-void Vehicle_SetTrainTrackid(alt::IVehicle* vehicle, int8_t trackId) {
+void Vehicle_SetTrainTrackId(alt::IVehicle* vehicle, int8_t trackId) {
     vehicle->SetTrainTrackId(trackId);
 }
 
