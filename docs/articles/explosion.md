@@ -15,6 +15,7 @@ This is called every time something explodes.
 ```csharp
 Alt.Explosion += (player, explosionType, position, explosionFx, targetEntity) => {
     // ...
+    return true; // return false will cancel the event.
 }
 ```
 
@@ -30,16 +31,16 @@ public class MyScriptClass : IScript
 {
     // We declare and create our event handler
     [ScriptEvent(ScriptEventType.Explosion)]
-        public void Explosion(IPlayer player, ExplosionType explosionType, Position position, uint explosionFx, IEntity targetEntity)
+        public bool Explosion(IPlayer player, ExplosionType explosionType, Position position, uint explosionFx, IEntity targetEntity)
         {
             switch (targetEntity)
             {
                 case IPlayer target:
                     Alt.Log(player.Name + " brutally blew up {target.Name}.");
-                    return;
+                    return false; // <= return false will cancel the event.
                 case IVehicle veh:
                     Alt.Log(player.Name + " brutally blew up a " + (VehicleModel)veh.Model + ". The explosion type was " + explosionType + ".");
-                    return;
+                    return true;
             }
 
             Alt.Log("Something blew up.");
