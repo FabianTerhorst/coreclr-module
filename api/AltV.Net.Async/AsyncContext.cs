@@ -56,6 +56,7 @@ namespace AltV.Net.Async
 
         public bool CreateRef(IBaseObject baseObject, bool safe)
         {
+            if (baseObject == null) return false;
             if (!createRefAutomatically) return true;
             try
             {
