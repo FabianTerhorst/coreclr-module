@@ -1699,7 +1699,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public bool TrainMissionTrain
+        public bool IsMissionTrain
         {
             get
             {
@@ -1801,7 +1801,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public bool TrainIsEngine
+        public bool IsTrainEngine
         {
             get
             {
@@ -1821,7 +1821,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public bool TrainIsCaboose
+        public bool IsTrainCaboose
         {
             get
             {

@@ -1102,7 +1102,7 @@ namespace AltV.Net.Async.Elements.Entities
             set { AsyncContext.Enqueue(() => BaseObject.DriftMode = value); }
         }
 
-        public bool TrainMissionTrain
+        public bool IsMissionTrain
         {
             get
             {
@@ -1110,10 +1110,10 @@ namespace AltV.Net.Async.Elements.Entities
                 lock (BaseObject)
                 {
                     if (!AsyncContext.CheckIfExists(BaseObject)) return default;
-                    return BaseObject.TrainMissionTrain;
+                    return BaseObject.IsMissionTrain;
                 }
             }
-            set { AsyncContext.Enqueue(() => BaseObject.TrainMissionTrain = value); }
+            set { AsyncContext.Enqueue(() => BaseObject.IsMissionTrain = value); }
         }
 
         public sbyte TrainTrackId
@@ -1172,7 +1172,7 @@ namespace AltV.Net.Async.Elements.Entities
             set { AsyncContext.Enqueue(() => BaseObject.TrainDistanceFromEngine = value); }
         }
 
-        public bool TrainIsEngine
+        public bool IsTrainEngine
         {
             get
             {
@@ -1180,13 +1180,13 @@ namespace AltV.Net.Async.Elements.Entities
                 lock (BaseObject)
                 {
                     if (!AsyncContext.CheckIfExists(BaseObject)) return default;
-                    return BaseObject.TrainIsEngine;
+                    return BaseObject.IsTrainEngine;
                 }
             }
-            set { AsyncContext.Enqueue(() => BaseObject.TrainIsEngine = value); }
+            set { AsyncContext.Enqueue(() => BaseObject.IsTrainEngine = value); }
         }
 
-        public bool TrainIsCaboose
+        public bool IsTrainCaboose
         {
             get
             {
@@ -1194,10 +1194,10 @@ namespace AltV.Net.Async.Elements.Entities
                 lock (BaseObject)
                 {
                     if (!AsyncContext.CheckIfExists(BaseObject)) return default;
-                    return BaseObject.TrainIsCaboose;
+                    return BaseObject.IsTrainCaboose;
                 }
             }
-            set { AsyncContext.Enqueue(() => BaseObject.TrainIsCaboose = value); }
+            set { AsyncContext.Enqueue(() => BaseObject.IsTrainCaboose = value); }
         }
 
         public bool TrainDirection

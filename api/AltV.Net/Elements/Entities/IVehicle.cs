@@ -727,9 +727,9 @@ namespace AltV.Net.Elements.Entities
         public bool DriftMode { get; set; }
         
         /// <summary>
-        /// Gets or sets if the vehicle is a train
+        /// Gets or sets if the vehicle is a mission train
         /// </summary>
-        public bool TrainMissionTrain { get; set; }
+        public bool IsMissionTrain { get; set; }
         
         /// <summary>
         /// Gets or sets the trains track id
@@ -754,12 +754,12 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Gets or sets if the vehicle is the trains engine
         /// </summary>
-        public bool TrainIsEngine { get; set; }
+        public bool IsTrainEngine { get; set; }
         
         /// <summary>
         /// Gets or sets if the vehicle is caboose
         /// </summary>
-        public bool TrainIsCaboose { get; set; }
+        public bool IsTrainCaboose { get; set; }
      
         /// <summary>
         /// Gets or sets the trains direction
