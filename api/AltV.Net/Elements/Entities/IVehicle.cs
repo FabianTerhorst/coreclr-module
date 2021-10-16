@@ -571,14 +571,14 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <param name="category">Mod category</param>
         /// <returns></returns>
-        public byte GetModExt(VehicleModType category) => GetMod((byte) category);
+        byte GetModExt(VehicleModType category) => GetMod((byte) category);
 
         /// <summary>
         /// Returns the amount of mods available in a category
         /// </summary>
         /// <param name="category">The mod type</param>
         /// <returns></returns>
-        public byte GetModsCountExt(VehicleModType category) =>
+        byte GetModsCountExt(VehicleModType category) =>
             GetModsCount((byte) category);
 
         /// <summary>
@@ -587,7 +587,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="category">The mod category</param>
         /// <param name="id">The mod id</param>
         /// <returns></returns>
-        public bool SetModExt(VehicleModType category, byte id) =>
+        bool SetModExt(VehicleModType category, byte id) =>
             SetMod((byte) category, id);
 
         /// <summary>
@@ -595,7 +595,7 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <param name="part">The vehicle part</param>
         /// <param name="damage">The damage</param>
-        public void SetPartDamageLevelExt(VehiclePart part, byte damage) =>
+        void SetPartDamageLevelExt(VehiclePart part, byte damage) =>
             SetPartDamageLevel((byte) part, damage);
 
         /// <summary>
@@ -603,7 +603,7 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <param name="part">The part</param>
         /// <returns>The VehiclePart damage level</returns>
-        public VehiclePartDamage GetPartDamageLevelExt(VehiclePart part) =>
+        VehiclePartDamage GetPartDamageLevelExt(VehiclePart part) =>
             (VehiclePartDamage) GetPartDamageLevel((byte) part);
 
         /// <summary>
@@ -611,7 +611,7 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <param name="part">The vehicle part</param>
         /// <returns>Amount of bullet holes</returns>
-        public byte GetPartBulletHolesExt(VehiclePart part) =>
+        byte GetPartBulletHolesExt(VehiclePart part) =>
             GetPartBulletHoles((byte) part);
 
         /// <summary>
@@ -619,7 +619,7 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <param name="part">The part</param>
         /// <param name="shootsCount">The amount of bullets</param>
-        public void SetPartBulletHolesExt(VehiclePart part, byte shootsCount) =>
+        void SetPartBulletHolesExt(VehiclePart part, byte shootsCount) =>
             SetPartBulletHoles((byte) part, shootsCount);
 
         /// <summary>
@@ -627,7 +627,7 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <param name="bumper">The bumper</param>
         /// <returns>Enum of VehicleBumperDamage</returns>
-        public VehicleBumperDamage GetBumperDamageLevelExt(VehicleBumper bumper) =>
+        VehicleBumperDamage GetBumperDamageLevelExt(VehicleBumper bumper) =>
             (VehicleBumperDamage) GetBumperDamageLevel((byte) bumper);
 
         /// <summary>
@@ -635,7 +635,7 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <param name="bumper">The bumper (Front/Rear)</param>
         /// <param name="damageLevel">The Bumper damage level</param>
-        public void SetBumperDamageLevelExt(VehicleBumper bumper,
+        void SetBumperDamageLevelExt(VehicleBumper bumper,
             VehicleBumperDamage damageLevel) => SetBumperDamageLevel((byte) bumper, (byte) damageLevel);
 
         /// <summary>
@@ -643,7 +643,7 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <param name="part">The vehicle part</param>
         /// <param name="damage">The damage level</param>
-        public void SetPartDamageLevelExt(VehiclePart part, VehiclePartDamage damage) =>
+        void SetPartDamageLevelExt(VehiclePart part, VehiclePartDamage damage) =>
             SetPartDamageLevel((byte) part, (byte) damage);
 
         /// <summary>
@@ -651,7 +651,7 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <param name="door">The door</param>
         /// <returns>The door state</returns>
-        public VehicleDoorState GetDoorStateExt(VehicleDoor door) =>
+        VehicleDoorState GetDoorStateExt(VehicleDoor door) =>
             (VehicleDoorState) GetDoorState((byte) door);
 
         /// <summary>
@@ -659,61 +659,61 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <param name="door">The door</param>
         /// <param name="state">The state</param>
-        public void SetDoorStateExt(VehicleDoor door, VehicleDoorState state) =>
+        void SetDoorStateExt(VehicleDoor door, VehicleDoorState state) =>
             SetDoorState((byte) door, (byte) state);
 
         /// <summary>
         /// Sets the current radio station
         /// </summary>
         /// <param name="radioStation">The radio station</param>
-        public void SetRadioStationExt(RadioStation radioStation) =>
+        void SetRadioStationExt(RadioStation radioStation) =>
             RadioStation = (uint) radioStation;
 
         /// <summary>
         /// Gets the current radio station
         /// </summary>
         /// <returns>The radio station</returns>
-        public RadioStation GetRadioStationExt() => (RadioStation) RadioStation;
+        RadioStation GetRadioStationExt() => (RadioStation) RadioStation;
 
         /// <summary>
         /// Sets the current window tint
         /// </summary>
         /// <param name="windowTint">The window tint</param>
-        public void SetWindowTintExt(WindowTint windowTint) =>
+        void SetWindowTintExt(WindowTint windowTint) =>
             WindowTint = (byte) windowTint;
 
         /// <summary>
         /// Gets the current window tint
         /// </summary>
         /// <returns>The window tint</returns>
-        public WindowTint GetWindowTintExt() => (WindowTint) WindowTint;
+        WindowTint GetWindowTintExt() => (WindowTint) WindowTint;
 
         /// <summary>
         /// Sets the current number plate style
         /// </summary>
         /// <param name="numberPlateStyle">The number plate style</param>
-        public void SetNumberPlateStyleExt(NumberPlateStyle numberPlateStyle) =>
+        void SetNumberPlateStyleExt(NumberPlateStyle numberPlateStyle) =>
             NumberplateIndex = (uint) numberPlateStyle;
 
         /// <summary>
         /// Gets the current number plate style
         /// </summary>
         /// <returns>The number plate style</returns>
-        public NumberPlateStyle GetNumberPlateStyleExt() =>
+        NumberPlateStyle GetNumberPlateStyleExt() =>
             (NumberPlateStyle) NumberplateIndex;
 
         /// <summary>
         /// Sets the current roof state
         /// </summary>
         /// <param name="roofState">The roof state</param>
-        public void SetRoofStateExt(VehicleRoofState roofState) =>
+        void SetRoofStateExt(VehicleRoofState roofState) =>
             RoofState = (byte) roofState;
 
         /// <summary>
         /// Gets the current roof state
         /// </summary>
         /// <returns>The roof state</returns>
-        public VehicleRoofState GetRoofStateExt() =>
+        VehicleRoofState GetRoofStateExt() =>
             (VehicleRoofState) RoofState;
 
         /// <summary>
