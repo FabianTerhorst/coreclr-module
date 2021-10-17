@@ -86,9 +86,17 @@ namespace AltV.Net.Interactions
                                 {
                                     foreach (var interaction in foundInteractions)
                                     {
-                                        if (interaction.OnInteraction(player, interactionPosition, currDimension))
+                                        try
                                         {
-                                            break;
+                                            if (interaction.OnInteraction(player, interactionPosition, currDimension))
+                                            {
+                                                break;
+                                            }
+                                        }
+                                        catch (Exception exception)
+                                        {
+                                            Console.WriteLine("interaction " + interaction + " threw a exception.");
+                                            Console.WriteLine(exception);
                                         }
                                     }
                                 }
