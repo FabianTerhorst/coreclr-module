@@ -95,8 +95,8 @@ namespace AltV.Net.Async
         public static Task<uint> GetPingAsync(this IPlayer player) =>
             AltVAsync.Schedule(() => player.Ping);
 
-        public static Task SpawnAsync(this IPlayer player, Position position) =>
-            AltVAsync.Schedule(() => player.Spawn(position));
+        public static Task SpawnAsync(this IPlayer player, Position position, uint delayMs = 0) =>
+            AltVAsync.Schedule(() => player.Spawn(position, delayMs));
 
         public static Task DespawnAsync(this IPlayer player) =>
             AltVAsync.Schedule(player.Despawn);
