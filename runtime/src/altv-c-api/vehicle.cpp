@@ -747,3 +747,11 @@ void Vehicle_SetDriftMode(alt::IVehicle* vehicle, uint8_t state) {
 uint8_t Vehicle_IsDriftMode(alt::IVehicle* vehicle) {
     return vehicle->IsDriftMode();
 }
+
+uint8_t Vehicle_SetSearchLight_Player(alt::IVehicle* vehicle, uint8_t state, alt::IPlayer* spottedEntity) {
+    return vehicle->SetSearchLight(state, spottedEntity);
+}
+
+uint8_t Vehicle_SetSearchLight_Vehicle(alt::IVehicle* vehicle, uint8_t state, alt::IVehicle* spottedEntity) {
+    return vehicle->SetSearchLight(state, spottedEntity);
+}
