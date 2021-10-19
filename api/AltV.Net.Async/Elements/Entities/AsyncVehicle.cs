@@ -1101,5 +1101,15 @@ namespace AltV.Net.Async.Elements.Entities
             }
             set { AsyncContext.Enqueue(() => BaseObject.DriftMode = value); }
         }
+
+        public bool SetSearchLight(bool state, IEntity spottedEntity)
+        {
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.SetSearchLight(state, spottedEntity);
+            }
+        }
     }
 }

@@ -725,5 +725,10 @@ namespace AltV.Net.Elements.Entities
         /// Get or set drift mode of the vehicle 
         /// </summary>
         public bool DriftMode { get; set; }
+
+        /// <summary>
+        /// Sets the searchlight to given entity
+        /// </summary>
+        bool SetSearchLight(bool state, IEntity spottedEntity);
     }
 }
