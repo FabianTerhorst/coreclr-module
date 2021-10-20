@@ -1699,6 +1699,20 @@ namespace AltV.Net.Elements.Entities
             }
         }
         
+        public bool SetSearchLight(bool state, IEntity spottedEntity)
+        {
+            if (spottedEntity == null) return false;
+            unsafe
+            {
+                if (spottedEntity.Type == BaseObjectType.Player)
+                    return Server.Library.Vehicle_SetSearchLight_Player(NativePointer, state ? (byte) 1 : (byte) 0, spottedEntity.NativePointer) == 1;
+                if (spottedEntity.Type == BaseObjectType.Vehicle)
+                    return Server.Library.Vehicle_SetSearchLight_Vehicle(NativePointer, state ? (byte) 1 : (byte) 0, spottedEntity.NativePointer) == 1;
+
+                return false;
+            }
+        }
+        
         public void Remove()
         {
             Alt.RemoveVehicle(this);

@@ -232,6 +232,9 @@ EXPORT void Vehicle_GetVelocity(alt::IVehicle* vehicle, position_t &velocity);
 EXPORT void Vehicle_SetDriftMode(alt::IVehicle* vehicle, uint8_t state);
 EXPORT uint8_t Vehicle_IsDriftMode(alt::IVehicle* vehicle);
 
+EXPORT uint8_t Vehicle_SetSearchLight_Player(alt::IVehicle* vehicle, uint8_t state, alt::IPlayer* spottedEntity);
+EXPORT uint8_t Vehicle_SetSearchLight_Vehicle(alt::IVehicle* vehicle, uint8_t state, alt::IVehicle* spottedEntity);
+
 #ifdef __cplusplus
 }
 #endif
