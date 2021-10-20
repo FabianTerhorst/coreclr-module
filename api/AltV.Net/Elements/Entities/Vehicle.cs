@@ -1701,9 +1701,11 @@ namespace AltV.Net.Elements.Entities
         
         public bool SetSearchLight(bool state, IEntity spottedEntity)
         {
-            if (spottedEntity == null) return false;
             unsafe
             {
+                if (spottedEntity == null) return false;
+                CheckIfEntityExists();
+                
                 if (spottedEntity.Type == BaseObjectType.Player)
                     return Server.Library.Vehicle_SetSearchLight_Player(NativePointer, state ? (byte) 1 : (byte) 0, spottedEntity.NativePointer) == 1;
                 if (spottedEntity.Type == BaseObjectType.Vehicle)
@@ -1770,7 +1772,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Vehicle_SetTrainEngineId(NativePointer, value.NativePointer);
+                    Server.Library.Vehicle_SetTrainEngineId(NativePointer, value?.NativePointer ?? IntPtr.Zero);
                 }
             }
         }
@@ -1992,7 +1994,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Vehicle_SetTrainLinkedToBackwardId(NativePointer, value.NativePointer);
+                    Server.Library.Vehicle_SetTrainLinkedToBackwardId(NativePointer, value?.NativePointer ?? IntPtr.Zero);
                 }
             }
         }
@@ -2014,7 +2016,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Vehicle_SetTrainLinkedToForwardId(NativePointer, value.NativePointer);
+                    Server.Library.Vehicle_SetTrainLinkedToForwardId(NativePointer, value?.NativePointer ?? IntPtr.Zero);
                 }
             }
         }
