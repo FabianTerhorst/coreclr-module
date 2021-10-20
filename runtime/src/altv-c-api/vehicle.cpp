@@ -755,3 +755,123 @@ uint8_t Vehicle_SetSearchLight_Player(alt::IVehicle* vehicle, uint8_t state, alt
 uint8_t Vehicle_SetSearchLight_Vehicle(alt::IVehicle* vehicle, uint8_t state, alt::IVehicle* spottedEntity) {
     return vehicle->SetSearchLight(state, spottedEntity);
 }
+
+uint8_t Vehicle_IsTrainMissionTrain(alt::IVehicle* vehicle) {
+    return vehicle->IsTrainMissionTrain();
+}
+
+void Vehicle_SetTrainMissionTrain(alt::IVehicle* vehicle, uint8_t state) {
+    vehicle->SetTrainMissionTrain(state);
+}
+
+int8_t Vehicle_GetTrainTrackId(alt::IVehicle* vehicle) {
+    return vehicle->GetTrainTrackId();
+}
+
+void Vehicle_SetTrainTrackId(alt::IVehicle* vehicle, int8_t trackId) {
+    vehicle->SetTrainTrackId(trackId);
+}
+
+alt::IVehicle* Vehicle_GetTrainEngineId(alt::IVehicle* vehicle) {
+    return vehicle->GetTrainEngineId().Get();
+}
+
+void Vehicle_SetTrainEngineId(alt::IVehicle* vehicle, alt::IVehicle* entity) {
+    vehicle->SetTrainEngineId(entity);
+}
+
+int8_t Vehicle_GetTrainConfigIndex(alt::IVehicle* vehicle) {
+    return vehicle->GetTrainConfigIndex();
+}
+
+void Vehicle_SetTrainConfigIndex(alt::IVehicle* vehicle, int8_t index) {
+    vehicle->SetTrainConfigIndex(index);
+}
+
+float Vehicle_GetTrainDistanceFromEngine(alt::IVehicle* vehicle) {
+    return vehicle->GetTrainDistanceFromEngine();
+}
+
+void Vehicle_SetTrainDistanceFromEngine(alt::IVehicle* vehicle, float distanceFromEngine) {
+    vehicle->SetTrainDistanceFromEngine(distanceFromEngine);
+}
+
+uint8_t Vehicle_IsTrainEngine(alt::IVehicle* vehicle) {
+    return vehicle->IsTrainEngine();
+}
+
+void Vehicle_SetTrainIsEngine(alt::IVehicle* vehicle, uint8_t state) {
+    vehicle->SetTrainIsEngine(state);
+}
+
+uint8_t Vehicle_IsTrainCaboose(alt::IVehicle* vehicle) {
+    return vehicle->IsTrainCaboose();
+}
+
+void Vehicle_SetTrainIsCaboose(alt::IVehicle* vehicle, uint8_t isCaboose) {
+    vehicle->SetTrainIsCaboose(isCaboose);
+}
+
+uint8_t Vehicle_GetTrainDirection(alt::IVehicle* vehicle) {
+    return vehicle->GetTrainDirection();
+}
+
+void Vehicle_SetTrainDirection(alt::IVehicle* vehicle, uint8_t direction) {
+    vehicle->SetTrainDirection(direction);
+}
+
+uint8_t Vehicle_HasTrainPassengerCarriages(alt::IVehicle* vehicle) {
+    return vehicle->HasTrainPassengerCarriages();
+}
+
+void Vehicle_SetTrainHasPassengerCarriages(alt::IVehicle* vehicle, uint8_t hasPassengerCarriages) {
+    vehicle->SetTrainHasPassengerCarriages(hasPassengerCarriages);
+}
+
+uint8_t Vehicle_GetTrainRenderDerailed(alt::IVehicle* vehicle) {
+    return vehicle->GetTrainRenderDerailed();
+}
+
+void Vehicle_SetTrainRenderDerailed(alt::IVehicle* vehicle, uint8_t renderDerailed) {
+    vehicle->SetTrainRenderDerailed(renderDerailed);
+}
+
+uint8_t Vehicle_GetTrainForceDoorsOpen(alt::IVehicle* vehicle) {
+    return vehicle->GetTrainForceDoorsOpen();
+}
+
+void Vehicle_SetTrainForceDoorsOpen(alt::IVehicle* vehicle, uint8_t forceDoorsOpen) {
+    vehicle->SetTrainForceDoorsOpen(forceDoorsOpen);
+}
+
+float Vehicle_GetTrainCruiseSpeed(alt::IVehicle* vehicle) {
+    return vehicle->GetTrainCruiseSpeed();
+}
+
+void Vehicle_SetTrainCruiseSpeed(alt::IVehicle* vehicle, float cruiseSpeed) {
+    vehicle->SetTrainCruiseSpeed(cruiseSpeed);
+}
+
+int8_t Vehicle_GetTrainCarriageConfigIndex(alt::IVehicle* vehicle) {
+    return vehicle->GetTrainCarriageConfigIndex();
+}
+
+void Vehicle_SetTrainCarriageConfigIndex(alt::IVehicle* vehicle, int8_t carriageConfigIndex) {
+    vehicle->SetTrainCarriageConfigIndex(carriageConfigIndex);
+}
+
+alt::IVehicle* Vehicle_GetTrainLinkedToBackwardId(alt::IVehicle* vehicle) {
+    return vehicle->GetTrainLinkedToBackwardId().Get();
+}
+
+void Vehicle_SetTrainLinkedToBackwardId(alt::IVehicle* vehicle, alt::IVehicle* entity) {
+    vehicle->SetTrainLinkedToBackwardId(entity);
+}
+
+alt::IVehicle* Vehicle_GetTrainLinkedToForwardId(alt::IVehicle* vehicle) {
+    return vehicle->GetTrainLinkedToForwardId().Get();
+}
+
+void Vehicle_SetTrainLinkedToForwardId(alt::IVehicle* vehicle, alt::IVehicle* entity) {
+    vehicle->SetTrainLinkedToForwardId(vehicle);
+}

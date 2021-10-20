@@ -730,5 +730,80 @@ namespace AltV.Net.Elements.Entities
         /// Sets the searchlight to given entity
         /// </summary>
         bool SetSearchLight(bool state, IEntity spottedEntity);
+
+        /// <summary>
+        /// Gets or sets if the vehicle is a train
+        /// </summary>
+        bool IsMissionTrain { get; set; }
+
+        /// <summary>
+        /// Gets or sets the trains track id
+        /// </summary>
+        sbyte TrainTrackId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the trains engine
+        /// </summary>
+        IVehicle TrainEngine { get; set; }
+
+        /// <summary>
+        /// Gets or sets the trains config index
+        /// </summary>
+        sbyte TrainConfigIndex { get; set; }
+
+        /// <summary>
+        /// Gets or sets the trains distance from the engine
+        /// </summary>
+        float TrainDistanceFromEngine { get; set; }
+
+        /// <summary>
+        /// Gets or sets if the vehicle is the trains engine
+        /// </summary>
+        bool IsTrainEngine { get; set; }
+
+        /// <summary>
+        /// Gets or sets if the vehicle is caboose
+        /// </summary>
+        bool IsTrainCaboose { get; set; }
+
+        /// <summary>
+        /// Gets or sets the trains direction
+        /// </summary>
+        bool TrainDirection { get; set; }
+
+        /// <summary>
+        /// Gets or sets if the train has passenger carriages
+        /// </summary>
+        bool TrainPassengerCarriages { get; set; }
+
+        /// <summary>
+        /// Gets or sets if the train should be rendered derailed
+        /// </summary>
+        bool TrainRenderDerailed { get; set; }
+
+        /// <summary>
+        /// Gets or sets if the trains doors should be forced open
+        /// </summary>
+        bool TrainForceDoorsOpen { get; set; }
+
+        /// <summary>
+        /// Gets or sets the trains cruise speed
+        /// </summary>
+        float TrainCruiseSpeed { get; set; }
+
+        /// <summary>
+        /// Gets or sets the trains carriage config index
+        /// </summary>
+        sbyte TrainCarriageConfigIndex { get; set; }
+
+        /// <summary>
+        /// Gets or sets the trains vehicle linked backward vehicle
+        /// </summary>
+        IVehicle TrainLinkedToBackward { get; set; }
+
+        /// <summary>
+        /// Gets or sets the trains vehicle linked forward vehicle
+        /// </summary>
+        IVehicle TrainLinkedToForward { get; set; }
     }
 }
