@@ -133,7 +133,7 @@ namespace AltV.Net.Interactions
 
         public static Task<IInteraction[]> FindInteractions(Vector3 position, int dimension)
         {
-            var callback = new TaskCompletionSource<IInteraction[]>();
+            var callback = new TaskCompletionSource<IInteraction[]>(TaskCreationOptions.RunContinuationsAsynchronously);
             InteractionChannel.Writer.TryWrite(new InteractionEvent(3, (position, dimension, callback)));
             return callback.Task;
         }
