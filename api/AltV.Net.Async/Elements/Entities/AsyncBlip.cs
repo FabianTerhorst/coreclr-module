@@ -38,11 +38,9 @@ namespace AltV.Net.Async.Elements.Entities
             get
             {
                 AsyncContext.RunAll();
-                lock (BaseObject)
-                {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
-                    return BaseObject.AttachedTo;
-                }
+                IEntity entity = default;
+                AsyncContext.RunOnMainThreadBlocking(() => entity = BaseObject.AttachedTo);
+                return entity;
             }
         }
 

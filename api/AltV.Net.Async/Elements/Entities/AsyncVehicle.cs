@@ -14,11 +14,9 @@ namespace AltV.Net.Async.Elements.Entities
             get
             {
                 AsyncContext.RunAll();
-                lock (BaseObject)
-                {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
-                    return BaseObject.Driver;
-                }
+                IPlayer driver = default;
+                AsyncContext.RunOnMainThreadBlocking(() => driver = BaseObject.Driver);
+                return driver;
             }
         }
 
