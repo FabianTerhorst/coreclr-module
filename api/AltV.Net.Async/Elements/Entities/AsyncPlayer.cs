@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 using AltV.Net.Data;
+using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Refs;
+using AltV.Net.Native;
 
 namespace AltV.Net.Async.Elements.Entities
 {
@@ -418,7 +421,25 @@ namespace AltV.Net.Async.Elements.Entities
 
         public void Emit(string eventName, params object[] args)
         {
-            BaseObject.EmitLocked(eventName, args);
+            var size = args.Length;
+            using var asyncContext = AsyncRefContext.Create(false);
+            var mValues = new MValueConst[size];
+            MValueConstLocked.CreateFromObjectsLocked(args, mValues, asyncContext);
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            lock (BaseObject)
+            {
+                if (BaseObject.Exists)
+                {
+                    Alt.Server.TriggerClientEvent(BaseObject, eventNamePtr, mValues);
+                }
+            }
+
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+
+            Marshal.FreeHGlobal(eventNamePtr);
         }
 
         public void AddWeaponComponent(uint weapon, uint weaponComponent)
