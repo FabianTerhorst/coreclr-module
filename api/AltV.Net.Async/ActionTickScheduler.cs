@@ -256,7 +256,7 @@ namespace AltV.Net.Async
 
         public Task ScheduleTask(Action action)
         {
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             actions.Enqueue(new ActionContainer5(action, completionSource).Run);
             return completionSource.Task;
         }
