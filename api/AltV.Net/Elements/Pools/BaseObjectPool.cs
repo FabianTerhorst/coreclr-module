@@ -9,7 +9,7 @@ namespace AltV.Net.Elements.Pools
     {
         public static void SetEntityNoLongerExists(TBaseObject entity)
         {
-            if (!(entity is IInternalBaseObject internalEntity)) return;
+            if (entity is not IInternalBaseObject internalEntity) return;
             internalEntity.Exists = false;
             internalEntity.ClearData();
         }
@@ -49,7 +49,11 @@ namespace AltV.Net.Elements.Pools
         {
             if (!entities.Remove(entityPointer, out var entity) || !entity.Exists) return false;
             entity.OnRemove();
-            SetEntityNoLongerExists(entity);
+            lock (entity)
+            {
+                SetEntityNoLongerExists(entity);
+            }
+
             OnRemove(entity);
             return true;
         }

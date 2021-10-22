@@ -282,11 +282,9 @@ namespace AltV.Net.Async.Elements.Entities
             get
             {
                 AsyncContext.RunAll();
-                lock (BaseObject)
-                {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
-                    return BaseObject.Vehicle;
-                }
+                IVehicle entity = default;
+                AsyncContext.RunOnMainThreadBlocking(() => entity = BaseObject.Vehicle);
+                return entity;
             }
         }
 
@@ -308,11 +306,9 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
-                {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
-                    return BaseObject.EntityAimingAt;
-                }
+                IEntity entity = default;
+                AsyncContext.RunOnMainThreadBlocking(() => entity = BaseObject.EntityAimingAt);
+                return entity;
             }
         }
 

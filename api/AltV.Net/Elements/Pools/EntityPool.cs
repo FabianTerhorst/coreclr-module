@@ -58,7 +58,11 @@ namespace AltV.Net.Elements.Pools
         {
             if (!entities.Remove(entityPointer, out var entity) || !entity.Exists) return false;
             entity.OnRemove();
-            BaseObjectPool<TEntity>.SetEntityNoLongerExists(entity);
+            lock (entity)
+            {
+                BaseObjectPool<TEntity>.SetEntityNoLongerExists(entity);
+            }
+
             OnRemove(entity);
             return true;
         }
