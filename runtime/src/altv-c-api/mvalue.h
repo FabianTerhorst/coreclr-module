@@ -12,6 +12,8 @@
 #pragma clang diagnostic pop
 #endif
 
+alt::MValueArgs MValuesToArgs(alt::MValueConst* args[], int size);
+
 #ifdef __cplusplus
 extern "C"
 {

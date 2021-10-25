@@ -1,5 +1,79 @@
 #include "mvalue.h"
 
+alt::MValue ToMValue(alt::MValueConst* val) {
+    alt::ICore& core = alt::ICore::Instance();
+    if (val == nullptr) return core.CreateMValueNil();
+    const alt::IMValue* mValue = val->Get();
+    switch (mValue->GetType()) {
+        case alt::IMValue::Type::NONE:
+            return core.CreateMValueNone();
+        case alt::IMValue::Type::NIL:
+            return core.CreateMValueNil();
+        case alt::IMValue::Type::BOOL:
+            return core.CreateMValueBool(dynamic_cast<const alt::IMValueBool*>(mValue)->Value());
+        case alt::IMValue::Type::INT:
+            return core.CreateMValueInt(dynamic_cast<const alt::IMValueInt*>(mValue)->Value());
+        case alt::IMValue::Type::UINT:
+            return core.CreateMValueUInt(dynamic_cast<const alt::IMValueUInt*>(mValue)->Value());
+        case alt::IMValue::Type::DOUBLE:
+            return core.CreateMValueDouble(dynamic_cast<const alt::IMValueDouble*>(mValue)->Value());
+        case alt::IMValue::Type::STRING:
+            return core.CreateMValueString(dynamic_cast<const alt::IMValueString*>(mValue)->Value());
+        case alt::IMValue::Type::LIST: {
+            auto cVal = dynamic_cast<const alt::IMValueList*>(mValue);
+            auto length = cVal->GetSize();
+            alt::MValueList list = core.CreateMValueList(length);
+
+            alt::RefBase<alt::RefStore<const alt::IMValue>> innerVal;
+            for (uint32_t i = 0; i < length; ++i) {
+                innerVal = cVal->Get(i);
+                list->Set(i, ToMValue(&innerVal));
+            }
+
+            return list;
+        }
+        case alt::IMValue::Type::DICT:{
+            auto cVal = dynamic_cast<const alt::IMValueDict*>(mValue);
+            auto length = cVal->GetSize();
+            alt::MValueDict dict = core.CreateMValueDict();
+
+            alt::RefBase<alt::RefStore<const alt::IMValue>> innerVal;
+            alt::IMValueDict::Iterator* it = cVal->Begin();
+            while (it != nullptr) {
+                innerVal = it->GetValue();
+                dict->Set(it->GetKey(), ToMValue(&innerVal));
+                it = cVal->Next();
+            }
+
+            return dict;
+        }
+        case alt::IMValue::Type::BASE_OBJECT:
+            return core.CreateMValueBaseObject(dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value());
+        case alt::IMValue::Type::FUNCTION:
+            return core.CreateMValueNone();//core.CreateMValueFunction(dynamic_cast<const alt::IMValueFunction*>(mValue)->Call);
+        case alt::IMValue::Type::VECTOR3:
+            return core.CreateMValueVector2(dynamic_cast<const alt::IMValueVector3*>(mValue)->Value());
+        case alt::IMValue::Type::RGBA:
+            return core.CreateMValueRGBA(dynamic_cast<const alt::IMValueRGBA*>(mValue)->Value());
+        case alt::IMValue::Type::BYTE_ARRAY: {
+            auto cVal = dynamic_cast<const alt::IMValueByteArray *>(mValue);
+            return core.CreateMValueByteArray(cVal->GetData(), cVal->GetSize());
+        }
+        case alt::IMValue::Type::VECTOR2:
+            return core.CreateMValueVector2(dynamic_cast<const alt::IMValueVector2*>(mValue)->Value());
+        default:
+            return core.CreateMValueNone();
+    }
+}
+
+alt::MValueArgs MValuesToArgs(alt::MValueConst* args[], int size) {
+    alt::Array<alt::MValueConst> mValues = alt::Array<alt::MValueConst>(size);
+    for (int i = 0; i < size; i++) {
+        mValues[i] = ToMValue(args[i]);
+    }
+    return mValues;
+}
+
 CustomInvoker* Invoker_Create(CSharpResourceImpl* resource, MValueFunctionCallback val) {
     auto invoker = new CustomInvoker(val);
     resource->invokers->Push(invoker);
@@ -14,9 +88,10 @@ void Invoker_Destroy(CSharpResourceImpl* resource, CustomInvoker* val) {
             newInvokers->Push(invoker);
         }
     }
-    delete val;
-    delete resource->invokers;
+    alt::Array<CustomInvoker*>* oldInvokers = resource->invokers;
     resource->invokers = newInvokers;
+    delete val;
+    delete oldInvokers;
 }
 
 void MValueConst_AddRef(alt::MValueConst* mValueConst) {

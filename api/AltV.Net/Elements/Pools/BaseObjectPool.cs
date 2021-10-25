@@ -14,7 +14,7 @@ namespace AltV.Net.Elements.Pools
             internalEntity.ClearData();
         }
 
-        private readonly Dictionary<IntPtr, TBaseObject> entities = new Dictionary<IntPtr, TBaseObject>();
+        private readonly Dictionary<IntPtr, TBaseObject> entities = new ();
 
         private readonly IBaseObjectFactory<TBaseObject> entityFactory;
 
