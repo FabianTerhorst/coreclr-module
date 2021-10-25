@@ -10,9 +10,9 @@ namespace AltV.Net.Async
 {
     public static class MValueConstLocked
     {
-        public static void CreateLocked(IPlayer player, IAsyncRefContext asyncRefContext, out MValueConst mValue)
+        public static void CreateLocked(IPlayer player, IRefContext refContext, out MValueConst mValue)
         {
-            if (!asyncRefContext.CreateRef(player))
+            if (!refContext.CreateRef(player))
             {
                 mValue = MValueConst.Nil;
                 return;
@@ -21,9 +21,9 @@ namespace AltV.Net.Async
             Alt.Server.CreateMValuePlayer(out mValue, player);
         }
 
-        public static void CreateLocked(IVehicle vehicle, IAsyncRefContext asyncRefContext, out MValueConst mValue)
+        public static void CreateLocked(IVehicle vehicle, IRefContext refContext, out MValueConst mValue)
         {
-            if (!asyncRefContext.CreateRef(vehicle))
+            if (!refContext.CreateRef(vehicle))
             {
                 mValue = MValueConst.Nil;
                 return;
@@ -32,9 +32,9 @@ namespace AltV.Net.Async
             Alt.Server.CreateMValueVehicle(out mValue, vehicle);
         }
 
-        public static void CreateLocked(IBlip blip, IAsyncRefContext asyncRefContext, out MValueConst mValue)
+        public static void CreateLocked(IBlip blip, IRefContext refContext, out MValueConst mValue)
         {
-            if (!asyncRefContext.CreateRef(blip))
+            if (!refContext.CreateRef(blip))
             {
                 mValue = MValueConst.Nil;
                 return;
@@ -43,9 +43,9 @@ namespace AltV.Net.Async
             Alt.Server.CreateMValueBlip(out mValue, blip);
         }
 
-        public static void CreateLocked(ICheckpoint checkpoint, IAsyncRefContext asyncRefContext, out MValueConst mValue)
+        public static void CreateLocked(ICheckpoint checkpoint, IRefContext refContext, out MValueConst mValue)
         {
-            if (!asyncRefContext.CreateRef(checkpoint))
+            if (!refContext.CreateRef(checkpoint))
             {
                 mValue = MValueConst.Nil;
                 return;
@@ -54,7 +54,7 @@ namespace AltV.Net.Async
             Alt.Server.CreateMValueCheckpoint(out mValue, checkpoint);
         }
 
-        public static void CreateFromObjectLocked(object obj, IAsyncRefContext asyncRefContext, out MValueConst mValue)
+        public static void CreateFromObjectLocked(object obj, IRefContext refContext, out MValueConst mValue)
         {
             if (obj == null)
             {
@@ -71,16 +71,16 @@ namespace AltV.Net.Async
             switch (obj)
             {
                 case IPlayer player:
-                    CreateLocked(player, asyncRefContext, out mValue);
+                    CreateLocked(player, refContext, out mValue);
                     return;
                 case IVehicle vehicle:
-                    CreateLocked(vehicle, asyncRefContext, out mValue);
+                    CreateLocked(vehicle, refContext, out mValue);
                     return;
                 case IBlip blip:
-                    CreateLocked(blip, asyncRefContext, out mValue);
+                    CreateLocked(blip, refContext, out mValue);
                     return;
                 case ICheckpoint checkpoint:
-                    CreateLocked(checkpoint, asyncRefContext, out mValue);
+                    CreateLocked(checkpoint, refContext, out mValue);
                     return;
                 case bool value:
                     Alt.Server.CreateMValueBool(out mValue, value);
@@ -228,12 +228,12 @@ namespace AltV.Net.Async
             }
         }
 
-        internal static void CreateFromObjectsLocked(object[] objects, MValueConst[] mValues, IAsyncRefContext asyncRefContext)
+        internal static void CreateFromObjectsLocked(object[] objects, MValueConst[] mValues, IRefContext refContext)
         {
             var length = objects.Length;
             for (var i = 0; i < length; i++)
             {
-                CreateFromObjectLocked(objects[i], asyncRefContext, out var mValueElement);
+                CreateFromObjectLocked(objects[i], refContext, out var mValueElement);
                 mValues[i] = mValueElement;
             }
         }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using AltV.Net.Elements.Entities;
 
-namespace AltV.Net.Async
+namespace AltV.Net
 {
-    public interface IAsyncRefContext : IDisposable
+    public interface IRefContext : IDisposable
     {
         public bool CheckIfExists(IBaseObject baseObject);
 
@@ -14,18 +14,18 @@ namespace AltV.Net.Async
         bool CreateRef(IBaseObject baseObject, bool safe = false);
     }
 
-    public class AsyncRefContext : IAsyncRefContext
+    public class RefContext : IRefContext
     {
-        public static IAsyncRefContext Create(bool throwOnExistsCheck = true)
+        public static IRefContext Create(bool throwOnExistsCheck = true)
         {
-            return new AsyncRefContext(throwOnExistsCheck);
+            return new RefContext(throwOnExistsCheck);
         }
         
         private readonly LinkedList<IBaseObject> baseObjectRefs;
 
         private readonly bool throwOnExistsCheck;
 
-        private AsyncRefContext(bool throwOnExistsCheck)
+        private RefContext(bool throwOnExistsCheck)
         {
             baseObjectRefs = new LinkedList<IBaseObject>();
             this.throwOnExistsCheck = throwOnExistsCheck;
