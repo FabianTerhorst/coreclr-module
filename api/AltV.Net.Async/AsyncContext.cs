@@ -142,6 +142,23 @@ namespace AltV.Net.Async
             if (actions.Count == 0 && !dispose) return;
             RunOnMainThreadBlocking(() =>
             {
+                if (actions.Count != 0)
+                {
+                    // Thread safe linked list loop
+                    var first = actions.First;
+                    var current = first;
+                    var last = actions.Last;
+                    var done = false;
+                    if (current == null) return; //empty list
+                    do
+                    {
+                        current.Value();
+                        if (current == last) done = true;
+                        current = current.Next;
+                    } while (!done && current != null);
+                    actions.Clear();
+                }
+                
                 if (dispose)
                 {
                     var firstBaseObject = baseObjectRefs.First;
@@ -167,23 +184,6 @@ namespace AltV.Net.Async
                         } while (!doneBaseObject && currentBaseObject != null);
                     }
                     baseObjectRefs.Clear();
-                }
-
-                if (actions.Count != 0)
-                {
-                    // Thread safe linked list loop
-                    var first = actions.First;
-                    var current = first;
-                    var last = actions.Last;
-                    var done = false;
-                    if (current == null) return; //empty list
-                    do
-                    {
-                        current.Value();
-                        if (current == last) done = true;
-                        current = current.Next;
-                    } while (!done && current != null);
-                    actions.Clear();
                 }
             });
         }
