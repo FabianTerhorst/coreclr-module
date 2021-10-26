@@ -34,7 +34,6 @@ alt::MValue ToMValue(alt::MValueConst* val) {
         }
         case alt::IMValue::Type::DICT:{
             auto cVal = dynamic_cast<const alt::IMValueDict*>(mValue);
-            auto length = cVal->GetSize();
             alt::MValueDict dict = core.CreateMValueDict();
 
             alt::RefBase<alt::RefStore<const alt::IMValue>> innerVal;
@@ -67,9 +66,9 @@ alt::MValue ToMValue(alt::MValueConst* val) {
 }
 
 alt::MValueArgs MValuesToArgs(alt::MValueConst* args[], int size) {
-    alt::Array<alt::MValueConst> mValues = alt::Array<alt::MValueConst>(size);
+    alt::MValueArgs mValues = alt::MValueArgs(size);
     for (int i = 0; i < size; i++) {
-        mValues[i] = ToMValue(args[i]);
+        mValues.Push(ToMValue(args[i]));
     }
     return mValues;
 }
