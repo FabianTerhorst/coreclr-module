@@ -1,26 +1,29 @@
 #include "mvalue.h"
+#include <iostream>
 
 alt::MValue ToMValue(alt::MValueConst* val) {
     alt::ICore& core = alt::ICore::Instance();
     if (val == nullptr) return core.CreateMValueNil();
-    const alt::IMValue* mValue = val->Get();
+    std::cout << "1" << std::endl;
+    auto mValue = val->Get();
+    std::cout << "2" << std::endl;
     switch (mValue->GetType()) {
         case alt::IMValue::Type::NONE:
             return core.CreateMValueNone();
         case alt::IMValue::Type::NIL:
             return core.CreateMValueNil();
         case alt::IMValue::Type::BOOL:
-            return core.CreateMValueBool(dynamic_cast<const alt::IMValueBool*>(mValue)->Value());
+            return core.CreateMValueBool(((alt::MValueBoolConst*)(val))->Get()->Value());
         case alt::IMValue::Type::INT:
-            return core.CreateMValueInt(dynamic_cast<const alt::IMValueInt*>(mValue)->Value());
+            return core.CreateMValueInt(((alt::MValueIntConst*)(val))->Get()->Value());
         case alt::IMValue::Type::UINT:
-            return core.CreateMValueUInt(dynamic_cast<const alt::IMValueUInt*>(mValue)->Value());
+            return core.CreateMValueUInt(((alt::MValueUIntConst*)(val))->Get()->Value());
         case alt::IMValue::Type::DOUBLE:
-            return core.CreateMValueDouble(dynamic_cast<const alt::IMValueDouble*>(mValue)->Value());
+            return core.CreateMValueDouble(((alt::MValueDoubleConst*)(val))->Get()->Value());
         case alt::IMValue::Type::STRING:
-            return core.CreateMValueString(dynamic_cast<const alt::IMValueString*>(mValue)->Value());
+            return core.CreateMValueString(((alt::MValueStringConst*)(val))->Get()->Value().CStr());
         case alt::IMValue::Type::LIST: {
-            auto cVal = dynamic_cast<const alt::IMValueList*>(mValue);
+            auto cVal = ((alt::MValueListConst*)(val))->Get();
             auto length = cVal->GetSize();
             alt::MValueList list = core.CreateMValueList(length);
 
@@ -33,7 +36,7 @@ alt::MValue ToMValue(alt::MValueConst* val) {
             return list;
         }
         case alt::IMValue::Type::DICT:{
-            auto cVal = dynamic_cast<const alt::IMValueDict*>(mValue);
+            auto cVal = ((alt::MValueDictConst*)(val))->Get();
             alt::MValueDict dict = core.CreateMValueDict();
 
             alt::RefBase<alt::RefStore<const alt::IMValue>> innerVal;
@@ -47,19 +50,19 @@ alt::MValue ToMValue(alt::MValueConst* val) {
             return dict;
         }
         case alt::IMValue::Type::BASE_OBJECT:
-            return core.CreateMValueBaseObject(dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value());
+            return core.CreateMValueBaseObject(((alt::MValueBaseObjectConst*)(val))->Get()->Value());
         case alt::IMValue::Type::FUNCTION:
             return core.CreateMValueNone();//core.CreateMValueFunction(dynamic_cast<const alt::IMValueFunction*>(mValue)->Call);
         case alt::IMValue::Type::VECTOR3:
-            return core.CreateMValueVector2(dynamic_cast<const alt::IMValueVector3*>(mValue)->Value());
+            return core.CreateMValueVector2(((alt::MValueVector3Const*)(val))->Get()->Value());
         case alt::IMValue::Type::RGBA:
-            return core.CreateMValueRGBA(dynamic_cast<const alt::IMValueRGBA*>(mValue)->Value());
+            return core.CreateMValueRGBA(((alt::MValueRGBAConst*)(val))->Get()->Value());
         case alt::IMValue::Type::BYTE_ARRAY: {
-            auto cVal = dynamic_cast<const alt::IMValueByteArray *>(mValue);
+            auto cVal = ((alt::MValueByteArrayConst*)(val))->Get();
             return core.CreateMValueByteArray(cVal->GetData(), cVal->GetSize());
         }
         case alt::IMValue::Type::VECTOR2:
-            return core.CreateMValueVector2(dynamic_cast<const alt::IMValueVector2*>(mValue)->Value());
+            return core.CreateMValueVector2(((alt::MValueVector2Const*)(val))->Get()->Value());
         default:
             return core.CreateMValueNone();
     }
