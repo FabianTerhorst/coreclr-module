@@ -1,6 +1,6 @@
 #include "mvalue.h"
 
-alt::MValue ToMValue(alt::ICore *core, alt::MValueConst *val) {
+alt::MValueConst ToMValue(alt::ICore *core, alt::MValueConst *val) {
     if (val == nullptr) return core->CreateMValueNil();
     auto mValue = val->Get();
     switch (mValue->GetType()) {
@@ -26,7 +26,7 @@ alt::MValue ToMValue(alt::ICore *core, alt::MValueConst *val) {
             alt::RefBase<alt::RefStore<const alt::IMValue>> innerVal;
             for (uint32_t i = 0; i < length; ++i) {
                 innerVal = cVal->Get(i);
-                list->Set(i, ToMValue(core, &innerVal));
+                list->SetConst(i, ToMValue(core, &innerVal));
             }
 
             return list;
@@ -39,7 +39,7 @@ alt::MValue ToMValue(alt::ICore *core, alt::MValueConst *val) {
             alt::IMValueDict::Iterator *it = cVal->Begin();
             while (it != nullptr) {
                 innerVal = it->GetValue();
-                dict->Set(it->GetKey(), ToMValue(core, &innerVal));
+                dict->SetConst(it->GetKey(), ToMValue(core, &innerVal));
                 it = cVal->Next();
             }
 
@@ -62,14 +62,6 @@ alt::MValue ToMValue(alt::ICore *core, alt::MValueConst *val) {
         default:
             return core->CreateMValueNone();
     }
-}
-
-alt::MValueArgs MValuesToArgs(alt::ICore *core, alt::MValueConst *args[], int size) {
-    alt::MValueArgs mValues = alt::MValueArgs(size);
-    for (int i = 0; i < size; i++) {
-        mValues.Push(ToMValue(core, args[i]));
-    }
-    return mValues;
 }
 
 CustomInvoker *Invoker_Create(CSharpResourceImpl *resource, MValueFunctionCallback val) {
