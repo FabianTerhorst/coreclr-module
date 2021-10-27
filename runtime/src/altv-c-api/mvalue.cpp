@@ -4,9 +4,7 @@
 alt::MValue ToMValue(alt::MValueConst* val) {
     alt::ICore& core = alt::ICore::Instance();
     if (val == nullptr) return core.CreateMValueNil();
-    std::cout << "1" << std::endl;
     auto mValue = val->Get();
-    std::cout << "2" << std::endl;
     switch (mValue->GetType()) {
         case alt::IMValue::Type::NONE:
             return core.CreateMValueNone();
