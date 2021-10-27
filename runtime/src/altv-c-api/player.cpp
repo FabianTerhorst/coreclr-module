@@ -548,9 +548,14 @@ uint8_t Player_SetHeadOverlayColor(alt::IPlayer* player, uint8_t overlayID, uint
     return player->SetHeadOverlayColor(overlayID, colorType, colorIndex, secondColorIndex);
 }
 
-alt::HeadOverlay Player_GetHeadOverlay(alt::IPlayer* player, uint8_t overlayID)
+void Player_GetHeadOverlay(alt::IPlayer* player, uint8_t overlayID, head_overlay_t &headOverlay)
 {
-    return player->GetHeadOverlay(overlayID);
+    auto playerHeadOverlay = player->GetHeadOverlay(overlayID);
+    headOverlay.index = playerHeadOverlay.index;
+    headOverlay.opacity = playerHeadOverlay.opacity;
+    headOverlay.colorType = playerHeadOverlay.colorType;
+    headOverlay.colorIndex = playerHeadOverlay.colorIndex;
+    headOverlay.secondColorIndex = playerHeadOverlay.secondColorIndex;
 }
 
 uint8_t Player_SetFaceFeature(alt::IPlayer* player, uint8_t index, float scale)
@@ -573,9 +578,13 @@ uint8_t Player_SetHeadBlendPaletteColor(alt::IPlayer* player, uint8_t id, uint8_
     return player->SetHeadBlendPaletteColor(id, red, green, blue);
 }
 
-alt::RGBA Player_GetHeadBlendPaletteColor(alt::IPlayer* player, uint8_t id)
+void Player_GetHeadBlendPaletteColor(alt::IPlayer* player, uint8_t id, rgba_t &headBlendPaletteColor)
 {
-    return player->GetHeadBlendPaletteColor(id);
+    auto playerHeadBlendPaletteColor = player->GetHeadBlendPaletteColor(id);
+    headBlendPaletteColor.r = playerHeadBlendPaletteColor.r;
+    headBlendPaletteColor.g = playerHeadBlendPaletteColor.g;
+    headBlendPaletteColor.b = playerHeadBlendPaletteColor.b;
+    headBlendPaletteColor.a= playerHeadBlendPaletteColor.a;
 }
 
 void Player_SetHeadBlendData(alt::IPlayer* player, uint32_t shapeFirstID, uint32_t shapeSecondID, uint32_t shapeThirdID,
@@ -585,9 +594,18 @@ void Player_SetHeadBlendData(alt::IPlayer* player, uint32_t shapeFirstID, uint32
     return player->SetHeadBlendData(shapeFirstID, shapeSecondID, shapeThirdID, skinFirstID, skinSecondID, skinThirdID, shapeMix, skinMix, thirdMix);
 }
 
-alt::HeadBlendData Player_GetHeadBlendData(alt::IPlayer* player)
+void Player_GetHeadBlendData(alt::IPlayer* player, head_blend_data_t &headBlendData)
 {
-    return player->GetHeadBlendData();
+    auto playerHeadBlendData = player->GetHeadBlendData();
+    headBlendData.shapeFirstID = playerHeadBlendData.shapeFirstID;
+    headBlendData.shapeSecondID = playerHeadBlendData.shapeSecondID;
+    headBlendData.shapeThirdID = playerHeadBlendData.shapeThirdID;
+    headBlendData.skinFirstID = playerHeadBlendData.skinFirstID;
+    headBlendData.skinSecondID = playerHeadBlendData.skinSecondID;
+    headBlendData.skinThirdID = playerHeadBlendData.skinThirdID;
+    headBlendData.shapeMix = playerHeadBlendData.shapeMix;
+    headBlendData.skinMix = playerHeadBlendData.skinMix;
+    headBlendData.thirdMix = playerHeadBlendData.thirdMix;
 }
 
 uint8_t Player_SetEyeColor(alt::IPlayer* player, uint16_t eyeColor)

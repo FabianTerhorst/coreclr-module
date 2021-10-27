@@ -690,6 +690,23 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsCrouching { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsStealthy { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, void> Player_PlayAmbientSpeech { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, float, byte> Player_SetHeadOverlay { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveHeadOverlay { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, byte, byte, byte> Player_SetHeadOverlayColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, HeadOverlay*, void> Player_GetHeadOverlay { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, float, byte> Player_SetFaceFeature { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, float> Player_GetFaceFeatureScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveFaceFeature { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, byte, byte, byte> Player_SetHeadBlendPaletteColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, Rgba*, void> Player_GetHeadBlendPaletteColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, int, int, int, int, int, float, float, float, void> Player_SetHeadBlendData { get; }
+        public delegate* unmanaged[Cdecl]<nint, HeadBlendData*, void> Player_GetHeadBlendData { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, byte> Player_SetEyeColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetEyeColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetHairColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetHairColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetHairHighlightColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetHairHighlightColor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetNetworkOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetModel { get; }
@@ -1244,6 +1261,23 @@ namespace AltV.Net.Native
             Player_IsCrouching = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsCrouching");
             Player_IsStealthy = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsStealthy");
             Player_PlayAmbientSpeech = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint, void>) NativeLibrary.GetExport(handle, "Player_PlayAmbientSpeech");
+            Player_SetHeadOverlay = (delegate* unmanaged[Cdecl]<nint, byte, byte, float, byte>)NativeLibrary.GetExport(handle, "Player_SetHeadOverlay");
+            Player_RemoveHeadOverlay = (delegate* unmanaged[Cdecl]<nint, byte, byte>)NativeLibrary.GetExport(handle, "Player_RemoveHeadOverlay");
+            Player_SetHeadOverlayColor = (delegate* unmanaged[Cdecl]<nint, byte, byte, byte, byte, byte>)NativeLibrary.GetExport(handle, "Player_SetHeadOverlayColor");
+            Player_GetHeadOverlay = (delegate* unmanaged[Cdecl]<nint, byte, HeadOverlay*, void>)NativeLibrary.GetExport(handle, "Player_GetHeadOverlay");
+            Player_SetFaceFeature = (delegate* unmanaged[Cdecl]<nint, byte, float, byte>)NativeLibrary.GetExport(handle, "Player_SetFaceFeature");
+            Player_GetFaceFeatureScale = (delegate* unmanaged[Cdecl]<nint, byte, float>)NativeLibrary.GetExport(handle, "Player_GetFaceFeatureScale");
+            Player_RemoveFaceFeature = (delegate* unmanaged[Cdecl]<nint, byte, byte>)NativeLibrary.GetExport(handle, "Player_RemoveFaceFeature");
+            Player_SetHeadBlendPaletteColor = (delegate* unmanaged[Cdecl]<nint, byte, byte, byte, byte, byte>)NativeLibrary.GetExport(handle, "Player_SetHeadBlendPaletteColor");
+            Player_GetHeadBlendPaletteColor = (delegate* unmanaged[Cdecl]<nint, byte, Rgba*, void>)NativeLibrary.GetExport(handle, "Player_GetHeadBlendPaletteColor");
+            Player_SetHeadBlendData = (delegate* unmanaged[Cdecl]<nint, int, int, int, int, int, int, float, float, float, void>)NativeLibrary.GetExport(handle, "Player_SetHeadBlendData");
+            Player_GetHeadBlendData = (delegate* unmanaged[Cdecl]<nint, HeadBlendData*, void>)NativeLibrary.GetExport(handle, "Player_GetHeadBlendData");
+            Player_SetEyeColor = (delegate* unmanaged[Cdecl]<nint, ushort, byte>)NativeLibrary.GetExport(handle, "Player_SetEyeColor");
+            Player_GetEyeColor = (delegate* unmanaged[Cdecl]<nint, ushort>)NativeLibrary.GetExport(handle, "Player_GetEyeColor");
+            Player_SetHairColor = (delegate* unmanaged[Cdecl]<nint, byte, void>)NativeLibrary.GetExport(handle, "Player_SetHairColor");
+            Player_GetHairColor = (delegate* unmanaged[Cdecl]<nint, byte>)NativeLibrary.GetExport(handle, "Player_GetHairColor");
+            Player_SetHairHighlightColor = (delegate* unmanaged[Cdecl]<nint, byte, void>)NativeLibrary.GetExport(handle, "Player_SetHairHighlightColor");
+            Player_GetHairHighlightColor = (delegate* unmanaged[Cdecl]<nint, byte>)NativeLibrary.GetExport(handle, "Player_GetHairHighlightColor");
             Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetID");
             Vehicle_GetNetworkOwner = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetNetworkOwner");
             Vehicle_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Vehicle_GetModel");

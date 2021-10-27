@@ -13,6 +13,9 @@
 #include "dlc_cloth.h"
 #include "prop.h"
 #include "dlc_prop.h"
+#include "head_overlay.h"
+#include "head_blend_data.h"
+#include "rgba.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -195,7 +198,7 @@ EXPORT uint8_t Player_RemoveHeadOverlay(alt::IPlayer* player, uint8_t overlayID)
 
 EXPORT uint8_t Player_SetHeadOverlayColor(alt::IPlayer* player, uint8_t overlayID, uint8_t colorType, uint8_t colorIndex, uint8_t secondColorIndex);
 
-EXPORT alt::HeadOverlay Player_GetHeadOverlay(alt::IPlayer* player, uint8_t overlayID);
+EXPORT void Player_GetHeadOverlay(alt::IPlayer* player, uint8_t overlayID, head_overlay_t& headOverlay);
 
 EXPORT uint8_t Player_SetFaceFeature(alt::IPlayer* player, uint8_t index, float scale);
 
@@ -205,13 +208,13 @@ EXPORT uint8_t Player_RemoveFaceFeature(alt::IPlayer* player, uint8_t index);
 
 EXPORT uint8_t Player_SetHeadBlendPaletteColor(alt::IPlayer* player, uint8_t id, uint8_t red, uint8_t green, uint8_t blue);
 
-EXPORT alt::RGBA Player_GetHeadBlendPaletteColor(alt::IPlayer* player, uint8_t id);
+EXPORT void Player_GetHeadBlendPaletteColor(alt::IPlayer* player, uint8_t id, rgba_t& headBlendPaletteColor);
 
 EXPORT void Player_SetHeadBlendData(alt::IPlayer* player, uint32_t shapeFirstID, uint32_t shapeSecondID, uint32_t shapeThirdID,
     uint32_t skinFirstID, uint32_t skinSecondID, uint32_t skinThirdID,
     float shapeMix, float skinMix, float thirdMix);
 
-EXPORT alt::HeadBlendData Player_GetHeadBlendData(alt::IPlayer* player);
+EXPORT void Player_GetHeadBlendData(alt::IPlayer* player, head_blend_data_t& headBlendData);
 
 EXPORT uint8_t Player_SetEyeColor(alt::IPlayer* player, uint16_t eyeColor);
 
