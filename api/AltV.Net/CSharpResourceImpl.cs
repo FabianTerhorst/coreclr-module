@@ -12,17 +12,19 @@ namespace AltV.Net
     public class CSharpResourceImpl : IDisposable
     {
         private readonly ILibrary library;
-        
+
         internal readonly IntPtr NativePointer;
 
-        private readonly LinkedList<GCHandle> handles = new ();
+        private readonly LinkedList<GCHandle> handles = new();
+
+        private readonly Dictionary<IntPtr, GCHandle> invokers = new();
 
         internal CSharpResourceImpl(ILibrary library, IntPtr nativePointer)
         {
             this.library = library;
             NativePointer = nativePointer;
         }
-        
+
         internal void SetDelegates(AltNative.Resource.MainDelegate onStart)
         {
             handles.AddFirst(GCHandle.Alloc(onStart));
@@ -55,15 +57,15 @@ namespace AltV.Net
             AltNative.Resource.PlayerConnectDelegate onPlayerConnect = ModuleWrapper.OnPlayerConnect;
             handles.AddFirst(GCHandle.Alloc(onPlayerConnect));
             AltNative.Resource.CSharpResourceImpl_SetPlayerConnectDelegate(NativePointer, onPlayerConnect);
-            
+
             AltNative.Resource.ResourceEventDelegate onResourceStart = ModuleWrapper.OnResourceStart;
             handles.AddFirst(GCHandle.Alloc(onResourceStart));
             AltNative.Resource.CSharpResourceImpl_SetResourceStartDelegate(NativePointer, onResourceStart);
-            
+
             AltNative.Resource.ResourceEventDelegate onResourceStop = ModuleWrapper.OnResourceStop;
             handles.AddFirst(GCHandle.Alloc(onResourceStop));
             AltNative.Resource.CSharpResourceImpl_SetResourceStopDelegate(NativePointer, onResourceStop);
-            
+
             AltNative.Resource.ResourceEventDelegate onResourceError = ModuleWrapper.OnResourceError;
             handles.AddFirst(GCHandle.Alloc(onResourceError));
             AltNative.Resource.CSharpResourceImpl_SetResourceErrorDelegate(NativePointer, onResourceError);
@@ -101,10 +103,12 @@ namespace AltV.Net
             AltNative.Resource.PlayerEnterVehicleDelegate onPlayerEnterVehicle = ModuleWrapper.OnPlayerEnterVehicle;
             handles.AddFirst(GCHandle.Alloc(onPlayerEnterVehicle));
             AltNative.Resource.CSharpResourceImpl_SetPlayerEnterVehicleDelegate(NativePointer, onPlayerEnterVehicle);
-            
-            AltNative.Resource.PlayerEnteringVehicleDelegate onPlayerEnteringVehicle = ModuleWrapper.OnPlayerEnteringVehicle;
+
+            AltNative.Resource.PlayerEnteringVehicleDelegate onPlayerEnteringVehicle =
+                ModuleWrapper.OnPlayerEnteringVehicle;
             handles.AddFirst(GCHandle.Alloc(onPlayerEnteringVehicle));
-            AltNative.Resource.CSharpResourceImpl_SetPlayerEnteringVehicleDelegate(NativePointer, onPlayerEnteringVehicle);
+            AltNative.Resource.CSharpResourceImpl_SetPlayerEnteringVehicleDelegate(NativePointer,
+                onPlayerEnteringVehicle);
 
             AltNative.Resource.PlayerLeaveVehicleDelegate onPlayerLeaveVehicle = ModuleWrapper.OnPlayerLeaveVehicle;
             handles.AddFirst(GCHandle.Alloc(onPlayerLeaveVehicle));
@@ -173,35 +177,35 @@ namespace AltV.Net
             AltNative.Resource.ColShapeDelegate onColShape = ModuleWrapper.OnColShape;
             handles.AddFirst(GCHandle.Alloc(onColShape));
             AltNative.Resource.CSharpResourceImpl_SetColShapeDelegate(NativePointer, onColShape);
-            
+
             AltNative.Resource.VehicleDestroyDelegate onVehicleDestroy = ModuleWrapper.OnVehicleDestroy;
             handles.AddFirst(GCHandle.Alloc(onVehicleDestroy));
             AltNative.Resource.CSharpResourceImpl_SetVehicleDestroyDelegate(NativePointer, onVehicleDestroy);
-            
+
             AltNative.Resource.FireDelegate onFire = ModuleWrapper.OnFire;
             handles.AddFirst(GCHandle.Alloc(onFire));
             AltNative.Resource.CSharpResourceImpl_SetFireDelegate(NativePointer, onFire);
-            
+
             AltNative.Resource.StartProjectileDelegate onStartProjectile = ModuleWrapper.OnStartProjectile;
             handles.AddFirst(GCHandle.Alloc(onStartProjectile));
             AltNative.Resource.CSharpResourceImpl_SetStartProjectileDelegate(NativePointer, onStartProjectile);
-            
+
             AltNative.Resource.PlayerWeaponChangeDelegate onPlayerWeaponChange = ModuleWrapper.OnPlayerWeaponChange;
             handles.AddFirst(GCHandle.Alloc(onPlayerWeaponChange));
             AltNative.Resource.CSharpResourceImpl_SetPlayerWeaponChangeDelegate(NativePointer, onPlayerWeaponChange);
-            
+
             AltNative.Resource.NetOwnerChangeDelegate onNetOwnerChange = ModuleWrapper.OnNetOwnerChange;
             handles.AddFirst(GCHandle.Alloc(onNetOwnerChange));
             AltNative.Resource.CSharpResourceImpl_SetNetOwnerChangeDelegate(NativePointer, onNetOwnerChange);
-            
+
             AltNative.Resource.VehicleAttachDelegate onVehicleAttach = ModuleWrapper.OnVehicleAttach;
             handles.AddFirst(GCHandle.Alloc(onVehicleAttach));
             AltNative.Resource.CSharpResourceImpl_SetVehicleAttachDelegate(NativePointer, onVehicleAttach);
-            
+
             AltNative.Resource.VehicleDetachDelegate onVehicleDetach = ModuleWrapper.OnVehicleDetach;
             handles.AddFirst(GCHandle.Alloc(onVehicleDetach));
             AltNative.Resource.CSharpResourceImpl_SetVehicleDetachDelegate(NativePointer, onVehicleDetach);
-            
+
             AltNative.Resource.VehicleDamageDelegate onVehicleDamage = ModuleWrapper.OnVehicleDamage;
             handles.AddFirst(GCHandle.Alloc(onVehicleDamage));
             AltNative.Resource.CSharpResourceImpl_SetVehicleDamageDelegate(NativePointer, onVehicleDamage);
@@ -209,14 +213,24 @@ namespace AltV.Net
 
         public IntPtr CreateInvoker(MValueFunctionCallback function)
         {
+            IntPtr invoker;
             unsafe
             {
-                return library.Invoker_Create(NativePointer, function);
+                invoker = library.Invoker_Create(NativePointer, function);
             }
+
+            invokers[invoker] = GCHandle.Alloc(function);
+
+            return invoker;
         }
 
         public void DestroyInvoker(IntPtr invoker)
         {
+            if (invokers.Remove(invoker, out var gcHandle))
+            {
+                gcHandle.Free();
+            }
+
             unsafe
             {
                 library.Invoker_Destroy(NativePointer, invoker);
