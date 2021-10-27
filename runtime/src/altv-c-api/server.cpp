@@ -46,19 +46,19 @@ void Server_FileRead(alt::ICore* server, const char* path, const char*&text) {
 }
 
 void Server_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size) {
-    server->TriggerLocalEvent(ev, MValuesToArgs(args, size));
+    server->TriggerLocalEvent(ev, MValuesToArgs(server, args, size));
 }
 
 void
 Server_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* ev, alt::MValueConst* args[],
                           int size) {
-    server->TriggerClientEvent(target, ev, MValuesToArgs(args, size));
+    server->TriggerClientEvent(target, ev, MValuesToArgs(server, args, size));
 }
 
 void
 Server_TriggerClientEventForAll(alt::ICore* server, const char* ev, alt::MValueConst* args[],
     int size) {
-    server->TriggerClientEventForAll(ev, MValuesToArgs(args, size));
+    server->TriggerClientEventForAll(ev, MValuesToArgs(server, args, size));
 }
 
 void
@@ -69,7 +69,7 @@ Server_TriggerClientEventForSome(alt::ICore* server, alt::IPlayer* targets[], in
     {
         clients[i] = targets[i];
     }
-    server->TriggerClientEvent(clients, ev, MValuesToArgs(args, argsSize));
+    server->TriggerClientEvent(clients, ev, MValuesToArgs(server, args, argsSize));
 }
 
 alt::IVehicle*
