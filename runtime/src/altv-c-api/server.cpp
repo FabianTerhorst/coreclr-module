@@ -46,19 +46,31 @@ void Server_FileRead(alt::ICore* server, const char* path, const char*&text) {
 }
 
 void Server_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size) {
-    server->TriggerLocalEvent(ev, MValuesToArgs(server, args, size));
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        mValues.Push(ToMValue(server, args[i]));
+    }
+    server->TriggerLocalEvent(ev, mValues);
 }
 
 void
 Server_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* ev, alt::MValueConst* args[],
                           int size) {
-    server->TriggerClientEvent(target, ev, MValuesToArgs(server, args, size));
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        mValues.Push(ToMValue(server, args[i]));
+    }
+    server->TriggerClientEvent(target, ev, mValues);
 }
 
 void
 Server_TriggerClientEventForAll(alt::ICore* server, const char* ev, alt::MValueConst* args[],
     int size) {
-    server->TriggerClientEventForAll(ev, MValuesToArgs(server, args, size));
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        mValues.Push(ToMValue(server, args[i]));
+    }
+    server->TriggerClientEventForAll(ev, mValues);
 }
 
 void
@@ -69,7 +81,11 @@ Server_TriggerClientEventForSome(alt::ICore* server, alt::IPlayer* targets[], in
     {
         clients[i] = targets[i];
     }
-    server->TriggerClientEvent(clients, ev, MValuesToArgs(server, args, argsSize));
+    alt::MValueArgs mValues = alt::MValueArgs(argsSize);
+    for (int i = 0; i < argsSize; i++) {
+        mValues.Push(ToMValue(server, args[i]));
+    }
+    server->TriggerClientEvent(clients, ev, mValues);
 }
 
 alt::IVehicle*
