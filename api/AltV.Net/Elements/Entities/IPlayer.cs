@@ -241,7 +241,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="weapon">Weapon hash</param>
         /// <param name="tintIndex">tintIndex</param>
         void SetWeaponTintIndex(uint weapon, byte tintIndex);
-        
+
         /// <summary>
         /// Gets the weapon tint of a weapon
         /// </summary>
@@ -334,9 +334,9 @@ namespace AltV.Net.Elements.Entities
         /// Returns if the entity is in the streaming range of the player
         /// </summary>
         bool IsEntityInStreamingRange(IEntity entity);
-        
+
         bool TryCreateRef(out PlayerRef playerRef);
-        
+
         /// <summary>
         /// Get or set if the player is invincible.
         /// </summary>
@@ -344,30 +344,121 @@ namespace AltV.Net.Elements.Entities
         bool Invincible { get; set; }
 
         void SetIntoVehicle(IVehicle vehicle, byte seat);
-        
+
         /// <summary>
         /// Gets if the player has super jump enabled.
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool IsSuperJumpEnabled { get; }
-        
+
         /// <summary>
         /// Gets if the player is crouching.
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool IsCrouching { get; }
-        
+
         /// <summary>
         /// Gets if the player is stealthy.
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool IsStealthy { get; }
-        
+
         /// <summary>
         /// Plays ambient speech
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         void PlayAmbientSpeech(string speechName, string speechParam, uint speechHash);
+
+        /// <summary>
+        /// Get Head Blend Data
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        HeadBlendData HeadBlendData { get; }
+
+        /// <summary>
+        /// Get Eye Color
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        ushort EyeColor { get; }
+
+        /// <summary>
+        /// Get/Set Hair Color
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        byte HairColor { get; set; }
+
+        /// <summary>
+        /// Get/Set Hair Highlight Color
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        byte HairHighlightColor { get; set; }
+
+        /// <summary>
+        /// Set Head Overlay
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        bool SetHeadOverlay(byte overlayId, byte index, float opacity);
+
+        /// <summary>
+        /// Remove Head Overlay
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        bool RemoveHeadOverlay(byte overlayId);
+
+        /// <summary>
+        /// Set Head Overlay Color
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        bool SetHeadOverlayColor(byte overlayId, byte colorType, byte colorIndex, byte secondColorIndex);
+
+        /// <summary>
+        /// Get Head Overlay
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        HeadOverlay GetHeadOverlay(byte overlayID);
+
+        /// <summary>
+        /// Set Face Feature
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        bool SetFaceFeature(byte index, float scale);
+
+        /// <summary>
+        /// Get Face Feature Scale
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        float GetFaceFeatureScale(byte index);
+
+        /// <summary>
+        /// Remove Face Feature
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        bool RemoveFaceFeature(byte index);
+
+        /// <summary>
+        /// Set Head Blend Palette Color
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        bool SetHeadBlendPaletteColor(byte id, Rgba rgba);
+
+        /// <summary>
+        /// Get Head Blend Palette Color
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        Rgba GetHeadBlendPaletteColor(byte id);
+
+
+        /// <summary>
+        /// Set Head Blend Data
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        void SetHeadBlendData(int shapeFirstID, int shapeSecondID, int shapeThirdID, int skinFirstID, int skinSecondID, int skinThirdID, float shapeMix, float skinMix, float thirdMix);
+
+        /// <summary>
+        /// Set Eye Color
+        /// </summary>
+        /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        bool SetEyeColor(ushort eyeColor);
     }
 
     public static class PlayerExtensions

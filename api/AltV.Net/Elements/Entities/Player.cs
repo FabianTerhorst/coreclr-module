@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
@@ -251,7 +250,7 @@ namespace AltV.Net.Elements.Entities
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
-        
+
         public override bool HasSyncedMetaData(string key)
         {
             unsafe
@@ -272,7 +271,7 @@ namespace AltV.Net.Elements.Entities
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
-        
+
         public override void SetStreamSyncedMetaData(string key, in MValueConst value)
         {
             unsafe
@@ -292,7 +291,7 @@ namespace AltV.Net.Elements.Entities
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
-        
+
         public override bool HasStreamSyncedMetaData(string key)
         {
             unsafe
@@ -918,7 +917,7 @@ namespace AltV.Net.Elements.Entities
         {
             if (drawable > 127)
                 throw new ArgumentOutOfRangeException(nameof(drawable), "Drawable can't be higher than 127");
-            
+
             unsafe
             {
                 CheckIfEntityExists();
@@ -966,7 +965,7 @@ namespace AltV.Net.Elements.Entities
                 return prop;
             }
         }
-        
+
         public void GetDlcProps(byte component, ref DlcProp prop)
         {
             unsafe
@@ -1003,7 +1002,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 if(entity == null) return false;
 
-                if(entity.Type == BaseObjectType.Player) 
+                if(entity.Type == BaseObjectType.Player)
                     return Server.Library.Player_IsEntityInStreamingRange_Player(NativePointer, entity.NativePointer) == 1;
                 if(entity.Type == BaseObjectType.Vehicle)
                     return Server.Library.Player_IsEntityInStreamingRange_Vehicle(NativePointer, entity.NativePointer) == 1;
@@ -1018,8 +1017,8 @@ namespace AltV.Net.Elements.Entities
             {
                 CheckIfEntityExists();
                 if(entity == null) return;
-            
-                if(entity.Type == BaseObjectType.Player) 
+
+                if(entity.Type == BaseObjectType.Player)
                     Server.Library.Player_AttachToEntity_Player(NativePointer, entity.NativePointer, otherBone, ownBone, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
                 if(entity.Type == BaseObjectType.Vehicle)
                     Server.Library.Player_AttachToEntity_Vehicle(NativePointer, entity.NativePointer, otherBone, ownBone, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
@@ -1117,6 +1116,175 @@ namespace AltV.Net.Elements.Entities
         {
             playerRef = new PlayerRef(this);
             return playerRef.Exists;
+        }
+
+        public HeadBlendData HeadBlendData
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var headBlendData = HeadBlendData.Zero;
+                    Server.Library.Player_GetHeadBlendData(NativePointer, &headBlendData);
+                    return headBlendData;
+                }
+            }
+        }
+
+        public ushort EyeColor
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_GetEyeColor(NativePointer);
+                }
+            }
+        }
+
+        public byte HairColor
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_GetHairColor(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Player_SetHairColor(NativePointer, value);
+                }
+            }
+        }
+
+        public byte HairHighlightColor
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Player_GetHairHighlightColor(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Player_SetHairHighlightColor(NativePointer, value);
+                }
+            }
+        }
+
+        public bool SetHeadOverlay(byte overlayId, byte index, float opacity)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Server.Library.Player_SetHeadOverlay(NativePointer, overlayId, index, opacity) == 1;
+            }
+        }
+
+        public bool RemoveHeadOverlay(byte overlayId)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Server.Library.Player_RemoveHeadOverlay(NativePointer, overlayId) == 1;
+            }
+        }
+
+        public bool SetHeadOverlayColor(byte overlayId, byte colorType, byte colorIndex, byte secondColorIndex)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Server.Library.Player_SetHeadOverlayColor(NativePointer, overlayId, colorType, colorIndex, secondColorIndex) == 1;
+            }
+        }
+
+        public bool SetFaceFeature(byte index, float scale)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Server.Library.Player_SetFaceFeature(NativePointer, index, scale) == 1;
+            }
+        }
+
+        public float GetFaceFeatureScale(byte index)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Server.Library.Player_GetFaceFeatureScale(NativePointer, index);
+            }
+        }
+
+        public bool RemoveFaceFeature(byte index)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Server.Library.Player_RemoveFaceFeature(NativePointer, index) == 1;
+            }
+        }
+
+        public bool SetHeadBlendPaletteColor(byte id, Rgba rgba)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Server.Library.Player_SetHeadBlendPaletteColor(NativePointer, id, rgba.R, rgba.G, rgba.B) == 1;
+            }
+        }
+
+        public Rgba GetHeadBlendPaletteColor(byte id)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                var headBlendPaletteColor = Rgba.Zero;
+                Server.Library.Player_GetHeadBlendPaletteColor(NativePointer, id, &headBlendPaletteColor);
+                return headBlendPaletteColor;
+            }
+        }
+
+        public void SetHeadBlendData(int shapeFirstID, int shapeSecondID, int shapeThirdID, int skinFirstID, int skinSecondID, int skinThirdID, float shapeMix, float skinMix, float thirdMix)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Player_SetHeadBlendData(NativePointer, shapeFirstID, shapeSecondID, shapeThirdID, skinFirstID, skinSecondID, skinThirdID, shapeMix, skinMix, thirdMix);
+            }
+        }
+
+        public bool SetEyeColor(ushort eyeColor)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                return Server.Library.Player_SetEyeColor(NativePointer, eyeColor) == 1;
+            }
+        }
+
+        public HeadOverlay GetHeadOverlay(byte overlayID)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                var headOverlay = HeadOverlay.Zero;
+                Server.Library.Player_GetHeadOverlay(NativePointer, overlayID, & headOverlay);
+                return headOverlay;
+            }
         }
     }
 }

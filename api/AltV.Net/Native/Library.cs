@@ -140,6 +140,23 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsCrouching { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsStealthy { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, void> Player_PlayAmbientSpeech { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, float, byte> Player_SetHeadOverlay { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveHeadOverlay { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, byte, byte, byte> Player_SetHeadOverlayColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, HeadOverlay*, void> Player_GetHeadOverlay { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, float, byte> Player_SetFaceFeature { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, float> Player_GetFaceFeatureScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveFaceFeature { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, byte, byte, byte> Player_SetHeadBlendPaletteColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, Rgba*, void> Player_GetHeadBlendPaletteColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, int, int, int, int, int, float, float, float, void> Player_SetHeadBlendData { get; }
+        public delegate* unmanaged[Cdecl]<nint, HeadBlendData*, void> Player_GetHeadBlendData { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, byte> Player_SetEyeColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetEyeColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetHairColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetHairColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetHairHighlightColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetHairHighlightColor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetNetworkOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetModel { get; }
