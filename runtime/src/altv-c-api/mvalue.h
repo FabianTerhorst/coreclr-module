@@ -12,7 +12,7 @@
 #pragma clang diagnostic pop
 #endif
 
-alt::MValueArgs MValuesToArgs(alt::MValueConst* args[], int size);
+void ToMValueArg(alt::MValueArgs& mValues, alt::ICore *core, alt::MValueConst *val, alt::Size i);
 
 #ifdef __cplusplus
 extern "C"
