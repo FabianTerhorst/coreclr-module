@@ -149,7 +149,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveFaceFeature { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, byte, byte, byte> Player_SetHeadBlendPaletteColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Rgba*, void> Player_GetHeadBlendPaletteColor { get; }
-        public delegate* unmanaged[Cdecl]<nint, int, int, int, int, int, int, float, float, float, void> Player_SetHeadBlendData { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint, uint, uint, uint, uint, float, float, float, void> Player_SetHeadBlendData { get; }
         public delegate* unmanaged[Cdecl]<nint, HeadBlendData*, void> Player_GetHeadBlendData { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte> Player_SetEyeColor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetEyeColor { get; }
@@ -716,7 +716,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveFaceFeature { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, byte, byte, byte> Player_SetHeadBlendPaletteColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Rgba*, void> Player_GetHeadBlendPaletteColor { get; }
-        public delegate* unmanaged[Cdecl]<nint, int, int, int, int, int, int, float, float, float, void> Player_SetHeadBlendData { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint, uint, uint, uint, uint, float, float, float, void> Player_SetHeadBlendData { get; }
         public delegate* unmanaged[Cdecl]<nint, HeadBlendData*, void> Player_GetHeadBlendData { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte> Player_SetEyeColor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetEyeColor { get; }
@@ -1287,7 +1287,7 @@ namespace AltV.Net.Native
             Player_RemoveFaceFeature = (delegate* unmanaged[Cdecl]<nint, byte, byte>)NativeLibrary.GetExport(handle, "Player_RemoveFaceFeature");
             Player_SetHeadBlendPaletteColor = (delegate* unmanaged[Cdecl]<nint, byte, byte, byte, byte, byte>)NativeLibrary.GetExport(handle, "Player_SetHeadBlendPaletteColor");
             Player_GetHeadBlendPaletteColor = (delegate* unmanaged[Cdecl]<nint, byte, Rgba*, void>)NativeLibrary.GetExport(handle, "Player_GetHeadBlendPaletteColor");
-            Player_SetHeadBlendData = (delegate* unmanaged[Cdecl]<nint, int, int, int, int, int, int, float, float, float, void>)NativeLibrary.GetExport(handle, "Player_SetHeadBlendData");
+            Player_SetHeadBlendData = (delegate* unmanaged[Cdecl]<nint, uint, uint, uint, uint, uint, uint, float, float, float, void>)NativeLibrary.GetExport(handle, "Player_SetHeadBlendData");
             Player_GetHeadBlendData = (delegate* unmanaged[Cdecl]<nint, HeadBlendData*, void>)NativeLibrary.GetExport(handle, "Player_GetHeadBlendData");
             Player_SetEyeColor = (delegate* unmanaged[Cdecl]<nint, ushort, byte>)NativeLibrary.GetExport(handle, "Player_SetEyeColor");
             Player_GetEyeColor = (delegate* unmanaged[Cdecl]<nint, ushort>)NativeLibrary.GetExport(handle, "Player_GetEyeColor");

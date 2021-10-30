@@ -452,7 +452,7 @@ namespace AltV.Net.Elements.Entities
         /// Set Head Blend Data
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
-        void SetHeadBlendData(int shapeFirstID, int shapeSecondID, int shapeThirdID, int skinFirstID, int skinSecondID, int skinThirdID, float shapeMix, float skinMix, float thirdMix);
+        void SetHeadBlendData(uint shapeFirstID, uint shapeSecondID, uint shapeThirdID, uint skinFirstID, uint skinSecondID, uint skinThirdID, float shapeMix, float skinMix, float thirdMix);
 
         /// <summary>
         /// Set Eye Color
