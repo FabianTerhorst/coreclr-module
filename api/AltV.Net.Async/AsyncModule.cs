@@ -436,12 +436,12 @@ namespace AltV.Net.Async
                                 }
                                 else
                                 {
-                                    AltAsync.Log("Wrong function params for " + taskName);
+                                    Alt.LogFast("Wrong function params for " + taskName);
                                 }
                             }
                             catch (Exception e)
                             {
-                                AltAsync.Log($"Execution of {taskName} threw an error: {e}");
+                                Alt.LogFast($"Execution of {taskName} threw an error: {e}");
                             }
                         }
 
@@ -542,12 +542,12 @@ namespace AltV.Net.Async
                             }
                             catch (Exception e)
                             {
-                                AltAsync.Log($"Execution of {taskName} threw an error: {e}");
+                                Alt.LogFast($"Execution of {taskName} threw an error: {e}");
                             }
                         }
                         else
                         {
-                            AltAsync.Log("Wrong function params for " + taskName);
+                            Alt.LogFast("Wrong function params for " + taskName);
                         }
                     }
                 }, new ValueTuple<object[], HashSet<Function>, string>(objects, eventHandlersServer, name));
