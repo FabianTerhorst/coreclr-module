@@ -10,6 +10,8 @@ namespace AltV.Net.Async.Events
 
     public delegate Task PlayerConnectAsyncDelegate(IPlayer player, string reason);
 
+    public delegate Task PlayerBeforeConnectAsyncDelegate(IPlayer player, ulong passwordHash, string cdnUrl, string reason);
+
     public delegate Task PlayerDamageAsyncDelegate(IPlayer player, IEntity attacker, ushort oldHealth, ushort oldArmor,
         ushort oldMaxHealth, ushort oldMaxArmor,  uint weapon, ushort healthDamage, ushort armourDamage);
 
@@ -35,30 +37,30 @@ namespace AltV.Net.Async.Events
     public delegate Task PlayerClientEventAsyncDelegate(IPlayer player, string eventName, object[] args);
 
     public delegate Task ConsoleCommandAsyncDelegate(string name, string[] args);
-    
+
     public delegate Task MetaDataChangeAsyncDelegate(IEntity entity, string key, object value);
 
     public delegate Task ColShapeAsyncDelegate(IColShape colShape, IEntity targetEntity, bool state);
-    
+
     public delegate Task ExplosionAsyncDelegate(IPlayer player, ExplosionType explosionType, Position position,
         uint explosionFx, IEntity target);
 
     public delegate Task WeaponDamageAsyncDelegate(IPlayer player, IEntity target, uint weapon, ushort damage,
         Position shotOffset, BodyPart bodyPart);
-    
+
     public delegate Task VehicleDestroyAsyncDelegate(IVehicle vehicle);
-    
+
     public delegate Task FireAsyncDelegate(IPlayer player, FireInfo[] fireInfos);
-    
+
     public delegate Task StartProjectileAsyncDelegate(IPlayer player, Position startPosition, Position direction, uint ammoHash, uint weaponHash);
-    
+
     public delegate Task PlayerWeaponChangeAsyncDelegate(IPlayer player, uint oldWeapon, uint newWeapon);
-    
+
     public delegate Task NetOwnerChangeAsyncDelegate(IEntity target, IPlayer oldNetOwner, IPlayer newNetOwner);
-    
+
     public delegate Task VehicleAttachAsyncDelegate(IVehicle target, IVehicle attachedVehicle);
-    
+
     public delegate Task VehicleDetachAsyncDelegate(IVehicle target, IVehicle detachedVehicle);
-    
+
     public delegate Task VehicleDamageAsyncDelegate(IVehicle target, IEntity attacker, uint bodyHealthDamage, uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash);
 }

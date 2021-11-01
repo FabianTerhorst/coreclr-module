@@ -160,6 +160,16 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                                     "");//TODO: maybe better solution
         }
             break;
+        case alt::CEvent::Type::PLAYER_BEFORE_CONNECT: {
+            auto beforeConnectEvent = (alt::CPlayerBeforeConnectEvent*)ev;
+            auto connectPlayer = beforeConnectEvent->GetTarget().Get();
+
+            OnPlayerBeforeConnectDelegate(connectPlayer, connectPlayer->GetID(),
+                beforeConnectEvent->GetPasswordHash(),
+                beforeConnectEvent->GetCdnUrl().CStr(),
+                beforeConnectEvent->GetReason().CStr());
+        }
+            break;
         case alt::CEvent::Type::RESOURCE_START: {
             OnResourceStartDelegate(reinterpret_cast<const alt::CResourceStartEvent*>(ev)->GetResource());
         }

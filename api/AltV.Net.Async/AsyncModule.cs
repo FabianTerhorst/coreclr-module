@@ -27,6 +27,9 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<PlayerConnectAsyncDelegate> PlayerConnectAsyncEventHandler =
             new();
 
+        internal readonly AsyncEventHandler<PlayerBeforeConnectAsyncDelegate> PlayerBeforeConnectAsyncEventHandler =
+            new();
+
         internal readonly AsyncEventHandler<PlayerDamageAsyncDelegate> PlayerDamageAsyncEventHandler =
             new();
 
@@ -172,6 +175,22 @@ namespace AltV.Net.Async
                 playerReference.DebugCountUp();
                 await PlayerConnectAsyncEventHandler.CallAsync(@delegate =>
                     @delegate(player, reason));
+                playerReference.DebugCountDown();
+                playerReference.Dispose();
+            });
+        }
+
+        public override void OnPlayerBeforeConnectEvent(IPlayer player, ulong passwordHash, string cdnUrl, string reason)
+        {
+            base.OnPlayerBeforeConnectEvent(player, passwordHash, cdnUrl, reason);
+            if (!PlayerBeforeConnectAsyncEventHandler.HasEvents()) return;
+            var playerReference = new PlayerRef(player);
+            CheckRef(in playerReference);
+            Task.Run(async () =>
+            {
+                playerReference.DebugCountUp();
+                await PlayerBeforeConnectAsyncEventHandler.CallAsync(@delegate =>
+                    @delegate(player, passwordHash, cdnUrl, reason));
                 playerReference.DebugCountDown();
                 playerReference.Dispose();
             });

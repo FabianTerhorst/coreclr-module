@@ -61,16 +61,16 @@ namespace AltV.Net
 
                 _resource ??= new DefaultResource();
             }
-            
+
             //var entityFactories = AssemblyLoader.FindAllTypesWithAttribute<IEntityFactory<IEntity>, EntityFactoryAttribute>(assemblyLoadContext.Assemblies);
             //var baseObjectFactories = AssemblyLoader.FindAllTypesWithAttribute<IBaseObjectFactory<IBaseObject>, EntityFactoryAttribute>(assemblyLoadContext.Assemblies);
-            
+
             //TODO: when resource has entity factories overwritten dont loop assemblies because of performance
-            
+
             //TODO: when not default resource and entity factory was found and none default resource has entity factory overwritten by not returning null throw exception
 
             //TODO: check
-            
+
             //TODO: do the same with the pools
 
             var library = _resource.GetLibrary() ?? new Library();
@@ -179,6 +179,11 @@ namespace AltV.Net
         public static void OnPlayerConnect(IntPtr playerPointer, ushort playerId, string reason)
         {
             _module.OnPlayerConnect(playerPointer, playerId, reason);
+        }
+
+        public static void OnPlayerBeforeConnect(IntPtr playerPointer, ushort playerId, ulong passwordHash, string cdnUrl, string reason)
+        {
+            _module.OnPlayerBeforeConnect(playerPointer, playerId, passwordHash, cdnUrl, reason);
         }
 
         public static void OnResourceStart(IntPtr resourcePointer)
@@ -339,7 +344,7 @@ namespace AltV.Net
         {
             _module.OnVehicleRemove(vehiclePointer);
         }
-        
+
         public static void OnConsoleCommand(string name,
             [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
             string[] args, int argsSize)
@@ -365,12 +370,12 @@ namespace AltV.Net
         {
             _module.OnColShape(colShapePointer, targetEntityPointer, entityType, state);
         }
-        
+
         public static void OnVehicleDestroy(IntPtr vehiclePointer)
         {
             _module.OnVehicleDestroy(vehiclePointer);
         }
-        
+
         public static void OnFire(IntPtr eventPointer, IntPtr playerPointer,
             [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 3)]
             FireInfo[] fires, int length)
@@ -378,12 +383,12 @@ namespace AltV.Net
             fires ??= new FireInfo[0];
             _module.OnFire(eventPointer, playerPointer, fires);
         }
-        
+
         public static void OnStartProjectile(IntPtr eventPointer, IntPtr sourcePlayerPointer, Position startPosition, Position direction, uint ammoHash, uint weaponHash)
         {
             _module.OnStartProjectile(eventPointer, sourcePlayerPointer, startPosition, direction, ammoHash, weaponHash);
         }
-        
+
         public static void OnPlayerWeaponChange(IntPtr eventPointer, IntPtr targetPlayerPointer, uint oldWeapon, uint newWeapon)
         {
             _module.OnPlayerWeaponChange(eventPointer, targetPlayerPointer, oldWeapon, newWeapon);
