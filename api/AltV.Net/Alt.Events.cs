@@ -26,6 +26,12 @@ namespace AltV.Net
             remove => Module.PlayerConnectEventHandler.Remove(value);
         }
 
+        public static event PlayerBeforeConnectDelegate OnPlayerBeforeConnect
+        {
+            add => Module.PlayerBeforeConnectEventHandler.Add(value);
+            remove => Module.PlayerBeforeConnectEventHandler.Remove(value);
+        }
+
         public static event ResourceEventDelegate OnAnyResourceStart
         {
             add => Module.ResourceStartEventHandler.Add(value);
@@ -108,7 +114,7 @@ namespace AltV.Net
             add => Module.PlayerEnterVehicleEventHandler.Add(value);
             remove => Module.PlayerEnterVehicleEventHandler.Remove(value);
         }
-        
+
         public static event PlayerEnteringVehicleDelegate OnPlayerEnteringVehicle
         {
             add => Module.PlayerEnteringVehicleEventHandler.Add(value);
@@ -200,25 +206,25 @@ namespace AltV.Net
             add => Module.PlayerWeaponChangeEventHandler.Add(value);
             remove => Module.PlayerWeaponChangeEventHandler.Remove(value);
         }
-        
+
         public static event NetOwnerChangeDelegate OnNetworkOwnerChange
         {
             add => Module.NetOwnerChangeEventHandler.Add(value);
             remove => Module.NetOwnerChangeEventHandler.Remove(value);
         }
-        
+
         public static event VehicleAttachDelegate OnVehicleAttach
         {
             add => Module.VehicleAttachEventHandler.Add(value);
             remove => Module.VehicleAttachEventHandler.Remove(value);
         }
-        
+
         public static event VehicleDetachDelegate OnVehicleDetach
         {
             add => Module.VehicleDetachEventHandler.Add(value);
             remove => Module.VehicleDetachEventHandler.Remove(value);
         }
-        
+
         public static event VehicleDamageDelegate OnVehicleDamage
         {
             add => Module.VehicleDamageEventHandler.Add(value);

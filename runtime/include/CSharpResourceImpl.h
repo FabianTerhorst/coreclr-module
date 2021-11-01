@@ -93,6 +93,8 @@ typedef void (* ClientEventDelegate_t)(alt::IPlayer* player, const char* name, a
 
 typedef void (* PlayerConnectDelegate_t)(alt::IPlayer* player, uint16_t playerId, const char* reason);
 
+typedef void (* PlayerBeforeConnectDelegate_t)(const alt::CEvent* event, alt::IPlayer* player, uint16_t playerId, uint64_t passwordHash, const char* cdnUrl);
+
 typedef void (* ResourceEventDelegate_t)(alt::IResource* resource);
 
 typedef void (* PlayerDamageDelegate_t)(alt::IPlayer* player, void* attacker,
@@ -215,6 +217,8 @@ public:
     ClientEventDelegate_t OnClientEventDelegate = nullptr;
 
     PlayerConnectDelegate_t OnPlayerConnectDelegate = nullptr;
+
+    PlayerBeforeConnectDelegate_t OnPlayerBeforeConnectDelegate = nullptr;
 
     ResourceEventDelegate_t OnResourceStartDelegate = nullptr;
 

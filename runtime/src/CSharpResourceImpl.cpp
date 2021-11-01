@@ -12,6 +12,7 @@ void CSharpResourceImpl::ResetDelegates() {
     MainDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnClientEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnPlayerConnectDelegate = [](auto var, auto var2, auto var3) {};
+    OnPlayerBeforeConnectDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
     OnResourceStartDelegate = [](auto var) {};
     OnResourceStopDelegate = [](auto var) {};
     OnResourceErrorDelegate = [](auto var) {};
@@ -158,6 +159,15 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             auto connectPlayer = reinterpret_cast<const alt::CPlayerConnectEvent*>(ev)->GetTarget().Get();
             OnPlayerConnectDelegate(connectPlayer, connectPlayer->GetID(),
                                     "");//TODO: maybe better solution
+        }
+            break;
+        case alt::CEvent::Type::PLAYER_BEFORE_CONNECT: {
+            auto beforeConnectEvent = (alt::CPlayerBeforeConnectEvent*)ev;
+            auto connectPlayer = beforeConnectEvent->GetTarget().Get();
+
+            OnPlayerBeforeConnectDelegate(beforeConnectEvent, connectPlayer, connectPlayer->GetID(),
+                beforeConnectEvent->GetPasswordHash(),
+                beforeConnectEvent->GetCdnUrl().CStr());
         }
             break;
         case alt::CEvent::Type::RESOURCE_START: {
@@ -564,6 +574,11 @@ void CSharpResourceImpl_SetPlayerDamageDelegate(CSharpResourceImpl* resource,
 void CSharpResourceImpl_SetPlayerConnectDelegate(CSharpResourceImpl* resource,
                                                  PlayerConnectDelegate_t delegate) {
     resource->OnPlayerConnectDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerBeforeConnectDelegate(CSharpResourceImpl* resource,
+                                                       PlayerBeforeConnectDelegate_t delegate) {
+    resource->OnPlayerBeforeConnectDelegate = delegate;
 }
 
 void CSharpResourceImpl_SetResourceStartDelegate(CSharpResourceImpl* resource, ResourceEventDelegate_t delegate) {

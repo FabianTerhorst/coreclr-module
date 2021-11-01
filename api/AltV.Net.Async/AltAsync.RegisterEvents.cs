@@ -48,6 +48,19 @@ namespace AltV.Net.Async
                                         return currScriptFunction.CallAsync();
                                     };
                                     break;
+                                case ScriptEventType.PlayerBeforeConnect:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[] { typeof(IPlayer), typeof(ulong), typeof(string) }, true);
+                                    if (scriptFunction == null) return;
+                                    OnPlayerBeforeConnect += (player, passwordHash, cdnUrl) =>
+                                    {
+                                        var currScriptFunction = scriptFunction.Clone();
+                                        currScriptFunction.Set(player);
+                                        currScriptFunction.Set(passwordHash);
+                                        currScriptFunction.Set(cdnUrl);
+                                        return currScriptFunction.CallAsync();
+                                    };
+                                    break;
                                 case ScriptEventType.PlayerDamage:
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[] {typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(ushort), typeof(ushort)}, true);

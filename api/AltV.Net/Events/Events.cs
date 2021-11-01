@@ -1,7 +1,6 @@
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
-using AltV.Net.Native;
 
 namespace AltV.Net.Events
 {
@@ -10,7 +9,9 @@ namespace AltV.Net.Events
     public delegate void ClientEventDelegate(IPlayer player, object[] args);
 
     public delegate void PlayerConnectDelegate(IPlayer player, string reason);
-    
+
+    public delegate bool PlayerBeforeConnectDelegate(IPlayer player, ulong passwordHash, string cdnUrl);
+
     public delegate void ResourceEventDelegate(INativeResource resource);
 
     public delegate void PlayerDamageDelegate(IPlayer player, IEntity attacker, uint weapon, ushort healthDamage, ushort armourDamage);
@@ -52,20 +53,20 @@ namespace AltV.Net.Events
 
     public delegate bool WeaponDamageDelegate(IPlayer player, IEntity target, uint weapon, ushort damage,
         Position shotOffset, BodyPart bodyPart);
-    
+
     public delegate void VehicleDestroyDelegate(IVehicle vehicle);
-    
+
     public delegate bool FireDelegate(IPlayer player, FireInfo[] fireInfos);
-    
+
     public delegate bool StartProjectileDelegate(IPlayer player, Position startPosition, Position direction, uint ammoHash, uint weaponHash);
-    
+
     public delegate bool PlayerWeaponChangeDelegate(IPlayer player, uint oldWeapon, uint newWeapon);
-    
+
     public delegate void NetOwnerChangeDelegate(IEntity target, IPlayer oldNetOwner, IPlayer newNetOwner);
-    
+
     public delegate void VehicleAttachDelegate(IVehicle target, IVehicle attachedVehicle);
-    
+
     public delegate void VehicleDetachDelegate(IVehicle target, IVehicle detachedVehicle);
-    
+
     public delegate void VehicleDamageDelegate(IVehicle target, IEntity attacker, uint bodyHealthDamage, uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash);
 }

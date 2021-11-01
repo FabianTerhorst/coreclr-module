@@ -2,9 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 using AltV.Net.Data;
-using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
-using AltV.Net.Events;
 
 namespace AltV.Net.Native
 {
@@ -25,6 +23,8 @@ namespace AltV.Net.Native
                 bool state);
 
             internal delegate void PlayerConnectDelegate(IntPtr playerPointer, ushort playerId, string reason);
+
+            internal delegate void PlayerBeforeConnectDelegate(IntPtr eventPointer, IntPtr playerPointer, ushort playerId, ulong passwordHash, string cdnUrl);
 
             internal delegate void ResourceEventDelegate(IntPtr resourcePointer);
 
@@ -105,13 +105,13 @@ namespace AltV.Net.Native
             internal delegate void StartProjectileDelegate(IntPtr eventPointer, IntPtr sourcePlayerPointer, Position startPosition, Position direction, uint ammoHash, uint weaponHash);
 
             internal delegate void PlayerWeaponChangeDelegate(IntPtr eventPointer, IntPtr targetPlayerPointer, uint oldWeapon, uint newWeapon);
-            
+
             internal delegate void NetOwnerChangeDelegate(IntPtr eventPointer, IntPtr targetEntityPointer, BaseObjectType targetEntityType, IntPtr oldNetOwnerPointer, IntPtr newNetOwnerPointer);
-            
+
             internal delegate void VehicleAttachDelegate(IntPtr eventPointer, IntPtr targetPointer, IntPtr attachedPointer);
-            
+
             internal delegate void VehicleDetachDelegate(IntPtr eventPointer, IntPtr targetPointer, IntPtr detachedPointer);
-            
+
             internal delegate void VehicleDamageDelegate(IntPtr eventPointer, IntPtr targetPointer, IntPtr sourcePointer, BaseObjectType sourceType, uint bodyHealthDamage, uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
@@ -145,6 +145,10 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerConnectDelegate(IntPtr resource,
                 PlayerConnectDelegate @delegate);
+
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPlayerBeforeConnectDelegate(IntPtr resource,
+                PlayerBeforeConnectDelegate @delegate);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetResourceStartDelegate(IntPtr resource,
@@ -277,19 +281,19 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetPlayerWeaponChangeDelegate(IntPtr resource,
                 PlayerWeaponChangeDelegate @delegate);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetNetOwnerChangeDelegate(IntPtr resource,
                 NetOwnerChangeDelegate @delegate);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetVehicleAttachDelegate(IntPtr resource,
                 VehicleAttachDelegate @delegate);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetVehicleDetachDelegate(IntPtr resource,
                 VehicleDetachDelegate @delegate);
-            
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetVehicleDamageDelegate(IntPtr resource,
                 VehicleDamageDelegate @delegate);
