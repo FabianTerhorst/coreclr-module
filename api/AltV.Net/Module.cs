@@ -468,7 +468,7 @@ namespace AltV.Net
             OnPlayerConnectEvent(player, reason);
         }
 
-        public void OnPlayerBeforeConnect(IntPtr playerPointer, ushort playerId, ulong passwordHash, string cdnUrl, string reason)
+        public void OnPlayerBeforeConnect(IntPtr eventPointer, IntPtr playerPointer, ushort playerId, ulong passwordHash, string cdnUrl, string reason)
         {
             if (!PlayerPool.Get(playerPointer, out var player))
             {
@@ -477,7 +477,7 @@ namespace AltV.Net
                 return;
             }
 
-            OnPlayerBeforeConnectEvent(player, passwordHash, cdnUrl, reason);
+            OnPlayerBeforeConnectEvent(eventPointer, player, passwordHash, cdnUrl, reason);
         }
 
         public void OnResourceStart(IntPtr resourcePointer)
@@ -577,13 +577,18 @@ namespace AltV.Net
             }
         }
 
-        public virtual void OnPlayerBeforeConnectEvent(IPlayer player, ulong passwordHash, string cdnUrl, string reason)
+        public virtual void OnPlayerBeforeConnectEvent(IntPtr eventPointer, IPlayer player, ulong passwordHash, string cdnUrl, string reason)
         {
+            if (!PlayerBeforeConnectEventHandler.HasEvents()) return;
+            var cancel = false;
             foreach (var @delegate in PlayerBeforeConnectEventHandler.GetEvents())
             {
                 try
                 {
-                    @delegate(player, passwordHash, cdnUrl, reason);
+                    if (!@delegate(player, passwordHash, cdnUrl, reason))
+                    {
+                        cancel = true;
+                    }
                 }
                 catch (TargetInvocationException exception)
                 {
@@ -592,6 +597,14 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnPlayerBeforeConnectEvent" + ":" + exception);
+                }
+            }
+
+            if (cancel)
+            {
+                unsafe
+                {
+                    Alt.Server.Library.Event_Cancel(eventPointer);
                 }
             }
         }

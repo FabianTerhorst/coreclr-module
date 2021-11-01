@@ -54,7 +54,12 @@ namespace AltV.Net
                                         scriptFunction.Set(passwordHash);
                                         scriptFunction.Set(cdnUrl);
                                         scriptFunction.Set(reason);
-                                        scriptFunction.Call();
+                                        if (scriptFunction.Call() is bool value)
+                                        {
+                                            return value;
+                                        }
+
+                                        return true;
                                     };
                                     break;
                                 case ScriptEventType.PlayerDamage:
