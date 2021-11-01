@@ -820,6 +820,19 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public WeaponData[] GetWeapons()
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                var weaponCount = Server.Library.Player_GetWeaponCount(NativePointer);
+                var weapons = new WeaponData[weaponCount];
+                Server.Library.Player_GetWeapons(NativePointer, weapons, weaponCount);
+
+                return weapons;
+            }
+        }
+
         public void Kick(string reason)
         {
             unsafe

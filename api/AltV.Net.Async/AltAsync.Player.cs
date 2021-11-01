@@ -231,6 +231,9 @@ namespace AltV.Net.Async
         public static Task<byte> GetCurrentWeaponTintIndexAsync(this IPlayer player) =>
             AltVAsync.Schedule(player.GetCurrentWeaponTintIndex);
 
+        public static Task<WeaponData[]> GetWeaponsAsync(this IPlayer player) =>
+            AltVAsync.Schedule(player.GetWeapons);
+
         public static Task<DlcCloth> GetDlcClothesAsync(this IPlayer player, byte component) =>
             AltVAsync.Schedule(() => player.GetDlcClothes(component));
 

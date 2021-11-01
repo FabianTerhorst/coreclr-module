@@ -16,6 +16,7 @@
 #include "head_overlay.h"
 #include "head_blend_data.h"
 #include "rgba.h"
+#include "weapon.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -117,6 +118,9 @@ EXPORT uint8_t Player_GetCurrentWeaponTintIndex(alt::IPlayer* player);
 
 EXPORT uint32_t Player_GetCurrentWeapon(alt::IPlayer* player);
 EXPORT void Player_SetCurrentWeapon(alt::IPlayer* player, uint32_t weapon);
+
+EXPORT uint64_t Player_GetWeaponCount(alt::IPlayer* player);
+EXPORT void Player_GetWeapons(alt::IPlayer* player, weapon_t* weapons[], uint64_t size);
 
 EXPORT uint8_t Player_IsDead(alt::IPlayer* player);
 
