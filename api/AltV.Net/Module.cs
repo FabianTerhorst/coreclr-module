@@ -468,16 +468,15 @@ namespace AltV.Net
             OnPlayerConnectEvent(player, reason);
         }
 
-        public void OnPlayerBeforeConnect(IntPtr eventPointer, IntPtr playerPointer, ushort playerId, ulong passwordHash, string cdnUrl, string reason)
+        public void OnPlayerBeforeConnect(IntPtr eventPointer, IntPtr playerPointer, ushort playerId, ulong passwordHash, string cdnUrl)
         {
             if (!PlayerPool.Get(playerPointer, out var player))
             {
-                Console.WriteLine("OnPlayerBeforeConnect Invalid player " + playerPointer + " " + playerId + " " +
-                                  reason);
+                Console.WriteLine("OnPlayerBeforeConnect Invalid player " + playerPointer + " " + playerId);
                 return;
             }
 
-            OnPlayerBeforeConnectEvent(eventPointer, player, passwordHash, cdnUrl, reason);
+            OnPlayerBeforeConnectEvent(eventPointer, player, passwordHash, cdnUrl);
         }
 
         public void OnResourceStart(IntPtr resourcePointer)
@@ -577,7 +576,7 @@ namespace AltV.Net
             }
         }
 
-        public virtual void OnPlayerBeforeConnectEvent(IntPtr eventPointer, IPlayer player, ulong passwordHash, string cdnUrl, string reason)
+        public virtual void OnPlayerBeforeConnectEvent(IntPtr eventPointer, IPlayer player, ulong passwordHash, string cdnUrl)
         {
             if (!PlayerBeforeConnectEventHandler.HasEvents()) return;
             var cancel = false;
@@ -585,7 +584,7 @@ namespace AltV.Net
             {
                 try
                 {
-                    if (!@delegate(player, passwordHash, cdnUrl, reason))
+                    if (!@delegate(player, passwordHash, cdnUrl))
                     {
                         cancel = true;
                     }

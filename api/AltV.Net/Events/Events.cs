@@ -10,7 +10,7 @@ namespace AltV.Net.Events
 
     public delegate void PlayerConnectDelegate(IPlayer player, string reason);
 
-    public delegate bool PlayerBeforeConnectDelegate(IPlayer player, ulong passwordHash, string cdnUrl, string reason);
+    public delegate bool PlayerBeforeConnectDelegate(IPlayer player, ulong passwordHash, string cdnUrl);
 
     public delegate void ResourceEventDelegate(INativeResource resource);
 
