@@ -209,6 +209,13 @@ jobs:
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
+      - uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: ./api/AltV.Net.Async.CodeGen/AltV.Net.Async.CodeGen.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          INCLUDE_SYMBOLS: true
+          TAG_COMMIT: false
   deploy-cdn:
     runs-on: ubuntu-latest
     needs: deploy-nuget
