@@ -113,12 +113,17 @@ namespace AltV.Net.Async.CodeGen {
 
                 foreach (var member in interfaceMembers)
                 {
+                    var classMember = classMembers.FirstOrDefault(m => m.Name == member.Name);
+                    
+                    // does member hide base class property (new keyword)
+                    var isNew = classMember?.DeclaringSyntaxReferences.Any(s =>
+                        s.GetSyntax() is MemberDeclarationSyntax declarationSyntax &&
+                        declarationSyntax.Modifiers.Any(SyntaxKind.NewKeyword)) ?? false;
+
                     switch (member)
                     {
                         case IPropertySymbol property:
                         {
-                            var classMember = classMembers.FirstOrDefault(m =>
-                                m is IPropertySymbol propertySymbol && propertySymbol.Name == member.Name);
                             if (classMember is not IPropertySymbol classProperty)
                             {
                                 context.ReportDiagnostic(Diagnostic.Create(
@@ -157,8 +162,10 @@ namespace AltV.Net.Async.CodeGen {
                                 var attributes = classProperty.GetAttributes();
                                 var formattedAttributes =
                                     attributes.Length == 0 ? "" : FormatAttributes(attributes) + "\n";
+                                var @new = isNew ? "new " : "";
+                                
                                 members.Add(formattedAttributes +
-                                            $"public {property.Type} {member.Name} {{ {propertyValue}}}");
+                                            $"public {@new}{property.Type} {member.Name} {{ {propertyValue}}}");
                             }
 
                             break;
@@ -166,8 +173,6 @@ namespace AltV.Net.Async.CodeGen {
 
                         case IMethodSymbol {MethodKind: MethodKind.Ordinary}:
                         {
-                            var classMember = classMembers.FirstOrDefault(m =>
-                                m is IMethodSymbol methodSymbol && methodSymbol.Name == member.Name);
                             if (classMember is not IMethodSymbol
                             {
                                 DeclaredAccessibility: Accessibility.Public
@@ -213,8 +218,10 @@ namespace AltV.Net.Async.CodeGen {
 
                             var attributes = classMethod.GetAttributes();
                             var formattedAttributes = attributes.Length == 0 ? "" : FormatAttributes(attributes) + "\n";
+                            var @new = isNew ? "new " : "";
+                            
                             members.Add(formattedAttributes +
-                                        $"public {classMethod.ReturnType} {name}({arguments})\n{{\n    {returnAction}BaseObject.{name}({callArguments});\n}}");
+                                        $"public {@new}{classMethod.ReturnType} {name}({arguments})\n{{\n    {returnAction}BaseObject.{name}({callArguments});\n}}");
 
                             break;
                         }
