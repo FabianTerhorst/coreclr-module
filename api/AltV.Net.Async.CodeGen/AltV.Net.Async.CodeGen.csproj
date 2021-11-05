@@ -11,7 +11,7 @@
         <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>altv gta bridge</PackageTags>
-        <PackageVersion>1.0.1</PackageVersion>
+        <PackageVersion>1.0.0</PackageVersion>
         <PackageReleaseNotes>No changelog provided</PackageReleaseNotes>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <PackageIcon>icon.png</PackageIcon>
