@@ -1,7 +1,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Async.CodeGen;
+using AltV.Net.Data;
 
 namespace AltV.Net.Example
 {
@@ -12,6 +14,7 @@ namespace AltV.Net.Example
         bool GetSomethingToOut([MaybeNullWhen(false)] out string data);
         void GetSomethingToRef(ref int data);
         int TakeSomethingToIn(in int data);
+        new void Spawn(Position position, uint delayMs = 0);
     }
 
     [AsyncEntity(typeof(IMyAutoAsyncPlayer))]
@@ -44,6 +47,13 @@ namespace AltV.Net.Example
         public int TakeSomethingToIn(in int data)
         {
             return data * 5;
+        }
+
+        // example of base class member hiding support via the new keyword
+        public new void Spawn(Position position, uint delayMs = 0)
+        {
+            Alt.Log("Spawned! " + position);
+            base.Spawn(position, delayMs);
         }
 
         public MyAutoAsyncPlayer(IServer server, IntPtr nativePointer, ushort id) : base(server, nativePointer, id)
