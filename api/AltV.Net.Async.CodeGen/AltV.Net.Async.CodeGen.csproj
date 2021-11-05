@@ -18,6 +18,10 @@
         <IncludeSymbols>true</IncludeSymbols>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <developmentDependency>true</developmentDependency>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <NoPackageAnalysis>true</NoPackageAnalysis>
     </PropertyGroup>
 
     <ItemGroup>
@@ -35,5 +39,31 @@
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.11.0" />
         <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3" />
     </ItemGroup>
+    
+    <Target Name="AddNuGetDlls" BeforeTargets="_GetPackageFiles">
+        <JoinItems Left="@(ResolvedCompileFileDefinitions)" LeftKey="NuGetPackageId" LeftMetadata="*"
+                   Right="@(PackageReference)" RightKey="" RightMetadata="*"
+                   ItemSpecToUse="Left">
+            <Output TaskParameter="JoinResult" ItemName="_PackagesToPack" />
+        </JoinItems>
+
+        <ItemGroup>
+            <_PackagesToPack Remove="@(_PackagesToPack)" Condition="%(NuGetPackageId) == 'NETStandard.Library'" />
+        </ItemGroup>
+
+        <Message Importance="High" Text="Adding DLLs from the following packages: @(_PackagesToPack->'%(NuGetPackageId)')" />
+
+        <ItemGroup>
+            <None Include="@(_PackagesToPack)"
+                  Pack="true"
+                  PackagePath="analyzers/dotnet/cs"
+                  Visible="false" />
+
+            <None Include="$(OutputPath)\$(AssemblyName).dll"
+                  Pack="true"
+                  PackagePath="analyzers/dotnet/cs"
+                  Visible="false" />
+        </ItemGroup>
+    </Target>
 
 </Project>
