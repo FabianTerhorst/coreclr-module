@@ -128,6 +128,11 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public void ClearData()
+        {
+            throw new NotImplementedException();
+        }
+
         public void SetStreamSyncedMetaData(string key, object value)
         {
             throw new NotImplementedException();
