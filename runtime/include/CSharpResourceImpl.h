@@ -373,6 +373,9 @@ EXPORT void CSharpResourceImpl_SetPlayerDamageDelegate(CSharpResourceImpl* resou
 EXPORT void CSharpResourceImpl_SetPlayerConnectDelegate(CSharpResourceImpl* resource,
                                                         PlayerConnectDelegate_t delegate);
 
+EXPORT void CSharpResourceImpl_SetPlayerBeforeConnectDelegate(CSharpResourceImpl* resource,
+                                                        PlayerBeforeConnectDelegate_t delegate);
+
 EXPORT void CSharpResourceImpl_SetResourceStartDelegate(CSharpResourceImpl* resource,
                                                         ResourceEventDelegate_t delegate);
 
