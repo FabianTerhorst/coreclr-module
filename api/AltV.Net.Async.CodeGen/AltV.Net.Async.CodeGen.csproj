@@ -4,6 +4,20 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>9</LangVersion>
         <Nullable>enable</Nullable>
+        <Authors>AltMp</Authors>
+        <Description>AltV .NET Core Async CodeGen</Description>
+        <Copyright>AltMp</Copyright>
+        <PackageProjectUrl>https://github.com/FabianTerhorst/coreclr-module</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>altv gta bridge</PackageTags>
+        <PackageVersion>1.0.0</PackageVersion>
+        <PackageReleaseNotes>No changelog provided</PackageReleaseNotes>
+        <PackageLicenseFile>license.txt</PackageLicenseFile>
+        <PackageIcon>icon.png</PackageIcon>
+        <IncludeSymbols>true</IncludeSymbols>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
 
     <ItemGroup>
