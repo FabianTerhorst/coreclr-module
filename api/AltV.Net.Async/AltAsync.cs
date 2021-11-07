@@ -237,7 +237,17 @@ namespace AltV.Net.Async
             CheckIfAsyncResource();
             return AltVAsync.Schedule(action);
         }
-
+        
+        public static Task Do(Task task)
+        {
+            throw new ArgumentException("AltAsync.Do should never have async code inside");
+        }
+        
+        public static Task Do(Func<Task> task)
+        {
+            throw new ArgumentException("AltAsync.Do should never have async code inside");
+        }
+        
         public static void RunOnMainThreadBlocking(Action action, SemaphoreSlim semaphoreSlim)
         {
             CheckIfAsyncResource();
