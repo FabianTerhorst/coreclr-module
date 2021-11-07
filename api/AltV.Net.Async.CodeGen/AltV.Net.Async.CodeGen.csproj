@@ -63,6 +63,11 @@
                   Pack="true"
                   PackagePath="analyzers/dotnet/cs"
                   Visible="false" />
+
+            <None Include="$(OutputPath)\$(AssemblyName).pdb"
+                  Pack="true"
+                  PackagePath="analyzers/dotnet/cs"
+                  Visible="false" />
         </ItemGroup>
     </Target>
 
