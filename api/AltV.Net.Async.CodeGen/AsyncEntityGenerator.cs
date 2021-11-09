@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
@@ -53,6 +54,48 @@ namespace AltV.Net.Async.CodeGen {
             context.RegisterForSyntaxNotifications(() => new SyntaxTreeReceiver());
         }
 
+        private static IEnumerable<ISymbol> GetInterfaceMembers(INamedTypeSymbol @interface)
+        {
+            var members = @interface.GetMembers().ToList();
+            foreach (var namedTypeSymbol in @interface.Interfaces)
+            {
+                if (namedTypeSymbol.ToString().StartsWith("AltV.Net.Elements.Entities.")) continue;
+                foreach (var interfaceMember in GetInterfaceMembers(namedTypeSymbol))
+                {
+                    if (members.All(e => e.Name != interfaceMember.Name)) members.Add(interfaceMember);
+                }
+            }
+
+            return members;
+        }
+
+        private static IEnumerable<ISymbol> GetClassMembers(INamedTypeSymbol @class)
+        {
+            var members = @class.GetMembers().ToList();
+            if (@class.BaseType is null || @class.BaseType.ToString().StartsWith("AltV.Net.Elements.Entities."))
+                return members;
+            foreach (var classMember in GetClassMembers(@class.BaseType))
+            {
+                if (members.All(e => e.Name != classMember.Name)) members.Add(classMember);
+            }
+
+            return members;
+        }
+
+        private static IList<INamedTypeSymbol> GetBaseTypes(INamedTypeSymbol @class)
+        {
+            var list = new List<INamedTypeSymbol>();
+            var currentClass = @class;
+
+            while (currentClass.BaseType is { } type)
+            {
+                list.Add(type);
+                currentClass = type;
+            }
+
+            return list;
+        }
+
         public void Execute(GeneratorExecutionContext context)
         {
             var receiver = (SyntaxTreeReceiver) context.SyntaxReceiver!;
@@ -65,6 +108,8 @@ namespace AltV.Net.Async.CodeGen {
                     CSharpSyntaxTree.ParseText(SourceText.From(AttributeText, Encoding.UTF8), options));
 
             var attributeSymbol = compilation.GetTypeByMetadataName("AltV.Net.Async.CodeGen.AsyncEntityAttribute");
+
+            var validClasses = new List<INamedTypeSymbol>();
 
             foreach (var classSyntax in receiver.Classes)
             {
@@ -99,22 +144,33 @@ namespace AltV.Net.Async.CodeGen {
                 }
 
                 var baseType = @class.BaseType;
-                if (baseType is null || !baseType.ToString().StartsWith("AltV.Net.Elements.Entities."))
+
+                if (baseType is not null)
+                    while (!baseType!.ToString().StartsWith("AltV.Net.Elements.Entities."))
+                        baseType = baseType.BaseType;
+
+                if (baseType is null)
                 {
                     context.ReportDiagnostic(Diagnostic.Create(Diagnostics.AsyncEntityShouldImplementEntity,
                         @class.Locations.FirstOrDefault(), @class.ToString()));
                     continue;
                 }
 
+                validClasses.Add(@class);
+
+                var classBaseDeclaration = @class.BaseType!.ToString().StartsWith("AltV.Net.Elements.Entities.")
+                    ? ""
+                    : " : " + @class.BaseType;
+
                 var members = new List<string>();
 
-                var interfaceMembers = @interface.GetMembers();
-                var classMembers = @class.GetMembers();
+                var interfaceMembers = GetInterfaceMembers(@interface);
+                var classMembers = GetClassMembers(@class).ToArray();
 
                 foreach (var member in interfaceMembers)
                 {
                     var classMember = classMembers.FirstOrDefault(m => m.Name == member.Name);
-                    
+
                     // does member hide base class property (new keyword)
                     var isNew = classMember?.DeclaringSyntaxReferences.Any(s =>
                         s.GetSyntax() is MemberDeclarationSyntax declarationSyntax &&
@@ -163,7 +219,7 @@ namespace AltV.Net.Async.CodeGen {
                                 var formattedAttributes =
                                     attributes.Length == 0 ? "" : FormatAttributes(attributes) + "\n";
                                 var @new = isNew ? "new " : "";
-                                
+
                                 members.Add(formattedAttributes +
                                             $"public {@new}{property.Type} {member.Name} {{ {propertyValue}}}");
                             }
@@ -219,7 +275,7 @@ namespace AltV.Net.Async.CodeGen {
                             var attributes = classMethod.GetAttributes();
                             var formattedAttributes = attributes.Length == 0 ? "" : FormatAttributes(attributes) + "\n";
                             var @new = isNew ? "new " : "";
-                            
+
                             members.Add(formattedAttributes +
                                         $"public {@new}{classMethod.ReturnType} {name}({arguments})\n{{\n    {returnAction}BaseObject.{name}({callArguments});\n}}");
 
@@ -236,7 +292,7 @@ namespace AltV.Net.Async.CodeGen {
                     interfaceDeclaration = $"namespace {interfaceNamespace} {{\n{Indent(interfaceDeclaration)}\n}}";
 
                 var classDeclaration = $@"
-public partial class {@class.Name} {{
+public partial class {@class.Name}{classBaseDeclaration} {{
     public {@interface} ToAsync(AltV.Net.Async.IAsyncContext asyncContext) {{
         return new Async(this, asyncContext);
     }}
@@ -255,6 +311,16 @@ public partial class {@class.Name} {{
 
 
                 sourceBuilder.Append($"\n\n{interfaceDeclaration}\n{classDeclaration}");
+            }
+
+            foreach (var @class in validClasses)
+            {
+                var types = GetBaseTypes(@class);
+                var invalid = types.FirstOrDefault(e => validClasses.Contains(e, SymbolEqualityComparer.Default));
+                if (invalid is not { } invalidClass) continue;
+
+                context.ReportDiagnostic(Diagnostic.Create(Diagnostics.AsyncEntityCannotBeNested,
+                    @class.Locations.FirstOrDefault(), @class.ToString(), invalidClass.ToString()));
             }
 
             context.AddSource("GeneratedAsyncEntities.cs", SourceText.From(sourceBuilder.ToString(), Encoding.UTF8));

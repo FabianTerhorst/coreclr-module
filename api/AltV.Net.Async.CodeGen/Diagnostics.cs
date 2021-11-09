@@ -85,5 +85,15 @@ namespace AltV.Net.Async.CodeGen
                 DiagnosticSeverity.Error,
                 true
             );
+        
+        public static DiagnosticDescriptor AsyncEntityCannotBeNested =
+            new(
+                "ALTV0009",
+                "Invalid async entity",
+                "Async entity class {0} cannot extend another async entity class {1}, async entities cannot be nested",
+                "AsyncEntity",
+                DiagnosticSeverity.Error,
+                true
+            );
     }
 }
