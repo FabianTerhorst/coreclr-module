@@ -16,11 +16,9 @@ namespace AltV.Net.Async.Elements.Entities
             get
             {
                 AsyncContext.RunAll();
-                lock (BaseObject)
-                {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
-                    return BaseObject.NetworkOwner;
-                }
+                IPlayer owner = default;
+                AsyncContext.RunOnMainThreadBlocking(() => owner = BaseObject.NetworkOwner);
+                return owner;
             }
         }
 

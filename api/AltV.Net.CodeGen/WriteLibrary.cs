@@ -8,7 +8,7 @@ namespace AltV.Net.CodeGen
     public static class WriteLibrary
     {
         private const string Quote = "\"";
-        
+
         private static readonly IDictionary<string, string> CToCSharpTypes = new Dictionary<string, string>
         {
             ["alt::IPlayer*"] = "nint",
@@ -28,6 +28,10 @@ namespace AltV.Net.CodeGen
             ["rotation_t&"] = "Rotation*",
             ["rotation_t"] = "Rotation",
             ["alt::Rotation"] = "Rotation",
+            ["vector2_t"] = "Vector2",
+            ["vector2_t&"] = "Vector2*",
+            ["vector3_t"] = "Vector3",
+            ["vector3_t&"] = "Vector3*",
             ["cloth_t&"] = "Cloth*",
             ["cloth_t"] = "Cloth",
             ["dlccloth_t&"] = "DlcCloth*",
@@ -101,6 +105,10 @@ namespace AltV.Net.CodeGen
             ["uint8_t&"] = "byte*",
             ["uint8_t*"] = "byte*",
             ["rgba_t"] = "Rgba",
+            ["head_blend_data_t"] = "HeadBlendData",
+            ["head_blend_data_t&"] = "HeadBlendData*",
+            ["head_overlay_t"] = "HeadOverlay",
+            ["head_overlay_t&"] = "HeadOverlay*",
             ["void*"] = "nint",
             ["const void*"] = "nint"
         };
@@ -155,7 +163,7 @@ using AltV.Net.Elements.Entities;");
             imports.Append(Environment.NewLine);
 
             fullFile.Append(imports);
-            
+
             foreach (var method in methods)
             {
                 var template = $@"        public delegate* unmanaged[Cdecl]<{string.Join(", ", method.Params.Select(param => TypeToCSharp(param.Type, param.Name)).ToArray())}, {TypeToCSharp(method.ReturnType)}> {method.Name} {{ get; }}";

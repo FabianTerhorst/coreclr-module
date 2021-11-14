@@ -100,6 +100,12 @@ namespace AltV.Net.Elements.Entities
         void DeleteData(string key);
 
         /// <summary>
+        /// Deletes all set data from the entity.
+        /// </summary>
+        /// <remarks>Data is accessible only within the resource that set the data.</remarks>
+        void ClearData();
+
+        /// <summary>
         /// Checks if the entity has a given meta data key.
         /// </summary>
         /// <remarks>Meta data is accessible across different serverside resources.</remarks>

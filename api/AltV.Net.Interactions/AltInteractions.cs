@@ -86,9 +86,17 @@ namespace AltV.Net.Interactions
                                 {
                                     foreach (var interaction in foundInteractions)
                                     {
-                                        if (interaction.OnInteraction(player, interactionPosition, currDimension))
+                                        try
                                         {
-                                            break;
+                                            if (interaction.OnInteraction(player, interactionPosition, currDimension))
+                                            {
+                                                break;
+                                            }
+                                        }
+                                        catch (Exception exception)
+                                        {
+                                            Console.WriteLine("interaction " + interaction + " threw a exception.");
+                                            Console.WriteLine(exception);
                                         }
                                     }
                                 }
@@ -125,7 +133,7 @@ namespace AltV.Net.Interactions
 
         public static Task<IInteraction[]> FindInteractions(Vector3 position, int dimension)
         {
-            var callback = new TaskCompletionSource<IInteraction[]>();
+            var callback = new TaskCompletionSource<IInteraction[]>(TaskCreationOptions.RunContinuationsAsynchronously);
             InteractionChannel.Writer.TryWrite(new InteractionEvent(3, (position, dimension, callback)));
             return callback.Task;
         }

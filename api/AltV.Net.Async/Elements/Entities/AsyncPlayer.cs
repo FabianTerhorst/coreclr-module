@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 using AltV.Net.Data;
+using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Refs;
+using AltV.Net.Native;
 
 namespace AltV.Net.Async.Elements.Entities
 {
     [SuppressMessage("ReSharper",
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
-    public class AsyncPlayer<TPlayer> : AsyncEntity<TPlayer>, IPlayer where TPlayer: class, IPlayer
+    public class AsyncPlayer<TPlayer> : AsyncEntity<TPlayer>, IPlayer where TPlayer : class, IPlayer
     {
         public new uint Model
         {
@@ -279,11 +282,9 @@ namespace AltV.Net.Async.Elements.Entities
             get
             {
                 AsyncContext.RunAll();
-                lock (BaseObject)
-                {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
-                    return BaseObject.Vehicle;
-                }
+                IVehicle entity = default;
+                AsyncContext.RunOnMainThreadBlocking(() => entity = BaseObject.Vehicle);
+                return entity;
             }
         }
 
@@ -305,11 +306,9 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                lock (BaseObject)
-                {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
-                    return BaseObject.EntityAimingAt;
-                }
+                IEntity entity = default;
+                AsyncContext.RunOnMainThreadBlocking(() => entity = BaseObject.EntityAimingAt);
+                return entity;
             }
         }
 
@@ -422,7 +421,25 @@ namespace AltV.Net.Async.Elements.Entities
 
         public void Emit(string eventName, params object[] args)
         {
-            BaseObject.EmitLocked(eventName, args);
+            var size = args.Length;
+            using var asyncContext = RefContext.Create(false);
+            var mValues = new MValueConst[size];
+            MValueConstLocked.CreateFromObjectsLocked(args, mValues, asyncContext);
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            lock (BaseObject)
+            {
+                if (BaseObject.Exists)
+                {
+                    Alt.Server.TriggerClientEvent(BaseObject, eventNamePtr, mValues);
+                }
+            }
+
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+
+            Marshal.FreeHGlobal(eventNamePtr);
         }
 
         public void AddWeaponComponent(uint weapon, uint weaponComponent)
@@ -631,6 +648,205 @@ namespace AltV.Net.Async.Elements.Entities
         public void SetIntoVehicle(IVehicle vehicle, byte seat)
         {
             AsyncContext.Enqueue(() => BaseObject.SetIntoVehicle(vehicle, seat));
+        }
+
+        public bool IsSuperJumpEnabled
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsSuperJumpEnabled;
+                }
+            }
+        }
+
+        public bool IsCrouching
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsCrouching;
+                }
+            }
+        }
+
+        public bool IsStealthy
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsStealthy;
+                }
+            }
+        }
+
+        public void PlayAmbientSpeech(string speechName, string speechParam, uint speechHash)
+        {
+            AsyncContext.Enqueue(() => BaseObject.PlayAmbientSpeech(speechName, speechParam, speechHash));
+        }
+
+        public HeadBlendData HeadBlendData
+        {
+            get
+            {
+                lock(BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.HeadBlendData;
+                }
+            }
+        }
+
+        public ushort EyeColor
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.EyeColor;
+                }
+            }
+        }
+
+        public byte HairColor
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.HairColor;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.HairColor = value); }
+        }
+
+        public byte HairHighlightColor
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.HairHighlightColor;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.HairHighlightColor = value); }
+        }
+
+        public bool SetHeadOverlay(byte overlayId, byte index, float opacity)
+        {
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.SetHeadOverlay(overlayId, index, opacity);
+            }
+        }
+
+        public bool RemoveHeadOverlay(byte overlayId)
+        {
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.RemoveHeadOverlay(overlayId);
+            }
+        }
+
+
+        public bool SetHeadOverlayColor(byte overlayId, byte colorType, byte colorIndex, byte secondColorIndex)
+        {
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.SetHeadOverlayColor(overlayId, colorType, colorIndex, secondColorIndex);
+            }
+        }
+
+        public HeadOverlay GetHeadOverlay(byte overlayID)
+        {
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetHeadOverlay(overlayID);
+            }
+        }
+
+        public bool SetFaceFeature(byte index, float scale)
+        {
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.SetFaceFeature(index, scale);
+            }
+        }
+
+        public float GetFaceFeatureScale(byte index)
+        {
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetFaceFeatureScale(index);
+            }
+        }
+
+        public bool RemoveFaceFeature(byte index)
+        {
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.RemoveFaceFeature(index);
+            }
+        }
+
+        public bool SetHeadBlendPaletteColor(byte id, Rgba rgba)
+        {
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.SetHeadBlendPaletteColor(id, rgba);
+            }
+        }
+
+        public Rgba GetHeadBlendPaletteColor(byte id)
+        {
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetHeadBlendPaletteColor(id);
+            }
+        }
+
+        public void SetHeadBlendData(uint shapeFirstID, uint shapeSecondID, uint shapeThirdID, uint skinFirstID, uint skinSecondID, uint skinThirdID, float shapeMix, float skinMix, float thirdMix)
+        {
+            AsyncContext.Enqueue(() => BaseObject.SetHeadBlendData(shapeFirstID, shapeSecondID, shapeThirdID, skinFirstID, skinSecondID, skinThirdID, shapeMix, skinMix, thirdMix));
+        }
+
+        public bool SetEyeColor(ushort eyeColor)
+        {
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.SetEyeColor(eyeColor);
+            }
         }
     }
 }

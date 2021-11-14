@@ -101,6 +101,11 @@ namespace AltV.Net.Async.Elements.Entities
             BaseObject.DeleteData(key);
         }
 
+        public void ClearData()
+        {
+            BaseObject.ClearData();
+        }
+
         public bool HasMetaData(string key)
         {
             AsyncContext.RunAll();

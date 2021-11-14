@@ -56,6 +56,7 @@ namespace AltV.Net.Async
 
         public bool CreateRef(IBaseObject baseObject, bool safe)
         {
+            if (baseObject == null) return false;
             if (!createRefAutomatically) return true;
             try
             {
@@ -133,53 +134,63 @@ namespace AltV.Net.Async
 
         public void RunAll()
         {
-            if (actions.Count == 0) return;
+            RunAll(false);
+        }
+
+        public void RunAll(bool dispose)
+        {
+            if (actions.Count == 0 && !dispose) return;
             RunOnMainThreadBlocking(() =>
             {
-                // Thread safe linked list loop
-                var first = actions.First;
-                var current = first;
-                var last = actions.Last;
-                var done = false;
-                if (current == null) return; //empty list
-                do
+                if (actions.Count != 0)
                 {
-                    current.Value();
-                    if (current == last) done = true;
-                    current = current.Next;
-                } while (!done && current != null);
+                    // Thread safe linked list loop
+                    var first = actions.First;
+                    var current = first;
+                    var last = actions.Last;
+                    var done = false;
+                    if (current == null) return; //empty list
+                    do
+                    {
+                        current.Value();
+                        if (current == last) done = true;
+                        current = current.Next;
+                    } while (!done && current != null);
+                    actions.Clear();
+                }
+                
+                if (dispose)
+                {
+                    var firstBaseObject = baseObjectRefs.First;
+                    var currentBaseObject = firstBaseObject;
+                    var lastBaseObject = baseObjectRefs.Last;
+                    var doneBaseObject = false;
+                    if (currentBaseObject != null) // check if empty
+                    {
+                        do
+                        {
+                            try
+                            {
+                                currentBaseObject.Value.RemoveRef();
+                            }
+                            catch (Exception exception)
+                            {
+                                Console.WriteLine(exception);
+                            }
+
+                            Alt.Module.CountDownRefForCurrentThread(currentBaseObject.Value);
+                            if (currentBaseObject == lastBaseObject) doneBaseObject = true;
+                            currentBaseObject = currentBaseObject.Next;
+                        } while (!doneBaseObject && currentBaseObject != null);
+                    }
+                    baseObjectRefs.Clear();
+                }
             });
         }
 
         public ValueTask DisposeAsync()
         {
-            RunAll();
-            // Thread safe linked list loop
-            var first = baseObjectRefs.First;
-            var current = first;
-            var last = baseObjectRefs.Last;
-            var done = false;
-            if (current != null) // check if empty
-            {
-                do
-                {
-                    try
-                    {
-                        current.Value.RemoveRef();
-                    }
-                    catch (Exception exception)
-                    {
-                        Console.WriteLine(exception);
-                    }
-
-                    Alt.Module.CountDownRefForCurrentThread(current.Value);
-                    if (current == last) done = true;
-                    current = current.Next;
-                } while (!done && current != null);
-            }
-
-            baseObjectRefs.Clear();
-            actions.Clear();
+            RunAll(true);
             semaphoreSlim.Dispose();
 
             GC.SuppressFinalize(this);

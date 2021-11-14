@@ -51,7 +51,7 @@ namespace AltV.Net.Async
         public static Task SetRouteAsync(this IBlip blip, bool route) =>
             AltVAsync.Schedule(() => blip.Route = route);
 
-        public static Task SetRouteColorAsync(this IBlip blip, byte color) =>
+        public static Task SetRouteColorAsync(this IBlip blip, Rgba color) =>
             AltVAsync.Schedule(() => blip.RouteColor = color);
 
         public static Task RemoveAsync(this IBlip blip) =>

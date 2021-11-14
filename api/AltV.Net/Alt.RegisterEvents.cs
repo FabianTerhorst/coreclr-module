@@ -44,6 +44,23 @@ namespace AltV.Net
                                         scriptFunction.Call();
                                     };
                                     break;
+                                case ScriptEventType.PlayerBeforeConnect:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[] { typeof(IPlayer), typeof(ulong), typeof(string) });
+                                    if (scriptFunction == null) return;
+                                    OnPlayerBeforeConnect += (player, passwordHash, cdnUrl) =>
+                                    {
+                                        scriptFunction.Set(player);
+                                        scriptFunction.Set(passwordHash);
+                                        scriptFunction.Set(cdnUrl);
+                                        if (scriptFunction.Call() is bool value)
+                                        {
+                                            return value;
+                                        }
+
+                                        return true;
+                                    };
+                                    break;
                                 case ScriptEventType.PlayerDamage:
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
                                         new[] {typeof(IPlayer), typeof(IEntity), typeof(uint), typeof(ushort), typeof(ushort)});

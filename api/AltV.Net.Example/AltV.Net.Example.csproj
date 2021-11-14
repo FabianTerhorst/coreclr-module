@@ -31,6 +31,9 @@
 
     <ItemGroup>
       <ProjectReference Include="..\AltV.Net.Async\AltV.Net.Async.csproj" />
+      <ProjectReference Include="..\AltV.Net.Async.CodeGen\AltV.Net.Async.CodeGen.csproj"
+                        OutputItemType="Analyzer"
+                        ReferenceOutputAssembly="false"/>
     </ItemGroup>
 
     <Target Name="CopyFiles" AfterTargets="build">

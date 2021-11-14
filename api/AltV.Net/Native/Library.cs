@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -135,6 +136,27 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetInvincible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetInvincible { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Player_SetIntoVehicle { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsSuperJumpEnabled { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsCrouching { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsStealthy { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, void> Player_PlayAmbientSpeech { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, float, byte> Player_SetHeadOverlay { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveHeadOverlay { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, byte, byte, byte> Player_SetHeadOverlayColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, HeadOverlay*, void> Player_GetHeadOverlay { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, float, byte> Player_SetFaceFeature { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, float> Player_GetFaceFeatureScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveFaceFeature { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, byte, byte, byte> Player_SetHeadBlendPaletteColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, Rgba*, void> Player_GetHeadBlendPaletteColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint, uint, uint, uint, uint, float, float, float, void> Player_SetHeadBlendData { get; }
+        public delegate* unmanaged[Cdecl]<nint, HeadBlendData*, void> Player_GetHeadBlendData { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, byte> Player_SetEyeColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetEyeColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetHairColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetHairColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetHairHighlightColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetHairHighlightColor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetNetworkOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetModel { get; }
@@ -299,6 +321,41 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Vehicle_AttachToEntity_Player { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Vehicle_AttachToEntity_Vehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Detach { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetVelocity { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetDriftMode { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsDriftMode { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, nint, byte> Vehicle_SetSearchLight_Player { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, nint, byte> Vehicle_SetSearchLight_Vehicle { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsTrainMissionTrain { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetTrainMissionTrain { get; }
+        public delegate* unmanaged[Cdecl]<nint, sbyte> Vehicle_GetTrainTrackId { get; }
+        public delegate* unmanaged[Cdecl]<nint, sbyte, void> Vehicle_SetTrainTrackId { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetTrainEngineId { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Vehicle_SetTrainEngineId { get; }
+        public delegate* unmanaged[Cdecl]<nint, sbyte> Vehicle_GetTrainConfigIndex { get; }
+        public delegate* unmanaged[Cdecl]<nint, sbyte, void> Vehicle_SetTrainConfigIndex { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetTrainDistanceFromEngine { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetTrainDistanceFromEngine { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsTrainEngine { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetTrainIsEngine { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsTrainCaboose { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetTrainIsCaboose { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetTrainDirection { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetTrainDirection { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_HasTrainPassengerCarriages { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetTrainHasPassengerCarriages { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetTrainRenderDerailed { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetTrainRenderDerailed { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetTrainForceDoorsOpen { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetTrainForceDoorsOpen { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetTrainCruiseSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetTrainCruiseSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, sbyte> Vehicle_GetTrainCarriageConfigIndex { get; }
+        public delegate* unmanaged[Cdecl]<nint, sbyte, void> Vehicle_SetTrainCarriageConfigIndex { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetTrainLinkedToBackwardId { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Vehicle_SetTrainLinkedToBackwardId { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetTrainLinkedToForwardId { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Vehicle_SetTrainLinkedToForwardId { get; }
         public delegate* unmanaged[Cdecl]<nint, Position*, void> ColShape_GetPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, void> ColShape_SetPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, int> ColShape_GetDimension { get; }
@@ -342,10 +399,69 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetType { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2*, void> Blip_GetScaleXY { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2, void> Blip_SetScaleXY { get; }
+        public delegate* unmanaged[Cdecl]<nint, short> Blip_GetDisplay { get; }
+        public delegate* unmanaged[Cdecl]<nint, short, void> Blip_SetDisplay { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetSprite { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Blip_SetSprite { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Blip_GetSecondaryColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba, void> Blip_SetSecondaryColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAlpha { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetAlpha { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetFlashTimer { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Blip_SetFlashTimer { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetFlashInterval { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Blip_SetFlashInterval { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAsFriendly { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetAsFriendly { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetRoute { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetRoute { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetRouteColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetBright { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetBright { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetNumber { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Blip_SetNumber { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetShowCone { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetShowCone { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetFlashes { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetFlashes { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetFlashesAlternate { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetFlashesAlternate { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAsShortRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetAsShortRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetPriority { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Blip_SetPriority { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Blip_GetRotation { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Blip_SetRotation { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, void> Blip_GetGxtName { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Blip_SetGxtName { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, void> Blip_GetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Blip_SetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Blip_GetRouteColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba, void> Blip_SetRouteColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetPulse { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetPulse { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAsMissionCreator { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetAsMissionCreator { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetTickVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetTickVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetHeadingIndicatorVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetHeadingIndicatorVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetOutlineIndicatorVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetOutlineIndicatorVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetFriendIndicatorVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetFriendIndicatorVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetCrewIndicatorVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetCrewIndicatorVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetCategory { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Blip_SetCategory { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAsHighDetail { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetAsHighDetail { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetShrinked { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetShrinked { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Blip_Fade { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Resource_GetExportsCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], nint[], void> Resource_GetExports { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Resource_GetExport { get; }
@@ -587,6 +703,27 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetInvincible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetInvincible { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Player_SetIntoVehicle { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsSuperJumpEnabled { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsCrouching { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsStealthy { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, void> Player_PlayAmbientSpeech { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, float, byte> Player_SetHeadOverlay { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveHeadOverlay { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, byte, byte, byte> Player_SetHeadOverlayColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, HeadOverlay*, void> Player_GetHeadOverlay { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, float, byte> Player_SetFaceFeature { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, float> Player_GetFaceFeatureScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte> Player_RemoveFaceFeature { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, byte, byte, byte> Player_SetHeadBlendPaletteColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, Rgba*, void> Player_GetHeadBlendPaletteColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint, uint, uint, uint, uint, float, float, float, void> Player_SetHeadBlendData { get; }
+        public delegate* unmanaged[Cdecl]<nint, HeadBlendData*, void> Player_GetHeadBlendData { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, byte> Player_SetEyeColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetEyeColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetHairColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetHairColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetHairHighlightColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetHairHighlightColor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetNetworkOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetModel { get; }
@@ -751,6 +888,41 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Vehicle_AttachToEntity_Player { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Vehicle_AttachToEntity_Vehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Detach { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Vehicle_GetVelocity { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetDriftMode { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsDriftMode { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, nint, byte> Vehicle_SetSearchLight_Player { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, nint, byte> Vehicle_SetSearchLight_Vehicle { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsTrainMissionTrain { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetTrainMissionTrain { get; }
+        public delegate* unmanaged[Cdecl]<nint, sbyte> Vehicle_GetTrainTrackId { get; }
+        public delegate* unmanaged[Cdecl]<nint, sbyte, void> Vehicle_SetTrainTrackId { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetTrainEngineId { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Vehicle_SetTrainEngineId { get; }
+        public delegate* unmanaged[Cdecl]<nint, sbyte> Vehicle_GetTrainConfigIndex { get; }
+        public delegate* unmanaged[Cdecl]<nint, sbyte, void> Vehicle_SetTrainConfigIndex { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetTrainDistanceFromEngine { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetTrainDistanceFromEngine { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsTrainEngine { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetTrainIsEngine { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_IsTrainCaboose { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetTrainIsCaboose { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetTrainDirection { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetTrainDirection { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_HasTrainPassengerCarriages { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetTrainHasPassengerCarriages { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetTrainRenderDerailed { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetTrainRenderDerailed { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetTrainForceDoorsOpen { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetTrainForceDoorsOpen { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetTrainCruiseSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Vehicle_SetTrainCruiseSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, sbyte> Vehicle_GetTrainCarriageConfigIndex { get; }
+        public delegate* unmanaged[Cdecl]<nint, sbyte, void> Vehicle_SetTrainCarriageConfigIndex { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetTrainLinkedToBackwardId { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Vehicle_SetTrainLinkedToBackwardId { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetTrainLinkedToForwardId { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Vehicle_SetTrainLinkedToForwardId { get; }
         public delegate* unmanaged[Cdecl]<nint, Position*, void> ColShape_GetPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, void> ColShape_SetPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, int> ColShape_GetDimension { get; }
@@ -794,10 +966,69 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetType { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2*, void> Blip_GetScaleXY { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2, void> Blip_SetScaleXY { get; }
+        public delegate* unmanaged[Cdecl]<nint, short> Blip_GetDisplay { get; }
+        public delegate* unmanaged[Cdecl]<nint, short, void> Blip_SetDisplay { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetSprite { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Blip_SetSprite { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Blip_GetSecondaryColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba, void> Blip_SetSecondaryColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAlpha { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetAlpha { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetFlashTimer { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Blip_SetFlashTimer { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetFlashInterval { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Blip_SetFlashInterval { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAsFriendly { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetAsFriendly { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetRoute { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetRoute { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetRouteColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetBright { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetBright { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetNumber { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Blip_SetNumber { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetShowCone { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetShowCone { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetFlashes { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetFlashes { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetFlashesAlternate { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetFlashesAlternate { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAsShortRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetAsShortRange { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetPriority { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Blip_SetPriority { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Blip_GetRotation { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Blip_SetRotation { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, void> Blip_GetGxtName { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Blip_SetGxtName { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, void> Blip_GetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Blip_SetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Blip_GetRouteColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba, void> Blip_SetRouteColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetPulse { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetPulse { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAsMissionCreator { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetAsMissionCreator { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetTickVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetTickVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetHeadingIndicatorVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetHeadingIndicatorVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetOutlineIndicatorVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetOutlineIndicatorVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetFriendIndicatorVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetFriendIndicatorVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetCrewIndicatorVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetCrewIndicatorVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetCategory { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Blip_SetCategory { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetAsHighDetail { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetAsHighDetail { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetShrinked { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetShrinked { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Blip_Fade { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Resource_GetExportsCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], nint[], void> Resource_GetExports { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Resource_GetExport { get; }
@@ -1043,6 +1274,27 @@ namespace AltV.Net.Native
             Player_GetInvincible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_GetInvincible");
             Player_SetInvincible = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Player_SetInvincible");
             Player_SetIntoVehicle = (delegate* unmanaged[Cdecl]<nint, nint, byte, void>) NativeLibrary.GetExport(handle, "Player_SetIntoVehicle");
+            Player_IsSuperJumpEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsSuperJumpEnabled");
+            Player_IsCrouching = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsCrouching");
+            Player_IsStealthy = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsStealthy");
+            Player_PlayAmbientSpeech = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint, void>) NativeLibrary.GetExport(handle, "Player_PlayAmbientSpeech");
+            Player_SetHeadOverlay = (delegate* unmanaged[Cdecl]<nint, byte, byte, float, byte>)NativeLibrary.GetExport(handle, "Player_SetHeadOverlay");
+            Player_RemoveHeadOverlay = (delegate* unmanaged[Cdecl]<nint, byte, byte>)NativeLibrary.GetExport(handle, "Player_RemoveHeadOverlay");
+            Player_SetHeadOverlayColor = (delegate* unmanaged[Cdecl]<nint, byte, byte, byte, byte, byte>)NativeLibrary.GetExport(handle, "Player_SetHeadOverlayColor");
+            Player_GetHeadOverlay = (delegate* unmanaged[Cdecl]<nint, byte, HeadOverlay*, void>)NativeLibrary.GetExport(handle, "Player_GetHeadOverlay");
+            Player_SetFaceFeature = (delegate* unmanaged[Cdecl]<nint, byte, float, byte>)NativeLibrary.GetExport(handle, "Player_SetFaceFeature");
+            Player_GetFaceFeatureScale = (delegate* unmanaged[Cdecl]<nint, byte, float>)NativeLibrary.GetExport(handle, "Player_GetFaceFeatureScale");
+            Player_RemoveFaceFeature = (delegate* unmanaged[Cdecl]<nint, byte, byte>)NativeLibrary.GetExport(handle, "Player_RemoveFaceFeature");
+            Player_SetHeadBlendPaletteColor = (delegate* unmanaged[Cdecl]<nint, byte, byte, byte, byte, byte>)NativeLibrary.GetExport(handle, "Player_SetHeadBlendPaletteColor");
+            Player_GetHeadBlendPaletteColor = (delegate* unmanaged[Cdecl]<nint, byte, Rgba*, void>)NativeLibrary.GetExport(handle, "Player_GetHeadBlendPaletteColor");
+            Player_SetHeadBlendData = (delegate* unmanaged[Cdecl]<nint, uint, uint, uint, uint, uint, uint, float, float, float, void>)NativeLibrary.GetExport(handle, "Player_SetHeadBlendData");
+            Player_GetHeadBlendData = (delegate* unmanaged[Cdecl]<nint, HeadBlendData*, void>)NativeLibrary.GetExport(handle, "Player_GetHeadBlendData");
+            Player_SetEyeColor = (delegate* unmanaged[Cdecl]<nint, ushort, byte>)NativeLibrary.GetExport(handle, "Player_SetEyeColor");
+            Player_GetEyeColor = (delegate* unmanaged[Cdecl]<nint, ushort>)NativeLibrary.GetExport(handle, "Player_GetEyeColor");
+            Player_SetHairColor = (delegate* unmanaged[Cdecl]<nint, byte, void>)NativeLibrary.GetExport(handle, "Player_SetHairColor");
+            Player_GetHairColor = (delegate* unmanaged[Cdecl]<nint, byte>)NativeLibrary.GetExport(handle, "Player_GetHairColor");
+            Player_SetHairHighlightColor = (delegate* unmanaged[Cdecl]<nint, byte, void>)NativeLibrary.GetExport(handle, "Player_SetHairHighlightColor");
+            Player_GetHairHighlightColor = (delegate* unmanaged[Cdecl]<nint, byte>)NativeLibrary.GetExport(handle, "Player_GetHairHighlightColor");
             Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetID");
             Vehicle_GetNetworkOwner = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetNetworkOwner");
             Vehicle_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Vehicle_GetModel");
@@ -1207,6 +1459,41 @@ namespace AltV.Net.Native
             Vehicle_AttachToEntity_Player = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_AttachToEntity_Player");
             Vehicle_AttachToEntity_Vehicle = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_AttachToEntity_Vehicle");
             Vehicle_Detach = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Vehicle_Detach");
+            Vehicle_GetVelocity = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetVelocity");
+            Vehicle_SetDriftMode = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetDriftMode");
+            Vehicle_IsDriftMode = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_IsDriftMode");
+            Vehicle_SetSearchLight_Player = (delegate* unmanaged[Cdecl]<nint, byte, nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_SetSearchLight_Player");
+            Vehicle_SetSearchLight_Vehicle = (delegate* unmanaged[Cdecl]<nint, byte, nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_SetSearchLight_Vehicle");
+             Vehicle_IsTrainMissionTrain = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_IsTrainMissionTrain");
+            Vehicle_SetTrainMissionTrain = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetTrainMissionTrain");
+            Vehicle_GetTrainTrackId = (delegate* unmanaged[Cdecl]<nint, sbyte>) NativeLibrary.GetExport(handle, "Vehicle_GetTrainTrackId");
+            Vehicle_SetTrainTrackId = (delegate* unmanaged[Cdecl]<nint, sbyte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetTrainTrackId");
+            Vehicle_GetTrainEngineId = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetTrainEngineId");
+            Vehicle_SetTrainEngineId = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Vehicle_SetTrainEngineId");
+            Vehicle_GetTrainConfigIndex = (delegate* unmanaged[Cdecl]<nint, sbyte>) NativeLibrary.GetExport(handle, "Vehicle_GetTrainConfigIndex");
+            Vehicle_SetTrainConfigIndex = (delegate* unmanaged[Cdecl]<nint, sbyte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetTrainConfigIndex");
+            Vehicle_GetTrainDistanceFromEngine = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Vehicle_GetTrainDistanceFromEngine");
+            Vehicle_SetTrainDistanceFromEngine = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Vehicle_SetTrainDistanceFromEngine");
+            Vehicle_IsTrainEngine = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_IsTrainEngine");
+            Vehicle_SetTrainIsEngine = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetTrainIsEngine");
+            Vehicle_IsTrainCaboose = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_IsTrainCaboose");
+            Vehicle_SetTrainIsCaboose = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetTrainIsCaboose");
+            Vehicle_GetTrainDirection = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetTrainDirection");
+            Vehicle_SetTrainDirection = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetTrainDirection");
+            Vehicle_HasTrainPassengerCarriages = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_HasTrainPassengerCarriages");
+            Vehicle_SetTrainHasPassengerCarriages = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetTrainHasPassengerCarriages");
+            Vehicle_GetTrainRenderDerailed = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetTrainRenderDerailed");
+            Vehicle_SetTrainRenderDerailed = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetTrainRenderDerailed");
+            Vehicle_GetTrainForceDoorsOpen = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetTrainForceDoorsOpen");
+            Vehicle_SetTrainForceDoorsOpen = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetTrainForceDoorsOpen");
+            Vehicle_GetTrainCruiseSpeed = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Vehicle_GetTrainCruiseSpeed");
+            Vehicle_SetTrainCruiseSpeed = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Vehicle_SetTrainCruiseSpeed");
+            Vehicle_GetTrainCarriageConfigIndex = (delegate* unmanaged[Cdecl]<nint, sbyte>) NativeLibrary.GetExport(handle, "Vehicle_GetTrainCarriageConfigIndex");
+            Vehicle_SetTrainCarriageConfigIndex = (delegate* unmanaged[Cdecl]<nint, sbyte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetTrainCarriageConfigIndex");
+            Vehicle_GetTrainLinkedToBackwardId = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetTrainLinkedToBackwardId");
+            Vehicle_SetTrainLinkedToBackwardId = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Vehicle_SetTrainLinkedToBackwardId");
+            Vehicle_GetTrainLinkedToForwardId = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetTrainLinkedToForwardId");
+            Vehicle_SetTrainLinkedToForwardId = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Vehicle_SetTrainLinkedToForwardId");
             ColShape_GetPosition = (delegate* unmanaged[Cdecl]<nint, Position*, void>) NativeLibrary.GetExport(handle, "ColShape_GetPosition");
             ColShape_SetPosition = (delegate* unmanaged[Cdecl]<nint, Position, void>) NativeLibrary.GetExport(handle, "ColShape_SetPosition");
             ColShape_GetDimension = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "ColShape_GetDimension");
@@ -1250,10 +1537,69 @@ namespace AltV.Net.Native
             Blip_IsAttached = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_IsAttached");
             Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) NativeLibrary.GetExport(handle, "Blip_AttachedTo");
             Blip_GetType = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetType");
+            Blip_GetScaleXY = (delegate* unmanaged[Cdecl]<nint, Vector2*, void>) NativeLibrary.GetExport(handle, "Blip_GetScaleXY");
+            Blip_SetScaleXY = (delegate* unmanaged[Cdecl]<nint, Vector2, void>) NativeLibrary.GetExport(handle, "Blip_SetScaleXY");
+            Blip_GetDisplay = (delegate* unmanaged[Cdecl]<nint, short>) NativeLibrary.GetExport(handle, "Blip_GetDisplay");
+            Blip_SetDisplay = (delegate* unmanaged[Cdecl]<nint, short, void>) NativeLibrary.GetExport(handle, "Blip_SetDisplay");
+            Blip_GetSprite = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Blip_GetSprite");
             Blip_SetSprite = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Blip_SetSprite");
+            Blip_GetColor = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetColor");
             Blip_SetColor = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetColor");
+            Blip_GetSecondaryColor = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) NativeLibrary.GetExport(handle, "Blip_GetSecondaryColor");
+            Blip_SetSecondaryColor = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) NativeLibrary.GetExport(handle, "Blip_SetSecondaryColor");
+            Blip_GetAlpha = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetAlpha");
+            Blip_SetAlpha = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetAlpha");
+            Blip_GetFlashTimer = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Blip_GetFlashTimer");
+            Blip_SetFlashTimer = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Blip_SetFlashTimer");
+            Blip_GetFlashInterval = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Blip_GetFlashInterval");
+            Blip_SetFlashInterval = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Blip_SetFlashInterval");
+            Blip_GetAsFriendly = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetAsFriendly");
+            Blip_SetAsFriendly = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetAsFriendly");
+            Blip_GetRoute = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetRoute");
             Blip_SetRoute = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetRoute");
-            Blip_SetRouteColor = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetRouteColor");
+            Blip_GetBright = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetBright");
+            Blip_SetBright = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetBright");
+            Blip_GetNumber = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Blip_GetNumber");
+            Blip_SetNumber = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Blip_SetNumber");
+            Blip_GetShowCone = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetShowCone");
+            Blip_SetShowCone = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetShowCone");
+            Blip_GetFlashes = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetFlashes");
+            Blip_SetFlashes = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetFlashes");
+            Blip_GetFlashesAlternate = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetFlashesAlternate");
+            Blip_SetFlashesAlternate = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetFlashesAlternate");
+            Blip_GetAsShortRange = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetAsShortRange");
+            Blip_SetAsShortRange = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetAsShortRange");
+            Blip_GetPriority = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Blip_GetPriority");
+            Blip_SetPriority = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Blip_SetPriority");
+            Blip_GetRotation = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Blip_GetRotation");
+            Blip_SetRotation = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Blip_SetRotation");
+            Blip_GetGxtName = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Blip_GetGxtName");
+            Blip_SetGxtName = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Blip_SetGxtName");
+            Blip_GetName = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Blip_GetName");
+            Blip_SetName = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Blip_SetName");
+            Blip_GetRouteColor = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) NativeLibrary.GetExport(handle, "Blip_GetRouteColor");
+            Blip_SetRouteColor = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) NativeLibrary.GetExport(handle, "Blip_SetRouteColor");
+            Blip_GetPulse = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetPulse");
+            Blip_SetPulse = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetPulse");
+            Blip_GetAsMissionCreator = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetAsMissionCreator");
+            Blip_SetAsMissionCreator = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetAsMissionCreator");
+            Blip_GetTickVisible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetTickVisible");
+            Blip_SetTickVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetTickVisible");
+            Blip_GetHeadingIndicatorVisible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetHeadingIndicatorVisible");
+            Blip_SetHeadingIndicatorVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetHeadingIndicatorVisible");
+            Blip_GetOutlineIndicatorVisible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetOutlineIndicatorVisible");
+            Blip_SetOutlineIndicatorVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetOutlineIndicatorVisible");
+            Blip_GetFriendIndicatorVisible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetFriendIndicatorVisible");
+            Blip_SetFriendIndicatorVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetFriendIndicatorVisible");
+            Blip_GetCrewIndicatorVisible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetCrewIndicatorVisible");
+            Blip_SetCrewIndicatorVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetCrewIndicatorVisible");
+            Blip_GetCategory = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Blip_GetCategory");
+            Blip_SetCategory = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Blip_SetCategory");
+            Blip_GetAsHighDetail = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetAsHighDetail");
+            Blip_SetAsHighDetail = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetAsHighDetail");
+            Blip_GetShrinked = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetShrinked");
+            Blip_SetShrinked = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetShrinked");
+            Blip_Fade = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) NativeLibrary.GetExport(handle, "Blip_Fade");
             Resource_GetExportsCount = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Resource_GetExportsCount");
             Resource_GetExports = (delegate* unmanaged[Cdecl]<nint, nint[], nint[], void>) NativeLibrary.GetExport(handle, "Resource_GetExports");
             Resource_GetExport = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Resource_GetExport");

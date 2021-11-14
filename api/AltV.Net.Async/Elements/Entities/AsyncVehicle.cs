@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
@@ -7,18 +8,16 @@ namespace AltV.Net.Async.Elements.Entities
 {
     [SuppressMessage("ReSharper",
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
-    public class AsyncVehicle<TVehicle> : AsyncEntity<TVehicle>, IVehicle where TVehicle: class, IVehicle
+    public class AsyncVehicle<TVehicle> : AsyncEntity<TVehicle>, IVehicle where TVehicle : class, IVehicle
     {
         public IPlayer Driver
         {
             get
             {
                 AsyncContext.RunAll();
-                lock (BaseObject)
-                {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
-                    return BaseObject.Driver;
-                }
+                IPlayer driver = default;
+                AsyncContext.RunOnMainThreadBlocking(() => driver = BaseObject.Driver);
+                return driver;
             }
         }
 
@@ -1072,6 +1071,253 @@ namespace AltV.Net.Async.Elements.Entities
         public void Repair()
         {
             AsyncContext.Enqueue(() => BaseObject.Repair());
+        }
+
+        public Vector3 Velocity
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.Velocity;
+                }
+            }
+        }
+
+        public bool DriftMode
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.DriftMode;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.DriftMode = value); }
+        }
+        
+        public bool SetSearchLight(bool state, IEntity spottedEntity)
+        {
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.SetSearchLight(state, spottedEntity);
+            }
+        }
+        
+        public bool IsMissionTrain
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsMissionTrain;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.IsMissionTrain = value); }
+        }
+
+        public sbyte TrainTrackId
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.TrainTrackId;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.TrainTrackId = value); }
+        }
+
+        public IVehicle TrainEngine
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.TrainEngine;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.TrainEngine = value); }
+        }
+
+        public sbyte TrainConfigIndex
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.TrainConfigIndex;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.TrainConfigIndex = value); }
+        }
+
+        public float TrainDistanceFromEngine
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.TrainDistanceFromEngine;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.TrainDistanceFromEngine = value); }
+        }
+
+        public bool IsTrainEngine
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsTrainEngine;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.IsTrainEngine = value); }
+        }
+
+        public bool IsTrainCaboose
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.IsTrainCaboose;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.IsTrainCaboose = value); }
+        }
+
+        public bool TrainDirection
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.TrainDirection;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.TrainDirection = value); }
+        }
+
+        public bool TrainPassengerCarriages
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.TrainPassengerCarriages;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.TrainPassengerCarriages = value); }
+        }
+
+        public bool TrainRenderDerailed
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.TrainRenderDerailed;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.TrainRenderDerailed = value); }
+        }
+
+        public bool TrainForceDoorsOpen
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.TrainForceDoorsOpen;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.TrainForceDoorsOpen = value); }
+        }
+
+        public float TrainCruiseSpeed
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.TrainCruiseSpeed;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.TrainCruiseSpeed = value); }
+        }
+
+        public sbyte TrainCarriageConfigIndex
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.TrainCarriageConfigIndex;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.TrainCarriageConfigIndex = value); }
+        }
+
+        public IVehicle TrainLinkedToBackward
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.TrainLinkedToBackward;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.TrainLinkedToBackward = value); }
+        }
+
+        public IVehicle TrainLinkedToForward
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.TrainLinkedToForward;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.TrainLinkedToForward = value); }
         }
     }
 }

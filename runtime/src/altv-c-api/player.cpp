@@ -512,3 +512,128 @@ void Player_SetInvincible(alt::IPlayer* player, uint8_t state) {
 void Player_SetIntoVehicle(alt::IPlayer* player, alt::IVehicle* vehicle, uint8_t seat) {
     player->SetIntoVehicle(vehicle, seat);
 }
+
+uint8_t Player_IsSuperJumpEnabled(alt::IPlayer* player)
+{
+    return player->IsSuperJumpEnabled();
+}
+
+uint8_t Player_IsCrouching(alt::IPlayer* player)
+{
+    return player->IsCrouching();
+}
+
+uint8_t Player_IsStealthy(alt::IPlayer* player)
+{
+    return player->IsStealthy();
+}
+
+void Player_PlayAmbientSpeech(alt::IPlayer* player, const char* speechName, const char* speechParam, uint32_t speechDictHash)
+{
+    player->PlayAmbientSpeech(speechName, speechParam, speechDictHash);
+}
+
+uint8_t Player_SetHeadOverlay(alt::IPlayer* player, uint8_t overlayID, uint8_t index, float opacity)
+{
+    return player->SetHeadOverlay(overlayID, index, opacity);
+}
+
+uint8_t Player_RemoveHeadOverlay(alt::IPlayer* player, uint8_t overlayID)
+{
+    return player->RemoveHeadOverlay(overlayID);
+}
+
+uint8_t Player_SetHeadOverlayColor(alt::IPlayer* player, uint8_t overlayID, uint8_t colorType, uint8_t colorIndex, uint8_t secondColorIndex)
+{
+    return player->SetHeadOverlayColor(overlayID, colorType, colorIndex, secondColorIndex);
+}
+
+void Player_GetHeadOverlay(alt::IPlayer* player, uint8_t overlayID, head_overlay_t &headOverlay)
+{
+    auto playerHeadOverlay = player->GetHeadOverlay(overlayID);
+    headOverlay.index = playerHeadOverlay.index;
+    headOverlay.opacity = playerHeadOverlay.opacity;
+    headOverlay.colorType = playerHeadOverlay.colorType;
+    headOverlay.colorIndex = playerHeadOverlay.colorIndex;
+    headOverlay.secondColorIndex = playerHeadOverlay.secondColorIndex;
+}
+
+uint8_t Player_SetFaceFeature(alt::IPlayer* player, uint8_t index, float scale)
+{
+    return player->SetFaceFeature(index, scale);
+}
+
+float Player_GetFaceFeatureScale(alt::IPlayer* player, uint8_t index)
+{
+    return player->GetFaceFeatureScale(index);
+}
+
+uint8_t Player_RemoveFaceFeature(alt::IPlayer* player, uint8_t index)
+{
+    return player->RemoveFaceFeature(index);
+}
+
+uint8_t Player_SetHeadBlendPaletteColor(alt::IPlayer* player, uint8_t id, uint8_t red, uint8_t green, uint8_t blue)
+{
+    return player->SetHeadBlendPaletteColor(id, red, green, blue);
+}
+
+void Player_GetHeadBlendPaletteColor(alt::IPlayer* player, uint8_t id, rgba_t &headBlendPaletteColor)
+{
+    auto playerHeadBlendPaletteColor = player->GetHeadBlendPaletteColor(id);
+    headBlendPaletteColor.r = playerHeadBlendPaletteColor.r;
+    headBlendPaletteColor.g = playerHeadBlendPaletteColor.g;
+    headBlendPaletteColor.b = playerHeadBlendPaletteColor.b;
+    headBlendPaletteColor.a= playerHeadBlendPaletteColor.a;
+}
+
+void Player_SetHeadBlendData(alt::IPlayer* player, uint32_t shapeFirstID, uint32_t shapeSecondID, uint32_t shapeThirdID,
+    uint32_t skinFirstID, uint32_t skinSecondID, uint32_t skinThirdID,
+    float shapeMix, float skinMix, float thirdMix)
+{
+    return player->SetHeadBlendData(shapeFirstID, shapeSecondID, shapeThirdID, skinFirstID, skinSecondID, skinThirdID, shapeMix, skinMix, thirdMix);
+}
+
+void Player_GetHeadBlendData(alt::IPlayer* player, head_blend_data_t &headBlendData)
+{
+    auto playerHeadBlendData = player->GetHeadBlendData();
+    headBlendData.shapeFirstID = playerHeadBlendData.shapeFirstID;
+    headBlendData.shapeSecondID = playerHeadBlendData.shapeSecondID;
+    headBlendData.shapeThirdID = playerHeadBlendData.shapeThirdID;
+    headBlendData.skinFirstID = playerHeadBlendData.skinFirstID;
+    headBlendData.skinSecondID = playerHeadBlendData.skinSecondID;
+    headBlendData.skinThirdID = playerHeadBlendData.skinThirdID;
+    headBlendData.shapeMix = playerHeadBlendData.shapeMix;
+    headBlendData.skinMix = playerHeadBlendData.skinMix;
+    headBlendData.thirdMix = playerHeadBlendData.thirdMix;
+}
+
+uint8_t Player_SetEyeColor(alt::IPlayer* player, uint16_t eyeColor)
+{
+    return player->SetEyeColor(eyeColor);
+}
+
+uint16_t Player_GetEyeColor(alt::IPlayer* player)
+{
+    return player->GetEyeColor();
+}
+
+void Player_SetHairColor(alt::IPlayer* player, uint8_t hairColor)
+{
+    return player->SetHairColor(hairColor);
+}
+
+uint8_t Player_GetHairColor(alt::IPlayer* player)
+{
+    return player->GetHairColor();
+}
+
+void Player_SetHairHighlightColor(alt::IPlayer* player, uint8_t hairHighlightColor)
+{
+    return player->SetHairHighlightColor(hairHighlightColor);
+}
+
+uint8_t Player_GetHairHighlightColor(alt::IPlayer* player)
+{
+    return player->GetHairHighlightColor();
+}
