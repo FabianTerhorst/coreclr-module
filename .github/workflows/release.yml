@@ -16,14 +16,14 @@ jobs:
         run: |
           ls -l
       - name: Copy nethost
-        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.11/runtimes/linux-x64/native/
+        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.12/runtimes/linux-x64/native/
         run: |
           tar -cvf ./libnethost.tar .
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: nethost-linux
-          path: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.11/runtimes/linux-x64/native/libnethost.tar
+          path: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.12/runtimes/linux-x64/native/libnethost.tar
   fetch-nethost-windows:
     runs-on: windows-2016
     steps:
