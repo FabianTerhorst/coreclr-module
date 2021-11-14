@@ -1,20 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net5.0</TargetFrameworks>
-        <PackageVersion>4.0.0</PackageVersion>
-        <Authors>AltMp</Authors>
-        <Description>AltV .NET Core Entity Sync</Description>
-        <Copyright>AltMp</Copyright>
+        <Authors>FabianTerhorst</Authors>
+        <Description>AltV .NET Core Entity Sync ServerEvent network layer</Description>
+        <Copyright>FabianTerhorst</Copyright>
         <PackageProjectUrl>https://github.com/FabianTerhorst/coreclr-module</PackageProjectUrl>
         <RepositoryUrl>https://github.com/FabianTerhorst/coreclr-module</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageTags>altv gta bridge gta5 gtav</PackageTags>
+        <PackageTags>altv gta bridge gta5 gtav chat</PackageTags>
+        <PackageVersion>1.0.0</PackageVersion>
+        <PackageReleaseNotes>No changelog provided</PackageReleaseNotes>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
-        <PackageReleaseNotes>Add net owner.</PackageReleaseNotes>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <PackageIcon>icon.png</PackageIcon>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <TargetFrameworks>net5.0</TargetFrameworks>
+        <LangVersion>default</LangVersion>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
      <ItemGroup>
