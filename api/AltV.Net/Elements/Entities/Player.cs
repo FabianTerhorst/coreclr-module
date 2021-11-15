@@ -830,7 +830,12 @@ namespace AltV.Net.Elements.Entities
                 Server.Library.Player_GetWeapons(NativePointer, weapons, weaponCount);
 
                 foreach (var weapon in weapons)
+                {
+                    if (weapon.Components == null)
+                        continue;
+
                     Server.Library.FreeUInt32Array(weapon.Components);
+                }
 
                 return weapons;
             }

@@ -272,7 +272,12 @@ void Player_GetWeapons(alt::IPlayer* player, weapon_t weapons[], uint64_t size) 
         int componentsSize = playerWeapons[i].components.size();
 
         //Free in C#
-        weapons[i].components = new uint32_t[componentsSize];
+        if (componentsSize == 0) {
+            weapons[i].components = nullptr;
+        }
+        else {
+            weapons[i].components = new uint32_t[componentsSize];
+        }
 
         int j = 0;
         for (auto component : playerWeapons[i].components) {
