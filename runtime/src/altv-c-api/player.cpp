@@ -258,7 +258,7 @@ uint64_t Player_GetWeaponCount(alt::IPlayer* player) {
     return player->GetWeapons().GetSize();
 }
 
-void Player_GetWeapons(alt::IPlayer* player, weapon_t* weapons[], uint64_t size) {
+void Player_GetWeapons(alt::IPlayer* player, weapon_t weapons[], uint64_t size) {
     auto playerWeapons = player->GetWeapons();
 
     if (playerWeapons.GetSize() < size) {
@@ -266,9 +266,23 @@ void Player_GetWeapons(alt::IPlayer* player, weapon_t* weapons[], uint64_t size)
     }
 
     for (uint64_t i = 0; i < size; i++) {
-        weapons[i]->hash = playerWeapons[i].hash;
-        weapons[i]->tintIndex = playerWeapons[i].tintIndex;
-        weapons[i]->components = playerWeapons[i].components;
+        weapons[i].hash = playerWeapons[i].hash;
+        weapons[i].tintIndex = playerWeapons[i].tintIndex;
+
+        int componentsSize = playerWeapons[i].components.size();
+
+        //Free in C#
+        weapons[i].components = new uint32_t[componentsSize];
+
+        int j = 0;
+        for (auto component : playerWeapons[i].components) {
+            if (j >= componentsSize) {
+                break;
+            }
+
+            weapons[i].components[j] = component;
+            j++;
+        }
     }
 }
 

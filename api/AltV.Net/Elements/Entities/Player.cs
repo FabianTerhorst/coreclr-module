@@ -829,6 +829,9 @@ namespace AltV.Net.Elements.Entities
                 var weapons = new WeaponData[weaponCount];
                 Server.Library.Player_GetWeapons(NativePointer, weapons, weaponCount);
 
+                foreach (var weapon in weapons)
+                    Server.Library.FreeUInt32Array(weapon.Components);
+
                 return weapons;
             }
         }

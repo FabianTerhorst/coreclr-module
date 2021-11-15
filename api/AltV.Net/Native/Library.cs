@@ -573,6 +573,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void> Core_GetBranch { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_SetPassword { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
+        public delegate* unmanaged[Cdecl]<uint[], void> FreeUInt32Array { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
     }
 
@@ -1141,6 +1142,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void> Core_GetBranch { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_SetPassword { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
+        public delegate* unmanaged[Cdecl]<uint[], void> FreeUInt32Array { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public Library()
         {
@@ -1713,6 +1715,7 @@ namespace AltV.Net.Native
             Core_GetBranch = (delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void>) NativeLibrary.GetExport(handle, "Core_GetBranch");
             Core_SetPassword = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_SetPassword");
             FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) NativeLibrary.GetExport(handle, "FreeUIntArray");
+            FreeUInt32Array = (delegate* unmanaged[Cdecl]<uint[], void>)NativeLibrary.GetExport(handle, "FreeUInt32Array");
             FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeCharArray");
         }
     }

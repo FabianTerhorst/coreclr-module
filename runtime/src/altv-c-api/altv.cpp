@@ -14,6 +14,10 @@ void FreeUIntArray(alt::Array<uint32_t>* array) {
     array->~Array<uint32_t>();
 }
 
+void FreeUInt32Array(uint32_t uintArray[]) {
+    delete[] uintArray;
+}
+
 /*void FreeStringViewArray(alt::Array<alt::StringView>* array) {
     array->~Array<alt::StringView>();
 }*/
