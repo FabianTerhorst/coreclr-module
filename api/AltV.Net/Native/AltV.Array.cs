@@ -229,7 +229,14 @@ namespace AltV.Net.Native
 
         internal static WeaponData[] Convert(WeaponDataInternal[] weapons)
         {
-            return weapons.Select(x => new WeaponData(x.Hash, x.TintIndex, x.GetComponents())).ToArray();
+            var result = new WeaponData[weapons.Length];
+
+            for (var i = 0;i < weapons.Length; i++)
+            {
+                result[i] = new WeaponData(weapons[i].Hash, weapons[i].TintIndex, weapons[i].GetComponents());
+            }
+
+            return result;
         }
     }
 
