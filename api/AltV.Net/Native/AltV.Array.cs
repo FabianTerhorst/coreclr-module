@@ -211,7 +211,7 @@ namespace AltV.Net.Native
 
         public WeaponData[] ToArray()
         {
-            return ToInternalArray().Select(x => new WeaponData(x.Hash, x.TintIndex, x.GetComponents())).ToArray();
+            return Convert(ToInternalArray());
         }
 
         internal WeaponDataInternal[] ToInternalArray()
@@ -225,6 +225,11 @@ namespace AltV.Net.Native
             }
 
             return values;
+        }
+
+        internal static WeaponData[] Convert(WeaponDataInternal[] weapons)
+        {
+            return weapons.Select(x => new WeaponData(x.Hash, x.TintIndex, x.GetComponents())).ToArray();
         }
     }
 

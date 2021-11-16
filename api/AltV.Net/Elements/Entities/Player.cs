@@ -828,9 +828,11 @@ namespace AltV.Net.Elements.Entities
 
                 var array = WeaponArray.Nil;
                 Server.Library.Player_GetWeapons(NativePointer, &array);
-                weapons = array.ToArray();
 
-                foreach (var weapon in array.ToInternalArray())
+                var weaponDatas = array.ToInternalArray();
+                weapons = WeaponArray.Convert(weaponDatas);
+
+                foreach (var weapon in weaponDatas)
                 {
                     if (weapon.ComponentsCount == 0)
                         continue;
