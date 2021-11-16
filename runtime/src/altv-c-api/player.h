@@ -120,7 +120,7 @@ EXPORT uint32_t Player_GetCurrentWeapon(alt::IPlayer* player);
 EXPORT void Player_SetCurrentWeapon(alt::IPlayer* player, uint32_t weapon);
 
 EXPORT uint64_t Player_GetWeaponCount(alt::IPlayer* player);
-EXPORT void Player_GetWeapons(alt::IPlayer* player, weapon_t* weapons[], uint64_t size);
+EXPORT void Player_GetWeapons(alt::IPlayer* player, alt::Array<weapon_t>& weapons);
 
 EXPORT uint8_t Player_IsDead(alt::IPlayer* player);
 

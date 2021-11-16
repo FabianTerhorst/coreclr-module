@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 
 namespace AltV.Net.Native
@@ -152,9 +154,9 @@ namespace AltV.Net.Native
         public ulong size;
         public ulong capacity;
 
-        private static readonly int UInt32Size = Marshal.SizeOf<uint>(); //TODO: check if 4
+        public static readonly int UInt32Size = Marshal.SizeOf<uint>(); //TODO: check if 4
 
-        public static UIntArray Nil = new UIntArray
+        public static UIntArray Nil = new()
         {
             data = IntPtr.Zero,
             size = 0,
@@ -169,7 +171,7 @@ namespace AltV.Net.Native
             //TODO:check if read of 4 is possible (UInt32Size)
             for (var i = 0; i < values.Length; i++)
             {
-                values[i] = ReadUInt32(buffer, data, 0);
+                values[i] = ReadUInt32(buffer, value);
                 value += UInt32Size;
             }
 
@@ -186,10 +188,43 @@ namespace AltV.Net.Native
         /// <param name="ofs">An additional byte offset, added to the ptr parameter before reading.</param>
         /// <returns>The 32-bit unsigned integer read from the ptr parameter.</returns>
         //[CLSCompliant(false)]
-        public static uint ReadUInt32(byte[] buffer, IntPtr ptr, int ofs)
+        public static uint ReadUInt32(byte[] buffer, IntPtr ptr)
         {
-            Marshal.Copy(new IntPtr(ptr.ToInt32() + ofs), buffer, 0, 4);
+            Marshal.Copy(ptr, buffer, 0, 4);
             return BitConverter.ToUInt32(buffer, 0);
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct WeaponArray
+    {
+        public IntPtr data; // Array of weapon's
+        public ulong size;
+        public ulong capacity;
+
+        public static WeaponArray Nil = new()
+        {
+            data = IntPtr.Zero,
+            size = 0,
+            capacity = 0
+        };
+
+        public WeaponData[] ToArray()
+        {
+            return ToInternalArray().Select(x => new WeaponData(x.Hash, x.TintIndex, x.GetComponents())).ToArray();
+        }
+
+        internal WeaponDataInternal[] ToInternalArray()
+        {
+            var value = data;
+            var values = new WeaponDataInternal[size];
+            for (var i = 0; i < values.Length; i++)
+            {
+                values[i] = Marshal.PtrToStructure<WeaponDataInternal>(value);
+                value += WeaponDataInternal.Size;
+            }
+
+            return values;
         }
     }
 

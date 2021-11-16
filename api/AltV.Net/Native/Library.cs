@@ -95,7 +95,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetWeaponCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, WeaponData[], ulong, void> Player_GetWeapons { get; }
+        public delegate* unmanaged[Cdecl]<nint, WeaponArray*, void> Player_GetWeapons { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsDead { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsJumping { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsInRagdoll { get; }
@@ -573,7 +573,6 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void> Core_GetBranch { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_SetPassword { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
-        public delegate* unmanaged[Cdecl]<uint[], void> FreeUInt32Array { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
     }
 
@@ -664,7 +663,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetWeaponCount { get; }
-        public delegate* unmanaged[Cdecl]<nint, WeaponData[], ulong, void> Player_GetWeapons { get; }
+        public delegate* unmanaged[Cdecl]<nint, WeaponArray*, void> Player_GetWeapons { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsDead { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsJumping { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsInRagdoll { get; }
@@ -1142,7 +1141,6 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void> Core_GetBranch { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_SetPassword { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
-        public delegate* unmanaged[Cdecl]<uint[], void> FreeUInt32Array { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public Library()
         {
@@ -1237,7 +1235,7 @@ namespace AltV.Net.Native
             Player_GetCurrentWeapon = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Player_GetCurrentWeapon");
             Player_SetCurrentWeapon = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Player_SetCurrentWeapon");
             Player_GetWeaponCount = (delegate* unmanaged[Cdecl]<nint, ulong>)NativeLibrary.GetExport(handle, "Player_GetWeaponCount");
-            Player_GetWeapons = (delegate* unmanaged[Cdecl]<nint, WeaponData[], ulong, void>)NativeLibrary.GetExport(handle, "Player_GetWeapons");
+            Player_GetWeapons = (delegate* unmanaged[Cdecl]<nint, WeaponArray*, void>)NativeLibrary.GetExport(handle, "Player_GetWeapons");
             Player_IsDead = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsDead");
             Player_IsJumping = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsJumping");
             Player_IsInRagdoll = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsInRagdoll");
@@ -1715,7 +1713,6 @@ namespace AltV.Net.Native
             Core_GetBranch = (delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void>) NativeLibrary.GetExport(handle, "Core_GetBranch");
             Core_SetPassword = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_SetPassword");
             FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) NativeLibrary.GetExport(handle, "FreeUIntArray");
-            FreeUInt32Array = (delegate* unmanaged[Cdecl]<uint[], void>)NativeLibrary.GetExport(handle, "FreeUInt32Array");
             FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeCharArray");
         }
     }

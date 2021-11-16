@@ -820,24 +820,23 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public WeaponData[] GetWeapons()
+        public void GetWeapons(out WeaponData[] weapons)
         {
             unsafe
             {
                 CheckIfEntityExists();
-                var weaponCount = Server.Library.Player_GetWeaponCount(NativePointer);
-                var weapons = new WeaponData[weaponCount];
-                Server.Library.Player_GetWeapons(NativePointer, weapons, weaponCount);
 
-                foreach (var weapon in weapons)
+                var array = WeaponArray.Nil;
+                Server.Library.Player_GetWeapons(NativePointer, &array);
+                weapons = array.ToArray();
+
+                foreach (var weapon in array.ToInternalArray())
                 {
-                    if (weapon.Components == null)
+                    if (weapon.ComponentsCount == 0)
                         continue;
 
-                    Server.Library.FreeUInt32Array(weapon.Components);
+                    Server.Library.FreeUIntArray(&weapon.Components);
                 }
-
-                return weapons;
             }
         }
 
