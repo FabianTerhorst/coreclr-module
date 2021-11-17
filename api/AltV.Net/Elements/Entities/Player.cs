@@ -821,6 +821,30 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
+        public WeaponData[] GetWeapons()
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+
+                var array = WeaponArray.Nil;
+                Server.Library.Player_GetWeapons(NativePointer, &array);
+
+                var weaponDatas = array.ToInternalArray();
+                var weapons = WeaponArray.Convert(weaponDatas);
+
+                foreach (var weapon in weaponDatas)
+                {
+                    if (weapon.ComponentsCount == 0)
+                        continue;
+
+                    Server.Library.FreeUIntArray(&weapon.Components);
+                }
+
+                return weapons;
+            }
+        }
+
         public void Kick(string reason)
         {
             unsafe

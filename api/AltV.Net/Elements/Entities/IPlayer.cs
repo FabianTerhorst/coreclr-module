@@ -255,6 +255,12 @@ namespace AltV.Net.Elements.Entities
         byte GetCurrentWeaponTintIndex();
 
         /// <summary>
+        /// Returns player weapons
+        /// </summary>
+        /// <returns></returns>
+        WeaponData[] GetWeapons();
+
+        /// <summary>
         /// Clears the blood damage of the player
         /// </summary>
         void ClearBloodDamage();

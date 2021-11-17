@@ -254,6 +254,46 @@ void Player_SetCurrentWeapon(alt::IPlayer* player, uint32_t weapon) {
     player->SetCurrentWeapon(weapon);
 }
 
+uint64_t Player_GetWeaponCount(alt::IPlayer* player) {
+    return player->GetWeapons().GetSize();
+}
+
+void Player_GetWeapons(alt::IPlayer* player, alt::Array<weapon_t>& weapons) {
+    auto playerWeapons = player->GetWeapons();
+
+    alt::Array<weapon_t> values;
+    for (auto& playerWeapon : playerWeapons) {
+
+        weapon_t weapon{};
+        weapon.hash = playerWeapon.hash;
+        weapon.tintIndex = playerWeapon.tintIndex;
+
+        int componentsSize = playerWeapon.components.size();
+
+        weapon.componentsCount = componentsSize;
+
+        if (componentsSize == 0) {
+            weapon.components = nullptr;
+        }
+        else {
+            weapon.components = new uint32_t[componentsSize];
+        }
+
+        int j = 0;
+        for (auto component : playerWeapon.components) {
+            if (j >= componentsSize) {
+                break;
+            }
+
+            weapon.components[j] = component;
+            j++;
+        }
+
+        values.Push(weapon);
+    }
+    weapons = values;
+}
+
 uint8_t Player_IsDead(alt::IPlayer* player) {
     return player->IsDead();
 }

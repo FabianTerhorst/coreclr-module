@@ -9,7 +9,7 @@ namespace AltV.Net.ColoredConsole
 
         private void CheckStringBuilder()
         {
-            stringBuilder = new StringBuilder();
+            stringBuilder = stringBuilder ?? new StringBuilder();
         }
 
         public static ColoredMessage operator +(ColoredMessage a, string b)
