@@ -502,6 +502,16 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public WeaponData[] GetWeapons()
+        {
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetWeapons();
+            }
+        }
+
         public void ClearBloodDamage()
         {
             AsyncContext.RunAll();

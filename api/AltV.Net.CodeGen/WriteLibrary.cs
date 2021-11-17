@@ -110,7 +110,8 @@ namespace AltV.Net.CodeGen
             ["head_overlay_t"] = "HeadOverlay",
             ["head_overlay_t&"] = "HeadOverlay*",
             ["void*"] = "nint",
-            ["const void*"] = "nint"
+            ["const void*"] = "nint",
+            ["weapon_t*[]"] = "WeaponData[]"
         };
 
         private static string TypeToCSharp(string cType, string name = null)
