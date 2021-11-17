@@ -258,7 +258,7 @@ namespace AltV.Net.Elements.Entities
         /// Returns player weapons
         /// </summary>
         /// <returns></returns>
-        void GetWeapons(out WeaponData[] weapons);
+        WeaponData[] GetWeapons();
 
         /// <summary>
         /// Clears the blood damage of the player

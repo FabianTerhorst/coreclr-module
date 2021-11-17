@@ -502,18 +502,13 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public void GetWeapons(out WeaponData[] weapons)
+        public WeaponData[] GetWeapons()
         {
             AsyncContext.RunAll();
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject))
-                {
-                    weapons = Array.Empty<WeaponData>();
-                    return;
-                }
-
-                BaseObject.GetWeapons(out weapons);
+                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                return BaseObject.GetWeapons();
             }
         }
 

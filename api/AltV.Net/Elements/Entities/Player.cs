@@ -820,7 +820,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public void GetWeapons(out WeaponData[] weapons)
+        public WeaponData[] GetWeapons()
         {
             unsafe
             {
@@ -830,7 +830,7 @@ namespace AltV.Net.Elements.Entities
                 Server.Library.Player_GetWeapons(NativePointer, &array);
 
                 var weaponDatas = array.ToInternalArray();
-                weapons = WeaponArray.Convert(weaponDatas);
+                var weapons = WeaponArray.Convert(weaponDatas);
 
                 foreach (var weapon in weaponDatas)
                 {
@@ -839,6 +839,8 @@ namespace AltV.Net.Elements.Entities
 
                     Server.Library.FreeUIntArray(&weapon.Components);
                 }
+
+                return weapons;
             }
         }
 
