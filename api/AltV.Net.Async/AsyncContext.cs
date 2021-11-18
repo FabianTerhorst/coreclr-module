@@ -12,6 +12,8 @@ namespace AltV.Net.Async
 
         void RunOnMainThreadBlocking(Action action);
 
+        void RunOnMainThreadBlockingAndRunAll(Action action);
+
         void RunAll();
 
         bool CheckIfExists(IBaseObject baseObject);
@@ -97,6 +99,32 @@ namespace AltV.Net.Async
             {
                 AltAsync.RunOnMainThreadBlocking(action, semaphoreSlim);
             }
+        }
+
+        public void RunOnMainThreadBlockingAndRunAll(Action action)
+        {
+            RunOnMainThreadBlocking(() =>
+            {
+                if (actions.Count != 0)
+                {
+                    // Thread safe linked list loop
+                    var first = actions.First;
+                    var current = first;
+                    var last = actions.Last;
+                    var done = false;
+                    if (current == null) return; //empty list
+                    do
+                    {
+                        current.Value();
+                        if (current == last) done = true;
+                        current = current.Next;
+                    } while (!done && current != null);
+
+                    actions.Clear();
+                }
+
+                action();
+            });
         }
 
         public bool CheckIfExists(IBaseObject baseObject)
