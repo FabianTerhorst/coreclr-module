@@ -64,34 +64,6 @@ namespace AltV.Net.Async.CodeGen {
             context.RegisterForSyntaxNotifications(() => new SyntaxTreeReceiver());
         }
 
-        private static IEnumerable<ISymbol> GetInterfaceMembers(INamedTypeSymbol @interface)
-        {
-            var members = @interface.GetMembers().ToList();
-            foreach (var namedTypeSymbol in @interface.Interfaces)
-            {
-                if (namedTypeSymbol.ToString().StartsWith("AltV.Net.Elements.Entities.")) continue;
-                foreach (var interfaceMember in GetInterfaceMembers(namedTypeSymbol))
-                {
-                    if (members.All(e => e.Name != interfaceMember.Name)) members.Add(interfaceMember);
-                }
-            }
-
-            return members;
-        }
-
-        private static IEnumerable<ISymbol> GetClassMembers(INamedTypeSymbol @class)
-        {
-            var members = @class.GetMembers().ToList();
-            if (@class.BaseType is null || @class.BaseType.ToString().StartsWith("AltV.Net.Elements.Entities."))
-                return members;
-            foreach (var classMember in GetClassMembers(@class.BaseType))
-            {
-                if (members.All(e => e.Name != classMember.Name)) members.Add(classMember);
-            }
-
-            return members;
-        }
-
         private static IList<INamedTypeSymbol> GetBaseTypes(INamedTypeSymbol @class)
         {
             var list = new List<INamedTypeSymbol>();
