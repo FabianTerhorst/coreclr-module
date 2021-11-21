@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using System.Linq;
@@ -44,6 +45,15 @@ namespace AltV.Net.Async.CodeGen {
     sealed class AsyncEntityAttribute : Attribute
     {
         public AsyncEntityAttribute(Type interfaceType)
+        {
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Property, Inherited = false)]
+    sealed class AsyncPropertyAttribute : Attribute
+    {
+        public bool ThreadSafe { get; set; } = false;
+        public AsyncPropertyAttribute()
         {
         }
     }
@@ -108,6 +118,8 @@ namespace AltV.Net.Async.CodeGen {
                     CSharpSyntaxTree.ParseText(SourceText.From(AttributeText, Encoding.UTF8), options));
 
             var attributeSymbol = compilation.GetTypeByMetadataName("AltV.Net.Async.CodeGen.AsyncEntityAttribute");
+            var propertyAttributeSymbol =
+                compilation.GetTypeByMetadataName("AltV.Net.Async.CodeGen.AsyncPropertyAttribute");
 
             var validClasses = new List<INamedTypeSymbol>();
 
@@ -164,17 +176,21 @@ namespace AltV.Net.Async.CodeGen {
 
                 var members = new List<string>();
 
-                var interfaceMembers = GetInterfaceMembers(@interface);
-                var classMembers = GetClassMembers(@class).ToArray();
-
-                foreach (var member in interfaceMembers)
+                foreach (var member in @interface.GetMembers())
                 {
-                    var classMember = classMembers.FirstOrDefault(m => m.Name == member.Name);
+                    var classMember = @class.FindImplementationForInterfaceMember(member);
 
                     // does member hide base class property (new keyword)
                     var isNew = classMember?.DeclaringSyntaxReferences.Any(s =>
                         s.GetSyntax() is MemberDeclarationSyntax declarationSyntax &&
                         declarationSyntax.Modifiers.Any(SyntaxKind.NewKeyword)) ?? false;
+
+                    var propertyAttribute = classMember?.GetAttributes().FirstOrDefault(a =>
+                        a.AttributeClass?.Equals(propertyAttributeSymbol, SymbolEqualityComparer.Default) == true);
+
+                    var propertySettings = propertyAttribute?.NamedArguments
+                                               .ToDictionary(e => e.Key, e => e.Value) ??
+                                           new Dictionary<string, TypedConstant>();
 
                     switch (member)
                     {
@@ -209,19 +225,37 @@ namespace AltV.Net.Async.CodeGen {
 
                             if (property.GetMethod is not null || property.SetMethod is not null)
                             {
+                                var getter = $"=> BaseObject.{member.Name}; ";
+                                var setter = $"=> BaseObject.{member.Name} = value; ";
+
+                                if (propertySettings.TryGetValue("ThreadSafe", out var threadSafe) &&
+                                    threadSafe.ToCSharpString() == "true")
+                                {
+                                    getter =
+                                        $"{{ {property.Type} res = default; AsyncContext.RunOnMainThreadBlockingAndRunAll(() => res = BaseObject.{property.Name}); return res; }}";
+                                    setter =
+                                        $"{{ AsyncContext.Enqueue(() => BaseObject.{property.Name} = value); }}";
+                                }
+
                                 var propertyValue = "";
                                 if (property.GetMethod is not null)
-                                    propertyValue += $"get => BaseObject.{member.Name}; ";
-                                if (property.SetMethod is not null)
-                                    propertyValue += $"set => BaseObject.{member.Name} = value; ";
+                                    propertyValue += $"\n    get {getter} ";
+                                if (property.SetMethod is not null && !property.SetMethod.IsInitOnly)
+                                    propertyValue += $"\n    set {setter} ";
+                                else if (property.SetMethod is not null)
+                                    propertyValue +=
+                                        @$"init => throw new System.MemberAccessException(""Manual construction of Async class is prohibited. Property {property.Name} is marked as init-only and therefore cannot be set on the async entity.""); ";
 
-                                var attributes = classProperty.GetAttributes();
+                                var attributes = classProperty.GetAttributes().Where(a => !a.Equals(propertyAttribute)).ToArray();
                                 var formattedAttributes =
                                     attributes.Length == 0 ? "" : FormatAttributes(attributes) + "\n";
                                 var @new = isNew ? "new " : "";
 
+                                var newline = property.GetMethod is not null && property.SetMethod is not null
+                                    ? "\n"
+                                    : "";
                                 members.Add(formattedAttributes +
-                                            $"public {@new}{property.Type} {member.Name} {{ {propertyValue}}}");
+                                            $"public {@new}{property.Type} {member.Name} {{ {propertyValue}{newline}}}");
                             }
 
                             break;
@@ -272,12 +306,30 @@ namespace AltV.Net.Async.CodeGen {
                             var returnAction = classMethod.ReturnsVoid ? "" : "return ";
                             var name = member.Name;
 
-                            var attributes = classMethod.GetAttributes();
+                            var attributes = classMethod.GetAttributes().Where(a => !a.Equals(propertyAttribute)).ToArray();
                             var formattedAttributes = attributes.Length == 0 ? "" : FormatAttributes(attributes) + "\n";
                             var @new = isNew ? "new " : "";
 
+                            var methodCall = $"BaseObject.{name}({callArguments})";
+                            var methodValue = "";
+
+                            if (propertySettings.TryGetValue("ThreadSafe", out var threadSafe) &&
+                                threadSafe.ToCSharpString() == "true")
+                            {
+                                if (classMethod.ReturnsVoid)
+                                    methodValue =
+                                        $"AsyncContext.RunOnMainThreadBlockingAndRunAll(() => {methodCall});";
+                                else
+                                    methodValue =
+                                        $"{classMethod.ReturnType} res = default; AsyncContext.RunOnMainThreadBlockingAndRunAll(() => res = {methodCall}); return res;";
+                            }
+                            else
+                            {
+                                methodValue = $"{returnAction}{methodCall};";
+                            }
+
                             members.Add(formattedAttributes +
-                                        $"public {@new}{classMethod.ReturnType} {name}({arguments})\n{{\n    {returnAction}BaseObject.{name}({callArguments});\n}}");
+                                        $"public {@new}{classMethod.ReturnType} {name}({arguments})\n{{\n{Indent(methodValue)}\n}}");
 
                             break;
                         }
