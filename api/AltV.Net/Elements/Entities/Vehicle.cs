@@ -1699,6 +1699,328 @@ namespace AltV.Net.Elements.Entities
             }
         }
         
+        public bool SetSearchLight(bool state, IEntity spottedEntity)
+        {
+            unsafe
+            {
+                if (spottedEntity == null) return false;
+                CheckIfEntityExists();
+                
+                if (spottedEntity.Type == BaseObjectType.Player)
+                    return Server.Library.Vehicle_SetSearchLight_Player(NativePointer, state ? (byte) 1 : (byte) 0, spottedEntity.NativePointer) == 1;
+                if (spottedEntity.Type == BaseObjectType.Vehicle)
+                    return Server.Library.Vehicle_SetSearchLight_Vehicle(NativePointer, state ? (byte) 1 : (byte) 0, spottedEntity.NativePointer) == 1;
+
+                return false;
+            }
+        }
+        
+        public bool IsMissionTrain
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Vehicle_IsTrainMissionTrain(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Vehicle_SetTrainMissionTrain(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public sbyte TrainTrackId
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Vehicle_GetTrainTrackId(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Vehicle_SetTrainTrackId(NativePointer, value);
+                }
+            }
+        }
+
+        public IVehicle TrainEngine
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var entityPointer = Server.Library.Vehicle_GetTrainEngineId(NativePointer);
+                    if (entityPointer == IntPtr.Zero) return null;
+                    return Alt.Module.VehiclePool.Get(entityPointer, out var vehicle) ? vehicle : null;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Vehicle_SetTrainEngineId(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+                }
+            }
+        }
+
+        public sbyte TrainConfigIndex
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Vehicle_GetTrainConfigIndex(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Vehicle_SetTrainConfigIndex(NativePointer, value);
+                }
+            }
+        }
+
+        public float TrainDistanceFromEngine
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Vehicle_GetTrainDistanceFromEngine(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Vehicle_SetTrainDistanceFromEngine(NativePointer, value);
+                }
+            }
+        }
+
+        public bool IsTrainEngine
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Vehicle_IsTrainEngine(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Vehicle_SetTrainIsEngine(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public bool IsTrainCaboose
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Vehicle_IsTrainCaboose(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Vehicle_SetTrainIsCaboose(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public bool TrainDirection
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Vehicle_GetTrainDirection(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Vehicle_SetTrainDirection(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public bool TrainPassengerCarriages
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Vehicle_HasTrainPassengerCarriages(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Vehicle_SetTrainHasPassengerCarriages(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public bool TrainRenderDerailed
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Vehicle_GetTrainRenderDerailed(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Vehicle_SetTrainRenderDerailed(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public bool TrainForceDoorsOpen
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Vehicle_GetTrainForceDoorsOpen(NativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Vehicle_SetTrainForceDoorsOpen(NativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public float TrainCruiseSpeed
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Vehicle_GetTrainCruiseSpeed(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Vehicle_SetTrainCruiseSpeed(NativePointer, value);
+                }
+            }
+        }
+
+        public sbyte TrainCarriageConfigIndex
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Server.Library.Vehicle_GetTrainCarriageConfigIndex(NativePointer);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Vehicle_SetTrainCarriageConfigIndex(NativePointer, value);
+                }
+            }
+        }
+
+        public IVehicle TrainLinkedToBackward
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var entityPointer = Server.Library.Vehicle_GetTrainLinkedToBackwardId(NativePointer);
+                    if (entityPointer == IntPtr.Zero) return null;
+                    return Alt.Module.VehiclePool.Get(entityPointer, out var vehicle) ? vehicle : null;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Vehicle_SetTrainLinkedToBackwardId(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+                }
+            }
+        }
+
+        public IVehicle TrainLinkedToForward
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    var entityPointer = Server.Library.Vehicle_GetTrainLinkedToForwardId(NativePointer);
+                    if (entityPointer == IntPtr.Zero) return null;
+                    return Alt.Module.VehiclePool.Get(entityPointer, out var vehicle) ? vehicle : null;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Server.Library.Vehicle_SetTrainLinkedToForwardId(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+                }
+            }
+        }
+        
         public void Remove()
         {
             Alt.RemoveVehicle(this);

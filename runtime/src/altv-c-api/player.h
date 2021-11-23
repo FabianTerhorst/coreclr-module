@@ -13,6 +13,10 @@
 #include "dlc_cloth.h"
 #include "prop.h"
 #include "dlc_prop.h"
+#include "head_overlay.h"
+#include "head_blend_data.h"
+#include "rgba.h"
+#include "weapon.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -115,6 +119,9 @@ EXPORT uint8_t Player_GetCurrentWeaponTintIndex(alt::IPlayer* player);
 EXPORT uint32_t Player_GetCurrentWeapon(alt::IPlayer* player);
 EXPORT void Player_SetCurrentWeapon(alt::IPlayer* player, uint32_t weapon);
 
+EXPORT uint64_t Player_GetWeaponCount(alt::IPlayer* player);
+EXPORT void Player_GetWeapons(alt::IPlayer* player, alt::Array<weapon_t>& weapons);
+
 EXPORT uint8_t Player_IsDead(alt::IPlayer* player);
 
 EXPORT uint8_t Player_IsJumping(alt::IPlayer* player);
@@ -188,6 +195,42 @@ EXPORT uint8_t Player_IsCrouching(alt::IPlayer* player);
 EXPORT uint8_t Player_IsStealthy(alt::IPlayer* player);
 
 EXPORT void Player_PlayAmbientSpeech(alt::IPlayer* player, const char* speechName, const char* speechParam, uint32_t speechDictHash);
+
+EXPORT uint8_t Player_SetHeadOverlay(alt::IPlayer* player, uint8_t overlayID, uint8_t index, float opacity);
+
+EXPORT uint8_t Player_RemoveHeadOverlay(alt::IPlayer* player, uint8_t overlayID);
+
+EXPORT uint8_t Player_SetHeadOverlayColor(alt::IPlayer* player, uint8_t overlayID, uint8_t colorType, uint8_t colorIndex, uint8_t secondColorIndex);
+
+EXPORT void Player_GetHeadOverlay(alt::IPlayer* player, uint8_t overlayID, head_overlay_t& headOverlay);
+
+EXPORT uint8_t Player_SetFaceFeature(alt::IPlayer* player, uint8_t index, float scale);
+
+EXPORT float Player_GetFaceFeatureScale(alt::IPlayer* player, uint8_t index);
+
+EXPORT uint8_t Player_RemoveFaceFeature(alt::IPlayer* player, uint8_t index);
+
+EXPORT uint8_t Player_SetHeadBlendPaletteColor(alt::IPlayer* player, uint8_t id, uint8_t red, uint8_t green, uint8_t blue);
+
+EXPORT void Player_GetHeadBlendPaletteColor(alt::IPlayer* player, uint8_t id, rgba_t& headBlendPaletteColor);
+
+EXPORT void Player_SetHeadBlendData(alt::IPlayer* player, uint32_t shapeFirstID, uint32_t shapeSecondID, uint32_t shapeThirdID,
+    uint32_t skinFirstID, uint32_t skinSecondID, uint32_t skinThirdID,
+    float shapeMix, float skinMix, float thirdMix);
+
+EXPORT void Player_GetHeadBlendData(alt::IPlayer* player, head_blend_data_t& headBlendData);
+
+EXPORT uint8_t Player_SetEyeColor(alt::IPlayer* player, uint16_t eyeColor);
+
+EXPORT uint16_t Player_GetEyeColor(alt::IPlayer* player);
+
+EXPORT void Player_SetHairColor(alt::IPlayer* player, uint8_t hairColor);
+
+EXPORT uint8_t Player_GetHairColor(alt::IPlayer* player);
+
+EXPORT void Player_SetHairHighlightColor(alt::IPlayer* player, uint8_t hairHighlightColor);
+
+EXPORT uint8_t Player_GetHairHighlightColor(alt::IPlayer* player);
 
 #ifdef __cplusplus
 }

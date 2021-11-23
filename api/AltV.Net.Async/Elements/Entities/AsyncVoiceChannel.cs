@@ -3,6 +3,7 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Async.Elements.Entities
 {
+    //TODO: later test unrestricting the methods to main thread since they are thread safe in core
     [SuppressMessage("ReSharper",
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
     public class AsyncVoiceChannel<TVoiceChannel> : AsyncBaseObject<TVoiceChannel>, IVoiceChannel where TVoiceChannel: class, IVoiceChannel

@@ -36,7 +36,7 @@ namespace AltV.Net.Async
             }
             catch (Exception e)
             {
-                AltAsync.Log($"Execution of {typeof(TEvent)} threw an error: {e}");
+                Alt.LogFast($"Execution of {typeof(TEvent)} threw an error: {e}");
             }
         }
         
@@ -48,7 +48,7 @@ namespace AltV.Net.Async
             }
             catch (Exception e)
             {
-                AltAsync.Log($"Execution of {typeof(TEvent)} threw an error: {e}");
+                Alt.LogFast($"Execution of {typeof(TEvent)} threw an error: {e}");
             }
         }
     }

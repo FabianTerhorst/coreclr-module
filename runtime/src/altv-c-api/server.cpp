@@ -1,4 +1,5 @@
 #include "server.h"
+#include "mvalue.h"
 
 void Server_LogInfo(alt::ICore* server, const char* str) {
     server->LogInfo(str);
@@ -45,13 +46,9 @@ void Server_FileRead(alt::ICore* server, const char* path, const char*&text) {
 }
 
 void Server_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size) {
-    alt::Array<alt::MValueConst> mValues = alt::Array<alt::MValueConst>(size);
+    alt::MValueArgs mValues = alt::MValueArgs(size);
     for (int i = 0; i < size; i++) {
-        if (args[i] == nullptr) {
-            mValues[i] = server->CreateMValueNil();
-        } else {
-            mValues[i] = *args[i];
-        }
+        ToMValueArg(mValues, server, args[i], i);
     }
     server->TriggerLocalEvent(ev, mValues);
 }
@@ -59,13 +56,9 @@ void Server_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueCo
 void
 Server_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* ev, alt::MValueConst* args[],
                           int size) {
-    alt::Array<alt::MValueConst> mValues = alt::Array<alt::MValueConst>(size);
+    alt::MValueArgs mValues = alt::MValueArgs(size);
     for (int i = 0; i < size; i++) {
-        if (args[i] == nullptr) {
-            mValues[i] = server->CreateMValueNil();
-        } else {
-            mValues[i] = *args[i];
-        }
+        ToMValueArg(mValues, server, args[i], i);
     }
     server->TriggerClientEvent(target, ev, mValues);
 }
@@ -73,14 +66,9 @@ Server_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* 
 void
 Server_TriggerClientEventForAll(alt::ICore* server, const char* ev, alt::MValueConst* args[],
     int size) {
-    alt::Array<alt::MValueConst> mValues = alt::Array<alt::MValueConst>(size);
+    alt::MValueArgs mValues = alt::MValueArgs(size);
     for (int i = 0; i < size; i++) {
-        if (args[i] == nullptr) {
-            mValues[i] = server->CreateMValueNil();
-        }
-        else {
-            mValues[i] = *args[i];
-        }
+        ToMValueArg(mValues, server, args[i], i);
     }
     server->TriggerClientEventForAll(ev, mValues);
 }
@@ -88,19 +76,14 @@ Server_TriggerClientEventForAll(alt::ICore* server, const char* ev, alt::MValueC
 void
 Server_TriggerClientEventForSome(alt::ICore* server, alt::IPlayer* targets[], int targetsSize, const char* ev, alt::MValueConst* args[],
     int argsSize) {
-    alt::Array<alt::MValueConst> mValues = alt::Array<alt::MValueConst>(argsSize);
-    for (int i = 0; i < argsSize; i++) {
-        if (args[i] == nullptr) {
-            mValues[i] = server->CreateMValueNil();
-        }
-        else {
-            mValues[i] = *args[i];
-        }
-    }
     alt::Array<alt::Ref<alt::IPlayer>> clients(targetsSize);
     for (int i = 0; i < targetsSize; i++)
     {
         clients[i] = targets[i];
+    }
+    alt::MValueArgs mValues = alt::MValueArgs(argsSize);
+    for (int i = 0; i < argsSize; i++) {
+        ToMValueArg(mValues, server, args[i], i);
     }
     server->TriggerClientEvent(clients, ev, mValues);
 }

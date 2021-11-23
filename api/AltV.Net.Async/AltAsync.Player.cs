@@ -1,7 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using AltV.Net.Async.Elements.Entities;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
@@ -119,7 +118,7 @@ namespace AltV.Net.Async
 
         public static Task RemoveAllWeaponsAsync(this IPlayer player) =>
             AltVAsync.Schedule(player.RemoveAllWeapons);
-        
+
         public static Task SetMaxHealthAsync(this IPlayer player, ushort maxhealth) =>
             AltVAsync.Schedule(() => player.MaxHealth = maxhealth);
 
@@ -166,7 +165,7 @@ namespace AltV.Net.Async
 
         public static Task SetVisibleAsync(this IPlayer player, bool visibility) =>
             AltVAsync.Schedule(() => player.Visible = visibility);
-        
+
         public static Task<bool> GetStreamedAsync(this IPlayer player) =>
             AltVAsync.Schedule(() => player.Streamed);
 
@@ -175,7 +174,7 @@ namespace AltV.Net.Async
 
         public static Task<string> GetAuthTokenAsync(this IPlayer player) =>
             AltVAsync.Schedule(() => player.AuthToken);
-        
+
         public static Task<uint> GetCurrentWeaponAsync(this IPlayer player) =>
             AltVAsync.Schedule(() => player.CurrentWeapon);
 
@@ -199,7 +198,7 @@ namespace AltV.Net.Async
 
         public static Task<ushort> GetMaxArmorAsync(this IPlayer player) =>
             AltVAsync.Schedule(() => player.MaxArmor);
-        
+
         public static Task<ushort> GetMaxHealthAsync(this IPlayer player) =>
             AltVAsync.Schedule(() => player.MaxHealth);
 
@@ -260,14 +259,14 @@ namespace AltV.Net.Async
 
         public static Task SetPropsAsync(this IPlayer player, byte component, ushort drawable, byte texture) =>
             AltVAsync.Schedule(() => player.SetProps(component, drawable, texture));
-        
+
         public static Task SetDlcPropsAsync(this IPlayer player, byte component, ushort drawable, byte texture,
             uint dlc) =>
             AltVAsync.Schedule(() => player.SetDlcProps(component, drawable, texture, dlc));
 
         public static Task SetWeaponTintIndexAsync(this IPlayer player, uint weapon, byte tintIndex) =>
             AltVAsync.Schedule(() => player.SetWeaponTintIndex(weapon, tintIndex));
-        
+
         public static Task SetWeaponTintIndexAsync(this IPlayer player, WeaponModel weaponModel, byte tintIndex) =>
             AltVAsync.Schedule(() => player.SetWeaponTintIndex(weaponModel, tintIndex));
 
@@ -277,7 +276,7 @@ namespace AltV.Net.Async
         public static Task SetInvincibleAsync(this IPlayer player, bool isInvincible) =>
             AltVAsync.Schedule(() => player.Invincible = isInvincible);
 
-        public static Task SetIntoVehicleAsync(this IPlayer player, IVehicle vehicle, byte seat) => 
+        public static Task SetIntoVehicleAsync(this IPlayer player, IVehicle vehicle, byte seat) =>
             AltVAsync.Schedule(() => player.SetIntoVehicle(vehicle, seat));
 
         public static Task<bool> IsSuperJumpEnabledAsync(this IPlayer player) =>

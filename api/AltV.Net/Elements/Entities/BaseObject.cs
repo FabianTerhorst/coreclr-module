@@ -229,9 +229,8 @@ namespace AltV.Net.Elements.Entities
             lock (this)
             {
                 if (!Exists) return false;
-                ++refCount;
-                //Alt.Module.CountUpRefForCurrentThread(this);
                 InternalAddRef();
+                ++refCount;
             }
             return true;
         }
@@ -245,7 +244,6 @@ namespace AltV.Net.Elements.Entities
             {
                 if (refCount == 0) return false;
                 --refCount;
-                //Alt.Module.CountDownRefForCurrentThread(this);
                 InternalRemoveRef();
             }
             return true;

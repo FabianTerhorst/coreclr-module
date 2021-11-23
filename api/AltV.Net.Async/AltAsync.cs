@@ -27,6 +27,12 @@ namespace AltV.Net.Async
             remove => Module.PlayerConnectAsyncEventHandler.Remove(value);
         }
 
+        public static event PlayerBeforeConnectAsyncDelegate OnPlayerBeforeConnect
+        {
+            add => Module.PlayerBeforeConnectAsyncEventHandler.Add(value);
+            remove => Module.PlayerBeforeConnectAsyncEventHandler.Remove(value);
+        }
+
         public static event PlayerDamageAsyncDelegate OnPlayerDamage
         {
             add => Module.PlayerDamageAsyncEventHandler.Add(value);
@@ -62,7 +68,7 @@ namespace AltV.Net.Async
             add => Module.PlayerEnterVehicleAsyncEventHandler.Add(value);
             remove => Module.PlayerEnterVehicleAsyncEventHandler.Remove(value);
         }
-        
+
         public static event PlayerEnteringVehicleAsyncDelegate OnPlayerEnteringVehicle
         {
             add => Module.PlayerEnteringVehicleAsyncEventHandler.Add(value);
@@ -128,7 +134,7 @@ namespace AltV.Net.Async
             add => Module.VehicleDestroyAsyncDelegateHandlers.Add(value);
             remove => Module.VehicleDestroyAsyncDelegateHandlers.Remove(value);
         }
-        
+
         public static event FireAsyncDelegate OnFire
         {
             add => Module.FireAsyncDelegateHandlers.Add(value);
@@ -152,25 +158,25 @@ namespace AltV.Net.Async
             add => Module.NetOwnerChangeAsyncEventHandler.Add(value);
             remove => Module.NetOwnerChangeAsyncEventHandler.Remove(value);
         }
-        
+
         public static event VehicleAttachAsyncDelegate OnVehicleAttach
         {
             add => Module.VehicleAttachAsyncEventHandler.Add(value);
             remove => Module.VehicleAttachAsyncEventHandler.Remove(value);
         }
-        
+
         public static event VehicleDetachAsyncDelegate OnVehicleDetach
         {
             add => Module.VehicleDetachAsyncEventHandler.Add(value);
             remove => Module.VehicleDetachAsyncEventHandler.Remove(value);
         }
-        
+
         public static event VehicleDamageAsyncDelegate OnVehicleDamage
         {
             add => Module.VehicleDamageAsyncEventHandler.Add(value);
             remove => Module.VehicleDamageAsyncEventHandler.Remove(value);
         }
-        
+
         public static async void Log(string message)
         {
             var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);
@@ -232,12 +238,22 @@ namespace AltV.Net.Async
             return AltVAsync.Schedule(action);
         }
         
+        public static Task Do(Task task)
+        {
+            throw new ArgumentException("AltAsync.Do should never have async code inside");
+        }
+        
+        public static Task Do(Func<Task> task)
+        {
+            throw new ArgumentException("AltAsync.Do should never have async code inside");
+        }
+        
         public static void RunOnMainThreadBlocking(Action action, SemaphoreSlim semaphoreSlim)
         {
             CheckIfAsyncResource();
             AltVAsync.ScheduleBlocking(action, semaphoreSlim);
         }
-        
+
         public static void RunOnMainThreadBlockingThrows(Action action, SemaphoreSlim semaphoreSlim)
         {
             CheckIfAsyncResource();

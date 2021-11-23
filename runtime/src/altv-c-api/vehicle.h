@@ -232,6 +232,40 @@ EXPORT void Vehicle_GetVelocity(alt::IVehicle* vehicle, position_t &velocity);
 EXPORT void Vehicle_SetDriftMode(alt::IVehicle* vehicle, uint8_t state);
 EXPORT uint8_t Vehicle_IsDriftMode(alt::IVehicle* vehicle);
 
+EXPORT uint8_t Vehicle_SetSearchLight_Player(alt::IVehicle* vehicle, uint8_t state, alt::IPlayer* spottedEntity);
+EXPORT uint8_t Vehicle_SetSearchLight_Vehicle(alt::IVehicle* vehicle, uint8_t state, alt::IVehicle* spottedEntity);
+
+EXPORT uint8_t Vehicle_IsTrainMissionTrain(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetTrainMissionTrain(alt::IVehicle* vehicle, uint8_t state);
+EXPORT int8_t Vehicle_GetTrainTrackId(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetTrainTrackId(alt::IVehicle* vehicle, int8_t trackId);
+EXPORT alt::IVehicle* Vehicle_GetTrainEngineId(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetTrainEngineId(alt::IVehicle* vehicle, alt::IVehicle* entity);
+EXPORT int8_t Vehicle_GetTrainConfigIndex(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetTrainConfigIndex(alt::IVehicle* vehicle, int8_t index);
+EXPORT float Vehicle_GetTrainDistanceFromEngine(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetTrainDistanceFromEngine(alt::IVehicle* vehicle, float distanceFromEngine);
+EXPORT uint8_t Vehicle_IsTrainEngine(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetTrainIsEngine(alt::IVehicle* vehicle, uint8_t state);
+EXPORT uint8_t Vehicle_IsTrainCaboose(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetTrainIsCaboose(alt::IVehicle* vehicle, uint8_t isCaboose);
+EXPORT uint8_t Vehicle_GetTrainDirection(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetTrainDirection(alt::IVehicle* vehicle, uint8_t direction);
+EXPORT uint8_t Vehicle_HasTrainPassengerCarriages(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetTrainHasPassengerCarriages(alt::IVehicle* vehicle, uint8_t hasPassengerCarriages);
+EXPORT uint8_t Vehicle_GetTrainRenderDerailed(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetTrainRenderDerailed(alt::IVehicle* vehicle, uint8_t renderDerailed);
+EXPORT uint8_t Vehicle_GetTrainForceDoorsOpen(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetTrainForceDoorsOpen(alt::IVehicle* vehicle, uint8_t forceDoorsOpen);
+EXPORT float Vehicle_GetTrainCruiseSpeed(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetTrainCruiseSpeed(alt::IVehicle* vehicle, float cruiseSpeed);
+EXPORT int8_t Vehicle_GetTrainCarriageConfigIndex(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetTrainCarriageConfigIndex(alt::IVehicle* vehicle, int8_t carriageConfigIndex);
+EXPORT alt::IVehicle* Vehicle_GetTrainLinkedToBackwardId(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetTrainLinkedToBackwardId(alt::IVehicle* vehicle, alt::IVehicle* entity);
+EXPORT alt::IVehicle* Vehicle_GetTrainLinkedToForwardId(alt::IVehicle* vehicle);
+EXPORT void Vehicle_SetTrainLinkedToForwardId(alt::IVehicle* vehicle, alt::IVehicle* entity);
+
 #ifdef __cplusplus
 }
 #endif
