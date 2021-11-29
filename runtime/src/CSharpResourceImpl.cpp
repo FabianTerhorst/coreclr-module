@@ -12,7 +12,7 @@ void CSharpResourceImpl::ResetDelegates() {
     MainDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnClientEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnPlayerConnectDelegate = [](auto var, auto var2, auto var3) {};
-    OnPlayerBeforeConnectDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
+    OnPlayerBeforeConnectDelegate = [](auto var, auto var2, auto var3) {};
     OnResourceStartDelegate = [](auto var) {};
     OnResourceStopDelegate = [](auto var) {};
     OnResourceErrorDelegate = [](auto var) {};
