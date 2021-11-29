@@ -93,6 +93,7 @@ namespace AltV.Net
             Module.ColShapePool.ForEach(baseObjectCallback);
 
         public static uint Hash(string stringToHash) => Server.Hash(stringToHash);
+        public static ulong HashPassword(string password) => Server.HashPassword(password);
 
         internal static void Init(Module module)
         {

@@ -421,6 +421,10 @@ alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value) {
     return new alt::MValueConst(mValue);
 }
 
+uint64_t Core_HashPassword(alt::ICore* core, const char* password) {
+    return core->HashServerPassword(password);
+}
+
 uint8_t Core_IsDebug(alt::ICore* core) {
     return core->IsDebug();
 }

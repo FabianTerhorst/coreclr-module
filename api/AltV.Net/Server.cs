@@ -243,6 +243,17 @@ namespace AltV.Net
             }
         }
 
+        public ulong HashPassword(string password)
+        {
+            unsafe
+            {
+                var passwordPtr = AltNative.StringUtils.StringToHGlobalUtf8(password);
+                var value = Library.Core_HashPassword(NativePointer, passwordPtr);
+                Marshal.FreeHGlobal(passwordPtr);
+                return value;
+            }
+        }
+
         public uint Hash(string stringToHash)
         {
             //return AltVNative.Server.Server_Hash(NativePointer, hash);
