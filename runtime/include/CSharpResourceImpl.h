@@ -79,6 +79,32 @@ public:
     }
 };
 
+struct ClrConnectionInfo {
+    char* name = nullptr;
+    uint64_t socialId = 0;
+    uint64_t hwidHash = 0;
+    uint64_t hwidExHash = 0;
+    char* authToken = nullptr;
+    bool isDebug = 0;
+    char* branch = nullptr;
+    uint32_t build = 0;
+    char* cdnUrl = nullptr;
+    uint64_t passwordHash = 0;
+
+    ClrConnectionInfo() = default;
+
+    ClrConnectionInfo(alt::ConnectionInfo info) :
+    socialId(info.socialId), hwidHash(info.hwidHash), hwidExHash(info.hwidExHash),
+    isDebug(info.isDebug),
+    build(info.build), passwordHash(info.passwordHash) {
+        // allocate strings (strings in the alt::ConnectionInfo are broken rn)
+    }
+
+    void dealloc() {
+        // deallocate strings
+    }
+};
+
 typedef void (* MainDelegate_t)(alt::ICore* server, alt::IResource* resource, const char* resourceName,
                                 const char* entryPoint);
 
@@ -93,7 +119,7 @@ typedef void (* ClientEventDelegate_t)(alt::IPlayer* player, const char* name, a
 
 typedef void (* PlayerConnectDelegate_t)(alt::IPlayer* player, uint16_t playerId, const char* reason);
 
-typedef void (* PlayerBeforeConnectDelegate_t)(const alt::CEvent* event, alt::IPlayer* player, uint16_t playerId, uint64_t passwordHash, const char* cdnUrl);
+typedef void (* PlayerBeforeConnectDelegate_t)(const alt::CEvent* event, ClrConnectionInfo* connectionInfo, const char* reason);
 
 typedef void (* ResourceEventDelegate_t)(alt::IResource* resource);
 

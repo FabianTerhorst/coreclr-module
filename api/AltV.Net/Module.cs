@@ -468,15 +468,9 @@ namespace AltV.Net
             OnPlayerConnectEvent(player, reason);
         }
 
-        public void OnPlayerBeforeConnect(IntPtr eventPointer, IntPtr playerPointer, ushort playerId, ulong passwordHash, string cdnUrl)
+        public void OnPlayerBeforeConnect(IntPtr eventPointer, PlayerConnectionInfo connectionInfo, string reason)
         {
-            if (!PlayerPool.Get(playerPointer, out var player))
-            {
-                Console.WriteLine("OnPlayerBeforeConnect Invalid player " + playerPointer + " " + playerId);
-                return;
-            }
-
-            OnPlayerBeforeConnectEvent(eventPointer, player, passwordHash, cdnUrl);
+            OnPlayerBeforeConnectEvent(eventPointer, connectionInfo, reason);
         }
 
         public void OnResourceStart(IntPtr resourcePointer)
@@ -576,17 +570,17 @@ namespace AltV.Net
             }
         }
 
-        public virtual void OnPlayerBeforeConnectEvent(IntPtr eventPointer, IPlayer player, ulong passwordHash, string cdnUrl)
+        public virtual void OnPlayerBeforeConnectEvent(IntPtr eventPointer, PlayerConnectionInfo connectionInfo, string reason)
         {
             if (!PlayerBeforeConnectEventHandler.HasEvents()) return;
-            var cancel = false;
+            string cancel = null;
             foreach (var @delegate in PlayerBeforeConnectEventHandler.GetEvents())
             {
                 try
                 {
-                    if (!@delegate(player, passwordHash, cdnUrl))
+                    if (@delegate(connectionInfo, reason) is string cancelReason)
                     {
-                        cancel = true;
+                        cancel = cancelReason;
                     }
                 }
                 catch (TargetInvocationException exception)
@@ -599,11 +593,14 @@ namespace AltV.Net
                 }
             }
 
-            if (cancel)
+            if (cancel is not null)
             {
+                Console.WriteLine("cancel message was:" + cancel);
                 unsafe
                 {
-                    Alt.Server.Library.Event_Cancel(eventPointer);
+                    var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(cancel);
+                    Alt.Server.Library.Event_PlayerBeforeConnect_Cancel(eventPointer, stringPtr);
+                    // Marshal.FreeHGlobal(stringPtr);
                 }
             }
         }

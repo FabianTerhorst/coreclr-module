@@ -38,6 +38,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, Position*, void> Checkpoint_GetNextPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, void> Checkpoint_SetNextPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Event_Cancel { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Event_PlayerBeforeConnect_Cancel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetNetworkOwner { get; }
@@ -606,6 +607,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, Position*, void> Checkpoint_GetNextPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, void> Checkpoint_SetNextPosition { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Event_Cancel { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Event_PlayerBeforeConnect_Cancel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetNetworkOwner { get; }
@@ -1178,6 +1180,7 @@ namespace AltV.Net.Native
             Checkpoint_GetNextPosition = (delegate* unmanaged[Cdecl]<nint, Position*, void>) NativeLibrary.GetExport(handle, "Checkpoint_GetNextPosition");
             Checkpoint_SetNextPosition = (delegate* unmanaged[Cdecl]<nint, Position, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetNextPosition");
             Event_Cancel = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Event_Cancel");
+            Event_PlayerBeforeConnect_Cancel = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Event_PlayerBeforeConnect_Cancel");
             Event_WasCancelled = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Event_WasCancelled");
             Player_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetID");
             Player_GetNetworkOwner = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Player_GetNetworkOwner");
