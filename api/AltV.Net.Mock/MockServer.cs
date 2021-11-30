@@ -109,6 +109,11 @@ namespace AltV.Net.Mock
             Console.WriteLine(Marshal.PtrToStringUTF8(message));
         }
 
+        public ulong HashPassword(string password)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public uint Hash(string hash)
         {
             throw new System.NotImplementedException();

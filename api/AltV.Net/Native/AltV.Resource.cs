@@ -24,7 +24,7 @@ namespace AltV.Net.Native
 
             internal delegate void PlayerConnectDelegate(IntPtr playerPointer, ushort playerId, string reason);
 
-            internal delegate void PlayerBeforeConnectDelegate(IntPtr eventPointer, IntPtr playerPointer, ushort playerId, ulong passwordHash, string cdnUrl);
+            internal delegate void PlayerBeforeConnectDelegate(IntPtr eventPointer, PlayerConnectionInfoInternal connectionInfo, string reason);
 
             internal delegate void ResourceEventDelegate(IntPtr resourcePointer);
 

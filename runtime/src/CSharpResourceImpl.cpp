@@ -12,7 +12,7 @@ void CSharpResourceImpl::ResetDelegates() {
     MainDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnClientEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnPlayerConnectDelegate = [](auto var, auto var2, auto var3) {};
-    OnPlayerBeforeConnectDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
+    OnPlayerBeforeConnectDelegate = [](auto var, auto var2, auto var3) {};
     OnResourceStartDelegate = [](auto var) {};
     OnResourceStopDelegate = [](auto var) {};
     OnResourceErrorDelegate = [](auto var) {};
@@ -163,11 +163,11 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             break;
         case alt::CEvent::Type::PLAYER_BEFORE_CONNECT: {
             auto beforeConnectEvent = (alt::CPlayerBeforeConnectEvent*)ev;
-            auto connectPlayer = beforeConnectEvent->GetTarget().Get();
+            auto clrInfo = ClrConnectionInfo(beforeConnectEvent->GetConnectionInfo());
 
-            OnPlayerBeforeConnectDelegate(beforeConnectEvent, connectPlayer, connectPlayer->GetID(),
-                beforeConnectEvent->GetPasswordHash(),
-                beforeConnectEvent->GetCdnUrl().CStr());
+            OnPlayerBeforeConnectDelegate(beforeConnectEvent, &clrInfo, beforeConnectEvent->GetReason().CStr());
+
+            clrInfo.dealloc();
         }
             break;
         case alt::CEvent::Type::RESOURCE_START: {

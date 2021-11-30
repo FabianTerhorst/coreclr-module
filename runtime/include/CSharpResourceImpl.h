@@ -79,6 +79,53 @@ public:
     }
 };
 
+struct ClrConnectionInfo {
+    char* name = nullptr;
+    uint64_t socialId = 0;
+    uint64_t hwidHash = 0;
+    uint64_t hwidExHash = 0;
+    char* authToken = nullptr;
+    bool isDebug = 0;
+    char* branch = nullptr;
+    uint32_t build = 0;
+    char* cdnUrl = nullptr;
+    uint64_t passwordHash = 0;
+
+    ClrConnectionInfo() = default;
+
+    ClrConnectionInfo(alt::ConnectionInfo info) :
+    socialId(info.socialId), hwidHash(info.hwidHash), hwidExHash(info.hwidExHash),
+    isDebug(info.isDebug),
+    build(info.build), passwordHash(info.passwordHash) {
+        auto nameSize = strlen(info.name.GetData()) + 1;
+        name = (char*) malloc(nameSize);
+        memset(name, '\0', nameSize);
+        strcpy(name, info.name.CStr());
+
+        auto authTokenSize = strlen(info.authToken.GetData()) + 1;
+        authToken = (char*) malloc(authTokenSize);
+        memset(authToken, '\0', authTokenSize);
+        strcpy(authToken, info.authToken.CStr());
+
+        auto branchSize = strlen(info.branch.GetData()) + 1;
+        branch = (char*) malloc(branchSize);
+        memset(branch, '\0', branchSize);
+        strcpy(branch, info.branch.CStr());
+
+        auto cdnUrlSize = strlen(info.cdnUrl.GetData()) + 1;
+        cdnUrl = (char*) malloc(cdnUrlSize);
+        memset(cdnUrl, '\0', cdnUrlSize);
+        strcpy(cdnUrl, info.cdnUrl.CStr());
+    }
+
+    void dealloc() const {
+        free(name);
+        free(authToken);
+        free(branch);
+        free(cdnUrl);
+    }
+};
+
 typedef void (* MainDelegate_t)(alt::ICore* server, alt::IResource* resource, const char* resourceName,
                                 const char* entryPoint);
 
@@ -93,7 +140,7 @@ typedef void (* ClientEventDelegate_t)(alt::IPlayer* player, const char* name, a
 
 typedef void (* PlayerConnectDelegate_t)(alt::IPlayer* player, uint16_t playerId, const char* reason);
 
-typedef void (* PlayerBeforeConnectDelegate_t)(const alt::CEvent* event, alt::IPlayer* player, uint16_t playerId, uint64_t passwordHash, const char* cdnUrl);
+typedef void (* PlayerBeforeConnectDelegate_t)(const alt::CEvent* event, ClrConnectionInfo* connectionInfo, const char* reason);
 
 typedef void (* ResourceEventDelegate_t)(alt::IResource* resource);
 

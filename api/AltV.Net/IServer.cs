@@ -51,6 +51,7 @@ namespace AltV.Net
 
         void LogColored(IntPtr message);
 
+        ulong HashPassword(string password);
         uint Hash(string hash);
 
         void SetPassword(string password);
