@@ -5,7 +5,7 @@ namespace AltV.Net.Data
 {
     // TODO: try use only one struct, and [MarshalAs] if strings won't be marshalled automatically
     [StructLayout(LayoutKind.Sequential)]
-    internal class PlayerConnectionInfoInternal
+    internal struct PlayerConnectionInfoInternal
     {
         public readonly IntPtr Name;
         public readonly ulong SocialId;

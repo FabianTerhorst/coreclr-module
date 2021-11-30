@@ -422,7 +422,11 @@ alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value) {
 }
 
 uint64_t Core_HashPassword(alt::ICore* core, const char* password) {
-    return core->HashServerPassword(password);
+    std::cout << password << std::endl;
+    std::cout << core->GetBranch() << std::endl;
+    auto hash = core->HashServerPassword(password);
+    std::cout << hash << std::endl;
+    return hash;
 }
 
 uint8_t Core_IsDebug(alt::ICore* core) {

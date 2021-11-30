@@ -595,12 +595,11 @@ namespace AltV.Net
 
             if (cancel is not null)
             {
-                Console.WriteLine("cancel message was:" + cancel);
                 unsafe
                 {
                     var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(cancel);
                     Alt.Server.Library.Event_PlayerBeforeConnect_Cancel(eventPointer, stringPtr);
-                    // Marshal.FreeHGlobal(stringPtr);
+                    Marshal.FreeHGlobal(stringPtr);
                 }
             }
         }

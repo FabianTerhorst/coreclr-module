@@ -97,11 +97,32 @@ struct ClrConnectionInfo {
     socialId(info.socialId), hwidHash(info.hwidHash), hwidExHash(info.hwidExHash),
     isDebug(info.isDebug),
     build(info.build), passwordHash(info.passwordHash) {
-        // allocate strings (strings in the alt::ConnectionInfo are broken rn)
+        auto nameSize = strlen(info.name.GetData()) + 1;
+        name = (char*) malloc(nameSize);
+        memset(name, '\0', nameSize);
+        strcpy(name, info.name.CStr());
+
+        auto authTokenSize = strlen(info.authToken.GetData()) + 1;
+        authToken = (char*) malloc(authTokenSize);
+        memset(authToken, '\0', authTokenSize);
+        strcpy(authToken, info.authToken.CStr());
+
+        auto branchSize = strlen(info.branch.GetData()) + 1;
+        branch = (char*) malloc(branchSize);
+        memset(branch, '\0', branchSize);
+        strcpy(branch, info.branch.CStr());
+
+        auto cdnUrlSize = strlen(info.cdnUrl.GetData()) + 1;
+        cdnUrl = (char*) malloc(cdnUrlSize);
+        memset(cdnUrl, '\0', cdnUrlSize);
+        strcpy(cdnUrl, info.cdnUrl.CStr());
     }
 
-    void dealloc() {
-        // deallocate strings
+    void dealloc() const {
+        free(name);
+        free(authToken);
+        free(branch);
+        free(cdnUrl);
     }
 };
 
