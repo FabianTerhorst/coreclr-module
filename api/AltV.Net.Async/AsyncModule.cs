@@ -180,19 +180,14 @@ namespace AltV.Net.Async
             });
         }
 
-        public override void OnPlayerBeforeConnectEvent(IntPtr eventPointer, IPlayer player, ulong passwordHash, string cdnUrl)
+        public override void OnPlayerBeforeConnectEvent(IntPtr eventPointer, PlayerConnectionInfo connectionInfo, string reason)
         {
-            base.OnPlayerBeforeConnectEvent(eventPointer, player, passwordHash, cdnUrl);
+            base.OnPlayerBeforeConnectEvent(eventPointer, connectionInfo, reason);
             if (!PlayerBeforeConnectAsyncEventHandler.HasEvents()) return;
-            var playerReference = new PlayerRef(player);
-            CheckRef(in playerReference, player);
             Task.Run(async () =>
             {
-                playerReference.DebugCountUp();
                 await PlayerBeforeConnectAsyncEventHandler.CallAsync(@delegate =>
-                    @delegate(player, passwordHash, cdnUrl));
-                playerReference.DebugCountDown();
-                playerReference.Dispose();
+                    @delegate(connectionInfo, reason));
             });
         }
 

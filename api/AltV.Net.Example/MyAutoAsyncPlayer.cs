@@ -9,22 +9,30 @@ namespace AltV.Net.Example
 {
     public partial interface IMyAutoAsyncPlayer : IPlayer
     {
-        int MyData { get; set; }
+        int MyData { get; init; }
         int CalculateOtherData();
+        int CalculateOtherData(int mod);
         bool GetSomethingToOut([MaybeNullWhen(false)] out string data);
         void GetSomethingToRef(ref int data);
         int TakeSomethingToIn(in int data);
+        void SomeNonThreadSafeMethod();
+        public long SomeNonThreadSafeProperty { get; set; }
         new void Spawn(Position position, uint delayMs = 0);
     }
 
     [AsyncEntity(typeof(IMyAutoAsyncPlayer))]
     public partial class MyAutoAsyncPlayer : Player, IMyAutoAsyncPlayer
     {
-        public int MyData { get; set; }
+        public int MyData { get; init; }
 
         public int CalculateOtherData()
         {
             return MyData * 2;
+        }
+        
+        public int CalculateOtherData(int mod)
+        {
+            return MyData * mod;
         }
 
         public bool GetSomethingToOut([MaybeNullWhen(false)] out string data)
@@ -39,6 +47,19 @@ namespace AltV.Net.Example
             return false;
         }
 
+        [AsyncProperty(ThreadSafe = true)]
+        public void SomeNonThreadSafeMethod()
+        {
+            this.SetStreamSyncedMetaData("test", 5L);
+        }
+
+        [AsyncProperty(ThreadSafe = true)]
+        public long SomeNonThreadSafeProperty
+        {
+            get => this.GetStreamSyncedMetaData("test", out long value) ? value : default;
+            set => this.SetStreamSyncedMetaData("test", value);
+        }
+        
         public void GetSomethingToRef(ref int data)
         {
             data *= 5;

@@ -181,9 +181,9 @@ namespace AltV.Net
             _module.OnPlayerConnect(playerPointer, playerId, reason);
         }
 
-        public static void OnPlayerBeforeConnect(IntPtr eventPointer, IntPtr playerPointer, ushort playerId, ulong passwordHash, string cdnUrl)
+        public static void OnPlayerBeforeConnect(IntPtr eventPointer, PlayerConnectionInfoInternal connectionInfo, string reason)
         {
-            _module.OnPlayerBeforeConnect(eventPointer, playerPointer, playerId, passwordHash, cdnUrl);
+            _module.OnPlayerBeforeConnect(eventPointer, new PlayerConnectionInfo(connectionInfo), reason);
         }
 
         public static void OnResourceStart(IntPtr resourcePointer)
