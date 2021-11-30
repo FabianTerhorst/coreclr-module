@@ -97,32 +97,24 @@ struct ClrConnectionInfo {
     socialId(info.socialId), hwidHash(info.hwidHash), hwidExHash(info.hwidExHash),
     isDebug(info.isDebug),
     build(info.build), passwordHash(info.passwordHash) {
-        auto nameSize = strlen(info.name.GetData()) + 1;
-        name = (char*) malloc(nameSize);
-        memset(name, '\0', nameSize);
-        strcpy(name, info.name.CStr());
+        name = new char[info.name.length() + 1];
+        strcpy(name, info.name.c_str());
 
-        auto authTokenSize = strlen(info.authToken.GetData()) + 1;
-        authToken = (char*) malloc(authTokenSize);
-        memset(authToken, '\0', authTokenSize);
-        strcpy(authToken, info.authToken.CStr());
+        authToken = new char[info.authToken.length() + 1];
+        strcpy(authToken, info.authToken.c_str());
 
-        auto branchSize = strlen(info.branch.GetData()) + 1;
-        branch = (char*) malloc(branchSize);
-        memset(branch, '\0', branchSize);
-        strcpy(branch, info.branch.CStr());
+        branch = new char[info.branch.length() + 1];
+        strcpy(branch, info.branch.c_str());
 
-        auto cdnUrlSize = strlen(info.cdnUrl.GetData()) + 1;
-        cdnUrl = (char*) malloc(cdnUrlSize);
-        memset(cdnUrl, '\0', cdnUrlSize);
-        strcpy(cdnUrl, info.cdnUrl.CStr());
+        cdnUrl = new char[info.cdnUrl.length() + 1];
+        strcpy(cdnUrl, info.cdnUrl.c_str());
     }
 
     void dealloc() const {
-        free(name);
-        free(authToken);
-        free(branch);
-        free(cdnUrl);
+        delete[] name;
+        delete[] authToken;
+        delete[] branch;
+        delete[] cdnUrl;
     }
 };
 
