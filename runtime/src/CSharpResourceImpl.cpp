@@ -165,7 +165,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             auto beforeConnectEvent = (alt::CPlayerBeforeConnectEvent*)ev;
             auto clrInfo = ClrConnectionInfo(beforeConnectEvent->GetConnectionInfo());
 
-            OnPlayerBeforeConnectDelegate(beforeConnectEvent, &clrInfo, beforeConnectEvent->GetReason().CStr());
+            OnPlayerBeforeConnectDelegate(beforeConnectEvent, &clrInfo, beforeConnectEvent->GetReason().c_str());
 
             clrInfo.dealloc();
         }
