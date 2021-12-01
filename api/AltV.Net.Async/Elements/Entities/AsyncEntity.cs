@@ -63,7 +63,19 @@ namespace AltV.Net.Async.Elements.Entities
             set { AsyncContext.Enqueue(() => BaseObject.Visible = value); }
         }
 
-        public bool Streamed { get; set; }
+        public bool Streamed
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.Streamed;
+                }
+            }
+            set { AsyncContext.Enqueue(() => BaseObject.Streamed = value); }
+        }
 
         public AsyncEntity(TEntity entity, IAsyncContext asyncContext) : base(entity, asyncContext)
         {
