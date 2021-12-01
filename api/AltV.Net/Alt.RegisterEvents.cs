@@ -46,7 +46,7 @@ namespace AltV.Net
                                     break;
                                 case ScriptEventType.PlayerBeforeConnect:
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] { typeof(PlayerConnectionInfo) });
+                                        new[] { typeof(PlayerConnectionInfo), typeof(string) });
                                     if (scriptFunction == null) return;
                                     OnPlayerBeforeConnect += (connectionInfo, reason) =>
                                     {
