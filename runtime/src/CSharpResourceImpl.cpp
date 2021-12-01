@@ -163,11 +163,12 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             break;
         case alt::CEvent::Type::PLAYER_BEFORE_CONNECT: {
             auto beforeConnectEvent = (alt::CPlayerBeforeConnectEvent*)ev;
-            auto clrInfo = ClrConnectionInfo(beforeConnectEvent->GetConnectionInfo());
+            auto clrInfo = new ClrConnectionInfo(beforeConnectEvent->GetConnectionInfo());
 
-            OnPlayerBeforeConnectDelegate(beforeConnectEvent, &clrInfo, beforeConnectEvent->GetReason().c_str());
+            OnPlayerBeforeConnectDelegate(beforeConnectEvent, clrInfo, beforeConnectEvent->GetReason().c_str());
 
-            clrInfo.dealloc();
+            clrInfo->dealloc();
+            delete clrInfo;
         }
             break;
         case alt::CEvent::Type::RESOURCE_START: {
