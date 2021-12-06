@@ -270,37 +270,37 @@ void Server_RestartResource(alt::ICore* server, const char* text) {
 }
 
 alt::MValueConst* Server_GetMetaData(alt::ICore* core, const char* key) {
-    return new alt::MValueConst(core->GetMetaData(key));
+    return new alt::MValueConst(core->GetMetaData(alt::String(key)));
 }
 
 void Server_SetMetaData(alt::ICore* core, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
-    core->SetMetaData(key, val->Get()->Clone());
+    core->SetMetaData(alt::String(key), val->Get()->Clone());
 }
 
 uint8_t Server_HasMetaData(alt::ICore* core, const char* key) {
-    return core->HasMetaData(key);
+    return core->HasMetaData(alt::String(key));
 }
 
 void Server_DeleteMetaData(alt::ICore* core, const char* key) {
-    core->DeleteMetaData(key);
+    core->DeleteMetaData(alt::String(key));
 }
 
 alt::MValueConst* Server_GetSyncedMetaData(alt::ICore* core, const char* key) {
-    return new alt::MValueConst(core->GetSyncedMetaData(key));
+    return new alt::MValueConst(core->GetSyncedMetaData(alt::String(key)));
 }
 
 void Server_SetSyncedMetaData(alt::ICore* core, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
-    core->SetSyncedMetaData(key, val->Get()->Clone());
+    core->SetSyncedMetaData(alt::String(key), val->Get()->Clone());
 }
 
 uint8_t Server_HasSyncedMetaData(alt::ICore* core, const char* key) {
-    return core->HasSyncedMetaData(key);
+    return core->HasSyncedMetaData(alt::String(key));
 }
 
 void Server_DeleteSyncedMetaData(alt::ICore* core, const char* key) {
-    core->DeleteSyncedMetaData(key);
+    core->DeleteSyncedMetaData(alt::String(key));
 }
 
 alt::MValueConst* Core_CreateMValueNil(alt::ICore* core) {
