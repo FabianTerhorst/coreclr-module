@@ -26,20 +26,20 @@ void ColShape_SetDimension(alt::IColShape* colShape, int32_t dimension) {
 }
 
 alt::MValueConst* ColShape_GetMetaData(alt::IColShape* colShape, const char* key) {
-    return new alt::MValueConst(colShape->GetMetaData(key));
+    return new alt::MValueConst(colShape->GetMetaData(alt::String(key)));
 }
 
 void ColShape_SetMetaData(alt::IColShape* colShape, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
-    colShape->SetMetaData(key, val->Get()->Clone());
+    colShape->SetMetaData(alt::String(key), val->Get()->Clone());
 }
 
 uint8_t ColShape_HasMetaData(alt::IColShape* colShape, const char* key) {
-    return colShape->HasMetaData(key);
+    return colShape->HasMetaData(alt::String(key));
 }
 
 void ColShape_DeleteMetaData(alt::IColShape* colShape, const char* key) {
-    colShape->DeleteMetaData(key);
+    colShape->DeleteMetaData(alt::String(key));
 }
 
 void ColShape_AddRef(alt::IColShape* colShape) {
