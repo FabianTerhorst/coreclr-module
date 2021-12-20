@@ -96,6 +96,9 @@ namespace AltV.Net.Enums
         FireExtinguisher = 101631238,
         GadgetPistol = 1470379660,
         MilitaryRifle = 2636060646,
-        CombatShotgun = 94989220  
+        CombatShotgun = 94989220,
+        Fertilizercan = 406929569,
+        HeavyRifle = 3347935668,
+        EMPLauncher = 3676729658
     }
 }
