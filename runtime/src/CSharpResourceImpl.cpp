@@ -765,7 +765,14 @@ void CSharpResourceImpl_SetVehicleDamageDelegate(CSharpResourceImpl* resource,
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files) {
-    info->type = "js";
+    std::string clientMain = resource->GetClientMain();
+    std::string suffix = ".dll";
+    if (clientMain.size() >= suffix.size() &&
+        clientMain.compare(clientMain.size() - suffix.size(), suffix.size(), suffix) == 0) {
+        info->type = "csharp";
+    } else {
+        info->type = "js";
+    }
     return true;
 }
 
