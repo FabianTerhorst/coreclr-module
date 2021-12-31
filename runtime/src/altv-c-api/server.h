@@ -45,7 +45,9 @@ Server_CreateCheckpoint(alt::ICore* server, uint8_t type, position_t pos, float 
 EXPORT alt::IBlip*
 Server_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, position_t pos);
 EXPORT alt::IBlip*
-Server_CreateBlipAttached(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo);
+Server_CreateBlipAttachedPlayer(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IPlayer* attachTo);
+EXPORT alt::IBlip*
+Server_CreateBlipAttachedVehicle(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IVehicle* attachTo);
 EXPORT alt::IResource* Server_GetResource(alt::ICore* server, const char* resourceName);
 EXPORT alt::IVoiceChannel* Server_CreateVoiceChannel(alt::ICore* server, uint8_t spatial, float maxDistance);
 EXPORT alt::IColShape*

@@ -589,12 +589,26 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                var ptr = Library.Server_CreateBlipAttached(NativePointer,
-                    player?.NativePointer ?? IntPtr.Zero,
-                    type, entityAttach.NativePointer);
-                if (ptr == IntPtr.Zero) return null;
-                blipPool.Create(this, ptr, out var blip);
-                return blip;
+                if (entityAttach is IPlayer playerAttach)
+                {
+                    var ptr = Library.Server_CreateBlipAttachedPlayer(NativePointer,
+                        player?.NativePointer ?? IntPtr.Zero,
+                        type, playerAttach.NativePointer);
+                    if (ptr == IntPtr.Zero) return null;
+                    blipPool.Create(this, ptr, out var blip);
+                    return blip;
+                }
+                if (entityAttach is IVehicle vehicleAttach)
+                {
+                    var ptr = Library.Server_CreateBlipAttachedVehicle(NativePointer,
+                        player?.NativePointer ?? IntPtr.Zero,
+                        type, vehicleAttach.NativePointer);
+                    if (ptr == IntPtr.Zero) return null;
+                    blipPool.Create(this, ptr, out var blip);
+                    return blip;
+                }
+
+                return null;
             }
         }
 

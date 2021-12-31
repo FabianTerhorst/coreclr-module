@@ -130,7 +130,12 @@ Server_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, positi
 }
 
 alt::IBlip*
-Server_CreateBlipAttached(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo) {
+Server_CreateBlipAttachedPlayer(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IPlayer* attachTo) {
+    return server->CreateBlip(target, (alt::IBlip::BlipType) type, attachTo).Get();
+}
+
+alt::IBlip*
+Server_CreateBlipAttachedVehicle(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IVehicle* attachTo) {
     return server->CreateBlip(target, (alt::IBlip::BlipType) type, attachTo).Get();
 }
 

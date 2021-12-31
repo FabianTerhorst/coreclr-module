@@ -500,7 +500,7 @@ namespace AltV.Net.Async
         public static Task SetWheelHasTireAsync(this IVehicle vehicle, byte wheelId, bool state) =>
             AltVAsync.Schedule(() => vehicle.SetWheelHasTire(wheelId, state));
 
-        public static Task<Vector3> GetVelocityAsync(this IVehicle vehicle) =>
+        public static Task<Position> GetVelocityAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.Velocity);
     }
 }
