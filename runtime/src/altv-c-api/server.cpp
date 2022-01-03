@@ -25,14 +25,6 @@ void Server_LogColored(alt::ICore* server, const char* str) {
     return server->Hash(str);
 }*/
 
-void Server_SubscribeEvent(alt::ICore* server, alt::CEvent::Type ev, alt::EventCallback cb) {
-    return server->SubscribeEvent(ev, cb);
-}
-
-void Server_SubscribeTick(alt::ICore* server, alt::TickCallback cb) {
-    return server->SubscribeTick(cb);
-}
-
 uint8_t Server_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb) {
     return server->SubscribeCommand(cmd, cb);
 }

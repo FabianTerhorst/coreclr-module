@@ -25,8 +25,6 @@ EXPORT void Server_LogWarning(alt::ICore* server, const char* str);
 EXPORT void Server_LogError(alt::ICore* server, const char* str);
 EXPORT void Server_LogColored(alt::ICore* server, const char* str);
 //EXPORT uint32_t Server_Hash(alt::ICore* server, const char* str);
-EXPORT void Server_SubscribeEvent(alt::ICore* server, alt::CEvent::Type ev, alt::EventCallback cb);
-EXPORT void Server_SubscribeTick(alt::ICore* server, alt::TickCallback cb);
 EXPORT uint8_t Server_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb);
 EXPORT uint8_t Server_FileExists(alt::ICore* server, const char* path);
 EXPORT void Server_FileRead(alt::ICore* server, const char* path, const char*&text);

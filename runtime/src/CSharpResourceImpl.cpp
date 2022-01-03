@@ -347,11 +347,11 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
         }
             break;
         case alt::CEvent::Type::CONSOLE_COMMAND_EVENT: {
-            alt::Array<alt::StringView> args = ((alt::CConsoleCommandEvent*) (ev))->GetArgs();
+            std::vector<std::string> args = ((alt::CConsoleCommandEvent*) (ev))->GetArgs();
 
-            uint64_t size = args.GetSize();
+            uint64_t size = args.size();
             if (size == 0) {
-                OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(), nullptr, 0);
+                OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().c_str(), nullptr, 0);
             } else {
 #ifdef _WIN32
                 auto constArgs = new const char* [size];
@@ -359,10 +359,10 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                 const char* constArgs[size];
 #endif
                 for (uint64_t i = 0; i < size; i++) {
-                    constArgs[i] = args[i].CStr();
+                    constArgs[i] = args[i].c_str();
                 }
 
-                OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(), constArgs, size);
+                OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().c_str(), constArgs, size);
 
 #ifdef _WIN32
                 delete[] constArgs;
