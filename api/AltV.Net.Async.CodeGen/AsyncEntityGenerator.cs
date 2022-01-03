@@ -274,10 +274,19 @@ namespace AltV.Net.Async.CodeGen {
                             }
 
                             var constraintClauses = "";
-                            if (classMethod.DeclaringSyntaxReferences.Length > 0 &&
-                                classMethod.DeclaringSyntaxReferences[0].GetSyntax() is MethodDeclarationSyntax methodDeclaration)
+                            foreach (var typeParameter in classMethod.TypeParameters)
                             {
-                                constraintClauses = methodDeclaration.ConstraintClauses.ToString();
+                                var constraintDeclarations = new List<string>();
+                                if (typeParameter.HasReferenceTypeConstraint) constraintDeclarations.Add("class");
+                                if (typeParameter.HasValueTypeConstraint) constraintDeclarations.Add("struct");
+                                if (typeParameter.HasUnmanagedTypeConstraint) constraintDeclarations.Add("unmanaged");
+                                if (typeParameter.HasNotNullConstraint) constraintDeclarations.Add("notnull");
+                                constraintDeclarations.AddRange(typeParameter.ConstraintTypes.Select(e => e.ToString()));
+                                if (typeParameter.HasConstructorConstraint) constraintDeclarations.Add("new()");
+                                
+                                if (constraintDeclarations.Count == 0) continue;
+                                constraintClauses +=
+                                    $"where {typeParameter.Name} : {string.Join(", ", constraintDeclarations)} ";
                             }
 
                             var genericTypes = "";
