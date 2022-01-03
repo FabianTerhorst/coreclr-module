@@ -273,6 +273,28 @@ namespace AltV.Net.Async.CodeGen {
                                 callArgumentsList[index] = modifier + methodParameter.Name;
                             }
 
+                            var constraintClauses = "";
+                            foreach (var typeParameter in classMethod.TypeParameters)
+                            {
+                                var constraintDeclarations = new List<string>();
+                                if (typeParameter.HasReferenceTypeConstraint) constraintDeclarations.Add("class");
+                                if (typeParameter.HasValueTypeConstraint) constraintDeclarations.Add("struct");
+                                if (typeParameter.HasUnmanagedTypeConstraint) constraintDeclarations.Add("unmanaged");
+                                if (typeParameter.HasNotNullConstraint) constraintDeclarations.Add("notnull");
+                                constraintDeclarations.AddRange(typeParameter.ConstraintTypes.Select(e => e.ToString()));
+                                if (typeParameter.HasConstructorConstraint) constraintDeclarations.Add("new()");
+                                
+                                if (constraintDeclarations.Count == 0) continue;
+                                constraintClauses +=
+                                    $"where {typeParameter.Name} : {string.Join(", ", constraintDeclarations)} ";
+                            }
+
+                            var genericTypes = "";
+                            if (classMethod.TypeParameters.Length > 0)
+                            {
+                                genericTypes = "<" + string.Join(", ", classMethod.TypeParameters.Select(t => t.ToString())) + ">";
+                            }
+
                             var arguments = string.Join(", ", argumentsList);
                             var callArguments = string.Join(", ", callArgumentsList);
                             var returnAction = classMethod.ReturnsVoid ? "" : "return ";
@@ -282,7 +304,7 @@ namespace AltV.Net.Async.CodeGen {
                             var formattedAttributes = attributes.Length == 0 ? "" : FormatAttributes(attributes) + "\n";
                             var @new = isNew ? "new " : "";
 
-                            var methodCall = $"BaseObject.{name}({callArguments})";
+                            var methodCall = $"BaseObject.{name}{genericTypes}({callArguments})";
                             var methodValue = "";
 
                             if (propertySettings.TryGetValue("ThreadSafe", out var threadSafe) &&
@@ -301,7 +323,7 @@ namespace AltV.Net.Async.CodeGen {
                             }
 
                             members.Add(formattedAttributes +
-                                        $"public {@new}{classMethod.ReturnType} {name}({arguments})\n{{\n{Indent(methodValue)}\n}}");
+                                        $"public {@new}{classMethod.ReturnType} {name}{genericTypes}({arguments}) {constraintClauses}\n{{\n{Indent(methodValue)}\n}}");
 
                             break;
                         }
