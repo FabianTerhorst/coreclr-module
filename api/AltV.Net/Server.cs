@@ -1130,6 +1130,15 @@ namespace AltV.Net
                     Library.Core_CreateMValueVector3(NativePointer, value));
             }
         }
+        
+        public void CreateMValueVector2(out MValueConst mValue, Vector2 value)
+        {
+            unsafe
+            {
+                mValue = new MValueConst(MValueConst.Type.Entity,
+                    Library.Core_CreateMValueVector2(NativePointer, value));
+            }
+        }
 
         public void CreateMValueRgba(out MValueConst mValue, Rgba value)
         {
@@ -1322,6 +1331,9 @@ namespace AltV.Net
                     return;
                 case Vector3 position:
                     CreateMValueVector3(out mValue, position);
+                    return;
+                case Vector2 value:
+                    CreateMValueVector2(out mValue, value);
                     return;
                 default:
                     Alt.Log("can't convert type:" + obj.GetType());
