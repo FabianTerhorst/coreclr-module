@@ -1135,7 +1135,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.Vector2,
                     Library.Core_CreateMValueVector2(NativePointer, value));
             }
         }

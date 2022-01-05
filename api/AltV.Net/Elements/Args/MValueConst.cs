@@ -34,7 +34,8 @@ namespace AltV.Net.Elements.Args
             Function = 10,
             Vector3 = 11,
             Rgba = 12,
-            ByteArray = 13
+            ByteArray = 13,
+            Vector2 = 14,
         }
 
         public static MValueConst[] CreateFrom(IntPtr[] pointers)
