@@ -56,6 +56,8 @@ namespace AltV.Net
 
         void SetPassword(string password);
 
+        void StopServer();
+
         void TriggerServerEvent(string eventName, MValueConst[] args);
 
         void TriggerServerEvent(IntPtr eventNamePtr, MValueConst[] args);

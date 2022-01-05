@@ -441,3 +441,7 @@ void Core_GetBranch(alt::ICore* core, const char*&value, uint64_t &size) {
 void Core_SetPassword(alt::ICore* core, const char* value) {
     core->SetPassword(value);
 }
+
+void Core_StopServer(alt::ICore* core) {
+    core->StopServer();
+}
