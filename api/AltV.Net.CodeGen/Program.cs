@@ -39,7 +39,7 @@ namespace AltV.Net.CodeGen
             {
                 Console.WriteLine(exception);
             }*/
-            
+
             try
             {
                 var methods = new List<ParseExports.CMethod>();
@@ -48,7 +48,9 @@ namespace AltV.Net.CodeGen
                     if (!file.EndsWith(".h")) continue;
                     methods.AddRange(ParseExports.Parse(File.ReadAllText(file)));
                 }
-                
+
+                methods.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.Ordinal));
+
                 var methodsOutput = WriteLibrary.Write(methods.ToArray());
                 if (methodsOutput.Length != 0)
                 {
