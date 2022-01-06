@@ -1126,7 +1126,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.Vector3,
                     Library.Core_CreateMValueVector3(NativePointer, value));
             }
         }
@@ -1144,7 +1144,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.Rgba,
                     Library.Core_CreateMValueRgba(NativePointer, value));
             }
         }
@@ -1156,7 +1156,7 @@ namespace AltV.Net
                 var size = value.Length;
                 var dataPtr = Marshal.AllocHGlobal(size);
                 Marshal.Copy(value, 0, dataPtr, size);
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.ByteArray,
                     Library.Core_CreateMValueByteArray(NativePointer, (ulong) size, dataPtr));
                 Marshal.FreeHGlobal(dataPtr);
             }
