@@ -30,7 +30,7 @@ namespace AltV.Net.Elements.Args
             String = 6,
             List = 7,
             Dict = 8,
-            Entity = 9,
+            BaseObject = 9,
             Function = 10,
             Vector3 = 11,
             Rgba = 12,
@@ -313,7 +313,7 @@ namespace AltV.Net.Elements.Args
                         return dictionary;
                     }
 
-                case Type.Entity:
+                case Type.BaseObject:
                     var entityType = BaseObjectType.Undefined;
                     var entityPointer = GetEntityPointer(ref entityType);
                     if (entityPointer == IntPtr.Zero) return null;
@@ -374,7 +374,7 @@ namespace AltV.Net.Elements.Args
                                    mValueConst.Dispose();
                                    return result;
                                }) + "}>";
-                case Type.Entity:
+                case Type.BaseObject:
                     var entityType = BaseObjectType.Undefined;
                     var ptr = GetEntityPointer(ref entityType);
                     if (ptr == IntPtr.Zero) return $"MValue<entity:nilptr>";

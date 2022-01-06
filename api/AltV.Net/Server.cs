@@ -1072,7 +1072,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.BaseObject,
                     Library.Core_CreateMValueCheckpoint(NativePointer, value.NativePointer));
             }
         }
@@ -1081,7 +1081,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.BaseObject,
                     Library.Core_CreateMValueBlip(NativePointer, value.NativePointer));
             }
         }
@@ -1090,7 +1090,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.BaseObject,
                     Library.Core_CreateMValueVoiceChannel(NativePointer, value.NativePointer));
             }
         }
@@ -1099,7 +1099,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.BaseObject,
                     Library.Core_CreateMValuePlayer(NativePointer, value.NativePointer));
             }
         }
@@ -1108,7 +1108,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.BaseObject,
                     Library.Core_CreateMValueVehicle(NativePointer, value.NativePointer));
             }
         }
