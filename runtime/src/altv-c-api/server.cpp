@@ -404,7 +404,7 @@ alt::MValueConst* Core_CreateMValueVector3(alt::ICore* core, position_t value) {
 
 alt::MValueConst* Core_CreateMValueVector2(alt::ICore* core, vector2_t value) {
     alt::Vector2f vector2F;
-    Vector2F[0] = value.x;
+    vector2F[0] = value.x;
     vector2F[1] = value.y;
     alt::MValueConst mValue = core->CreateMValueVector2(vector2F);
     return new alt::MValueConst(mValue);
