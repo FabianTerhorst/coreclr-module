@@ -287,6 +287,14 @@ namespace AltV.Net
             }
         }
 
+        public void StopServer()
+        {
+            unsafe
+            {
+                Library.Core_StopServer(NativePointer);  
+            }
+        }
+
         public void TriggerServerEvent(string eventName, MValueConst[] args)
         {
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
