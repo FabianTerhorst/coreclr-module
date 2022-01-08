@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
@@ -369,6 +370,11 @@ namespace AltV.Net.Mock
         }
 
         public void CreateMValueVector3(out MValueConst mValue, Position value)
+        {
+            throw new NotImplementedException();
+        }
+        
+        public void CreateMValueVector2(out MValueConst mValue, Vector2 value)
         {
             throw new NotImplementedException();
         }

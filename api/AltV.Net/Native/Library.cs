@@ -143,6 +143,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, Rgba, nint> Core_CreateMValueRgba { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueString { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong, nint> Core_CreateMValueUInt { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2, nint> Core_CreateMValueVector2 { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, nint> Core_CreateMValueVector3 { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueVoiceChannel { get; }
@@ -714,6 +715,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, Rgba, nint> Core_CreateMValueRgba { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueString { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong, nint> Core_CreateMValueUInt { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2, nint> Core_CreateMValueVector2 { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, nint> Core_CreateMValueVector3 { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueVoiceChannel { get; }
@@ -1289,6 +1291,7 @@ namespace AltV.Net.Native
             Core_CreateMValueRgba = (delegate* unmanaged[Cdecl]<nint, Rgba, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueRgba");
             Core_CreateMValueString = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueString");
             Core_CreateMValueUInt = (delegate* unmanaged[Cdecl]<nint, ulong, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueUInt");
+            Core_CreateMValueVector2 = (delegate* unmanaged[Cdecl]<nint, Vector2, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueVector2");
             Core_CreateMValueVector3 = (delegate* unmanaged[Cdecl]<nint, Position, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueVector3");
             Core_CreateMValueVehicle = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueVehicle");
             Core_CreateMValueVoiceChannel = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueVoiceChannel");

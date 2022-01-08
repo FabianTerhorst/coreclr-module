@@ -95,6 +95,7 @@ EXPORT alt::MValueConst* Core_CreateMValuePlayer(alt::ICore* core, alt::IPlayer*
 EXPORT alt::MValueConst* Core_CreateMValueVehicle(alt::ICore* core, alt::IVehicle* value);
 EXPORT alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* value);
 EXPORT alt::MValueConst* Core_CreateMValueVector3(alt::ICore* core, position_t value);
+EXPORT alt::MValueConst* Core_CreateMValueVector2(alt::ICore* core, vector2_t value);
 EXPORT alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value);
 EXPORT alt::MValueConst* Core_CreateMValueByteArray(alt::ICore* core, uint64_t size, const void* data);
 EXPORT uint64_t Core_HashPassword(alt::ICore* core, const char* password);

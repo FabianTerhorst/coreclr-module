@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -212,6 +213,8 @@ namespace AltV.Net
         void CreateMValueFunction(out MValueConst mValue, IntPtr value);
         
         void CreateMValueVector3(out MValueConst mValue, Position value);
+        
+        void CreateMValueVector2(out MValueConst mValue, Vector2 value);
         
         void CreateMValueRgba(out MValueConst mValue, Rgba value);
         

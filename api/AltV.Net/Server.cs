@@ -1072,7 +1072,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.BaseObject,
                     Library.Core_CreateMValueCheckpoint(NativePointer, value.NativePointer));
             }
         }
@@ -1081,7 +1081,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.BaseObject,
                     Library.Core_CreateMValueBlip(NativePointer, value.NativePointer));
             }
         }
@@ -1090,7 +1090,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.BaseObject,
                     Library.Core_CreateMValueVoiceChannel(NativePointer, value.NativePointer));
             }
         }
@@ -1099,7 +1099,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.BaseObject,
                     Library.Core_CreateMValuePlayer(NativePointer, value.NativePointer));
             }
         }
@@ -1108,7 +1108,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.BaseObject,
                     Library.Core_CreateMValueVehicle(NativePointer, value.NativePointer));
             }
         }
@@ -1126,8 +1126,17 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.Vector3,
                     Library.Core_CreateMValueVector3(NativePointer, value));
+            }
+        }
+        
+        public void CreateMValueVector2(out MValueConst mValue, Vector2 value)
+        {
+            unsafe
+            {
+                mValue = new MValueConst(MValueConst.Type.Vector2,
+                    Library.Core_CreateMValueVector2(NativePointer, value));
             }
         }
 
@@ -1135,7 +1144,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.Rgba,
                     Library.Core_CreateMValueRgba(NativePointer, value));
             }
         }
@@ -1147,7 +1156,7 @@ namespace AltV.Net
                 var size = value.Length;
                 var dataPtr = Marshal.AllocHGlobal(size);
                 Marshal.Copy(value, 0, dataPtr, size);
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.ByteArray,
                     Library.Core_CreateMValueByteArray(NativePointer, (ulong) size, dataPtr));
                 Marshal.FreeHGlobal(dataPtr);
             }
@@ -1322,6 +1331,9 @@ namespace AltV.Net
                     return;
                 case Vector3 position:
                     CreateMValueVector3(out mValue, position);
+                    return;
+                case Vector2 value:
+                    CreateMValueVector2(out mValue, value);
                     return;
                 default:
                     Alt.Log("can't convert type:" + obj.GetType());
