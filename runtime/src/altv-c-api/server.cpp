@@ -181,9 +181,9 @@ alt::IColShape* Server_CreateColShapeRectangle(alt::ICore* server, float x1, flo
     return server->CreateColShapeRectangle(x1, y1, x2, y2, z).Get();
 }
 
-alt::IColShape* Server_CreateColShapePolygon(alt::ICore* server, float minZ, float maxZ, vector2_t points[]) {
-    std::vector<alt::Vector2f> convertedPoints(sizeof(points));
-    for (int i = 0; i < convertedPoints.size(); i++)
+alt::IColShape* Server_CreateColShapePolygon(alt::ICore* server, float minZ, float maxZ, vector2_t points[], int pointSize) {
+    std::vector<alt::Vector2f> convertedPoints(pointSize);
+    for (int i = 0; i < pointSize; i++)
     {
        alt::Vector2f point;
        point[0] = points[i].x;

@@ -325,7 +325,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, Position, Position, nint> Server_CreateColShapeCube { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, float, float, nint> Server_CreateColShapeCylinder { get; }
         public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, nint> Server_CreateColShapeRectangle { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, float, Vector2[], nint> Server_CreateColShapePolygon { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, float, Vector2[], int, nint> Server_CreateColShapePolygon { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, float, nint> Server_CreateColShapeSphere { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint> Server_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, nint> Server_CreateVoiceChannel { get; }
@@ -898,7 +898,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, Position, Position, nint> Server_CreateColShapeCube { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, float, float, nint> Server_CreateColShapeCylinder { get; }
         public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, nint> Server_CreateColShapeRectangle { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, float, Vector2[], nint> Server_CreateColShapePolygon { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, float, Vector2[], int, nint> Server_CreateColShapePolygon { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, float, nint> Server_CreateColShapeSphere { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint> Server_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, nint> Server_CreateVoiceChannel { get; }
@@ -1475,7 +1475,7 @@ namespace AltV.Net.Native
             Server_CreateColShapeCube = (delegate* unmanaged[Cdecl]<nint, Position, Position, nint>) NativeLibrary.GetExport(handle, "Server_CreateColShapeCube");
             Server_CreateColShapeCylinder = (delegate* unmanaged[Cdecl]<nint, Position, float, float, nint>) NativeLibrary.GetExport(handle, "Server_CreateColShapeCylinder");
             Server_CreateColShapeRectangle = (delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, nint>) NativeLibrary.GetExport(handle, "Server_CreateColShapeRectangle");
-            Server_CreateColShapePolygon = (delegate* unmanaged[Cdecl]<nint, float, float, Vector2[], nint>) NativeLibrary.GetExport(handle, "Server_CreateColShapePolygon");
+            Server_CreateColShapePolygon = (delegate* unmanaged[Cdecl]<nint, float, float, Vector2[], int, nint>) NativeLibrary.GetExport(handle, "Server_CreateColShapePolygon");
             Server_CreateColShapeSphere = (delegate* unmanaged[Cdecl]<nint, Position, float, nint>) NativeLibrary.GetExport(handle, "Server_CreateColShapeSphere");
             Server_CreateVehicle = (delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint>) NativeLibrary.GetExport(handle, "Server_CreateVehicle");
             Server_CreateVoiceChannel = (delegate* unmanaged[Cdecl]<nint, byte, float, nint>) NativeLibrary.GetExport(handle, "Server_CreateVoiceChannel");

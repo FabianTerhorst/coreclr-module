@@ -698,7 +698,8 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                var ptr = Library.Server_CreateColShapePolygon(NativePointer, minZ, maxZ, points);
+                int size = points.Count();
+                var ptr = Library.Server_CreateColShapePolygon(NativePointer, minZ, maxZ, points, size);
                 if (ptr == IntPtr.Zero) return null;
                 colShapePool.Create(this, ptr, out var colShape);
                 return colShape;
