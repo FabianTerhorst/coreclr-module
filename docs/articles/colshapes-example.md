@@ -78,3 +78,16 @@ ColShape in a Rectangle form.
 //Parameter : (float x1, float y1, float x2, float y2, float height)
 Alt.CreateColShapeRectangle(0.0f, 0.0f, 0.0f, 0.0f, 10f); // Creates a colshape in a form of a rectangle.
 ```
+
+ColShape in a Polygon form.
+```csharp
+//polygon points
+Vector2[] points = new Vector2[]{
+    new Vector2(0, 0),
+    new Vector2(0, 1),
+    new Vector2(1, 0),
+    new Vector2(1, 1)
+}
+//Parameter : (float minZ, float maxZ, Vector2[] points)
+Alt.CreateColShapePolygon(0.0f, 2.0f, points); // Creates a colshape in a form of a polygon.
+```

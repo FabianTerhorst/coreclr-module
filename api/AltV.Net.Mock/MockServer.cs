@@ -323,6 +323,11 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public IColShape CreateColShapePolygon(float minZ, float maxZ, Vector2[] points)
+        {
+            throw new NotImplementedException();
+        }
+
         public void RemoveColShape(IColShape colShape)
         {
             throw new NotImplementedException();

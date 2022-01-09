@@ -693,6 +693,18 @@ namespace AltV.Net
             }
         }
 
+        public IColShape CreateColShapePolygon(float minZ, float maxZ, Vector2[] points)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                var ptr = Library.Server_CreateColShapePolygon(NativePointer, minZ, maxZ, points);
+                if (ptr == IntPtr.Zero) return null;
+                colShapePool.Create(this, ptr, out var colShape);
+                return colShape;
+            }
+        }
+
         public void RemoveBlip(IBlip blip)
         {
             CheckIfCallIsValid();
