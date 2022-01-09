@@ -180,7 +180,7 @@ alt::IColShape* Server_CreateColShapeRectangle(alt::ICore* server, float x1, flo
     return server->CreateColShapeRectangle(x1, y1, x2, y2, z).Get();
 }
 
-alt::IColShape* Server_CreateColShapePolygon(alt::ICore* server, float minZ, float maxZ, vector2_t points[]) {
+alt::IColShape* Server_CreateColShapePolygon(alt::ICore* server, float minZ, float maxZ, std::vector<alt::Vector2f> points) {
     return server->CreateColShapePolygon(minZ, maxZ, points).Get();
 }
 
