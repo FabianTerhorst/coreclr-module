@@ -7,6 +7,7 @@ namespace AltV.Net.Elements.Entities
         Circle,
         Cube,
         Rect,
-        CheckpointCylinder
+        CheckpointCylinder,
+        Polygon
     }
 }

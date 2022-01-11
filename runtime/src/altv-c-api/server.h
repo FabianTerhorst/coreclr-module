@@ -10,6 +10,7 @@
 #include <CSharpResourceImpl.h>
 #include "rotation.h"
 #include "position.h"
+#include "vector2.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -54,6 +55,7 @@ EXPORT alt::IColShape* Server_CreateColShapeSphere(alt::ICore* server, position_
 EXPORT alt::IColShape* Server_CreateColShapeCircle(alt::ICore* server, position_t pos, float radius);
 EXPORT alt::IColShape* Server_CreateColShapeCube(alt::ICore* server, position_t pos, position_t pos2);
 EXPORT alt::IColShape* Server_CreateColShapeRectangle(alt::ICore* server, float x1, float y1, float x2, float y2, float z);
+EXPORT alt::IColShape* Server_CreateColShapePolygon(alt::ICore* server, float minZ, float maxZ, vector2_t points[], int pointSize);
 //EXPORT void Server_DestroyBaseObject(alt::ICore* server, alt::IBaseObject* baseObject);
 EXPORT void Server_DestroyVehicle(alt::ICore* server, alt::IVehicle* baseObject);
 EXPORT void Server_DestroyBlip(alt::ICore* server, alt::IBlip* baseObject);

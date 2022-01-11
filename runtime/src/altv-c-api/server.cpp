@@ -1,5 +1,6 @@
 #include "server.h"
 #include "mvalue.h"
+#include <vector>
 
 void Server_LogInfo(alt::ICore* server, const char* str) {
     server->LogInfo(str);
@@ -178,6 +179,19 @@ alt::IColShape* Server_CreateColShapeCube(alt::ICore* server, position_t pos, po
 
 alt::IColShape* Server_CreateColShapeRectangle(alt::ICore* server, float x1, float y1, float x2, float y2, float z) {
     return server->CreateColShapeRectangle(x1, y1, x2, y2, z).Get();
+}
+
+alt::IColShape* Server_CreateColShapePolygon(alt::ICore* server, float minZ, float maxZ, vector2_t points[], int pointSize) {
+    std::vector<alt::Vector2f> convertedPoints(pointSize);
+    for (int i = 0; i < pointSize; i++)
+    {
+       alt::Vector2f point;
+       point[0] = points[i].x;
+       point[1] = points[i].y;
+       convertedPoints[i] = point;
+    }
+    
+    return server->CreateColShapePolygon(minZ, maxZ, convertedPoints).Get();
 }
 
 /*void Server_DestroyBaseObject(alt::ICore* server, alt::IBaseObject* baseObject) {

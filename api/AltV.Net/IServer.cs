@@ -127,6 +127,8 @@ namespace AltV.Net
 
         IColShape CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z);
 
+        IColShape CreateColShapePolygon(float minZ, float maxZ, Vector2[] points);
+
         void RemoveBlip(IBlip blip);
 
         void RemoveCheckpoint(ICheckpoint checkpoint);
