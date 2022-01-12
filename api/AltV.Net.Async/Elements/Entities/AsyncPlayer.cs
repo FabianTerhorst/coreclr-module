@@ -391,17 +391,26 @@ namespace AltV.Net.Async.Elements.Entities
         {
             AsyncContext.Enqueue(() => BaseObject.SetDateTime(day, month, year, hour, minute, second));
         }
-
+        
+        public void SetWeather(WeatherType weather)
+                 => SetWeather((uint)weather);
+        
         public void SetWeather(uint weather)
         {
             AsyncContext.Enqueue(() => BaseObject.SetWeather(weather));
         }
-
+        
+        public void GiveWeapon(WeaponModel weapon, int ammo, bool selectWeapon)
+                 => GiveWeapon((uint)weapon, int ammo, bool selectWeapon);
+        
         public void GiveWeapon(uint weapon, int ammo, bool selectWeapon)
         {
             AsyncContext.Enqueue(() => BaseObject.GiveWeapon(weapon, ammo, selectWeapon));
         }
 
+        public bool RemoveWeapon(WeaponModel weapon)
+                 => RemoveWeapon((uint)weapon); 
+                 
         public bool RemoveWeapon(uint weapon)
         {
             bool result = default;
