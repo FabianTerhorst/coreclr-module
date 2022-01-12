@@ -401,7 +401,7 @@ namespace AltV.Net.Async.Elements.Entities
         }
         
         public void GiveWeapon(WeaponModel weapon, int ammo, bool selectWeapon)
-                 => GiveWeapon((uint)weapon, int ammo, bool selectWeapon);
+                 => GiveWeapon((uint)weapon, ammo, selectWeapon);
         
         public void GiveWeapon(uint weapon, int ammo, bool selectWeapon)
         {
