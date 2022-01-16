@@ -702,12 +702,11 @@ namespace AltV.Net.Elements.Entities
 
         public void Despawn()
         {
-            throw new NotImplementedException();
-            //unsafe
-            //{
-            //    CheckIfEntityExists();
-            //    Server.Library.Player_Despawn(NativePointer);
-            //}
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Player_Despawn(NativePointer);
+            }
         }
 
         public void SetDateTime(int day, int month, int year, int hour, int minute, int second)
