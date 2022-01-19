@@ -147,8 +147,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, Position, nint> Core_CreateMValueVector3 { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueVoiceChannel { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void> Core_GetBranch { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void> Core_GetVersion { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetVersion { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ulong> Core_HashPassword { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsDebug { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_SetPassword { get; }
@@ -157,6 +157,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, void> Event_PlayerBeforeConnect_Cancel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint> Invoker_Create { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Invoker_Destroy { get; }
@@ -192,7 +193,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, void> Player_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, Position*, void> Player_GetAimPos { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetArmor { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Player_GetAuthToken { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetAuthToken { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Cloth*, void> Player_GetClothes { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, UIntArray*, void> Player_GetCurrentWeaponComponents { get; }
@@ -214,14 +215,14 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetHwidExHash { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetHwidHash { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Player_GetIP { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetIP { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetInvincible { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Player_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMoveSpeed { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Player_GetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetName { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetNetworkOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetPing { get; }
         public delegate* unmanaged[Cdecl]<nint, Position*, void> Player_GetPosition { get; }
@@ -324,8 +325,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, Position, float, nint> Server_CreateColShapeCircle { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, Position, nint> Server_CreateColShapeCube { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, float, float, nint> Server_CreateColShapeCylinder { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, nint> Server_CreateColShapeRectangle { get; }
         public delegate* unmanaged[Cdecl]<nint, float, float, Vector2[], int, nint> Server_CreateColShapePolygon { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, nint> Server_CreateColShapeRectangle { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, float, nint> Server_CreateColShapeSphere { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint> Server_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, nint> Server_CreateVoiceChannel { get; }
@@ -373,7 +374,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, void> Vehicle_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_DoesWheelHasTire { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetAppearanceDataBase64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetAppearanceDataBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float> Vehicle_GetArmoredWindowHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetArmoredWindowShootCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetAttached { get; }
@@ -382,16 +383,16 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetBodyHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetBumperDamageLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetCustomTires { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetDamageDataBase64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetDamageDataBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetDashboardColor { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetDimension { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetDirtLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetDoorState { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetDriver { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetEngineHealth { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetGameStateBase64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetGameStateBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetHeadlightColor { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetHealthDataBase64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetHealthDataBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetInteriorColor { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetLightsMultiplier { get; }
@@ -407,7 +408,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Vehicle_GetNeonColor { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetNetworkOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetNumberplateIndex { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetNumberplateText { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetNumberplateText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetPartBulletHoles { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetPartDamageLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetPearlColor { get; }
@@ -422,7 +423,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetRoofLivery { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetRoofState { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Vehicle_GetRotation { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetScriptDataBase64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetScriptDataBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSecondaryColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Vehicle_GetSecondaryColorRGB { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSpecialDarkness { get; }
@@ -720,8 +721,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, Position, nint> Core_CreateMValueVector3 { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueVoiceChannel { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void> Core_GetBranch { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void> Core_GetVersion { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetVersion { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ulong> Core_HashPassword { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsDebug { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_SetPassword { get; }
@@ -730,6 +731,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, void> Event_PlayerBeforeConnect_Cancel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint> Invoker_Create { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Invoker_Destroy { get; }
@@ -765,7 +767,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, void> Player_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, Position*, void> Player_GetAimPos { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetArmor { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Player_GetAuthToken { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetAuthToken { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, Cloth*, void> Player_GetClothes { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, UIntArray*, void> Player_GetCurrentWeaponComponents { get; }
@@ -787,14 +789,14 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetHwidExHash { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Player_GetHwidHash { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Player_GetIP { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetIP { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetInvincible { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Player_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMoveSpeed { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Player_GetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetName { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetNetworkOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetPing { get; }
         public delegate* unmanaged[Cdecl]<nint, Position*, void> Player_GetPosition { get; }
@@ -897,8 +899,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, Position, float, nint> Server_CreateColShapeCircle { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, Position, nint> Server_CreateColShapeCube { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, float, float, nint> Server_CreateColShapeCylinder { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, nint> Server_CreateColShapeRectangle { get; }
         public delegate* unmanaged[Cdecl]<nint, float, float, Vector2[], int, nint> Server_CreateColShapePolygon { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, nint> Server_CreateColShapeRectangle { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, float, nint> Server_CreateColShapeSphere { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint> Server_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, nint> Server_CreateVoiceChannel { get; }
@@ -946,7 +948,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, void> Vehicle_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Detach { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_DoesWheelHasTire { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetAppearanceDataBase64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetAppearanceDataBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float> Vehicle_GetArmoredWindowHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetArmoredWindowShootCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetAttached { get; }
@@ -955,16 +957,16 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetBodyHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetBumperDamageLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetCustomTires { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetDamageDataBase64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetDamageDataBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetDashboardColor { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetDimension { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetDirtLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetDoorState { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetDriver { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Vehicle_GetEngineHealth { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetGameStateBase64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetGameStateBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetHeadlightColor { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetHealthDataBase64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetHealthDataBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetInteriorColor { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetLightsMultiplier { get; }
@@ -980,7 +982,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Vehicle_GetNeonColor { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetNetworkOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetNumberplateIndex { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetNumberplateText { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetNumberplateText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetPartBulletHoles { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetPartDamageLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetPearlColor { get; }
@@ -995,7 +997,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetRoofLivery { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetRoofState { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation*, void> Vehicle_GetRotation { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Vehicle_GetScriptDataBase64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Vehicle_GetScriptDataBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSecondaryColor { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Vehicle_GetSecondaryColorRGB { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSpecialDarkness { get; }
@@ -1297,8 +1299,8 @@ namespace AltV.Net.Native
             Core_CreateMValueVector3 = (delegate* unmanaged[Cdecl]<nint, Position, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueVector3");
             Core_CreateMValueVehicle = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueVehicle");
             Core_CreateMValueVoiceChannel = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueVoiceChannel");
-            Core_GetBranch = (delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void>) NativeLibrary.GetExport(handle, "Core_GetBranch");
-            Core_GetVersion = (delegate* unmanaged[Cdecl]<nint, nint*, ulong*, void>) NativeLibrary.GetExport(handle, "Core_GetVersion");
+            Core_GetBranch = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetBranch");
+            Core_GetVersion = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetVersion");
             Core_HashPassword = (delegate* unmanaged[Cdecl]<nint, nint, ulong>) NativeLibrary.GetExport(handle, "Core_HashPassword");
             Core_IsDebug = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsDebug");
             Core_SetPassword = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_SetPassword");
@@ -1307,6 +1309,7 @@ namespace AltV.Net.Native
             Event_PlayerBeforeConnect_Cancel = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Event_PlayerBeforeConnect_Cancel");
             Event_WasCancelled = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Event_WasCancelled");
             FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeCharArray");
+            FreeString = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeString");
             FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) NativeLibrary.GetExport(handle, "FreeUIntArray");
             Invoker_Create = (delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint>) NativeLibrary.GetExport(handle, "Invoker_Create");
             Invoker_Destroy = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Invoker_Destroy");
@@ -1342,7 +1345,7 @@ namespace AltV.Net.Native
             Player_Detach = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Player_Detach");
             Player_GetAimPos = (delegate* unmanaged[Cdecl]<nint, Position*, void>) NativeLibrary.GetExport(handle, "Player_GetAimPos");
             Player_GetArmor = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetArmor");
-            Player_GetAuthToken = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Player_GetAuthToken");
+            Player_GetAuthToken = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Player_GetAuthToken");
             Player_GetClothes = (delegate* unmanaged[Cdecl]<nint, byte, Cloth*, void>) NativeLibrary.GetExport(handle, "Player_GetClothes");
             Player_GetCurrentWeapon = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Player_GetCurrentWeapon");
             Player_GetCurrentWeaponComponents = (delegate* unmanaged[Cdecl]<nint, UIntArray*, void>) NativeLibrary.GetExport(handle, "Player_GetCurrentWeaponComponents");
@@ -1364,14 +1367,14 @@ namespace AltV.Net.Native
             Player_GetHwidExHash = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Player_GetHwidExHash");
             Player_GetHwidHash = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Player_GetHwidHash");
             Player_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetID");
-            Player_GetIP = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Player_GetIP");
+            Player_GetIP = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Player_GetIP");
             Player_GetInvincible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_GetInvincible");
             Player_GetMaxArmor = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetMaxArmor");
             Player_GetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetMaxHealth");
             Player_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Player_GetMetaData");
             Player_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Player_GetModel");
             Player_GetMoveSpeed = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Player_GetMoveSpeed");
-            Player_GetName = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Player_GetName");
+            Player_GetName = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Player_GetName");
             Player_GetNetworkOwner = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Player_GetNetworkOwner");
             Player_GetPing = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Player_GetPing");
             Player_GetPosition = (delegate* unmanaged[Cdecl]<nint, Position*, void>) NativeLibrary.GetExport(handle, "Player_GetPosition");
@@ -1474,8 +1477,8 @@ namespace AltV.Net.Native
             Server_CreateColShapeCircle = (delegate* unmanaged[Cdecl]<nint, Position, float, nint>) NativeLibrary.GetExport(handle, "Server_CreateColShapeCircle");
             Server_CreateColShapeCube = (delegate* unmanaged[Cdecl]<nint, Position, Position, nint>) NativeLibrary.GetExport(handle, "Server_CreateColShapeCube");
             Server_CreateColShapeCylinder = (delegate* unmanaged[Cdecl]<nint, Position, float, float, nint>) NativeLibrary.GetExport(handle, "Server_CreateColShapeCylinder");
-            Server_CreateColShapeRectangle = (delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, nint>) NativeLibrary.GetExport(handle, "Server_CreateColShapeRectangle");
             Server_CreateColShapePolygon = (delegate* unmanaged[Cdecl]<nint, float, float, Vector2[], int, nint>) NativeLibrary.GetExport(handle, "Server_CreateColShapePolygon");
+            Server_CreateColShapeRectangle = (delegate* unmanaged[Cdecl]<nint, float, float, float, float, float, nint>) NativeLibrary.GetExport(handle, "Server_CreateColShapeRectangle");
             Server_CreateColShapeSphere = (delegate* unmanaged[Cdecl]<nint, Position, float, nint>) NativeLibrary.GetExport(handle, "Server_CreateColShapeSphere");
             Server_CreateVehicle = (delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint>) NativeLibrary.GetExport(handle, "Server_CreateVehicle");
             Server_CreateVoiceChannel = (delegate* unmanaged[Cdecl]<nint, byte, float, nint>) NativeLibrary.GetExport(handle, "Server_CreateVoiceChannel");
@@ -1523,7 +1526,7 @@ namespace AltV.Net.Native
             Vehicle_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Vehicle_DeleteSyncedMetaData");
             Vehicle_Detach = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Vehicle_Detach");
             Vehicle_DoesWheelHasTire = (delegate* unmanaged[Cdecl]<nint, byte, byte>) NativeLibrary.GetExport(handle, "Vehicle_DoesWheelHasTire");
-            Vehicle_GetAppearanceDataBase64 = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetAppearanceDataBase64");
+            Vehicle_GetAppearanceDataBase64 = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetAppearanceDataBase64");
             Vehicle_GetArmoredWindowHealth = (delegate* unmanaged[Cdecl]<nint, byte, float>) NativeLibrary.GetExport(handle, "Vehicle_GetArmoredWindowHealth");
             Vehicle_GetArmoredWindowShootCount = (delegate* unmanaged[Cdecl]<nint, byte, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetArmoredWindowShootCount");
             Vehicle_GetAttached = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetAttached");
@@ -1532,16 +1535,16 @@ namespace AltV.Net.Native
             Vehicle_GetBodyHealth = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Vehicle_GetBodyHealth");
             Vehicle_GetBumperDamageLevel = (delegate* unmanaged[Cdecl]<nint, byte, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetBumperDamageLevel");
             Vehicle_GetCustomTires = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetCustomTires");
-            Vehicle_GetDamageDataBase64 = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetDamageDataBase64");
+            Vehicle_GetDamageDataBase64 = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetDamageDataBase64");
             Vehicle_GetDashboardColor = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetDashboardColor");
             Vehicle_GetDimension = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Vehicle_GetDimension");
             Vehicle_GetDirtLevel = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetDirtLevel");
             Vehicle_GetDoorState = (delegate* unmanaged[Cdecl]<nint, byte, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetDoorState");
             Vehicle_GetDriver = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetDriver");
             Vehicle_GetEngineHealth = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Vehicle_GetEngineHealth");
-            Vehicle_GetGameStateBase64 = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetGameStateBase64");
+            Vehicle_GetGameStateBase64 = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetGameStateBase64");
             Vehicle_GetHeadlightColor = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetHeadlightColor");
-            Vehicle_GetHealthDataBase64 = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetHealthDataBase64");
+            Vehicle_GetHealthDataBase64 = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetHealthDataBase64");
             Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetID");
             Vehicle_GetInteriorColor = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetInteriorColor");
             Vehicle_GetLightsMultiplier = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Vehicle_GetLightsMultiplier");
@@ -1557,7 +1560,7 @@ namespace AltV.Net.Native
             Vehicle_GetNeonColor = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetNeonColor");
             Vehicle_GetNetworkOwner = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetNetworkOwner");
             Vehicle_GetNumberplateIndex = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Vehicle_GetNumberplateIndex");
-            Vehicle_GetNumberplateText = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetNumberplateText");
+            Vehicle_GetNumberplateText = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetNumberplateText");
             Vehicle_GetPartBulletHoles = (delegate* unmanaged[Cdecl]<nint, byte, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetPartBulletHoles");
             Vehicle_GetPartDamageLevel = (delegate* unmanaged[Cdecl]<nint, byte, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetPartDamageLevel");
             Vehicle_GetPearlColor = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetPearlColor");
@@ -1572,7 +1575,7 @@ namespace AltV.Net.Native
             Vehicle_GetRoofLivery = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetRoofLivery");
             Vehicle_GetRoofState = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetRoofState");
             Vehicle_GetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetRotation");
-            Vehicle_GetScriptDataBase64 = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetScriptDataBase64");
+            Vehicle_GetScriptDataBase64 = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetScriptDataBase64");
             Vehicle_GetSecondaryColor = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetSecondaryColor");
             Vehicle_GetSecondaryColorRGB = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) NativeLibrary.GetExport(handle, "Vehicle_GetSecondaryColorRGB");
             Vehicle_GetSpecialDarkness = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetSpecialDarkness");

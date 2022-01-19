@@ -88,7 +88,7 @@ EXPORT uint8_t Vehicle_GetSpecialDarkness(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetSpecialDarkness(alt::IVehicle* vehicle, uint8_t value);
 EXPORT uint32_t Vehicle_GetNumberplateIndex(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetNumberplateIndex(alt::IVehicle* vehicle, uint32_t index);
-EXPORT void Vehicle_GetNumberplateText(alt::IVehicle* vehicle, const char*&text);
+EXPORT const char* Vehicle_GetNumberplateText(alt::IVehicle* vehicle, int32_t& size);
 EXPORT void Vehicle_SetNumberplateText(alt::IVehicle* vehicle, const char* text);
 EXPORT uint8_t Vehicle_GetWindowTint(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetWindowTint(alt::IVehicle* vehicle, uint8_t tint);
@@ -107,7 +107,7 @@ EXPORT void Vehicle_SetLivery(alt::IVehicle* vehicle, uint8_t livery);
 EXPORT uint8_t Vehicle_GetRoofLivery(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetRoofLivery(alt::IVehicle* vehicle, uint8_t roofLivery);
 
-EXPORT void Vehicle_GetAppearanceDataBase64(alt::IVehicle* vehicle, const char*&base64);
+EXPORT const char* Vehicle_GetAppearanceDataBase64(alt::IVehicle* vehicle, int32_t& size);
 EXPORT void Vehicle_LoadAppearanceDataFromBase64(alt::IVehicle* vehicle, const char* base64);
 
 EXPORT uint8_t Vehicle_IsEngineOn(alt::IVehicle* vehicle);
@@ -146,7 +146,7 @@ EXPORT uint8_t Vehicle_IsFlamethrowerActive(alt::IVehicle* vehicle);
 EXPORT float Vehicle_GetLightsMultiplier(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetLightsMultiplier(alt::IVehicle* vehicle, float multiplier);
 
-EXPORT void Vehicle_GetGameStateBase64(alt::IVehicle* vehicle, const char*&text);
+EXPORT const char* Vehicle_GetGameStateBase64(alt::IVehicle* vehicle, int32_t& size);
 EXPORT void Vehicle_LoadGameStateFromBase64(alt::IVehicle* vehicle, const char* base64);
 
 //vehicle health
@@ -182,7 +182,7 @@ EXPORT void Vehicle_SetBodyHealth(alt::IVehicle* vehicle, uint32_t health);
 EXPORT uint32_t Vehicle_GetBodyAdditionalHealth(alt::IVehicle* vehicle);
 EXPORT void Vehicle_SetBodyAdditionalHealth(alt::IVehicle* vehicle, uint32_t health);
 
-EXPORT void Vehicle_GetHealthDataBase64(alt::IVehicle* vehicle, const char*&text);
+EXPORT const char* Vehicle_GetHealthDataBase64(alt::IVehicle* vehicle, int32_t& size);
 EXPORT void Vehicle_LoadHealthDataFromBase64(alt::IVehicle* vehicle, const char* base64);
 
 // vehicle damage
@@ -204,14 +204,14 @@ EXPORT void Vehicle_SetArmoredWindowShootCount(alt::IVehicle* vehicle, uint8_t w
 EXPORT uint8_t Vehicle_GetBumperDamageLevel(alt::IVehicle* vehicle, uint8_t bumperId);
 EXPORT void Vehicle_SetBumperDamageLevel(alt::IVehicle* vehicle, uint8_t bumperId, uint8_t damageLevel);
 
-EXPORT void Vehicle_GetDamageDataBase64(alt::IVehicle* vehicle, const char*&text);
+EXPORT const char* Vehicle_GetDamageDataBase64(alt::IVehicle* vehicle, int32_t& size);
 EXPORT void Vehicle_LoadDamageDataFromBase64(alt::IVehicle* vehicle, const char* base64);
 
 //vehicle script data
 EXPORT void Vehicle_SetManualEngineControl(alt::IVehicle* vehicle, uint8_t state);
 EXPORT uint8_t Vehicle_IsManualEngineControl(alt::IVehicle* vehicle);
 
-EXPORT void Vehicle_GetScriptDataBase64(alt::IVehicle* vehicle, const char*&base64);
+EXPORT const char* Vehicle_GetScriptDataBase64(alt::IVehicle* vehicle, int32_t& size);
 EXPORT void Vehicle_LoadScriptDataFromBase64(alt::IVehicle* vehicle, const char* base64);
 
 EXPORT void Vehicle_GetPositionCoords2(alt::IVehicle* vehicle, float* position_x, float* position_y, float* position_z, float* rotation_x, float* rotation_y, float* rotation_z, int* dimension);

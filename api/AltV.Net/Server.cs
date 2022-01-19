@@ -56,10 +56,9 @@ namespace AltV.Net
                 unsafe
                 {
                     if (version != null) return version;
-                    var ptr = IntPtr.Zero;
-                    ulong size = 0;
-                    Library.Core_GetVersion(NativePointer, &ptr, &size);
-                    version = Marshal.PtrToStringUTF8(ptr, (int) size);
+                    var size = 0;
+                    version = PtrToStringUtf8AndFree(
+                        Library.Core_GetVersion(NativePointer, &size), size);
 
                     return version;
                 }
@@ -73,10 +72,9 @@ namespace AltV.Net
                 unsafe
                 {
                     if (branch != null) return branch;
-                    var ptr = IntPtr.Zero;
-                    ulong size = 0;
-                    Library.Core_GetBranch(NativePointer, &ptr, &size);
-                    branch = Marshal.PtrToStringUTF8(ptr, (int) size);
+                    var size = 0;
+                    branch = PtrToStringUtf8AndFree(
+                        Library.Core_GetBranch(NativePointer, &size), size);
 
                     return branch;
                 }
@@ -1392,6 +1390,16 @@ namespace AltV.Net
                 var result = Marshal.PtrToStringUTF8(ptr);
                 Marshal.FreeHGlobal(valuePtr);
                 return result;
+            }
+        }
+        
+        public string PtrToStringUtf8AndFree(nint str, int size)
+        {
+            unsafe
+            {
+                var stringResult = Marshal.PtrToStringUTF8(str, size);
+                Library.FreeString(str);
+                return stringResult;
             }
         }
     }

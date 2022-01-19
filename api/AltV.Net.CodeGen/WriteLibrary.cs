@@ -80,6 +80,7 @@ namespace AltV.Net.CodeGen
             ["alt::MValueDict&"] = "MValue*", //no c# representation for MValue dictionary memory layout yet
             ["alt::ICheckpoint*"] = "nint",
             ["uint64_t&"] = "ulong*",
+            ["int32_t&"] = "int*",
             ["alt::MValueFunction&"] =
                 "MValue*", //no c# representation for MValue function memory layout yet, this is only in commented code and not required
             ["alt::ICore*"] = "nint",
@@ -112,10 +113,11 @@ namespace AltV.Net.CodeGen
             ["void*"] = "nint",
             ["const void*"] = "nint",
             ["weapon_t*[]"] = "WeaponData[]",
-            ["alt::Array<weapon_t>&"] = "WeaponArray*"
+            ["alt::Array<weapon_t>&"] = "WeaponArray*",
+            ["vector2_t[]"] = "Vector2[]"
         };
 
-        private static string TypeToCSharp(string cType, string name = null)
+        private static string TypeToCSharp(string cType, string name, ParseExports.CMethod method)
         {
             if (name == "base64" && cType == "const char*") return "string";
             cType = cType.Replace(" &", "&").Replace(" *", "*");
@@ -124,7 +126,7 @@ namespace AltV.Net.CodeGen
                 return cSharpType;
             }
 
-            throw new ArgumentException("No csharp type found for:" + cType + " param:" + name);
+            throw new ArgumentException("No csharp type found for:" + cType + " param:" + name + " in method:" + method.Name);
         }
 
         private static string TransformParameterName(string parameterName)
@@ -169,11 +171,11 @@ using AltV.Net.Elements.Entities;");
 
             foreach (var method in methods)
             {
-                var template = $@"        public delegate* unmanaged[Cdecl]<{string.Join(", ", method.Params.Select(param => TypeToCSharp(param.Type, param.Name)).ToArray())}, {TypeToCSharp(method.ReturnType)}> {method.Name} {{ get; }}";
+                var template = $@"        public delegate* unmanaged[Cdecl]<{string.Join(", ", method.Params.Select(param => TypeToCSharp(param.Type, param.Name, method)).ToArray())}, {TypeToCSharp(method.ReturnType, null, method)}> {method.Name} {{ get; }}";
                 template += Environment.NewLine;
                 properties.Append(template);
 
-                var exportTemplate = $@"            {method.Name} = (delegate* unmanaged[Cdecl]<{string.Join(", ", method.Params.Select(param => TypeToCSharp(param.Type, param.Name)).ToArray())}, {TypeToCSharp(method.ReturnType)}>) NativeLibrary.GetExport(handle, {Quote}{method.Name}{Quote});";
+                var exportTemplate = $@"            {method.Name} = (delegate* unmanaged[Cdecl]<{string.Join(", ", method.Params.Select(param => TypeToCSharp(param.Type, param.Name, method)).ToArray())}, {TypeToCSharp(method.ReturnType, null, method)}>) NativeLibrary.GetExport(handle, {Quote}{method.Name}{Quote});";
                 exportTemplate += Environment.NewLine;
                 exports.Append(exportTemplate);
             }
