@@ -57,8 +57,28 @@ namespace AltV.Net.CodeGen
             {
                 methodReturnTypeEndNewLine = int.MaxValue;
             }
+            
+            var firstOpenedBracketIndex = span.IndexOf(OpenedBracketExpression);
+            bool foundString = false;
+            int methodNameStartIndex = -1;
+            while (firstOpenedBracketIndex > 0)
+            {
+                var currentChar = span[firstOpenedBracketIndex];
+                if (foundString)
+                {
+                    if (currentChar == ' ')
+                    {
+                        methodNameStartIndex = firstOpenedBracketIndex;
+                        break;
+                    }
+                } else if (currentChar != ' ')
+                {
+                    foundString = true;
+                }
+                firstOpenedBracketIndex--;
+            }
 
-            var methodReturnTypeEnd = Math.Min(methodReturnTypeEndBlank, methodReturnTypeEndNewLine);
+            var methodReturnTypeEnd = Math.Max(methodNameStartIndex, Math.Min(methodReturnTypeEndBlank, methodReturnTypeEndNewLine));
             
             if (methodReturnTypeEnd == -1)
             {

@@ -229,5 +229,7 @@ namespace AltV.Net
         bool FileExists(string path);
 
         string FileRead(string path);
+
+        string PtrToStringUtf8AndFree(nint str, int size);
     }
 }

@@ -76,18 +76,22 @@ void Resource_SetExports(alt::ICore* core, alt::IResource* resource, alt::MValue
     resource->SetExports(dict);
 }
 
+// needs migration to std::string in cpp-sdk
 void Resource_GetPath(alt::IResource* resource, const char*&text) {
     text = resource->GetPath().CStr();
 }
 
+// needs migration to std::string in cpp-sdk
 void Resource_GetName(alt::IResource* resource, const char*&text) {
     text = resource->GetName().CStr();
 }
 
+// needs migration to std::string in cpp-sdk
 void Resource_GetMain(alt::IResource* resource, const char*&text) {
     text = resource->GetMain().CStr();
 }
 
+// needs migration to std::string in cpp-sdk
 void Resource_GetType(alt::IResource* resource, const char*&text) {
     text = resource->GetType().CStr();
 }

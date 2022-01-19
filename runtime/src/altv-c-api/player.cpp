@@ -1,5 +1,7 @@
 #include "player.h"
 
+#include "strings.h"
+
 // Entity
 
 uint16_t Player_GetID(alt::IPlayer* player) {
@@ -153,8 +155,8 @@ void Player_Despawn(alt::IPlayer* player) {
     player->Despawn();
 }
 
-void Player_GetName(alt::IPlayer* player, const char*&name) {
-    name = player->GetName().c_str();
+const char* Player_GetName(alt::IPlayer* player, int32_t& size) {
+    return AllocateString(player->GetName(), size);
 }
 
 uint64_t Player_GetSocialID(alt::IPlayer* player) {
@@ -169,8 +171,8 @@ uint64_t Player_GetHwidExHash(alt::IPlayer* player) {
     return player->GetHwidExHash();
 }
 
-void Player_GetAuthToken(alt::IPlayer* player, const char*&name) {
-    name = player->GetAuthToken().c_str();
+const char* Player_GetAuthToken(alt::IPlayer* player, int32_t& size) {
+    return AllocateString(player->GetName(), size);
 }
 
 uint16_t Player_GetHealth(alt::IPlayer* player) {
@@ -189,8 +191,8 @@ void Player_SetMaxHealth(alt::IPlayer* player, uint16_t maxHealth) {
     player->SetMaxHealth(maxHealth);
 }
 
-void Player_GetIP(alt::IPlayer* player, const char*&ip) {
-    ip = player->GetIP().c_str();
+const char* Player_GetIP(alt::IPlayer* player, int32_t& size) {
+    return AllocateString(player->GetIP(), size);
 }
 
 void Player_SetDateTime(alt::IPlayer* player, int day, int month, int year, int hour, int minute, int second) {
@@ -399,7 +401,7 @@ uint32_t Player_GetPing(alt::IPlayer* player) {
     return player->GetPing();
 }
 
-void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
+/*void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
     player_struct->id = player->GetID();
     auto position = player->GetPosition();
     player_struct->position.x = position.x;
@@ -423,11 +425,11 @@ void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
     player_struct->head_rotation.yaw = headRotation.yaw;
     player_struct->armor = player->GetArmour();
     player_struct->move_speed = player->GetMoveSpeed();
-    /*auto name = player->GetName();
+    auto name = player->GetName();
     // Free in c# after async method ends
     auto copiedName = new char[name.GetSize() + 1];
     memcpy(copiedName, name.GetData(), name.GetSize());
-    copiedName[name.GetSize()] = '\0';*/
+    copiedName[name.GetSize()] = '\0';
     //player_struct->name = copiedName;
     player_struct->health = player->GetHealth();
     player_struct->is_in_ragdoll = player->IsInRagdoll();
@@ -443,7 +445,7 @@ void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
 
 void Player_Copy_Dispose(player_struct_t* player_struct) {
     delete[] player_struct->name;
-}
+}*/
 
 void Player_GetPositionCoords2(alt::IPlayer* player, float* position_x, float* position_y, float* position_z,float *rotation_x,float *rotation_y,float *rotation_z,int* dimension) {
     auto playerPosition = player->GetPosition();

@@ -1,5 +1,6 @@
 #include "server.h"
 #include "mvalue.h"
+#include "strings.h"
 #include <vector>
 
 void Server_LogInfo(alt::ICore* server, const char* str) {
@@ -34,6 +35,7 @@ uint8_t Server_FileExists(alt::ICore* server, const char* path) {
     return server->FileExists(path);
 }
 
+//TODO: needs migration to std::string in cpp-sdk
 void Server_FileRead(alt::ICore* server, const char* path, const char*&text) {
     text = server->FileRead(path).CStr();
 }
@@ -448,16 +450,12 @@ uint8_t Core_IsDebug(alt::ICore* core) {
     return core->IsDebug();
 }
 
-void Core_GetVersion(alt::ICore* core, const char*&value, uint64_t &size) {
-    auto version = core->GetVersion();
-    value = version.c_str();
-    size = version.size();
+const char* Core_GetVersion(alt::ICore* core, int32_t &size) {
+    return AllocateString(core->GetVersion(), size);
 }
 
-void Core_GetBranch(alt::ICore* core, const char*&value, uint64_t &size) {
-    auto version = core->GetBranch();
-    value = version.c_str();
-    size = version.size();
+const char* Core_GetBranch(alt::ICore* core, int32_t &size) {
+    return AllocateString(core->GetBranch(), size);
 }
 
 void Core_SetPassword(alt::ICore* core, const char* value) {
