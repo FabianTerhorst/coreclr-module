@@ -1073,7 +1073,7 @@ namespace AltV.Net.Async.Elements.Entities
             AsyncContext.Enqueue(() => BaseObject.Repair());
         }
 
-        public Vector3 Velocity
+        public Position Velocity
         {
             get
             {

@@ -287,6 +287,14 @@ namespace AltV.Net
             }
         }
 
+        public void StopServer()
+        {
+            unsafe
+            {
+                Library.Core_StopServer(NativePointer);  
+            }
+        }
+
         public void TriggerServerEvent(string eventName, MValueConst[] args)
         {
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
@@ -589,12 +597,26 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                var ptr = Library.Server_CreateBlipAttached(NativePointer,
-                    player?.NativePointer ?? IntPtr.Zero,
-                    type, entityAttach.NativePointer);
-                if (ptr == IntPtr.Zero) return null;
-                blipPool.Create(this, ptr, out var blip);
-                return blip;
+                if (entityAttach is IPlayer playerAttach)
+                {
+                    var ptr = Library.Server_CreateBlipAttachedPlayer(NativePointer,
+                        player?.NativePointer ?? IntPtr.Zero,
+                        type, playerAttach.NativePointer);
+                    if (ptr == IntPtr.Zero) return null;
+                    blipPool.Create(this, ptr, out var blip);
+                    return blip;
+                }
+                if (entityAttach is IVehicle vehicleAttach)
+                {
+                    var ptr = Library.Server_CreateBlipAttachedVehicle(NativePointer,
+                        player?.NativePointer ?? IntPtr.Zero,
+                        type, vehicleAttach.NativePointer);
+                    if (ptr == IntPtr.Zero) return null;
+                    blipPool.Create(this, ptr, out var blip);
+                    return blip;
+                }
+
+                return null;
             }
         }
 
@@ -665,6 +687,19 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 var ptr = Library.Server_CreateColShapeRectangle(NativePointer, x1, y1, x2, y2, z);
+                if (ptr == IntPtr.Zero) return null;
+                colShapePool.Create(this, ptr, out var colShape);
+                return colShape;
+            }
+        }
+
+        public IColShape CreateColShapePolygon(float minZ, float maxZ, Vector2[] points)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                int size = points.Count();
+                var ptr = Library.Server_CreateColShapePolygon(NativePointer, minZ, maxZ, points, size);
                 if (ptr == IntPtr.Zero) return null;
                 colShapePool.Create(this, ptr, out var colShape);
                 return colShape;
@@ -1050,7 +1085,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.BaseObject,
                     Library.Core_CreateMValueCheckpoint(NativePointer, value.NativePointer));
             }
         }
@@ -1059,7 +1094,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.BaseObject,
                     Library.Core_CreateMValueBlip(NativePointer, value.NativePointer));
             }
         }
@@ -1068,7 +1103,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.BaseObject,
                     Library.Core_CreateMValueVoiceChannel(NativePointer, value.NativePointer));
             }
         }
@@ -1077,7 +1112,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.BaseObject,
                     Library.Core_CreateMValuePlayer(NativePointer, value.NativePointer));
             }
         }
@@ -1086,7 +1121,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.BaseObject,
                     Library.Core_CreateMValueVehicle(NativePointer, value.NativePointer));
             }
         }
@@ -1104,8 +1139,17 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.Vector3,
                     Library.Core_CreateMValueVector3(NativePointer, value));
+            }
+        }
+        
+        public void CreateMValueVector2(out MValueConst mValue, Vector2 value)
+        {
+            unsafe
+            {
+                mValue = new MValueConst(MValueConst.Type.Vector2,
+                    Library.Core_CreateMValueVector2(NativePointer, value));
             }
         }
 
@@ -1113,7 +1157,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.Rgba,
                     Library.Core_CreateMValueRgba(NativePointer, value));
             }
         }
@@ -1125,7 +1169,7 @@ namespace AltV.Net
                 var size = value.Length;
                 var dataPtr = Marshal.AllocHGlobal(size);
                 Marshal.Copy(value, 0, dataPtr, size);
-                mValue = new MValueConst(MValueConst.Type.Entity,
+                mValue = new MValueConst(MValueConst.Type.ByteArray,
                     Library.Core_CreateMValueByteArray(NativePointer, (ulong) size, dataPtr));
                 Marshal.FreeHGlobal(dataPtr);
             }
@@ -1300,6 +1344,9 @@ namespace AltV.Net
                     return;
                 case Vector3 position:
                     CreateMValueVector3(out mValue, position);
+                    return;
+                case Vector2 value:
+                    CreateMValueVector2(out mValue, value);
                     return;
                 default:
                     Alt.Log("can't convert type:" + obj.GetType());

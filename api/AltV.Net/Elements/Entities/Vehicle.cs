@@ -1665,14 +1665,14 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public Vector3 Velocity
+        public Position Velocity
         {
             get
             {
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var position = Vector3.Zero;
+                    var position = Position.Zero;
                     Server.Library.Vehicle_GetVelocity(NativePointer, &position);
                     return position;
                 }

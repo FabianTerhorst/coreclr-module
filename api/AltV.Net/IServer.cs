@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -55,6 +56,8 @@ namespace AltV.Net
         uint Hash(string hash);
 
         void SetPassword(string password);
+
+        void StopServer();
 
         void TriggerServerEvent(string eventName, MValueConst[] args);
 
@@ -123,6 +126,8 @@ namespace AltV.Net
         IColShape CreateColShapeCube(Position pos, Position pos2);
 
         IColShape CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z);
+
+        IColShape CreateColShapePolygon(float minZ, float maxZ, Vector2[] points);
 
         void RemoveBlip(IBlip blip);
 
@@ -210,6 +215,8 @@ namespace AltV.Net
         void CreateMValueFunction(out MValueConst mValue, IntPtr value);
         
         void CreateMValueVector3(out MValueConst mValue, Position value);
+        
+        void CreateMValueVector2(out MValueConst mValue, Vector2 value);
         
         void CreateMValueRgba(out MValueConst mValue, Rgba value);
         

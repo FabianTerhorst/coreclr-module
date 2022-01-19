@@ -111,7 +111,8 @@ namespace AltV.Net.CodeGen
             ["head_overlay_t&"] = "HeadOverlay*",
             ["void*"] = "nint",
             ["const void*"] = "nint",
-            ["weapon_t*[]"] = "WeaponData[]"
+            ["weapon_t*[]"] = "WeaponData[]",
+            ["alt::Array<weapon_t>&"] = "WeaponArray*"
         };
 
         private static string TypeToCSharp(string cType, string name = null)
@@ -154,6 +155,7 @@ namespace AltV.Net.CodeGen
             var exports = new StringBuilder();
             var imports = new StringBuilder();
             imports.Append($@"using System;
+using System.Numerics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security;

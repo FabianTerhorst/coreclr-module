@@ -393,7 +393,7 @@ namespace AltV.Net.FunctionParser
                     }
 
                     return ParseArray(in mValue, type, typeInfo);
-                case MValueConst.Type.Entity:
+                case MValueConst.Type.BaseObject:
                     return ParseEntity(in mValue, type, typeInfo);
                 case MValueConst.Type.Dict:
                     if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
@@ -507,7 +507,7 @@ namespace AltV.Net.FunctionParser
 
                     obj = GetDefault(type, typeInfo);
                     return false;
-                case MValueConst.Type.Entity:
+                case MValueConst.Type.BaseObject:
                     if (type == FunctionTypes.Obj ||
                         (typeInfo?.IsEntity ?? type.GetInterfaces().Contains(FunctionTypes.Entity)))
                     {
@@ -586,7 +586,7 @@ namespace AltV.Net.FunctionParser
             FunctionTypeInfo typeInfo)
         {
             // Types doesn't match
-            if (mValue.type != MValueConst.Type.Entity) return null;
+            if (mValue.type != MValueConst.Type.BaseObject) return null;
             var entityType = BaseObjectType.Undefined;
 
             var entityPointer = mValue.GetEntityPointer(ref entityType);

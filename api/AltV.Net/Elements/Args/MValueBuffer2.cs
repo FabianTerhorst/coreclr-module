@@ -363,7 +363,7 @@ namespace AltV.Net.Elements.Args
 
             var mValue = values[position++];
             size--;
-            if (mValue.type != MValueConst.Type.Entity)
+            if (mValue.type != MValueConst.Type.BaseObject)
             {
                 value = default;
                 return false;

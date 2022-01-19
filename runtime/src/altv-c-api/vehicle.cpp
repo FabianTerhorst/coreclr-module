@@ -53,54 +53,54 @@ void Vehicle_SetDimension(alt::IVehicle* entity, int32_t dimension) {
 }
 
 alt::MValueConst* Vehicle_GetMetaData(alt::IVehicle* vehicle, const char* key) {
-    return new alt::MValueConst(vehicle->GetMetaData(alt::String(key)));
+    return new alt::MValueConst(vehicle->GetMetaData(key));
 }
 
 void Vehicle_SetMetaData(alt::IVehicle* entity, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
-    entity->SetMetaData(alt::String(key), val->Get()->Clone());
+    entity->SetMetaData(key, val->Get()->Clone());
 }
 
 uint8_t Vehicle_HasMetaData(alt::IVehicle* vehicle, const char* key) {
-    return vehicle->HasMetaData(alt::String(key));
+    return vehicle->HasMetaData(key);
 }
 
 void Vehicle_DeleteMetaData(alt::IVehicle* vehicle, const char* key) {
-    vehicle->DeleteMetaData(alt::String(key));
+    vehicle->DeleteMetaData(key);
 }
 
 alt::MValueConst* Vehicle_GetSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
-    return new alt::MValueConst(vehicle->GetSyncedMetaData(alt::String(key)));
+    return new alt::MValueConst(vehicle->GetSyncedMetaData(key));
 }
 
 void Vehicle_SetSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
-    entity->SetSyncedMetaData(alt::String(key), val->Get()->Clone());
+    entity->SetSyncedMetaData(key, val->Get()->Clone());
 }
 
 uint8_t Vehicle_HasSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
-    return vehicle->HasSyncedMetaData(alt::String(key));
+    return vehicle->HasSyncedMetaData(key);
 }
 
 void Vehicle_DeleteSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
-    vehicle->DeleteSyncedMetaData(alt::String(key));
+    vehicle->DeleteSyncedMetaData(key);
 }
 
 alt::MValueConst* Vehicle_GetStreamSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
-    return new alt::MValueConst(vehicle->GetStreamSyncedMetaData(alt::String(key)));
+    return new alt::MValueConst(vehicle->GetStreamSyncedMetaData(key));
 }
 
 void Vehicle_SetStreamSyncedMetaData(alt::IVehicle* entity, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
-    entity->SetStreamSyncedMetaData(alt::String(key), val->Get()->Clone());
+    entity->SetStreamSyncedMetaData(key, val->Get()->Clone());
 }
 
 uint8_t Vehicle_HasStreamSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
-    return vehicle->HasStreamSyncedMetaData(alt::String(key));
+    return vehicle->HasStreamSyncedMetaData(key);
 }
 
 void Vehicle_DeleteStreamSyncedMetaData(alt::IVehicle* vehicle, const char* key) {
-    vehicle->DeleteStreamSyncedMetaData(alt::String(key));
+    vehicle->DeleteStreamSyncedMetaData(key);
 }
 
 void Vehicle_AddRef(alt::IVehicle* vehicle) {
@@ -317,7 +317,7 @@ void Vehicle_SetNumberplateIndex(alt::IVehicle* vehicle, uint32_t index) {
 }
 
 void Vehicle_GetNumberplateText(alt::IVehicle* vehicle, const char*&text) {
-    text = vehicle->GetNumberplateText().CStr();
+    text = vehicle->GetNumberplateText().c_str();
 }
 
 void Vehicle_SetNumberplateText(alt::IVehicle* vehicle, const char* text) {
@@ -399,7 +399,7 @@ void Vehicle_SetRoofLivery(alt::IVehicle* vehicle, uint8_t roofLivery) {
 }
 
 void Vehicle_GetAppearanceDataBase64(alt::IVehicle* vehicle, const char*&base64) {
-    base64 = vehicle->GetAppearanceDataBase64().CStr();
+    base64 = vehicle->GetAppearanceDataBase64().c_str();
 }
 
 void Vehicle_LoadAppearanceDataFromBase64(alt::IVehicle* vehicle, const char* base64) {
@@ -495,7 +495,7 @@ void Vehicle_SetLightsMultiplier(alt::IVehicle* vehicle, float multiplier) {
 }
 
 void Vehicle_GetGameStateBase64(alt::IVehicle* vehicle, const char*&text) {
-    text = vehicle->GetGameStateBase64().CStr();
+    text = vehicle->GetGameStateBase64().c_str();
 }
 
 void Vehicle_LoadGameStateFromBase64(alt::IVehicle* vehicle, const char* base64) {
@@ -587,7 +587,7 @@ void Vehicle_SetBodyAdditionalHealth(alt::IVehicle* vehicle, uint32_t health) {
 }
 
 void Vehicle_GetHealthDataBase64(alt::IVehicle* vehicle, const char*&text) {
-    text = vehicle->GetHealthDataBase64().CStr();
+    text = vehicle->GetHealthDataBase64().c_str();
 }
 
 void Vehicle_LoadHealthDataFromBase64(alt::IVehicle* vehicle, const char* base64) {
@@ -663,7 +663,7 @@ void Vehicle_SetBumperDamageLevel(alt::IVehicle* vehicle, uint8_t bumperId, uint
 }
 
 void Vehicle_GetDamageDataBase64(alt::IVehicle* vehicle, const char*&text) {
-    text = vehicle->GetDamageDataBase64().CStr();
+    text = vehicle->GetDamageDataBase64().c_str();
 }
 
 void Vehicle_LoadDamageDataFromBase64(alt::IVehicle* vehicle, const char* base64) {
@@ -679,7 +679,7 @@ uint8_t Vehicle_IsManualEngineControl(alt::IVehicle* vehicle) {
 }
 
 void Vehicle_GetScriptDataBase64(alt::IVehicle* vehicle, const char*&base64) {
-    base64 = vehicle->GetScriptDataBase64().CStr();
+    base64 = vehicle->GetScriptDataBase64().c_str();
 }
 
 void Vehicle_LoadScriptDataFromBase64(alt::IVehicle* vehicle, const char* base64) {

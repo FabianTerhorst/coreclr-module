@@ -26,20 +26,20 @@ void Checkpoint_SetDimension(alt::ICheckpoint* checkpoint, int32_t dimension) {
 }
 
 alt::MValueConst* Checkpoint_GetMetaData(alt::ICheckpoint* checkpoint, const char* key) {
-    return new alt::MValueConst(checkpoint->GetMetaData(alt::String(key)));
+    return new alt::MValueConst(checkpoint->GetMetaData(key));
 }
 
 void Checkpoint_SetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
-    checkpoint->SetMetaData(alt::String(key), val->Get()->Clone());
+    checkpoint->SetMetaData(key, val->Get()->Clone());
 }
 
 uint8_t Checkpoint_HasMetaData(alt::ICheckpoint* checkpoint, const char* key) {
-    return checkpoint->HasMetaData(alt::String(key));
+    return checkpoint->HasMetaData(key);
 }
 
 void Checkpoint_DeleteMetaData(alt::ICheckpoint* checkpoint, const char* key) {
-    checkpoint->DeleteMetaData(alt::String(key));
+    checkpoint->DeleteMetaData(key);
 }
 
 void Checkpoint_AddRef(alt::ICheckpoint* checkpoint) {
