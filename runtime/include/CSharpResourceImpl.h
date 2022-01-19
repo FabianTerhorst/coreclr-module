@@ -7,6 +7,7 @@
 #endif
 
 #include <altv-cpp-api/SDK.h>
+#include <altv-cpp-api/types/IConnectionInfo.h>
 #include <altv-cpp-api/events/CMetaDataChangeEvent.h>
 #include <altv-cpp-api/events/CSyncedMetaDataChangeEvent.h>
 #include <altv-cpp-api/events/CVehicleDestroyEvent.h>
@@ -93,21 +94,21 @@ struct ClrConnectionInfo {
 
     ClrConnectionInfo() = default;
 
-    ClrConnectionInfo(alt::ConnectionInfo info) :
-    socialId(info.socialId), hwidHash(info.hwidHash), hwidExHash(info.hwidExHash),
-    isDebug(info.isDebug),
-    build(info.build), passwordHash(info.passwordHash) {
-        name = new char[info.name.length() + 1];
-        strcpy(name, info.name.c_str());
+    ClrConnectionInfo(alt::IConnectionInfo* info) :
+    socialId(info->GetSocialId()), hwidHash(info->GetHwIdHash()), hwidExHash(info->GetHwIdExHash()),
+    isDebug(info->GetIsDebug()),
+    build(info->GetBuild()), passwordHash(info->GetPasswordHash()) {
+        name = new char[info->GetName().length() + 1];
+        strcpy(name, info->GetName().c_str());
 
-        authToken = new char[info.authToken.length() + 1];
-        strcpy(authToken, info.authToken.c_str());
+        authToken = new char[info->GetAuthToken().length() + 1];
+        strcpy(authToken, info->GetAuthToken().c_str());
 
-        branch = new char[info.branch.length() + 1];
-        strcpy(branch, info.branch.c_str());
+        branch = new char[info->GetBranch().length() + 1];
+        strcpy(branch, info->GetBranch().c_str());
 
-        cdnUrl = new char[info.cdnUrl.length() + 1];
-        strcpy(cdnUrl, info.cdnUrl.c_str());
+        cdnUrl = new char[info->GetCdnUrl().length() + 1];
+        strcpy(cdnUrl, info->GetCdnUrl().c_str());
     }
 
     void dealloc() const {

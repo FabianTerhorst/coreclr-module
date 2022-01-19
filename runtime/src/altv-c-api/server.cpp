@@ -450,14 +450,14 @@ uint8_t Core_IsDebug(alt::ICore* core) {
 
 void Core_GetVersion(alt::ICore* core, const char*&value, uint64_t &size) {
     auto version = core->GetVersion();
-    value = version.GetData();
-    size = version.GetSize();
+    value = version.c_str();
+    size = version.size();
 }
 
 void Core_GetBranch(alt::ICore* core, const char*&value, uint64_t &size) {
     auto version = core->GetBranch();
-    value = version.GetData();
-    size = version.GetSize();
+    value = version.c_str();
+    size = version.size();
 }
 
 void Core_SetPassword(alt::ICore* core, const char* value) {
