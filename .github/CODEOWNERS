@@ -1,4 +1,7 @@
 * @fabianterhorst
 /docs/ @lhoerion
+!/docs/*.md @lhoerion
+!/docs/*.yml @lhoerion
+/docs/filterConfig.yml @lhoerion
 /api/AltV.Net.Async.CodeGen/ @zziger
 /api/AltV.Net.Client/ @zziger @juztim
