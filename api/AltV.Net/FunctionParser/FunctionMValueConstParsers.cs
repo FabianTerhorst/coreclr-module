@@ -269,7 +269,7 @@ namespace AltV.Net.FunctionParser
 
             if (mValue.type == MValueConst.Type.Uint)
             {
-                return (int) mValue.GetUint();
+                return (long) mValue.GetUint();
             }
 
             // Types doesn't match
