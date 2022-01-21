@@ -21,6 +21,18 @@ namespace AltV.Net.FunctionParser
             return boolValue;
         }
 
+        public static object ParseSByte(string value, Type type, FunctionTypeInfo typeInfo)
+        {
+            if (!sbyte.TryParse(value, out var sbyteValue)) return null;
+            return sbyteValue;
+        }
+
+        public static object ParseShort(string value, Type type, FunctionTypeInfo typeInfo)
+        {
+            if (!short.TryParse(value, out var shortValue)) return null;
+            return shortValue;
+        }
+
         public static object ParseInt(string value, Type type, FunctionTypeInfo typeInfo)
         {
             if (!int.TryParse(value, out var intValue)) return null;
@@ -31,6 +43,18 @@ namespace AltV.Net.FunctionParser
         {
             if (!long.TryParse(value, out var longValue)) return null;
             return longValue;
+        }
+
+        public static object ParseByte(string value, Type type, FunctionTypeInfo typeInfo)
+        {
+            if (!byte.TryParse(value, out var byteValue)) return null;
+            return byteValue;
+        }
+
+        public static object ParseUShort(string value, Type type, FunctionTypeInfo typeInfo)
+        {
+            if (!ushort.TryParse(value, out var ushortValue)) return null;
+            return ushortValue;
         }
 
         public static object ParseUInt(string value, Type type, FunctionTypeInfo typeInfo)
