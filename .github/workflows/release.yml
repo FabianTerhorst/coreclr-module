@@ -64,12 +64,12 @@ jobs:
       - name: Build
         working-directory: ./api
         run: |
-          dotnet publish AltV.Net.Host -c Release -f net5.0
-          dotnet publish AltV.Net.Host -c Release -f net5.0
-          dotnet publish AltV.Net -c Release -f net5.0
-          dotnet publish AltV.Net -c Debug -f net5.0
-          dotnet publish AltV.Net.Async -c Release -f net5.0
-          dotnet publish AltV.Net.Async -c Debug -f net5.0
+          dotnet publish AltV.Net.Host -c Release -f net6.0
+          dotnet publish AltV.Net.Host -c Release -f net6.0
+          dotnet publish AltV.Net -c Release -f net6.0
+          dotnet publish AltV.Net -c Debug -f net6.0
+          dotnet publish AltV.Net.Async -c Release -f net6.0
+          dotnet publish AltV.Net.Async -c Debug -f net6.0
       - run: |
           mkdir -p ./modules/linux
           mkdir -p ./modules/windows
