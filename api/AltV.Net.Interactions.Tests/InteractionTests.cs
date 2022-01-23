@@ -6,10 +6,14 @@ namespace AltV.Net.Interactions.Tests
 {
     public class InteractionTests
     {
+        private InteractionsService interactionsService;
+        
         [SetUp]
         public void Setup()
         {
-            AltInteractions.Init();
+            var interactionsServiceBuilder = InteractionsService.CreateBuilder();
+            interactionsServiceBuilder.AddThreadForType(1);
+            interactionsService = interactionsServiceBuilder.Build();
         }
 
         [Test]
@@ -17,8 +21,8 @@ namespace AltV.Net.Interactions.Tests
         {
             var position = GetRandomVector3();
             var entity = new Interaction(1, 1, position, 0, 1);
-            AltInteractions.AddInteraction(entity);
-            var task = AltInteractions.FindInteractions(position, 0);
+            interactionsService.Add(entity);
+            var task = interactionsService.Find(1, position, 0);
             task.Wait();
             var interactions = task.Result;
             Assert.AreEqual(1, interactions.Length);
@@ -30,9 +34,9 @@ namespace AltV.Net.Interactions.Tests
         {
             var position = GetRandomVector3();
             var entity = new Interaction(1, 1, position, 0, 1);
-            AltInteractions.AddInteraction(entity);
-            AltInteractions.RemoveInteraction(entity);
-            var task = AltInteractions.FindInteractions(position, 0);
+            interactionsService.Add(entity);
+            interactionsService.Remove(entity);
+            var task = interactionsService.Find(1, position, 0);
             task.Wait();
             var interactions = task.Result;
             Assert.AreEqual(0, interactions.Length);
@@ -53,7 +57,7 @@ namespace AltV.Net.Interactions.Tests
         [TearDown]
         public void Cleanup()
         {
-            AltInteractions.Dispose();
+            interactionsService.Dispose();
         }
     }
 }
