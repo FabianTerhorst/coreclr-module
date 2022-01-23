@@ -18,12 +18,12 @@ jobs:
       - name: Copy nethost
         working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/6.0.1/runtimes/linux-x64/native/
         run: |
-          sudo tar -cvf ./libnethost.tar .
+          sudo tar -cvf $RUNNER_TEMP/libnethost.tar .
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: nethost-linux
-          path: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/6.0.1/runtimes/linux-x64/native/libnethost.tar
+          path: ${{ runner.temp }}/libnethost.tar
   fetch-nethost-windows:
     runs-on: windows-2022
     steps:
@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: nethost-windows
-          path: ${{ RUNNER_TEMP }}\libnethost.tar
+          path: ${{ runner.temp }}\libnethost.tar
   build-api:
     runs-on: ubuntu-latest
     steps:
