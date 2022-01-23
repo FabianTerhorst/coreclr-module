@@ -18,7 +18,7 @@ jobs:
       - name: Copy nethost
         working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/6.0.1/runtimes/linux-x64/native/
         run: |
-          sudo tar -cvf $RUNNER_TEMP/libnethost.tar .
+          sudo tar -cvf ${{ runner.temp }}/libnethost.tar .
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -38,7 +38,7 @@ jobs:
       - name: Copy nethost
         working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\6.0.1\runtimes\win-x64\native\
         run: |
-          tar -cvzf $RUNNER_TEMP\libnethost.tar .
+          tar -cvzf ${{ runner.temp }}\libnethost.tar .
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
