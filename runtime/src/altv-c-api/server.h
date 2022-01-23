@@ -72,6 +72,8 @@ EXPORT void* Server_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type);
 EXPORT void Server_StartResource(alt::ICore* server, const char* text);
 EXPORT void Server_StopResource(alt::ICore* server, const char* text);
 EXPORT void Server_RestartResource(alt::ICore* server, const char* text);
+EXPORT void Server_GetAllResources(alt::ICore* server, alt::IResource* resources[], uint64_t size);
+EXPORT uint64_t Server_GetAllResourceCount(alt::ICore* server);
 EXPORT alt::MValueConst* Server_GetMetaData(alt::ICore* core, const char* key);
 EXPORT void Server_SetMetaData(alt::ICore* core, const char* key, alt::MValueConst* val);
 EXPORT uint8_t Server_HasMetaData(alt::ICore* core, const char* key);

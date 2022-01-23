@@ -891,6 +891,27 @@ namespace AltV.Net
             }
         }
 
+        public INativeResource[] GetAllResources()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                var resourceCount = Library.Server_GetAllResourceCount(NativePointer);
+                var pointers = new IntPtr[resourceCount];
+                Library.Server_GetAllResources(NativePointer,pointers,resourceCount);
+                var resources = new INativeResource[resourceCount];
+                for (ulong i = 0; i < resourceCount; i++)
+                {
+                    var resourcePointer = pointers[i];
+                    if(nativeResourcePool.GetOrCreate(Library,NativePointer,resourcePointer,out var resource)) {
+                        resources[i] = resource;
+                    }
+                }
+
+                return resources;
+            }
+        }
+
         public void GetMetaData(string key, out MValueConst value)
         {
             unsafe

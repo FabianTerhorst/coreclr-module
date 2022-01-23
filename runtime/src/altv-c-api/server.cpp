@@ -282,6 +282,22 @@ void Server_RestartResource(alt::ICore* server, const char* text) {
     server->RestartResource(text);
 }
 
+void Server_GetAllResources(alt::ICore* server, alt::IResource* resources[],uint64_t size) {
+    auto resourceArray = server->GetAllResources();
+    
+    if (sizeof(resourceArray) < size) {
+        size = sizeof(resourceArray);
+    }
+
+    for (uint64_t i = 0; i < size; i++) {
+        resources[i] = resourceArray[i];
+    }
+}
+
+uint64_t Server_GetAllResourceCount(alt::ICore* server) {
+    return sizeof(server->GetAllResources());
+}
+
 alt::MValueConst* Server_GetMetaData(alt::ICore* core, const char* key) {
     return new alt::MValueConst(core->GetMetaData(key));
 }

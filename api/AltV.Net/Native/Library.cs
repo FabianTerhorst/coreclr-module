@@ -361,6 +361,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Server_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Server_StartResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Server_StopResource { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Server_GetAllResources { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Server_GetAllResourceCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, AltV.Net.Server.CommandCallback, byte> Server_SubscribeCommand { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Server_TriggerClientEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Server_TriggerClientEventForAll { get; }
@@ -935,6 +937,8 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Server_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Server_StartResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Server_StopResource { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Server_GetAllResources { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Server_GetAllResourceCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, AltV.Net.Server.CommandCallback, byte> Server_SubscribeCommand { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Server_TriggerClientEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Server_TriggerClientEventForAll { get; }
@@ -1513,6 +1517,8 @@ namespace AltV.Net.Native
             Server_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "Server_SetSyncedMetaData");
             Server_StartResource = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Server_StartResource");
             Server_StopResource = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Server_StopResource");
+            Server_GetAllResources = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) NativeLibrary.GetExport(handle, "Server_GetAllResources");
+            Server_GetAllResourceCount = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Server_GetAllResourceCount");
             Server_SubscribeCommand = (delegate* unmanaged[Cdecl]<nint, nint, AltV.Net.Server.CommandCallback, byte>) NativeLibrary.GetExport(handle, "Server_SubscribeCommand");
             Server_TriggerClientEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Server_TriggerClientEvent");
             Server_TriggerClientEventForAll = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Server_TriggerClientEventForAll");
