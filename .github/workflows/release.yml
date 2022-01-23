@@ -25,7 +25,7 @@ jobs:
           name: nethost-linux
           path: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/6.0.1/runtimes/linux-x64/native/libnethost.tar
   fetch-nethost-windows:
-    runs-on: windows-2016
+    runs-on: windows-2022
     steps:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
@@ -104,7 +104,7 @@ jobs:
         config:
           - {
               name: linux,
-              os: ubuntu-18.04,
+              os: ubuntu-latest,
               cc: gcc-9,
               cxx: g++-9,
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo,
