@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1.7.2
+        uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.101
       - name: check nethost
@@ -28,7 +28,7 @@ jobs:
     runs-on: windows-2016
     steps:
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1.7.2
+        uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.101
       - name: Check nethost
@@ -51,7 +51,7 @@ jobs:
         with:
           submodules: recursive
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1.7.2
+        uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.101
       - id: build_info
@@ -177,7 +177,7 @@ jobs:
         with:
           submodules: recursive
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1.7.2
+        uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.101
       - run: |
