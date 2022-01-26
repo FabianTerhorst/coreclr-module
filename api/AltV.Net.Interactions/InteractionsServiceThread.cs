@@ -51,7 +51,7 @@ public class InteractionsServiceThread : IDisposable
                                 break;
                             case 2:
                             {
-                                var player = (IPlayer) interactionEvent.Data;
+                                var (player, argument) = ((IPlayer, object)) interactionEvent.Data;
                                 float x;
                                 float y;
                                 float z;
@@ -80,7 +80,7 @@ public class InteractionsServiceThread : IDisposable
                                     {
                                         try
                                         {
-                                            if (interaction.OnInteraction(player, interactionPosition, currDimension))
+                                            if (interaction.OnInteraction(player, interactionPosition, currDimension, argument))
                                             {
                                                 break;
                                             }
