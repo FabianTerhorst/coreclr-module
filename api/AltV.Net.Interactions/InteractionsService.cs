@@ -103,16 +103,16 @@ public class InteractionsService: IDisposable
         threadToTypeIndex[interaction.Type].Writer.TryWrite(new InteractionsServiceThreadEvent(1, interaction));
     }
 
-    public void Trigger(ulong type, IPlayer player/*in Vector3 position, int dimension*/)
+    public void Trigger(ulong type, IPlayer player, object argument = null/*in Vector3 position, int dimension*/)
     {
         if (threadToTypeIndex == null)
         {
             for (int i = 0, length = threads.Length; i < length; ++i) {
-                threads[i].Writer.TryWrite(new InteractionsServiceThreadEvent(2, player));
+                threads[i].Writer.TryWrite(new InteractionsServiceThreadEvent(2, (player, argument)));
             }
             return;
         }
-        threadToTypeIndex[type].Writer.TryWrite(new InteractionsServiceThreadEvent(2, player));
+        threadToTypeIndex[type].Writer.TryWrite(new InteractionsServiceThreadEvent(2, (player, argument)));
     }
     
     public Task<IInteraction[]> Find(ulong type, Vector3 position, int dimension)
