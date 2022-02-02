@@ -416,5 +416,15 @@ namespace AltV.Net
             _module.OnVehicleDamage(eventPointer, vehiclePointer, entityPointer, entityType, bodyHealthDamage, additionalBodyHealthDamage,
                 engineHealthDamage, petrolTankDamage, weaponHash);
         }
+        
+        public static void OnConnectionQueueAdd(IntPtr connectionInfo)
+        {
+            _module.OnConnectionQueueAdd(connectionInfo);
+        }
+        
+        public static void OnConnectionQueueRemove(IntPtr connectionInfo)
+        { 
+            _module.OnConnectionQueueRemove(connectionInfo);
+        }
     }
 }

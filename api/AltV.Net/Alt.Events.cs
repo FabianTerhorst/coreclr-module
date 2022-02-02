@@ -230,5 +230,17 @@ namespace AltV.Net
             add => Module.VehicleDamageEventHandler.Add(value);
             remove => Module.VehicleDamageEventHandler.Remove(value);
         }
+        
+        public static event ConnectionQueueAddDelegate OnConnectionQueueAdd
+        {
+            add => Module.ConnectionQueueAddHandler.Add(value);
+            remove => Module.ConnectionQueueAddHandler.Remove(value);
+        }
+        
+        public static event ConnectionQueueRemoveDelegate OnConnectionQueueRemove
+        {
+            add => Module.ConnectionQueueRemoveHandler.Add(value);
+            remove => Module.ConnectionQueueRemoveHandler.Remove(value);
+        }
     }
 }

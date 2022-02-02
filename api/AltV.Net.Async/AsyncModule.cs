@@ -10,6 +10,8 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Refs;
+using AltV.Net.Events;
+using AltV.Net.Types;
 
 namespace AltV.Net.Async
 {
@@ -101,6 +103,12 @@ namespace AltV.Net.Async
             new();
 
         internal readonly AsyncEventHandler<VehicleDamageAsyncDelegate> VehicleDamageAsyncEventHandler =
+            new();
+        
+        internal readonly AsyncEventHandler<ConnectionQueueAddAsyncDelegate> ConnectionQueueAddAsyncEventHandler =
+            new();
+        
+        internal readonly AsyncEventHandler<ConnectionQueueRemoveAsyncDelegate> ConnectionQueueRemoveAsyncEventHandler =
             new();
 
         public AsyncModule(IServer server, AssemblyLoadContext assemblyLoadContext, INativeResource moduleResource,
@@ -789,6 +797,38 @@ namespace AltV.Net.Async
             });
         }
 
+        public override void OnConnectionQueueAddEvent(IConnectionInfo connectionInfo)
+        {
+            base.OnConnectionQueueAddEvent(connectionInfo);
+            if (!ConnectionQueueAddAsyncEventHandler.HasEvents()) return;
+            var connectionInfoRef = new BaseObjectRef(connectionInfo);
+            CheckRef(in connectionInfoRef, connectionInfo);
+            Task.Run(async () =>
+            {
+                connectionInfoRef.DebugCountUp();
+                await ConnectionQueueAddAsyncEventHandler.CallAsync(@delegate =>
+                    @delegate(connectionInfo));
+                connectionInfoRef.DebugCountDown();
+                connectionInfoRef.Dispose();
+            });
+        }
+
+        public override void OnConnectionQueueRemoveEvent(IConnectionInfo connectionInfo)
+        {
+            base.OnConnectionQueueRemoveEvent(connectionInfo);
+            if (!ConnectionQueueRemoveAsyncEventHandler.HasEvents()) return;
+            var connectionInfoRef = new BaseObjectRef(connectionInfo);
+            CheckRef(in connectionInfoRef, connectionInfo);
+            Task.Run(async () =>
+            {
+                connectionInfoRef.DebugCountUp();
+                await ConnectionQueueRemoveAsyncEventHandler.CallAsync(@delegate =>
+                    @delegate(connectionInfo));
+                connectionInfoRef.DebugCountDown();
+                connectionInfoRef.Dispose();
+            });
+        }
+
         public new Function OnClient(string eventName, Function function)
         {
             if (function == null) return null;
@@ -845,7 +885,7 @@ namespace AltV.Net.Async
         }
 
         [Conditional("DEBUG")]
-        private static void CheckRef(in PlayerRef @ref, IBaseObject baseObject, [CallerMemberName] string callerName = "")
+        private static void CheckRef(in PlayerRef @ref, IRefCountable baseObject, [CallerMemberName] string callerName = "")
         {
             if (!@ref.Exists && baseObject != null)
             {
@@ -854,7 +894,7 @@ namespace AltV.Net.Async
         }
 
         [Conditional("DEBUG")]
-        private static void CheckRef(in VehicleRef @ref, IBaseObject baseObject, [CallerMemberName] string callerName = "")
+        private static void CheckRef(in VehicleRef @ref, IRefCountable baseObject, [CallerMemberName] string callerName = "")
         {
             if (!@ref.Exists && baseObject != null)
             {
@@ -863,7 +903,7 @@ namespace AltV.Net.Async
         }
 
         [Conditional("DEBUG")]
-        private static void CheckRef(in BaseObjectRef @ref, IBaseObject baseObject, [CallerMemberName] string callerName = "")
+        private static void CheckRef(in BaseObjectRef @ref, IRefCountable baseObject, [CallerMemberName] string callerName = "")
         {
             if (!@ref.Exists && baseObject != null)
             {
@@ -872,7 +912,7 @@ namespace AltV.Net.Async
         }
 
         [Conditional("DEBUG")]
-        private static void CheckRef(in ColShapeRef @ref, IBaseObject baseObject, [CallerMemberName] string callerName = "")
+        private static void CheckRef(in ColShapeRef @ref, IRefCountable baseObject, [CallerMemberName] string callerName = "")
         {
             if (!@ref.Exists && baseObject != null)
             {
@@ -881,7 +921,7 @@ namespace AltV.Net.Async
         }
 
         [Conditional("DEBUG")]
-        private static void CheckRef(in CheckpointRef @ref, IBaseObject baseObject, [CallerMemberName] string callerName = "")
+        private static void CheckRef(in CheckpointRef @ref, IRefCountable baseObject, [CallerMemberName] string callerName = "")
         {
             if (!@ref.Exists && baseObject != null)
             {
