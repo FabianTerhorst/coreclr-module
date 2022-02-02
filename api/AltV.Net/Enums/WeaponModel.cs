@@ -99,6 +99,9 @@ namespace AltV.Net.Enums
         CombatShotgun = 94989220,
         Fertilizercan = 406929569,
         HeavyRifle = 3347935668,
-        EMPLauncher = 3676729658
+        EMPLauncher = 3676729658,
+        CeramicPistol = 727643628,
+        NavyRevolver = 2441047180,
+        HazardCan = 3126027122
     }
 }
