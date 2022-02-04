@@ -31,7 +31,7 @@ namespace AltV.Net.Interactions
             Range = range;
         }
 
-        public virtual bool OnInteraction(IPlayer player, Vector3 interactionPosition, int interactionDimension)
+        public virtual bool OnInteraction(IPlayer player, Vector3 interactionPosition, int interactionDimension, object argument)
         {
             return false;
         }

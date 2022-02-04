@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Types;
 
 namespace AltV.Net.Async.Events
 {
@@ -63,4 +64,8 @@ namespace AltV.Net.Async.Events
     public delegate Task VehicleDetachAsyncDelegate(IVehicle target, IVehicle detachedVehicle);
 
     public delegate Task VehicleDamageAsyncDelegate(IVehicle target, IEntity attacker, uint bodyHealthDamage, uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash);
+    
+    public delegate Task ConnectionQueueAddAsyncDelegate(IConnectionInfo connectionInfo);
+    
+    public delegate Task ConnectionQueueRemoveAsyncDelegate(IConnectionInfo connectionInfo);
 }

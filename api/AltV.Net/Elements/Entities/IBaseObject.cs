@@ -1,25 +1,11 @@
-using System;
 using System.Collections.Generic;
 using AltV.Net.Elements.Args;
+using AltV.Net.Types;
 
 namespace AltV.Net.Elements.Entities
 {
-    public interface IBaseObject
+    public interface IBaseObject : IRefCountable
     {
-        /// <summary>
-        /// Get the internal entity pointer.
-        ///
-        /// WARNING: Do NOT use this.
-        /// </summary>
-        IntPtr NativePointer { get; }
-
-        /// <summary>
-        /// Get current entity existence
-        ///
-        /// WARNING: Do NOT use this.
-        /// </summary>
-        bool Exists { get; }
-
         BaseObjectType Type { get; }
 
         /// <summary>
@@ -123,10 +109,6 @@ namespace AltV.Net.Elements.Entities
         void CheckIfEntityExists();
 
         void OnRemove();
-
-        bool AddRef();
-
-        bool RemoveRef();
 
         bool GetMetaData(string key, out int result)
         {

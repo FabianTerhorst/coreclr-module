@@ -1,15 +1,16 @@
 ﻿using System.Diagnostics;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Types;
 
 namespace AltV.Net.Elements.Refs
 {
     public struct BaseObjectRef
     {
-        private readonly IBaseObject baseObject;
+        private readonly IRefCountable baseObject;
 
         public bool Exists => baseObject != null;
 
-        public BaseObjectRef(IBaseObject baseObject)
+        public BaseObjectRef(IRefCountable baseObject)
         {
             this.baseObject = baseObject?.AddRef() == true ? baseObject : null;
         }
