@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -13,6 +14,7 @@ using AltV.Net.Elements.Entities;
 using AltV.Net.Events;
 using AltV.Net.FunctionParser;
 using AltV.Net.Native;
+using AltV.Net.Types;
 
 namespace AltV.Net
 {
@@ -158,14 +160,23 @@ namespace AltV.Net
         internal readonly IEventHandler<VehicleDamageDelegate> VehicleDamageEventHandler =
             new HashSetEventHandler<VehicleDamageDelegate>();
 
+        private readonly ConcurrentDictionary<IntPtr, IConnectionInfo> connectionInfos =
+            new ();
+        
+        internal readonly IEventHandler<ConnectionQueueAddDelegate> ConnectionQueueAddHandler =
+            new HashSetEventHandler<ConnectionQueueAddDelegate>();
+        
+        internal readonly IEventHandler<ConnectionQueueRemoveDelegate> ConnectionQueueRemoveHandler =
+            new HashSetEventHandler<ConnectionQueueRemoveDelegate>();
+
         internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
 
         internal readonly LinkedList<GCHandle> functionExportHandles = new LinkedList<GCHandle>();
 
         private readonly Thread MainThread;
 
-        private readonly IDictionary<int, IDictionary<IBaseObject, ulong>> threadRefCount =
-            new Dictionary<int, IDictionary<IBaseObject, ulong>>();
+        private readonly IDictionary<int, IDictionary<IRefCountable, ulong>> threadRefCount =
+            new Dictionary<int, IDictionary<IRefCountable, ulong>>();
 
         public Module(IServer server, AssemblyLoadContext assemblyLoadContext,
             INativeResource moduleResource, IBaseBaseObjectPool baseBaseObjectPool,
@@ -199,7 +210,7 @@ namespace AltV.Net
         }
 
         [Conditional("DEBUG")]
-        public void CountUpRefForCurrentThread(IBaseObject baseObject)
+        public void CountUpRefForCurrentThread(IRefCountable baseObject)
         {
             if (baseObject == null) return;
             var currThread = Thread.CurrentThread.ManagedThreadId;
@@ -207,7 +218,7 @@ namespace AltV.Net
             {
                 if (!threadRefCount.TryGetValue(currThread, out var baseObjectRefCount))
                 {
-                    baseObjectRefCount = new Dictionary<IBaseObject, ulong>();
+                    baseObjectRefCount = new Dictionary<IRefCountable, ulong>();
                     threadRefCount[currThread] = baseObjectRefCount;
                 }
 
@@ -221,7 +232,7 @@ namespace AltV.Net
         }
 
         [Conditional("DEBUG")]
-        public void CountDownRefForCurrentThread(IBaseObject baseObject)
+        public void CountDownRefForCurrentThread(IRefCountable baseObject)
         {
             if (baseObject == null) return;
             var currThread = Thread.CurrentThread.ManagedThreadId;
@@ -247,7 +258,7 @@ namespace AltV.Net
             }
         }
 
-        public bool HasRefForCurrentThread(IBaseObject baseObject)
+        public bool HasRefForCurrentThread(IRefCountable baseObject)
         {
             var currThread = Thread.CurrentThread.ManagedThreadId;
             lock (threadRefCount)
@@ -1742,6 +1753,66 @@ namespace AltV.Net
             }
         }
 
+        public virtual void OnConnectionQueueAdd(IntPtr connectionInfoPtr)
+        {
+            IConnectionInfo connectionInfo = new ConnectionInfo(Server, connectionInfoPtr);
+            connectionInfos[connectionInfoPtr] = connectionInfo;
+            OnConnectionQueueAddEvent(connectionInfo);
+        }
+
+        public virtual void OnConnectionQueueAddEvent(IConnectionInfo connectionInfo)
+        {
+            foreach (var @delegate in ConnectionQueueAddHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(connectionInfo);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnConnectionQueueAddEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnConnectionQueueAddEvent" + ":" + exception);
+                }
+            }
+        }
+        
+        public virtual void OnConnectionQueueRemove(IntPtr connectionInfoPtr)
+        {
+            if (!connectionInfos.Remove(connectionInfoPtr, out var connectionInfo))
+            {
+                return;
+            }
+
+            OnConnectionQueueRemoveEvent(connectionInfo);
+
+            lock (connectionInfo)
+            {
+                ((IInternalNative) connectionInfo).Exists = false;
+            }
+        }
+
+        public virtual void OnConnectionQueueRemoveEvent(IConnectionInfo connectionInfo)
+        {
+            foreach (var @delegate in ConnectionQueueRemoveHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(connectionInfo);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnConnectionQueueRemoveEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnConnectionQueueRemoveEvent" + ":" + exception);
+                }
+            }
+        }
+        
         public void OnScriptsLoaded(IScript[] scripts)
         {
             foreach (var script in scripts)

@@ -6,6 +6,7 @@ using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Native
 {
+    //TODO: refactor to function pointers
     internal static partial class AltNative
     {
         [SuppressUnmanagedCodeSecurity]
@@ -113,6 +114,10 @@ namespace AltV.Net.Native
             internal delegate void VehicleDetachDelegate(IntPtr eventPointer, IntPtr targetPointer, IntPtr detachedPointer);
 
             internal delegate void VehicleDamageDelegate(IntPtr eventPointer, IntPtr targetPointer, IntPtr sourcePointer, BaseObjectType sourceType, uint bodyHealthDamage, uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash);
+            
+            internal delegate void ConnectionQueueAddDelegate(IntPtr connectionInfoPointer);
+            
+            internal delegate void ConnectionQueueRemoveDelegate(IntPtr connectionInfoPointer);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetMainDelegate(IntPtr resource,
@@ -297,6 +302,14 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetVehicleDamageDelegate(IntPtr resource,
                 VehicleDamageDelegate @delegate);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetConnectionQueueAddDelegate(IntPtr resource,
+                ConnectionQueueAddDelegate @delegate);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetConnectionQueueRemoveDelegate(IntPtr resource,
+                ConnectionQueueRemoveDelegate @delegate);
         }
     }
 }

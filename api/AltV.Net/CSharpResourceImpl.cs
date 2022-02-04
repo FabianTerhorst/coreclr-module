@@ -213,6 +213,14 @@ namespace AltV.Net
             AltNative.Resource.VehicleDamageDelegate onVehicleDamage = ModuleWrapper.OnVehicleDamage;
             handles.AddFirst(GCHandle.Alloc(onVehicleDamage));
             AltNative.Resource.CSharpResourceImpl_SetVehicleDamageDelegate(NativePointer, onVehicleDamage);
+            
+            AltNative.Resource.ConnectionQueueAddDelegate onConnectionQueueAdd = ModuleWrapper.OnConnectionQueueAdd;
+            handles.AddFirst(GCHandle.Alloc(onConnectionQueueAdd));
+            AltNative.Resource.CSharpResourceImpl_SetConnectionQueueAddDelegate(NativePointer, onConnectionQueueAdd);
+            
+            AltNative.Resource.ConnectionQueueRemoveDelegate onConnectionQueueRemove = ModuleWrapper.OnConnectionQueueRemove;
+            handles.AddFirst(GCHandle.Alloc(onConnectionQueueRemove));
+            AltNative.Resource.CSharpResourceImpl_SetConnectionQueueRemoveDelegate(NativePointer, onConnectionQueueRemove);
         }
 
         public IntPtr CreateInvoker(MValueFunctionCallback function)

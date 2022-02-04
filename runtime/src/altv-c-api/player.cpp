@@ -172,7 +172,7 @@ uint64_t Player_GetHwidExHash(alt::IPlayer* player) {
 }
 
 const char* Player_GetAuthToken(alt::IPlayer* player, int32_t& size) {
-    return AllocateString(player->GetName(), size);
+    return AllocateString(player->GetAuthToken(), size);
 }
 
 uint16_t Player_GetHealth(alt::IPlayer* player) {
