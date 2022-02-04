@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 
@@ -212,6 +214,14 @@ namespace AltV.Net.Elements.Args
             }
         }
 
+        public void Value(float value)
+        {
+            if (currents.TryPeek(out currCurr))
+            {
+                currCurr.Values.Add(value);
+            }
+        }
+
         public void Value(double value)
         {
             if (currents.TryPeek(out currCurr))
@@ -259,7 +269,23 @@ namespace AltV.Net.Elements.Args
                 currCurr.Values.Add(value);
             }
         }
-        
+
+        public void Value(ICollection value)
+        {
+            if (currents.TryPeek(out currCurr))
+            {
+                currCurr.Values.Add(value);
+            }
+        }
+
+        public void Value(IWritable value)
+        {
+            if (currents.TryPeek(out currCurr))
+            {
+                currCurr.Values.Add(value);
+            }
+        }
+
         public void Value(Position value)
         {
             if (currents.TryPeek(out currCurr))
@@ -267,8 +293,32 @@ namespace AltV.Net.Elements.Args
                 currCurr.Values.Add(value);
             }
         }
-        
+
+        public void Value(Rotation value)
+        {
+            if (currents.TryPeek(out currCurr))
+            {
+                currCurr.Values.Add(value);
+            }
+        }
+
         public void Value(Rgba value)
+        {
+            if (currents.TryPeek(out currCurr))
+            {
+                currCurr.Values.Add(value);
+            }
+        }
+
+        public void Value(Vector3 value)
+        {
+            if (currents.TryPeek(out currCurr))
+            {
+                currCurr.Values.Add(value);
+            }
+        }
+
+        public void Value(Vector2 value)
         {
             if (currents.TryPeek(out currCurr))
             {

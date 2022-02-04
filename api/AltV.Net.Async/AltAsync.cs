@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AltV.Net.Async.Events;
 using AltV.Net.Elements.Args;
+using AltV.Net.Events;
 using AltV.Net.Native;
 
 namespace AltV.Net.Async
@@ -175,6 +176,18 @@ namespace AltV.Net.Async
         {
             add => Module.VehicleDamageAsyncEventHandler.Add(value);
             remove => Module.VehicleDamageAsyncEventHandler.Remove(value);
+        }
+        
+        public static event ConnectionQueueAddAsyncDelegate OnConnectionQueueAdd
+        {
+            add => Module.ConnectionQueueAddAsyncEventHandler.Add(value);
+            remove => Module.ConnectionQueueAddAsyncEventHandler.Remove(value);
+        }
+        
+        public static event ConnectionQueueRemoveAsyncDelegate OnConnectionQueueRemove
+        {
+            add => Module.ConnectionQueueRemoveAsyncEventHandler.Add(value);
+            remove => Module.ConnectionQueueRemoveAsyncEventHandler.Remove(value);
         }
 
         public static async void Log(string message)

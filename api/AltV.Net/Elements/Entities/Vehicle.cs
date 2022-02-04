@@ -673,9 +673,9 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var ptr = IntPtr.Zero;
-                    Server.Library.Vehicle_GetNumberplateText(NativePointer, &ptr);
-                    return Marshal.PtrToStringUTF8(ptr);
+                    var size = 0;
+                    return Server.PtrToStringUtf8AndFree(
+                        Server.Library.Vehicle_GetNumberplateText(NativePointer, &size), size);
                 }
             }
             set
@@ -799,9 +799,9 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var ptr = IntPtr.Zero;
-                    Server.Library.Vehicle_GetAppearanceDataBase64(NativePointer, &ptr);
-                    return Marshal.PtrToStringAnsi(ptr);
+                    var size = 0;
+                    return Server.PtrToStringUtf8AndFree(
+                        Server.Library.Vehicle_GetAppearanceDataBase64(NativePointer, &size), size);
                 }
             }
             set
@@ -1045,9 +1045,9 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var ptr = IntPtr.Zero;
-                    Server.Library.Vehicle_GetGameStateBase64(NativePointer, &ptr);
-                    return Marshal.PtrToStringAnsi(ptr);
+                    var size = 0;
+                    return Server.PtrToStringUtf8AndFree(
+                        Server.Library.Vehicle_GetGameStateBase64(NativePointer, &size), size);
                 }
             }
             set
@@ -1270,9 +1270,9 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var ptr = IntPtr.Zero;
-                    Server.Library.Vehicle_GetHealthDataBase64(NativePointer, &ptr);
-                    return Marshal.PtrToStringAnsi(ptr);
+                    var size = 0;
+                    return Server.PtrToStringUtf8AndFree(
+                        Server.Library.Vehicle_GetHealthDataBase64(NativePointer, &size), size);
                 }
             }
             set
@@ -1448,9 +1448,9 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var ptr = IntPtr.Zero;
-                    Server.Library.Vehicle_GetDamageDataBase64(NativePointer, &ptr);
-                    return Marshal.PtrToStringAnsi(ptr);
+                    var size = 0;
+                    return Server.PtrToStringUtf8AndFree(
+                        Server.Library.Vehicle_GetDamageDataBase64(NativePointer, &size), size);
                 }
             }
             set
@@ -1490,9 +1490,9 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var ptr = IntPtr.Zero;
-                    Server.Library.Vehicle_GetScriptDataBase64(NativePointer, &ptr);
-                    return Marshal.PtrToStringAnsi(ptr);
+                    var size = 0;
+                    return Server.PtrToStringUtf8AndFree(
+                        Server.Library.Vehicle_GetScriptDataBase64(NativePointer, &size), size);
                 }
             }
             set
@@ -1665,14 +1665,14 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public Vector3 Velocity
+        public Position Velocity
         {
             get
             {
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var position = Vector3.Zero;
+                    var position = Position.Zero;
                     Server.Library.Vehicle_GetVelocity(NativePointer, &position);
                     return position;
                 }

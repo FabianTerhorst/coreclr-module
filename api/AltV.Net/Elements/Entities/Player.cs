@@ -174,9 +174,9 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    var ptr = IntPtr.Zero;
-                    Server.Library.Player_GetIP(NativePointer, &ptr);
-                    return Marshal.PtrToStringUTF8(ptr);
+                    var size = 0;
+                    return Server.PtrToStringUtf8AndFree(
+                        Server.Library.Player_GetIP(NativePointer, &size), size);
                 }
             }
         }
@@ -332,18 +332,11 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var ptr = IntPtr.Zero;
-                    Server.Library.Player_GetName(NativePointer, &ptr);
-                    return Marshal.PtrToStringUTF8(ptr);
+                    var size = 0;
+                    return Server.PtrToStringUtf8AndFree(
+                        Server.Library.Player_GetName(NativePointer, &size), size);
                 }
             }
-            /*set
-            {
-                CheckIfEntityExists();
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
-                Server.Library.Player_SetName(NativePointer, stringPtr);
-                Marshal.FreeHGlobal(stringPtr);
-            }*/
         }
 
         public ulong SocialClubId
@@ -389,9 +382,9 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var ptr = IntPtr.Zero;
-                    Server.Library.Player_GetAuthToken(NativePointer, &ptr);
-                    return Marshal.PtrToStringUTF8(ptr);
+                    var size = 0;
+                    return Server.PtrToStringUtf8AndFree(
+                        Server.Library.Player_GetAuthToken(NativePointer, &size), size);
                 }
             }
         }
@@ -702,12 +695,11 @@ namespace AltV.Net.Elements.Entities
 
         public void Despawn()
         {
-            throw new NotImplementedException();
-            //unsafe
-            //{
-            //    CheckIfEntityExists();
-            //    Server.Library.Player_Despawn(NativePointer);
-            //}
+            unsafe
+            {
+                CheckIfEntityExists();
+                Server.Library.Player_Despawn(NativePointer);
+            }
         }
 
         public void SetDateTime(int day, int month, int year, int hour, int minute, int second)

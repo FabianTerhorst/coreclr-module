@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace AltV.Net.Interactions
 {
+    [Obsolete("Got replaced with InteractionsService", false)]
     public static class AltInteractions
     {
         private const string DllName = "csharp-module";
@@ -59,7 +60,7 @@ namespace AltV.Net.Interactions
                                 break;
                             case 2:
                             {
-                                var player = (IPlayer) interactionEvent.Data;
+                                var (player, argument) = ((IPlayer, object)) interactionEvent.Data;
                                 float x;
                                 float y;
                                 float z;
@@ -88,7 +89,7 @@ namespace AltV.Net.Interactions
                                     {
                                         try
                                         {
-                                            if (interaction.OnInteraction(player, interactionPosition, currDimension))
+                                            if (interaction.OnInteraction(player, interactionPosition, currDimension, argument))
                                             {
                                                 break;
                                             }

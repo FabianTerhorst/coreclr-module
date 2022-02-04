@@ -221,6 +221,9 @@ namespace AltV.Net.Async
                 case Vector3 position:
                     Alt.Server.CreateMValueVector3(out mValue, position);
                     return;
+                case Vector2 value:
+                    Alt.Server.CreateMValueVector2(out mValue, value);
+                    return;
                 default:
                     Alt.Log("can't convert type:" + obj.GetType());
                     mValue = MValueConst.Nil;

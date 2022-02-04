@@ -1,5 +1,7 @@
 #include "player.h"
 
+#include "strings.h"
+
 // Entity
 
 uint16_t Player_GetID(alt::IPlayer* player) {
@@ -65,54 +67,54 @@ void Player_SetDimension(alt::IPlayer* player, int32_t dimension) {
 }
 
 alt::MValueConst* Player_GetMetaData(alt::IPlayer* player, const char* key) {
-    return new alt::MValueConst(player->GetMetaData(alt::String(key)));
+    return new alt::MValueConst(player->GetMetaData(key));
 }
 
 void Player_SetMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
-    player->SetMetaData(alt::String(key), val->Get()->Clone());
+    player->SetMetaData(key, val->Get()->Clone());
 }
 
 uint8_t Player_HasMetaData(alt::IPlayer* player, const char* key) {
-    return player->HasMetaData(alt::String(key));
+    return player->HasMetaData(key);
 }
 
 void Player_DeleteMetaData(alt::IPlayer* player, const char* key) {
-    player->DeleteMetaData(alt::String(key));
+    player->DeleteMetaData(key);
 }
 
 alt::MValueConst* Player_GetSyncedMetaData(alt::IPlayer* player, const char* key) {
-    return new alt::MValueConst(player->GetSyncedMetaData(alt::String(key)));
+    return new alt::MValueConst(player->GetSyncedMetaData(key));
 }
 
 void Player_SetSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
-    player->SetSyncedMetaData(alt::String(key), val->Get()->Clone());
+    player->SetSyncedMetaData(key, val->Get()->Clone());
 }
 
 uint8_t Player_HasSyncedMetaData(alt::IPlayer* player, const char* key) {
-    return player->HasSyncedMetaData(alt::String(key));
+    return player->HasSyncedMetaData(key);
 }
 
 void Player_DeleteSyncedMetaData(alt::IPlayer* player, const char* key) {
-    player->DeleteSyncedMetaData(alt::String(key));
+    player->DeleteSyncedMetaData(key);
 }
 
 alt::MValueConst* Player_GetStreamSyncedMetaData(alt::IPlayer* player, const char* key) {
-    return new alt::MValueConst(player->GetStreamSyncedMetaData(alt::String(key)));
+    return new alt::MValueConst(player->GetStreamSyncedMetaData(key));
 }
 
 void Player_SetStreamSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
-    player->SetStreamSyncedMetaData(alt::String(key), val->Get()->Clone());
+    player->SetStreamSyncedMetaData(key, val->Get()->Clone());
 }
 
 uint8_t Player_HasStreamSyncedMetaData(alt::IPlayer* player, const char* key) {
-    return player->HasStreamSyncedMetaData(alt::String(key));
+    return player->HasStreamSyncedMetaData(key);
 }
 
 void Player_DeleteStreamSyncedMetaData(alt::IPlayer* player, const char* key) {
-    player->DeleteStreamSyncedMetaData(alt::String(key));
+    player->DeleteStreamSyncedMetaData(key);
 }
 
 void Player_AddRef(alt::IPlayer* player) {
@@ -153,8 +155,8 @@ void Player_Despawn(alt::IPlayer* player) {
     player->Despawn();
 }
 
-void Player_GetName(alt::IPlayer* player, const char*&name) {
-    name = player->GetName().CStr();
+const char* Player_GetName(alt::IPlayer* player, int32_t& size) {
+    return AllocateString(player->GetName(), size);
 }
 
 uint64_t Player_GetSocialID(alt::IPlayer* player) {
@@ -169,8 +171,8 @@ uint64_t Player_GetHwidExHash(alt::IPlayer* player) {
     return player->GetHwidExHash();
 }
 
-void Player_GetAuthToken(alt::IPlayer* player, const char*&name) {
-    name = player->GetAuthToken().CStr();
+const char* Player_GetAuthToken(alt::IPlayer* player, int32_t& size) {
+    return AllocateString(player->GetAuthToken(), size);
 }
 
 uint16_t Player_GetHealth(alt::IPlayer* player) {
@@ -189,8 +191,8 @@ void Player_SetMaxHealth(alt::IPlayer* player, uint16_t maxHealth) {
     player->SetMaxHealth(maxHealth);
 }
 
-void Player_GetIP(alt::IPlayer* player, const char*&ip) {
-    ip = player->GetIP().CStr();
+const char* Player_GetIP(alt::IPlayer* player, int32_t& size) {
+    return AllocateString(player->GetIP(), size);
 }
 
 void Player_SetDateTime(alt::IPlayer* player, int day, int month, int year, int hour, int minute, int second) {
@@ -399,7 +401,7 @@ uint32_t Player_GetPing(alt::IPlayer* player) {
     return player->GetPing();
 }
 
-void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
+/*void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
     player_struct->id = player->GetID();
     auto position = player->GetPosition();
     player_struct->position.x = position.x;
@@ -428,7 +430,7 @@ void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
     auto copiedName = new char[name.GetSize() + 1];
     memcpy(copiedName, name.GetData(), name.GetSize());
     copiedName[name.GetSize()] = '\0';
-    player_struct->name = copiedName;
+    //player_struct->name = copiedName;
     player_struct->health = player->GetHealth();
     player_struct->is_in_ragdoll = player->IsInRagdoll();
     player_struct->is_dead = player->IsDead();
@@ -443,7 +445,7 @@ void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct) {
 
 void Player_Copy_Dispose(player_struct_t* player_struct) {
     delete[] player_struct->name;
-}
+}*/
 
 void Player_GetPositionCoords2(alt::IPlayer* player, float* position_x, float* position_y, float* position_z,float *rotation_x,float *rotation_y,float *rotation_z,int* dimension) {
     auto playerPosition = player->GetPosition();

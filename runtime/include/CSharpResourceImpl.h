@@ -7,6 +7,7 @@
 #endif
 
 #include <altv-cpp-api/SDK.h>
+#include <altv-cpp-api/types/IConnectionInfo.h>
 #include <altv-cpp-api/events/CMetaDataChangeEvent.h>
 #include <altv-cpp-api/events/CSyncedMetaDataChangeEvent.h>
 #include <altv-cpp-api/events/CVehicleDestroyEvent.h>
@@ -93,21 +94,21 @@ struct ClrConnectionInfo {
 
     ClrConnectionInfo() = default;
 
-    ClrConnectionInfo(alt::ConnectionInfo info) :
-    socialId(info.socialId), hwidHash(info.hwidHash), hwidExHash(info.hwidExHash),
-    isDebug(info.isDebug),
-    build(info.build), passwordHash(info.passwordHash) {
-        name = new char[info.name.length() + 1];
-        strcpy(name, info.name.c_str());
+    ClrConnectionInfo(alt::IConnectionInfo* info) :
+    socialId(info->GetSocialId()), hwidHash(info->GetHwIdHash()), hwidExHash(info->GetHwIdExHash()),
+    isDebug(info->GetIsDebug()),
+    build(info->GetBuild()), passwordHash(info->GetPasswordHash()) {
+        name = new char[info->GetName().length() + 1];
+        strcpy(name, info->GetName().c_str());
 
-        authToken = new char[info.authToken.length() + 1];
-        strcpy(authToken, info.authToken.c_str());
+        authToken = new char[info->GetAuthToken().length() + 1];
+        strcpy(authToken, info->GetAuthToken().c_str());
 
-        branch = new char[info.branch.length() + 1];
-        strcpy(branch, info.branch.c_str());
+        branch = new char[info->GetBranch().length() + 1];
+        strcpy(branch, info->GetBranch().c_str());
 
-        cdnUrl = new char[info.cdnUrl.length() + 1];
-        strcpy(cdnUrl, info.cdnUrl.c_str());
+        cdnUrl = new char[info->GetCdnUrl().length() + 1];
+        strcpy(cdnUrl, info->GetCdnUrl().c_str());
     }
 
     void dealloc() const {
@@ -222,6 +223,10 @@ typedef void (* VehicleDetachDelegate_t)(const alt::CEvent* event, alt::IVehicle
 
 typedef void (* VehicleDamageDelegate_t)(const alt::CEvent* event, alt::IVehicle* target, void* attacker, alt::IBaseObject::Type attackerBaseObjectType,
     uint32_t bodyHealthDamage, uint32_t additionalBodyHealthDamage, uint32_t engineHealthDamage, uint32_t petrolTankDamage, uint32_t weaponHash);
+
+typedef void (* ConnectionQueueAddDelegate_t)(alt::IConnectionInfo* connectionInfo);
+
+typedef void (* ConnectionQueueRemoveDelegate_t)(alt::IConnectionInfo* connectionInfo);
 
 class CSharpResourceImpl : public alt::IResource::Impl {
     bool OnEvent(const alt::CEvent* ev) override;
@@ -342,6 +347,10 @@ public:
     VehicleDetachDelegate_t OnVehicleDetachDelegate = nullptr;
 
     VehicleDamageDelegate_t OnVehicleDamageDelegate = nullptr;
+
+    ConnectionQueueAddDelegate_t OnConnectionQueueAddDelegate = nullptr;
+
+    ConnectionQueueRemoveDelegate_t OnConnectionQueueRemoveDelegate = nullptr;
 
     alt::Array<CustomInvoker*>* invokers;
     CoreClr* coreClr;
@@ -525,3 +534,9 @@ EXPORT void CSharpResourceImpl_SetVehicleDetachDelegate(CSharpResourceImpl* reso
 
 EXPORT void CSharpResourceImpl_SetVehicleDamageDelegate(CSharpResourceImpl* resource,
     VehicleDamageDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetConnectionQueueAddDelegate(CSharpResourceImpl* resource,
+                                                      ConnectionQueueAddDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetConnectionQueueRemoveDelegate(CSharpResourceImpl* resource,
+                                                         ConnectionQueueRemoveDelegate_t delegate);

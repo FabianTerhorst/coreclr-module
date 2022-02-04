@@ -11,9 +11,17 @@ namespace AltV.Net.FunctionParser
 
         public static readonly Type Bool = typeof(bool);
 
+        public static readonly Type SByte = typeof(sbyte);
+
+        public static readonly Type Short = typeof(short);
+
         public static readonly Type Int = typeof(int);
 
         public static readonly Type Long = typeof(long);
+
+        public static readonly Type Byte = typeof(byte);
+
+        public static readonly Type UShort = typeof(ushort);
 
         public static readonly Type UInt = typeof(uint);
 

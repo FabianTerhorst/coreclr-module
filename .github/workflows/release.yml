@@ -8,42 +8,42 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1.7.2
+        uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 5.0.202
+          dotnet-version: 6.0.x
       - name: check nethost
         working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64
         run: |
           ls -l
       - name: Copy nethost
-        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.12/runtimes/linux-x64/native/
+        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.13/runtimes/linux-x64/native/
         run: |
-          tar -cvf ./libnethost.tar .
+          sudo tar -cvf ${{ runner.temp }}/libnethost.tar .
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: nethost-linux
-          path: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.12/runtimes/linux-x64/native/libnethost.tar
+          path: ${{ runner.temp }}/libnethost.tar
   fetch-nethost-windows:
-    runs-on: windows-2016
+    runs-on: windows-2022
     steps:
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1.7.2
+        uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 5.0.202
+          dotnet-version: 6.0.x
       - name: Check nethost
         working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64
         run: |
           dir
       - name: Copy nethost
-        working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.9\runtimes\win-x64\native\
+        working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\6.0.1\runtimes\win-x64\native\
         run: |
-          tar -cvf ./libnethost.tar .
+          tar -cvzf ${{ runner.temp }}\libnethost.tar .
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: nethost-windows
-          path: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\5.0.9\runtimes\win-x64\native\libnethost.tar
+          path: ${{ runner.temp }}\libnethost.tar
   build-api:
     runs-on: ubuntu-latest
     steps:
@@ -51,9 +51,9 @@ jobs:
         with:
           submodules: recursive
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1.7.2
+        uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 5.0.101
+          dotnet-version: 6.0.x
       - id: build_info
         run: |
           branch=$(git ls-remote --heads origin | grep $GITHUB_SHA | sed "s/.*\///")
@@ -64,12 +64,12 @@ jobs:
       - name: Build
         working-directory: ./api
         run: |
-          dotnet publish AltV.Net.Host -c Release -f net5.0
-          dotnet publish AltV.Net.Host -c Release -f net5.0
-          dotnet publish AltV.Net -c Release -f net5.0
-          dotnet publish AltV.Net -c Debug -f net5.0
-          dotnet publish AltV.Net.Async -c Release -f net5.0
-          dotnet publish AltV.Net.Async -c Debug -f net5.0
+          dotnet publish AltV.Net.Host -c Release -f net6.0
+          dotnet publish AltV.Net.Host -c Release -f net6.0
+          dotnet publish AltV.Net -c Release -f net6.0
+          dotnet publish AltV.Net -c Debug -f net6.0
+          dotnet publish AltV.Net.Async -c Release -f net6.0
+          dotnet publish AltV.Net.Async -c Debug -f net6.0
       - run: |
           mkdir -p ./modules/linux
           mkdir -p ./modules/windows
@@ -104,7 +104,7 @@ jobs:
         config:
           - {
               name: linux,
-              os: ubuntu-18.04,
+              os: ubuntu-latest,
               cc: gcc-9,
               cxx: g++-9,
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo,
@@ -177,9 +177,9 @@ jobs:
         with:
           submodules: recursive
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1.7.2
+        uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 5.0.101
+          dotnet-version: 6.0.x
       - run: |
           echo "$(echo "`cat ./api/AltV.Net/AltV.Net.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net/AltV.Net.csproj
           echo "$(echo "`cat ./api/AltV.Net/AltV.Net.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net/AltV.Net.csproj
@@ -195,51 +195,60 @@ jobs:
           echo "$(echo "`cat ./api/AltV.Net.EntitySync.ServerEvent/AltV.Net.EntitySync.ServerEvent.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.EntitySync.ServerEvent/AltV.Net.EntitySync.ServerEvent.csproj
           echo "$(echo "`cat ./api/AltV.Net.Client/AltV.Net.Client.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.Client/AltV.Net.Client.csproj
           echo "$(echo "`cat ./api/AltV.Net.Client/AltV.Net.Client.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.Client/AltV.Net.Client.csproj
-      - uses: rohith/publish-nuget@v2
+          echo "$(echo "`cat ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj
+          echo "$(echo "`cat ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj
+      - uses: alirezanet/publish-nuget@v3.0.0
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net/AltV.Net.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-      - uses: rohith/publish-nuget@v2
+      - uses: alirezanet/publish-nuget@v3.0.0
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Async/AltV.Net.Async.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-      - uses: rohith/publish-nuget@v2
+      - uses: alirezanet/publish-nuget@v3.0.0
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Interactions/AltV.Net.Interactions.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-      - uses: rohith/publish-nuget@v2
+      - uses: alirezanet/publish-nuget@v3.0.0
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Async.CodeGen/AltV.Net.Async.CodeGen.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-      - uses: rohith/publish-nuget@v2
+      - uses: alirezanet/publish-nuget@v3.0.0
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Resources.Chat.Api/AltV.Net.Resources.Chat.Api.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-      - uses: rohith/publish-nuget@v2
+      - uses: alirezanet/publish-nuget@v3.0.0
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.EntitySync.ServerEvent/AltV.Net.EntitySync.ServerEvent.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-      - uses: rohith/publish-nuget@v2
+      - uses: alirezanet/publish-nuget@v3.0.0
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Client/AltV.Net.Client.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          INCLUDE_SYMBOLS: true
+          TAG_COMMIT: false
+      - uses: alirezanet/publish-nuget@v3.0.0
+        with:
+          PROJECT_FILE_PATH: ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true

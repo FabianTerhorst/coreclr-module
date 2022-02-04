@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
@@ -322,6 +323,11 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public IColShape CreateColShapePolygon(float minZ, float maxZ, Vector2[] points)
+        {
+            throw new NotImplementedException();
+        }
+
         public void RemoveColShape(IColShape colShape)
         {
             throw new NotImplementedException();
@@ -369,6 +375,11 @@ namespace AltV.Net.Mock
         }
 
         public void CreateMValueVector3(out MValueConst mValue, Position value)
+        {
+            throw new NotImplementedException();
+        }
+        
+        public void CreateMValueVector2(out MValueConst mValue, Vector2 value)
         {
             throw new NotImplementedException();
         }
@@ -623,6 +634,11 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public void StopServer()
+        {
+            throw new NotImplementedException();
+        }
+
         public bool IsDebug { get; }
 
         public bool FileExists(string path)
@@ -631,6 +647,11 @@ namespace AltV.Net.Mock
         }
 
         public string FileRead(string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string PtrToStringUtf8AndFree(nint str, int size)
         {
             throw new NotImplementedException();
         }

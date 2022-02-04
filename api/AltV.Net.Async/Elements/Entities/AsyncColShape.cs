@@ -11,7 +11,6 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
                     if (!AsyncContext.CheckIfExists(BaseObject)) return default;
@@ -24,14 +23,19 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
                     if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.IsPlayersOnly;
                 }
             }
-            set { AsyncContext.Enqueue(() => BaseObject.IsPlayersOnly = value); }
+            set {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    BaseObject.IsPlayersOnly = value;
+                }
+            }
         }
 
         public AsyncColShape(TColShape colShape, IAsyncContext asyncContext) : base(colShape, asyncContext)

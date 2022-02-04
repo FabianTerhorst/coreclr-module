@@ -26,20 +26,20 @@ void Blip_SetDimension(alt::IBlip* blip, int32_t dimension) {
 }
 
 alt::MValueConst* Blip_GetMetaData(alt::IBlip* blip, const char* key) {
-    return new alt::MValueConst(blip->GetMetaData(alt::String(key)));
+    return new alt::MValueConst(blip->GetMetaData(key));
 }
 
 void Blip_SetMetaData(alt::IBlip* blip, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
-    blip->SetMetaData(alt::String(key), val->Get()->Clone());
+    blip->SetMetaData(key, val->Get()->Clone());
 }
 
 uint8_t Blip_HasMetaData(alt::IBlip* blip, const char* key) {
-    return blip->HasMetaData(alt::String(key));
+    return blip->HasMetaData(key);
 }
 
 void Blip_DeleteMetaData(alt::IBlip* blip, const char* key) {
-    blip->DeleteMetaData(alt::String(key));
+    blip->DeleteMetaData(key);
 }
 
 void Blip_AddRef(alt::IBlip* blip) {

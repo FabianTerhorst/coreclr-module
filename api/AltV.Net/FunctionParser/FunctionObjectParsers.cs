@@ -55,6 +55,38 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
+        public static object ParseSByte(object value, Type type, FunctionTypeInfo typeInfo)
+        {
+            unchecked
+            {
+                return value switch
+                {
+                    long longValue => (sbyte) longValue,
+                    ulong ulongValue => (sbyte) ulongValue,
+                    double doubleValue => (sbyte) doubleValue,
+                    string stringValue when sbyte.TryParse(stringValue, out var sbyteValue) => sbyteValue,
+                    bool boolValue => boolValue ? (sbyte) 1 : (sbyte) 0,
+                    _ => default
+                };
+            }
+        }
+
+        public static object ParseShort(object value, Type type, FunctionTypeInfo typeInfo)
+        {
+            unchecked
+            {
+                return value switch
+                {
+                    long longValue => (short) longValue,
+                    ulong ulongValue => (short) ulongValue,
+                    double doubleValue => (short) doubleValue,
+                    string stringValue when short.TryParse(stringValue, out var shortValue) => shortValue,
+                    bool boolValue => boolValue ? (short) 1 : (short) 0,
+                    _ => default
+                };
+            }
+        }
+
         public static object ParseInt(object value, Type type, FunctionTypeInfo typeInfo)
         {
             unchecked
@@ -87,6 +119,38 @@ namespace AltV.Net.FunctionParser
             }
         }
 
+        public static object ParseByte(object value, Type type, FunctionTypeInfo typeInfo)
+        {
+            unchecked
+            {
+                return value switch
+                {
+                    long longValue => (byte) longValue,
+                    ulong ulongValue => (byte) ulongValue,
+                    double doubleValue => (byte) doubleValue,
+                    string stringValue when byte.TryParse(stringValue, out var byteValue) => byteValue,
+                    bool boolValue => boolValue ? (byte) 1 : (byte) 0,
+                    _ => default
+                };
+            }
+        }
+
+        public static object ParseUShort(object value, Type type, FunctionTypeInfo typeInfo)
+        {
+            unchecked
+            {
+                return value switch
+                {
+                    long longValue => (ushort) longValue,
+                    ulong ulongValue => (ushort) ulongValue,
+                    double doubleValue => (ushort) doubleValue,
+                    string stringValue when ushort.TryParse(stringValue, out var ushortValue) => ushortValue,
+                    bool boolValue => boolValue ? (ushort) 1 : (ushort) 0,
+                    _ => default
+                };
+            }
+        }
+
         public static object ParseUInt(object value, Type type, FunctionTypeInfo typeInfo)
         {
             unchecked
@@ -97,7 +161,7 @@ namespace AltV.Net.FunctionParser
                     ulong ulongValue => (uint) ulongValue,
                     double doubleValue => (uint) doubleValue,
                     string stringValue when uint.TryParse(stringValue, out var uintValue) => uintValue,
-                    bool boolValue => boolValue ? (uint) 1 : (uint) 0,
+                    bool boolValue => boolValue ? 1U : 0U,
                     _ => default
                 };
             }
@@ -113,7 +177,7 @@ namespace AltV.Net.FunctionParser
                     ulong ulongValue => ulongValue,
                     double doubleValue => (ulong) doubleValue,
                     string stringValue when ulong.TryParse(stringValue, out var ulongValue) => ulongValue,
-                    bool boolValue => boolValue ? (ulong) 1L : (ulong) 0L,
+                    bool boolValue => boolValue ? 1UL : 0UL,
                     _ => default
                 };
             }
@@ -129,7 +193,7 @@ namespace AltV.Net.FunctionParser
                     ulong ulongValue => (float) ulongValue,
                     double doubleValue => (float) doubleValue,
                     string stringValue when float.TryParse(stringValue, out var floatValue) => floatValue,
-                    bool boolValue => boolValue ? (float) 1.0 : (float) 0.0,
+                    bool boolValue => boolValue ? 1.0f : 0.0f,
                     _ => default
                 };
             }
@@ -143,9 +207,9 @@ namespace AltV.Net.FunctionParser
                 {
                     long longValue => (double) longValue,
                     ulong ulongValue => (double) ulongValue,
-                    double doubleValue => (double) doubleValue,
+                    double doubleValue => doubleValue,
                     string stringValue when double.TryParse(stringValue, out var doubleValue) => doubleValue,
-                    bool boolValue => boolValue ? (double) 1.0 : (double) 0.0,
+                    bool boolValue => boolValue ? 1.0 : 0.0,
                     _ => default
                 };
             }

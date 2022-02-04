@@ -22,7 +22,7 @@
 #pragma clang diagnostic pop
 #endif
 
-typedef struct {
+/*typedef struct {
     uint16_t id;
     position_t position;
     rotation_t rotation;
@@ -45,7 +45,7 @@ typedef struct {
     uint8_t is_reloading;
     uint8_t is_connected;
     alt::IVehicle* vehicle;
-} player_struct_t;
+} player_struct_t;*/
 
 #ifdef __cplusplus
 extern "C"
@@ -87,12 +87,12 @@ EXPORT uint8_t Player_IsConnected(alt::IPlayer* player);
 EXPORT void Player_Spawn(alt::IPlayer* player, alt::Position pos, uint32_t delayMs);
 EXPORT void Player_Despawn(alt::IPlayer* player);
 
-EXPORT void Player_GetName(alt::IPlayer* player, const char*&name);
+EXPORT const char* Player_GetName(alt::IPlayer* player, int32_t& size);
 
 EXPORT uint64_t Player_GetSocialID(alt::IPlayer* player);
 EXPORT uint64_t Player_GetHwidHash(alt::IPlayer* player);
 EXPORT uint64_t Player_GetHwidExHash(alt::IPlayer* player);
-EXPORT void Player_GetAuthToken(alt::IPlayer* player, const char*&name);
+EXPORT const char* Player_GetAuthToken(alt::IPlayer* player, int32_t& size);
 
 EXPORT uint16_t Player_GetHealth(alt::IPlayer* player);
 EXPORT void Player_SetHealth(alt::IPlayer* player, uint16_t health);
@@ -153,7 +153,7 @@ EXPORT uint8_t Player_IsFlashlightActive(alt::IPlayer* player);
 EXPORT void Player_Kick(alt::IPlayer* player, const char* reason);
 
 EXPORT uint32_t Player_GetPing(alt::IPlayer* player);
-EXPORT void Player_GetIP(alt::IPlayer* player, const char*&ip);
+EXPORT const char* Player_GetIP(alt::IPlayer* player, int32_t& size);
 
 //EXPORT void Player_Copy(alt::IPlayer* player, player_struct_t* player_struct);
 //EXPORT void Player_Copy_Dispose(player_struct_t* player_struct);

@@ -17,21 +17,8 @@ namespace AltV.Net.Async
         public static Task SetModelAsync(this IPlayer player, uint model) =>
             AltVAsync.Schedule(() => player.Model = model);
 
-        public static async Task<string> GetNameAsync(this IPlayer player)
-        {
-            var resultPtr = await AltVAsync.Schedule(
-                () =>
-                {
-                    var ptr = IntPtr.Zero;
-                    unsafe
-                    {
-                        player.CheckIfEntityExists();
-                        Alt.Server.Library.Player_GetName(player.NativePointer, &ptr);
-                    }
-                    return ptr;
-                });
-            return resultPtr == IntPtr.Zero ? string.Empty : Marshal.PtrToStringUTF8(resultPtr);
-        }
+        public static async Task<string> GetNameAsync(this IPlayer player) => await AltVAsync.Schedule(
+                () => player.Name);
 
         public static Task<ushort> GetHealthAsync(this IPlayer player) =>
             AltVAsync.Schedule(() => player.Health);
