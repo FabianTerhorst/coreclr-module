@@ -114,7 +114,8 @@ namespace AltV.Net.CodeGen
             ["const void*"] = "nint",
             ["weapon_t*[]"] = "WeaponData[]",
             ["alt::Array<weapon_t>&"] = "WeaponArray*",
-            ["vector2_t[]"] = "Vector2[]"
+            ["vector2_t[]"] = "Vector2[]",
+            ["alt::IConnectionInfo*"] = "IntPtr"
         };
 
         private static string TypeToCSharp(string cType, string name, ParseExports.CMethod method)

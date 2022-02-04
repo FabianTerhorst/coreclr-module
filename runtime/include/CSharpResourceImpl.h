@@ -534,3 +534,9 @@ EXPORT void CSharpResourceImpl_SetVehicleDetachDelegate(CSharpResourceImpl* reso
 
 EXPORT void CSharpResourceImpl_SetVehicleDamageDelegate(CSharpResourceImpl* resource,
     VehicleDamageDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetConnectionQueueAddDelegate(CSharpResourceImpl* resource,
+                                                      ConnectionQueueAddDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetConnectionQueueRemoveDelegate(CSharpResourceImpl* resource,
+                                                         ConnectionQueueRemoveDelegate_t delegate);

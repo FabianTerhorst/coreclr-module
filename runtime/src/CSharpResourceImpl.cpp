@@ -780,6 +780,16 @@ void CSharpResourceImpl_SetVehicleDamageDelegate(CSharpResourceImpl* resource,
     resource->OnVehicleDamageDelegate = delegate;
 }
 
+void CSharpResourceImpl_SetConnectionQueueAddDelegate(CSharpResourceImpl* resource,
+                                                 ConnectionQueueAddDelegate_t delegate) {
+    resource->OnConnectionQueueAddDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetConnectionQueueRemoveDelegate(CSharpResourceImpl* resource,
+                                                      ConnectionQueueRemoveDelegate_t delegate) {
+    resource->OnConnectionQueueRemoveDelegate = delegate;
+}
+
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files) {
     std::string clientMain = resource->GetClientMain();
     std::string suffix = ".dll";

@@ -129,6 +129,20 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> ColShape_SetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> ColShape_SetPlayersOnly { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, void> ColShape_SetPosition { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, void> ConnectionInfo_Accept { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, nint, void> ConnectionInfo_Decline { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetAuthToken { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetBranch { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, uint> ConnectionInfo_GetBuild { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetCdnUrl { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetDiscordUserID { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetHwIdExHash { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetHwIdHash { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetIp { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, byte> ConnectionInfo_GetIsDebug { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetName { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetPasswordHash { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetSocialId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, nint> Core_CreateMValueBool { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong, nint, nint> Core_CreateMValueByteArray { get; }
@@ -703,6 +717,20 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> ColShape_SetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> ColShape_SetPlayersOnly { get; }
         public delegate* unmanaged[Cdecl]<nint, Position, void> ColShape_SetPosition { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, void> ConnectionInfo_Accept { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, nint, void> ConnectionInfo_Decline { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetAuthToken { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetBranch { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, uint> ConnectionInfo_GetBuild { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetCdnUrl { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetDiscordUserID { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetHwIdExHash { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetHwIdHash { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetIp { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, byte> ConnectionInfo_GetIsDebug { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, int*, nint> ConnectionInfo_GetName { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetPasswordHash { get; }
+        public delegate* unmanaged[Cdecl]<IntPtr, ulong> ConnectionInfo_GetSocialId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, nint> Core_CreateMValueBool { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong, nint, nint> Core_CreateMValueByteArray { get; }
@@ -1281,6 +1309,20 @@ namespace AltV.Net.Native
             ColShape_SetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "ColShape_SetMetaData");
             ColShape_SetPlayersOnly = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "ColShape_SetPlayersOnly");
             ColShape_SetPosition = (delegate* unmanaged[Cdecl]<nint, Position, void>) NativeLibrary.GetExport(handle, "ColShape_SetPosition");
+            ConnectionInfo_Accept = (delegate* unmanaged[Cdecl]<IntPtr, void>) NativeLibrary.GetExport(handle, "ConnectionInfo_Accept");
+            ConnectionInfo_Decline = (delegate* unmanaged[Cdecl]<IntPtr, nint, void>) NativeLibrary.GetExport(handle, "ConnectionInfo_Decline");
+            ConnectionInfo_GetAuthToken = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetAuthToken");
+            ConnectionInfo_GetBranch = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetBranch");
+            ConnectionInfo_GetBuild = (delegate* unmanaged[Cdecl]<IntPtr, uint>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetBuild");
+            ConnectionInfo_GetCdnUrl = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetCdnUrl");
+            ConnectionInfo_GetDiscordUserID = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetDiscordUserID");
+            ConnectionInfo_GetHwIdExHash = (delegate* unmanaged[Cdecl]<IntPtr, ulong>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetHwIdExHash");
+            ConnectionInfo_GetHwIdHash = (delegate* unmanaged[Cdecl]<IntPtr, ulong>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetHwIdHash");
+            ConnectionInfo_GetIp = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetIp");
+            ConnectionInfo_GetIsDebug = (delegate* unmanaged[Cdecl]<IntPtr, byte>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetIsDebug");
+            ConnectionInfo_GetName = (delegate* unmanaged[Cdecl]<IntPtr, int*, nint>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetName");
+            ConnectionInfo_GetPasswordHash = (delegate* unmanaged[Cdecl]<IntPtr, ulong>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetPasswordHash");
+            ConnectionInfo_GetSocialId = (delegate* unmanaged[Cdecl]<IntPtr, ulong>) NativeLibrary.GetExport(handle, "ConnectionInfo_GetSocialId");
             Core_CreateMValueBlip = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueBlip");
             Core_CreateMValueBool = (delegate* unmanaged[Cdecl]<nint, byte, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueBool");
             Core_CreateMValueByteArray = (delegate* unmanaged[Cdecl]<nint, ulong, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueByteArray");
