@@ -56,3 +56,11 @@ const char* ConnectionInfo_GetIp(alt::IConnectionInfo *connectionInfo, int32_t& 
 const char* ConnectionInfo_GetDiscordUserID(alt::IConnectionInfo *connectionInfo, int32_t& size) {
     return AllocateString(connectionInfo->GetDiscordUserID(), size);
 }
+
+void ConnectionInfo_AddRef(alt::IConnectionInfo *connectionInfo) {
+    connectionInfo->AddRef();
+}
+
+void ConnectionInfo_RemoveRef(alt::IConnectionInfo *connectionInfo) {
+    connectionInfo->RemoveRef();
+}

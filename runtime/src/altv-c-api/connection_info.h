@@ -31,6 +31,8 @@ EXPORT const char* ConnectionInfo_GetCdnUrl(alt::IConnectionInfo *connectionInfo
 EXPORT uint64_t ConnectionInfo_GetPasswordHash(alt::IConnectionInfo *connectionInfo);
 EXPORT const char* ConnectionInfo_GetIp(alt::IConnectionInfo *connectionInfo, int32_t& size);
 EXPORT const char* ConnectionInfo_GetDiscordUserID(alt::IConnectionInfo *connectionInfo, int32_t& size);
+EXPORT void ConnectionInfo_AddRef(alt::IConnectionInfo *connectionInfo);
+EXPORT void ConnectionInfo_RemoveRef(alt::IConnectionInfo *connectionInfo);
 #ifdef __cplusplus
 }
 #endif

@@ -1755,7 +1755,7 @@ namespace AltV.Net
 
         public virtual void OnConnectionQueueAdd(IntPtr connectionInfoPtr)
         {
-            IConnectionInfo connectionInfo = new ConnectionInfo(connectionInfoPtr);
+            IConnectionInfo connectionInfo = new ConnectionInfo(Server, connectionInfoPtr);
             connectionInfos[connectionInfoPtr] = connectionInfo;
             OnConnectionQueueAddEvent(connectionInfo);
         }
