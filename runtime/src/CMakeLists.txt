@@ -4,7 +4,7 @@ set(TARGET_NAME core_clr_host)
 
 add_library(${TARGET_NAME} SHARED altv.cpp CSharpScriptRuntime.cpp CSharpResourceImpl.cpp CoreClr.cpp
         altv-c-api/altv.cpp altv-c-api/blip.cpp altv-c-api/vehicle.cpp altv-c-api/player.cpp altv-c-api/checkpoint.cpp altv-c-api/server.cpp
-        altv-c-api/baseobject.cpp altv-c-api/mvalue.cpp altv-c-api/function.cpp altv-c-api/position.h altv-c-api/rotation.h altv-c-api/rgba.h altv-c-api/head_blend_data.h altv-c-api/head_overlay.h altv-c-api/weapon.h altv-c-api/resource.h altv-c-api/resource.cpp altv-c-api/voice_channel.cpp altv-c-api/colshape.cpp altv-c-api/event.cpp altv-c-api/strings.cpp altv-c-api/strings.h)# clrHost.cpp
+        altv-c-api/baseobject.cpp altv-c-api/mvalue.cpp altv-c-api/function.cpp altv-c-api/position.h altv-c-api/rotation.h altv-c-api/rgba.h altv-c-api/head_blend_data.h altv-c-api/head_overlay.h altv-c-api/weapon.h altv-c-api/resource.h altv-c-api/resource.cpp altv-c-api/voice_channel.cpp altv-c-api/colshape.cpp altv-c-api/event.cpp altv-c-api/strings.cpp altv-c-api/strings.h altv-c-api/connection_info.cpp altv-c-api/connection_info.h)# clrHost.cpp
 
 #link_directories(nethost)
 

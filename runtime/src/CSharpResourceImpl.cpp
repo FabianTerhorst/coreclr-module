@@ -56,6 +56,8 @@ void CSharpResourceImpl::ResetDelegates() {
     OnVehicleDetachDelegate = [](auto var, auto var2, auto var3) {};
     OnVehicleDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7,
         auto var8, auto var9) {};
+    OnConnectionQueueAddDelegate = [](auto var){};
+    OnConnectionQueueRemoveDelegate = [](auto var){};
 }
 
 bool CSharpResourceImpl::Start() {
@@ -464,6 +466,20 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                     vehicleDamageEvent->GetPetrolTankHealthDamage(),
                     vehicleDamageEvent->GetDamagedWith());
             }
+            break;
+        }
+        case alt::CEvent::Type::CONNECTION_QUEUE_ADD: {
+            auto connectionQueueAddEvent = ((alt::CConnectionQueueAddEvent*) (ev));
+            auto connectionInfo = connectionQueueAddEvent->GetConnectionInfo();
+            connectionInfo->AddRef();
+            OnConnectionQueueAddDelegate(connectionInfo.Get());
+            break;
+        }
+        case alt::CEvent::Type::CONNECTION_QUEUE_REMOVE: {
+            auto connectionQueueRemoveEvent = ((alt::CConnectionQueueRemoveEvent*) (ev));
+            auto connectionInfo = connectionQueueRemoveEvent->GetConnectionInfo();
+            OnConnectionQueueRemoveDelegate(connectionInfo.Get());
+            connectionInfo->RemoveRef();
             break;
         }
     }
