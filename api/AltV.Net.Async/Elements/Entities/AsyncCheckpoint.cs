@@ -12,70 +12,95 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
                     if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.CheckpointType;
                 }
             }
-            set { AsyncContext.Enqueue(() => BaseObject.CheckpointType = value); }
+            set {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    BaseObject.CheckpointType = value;
+                }
+            }
         }
 
         public float Height
         {
             get
             {
-                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
                     if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.Height;
                 }
             }
-            set { AsyncContext.Enqueue(() => BaseObject.Height = value); }
+            set {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    BaseObject.Height = value;
+                }
+            }
         }
 
         public float Radius
         {
             get
             {
-                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
                     if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.Radius;
                 }
             }
-            set { AsyncContext.Enqueue(() => BaseObject.Radius = value); }
+            set {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    BaseObject.Radius = value;
+                }
+            }
         }
 
         public Rgba Color
         {
             get
             {
-                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
                     if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.Color;
                 }
             }
-            set { AsyncContext.Enqueue(() => BaseObject.Color = value); }
+            set {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    BaseObject.Color = value;
+                }
+            }
         }
 
         public Position NextPosition
         {
             get
             {
-                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
                     if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.NextPosition;
                 }
             }
-            set { AsyncContext.Enqueue(() => BaseObject.NextPosition = value); }
+            set {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    BaseObject.NextPosition = value;
+                }
+            }
         }
 
         public AsyncCheckpoint(TCheckpoint checkpoint, IAsyncContext asyncContext) : base(checkpoint, asyncContext)
