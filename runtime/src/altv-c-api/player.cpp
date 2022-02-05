@@ -117,6 +117,23 @@ void Player_DeleteStreamSyncedMetaData(alt::IPlayer* player, const char* key) {
     player->DeleteStreamSyncedMetaData(key);
 }
 
+alt::MValueConst* Player_GetLocalMetaData(alt::IPlayer* player, const char* key) {
+    return new alt::MValueConst(player->GetLocalMetaData(key));
+}
+
+void Player_SetLocalMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val) {
+    if (val == nullptr) return;
+    player->SetLocalMetaData(key, val->Get()->Clone());
+}
+
+uint8_t Player_HasLocalMetaData(alt::IPlayer* player, const char* key) {
+    return player->HasLocalMetaData(key);
+}
+
+void Player_DeleteLocalMetaData(alt::IPlayer* player, const char* key) {
+    player->DeleteLocalMetaData(key);
+}
+
 void Player_AddRef(alt::IPlayer* player) {
     player->AddRef();
 }
