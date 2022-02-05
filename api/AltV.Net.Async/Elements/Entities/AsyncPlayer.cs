@@ -964,5 +964,48 @@ namespace AltV.Net.Async.Elements.Entities
                 return BaseObject.SetEyeColor(eyeColor);
             }
         }
+
+        public void GetLocalMetaData(string key, out MValueConst value)
+        {
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject))
+                {
+                    value = default;
+                    return;
+                }
+                BaseObject.GetLocalMetaData(key, out value);
+            }
+        }
+
+        public void SetLocalMetaData(string key, in MValueConst value)
+        {
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject))
+                {
+                    return;
+                }
+                BaseObject.SetLocalMetaData(key, in value);
+            }
+        }
+
+        public bool HasLocalMetaData(string key)
+        {
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return false;
+                return BaseObject.HasLocalMetaData(key);
+            }
+        }
+
+        public void DeleteLocalMetaData(string key)
+        {
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                BaseObject.DeleteLocalMetaData(key);
+            }
+        }
     }
 }
