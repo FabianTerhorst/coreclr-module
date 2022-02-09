@@ -57,6 +57,8 @@ namespace AltV.Net
 
         void SetPassword(string password);
 
+        public VehicleModelInfo GetVehicleModelInfo(uint hash);
+
         void StopServer();
 
         void TriggerServerEvent(string eventName, MValueConst[] args);
