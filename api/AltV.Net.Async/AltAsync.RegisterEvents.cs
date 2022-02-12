@@ -1,6 +1,7 @@
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.FunctionParser;
+using AltV.Net.Types;
 
 namespace AltV.Net.Async
 {
@@ -426,6 +427,36 @@ namespace AltV.Net.Async
                                             currScriptFunction.Set(engineHealthDamage);
                                             currScriptFunction.Set(petrolTankDamage);
                                             currScriptFunction.Set(weaponHash);
+                                            return currScriptFunction.CallAsync();
+                                        };
+                                    break;
+                                case ScriptEventType.ConnectionQueueAdd:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IConnectionInfo)
+                                        }, true);
+                                    if (scriptFunction == null) return;
+                                    OnConnectionQueueAdd +=
+                                        (connectionInfo) =>
+                                        {
+                                            var currScriptFunction = scriptFunction.Clone();
+                                            currScriptFunction.Set(connectionInfo);
+                                            return currScriptFunction.CallAsync();
+                                        };
+                                    break;
+                                case ScriptEventType.ConnectionQueueRemove:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IConnectionInfo)
+                                        }, true);
+                                    if (scriptFunction == null) return;
+                                    OnConnectionQueueRemove +=
+                                        (connectionInfo) =>
+                                        {
+                                            var currScriptFunction = scriptFunction.Clone();
+                                            currScriptFunction.Set(connectionInfo);
                                             return currScriptFunction.CallAsync();
                                         };
                                     break;
