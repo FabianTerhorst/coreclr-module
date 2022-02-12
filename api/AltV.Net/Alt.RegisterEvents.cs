@@ -3,6 +3,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.FunctionParser;
+using AltV.Net.Types;
 
 namespace AltV.Net
 {
@@ -450,6 +451,34 @@ namespace AltV.Net
                                             scriptFunction.Set(engineHealthDamage);
                                             scriptFunction.Set(petrolTankDamage);
                                             scriptFunction.Set(weaponHash);
+                                            scriptFunction.Call();
+                                        };
+                                    break;
+                                case ScriptEventType.ConnectionQueueAdd:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IConnectionInfo)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnConnectionQueueAdd +=
+                                        (connectionInfo) =>
+                                        {
+                                            scriptFunction.Set(connectionInfo);
+                                            scriptFunction.Call();
+                                        };
+                                    break;
+                                case ScriptEventType.ConnectionQueueRemove:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IConnectionInfo)
+                                        });
+                                    if (scriptFunction == null) return;
+                                    OnConnectionQueueRemove +=
+                                        (connectionInfo) =>
+                                        {
+                                            scriptFunction.Set(connectionInfo);
                                             scriptFunction.Call();
                                         };
                                     break;
