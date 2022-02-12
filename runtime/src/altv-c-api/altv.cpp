@@ -1,5 +1,7 @@
 #include "altv.h"
 
+#include <string.h>
+
 #ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wempty-body"
@@ -32,4 +34,8 @@ void FreeUIntArray(alt::Array<uint32_t>* array) {
 
 void FreeCharArray(char charArray[]) {
     delete[] charArray;
+}
+
+void FreeString(const char* string) {
+    delete[] string;
 }

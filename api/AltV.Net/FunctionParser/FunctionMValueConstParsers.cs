@@ -242,6 +242,40 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
+        public static object ParseSByte(in MValueConst mValue, Type type,
+            FunctionTypeInfo typeInfo)
+        {
+            if (mValue.type == MValueConst.Type.Int)
+            {
+                return (sbyte) mValue.GetInt();
+            }
+
+            if (mValue.type == MValueConst.Type.Uint)
+            {
+                return (sbyte) mValue.GetUint();
+            }
+
+            // Types doesn't match
+            return null;
+        }
+
+        public static object ParseShort(in MValueConst mValue, Type type,
+            FunctionTypeInfo typeInfo)
+        {
+            if (mValue.type == MValueConst.Type.Int)
+            {
+                return (short) mValue.GetInt();
+            }
+
+            if (mValue.type == MValueConst.Type.Uint)
+            {
+                return (short) mValue.GetUint();
+            }
+
+            // Types doesn't match
+            return null;
+        }
+
         public static object ParseInt(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
@@ -269,7 +303,41 @@ namespace AltV.Net.FunctionParser
 
             if (mValue.type == MValueConst.Type.Uint)
             {
-                return (int) mValue.GetUint();
+                return (long) mValue.GetUint();
+            }
+
+            // Types doesn't match
+            return null;
+        }
+
+        public static object ParseByte(in MValueConst mValue, Type type,
+            FunctionTypeInfo typeInfo)
+        {
+            if (mValue.type == MValueConst.Type.Uint)
+            {
+                return (byte) mValue.GetUint();
+            }
+
+            if (mValue.type == MValueConst.Type.Int)
+            {
+                return (byte) mValue.GetInt();
+            }
+
+            // Types doesn't match
+            return null;
+        }
+
+        public static object ParseUShort(in MValueConst mValue, Type type,
+            FunctionTypeInfo typeInfo)
+        {
+            if (mValue.type == MValueConst.Type.Uint)
+            {
+                return (ushort) mValue.GetUint();
+            }
+
+            if (mValue.type == MValueConst.Type.Int)
+            {
+                return (ushort) mValue.GetInt();
             }
 
             // Types doesn't match
@@ -393,7 +461,7 @@ namespace AltV.Net.FunctionParser
                     }
 
                     return ParseArray(in mValue, type, typeInfo);
-                case MValueConst.Type.Entity:
+                case MValueConst.Type.BaseObject:
                     return ParseEntity(in mValue, type, typeInfo);
                 case MValueConst.Type.Dict:
                     if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
@@ -507,7 +575,7 @@ namespace AltV.Net.FunctionParser
 
                     obj = GetDefault(type, typeInfo);
                     return false;
-                case MValueConst.Type.Entity:
+                case MValueConst.Type.BaseObject:
                     if (type == FunctionTypes.Obj ||
                         (typeInfo?.IsEntity ?? type.GetInterfaces().Contains(FunctionTypes.Entity)))
                     {
@@ -586,7 +654,7 @@ namespace AltV.Net.FunctionParser
             FunctionTypeInfo typeInfo)
         {
             // Types doesn't match
-            if (mValue.type != MValueConst.Type.Entity) return null;
+            if (mValue.type != MValueConst.Type.BaseObject) return null;
             var entityType = BaseObjectType.Undefined;
 
             var entityPointer = mValue.GetEntityPointer(ref entityType);

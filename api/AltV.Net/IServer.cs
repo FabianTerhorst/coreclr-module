@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -51,9 +52,14 @@ namespace AltV.Net
 
         void LogColored(IntPtr message);
 
+        ulong HashPassword(string password);
         uint Hash(string hash);
 
         void SetPassword(string password);
+
+        public VehicleModelInfo GetVehicleModelInfo(uint hash);
+
+        void StopServer();
 
         void TriggerServerEvent(string eventName, MValueConst[] args);
 
@@ -122,6 +128,8 @@ namespace AltV.Net
         IColShape CreateColShapeCube(Position pos, Position pos2);
 
         IColShape CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z);
+
+        IColShape CreateColShapePolygon(float minZ, float maxZ, Vector2[] points);
 
         void RemoveBlip(IBlip blip);
 
@@ -210,6 +218,8 @@ namespace AltV.Net
         
         void CreateMValueVector3(out MValueConst mValue, Position value);
         
+        void CreateMValueVector2(out MValueConst mValue, Vector2 value);
+        
         void CreateMValueRgba(out MValueConst mValue, Rgba value);
         
         void CreateMValueByteArray(out MValueConst mValue, byte[] value);
@@ -221,5 +231,7 @@ namespace AltV.Net
         bool FileExists(string path);
 
         string FileRead(string path);
+
+        string PtrToStringUtf8AndFree(nint str, int size);
     }
 }

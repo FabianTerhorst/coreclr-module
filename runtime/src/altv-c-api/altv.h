@@ -19,6 +19,7 @@ EXPORT void FreeUIntArray(alt::Array<uint32_t> *array);
 //EXPORT void FreeStringArray(alt::Array<alt::String>* array);
 /*EXPORT void FreeMValueArray(alt::Array<alt::MValue> *array);*/
 EXPORT void FreeCharArray(char charArray[]);
+EXPORT void FreeString(const char* string);
 #ifdef __cplusplus
 }
 #endif

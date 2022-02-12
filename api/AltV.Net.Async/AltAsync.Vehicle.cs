@@ -126,21 +126,8 @@ namespace AltV.Net.Async
         public static Task SetNumberplateIndexAsync(this IVehicle vehicle, uint numberPlateIndex) =>
             AltVAsync.Schedule(() => vehicle.NumberplateIndex = numberPlateIndex);
 
-        public static async Task<string> GetNumberplateTextAsync(this IVehicle vehicle)
-        {
-            var returnPtr = await AltVAsync.Schedule(
-                () =>
-                {
-                    unsafe
-                    {
-                        var ptr = IntPtr.Zero;
-                        vehicle.CheckIfEntityExists();
-                        Alt.Server.Library.Vehicle_GetNumberplateText(vehicle.NativePointer, &ptr);
-                        return ptr;
-                    }
-                });
-            return returnPtr == IntPtr.Zero ? string.Empty : Marshal.PtrToStringUTF8(returnPtr);
-        }
+        public static async Task<string> GetNumberplateTextAsync(this IVehicle vehicle) => await AltVAsync.Schedule(
+                () => vehicle.NumberplateText);
 
         public static async Task SetNumberplateTextAsync(this IVehicle vehicle, string numberPlateText)
         {
@@ -500,7 +487,7 @@ namespace AltV.Net.Async
         public static Task SetWheelHasTireAsync(this IVehicle vehicle, byte wheelId, bool state) =>
             AltVAsync.Schedule(() => vehicle.SetWheelHasTire(wheelId, state));
 
-        public static Task<Vector3> GetVelocityAsync(this IVehicle vehicle) =>
+        public static Task<Position> GetVelocityAsync(this IVehicle vehicle) =>
             AltVAsync.Schedule(() => vehicle.Velocity);
     }
 }

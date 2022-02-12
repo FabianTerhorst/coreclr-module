@@ -740,6 +740,23 @@ namespace AltV.Net.Enums
         Tailgater2 = 3050505892,
         Vectre = 2754593701,
         Warrener2 = 579912970,
-        Zr350 = 2436313176
+        Zr350 = 2436313176,
+        Shinobi = 1353120668,
+        Reever = 1993851908,
+        Champion = 3379732821,
+        Cinquemila = 2767531027,
+        Iwagen = 662793086,
+        Comet7 = 1141395928,
+        Astron = 629969764,
+        Baller7 = 359875117,
+        Buffalo4 = 3675036420,
+        Deity = 1532171089,
+        Jubilee = 461465043,
+        Granger2 = 4033620423,
+        Ignus = 2850852987,
+        Patriot3 = 3624880708,
+        Youga4 = 1486521356,
+        Zeno = 655665811,
+        Mule5 = 1343932732
     }
 }

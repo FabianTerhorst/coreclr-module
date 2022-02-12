@@ -24,6 +24,6 @@ namespace AltV.Net.Interactions
         /// <param name="interactionPosition"></param>
         /// <param name="interactionDimension"></param>
         /// <returns>True if you don't want that other interactions are triggered as well</returns>
-        bool OnInteraction(IPlayer player, Vector3 interactionPosition, int interactionDimension);
+        bool OnInteraction(IPlayer player, Vector3 interactionPosition, int interactionDimension, object argument);
     }
 }

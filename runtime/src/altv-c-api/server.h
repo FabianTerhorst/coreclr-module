@@ -10,6 +10,8 @@
 #include <CSharpResourceImpl.h>
 #include "rotation.h"
 #include "position.h"
+#include "vector2.h"
+#include "vehicle_model_info.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -25,8 +27,6 @@ EXPORT void Server_LogWarning(alt::ICore* server, const char* str);
 EXPORT void Server_LogError(alt::ICore* server, const char* str);
 EXPORT void Server_LogColored(alt::ICore* server, const char* str);
 //EXPORT uint32_t Server_Hash(alt::ICore* server, const char* str);
-EXPORT void Server_SubscribeEvent(alt::ICore* server, alt::CEvent::Type ev, alt::EventCallback cb);
-EXPORT void Server_SubscribeTick(alt::ICore* server, alt::TickCallback cb);
 EXPORT uint8_t Server_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb);
 EXPORT uint8_t Server_FileExists(alt::ICore* server, const char* path);
 EXPORT void Server_FileRead(alt::ICore* server, const char* path, const char*&text);
@@ -45,8 +45,12 @@ Server_CreateCheckpoint(alt::ICore* server, uint8_t type, position_t pos, float 
 EXPORT alt::IBlip*
 Server_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, position_t pos);
 EXPORT alt::IBlip*
-Server_CreateBlipAttached(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo);
+Server_CreateBlipAttachedPlayer(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IPlayer* attachTo);
+EXPORT alt::IBlip*
+Server_CreateBlipAttachedVehicle(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IVehicle* attachTo);
 EXPORT alt::IResource* Server_GetResource(alt::ICore* server, const char* resourceName);
+EXPORT ClrVehicleModelInfo* Server_GetVehicleModelInfo(alt::ICore* server, uint32_t hash);
+EXPORT void Server_DeallocVehicleModelInfo(ClrVehicleModelInfo* modelInfo);
 EXPORT alt::IVoiceChannel* Server_CreateVoiceChannel(alt::ICore* server, uint8_t spatial, float maxDistance);
 EXPORT alt::IColShape*
 Server_CreateColShapeCylinder(alt::ICore* server, position_t pos, float radius, float height);
@@ -54,6 +58,7 @@ EXPORT alt::IColShape* Server_CreateColShapeSphere(alt::ICore* server, position_
 EXPORT alt::IColShape* Server_CreateColShapeCircle(alt::ICore* server, position_t pos, float radius);
 EXPORT alt::IColShape* Server_CreateColShapeCube(alt::ICore* server, position_t pos, position_t pos2);
 EXPORT alt::IColShape* Server_CreateColShapeRectangle(alt::ICore* server, float x1, float y1, float x2, float y2, float z);
+EXPORT alt::IColShape* Server_CreateColShapePolygon(alt::ICore* server, float minZ, float maxZ, vector2_t points[], int pointSize);
 //EXPORT void Server_DestroyBaseObject(alt::ICore* server, alt::IBaseObject* baseObject);
 EXPORT void Server_DestroyVehicle(alt::ICore* server, alt::IVehicle* baseObject);
 EXPORT void Server_DestroyBlip(alt::ICore* server, alt::IBlip* baseObject);
@@ -95,12 +100,15 @@ EXPORT alt::MValueConst* Core_CreateMValuePlayer(alt::ICore* core, alt::IPlayer*
 EXPORT alt::MValueConst* Core_CreateMValueVehicle(alt::ICore* core, alt::IVehicle* value);
 EXPORT alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* value);
 EXPORT alt::MValueConst* Core_CreateMValueVector3(alt::ICore* core, position_t value);
+EXPORT alt::MValueConst* Core_CreateMValueVector2(alt::ICore* core, vector2_t value);
 EXPORT alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value);
 EXPORT alt::MValueConst* Core_CreateMValueByteArray(alt::ICore* core, uint64_t size, const void* data);
+EXPORT uint64_t Core_HashPassword(alt::ICore* core, const char* password);
 EXPORT uint8_t Core_IsDebug(alt::ICore* core);
-EXPORT void Core_GetVersion(alt::ICore* core, const char*&value, uint64_t &size);
-EXPORT void Core_GetBranch(alt::ICore* core, const char*&value, uint64_t &size);
+EXPORT const char* Core_GetVersion(alt::ICore* core,int32_t &size);
+EXPORT const char* Core_GetBranch(alt::ICore* core, int32_t &size);
 EXPORT void Core_SetPassword(alt::ICore* core, const char* value);
+EXPORT void Core_StopServer(alt::ICore* core);
 
 #ifdef __cplusplus
 }

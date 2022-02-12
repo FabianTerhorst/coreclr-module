@@ -1,6 +1,7 @@
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Types;
 
 namespace AltV.Net.Events
 {
@@ -10,7 +11,7 @@ namespace AltV.Net.Events
 
     public delegate void PlayerConnectDelegate(IPlayer player, string reason);
 
-    public delegate bool PlayerBeforeConnectDelegate(IPlayer player, ulong passwordHash, string cdnUrl);
+    public delegate string PlayerBeforeConnectDelegate(PlayerConnectionInfo connectionInfo, string reason);
 
     public delegate void ResourceEventDelegate(INativeResource resource);
 
@@ -69,4 +70,8 @@ namespace AltV.Net.Events
     public delegate void VehicleDetachDelegate(IVehicle target, IVehicle detachedVehicle);
 
     public delegate void VehicleDamageDelegate(IVehicle target, IEntity attacker, uint bodyHealthDamage, uint additionalBodyHealthDamage, uint engineHealthDamage, uint petrolTankDamage, uint weaponHash);
+    
+    public delegate void ConnectionQueueAddDelegate(IConnectionInfo connectionInfo);
+    
+    public delegate void ConnectionQueueRemoveDelegate(IConnectionInfo connectionInfo);
 }

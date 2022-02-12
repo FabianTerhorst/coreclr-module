@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Numerics;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net
@@ -24,6 +27,8 @@ namespace AltV.Net
 
         void Value(ulong value);
 
+        void Value(float value);
+
         void Value(double value);
 
         void Value(string value);
@@ -35,5 +40,19 @@ namespace AltV.Net
         void Value(IVehicle value);
 
         void Value(IPlayer value);
+
+        void Value(ICollection value);
+
+        void Value(IWritable value);
+
+        void Value(Position value);
+
+        void Value(Rotation value);
+
+        void Value(Rgba value);
+
+        void Value(Vector3 value);
+
+        void Value(Vector2 value);
     }
 }

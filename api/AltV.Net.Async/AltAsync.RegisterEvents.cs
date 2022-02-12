@@ -50,14 +50,13 @@ namespace AltV.Net.Async
                                     break;
                                 case ScriptEventType.PlayerBeforeConnect:
                                     scriptFunction = ScriptFunction.Create(eventMethodDelegate,
-                                        new[] { typeof(IPlayer), typeof(ulong), typeof(string) }, true);
+                                        new[] { typeof(PlayerConnectionInfo), typeof(string) }, true);
                                     if (scriptFunction == null) return;
-                                    OnPlayerBeforeConnect += (player, passwordHash, cdnUrl) =>
+                                    OnPlayerBeforeConnect += (connectionInfo, reason) =>
                                     {
                                         var currScriptFunction = scriptFunction.Clone();
-                                        currScriptFunction.Set(player);
-                                        currScriptFunction.Set(passwordHash);
-                                        currScriptFunction.Set(cdnUrl);
+                                        currScriptFunction.Set(connectionInfo);
+                                        currScriptFunction.Set(reason);
                                         return currScriptFunction.CallAsync();
                                     };
                                     break;

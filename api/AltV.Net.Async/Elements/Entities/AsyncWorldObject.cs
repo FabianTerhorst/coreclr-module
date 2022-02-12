@@ -12,28 +12,38 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
                     if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.Position;
                 }
             }
-            set { AsyncContext.Enqueue(() => BaseObject.Position = value); }
+            set {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    BaseObject.Position = value;
+                }
+            }
         }
 
         public int Dimension
         {
             get
             {
-                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
                     if (!AsyncContext.CheckIfExists(BaseObject)) return default;
                     return BaseObject.Dimension;
                 }
             }
-            set { AsyncContext.Enqueue(() => BaseObject.Dimension = value); }
+            set {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    BaseObject.Dimension = value;
+                }
+            }
         }
 
         public AsyncWorldObject(TWorld worldObject, IAsyncContext asyncContext) : base(worldObject, asyncContext)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Pools;
 
@@ -92,7 +93,11 @@ namespace AltV.Net
         public static Task ForEachColShapes(IAsyncBaseObjectCallback<IColShape> baseObjectCallback) =>
             Module.ColShapePool.ForEach(baseObjectCallback);
 
+        public static VehicleModelInfo GetVehicleModelInfo(uint hash) => Server.GetVehicleModelInfo(hash);
+        public static VehicleModelInfo GetVehicleModelInfo(string name) => Server.GetVehicleModelInfo(Hash(name));
+        
         public static uint Hash(string stringToHash) => Server.Hash(stringToHash);
+        public static ulong HashPassword(string password) => Server.HashPassword(password);
 
         internal static void Init(Module module)
         {

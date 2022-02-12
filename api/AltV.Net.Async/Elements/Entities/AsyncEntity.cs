@@ -33,7 +33,13 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Rotation;
                 }
             }
-            set { AsyncContext.Enqueue(() => BaseObject.Rotation = value); }
+            set {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    BaseObject.Rotation = value;
+                }
+            }
         }
 
         public virtual uint Model
@@ -60,10 +66,34 @@ namespace AltV.Net.Async.Elements.Entities
                     return BaseObject.Visible;
                 }
             }
-            set { AsyncContext.Enqueue(() => BaseObject.Visible = value); }
+            set {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    BaseObject.Visible = value;
+                }
+            }
         }
 
-        public bool Streamed { get; set; }
+        public bool Streamed
+        {
+            get
+            {
+                AsyncContext.RunAll();
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    return BaseObject.Streamed;
+                }
+            }
+            set {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    BaseObject.Streamed = value;
+                }
+            }
+        }
 
         public AsyncEntity(TEntity entity, IAsyncContext asyncContext) : base(entity, asyncContext)
         {
@@ -81,7 +111,11 @@ namespace AltV.Net.Async.Elements.Entities
 
         public void SetSyncedMetaData(string key, object value)
         {
-            AsyncContext.Enqueue(() => BaseObject.SetSyncedMetaData(key, value));
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                BaseObject.SetSyncedMetaData(key, value);
+            }
         }
 
         public bool GetSyncedMetaData<T1>(string key, out T1 result)
@@ -101,7 +135,11 @@ namespace AltV.Net.Async.Elements.Entities
 
         public void SetStreamSyncedMetaData(string key, object value)
         {
-            AsyncContext.Enqueue(() => BaseObject.SetStreamSyncedMetaData(key, value));
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                BaseObject.SetStreamSyncedMetaData(key, value);
+            }
         }
 
         public bool GetStreamSyncedMetaData<T1>(string key, out T1 result)
@@ -121,8 +159,11 @@ namespace AltV.Net.Async.Elements.Entities
 
         public void SetSyncedMetaData(string key, in MValueConst value)
         {
-            var @const = value;
-            AsyncContext.Enqueue(() => BaseObject.SetSyncedMetaData(key, in @const));
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                BaseObject.SetSyncedMetaData(key, in value);
+            }
         }
 
         public void GetSyncedMetaData(string key, out MValueConst value)
@@ -187,8 +228,11 @@ namespace AltV.Net.Async.Elements.Entities
 
         public void SetStreamSyncedMetaData(string key, in MValueConst value)
         {
-            var @const = value;
-            AsyncContext.Enqueue(() => BaseObject.SetSyncedMetaData(key, in @const));
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                BaseObject.SetSyncedMetaData(key, in value);
+            }
         }
 
         public void GetStreamSyncedMetaData(string key, out MValueConst value)
@@ -223,7 +267,6 @@ namespace AltV.Net.Async.Elements.Entities
 
         public bool GetStreamSyncedMetaData(string key, out uint value)
         {
-            AsyncContext.RunAll();
             lock (BaseObject)
             {
                 if (!AsyncContext.CheckIfExists(BaseObject))
@@ -238,7 +281,6 @@ namespace AltV.Net.Async.Elements.Entities
 
         public bool GetStreamSyncedMetaData(string key, out float value)
         {
-            AsyncContext.RunAll();
             lock (BaseObject)
             {
                 if (!AsyncContext.CheckIfExists(BaseObject))
@@ -253,7 +295,6 @@ namespace AltV.Net.Async.Elements.Entities
 
         public bool HasSyncedMetaData(string key)
         {
-            AsyncContext.RunAll();
             lock (BaseObject)
             {
                 if (!AsyncContext.CheckIfExists(BaseObject)) return default;
@@ -263,7 +304,11 @@ namespace AltV.Net.Async.Elements.Entities
 
         public void DeleteSyncedMetaData(string key)
         {
-            AsyncContext.Enqueue(() => BaseObject.DeleteSyncedMetaData(key));
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                BaseObject.DeleteSyncedMetaData(key);
+            }
         }
 
         public bool HasStreamSyncedMetaData(string key)
@@ -278,19 +323,30 @@ namespace AltV.Net.Async.Elements.Entities
 
         public void DeleteStreamSyncedMetaData(string key)
         {
-            AsyncContext.Enqueue(() => BaseObject.DeleteStreamSyncedMetaData(key));
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                BaseObject.DeleteStreamSyncedMetaData(key);
+            }
         }
 
         public void AttachToEntity(IEntity entity, short otherBone, short ownBone, Position position, Rotation rotation,
             bool collision, bool noFixedRotation)
         {
-            AsyncContext.Enqueue(() =>
-                BaseObject.AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRotation));
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                BaseObject.AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRotation);
+            }
         }
 
         public void Detach()
         {
-            AsyncContext.Enqueue(() => BaseObject.Detach());
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                BaseObject.Detach();
+            }
         }
     }
 }

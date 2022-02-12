@@ -181,9 +181,10 @@ namespace AltV.Net
             _module.OnPlayerConnect(playerPointer, playerId, reason);
         }
 
-        public static void OnPlayerBeforeConnect(IntPtr eventPointer, IntPtr playerPointer, ushort playerId, ulong passwordHash, string cdnUrl)
+        public static void OnPlayerBeforeConnect(IntPtr eventPointer, IntPtr connectionInfoPointer, string reason)
         {
-            _module.OnPlayerBeforeConnect(eventPointer, playerPointer, playerId, passwordHash, cdnUrl);
+            var connectionInfo = Marshal.PtrToStructure<PlayerConnectionInfo>(connectionInfoPointer);
+            _module.OnPlayerBeforeConnect(eventPointer, connectionInfo, reason);
         }
 
         public static void OnResourceStart(IntPtr resourcePointer)
@@ -414,6 +415,16 @@ namespace AltV.Net
         {
             _module.OnVehicleDamage(eventPointer, vehiclePointer, entityPointer, entityType, bodyHealthDamage, additionalBodyHealthDamage,
                 engineHealthDamage, petrolTankDamage, weaponHash);
+        }
+        
+        public static void OnConnectionQueueAdd(IntPtr connectionInfo)
+        {
+            _module.OnConnectionQueueAdd(connectionInfo);
+        }
+        
+        public static void OnConnectionQueueRemove(IntPtr connectionInfo)
+        { 
+            _module.OnConnectionQueueRemove(connectionInfo);
         }
     }
 }

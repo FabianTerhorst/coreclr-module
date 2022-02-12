@@ -12,7 +12,7 @@ void CSharpResourceImpl::ResetDelegates() {
     MainDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnClientEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnPlayerConnectDelegate = [](auto var, auto var2, auto var3) {};
-    OnPlayerBeforeConnectDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
+    OnPlayerBeforeConnectDelegate = [](auto var, auto var2, auto var3) {};
     OnResourceStartDelegate = [](auto var) {};
     OnResourceStopDelegate = [](auto var) {};
     OnResourceErrorDelegate = [](auto var) {};
@@ -56,6 +56,8 @@ void CSharpResourceImpl::ResetDelegates() {
     OnVehicleDetachDelegate = [](auto var, auto var2, auto var3) {};
     OnVehicleDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7,
         auto var8, auto var9) {};
+    OnConnectionQueueAddDelegate = [](auto var){};
+    OnConnectionQueueRemoveDelegate = [](auto var){};
 }
 
 bool CSharpResourceImpl::Start() {
@@ -163,11 +165,12 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             break;
         case alt::CEvent::Type::PLAYER_BEFORE_CONNECT: {
             auto beforeConnectEvent = (alt::CPlayerBeforeConnectEvent*)ev;
-            auto connectPlayer = beforeConnectEvent->GetTarget().Get();
+            auto clrInfo = new ClrConnectionInfo(beforeConnectEvent->GetConnectionInfo().Get());
 
-            OnPlayerBeforeConnectDelegate(beforeConnectEvent, connectPlayer, connectPlayer->GetID(),
-                beforeConnectEvent->GetPasswordHash(),
-                beforeConnectEvent->GetCdnUrl().CStr());
+            OnPlayerBeforeConnectDelegate(beforeConnectEvent, clrInfo, "");
+
+            clrInfo->dealloc();
+            delete clrInfo;
         }
             break;
         case alt::CEvent::Type::RESOURCE_START: {
@@ -346,11 +349,11 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
         }
             break;
         case alt::CEvent::Type::CONSOLE_COMMAND_EVENT: {
-            alt::Array<alt::StringView> args = ((alt::CConsoleCommandEvent*) (ev))->GetArgs();
+            std::vector<std::string> args = ((alt::CConsoleCommandEvent*) (ev))->GetArgs();
 
-            uint64_t size = args.GetSize();
+            uint64_t size = args.size();
             if (size == 0) {
-                OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(), nullptr, 0);
+                OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().c_str(), nullptr, 0);
             } else {
 #ifdef _WIN32
                 auto constArgs = new const char* [size];
@@ -358,10 +361,10 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                 const char* constArgs[size];
 #endif
                 for (uint64_t i = 0; i < size; i++) {
-                    constArgs[i] = args[i].CStr();
+                    constArgs[i] = args[i].c_str();
                 }
 
-                OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().CStr(), constArgs, size);
+                OnConsoleCommandDelegate(((alt::CConsoleCommandEvent*) (ev))->GetName().c_str(), constArgs, size);
 
 #ifdef _WIN32
                 delete[] constArgs;
@@ -463,6 +466,20 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                     vehicleDamageEvent->GetPetrolTankHealthDamage(),
                     vehicleDamageEvent->GetDamagedWith());
             }
+            break;
+        }
+        case alt::CEvent::Type::CONNECTION_QUEUE_ADD: {
+            auto connectionQueueAddEvent = ((alt::CConnectionQueueAddEvent*) (ev));
+            auto connectionInfo = connectionQueueAddEvent->GetConnectionInfo();
+            connectionInfo->AddRef();
+            OnConnectionQueueAddDelegate(connectionInfo.Get());
+            break;
+        }
+        case alt::CEvent::Type::CONNECTION_QUEUE_REMOVE: {
+            auto connectionQueueRemoveEvent = ((alt::CConnectionQueueRemoveEvent*) (ev));
+            auto connectionInfo = connectionQueueRemoveEvent->GetConnectionInfo();
+            OnConnectionQueueRemoveDelegate(connectionInfo.Get());
+            connectionInfo->RemoveRef();
             break;
         }
     }
@@ -763,8 +780,25 @@ void CSharpResourceImpl_SetVehicleDamageDelegate(CSharpResourceImpl* resource,
     resource->OnVehicleDamageDelegate = delegate;
 }
 
+void CSharpResourceImpl_SetConnectionQueueAddDelegate(CSharpResourceImpl* resource,
+                                                 ConnectionQueueAddDelegate_t delegate) {
+    resource->OnConnectionQueueAddDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetConnectionQueueRemoveDelegate(CSharpResourceImpl* resource,
+                                                      ConnectionQueueRemoveDelegate_t delegate) {
+    resource->OnConnectionQueueRemoveDelegate = delegate;
+}
+
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files) {
-    info->type = "js";
+    std::string clientMain = resource->GetClientMain();
+    std::string suffix = ".dll";
+    if (clientMain.size() >= suffix.size() &&
+        clientMain.compare(clientMain.size() - suffix.size(), suffix.size(), suffix) == 0) {
+        info->type = "csharp";
+    } else {
+        info->type = "js";
+    }
     return true;
 }
 

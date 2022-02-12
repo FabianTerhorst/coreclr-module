@@ -199,6 +199,18 @@ namespace AltV.Net.FunctionParser
                 ObjectParser = FunctionObjectParsers.ParseBool;
                 StringParser = FunctionStringParsers.ParseBool;
             }
+            else if (paramType == FunctionTypes.SByte)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseSByte;
+                ObjectParser = FunctionObjectParsers.ParseSByte;
+                StringParser = FunctionStringParsers.ParseSByte;
+            }
+            else if (paramType == FunctionTypes.Short)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseShort;
+                ObjectParser = FunctionObjectParsers.ParseShort;
+                StringParser = FunctionStringParsers.ParseShort;
+            }
             else if (paramType == FunctionTypes.Int)
             {
                 ConstParser = FunctionMValueConstParsers.ParseInt;
@@ -210,6 +222,18 @@ namespace AltV.Net.FunctionParser
                 ConstParser = FunctionMValueConstParsers.ParseLong;
                 ObjectParser = FunctionObjectParsers.ParseLong;
                 StringParser = FunctionStringParsers.ParseLong;
+            }
+            else if (paramType == FunctionTypes.Byte)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseByte;
+                ObjectParser = FunctionObjectParsers.ParseByte;
+                StringParser = FunctionStringParsers.ParseByte;
+            }
+            else if (paramType == FunctionTypes.UShort)
+            {
+                ConstParser = FunctionMValueConstParsers.ParseUShort;
+                ObjectParser = FunctionObjectParsers.ParseUShort;
+                StringParser = FunctionStringParsers.ParseUShort;
             }
             else if (paramType == FunctionTypes.UInt)
             {

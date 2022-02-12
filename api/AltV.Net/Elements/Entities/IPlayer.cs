@@ -1,6 +1,7 @@
 using System;
 using System.Numerics;
 using AltV.Net.Data;
+using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Refs;
 using AltV.Net.Enums;
 
@@ -465,6 +466,14 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
         bool SetEyeColor(ushort eyeColor);
+
+        void GetLocalMetaData(string key, out MValueConst value);
+
+        void SetLocalMetaData(string key, in MValueConst value);
+        
+        bool HasLocalMetaData(string key);
+
+        void DeleteLocalMetaData(string key);
     }
 
     public static class PlayerExtensions
@@ -546,6 +555,86 @@ namespace AltV.Net.Elements.Entities
                 (float) (Math.Cos(z) * num),
                 (float) Math.Sin(x)
             );
+        }
+        
+        public static void SetLocalMetaData(this IPlayer player, string key, object value)
+        {
+            player.CheckIfEntityExists();
+            Alt.Server.CreateMValue(out var mValue, value);
+            player.SetLocalMetaData(key, in mValue);
+            mValue.Dispose();
+        }
+
+        public static bool GetLocalMetaData(this IPlayer player, string key, out int result)
+        {
+            player.CheckIfEntityExists();
+            player.GetLocalMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.Int)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (int) mValue.GetInt();
+            }
+
+            return true;
+        }
+
+        public static bool GetLocalMetaData(this IPlayer player, string key, out uint result)
+        {
+            player.CheckIfEntityExists();
+            player.GetLocalMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.Uint)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (uint) mValue.GetUint();
+            }
+
+            return true;
+        }
+
+        public static bool GetLocalMetaData(this IPlayer player, string key, out float result)
+        {
+            player.CheckIfEntityExists();
+            player.GetLocalMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.Double)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (float) mValue.GetDouble();
+            }
+
+            return true;
+        }
+
+        public static bool GetLocalMetaData<T>(this IPlayer player, string key, out T result)
+        {
+            player.CheckIfEntityExists();
+            player.GetLocalMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (!(mValue.ToObject() is T cast))
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = cast;
+            }
+
+            return true;
         }
     }
 }

@@ -19,6 +19,7 @@ extern "C"
 {
 #endif
 EXPORT void Event_Cancel(alt::CEvent* event);
+EXPORT void Event_PlayerBeforeConnect_Cancel(alt::CEvent* event, const char* reason);
 EXPORT uint8_t Event_WasCancelled(alt::CEvent* event);
 #ifdef __cplusplus
 }

@@ -1,5 +1,7 @@
 #include "server.h"
 #include "mvalue.h"
+#include "strings.h"
+#include <vector>
 
 void Server_LogInfo(alt::ICore* server, const char* str) {
     server->LogInfo(str);
@@ -25,14 +27,6 @@ void Server_LogColored(alt::ICore* server, const char* str) {
     return server->Hash(str);
 }*/
 
-void Server_SubscribeEvent(alt::ICore* server, alt::CEvent::Type ev, alt::EventCallback cb) {
-    return server->SubscribeEvent(ev, cb);
-}
-
-void Server_SubscribeTick(alt::ICore* server, alt::TickCallback cb) {
-    return server->SubscribeTick(cb);
-}
-
 uint8_t Server_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb) {
     return server->SubscribeCommand(cmd, cb);
 }
@@ -41,6 +35,7 @@ uint8_t Server_FileExists(alt::ICore* server, const char* path) {
     return server->FileExists(path);
 }
 
+//TODO: needs migration to std::string in cpp-sdk
 void Server_FileRead(alt::ICore* server, const char* path, const char*&text) {
     text = server->FileRead(path).CStr();
 }
@@ -130,12 +125,25 @@ Server_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, positi
 }
 
 alt::IBlip*
-Server_CreateBlipAttached(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo) {
+Server_CreateBlipAttachedPlayer(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IPlayer* attachTo) {
+    return server->CreateBlip(target, (alt::IBlip::BlipType) type, attachTo).Get();
+}
+
+alt::IBlip*
+Server_CreateBlipAttachedVehicle(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IVehicle* attachTo) {
     return server->CreateBlip(target, (alt::IBlip::BlipType) type, attachTo).Get();
 }
 
 alt::IResource* Server_GetResource(alt::ICore* server, const char* resourceName) {
     return server->GetResource(resourceName);
+}
+
+ClrVehicleModelInfo* Server_GetVehicleModelInfo(alt::ICore* server, uint32_t hash) {
+    return new ClrVehicleModelInfo(server->GetVehicleModelByHash(hash));
+}
+
+void Server_DeallocVehicleModelInfo(ClrVehicleModelInfo* modelInfo) {
+    delete modelInfo;
 }
 
 alt::IVoiceChannel* Server_CreateVoiceChannel(alt::ICore* server, uint8_t spatial, float maxDistance) {
@@ -181,6 +189,19 @@ alt::IColShape* Server_CreateColShapeCube(alt::ICore* server, position_t pos, po
 
 alt::IColShape* Server_CreateColShapeRectangle(alt::ICore* server, float x1, float y1, float x2, float y2, float z) {
     return server->CreateColShapeRectangle(x1, y1, x2, y2, z).Get();
+}
+
+alt::IColShape* Server_CreateColShapePolygon(alt::ICore* server, float minZ, float maxZ, vector2_t points[], int pointSize) {
+    std::vector<alt::Vector2f> convertedPoints(pointSize);
+    for (int i = 0; i < pointSize; i++)
+    {
+       alt::Vector2f point;
+       point[0] = points[i].x;
+       point[1] = points[i].y;
+       convertedPoints[i] = point;
+    }
+    
+    return server->CreateColShapePolygon(minZ, maxZ, convertedPoints).Get();
 }
 
 /*void Server_DestroyBaseObject(alt::ICore* server, alt::IBaseObject* baseObject) {
@@ -405,6 +426,14 @@ alt::MValueConst* Core_CreateMValueVector3(alt::ICore* core, position_t value) {
     return new alt::MValueConst(mValue);
 }
 
+alt::MValueConst* Core_CreateMValueVector2(alt::ICore* core, vector2_t value) {
+    alt::Vector2f vector2F;
+    vector2F[0] = value.x;
+    vector2F[1] = value.y;
+    alt::MValueConst mValue = core->CreateMValueVector2(vector2F);
+    return new alt::MValueConst(mValue);
+}
+
 alt::MValueConst* Core_CreateMValueByteArray(alt::ICore* core, uint64_t size, const void* data) {
     auto byteArray = (const uint8_t*) data;
     alt::MValueConst mValue = core->CreateMValueByteArray(byteArray, size);
@@ -421,22 +450,26 @@ alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value) {
     return new alt::MValueConst(mValue);
 }
 
+uint64_t Core_HashPassword(alt::ICore* core, const char* password) {
+    return core->HashServerPassword(password);
+}
+
 uint8_t Core_IsDebug(alt::ICore* core) {
     return core->IsDebug();
 }
 
-void Core_GetVersion(alt::ICore* core, const char*&value, uint64_t &size) {
-    auto version = core->GetVersion();
-    value = version.GetData();
-    size = version.GetSize();
+const char* Core_GetVersion(alt::ICore* core, int32_t &size) {
+    return AllocateString(core->GetVersion(), size);
 }
 
-void Core_GetBranch(alt::ICore* core, const char*&value, uint64_t &size) {
-    auto version = core->GetBranch();
-    value = version.GetData();
-    size = version.GetSize();
+const char* Core_GetBranch(alt::ICore* core, int32_t &size) {
+    return AllocateString(core->GetBranch(), size);
 }
 
 void Core_SetPassword(alt::ICore* core, const char* value) {
     core->SetPassword(value);
+}
+
+void Core_StopServer(alt::ICore* core) {
+    core->StopServer();
 }
