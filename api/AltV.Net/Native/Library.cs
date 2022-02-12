@@ -350,6 +350,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, Position, float, nint> Server_CreateColShapeSphere { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint> Server_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, nint> Server_CreateVoiceChannel { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Server_DeallocVehicleModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Server_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Server_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Server_DestroyBlip { get; }
@@ -368,6 +369,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint*, void> Server_GetRootDirectory { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Server_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Server_GetVehicleCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint> Server_GetVehicleModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Server_GetVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Server_HasMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Server_HasSyncedMetaData { get; }
@@ -944,6 +946,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, Position, float, nint> Server_CreateColShapeSphere { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint> Server_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, nint> Server_CreateVoiceChannel { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Server_DeallocVehicleModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Server_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Server_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Server_DestroyBlip { get; }
@@ -962,6 +965,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint*, void> Server_GetRootDirectory { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Server_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Server_GetVehicleCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint> Server_GetVehicleModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Server_GetVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Server_HasMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Server_HasSyncedMetaData { get; }
@@ -1542,6 +1546,7 @@ namespace AltV.Net.Native
             Server_CreateColShapeSphere = (delegate* unmanaged[Cdecl]<nint, Position, float, nint>) NativeLibrary.GetExport(handle, "Server_CreateColShapeSphere");
             Server_CreateVehicle = (delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint>) NativeLibrary.GetExport(handle, "Server_CreateVehicle");
             Server_CreateVoiceChannel = (delegate* unmanaged[Cdecl]<nint, byte, float, nint>) NativeLibrary.GetExport(handle, "Server_CreateVoiceChannel");
+            Server_DeallocVehicleModelInfo = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Server_DeallocVehicleModelInfo");
             Server_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Server_DeleteMetaData");
             Server_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Server_DeleteSyncedMetaData");
             Server_DestroyBlip = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Server_DestroyBlip");
@@ -1560,6 +1565,7 @@ namespace AltV.Net.Native
             Server_GetRootDirectory = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Server_GetRootDirectory");
             Server_GetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Server_GetSyncedMetaData");
             Server_GetVehicleCount = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Server_GetVehicleCount");
+            Server_GetVehicleModelInfo = (delegate* unmanaged[Cdecl]<nint, uint, nint>) NativeLibrary.GetExport(handle, "Server_GetVehicleModelInfo");
             Server_GetVehicles = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) NativeLibrary.GetExport(handle, "Server_GetVehicles");
             Server_HasMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Server_HasMetaData");
             Server_HasSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Server_HasSyncedMetaData");

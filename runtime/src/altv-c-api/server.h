@@ -11,6 +11,7 @@
 #include "rotation.h"
 #include "position.h"
 #include "vector2.h"
+#include "vehicle_model_info.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -48,6 +49,8 @@ Server_CreateBlipAttachedPlayer(alt::ICore* server, alt::IPlayer* target, uint8_
 EXPORT alt::IBlip*
 Server_CreateBlipAttachedVehicle(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IVehicle* attachTo);
 EXPORT alt::IResource* Server_GetResource(alt::ICore* server, const char* resourceName);
+EXPORT ClrVehicleModelInfo* Server_GetVehicleModelInfo(alt::ICore* server, uint32_t hash);
+EXPORT void Server_DeallocVehicleModelInfo(ClrVehicleModelInfo* modelInfo);
 EXPORT alt::IVoiceChannel* Server_CreateVoiceChannel(alt::ICore* server, uint8_t spatial, float maxDistance);
 EXPORT alt::IColShape*
 Server_CreateColShapeCylinder(alt::ICore* server, position_t pos, float radius, float height);

@@ -138,6 +138,14 @@ alt::IResource* Server_GetResource(alt::ICore* server, const char* resourceName)
     return server->GetResource(resourceName);
 }
 
+ClrVehicleModelInfo* Server_GetVehicleModelInfo(alt::ICore* server, uint32_t hash) {
+    return new ClrVehicleModelInfo(server->GetVehicleModelByHash(hash));
+}
+
+void Server_DeallocVehicleModelInfo(ClrVehicleModelInfo* modelInfo) {
+    delete modelInfo;
+}
+
 alt::IVoiceChannel* Server_CreateVoiceChannel(alt::ICore* server, uint8_t spatial, float maxDistance) {
     return server->CreateVoiceChannel(spatial, maxDistance).Get();
 }

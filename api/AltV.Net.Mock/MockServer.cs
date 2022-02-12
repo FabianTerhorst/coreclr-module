@@ -634,6 +634,11 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public VehicleModelInfo GetVehicleModelInfo(uint hash)
+        {
+            throw new NotImplementedException();
+        }
+        
         public void StopServer()
         {
             throw new NotImplementedException();
