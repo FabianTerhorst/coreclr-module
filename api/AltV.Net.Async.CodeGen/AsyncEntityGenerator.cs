@@ -40,6 +40,8 @@ namespace AltV.Net.Async.CodeGen
 
         private const string AttributeText = @"
 using System;
+using AltV.Net.Async;
+
 namespace AltV.Net.Async.CodeGen {
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     sealed class AsyncEntityAttribute : Attribute
@@ -203,10 +205,8 @@ namespace AltV.Net.Async.CodeGen {
                                 if (propertySettings.TryGetValue("ThreadSafe", out var threadSafe) &&
                                     threadSafe.ToCSharpString() == "true")
                                 {
-                                    getter =
-                                        $"{{ {property.Type} res = default; AsyncContext.RunOnMainThreadBlockingAndRunAll(() => res = BaseObject.{property.Name}); return res; }}";
-                                    setter =
-                                        $"{{ AsyncContext.Enqueue(() => BaseObject.{property.Name} = value); }}";
+                                    getter = $"{{ lock (BaseObject) return AsyncContext.CheckIfExistsNullable(BaseObject) ? BaseObject.{member.Name} : default; }}";
+                                    setter = $"{{ lock (BaseObject) if (AsyncContext.CheckIfExistsNullable(BaseObject)) BaseObject.{member.Name} = value; }}";
                                 }
 
                                 var propertyValue = "";
