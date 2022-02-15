@@ -14,14 +14,14 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.Position;
                 }
             }
             set {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.Position = value;
                 }
             }
@@ -33,14 +33,14 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.Dimension;
                 }
             }
             set {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.Dimension = value;
                 }
             }

@@ -23,6 +23,18 @@ namespace AltV.Net.Async
         public static IVoiceChannel ToAsync(this IVoiceChannel voiceChannel, IAsyncContext asyncContext) =>
             asyncContext.CreateRef(voiceChannel) ? new AsyncVoiceChannel<IVoiceChannel>(voiceChannel, asyncContext) : null;
 
+        public static IPlayer ToAsync(this IPlayer player) => new AsyncPlayer<IPlayer>(player, null);
+
+        public static IVehicle ToAsync(this IVehicle vehicle) => new AsyncVehicle<IVehicle>(vehicle, null);
+
+        public static ICheckpoint ToAsync(this ICheckpoint checkpoint) => new AsyncCheckpoint<ICheckpoint>(checkpoint, null);
+
+        public static IColShape ToAsync(this IColShape colShape) => new AsyncColShape<IColShape>(colShape, null);
+
+        public static IBlip ToAsync(this IBlip blip) => new AsyncBlip<IBlip>(blip, null);
+
+        public static IVoiceChannel ToAsync(this IVoiceChannel voiceChannel) => new AsyncVoiceChannel<IVoiceChannel>(voiceChannel, null);
+
         public static bool TryToAsync(this IPlayer thisValue, IAsyncContext asyncContext, out IPlayer player)
         {
             if (!asyncContext.CreateRef(thisValue, true))

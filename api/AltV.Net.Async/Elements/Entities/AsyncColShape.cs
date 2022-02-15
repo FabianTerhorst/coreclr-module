@@ -13,7 +13,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.ColShapeType;
                 }
             }
@@ -25,14 +25,14 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.IsPlayersOnly;
                 }
             }
             set {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.IsPlayersOnly = value;
                 }
             }
@@ -46,7 +46,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.IsEntityIn(entity);
             }
         }
@@ -55,7 +55,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.IsPlayerIn(entity);
             }
         }
@@ -64,14 +64,14 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.IsVehicleIn(entity);
             }
         }
 
         public void Remove()
         {
-            AsyncContext.RunOnMainThreadBlocking(() => BaseObject.Remove());
+            AsyncContext.RunOnMainThreadBlockingNullable(() => BaseObject.Remove());
         }
     }
 }
