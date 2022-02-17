@@ -1,5 +1,5 @@
 # alt:V C# module
-The documentation for the [alt:V V$ module](https://github.com/FabianTerhorst/coreclr-module).
+The documentation for the [alt:V C# module](https://github.com/FabianTerhorst/coreclr-module).
 
 ## Overview
 <section class="destinations">
