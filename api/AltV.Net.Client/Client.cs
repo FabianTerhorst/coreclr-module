@@ -4,12 +4,12 @@ namespace AltV.Net.Client
 {
     public class Client : IClient
     {
-        private readonly ILibrary _library;
+        public ILibrary Library { get; }
         private readonly IntPtr _corePointer;
 
         public Client(ILibrary library, IntPtr corePointer)
         {
-            _library = library;
+            Library = library;
             _corePointer = corePointer;
         }
 
@@ -17,7 +17,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                this._library.LogInfo(message);
+                this.Library.LogInfo(message);
             }
         }
 
@@ -25,7 +25,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                this._library.LogWarning(message);
+                this.Library.LogWarning(message);
             }
         }
         
@@ -33,7 +33,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                this._library.LogError(message);
+                this.Library.LogError(message);
             }
         }
         
@@ -41,7 +41,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                this._library.LogDebug(message);
+                this.Library.LogDebug(message);
             }
         }
     }

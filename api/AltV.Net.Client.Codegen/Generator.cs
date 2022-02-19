@@ -52,7 +52,9 @@ namespace AltV.Net.Client.Codegen
                     {
                         var matchArg = matches[i];
                         var argType = matchArg.Groups[1].Value;
+                        var argName = matchArg.Groups[2].Value;
                         var csArgType = CsTypes.FirstOrDefault(t => t.Key == argType).Value ?? "object";
+                        if (argName.EndsWith("[]")) csArgType += "[]";
                         
                         delegateType.Append($"{csArgType}, ");
                     }
@@ -66,8 +68,9 @@ namespace AltV.Net.Client.Codegen
             
             var output = new StringBuilder();
                 
-            output.Append("using System.Reflection; \n");
-            output.Append("using System.Runtime.InteropServices; \n");
+            output.Append("using System.Numerics;\n");
+            output.Append("using System.Reflection;\n");
+            output.Append("using System.Runtime.InteropServices;\n");
             output.Append("namespace AltV.Net.Client.CApi\n{\n");
                 
             output.Append("    public unsafe interface ILibrary\n    {\n");
@@ -110,7 +113,18 @@ namespace AltV.Net.Client.Codegen
             {"const char*", "string"},
             {"int*", "int*"},
             {"alt::IResource*", "nint"},
-            {"void**", "nint*"}
+            {"void**", "nint*"},
+            {"alt::MValueConst*", "nint"},
+            {"int8_t", "sbyte"},
+            {"uint8_t", "byte"},
+            {"int16_t", "short"},
+            {"uint16_t", "ushort"},
+            {"int32_t", "int"},
+            {"uint32_t", "uint"},
+            {"int64_t", "long"},
+            {"uint64_t", "ulong"},
+            {"vector2_t", "Vector2"},
+            {"vector3_t", "Vector3"}
         };
         
         public static void Main(string[] args)
