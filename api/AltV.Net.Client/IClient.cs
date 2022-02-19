@@ -2,6 +2,9 @@ namespace AltV.Net.Client
 {
     public interface IClient
     {
-        public void Log(string message);
+        public void LogInfo(string message);
+        public void LogError(string message);
+        void LogWarning(string message);
+        void LogDebug(string message);
     }
 }

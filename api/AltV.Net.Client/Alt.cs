@@ -11,10 +11,13 @@ namespace AltV.Net.Client
         {
             Module = module;
         }
-        
-        public static void Log(string message)
-        {
-            Client.Log(message);
-        }
+
+        public static void Log(string message) => Client.LogInfo(message);
+        public static void LogInfo(string message) => Client.LogInfo(message);
+        public static void LogWarning(string message) => Client.LogWarning(message);
+        public static void LogError(string message) => Client.LogError(message);
+        public static void LogDebug(string message) => Client.LogDebug(message);
+        // todo add time and some prefix maybe
+        public static void LogExternal(string message) => Console.WriteLine(message);
     }
 }

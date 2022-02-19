@@ -13,11 +13,35 @@ namespace AltV.Net.Client
             _corePointer = corePointer;
         }
 
-        public void Log(string message)
+        public void LogInfo(string message)
         {
             unsafe
             {
                 this._library.LogInfo(message);
+            }
+        }
+
+        public void LogWarning(string message)
+        {
+            unsafe
+            {
+                this._library.LogWarning(message);
+            }
+        }
+        
+        public void LogError(string message)
+        {
+            unsafe
+            {
+                this._library.LogError(message);
+            }
+        }
+        
+        public void LogDebug(string message)
+        {
+            unsafe
+            {
+                this._library.LogDebug(message);
             }
         }
     }
