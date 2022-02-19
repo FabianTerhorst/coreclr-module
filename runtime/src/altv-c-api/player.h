@@ -76,6 +76,10 @@ EXPORT alt::MValueConst* Player_GetStreamSyncedMetaData(alt::IPlayer* player, co
 EXPORT void Player_SetStreamSyncedMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val);
 EXPORT uint8_t Player_HasStreamSyncedMetaData(alt::IPlayer* player, const char* key);
 EXPORT void Player_DeleteStreamSyncedMetaData(alt::IPlayer* player, const char* key);
+EXPORT alt::MValueConst* Player_GetLocalMetaData(alt::IPlayer* player, const char* key);
+EXPORT void Player_SetLocalMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val);
+EXPORT uint8_t Player_HasLocalMetaData(alt::IPlayer* player, const char* key);
+EXPORT void Player_DeleteLocalMetaData(alt::IPlayer* player, const char* key);
 EXPORT void Player_AddRef(alt::IPlayer* player);
 EXPORT void Player_RemoveRef(alt::IPlayer* player);
 EXPORT uint8_t Player_GetVisible(alt::IPlayer* player);

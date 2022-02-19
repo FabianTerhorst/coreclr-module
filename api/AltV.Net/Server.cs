@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -42,6 +43,8 @@ namespace AltV.Net
         private readonly IBaseObjectPool<IColShape> colShapePool;
 
         private readonly INativeResourcePool nativeResourcePool;
+
+        private readonly ConcurrentDictionary<uint, VehicleModelInfo> vehicleModelInfoCache;
 
         private string version;
 
@@ -147,6 +150,7 @@ namespace AltV.Net
             this.voiceChannelPool = voiceChannelPool;
             this.colShapePool = colShapePool;
             this.nativeResourcePool = nativeResourcePool;
+            this.vehicleModelInfoCache = new();
             Library = library;
             Resource = resource;
         }
@@ -283,6 +287,20 @@ namespace AltV.Net
                 Library.Core_SetPassword(NativePointer, passwordPtr);
                 Marshal.FreeHGlobal(passwordPtr);
             }
+        }
+
+        public VehicleModelInfo GetVehicleModelInfo(uint hash)
+        {
+            return this.vehicleModelInfoCache.GetOrAdd(hash, u =>
+            {
+                unsafe
+                {
+                    var ptr = Library.Server_GetVehicleModelInfo(NativePointer, u);
+                    var structure = Marshal.PtrToStructure<VehicleModelInfo>(ptr);
+                    Library.Server_DeallocVehicleModelInfo(ptr);
+                    return structure;
+                }
+            });
         }
 
         public void StopServer()

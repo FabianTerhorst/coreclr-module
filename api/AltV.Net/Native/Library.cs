@@ -202,6 +202,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Player_AttachToEntity_Vehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearBloodDamage { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_ClearProps { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteSyncedMetaData { get; }
@@ -233,6 +234,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetIP { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetInvincible { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> Player_GetLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Player_GetMetaData { get; }
@@ -257,6 +259,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_GetWeaponTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, WeaponArray*, void> Player_GetWeapons { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, byte, void> Player_GiveWeapon { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Player_HasLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Player_HasMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Player_HasStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Player_HasSyncedMetaData { get; }
@@ -301,6 +304,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Player_SetIntoVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetInvincible { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Player_SetLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Player_SetMetaData { get; }
@@ -346,6 +350,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, Position, float, nint> Server_CreateColShapeSphere { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint> Server_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, nint> Server_CreateVoiceChannel { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Server_DeallocVehicleModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Server_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Server_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Server_DestroyBlip { get; }
@@ -364,6 +369,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint*, void> Server_GetRootDirectory { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Server_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Server_GetVehicleCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint> Server_GetVehicleModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Server_GetVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Server_HasMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Server_HasSyncedMetaData { get; }
@@ -792,6 +798,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void> Player_AttachToEntity_Vehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Player_ClearBloodDamage { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_ClearProps { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Player_DeleteSyncedMetaData { get; }
@@ -823,6 +830,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Player_GetIP { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_GetInvincible { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> Player_GetLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Player_GetMetaData { get; }
@@ -847,6 +855,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_GetWeaponTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, WeaponArray*, void> Player_GetWeapons { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, int, byte, void> Player_GiveWeapon { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Player_HasLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Player_HasMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Player_HasStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Player_HasSyncedMetaData { get; }
@@ -891,6 +900,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Player_SetIntoVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetInvincible { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Player_SetLocalMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Player_SetMetaData { get; }
@@ -936,6 +946,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, Position, float, nint> Server_CreateColShapeSphere { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint> Server_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, nint> Server_CreateVoiceChannel { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Server_DeallocVehicleModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Server_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Server_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Server_DestroyBlip { get; }
@@ -954,6 +965,7 @@ namespace AltV.Net.Native
         public delegate* unmanaged[Cdecl]<nint, nint*, void> Server_GetRootDirectory { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Server_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Server_GetVehicleCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint> Server_GetVehicleModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Server_GetVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Server_HasMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Server_HasSyncedMetaData { get; }
@@ -1386,6 +1398,7 @@ namespace AltV.Net.Native
             Player_AttachToEntity_Vehicle = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Position, Rotation, byte, byte, void>) NativeLibrary.GetExport(handle, "Player_AttachToEntity_Vehicle");
             Player_ClearBloodDamage = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Player_ClearBloodDamage");
             Player_ClearProps = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Player_ClearProps");
+            Player_DeleteLocalMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Player_DeleteLocalMetaData");
             Player_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Player_DeleteMetaData");
             Player_DeleteStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Player_DeleteStreamSyncedMetaData");
             Player_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Player_DeleteSyncedMetaData");
@@ -1417,6 +1430,7 @@ namespace AltV.Net.Native
             Player_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetID");
             Player_GetIP = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Player_GetIP");
             Player_GetInvincible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_GetInvincible");
+            Player_GetLocalMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Player_GetLocalMetaData");
             Player_GetMaxArmor = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetMaxArmor");
             Player_GetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetMaxHealth");
             Player_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Player_GetMetaData");
@@ -1441,6 +1455,7 @@ namespace AltV.Net.Native
             Player_GetWeaponTintIndex = (delegate* unmanaged[Cdecl]<nint, uint, byte>) NativeLibrary.GetExport(handle, "Player_GetWeaponTintIndex");
             Player_GetWeapons = (delegate* unmanaged[Cdecl]<nint, WeaponArray*, void>) NativeLibrary.GetExport(handle, "Player_GetWeapons");
             Player_GiveWeapon = (delegate* unmanaged[Cdecl]<nint, uint, int, byte, void>) NativeLibrary.GetExport(handle, "Player_GiveWeapon");
+            Player_HasLocalMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Player_HasLocalMetaData");
             Player_HasMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Player_HasMetaData");
             Player_HasStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Player_HasStreamSyncedMetaData");
             Player_HasSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Player_HasSyncedMetaData");
@@ -1485,6 +1500,7 @@ namespace AltV.Net.Native
             Player_SetHealth = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Player_SetHealth");
             Player_SetIntoVehicle = (delegate* unmanaged[Cdecl]<nint, nint, byte, void>) NativeLibrary.GetExport(handle, "Player_SetIntoVehicle");
             Player_SetInvincible = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Player_SetInvincible");
+            Player_SetLocalMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "Player_SetLocalMetaData");
             Player_SetMaxArmor = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Player_SetMaxArmor");
             Player_SetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Player_SetMaxHealth");
             Player_SetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "Player_SetMetaData");
@@ -1530,6 +1546,7 @@ namespace AltV.Net.Native
             Server_CreateColShapeSphere = (delegate* unmanaged[Cdecl]<nint, Position, float, nint>) NativeLibrary.GetExport(handle, "Server_CreateColShapeSphere");
             Server_CreateVehicle = (delegate* unmanaged[Cdecl]<nint, uint, Position, Rotation, ushort*, nint>) NativeLibrary.GetExport(handle, "Server_CreateVehicle");
             Server_CreateVoiceChannel = (delegate* unmanaged[Cdecl]<nint, byte, float, nint>) NativeLibrary.GetExport(handle, "Server_CreateVoiceChannel");
+            Server_DeallocVehicleModelInfo = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Server_DeallocVehicleModelInfo");
             Server_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Server_DeleteMetaData");
             Server_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Server_DeleteSyncedMetaData");
             Server_DestroyBlip = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Server_DestroyBlip");
@@ -1548,6 +1565,7 @@ namespace AltV.Net.Native
             Server_GetRootDirectory = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Server_GetRootDirectory");
             Server_GetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Server_GetSyncedMetaData");
             Server_GetVehicleCount = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Server_GetVehicleCount");
+            Server_GetVehicleModelInfo = (delegate* unmanaged[Cdecl]<nint, uint, nint>) NativeLibrary.GetExport(handle, "Server_GetVehicleModelInfo");
             Server_GetVehicles = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) NativeLibrary.GetExport(handle, "Server_GetVehicles");
             Server_HasMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Server_HasMetaData");
             Server_HasSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Server_HasSyncedMetaData");
