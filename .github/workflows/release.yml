@@ -16,7 +16,7 @@ jobs:
         run: |
           ls -l
       - name: Copy nethost
-        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.13/runtimes/linux-x64/native/
+        working-directory: /usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/6.0.2/runtimes/linux-x64/native/
         run: |
           sudo tar -cvf ${{ runner.temp }}/libnethost.tar .
       - name: Upload artifacts
