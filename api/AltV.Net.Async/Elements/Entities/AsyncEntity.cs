@@ -15,10 +15,11 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                AsyncContext.RunAll();
-                IPlayer owner = default;
-                AsyncContext.RunOnMainThreadBlocking(() => owner = BaseObject.NetworkOwner);
-                return owner;
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return null;
+                    return BaseObject.NetworkOwner;
+                }
             }
         }
 
@@ -26,17 +27,16 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.Rotation;
                 }
             }
             set {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.Rotation = value;
                 }
             }
@@ -46,10 +46,9 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.Model;
                 }
             }
@@ -59,17 +58,16 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.Visible;
                 }
             }
             set {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.Visible = value;
                 }
             }
@@ -79,17 +77,16 @@ namespace AltV.Net.Async.Elements.Entities
         {
             get
             {
-                AsyncContext.RunAll();
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.Streamed;
                 }
             }
             set {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.Streamed = value;
                 }
             }
@@ -101,29 +98,36 @@ namespace AltV.Net.Async.Elements.Entities
 
         public void SetNetworkOwner(IPlayer player, bool disableMigration = true)
         {
-            AsyncContext.Enqueue(() => BaseObject.SetNetworkOwner(player, disableMigration));
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
+                BaseObject.SetNetworkOwner(player, disableMigration);
+            }
         }
 
         public void ResetNetworkOwner()
         {
-            AsyncContext.Enqueue(() => BaseObject.ResetNetworkOwner());
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
+                BaseObject.ResetNetworkOwner();
+            }
         }
 
         public void SetSyncedMetaData(string key, object value)
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.SetSyncedMetaData(key, value);
             }
         }
 
         public bool GetSyncedMetaData<T1>(string key, out T1 result)
         {
-            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
                 {
                     result = default;
                     return false;
@@ -137,17 +141,16 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.SetStreamSyncedMetaData(key, value);
             }
         }
 
         public bool GetStreamSyncedMetaData<T1>(string key, out T1 result)
         {
-            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
                 {
                     result = default;
                     return false;
@@ -161,17 +164,16 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.SetSyncedMetaData(key, in value);
             }
         }
 
         public void GetSyncedMetaData(string key, out MValueConst value)
         {
-            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
                 {
                     value = MValueConst.Nil;
                     return;
@@ -183,10 +185,9 @@ namespace AltV.Net.Async.Elements.Entities
 
         public bool GetSyncedMetaData(string key, out int value)
         {
-            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
                 {
                     value = default;
                     return false;
@@ -198,10 +199,9 @@ namespace AltV.Net.Async.Elements.Entities
 
         public bool GetSyncedMetaData(string key, out uint value)
         {
-            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
                 {
                     value = default;
                     return false;
@@ -213,10 +213,9 @@ namespace AltV.Net.Async.Elements.Entities
 
         public bool GetSyncedMetaData(string key, out float value)
         {
-            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
                 {
                     value = default;
                     return false;
@@ -230,17 +229,16 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.SetSyncedMetaData(key, in value);
             }
         }
 
         public void GetStreamSyncedMetaData(string key, out MValueConst value)
         {
-            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
                 {
                     value = MValueConst.Nil;
                     return;
@@ -252,10 +250,9 @@ namespace AltV.Net.Async.Elements.Entities
 
         public bool GetStreamSyncedMetaData(string key, out int value)
         {
-            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
                 {
                     value = default;
                     return false;
@@ -269,7 +266,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
                 {
                     value = default;
                     return false;
@@ -283,7 +280,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
                 {
                     value = default;
                     return false;
@@ -297,7 +294,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.HasSyncedMetaData(key);
             }
         }
@@ -306,17 +303,16 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.DeleteSyncedMetaData(key);
             }
         }
 
         public bool HasStreamSyncedMetaData(string key)
         {
-            AsyncContext.RunAll();
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.HasStreamSyncedMetaData(key);
             }
         }
@@ -325,7 +321,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.DeleteStreamSyncedMetaData(key);
             }
         }
@@ -335,7 +331,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRotation);
             }
         }
@@ -344,7 +340,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.Detach();
             }
         }

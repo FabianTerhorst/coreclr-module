@@ -14,14 +14,14 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.CheckpointType;
                 }
             }
             set {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.CheckpointType = value;
                 }
             }
@@ -33,14 +33,14 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.Height;
                 }
             }
             set {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.Height = value;
                 }
             }
@@ -52,14 +52,14 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.Radius;
                 }
             }
             set {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.Radius = value;
                 }
             }
@@ -71,14 +71,14 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.Color;
                 }
             }
             set {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.Color = value;
                 }
             }
@@ -90,14 +90,14 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.NextPosition;
                 }
             }
             set {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.NextPosition = value;
                 }
             }

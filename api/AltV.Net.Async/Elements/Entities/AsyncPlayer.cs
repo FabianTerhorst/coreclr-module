@@ -19,7 +19,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.Model;
                 }
             }
@@ -27,7 +27,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.Model = value;
                 }
             }
@@ -39,7 +39,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.IsConnected;
                 }
             }
@@ -51,7 +51,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.Name;
                 }
             }
@@ -63,7 +63,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.SocialClubId;
                 }
             }
@@ -75,7 +75,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.HardwareIdHash;
                 }
             }
@@ -87,7 +87,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.HardwareIdExHash;
                 }
             }
@@ -99,7 +99,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.AuthToken;
                 }
             }
@@ -111,7 +111,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.Health;
                 }
             }
@@ -119,7 +119,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.Health = value;
                 }
             }
@@ -131,7 +131,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.MaxHealth;
                 }
             }
@@ -139,7 +139,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.MaxHealth = value;
                 }
             }
@@ -151,7 +151,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.IsDead;
                 }
             }
@@ -163,7 +163,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.IsJumping;
                 }
             }
@@ -175,7 +175,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.IsInRagdoll;
                 }
             }
@@ -187,7 +187,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.IsAiming;
                 }
             }
@@ -199,7 +199,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.IsShooting;
                 }
             }
@@ -211,7 +211,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.IsReloading;
                 }
             }
@@ -223,7 +223,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.Armor;
                 }
             }
@@ -231,7 +231,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.Armor = value;
                 }
             }
@@ -243,7 +243,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.MaxArmor;
                 }
             }
@@ -251,7 +251,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.MaxArmor = value;
                 }
             }
@@ -263,7 +263,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.MoveSpeed;
                 }
             }
@@ -275,7 +275,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.AimPosition;
                 }
             }
@@ -287,7 +287,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.HeadRotation;
                 }
             }
@@ -299,7 +299,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.IsInVehicle;
                 }
             }
@@ -311,7 +311,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return null;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return null;
                     return BaseObject.Vehicle;
                 }
             }
@@ -323,7 +323,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.CurrentWeapon;
                 }
             }
@@ -331,7 +331,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.CurrentWeapon = value;
                 }
             }
@@ -343,7 +343,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return null;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return null;
                     return BaseObject.EntityAimingAt;
                 }
             }
@@ -355,7 +355,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.EntityAimOffset;
                 }
             }
@@ -367,7 +367,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.IsFlashlightActive;
                 }
             }
@@ -379,7 +379,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.Seat;
                 }
             }
@@ -391,7 +391,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.Ping;
                 }
             }
@@ -403,7 +403,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.Ip;
                 }
             }
@@ -417,7 +417,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.Spawn(position, delayMs);
             }
         }
@@ -426,7 +426,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.Despawn();
             }
         }
@@ -435,7 +435,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.SetDateTime(day, month, year, hour, minute, second);
             }
         }
@@ -444,7 +444,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.SetWeather(weather);
             }
         }
@@ -453,7 +453,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.GiveWeapon(weapon, ammo, selectWeapon);
             }
         }
@@ -462,7 +462,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return false;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return false;
                 return BaseObject.RemoveWeapon(weapon);
             }
         }
@@ -471,7 +471,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.RemoveAllWeapons();
             }
         }
@@ -480,7 +480,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.Kick(reason);
             }
         }
@@ -512,7 +512,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.AddWeaponComponent(weapon, weaponComponent);
             }
         }
@@ -521,7 +521,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.RemoveWeaponComponent(weapon, weaponComponent);
             }
         }
@@ -530,7 +530,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return false;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return false;
                 return BaseObject.HasWeaponComponent(weapon, weaponComponent);
             }
         }
@@ -539,7 +539,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
                 {
                     weaponComponents = Array.Empty<uint>();
                     return;
@@ -553,7 +553,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.SetWeaponTintIndex(weapon, tintIndex);
             }
         }
@@ -562,7 +562,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.GetWeaponTintIndex(weapon);
             }
         }
@@ -571,7 +571,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.GetCurrentWeaponTintIndex();
             }
         }
@@ -580,7 +580,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.GetWeapons();
             }
         }
@@ -589,7 +589,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.ClearBloodDamage();
             }
         }
@@ -598,7 +598,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.GetClothes(component);
             }
         }
@@ -607,7 +607,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.GetClothes(component, ref cloth);
             }
         }
@@ -616,7 +616,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.SetClothes(component, drawable, texture, palette);
             }
         }
@@ -625,7 +625,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.GetDlcClothes(component);
             }
         }
@@ -634,7 +634,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.GetDlcClothes(component, ref cloth);
             }
         }
@@ -643,7 +643,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.SetDlcClothes(component, drawable, texture, palette, dlc);
             }
         }
@@ -652,7 +652,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.GetProps(component);
             }
         }
@@ -661,7 +661,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.GetProps(component, ref prop);
             }
         }
@@ -670,7 +670,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.SetProps(component, drawable, texture);
             }
         }
@@ -679,7 +679,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.GetDlcProps(component);
             }
         }
@@ -688,7 +688,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.GetDlcProps(component, ref prop);
             }
         }
@@ -697,7 +697,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.SetDlcProps(component, drawable, texture, dlc);
             }
         }
@@ -706,7 +706,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.ClearProps(component);
             }
         }
@@ -715,7 +715,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.IsEntityInStreamingRange(entity);
             }
         }
@@ -731,7 +731,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.Invincible;
                 }
             }
@@ -739,7 +739,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.Invincible = value;
                 }
             }
@@ -749,7 +749,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.SetIntoVehicle(vehicle, seat);
             }
         }
@@ -760,7 +760,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.IsSuperJumpEnabled;
                 }
             }
@@ -772,7 +772,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.IsCrouching;
                 }
             }
@@ -784,7 +784,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.IsStealthy;
                 }
             }
@@ -794,7 +794,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.PlayAmbientSpeech(speechName, speechParam, speechHash);
             }
         }
@@ -805,7 +805,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.HeadBlendData;
                 }
             }
@@ -817,7 +817,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.EyeColor;
                 }
             }
@@ -829,7 +829,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.HairColor;
                 }
             }
@@ -837,7 +837,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.HairColor = value;
                 }
             }
@@ -849,7 +849,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                     return BaseObject.HairHighlightColor;
                 }
             }
@@ -857,7 +857,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 lock (BaseObject)
                 {
-                    if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                     BaseObject.HairHighlightColor = value;
                 }
             }
@@ -867,7 +867,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.SetHeadOverlay(overlayId, index, opacity);
             }
         }
@@ -876,7 +876,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.RemoveHeadOverlay(overlayId);
             }
         }
@@ -886,7 +886,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.SetHeadOverlayColor(overlayId, colorType, colorIndex, secondColorIndex);
             }
         }
@@ -895,7 +895,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.GetHeadOverlay(overlayID);
             }
         }
@@ -904,7 +904,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.SetFaceFeature(index, scale);
             }
         }
@@ -913,7 +913,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.GetFaceFeatureScale(index);
             }
         }
@@ -922,7 +922,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.RemoveFaceFeature(index);
             }
         }
@@ -931,7 +931,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.SetHeadBlendPaletteColor(id, rgba);
             }
         }
@@ -940,7 +940,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.GetHeadBlendPaletteColor(id);
             }
         }
@@ -950,7 +950,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.SetHeadBlendData(shapeFirstID, shapeSecondID, shapeThirdID, skinFirstID, skinSecondID,
                     skinThirdID, shapeMix, skinMix, thirdMix);
             }
@@ -960,7 +960,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return default;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.SetEyeColor(eyeColor);
             }
         }
@@ -969,7 +969,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
                 {
                     value = default;
                     return;
@@ -982,7 +982,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject))
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
                 {
                     return;
                 }
@@ -994,7 +994,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return false;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return false;
                 return BaseObject.HasLocalMetaData(key);
             }
         }
@@ -1003,7 +1003,7 @@ namespace AltV.Net.Async.Elements.Entities
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExists(BaseObject)) return;
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
                 BaseObject.DeleteLocalMetaData(key);
             }
         }
