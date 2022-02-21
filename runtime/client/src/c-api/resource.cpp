@@ -23,3 +23,8 @@ void Resource_GetFile(alt::IResource* resource, const char* path, int* bufferSiz
     *bufferSize = static_cast<int>(content.GetSize());
     *buffer = utils::get_clr_value(content.GetData(), size);
 }
+
+CSharpResourceImpl* Resource_GetCSharpImpl(alt::IResource* resource)
+{
+    return (CSharpResourceImpl*) resource->GetImpl();
+}

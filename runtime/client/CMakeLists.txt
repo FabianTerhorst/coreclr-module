@@ -11,8 +11,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(GLOB_RECURSE PROJECT_SOURCE_FILES
         "src/*.h"
         "src/*.cpp"
-        src/c-api/mvalue.h
-        src/c-api/mvalue.cpp
 )
 
 add_library(${TARGET_NAME} SHARED

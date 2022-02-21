@@ -25,14 +25,33 @@ bool CSharpResourceImpl::Stop()
 
 bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
 {
-    // Handle incoming events here, e.g. call the event handlers registered by the resource
+    if (ev == nullptr) return true;
+
+    switch(ev->GetType()) {
+        case alt::CEvent::Type::SERVER_SCRIPT_EVENT:
+            auto serverScriptEvent = (alt::CServerScriptEvent*) ev;
+            alt::MValueArgs serverArgs = serverScriptEvent->GetArgs();
+            uint64_t size = serverArgs.GetSize();
+            if (size == 0) {
+                OnServerEventDelegate(serverScriptEvent->GetName().CStr(), nullptr, 0);
+            } else {
+                auto constArgs = new alt::MValueConst*[size];
+                for(uint64_t i = 0; i < size; i++)
+                {
+                    constArgs[i] = &serverArgs[i];
+                }
+                OnServerEventDelegate(serverScriptEvent->GetName().CStr(), constArgs, size);
+                delete[] constArgs;
+            }
+            break;
+    }
+
     return true;
 }
 
 void CSharpResourceImpl::OnTick()
 {
-    // Do everything here that needs to be handled on tick that is resource related
-    // This can be e.g. timers
+    OnTickDelegate();
 }
 
 void CSharpResourceImpl::OnCreateBaseObject(alt::Ref<alt::IBaseObject> object)
@@ -57,4 +76,10 @@ alt::String CSharpResourceImpl::ReadFile(alt::String path)
     pkg->CloseFile(pkgFile);
 
     return src;
+}
+
+
+void CSharpResourceImpl::ResetDelegates() {
+    OnTickDelegate = []() {};
+    OnServerEventDelegate = [](auto var, auto var2, auto var3) {};
 }

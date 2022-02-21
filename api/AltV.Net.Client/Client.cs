@@ -1,23 +1,27 @@
+using System.Runtime.InteropServices;
 using AltV.Net.Client.CApi;
+using AltV.Net.Client.CApi.Memory;
 
 namespace AltV.Net.Client
 {
     public class Client : IClient
     {
         public ILibrary Library { get; }
-        private readonly IntPtr _corePointer;
+        public IntPtr NativePointer { get; }
 
-        public Client(ILibrary library, IntPtr corePointer)
+        public Client(ILibrary library, IntPtr nativePointer)
         {
             Library = library;
-            _corePointer = corePointer;
+            NativePointer = nativePointer;
         }
-
+        
         public void LogInfo(string message)
         {
             unsafe
             {
-                this.Library.LogInfo(message);
+                var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
+                this.Library.LogInfo(messagePtr);
+                Marshal.FreeHGlobal(messagePtr);
             }
         }
 
@@ -25,7 +29,9 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                this.Library.LogWarning(message);
+                var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
+                this.Library.LogWarning(messagePtr);
+                Marshal.FreeHGlobal(messagePtr);
             }
         }
         
@@ -33,7 +39,9 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                this.Library.LogError(message);
+                var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
+                this.Library.LogError(messagePtr);
+                Marshal.FreeHGlobal(messagePtr);
             }
         }
         
@@ -41,7 +49,9 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                this.Library.LogDebug(message);
+                var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
+                this.Library.LogDebug(messagePtr);
+                Marshal.FreeHGlobal(messagePtr);
             }
         }
     }

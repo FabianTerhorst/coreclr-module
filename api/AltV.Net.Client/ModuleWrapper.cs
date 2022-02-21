@@ -30,8 +30,22 @@ namespace AltV.Net.Client
                 return;
             }
 
+            unsafe
+            {
+                var pointer = library.Resource_GetCSharpImpl(_resourcePointer);
+                Alt.Log("Pointer was " + pointer);
+                var runtime = new Runtime.CSharpResourceImpl(library, pointer); // todo pool, move somewhere else
+                runtime.SetDelegates();
+            }
+
             _resource = (IResource) Activator.CreateInstance(resource)!;
             _resource.OnStart();
+        }
+
+        public static void OnTick()
+        {
+            Alt.Log("OnTick called");
+            _module.OnTick();
         }
     }
 }

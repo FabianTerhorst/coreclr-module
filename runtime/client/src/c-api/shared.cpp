@@ -1,6 +1,6 @@
+#include "shared.h"
 #include "altv-cpp-api/SDK.h"
 #include <Log.h>
-#include "shared.h"
 
 using namespace alt;
 

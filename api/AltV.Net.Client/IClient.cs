@@ -9,5 +9,6 @@ namespace AltV.Net.Client
         void LogWarning(string message);
         void LogDebug(string message);
         ILibrary Library { get; }
+        IntPtr NativePointer { get; }
     }
 }

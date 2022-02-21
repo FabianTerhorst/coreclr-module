@@ -1,9 +1,9 @@
 #pragma once
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-#include <coreclr/hostfxr.h>
-#include <coreclr/coreclr_delegates.h>
-#include <utils.h>
+#include "coreclr/hostfxr.h"
+#include "coreclr/coreclr_delegates.h"
+#include "utils.h"
 #include "altv-cpp-api/ICore.h"
 
 typedef int (* CoreClrDelegate_t)(void* args, int argsLength);

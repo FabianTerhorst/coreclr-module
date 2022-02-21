@@ -1,12 +1,16 @@
 #pragma once
 #include <objidlbase.h>
 #include "../../thirdparty/altv-cpp-api/SDK.h"
+#include "./CSharpScriptRuntime.h"
+#include "eventDelegates.h"
 
 class CSharpResourceImpl : public alt::IResource::Impl
 {
     CSharpScriptRuntime* runtime;
     alt::IResource* resource;
     alt::ICore* core;
+
+    void ResetDelegates();
 
 public:
     CSharpResourceImpl(CSharpScriptRuntime* runtime, alt::IResource* resource, alt::ICore* core) : runtime(runtime), resource(resource), core(core) {};
@@ -20,6 +24,9 @@ public:
 
     void OnCreateBaseObject(alt::Ref<alt::IBaseObject> object) override;
     void OnRemoveBaseObject(alt::Ref<alt::IBaseObject> object) override;
+
+    ServerEventDelegate_t OnServerEventDelegate = nullptr;
+    TickDelegate_t OnTickDelegate = nullptr;
 
     bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files)
     {

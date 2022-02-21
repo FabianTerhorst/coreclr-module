@@ -13,7 +13,7 @@ namespace AltV.Net.Client.Codegen
     public static class Codegen
     {
         private static readonly Regex ExportRegex = new(@"EXPORT +(?:(?:const +)?(?<type>[^ ]+) +(?<name>[^ ]+) *\((?<args>.*?)\)|(?<name>[^ ]+) *= *(?<type>[^ ]+) *\( *\* *\) *\((?<args>.*?)\))", RegexOptions.Compiled);
-        private static readonly Regex ArgsRegex = new(@"(?:const +)?(.*?) +([^ ]+)(?:, *|$)", RegexOptions.Compiled);
+        private static readonly Regex ArgsRegex = new(@"(?:const +)?(?:\/\** *(?<typeOverride>.*?) *\*\/ *)?(?<type>.*?) +(?<name>[^ ]+)(?:, *|$)", RegexOptions.Compiled);
         private static readonly Regex CommentRegex = new(@"//.*?(?:$|[\n\r]+)", RegexOptions.Compiled);
         
         private const string DllName = "coreclr-client-module";
@@ -51,10 +51,13 @@ namespace AltV.Net.Client.Codegen
                     for (var i = 0; i < matches.Count; i++)
                     {
                         var matchArg = matches[i];
-                        var argType = matchArg.Groups[1].Value;
-                        var argName = matchArg.Groups[2].Value;
-                        var csArgType = CsTypes.FirstOrDefault(t => t.Key == argType).Value ?? "object";
-                        if (argName.EndsWith("[]")) csArgType += "[]";
+                        var argType = matchArg.Groups["type"].Value;
+                        var argName = matchArg.Groups["name"].Value;
+                        if (argName.EndsWith("[]")) argType += "[]";
+
+                        var csArgType = matchArg.Groups.ContainsKey("typeOverride") && matchArg.Groups["typeOverride"].Value is not ""
+                            ? matchArg.Groups["typeOverride"].Value 
+                            : CsTypes.FirstOrDefault(t => t.Key == argType).Value ?? "object";
                         
                         delegateType.Append($"{csArgType}, ");
                     }
@@ -68,6 +71,8 @@ namespace AltV.Net.Client.Codegen
             
             var output = new StringBuilder();
                 
+            output.Append("using AltV.Net.Client.Data;\n");
+            output.Append("using AltV.Net.Client.CApi.Events;\n");
             output.Append("using System.Numerics;\n");
             output.Append("using System.Reflection;\n");
             output.Append("using System.Runtime.InteropServices;\n");
@@ -109,22 +114,38 @@ namespace AltV.Net.Client.Codegen
             {"double", "double"},
             {"bool", "bool"},
             {"void", "void"},
-            {"char*", "string"},
-            {"const char*", "string"},
+            {"char*", "nint"},
+            {"char[]", "nint"},
+            {"char*&", "nint*"},
+            {"char*[]", "nint[]"},
             {"int*", "int*"},
             {"alt::IResource*", "nint"},
+            {"CSharpResourceImpl*", "nint"},
             {"void**", "nint*"},
             {"alt::MValueConst*", "nint"},
+            {"alt::MValueConst*[]", "nint[]"},
             {"int8_t", "sbyte"},
+            {"int8_t&", "sbyte*"},
             {"uint8_t", "byte"},
+            {"uint8_t&", "byte*"},
             {"int16_t", "short"},
+            {"int16_t&", "short*"},
             {"uint16_t", "ushort"},
+            {"uint16_t&", "ushort*"},
             {"int32_t", "int"},
+            {"int32_t&", "int*"},
             {"uint32_t", "uint"},
+            {"uint32_t&", "uint*"},
             {"int64_t", "long"},
+            {"int64_t&", "long*"},
             {"uint64_t", "ulong"},
+            {"uint64_t&", "ulong*"},
             {"vector2_t", "Vector2"},
-            {"vector3_t", "Vector3"}
+            {"vector2_t&", "Vector2*"},
+            {"vector3_t", "Vector3"},
+            {"vector3_t&", "Vector3*"},
+            {"rgba_t", "Rgba"},
+            {"rgba_t&", "Rgba*"},
         };
         
         public static void Main(string[] args)

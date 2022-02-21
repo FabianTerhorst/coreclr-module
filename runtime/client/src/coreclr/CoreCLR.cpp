@@ -1,13 +1,13 @@
-#include <coreclr/nethost.h>
+#include "coreclr/nethost.h"
 #include "CoreCLR.h"
 #include "altv-cpp-api/SDK.h"
 #include <windows.h>
-#include <coreclr/hostfxr.h>
+#include "coreclr/hostfxr.h"
 #include <string>
 #include <sstream>
-#include <exceptions/LoadException.h>
-#include <coreclr/coreclr_delegates.h>
-#include <utils.h>
+#include "exceptions/LoadException.h"
+#include "coreclr/coreclr_delegates.h"
+#include "utils.h"
 #include "Log.h"
 
 using namespace alt;
