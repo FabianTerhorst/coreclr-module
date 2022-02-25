@@ -167,7 +167,6 @@ namespace AltV.Net.Elements.Args
                     var mValue = new MValueConst(mValuePointers[i]);
                     dictionary[Marshal.PtrToStringUTF8(keyPointer)] = mValue;
                     Alt.Server.Library.FreeCharArray(keyPointer);
-                    mValue.Dispose();
                 }
 
                 return dictionary;
