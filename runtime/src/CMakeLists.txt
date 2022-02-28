@@ -1,5 +1,7 @@
 cmake_minimum_required (VERSION 3.13)
 
+include(../thirdparty/altv-cpp-api/CMakeLists.txt)
+
 set(TARGET_NAME core_clr_host)
 
 add_library(${TARGET_NAME} SHARED altv.cpp CSharpScriptRuntime.cpp CSharpResourceImpl.cpp CoreClr.cpp
@@ -40,3 +42,5 @@ if(MSVC)
 else()
     install(FILES ${CMAKE_BINARY_DIR}/src/csharp-module.so DESTINATION "${CMAKE_SOURCE_DIR}/../../server/modules")
 endif(MSVC)
+
+add_dependencies(core_clr_host alt-sdk)
