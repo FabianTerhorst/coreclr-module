@@ -16,12 +16,12 @@ Boilerplate YourProject.csproj:
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
       <!--Use latest version from https://www.nuget.org/packages/AltV.Net-->
-      <PackageReference Include="AltV.Net" Version="2.0.8" />
+      <PackageReference Include="AltV.Net" Version="9.0.2" />
     </ItemGroup>
     
     <!--This copies the publish directory to the resource folder which is named "my-server"-->
