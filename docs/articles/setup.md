@@ -1,7 +1,7 @@
 # Setup
 You need the following requirements to use the c# module.
 
-* Latest [.NET SDK](https://dotnet.microsoft.com/download/dotnet/5.0).
+* Latest [.NET 6.0 SDK](https://dotnet.microsoft.com/download/dotnet/6.0).
 
 ## Step 1
 
