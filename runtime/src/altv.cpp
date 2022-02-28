@@ -7,6 +7,7 @@
 #include <altv-cpp-api/SDK.h>
 #include "altv-c-api/altv.h"
 #include "CSharpScriptRuntime.h"
+#include "altv-cpp-api/version/version.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -18,6 +19,7 @@ EXPORT bool altMain(alt::ICore* server) {
     return true;
 }
 
-EXPORT uint32_t GetSDKVersion() {
-    return alt::ICore::SDK_VERSION;
+EXPORT const char* GetSDKHash()
+{
+    return ALT_SDK_VERSION;
 }
