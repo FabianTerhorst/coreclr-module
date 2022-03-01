@@ -19,5 +19,6 @@ namespace AltV.Net.Client
         public static void LogDebug(string message) => Client.LogDebug(message);
         // todo add time and some prefix maybe
         public static void LogExternal(string message) => Console.WriteLine(message);
+        public static void OnClient(string eventName, Function.Function function) => Module.AddClientEventListener(eventName, function);
     }
 }

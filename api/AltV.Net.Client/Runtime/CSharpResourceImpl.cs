@@ -28,6 +28,10 @@ namespace AltV.Net.Client.Runtime
                 TickDelegate onTick = ModuleWrapper.OnTick;
                 _handles.AddFirst(GCHandle.Alloc(onTick));
                 _library.Event_SetTickDelegate(this.NativePointer, onTick);
+                
+                ServerEventDelegate onServerEvent = ModuleWrapper.OnServerEvent;
+                _handles.AddFirst(GCHandle.Alloc(onServerEvent));
+                _library.Event_SetServerEventDelegate(this.NativePointer, onServerEvent);
             }
         }
         

@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using AltV.Net.Client.CApi;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -44,8 +45,20 @@ namespace AltV.Net.Client
 
         public static void OnTick()
         {
-            Alt.Log("OnTick called");
             _module.OnTick();
+        }
+
+        public static void OnServerEvent(string name, IntPtr pointer, ulong size)
+        {
+            var args = new IntPtr[size];
+            if (pointer != IntPtr.Zero)
+            {
+                Marshal.Copy(pointer, args, 0, (int) size);
+            }
+            
+            Alt.Log($"Server event \"{name}\" called. Parsed {args.Length} arguments");
+            
+            _module.OnServerEvent(name, args);
         }
     }
 }
