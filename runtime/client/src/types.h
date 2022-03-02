@@ -3,12 +3,6 @@
 typedef struct {
     float x;
     float y;
-    float z;
-} position_t;
-
-typedef struct {
-    float x;
-    float y;
 } vector2_t;
 
 typedef struct {

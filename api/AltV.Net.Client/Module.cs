@@ -1,6 +1,9 @@
 using System.Reflection;
 using AltV.Net.Client.CApi.Events;
 using AltV.Net.Client.Elements.Args;
+using AltV.Net.Client.Elements.Entities;
+using AltV.Net.Client.Elements.Factories;
+using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Client.Events;
 using AltV.Net.Client.Extensions;
 
@@ -9,11 +12,18 @@ namespace AltV.Net.Client
     public class Module
     {
         internal readonly IClient Client;
+        
+        internal static PlayerPool PlayerPool;
     
         public Module(IClient client)
         {
             Alt.Init(this);
             Client = client;
+        }
+        
+        internal void InitPools(PlayerPool playerPool)
+        {
+            PlayerPool = playerPool;
         }
 
         private Dictionary<string, HashSet<Function.Function>> ServerEventBus = new();
@@ -34,7 +44,7 @@ namespace AltV.Net.Client
         
         public void OnTick()
         {
-            TickEventHandler.GetEvents().ForEachCatching(@delegate => @delegate(), "event OnTick");
+            TickEventHandler.GetEvents().ForEachCatching(@delegate => @delegate(), $"event {nameof(OnTick)}");
         }
         
         public Function.Function AddServerEventListener(string eventName, Function.Function function)

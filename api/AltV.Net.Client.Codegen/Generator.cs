@@ -119,6 +119,7 @@ namespace AltV.Net.Client.Codegen
             {"char*&", "nint*"},
             {"char*[]", "nint[]"},
             {"int*", "int*"},
+            {"alt::IPlayer*", "nint"},
             {"alt::IResource*", "nint"},
             {"CSharpResourceImpl*", "nint"},
             {"void**", "nint*"},

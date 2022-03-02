@@ -7,6 +7,9 @@ namespace AltV.Net.Client.CApi
 {
     public unsafe interface ILibrary
     {
+        public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetPosition { get; }
         public delegate* unmanaged[Cdecl]<object, void> Event_Cancel { get; }
         public delegate* unmanaged[Cdecl]<object, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, TickDelegate, void> Event_SetTickDelegate { get; }
@@ -60,6 +63,9 @@ namespace AltV.Net.Client.CApi
     {
         private const string DllName = "coreclr-client-module";
 
+        public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetPosition { get; }
         public delegate* unmanaged[Cdecl]<object, void> Event_Cancel { get; }
         public delegate* unmanaged[Cdecl]<object, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, TickDelegate, void> Event_SetTickDelegate { get; }
@@ -111,6 +117,9 @@ namespace AltV.Net.Client.CApi
         {
             const DllImportSearchPath dllImportSearchPath = DllImportSearchPath.LegacyBehavior | DllImportSearchPath.AssemblyDirectory | DllImportSearchPath.SafeDirectories | DllImportSearchPath.System32 | DllImportSearchPath.UserDirectories | DllImportSearchPath.ApplicationDirectory | DllImportSearchPath.UseDllDirectoryForDependencies;
             var handle = NativeLibrary.Load(DllName, Assembly.GetExecutingAssembly(), dllImportSearchPath);
+            Player_GetLocal = (delegate* unmanaged[Cdecl]<nint>) NativeLibrary.GetExport(handle, "Player_GetLocal");
+            Player_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetID");
+            Player_GetPosition = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Player_GetPosition");
             Event_Cancel = (delegate* unmanaged[Cdecl]<object, void>) NativeLibrary.GetExport(handle, "Event_Cancel");
             Event_WasCancelled = (delegate* unmanaged[Cdecl]<object, byte>) NativeLibrary.GetExport(handle, "Event_WasCancelled");
             Event_SetTickDelegate = (delegate* unmanaged[Cdecl]<nint, TickDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetTickDelegate");

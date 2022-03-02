@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using AltV.Net.Client.Elements.Entities;
 
 namespace AltV.Net.Client
 {
@@ -11,6 +13,8 @@ namespace AltV.Net.Client
         {
             Module = module;
         }
+
+        public static IPlayer LocalPlayer => Module.PlayerPool.LocalPlayer;
 
         public static void Log(string message) => Client.LogInfo(message);
         public static void LogInfo(string message) => Client.LogInfo(message);
