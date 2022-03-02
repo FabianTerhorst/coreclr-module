@@ -35,26 +35,48 @@ namespace AltV.Net.Client.Function
                 for (var i = length; i < argsLength; i++)
                 {
                     var arg = _args[i];
-                    if (!arg.Nullable && !arg.HasDefault) throw new Exception("Invalid event call: not enough arguments");
+                    if (!arg.IsNullable && !arg.HasDefault) throw new Exception($"Invalid event call: not enough arguments at index {i}");
                 }
             }
             
-            for (var i = 0; i < _args.Length; i++)
+            for (var i = 0; i < argsLength; i++)
             {
                 var arg = _args[i];
+                
+                if (i == argsLength - 1 && _paramArgumentType != null)
+                {
+                    var paramArray = Array.CreateInstance(_paramArgumentType, values.Count - i);
+                    for (var j = 0; j < values.Count - i; j++)
+                    {
+                        paramArray.SetValue(Convert.ChangeType(values[i + j].ToObject(), _paramArgumentType), j);
+                    }
+                    
+                    invokeValues.Add(paramArray);
+                    break;
+                }
+                
                 MValueConst? value = values.Count > i ? values[i] : null;
                 
                 if (arg.HasDefault && value is null) break;
                 
-                if ((arg.Nullable || arg.HasDefault) && (value is null || value.Value.type is MValueConst.Type.Nil or MValueConst.Type.None))
+                if ((arg.IsNullable || arg.HasDefault) && (value is null || value.Value.type is MValueConst.Type.Nil or MValueConst.Type.None))
                 {
-                    invokeValues.Add(arg.HasDefault ? arg.DefaultValue : null);
+                    invokeValues.Add(arg.DefaultValue);
                     continue;
                 }
 
                 if (value is null || value.Value.type is MValueConst.Type.Nil or MValueConst.Type.None) throw new Exception("Invalid event call: null argument at index " + i);
 
-                invokeValues.Add(Convert.ChangeType(value.Value.ToObject(), arg.Type));
+                var objValue = value.Value.ToObject();
+                invokeValues.Add(objValue is null ? null : Convert.ChangeType(objValue, arg.Type));
+            }
+
+            if (length < argsLength)
+            {
+                for (var i = length; i < argsLength; i++)
+                {
+                    invokeValues.Add(_args[i].DefaultValue);
+                }
             }
             
             return invokeValues;
@@ -65,12 +87,30 @@ namespace AltV.Net.Client.Function
             var invokeValues = CalculateInvokeValues(values);
             return _delegate.DynamicInvoke(invokeValues.ToArray());
         }
+        
+        internal object? CallCatching(MValueConst[] values, string exceptionLocation)
+        {
+            try
+            {
+                return this.Call(values);
+            }
+            catch (TargetInvocationException exception)
+            {
+                Alt.Log($"Exception at {exceptionLocation}: {exception.InnerException}");
+                return null;
+            }
+            catch (Exception exception)
+            {
+                Alt.Log($"Exception at {exceptionLocation}: {exception}");
+                return null;
+            }
+        }
 
         public static Function Create(Delegate action)
         {
             var parameters = action.Method.GetParameters();
             var paramArgument = parameters.Length > 0 && parameters.Last().IsDefined(typeof(ParamArrayAttribute), false) 
-                ? parameters.Last().ParameterType 
+                ? parameters.Last().ParameterType.GetElementType() 
                 : null;
             
             return new Function(action, action.Method.ReturnType, parameters.Select(e => new FunctionArgumentType(e)).ToArray(), paramArgument);

@@ -248,12 +248,12 @@ namespace AltV.Net.Client.Elements.Args
             }
         }
 
-        public object ToObject()
+        public object? ToObject()
         {
             switch (type)
             {
                 case Type.None:
-                    return None;
+                    return null;
                 case Type.Nil:
                     return null;
                 case Type.Bool:

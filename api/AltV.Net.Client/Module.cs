@@ -2,6 +2,7 @@ using System.Reflection;
 using AltV.Net.Client.CApi.Events;
 using AltV.Net.Client.Elements.Args;
 using AltV.Net.Client.Events;
+using AltV.Net.Client.Extensions;
 
 namespace AltV.Net.Client
 {
@@ -27,38 +28,13 @@ namespace AltV.Net.Client
             if (!ServerEventBus.ContainsKey(name)) return;
             foreach (var function in ServerEventBus[name])
             {
-                try
-                {
-                    function.Call(mValues);
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log($"Exception at server event \"{name}\" handler: {exception.InnerException}");
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log($"Exception at server event \"{name}\" handler: {exception}");
-                }
+                function.CallCatching(mValues, $"server event {name} handler");
             }
         }
         
         public void OnTick()
         {
-            foreach (var @delegate in TickEventHandler.GetEvents())
-            {
-                try
-                {
-                    @delegate();
-                }
-                catch (TargetInvocationException exception)
-                {
-                    Alt.Log("Exception at event OnTick: " + exception.InnerException);
-                }
-                catch (Exception exception)
-                {
-                    Alt.Log("Exception at event OnTick: " + exception);
-                }
-            }
+            TickEventHandler.GetEvents().ForEachCatching(@delegate => @delegate(), "event OnTick");
         }
         
         public Function.Function AddServerEventListener(string eventName, Function.Function function)

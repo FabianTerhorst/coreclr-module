@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Microsoft.VisualBasic;
 
 namespace AltV.Net.Client.Function
 {
@@ -6,7 +7,7 @@ namespace AltV.Net.Client.Function
     {
         private static NullabilityInfoContext nullabilityInfoContext = new NullabilityInfoContext();
         
-        public bool Nullable = false;
+        public bool IsNullable = false;
         
         public bool HasDefault = false;
 
@@ -14,20 +15,21 @@ namespace AltV.Net.Client.Function
         
         public Type Type;
         
-        public FunctionArgumentType(Type type, bool nullable, bool hasDefault, object? defaultValue)
+        public FunctionArgumentType(Type type, bool isNullable, bool hasDefault, object? defaultValue)
         {
             Type = type;
-            Nullable = nullable;
+            IsNullable = isNullable;
             HasDefault = hasDefault;
             DefaultValue = defaultValue;
         }
 
         public FunctionArgumentType(ParameterInfo parameterInfo)
         {
-            Type = parameterInfo.ParameterType;
-            Nullable = nullabilityInfoContext.Create(parameterInfo).WriteState == NullabilityState.Nullable;
+            var context = nullabilityInfoContext.Create(parameterInfo);
+            IsNullable = context.WriteState == NullabilityState.Nullable;
+            Type = Nullable.GetUnderlyingType(parameterInfo.ParameterType) ?? parameterInfo.ParameterType; // todo optimize for non-nullable types
             HasDefault = parameterInfo.HasDefaultValue;
-            DefaultValue = parameterInfo.DefaultValue;
+            DefaultValue = Information.IsDBNull(parameterInfo.DefaultValue) ? null : parameterInfo.DefaultValue;
         }
     }
 }
