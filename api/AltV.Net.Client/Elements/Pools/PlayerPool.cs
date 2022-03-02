@@ -11,7 +11,7 @@ namespace AltV.Net.Client.Elements.Pools
         {
             unsafe
             {
-                this.GetOrCreate(Alt.Client, Alt.Client.Library.Player_GetLocal(), out var localPlayer);
+                this.GetOrCreate(Alt.Core, Alt.Core.Library.Player_GetLocal(), out var localPlayer);
                 this.LocalPlayer = localPlayer;
             }
         }
@@ -20,7 +20,7 @@ namespace AltV.Net.Client.Elements.Pools
         {
             unsafe
             {
-                return Alt.Client.Library.Player_GetID(entityPointer);
+                return Alt.Core.Library.Player_GetID(entityPointer);
             }
         }
     }

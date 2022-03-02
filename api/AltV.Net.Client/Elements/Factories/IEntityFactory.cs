@@ -4,6 +4,6 @@ namespace AltV.Net.Client.Elements.Factories
 {
     public interface IEntityFactory<TEntity> where TEntity : IEntity
     {
-        TEntity Create(IClient client, IntPtr entityPointer, ushort id);
+        TEntity Create(ICore core, IntPtr entityPointer, ushort id);
     }
 }

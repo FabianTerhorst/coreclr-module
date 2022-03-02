@@ -2,7 +2,7 @@ using AltV.Net.Client.CApi;
 
 namespace AltV.Net.Client
 {
-    public interface IClient
+    public interface ICore
     {
         public void LogInfo(string message);
         public void LogError(string message);

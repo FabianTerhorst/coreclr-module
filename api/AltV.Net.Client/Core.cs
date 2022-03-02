@@ -4,12 +4,12 @@ using AltV.Net.Client.CApi.Memory;
 
 namespace AltV.Net.Client
 {
-    public class Client : IClient
+    public class Core : ICore
     {
         public ILibrary Library { get; }
         public IntPtr NativePointer { get; }
 
-        public Client(ILibrary library, IntPtr nativePointer)
+        public Core(ILibrary library, IntPtr nativePointer)
         {
             Library = library;
             NativePointer = nativePointer;

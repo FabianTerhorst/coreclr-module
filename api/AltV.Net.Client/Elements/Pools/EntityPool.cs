@@ -15,22 +15,22 @@ namespace AltV.Net.Client.Elements.Pools
 
         protected abstract ushort GetId(IntPtr entityPointer);
         
-        public void Create(IClient client, IntPtr entityPointer, ushort id)
+        public void Create(ICore core, IntPtr entityPointer, ushort id)
         {
             if (_entities.ContainsKey(entityPointer)) return;
-            Add(_entityFactory.Create(client, entityPointer, id));
+            Add(_entityFactory.Create(core, entityPointer, id));
         }
         
-        public void Create(IClient server, IntPtr entityPointer, ushort id, out TEntity entity)
+        public void Create(ICore server, IntPtr entityPointer, ushort id, out TEntity entity)
         {
             if (_entities.TryGetValue(entityPointer, out entity!)) return;
             entity = _entityFactory.Create(server, entityPointer, id);
             Add(entity);
         }
         
-        public void Create(IClient client, IntPtr entityPointer, out TEntity entity)
+        public void Create(ICore core, IntPtr entityPointer, out TEntity entity)
         {
-            Create(client, entityPointer, GetId(entityPointer), out entity);
+            Create(core, entityPointer, GetId(entityPointer), out entity);
         }
         
         public void Add(TEntity entity)
@@ -58,21 +58,21 @@ namespace AltV.Net.Client.Elements.Pools
             return _entities.TryGetValue(entityPointer, out entity) && entity.Exists;
         }
         
-        public bool GetOrCreate(IClient client, IntPtr entityPointer, ushort entityId, out TEntity entity)
+        public bool GetOrCreate(ICore core, IntPtr entityPointer, ushort entityId, out TEntity entity)
         {
             if (_entities.TryGetValue(entityPointer, out entity!)) return entity.Exists;
 
-            entity = _entityFactory.Create(client, entityPointer, entityId);
+            entity = _entityFactory.Create(core, entityPointer, entityId);
             Add(entity);
 
             return entity.Exists;
         }
         
-        public bool GetOrCreate(IClient client, IntPtr entityPointer, out TEntity entity)
+        public bool GetOrCreate(ICore core, IntPtr entityPointer, out TEntity entity)
         {
             if (_entities.TryGetValue(entityPointer, out entity!)) return entity.Exists;
 
-            entity = _entityFactory.Create(client, entityPointer, GetId(entityPointer));
+            entity = _entityFactory.Create(core, entityPointer, GetId(entityPointer));
             Add(entity);
 
             return entity.Exists;

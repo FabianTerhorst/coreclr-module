@@ -11,14 +11,14 @@ namespace AltV.Net.Client
 {
     public class Module
     {
-        internal readonly IClient Client;
+        internal readonly ICore Core;
         
         internal static PlayerPool PlayerPool;
     
-        public Module(IClient client)
+        public Module(ICore core)
         {
             Alt.Init(this);
-            Client = client;
+            Core = core;
         }
         
         internal void InitPools(PlayerPool playerPool)

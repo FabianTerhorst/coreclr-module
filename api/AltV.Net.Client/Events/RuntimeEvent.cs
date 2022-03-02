@@ -10,7 +10,7 @@
             {
                 unsafe
                 {
-                    return Alt.Client.Library.Event_WasCancelled(_nativePointer) == 1;
+                    return Alt.Core.Library.Event_WasCancelled(_nativePointer) == 1;
                 }
             }
         }
@@ -24,7 +24,7 @@
         {
             unsafe
             {
-                Alt.Client.Library.Event_Cancel(_nativePointer);
+                Alt.Core.Library.Event_Cancel(_nativePointer);
             }
         }
     }

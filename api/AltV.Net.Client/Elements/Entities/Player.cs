@@ -5,12 +5,12 @@ namespace AltV.Net.Client.Elements.Entities
     public class Player : IPlayer
     {
         public IntPtr NativePointer { get; }
-        private readonly IClient _client;
+        private readonly ICore _core;
         
-        public Player(IClient client, IntPtr nativePointer, ushort id)
+        public Player(ICore core, IntPtr nativePointer, ushort id)
         {
             Id = id;
-            _client = client;
+            _core = core;
             NativePointer = nativePointer;
         }
         
@@ -24,7 +24,7 @@ namespace AltV.Net.Client.Elements.Entities
                 unsafe
                 {
                     var position = Vector3.Zero;
-                    this._client.Library.Player_GetPosition(this.NativePointer, &position);
+                    this._core.Library.Player_GetPosition(this.NativePointer, &position);
                     return position;
                 }
             }

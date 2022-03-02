@@ -19,7 +19,7 @@ namespace AltV.Net.Client
         public static void MainWithAssembly(Assembly resourceAssembly, IntPtr resourcePointer, IntPtr corePointer)
         {
             var library = new Library();
-            var client = new Client(library, corePointer);
+            var client = new Core(library, corePointer);
             var module = new Module(client);
             _module = module;
             _resourcePointer = resourcePointer;
