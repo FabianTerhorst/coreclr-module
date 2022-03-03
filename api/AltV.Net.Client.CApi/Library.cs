@@ -77,9 +77,41 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Player_GetVehicleId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetAimPos { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetArmour { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentWeapon { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetEntityAimOffset { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsFlashlightActive { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetHeadRot { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetHealth { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsAiming { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsDead { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsInRagdoll { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsReloading { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsTalking { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxArmour { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxHealth { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Player_GetMicLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Player_GetMoveSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Player_GetNonSpatialVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetNonSpatialVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetSeat { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Player_GetSpatialVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetModel { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetIndicatorLights { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetIndicatorLights { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetMaxGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetMaxGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetRPM { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSeatCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, byte> Vehicle_GetSpeedVector { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelsCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WorldObject_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> WorldObject_GetPosition { get; }
     }
@@ -158,9 +190,41 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Player_GetVehicleId { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetAimPos { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetArmour { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentWeapon { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetEntityAimOffset { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsFlashlightActive { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetHeadRot { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetHealth { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsAiming { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsDead { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsInRagdoll { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsReloading { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_IsTalking { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxArmour { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetMaxHealth { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Player_GetMicLevel { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Player_GetMoveSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Player_GetNonSpatialVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetNonSpatialVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Player_GetSeat { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Player_GetSpatialVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetModel { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetIndicatorLights { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetIndicatorLights { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetMaxGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetMaxGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Vehicle_GetRPM { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetSeatCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, byte> Vehicle_GetSpeedVector { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelsCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WorldObject_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> WorldObject_GetPosition { get; }
         public Library()
@@ -237,9 +301,41 @@ namespace AltV.Net.Client.CApi
             LocalPlayer_GetPlayer = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "LocalPlayer_GetPlayer");
             Player_GetVehicleId = (delegate* unmanaged[Cdecl]<nint, ushort*, byte>) NativeLibrary.GetExport(handle, "Player_GetVehicleId");
             Player_GetName = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Player_GetName");
+            Player_GetAimPos = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Player_GetAimPos");
+            Player_GetArmour = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetArmour");
+            Player_GetCurrentWeapon = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Player_GetCurrentWeapon");
+            Player_GetEntityAimOffset = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Player_GetEntityAimOffset");
+            Player_IsFlashlightActive = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsFlashlightActive");
+            Player_GetHeadRot = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Player_GetHeadRot");
+            Player_GetHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetHealth");
+            Player_IsAiming = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsAiming");
+            Player_IsDead = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsDead");
+            Player_IsInRagdoll = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsInRagdoll");
+            Player_IsReloading = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsReloading");
+            Player_IsTalking = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsTalking");
+            Player_GetMaxArmour = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetMaxArmour");
+            Player_GetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetMaxHealth");
+            Player_GetMicLevel = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Player_GetMicLevel");
+            Player_GetMoveSpeed = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Player_GetMoveSpeed");
+            Player_GetNonSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Player_GetNonSpatialVolume");
+            Player_SetNonSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Player_SetNonSpatialVolume");
+            Player_GetSeat = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_GetSeat");
+            Player_GetSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Player_GetSpatialVolume");
+            Player_SetSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Player_SetSpatialVolume");
             Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetID");
             Vehicle_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetEntity");
             Vehicle_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Vehicle_GetModel");
+            Vehicle_GetGear = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetGear");
+            Vehicle_SetGear = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Vehicle_SetGear");
+            Vehicle_GetIndicatorLights = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetIndicatorLights");
+            Vehicle_SetIndicatorLights = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetIndicatorLights");
+            Vehicle_GetMaxGear = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetMaxGear");
+            Vehicle_SetMaxGear = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Vehicle_SetMaxGear");
+            Vehicle_GetRPM = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Vehicle_GetRPM");
+            Vehicle_GetSeatCount = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetSeatCount");
+            Vehicle_GetWheelSpeed = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetWheelSpeed");
+            Vehicle_GetSpeedVector = (delegate* unmanaged[Cdecl]<nint, Vector3*, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetSpeedVector");
+            Vehicle_GetWheelsCount = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetWheelsCount");
             WorldObject_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "WorldObject_GetBaseObject");
             WorldObject_GetPosition = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "WorldObject_GetPosition");
         }
