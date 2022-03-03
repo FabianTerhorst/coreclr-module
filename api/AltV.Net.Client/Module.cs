@@ -3,6 +3,7 @@ using AltV.Net.Client.CApi.Events;
 using AltV.Net.Client.Elements.Args;
 using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Factories;
+using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Client.Events;
 using AltV.Net.Client.Extensions;

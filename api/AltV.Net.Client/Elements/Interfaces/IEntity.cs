@@ -1,4 +1,6 @@
-﻿namespace AltV.Net.Client.Elements.Entities
+﻿using AltV.Net.Client.Elements.Entities;
+
+namespace AltV.Net.Client.Elements.Interfaces
 {
     public interface IEntity : IWorldObject
     {

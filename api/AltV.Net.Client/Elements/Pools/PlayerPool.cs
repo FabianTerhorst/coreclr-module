@@ -1,5 +1,6 @@
 ﻿using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Factories;
+using AltV.Net.Client.Elements.Interfaces;
 
 namespace AltV.Net.Client.Elements.Pools
 {

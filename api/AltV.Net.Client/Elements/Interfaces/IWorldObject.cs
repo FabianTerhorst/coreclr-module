@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace AltV.Net.Client.Elements.Entities
+namespace AltV.Net.Client.Elements.Interfaces
 {
     public interface IWorldObject : IBaseObject
     {

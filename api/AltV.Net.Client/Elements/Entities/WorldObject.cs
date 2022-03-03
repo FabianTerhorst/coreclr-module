@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using AltV.Net.Client.Elements.Interfaces;
 
 namespace AltV.Net.Client.Elements.Entities
 {

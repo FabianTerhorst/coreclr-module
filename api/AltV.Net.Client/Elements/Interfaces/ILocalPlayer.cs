@@ -1,4 +1,4 @@
-﻿namespace AltV.Net.Client.Elements.Entities
+﻿namespace AltV.Net.Client.Elements.Interfaces
 {
     public interface ILocalPlayer : IPlayer
     {

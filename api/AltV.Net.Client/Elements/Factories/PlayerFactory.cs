@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.Tracing;
 using AltV.Net.Client.Elements.Entities;
+using AltV.Net.Client.Elements.Interfaces;
 
 namespace AltV.Net.Client.Elements.Factories
 {
