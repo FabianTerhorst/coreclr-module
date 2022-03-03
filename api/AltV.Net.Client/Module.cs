@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Runtime.InteropServices;
 using AltV.Net.Client.CApi.Events;
 using AltV.Net.Client.Elements.Args;
 using AltV.Net.Client.Elements.Entities;
@@ -35,6 +36,9 @@ namespace AltV.Net.Client
 
         internal readonly IEventHandler<TickDelegate> TickEventHandler =
             new HashSetEventHandler<TickDelegate>();
+
+        internal readonly IEventHandler<ConsoleCommandDelegate> ConsoleCommandEventHandler =
+            new HashSetEventHandler<ConsoleCommandDelegate>();
         
         public void OnServerEvent(string name, IntPtr[] args)
         {
@@ -47,9 +51,14 @@ namespace AltV.Net.Client
             }
         }
         
+        public void OnConsoleCommand(string name, string[] args)
+        {
+            ConsoleCommandEventHandler.GetEvents().ForEachCatching(fn => fn(name, args), $"event {nameof(OnConsoleCommand)} \"{name}\"");
+        }
+        
         public void OnTick()
         {
-            TickEventHandler.GetEvents().ForEachCatching(@delegate => @delegate(), $"event {nameof(OnTick)}");
+            TickEventHandler.GetEvents().ForEachCatching(fn => fn(), $"event {nameof(OnTick)}");
         }
 
         public void OnCreatePlayer(IntPtr pointer, ushort id)

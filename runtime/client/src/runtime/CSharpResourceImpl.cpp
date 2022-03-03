@@ -29,12 +29,16 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
 
     switch(ev->GetType()) {
         case alt::CEvent::Type::SERVER_SCRIPT_EVENT:
-            auto serverScriptEvent = (alt::CServerScriptEvent*) ev;
+        {
+            auto serverScriptEvent = (alt::CServerScriptEvent*)ev;
             alt::MValueArgs serverArgs = serverScriptEvent->GetArgs();
             uint64_t size = serverArgs.GetSize();
-            if (size == 0) {
+            if(size == 0)
+            {
                 OnServerEventDelegate(serverScriptEvent->GetName().CStr(), nullptr, 0);
-            } else {
+            }
+            else
+            {
                 auto constArgs = new alt::MValueConst*[size];
                 for(uint64_t i = 0; i < size; i++)
                 {
@@ -44,6 +48,20 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                 delete[] constArgs;
             }
             break;
+        }
+        case alt::CEvent::Type::CONSOLE_COMMAND_EVENT:
+        {
+            auto consoleCommandEvent = (alt::CConsoleCommandEvent*)ev;
+            auto args = consoleCommandEvent->GetArgs();
+            uint64_t size = args.size();
+            auto cArgs = new const char*[size];
+            for(uint64_t i = 0; i < size; i++)
+            {
+                cArgs[i] = args[i].c_str();
+            }
+            OnConsoleCommandDelegate(consoleCommandEvent->GetName().c_str(), cArgs, (uint32_t) size);
+            delete[] cArgs;
+        }
     }
 
     return true;
@@ -112,7 +130,8 @@ alt::String CSharpResourceImpl::ReadFile(alt::String path)
 void CSharpResourceImpl::ResetDelegates() {
     OnTickDelegate = []() {};
     OnServerEventDelegate = [](auto var, auto var2, auto var3) {};
-    
+    OnConsoleCommandDelegate = [](auto var, auto var2, auto var3) {};
+
     OnCreatePlayerDelegate = [](auto var, auto var2) {};
     OnRemovePlayerDelegate = [](auto var) {};
 

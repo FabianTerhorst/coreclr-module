@@ -14,7 +14,10 @@ uint8_t Event_WasCancelled(alt::CEvent* event) {
 
 SetDelegate(Tick);
 SetDelegate(ServerEvent);
+SetDelegate(ConsoleCommand);
+
 SetDelegate(CreatePlayer);
 SetDelegate(RemovePlayer);
+
 SetDelegate(CreateVehicle);
 SetDelegate(RemoveVehicle);

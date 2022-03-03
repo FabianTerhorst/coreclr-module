@@ -25,8 +25,9 @@ public:
     void OnCreateBaseObject(alt::Ref<alt::IBaseObject> object) override;
     void OnRemoveBaseObject(alt::Ref<alt::IBaseObject> object) override;
 
-    ServerEventDelegate_t OnServerEventDelegate = nullptr;
     TickDelegate_t OnTickDelegate = nullptr;
+    ServerEventDelegate_t OnServerEventDelegate = nullptr;
+    ConsoleCommandDelegate_t OnConsoleCommandDelegate = nullptr;
 
     CreatePlayerDelegate_t OnCreatePlayerDelegate = nullptr;
     RemovePlayerDelegate_t OnRemovePlayerDelegate = nullptr;

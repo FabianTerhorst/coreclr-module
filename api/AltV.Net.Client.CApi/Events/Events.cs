@@ -1,12 +1,15 @@
-﻿namespace AltV.Net.Client.CApi.Events
+﻿using System.Runtime.InteropServices;
+
+namespace AltV.Net.Client.CApi.Events
 {
-    public delegate void TickDelegate();
+    public delegate void TickModuleDelegate();
         
-    public delegate void ServerEventDelegate(string name, IntPtr args, ulong size);
+    public delegate void ServerEventModuleDelegate(string name, IntPtr args, ulong size);
+    public delegate void ConsoleCommandModuleDelegate(string name, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] string[] args, int argsSize);
     
-    public delegate void CreatePlayerDelegate(IntPtr pointer, ushort id);
-    public delegate void RemovePlayerDelegate(ushort id);
+    public delegate void CreatePlayerModuleDelegate(IntPtr pointer, ushort id);
+    public delegate void RemovePlayerModuleDelegate(ushort id);
     
-    public delegate void CreateVehicleDelegate(IntPtr pointer, ushort id);
-    public delegate void RemoveVehicleDelegate(ushort id);
+    public delegate void CreateVehicleModuleDelegate(IntPtr pointer, ushort id);
+    public delegate void RemoveVehicleModuleDelegate(ushort id);
 }

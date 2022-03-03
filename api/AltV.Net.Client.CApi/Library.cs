@@ -9,12 +9,13 @@ namespace AltV.Net.Client.CApi
     {
         public delegate* unmanaged[Cdecl]<object, void> Event_Cancel { get; }
         public delegate* unmanaged[Cdecl]<object, byte> Event_WasCancelled { get; }
-        public delegate* unmanaged[Cdecl]<nint, TickDelegate, void> Event_SetTickDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, ServerEventDelegate, void> Event_SetServerEventDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, CreatePlayerDelegate, void> Event_SetCreatePlayerDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, RemovePlayerDelegate, void> Event_SetRemovePlayerDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, CreateVehicleDelegate, void> Event_SetCreateVehicleDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, RemoveVehicleDelegate, void> Event_SetRemoveVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, TickModuleDelegate, void> Event_SetTickDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ServerEventModuleDelegate, void> Event_SetServerEventDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ConsoleCommandModuleDelegate, void> Event_SetConsoleCommandDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, CreatePlayerModuleDelegate, void> Event_SetCreatePlayerDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, RemovePlayerModuleDelegate, void> Event_SetRemovePlayerDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, CreateVehicleModuleDelegate, void> Event_SetCreateVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, RemoveVehicleModuleDelegate, void> Event_SetRemoveVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<object, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
@@ -86,12 +87,13 @@ namespace AltV.Net.Client.CApi
 
         public delegate* unmanaged[Cdecl]<object, void> Event_Cancel { get; }
         public delegate* unmanaged[Cdecl]<object, byte> Event_WasCancelled { get; }
-        public delegate* unmanaged[Cdecl]<nint, TickDelegate, void> Event_SetTickDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, ServerEventDelegate, void> Event_SetServerEventDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, CreatePlayerDelegate, void> Event_SetCreatePlayerDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, RemovePlayerDelegate, void> Event_SetRemovePlayerDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, CreateVehicleDelegate, void> Event_SetCreateVehicleDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, RemoveVehicleDelegate, void> Event_SetRemoveVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, TickModuleDelegate, void> Event_SetTickDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ServerEventModuleDelegate, void> Event_SetServerEventDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ConsoleCommandModuleDelegate, void> Event_SetConsoleCommandDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, CreatePlayerModuleDelegate, void> Event_SetCreatePlayerDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, RemovePlayerModuleDelegate, void> Event_SetRemovePlayerDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, CreateVehicleModuleDelegate, void> Event_SetCreateVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, RemoveVehicleModuleDelegate, void> Event_SetRemoveVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<object, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
@@ -161,12 +163,13 @@ namespace AltV.Net.Client.CApi
             var handle = NativeLibrary.Load(DllName, Assembly.GetExecutingAssembly(), dllImportSearchPath);
             Event_Cancel = (delegate* unmanaged[Cdecl]<object, void>) NativeLibrary.GetExport(handle, "Event_Cancel");
             Event_WasCancelled = (delegate* unmanaged[Cdecl]<object, byte>) NativeLibrary.GetExport(handle, "Event_WasCancelled");
-            Event_SetTickDelegate = (delegate* unmanaged[Cdecl]<nint, TickDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetTickDelegate");
-            Event_SetServerEventDelegate = (delegate* unmanaged[Cdecl]<nint, ServerEventDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetServerEventDelegate");
-            Event_SetCreatePlayerDelegate = (delegate* unmanaged[Cdecl]<nint, CreatePlayerDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreatePlayerDelegate");
-            Event_SetRemovePlayerDelegate = (delegate* unmanaged[Cdecl]<nint, RemovePlayerDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemovePlayerDelegate");
-            Event_SetCreateVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, CreateVehicleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateVehicleDelegate");
-            Event_SetRemoveVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, RemoveVehicleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveVehicleDelegate");
+            Event_SetTickDelegate = (delegate* unmanaged[Cdecl]<nint, TickModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetTickDelegate");
+            Event_SetServerEventDelegate = (delegate* unmanaged[Cdecl]<nint, ServerEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetServerEventDelegate");
+            Event_SetConsoleCommandDelegate = (delegate* unmanaged[Cdecl]<nint, ConsoleCommandModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetConsoleCommandDelegate");
+            Event_SetCreatePlayerDelegate = (delegate* unmanaged[Cdecl]<nint, CreatePlayerModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreatePlayerDelegate");
+            Event_SetRemovePlayerDelegate = (delegate* unmanaged[Cdecl]<nint, RemovePlayerModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemovePlayerDelegate");
+            Event_SetCreateVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, CreateVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateVehicleDelegate");
+            Event_SetRemoveVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, RemoveVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveVehicleDelegate");
             FreeUIntArray = (delegate* unmanaged[Cdecl]<object, void>) NativeLibrary.GetExport(handle, "FreeUIntArray");
             FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeCharArray");
             FreeString = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeString");

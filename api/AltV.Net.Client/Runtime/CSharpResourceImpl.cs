@@ -23,27 +23,31 @@ namespace AltV.Net.Client.Runtime
         {
             unsafe
             {
-                TickDelegate onTick = ModuleWrapper.OnTick;
+                TickModuleDelegate onTick = ModuleWrapper.OnTick;
                 _handles.AddFirst(GCHandle.Alloc(onTick));
                 _library.Event_SetTickDelegate(this.NativePointer, onTick);
                 
-                ServerEventDelegate onServerEvent = ModuleWrapper.OnServerEvent;
+                ServerEventModuleDelegate onServerEvent = ModuleWrapper.OnServerEvent;
                 _handles.AddFirst(GCHandle.Alloc(onServerEvent));
                 _library.Event_SetServerEventDelegate(this.NativePointer, onServerEvent);
                 
-                CreatePlayerDelegate onCreatePlayer = ModuleWrapper.OnCreatePlayer;
+                ConsoleCommandModuleDelegate onConsoleCommand = ModuleWrapper.OnConsoleCommand;
+                _handles.AddFirst(GCHandle.Alloc(onConsoleCommand));
+                _library.Event_SetConsoleCommandDelegate(this.NativePointer, onConsoleCommand);
+                
+                CreatePlayerModuleDelegate onCreatePlayer = ModuleWrapper.OnCreatePlayer;
                 _handles.AddFirst(GCHandle.Alloc(onCreatePlayer));
                 _library.Event_SetCreatePlayerDelegate(this.NativePointer, onCreatePlayer);
                 
-                RemovePlayerDelegate onRemovePlayer = ModuleWrapper.OnRemovePlayer;
+                RemovePlayerModuleDelegate onRemovePlayer = ModuleWrapper.OnRemovePlayer;
                 _handles.AddFirst(GCHandle.Alloc(onRemovePlayer));
                 _library.Event_SetRemovePlayerDelegate(this.NativePointer, onRemovePlayer);
                 
-                CreateVehicleDelegate onCreateVehicle = ModuleWrapper.OnCreateVehicle;
+                CreateVehicleModuleDelegate onCreateVehicle = ModuleWrapper.OnCreateVehicle;
                 _handles.AddFirst(GCHandle.Alloc(onCreateVehicle));
                 _library.Event_SetCreateVehicleDelegate(this.NativePointer, onCreateVehicle);
                 
-                RemoveVehicleDelegate onRemoveVehicle = ModuleWrapper.OnRemoveVehicle;
+                RemoveVehicleModuleDelegate onRemoveVehicle = ModuleWrapper.OnRemoveVehicle;
                 _handles.AddFirst(GCHandle.Alloc(onRemoveVehicle));
                 _library.Event_SetRemoveVehicleDelegate(this.NativePointer, onRemoveVehicle);
             }

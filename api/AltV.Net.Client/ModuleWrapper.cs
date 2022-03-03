@@ -110,5 +110,13 @@ namespace AltV.Net.Client
             
             _module.OnServerEvent(name, args);
         }
+        
+        public static void OnConsoleCommand(string name,
+            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
+            string[] args, int _)
+        {
+            args ??= new string[0];
+            _module.OnConsoleCommand(name, args);
+        }
     }
 }
