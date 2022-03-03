@@ -17,6 +17,35 @@ namespace AltV.Net.Client.Elements.Entities
             BaseObjectNativePointer = baseObjectPointer;
         }
         
+        #region Data
+        private Dictionary<string, object?> _data = new();
+        
+        public void SetData<T>(string key, T value)
+        {
+            this._data[key] = value;
+        }
+        
+        public bool HasData(string key)
+        {
+            return this._data.ContainsKey(key);
+        }
+        
+        public void DeleteData(string key)
+        {
+            this._data.Remove(key);
+        }
+        
+        public bool GetData<T>(string key, out T? value)
+        {
+            value = default;
+            if (!this._data.TryGetValue(key, out var obj)) return false;
+            if (obj is not T convertedObj) return false;
+            value = convertedObj;
+            return true;
+        }
+        #endregion
+        
+        #region MetaData
         public void SetMetaData<T>(string key, T value)
         {
             unsafe
@@ -104,5 +133,6 @@ namespace AltV.Net.Client.Elements.Entities
             value = (float) mValue.GetDouble();
             return true;
         }
+        #endregion
     }
 }
