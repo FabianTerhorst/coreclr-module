@@ -27,6 +27,7 @@ public:
 
     TickDelegate_t OnTickDelegate = nullptr;
     ServerEventDelegate_t OnServerEventDelegate = nullptr;
+    ClientEventDelegate_t OnClientEventDelegate = nullptr;
     ConsoleCommandDelegate_t OnConsoleCommandDelegate = nullptr;
 
     CreatePlayerDelegate_t OnCreatePlayerDelegate = nullptr;

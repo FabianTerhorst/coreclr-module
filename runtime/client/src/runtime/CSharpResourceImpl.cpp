@@ -49,6 +49,27 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             }
             break;
         }
+        case alt::CEvent::Type::CLIENT_SCRIPT_EVENT:
+        {
+            auto clientScriptEvent = (alt::CClientScriptEvent*)ev;
+            alt::MValueArgs serverArgs = clientScriptEvent->GetArgs();
+            uint64_t size = serverArgs.GetSize();
+            if(size == 0)
+            {
+                OnClientEventDelegate(clientScriptEvent->GetName().CStr(), nullptr, 0);
+            }
+            else
+            {
+                auto constArgs = new alt::MValueConst*[size];
+                for(uint64_t i = 0; i < size; i++)
+                {
+                    constArgs[i] = &serverArgs[i];
+                }
+                OnClientEventDelegate(clientScriptEvent->GetName().CStr(), constArgs, size);
+                delete[] constArgs;
+            }
+            break;
+        }
         case alt::CEvent::Type::CONSOLE_COMMAND_EVENT:
         {
             auto consoleCommandEvent = (alt::CConsoleCommandEvent*)ev;
@@ -129,6 +150,7 @@ alt::String CSharpResourceImpl::ReadFile(alt::String path)
 
 void CSharpResourceImpl::ResetDelegates() {
     OnTickDelegate = []() {};
+    OnClientEventDelegate = [](auto var, auto var2, auto var3) {};
     OnServerEventDelegate = [](auto var, auto var2, auto var3) {};
     OnConsoleCommandDelegate = [](auto var, auto var2, auto var3) {};
 

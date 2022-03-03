@@ -33,6 +33,7 @@ namespace AltV.Net.Client
         }
 
         private Dictionary<string, HashSet<Function.Function>> ServerEventBus = new();
+        private Dictionary<string, HashSet<Function.Function>> ClientEventBus = new();
 
         internal readonly IEventHandler<TickDelegate> TickEventHandler =
             new HashSetEventHandler<TickDelegate>();
@@ -48,6 +49,17 @@ namespace AltV.Net.Client
             foreach (var function in ServerEventBus[name])
             {
                 function.CallCatching(mValues, $"server event {name} handler");
+            }
+        }
+        
+        public void OnClientEvent(string name, IntPtr[] args)
+        {
+            var mValues = MValueConst.CreateFrom(args);
+
+            if (!ClientEventBus.ContainsKey(name)) return;
+            foreach (var function in ClientEventBus[name])
+            {
+                function.CallCatching(mValues, $"client event {name} handler");
             }
         }
         
@@ -91,6 +103,21 @@ namespace AltV.Net.Client
             {
                 eventHandlers = new HashSet<Function.Function> {function};
                 ServerEventBus[eventName] = eventHandlers;
+            }
+
+            return function;
+        }
+        
+        public Function.Function AddClientEventListener(string eventName, Function.Function function)
+        {
+            if (ClientEventBus.TryGetValue(eventName, out var eventHandlers))
+            {
+                eventHandlers.Add(function);
+            }
+            else
+            {
+                eventHandlers = new HashSet<Function.Function> {function};
+                ClientEventBus[eventName] = eventHandlers;
             }
 
             return function;

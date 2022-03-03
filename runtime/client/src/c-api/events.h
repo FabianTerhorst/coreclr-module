@@ -7,6 +7,7 @@ EXPORT uint8_t Event_WasCancelled(alt::CEvent* event);
 
 EXPORT void Event_SetTickDelegate(CSharpResourceImpl* resource, /** TickModuleDelegate */ TickDelegate_t delegate);
 EXPORT void Event_SetServerEventDelegate(CSharpResourceImpl* resource,  /** ServerEventModuleDelegate */ ServerEventDelegate_t delegate);
+EXPORT void Event_SetClientEventDelegate(CSharpResourceImpl* resource,  /** ClientEventModuleDelegate */ ClientEventDelegate_t delegate);
 EXPORT void Event_SetConsoleCommandDelegate(CSharpResourceImpl* resource,  /** ConsoleCommandModuleDelegate */ ConsoleCommandDelegate_t delegate);
 
 EXPORT void Event_SetCreatePlayerDelegate(CSharpResourceImpl* resource, /** CreatePlayerModuleDelegate */ CreatePlayerDelegate_t delegate);

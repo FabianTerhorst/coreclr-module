@@ -11,6 +11,7 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<object, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, TickModuleDelegate, void> Event_SetTickDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ServerEventModuleDelegate, void> Event_SetServerEventDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEventModuleDelegate, void> Event_SetClientEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ConsoleCommandModuleDelegate, void> Event_SetConsoleCommandDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, CreatePlayerModuleDelegate, void> Event_SetCreatePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, RemovePlayerModuleDelegate, void> Event_SetRemovePlayerDelegate { get; }
@@ -89,6 +90,7 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<object, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, TickModuleDelegate, void> Event_SetTickDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ServerEventModuleDelegate, void> Event_SetServerEventDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEventModuleDelegate, void> Event_SetClientEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ConsoleCommandModuleDelegate, void> Event_SetConsoleCommandDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, CreatePlayerModuleDelegate, void> Event_SetCreatePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, RemovePlayerModuleDelegate, void> Event_SetRemovePlayerDelegate { get; }
@@ -165,6 +167,7 @@ namespace AltV.Net.Client.CApi
             Event_WasCancelled = (delegate* unmanaged[Cdecl]<object, byte>) NativeLibrary.GetExport(handle, "Event_WasCancelled");
             Event_SetTickDelegate = (delegate* unmanaged[Cdecl]<nint, TickModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetTickDelegate");
             Event_SetServerEventDelegate = (delegate* unmanaged[Cdecl]<nint, ServerEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetServerEventDelegate");
+            Event_SetClientEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetClientEventDelegate");
             Event_SetConsoleCommandDelegate = (delegate* unmanaged[Cdecl]<nint, ConsoleCommandModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetConsoleCommandDelegate");
             Event_SetCreatePlayerDelegate = (delegate* unmanaged[Cdecl]<nint, CreatePlayerModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreatePlayerDelegate");
             Event_SetRemovePlayerDelegate = (delegate* unmanaged[Cdecl]<nint, RemovePlayerModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemovePlayerDelegate");

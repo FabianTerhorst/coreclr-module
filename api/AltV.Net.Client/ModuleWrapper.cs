@@ -110,6 +110,19 @@ namespace AltV.Net.Client
             
             _module.OnServerEvent(name, args);
         }
+
+        public static void OnClientEvent(string name, IntPtr pointer, ulong size)
+        {
+            var args = new IntPtr[size];
+            if (pointer != IntPtr.Zero)
+            {
+                Marshal.Copy(pointer, args, 0, (int) size);
+            }
+            
+            Alt.Log($"Client event \"{name}\" called. Parsed {args.Length} arguments");
+            
+            _module.OnClientEvent(name, args);
+        }
         
         public static void OnConsoleCommand(string name,
             [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]

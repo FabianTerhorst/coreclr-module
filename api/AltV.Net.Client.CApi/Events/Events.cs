@@ -4,6 +4,7 @@ namespace AltV.Net.Client.CApi.Events
 {
     public delegate void TickModuleDelegate();
         
+    public delegate void ClientEventModuleDelegate(string name, IntPtr args, ulong size);
     public delegate void ServerEventModuleDelegate(string name, IntPtr args, ulong size);
     public delegate void ConsoleCommandModuleDelegate(string name, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] string[] args, int argsSize);
     

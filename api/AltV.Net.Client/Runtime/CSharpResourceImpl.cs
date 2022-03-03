@@ -31,6 +31,10 @@ namespace AltV.Net.Client.Runtime
                 _handles.AddFirst(GCHandle.Alloc(onServerEvent));
                 _library.Event_SetServerEventDelegate(this.NativePointer, onServerEvent);
                 
+                ClientEventModuleDelegate onClientEvent = ModuleWrapper.OnClientEvent;
+                _handles.AddFirst(GCHandle.Alloc(onClientEvent));
+                _library.Event_SetClientEventDelegate(this.NativePointer, onClientEvent);
+                
                 ConsoleCommandModuleDelegate onConsoleCommand = ModuleWrapper.OnConsoleCommand;
                 _handles.AddFirst(GCHandle.Alloc(onConsoleCommand));
                 _library.Event_SetConsoleCommandDelegate(this.NativePointer, onConsoleCommand);
