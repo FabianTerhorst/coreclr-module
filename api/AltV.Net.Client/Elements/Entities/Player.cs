@@ -31,7 +31,7 @@ namespace AltV.Net.Client.Elements.Entities
                 unsafe
                 {
                     ushort id = 0;
-                    var success = Core.Library.Player_GetVehicleId(PlayerNativePointer, &id);
+                    var success = Core.Library.Player_GetVehicleID(PlayerNativePointer, &id);
                     if (success == 0) return null;
                     
                     Alt.Module.VehiclePool.Get(id, out var vehicle);
@@ -95,6 +95,22 @@ namespace AltV.Net.Client.Elements.Entities
                     var position = Vector3.Zero;
                     this.Core.Library.Player_GetEntityAimOffset(this.PlayerNativePointer, &position);
                     return position;                    
+                }
+            }
+        }
+        
+        public IEntity? EntityAimingAt
+        {
+            get
+            {
+                unsafe
+                {
+                    ushort id = 0;
+                    var success = this.Core.Library.Player_GetEntityAimingAtID(this.PlayerNativePointer, &id);
+                    if (success == 0) return null;
+
+                    if (!Alt.Module.GetEntityById(id, out var entity)) return null;
+                    return entity;
                 }
             }
         }

@@ -69,7 +69,7 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte> Entity_GetTypeByID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetModel { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte*, ushort*, void> Entity_GetNetOwnerId { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte*, ushort*, void> Entity_GetNetOwnerID { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Entity_GetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
@@ -78,12 +78,13 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Entity_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetEntity { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Player_GetVehicleId { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Player_GetVehicleID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetName { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetAimPos { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetArmour { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetEntityAimOffset { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Player_GetEntityAimingAtID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsFlashlightActive { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetHeadRot { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetHealth { get; }
@@ -188,7 +189,7 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte> Entity_GetTypeByID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetModel { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte*, ushort*, void> Entity_GetNetOwnerId { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte*, ushort*, void> Entity_GetNetOwnerID { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Entity_GetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
@@ -197,12 +198,13 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Entity_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetEntity { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Player_GetVehicleId { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Player_GetVehicleID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetName { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetAimPos { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetArmour { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetEntityAimOffset { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Player_GetEntityAimingAtID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsFlashlightActive { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetHeadRot { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetHealth { get; }
@@ -305,7 +307,7 @@ namespace AltV.Net.Client.CApi
             Entity_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Entity_GetWorldObject");
             Entity_GetTypeByID = (delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte>) NativeLibrary.GetExport(handle, "Entity_GetTypeByID");
             Entity_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Entity_GetModel");
-            Entity_GetNetOwnerId = (delegate* unmanaged[Cdecl]<nint, byte*, ushort*, void>) NativeLibrary.GetExport(handle, "Entity_GetNetOwnerId");
+            Entity_GetNetOwnerID = (delegate* unmanaged[Cdecl]<nint, byte*, ushort*, void>) NativeLibrary.GetExport(handle, "Entity_GetNetOwnerID");
             Entity_GetScriptID = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Entity_GetScriptID");
             Entity_GetRotation = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Entity_GetRotation");
             Entity_HasStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Entity_HasStreamSyncedMetaData");
@@ -314,12 +316,13 @@ namespace AltV.Net.Client.CApi
             Entity_GetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Entity_GetSyncedMetaData");
             Player_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetID");
             Player_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Player_GetEntity");
-            Player_GetVehicleId = (delegate* unmanaged[Cdecl]<nint, ushort*, byte>) NativeLibrary.GetExport(handle, "Player_GetVehicleId");
+            Player_GetVehicleID = (delegate* unmanaged[Cdecl]<nint, ushort*, byte>) NativeLibrary.GetExport(handle, "Player_GetVehicleID");
             Player_GetName = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Player_GetName");
             Player_GetAimPos = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Player_GetAimPos");
             Player_GetArmour = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetArmour");
             Player_GetCurrentWeapon = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Player_GetCurrentWeapon");
             Player_GetEntityAimOffset = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Player_GetEntityAimOffset");
+            Player_GetEntityAimingAtID = (delegate* unmanaged[Cdecl]<nint, ushort*, byte>) NativeLibrary.GetExport(handle, "Player_GetEntityAimingAtID");
             Player_IsFlashlightActive = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsFlashlightActive");
             Player_GetHeadRot = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Player_GetHeadRot");
             Player_GetHealth = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetHealth");

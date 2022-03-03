@@ -14,7 +14,7 @@ alt::IEntity* Player_GetEntity(alt::IPlayer* player) {
 }
 
 
-uint8_t Player_GetVehicleId(alt::IPlayer* player, uint16_t& id) {
+uint8_t Player_GetVehicleID(alt::IPlayer* player, uint16_t& id) {
     auto vehicle = player->GetVehicle();
     if (vehicle.IsEmpty() || vehicle.Get() == nullptr) return 0;
     id = vehicle->GetID();
@@ -46,6 +46,13 @@ void Player_GetEntityAimOffset(alt::IPlayer* player, vector3_t& offset) {
     offset.x = vector.x;
     offset.y = vector.y;
     offset.z = vector.z;
+}
+
+uint8_t Player_GetEntityAimingAtID(alt::IPlayer* player, uint16_t& id) {
+    auto entity = player->GetEntityAimingAt();
+    if (entity.IsEmpty()) return false;
+    id = entity->GetID();
+    return true;
 }
 
 uint8_t Player_IsFlashlightActive(alt::IPlayer* player) {

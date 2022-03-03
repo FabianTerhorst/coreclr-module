@@ -24,7 +24,7 @@ uint32_t Entity_GetModel(alt::IEntity* entity) {
     return entity->GetModel();
 }
 
-void Entity_GetNetOwnerId(alt::IEntity* entity, uint8_t& exists, uint16_t& id) {
+void Entity_GetNetOwnerID(alt::IEntity* entity, uint8_t& exists, uint16_t& id) {
     auto owner = entity->GetNetworkOwner();
     if (owner.IsEmpty()) {
         exists = false;
