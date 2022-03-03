@@ -7,6 +7,7 @@ namespace AltV.Net.Client
     {
         public void OnStart();
         public void OnStop();
-        public IEntityFactory<IPlayer> GetPlayerFactory();
+        public IPlayerFactory GetPlayerFactory();
+        public IEntityFactory<IVehicle> GetVehicleFactory();
     }
 }

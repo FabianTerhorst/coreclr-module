@@ -14,7 +14,7 @@ namespace AltV.Net.Client
             Module = module;
         }
 
-        public static IPlayer LocalPlayer => Module.PlayerPool.LocalPlayer;
+        public static ILocalPlayer LocalPlayer => Module.PlayerPool.LocalPlayer;
 
         public static void Log(string message) => Core.LogInfo(message);
         public static void LogInfo(string message) => Core.LogInfo(message);

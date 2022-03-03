@@ -2,6 +2,7 @@
 {
     public interface IBaseObject
     {
+        public IntPtr BaseObjectNativePointer { get; }
         // todo
     }
 }

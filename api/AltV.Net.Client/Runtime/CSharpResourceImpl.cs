@@ -32,6 +32,22 @@ namespace AltV.Net.Client.Runtime
                 ServerEventDelegate onServerEvent = ModuleWrapper.OnServerEvent;
                 _handles.AddFirst(GCHandle.Alloc(onServerEvent));
                 _library.Event_SetServerEventDelegate(this.NativePointer, onServerEvent);
+                
+                CreatePlayerDelegate onCreatePlayer = ModuleWrapper.OnCreatePlayer;
+                _handles.AddFirst(GCHandle.Alloc(onCreatePlayer));
+                _library.Event_SetCreatePlayerDelegate(this.NativePointer, onCreatePlayer);
+                
+                RemovePlayerDelegate onRemovePlayer = ModuleWrapper.OnRemovePlayer;
+                _handles.AddFirst(GCHandle.Alloc(onRemovePlayer));
+                _library.Event_SetRemovePlayerDelegate(this.NativePointer, onRemovePlayer);
+                
+                CreateVehicleDelegate onCreateVehicle = ModuleWrapper.OnCreateVehicle;
+                _handles.AddFirst(GCHandle.Alloc(onCreateVehicle));
+                _library.Event_SetCreateVehicleDelegate(this.NativePointer, onCreateVehicle);
+                
+                RemoveVehicleDelegate onRemoveVehicle = ModuleWrapper.OnRemoveVehicle;
+                _handles.AddFirst(GCHandle.Alloc(onRemoveVehicle));
+                _library.Event_SetRemoveVehicleDelegate(this.NativePointer, onRemoveVehicle);
             }
         }
         

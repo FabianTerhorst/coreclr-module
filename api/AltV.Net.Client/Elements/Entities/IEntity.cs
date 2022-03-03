@@ -2,7 +2,7 @@
 {
     public interface IEntity : IWorldObject
     {
-        public IntPtr NativePointer { get; }
+        public IntPtr EntityNativePointer { get; }
         public ushort Id { get; }
         public bool Exists { get; }
     }

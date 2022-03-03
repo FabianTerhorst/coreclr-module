@@ -13,7 +13,8 @@ namespace AltV.Net.Client
     {
         internal readonly ICore Core;
         
-        internal static PlayerPool PlayerPool;
+        internal PlayerPool PlayerPool;
+        internal IEntityPool<IVehicle> VehiclePool;
     
         public Module(ICore core)
         {
@@ -21,9 +22,10 @@ namespace AltV.Net.Client
             Core = core;
         }
         
-        internal void InitPools(PlayerPool playerPool)
+        internal void InitPools(PlayerPool playerPool, IEntityPool<IVehicle> vehiclePool)
         {
             PlayerPool = playerPool;
+            VehiclePool = vehiclePool;
         }
 
         private Dictionary<string, HashSet<Function.Function>> ServerEventBus = new();
@@ -45,6 +47,26 @@ namespace AltV.Net.Client
         public void OnTick()
         {
             TickEventHandler.GetEvents().ForEachCatching(@delegate => @delegate(), $"event {nameof(OnTick)}");
+        }
+
+        public void OnCreatePlayer(IntPtr pointer, ushort id)
+        {
+            PlayerPool.Create(Core, pointer, id);
+        }
+
+        public void OnRemovePlayer(ushort id)
+        {
+            PlayerPool.Remove(id);
+        }
+
+        public void OnCreateVehicle(IntPtr pointer, ushort id)
+        {
+            VehiclePool.Create(Core, pointer, id);
+        }
+
+        public void OnRemoveVehicle(ushort id)
+        {
+            VehiclePool.Remove(id);
         }
         
         public Function.Function AddServerEventListener(string eventName, Function.Function function)

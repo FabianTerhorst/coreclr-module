@@ -14,17 +14,16 @@ namespace AltV.Net.Client.Elements.Pools
 
         bool Remove(TEntity entity);
 
-        bool Remove(IntPtr entityPointer);
+        bool Remove(ushort id);
 
-        bool Get(IntPtr entityPointer, out TEntity entity);
+        bool Get(ushort id, out TEntity entity);
 
         bool GetOrCreate(ICore server, IntPtr entityPointer, ushort entityId, out TEntity entity);
-        
         bool GetOrCreate(ICore server, IntPtr entityPointer, out TEntity entity);
 
         ICollection<TEntity> GetAllEntities();
 
-        KeyValuePair<IntPtr, TEntity>[] GetEntitiesArray();
+        KeyValuePair<ushort, TEntity>[] GetEntitiesArray();
 
         // void ForEach(IBaseObjectCallback<TEntity> baseObjectCallback);
         //

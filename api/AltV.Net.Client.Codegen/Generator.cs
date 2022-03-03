@@ -20,7 +20,7 @@ namespace AltV.Net.Client.Codegen
         public static void Generate()
         {
             // get all files in the directory
-            var files = Directory.GetFiles(Environment.CurrentDirectory, "*.h", SearchOption.TopDirectoryOnly);
+            var files = Directory.GetFiles(Environment.CurrentDirectory, "*.h", SearchOption.AllDirectories);
 
             var superClassInterface = new StringBuilder();
             var superClassFields = new StringBuilder();
@@ -119,7 +119,12 @@ namespace AltV.Net.Client.Codegen
             {"char*&", "nint*"},
             {"char*[]", "nint[]"},
             {"int*", "int*"},
+            {"alt::ILocalPlayer*", "nint"},
             {"alt::IPlayer*", "nint"},
+            {"alt::IVehicle*", "nint"},
+            {"alt::IEntity*", "nint"},
+            {"alt::IWorldObject*", "nint"},
+            {"alt::IBaseObject*", "nint"},
             {"alt::IResource*", "nint"},
             {"CSharpResourceImpl*", "nint"},
             {"void**", "nint*"},

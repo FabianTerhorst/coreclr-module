@@ -37,15 +37,45 @@ namespace AltV.Net.Client
             {
                 var pointer = library.Resource_GetCSharpImpl(_resourcePointer);
                 var runtime = new Runtime.CSharpResourceImpl(library, pointer); // todo pool, move somewhere else
+                Alt.Log("Before delegates set");
                 runtime.SetDelegates();
+                Console.WriteLine("After delegates set");
             }
 
             _resource = (IResource) Activator.CreateInstance(resource)!;
-
-            var playerPool = new PlayerPool(_resource.GetPlayerFactory());
-            _module.InitPools(playerPool);
+            Alt.Log("Instance created");
             
+            var playerPool = new PlayerPool(_resource.GetPlayerFactory());
+            Alt.Log("Player pool created");
+            
+            var vehiclePool = new VehiclePool(_resource.GetVehicleFactory());
+            Alt.Log("Vehicle pool created");
+            
+            _module.InitPools(playerPool, vehiclePool);
+            Alt.Log("Pools initialized");
+
             _resource.OnStart();
+            Alt.Log("Finished");
+        }
+        
+        public static void OnCreatePlayer(IntPtr pointer, ushort id)
+        {
+            _module.OnCreatePlayer(pointer, id);
+        }
+
+        public static void OnRemovePlayer(ushort id)
+        {
+            _module.OnRemovePlayer(id);
+        }
+
+        public static void OnCreateVehicle(IntPtr pointer, ushort id)
+        {
+            _module.OnCreateVehicle(pointer, id);
+        }
+
+        public static void OnRemoveVehicle(ushort id)
+        {
+            _module.OnRemoveVehicle(id);
         }
 
         public static void OnTick()

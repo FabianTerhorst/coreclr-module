@@ -28,6 +28,12 @@ public:
     ServerEventDelegate_t OnServerEventDelegate = nullptr;
     TickDelegate_t OnTickDelegate = nullptr;
 
+    CreatePlayerDelegate_t OnCreatePlayerDelegate = nullptr;
+    RemovePlayerDelegate_t OnRemovePlayerDelegate = nullptr;
+
+    CreateVehicleDelegate_t OnCreateVehicleDelegate = nullptr;
+    RemoveVehicleDelegate_t OnRemoveVehicleDelegate = nullptr;
+
     bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files)
     {
         // When also having a client module that is inteded to be used with this module,

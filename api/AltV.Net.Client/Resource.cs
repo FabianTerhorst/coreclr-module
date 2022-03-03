@@ -14,10 +14,15 @@ namespace AltV.Net.Client
         {
             //
         }
-        
-        public virtual IEntityFactory<IPlayer> GetPlayerFactory()
+
+        public virtual IPlayerFactory GetPlayerFactory()
         {
             return new PlayerFactory();
+        }
+
+        public virtual IEntityFactory<IVehicle> GetVehicleFactory()
+        {
+            return new VehicleFactory();
         }
     }
 }

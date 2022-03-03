@@ -8,10 +8,13 @@ uint8_t Event_WasCancelled(alt::CEvent* event) {
     return event->WasCancelled();
 }
 
-void Event_SetTickDelegate(CSharpResourceImpl* resource, TickDelegate_t delegate) {
-    resource->OnTickDelegate = delegate;
+#define SetDelegate(name) void Event_Set##name##Delegate(CSharpResourceImpl* resource, name##Delegate_t delegate) {\
+    resource->On##name##Delegate = delegate;\
 }
 
-void Event_SetServerEventDelegate(CSharpResourceImpl* resource, ServerEventDelegate_t delegate) {
-    resource->OnServerEventDelegate = delegate;
-}
+SetDelegate(Tick);
+SetDelegate(ServerEvent);
+SetDelegate(CreatePlayer);
+SetDelegate(RemovePlayer);
+SetDelegate(CreateVehicle);
+SetDelegate(RemoveVehicle);

@@ -5,7 +5,7 @@ namespace AltV.Net.Client.Elements.Pools
 {
     public abstract class EntityPool<TEntity> : IEntityPool<TEntity> where TEntity : IEntity
     {
-        private readonly Dictionary<IntPtr, TEntity> _entities = new();
+        private readonly Dictionary<ushort, TEntity> _entities = new();
         private IEntityFactory<TEntity> _entityFactory;
 
         public EntityPool(IEntityFactory<TEntity> entityFactory)
@@ -13,17 +13,17 @@ namespace AltV.Net.Client.Elements.Pools
             this._entityFactory = entityFactory;
         }
 
-        protected abstract ushort GetId(IntPtr entityPointer);
+        protected abstract ushort GetId(IntPtr highestPointer);
         
         public void Create(ICore core, IntPtr entityPointer, ushort id)
         {
-            if (_entities.ContainsKey(entityPointer)) return;
+            if (_entities.ContainsKey(id)) return;
             Add(_entityFactory.Create(core, entityPointer, id));
         }
         
         public void Create(ICore server, IntPtr entityPointer, ushort id, out TEntity entity)
         {
-            if (_entities.TryGetValue(entityPointer, out entity!)) return;
+            if (_entities.TryGetValue(id, out entity!)) return;
             entity = _entityFactory.Create(server, entityPointer, id);
             Add(entity);
         }
@@ -35,32 +35,32 @@ namespace AltV.Net.Client.Elements.Pools
         
         public void Add(TEntity entity)
         {
-            _entities[entity.NativePointer] = entity;
+            _entities[entity.Id] = entity;
             OnAdd(entity);
         }
         
         public bool Remove(TEntity entity)
         {
-            return Remove(entity.NativePointer);
+            return Remove(entity.Id);
         }
         
-        public bool Remove(IntPtr entityPointer)
+        public bool Remove(ushort id)
         {
-            if (!_entities.Remove(entityPointer, out var entity) || !entity.Exists) return false;
+            if (!_entities.Remove(id, out var entity) || !entity.Exists) return false;
             // todo call on remove
             // todo set exists false
             OnRemove(entity);
             return true;
         }
         
-        public bool Get(IntPtr entityPointer, out TEntity entity)
+        public bool Get(ushort id, out TEntity entity)
         {
-            return _entities.TryGetValue(entityPointer, out entity) && entity.Exists;
+            return _entities.TryGetValue(id, out entity) && entity.Exists;
         }
         
         public bool GetOrCreate(ICore core, IntPtr entityPointer, ushort entityId, out TEntity entity)
         {
-            if (_entities.TryGetValue(entityPointer, out entity!)) return entity.Exists;
+            if (_entities.TryGetValue(entityId, out entity!)) return entity.Exists;
 
             entity = _entityFactory.Create(core, entityPointer, entityId);
             Add(entity);
@@ -70,26 +70,21 @@ namespace AltV.Net.Client.Elements.Pools
         
         public bool GetOrCreate(ICore core, IntPtr entityPointer, out TEntity entity)
         {
-            if (_entities.TryGetValue(entityPointer, out entity!)) return entity.Exists;
-
-            entity = _entityFactory.Create(core, entityPointer, GetId(entityPointer));
-            Add(entity);
-
-            return entity.Exists;
+            return this.GetOrCreate(core, entityPointer, GetId(entityPointer), out entity);
         }
-        
+
         public ICollection<TEntity> GetAllEntities()
         {
             return _entities.Values;
         }
         
-        public KeyValuePair<IntPtr, TEntity>[] GetEntitiesArray()
+        public KeyValuePair<ushort, TEntity>[] GetEntitiesArray()
         {
-            var arr = new KeyValuePair<IntPtr, TEntity>[_entities.Count];
+            var arr = new KeyValuePair<ushort, TEntity>[_entities.Count];
             var i = 0;
             foreach (var (ptr, entity) in _entities)
             {
-                arr[i++] = new KeyValuePair<IntPtr, TEntity>(ptr, entity);
+                arr[i++] = new KeyValuePair<ushort, TEntity>(ptr, entity);
             }
 
             return arr;

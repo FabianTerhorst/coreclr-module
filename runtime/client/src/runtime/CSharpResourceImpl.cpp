@@ -54,16 +54,46 @@ void CSharpResourceImpl::OnTick()
     OnTickDelegate();
 }
 
-void CSharpResourceImpl::OnCreateBaseObject(alt::Ref<alt::IBaseObject> object)
+void CSharpResourceImpl::OnCreateBaseObject(alt::Ref<alt::IBaseObject> objectRef)
 {
-    // Called every time a base object has been created, so you can use this to keep track
-    // of all the existing base objects, to check if they are valid in the user scripts
+    objectRef->AddRef();
+    auto object = objectRef.Get();
+    if (object == nullptr) return;
+
+    switch (object->GetType()) {
+        case alt::IBaseObject::Type::VEHICLE:
+        {
+            auto vehicle = dynamic_cast<alt::IVehicle*>(object);
+            OnCreateVehicleDelegate(vehicle, vehicle->GetID());
+            break;
+        }
+        case alt::IBaseObject::Type::PLAYER:
+        {
+            auto player = dynamic_cast<alt::IPlayer*>(object);
+            OnCreatePlayerDelegate(player, player->GetID());
+            break;
+        }
+        default: objectRef->RemoveRef(); // todo
+    }
 }
 
-void CSharpResourceImpl::OnRemoveBaseObject(alt::Ref<alt::IBaseObject> object)
+void CSharpResourceImpl::OnRemoveBaseObject(alt::Ref<alt::IBaseObject> objectRef)
 {
-    // Called every time a base object has been created, so you can use this to keep track
-    // of all the existing base objects, to check if they are valid in the user scripts
+    auto object = objectRef.Get();
+    if (object == nullptr) return;
+
+    switch (object->GetType()) {
+        case alt::IBaseObject::Type::VEHICLE:
+        {
+            OnRemoveVehicleDelegate(dynamic_cast<alt::IEntity*>(object)->GetID());
+            break;
+        }
+        case alt::IBaseObject::Type::PLAYER:
+        {
+            OnRemovePlayerDelegate(dynamic_cast<alt::IEntity*>(object)->GetID());
+            break;
+        }
+    }
 }
 
 alt::String CSharpResourceImpl::ReadFile(alt::String path)
@@ -82,4 +112,10 @@ alt::String CSharpResourceImpl::ReadFile(alt::String path)
 void CSharpResourceImpl::ResetDelegates() {
     OnTickDelegate = []() {};
     OnServerEventDelegate = [](auto var, auto var2, auto var3) {};
+    
+    OnCreatePlayerDelegate = [](auto var, auto var2) {};
+    OnRemovePlayerDelegate = [](auto var) {};
+
+    OnCreateVehicleDelegate = [](auto var, auto var2) {};
+    OnRemoveVehicleDelegate = [](auto var) {};
 }

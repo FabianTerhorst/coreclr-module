@@ -1,31 +1,37 @@
 ﻿using System.Numerics;
+using Microsoft.CodeAnalysis;
 
 namespace AltV.Net.Client.Elements.Entities
 {
-    public class Player : IPlayer
+    public class Player : Entity, IPlayer
     {
-        public IntPtr NativePointer { get; }
-        private readonly ICore _core;
-        
-        public Player(ICore core, IntPtr nativePointer, ushort id)
+        private static IntPtr GetEntityPointer(ICore core, IntPtr playerNativePointer)
         {
-            Id = id;
-            _core = core;
-            NativePointer = nativePointer;
+            unsafe
+            {
+                return core.Library.Player_GetEntity(playerNativePointer);
+            }
         }
         
-        public ushort Id { get; }
-        public bool Exists => true; // todo
+        public IntPtr PlayerNativePointer { get; }
+        
+        public Player(ICore core, IntPtr playerPointer, ushort id) : base(core, GetEntityPointer(core, playerPointer), id)
+        {
+            PlayerNativePointer = playerPointer;
+        }
 
-        public Vector3 Position
+        public IVehicle? Vehicle
         {
             get
             {
                 unsafe
                 {
-                    var position = Vector3.Zero;
-                    this._core.Library.Player_GetPosition(this.NativePointer, &position);
-                    return position;
+                    ushort id = 0;
+                    var success = Core.Library.Player_GetVehicleId(PlayerNativePointer, &id);
+                    if (success == 0) return null;
+                    
+                    Alt.Module.VehiclePool.Get(id, out var vehicle);
+                    return vehicle;
                 }
             }
         }
