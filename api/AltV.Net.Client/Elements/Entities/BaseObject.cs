@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using AltV.Net.Client.CApi.Memory;
 using AltV.Net.Client.Elements.Args;
+using AltV.Net.Client.Elements.Enums;
 using AltV.Net.Client.Elements.Interfaces;
 
 namespace AltV.Net.Client.Elements.Entities
@@ -15,6 +16,17 @@ namespace AltV.Net.Client.Elements.Entities
         {
             Core = core;
             BaseObjectNativePointer = baseObjectPointer;
+        }
+
+        public BaseObjectType Type
+        {
+            get
+            {
+                unsafe
+                {
+                    return (BaseObjectType) Core.Library.BaseObject_GetType(BaseObjectNativePointer);
+                }
+            }
         }
         
         #region Data

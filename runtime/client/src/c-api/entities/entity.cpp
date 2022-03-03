@@ -12,6 +12,34 @@ alt::IWorldObject* Entity_GetWorldObject(alt::IEntity* entity) {
     return dynamic_cast<alt::IWorldObject*>(entity);
 }
 
+
+uint32_t Entity_GetModel(alt::IEntity* entity) {
+    return entity->GetModel();
+}
+
+void Entity_GetNetOwnerId(alt::IEntity* entity, uint8_t& exists, uint16_t& id) {
+    auto owner = entity->GetNetworkOwner();
+    if (owner.IsEmpty()) {
+        exists = false;
+        return;
+    }
+
+    exists = true;
+    id = entity->GetID();
+}
+
+int32_t Entity_GetScriptID(alt::IEntity* entity) {
+    return entity->GetScriptGuid();
+}
+
+void Entity_GetRotation(alt::IEntity* entity, vector3_t& rot) {
+    auto vector = entity->GetRotation();
+    rot.x = vector.roll;
+    rot.y = vector.pitch;
+    rot.z = vector.yaw;
+}
+
+
 uint8_t Entity_HasStreamSyncedMetaData(alt::IEntity* Entity, const char* key) {
     return Entity->HasStreamSyncedMetaData(key);
 }
@@ -19,6 +47,7 @@ uint8_t Entity_HasStreamSyncedMetaData(alt::IEntity* Entity, const char* key) {
 alt::MValueConst* Entity_GetStreamSyncedMetaData(alt::IEntity* Entity, const char* key) {
     return new MValueConst(Entity->GetStreamSyncedMetaData(key));
 }
+
 
 uint8_t Entity_HasSyncedMetaData(alt::IEntity* Entity, const char* key) {
     return Entity->HasSyncedMetaData(key);

@@ -7,10 +7,6 @@ extern "C"
     EXPORT uint16_t Player_GetID(alt::IPlayer* player); // optimization so the Player_GetEntity isn't needed to retrieve the id
     EXPORT alt::IEntity* Player_GetEntity(alt::IPlayer* player);
 
-    EXPORT uint16_t LocalPlayer_GetID(alt::ILocalPlayer* localPlayer);
-    EXPORT alt::ILocalPlayer* Player_GetLocal();
-    EXPORT alt::IPlayer* LocalPlayer_GetPlayer(alt::ILocalPlayer* player);
-
     EXPORT uint8_t Player_GetVehicleId(alt::IPlayer* player, uint16_t& id);
     EXPORT char* Player_GetName(alt::IPlayer* player);
     EXPORT void Player_GetAimPos(alt::IPlayer* player, vector3_t& pos);
@@ -36,4 +32,10 @@ extern "C"
     EXPORT uint8_t Player_GetSeat(alt::IPlayer* player);
     EXPORT float Player_GetSpatialVolume(alt::IPlayer* player);
     EXPORT void Player_SetSpatialVolume(alt::IPlayer* player, float value);
+
+    EXPORT uint16_t LocalPlayer_GetID(alt::ILocalPlayer* localPlayer);
+    EXPORT alt::ILocalPlayer* Player_GetLocal();
+    EXPORT alt::IPlayer* LocalPlayer_GetPlayer(alt::ILocalPlayer* player);
+
+    EXPORT uint16_t LocalPlayer_GetCurrentAmmo(alt::ILocalPlayer* localPlayer);
 }

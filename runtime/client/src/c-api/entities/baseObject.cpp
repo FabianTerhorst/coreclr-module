@@ -19,3 +19,8 @@ void BaseObject_DeleteMetaData(alt::IBaseObject* baseObject, const char* key) {
 alt::MValueConst* BaseObject_GetMetaData(alt::IBaseObject* baseObject, const char* key) {
     return new MValueConst(baseObject->GetMetaData(key));
 }
+
+uint8_t BaseObject_GetType(alt::IBaseObject* baseObject)
+{
+    return (uint8_t) baseObject->GetType();
+}

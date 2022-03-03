@@ -20,17 +20,6 @@ namespace AltV.Net.Client.Elements.Entities
             VehicleNativePointer = vehiclePointer;
         }
 
-        public uint Model
-        {
-            get
-            {
-                unsafe
-                {
-                    return Core.Library.Vehicle_GetModel(VehicleNativePointer);
-                }
-            }
-        }
-
         public ushort Gear
         {
             get

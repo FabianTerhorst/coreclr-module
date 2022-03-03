@@ -26,7 +26,61 @@ namespace AltV.Net.Client.Elements.Entities
 
         public ushort Id { get; }
         public bool Exists => true; // todo
-        
+
+        public uint Model
+        {
+            get
+            {
+                unsafe
+                {
+                    return Core.Library.Entity_GetModel(EntityNativePointer);
+                }
+            }
+        }
+
+        public IPlayer? NetOwner
+        {
+            get
+            {
+                unsafe
+                {
+                    byte exists = 0;
+                    ushort id = 0;
+                    Core.Library.Entity_GetNetOwnerId(EntityNativePointer, &exists, &id);
+                    Alt.Log("exists: " + exists + " id: " + id);
+                    if (exists != 1) return null;
+                    if (!Alt.Module.PlayerPool.Get(id, out var player)) return null;
+                    return player;
+                }
+            }
+        }
+
+        public int ScriptID
+        {
+            get
+            {
+                unsafe
+                {
+                    return Core.Library.Entity_GetScriptID(EntityNativePointer);
+                }
+            }
+        }
+
+        public bool Spawned => ScriptID != 0;
+
+        public Vector3 Rotation
+        {
+            get
+            {
+                unsafe
+                {
+                    
+                    var position = Vector3.Zero;
+                    this.Core.Library.Entity_GetRotation(this.EntityNativePointer, &position);
+                    return position;
+                }
+            }
+        }
         
         private MValueConst GetStreamSyncedMetaData(string key)
         {

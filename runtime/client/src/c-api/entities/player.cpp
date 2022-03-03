@@ -13,19 +13,6 @@ alt::IEntity* Player_GetEntity(alt::IPlayer* player) {
     return dynamic_cast<alt::IEntity*>(player);
 }
 
-alt::ILocalPlayer* Player_GetLocal() {
-    return alt::ICore::Instance().GetLocalPlayer().Get();
-}
-
-
-uint16_t LocalPlayer_GetID(alt::ILocalPlayer* player) {
-    return player->GetID();
-}
-
-alt::IPlayer* LocalPlayer_GetPlayer(alt::ILocalPlayer* localPlayer) {
-    return dynamic_cast<alt::IPlayer*>(localPlayer);
-}
-
 
 uint8_t Player_GetVehicleId(alt::IPlayer* player, uint16_t& id) {
     auto vehicle = player->GetVehicle();
@@ -130,4 +117,22 @@ float Player_GetSpatialVolume(alt::IPlayer* player) {
 
 void Player_SetSpatialVolume(alt::IPlayer* player, float value) {
     player->SetSpatialVolume(value);
+}
+
+
+alt::ILocalPlayer* Player_GetLocal() {
+    return alt::ICore::Instance().GetLocalPlayer().Get();
+}
+
+uint16_t LocalPlayer_GetID(alt::ILocalPlayer* player) {
+    return player->GetID();
+}
+
+alt::IPlayer* LocalPlayer_GetPlayer(alt::ILocalPlayer* localPlayer) {
+    return dynamic_cast<alt::IPlayer*>(localPlayer);
+}
+
+
+uint16_t LocalPlayer_GetCurrentAmmo(alt::ILocalPlayer* localPlayer) {
+    return localPlayer->GetCurrentAmmo();
 }

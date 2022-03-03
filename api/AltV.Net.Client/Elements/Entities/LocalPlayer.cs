@@ -18,5 +18,16 @@ namespace AltV.Net.Client.Elements.Entities
         }
         
         public IntPtr LocalPlayerNativePointer { get; }
+
+        public ushort CurrentAmmo
+        {
+            get
+            {
+                unsafe
+                {
+                    return Core.Library.LocalPlayer_GetCurrentAmmo(LocalPlayerNativePointer);
+                }
+            }
+        }
     }
 }

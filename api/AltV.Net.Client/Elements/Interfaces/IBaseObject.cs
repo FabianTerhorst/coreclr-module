@@ -1,9 +1,12 @@
-﻿namespace AltV.Net.Client.Elements.Interfaces
+﻿using AltV.Net.Client.Elements.Enums;
+
+namespace AltV.Net.Client.Elements.Interfaces
 {
     public interface IBaseObject
     {
         public IntPtr BaseObjectNativePointer { get; }
-        
+        BaseObjectType Type { get; }
+
         public void SetData<T>(string key, T value);
         public bool HasData(string key);
         public void DeleteData(string key);

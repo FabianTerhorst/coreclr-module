@@ -13,11 +13,6 @@ alt::IEntity* Vehicle_GetEntity(alt::IVehicle* vehicle) {
 }
 
 
-uint32_t Vehicle_GetModel(alt::IVehicle* vehicle) {
-    return vehicle->GetModel();
-}
-
-
 uint16_t Vehicle_GetGear(alt::IVehicle* vehicle)
 {
     return vehicle->GetCurrentGear();

@@ -3,5 +3,6 @@
     public interface ILocalPlayer : IPlayer
     {
         public IntPtr LocalPlayerNativePointer { get; }
+        ushort CurrentAmmo { get; }
     }
 }

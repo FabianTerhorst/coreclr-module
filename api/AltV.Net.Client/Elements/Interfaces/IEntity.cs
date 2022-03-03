@@ -1,4 +1,5 @@
-﻿using AltV.Net.Client.Elements.Entities;
+﻿using System.Numerics;
+using AltV.Net.Client.Elements.Entities;
 
 namespace AltV.Net.Client.Elements.Interfaces
 {
@@ -7,6 +8,11 @@ namespace AltV.Net.Client.Elements.Interfaces
         public IntPtr EntityNativePointer { get; }
         public ushort Id { get; }
         public bool Exists { get; }
+        public uint Model { get; }
+        IPlayer? NetOwner { get; }
+        int ScriptID { get; }
+        bool Spawned { get; }
+        Vector3 Rotation { get; }
 
         public bool HasStreamSyncedMetaData(string key);
         public bool GetStreamSyncedMetaData(string key, out int value);

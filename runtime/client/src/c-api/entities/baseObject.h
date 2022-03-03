@@ -8,4 +8,6 @@ extern "C"
     EXPORT uint8_t BaseObject_HasMetaData(alt::IBaseObject* baseObject, const char* key);
     EXPORT void BaseObject_DeleteMetaData(alt::IBaseObject* baseObject, const char* key);
     EXPORT alt::MValueConst* BaseObject_GetMetaData(alt::IBaseObject* baseObject, const char* key);
+
+    EXPORT uint8_t BaseObject_GetType(alt::IBaseObject* baseObject);
 }
