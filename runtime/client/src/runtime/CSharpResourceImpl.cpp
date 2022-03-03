@@ -95,7 +95,6 @@ void CSharpResourceImpl::OnTick()
 
 void CSharpResourceImpl::OnCreateBaseObject(alt::Ref<alt::IBaseObject> objectRef)
 {
-    objectRef->AddRef();
     auto object = objectRef.Get();
     if (object == nullptr) return;
 
@@ -112,7 +111,6 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::Ref<alt::IBaseObject> objectRef
             OnCreatePlayerDelegate(player, player->GetID());
             break;
         }
-        default: objectRef->RemoveRef(); // todo
     }
 }
 

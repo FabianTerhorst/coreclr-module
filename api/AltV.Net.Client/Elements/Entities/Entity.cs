@@ -47,7 +47,6 @@ namespace AltV.Net.Client.Elements.Entities
                     byte exists = 0;
                     ushort id = 0;
                     Core.Library.Entity_GetNetOwnerId(EntityNativePointer, &exists, &id);
-                    Alt.Log("exists: " + exists + " id: " + id);
                     if (exists != 1) return null;
                     if (!Alt.Module.PlayerPool.Get(id, out var player)) return null;
                     return player;

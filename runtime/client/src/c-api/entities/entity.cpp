@@ -25,7 +25,7 @@ void Entity_GetNetOwnerId(alt::IEntity* entity, uint8_t& exists, uint16_t& id) {
     }
 
     exists = true;
-    id = entity->GetID();
+    id = owner->GetID();
 }
 
 int32_t Entity_GetScriptID(alt::IEntity* entity) {
