@@ -67,6 +67,7 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_GetType { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Entity_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte> Entity_GetTypeByID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte*, ushort*, void> Entity_GetNetOwnerId { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
@@ -185,6 +186,7 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_GetType { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Entity_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte> Entity_GetTypeByID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, byte*, ushort*, void> Entity_GetNetOwnerId { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
@@ -301,6 +303,7 @@ namespace AltV.Net.Client.CApi
             BaseObject_GetType = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "BaseObject_GetType");
             Entity_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Entity_GetID");
             Entity_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Entity_GetWorldObject");
+            Entity_GetTypeByID = (delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte>) NativeLibrary.GetExport(handle, "Entity_GetTypeByID");
             Entity_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Entity_GetModel");
             Entity_GetNetOwnerId = (delegate* unmanaged[Cdecl]<nint, byte*, ushort*, void>) NativeLibrary.GetExport(handle, "Entity_GetNetOwnerId");
             Entity_GetScriptID = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Entity_GetScriptID");

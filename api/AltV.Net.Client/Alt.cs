@@ -16,6 +16,7 @@ namespace AltV.Net.Client
             Module = module;
         }
 
+        public static bool GetEntityById(ushort id, [MaybeNullWhen(false)] out IEntity entity) => Module.GetEntityById(id, out entity);
         public static bool GetPlayerById(ushort id, [MaybeNullWhen(false)] out IPlayer player) => Module.PlayerPool.Get(id, out player);
         public static bool GetVehicleById(ushort id, [MaybeNullWhen(false)] out IVehicle vehicle) => Module.VehiclePool.Get(id, out vehicle);
         public static ILocalPlayer LocalPlayer => Module.PlayerPool.LocalPlayer;

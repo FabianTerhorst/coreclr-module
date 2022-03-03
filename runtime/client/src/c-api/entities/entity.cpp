@@ -12,6 +12,13 @@ alt::IWorldObject* Entity_GetWorldObject(alt::IEntity* entity) {
     return dynamic_cast<alt::IWorldObject*>(entity);
 }
 
+uint8_t Entity_GetTypeByID(alt::ICore* core, uint16_t id, uint8_t& type) {
+    auto entity = core->GetEntityByID(id);
+    if (entity.IsEmpty()) return false;
+    type = static_cast<uint8_t>(entity->GetType());
+    return true;
+}
+
 
 uint32_t Entity_GetModel(alt::IEntity* entity) {
     return entity->GetModel();

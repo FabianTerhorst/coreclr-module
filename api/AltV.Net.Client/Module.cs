@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using AltV.Net.Client.CApi.Events;
 using AltV.Net.Client.Elements.Args;
 using AltV.Net.Client.Elements.Entities;
+using AltV.Net.Client.Elements.Enums;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Elements.Pools;
@@ -125,6 +127,36 @@ namespace AltV.Net.Client
             }
 
             return function;
+        }
+
+        public bool GetEntityById(ushort id, [MaybeNullWhen(false)] out IEntity entity)
+        {
+            unsafe
+            {
+                byte type = 0;
+                entity = default;
+                if (this.Core.Library.Entity_GetTypeByID(this.Core.NativePointer, id, &type) != 1) return false;
+                
+                switch ((BaseObjectType) type)
+                {
+                    case BaseObjectType.Player:
+                    case BaseObjectType.LocalPlayer:
+                    {
+                        PlayerPool.Get(id, out var player);
+                        entity = player;
+                        return true;
+                    }
+                    case BaseObjectType.Vehicle:
+                    {
+                        VehiclePool.Get(id, out var vehicle);
+                        entity = vehicle;
+                        return true;
+                    }
+                    // todo
+                    default:
+                        return false;
+                }
+            }
         }
     }
 }
