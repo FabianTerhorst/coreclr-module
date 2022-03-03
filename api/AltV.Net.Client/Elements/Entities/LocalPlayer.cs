@@ -19,6 +19,8 @@ namespace AltV.Net.Client.Elements.Entities
         
         public IntPtr LocalPlayerNativePointer { get; }
 
+        public override bool IsLocal => true;
+
         public ushort CurrentAmmo
         {
             get

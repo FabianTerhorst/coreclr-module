@@ -26,6 +26,7 @@ namespace AltV.Net.Client.Elements.Interfaces
         float NonSpatialVolume { get; set; }
         byte Seat { get; }
         float SpatialVolume { get; set; }
+        bool IsLocal { get; }
         // todo
     }
 }

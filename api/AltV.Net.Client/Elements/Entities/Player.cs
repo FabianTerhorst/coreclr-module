@@ -21,6 +21,8 @@ namespace AltV.Net.Client.Elements.Entities
         {
             PlayerNativePointer = playerPointer;
         }
+        
+        public virtual bool IsLocal => false;
 
         public IVehicle? Vehicle
         {
