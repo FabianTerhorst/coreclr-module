@@ -12,4 +12,5 @@ extern "C"
     EXPORT alt::IPlayer* LocalPlayer_GetPlayer(alt::ILocalPlayer* player);
 
     EXPORT uint8_t Player_GetVehicleId(alt::IPlayer* player, uint16_t& id);
+    EXPORT char* Player_GetName(alt::IPlayer* player);
 }

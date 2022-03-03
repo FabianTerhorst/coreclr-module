@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Runtime.InteropServices;
 using AltV.Net.Client.Elements.Interfaces;
 using Microsoft.CodeAnalysis;
 
@@ -33,6 +34,17 @@ namespace AltV.Net.Client.Elements.Entities
                     
                     Alt.Module.VehiclePool.Get(id, out var vehicle);
                     return vehicle;
+                }
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                unsafe
+                {
+                    return Marshal.PtrToStringUTF8(Alt.Core.Library.Player_GetName(this.PlayerNativePointer))!;
                 }
             }
         }

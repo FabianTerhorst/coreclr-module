@@ -5,8 +5,29 @@ namespace AltV.Net.Client.Elements.Entities
 {
     public class Vehicle : Entity, IVehicle
     {
-        public Vehicle(ICore core, IntPtr entityNativePointer, ushort id) : base(core, entityNativePointer, id)
+        private static IntPtr GetEntityPointer(ICore core, IntPtr vehicleNativePointer)
         {
+            unsafe
+            {
+                return core.Library.Vehicle_GetEntity(vehicleNativePointer);
+            }
+        }
+        
+        public IntPtr VehicleNativePointer { get; }
+        
+        public Vehicle(ICore core, IntPtr vehiclePointer, ushort id) : base(core, GetEntityPointer(core, vehiclePointer), id)
+        {
+            VehicleNativePointer = vehiclePointer;
+        }
+
+        public uint Model
+        {
+            get {
+                unsafe
+                {
+                    return Core.Library.Vehicle_GetModel(VehicleNativePointer);
+                }
+            }
         }
     }
 }

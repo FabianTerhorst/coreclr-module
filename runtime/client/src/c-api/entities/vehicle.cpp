@@ -11,3 +11,8 @@ uint16_t Vehicle_GetID(alt::IVehicle* vehicle) {
 alt::IEntity* Vehicle_GetEntity(alt::IVehicle* vehicle) {
     return dynamic_cast<alt::IEntity*>(vehicle);
 }
+
+
+uint32_t Vehicle_GetModel(alt::IVehicle* vehicle) {
+    return vehicle->GetModel();
+}

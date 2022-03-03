@@ -1,6 +1,7 @@
 #include "player.h"
 #include "altv-cpp-api/SDK.h"
 #include <Log.h>
+#include "utils.h"
 
 using namespace alt;
 
@@ -31,4 +32,8 @@ uint8_t Player_GetVehicleId(alt::IPlayer* player, uint16_t& id) {
     if (vehicle.IsEmpty() || vehicle.Get() == nullptr) return 0;
     id = vehicle->GetID();
     return 1;
+}
+
+char* Player_GetName(alt::IPlayer* player) {
+    return utils::get_clr_value(player->GetName().c_str());
 }

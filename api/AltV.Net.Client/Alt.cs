@@ -15,6 +15,8 @@ namespace AltV.Net.Client
             Module = module;
         }
 
+        public static bool GetPlayerById(ushort id, out IPlayer player) => Module.PlayerPool.Get(id, out player);
+        public static bool GetVehicleById(ushort id, out IVehicle vehicle) => Module.VehiclePool.Get(id, out vehicle);
         public static ILocalPlayer LocalPlayer => Module.PlayerPool.LocalPlayer;
 
         public static void Log(string message) => Core.LogInfo(message);

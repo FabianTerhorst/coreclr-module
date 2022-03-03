@@ -7,7 +7,7 @@ namespace AltV.Net.Client.Elements.Interfaces
         public IntPtr EntityNativePointer { get; }
         public ushort Id { get; }
         public bool Exists { get; }
-        
+
         public bool HasStreamSyncedMetaData(string key);
         public bool GetStreamSyncedMetaData(string key, out int value);
         public bool GetStreamSyncedMetaData(string key, out uint value);
