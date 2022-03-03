@@ -14,11 +14,7 @@ namespace AltV.Net.Client.Elements.Pools
         {
             unsafe
             {
-                Console.WriteLine("Getting ID");
-                var entityPointer = Alt.Core.Library.Vehicle_GetEntity(vehiclePointer);
-                var id = Alt.Core.Library.Entity_GetID(entityPointer);
-                Console.WriteLine("ID was " + id);
-                return id;
+                return Alt.Core.Library.Vehicle_GetID(vehiclePointer);
             }
         }
     }
