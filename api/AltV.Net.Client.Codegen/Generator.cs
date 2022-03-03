@@ -119,6 +119,7 @@ namespace AltV.Net.Client.Codegen
             {"char*&", "nint*"},
             {"char*[]", "nint[]"},
             {"int*", "int*"},
+            {"alt::ICore*", "nint"},
             {"alt::ILocalPlayer*", "nint"},
             {"alt::IPlayer*", "nint"},
             {"alt::IVehicle*", "nint"},

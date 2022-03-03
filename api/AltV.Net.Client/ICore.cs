@@ -1,4 +1,5 @@
 using AltV.Net.Client.CApi;
+using AltV.Net.Client.Elements.Args;
 
 namespace AltV.Net.Client
 {
@@ -10,5 +11,6 @@ namespace AltV.Net.Client
         void LogDebug(string message);
         ILibrary Library { get; }
         IntPtr NativePointer { get; }
+        void CreateMValue(out MValueConst mValue, object? obj);
     }
 }

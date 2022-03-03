@@ -23,6 +23,6 @@ namespace AltV.Net.Client
         public static void LogError(string message) => Core.LogError(message);
         public static void LogDebug(string message) => Core.LogDebug(message);
         // todo add time and some prefix maybe
-        public static void LogExternal(string message) => Console.WriteLine(message);
+        public static void LogExternal(string message) => Alt.Log(message);
     }
 }
