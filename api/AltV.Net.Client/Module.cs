@@ -16,6 +16,8 @@ namespace AltV.Net.Client
         
         internal PlayerPool PlayerPool;
         internal IEntityPool<IVehicle> VehiclePool;
+
+        public List<SafeTimer> RunningTimers { get; } = new();
     
         public Module(ICore core)
         {

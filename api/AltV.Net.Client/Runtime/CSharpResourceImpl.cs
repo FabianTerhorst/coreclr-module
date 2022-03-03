@@ -21,8 +21,6 @@ namespace AltV.Net.Client.Runtime
 
         internal void SetDelegates()
         {
-            Alt.Log($"Set delegates! Pointer was: {this.NativePointer}");
-            
             unsafe
             {
                 TickDelegate onTick = ModuleWrapper.OnTick;

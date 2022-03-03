@@ -15,6 +15,7 @@ namespace AltV.Net.Client
         private static IResource _resource;
         private static IntPtr _resourcePointer;
         private static IntPtr _corePointer;
+        private static Runtime.CSharpResourceImpl _runtime;
 
         public static void MainWithAssembly(Assembly resourceAssembly, IntPtr resourcePointer, IntPtr corePointer)
         {
@@ -36,10 +37,8 @@ namespace AltV.Net.Client
             unsafe
             {
                 var pointer = library.Resource_GetCSharpImpl(_resourcePointer);
-                var runtime = new Runtime.CSharpResourceImpl(library, pointer); // todo pool, move somewhere else
-                Alt.Log("Before delegates set");
-                runtime.SetDelegates();
-                Console.WriteLine("After delegates set");
+                _runtime = new Runtime.CSharpResourceImpl(library, pointer); // todo pool, move somewhere else
+                _runtime.SetDelegates();
             }
 
             _resource = (IResource) Activator.CreateInstance(resource)!;
@@ -56,6 +55,22 @@ namespace AltV.Net.Client
 
             _resource.OnStart();
             Alt.Log("Finished");
+        }
+        
+        public static void OnStop()
+        {
+            _resource.OnStop();
+            
+            Alt.Log("Stopping timers");
+            foreach (var safeTimer in _module.RunningTimers.ToArray())
+            {
+                safeTimer.Stop();
+                safeTimer.Dispose();
+            }
+            _module.PlayerPool.Dispose();
+            _module.VehiclePool.Dispose();
+
+            _runtime.Dispose();
         }
         
         public static void OnCreatePlayer(IntPtr pointer, ushort id)
