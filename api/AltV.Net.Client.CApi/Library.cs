@@ -3,6 +3,7 @@ using AltV.Net.Client.CApi.Events;
 using System.Numerics;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using AltV.Net.Client.CApi.Data;
 namespace AltV.Net.Client.CApi
 {
     public unsafe interface ILibrary
@@ -17,7 +18,7 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, RemovePlayerModuleDelegate, void> Event_SetRemovePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, CreateVehicleModuleDelegate, void> Event_SetCreateVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, RemoveVehicleModuleDelegate, void> Event_SetRemoveVehicleDelegate { get; }
-        public delegate* unmanaged[Cdecl]<object, void> FreeUIntArray { get; }
+        public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Core_CreateMValueNil { get; }
@@ -83,6 +84,7 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetAimPos { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetArmour { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentWeapon { get; }
+        public delegate* unmanaged[Cdecl]<nint, UIntArray*, void> Player_GetCurrentWeaponComponents { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetEntityAimOffset { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Player_GetEntityAimingAtID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsFlashlightActive { get; }
@@ -137,7 +139,7 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, RemovePlayerModuleDelegate, void> Event_SetRemovePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, CreateVehicleModuleDelegate, void> Event_SetCreateVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, RemoveVehicleModuleDelegate, void> Event_SetRemoveVehicleDelegate { get; }
-        public delegate* unmanaged[Cdecl]<object, void> FreeUIntArray { get; }
+        public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Core_CreateMValueNil { get; }
@@ -203,6 +205,7 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetAimPos { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetArmour { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Player_GetCurrentWeapon { get; }
+        public delegate* unmanaged[Cdecl]<nint, UIntArray*, void> Player_GetCurrentWeaponComponents { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Player_GetEntityAimOffset { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Player_GetEntityAimingAtID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsFlashlightActive { get; }
@@ -255,7 +258,7 @@ namespace AltV.Net.Client.CApi
             Event_SetRemovePlayerDelegate = (delegate* unmanaged[Cdecl]<nint, RemovePlayerModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemovePlayerDelegate");
             Event_SetCreateVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, CreateVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateVehicleDelegate");
             Event_SetRemoveVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, RemoveVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveVehicleDelegate");
-            FreeUIntArray = (delegate* unmanaged[Cdecl]<object, void>) NativeLibrary.GetExport(handle, "FreeUIntArray");
+            FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) NativeLibrary.GetExport(handle, "FreeUIntArray");
             FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeCharArray");
             FreeString = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeString");
             Core_CreateMValueNil = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueNil");
@@ -321,6 +324,7 @@ namespace AltV.Net.Client.CApi
             Player_GetAimPos = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Player_GetAimPos");
             Player_GetArmour = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetArmour");
             Player_GetCurrentWeapon = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Player_GetCurrentWeapon");
+            Player_GetCurrentWeaponComponents = (delegate* unmanaged[Cdecl]<nint, UIntArray*, void>) NativeLibrary.GetExport(handle, "Player_GetCurrentWeaponComponents");
             Player_GetEntityAimOffset = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Player_GetEntityAimOffset");
             Player_GetEntityAimingAtID = (delegate* unmanaged[Cdecl]<nint, ushort*, byte>) NativeLibrary.GetExport(handle, "Player_GetEntityAimingAtID");
             Player_IsFlashlightActive = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsFlashlightActive");

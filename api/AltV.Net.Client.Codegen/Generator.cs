@@ -76,6 +76,7 @@ namespace AltV.Net.Client.Codegen
             output.Append("using System.Numerics;\n");
             output.Append("using System.Reflection;\n");
             output.Append("using System.Runtime.InteropServices;\n");
+            output.Append("using AltV.Net.Client.CApi.Data;\n");
             output.Append("namespace AltV.Net.Client.CApi\n{\n");
                 
             output.Append("    public unsafe interface ILibrary\n    {\n");
@@ -153,6 +154,7 @@ namespace AltV.Net.Client.Codegen
             {"vector3_t&", "Vector3*"},
             {"rgba_t", "Rgba"},
             {"rgba_t&", "Rgba*"},
+            {"alt::Array<uint32_t>", "UIntArray*"}
         };
         
         public static void Main(string[] args)

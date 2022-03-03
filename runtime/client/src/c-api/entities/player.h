@@ -12,7 +12,7 @@ extern "C"
     EXPORT void Player_GetAimPos(alt::IPlayer* player, vector3_t& pos);
     EXPORT uint16_t Player_GetArmour(alt::IPlayer* player);
     EXPORT uint32_t Player_GetCurrentWeapon(alt::IPlayer* player);
-    // todo current weapon components
+    EXPORT void Player_GetCurrentWeaponComponents(alt::IPlayer* player, alt::Array<uint32_t> &weaponComponents);
     EXPORT void Player_GetEntityAimOffset(alt::IPlayer* player, vector3_t& offset);
     EXPORT uint8_t Player_GetEntityAimingAtID(alt::IPlayer* player, uint16_t& id);
     EXPORT uint8_t Player_IsFlashlightActive(alt::IPlayer* player);

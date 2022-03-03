@@ -41,6 +41,15 @@ uint32_t Player_GetCurrentWeapon(alt::IPlayer* player) {
     return player->GetCurrentWeapon();
 }
 
+void Player_GetCurrentWeaponComponents(alt::IPlayer* player, alt::Array<uint32_t> &weaponComponents) {
+    auto currWeaponComponents = player->GetCurrentWeaponComponents();
+    alt::Array<uint32_t> values;
+    for (auto currWeaponComponent : currWeaponComponents) {
+        values.Push(currWeaponComponent);
+    }
+    weaponComponents = values;
+}
+
 void Player_GetEntityAimOffset(alt::IPlayer* player, vector3_t& offset) {
     auto vector = player->GetEntityAimOffset();
     offset.x = vector.x;

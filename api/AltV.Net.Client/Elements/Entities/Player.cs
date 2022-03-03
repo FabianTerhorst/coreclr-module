@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using System.Runtime.InteropServices;
+using AltV.Net.Client.CApi.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using Microsoft.CodeAnalysis;
 
@@ -82,6 +83,21 @@ namespace AltV.Net.Client.Elements.Entities
                 unsafe
                 {
                     return this.Core.Library.Player_GetCurrentWeapon(this.PlayerNativePointer);
+                }
+            }
+        }
+        
+        public uint[] CurrentWeaponComponents
+        {
+            get
+            {
+                unsafe
+                {
+                    var array = UIntArray.Nil;
+                    Core.Library.Player_GetCurrentWeaponComponents(PlayerNativePointer, &array);
+                    var components = array.ToArray();
+                    Core.Library.FreeUIntArray(&array);
+                    return components;
                 }
             }
         }

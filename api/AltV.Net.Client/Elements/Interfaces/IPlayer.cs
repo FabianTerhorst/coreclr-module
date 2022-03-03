@@ -28,6 +28,7 @@ namespace AltV.Net.Client.Elements.Interfaces
         float SpatialVolume { get; set; }
         bool IsLocal { get; }
         IEntity? EntityAimingAt { get; }
+        uint[] CurrentWeaponComponents { get; }
         // todo
     }
 }
