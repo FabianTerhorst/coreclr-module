@@ -108,11 +108,82 @@ public class InteractionsService: IDisposable
         if (threadToTypeIndex == null)
         {
             for (int i = 0, length = threads.Length; i < length; ++i) {
-                threads[i].Writer.TryWrite(new InteractionsServiceThreadEvent(2, (player, argument)));
+                threads[i].Writer.TryWrite(new InteractionsServiceThreadEvent(2, (type, player, argument)));
             }
             return;
         }
-        threadToTypeIndex[type].Writer.TryWrite(new InteractionsServiceThreadEvent(2, (player, argument)));
+        threadToTypeIndex[type].Writer.TryWrite(new InteractionsServiceThreadEvent(2, (type, player, argument)));
+    }
+    
+    public void TriggerMultiple(IPlayer player, object argument, params ulong[] types)
+    {
+        var typesCount = types.Length;
+        InteractionsServiceThread firstThread = null;
+        ulong firstThreadType = 0;
+        HashSet<ulong> firstThreadTypes = null;
+        Dictionary<InteractionsServiceThread, HashSet<ulong>> threadsToTrigger = null;
+        // zero alloc in case of single thread types
+        for (var i = 0; i < typesCount; ++i)
+        {
+            var type = types[i];
+            var thread = threadToTypeIndex[type];
+            if (firstThread == null)
+            {
+                firstThread = thread;
+                firstThreadType = type;
+            }
+            else if (firstThread != thread)
+            {
+                if (threadsToTrigger == null)
+                {
+                    threadsToTrigger = new Dictionary<InteractionsServiceThread, HashSet<ulong>> {[thread] = new() {type}};
+                }
+                else
+                {
+                    if (!threadsToTrigger.TryGetValue(thread, out var threadTypes))
+                    {
+                        threadTypes = new HashSet<ulong> {type};
+                        threadsToTrigger[thread] = threadTypes;
+                    }
+                    threadTypes.Add(type);
+                }
+            }
+            else
+            {
+                if (firstThreadTypes == null)
+                {
+                    firstThreadTypes = new HashSet<ulong> {firstThreadType, type};
+                }
+                else
+                {
+                    firstThreadTypes.Add(type);
+                }
+            }
+        }
+
+        if (firstThread == null) return; // no types found
+        if (firstThreadTypes == null) // single type optimization
+        {
+            firstThread.Writer.TryWrite(new InteractionsServiceThreadEvent(2, (firstThreadType, player, argument)));
+            return;
+        }
+        
+        firstThread.Writer.TryWrite(new InteractionsServiceThreadEvent(4, ((IReadOnlySet<ulong>) firstThreadTypes, player, argument)));
+
+        if (threadsToTrigger == null) return; // no other threads to trigger
+        
+        foreach (var (thread, threadTypes) in threadsToTrigger)
+        {
+            thread.Writer.TryWrite(new InteractionsServiceThreadEvent(4, ((IReadOnlySet<ulong>) threadTypes, player, argument)));   
+        }
+    }
+
+    public void TriggerAllTypes(IPlayer player, object argument)
+    {
+        for (int i = 0, length = threads.Length; i < length; ++i) 
+        {
+            threads[i].Writer.TryWrite(new InteractionsServiceThreadEvent(5, (player, argument)));
+        }
     }
     
     public Task<IInteraction[]> Find(ulong type, Vector3 position, int dimension)
