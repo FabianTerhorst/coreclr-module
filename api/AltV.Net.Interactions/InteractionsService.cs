@@ -165,7 +165,7 @@ public class InteractionsService: IDisposable
         }
     }
 
-    public void TriggerAllTypes(IPlayer player, object argument)
+    public void TriggerAll(IPlayer player, object argument)
     {
         for (int i = 0, length = threads.Length; i < length; ++i) 
         {
