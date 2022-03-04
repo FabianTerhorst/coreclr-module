@@ -34,11 +34,11 @@ public class InteractionsService: IDisposable
                         "You have to use .AddThreadWithType when you don't use .AddGlobalThreadMapping");
                 }
                 
-                foreach (var currType in types)
+                foreach (var currThreadType in typesForThread)
                 {
-                    if (typesForThread.Any(currThreadType => currType == currThreadType)) continue;
+                    if (types.Any(currType => currType == currThreadType)) continue;
                     throw new ArgumentException(
-                        "You have to use .AddType to add a type. Missing type: " + currType);
+                        "You have to use .AddType to add a type. Missing type: " + currThreadType);
                 }
 
                 var currThread = new InteractionsServiceThread(threadIndex, typesForThread, grid);
