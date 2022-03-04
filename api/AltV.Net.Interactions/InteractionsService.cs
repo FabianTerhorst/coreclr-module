@@ -119,7 +119,6 @@ public class InteractionsService: IDisposable
     {
         var typesCount = types.Length;
         InteractionsServiceThread firstThread = null;
-        ulong firstThreadType = 0;
         HashSet<ulong> firstThreadTypes = null;
         Dictionary<InteractionsServiceThread, HashSet<ulong>> threadsToTrigger = null;
         // zero alloc in case of single thread types
@@ -130,7 +129,7 @@ public class InteractionsService: IDisposable
             if (firstThread == null)
             {
                 firstThread = thread;
-                firstThreadType = type;
+                firstThreadTypes = new HashSet<ulong>{type};
             }
             else if (firstThread != thread)
             {
@@ -150,24 +149,12 @@ public class InteractionsService: IDisposable
             }
             else
             {
-                if (firstThreadTypes == null)
-                {
-                    firstThreadTypes = new HashSet<ulong> {firstThreadType, type};
-                }
-                else
-                {
-                    firstThreadTypes.Add(type);
-                }
+                firstThreadTypes.Add(type);
             }
         }
 
         if (firstThread == null) return; // no types found
-        if (firstThreadTypes == null) // single type optimization
-        {
-            firstThread.Writer.TryWrite(new InteractionsServiceThreadEvent(2, (firstThreadType, player, argument)));
-            return;
-        }
-        
+
         firstThread.Writer.TryWrite(new InteractionsServiceThreadEvent(4, ((IReadOnlySet<ulong>) firstThreadTypes, player, argument)));
 
         if (threadsToTrigger == null) return; // no other threads to trigger
