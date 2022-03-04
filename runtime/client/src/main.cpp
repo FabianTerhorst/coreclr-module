@@ -2,6 +2,7 @@
 #include <exceptions/LoadException.h>
 #include "../thirdparty/altv-cpp-api/SDK.h"
 #include "runtime/CSharpScriptRuntime.h"
+#include "../thirdparty/altv-cpp-api/version/version.h"
 #include <Log.h>
 
 using namespace alt;
@@ -27,9 +28,9 @@ EXPORT const char* GetType()
     return "csharp";
 }
 
-EXPORT uint32_t GetSDKVersion(ICore* core)
+EXPORT char* GetSDKHash()
 {
-    return ICore::SDK_VERSION;
+    return ALT_SDK_VERSION;
 }
 
 #ifdef DEBUG_CLIENT
