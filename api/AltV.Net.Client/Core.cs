@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Text;
 using AltV.Net.Client.CApi;
 using AltV.Net.Client.CApi.Memory;
 using AltV.Net.Client.Data;
@@ -349,5 +350,27 @@ namespace AltV.Net.Client
             }
         }
         #endregion
+        
+        public uint Hash(string stringToHash)
+        {
+            if (string.IsNullOrEmpty(stringToHash)) return 0;
+
+            var characters = Encoding.UTF8.GetBytes(stringToHash.ToLower());
+
+            uint hash = 0;
+
+            foreach (var c in characters)
+            {
+                hash += c;
+                hash += hash << 10;
+                hash ^= hash >> 6;
+            }
+
+            hash += hash << 3;
+            hash ^= hash >> 11;
+            hash += hash << 15;
+
+            return hash;
+        }
     }
 }

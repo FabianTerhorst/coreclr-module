@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 
 namespace AltV.Net.Client.Elements.Entities
@@ -122,6 +123,11 @@ namespace AltV.Net.Client.Elements.Entities
                     return Core.Library.Vehicle_GetWheelsCount(VehicleNativePointer);
                 }
             }
+        }
+
+        public Handling GetHandling()
+        {
+            return new Handling(Core, VehicleNativePointer);
         }
     }
 }

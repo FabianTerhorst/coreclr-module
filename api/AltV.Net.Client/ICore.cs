@@ -12,5 +12,6 @@ namespace AltV.Net.Client
         ILibrary Library { get; }
         IntPtr NativePointer { get; }
         void CreateMValue(out MValueConst mValue, object? obj);
+        uint Hash(string stringToHash);
     }
 }

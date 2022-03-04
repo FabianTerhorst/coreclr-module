@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using AltV.Net.Client.Elements.Data;
 
 namespace AltV.Net.Client.Elements.Interfaces
 {
@@ -14,5 +15,6 @@ namespace AltV.Net.Client.Elements.Interfaces
         Vector3 SpeedVector { get; }
         byte WheelsCount { get; }
         // todo
+        Handling GetHandling();
     }
 }

@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using AltV.Net.Client.CApi.Events;
 using AltV.Net.Client.Elements.Args;
+using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Enums;
 using AltV.Net.Client.Elements.Factories;
@@ -156,6 +157,17 @@ namespace AltV.Net.Client
                     default:
                         return false;
                 }
+            }
+        }
+
+        public HandlingData? GetHandlingByModelHash(uint modelHash)
+        {
+            unsafe
+            {
+                var pointer = IntPtr.Zero;
+                var success = Core.Library.Vehicle_Handling_GetByModelHash(Core.NativePointer, modelHash, &pointer);
+                if (success == 0 || pointer == IntPtr.Zero) return null;
+                return new HandlingData(Core, pointer);
             }
         }
     }

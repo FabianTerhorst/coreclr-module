@@ -124,6 +124,8 @@ namespace AltV.Net.Client.Codegen
             {"alt::ILocalPlayer*", "nint"},
             {"alt::IPlayer*", "nint"},
             {"alt::IVehicle*", "nint"},
+            {"alt::IHandlingData*", "nint"},
+            {"alt::IHandlingData*&", "nint*"},
             {"alt::IEntity*", "nint"},
             {"alt::IWorldObject*", "nint"},
             {"alt::IBaseObject*", "nint"},
