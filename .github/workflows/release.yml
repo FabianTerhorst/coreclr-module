@@ -20,7 +20,7 @@ jobs:
         run: |
           sudo tar -cvf ${{ runner.temp }}/libnethost.tar .
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: nethost-linux
           path: ${{ runner.temp }}/libnethost.tar
@@ -40,7 +40,7 @@ jobs:
         run: |
           tar -cvzf ${{ runner.temp }}\libnethost.tar .
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: nethost-windows
           path: ${{ runner.temp }}\libnethost.tar
@@ -92,7 +92,7 @@ jobs:
         run: |
           tar -cvf ./api.tar modules
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: csharp-module-api
           path: ./api.tar
@@ -165,7 +165,7 @@ jobs:
           filename=$(echo "${{ matrix.config.name }}")
           tar -cvf ./$filename.tar modules/$filename/modules
           echo "::set-output name=art_name::$filename"
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: csharp-module-${{ matrix.config.name }}
           path: ./${{ steps.create_archive.outputs.art_name }}.tar
