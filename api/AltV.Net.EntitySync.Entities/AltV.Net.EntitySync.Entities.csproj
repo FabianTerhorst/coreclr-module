@@ -12,12 +12,12 @@
       <ProjectReference Include="..\AltV.Net.EntitySync.ServerEvent\AltV.Net.EntitySync.ServerEvent.csproj" />
       <ProjectReference Include="..\AltV.Net.EntitySync\AltV.Net.EntitySync.csproj" />
       <ProjectReference Include="..\AltV.Net\AltV.Net.csproj" />
-      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="System.Threading.Channels" Version="5.0.0" />
-      <PackageReference Include="VIEApps.Components.WebSockets" Version="10.4.2106.2" />
+      <PackageReference Include="VIEApps.Components.WebSockets" Version="10.5.2201.1" />
     </ItemGroup>
 
 </Project>

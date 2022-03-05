@@ -39,3 +39,11 @@ void FreeCharArray(char charArray[]) {
 void FreeString(const char* string) {
     delete[] string;
 }
+
+const char* GetVersionStatic(int32_t &size) {
+    return AllocateString(alt::ICore::Instance().GetVersion(), size);
+}
+
+const char* GetBranchStatic(int32_t &size) {
+    return AllocateString(alt::ICore::Instance().GetBranch(), size);
+}

@@ -333,7 +333,7 @@ jobs:
           draft: true
           prerelease: ${{ steps.build_info.outputs.branch != 'release' }}
       - id: upload-release-asset 
-        uses: actions/upload-release-asset@v1.0.1
+        uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -341,7 +341,7 @@ jobs:
           asset_path: ./csharp-module-linux.zip
           asset_name: csharp-module-linux.zip
           asset_content_type: application/zip
-      - uses: actions/upload-release-asset@v1.0.1
+      - uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -349,7 +349,7 @@ jobs:
           asset_path: ./csharp-module-win.zip
           asset_name: csharp-module-win.zip
           asset_content_type: application/zip
-      - uses: actions/upload-release-asset@v1.0.1
+      - uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -357,7 +357,7 @@ jobs:
           asset_path: ./csharp-module-api-release.zip
           asset_name: csharp-module-api-release.zip
           asset_content_type: application/zip
-      - uses: actions/upload-release-asset@v1.0.1
+      - uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:

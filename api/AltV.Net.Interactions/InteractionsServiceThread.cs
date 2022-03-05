@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -33,9 +34,9 @@ public class InteractionsServiceThread : IDisposable
         this.threadIndex = threadIndex;
         this.types = types;
         this.grid = grid;
-        Writer =  channel.Writer;
+        Writer = channel.Writer;
         
-        Task.Run(async () =>
+        Task.Run(new Func<Task>(async () =>
             {
                 while (await channel.Reader.WaitToReadAsync())
                 {
@@ -50,6 +51,107 @@ public class InteractionsServiceThread : IDisposable
                                 grid.Remove((IInteraction) interactionEvent.Data);
                                 break;
                             case 2:
+                            {
+                                var (type, player, argument) = ((ulong, IPlayer, object)) interactionEvent.Data;
+                                float x;
+                                float y;
+                                float z;
+                                int currDimension;
+                                lock (player)
+                                {
+                                    if (player.Exists)
+                                    {
+                                        unsafe
+                                        {
+                                            WorldObject_GetPositionCoords(player.WorldObjectNativePointer.ToPointer(), &x, &y, &z,
+                                                &currDimension);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+
+                                var interactionPosition = new Vector3(x, y, z);
+                                var foundInteractions = grid.Find(interactionPosition, currDimension);
+                                if (foundInteractions != null)
+                                {
+                                    foreach (var interaction in foundInteractions)
+                                    {
+                                        if (type != interaction.Type) continue;
+                                        try
+                                        {
+                                            if (interaction.OnInteraction(player, interactionPosition, currDimension, argument))
+                                            {
+                                                break;
+                                            }
+                                        }
+                                        catch (Exception exception)
+                                        {
+                                            Console.WriteLine("interaction " + interaction + " threw a exception.");
+                                            Console.WriteLine(exception);
+                                        }
+                                    }
+                                }
+
+                                break;
+                            }
+                            case 3:
+                            {
+                                var (interactionPosition, currDimension, callback) =
+                                    ((Vector3, int, TaskCompletionSource<IInteraction[]>)) interactionEvent.Data;
+                                callback.SetResult(grid.Find(interactionPosition, currDimension).ToArray());
+                                break;
+                            }
+                            case 4:
+                            {
+                                var (currTypes, player, argument) = ((IReadOnlySet<ulong>, IPlayer, object)) interactionEvent.Data;
+                                float x;
+                                float y;
+                                float z;
+                                int currDimension;
+                                lock (player)
+                                {
+                                    if (player.Exists)
+                                    {
+                                        unsafe
+                                        {
+                                            WorldObject_GetPositionCoords(player.WorldObjectNativePointer.ToPointer(), &x, &y, &z,
+                                                &currDimension);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+
+                                var interactionPosition = new Vector3(x, y, z);
+                                var foundInteractions = grid.Find(interactionPosition, currDimension);
+                                if (foundInteractions != null)
+                                {
+                                    foreach (var interaction in foundInteractions)
+                                    {
+                                        if (!currTypes.Contains(interaction.Type)) continue;
+                                        try
+                                        {
+                                            if (interaction.OnInteraction(player, interactionPosition, currDimension, argument))
+                                            {
+                                                break;
+                                            }
+                                        }
+                                        catch (Exception exception)
+                                        {
+                                            Console.WriteLine("interaction " + interaction + " threw a exception.");
+                                            Console.WriteLine(exception);
+                                        }
+                                    }
+                                }
+
+                                break;
+                            }
+                            case 5:
                             {
                                 var (player, argument) = ((IPlayer, object)) interactionEvent.Data;
                                 float x;
@@ -95,17 +197,10 @@ public class InteractionsServiceThread : IDisposable
 
                                 break;
                             }
-                            case 3:
-                            {
-                                var (interactionPosition, currDimension, callback) =
-                                    ((Vector3, int, TaskCompletionSource<IInteraction[]>)) interactionEvent.Data;
-                                callback.SetResult(grid.Find(interactionPosition, currDimension).ToArray());
-                                break;
-                            }
                         }
                     }
                 }
-            });
+            }));
     }
 
     public void Dispose()

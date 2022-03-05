@@ -34,11 +34,11 @@ public class InteractionsService: IDisposable
                         "You have to use .AddThreadWithType when you don't use .AddGlobalThreadMapping");
                 }
                 
-                foreach (var currType in types)
+                foreach (var currThreadType in typesForThread)
                 {
-                    if (typesForThread.Any(currThreadType => currType == currThreadType)) continue;
+                    if (types.Any(currType => currType == currThreadType)) continue;
                     throw new ArgumentException(
-                        "You have to use .AddType to add a type. Missing type: " + currType);
+                        "You have to use .AddType to add a type. Missing type: " + currThreadType);
                 }
 
                 var currThread = new InteractionsServiceThread(threadIndex, typesForThread, grid);
@@ -108,11 +108,69 @@ public class InteractionsService: IDisposable
         if (threadToTypeIndex == null)
         {
             for (int i = 0, length = threads.Length; i < length; ++i) {
-                threads[i].Writer.TryWrite(new InteractionsServiceThreadEvent(2, (player, argument)));
+                threads[i].Writer.TryWrite(new InteractionsServiceThreadEvent(2, (type, player, argument)));
             }
             return;
         }
-        threadToTypeIndex[type].Writer.TryWrite(new InteractionsServiceThreadEvent(2, (player, argument)));
+        threadToTypeIndex[type].Writer.TryWrite(new InteractionsServiceThreadEvent(2, (type, player, argument)));
+    }
+    
+    public void TriggerMultiple(IPlayer player, object argument, params ulong[] types)
+    {
+        var typesCount = types.Length;
+        InteractionsServiceThread firstThread = null;
+        HashSet<ulong> firstThreadTypes = null;
+        Dictionary<InteractionsServiceThread, HashSet<ulong>> threadsToTrigger = null;
+        // zero alloc in case of single thread types
+        for (var i = 0; i < typesCount; ++i)
+        {
+            var type = types[i];
+            var thread = threadToTypeIndex[type];
+            if (firstThread == null)
+            {
+                firstThread = thread;
+                firstThreadTypes = new HashSet<ulong>{type};
+            }
+            else if (firstThread != thread)
+            {
+                if (threadsToTrigger == null)
+                {
+                    threadsToTrigger = new Dictionary<InteractionsServiceThread, HashSet<ulong>> {[thread] = new() {type}};
+                }
+                else
+                {
+                    if (!threadsToTrigger.TryGetValue(thread, out var threadTypes))
+                    {
+                        threadTypes = new HashSet<ulong> {type};
+                        threadsToTrigger[thread] = threadTypes;
+                    }
+                    threadTypes.Add(type);
+                }
+            }
+            else
+            {
+                firstThreadTypes.Add(type);
+            }
+        }
+
+        if (firstThread == null) return; // no types found
+
+        firstThread.Writer.TryWrite(new InteractionsServiceThreadEvent(4, ((IReadOnlySet<ulong>) firstThreadTypes, player, argument)));
+
+        if (threadsToTrigger == null) return; // no other threads to trigger
+        
+        foreach (var (thread, threadTypes) in threadsToTrigger)
+        {
+            thread.Writer.TryWrite(new InteractionsServiceThreadEvent(4, ((IReadOnlySet<ulong>) threadTypes, player, argument)));   
+        }
+    }
+
+    public void TriggerAll(IPlayer player, object argument)
+    {
+        for (int i = 0, length = threads.Length; i < length; ++i) 
+        {
+            threads[i].Writer.TryWrite(new InteractionsServiceThreadEvent(5, (player, argument)));
+        }
     }
     
     public Task<IInteraction[]> Find(ulong type, Vector3 position, int dimension)
