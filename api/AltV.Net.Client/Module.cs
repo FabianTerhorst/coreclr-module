@@ -44,6 +44,12 @@ namespace AltV.Net.Client
         internal readonly IEventHandler<ConsoleCommandDelegate> ConsoleCommandEventHandler =
             new HashSetEventHandler<ConsoleCommandDelegate>();
         
+        internal readonly IEventHandler<PlayerSpawnDelegate> SpawnEventHandler =
+            new HashSetEventHandler<PlayerSpawnDelegate>();
+        
+        internal readonly IEventHandler<PlayerDisconnectDelegate> DisconnectEventHandler =
+            new HashSetEventHandler<PlayerDisconnectDelegate>();
+
         public void OnServerEvent(string name, IntPtr[] args)
         {
             var mValues = MValueConst.CreateFrom(args);
@@ -74,6 +80,16 @@ namespace AltV.Net.Client
         public void OnTick()
         {
             TickEventHandler.GetEvents().ForEachCatching(fn => fn(), $"event {nameof(OnTick)}");
+        }
+
+        public void OnSpawn()
+        {
+            SpawnEventHandler.GetEvents().ForEachCatching(fn => fn(), $"event {nameof(OnSpawn)}");
+        }
+        
+        public void OnDisconnect()
+        {
+            DisconnectEventHandler.GetEvents().ForEachCatching(fn => fn(), $"event {nameof(OnDisconnect)}");
         }
 
         public void OnCreatePlayer(IntPtr pointer, ushort id)

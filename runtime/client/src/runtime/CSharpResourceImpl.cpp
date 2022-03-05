@@ -26,7 +26,6 @@ bool CSharpResourceImpl::Stop()
 bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
 {
     if (ev == nullptr) return true;
-
     switch(ev->GetType()) {
         case alt::CEvent::Type::SERVER_SCRIPT_EVENT:
         {
@@ -82,6 +81,17 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             }
             OnConsoleCommandDelegate(consoleCommandEvent->GetName().c_str(), cArgs, (uint32_t) size);
             delete[] cArgs;
+            break;
+        }
+		case alt::CEvent::Type::SPAWNED:
+	    {
+            OnPlayerSpawnDelegate();
+            break;
+	    }
+        case alt::CEvent::Type::DISCONNECT_EVENT:
+        {
+            OnPlayerDisconnectDelegate();
+            break;
         }
     }
 
@@ -157,4 +167,7 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnCreateVehicleDelegate = [](auto var, auto var2) {};
     OnRemoveVehicleDelegate = [](auto var) {};
+
+    OnPlayerSpawnDelegate = [](){};
+    OnPlayerDisconnectDelegate = [](){};
 }

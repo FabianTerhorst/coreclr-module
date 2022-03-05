@@ -22,3 +22,6 @@ SetDelegate(RemovePlayer);
 
 SetDelegate(CreateVehicle);
 SetDelegate(RemoveVehicle);
+
+SetDelegate(PlayerSpawn);
+SetDelegate(PlayerDisconnect);

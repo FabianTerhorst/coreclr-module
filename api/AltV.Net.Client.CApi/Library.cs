@@ -8,6 +8,22 @@ namespace AltV.Net.Client.CApi
 {
     public unsafe interface ILibrary
     {
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> BaseObject_HasMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> BaseObject_GetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_GetType { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Entity_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte> Entity_GetTypeByID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetModel { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte*, ushort*, void> Entity_GetNetOwnerID { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Entity_GetRotation { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> Entity_GetStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> Entity_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<object, void> Event_Cancel { get; }
         public delegate* unmanaged[Cdecl]<object, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, TickModuleDelegate, void> Event_SetTickDelegate { get; }
@@ -18,6 +34,8 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, RemovePlayerModuleDelegate, void> Event_SetRemovePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, CreateVehicleModuleDelegate, void> Event_SetCreateVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, RemoveVehicleModuleDelegate, void> Event_SetRemoveVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, PlayerSpawnModuleDelegate, void> Event_SetPlayerSpawnDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, PlayerDisconnectModuleDelegate, void> Event_SetPlayerDisconnectDelegate { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
@@ -52,31 +70,6 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_Delete { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> MValueConst_GetType { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetName { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void> Resource_GetFile { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, bool> Resource_FileExists { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetCSharpImpl { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> LogInfo { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> LogDebug { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> LogWarning { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> LogError { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> LogColored { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> BaseObject_HasMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint> BaseObject_GetMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_GetType { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> Entity_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte> Entity_GetTypeByID { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetModel { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte*, ushort*, void> Entity_GetNetOwnerID { get; }
-        public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Entity_GetRotation { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint> Entity_GetStreamSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint> Entity_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Player_GetVehicleID { get; }
@@ -108,6 +101,15 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void> Resource_GetFile { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, bool> Resource_FileExists { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetCSharpImpl { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> LogInfo { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> LogDebug { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> LogWarning { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> LogError { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> LogColored { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetGear { get; }
@@ -265,6 +267,22 @@ namespace AltV.Net.Client.CApi
     {
         private const string DllName = "coreclr-client-module";
 
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> BaseObject_HasMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> BaseObject_GetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_GetType { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Entity_GetID { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte> Entity_GetTypeByID { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetModel { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte*, ushort*, void> Entity_GetNetOwnerID { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Entity_GetRotation { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> Entity_GetStreamSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> Entity_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<object, void> Event_Cancel { get; }
         public delegate* unmanaged[Cdecl]<object, byte> Event_WasCancelled { get; }
         public delegate* unmanaged[Cdecl]<nint, TickModuleDelegate, void> Event_SetTickDelegate { get; }
@@ -275,6 +293,8 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, RemovePlayerModuleDelegate, void> Event_SetRemovePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, CreateVehicleModuleDelegate, void> Event_SetCreateVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, RemoveVehicleModuleDelegate, void> Event_SetRemoveVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, PlayerSpawnModuleDelegate, void> Event_SetPlayerSpawnDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, PlayerDisconnectModuleDelegate, void> Event_SetPlayerDisconnectDelegate { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
@@ -309,31 +329,6 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_RemoveRef { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_Delete { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> MValueConst_GetType { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetName { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void> Resource_GetFile { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, bool> Resource_FileExists { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetCSharpImpl { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> LogInfo { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> LogDebug { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> LogWarning { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> LogError { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> LogColored { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> BaseObject_SetMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> BaseObject_HasMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint> BaseObject_GetMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_GetType { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort> Entity_GetID { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
-        public delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte> Entity_GetTypeByID { get; }
-        public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetModel { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte*, ushort*, void> Entity_GetNetOwnerID { get; }
-        public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Entity_GetRotation { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint> Entity_GetStreamSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasSyncedMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint> Entity_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Player_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Player_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort*, byte> Player_GetVehicleID { get; }
@@ -365,6 +360,15 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void> Resource_GetFile { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, bool> Resource_FileExists { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetCSharpImpl { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> LogInfo { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> LogDebug { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> LogWarning { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> LogError { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> LogColored { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetGear { get; }
@@ -520,6 +524,22 @@ namespace AltV.Net.Client.CApi
         {
             const DllImportSearchPath dllImportSearchPath = DllImportSearchPath.LegacyBehavior | DllImportSearchPath.AssemblyDirectory | DllImportSearchPath.SafeDirectories | DllImportSearchPath.System32 | DllImportSearchPath.UserDirectories | DllImportSearchPath.ApplicationDirectory | DllImportSearchPath.UseDllDirectoryForDependencies;
             var handle = NativeLibrary.Load(DllName, Assembly.GetExecutingAssembly(), dllImportSearchPath);
+            BaseObject_SetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "BaseObject_SetMetaData");
+            BaseObject_HasMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "BaseObject_HasMetaData");
+            BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "BaseObject_DeleteMetaData");
+            BaseObject_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "BaseObject_GetMetaData");
+            BaseObject_GetType = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "BaseObject_GetType");
+            Entity_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Entity_GetID");
+            Entity_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Entity_GetWorldObject");
+            Entity_GetTypeByID = (delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte>) NativeLibrary.GetExport(handle, "Entity_GetTypeByID");
+            Entity_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Entity_GetModel");
+            Entity_GetNetOwnerID = (delegate* unmanaged[Cdecl]<nint, byte*, ushort*, void>) NativeLibrary.GetExport(handle, "Entity_GetNetOwnerID");
+            Entity_GetScriptID = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Entity_GetScriptID");
+            Entity_GetRotation = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Entity_GetRotation");
+            Entity_HasStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Entity_HasStreamSyncedMetaData");
+            Entity_GetStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Entity_GetStreamSyncedMetaData");
+            Entity_HasSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Entity_HasSyncedMetaData");
+            Entity_GetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Entity_GetSyncedMetaData");
             Event_Cancel = (delegate* unmanaged[Cdecl]<object, void>) NativeLibrary.GetExport(handle, "Event_Cancel");
             Event_WasCancelled = (delegate* unmanaged[Cdecl]<object, byte>) NativeLibrary.GetExport(handle, "Event_WasCancelled");
             Event_SetTickDelegate = (delegate* unmanaged[Cdecl]<nint, TickModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetTickDelegate");
@@ -530,6 +550,8 @@ namespace AltV.Net.Client.CApi
             Event_SetRemovePlayerDelegate = (delegate* unmanaged[Cdecl]<nint, RemovePlayerModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemovePlayerDelegate");
             Event_SetCreateVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, CreateVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateVehicleDelegate");
             Event_SetRemoveVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, RemoveVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveVehicleDelegate");
+            Event_SetPlayerSpawnDelegate = (delegate* unmanaged[Cdecl]<nint, PlayerSpawnModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerSpawnDelegate");
+            Event_SetPlayerDisconnectDelegate = (delegate* unmanaged[Cdecl]<nint, PlayerDisconnectModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerDisconnectDelegate");
             FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) NativeLibrary.GetExport(handle, "FreeUIntArray");
             FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeCharArray");
             FreeString = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeString");
@@ -564,31 +586,6 @@ namespace AltV.Net.Client.CApi
             MValueConst_RemoveRef = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "MValueConst_RemoveRef");
             MValueConst_Delete = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "MValueConst_Delete");
             MValueConst_GetType = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "MValueConst_GetType");
-            Resource_GetName = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Resource_GetName");
-            Resource_GetFile = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void>) NativeLibrary.GetExport(handle, "Resource_GetFile");
-            Resource_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, bool>) NativeLibrary.GetExport(handle, "Resource_FileExists");
-            Resource_GetCSharpImpl = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Resource_GetCSharpImpl");
-            LogInfo = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "LogInfo");
-            LogDebug = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "LogDebug");
-            LogWarning = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "LogWarning");
-            LogError = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "LogError");
-            LogColored = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "LogColored");
-            BaseObject_SetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "BaseObject_SetMetaData");
-            BaseObject_HasMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "BaseObject_HasMetaData");
-            BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "BaseObject_DeleteMetaData");
-            BaseObject_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "BaseObject_GetMetaData");
-            BaseObject_GetType = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "BaseObject_GetType");
-            Entity_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Entity_GetID");
-            Entity_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Entity_GetWorldObject");
-            Entity_GetTypeByID = (delegate* unmanaged[Cdecl]<nint, ushort, byte*, byte>) NativeLibrary.GetExport(handle, "Entity_GetTypeByID");
-            Entity_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Entity_GetModel");
-            Entity_GetNetOwnerID = (delegate* unmanaged[Cdecl]<nint, byte*, ushort*, void>) NativeLibrary.GetExport(handle, "Entity_GetNetOwnerID");
-            Entity_GetScriptID = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Entity_GetScriptID");
-            Entity_GetRotation = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Entity_GetRotation");
-            Entity_HasStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Entity_HasStreamSyncedMetaData");
-            Entity_GetStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Entity_GetStreamSyncedMetaData");
-            Entity_HasSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Entity_HasSyncedMetaData");
-            Entity_GetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Entity_GetSyncedMetaData");
             Player_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Player_GetID");
             Player_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Player_GetEntity");
             Player_GetVehicleID = (delegate* unmanaged[Cdecl]<nint, ushort*, byte>) NativeLibrary.GetExport(handle, "Player_GetVehicleID");
@@ -620,6 +617,15 @@ namespace AltV.Net.Client.CApi
             Player_GetLocal = (delegate* unmanaged[Cdecl]<nint>) NativeLibrary.GetExport(handle, "Player_GetLocal");
             LocalPlayer_GetPlayer = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "LocalPlayer_GetPlayer");
             LocalPlayer_GetCurrentAmmo = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "LocalPlayer_GetCurrentAmmo");
+            Resource_GetName = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Resource_GetName");
+            Resource_GetFile = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void>) NativeLibrary.GetExport(handle, "Resource_GetFile");
+            Resource_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, bool>) NativeLibrary.GetExport(handle, "Resource_FileExists");
+            Resource_GetCSharpImpl = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Resource_GetCSharpImpl");
+            LogInfo = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "LogInfo");
+            LogDebug = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "LogDebug");
+            LogWarning = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "LogWarning");
+            LogError = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "LogError");
+            LogColored = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "LogColored");
             Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetID");
             Vehicle_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetEntity");
             Vehicle_GetGear = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetGear");

@@ -36,6 +36,11 @@ public:
     CreateVehicleDelegate_t OnCreateVehicleDelegate = nullptr;
     RemoveVehicleDelegate_t OnRemoveVehicleDelegate = nullptr;
 
+    PlayerSpawnDelegate_t OnPlayerSpawnDelegate = nullptr;
+    PlayerDisconnectDelegate_t OnPlayerDisconnectDelegate = nullptr;
+
+
+
     bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files)
     {
         // When also having a client module that is inteded to be used with this module,

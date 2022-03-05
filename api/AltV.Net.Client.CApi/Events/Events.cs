@@ -13,4 +13,7 @@ namespace AltV.Net.Client.CApi.Events
     
     public delegate void CreateVehicleModuleDelegate(IntPtr pointer, ushort id);
     public delegate void RemoveVehicleModuleDelegate(ushort id);
+
+    public delegate void PlayerSpawnModuleDelegate();
+    public delegate void PlayerDisconnectModuleDelegate();
 }

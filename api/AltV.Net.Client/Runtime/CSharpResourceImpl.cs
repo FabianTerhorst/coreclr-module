@@ -54,6 +54,14 @@ namespace AltV.Net.Client.Runtime
                 RemoveVehicleModuleDelegate onRemoveVehicle = ModuleWrapper.OnRemoveVehicle;
                 _handles.AddFirst(GCHandle.Alloc(onRemoveVehicle));
                 _library.Event_SetRemoveVehicleDelegate(this.NativePointer, onRemoveVehicle);
+
+                PlayerSpawnModuleDelegate onPlayerSpawn = ModuleWrapper.OnPlayerSpawn;
+                _handles.AddFirst(GCHandle.Alloc(onPlayerSpawn));
+                _library.Event_SetPlayerSpawnDelegate(this.NativePointer, onPlayerSpawn);
+                
+                PlayerDisconnectModuleDelegate onPlayerDisconnect = ModuleWrapper.OnPlayerDisconnect;
+                _handles.AddFirst(GCHandle.Alloc(onPlayerDisconnect));
+                _library.Event_SetPlayerDisconnectDelegate(this.NativePointer, onPlayerDisconnect);
             }
         }
         

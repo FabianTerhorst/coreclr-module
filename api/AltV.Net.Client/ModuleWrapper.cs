@@ -98,6 +98,16 @@ namespace AltV.Net.Client
             _module.OnTick();
         }
 
+        public static void OnPlayerSpawn()
+        {
+            _module.OnSpawn();
+        }
+        
+        public static void OnPlayerDisconnect()
+        {
+            _module.OnDisconnect();
+        }
+        
         public static void OnServerEvent(string name, IntPtr pointer, ulong size)
         {
             var args = new IntPtr[size];

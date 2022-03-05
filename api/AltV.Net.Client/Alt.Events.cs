@@ -17,6 +17,18 @@ namespace AltV.Net.Client
             remove => Module.ConsoleCommandEventHandler.Remove(value);
         }
         
+        public static event PlayerSpawnDelegate OnSpawn
+        {
+            add => Module.SpawnEventHandler.Add(value);
+            remove => Module.SpawnEventHandler.Remove(value);
+        }
+        
+        public static event PlayerDisconnectDelegate OnDisconnect
+        {
+            add => Module.DisconnectEventHandler.Add(value);
+            remove => Module.DisconnectEventHandler.Remove(value);
+        }
+        
         public static void OnServer(string eventName, Function.Function function) => Module.AddServerEventListener(eventName, function);
         public static void OnServer<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> function) => Module.AddServerEventListener(eventName, Function.Function.Create(function));
         public static void OnServer<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> function) => Module.AddServerEventListener(eventName, Function.Function.Create(function));

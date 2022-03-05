@@ -11,3 +11,6 @@ typedef void (* RemovePlayerDelegate_t)(uint16_t);
 
 typedef void (* CreateVehicleDelegate_t)(alt::IVehicle*, uint16_t id);
 typedef void (* RemoveVehicleDelegate_t)(uint16_t);
+
+typedef void (* PlayerSpawnDelegate_t)();
+typedef void (* PlayerDisconnectDelegate_t)();
