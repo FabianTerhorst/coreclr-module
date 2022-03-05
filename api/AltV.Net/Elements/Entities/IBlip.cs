@@ -1,3 +1,4 @@
+using System;
 using System.Numerics;
 using AltV.Net.Data;
 
@@ -5,6 +6,8 @@ namespace AltV.Net.Elements.Entities
 {
     public interface IBlip : IWorldObject
     {
+        IntPtr BlipNativePointer { get; }
+        
         /// <summary>
         /// If the blip is global.
         /// </summary>

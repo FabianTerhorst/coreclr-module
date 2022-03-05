@@ -69,7 +69,7 @@ namespace AltV.Net.Async
                     unsafe
                     {
                         player.CheckIfEntityExists();
-                        var vehiclePtr = Alt.Server.Library.Player_GetVehicle(player.NativePointer);
+                        var vehiclePtr = Alt.Server.Library.Shared.Player_GetVehicle(player.PlayerNativePointer);
                         return Alt.Module.VehiclePool.Get(vehiclePtr, out var vehicle) ? vehicle : null;
                     }
                 });
@@ -123,7 +123,7 @@ namespace AltV.Net.Async
                 unsafe
                 {
                     player.CheckIfEntityExists();
-                    Alt.Server.Library.Player_Kick(player.NativePointer, reasonPtr);
+                    Alt.Server.Library.Server.Player_Kick(player.PlayerNativePointer, reasonPtr);
                 }
             });
             Marshal.FreeHGlobal(reasonPtr);

@@ -11,6 +11,7 @@ namespace AltV.Net.Mock
         {
         }
 
+        public IntPtr BlipNativePointer { get; }
         public bool IsGlobal { get; }
         public bool IsAttached { get; set; }
         public IEntity AttachedTo { get; set; }

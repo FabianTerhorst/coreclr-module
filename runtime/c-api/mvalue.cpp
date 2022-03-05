@@ -255,26 +255,6 @@ void ToMValueDict(alt::MValueDict& mValues, alt::String& key, alt::ICore *core, 
     }
 }
 
-CustomInvoker *Invoker_Create(CSharpResourceImpl *resource, MValueFunctionCallback val) {
-    auto invoker = new CustomInvoker(val);
-    resource->invokers->Push(invoker);
-    return invoker;
-}
-
-void Invoker_Destroy(CSharpResourceImpl *resource, CustomInvoker *val) {
-    auto newInvokers = new alt::Array<CustomInvoker *>();
-    for (alt::Size i = 0, length = resource->invokers->GetSize(); i < length; i++) {
-        auto invoker = (*resource->invokers)[i];
-        if (invoker != val) {
-            newInvokers->Push(invoker);
-        }
-    }
-    alt::Array<CustomInvoker *> *oldInvokers = resource->invokers;
-    resource->invokers = newInvokers;
-    delete val;
-    delete oldInvokers;
-}
-
 void MValueConst_AddRef(alt::MValueConst *mValueConst) {
     (*mValueConst)->AddRef();
 }
@@ -485,3 +465,25 @@ uint8_t MValueConst_GetType(alt::MValueConst *mValueConst) {
     if (mValue == nullptr) return (uint8_t) alt::IMValue::Type::NIL;
     return (uint8_t) mValue->GetType();
 }
+
+#ifdef ALT_SERVER_API
+CustomInvoker *Invoker_Create(CSharpResourceImpl *resource, MValueFunctionCallback val) {
+    auto invoker = new CustomInvoker(val);
+    resource->invokers->Push(invoker);
+    return invoker;
+}
+
+void Invoker_Destroy(CSharpResourceImpl *resource, CustomInvoker *val) {
+    auto newInvokers = new alt::Array<CustomInvoker *>();
+    for (alt::Size i = 0, length = resource->invokers->GetSize(); i < length; i++) {
+        auto invoker = (*resource->invokers)[i];
+        if (invoker != val) {
+            newInvokers->Push(invoker);
+        }
+    }
+    alt::Array<CustomInvoker *> *oldInvokers = resource->invokers;
+    resource->invokers = newInvokers;
+    delete val;
+    delete oldInvokers;
+}
+#endif

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
@@ -9,6 +10,7 @@ namespace AltV.Net.Async.Elements.Entities
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
     public class AsyncBlip<TBlip> : AsyncWorldObject<TBlip>, IBlip where TBlip: class, IBlip
     {
+        public IntPtr BlipNativePointer => BaseObject.BlipNativePointer;
         public bool IsGlobal
         {
             get

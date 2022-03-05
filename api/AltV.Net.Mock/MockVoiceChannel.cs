@@ -9,6 +9,7 @@ namespace AltV.Net.Mock
         {
         }
 
+        public IntPtr VoiceChannelNativePointer { get; }
         public void AddPlayer(IPlayer player)
         {
             throw new NotImplementedException();

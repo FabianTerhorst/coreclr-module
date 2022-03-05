@@ -8,6 +8,7 @@
 
 #include "../../cpp-sdk/SDK.h"
 #include "data/types.h"
+#include "utils/export.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -17,9 +18,11 @@
 extern "C"
 {
 #endif
-EXPORT void Event_Cancel(alt::CEvent* event);
-EXPORT void Event_PlayerBeforeConnect_Cancel(alt::CEvent* event, const char* reason);
-EXPORT uint8_t Event_WasCancelled(alt::CEvent* event);
+    
+EXPORT_SERVER void Event_Cancel(alt::CEvent* event);
+EXPORT_SERVER void Event_PlayerBeforeConnect_Cancel(alt::CEvent* event, const char* reason);
+EXPORT_SERVER uint8_t Event_WasCancelled(alt::CEvent* event);
+
 #ifdef __cplusplus
 }
 #endif

@@ -137,7 +137,7 @@ namespace AltV.Net.Async
                 unsafe
                 {
                     vehicle.CheckIfEntityExists();
-                    Alt.Server.Library.Vehicle_SetNumberplateText(vehicle.NativePointer, numberPlateTextPtr);
+                    Alt.Server.Library.Server.Vehicle_SetNumberplateText(vehicle.VehicleNativePointer, numberPlateTextPtr);
                 }
             });
             Marshal.FreeHGlobal(numberPlateTextPtr);

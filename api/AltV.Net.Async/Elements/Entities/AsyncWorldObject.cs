@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 
@@ -8,6 +9,7 @@ namespace AltV.Net.Async.Elements.Entities
         "InconsistentlySynchronizedField")] // we sometimes use player in lock and sometimes not
     public class AsyncWorldObject<TWorld> : AsyncBaseObject<TWorld>, IWorldObject where TWorld : class, IWorldObject
     {
+        public IntPtr WorldObjectNativePointer => BaseObject.WorldObjectNativePointer;
         public Position Position
         {
             get

@@ -120,11 +120,9 @@ EXPORT_SERVER void Player_GetDlcProps(alt::IPlayer* player, uint8_t component, d
 EXPORT_SERVER void Player_SetDlcProps(alt::IPlayer* player, uint8_t component, uint16_t drawable, uint8_t texture, uint32_t dlc);
 EXPORT_SERVER void Player_ClearProps(alt::IPlayer* player, uint8_t component);
 
-EXPORT_SERVER uint8_t Player_IsEntityInStreamingRange_Player(alt::IPlayer* player, alt::IPlayer* entity);
-EXPORT_SERVER uint8_t Player_IsEntityInStreamingRange_Vehicle(alt::IPlayer* player, alt::IVehicle* entity);
+EXPORT_SERVER uint8_t Player_IsEntityInStreamingRange(alt::IPlayer* player, alt::IEntity* entity);
 
-EXPORT_SERVER void Player_AttachToEntity_Player(alt::IPlayer* player, alt::IPlayer* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
-EXPORT_SERVER void Player_AttachToEntity_Vehicle(alt::IPlayer* player, alt::IVehicle* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
+EXPORT_SERVER void Player_AttachToEntity(alt::IPlayer* player, alt::IEntity* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
 EXPORT_SERVER void Player_Detach(alt::IPlayer* player);
 
 EXPORT_SERVER uint8_t Player_GetInvincible(alt::IPlayer* player);

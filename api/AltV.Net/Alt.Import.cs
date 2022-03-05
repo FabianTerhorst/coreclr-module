@@ -218,12 +218,12 @@ namespace AltV.Net
                     mValueArgs[i] = mValueElement.nativePointer;
                 }
 
-                var result = new MValueConst(Alt.Server.Library.MValueConst_CallFunction(Alt.Server.NativePointer, mValue.nativePointer, mValueArgs, length));
+                var result = new MValueConst(Alt.Server.Library.Shared.MValueConst_CallFunction(Alt.Server.NativePointer, mValue.nativePointer, mValueArgs, length));
                 var resultObj = result.ToObject();
                 result.Dispose();
                 for (ulong i = 0;i < length;i++)
                 {
-                    Alt.Server.Library.MValueConst_Delete(mValueArgs[i]);
+                    Alt.Server.Library.Shared.MValueConst_Delete(mValueArgs[i]);
                 }
 
                 return resultObj;

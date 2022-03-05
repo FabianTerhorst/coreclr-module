@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Async.Elements.Entities
@@ -7,6 +8,8 @@ namespace AltV.Net.Async.Elements.Entities
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
     public class AsyncColShape<TColShape> : AsyncWorldObject<TColShape>, IColShape where TColShape : class, IColShape
     {
+        public IntPtr ColShapeNativePointer => BaseObject.ColShapeNativePointer;
+        
         public ColShapeType ColShapeType
         {
             get

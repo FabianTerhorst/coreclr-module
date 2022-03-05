@@ -7,7 +7,7 @@ namespace AltV.Net.CodeGen
 {
     class Program
     {
-        static void Main(string[] args)
+        static void MainOld(string[] args)
         {
             var files = Directory.GetFiles(
                 Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName +
@@ -68,7 +68,7 @@ namespace AltV.Net.CodeGen
 
         private static string GetAltNativeFileName(string fileName)
         {
-            var newFileName = fileName.Replace(".h", ".cs").FirstCharToUpper();
+            var newFileName = fileName.Replace(".h", ".cs").ForceCapitalize();
             var indexOf = newFileName.IndexOf("_", StringComparison.Ordinal);
             //TODO: only works with one _ in string
             if (indexOf != -1)
@@ -85,11 +85,11 @@ namespace AltV.Net.CodeGen
 
 public static class StringExtensions
 {
-    public static string FirstCharToUpper(this string input) =>
+    public static string ForceCapitalize(this string input) =>
         input switch
         {
             null => throw new ArgumentNullException(nameof(input)),
             "" => throw new ArgumentException($"{nameof(input)} cannot be empty", nameof(input)),
-            _ => input.First().ToString().ToUpper() + input.Substring(1)
+            _ => input.First().ToString().ToUpper() + input.Substring(1).ToLower()
         };
 }

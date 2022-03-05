@@ -1,6 +1,7 @@
 #include "connection_info.h"
 #include "utils/strings.h"
 
+#ifdef ALT_SERVER_API
 void ConnectionInfo_Accept(alt::IConnectionInfo *connectionInfo) {
     connectionInfo->Accept();
 }
@@ -29,7 +30,7 @@ const char* ConnectionInfo_GetAuthToken(alt::IConnectionInfo *connectionInfo, in
     return AllocateString(connectionInfo->GetAuthToken(), size);
 }
 
-bool ConnectionInfo_GetIsDebug(alt::IConnectionInfo *connectionInfo) {
+uint8_t ConnectionInfo_GetIsDebug(alt::IConnectionInfo *connectionInfo) {
     return connectionInfo->GetIsDebug();
 }
 
@@ -64,3 +65,4 @@ void ConnectionInfo_AddRef(alt::IConnectionInfo *connectionInfo) {
 void ConnectionInfo_RemoveRef(alt::IConnectionInfo *connectionInfo) {
     connectionInfo->RemoveRef();
 }
+#endif

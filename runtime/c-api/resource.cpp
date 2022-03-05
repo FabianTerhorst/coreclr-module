@@ -4,6 +4,12 @@
 
 #include "resource.h"
 
+// needs migration to std::string in cpp-sdk
+void Resource_GetName(alt::IResource* resource, const char*&text) {
+    text = resource->GetName().CStr();
+}
+
+#ifdef ALT_SERVER_API
 uint64_t Resource_GetExportsCount(alt::IResource* resource) {
     alt::IMValueDict* dict = resource->GetExports().Get();
     if (dict == nullptr) return 0;
@@ -82,11 +88,6 @@ void Resource_GetPath(alt::IResource* resource, const char*&text) {
 }
 
 // needs migration to std::string in cpp-sdk
-void Resource_GetName(alt::IResource* resource, const char*&text) {
-    text = resource->GetName().CStr();
-}
-
-// needs migration to std::string in cpp-sdk
 void Resource_GetMain(alt::IResource* resource, const char*&text) {
     text = resource->GetMain().CStr();
 }
@@ -115,3 +116,4 @@ alt::IResource::Impl* Resource_GetImpl(alt::IResource* resource) {
 CSharpResourceImpl* Resource_GetCSharpImpl(alt::IResource* resource) {
     return (CSharpResourceImpl*) resource->GetImpl();
 }
+#endif

@@ -9,9 +9,10 @@ namespace AltV.Net.Mock
         public MockCheckpoint(IServer server, IntPtr nativePointer) : base(server, nativePointer)
         {
         }
-        
-        
-        
+
+
+
+        public IntPtr CheckpointNativePointer { get; }
         public byte CheckpointType { get; set; }
         public float Height { get; set; }
         public float Radius { get; set; }

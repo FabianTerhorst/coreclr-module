@@ -1,7 +1,11 @@
+using System;
+
 namespace AltV.Net.Elements.Entities
 {
     public interface IColShape : IWorldObject
     {
+        IntPtr ColShapeNativePointer { get; }
+
         /// <summary>
         /// Returns the ColShape type
         /// </summary>

@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.Loader;
+using AltV.Net.CApi;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Factories;
 using AltV.Net.Elements.Pools;

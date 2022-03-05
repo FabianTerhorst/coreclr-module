@@ -1,56 +1,9 @@
 #include "checkpoint.h"
 
-// Entity
-
-void Checkpoint_GetPosition(alt::ICheckpoint* checkpoint, position_t &position) {
-    auto checkpointPosition = checkpoint->GetPosition();
-    position.x = checkpointPosition.x;
-    position.y = checkpointPosition.y;
-    position.z = checkpointPosition.z;
+#ifdef ALT_SERVER_API
+alt::IWorldObject* Checkpoint_GetWorldObject(alt::ICheckpoint* checkpoint) {
+    return dynamic_cast<alt::IWorldObject*>(checkpoint);
 }
-
-void Checkpoint_SetPosition(alt::ICheckpoint* checkpoint, position_t pos) {
-    alt::Position position;
-    position.x = pos.x;
-    position.y = pos.y;
-    position.z = pos.z;
-    checkpoint->SetPosition(position);
-}
-
-int32_t Checkpoint_GetDimension(alt::ICheckpoint* checkpoint) {
-    return checkpoint->GetDimension();
-}
-
-void Checkpoint_SetDimension(alt::ICheckpoint* checkpoint, int32_t dimension) {
-    checkpoint->SetDimension(dimension);
-}
-
-alt::MValueConst* Checkpoint_GetMetaData(alt::ICheckpoint* checkpoint, const char* key) {
-    return new alt::MValueConst(checkpoint->GetMetaData(key));
-}
-
-void Checkpoint_SetMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValueConst* val) {
-    if (val == nullptr) return;
-    checkpoint->SetMetaData(key, val->Get()->Clone());
-}
-
-uint8_t Checkpoint_HasMetaData(alt::ICheckpoint* checkpoint, const char* key) {
-    return checkpoint->HasMetaData(key);
-}
-
-void Checkpoint_DeleteMetaData(alt::ICheckpoint* checkpoint, const char* key) {
-    checkpoint->DeleteMetaData(key);
-}
-
-void Checkpoint_AddRef(alt::ICheckpoint* checkpoint) {
-    checkpoint->AddRef();
-}
-
-void Checkpoint_RemoveRef(alt::ICheckpoint* checkpoint) {
-    checkpoint->RemoveRef();
-}
-
-// Checkpoint
 
 uint8_t Checkpoint_GetCheckpointType(alt::ICheckpoint* checkpoint) {
     return checkpoint->GetCheckpointType();
@@ -93,12 +46,8 @@ void Checkpoint_SetColor(alt::ICheckpoint* checkpoint, rgba_t color) {
     checkpoint->SetColor(newColor);
 }
 
-uint8_t Checkpoint_IsPlayerIn(alt::ICheckpoint* checkpoint, alt::IPlayer* player) {
-    return checkpoint->IsEntityIn(player);
-}
-
-uint8_t Checkpoint_IsVehicleIn(alt::ICheckpoint* checkpoint, alt::IVehicle* vehicle) {
-    return checkpoint->IsEntityIn(vehicle);
+uint8_t Checkpoint_IsEntityIn(alt::ICheckpoint* checkpoint, alt::IEntity* entity) {
+    return checkpoint->IsEntityIn(entity);
 }
 
 uint8_t Checkpoint_GetColShapeType(alt::ICheckpoint* checkpoint) {
@@ -127,3 +76,4 @@ void Checkpoint_SetNextPosition(alt::ICheckpoint* checkpoint, position_t pos) {
     position.z = pos.z;
     checkpoint->SetNextPosition(position);
 }
+#endif

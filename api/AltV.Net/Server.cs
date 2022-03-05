@@ -8,6 +8,7 @@ using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using AltV.Net.CApi;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -18,12 +19,6 @@ namespace AltV.Net
 {
     public class Server : IServer
     {
-        public delegate bool EventCallback(IntPtr eventPointer, IntPtr userData);
-
-        public delegate void TickCallback(IntPtr userData);
-
-        public delegate void CommandCallback(StringView cmd, StringViewArray args, IntPtr userData);
-
         public IntPtr NativePointer { get; }
 
         private readonly IBaseBaseObjectPool baseBaseObjectPool;
@@ -61,7 +56,7 @@ namespace AltV.Net
                     if (version != null) return version;
                     var size = 0;
                     version = PtrToStringUtf8AndFree(
-                        Library.Core_GetVersion(NativePointer, &size), size);
+                        Library.Server.Core_GetVersion(NativePointer, &size), size);
 
                     return version;
                 }
@@ -77,7 +72,7 @@ namespace AltV.Net
                     if (branch != null) return branch;
                     var size = 0;
                     branch = PtrToStringUtf8AndFree(
-                        Library.Core_GetBranch(NativePointer, &size), size);
+                        Library.Server.Core_GetBranch(NativePointer, &size), size);
 
                     return branch;
                 }
@@ -90,7 +85,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    return Library.Server_GetNetTime(NativePointer);
+                    return Library.Server.Core_GetNetTime(NativePointer);
                 }
             }
         }
@@ -107,7 +102,7 @@ namespace AltV.Net
                 {
                     if (rootDirectory != null) return rootDirectory;
                     var ptr = IntPtr.Zero;
-                    Library.Server_GetRootDirectory(NativePointer, &ptr);
+                    Library.Server.Core_GetRootDirectory(NativePointer, &ptr);
                     rootDirectory = Marshal.PtrToStringUTF8(ptr);
 
                     return rootDirectory;
@@ -122,7 +117,7 @@ namespace AltV.Net
                 unsafe
                 {
                     if (isDebug.HasValue) return isDebug.Value;
-                    isDebug = Library.Core_IsDebug(NativePointer) == 1;
+                    isDebug = Library.Server.Core_IsDebug(NativePointer) == 1;
                     return isDebug.Value;
                 }
             }
@@ -159,7 +154,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                Library.Server_LogInfo(NativePointer, messagePtr);
+                Library.Shared.Core_LogInfo(NativePointer, messagePtr);
             }
         }
 
@@ -167,7 +162,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                Library.Server_LogDebug(NativePointer, messagePtr);
+                Library.Shared.Core_LogDebug(NativePointer, messagePtr);
             }
         }
 
@@ -175,7 +170,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                Library.Server_LogWarning(NativePointer, messagePtr);
+                Library.Shared.Core_LogWarning(NativePointer, messagePtr);
             }
         }
 
@@ -183,7 +178,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                Library.Server_LogError(NativePointer, messagePtr);
+                Library.Shared.Core_LogError(NativePointer, messagePtr);
             }
         }
 
@@ -191,7 +186,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                Library.Server_LogColored(NativePointer, messagePtr);
+                Library.Shared.Core_LogColored(NativePointer, messagePtr);
             }
         }
 
@@ -200,7 +195,7 @@ namespace AltV.Net
             unsafe
             {
                 var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);
-                Library.Server_LogInfo(NativePointer, messagePtr);
+                Library.Shared.Core_LogInfo(NativePointer, messagePtr);
                 Marshal.FreeHGlobal(messagePtr);
             }
         }
@@ -210,7 +205,7 @@ namespace AltV.Net
             unsafe
             {
                 var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);
-                Library.Server_LogDebug(NativePointer, messagePtr);
+                Library.Shared.Core_LogDebug(NativePointer, messagePtr);
                 Marshal.FreeHGlobal(messagePtr);
             }
         }
@@ -220,7 +215,7 @@ namespace AltV.Net
             unsafe
             {
                 var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);
-                Library.Server_LogWarning(NativePointer, messagePtr);
+                Library.Shared.Core_LogWarning(NativePointer, messagePtr);
                 Marshal.FreeHGlobal(messagePtr);
             }
         }
@@ -230,7 +225,7 @@ namespace AltV.Net
             unsafe
             {
                 var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);
-                Library.Server_LogError(NativePointer, messagePtr);
+                Library.Shared.Core_LogError(NativePointer, messagePtr);
                 Marshal.FreeHGlobal(messagePtr);
             }
         }
@@ -240,7 +235,7 @@ namespace AltV.Net
             unsafe
             {
                 var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);
-                Library.Server_LogColored(NativePointer, messagePtr);
+                Library.Shared.Core_LogColored(NativePointer, messagePtr);
                 Marshal.FreeHGlobal(messagePtr);
             }
         }
@@ -250,7 +245,7 @@ namespace AltV.Net
             unsafe
             {
                 var passwordPtr = AltNative.StringUtils.StringToHGlobalUtf8(password);
-                var value = Library.Core_HashPassword(NativePointer, passwordPtr);
+                var value = Library.Server.Core_HashPassword(NativePointer, passwordPtr);
                 Marshal.FreeHGlobal(passwordPtr);
                 return value;
             }
@@ -258,7 +253,7 @@ namespace AltV.Net
 
         public uint Hash(string stringToHash)
         {
-            //return AltVNative.Server.Server_Hash(NativePointer, hash);
+            //return AltVNative.Server.Core_Hash(NativePointer, hash);
             if (string.IsNullOrEmpty(stringToHash)) return 0;
 
             var characters = Encoding.UTF8.GetBytes(stringToHash.ToLower());
@@ -284,7 +279,7 @@ namespace AltV.Net
             unsafe
             {
                 var passwordPtr = AltNative.StringUtils.StringToHGlobalUtf8(password);
-                Library.Core_SetPassword(NativePointer, passwordPtr);
+                Library.Server.Core_SetPassword(NativePointer, passwordPtr);
                 Marshal.FreeHGlobal(passwordPtr);
             }
         }
@@ -295,9 +290,9 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    var ptr = Library.Server_GetVehicleModelInfo(NativePointer, u);
+                    var ptr = Library.Server.Core_GetVehicleModelInfo(NativePointer, u);
                     var structure = Marshal.PtrToStructure<VehicleModelInfo>(ptr);
-                    Library.Server_DeallocVehicleModelInfo(ptr);
+                    Library.Server.Core_DeallocVehicleModelInfo(ptr);
                     return structure;
                 }
             });
@@ -307,7 +302,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                Library.Core_StopServer(NativePointer);  
+                Library.Server.Core_StopServer(NativePointer);  
             }
         }
 
@@ -342,7 +337,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                Library.Server_TriggerServerEvent(NativePointer, eventNamePtr, args, args.Length);
+                Library.Server.Core_TriggerServerEvent(NativePointer, eventNamePtr, args, args.Length);
             }
         }
 
@@ -396,7 +391,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                Library.Server_TriggerClientEvent(NativePointer, player.NativePointer,
+                Library.Server.Core_TriggerClientEvent(NativePointer, player.PlayerNativePointer,
                     eventNamePtr, args, args.Length);
             }
         }
@@ -447,7 +442,7 @@ namespace AltV.Net
                     mValuePointers[i] = args[i].nativePointer;
                 }
 
-                Library.Server_TriggerClientEventForAll(NativePointer, eventNamePtr, mValuePointers, args.Length);
+                Library.Server.Core_TriggerClientEventForAll(NativePointer, eventNamePtr, mValuePointers, args.Length);
             }
         }
 
@@ -462,7 +457,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                Library.Server_TriggerClientEventForAll(NativePointer, eventNamePtr, args, args.Length);
+                Library.Server.Core_TriggerClientEventForAll(NativePointer, eventNamePtr, args, args.Length);
             }
         }
 
@@ -527,9 +522,9 @@ namespace AltV.Net
                 var clPtrs = new IntPtr[size];
                 for (var i = 0; i < size; i++)
                 {
-                    clPtrs[i] = clients[i].NativePointer;
+                    clPtrs[i] = clients[i].PlayerNativePointer;
                 }
-                Library.Server_TriggerClientEventForSome(NativePointer, clPtrs, size,
+                Library.Server.Core_TriggerClientEventForSome(NativePointer, clPtrs, size,
                     eventNamePtr, args, args.Length);
             }
         }
@@ -575,7 +570,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 ushort id = default;
-                var ptr = Library.Server_CreateVehicle(NativePointer, model, pos, rotation, &id);
+                var ptr = Library.Server.Core_CreateVehicle(NativePointer, model, pos, rotation, &id);
                 if (ptr == IntPtr.Zero) return null;
                 vehiclePool.Create(this, ptr, id, out var vehicle);
                 return vehicle;
@@ -588,7 +583,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                var ptr = Library.Server_CreateCheckpoint(NativePointer, type, pos, radius, height, color);
+                var ptr = Library.Server.Core_CreateCheckpoint(NativePointer, type, pos, radius, height, color);
                 if (ptr == IntPtr.Zero) return null;
                 checkpointPool.Create(this, ptr, out var checkpoint);
                 return checkpoint;
@@ -600,7 +595,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                var ptr = Library.Server_CreateBlip(NativePointer, player?.NativePointer ?? IntPtr.Zero,
+                var ptr = Library.Server.Core_CreateBlip(NativePointer, player?.PlayerNativePointer ?? IntPtr.Zero,
                     type, pos);
                 if (ptr == IntPtr.Zero) return null;
                 blipPool.Create(this, ptr, out var blip);
@@ -613,26 +608,13 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                if (entityAttach is IPlayer playerAttach)
-                {
-                    var ptr = Library.Server_CreateBlipAttachedPlayer(NativePointer,
-                        player?.NativePointer ?? IntPtr.Zero,
-                        type, playerAttach.NativePointer);
-                    if (ptr == IntPtr.Zero) return null;
-                    blipPool.Create(this, ptr, out var blip);
-                    return blip;
-                }
-                if (entityAttach is IVehicle vehicleAttach)
-                {
-                    var ptr = Library.Server_CreateBlipAttachedVehicle(NativePointer,
-                        player?.NativePointer ?? IntPtr.Zero,
-                        type, vehicleAttach.NativePointer);
-                    if (ptr == IntPtr.Zero) return null;
-                    blipPool.Create(this, ptr, out var blip);
-                    return blip;
-                }
-
-                return null;
+                
+                var ptr = Library.Server.Core_CreateBlipAttached(NativePointer,
+                    player?.PlayerNativePointer ?? IntPtr.Zero,
+                    type, entityAttach.EntityNativePointer);
+                if (ptr == IntPtr.Zero) return null;
+                blipPool.Create(this, ptr, out var blip);
+                return blip;
             }
         }
 
@@ -641,7 +623,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                var ptr = Library.Server_CreateVoiceChannel(NativePointer,
+                var ptr = Library.Server.Core_CreateVoiceChannel(NativePointer,
                     spatial ? (byte) 1 : (byte) 0, maxDistance);
                 if (ptr == IntPtr.Zero) return null;
                 voiceChannelPool.Create(this, ptr, out var voiceChannel);
@@ -654,7 +636,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                var ptr = Library.Server_CreateColShapeCylinder(NativePointer, pos, radius, height);
+                var ptr = Library.Server.Core_CreateColShapeCylinder(NativePointer, pos, radius, height);
                 if (ptr == IntPtr.Zero) return null;
                 colShapePool.Create(this, ptr, out var colShape);
                 return colShape;
@@ -666,7 +648,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                var ptr = Library.Server_CreateColShapeSphere(NativePointer, pos, radius);
+                var ptr = Library.Server.Core_CreateColShapeSphere(NativePointer, pos, radius);
                 if (ptr == IntPtr.Zero) return null;
                 colShapePool.Create(this, ptr, out var colShape);
                 return colShape;
@@ -678,7 +660,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                var ptr = Library.Server_CreateColShapeCircle(NativePointer, pos, radius);
+                var ptr = Library.Server.Core_CreateColShapeCircle(NativePointer, pos, radius);
                 if (ptr == IntPtr.Zero) return null;
                 colShapePool.Create(this, ptr, out var colShape);
                 return colShape;
@@ -690,7 +672,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                var ptr = Library.Server_CreateColShapeCube(NativePointer, pos, pos2);
+                var ptr = Library.Server.Core_CreateColShapeCube(NativePointer, pos, pos2);
                 if (ptr == IntPtr.Zero) return null;
                 colShapePool.Create(this, ptr, out var colShape);
                 return colShape;
@@ -702,7 +684,7 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                var ptr = Library.Server_CreateColShapeRectangle(NativePointer, x1, y1, x2, y2, z);
+                var ptr = Library.Server.Core_CreateColShapeRectangle(NativePointer, x1, y1, x2, y2, z);
                 if (ptr == IntPtr.Zero) return null;
                 colShapePool.Create(this, ptr, out var colShape);
                 return colShape;
@@ -715,7 +697,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 int size = points.Count();
-                var ptr = Library.Server_CreateColShapePolygon(NativePointer, minZ, maxZ, points, size);
+                var ptr = Library.Server.Core_CreateColShapePolygon(NativePointer, minZ, maxZ, points, size);
                 if (ptr == IntPtr.Zero) return null;
                 colShapePool.Create(this, ptr, out var colShape);
                 return colShape;
@@ -729,7 +711,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Library.Server_DestroyBlip(NativePointer, blip.NativePointer);
+                    Library.Server.Core_DestroyBlip(NativePointer, blip.BlipNativePointer);
                 }
             }
         }
@@ -741,7 +723,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Library.Server_DestroyCheckpoint(NativePointer, checkpoint.NativePointer);
+                    Library.Server.Core_DestroyCheckpoint(NativePointer, checkpoint.CheckpointNativePointer);
                 }
             }
         }
@@ -753,7 +735,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Library.Server_DestroyVehicle(NativePointer, vehicle.NativePointer);
+                    Library.Server.Core_DestroyVehicle(NativePointer, vehicle.VehicleNativePointer);
                 }
             }
         }
@@ -764,7 +746,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Library.Server_DestroyVoiceChannel(NativePointer, channel.NativePointer);
+                    Library.Server.Core_DestroyVoiceChannel(NativePointer, channel.VoiceChannelNativePointer);
                 }
             }
         }
@@ -776,7 +758,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Library.Server_DestroyColShape(NativePointer, colShape.NativePointer);
+                    Library.Server.Core_DestroyColShape(NativePointer, colShape.ColShapeNativePointer);
                 }
             }
         }
@@ -786,7 +768,7 @@ namespace AltV.Net
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
-                var resourcePointer = Library.Server_GetResource(NativePointer, stringPtr);
+                var resourcePointer = Library.Server.Core_GetResource(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
                 return !nativeResourcePool.GetOrCreate(Library, NativePointer, resourcePointer, out var nativeResource)
                     ? null
@@ -801,14 +783,15 @@ namespace AltV.Net
                 : nativeResource;
         }
 
-        public IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation)
+        public IntPtr CreateVehicleEntity(out ushort id, out IntPtr vehiclePointer, uint model, Position pos, Rotation rotation)
         {
             unsafe
             {
                 ushort pId;
-                var pointer = Library.Server_CreateVehicle(NativePointer, model, pos, rotation, &pId);
+                var pointer = Library.Server.Core_CreateVehicle(NativePointer, model, pos, rotation, &pId);
                 id = pId;
-                return pointer;
+                vehiclePointer = pointer;
+                return Library.Shared.Vehicle_GetEntity(pointer);
             }
         }
 
@@ -817,9 +800,9 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                var playerCount = Library.Server_GetPlayerCount(NativePointer);
+                var playerCount = Library.Server.Core_GetPlayerCount(NativePointer);
                 var pointers = new IntPtr[playerCount];
-                Library.Server_GetPlayers(NativePointer, pointers, playerCount);
+                Library.Server.Core_GetPlayers(NativePointer, pointers, playerCount);
                 var players = new IPlayer[playerCount];
                 for (ulong i = 0; i < playerCount; i++)
                 {
@@ -839,9 +822,9 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                var vehicleCount = Library.Server_GetVehicleCount(NativePointer);
+                var vehicleCount = Library.Server.Core_GetVehicleCount(NativePointer);
                 var pointers = new IntPtr[vehicleCount];
-                Library.Server_GetVehicles(NativePointer, pointers, vehicleCount);
+                Library.Server.Core_GetVehicles(NativePointer, pointers, vehicleCount);
                 var vehicles = new IVehicle[vehicleCount];
                 for (ulong i = 0; i < vehicleCount; i++)
                 {
@@ -862,7 +845,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 var type = (byte) BaseObjectType.Undefined;
-                var entityPointer = Library.Server_GetEntityById(NativePointer, id, &type);
+                var entityPointer = Library.Server.Core_GetEntityById(NativePointer, id, &type);
                 if (entityPointer == IntPtr.Zero) return null;
                 switch (type)
                 {
@@ -882,7 +865,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
-                Library.Server_StartResource(NativePointer, namePtr);
+                Library.Server.Core_StartResource(NativePointer, namePtr);
                 Marshal.FreeHGlobal(namePtr);
             }
         }
@@ -893,7 +876,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
-                Library.Server_StopResource(NativePointer, namePtr);
+                Library.Server.Core_StopResource(NativePointer, namePtr);
                 Marshal.FreeHGlobal(namePtr);
             }
         }
@@ -904,7 +887,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 var namePtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
-                Library.Server_RestartResource(NativePointer, namePtr);
+                Library.Server.Core_RestartResource(NativePointer, namePtr);
                 Marshal.FreeHGlobal(namePtr);
             }
         }
@@ -915,7 +898,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                value = new MValueConst(Library.Server_GetMetaData(NativePointer, stringPtr));
+                value = new MValueConst(Library.Server.Core_GetMetaData(NativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
@@ -927,7 +910,7 @@ namespace AltV.Net
                 CheckIfCallIsValid();
                 CreateMValue(out var mValue, value);
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                Library.Server_SetMetaData(NativePointer, stringPtr, mValue.nativePointer);
+                Library.Server.Core_SetMetaData(NativePointer, stringPtr, mValue.nativePointer);
                 Marshal.FreeHGlobal(stringPtr);
                 mValue.Dispose();
             }
@@ -939,7 +922,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                var result = Library.Server_HasMetaData(NativePointer, stringPtr);
+                var result = Library.Server.Core_HasMetaData(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
                 return result == 1;
             }
@@ -951,7 +934,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                Library.Server_DeleteMetaData(NativePointer, stringPtr);
+                Library.Server.Core_DeleteMetaData(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
@@ -962,7 +945,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                value = new MValueConst(Library.Server_GetSyncedMetaData(NativePointer, stringPtr));
+                value = new MValueConst(Library.Server.Core_GetSyncedMetaData(NativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
@@ -974,7 +957,7 @@ namespace AltV.Net
                 CheckIfCallIsValid();
                 CreateMValue(out var mValue, value);
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                Library.Server_SetSyncedMetaData(NativePointer, stringPtr, mValue.nativePointer);
+                Library.Server.Core_SetSyncedMetaData(NativePointer, stringPtr, mValue.nativePointer);
                 Marshal.FreeHGlobal(stringPtr);
                 mValue.Dispose();
             }
@@ -986,7 +969,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                var result = Library.Server_HasSyncedMetaData(NativePointer, stringPtr);
+                var result = Library.Server.Core_HasSyncedMetaData(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
                 return result == 1;
             }
@@ -998,7 +981,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                Library.Server_DeleteSyncedMetaData(NativePointer, stringPtr);
+                Library.Server.Core_DeleteSyncedMetaData(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
@@ -1007,7 +990,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Nil, Library.Core_CreateMValueNil(NativePointer));
+                mValue = new MValueConst(MValueConst.Type.Nil, Library.Shared.Core_CreateMValueNil(NativePointer));
             }
         }
 
@@ -1016,7 +999,7 @@ namespace AltV.Net
             unsafe
             {
                 mValue = new MValueConst(MValueConst.Type.Bool,
-                    Library.Core_CreateMValueBool(NativePointer, value ? (byte) 1 : (byte) 0));
+                    Library.Shared.Core_CreateMValueBool(NativePointer, value ? (byte) 1 : (byte) 0));
             }
         }
 
@@ -1024,7 +1007,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Int, Library.Core_CreateMValueInt(NativePointer, value));
+                mValue = new MValueConst(MValueConst.Type.Int, Library.Shared.Core_CreateMValueInt(NativePointer, value));
             }
         }
 
@@ -1033,7 +1016,7 @@ namespace AltV.Net
             unsafe
             {
                 mValue = new MValueConst(MValueConst.Type.Uint,
-                    Library.Core_CreateMValueUInt(NativePointer, value));
+                    Library.Shared.Core_CreateMValueUInt(NativePointer, value));
             }
         }
 
@@ -1042,7 +1025,7 @@ namespace AltV.Net
             unsafe
             {
                 mValue = new MValueConst(MValueConst.Type.Double,
-                    Library.Core_CreateMValueDouble(NativePointer, value));
+                    Library.Shared.Core_CreateMValueDouble(NativePointer, value));
             }
         }
 
@@ -1052,7 +1035,7 @@ namespace AltV.Net
             {
                 var valuePtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
                 mValue = new MValueConst(MValueConst.Type.String,
-                    Library.Core_CreateMValueString(NativePointer, valuePtr));
+                    Library.Shared.Core_CreateMValueString(NativePointer, valuePtr));
                 Marshal.FreeHGlobal(valuePtr);
             }
         }
@@ -1068,7 +1051,7 @@ namespace AltV.Net
                 }
 
                 mValue = new MValueConst(MValueConst.Type.List,
-                    Library.Core_CreateMValueList(NativePointer, pointers, size));
+                    Library.Shared.Core_CreateMValueList(NativePointer, pointers, size));
             }
         }
 
@@ -1089,7 +1072,7 @@ namespace AltV.Net
                 }
 
                 mValue = new MValueConst(MValueConst.Type.Dict,
-                    Library.Core_CreateMValueDict(NativePointer, keyPointers, pointers, size));
+                    Library.Shared.Core_CreateMValueDict(NativePointer, keyPointers, pointers, size));
                 for (ulong i = 0; i < size; i++)
                 {
                     Marshal.FreeHGlobal(keyPointers[i]);  
@@ -1102,7 +1085,7 @@ namespace AltV.Net
             unsafe
             {
                 mValue = new MValueConst(MValueConst.Type.BaseObject,
-                    Library.Core_CreateMValueCheckpoint(NativePointer, value.NativePointer));
+                    Library.Shared.Core_CreateMValueCheckpoint(NativePointer, value.CheckpointNativePointer));
             }
         }
 
@@ -1111,7 +1094,7 @@ namespace AltV.Net
             unsafe
             {
                 mValue = new MValueConst(MValueConst.Type.BaseObject,
-                    Library.Core_CreateMValueBlip(NativePointer, value.NativePointer));
+                    Library.Shared.Core_CreateMValueBlip(NativePointer, value.BlipNativePointer));
             }
         }
 
@@ -1120,7 +1103,7 @@ namespace AltV.Net
             unsafe
             {
                 mValue = new MValueConst(MValueConst.Type.BaseObject,
-                    Library.Core_CreateMValueVoiceChannel(NativePointer, value.NativePointer));
+                    Library.Shared.Core_CreateMValueVoiceChannel(NativePointer, value.VoiceChannelNativePointer));
             }
         }
 
@@ -1129,7 +1112,7 @@ namespace AltV.Net
             unsafe
             {
                 mValue = new MValueConst(MValueConst.Type.BaseObject,
-                    Library.Core_CreateMValuePlayer(NativePointer, value.NativePointer));
+                    Library.Shared.Core_CreateMValuePlayer(NativePointer, value.PlayerNativePointer));
             }
         }
 
@@ -1138,7 +1121,7 @@ namespace AltV.Net
             unsafe
             {
                 mValue = new MValueConst(MValueConst.Type.BaseObject,
-                    Library.Core_CreateMValueVehicle(NativePointer, value.NativePointer));
+                    Library.Shared.Core_CreateMValueVehicle(NativePointer, value.VehicleNativePointer));
             }
         }
 
@@ -1147,7 +1130,7 @@ namespace AltV.Net
             unsafe
             {
                 mValue = new MValueConst(MValueConst.Type.Function,
-                    Library.Core_CreateMValueFunction(NativePointer, value));
+                    Library.Server.Core_CreateMValueFunction(NativePointer, value));
             }
         }
 
@@ -1156,7 +1139,7 @@ namespace AltV.Net
             unsafe
             {
                 mValue = new MValueConst(MValueConst.Type.Vector3,
-                    Library.Core_CreateMValueVector3(NativePointer, value));
+                    Library.Shared.Core_CreateMValueVector3(NativePointer, value));
             }
         }
         
@@ -1165,7 +1148,7 @@ namespace AltV.Net
             unsafe
             {
                 mValue = new MValueConst(MValueConst.Type.Vector2,
-                    Library.Core_CreateMValueVector2(NativePointer, value));
+                    Library.Shared.Core_CreateMValueVector2(NativePointer, value));
             }
         }
 
@@ -1174,7 +1157,7 @@ namespace AltV.Net
             unsafe
             {
                 mValue = new MValueConst(MValueConst.Type.Rgba,
-                    Library.Core_CreateMValueRgba(NativePointer, value));
+                    Library.Shared.Core_CreateMValueRgba(NativePointer, value));
             }
         }
 
@@ -1186,7 +1169,7 @@ namespace AltV.Net
                 var dataPtr = Marshal.AllocHGlobal(size);
                 Marshal.Copy(value, 0, dataPtr, size);
                 mValue = new MValueConst(MValueConst.Type.ByteArray,
-                    Library.Core_CreateMValueByteArray(NativePointer, (ulong) size, dataPtr));
+                    Library.Shared.Core_CreateMValueByteArray(NativePointer, (ulong) size, dataPtr));
                 Marshal.FreeHGlobal(dataPtr);
             }
         }
@@ -1392,7 +1375,7 @@ namespace AltV.Net
             unsafe
             {
                 var valuePtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
-                var result = Library.Server_FileExists(NativePointer, valuePtr);
+                var result = Library.Server.Core_FileExists(NativePointer, valuePtr);
                 Marshal.FreeHGlobal(valuePtr);
                 return result == 1;
             }
@@ -1404,7 +1387,7 @@ namespace AltV.Net
             {
                 var valuePtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
                 var ptr = IntPtr.Zero;
-                Library.Server_FileRead(NativePointer, valuePtr, &ptr);
+                Library.Server.Core_FileRead(NativePointer, valuePtr, &ptr);
                 var result = Marshal.PtrToStringUTF8(ptr);
                 Marshal.FreeHGlobal(valuePtr);
                 return result;
@@ -1416,7 +1399,7 @@ namespace AltV.Net
             unsafe
             {
                 var stringResult = Marshal.PtrToStringUTF8(str, size);
-                Library.FreeString(str);
+                Library.Shared.FreeString(str);
                 return stringResult;
             }
         }

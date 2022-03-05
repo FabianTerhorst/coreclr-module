@@ -1,9 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Pools;
+
+[assembly: InternalsVisibleTo("AltV.Net")]
+[assembly: InternalsVisibleTo("AltV.Net.Mock")]
+[assembly: InternalsVisibleTo("AltV.Net.Mock2")]
+[assembly: InternalsVisibleTo("AltV.Net.Async")]
 
 namespace AltV.Net
 {

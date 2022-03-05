@@ -61,10 +61,6 @@ alt::MValueConst* Entity_GetSyncedMetaData(alt::IEntity* Entity, const char* key
 }
 
 #ifdef ALT_SERVER_API
-int32_t Entity_GetDimension(alt::IEntity* entity) {
-    return entity->GetDimension();
-}
-
 void Entity_SetNetOwner(alt::IEntity* entity, alt::IPlayer* networkOwnerPlayer, uint8_t disableMigration) {
     entity->SetNetworkOwner(networkOwnerPlayer, disableMigration);
 }
@@ -75,10 +71,6 @@ void Entity_SetRotation(alt::IEntity* entity, rotation_t rot) {
     rotation.pitch = rot.pitch;
     rotation.yaw = rot.yaw;
     entity->SetRotation(rotation);
-}
-
-void Entity_SetDimension(alt::IEntity* entity, int32_t dimension) {
-    entity->SetDimension(dimension);
 }
 
 void Entity_SetStreamSyncedMetaData(alt::IEntity* entity, const char* key, alt::MValueConst* val) {

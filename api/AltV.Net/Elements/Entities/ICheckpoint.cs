@@ -1,9 +1,12 @@
+using System;
 using AltV.Net.Data;
 
 namespace AltV.Net.Elements.Entities
 {
     public interface ICheckpoint : IColShape
     {
+        IntPtr CheckpointNativePointer { get; }
+        
         /// <summary>
         /// Gets or sets the checkpoint type
         /// </summary>

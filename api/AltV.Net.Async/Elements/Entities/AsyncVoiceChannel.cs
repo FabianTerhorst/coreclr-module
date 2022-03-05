@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Async.Elements.Entities
@@ -8,6 +9,8 @@ namespace AltV.Net.Async.Elements.Entities
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
     public class AsyncVoiceChannel<TVoiceChannel> : AsyncBaseObject<TVoiceChannel>, IVoiceChannel where TVoiceChannel: class, IVoiceChannel
     {
+        public IntPtr VoiceChannelNativePointer => BaseObject.VoiceChannelNativePointer;
+        
         public bool IsSpatial
         {
             get

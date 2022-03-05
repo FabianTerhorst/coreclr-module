@@ -697,10 +697,10 @@ namespace AltV.Net.FunctionParser
 
             unsafe
             {
-                var length = Alt.Server.Library.MValueConst_GetDictSize(mValue.nativePointer);
+                var length = Alt.Server.Library.Shared.MValueConst_GetDictSize(mValue.nativePointer);
                 var keyPointers = new IntPtr[length];
                 var pointerValues = new IntPtr[length];
-                Alt.Server.Library.MValueConst_GetDict(mValue.nativePointer, keyPointers, pointerValues);
+                Alt.Server.Library.Shared.MValueConst_GetDict(mValue.nativePointer, keyPointers, pointerValues);
 
 
                 var strings = new string[length];
@@ -708,7 +708,7 @@ namespace AltV.Net.FunctionParser
                 for (ulong i = 0; i < length; i++)
                 {
                     strings[i] = Marshal.PtrToStringUTF8(keyPointers[i]);
-                    Alt.Server.Library.FreeCharArray(keyPointers[i]);
+                    Alt.Server.Library.Shared.FreeCharArray(keyPointers[i]);
                     valueArray[i] = new MValueConst(pointerValues[i]);
                 }
 

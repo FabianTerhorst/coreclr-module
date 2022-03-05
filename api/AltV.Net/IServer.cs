@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using AltV.Net.CApi;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -8,13 +9,11 @@ using AltV.Net.Native;
 
 namespace AltV.Net
 {
-    public interface IServer
+    public interface IServer : ICApiCore
     {
         string Version { get; }
         
         string Branch { get; }
-        
-        public ILibrary Library { get; }
         
         int NetTime { get; }
 
@@ -147,7 +146,7 @@ namespace AltV.Net
 
         // Only for advanced use cases
 
-        IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation);
+        IntPtr CreateVehicleEntity(out ushort id, out IntPtr vehiclePointer, uint model, Position pos, Rotation rotation);
 
         IPlayer[] GetPlayers();
 

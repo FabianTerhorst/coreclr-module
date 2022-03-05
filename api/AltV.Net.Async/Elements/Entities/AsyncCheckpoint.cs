@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 
@@ -8,6 +9,8 @@ namespace AltV.Net.Async.Elements.Entities
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
     public class AsyncCheckpoint<TCheckpoint> : AsyncColShape<TCheckpoint>, ICheckpoint where TCheckpoint: class, ICheckpoint
     {
+        public IntPtr CheckpointNativePointer => BaseObject.CheckpointNativePointer;
+        
         public byte CheckpointType
         {
             get

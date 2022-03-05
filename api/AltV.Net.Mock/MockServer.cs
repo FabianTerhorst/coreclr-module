@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using AltV.Net.CApi;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
@@ -362,6 +363,9 @@ namespace AltV.Net.Mock
         public INativeResource GetResource(IntPtr resourcePointer)
         {
             return new NativeResource(null, IntPtr.Zero, IntPtr.Zero);
+        }
+        public IntPtr CreateVehicleEntity(out ushort id, out IntPtr vehiclePointer, uint model, Position pos, Rotation rotation)
+        {
         }
 
         public IPlayer[] GetPlayers()

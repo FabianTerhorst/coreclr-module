@@ -1,3 +1,4 @@
+using System;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 
@@ -5,6 +6,8 @@ namespace AltV.Net.Elements.Entities
 {
     public interface IEntity : IWorldObject
     {
+        IntPtr EntityNativePointer { get; }
+        
         /// <summary>
         /// Get the entity id.
         /// </summary>

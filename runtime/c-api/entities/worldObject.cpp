@@ -22,6 +22,14 @@ void WorldObject_GetPositionCoords(alt::IWorldObject* worldObject, float *positi
 }
 
 #ifdef ALT_SERVER_API
+int32_t WorldObject_GetDimension(alt::IWorldObject* worldObject) {
+    return worldObject->GetDimension();
+}
+
+void WorldObject_SetDimension(alt::IWorldObject* worldObject, int32_t dimension) {
+    worldObject->SetDimension(dimension);
+}
+
 void WorldObject_SetPosition(alt::IWorldObject* worldObject, position_t pos) {
     alt::Position position;
     position.x = pos.x;

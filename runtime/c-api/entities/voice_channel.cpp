@@ -1,5 +1,10 @@
 #include "voice_channel.h"
 
+#ifdef ALT_SERVER_API
+alt::IBaseObject* VoiceChannel_GetBaseObject(alt::IVoiceChannel* channel) {
+    return dynamic_cast<alt::IBaseObject*>(channel);
+}
+
 alt::MValueConst* VoiceChannel_GetMetaData(alt::IVoiceChannel* voiceChannel, const char* key) {
     return new alt::MValueConst(voiceChannel->GetMetaData(key));
 }
@@ -60,3 +65,4 @@ uint8_t VoiceChannel_IsSpatial(alt::IVoiceChannel* channel) {
 float VoiceChannel_GetMaxDistance(alt::IVoiceChannel* channel) {
     return channel->GetMaxDistance();
 }
+#endif

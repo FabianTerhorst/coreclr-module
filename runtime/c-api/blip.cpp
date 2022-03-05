@@ -1,56 +1,9 @@
 #include "blip.h"
 
-// Entity
-
-void Blip_GetPosition(alt::IBlip* blip, position_t &position) {
-    auto blipPosition = blip->GetPosition();
-    position.x = blipPosition.x;
-    position.y = blipPosition.y;
-    position.z = blipPosition.z;
+#ifdef ALT_SERVER_API
+alt::IWorldObject* Blip_GetWorldObject(alt::IBlip* blip) {
+    return dynamic_cast<alt::IWorldObject*>(blip);
 }
-
-void Blip_SetPosition(alt::IBlip* blip, position_t pos) {
-    alt::Position position;
-    position.x = pos.x;
-    position.y = pos.y;
-    position.z = pos.z;
-    blip->SetPosition(position);
-}
-
-int32_t Blip_GetDimension(alt::IBlip* blip) {
-    return blip->GetDimension();
-}
-
-void Blip_SetDimension(alt::IBlip* blip, int32_t dimension) {
-    blip->SetDimension(dimension);
-}
-
-alt::MValueConst* Blip_GetMetaData(alt::IBlip* blip, const char* key) {
-    return new alt::MValueConst(blip->GetMetaData(key));
-}
-
-void Blip_SetMetaData(alt::IBlip* blip, const char* key, alt::MValueConst* val) {
-    if (val == nullptr) return;
-    blip->SetMetaData(key, val->Get()->Clone());
-}
-
-uint8_t Blip_HasMetaData(alt::IBlip* blip, const char* key) {
-    return blip->HasMetaData(key);
-}
-
-void Blip_DeleteMetaData(alt::IBlip* blip, const char* key) {
-    blip->DeleteMetaData(key);
-}
-
-void Blip_AddRef(alt::IBlip* blip) {
-    blip->AddRef();
-}
-
-void Blip_RemoveRef(alt::IBlip* blip) {
-    blip->RemoveRef();
-}
-
-// Blip
 
 uint8_t Blip_IsGlobal(alt::IBlip* blip) {
     return blip->IsGlobal();
@@ -354,3 +307,4 @@ void Blip_SetShrinked(alt::IBlip* blip, uint8_t state) {
 void Blip_Fade(alt::IBlip* blip, uint32_t opacity, uint32_t duration) {
     blip->Fade(opacity, duration);
 }
+#endif
