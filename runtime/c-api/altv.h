@@ -1,6 +1,7 @@
 #pragma once
 
 #include "utils/export.h"
+#include "utils/strings.h"
 #include "../../cpp-sdk/SDK.h"
 
 #ifdef __cplusplus
