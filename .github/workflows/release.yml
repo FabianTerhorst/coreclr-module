@@ -47,7 +47,7 @@ jobs:
   build-api:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
         with:
           submodules: recursive
       - name: Setup .NET Core
@@ -119,7 +119,7 @@ jobs:
               nethost: nethost-windows,
             }
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
         with:
           submodules: recursive
       - uses: actions/download-artifact@v3
@@ -173,7 +173,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-module
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
         with:
           submodules: recursive
       - name: Setup .NET Core
