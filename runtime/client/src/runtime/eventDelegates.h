@@ -14,3 +14,4 @@ typedef void (* RemoveVehicleDelegate_t)(uint16_t);
 
 typedef void (* PlayerSpawnDelegate_t)();
 typedef void (* PlayerDisconnectDelegate_t)();
+typedef void (* PlayerEnterVehicleDelegate_t)(uint16_t id, uint8_t seat);

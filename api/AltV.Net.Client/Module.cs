@@ -49,6 +49,9 @@ namespace AltV.Net.Client
         
         internal readonly IEventHandler<PlayerDisconnectDelegate> DisconnectEventHandler =
             new HashSetEventHandler<PlayerDisconnectDelegate>();
+        
+        internal readonly IEventHandler<PlayerEnterVehicleDelegate> EnterVehicleEventHandler =
+            new HashSetEventHandler<PlayerEnterVehicleDelegate>();
 
         public void OnServerEvent(string name, IntPtr[] args)
         {
@@ -82,16 +85,22 @@ namespace AltV.Net.Client
             TickEventHandler.GetEvents().ForEachCatching(fn => fn(), $"event {nameof(OnTick)}");
         }
 
-        public void OnSpawn()
+        public void OnPlayerSpawn()
         {
-            SpawnEventHandler.GetEvents().ForEachCatching(fn => fn(), $"event {nameof(OnSpawn)}");
+            SpawnEventHandler.GetEvents().ForEachCatching(fn => fn(), $"event {nameof(OnPlayerSpawn)}");
         }
         
-        public void OnDisconnect()
+        public void OnPlayerDisconnect()
         {
-            DisconnectEventHandler.GetEvents().ForEachCatching(fn => fn(), $"event {nameof(OnDisconnect)}");
+            DisconnectEventHandler.GetEvents().ForEachCatching(fn => fn(), $"event {nameof(OnPlayerDisconnect)}");
         }
 
+        public void OnPlayerEnterVehicle(ushort id, byte seat)
+        {
+            VehiclePool.Get(id, out var vehicle);
+            EnterVehicleEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, seat), $"event {nameof(OnPlayerEnterVehicle)}");
+        }
+        
         public void OnCreatePlayer(IntPtr pointer, ushort id)
         {
             Alt.Log("Creating player " + id);

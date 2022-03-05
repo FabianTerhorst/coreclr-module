@@ -25,3 +25,4 @@ SetDelegate(RemoveVehicle);
 
 SetDelegate(PlayerSpawn);
 SetDelegate(PlayerDisconnect);
+SetDelegate(PlayerEnterVehicle);

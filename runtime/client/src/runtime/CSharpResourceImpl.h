@@ -38,6 +38,7 @@ public:
 
     PlayerSpawnDelegate_t OnPlayerSpawnDelegate = nullptr;
     PlayerDisconnectDelegate_t OnPlayerDisconnectDelegate = nullptr;
+    PlayerEnterVehicleDelegate_t OnPlayerEnterVehicleDelegate = nullptr;
 
 
 

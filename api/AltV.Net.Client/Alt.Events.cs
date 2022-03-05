@@ -17,16 +17,22 @@ namespace AltV.Net.Client
             remove => Module.ConsoleCommandEventHandler.Remove(value);
         }
         
-        public static event PlayerSpawnDelegate OnSpawn
+        public static event PlayerSpawnDelegate OnPlayerSpawn
         {
             add => Module.SpawnEventHandler.Add(value);
             remove => Module.SpawnEventHandler.Remove(value);
         }
         
-        public static event PlayerDisconnectDelegate OnDisconnect
+        public static event PlayerDisconnectDelegate OnPlayerDisconnect
         {
             add => Module.DisconnectEventHandler.Add(value);
             remove => Module.DisconnectEventHandler.Remove(value);
+        }
+        
+        public static event PlayerEnterVehicleDelegate OnPlayerEnterVehicle
+        {
+            add => Module.EnterVehicleEventHandler.Add(value);
+            remove => Module.EnterVehicleEventHandler.Remove(value);
         }
         
         public static void OnServer(string eventName, Function.Function function) => Module.AddServerEventListener(eventName, function);

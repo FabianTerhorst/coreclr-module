@@ -16,5 +16,6 @@ EXPORT void Event_SetRemovePlayerDelegate(CSharpResourceImpl* resource,  /** Rem
 EXPORT void Event_SetCreateVehicleDelegate(CSharpResourceImpl* resource, /** CreateVehicleModuleDelegate */ CreateVehicleDelegate_t delegate);
 EXPORT void Event_SetRemoveVehicleDelegate(CSharpResourceImpl* resource,  /** RemoveVehicleModuleDelegate */ RemoveVehicleDelegate_t delegate);
 
-EXPORT void Event_SetPlayerSpawnDelegate(CSharpResourceImpl* resource, /** PlayerSpawnDelegate */ PlayerSpawnDelegate_t delegate);
-EXPORT void Event_SetPlayerDisconnectDelegate(CSharpResourceImpl* resource, /** PlayerDisconnectDelegate */ PlayerDisconnectDelegate_t delegate);
+EXPORT void Event_SetPlayerSpawnDelegate(CSharpResourceImpl* resource, /** PlayerSpawnModuleDelegate */ PlayerSpawnDelegate_t delegate);
+EXPORT void Event_SetPlayerDisconnectDelegate(CSharpResourceImpl* resource, /** PlayerDisconnectModuleDelegate */ PlayerDisconnectDelegate_t delegate);
+EXPORT void Event_SetPlayerEnterVehicleDelegate(CSharpResourceImpl* resource, /** PlayerEnterVehicleModuleDelegate */ PlayerEnterVehicleDelegate_t delegate);

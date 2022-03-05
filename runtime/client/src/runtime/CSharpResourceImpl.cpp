@@ -93,6 +93,12 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             OnPlayerDisconnectDelegate();
             break;
         }
+        case alt::CEvent::Type::PLAYER_ENTER_VEHICLE:
+        {
+            auto playerEnterVehicleEvent = (alt::CPlayerEnterVehicleEvent*)ev;
+            OnPlayerEnterVehicleDelegate(playerEnterVehicleEvent->GetTarget()->GetID(), playerEnterVehicleEvent->GetSeat());
+            break;
+        }
     }
 
     return true;
@@ -170,4 +176,5 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnPlayerSpawnDelegate = [](){};
     OnPlayerDisconnectDelegate = [](){};
+    OnPlayerEnterVehicleDelegate = [](auto var, auto var2) {};
 }

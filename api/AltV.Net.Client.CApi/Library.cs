@@ -36,6 +36,7 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, RemoveVehicleModuleDelegate, void> Event_SetRemoveVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, PlayerSpawnModuleDelegate, void> Event_SetPlayerSpawnDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, PlayerDisconnectModuleDelegate, void> Event_SetPlayerDisconnectDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, PlayerEnterVehicleModuleDelegate, void> Event_SetPlayerEnterVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
@@ -295,6 +296,7 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, RemoveVehicleModuleDelegate, void> Event_SetRemoveVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, PlayerSpawnModuleDelegate, void> Event_SetPlayerSpawnDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, PlayerDisconnectModuleDelegate, void> Event_SetPlayerDisconnectDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, PlayerEnterVehicleModuleDelegate, void> Event_SetPlayerEnterVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
@@ -552,6 +554,7 @@ namespace AltV.Net.Client.CApi
             Event_SetRemoveVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, RemoveVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveVehicleDelegate");
             Event_SetPlayerSpawnDelegate = (delegate* unmanaged[Cdecl]<nint, PlayerSpawnModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerSpawnDelegate");
             Event_SetPlayerDisconnectDelegate = (delegate* unmanaged[Cdecl]<nint, PlayerDisconnectModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerDisconnectDelegate");
+            Event_SetPlayerEnterVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, PlayerEnterVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerEnterVehicleDelegate");
             FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) NativeLibrary.GetExport(handle, "FreeUIntArray");
             FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeCharArray");
             FreeString = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeString");

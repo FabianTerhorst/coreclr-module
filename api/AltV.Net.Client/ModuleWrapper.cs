@@ -100,12 +100,17 @@ namespace AltV.Net.Client
 
         public static void OnPlayerSpawn()
         {
-            _module.OnSpawn();
+            _module.OnPlayerSpawn();
         }
         
         public static void OnPlayerDisconnect()
         {
-            _module.OnDisconnect();
+            _module.OnPlayerDisconnect();
+        }
+
+        public static void OnPlayerEnterVehicle(ushort id, byte seat)
+        {
+            _module.OnPlayerEnterVehicle(id, seat);
         }
         
         public static void OnServerEvent(string name, IntPtr pointer, ulong size)

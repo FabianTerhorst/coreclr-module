@@ -62,6 +62,11 @@ namespace AltV.Net.Client.Runtime
                 PlayerDisconnectModuleDelegate onPlayerDisconnect = ModuleWrapper.OnPlayerDisconnect;
                 _handles.AddFirst(GCHandle.Alloc(onPlayerDisconnect));
                 _library.Event_SetPlayerDisconnectDelegate(this.NativePointer, onPlayerDisconnect);
+                
+                PlayerEnterVehicleModuleDelegate onPlayerEnterVehicle = ModuleWrapper.OnPlayerEnterVehicle;
+                _handles.AddFirst(GCHandle.Alloc(onPlayerEnterVehicle));
+                _library.Event_SetPlayerEnterVehicleDelegate(this.NativePointer, onPlayerEnterVehicle);
+                
             }
         }
         
