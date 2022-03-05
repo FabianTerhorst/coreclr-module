@@ -1303,14 +1303,14 @@ namespace AltV.Net.Elements.Entities
         }
 
         public Vehicle(IServer server, uint model, Position position, Rotation rotation) : this(
-            server, server.CreateVehicleEntity(out var id, out var vehiclePointer, model, position, rotation), id)
+            server, server.CreateVehicleEntity(out var id, model, position, rotation), id)
         {
-            this.VehicleNativePointer = vehiclePointer;
             Alt.Module.VehiclePool.Add(this);
         }
 
         public Vehicle(IServer server, IntPtr nativePointer, ushort id) : base(server, GetEntityPointer(server, nativePointer), BaseObjectType.Vehicle, id)
         {
+            this.VehicleNativePointer = nativePointer;
         }
 
         public byte GetMod(byte category)

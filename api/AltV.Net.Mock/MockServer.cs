@@ -364,12 +364,6 @@ namespace AltV.Net.Mock
         {
             return new NativeResource(null, IntPtr.Zero, IntPtr.Zero);
         }
-        public IntPtr CreateVehicleEntity(out ushort id, out IntPtr vehiclePointer, uint model, Position pos, Rotation rotation)
-        {
-            id = 0;
-            vehiclePointer = IntPtr.Zero;
-            return IntPtr.Zero;
-        }
 
         public IPlayer[] GetPlayers()
         {

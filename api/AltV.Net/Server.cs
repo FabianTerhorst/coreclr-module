@@ -783,15 +783,14 @@ namespace AltV.Net
                 : nativeResource;
         }
 
-        public IntPtr CreateVehicleEntity(out ushort id, out IntPtr vehiclePointer, uint model, Position pos, Rotation rotation)
+        public IntPtr CreateVehicleEntity(out ushort id, uint model, Position pos, Rotation rotation)
         {
             unsafe
             {
                 ushort pId;
                 var pointer = Library.Server.Core_CreateVehicle(NativePointer, model, pos, rotation, &pId);
                 id = pId;
-                vehiclePointer = pointer;
-                return Library.Shared.Vehicle_GetEntity(pointer);
+                return pointer;
             }
         }
 
