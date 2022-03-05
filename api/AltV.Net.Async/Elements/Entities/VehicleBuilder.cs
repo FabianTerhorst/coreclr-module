@@ -10,6 +10,7 @@ using AltV.Net.Native;
 
 namespace AltV.Net.Async.Elements.Entities
 {
+    [Obsolete("Use Vehicle constructor instead")]
     public class VehicleBuilder : IVehicleBuilder
     {
         private readonly uint model;
