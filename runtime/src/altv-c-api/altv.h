@@ -8,6 +8,7 @@
 #include "vehicle.h"
 #include "mvalue.h"
 #include "function.h"
+#include "strings.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -20,6 +21,7 @@ EXPORT void FreeUIntArray(alt::Array<uint32_t> *array);
 /*EXPORT void FreeMValueArray(alt::Array<alt::MValue> *array);*/
 EXPORT void FreeCharArray(char charArray[]);
 EXPORT void FreeString(const char* string);
+EXPORT const char* GetVersionStatic(int32_t &size);
 #ifdef __cplusplus
 }
 #endif
