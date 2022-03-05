@@ -22,6 +22,7 @@ EXPORT void FreeUIntArray(alt::Array<uint32_t> *array);
 EXPORT void FreeCharArray(char charArray[]);
 EXPORT void FreeString(const char* string);
 EXPORT const char* GetVersionStatic(int32_t &size);
+EXPORT const char* GetBranchStatic(int32_t &size);
 #ifdef __cplusplus
 }
 #endif
