@@ -54,6 +54,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        [Obsolete("Use IsEntityIn instead")]
         public bool IsPlayerIn(IPlayer entity)
         {
             lock (BaseObject)
@@ -63,6 +64,7 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        [Obsolete("Use IsEntityIn instead")]
         public bool IsVehicleIn(IVehicle entity)
         {
             lock (BaseObject)

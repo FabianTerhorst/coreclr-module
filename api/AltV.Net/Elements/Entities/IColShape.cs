@@ -28,6 +28,7 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <param name="entity">The entity</param>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        [Obsolete("Use IsEntityIn instead")]
         bool IsPlayerIn(IPlayer entity);
         
         /// <summary>
@@ -35,6 +36,7 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <param name="entity">The entity</param>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        [Obsolete("Use IsEntityIn instead")]
         bool IsVehicleIn(IVehicle entity);
 		
         /// <summary>
