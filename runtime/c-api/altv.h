@@ -1,0 +1,24 @@
+#pragma once
+
+#include "blip.h"
+#include "checkpoint.h"
+#include "entities/player.h"
+#include "server.h"
+#include "entities/vehicle.h"
+#include "mvalue.h"
+#include "function.h"
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+EXPORT void FreeUIntArray(alt::Array<uint32_t> *array);
+//EXPORT void FreePlayerPointerArray(alt::Array<alt::IPlayer*> *array);
+//EXPORT void FreeStringViewArray(alt::Array<alt::StringView> *array);
+//EXPORT void FreeStringArray(alt::Array<alt::String>* array);
+/*EXPORT void FreeMValueArray(alt::Array<alt::MValue> *array);*/
+EXPORT void FreeCharArray(char charArray[]);
+EXPORT void FreeString(const char* string);
+#ifdef __cplusplus
+}
+#endif
