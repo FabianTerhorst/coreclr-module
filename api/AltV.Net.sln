@@ -54,8 +54,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.VehicleData", "Alt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.Async.CodeGen", "AltV.Net.Async.CodeGen\AltV.Net.Async.CodeGen.csproj", "{70A4DF19-8558-46AA-8B9B-BFB3EDA2A4FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.Shared", "AltV.Net.Shared\AltV.Net.Shared.csproj", "{BE4AF1F8-0CF1-43A8-BBAD-3402A4480D0E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.CApi", "AltV.Net.CApi\AltV.Net.CApi.csproj", "{0A90B1FB-E2DF-49CA-B937-ECF0B5FA565C}"
 EndProject
 Global
