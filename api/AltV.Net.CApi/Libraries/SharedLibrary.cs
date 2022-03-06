@@ -50,7 +50,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
+        public delegate* unmanaged[Cdecl]<int*, nint> GetBranchStatic { get; }
+        public delegate* unmanaged[Cdecl]<int*, nint> GetVersionStatic { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_AddRef { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], ulong, nint> MValueConst_CallFunction { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_Delete { get; }
@@ -146,7 +150,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetWorldObject { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasSyncedMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
+        public delegate* unmanaged[Cdecl]<int*, nint> GetBranchStatic { get; }
+        public delegate* unmanaged[Cdecl]<int*, nint> GetVersionStatic { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_AddRef { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], ulong, nint> MValueConst_CallFunction { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_Delete { get; }
@@ -242,7 +250,11 @@ namespace AltV.Net.CApi.Libraries
             Entity_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Entity_GetWorldObject");
             Entity_HasStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Entity_HasStreamSyncedMetaData");
             Entity_HasSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Entity_HasSyncedMetaData");
+            FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeCharArray");
+            FreeString = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeString");
             FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) NativeLibrary.GetExport(handle, "FreeUIntArray");
+            GetBranchStatic = (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetBranchStatic");
+            GetVersionStatic = (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetVersionStatic");
             MValueConst_AddRef = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "MValueConst_AddRef");
             MValueConst_CallFunction = (delegate* unmanaged[Cdecl]<nint, nint, nint[], ulong, nint>) NativeLibrary.GetExport(handle, "MValueConst_CallFunction");
             MValueConst_Delete = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "MValueConst_Delete");
