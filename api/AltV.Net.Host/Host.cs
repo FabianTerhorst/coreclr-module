@@ -123,8 +123,7 @@ namespace AltV.Net.Host
                             }
 
                             var fileName = Path.GetFileName(fullName);
-
-                            Console.WriteLine("dll:" + fileName);
+                            
                             using var stream = entry.Open();
                             byte[] bytes;
                             using (var ms = new MemoryStream())
@@ -153,8 +152,7 @@ namespace AltV.Net.Host
                             }
 
                             var fileName = Path.GetFileName(fullName);
-
-                            Console.WriteLine("pdb:" + fileName);
+                            
                             using var stream = entry.Open();
                             byte[] bytes;
                             using (var ms = new MemoryStream())
