@@ -3,7 +3,7 @@
 cat <<EOM >> version.h.tmp
 #pragma once
 
-#define CSHARP_VERSION "VERSION"
+#define CSHARP_VERSION "%VERSION%"
 EOM
 
 if [ -f version.h ]; then
