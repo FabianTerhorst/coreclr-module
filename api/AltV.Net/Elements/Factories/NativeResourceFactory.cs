@@ -1,4 +1,5 @@
 using System;
+using AltV.Net.CApi;
 using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Factories

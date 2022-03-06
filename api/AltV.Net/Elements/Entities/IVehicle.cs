@@ -1,3 +1,4 @@
+using System;
 using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Enums;
@@ -6,6 +7,7 @@ namespace AltV.Net.Elements.Entities
 {
     public interface IVehicle : IEntity
     {
+        IntPtr VehicleNativePointer { get; }
         /// <summary>
         /// Get the current driver of the 
         /// </summary>

@@ -10,6 +10,7 @@ using AltV.Net.Native;
 
 namespace AltV.Net.Async.Elements.Entities
 {
+    [Obsolete("Use Vehicle constructor instead")]
     public class VehicleBuilder : IVehicleBuilder
     {
         private readonly uint model;
@@ -35,7 +36,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetModKit(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetModKit(ptr, value);
                 }
             });
             return this;
@@ -47,7 +48,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetPrimaryColor(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetPrimaryColor(ptr, value);
                 }
             });
             return this;
@@ -59,7 +60,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetPrimaryColorRGB(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetPrimaryColorRGB(ptr, value);
                 }
             });
             return this;
@@ -71,7 +72,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetSecondaryColor(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetSecondaryColor(ptr, value);
                 }
             });
             return this;
@@ -83,7 +84,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetSecondaryColorRGB(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetSecondaryColorRGB(ptr, value);
                 }
             });
             return this;
@@ -95,7 +96,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetPearlColor(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetPearlColor(ptr, value);
                 }
             });
             return this;
@@ -107,7 +108,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetWheelColor(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetWheelColor(ptr, value);
                 }
             });
             return this;
@@ -119,7 +120,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetInteriorColor(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetInteriorColor(ptr, value);
                 }
             });
             return this;
@@ -131,7 +132,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetDashboardColor(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetDashboardColor(ptr, value);
                 }
             });
             return this;
@@ -143,7 +144,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetTireSmokeColor(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetTireSmokeColor(ptr, value);
                 }
             });
             return this;
@@ -155,7 +156,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetCustomTires(ptr, value ? (byte) 1 : (byte) 0);
+                    Alt.Server.Library.Server.Vehicle_SetCustomTires(ptr, value ? (byte) 1 : (byte) 0);
                 }
             });
             return this;
@@ -167,7 +168,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetSpecialDarkness(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetSpecialDarkness(ptr, value);
                 }
             });
             return this;
@@ -179,7 +180,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetNumberplateIndex(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetNumberplateIndex(ptr, value);
                 }
             });
             return this;
@@ -192,7 +193,8 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetNumberplateText(ptr, valuePtr);
+                    Alt.Server.Library.Server.Vehicle_SetNumberplateText(ptr, valuePtr);
+                    Marshal.FreeHGlobal(valuePtr);
                 }
             });
             return this;
@@ -204,7 +206,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetWindowTint(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetWindowTint(ptr, value);
                 }
             });
             return this;
@@ -216,7 +218,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetDirtLevel(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetDirtLevel(ptr, value);
                 }
             });
             return this;
@@ -228,7 +230,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetNeonColor(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetNeonColor(ptr, value);
                 }
             });
             return this;
@@ -240,7 +242,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetEngineOn(ptr, value ? (byte) 1 : (byte) 0);
+                    Alt.Server.Library.Server.Vehicle_SetEngineOn(ptr, value ? (byte) 1 : (byte) 0);
                 }
             });
             return this;
@@ -252,7 +254,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetHeadlightColor(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetHeadlightColor(ptr, value);
                 }
             });
             return this;
@@ -264,7 +266,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetSirenActive(ptr, value ? (byte) 1 : (byte) 0);
+                    Alt.Server.Library.Server.Vehicle_SetSirenActive(ptr, value ? (byte) 1 : (byte) 0);
                 }
             });
             return this;
@@ -276,7 +278,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetLockState(ptr, (byte) value);
+                    Alt.Server.Library.Server.Vehicle_SetLockState(ptr, (byte) value);
                 }
             });
             return this;
@@ -288,7 +290,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetRoofState(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetRoofState(ptr, value);
                 }
             });
             return this;
@@ -296,11 +298,13 @@ namespace AltV.Net.Async.Elements.Entities
 
         public IVehicleBuilder State(string value)
         {
+            var valuePtr = StringToHGlobalUtf8(value);
             Add(ptr =>
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_LoadGameStateFromBase64(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_LoadGameStateFromBase64(ptr, valuePtr);
+                    Marshal.FreeHGlobal(valuePtr);
                 }
             });
             return this;
@@ -312,7 +316,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetEngineHealth(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetEngineHealth(ptr, value);
                 }
             });
             return this;
@@ -324,7 +328,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetPetrolTankHealth(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetPetrolTankHealth(ptr, value);
                 }
             });
             return this;
@@ -336,7 +340,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetBodyHealth(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetBodyHealth(ptr, value);
                 }
             });
             return this;
@@ -348,7 +352,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_SetBodyAdditionalHealth(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_SetBodyAdditionalHealth(ptr, value);
                 }
             });
             return this;
@@ -356,11 +360,13 @@ namespace AltV.Net.Async.Elements.Entities
 
         public IVehicleBuilder HealthData(string value)
         {
+            var valuePtr = StringToHGlobalUtf8(value);
             Add(ptr =>
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_LoadHealthDataFromBase64(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_LoadHealthDataFromBase64(ptr, valuePtr);
+                    Marshal.FreeHGlobal(valuePtr);
                 }
             });
             return this;
@@ -368,11 +374,13 @@ namespace AltV.Net.Async.Elements.Entities
 
         public IVehicleBuilder DamageData(string value)
         {
+            var valuePtr = StringToHGlobalUtf8(value);
             Add(ptr =>
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_LoadDamageDataFromBase64(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_LoadDamageDataFromBase64(ptr, valuePtr);
+                    Marshal.FreeHGlobal(valuePtr);
                 }
             });
             return this;
@@ -380,11 +388,13 @@ namespace AltV.Net.Async.Elements.Entities
 
         public IVehicleBuilder Appearance(string value)
         {
+            var valuePtr = StringToHGlobalUtf8(value);
             Add(ptr =>
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_LoadAppearanceDataFromBase64(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_LoadAppearanceDataFromBase64(ptr, valuePtr);
+                    Marshal.FreeHGlobal(valuePtr);
                 }
             });
             return this;
@@ -392,11 +402,13 @@ namespace AltV.Net.Async.Elements.Entities
 
         public IVehicleBuilder ScriptData(string value)
         {
+            var valuePtr = StringToHGlobalUtf8(value);
             Add(ptr =>
             {
                 unsafe
                 {
-                    Alt.Server.Library.Vehicle_LoadScriptDataFromBase64(ptr, value);
+                    Alt.Server.Library.Server.Vehicle_LoadScriptDataFromBase64(ptr, valuePtr);
+                    Marshal.FreeHGlobal(valuePtr);
                 }
             });
             return this;
@@ -410,7 +422,7 @@ namespace AltV.Net.Async.Elements.Entities
                 unsafe
                 {
                     ushort id = default;
-                    var ptr = Alt.Server.Library.Server_CreateVehicle(((Server) Alt.Server).NativePointer, model,
+                    var ptr = Alt.Server.Library.Server.Core_CreateVehicle(((Server) Alt.Server).NativePointer, model,
                         position, rotation,
                         &id);
 

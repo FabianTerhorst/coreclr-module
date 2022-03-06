@@ -11,6 +11,7 @@ namespace AltV.Net.Async.Elements.Entities
     public class AsyncBaseObject<TBase> : IBaseObject where TBase : class, IBaseObject
     {
         public IntPtr NativePointer => BaseObject.NativePointer;
+        public IntPtr BaseObjectNativePointer => BaseObject.BaseObjectNativePointer;
 
         public bool Exists
         {

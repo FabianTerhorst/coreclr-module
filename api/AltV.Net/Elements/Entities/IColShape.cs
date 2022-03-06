@@ -1,7 +1,11 @@
+using System;
+
 namespace AltV.Net.Elements.Entities
 {
     public interface IColShape : IWorldObject
     {
+        IntPtr ColShapeNativePointer { get; }
+
         /// <summary>
         /// Returns the ColShape type
         /// </summary>
@@ -24,6 +28,7 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <param name="entity">The entity</param>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        [Obsolete("Use IsEntityIn instead")]
         bool IsPlayerIn(IPlayer entity);
         
         /// <summary>
@@ -31,6 +36,7 @@ namespace AltV.Net.Elements.Entities
         /// </summary>
         /// <param name="entity">The entity</param>
         /// <exception cref="EntityRemovedException">This entity was removed</exception>
+        [Obsolete("Use IsEntityIn instead")]
         bool IsVehicleIn(IVehicle entity);
 		
         /// <summary>

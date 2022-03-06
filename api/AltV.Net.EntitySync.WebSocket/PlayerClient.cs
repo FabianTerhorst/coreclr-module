@@ -12,7 +12,7 @@ namespace AltV.Net.EntitySync.WebSocket
 
         [DllImport(DllName, CallingConvention = NativeCallingConvention)]
         [SuppressUnmanagedCodeSecurity]
-        private static extern unsafe void Player_GetPositionCoords(void* player, float* positionX, float* positionY,
+        private static extern unsafe void WorldObject_GetPositionCoords(void* player, float* positionX, float* positionY,
             float* positionZ, int* dimension);
 
         private readonly IPlayer player;
@@ -93,7 +93,7 @@ namespace AltV.Net.EntitySync.WebSocket
                             float y;
                             float z;
                             int currDimension;
-                            Player_GetPositionCoords(player.NativePointer.ToPointer(), &x, &y, &z, &currDimension);
+                            WorldObject_GetPositionCoords(player.WorldObjectNativePointer.ToPointer(), &x, &y, &z, &currDimension);
                             position.X = x;
                             position.Y = y;
                             position.Z = z;

@@ -96,7 +96,7 @@ jobs:
         with:
           name: csharp-module-api
           path: ./api.tar
-  build-module:
+  build-server:
     runs-on: ${{ matrix.config.os }}
     needs: [build-api, fetch-nethost-linux, fetch-nethost-windows]
     strategy:
@@ -125,14 +125,14 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: ${{ matrix.config.nethost }}
-          path: ./runtime/src/nethost
-      - working-directory: ./runtime/src/nethost
+          path: ./runtime/nethost
+      - working-directory: ./runtime/nethost
         shell: bash
         run: |
           tar xvf libnethost.tar
           ls -l
           pwd
-      - working-directory: ./runtime
+      - working-directory: ./runtime/server
         shell: cmake -P {0}
         run: |
           set(ENV{CC} ${{ matrix.config.cc }})
@@ -146,19 +146,19 @@ jobs:
           if (NOT result EQUAL 0)
             message(FATAL_ERROR "Bad exit status")
           endif()
-      - working-directory: ./runtime
+      - working-directory: ./runtime/server
         shell: bash
         run: cmake --build build --config Release
       - if: ${{ runner.os == 'Linux' }}
         shell: bash
         run: |
           mkdir -p modules/linux/modules/
-          cp ./runtime/build/src/libcsharp-module.so ./modules/linux/modules
+          cp ./runtime/server/build/src/libcsharp-module.so ./modules/linux/modules
       - if: ${{ runner.os == 'Windows' }}
         shell: bash
         run: |
           mkdir -p modules/windows/modules/
-          cp ./runtime/build/src/Release/csharp-module.dll ./modules/windows/modules
+          cp ./runtime/server/build/src/Release/csharp-module.dll ./modules/windows/modules
       - id: create_archive
         shell: bash
         run: |

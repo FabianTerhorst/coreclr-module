@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using AltV.Net.Native;
 using System.Runtime.InteropServices;
+using AltV.Net.CApi;
 using AltV.Net.Elements.Args;
 
 namespace AltV.Net
@@ -228,7 +229,7 @@ namespace AltV.Net
             IntPtr invoker;
             unsafe
             {
-                invoker = library.Invoker_Create(NativePointer, function);
+                invoker = library.Server.Invoker_Create(NativePointer, function);
             }
 
             invokers[invoker] = GCHandle.Alloc(function);
@@ -245,7 +246,7 @@ namespace AltV.Net
 
             unsafe
             {
-                library.Invoker_Destroy(NativePointer, invoker);
+                library.Server.Invoker_Destroy(NativePointer, invoker);
             }
         }
 

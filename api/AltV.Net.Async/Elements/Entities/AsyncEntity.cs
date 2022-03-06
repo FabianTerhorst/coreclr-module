@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
@@ -9,6 +10,8 @@ namespace AltV.Net.Async.Elements.Entities
         "InconsistentlySynchronizedField")] // we sometimes use object in lock and sometimes not
     public class AsyncEntity<TEntity> : AsyncWorldObject<TEntity>, IEntity where TEntity : class, IEntity
     {
+        public IntPtr EntityNativePointer => BaseObject.EntityNativePointer;
+        
         public ushort Id => BaseObject.Id;
 
         public IPlayer NetworkOwner

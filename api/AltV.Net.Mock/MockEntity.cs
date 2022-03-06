@@ -13,9 +13,6 @@ namespace AltV.Net.Mock
         public bool Exists { get; }
         public ushort Id { get; }
         public BaseObjectType Type { get; }
-        public override Position Position { get; set; }
-        public override Rotation Rotation { get; set; }
-        public override int Dimension { get; set; }
         public override uint Model { get; set; }
 
         private readonly Dictionary<string, object> data = new Dictionary<string, object>();

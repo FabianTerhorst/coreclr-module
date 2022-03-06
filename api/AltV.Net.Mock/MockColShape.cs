@@ -10,6 +10,7 @@ namespace AltV.Net.Mock
         {
         }
 
+        public IntPtr ColShapeNativePointer { get; }
         public ColShapeType ColShapeType { get; }
 
         public bool IsPlayersOnly { get; set; }

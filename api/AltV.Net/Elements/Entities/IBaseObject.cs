@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using AltV.Net.Elements.Args;
 using AltV.Net.Types;
@@ -6,6 +7,8 @@ namespace AltV.Net.Elements.Entities
 {
     public interface IBaseObject : IRefCountable
     {
+        IntPtr BaseObjectNativePointer { get; }
+        
         BaseObjectType Type { get; }
 
         /// <summary>

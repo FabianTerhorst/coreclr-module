@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
+using AltV.Net.CApi;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Factories;
@@ -73,7 +74,7 @@ namespace AltV.Net
 
             //TODO: do the same with the pools
 
-            var library = _resource.GetLibrary() ?? new Library();
+            var library = _resource.GetLibrary() ?? new Library("csharp-module", false);
             var playerFactory = _resource.GetPlayerFactory() ?? new PlayerFactory();
             var vehicleFactory = _resource.GetVehicleFactory() ?? new VehicleFactory();
             var blipFactory = _resource.GetBlipFactory() ?? new BlipFactory();

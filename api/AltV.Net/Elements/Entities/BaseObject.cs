@@ -4,19 +4,22 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading;
 using AltV.Net.Elements.Args;
 using AltV.Net.Exceptions;
+using AltV.Net.Native;
 
 namespace AltV.Net.Elements.Entities
 {
     public abstract class BaseObject : IBaseObject, IInternalBaseObject
     {
+        public IntPtr BaseObjectNativePointer { get; }
+        public virtual IntPtr NativePointer => BaseObjectNativePointer;
+        
         private readonly ConcurrentDictionary<string, object> data = new ConcurrentDictionary<string, object>();
 
         public IServer Server;
-        
-        public IntPtr NativePointer { get; }
 
         private bool exists;
 
@@ -38,18 +41,67 @@ namespace AltV.Net.Elements.Entities
 
         public BaseObjectType Type { get; }
 
-        public abstract void SetMetaData(string key, in MValueConst value);
-        public abstract void GetMetaData(string key, out MValueConst value);
-        public abstract bool HasMetaData(string key);
-        public abstract void DeleteMetaData(string key);
+        public void GetMetaData(string key, out MValueConst value)
+        {
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                value = new MValueConst(Server.Library.Shared.BaseObject_GetMetaData(BaseObjectNativePointer, stringPtr));
+                Marshal.FreeHGlobal(stringPtr);
+            }
+        }
 
-        protected abstract void InternalAddRef();
-        protected abstract void InternalRemoveRef();
+        public void SetMetaData(string key, in MValueConst value)
+        {
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Server.Library.Shared.BaseObject_SetMetaData(BaseObjectNativePointer, stringPtr, value.nativePointer);
+                Marshal.FreeHGlobal(stringPtr);
+            }
+        }
+
+        public bool HasMetaData(string key)
+        {
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var result = Server.Library.Shared.BaseObject_HasMetaData(BaseObjectNativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+                return result == 1;
+            }
+        }
+
+        public void DeleteMetaData(string key)
+        {
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Server.Library.Shared.BaseObject_DeleteMetaData(BaseObjectNativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+            }
+        }
+
+        protected void InternalAddRef()
+        {
+            unsafe
+            {
+                Server.Library.Shared.BaseObject_AddRef(BaseObjectNativePointer);
+                
+            }
+        }
+        protected void InternalRemoveRef()
+        {
+            unsafe
+            {
+                Server.Library.Shared.BaseObject_RemoveRef(BaseObjectNativePointer);
+            }
+        }
 
         protected BaseObject(IServer server, IntPtr nativePointer, BaseObjectType type)
         {
             Server = server;
-            NativePointer = nativePointer;
+            BaseObjectNativePointer = nativePointer;
             Type = type;
             
             if (nativePointer == IntPtr.Zero)

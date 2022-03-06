@@ -609,7 +609,7 @@ namespace AltV.Net
                 unsafe
                 {
                     var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(cancel);
-                    Alt.Server.Library.Event_PlayerBeforeConnect_Cancel(eventPointer, stringPtr);
+                    Alt.Server.Library.Server.Event_PlayerBeforeConnect_Cancel(eventPointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
                 }
             }
@@ -728,7 +728,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Server.Library.Event_Cancel(eventPointer);
+                    Alt.Server.Library.Server.Event_Cancel(eventPointer);
                 }
             }
         }
@@ -777,7 +777,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Server.Library.Event_Cancel(eventPointer);
+                    Alt.Server.Library.Server.Event_Cancel(eventPointer);
                 }
             }
         }
@@ -1517,7 +1517,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Server.Library.Event_Cancel(eventPointer);
+                    Alt.Server.Library.Server.Event_Cancel(eventPointer);
                 }
             }
         }
@@ -1560,7 +1560,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Server.Library.Event_Cancel(eventPointer);
+                    Alt.Server.Library.Server.Event_Cancel(eventPointer);
                 }
             }
         }
@@ -1603,7 +1603,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Server.Library.Event_Cancel(eventPointer);
+                    Alt.Server.Library.Server.Event_Cancel(eventPointer);
                 }
             }
         }
@@ -1847,7 +1847,7 @@ namespace AltV.Net
                 MValueFunctionCallback callDelegate = function.Call;
                 functionExportHandles.AddFirst(GCHandle.Alloc(callDelegate));
                 Server.CreateMValueFunction(out var mValue,
-                    Server.Library.Invoker_Create(ModuleResource.ResourceImplPtr, callDelegate));
+                    Server.Library.Server.Invoker_Create(ModuleResource.ResourceImplPtr, callDelegate));
                 ModuleResource.SetExport(key, in mValue);
                 mValue.Dispose();
             }

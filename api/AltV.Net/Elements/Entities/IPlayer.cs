@@ -9,6 +9,8 @@ namespace AltV.Net.Elements.Entities
 {
     public interface IPlayer : IEntity
     {
+        IntPtr PlayerNativePointer { get; }
+        
         /// <summary>
         /// The players model / skin
         /// </summary>

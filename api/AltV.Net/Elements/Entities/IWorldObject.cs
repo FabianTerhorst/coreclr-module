@@ -1,9 +1,12 @@
+using System;
 using AltV.Net.Data;
 
 namespace AltV.Net.Elements.Entities
 {
     public interface IWorldObject : IBaseObject
     {
+        IntPtr WorldObjectNativePointer { get; }
+        
         /// <summary>
         /// Get or set position of the entity.
         /// </summary>
