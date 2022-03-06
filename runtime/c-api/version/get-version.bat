@@ -3,7 +3,7 @@
 (
   echo #pragma once
   echo.
-  echo #define CSHARP_VERSION "%VERSION%"
+  echo #define CSHARP_VERSION "%GITHUB_REF_NAME%"
 ) > version.h.tmp
 
 if not exist version.h goto rename

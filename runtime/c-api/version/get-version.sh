@@ -1,11 +1,9 @@
 #!/bin/bash
 
-printenv
-
 cat <<EOM >> version.h.tmp
 #pragma once
 
-#define CSHARP_VERSION "$VERSION"
+#define CSHARP_VERSION "$GITHUB_REF_NAME"
 EOM
 
 if [ -f version.h ]; then
