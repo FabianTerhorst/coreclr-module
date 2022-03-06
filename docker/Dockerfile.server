@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2 as dotnet
 
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 # construct server structure
 WORKDIR /altv-server
