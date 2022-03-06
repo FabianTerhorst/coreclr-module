@@ -80,10 +80,9 @@ namespace AltV.Net.CodeGen
             var outputPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "Codegen Output"); 
             Directory.CreateDirectory(outputPath);
             
-            foreach (var group in ParseMethods().GroupBy(e => e.Target))
+            foreach (var group in ParseMethods().OrderBy(e => e.Name).GroupBy(e => e.Target))
             {
                 var target = group.Key.ForceCapitalize();
-
 
                 var methods = string.Join("\n", group.Select(e => $"        public delegate* unmanaged[Cdecl]<{string.Join("", e.Params.Select(p => p.Type + ", "))}{e.ReturnType}> {e.Name} {{ get; }}"));
                 var loads = string.Join("\n", group.Select(e => $"            {e.Name} = (delegate* unmanaged[Cdecl]<{string.Join("", e.Params.Select(p => p.Type + ", "))}{e.ReturnType}>) NativeLibrary.GetExport(handle, \"{e.Name}\");"));
