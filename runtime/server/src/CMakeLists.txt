@@ -1,6 +1,7 @@
 cmake_minimum_required (VERSION 3.13)
 
 include(../../cpp-sdk/CMakeLists.txt)
+include(../../c-api/CMakeLists.txt)
 
 set(TARGET_NAME core_clr_host)
 
@@ -15,7 +16,9 @@ add_library(${TARGET_NAME} SHARED altv.cpp CSharpScriptRuntime.cpp CSharpResourc
 #find_library(NetHost libnethost "${CMAKE_CURRENT_SOURCE_DIR}/../nethost/lib")
 #target_link_libraries(${TARGET_NAME} ${NetHost})
 
-if(UNIX AND NOT APPLE)
+if (APPLE)
+    target_link_libraries(${TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/../nethost/libnethost.a)
+elseif(UNIX)
     # target_compile_options(${TARGET_NAME} PRIVATE -std=c++17 -static)
     # target_link_libraries(${TARGET_NAME} -lstdc++ -static-libstdc++)
     # target_link_libraries(${TARGET_NAME} -static-libgcc -static-libstdc++)
@@ -40,3 +43,4 @@ else()
 endif(MSVC)
 
 add_dependencies(core_clr_host alt-sdk)
+add_dependencies(core_clr_host c-api)

@@ -18,6 +18,7 @@ EXPORT_SHARED void FreeCharArray(char charArray[]);
 EXPORT_SHARED void FreeString(const char* string);
 EXPORT_SHARED const char* GetVersionStatic(int32_t &size);
 EXPORT_SHARED const char* GetBranchStatic(int32_t &size);
+EXPORT_SHARED const char* GetCApiVersion(int32_t &size);
 #ifdef __cplusplus
 }
 #endif

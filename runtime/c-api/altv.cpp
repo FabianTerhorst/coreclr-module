@@ -1,6 +1,7 @@
 #include "altv.h"
 
 #include <string.h>
+#include "version/version.h"
 
 #ifdef __clang__
 #pragma clang diagnostic push
@@ -46,4 +47,8 @@ const char* GetVersionStatic(int32_t &size) {
 
 const char* GetBranchStatic(int32_t &size) {
     return AllocateString(alt::ICore::Instance().GetBranch(), size);
+}
+
+const char* GetCApiVersion(int32_t &size) {
+    return AllocateString(CSHARP_VERSION, size);
 }
