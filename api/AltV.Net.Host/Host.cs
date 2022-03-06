@@ -122,13 +122,7 @@ namespace AltV.Net.Host
                                 continue;
                             }
 
-                            var pathSeperated = fullName.Split(Path.DirectorySeparatorChar);
-                            if (pathSeperated.Length <= 0)
-                            {
-                                continue;
-                            }
-
-                            var fileName = pathSeperated[^1];
+                            var fileName = Path.GetFileName(fullName);
 
                             Console.WriteLine("dll:" + fileName);
                             using var stream = entry.Open();
@@ -158,13 +152,7 @@ namespace AltV.Net.Host
                                 continue;
                             }
 
-                            var pathSeperated = fullName.Split(Path.DirectorySeparatorChar);
-                            if (pathSeperated.Length <= 0)
-                            {
-                                continue;
-                            }
-
-                            var fileName = pathSeperated[^1];
+                            var fileName = Path.GetFileName(fullName);
 
                             Console.WriteLine("pdb:" + fileName);
                             using var stream = entry.Open();
