@@ -12,10 +12,10 @@ namespace AltV.Net.Mock
             this.blipFactory = blipFactory;
         }
 
-        public IBlip Create(IServer server, IntPtr entityPointer)
+        public IBlip Create(ICore core, IntPtr entityPointer)
         {
-            return MockDecorator<TEntity, IBlip>.Create((TEntity) blipFactory.Create(server, entityPointer),
-                new MockBlip(server, entityPointer));
+            return MockDecorator<TEntity, IBlip>.Create((TEntity) blipFactory.Create(core, entityPointer),
+                new MockBlip(core, entityPointer));
         }
     }
 }

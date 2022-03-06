@@ -20,14 +20,14 @@ namespace AltV.Net.Async
             this.entityFactory = entityFactory;
         }
 
-        public void Create(IServer server, IntPtr entityPointer)
+        public void Create(ICore core, IntPtr entityPointer)
         {
-            Add(entityFactory.Create(server, entityPointer));
+            Add(entityFactory.Create(core, entityPointer));
         }
 
-        public void Create(IServer server, IntPtr entityPointer, out TBaseObject entity)
+        public void Create(ICore core, IntPtr entityPointer, out TBaseObject entity)
         {
-            entity = entityFactory.Create(server, entityPointer);
+            entity = entityFactory.Create(core, entityPointer);
             Add(entity);
         }
         
@@ -61,7 +61,7 @@ namespace AltV.Net.Async
             return entities.TryGetValue(entityPointer, out entity) && entity.Exists;
         }
 
-        public bool GetOrCreate(IServer server, IntPtr entityPointer, out TBaseObject entity)
+        public bool GetOrCreate(ICore core, IntPtr entityPointer, out TBaseObject entity)
         {
             if (entityPointer == IntPtr.Zero)
             {
@@ -71,7 +71,7 @@ namespace AltV.Net.Async
 
             if (entities.TryGetValue(entityPointer, out entity)) return entity.Exists;
 
-            Create(server, entityPointer, out entity);
+            Create(core, entityPointer, out entity);
 
             return entity.Exists;
         }

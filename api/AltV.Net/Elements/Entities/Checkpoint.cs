@@ -13,11 +13,11 @@ namespace AltV.Net.Elements.Entities
         public override IntPtr NativePointer => CheckpointNativePointer;
         public IntPtr ColShapeNativePointer => throw new Exception("Checkpoint doesn't have ColShape native pointer");
         
-        private static IntPtr GetWorldObjectPointer(IServer server, IntPtr nativePointer)
+        private static IntPtr GetWorldObjectPointer(ICore core, IntPtr nativePointer)
         {
             unsafe
             {
-                return server.Library.Server.Checkpoint_GetWorldObject(nativePointer);
+                return core.Library.Server.Checkpoint_GetWorldObject(nativePointer);
             }
         }
         
@@ -28,7 +28,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return (ColShapeType) Server.Library.Server.Checkpoint_GetColShapeType(CheckpointNativePointer);
+                    return (ColShapeType) Core.Library.Server.Checkpoint_GetColShapeType(CheckpointNativePointer);
                 }
             }
         }
@@ -40,7 +40,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Checkpoint_IsPlayersOnly(CheckpointNativePointer) == 1;
+                    return Core.Library.Server.Checkpoint_IsPlayersOnly(CheckpointNativePointer) == 1;
                 }
             }
             set
@@ -48,7 +48,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Checkpoint_SetPlayersOnly(CheckpointNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.Checkpoint_SetPlayersOnly(CheckpointNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }
@@ -60,7 +60,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Checkpoint_GetCheckpointType(CheckpointNativePointer);
+                    return Core.Library.Server.Checkpoint_GetCheckpointType(CheckpointNativePointer);
                 }
             }
             set
@@ -68,7 +68,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Checkpoint_SetCheckpointType(CheckpointNativePointer, value);
+                    Core.Library.Server.Checkpoint_SetCheckpointType(CheckpointNativePointer, value);
                 }
             }
         }
@@ -80,7 +80,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Checkpoint_GetHeight(CheckpointNativePointer);
+                    return Core.Library.Server.Checkpoint_GetHeight(CheckpointNativePointer);
                 }
             }
             set
@@ -88,7 +88,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Checkpoint_SetHeight(CheckpointNativePointer, value);
+                    Core.Library.Server.Checkpoint_SetHeight(CheckpointNativePointer, value);
                 }
             }
         }
@@ -100,7 +100,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Checkpoint_GetRadius(CheckpointNativePointer);
+                    return Core.Library.Server.Checkpoint_GetRadius(CheckpointNativePointer);
                 }
             }
             set
@@ -108,7 +108,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Checkpoint_SetRadius(CheckpointNativePointer, value);
+                    Core.Library.Server.Checkpoint_SetRadius(CheckpointNativePointer, value);
                 }
             }
         }
@@ -121,7 +121,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var color = Rgba.Zero;
-                    Server.Library.Server.Checkpoint_GetColor(CheckpointNativePointer, &color);
+                    Core.Library.Server.Checkpoint_GetColor(CheckpointNativePointer, &color);
                     return color;
                 }
             }
@@ -130,7 +130,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Checkpoint_SetColor(CheckpointNativePointer, value);
+                    Core.Library.Server.Checkpoint_SetColor(CheckpointNativePointer, value);
                 }
             }
         }
@@ -143,7 +143,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var position = Vector3.Zero;
-                    Server.Library.Server.Checkpoint_GetNextPosition(CheckpointNativePointer, &position);
+                    Core.Library.Server.Checkpoint_GetNextPosition(CheckpointNativePointer, &position);
                     return position;
                 }
             }
@@ -152,12 +152,12 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Checkpoint_SetNextPosition(CheckpointNativePointer, value);
+                    Core.Library.Server.Checkpoint_SetNextPosition(CheckpointNativePointer, value);
                 }
             }
         }
 
-        public Checkpoint(IServer server, IntPtr nativePointer) : base(server, GetWorldObjectPointer(server, nativePointer), BaseObjectType.Checkpoint)
+        public Checkpoint(ICore core, IntPtr nativePointer) : base(core, GetWorldObjectPointer(core, nativePointer), BaseObjectType.Checkpoint)
         {
             CheckpointNativePointer = nativePointer;
         }
@@ -181,7 +181,7 @@ namespace AltV.Net.Elements.Entities
             
             unsafe
             {
-                return Server.Library.Server.Checkpoint_IsEntityIn(CheckpointNativePointer, entity.EntityNativePointer) == 1;
+                return Core.Library.Server.Checkpoint_IsEntityIn(CheckpointNativePointer, entity.EntityNativePointer) == 1;
             }
         }
         

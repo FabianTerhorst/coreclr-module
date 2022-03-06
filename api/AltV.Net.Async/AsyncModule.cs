@@ -111,14 +111,14 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<ConnectionQueueRemoveAsyncDelegate> ConnectionQueueRemoveAsyncEventHandler =
             new();
 
-        public AsyncModule(IServer server, AssemblyLoadContext assemblyLoadContext, INativeResource moduleResource,
+        public AsyncModule(ICore core, AssemblyLoadContext assemblyLoadContext, INativeResource moduleResource,
             IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool,
-            INativeResourcePool nativeResourcePool) : base(server, assemblyLoadContext, moduleResource,
+            INativeResourcePool nativeResourcePool) : base(core, assemblyLoadContext, moduleResource,
             baseBaseObjectPool,
             baseEntityPool, playerPool, vehiclePool, blipPool,
             checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool)

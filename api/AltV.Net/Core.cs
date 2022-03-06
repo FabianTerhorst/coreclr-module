@@ -17,7 +17,7 @@ using AltV.Net.Native;
 
 namespace AltV.Net
 {
-    public class Server : IServer
+    public class Core : ICore
     {
         public IntPtr NativePointer { get; }
 
@@ -125,7 +125,7 @@ namespace AltV.Net
 
         public INativeResource Resource { get; }
 
-        public Server(IntPtr nativePointer, ILibrary library, INativeResource resource, IBaseBaseObjectPool baseBaseObjectPool,
+        public Core(IntPtr nativePointer, ILibrary library, INativeResource resource, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
@@ -253,7 +253,7 @@ namespace AltV.Net
 
         public uint Hash(string stringToHash)
         {
-            //return AltVNative.Server.Core_Hash(NativePointer, hash);
+            //return AltVNative.Core.Core_Hash(NativePointer, hash);
             if (string.IsNullOrEmpty(stringToHash)) return 0;
 
             var characters = Encoding.UTF8.GetBytes(stringToHash.ToLower());

@@ -83,7 +83,7 @@ namespace AltV.Net.Mock
         }
 
         /// <summary>
-        /// Registers a event handler to this player that triggers on server to client events with the specified event name
+        /// Registers a event handler to this player that triggers on core to client events with the specified event name
         /// </summary>
         /// <param name="player"></param>
         /// <param name="eventName"></param>

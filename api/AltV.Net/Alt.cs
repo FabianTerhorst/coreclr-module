@@ -17,21 +17,22 @@ namespace AltV.Net
     {
         internal static Module Module;
 
-        public static IServer Server => Module.Server;
+        public static ICore Core => Module.Core;
+        
+        [Obsolete("Use Core instead")]
+        public static ICore Server => Core;
 
-        public static IServer Core => Module.Server;
+        public static bool IsDebug => Core.IsDebug;
 
-        public static bool IsDebug => Server.IsDebug;
-
-        public static void Emit(string eventName, params object[] args) => Server.TriggerServerEvent(eventName, args);
+        public static void Emit(string eventName, params object[] args) => Core.TriggerServerEvent(eventName, args);
 
         public static void EmitAllClients(string eventName, params object[] args) =>
-            Server.TriggerClientEventForAll(eventName, args);
+            Core.TriggerClientEventForAll(eventName, args);
 
         public static void EmitClients(IPlayer[] clients, string eventName, params object[] args) =>
-            Server.TriggerClientEventForSome(clients, eventName, args);
+            Core.TriggerClientEventForSome(clients, eventName, args);
         
-        public static void Log(string message) => Server.LogInfo(message);
+        public static void Log(string message) => Core.LogInfo(message);
 
         public static ICollection<IPlayer> GetAllPlayers() => Module.PlayerPool.GetAllEntities();
 
@@ -99,11 +100,11 @@ namespace AltV.Net
         public static Task ForEachColShapes(IAsyncBaseObjectCallback<IColShape> baseObjectCallback) =>
             Module.ColShapePool.ForEach(baseObjectCallback);
 
-        public static VehicleModelInfo GetVehicleModelInfo(uint hash) => Server.GetVehicleModelInfo(hash);
-        public static VehicleModelInfo GetVehicleModelInfo(string name) => Server.GetVehicleModelInfo(Hash(name));
+        public static VehicleModelInfo GetVehicleModelInfo(uint hash) => Core.GetVehicleModelInfo(hash);
+        public static VehicleModelInfo GetVehicleModelInfo(string name) => Core.GetVehicleModelInfo(Hash(name));
         
-        public static uint Hash(string stringToHash) => Server.Hash(stringToHash);
-        public static ulong HashPassword(string password) => Server.HashPassword(password);
+        public static uint Hash(string stringToHash) => Core.Hash(stringToHash);
+        public static ulong HashPassword(string password) => Core.HashPassword(password);
 
         internal static void Init(Module module)
         {

@@ -7,11 +7,11 @@ namespace AltV.Net.Elements.Entities
         public IntPtr VoiceChannelNativePointer { get; }
         public override IntPtr NativePointer => VoiceChannelNativePointer;
         
-        private static IntPtr GetBaseObjectPointer(IServer server, IntPtr nativePointer)
+        private static IntPtr GetBaseObjectPointer(ICore core, IntPtr nativePointer)
         {
             unsafe
             {
-                return server.Library.Server.VoiceChannel_GetBaseObject(nativePointer);
+                return core.Library.Server.VoiceChannel_GetBaseObject(nativePointer);
             }
         }
         
@@ -20,7 +20,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.VoiceChannel_AddPlayer(VoiceChannelNativePointer, player.PlayerNativePointer);
+                Core.Library.Server.VoiceChannel_AddPlayer(VoiceChannelNativePointer, player.PlayerNativePointer);
             }
         }
 
@@ -29,7 +29,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.VoiceChannel_RemovePlayer(VoiceChannelNativePointer, player.PlayerNativePointer);
+                Core.Library.Server.VoiceChannel_RemovePlayer(VoiceChannelNativePointer, player.PlayerNativePointer);
             }
         }
 
@@ -38,7 +38,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.VoiceChannel_MutePlayer(VoiceChannelNativePointer, player.PlayerNativePointer);
+                Core.Library.Server.VoiceChannel_MutePlayer(VoiceChannelNativePointer, player.PlayerNativePointer);
             }
         }
 
@@ -47,7 +47,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.VoiceChannel_UnmutePlayer(VoiceChannelNativePointer, player.PlayerNativePointer);
+                Core.Library.Server.VoiceChannel_UnmutePlayer(VoiceChannelNativePointer, player.PlayerNativePointer);
             }
         }
 
@@ -56,7 +56,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.VoiceChannel_HasPlayer(VoiceChannelNativePointer, player.PlayerNativePointer) == 1;
+                return Core.Library.Server.VoiceChannel_HasPlayer(VoiceChannelNativePointer, player.PlayerNativePointer) == 1;
             }
         }
 
@@ -65,7 +65,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.VoiceChannel_IsPlayerMuted(VoiceChannelNativePointer, player.PlayerNativePointer) == 1;
+                return Core.Library.Server.VoiceChannel_IsPlayerMuted(VoiceChannelNativePointer, player.PlayerNativePointer) == 1;
             }
         }
 
@@ -76,7 +76,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.VoiceChannel_IsSpatial(VoiceChannelNativePointer) == 1;
+                    return Core.Library.Server.VoiceChannel_IsSpatial(VoiceChannelNativePointer) == 1;
                 }
             }
         }
@@ -88,12 +88,12 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.VoiceChannel_GetMaxDistance(VoiceChannelNativePointer);
+                    return Core.Library.Server.VoiceChannel_GetMaxDistance(VoiceChannelNativePointer);
                 }
             }
         }
 
-        public VoiceChannel(IServer server, IntPtr nativePointer) : base(server, GetBaseObjectPointer(server, nativePointer), BaseObjectType.VoiceChannel)
+        public VoiceChannel(ICore core, IntPtr nativePointer) : base(core, GetBaseObjectPointer(core, nativePointer), BaseObjectType.VoiceChannel)
         {
             VoiceChannelNativePointer = nativePointer;
         }

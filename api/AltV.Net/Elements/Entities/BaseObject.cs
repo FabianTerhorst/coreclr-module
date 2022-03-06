@@ -19,7 +19,10 @@ namespace AltV.Net.Elements.Entities
         
         private readonly ConcurrentDictionary<string, object> data = new ConcurrentDictionary<string, object>();
 
-        public IServer Server;
+        public ICore Core;
+        
+        [Obsolete("Use Core instead")]
+        public ICore Server => Core;
 
         private bool exists;
 
@@ -46,7 +49,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                value = new MValueConst(Server.Library.Shared.BaseObject_GetMetaData(BaseObjectNativePointer, stringPtr));
+                value = new MValueConst(Core.Library.Shared.BaseObject_GetMetaData(BaseObjectNativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
@@ -56,7 +59,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                Server.Library.Shared.BaseObject_SetMetaData(BaseObjectNativePointer, stringPtr, value.nativePointer);
+                Core.Library.Shared.BaseObject_SetMetaData(BaseObjectNativePointer, stringPtr, value.nativePointer);
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
@@ -66,7 +69,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                var result = Server.Library.Shared.BaseObject_HasMetaData(BaseObjectNativePointer, stringPtr);
+                var result = Core.Library.Shared.BaseObject_HasMetaData(BaseObjectNativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
                 return result == 1;
             }
@@ -77,7 +80,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                Server.Library.Shared.BaseObject_DeleteMetaData(BaseObjectNativePointer, stringPtr);
+                Core.Library.Shared.BaseObject_DeleteMetaData(BaseObjectNativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
@@ -86,7 +89,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                Server.Library.Shared.BaseObject_AddRef(BaseObjectNativePointer);
+                Core.Library.Shared.BaseObject_AddRef(BaseObjectNativePointer);
                 
             }
         }
@@ -94,13 +97,13 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                Server.Library.Shared.BaseObject_RemoveRef(BaseObjectNativePointer);
+                Core.Library.Shared.BaseObject_RemoveRef(BaseObjectNativePointer);
             }
         }
 
-        protected BaseObject(IServer server, IntPtr nativePointer, BaseObjectType type)
+        protected BaseObject(ICore core, IntPtr nativePointer, BaseObjectType type)
         {
-            Server = server;
+            Core = core;
             BaseObjectNativePointer = nativePointer;
             Type = type;
             
@@ -115,7 +118,7 @@ namespace AltV.Net.Elements.Entities
         public void SetMetaData(string key, object value)
         {
             CheckIfEntityExists();
-            Alt.Server.CreateMValue(out var mValue, value);
+            Alt.Core.CreateMValue(out var mValue, value);
             SetMetaData(key, in mValue);
             mValue.Dispose();
         }

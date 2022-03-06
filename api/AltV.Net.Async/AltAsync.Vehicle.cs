@@ -13,7 +13,7 @@ namespace AltV.Net.Async
     public static partial class AltAsync
     {
         public static Task<IVehicle> CreateVehicle(uint model, Position pos, Rotation rot) => AltVAsync.Schedule(() =>
-            Alt.Module.Server.CreateVehicle(model, pos, rot));
+            Alt.Module.Core.CreateVehicle(model, pos, rot));
 
         public static Task<IVehicle> CreateVehicle(VehicleModel model, Position pos, Rotation rot) =>
             CreateVehicle((uint) model, pos, rot);
@@ -137,7 +137,7 @@ namespace AltV.Net.Async
                 unsafe
                 {
                     vehicle.CheckIfEntityExists();
-                    Alt.Server.Library.Server.Vehicle_SetNumberplateText(vehicle.VehicleNativePointer, numberPlateTextPtr);
+                    Alt.Core.Library.Server.Vehicle_SetNumberplateText(vehicle.VehicleNativePointer, numberPlateTextPtr);
                 }
             });
             Marshal.FreeHGlobal(numberPlateTextPtr);

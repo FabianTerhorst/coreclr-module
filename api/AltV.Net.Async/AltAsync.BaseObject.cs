@@ -15,7 +15,7 @@ namespace AltV.Net.Async
 
         public static async Task SetMetaDataAsync(this IBaseObject baseObject, string key, object value)
         {
-            Alt.Server.CreateMValue(out var mValue, value);
+            Alt.Core.CreateMValue(out var mValue, value);
             await AltVAsync.Schedule(() => baseObject.SetMetaData(key, in mValue));
             mValue.Dispose();
         }

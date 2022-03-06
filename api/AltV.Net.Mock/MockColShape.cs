@@ -6,7 +6,7 @@ namespace AltV.Net.Mock
 {
     public class MockColShape : MockWorldObject, IColShape
     {
-        public MockColShape(IServer server, IntPtr nativePointer) : base(server, nativePointer, BaseObjectType.ColShape)
+        public MockColShape(ICore core, IntPtr nativePointer) : base(core, nativePointer, BaseObjectType.ColShape)
         {
         }
 
@@ -22,7 +22,7 @@ namespace AltV.Net.Mock
 
         public void Remove()
         {
-            Alt.Server.RemoveColShape(this);
+            Alt.Core.RemoveColShape(this);
         }
 
         public bool IsPlayerIn(IPlayer entity)

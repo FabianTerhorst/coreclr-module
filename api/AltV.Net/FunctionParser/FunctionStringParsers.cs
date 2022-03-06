@@ -90,7 +90,7 @@ namespace AltV.Net.FunctionParser
         {
             if (typeInfo.IsPlayer)
             {
-                foreach (var player in Alt.Server.GetPlayers())
+                foreach (var player in Alt.Core.GetPlayers())
                 {
                     if (!player.Exists) continue;
                     if (player.Name.Equals(value))
@@ -100,7 +100,7 @@ namespace AltV.Net.FunctionParser
                 }
 
                 if (!ushort.TryParse(value, out var playerId)) return null;
-                var entity = Alt.Server.GetEntityById(playerId);
+                var entity = Alt.Core.GetEntityById(playerId);
                 if (entity is IPlayer playerEntity)
                 {
                     return playerEntity;
@@ -109,7 +109,7 @@ namespace AltV.Net.FunctionParser
             else if (typeInfo.IsVehicle)
             {
                 if (!ushort.TryParse(value, out var vehicleId)) return null;
-                var entity = Alt.Server.GetEntityById(vehicleId);
+                var entity = Alt.Core.GetEntityById(vehicleId);
                 if (entity is IVehicle vehicleEntity)
                 {
                     return vehicleEntity;

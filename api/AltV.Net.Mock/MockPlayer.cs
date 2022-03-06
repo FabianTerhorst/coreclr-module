@@ -5,7 +5,7 @@ namespace AltV.Net.Mock
 {
     public class MockPlayer : Player
     {
-        public MockPlayer(IServer server, IntPtr nativePointer, ushort id) : base(server, nativePointer, id)
+        public MockPlayer(ICore core, IntPtr nativePointer, ushort id) : base(core, nativePointer, id)
         {
         }
     }

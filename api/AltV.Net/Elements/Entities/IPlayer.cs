@@ -562,7 +562,7 @@ namespace AltV.Net.Elements.Entities
         public static void SetLocalMetaData(this IPlayer player, string key, object value)
         {
             player.CheckIfEntityExists();
-            Alt.Server.CreateMValue(out var mValue, value);
+            Alt.Core.CreateMValue(out var mValue, value);
             player.SetLocalMetaData(key, in mValue);
             mValue.Dispose();
         }

@@ -325,13 +325,13 @@ namespace AltV.Net.Example
 
             Alt.Export("GetBla", () => { Alt.Log("GetBla called"); });
 
-            Alt.Import(Alt.Server.Resource.Name, "GetBla", out Action action);
+            Alt.Import(Alt.Core.Resource.Name, "GetBla", out Action action);
 
             action();
 
             Alt.Export("functionExport", delegate(string name) { Alt.Log("called with:" + name); });
 
-            Alt.Import(Alt.Server.Resource.Name, "functionExport", out Action<string> action2);
+            Alt.Import(Alt.Core.Resource.Name, "functionExport", out Action<string> action2);
 
             action2("123");
             /*if (Alt.Import("Bla", "GetBla", out Action value))

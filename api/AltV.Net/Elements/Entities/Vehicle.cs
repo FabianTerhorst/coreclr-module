@@ -12,11 +12,11 @@ namespace AltV.Net.Elements.Entities
         public IntPtr VehicleNativePointer { get; }
         public override IntPtr NativePointer => VehicleNativePointer;
         
-        private static IntPtr GetEntityPointer(IServer server, IntPtr nativePointer)
+        private static IntPtr GetEntityPointer(ICore core, IntPtr nativePointer)
         {
             unsafe
             {
-                return server.Library.Shared.Vehicle_GetEntity(nativePointer);
+                return core.Library.Shared.Vehicle_GetEntity(nativePointer);
             }
         }
         
@@ -24,7 +24,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                return Alt.Server.Library.Shared.Vehicle_GetID(vehiclePointer);
+                return Alt.Core.Library.Shared.Vehicle_GetID(vehiclePointer);
             }
         }
 
@@ -35,7 +35,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Shared.Entity_GetModel(EntityNativePointer);
+                    return Core.Library.Shared.Entity_GetModel(EntityNativePointer);
                 }
             }
             set => throw new NotImplementedException("vehicle doesn't support set model");
@@ -48,7 +48,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var entityPointer = Server.Library.Server.Vehicle_GetDriver(VehicleNativePointer);
+                    var entityPointer = Core.Library.Server.Vehicle_GetDriver(VehicleNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
                     return Alt.Module.PlayerPool.Get(entityPointer, out var player) ? player : null;
                 }
@@ -62,7 +62,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_IsDestroyed(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_IsDestroyed(VehicleNativePointer) == 1;
                 }
             }
         }
@@ -74,7 +74,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetModKit(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetModKit(VehicleNativePointer);
                 }
             }
             set
@@ -82,7 +82,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetModKit(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetModKit(VehicleNativePointer, value);
                 }
             }
         }
@@ -94,7 +94,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetModKitsCount(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetModKitsCount(VehicleNativePointer);
                 }
             }
         }
@@ -106,7 +106,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_IsPrimaryColorRGB(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_IsPrimaryColorRGB(VehicleNativePointer) == 1;
                 }
             }
         }
@@ -118,7 +118,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetPrimaryColor(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetPrimaryColor(VehicleNativePointer);
                 }
             }
             set
@@ -126,7 +126,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetPrimaryColor(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetPrimaryColor(VehicleNativePointer, value);
                 }
             }
         }
@@ -139,7 +139,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var rgba = Rgba.Zero;
-                    Server.Library.Server.Vehicle_GetPrimaryColorRGB(VehicleNativePointer, &rgba);
+                    Core.Library.Server.Vehicle_GetPrimaryColorRGB(VehicleNativePointer, &rgba);
                     return rgba;
                 }
             }
@@ -148,7 +148,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetPrimaryColorRGB(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetPrimaryColorRGB(VehicleNativePointer, value);
                 }
             }
         }
@@ -160,7 +160,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_IsSecondaryColorRGB(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_IsSecondaryColorRGB(VehicleNativePointer) == 1;
                 }
             }
         }
@@ -172,7 +172,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetSecondaryColor(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetSecondaryColor(VehicleNativePointer);
                 }
             }
             set
@@ -180,7 +180,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetSecondaryColor(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetSecondaryColor(VehicleNativePointer, value);
                 }
             }
         }
@@ -193,7 +193,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var rgba = Rgba.Zero;
-                    Server.Library.Server.Vehicle_GetSecondaryColorRGB(VehicleNativePointer, &rgba);
+                    Core.Library.Server.Vehicle_GetSecondaryColorRGB(VehicleNativePointer, &rgba);
                     return rgba;
                 }
             }
@@ -202,7 +202,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetSecondaryColorRGB(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetSecondaryColorRGB(VehicleNativePointer, value);
                 }
             }
         }
@@ -214,7 +214,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetPearlColor(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetPearlColor(VehicleNativePointer);
                 }
             }
             set
@@ -222,7 +222,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetPearlColor(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetPearlColor(VehicleNativePointer, value);
                 }
             }
         }
@@ -234,7 +234,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetWheelColor(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetWheelColor(VehicleNativePointer);
                 }
             }
             set
@@ -242,7 +242,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetWheelColor(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetWheelColor(VehicleNativePointer, value);
                 }
             }
         }
@@ -254,7 +254,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetInteriorColor(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetInteriorColor(VehicleNativePointer);
                 }
             }
             set
@@ -262,7 +262,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetInteriorColor(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetInteriorColor(VehicleNativePointer, value);
                 }
             }
         }
@@ -274,7 +274,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetDashboardColor(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetDashboardColor(VehicleNativePointer);
                 }
             }
             set
@@ -282,7 +282,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetDashboardColor(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetDashboardColor(VehicleNativePointer, value);
                 }
             }
         }
@@ -294,7 +294,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_IsTireSmokeColorCustom(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_IsTireSmokeColorCustom(VehicleNativePointer) == 1;
                 }
             }
         }
@@ -307,7 +307,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var rgba = Rgba.Zero;
-                    Server.Library.Server.Vehicle_GetTireSmokeColor(VehicleNativePointer, &rgba);
+                    Core.Library.Server.Vehicle_GetTireSmokeColor(VehicleNativePointer, &rgba);
                     return rgba;
                 }
             }
@@ -316,7 +316,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetTireSmokeColor(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetTireSmokeColor(VehicleNativePointer, value);
                 }
             }
         }
@@ -328,7 +328,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetWheelType(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetWheelType(VehicleNativePointer);
                 }
             }
         }
@@ -340,7 +340,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetWheelVariation(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetWheelVariation(VehicleNativePointer);
                 }
             }
         }
@@ -352,7 +352,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetRearWheelVariation(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetRearWheelVariation(VehicleNativePointer);
                 }
             }
             set
@@ -360,7 +360,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetRearWheels(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetRearWheels(VehicleNativePointer, value);
                 }
             }
         }
@@ -372,7 +372,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetCustomTires(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_GetCustomTires(VehicleNativePointer) == 1;
                 }
             }
             set
@@ -380,7 +380,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetCustomTires(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.Vehicle_SetCustomTires(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }
@@ -392,7 +392,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetSpecialDarkness(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetSpecialDarkness(VehicleNativePointer);
                 }
             }
             set
@@ -400,7 +400,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetSpecialDarkness(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetSpecialDarkness(VehicleNativePointer, value);
                 }
             }
         }
@@ -412,7 +412,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetNumberplateIndex(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetNumberplateIndex(VehicleNativePointer);
                 }
             }
             set
@@ -420,7 +420,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetNumberplateIndex(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetNumberplateIndex(VehicleNativePointer, value);
                 }
             }
         }
@@ -433,8 +433,8 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var size = 0;
-                    return Server.PtrToStringUtf8AndFree(
-                        Server.Library.Server.Vehicle_GetNumberplateText(VehicleNativePointer, &size), size);
+                    return Core.PtrToStringUtf8AndFree(
+                        Core.Library.Server.Vehicle_GetNumberplateText(VehicleNativePointer, &size), size);
                 }
             }
             set
@@ -443,7 +443,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
-                    Server.Library.Server.Vehicle_SetNumberplateText(VehicleNativePointer, stringPtr);
+                    Core.Library.Server.Vehicle_SetNumberplateText(VehicleNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
                 }
             }
@@ -456,7 +456,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetWindowTint(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetWindowTint(VehicleNativePointer);
                 }
             }
             set
@@ -464,7 +464,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetWindowTint(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetWindowTint(VehicleNativePointer, value);
                 }
             }
         }
@@ -476,7 +476,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetDirtLevel(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetDirtLevel(VehicleNativePointer);
                 }
             }
             set
@@ -484,7 +484,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetDirtLevel(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetDirtLevel(VehicleNativePointer, value);
                 }
             }
         }
@@ -497,7 +497,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var rgba = Rgba.Zero;
-                    Server.Library.Server.Vehicle_GetNeonColor(VehicleNativePointer, &rgba);
+                    Core.Library.Server.Vehicle_GetNeonColor(VehicleNativePointer, &rgba);
                     return rgba;
                 }
             }
@@ -506,7 +506,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetNeonColor(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetNeonColor(VehicleNativePointer, value);
                 }
             }
         }
@@ -518,7 +518,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetLivery(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetLivery(VehicleNativePointer);
                 }
             }
             set
@@ -526,7 +526,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetLivery(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetLivery(VehicleNativePointer, value);
                 }
             }
         }
@@ -538,7 +538,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetRoofLivery(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetRoofLivery(VehicleNativePointer);
                 }
             }
             set
@@ -546,7 +546,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetRoofLivery(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetRoofLivery(VehicleNativePointer, value);
                 }
             }
         }
@@ -559,8 +559,8 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var size = 0;
-                    return Server.PtrToStringUtf8AndFree(
-                        Server.Library.Server.Vehicle_GetAppearanceDataBase64(VehicleNativePointer, &size), size);
+                    return Core.PtrToStringUtf8AndFree(
+                        Core.Library.Server.Vehicle_GetAppearanceDataBase64(VehicleNativePointer, &size), size);
                 }
             }
             set
@@ -569,7 +569,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
-                    Server.Library.Server.Vehicle_LoadAppearanceDataFromBase64(VehicleNativePointer, stringPtr);
+                    Core.Library.Server.Vehicle_LoadAppearanceDataFromBase64(VehicleNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
                 }
             }
@@ -582,7 +582,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_IsEngineOn(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_IsEngineOn(VehicleNativePointer) == 1;
                 }
             }
             set
@@ -590,7 +590,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetEngineOn(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.Vehicle_SetEngineOn(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }
@@ -602,7 +602,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_IsHandbrakeActive(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_IsHandbrakeActive(VehicleNativePointer) == 1;
                 }
             }
         }
@@ -614,7 +614,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetHeadlightColor(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetHeadlightColor(VehicleNativePointer);
                 }
             }
             set
@@ -622,7 +622,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetHeadlightColor(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetHeadlightColor(VehicleNativePointer, value);
                 }
             }
         }
@@ -634,7 +634,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetRadioStationIndex(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetRadioStationIndex(VehicleNativePointer);
                 }
             }
             set
@@ -642,7 +642,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetRadioStationIndex(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetRadioStationIndex(VehicleNativePointer, value);
                 }
             }
         }
@@ -654,7 +654,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_IsSirenActive(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_IsSirenActive(VehicleNativePointer) == 1;
                 }
             }
             set
@@ -662,7 +662,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetSirenActive(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.Vehicle_SetSirenActive(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }
@@ -674,7 +674,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return (VehicleLockState) Server.Library.Server.Vehicle_GetLockState(VehicleNativePointer);
+                    return (VehicleLockState) Core.Library.Server.Vehicle_GetLockState(VehicleNativePointer);
                 }
             }
             set
@@ -682,7 +682,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetLockState(VehicleNativePointer, (byte) value);
+                    Core.Library.Server.Vehicle_SetLockState(VehicleNativePointer, (byte) value);
                 }
             }
         }
@@ -692,7 +692,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.Vehicle_GetDoorState(VehicleNativePointer, doorId);
+                return Core.Library.Server.Vehicle_GetDoorState(VehicleNativePointer, doorId);
             }
         }
 
@@ -701,7 +701,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_SetDoorState(VehicleNativePointer, doorId, state);
+                Core.Library.Server.Vehicle_SetDoorState(VehicleNativePointer, doorId, state);
             }
         }
 
@@ -710,7 +710,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.Vehicle_IsWindowOpened(VehicleNativePointer, windowId) == 1;
+                return Core.Library.Server.Vehicle_IsWindowOpened(VehicleNativePointer, windowId) == 1;
             }
         }
 
@@ -719,7 +719,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_SetWindowOpened(VehicleNativePointer, windowId, state ? (byte) 1 : (byte) 0);
+                Core.Library.Server.Vehicle_SetWindowOpened(VehicleNativePointer, windowId, state ? (byte) 1 : (byte) 0);
             }
         }
 
@@ -730,7 +730,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_IsDaylightOn(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_IsDaylightOn(VehicleNativePointer) == 1;
                 }
             }
         }
@@ -742,7 +742,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_IsNightlightOn(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_IsNightlightOn(VehicleNativePointer) == 1;
                 }
             }
         }
@@ -754,7 +754,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetRoofState(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetRoofState(VehicleNativePointer);
                 }
             }
             set
@@ -762,7 +762,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetRoofState(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetRoofState(VehicleNativePointer, value);
                 }
             }
         }
@@ -774,7 +774,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_IsFlamethrowerActive(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_IsFlamethrowerActive(VehicleNativePointer) == 1;
                 }
             }
         }
@@ -786,7 +786,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetLightsMultiplier(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetLightsMultiplier(VehicleNativePointer);
                 }
             }
             set
@@ -794,7 +794,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetLightsMultiplier(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetLightsMultiplier(VehicleNativePointer, value);
                 }
             }
         }
@@ -807,8 +807,8 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var size = 0;
-                    return Server.PtrToStringUtf8AndFree(
-                        Server.Library.Server.Vehicle_GetGameStateBase64(VehicleNativePointer, &size), size);
+                    return Core.PtrToStringUtf8AndFree(
+                        Core.Library.Server.Vehicle_GetGameStateBase64(VehicleNativePointer, &size), size);
                 }
             }
             set
@@ -817,7 +817,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
-                    Server.Library.Server.Vehicle_LoadGameStateFromBase64(VehicleNativePointer, stringPtr);
+                    Core.Library.Server.Vehicle_LoadGameStateFromBase64(VehicleNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
                 }
             }
@@ -830,7 +830,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetEngineHealth(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetEngineHealth(VehicleNativePointer);
                 }
             }
             set
@@ -838,7 +838,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetEngineHealth(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetEngineHealth(VehicleNativePointer, value);
                 }
             }
         }
@@ -850,7 +850,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetPetrolTankHealth(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetPetrolTankHealth(VehicleNativePointer);
                 }
             }
             set
@@ -858,7 +858,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetPetrolTankHealth(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetPetrolTankHealth(VehicleNativePointer, value);
                 }
             }
         }
@@ -870,7 +870,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Shared.Vehicle_GetWheelsCount(VehicleNativePointer);
+                    return Core.Library.Shared.Vehicle_GetWheelsCount(VehicleNativePointer);
                 }
             }
         }
@@ -880,7 +880,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.Vehicle_IsWheelBurst(VehicleNativePointer, wheelId) == 1;
+                return Core.Library.Server.Vehicle_IsWheelBurst(VehicleNativePointer, wheelId) == 1;
             }
         }
 
@@ -889,7 +889,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_SetWheelBurst(VehicleNativePointer, wheelId, state ? (byte) 1 : (byte) 0);
+                Core.Library.Server.Vehicle_SetWheelBurst(VehicleNativePointer, wheelId, state ? (byte) 1 : (byte) 0);
             }
         }
 
@@ -898,7 +898,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.Vehicle_DoesWheelHasTire(VehicleNativePointer, wheelId) == 1;
+                return Core.Library.Server.Vehicle_DoesWheelHasTire(VehicleNativePointer, wheelId) == 1;
             }
         }
 
@@ -907,7 +907,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_SetWheelHasTire(VehicleNativePointer, wheelId, state ? (byte) 1 : (byte) 0);
+                Core.Library.Server.Vehicle_SetWheelHasTire(VehicleNativePointer, wheelId, state ? (byte) 1 : (byte) 0);
             }
         }
 
@@ -916,7 +916,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.Vehicle_IsWheelDetached(VehicleNativePointer, wheelId) == 1;
+                return Core.Library.Server.Vehicle_IsWheelDetached(VehicleNativePointer, wheelId) == 1;
             }
         }
 
@@ -925,7 +925,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_SetWheelDetached(VehicleNativePointer, wheelId, state ? (byte) 1 : (byte) 0);
+                Core.Library.Server.Vehicle_SetWheelDetached(VehicleNativePointer, wheelId, state ? (byte) 1 : (byte) 0);
             }
         }
 
@@ -934,7 +934,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.Vehicle_IsWheelOnFire(VehicleNativePointer, wheelId) == 1;
+                return Core.Library.Server.Vehicle_IsWheelOnFire(VehicleNativePointer, wheelId) == 1;
             }
         }
 
@@ -943,7 +943,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_SetWheelOnFire(VehicleNativePointer, wheelId, state ? (byte) 1 : (byte) 0);
+                Core.Library.Server.Vehicle_SetWheelOnFire(VehicleNativePointer, wheelId, state ? (byte) 1 : (byte) 0);
             }
         }
 
@@ -952,7 +952,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.Vehicle_GetWheelHealth(VehicleNativePointer, wheelId);
+                return Core.Library.Server.Vehicle_GetWheelHealth(VehicleNativePointer, wheelId);
             }
         }
 
@@ -961,7 +961,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_SetWheelHealth(VehicleNativePointer, wheelId, health);
+                Core.Library.Server.Vehicle_SetWheelHealth(VehicleNativePointer, wheelId, health);
             }
         }
 
@@ -970,7 +970,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_SetWheelFixed(VehicleNativePointer, wheelId);
+                Core.Library.Server.Vehicle_SetWheelFixed(VehicleNativePointer, wheelId);
             }
         }
 
@@ -981,7 +981,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetRepairsCount(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetRepairsCount(VehicleNativePointer);
                 }
             }
         }
@@ -993,7 +993,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetBodyHealth(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetBodyHealth(VehicleNativePointer);
                 }
             }
             set
@@ -1001,7 +1001,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetBodyHealth(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetBodyHealth(VehicleNativePointer, value);
                 }
             }
         }
@@ -1013,7 +1013,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetBodyAdditionalHealth(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetBodyAdditionalHealth(VehicleNativePointer);
                 }
             }
             set
@@ -1021,7 +1021,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetBodyAdditionalHealth(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetBodyAdditionalHealth(VehicleNativePointer, value);
                 }
             }
         }
@@ -1034,8 +1034,8 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var size = 0;
-                    return Server.PtrToStringUtf8AndFree(
-                        Server.Library.Server.Vehicle_GetHealthDataBase64(VehicleNativePointer, &size), size);
+                    return Core.PtrToStringUtf8AndFree(
+                        Core.Library.Server.Vehicle_GetHealthDataBase64(VehicleNativePointer, &size), size);
                 }
             }
             set
@@ -1044,7 +1044,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
-                    Server.Library.Server.Vehicle_LoadHealthDataFromBase64(VehicleNativePointer, stringPtr);
+                    Core.Library.Server.Vehicle_LoadHealthDataFromBase64(VehicleNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
                 }
             }
@@ -1055,7 +1055,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.Vehicle_GetPartDamageLevel(VehicleNativePointer, partId);
+                return Core.Library.Server.Vehicle_GetPartDamageLevel(VehicleNativePointer, partId);
             }
         }
 
@@ -1064,7 +1064,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_SetPartDamageLevel(VehicleNativePointer, partId, damage);
+                Core.Library.Server.Vehicle_SetPartDamageLevel(VehicleNativePointer, partId, damage);
             }
         }
 
@@ -1073,7 +1073,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.Vehicle_GetPartBulletHoles(VehicleNativePointer, partId);
+                return Core.Library.Server.Vehicle_GetPartBulletHoles(VehicleNativePointer, partId);
             }
         }
 
@@ -1082,7 +1082,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_SetPartBulletHoles(VehicleNativePointer, partId, shootsCount);
+                Core.Library.Server.Vehicle_SetPartBulletHoles(VehicleNativePointer, partId, shootsCount);
             }
         }
 
@@ -1091,7 +1091,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.Vehicle_IsLightDamaged(VehicleNativePointer, lightId) == 1;
+                return Core.Library.Server.Vehicle_IsLightDamaged(VehicleNativePointer, lightId) == 1;
             }
         }
 
@@ -1100,7 +1100,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_SetLightDamaged(VehicleNativePointer, lightId, isDamaged ? (byte) 1 : (byte) 0);
+                Core.Library.Server.Vehicle_SetLightDamaged(VehicleNativePointer, lightId, isDamaged ? (byte) 1 : (byte) 0);
             }
         }
 
@@ -1109,7 +1109,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.Vehicle_IsWindowDamaged(VehicleNativePointer, windowId) == 1;
+                return Core.Library.Server.Vehicle_IsWindowDamaged(VehicleNativePointer, windowId) == 1;
             }
         }
 
@@ -1118,7 +1118,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_SetWindowDamaged(VehicleNativePointer, windowId, isDamaged ? (byte) 1 : (byte) 0);
+                Core.Library.Server.Vehicle_SetWindowDamaged(VehicleNativePointer, windowId, isDamaged ? (byte) 1 : (byte) 0);
             }
         }
 
@@ -1127,7 +1127,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.Vehicle_IsSpecialLightDamaged(VehicleNativePointer, specialLightId) == 1;
+                return Core.Library.Server.Vehicle_IsSpecialLightDamaged(VehicleNativePointer, specialLightId) == 1;
             }
         }
 
@@ -1136,7 +1136,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_SetSpecialLightDamaged(VehicleNativePointer, specialLightId, isDamaged ? (byte) 1 : (byte) 0);
+                Core.Library.Server.Vehicle_SetSpecialLightDamaged(VehicleNativePointer, specialLightId, isDamaged ? (byte) 1 : (byte) 0);
             }
         }
 
@@ -1147,7 +1147,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_HasArmoredWindows(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_HasArmoredWindows(VehicleNativePointer) == 1;
                 }
             }
         }
@@ -1157,7 +1157,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.Vehicle_GetArmoredWindowHealth(VehicleNativePointer, windowId);
+                return Core.Library.Server.Vehicle_GetArmoredWindowHealth(VehicleNativePointer, windowId);
             }
         }
 
@@ -1166,7 +1166,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_SetArmoredWindowHealth(VehicleNativePointer, windowId, health);
+                Core.Library.Server.Vehicle_SetArmoredWindowHealth(VehicleNativePointer, windowId, health);
             }
         }
 
@@ -1175,7 +1175,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.Vehicle_GetArmoredWindowShootCount(VehicleNativePointer, windowId);
+                return Core.Library.Server.Vehicle_GetArmoredWindowShootCount(VehicleNativePointer, windowId);
             }
         }
 
@@ -1184,7 +1184,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_SetArmoredWindowShootCount(VehicleNativePointer, windowId, count);
+                Core.Library.Server.Vehicle_SetArmoredWindowShootCount(VehicleNativePointer, windowId, count);
             }
         }
 
@@ -1193,7 +1193,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.Vehicle_GetBumperDamageLevel(VehicleNativePointer, bumperId);
+                return Core.Library.Server.Vehicle_GetBumperDamageLevel(VehicleNativePointer, bumperId);
             }
         }
 
@@ -1202,7 +1202,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_SetBumperDamageLevel(VehicleNativePointer, bumperId, damageLevel);
+                Core.Library.Server.Vehicle_SetBumperDamageLevel(VehicleNativePointer, bumperId, damageLevel);
             }
         }
 
@@ -1214,8 +1214,8 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var size = 0;
-                    return Server.PtrToStringUtf8AndFree(
-                        Server.Library.Server.Vehicle_GetDamageDataBase64(VehicleNativePointer, &size), size);
+                    return Core.PtrToStringUtf8AndFree(
+                        Core.Library.Server.Vehicle_GetDamageDataBase64(VehicleNativePointer, &size), size);
                 }
             }
             set
@@ -1224,7 +1224,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
-                    Server.Library.Server.Vehicle_LoadDamageDataFromBase64(VehicleNativePointer, stringPtr);
+                    Core.Library.Server.Vehicle_LoadDamageDataFromBase64(VehicleNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
                 }
             }
@@ -1237,7 +1237,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_IsManualEngineControl(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_IsManualEngineControl(VehicleNativePointer) == 1;
                 }
             }
             set
@@ -1245,7 +1245,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetManualEngineControl(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.Vehicle_SetManualEngineControl(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }
@@ -1258,8 +1258,8 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var size = 0;
-                    return Server.PtrToStringUtf8AndFree(
-                        Server.Library.Server.Vehicle_GetScriptDataBase64(VehicleNativePointer, &size), size);
+                    return Core.PtrToStringUtf8AndFree(
+                        Core.Library.Server.Vehicle_GetScriptDataBase64(VehicleNativePointer, &size), size);
                 }
             }
             set
@@ -1268,7 +1268,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
-                    Server.Library.Server.Vehicle_LoadScriptDataFromBase64(VehicleNativePointer, stringPtr);
+                    Core.Library.Server.Vehicle_LoadScriptDataFromBase64(VehicleNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
                 }
             }
@@ -1281,7 +1281,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var entityPointer = Server.Library.Server.Vehicle_GetAttached(VehicleNativePointer);
+                    var entityPointer = Core.Library.Server.Vehicle_GetAttached(VehicleNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
                     return Alt.Module.VehiclePool.Get(entityPointer, out var vehicle) ? vehicle : null;
                 }
@@ -1295,20 +1295,20 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var entityPointer = Server.Library.Server.Vehicle_GetAttachedTo(VehicleNativePointer);
+                    var entityPointer = Core.Library.Server.Vehicle_GetAttachedTo(VehicleNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
                     return Alt.Module.VehiclePool.Get(entityPointer, out var vehicle) ? vehicle : null;
                 }
             }
         }
 
-        public Vehicle(IServer server, uint model, Position position, Rotation rotation) : this(
-            server, server.CreateVehicleEntity(out var id, model, position, rotation), id)
+        public Vehicle(ICore core, uint model, Position position, Rotation rotation) : this(
+            core, core.CreateVehicleEntity(out var id, model, position, rotation), id)
         {
             Alt.Module.VehiclePool.Add(this);
         }
 
-        public Vehicle(IServer server, IntPtr nativePointer, ushort id) : base(server, GetEntityPointer(server, nativePointer), BaseObjectType.Vehicle, id)
+        public Vehicle(ICore core, IntPtr nativePointer, ushort id) : base(core, GetEntityPointer(core, nativePointer), BaseObjectType.Vehicle, id)
         {
             this.VehicleNativePointer = nativePointer;
         }
@@ -1318,7 +1318,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.Vehicle_GetMod(VehicleNativePointer, category);
+                return Core.Library.Server.Vehicle_GetMod(VehicleNativePointer, category);
             }
         }
 
@@ -1327,7 +1327,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.Vehicle_GetModsCount(VehicleNativePointer, category);
+                return Core.Library.Server.Vehicle_GetModsCount(VehicleNativePointer, category);
             }
         }
 
@@ -1336,7 +1336,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.Vehicle_SetMod(VehicleNativePointer, category, id) == 1;
+                return Core.Library.Server.Vehicle_SetMod(VehicleNativePointer, category, id) == 1;
             }
         }
 
@@ -1345,7 +1345,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_SetWheels(VehicleNativePointer, type, variation);
+                Core.Library.Server.Vehicle_SetWheels(VehicleNativePointer, type, variation);
             }
         }
 
@@ -1354,7 +1354,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                return Server.Library.Server.Vehicle_IsExtraOn(VehicleNativePointer, extraId) == 1;
+                return Core.Library.Server.Vehicle_IsExtraOn(VehicleNativePointer, extraId) == 1;
             }
         }
 
@@ -1363,7 +1363,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_ToggleExtra(VehicleNativePointer, extraId, state ? (byte) 1 : (byte) 0);
+                Core.Library.Server.Vehicle_ToggleExtra(VehicleNativePointer, extraId, state ? (byte) 1 : (byte) 0);
             }
         }
 
@@ -1374,7 +1374,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_IsNeonActive(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_IsNeonActive(VehicleNativePointer) == 1;
                 }
             }
         }
@@ -1384,7 +1384,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_SetNeonActive(VehicleNativePointer, left ? (byte) 1 : (byte) 0, right ? (byte) 1 : (byte) 0, front ? (byte) 1 : (byte) 0, back ? (byte) 1 : (byte) 0);
+                Core.Library.Server.Vehicle_SetNeonActive(VehicleNativePointer, left ? (byte) 1 : (byte) 0, right ? (byte) 1 : (byte) 0, front ? (byte) 1 : (byte) 0, back ? (byte) 1 : (byte) 0);
             }
         }
 
@@ -1397,7 +1397,7 @@ namespace AltV.Net.Elements.Entities
                 byte pRight;
                 byte pFront;
                 byte pBack;
-                Server.Library.Server.Vehicle_GetNeonActive(VehicleNativePointer, &pLeft, &pRight, &pFront, &pBack);
+                Core.Library.Server.Vehicle_GetNeonActive(VehicleNativePointer, &pLeft, &pRight, &pFront, &pBack);
                 left = pLeft == 1;
                 right = pRight == 1;
                 front = pFront == 1;
@@ -1410,7 +1410,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Server.Library.Server.Vehicle_Repair(VehicleNativePointer);
+                Core.Library.Server.Vehicle_Repair(VehicleNativePointer);
             }
         }
 
@@ -1419,7 +1419,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 if(entity == null) return;
-                Server.Library.Server.Vehicle_AttachToEntity(VehicleNativePointer, entity.EntityNativePointer, otherBone, ownBone, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
+                Core.Library.Server.Vehicle_AttachToEntity(VehicleNativePointer, entity.EntityNativePointer, otherBone, ownBone, position, rotation, collision ? (byte) 1 : (byte) 0, noFixedRotation ? (byte) 1 : (byte) 0);
             }
         }
 
@@ -1427,7 +1427,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                Server.Library.Server.Vehicle_Detach(VehicleNativePointer);
+                Core.Library.Server.Vehicle_Detach(VehicleNativePointer);
             }
         }
 
@@ -1439,7 +1439,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var position = Vector3.Zero;
-                    Server.Library.Server.Vehicle_GetVelocity(VehicleNativePointer, &position);
+                    Core.Library.Server.Vehicle_GetVelocity(VehicleNativePointer, &position);
                     return position;
                 }
             }
@@ -1452,7 +1452,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_IsDriftMode(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_IsDriftMode(VehicleNativePointer) == 1;
                 }
             }
             set
@@ -1460,7 +1460,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetDriftMode(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.Vehicle_SetDriftMode(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }
@@ -1472,7 +1472,7 @@ namespace AltV.Net.Elements.Entities
                 if (spottedEntity == null) return false;
                 CheckIfEntityExists();
                 
-                return Server.Library.Server.Vehicle_SetSearchLight(VehicleNativePointer, state ? (byte) 1 : (byte) 0, spottedEntity.EntityNativePointer) == 1;
+                return Core.Library.Server.Vehicle_SetSearchLight(VehicleNativePointer, state ? (byte) 1 : (byte) 0, spottedEntity.EntityNativePointer) == 1;
             }
         }
         
@@ -1483,7 +1483,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_IsTrainMissionTrain(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_IsTrainMissionTrain(VehicleNativePointer) == 1;
                 }
             }
             set
@@ -1491,7 +1491,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetTrainMissionTrain(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.Vehicle_SetTrainMissionTrain(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }
@@ -1503,7 +1503,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetTrainTrackId(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetTrainTrackId(VehicleNativePointer);
                 }
             }
             set
@@ -1511,7 +1511,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetTrainTrackId(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetTrainTrackId(VehicleNativePointer, value);
                 }
             }
         }
@@ -1523,7 +1523,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var entityPointer = Server.Library.Server.Vehicle_GetTrainEngineId(VehicleNativePointer);
+                    var entityPointer = Core.Library.Server.Vehicle_GetTrainEngineId(VehicleNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
                     return Alt.Module.VehiclePool.Get(entityPointer, out var vehicle) ? vehicle : null;
                 }
@@ -1533,7 +1533,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetTrainEngineId(VehicleNativePointer, value?.VehicleNativePointer ?? IntPtr.Zero);
+                    Core.Library.Server.Vehicle_SetTrainEngineId(VehicleNativePointer, value?.VehicleNativePointer ?? IntPtr.Zero);
                 }
             }
         }
@@ -1545,7 +1545,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetTrainConfigIndex(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetTrainConfigIndex(VehicleNativePointer);
                 }
             }
             set
@@ -1553,7 +1553,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetTrainConfigIndex(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetTrainConfigIndex(VehicleNativePointer, value);
                 }
             }
         }
@@ -1565,7 +1565,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetTrainDistanceFromEngine(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetTrainDistanceFromEngine(VehicleNativePointer);
                 }
             }
             set
@@ -1573,7 +1573,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetTrainDistanceFromEngine(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetTrainDistanceFromEngine(VehicleNativePointer, value);
                 }
             }
         }
@@ -1585,7 +1585,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_IsTrainEngine(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_IsTrainEngine(VehicleNativePointer) == 1;
                 }
             }
             set
@@ -1593,7 +1593,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetTrainIsEngine(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.Vehicle_SetTrainIsEngine(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }
@@ -1605,7 +1605,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_IsTrainCaboose(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_IsTrainCaboose(VehicleNativePointer) == 1;
                 }
             }
             set
@@ -1613,7 +1613,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetTrainIsCaboose(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.Vehicle_SetTrainIsCaboose(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }
@@ -1625,7 +1625,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetTrainDirection(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_GetTrainDirection(VehicleNativePointer) == 1;
                 }
             }
             set
@@ -1633,7 +1633,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetTrainDirection(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.Vehicle_SetTrainDirection(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }
@@ -1645,7 +1645,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_HasTrainPassengerCarriages(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_HasTrainPassengerCarriages(VehicleNativePointer) == 1;
                 }
             }
             set
@@ -1653,7 +1653,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetTrainHasPassengerCarriages(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.Vehicle_SetTrainHasPassengerCarriages(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }
@@ -1665,7 +1665,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetTrainRenderDerailed(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_GetTrainRenderDerailed(VehicleNativePointer) == 1;
                 }
             }
             set
@@ -1673,7 +1673,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetTrainRenderDerailed(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.Vehicle_SetTrainRenderDerailed(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }
@@ -1685,7 +1685,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetTrainForceDoorsOpen(VehicleNativePointer) == 1;
+                    return Core.Library.Server.Vehicle_GetTrainForceDoorsOpen(VehicleNativePointer) == 1;
                 }
             }
             set
@@ -1693,7 +1693,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetTrainForceDoorsOpen(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.Vehicle_SetTrainForceDoorsOpen(VehicleNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }
@@ -1705,7 +1705,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetTrainCruiseSpeed(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetTrainCruiseSpeed(VehicleNativePointer);
                 }
             }
             set
@@ -1713,7 +1713,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetTrainCruiseSpeed(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetTrainCruiseSpeed(VehicleNativePointer, value);
                 }
             }
         }
@@ -1725,7 +1725,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.Vehicle_GetTrainCarriageConfigIndex(VehicleNativePointer);
+                    return Core.Library.Server.Vehicle_GetTrainCarriageConfigIndex(VehicleNativePointer);
                 }
             }
             set
@@ -1733,7 +1733,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetTrainCarriageConfigIndex(VehicleNativePointer, value);
+                    Core.Library.Server.Vehicle_SetTrainCarriageConfigIndex(VehicleNativePointer, value);
                 }
             }
         }
@@ -1745,7 +1745,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var entityPointer = Server.Library.Server.Vehicle_GetTrainLinkedToBackwardId(VehicleNativePointer);
+                    var entityPointer = Core.Library.Server.Vehicle_GetTrainLinkedToBackwardId(VehicleNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
                     return Alt.Module.VehiclePool.Get(entityPointer, out var vehicle) ? vehicle : null;
                 }
@@ -1755,7 +1755,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetTrainLinkedToBackwardId(VehicleNativePointer, value?.VehicleNativePointer ?? IntPtr.Zero);
+                    Core.Library.Server.Vehicle_SetTrainLinkedToBackwardId(VehicleNativePointer, value?.VehicleNativePointer ?? IntPtr.Zero);
                 }
             }
         }
@@ -1767,7 +1767,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var entityPointer = Server.Library.Server.Vehicle_GetTrainLinkedToForwardId(VehicleNativePointer);
+                    var entityPointer = Core.Library.Server.Vehicle_GetTrainLinkedToForwardId(VehicleNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
                     return Alt.Module.VehiclePool.Get(entityPointer, out var vehicle) ? vehicle : null;
                 }
@@ -1777,7 +1777,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.Vehicle_SetTrainLinkedToForwardId(VehicleNativePointer, value?.VehicleNativePointer ?? IntPtr.Zero);
+                    Core.Library.Server.Vehicle_SetTrainLinkedToForwardId(VehicleNativePointer, value?.VehicleNativePointer ?? IntPtr.Zero);
                 }
             }
         }

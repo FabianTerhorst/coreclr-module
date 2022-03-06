@@ -2,14 +2,14 @@
 {
     public partial class Alt
     {
-        public static void StartResource(string name) => Module.Server.StartResource(name);
+        public static void StartResource(string name) => Module.Core.StartResource(name);
 
-        public static void StopResource(string name) => Module.Server.StopResource(name);
+        public static void StopResource(string name) => Module.Core.StopResource(name);
 
-        public static void RestartResource(string name) => Module.Server.RestartResource(name);
+        public static void RestartResource(string name) => Module.Core.RestartResource(name);
 
-        public static INativeResource GetResource(string name) => Module.Server.GetResource(name);
+        public static INativeResource GetResource(string name) => Module.Core.GetResource(name);
 
-        public static INativeResource Resource => Module.Server.Resource;
+        public static INativeResource Resource => Module.Core.Resource;
     }
 }

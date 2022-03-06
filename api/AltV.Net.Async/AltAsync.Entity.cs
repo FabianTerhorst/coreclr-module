@@ -19,7 +19,7 @@ namespace AltV.Net.Async
 
         public static async Task SetSyncedMetaDataAsync(this IEntity entity, string key, object value)
         {
-            Alt.Server.CreateMValue(out var mValue, value);
+            Alt.Core.CreateMValue(out var mValue, value);
             await AltVAsync.Schedule(() => entity.SetSyncedMetaData(key, mValue));
             mValue.Dispose();
         }
@@ -33,7 +33,7 @@ namespace AltV.Net.Async
 
         public static async Task SetStreamSyncedMetaDataAsync(this IEntity entity, string key, object value)
         {
-            Alt.Server.CreateMValue(out var mValue, value);
+            Alt.Core.CreateMValue(out var mValue, value);
             await AltVAsync.Schedule(() => entity.SetStreamSyncedMetaData(key, mValue));
             mValue.Dispose();
         }

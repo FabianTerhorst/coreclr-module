@@ -9,27 +9,27 @@ namespace AltV.Net.ColShape.Tests
 {
     public class MockVehiclePool : IEntityPool<IVehicle>
     {
-        public void Create(IServer server, IntPtr entityPointer, ushort id)
+        public void Create(ICore core, IntPtr entityPointer, ushort id)
         {
             throw new NotImplementedException();
         }
 
-        public void Create(IServer server, IntPtr entityPointer, ushort id, out IVehicle entity)
+        public void Create(ICore core, IntPtr entityPointer, ushort id, out IVehicle entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Create(IServer server, IntPtr entityPointer, out IVehicle entity)
+        public void Create(ICore core, IntPtr entityPointer, out IVehicle entity)
         {
             throw new NotImplementedException();
         }
 
-        public bool GetOrCreate(IServer server, IntPtr entityPointer, ushort entityId, out IVehicle entity)
+        public bool GetOrCreate(ICore core, IntPtr entityPointer, ushort entityId, out IVehicle entity)
         {
             throw new NotImplementedException();
         }
 
-        public bool GetOrCreate(IServer server, IntPtr entityPointer, out IVehicle entity)
+        public bool GetOrCreate(ICore core, IntPtr entityPointer, out IVehicle entity)
         {
             throw new NotImplementedException();
         }

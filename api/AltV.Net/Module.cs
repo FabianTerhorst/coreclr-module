@@ -20,7 +20,7 @@ namespace AltV.Net
 {
     public class Module : IDisposable
     {
-        internal readonly IServer Server;
+        internal readonly ICore Core;
 
         private readonly WeakReference<AssemblyLoadContext> assemblyLoadContext;
 
@@ -178,7 +178,7 @@ namespace AltV.Net
         private readonly IDictionary<int, IDictionary<IRefCountable, ulong>> threadRefCount =
             new Dictionary<int, IDictionary<IRefCountable, ulong>>();
 
-        public Module(IServer server, AssemblyLoadContext assemblyLoadContext,
+        public Module(ICore core, AssemblyLoadContext assemblyLoadContext,
             INativeResource moduleResource, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
@@ -189,7 +189,7 @@ namespace AltV.Net
             INativeResourcePool nativeResourcePool)
         {
             Alt.Init(this);
-            Server = server;
+            Core = core;
             this.assemblyLoadContext = new WeakReference<AssemblyLoadContext>(assemblyLoadContext);
             ModuleResource = moduleResource;
             BaseBaseObjectPool = baseBaseObjectPool;
@@ -486,7 +486,7 @@ namespace AltV.Net
 
         public void OnResourceStart(IntPtr resourcePointer)
         {
-            var resource = Server.GetResource(resourcePointer);
+            var resource = Core.GetResource(resourcePointer);
             if (resource == null) return;
             OnResourceStartEvent(resource);
         }
@@ -512,7 +512,7 @@ namespace AltV.Net
 
         public void OnResourceStop(IntPtr resourcePointer)
         {
-            var resource = Server.GetResource(resourcePointer);
+            var resource = Core.GetResource(resourcePointer);
             if (resource == null) return;
             OnResourceStopEvent(resource);
         }
@@ -538,7 +538,7 @@ namespace AltV.Net
 
         public void OnResourceError(IntPtr resourcePointer)
         {
-            var resource = Server.GetResource(resourcePointer);
+            var resource = Core.GetResource(resourcePointer);
             if (resource == null) return;
             OnResourceErrorEvent(resource);
         }
@@ -609,7 +609,7 @@ namespace AltV.Net
                 unsafe
                 {
                     var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(cancel);
-                    Alt.Server.Library.Server.Event_PlayerBeforeConnect_Cancel(eventPointer, stringPtr);
+                    Alt.Core.Library.Server.Event_PlayerBeforeConnect_Cancel(eventPointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
                 }
             }
@@ -728,7 +728,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Server.Library.Server.Event_Cancel(eventPointer);
+                    Alt.Core.Library.Server.Event_Cancel(eventPointer);
                 }
             }
         }
@@ -777,7 +777,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Server.Library.Server.Event_Cancel(eventPointer);
+                    Alt.Core.Library.Server.Event_Cancel(eventPointer);
                 }
             }
         }
@@ -1260,7 +1260,7 @@ namespace AltV.Net
 
         public void OnCreatePlayer(IntPtr playerPointer, ushort playerId)
         {
-            PlayerPool.Create(Server, playerPointer, playerId);
+            PlayerPool.Create(Core, playerPointer, playerId);
         }
 
         public void OnRemovePlayer(IntPtr playerPointer)
@@ -1270,17 +1270,17 @@ namespace AltV.Net
 
         public void OnCreateVehicle(IntPtr vehiclePointer, ushort vehicleId)
         {
-            VehiclePool.Create(Server, vehiclePointer, vehicleId);
+            VehiclePool.Create(Core, vehiclePointer, vehicleId);
         }
 
         public void OnCreateVoiceChannel(IntPtr channelPointer)
         {
-            VoiceChannelPool.Create(Server, channelPointer);
+            VoiceChannelPool.Create(Core, channelPointer);
         }
 
         public void OnCreateColShape(IntPtr colShapePointer)
         {
-            ColShapePool.Create(Server, colShapePointer);
+            ColShapePool.Create(Core, colShapePointer);
         }
 
         public void OnRemoveVehicle(IntPtr vehiclePointer)
@@ -1290,7 +1290,7 @@ namespace AltV.Net
 
         public void OnCreateBlip(IntPtr blipPointer)
         {
-            BlipPool.Create(Server, blipPointer);
+            BlipPool.Create(Core, blipPointer);
         }
 
         public void OnRemoveBlip(IntPtr blipPointer)
@@ -1300,7 +1300,7 @@ namespace AltV.Net
 
         public void OnCreateCheckpoint(IntPtr checkpointPointer)
         {
-            CheckpointPool.Create(Server, checkpointPointer);
+            CheckpointPool.Create(Core, checkpointPointer);
         }
 
         public void OnRemoveCheckpoint(IntPtr checkpointPointer)
@@ -1517,7 +1517,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Server.Library.Server.Event_Cancel(eventPointer);
+                    Alt.Core.Library.Server.Event_Cancel(eventPointer);
                 }
             }
         }
@@ -1560,7 +1560,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Server.Library.Server.Event_Cancel(eventPointer);
+                    Alt.Core.Library.Server.Event_Cancel(eventPointer);
                 }
             }
         }
@@ -1603,7 +1603,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Alt.Server.Library.Server.Event_Cancel(eventPointer);
+                    Alt.Core.Library.Server.Event_Cancel(eventPointer);
                 }
             }
         }
@@ -1755,7 +1755,7 @@ namespace AltV.Net
 
         public virtual void OnConnectionQueueAdd(IntPtr connectionInfoPtr)
         {
-            IConnectionInfo connectionInfo = new ConnectionInfo(Server, connectionInfoPtr);
+            IConnectionInfo connectionInfo = new ConnectionInfo(Core, connectionInfoPtr);
             connectionInfos[connectionInfoPtr] = connectionInfo;
             OnConnectionQueueAddEvent(connectionInfo);
         }
@@ -1846,8 +1846,8 @@ namespace AltV.Net
                 functionExports[key] = function;
                 MValueFunctionCallback callDelegate = function.Call;
                 functionExportHandles.AddFirst(GCHandle.Alloc(callDelegate));
-                Server.CreateMValueFunction(out var mValue,
-                    Server.Library.Server.Invoker_Create(ModuleResource.ResourceImplPtr, callDelegate));
+                Core.CreateMValueFunction(out var mValue,
+                    Core.Library.Server.Invoker_Create(ModuleResource.ResourceImplPtr, callDelegate));
                 ModuleResource.SetExport(key, in mValue);
                 mValue.Dispose();
             }

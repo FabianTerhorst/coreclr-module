@@ -498,7 +498,7 @@ namespace AltV.Net.Async.Elements.Entities
             {
                 if (BaseObject.Exists)
                 {
-                    Alt.Server.TriggerClientEvent(BaseObject, eventNamePtr, mValues);
+                    Alt.Core.TriggerClientEvent(BaseObject, eventNamePtr, mValues);
                 }
             }
 

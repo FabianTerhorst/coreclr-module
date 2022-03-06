@@ -336,10 +336,10 @@ namespace AltV.Net.Elements.Args
                 }
 
 
-                var listSize = Alt.Server.Library.Shared.MValueConst_GetListSize(mValue.nativePointer);
+                var listSize = Alt.Core.Library.Shared.MValueConst_GetListSize(mValue.nativePointer);
                 var valueArrayRef = new IntPtr[listSize];
                 valuesList = new MValueConst[listSize];
-                Alt.Server.Library.Shared.MValueConst_GetList(mValue.nativePointer, valueArrayRef);
+                Alt.Core.Library.Shared.MValueConst_GetList(mValue.nativePointer, valueArrayRef);
                 for (ulong i = 0; i < listSize; i++)
                 {
                     valuesList[i] = new MValueConst(valueArrayRef[i]);

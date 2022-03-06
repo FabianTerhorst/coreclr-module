@@ -20,7 +20,7 @@ namespace AltV.Net.FunctionParser
         {
             var length = args.Length;
             var mValues = new MValueConst[length];
-            Alt.Server.CreateMValues(mValues, args);
+            Alt.Core.CreateMValues(mValues, args);
             var argsPointers = Marshal.AllocHGlobal(length * IntPtr.Size);
             for (var i = 0; i < length; i++)
             {

@@ -9,11 +9,11 @@ namespace AltV.Net.Elements.Entities
         public IntPtr WorldObjectNativePointer { get; }
         public override IntPtr NativePointer => WorldObjectNativePointer;
         
-        private static IntPtr GetBaseObjectPointer(IServer server, IntPtr nativePointer)
+        private static IntPtr GetBaseObjectPointer(ICore core, IntPtr nativePointer)
         {
             unsafe
             {
-                return server.Library.Shared.WorldObject_GetBaseObject(nativePointer);
+                return core.Library.Shared.WorldObject_GetBaseObject(nativePointer);
             }
         }
         
@@ -26,7 +26,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     var position = Vector3.Zero;
-                    Server.Library.Shared.WorldObject_GetPosition(WorldObjectNativePointer, &position);
+                    Core.Library.Shared.WorldObject_GetPosition(WorldObjectNativePointer, &position);
                     return position;
                 }
             }
@@ -35,7 +35,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    Server.Library.Server.WorldObject_SetPosition(WorldObjectNativePointer, value);
+                    Core.Library.Server.WorldObject_SetPosition(WorldObjectNativePointer, value);
                 }
             }
         }
@@ -46,7 +46,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    return Server.Library.Server.WorldObject_GetDimension(WorldObjectNativePointer);
+                    return Core.Library.Server.WorldObject_GetDimension(WorldObjectNativePointer);
                 }
             }
             set
@@ -54,12 +54,12 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    Server.Library.Server.WorldObject_SetDimension(WorldObjectNativePointer, value);
+                    Core.Library.Server.WorldObject_SetDimension(WorldObjectNativePointer, value);
                 }
             }
         }
 
-        protected WorldObject(IServer server, IntPtr nativePointer, BaseObjectType type) : base(server, GetBaseObjectPointer(server, nativePointer), type)
+        protected WorldObject(ICore core, IntPtr nativePointer, BaseObjectType type) : base(core, GetBaseObjectPointer(core, nativePointer), type)
         {
             WorldObjectNativePointer = nativePointer;
         }

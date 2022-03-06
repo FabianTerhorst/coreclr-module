@@ -161,7 +161,7 @@ namespace AltV.Net
 
         public static bool Import(string resourceName, string key, out MValueConst mValue)
         {
-            var resource = Server.GetResource(resourceName);
+            var resource = Core.GetResource(resourceName);
             if (resource == null)
             {
                 mValue = default;
@@ -195,14 +195,14 @@ namespace AltV.Net
             var mValueArgs = new IntPtr[length];
             for (uint i = 0; i < length; i++)
             {
-                Alt.Server.CreateMValue(out var mValueElement, args[i]);
+                Alt.Core.CreateMValue(out var mValueElement, args[i]);
                 mValueArgs[i] = mValueElement.nativePointer;
             }
             
-            result = new MValueConst(Alt.Server.Library.MValue_CallFunction(mValue.nativePointer, mValueArgs, length));
+            result = new MValueConst(Alt.Core.Library.MValue_CallFunction(mValue.nativePointer, mValueArgs, length));
             for (ulong i = 0;i < length;i++)
             {
-                Alt.Server.Library.MValueConst_Delete(mValueArgs[i]);
+                Alt.Core.Library.MValueConst_Delete(mValueArgs[i]);
             }
         }*/
         
@@ -214,16 +214,16 @@ namespace AltV.Net
                 var mValueArgs = new IntPtr[length];
                 for (uint i = 0; i < length; i++)
                 {
-                    Alt.Server.CreateMValue(out var mValueElement, args[i]);
+                    Alt.Core.CreateMValue(out var mValueElement, args[i]);
                     mValueArgs[i] = mValueElement.nativePointer;
                 }
 
-                var result = new MValueConst(Alt.Server.Library.Shared.MValueConst_CallFunction(Alt.Server.NativePointer, mValue.nativePointer, mValueArgs, length));
+                var result = new MValueConst(Alt.Core.Library.Shared.MValueConst_CallFunction(Alt.Core.NativePointer, mValue.nativePointer, mValueArgs, length));
                 var resultObj = result.ToObject();
                 result.Dispose();
                 for (ulong i = 0;i < length;i++)
                 {
-                    Alt.Server.Library.Shared.MValueConst_Delete(mValueArgs[i]);
+                    Alt.Core.Library.Shared.MValueConst_Delete(mValueArgs[i]);
                 }
 
                 return resultObj;
