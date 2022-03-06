@@ -36,7 +36,7 @@ public class InteractionsServiceThread : IDisposable
         this.grid = grid;
         Writer = channel.Writer;
         
-        Task.Run(new Func<Task>(async () =>
+        Task.Run(async () =>
             {
                 while (await channel.Reader.WaitToReadAsync())
                 {
@@ -200,7 +200,7 @@ public class InteractionsServiceThread : IDisposable
                         }
                     }
                 }
-            }));
+            });
     }
 
     public void Dispose()
