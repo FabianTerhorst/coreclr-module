@@ -50,11 +50,39 @@ namespace AltV.Net.Host
 
         private static Semaphore _runtimeBlockingSemaphore;
 
+        private static string GetCApiVersion()
+        {
+            unsafe
+            {
+                const DllImportSearchPath dllImportSearchPath = DllImportSearchPath.LegacyBehavior
+                                                                | DllImportSearchPath.AssemblyDirectory
+                                                                | DllImportSearchPath.SafeDirectories
+                                                                | DllImportSearchPath.System32
+                                                                | DllImportSearchPath.UserDirectories
+                                                                | DllImportSearchPath.ApplicationDirectory
+                                                                | DllImportSearchPath.UseDllDirectoryForDependencies;
+                var handle = NativeLibrary.Load(DllName, Assembly.GetExecutingAssembly(), dllImportSearchPath);
+                var freeString = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeString");
+                var getBranchStatic =
+                    (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetCApiVersion");
+
+                var size = 0;
+
+                var str = getBranchStatic(&size);
+                var stringResult = Marshal.PtrToStringUTF8(str, size);
+                freeString(str);
+
+                return stringResult;
+            }
+        }
+
         /// <summary>
         /// Main is present to execute the dll as a assembly
         /// </summary>
         public static int Main(string[] args)
         {
+            var version = GetCApiVersion();
+            Console.WriteLine("C# CApiVersion:" + version);
             _runtimeBlockingSemaphore = new Semaphore(0, 1);
             SetDelegates();
             _runtimeBlockingSemaphore.WaitOne();
