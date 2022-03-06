@@ -1,5 +1,7 @@
 #!/bin/bash
 
+printenv
+
 cat <<EOM >> version.h.tmp
 #pragma once
 
