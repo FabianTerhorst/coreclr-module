@@ -182,7 +182,9 @@ namespace AltV.Net.Host
             }
             catch (Exception e)
             {
+                Console.WriteLine("----Error while downloading AltV Standard Dll's.----");
                 Console.WriteLine(e);
+                Console.WriteLine("----------------------------------------------------");
             }
 
             _runtimeBlockingSemaphore = new Semaphore(0, 1);
