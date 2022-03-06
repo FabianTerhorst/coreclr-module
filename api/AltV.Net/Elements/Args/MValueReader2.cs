@@ -341,14 +341,21 @@ namespace AltV.Net.Elements.Args
 
             public bool GetNext(out double value)
             {
-                if (mValue.type != MValueConst.Type.Double)
+                switch (mValue.type)
                 {
-                    value = default;
-                    return false;
+                    case MValueConst.Type.Double:
+                        value = mValue.GetDouble();
+                        return true;
+                    case MValueConst.Type.Int:
+                        value = mValue.GetInt();
+                        return true;
+                    case MValueConst.Type.Uint:
+                        value = mValue.GetUint();
+                        return true;
+                    default:
+                        value = default;
+                        return false;
                 }
-
-                value = mValue.GetDouble();
-                return true;
             }
 
             public bool GetNext(out string value)
