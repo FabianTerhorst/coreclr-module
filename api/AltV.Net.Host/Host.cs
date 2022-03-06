@@ -105,75 +105,78 @@ namespace AltV.Net.Host
             try
             {
                 var version = GetCApiVersion();
-                for (int i = 0, length = _packets.Length; i < length; ++i)
+                if (!string.IsNullOrEmpty(version))
                 {
-                    var packet = _packets[i] + version;
-                    var task = Task.Run(() => _httpClient.GetStreamAsync(packet));
-                    task.Wait();
-                    var result = task.Result;
-                    using var zip = new ZipArchive(result, ZipArchiveMode.Read);
-                    foreach (var entry in zip.Entries)
+                    for (int i = 0, length = _packets.Length; i < length; ++i)
                     {
-                        var fullName = entry.FullName;
-                        if (!fullName.EndsWith(".dll"))
+                        var packet = _packets[i] + version;
+                        var task = Task.Run(() => _httpClient.GetStreamAsync(packet));
+                        task.Wait();
+                        var result = task.Result;
+                        using var zip = new ZipArchive(result, ZipArchiveMode.Read);
+                        foreach (var entry in zip.Entries)
                         {
-                            continue;
+                            var fullName = entry.FullName;
+                            if (!fullName.EndsWith(".dll"))
+                            {
+                                continue;
+                            }
+
+                            var pathSeperated = fullName.Split(Path.DirectorySeparatorChar);
+                            if (pathSeperated.Length <= 0)
+                            {
+                                continue;
+                            }
+
+                            var fileName = pathSeperated[^1];
+
+                            Console.WriteLine("dll:" + fileName);
+                            using var stream = entry.Open();
+                            byte[] bytes;
+                            using (var ms = new MemoryStream())
+                            {
+                                stream.CopyTo(ms);
+                                bytes = ms.ToArray();
+                            }
+
+                            _packetContents[fileName] = bytes;
                         }
-
-                        var pathSeperated = fullName.Split(Path.DirectorySeparatorChar);
-                        if (pathSeperated.Length <= 0)
-                        {
-                            continue;
-                        }
-
-                        var fileName = pathSeperated[^1];
-
-                        Console.WriteLine("dll:" + fileName);
-                        using var stream = entry.Open();
-                        byte[] bytes;
-                        using (var ms = new MemoryStream())
-                        {
-                            stream.CopyTo(ms);
-                            bytes = ms.ToArray();
-                        }
-
-                        _packetContents[fileName] = bytes;
                     }
-                }
 
-                for (int i = 0, length = _packetsSymbol.Length; i < length; ++i)
-                {
-                    var packet = _packetsSymbol[i] + version;
-                    var task = Task.Run(() => _httpClient.GetStreamAsync(packet));
-                    task.Wait();
-                    var result = task.Result;
-                    using var zip = new ZipArchive(result, ZipArchiveMode.Read);
-                    foreach (var entry in zip.Entries)
+                    for (int i = 0, length = _packetsSymbol.Length; i < length; ++i)
                     {
-                        var fullName = entry.FullName;
-                        if (!fullName.EndsWith(".pdb"))
+                        var packet = _packetsSymbol[i] + version;
+                        var task = Task.Run(() => _httpClient.GetStreamAsync(packet));
+                        task.Wait();
+                        var result = task.Result;
+                        using var zip = new ZipArchive(result, ZipArchiveMode.Read);
+                        foreach (var entry in zip.Entries)
                         {
-                            continue;
+                            var fullName = entry.FullName;
+                            if (!fullName.EndsWith(".pdb"))
+                            {
+                                continue;
+                            }
+
+                            var pathSeperated = fullName.Split(Path.DirectorySeparatorChar);
+                            if (pathSeperated.Length <= 0)
+                            {
+                                continue;
+                            }
+
+                            var fileName = pathSeperated[^1];
+
+                            Console.WriteLine("pdb:" + fileName);
+                            using var stream = entry.Open();
+                            byte[] bytes;
+                            using (var ms = new MemoryStream())
+                            {
+                                stream.CopyTo(ms);
+                                bytes = ms.ToArray();
+                            }
+
+                            _packetSymbols[fileName] = bytes;
                         }
-
-                        var pathSeperated = fullName.Split(Path.DirectorySeparatorChar);
-                        if (pathSeperated.Length <= 0)
-                        {
-                            continue;
-                        }
-
-                        var fileName = pathSeperated[^1];
-
-                        Console.WriteLine("pdb:" + fileName);
-                        using var stream = entry.Open();
-                        byte[] bytes;
-                        using (var ms = new MemoryStream())
-                        {
-                            stream.CopyTo(ms);
-                            bytes = ms.ToArray();
-                        }
-
-                        _packetSymbols[fileName] = bytes;
                     }
                 }
             }
