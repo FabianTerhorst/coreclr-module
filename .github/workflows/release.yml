@@ -134,7 +134,7 @@ jobs:
           pwd
       - working-directory: ./runtime/server
         env:
-          VERSION: ${{GITHUB_REF##*/}}
+          VERSION: ${GITHUB_REF##*/}
         shell: cmake -P {0}
         run: |
           set(ENV{CC} ${{ matrix.config.cc }})
