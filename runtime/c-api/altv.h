@@ -14,10 +14,10 @@ EXPORT_SHARED void FreeUIntArray(alt::Array<uint32_t> *array);
 //EXPORT void FreeStringViewArray(alt::Array<alt::StringView> *array);
 //EXPORT void FreeStringArray(alt::Array<alt::String>* array);
 /*EXPORT void FreeMValueArray(alt::Array<alt::MValue> *array);*/
-EXPORT void FreeCharArray(char charArray[]);
-EXPORT void FreeString(const char* string);
-EXPORT const char* GetVersionStatic(int32_t &size);
-EXPORT const char* GetBranchStatic(int32_t &size);
+EXPORT_SHARED void FreeCharArray(char charArray[]);
+EXPORT_SHARED void FreeString(const char* string);
+EXPORT_SHARED const char* GetVersionStatic(int32_t &size);
+EXPORT_SHARED const char* GetBranchStatic(int32_t &size);
 #ifdef __cplusplus
 }
 #endif
