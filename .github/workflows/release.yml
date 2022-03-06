@@ -197,6 +197,8 @@ jobs:
           echo "$(echo "`cat ./api/AltV.Net.Client/AltV.Net.Client.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.Client/AltV.Net.Client.csproj
           echo "$(echo "`cat ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj
           echo "$(echo "`cat ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj
+          echo "$(echo "`cat ./api/AltV.Net.CApi/AltV.Net.CApi.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.CApi/AltV.Net.CApi.csproj
+          echo "$(echo "`cat ./api/AltV.Net.CApi/AltV.Net.CApi.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.CApi/AltV.Net.CApi.csproj
       - uses: alirezanet/publish-nuget@v3.0.0
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net/AltV.Net.csproj
@@ -249,6 +251,13 @@ jobs:
       - uses: alirezanet/publish-nuget@v3.0.0
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          INCLUDE_SYMBOLS: true
+          TAG_COMMIT: false
+      - uses: alirezanet/publish-nuget@v3.0.0
+        with:
+          PROJECT_FILE_PATH: ./api/AltV.Net.CApi/AltV.Net.CApi.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
