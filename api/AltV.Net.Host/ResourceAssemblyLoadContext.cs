@@ -38,19 +38,6 @@ namespace AltV.Net.Host
             Resolving += (context, assemblyName) =>
             {
                 var assemblyFileName = assemblyName.Name + ".dll";
-                if (standardDlls.TryGetValue(assemblyFileName, out var content))
-                {
-                    Stream assemblyStream = new MemoryStream(content);
-                    Stream assemblySymbols = null;
-                    if (standardSymbols.TryGetValue(assemblyName.Name + ".pdb", out var symbolsContent))
-                    {
-                        assemblySymbols = new MemoryStream(symbolsContent);
-                    }
-                    
-                    var assembly = LoadFromStream(assemblyStream, assemblySymbols);
-                    assemblySymbols?.Dispose();
-                    return assembly;
-                }
                 var dllPath = resourcePath + Path.DirectorySeparatorChar + assemblyFileName;
                 if (File.Exists(dllPath))
                 {
@@ -67,7 +54,7 @@ namespace AltV.Net.Host
                 }
 
                 dllPath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "runtime" +
-                          Path.DirectorySeparatorChar + assemblyName.Name + ".dll";
+                          Path.DirectorySeparatorChar + assemblyFileName;
                 if (File.Exists(dllPath))
                 {
                     try
@@ -83,7 +70,7 @@ namespace AltV.Net.Host
                 }
 
                 dllPath = Path.GetDirectoryName(resourceDllPath) + Path.DirectorySeparatorChar +
-                          assemblyName.Name + ".dll";
+                          assemblyFileName;
                 if (File.Exists(dllPath))
                 {
                     try
@@ -100,7 +87,7 @@ namespace AltV.Net.Host
 
                 dllPath = Path.GetDirectoryName(resourceDllPath) + Path.DirectorySeparatorChar + "publish" +
                           Path.DirectorySeparatorChar +
-                          assemblyName.Name + ".dll";
+                          assemblyFileName;
                 if (File.Exists(dllPath))
                 {
                     try
@@ -113,6 +100,20 @@ namespace AltV.Net.Host
                     {
                         Console.WriteLine(exception);
                     }
+                }
+                
+                if (standardDlls.TryGetValue(assemblyFileName, out var content))
+                {
+                    Stream assemblyStream = new MemoryStream(content);
+                    Stream assemblySymbols = null;
+                    if (standardSymbols.TryGetValue(assemblyName.Name + ".pdb", out var symbolsContent))
+                    {
+                        assemblySymbols = new MemoryStream(symbolsContent);
+                    }
+                    
+                    var assembly = LoadFromStream(assemblyStream, assemblySymbols);
+                    assemblySymbols?.Dispose();
+                    return assembly;
                 }
 
                 return null;
