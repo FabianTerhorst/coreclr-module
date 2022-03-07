@@ -7,7 +7,7 @@ namespace AltV.Net.Mock
 {
     public class MockWorldObject : WorldObject
     {
-        public MockWorldObject(IServer server, IntPtr nativePointer, BaseObjectType type) : base(server, nativePointer, type)
+        public MockWorldObject(ICore core, IntPtr nativePointer, BaseObjectType type) : base(core, nativePointer, type)
         {
         }
     }

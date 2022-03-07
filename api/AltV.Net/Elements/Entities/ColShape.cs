@@ -7,11 +7,11 @@ namespace AltV.Net.Elements.Entities
         public IntPtr ColShapeNativePointer { get; }
         public override IntPtr NativePointer => ColShapeNativePointer;
         
-        private static IntPtr GetWorldObjectPointer(IServer server, IntPtr nativePointer)
+        private static IntPtr GetWorldObjectPointer(ICore core, IntPtr nativePointer)
         {
             unsafe
             {
-                return server.Library.Server.ColShape_GetWorldObject(nativePointer);
+                return core.Library.Server.ColShape_GetWorldObject(nativePointer);
             }
         }
         
@@ -22,7 +22,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return Server.Library.Server.ColShape_IsPlayersOnly(ColShapeNativePointer) == 1;
+                    return Core.Library.Server.ColShape_IsPlayersOnly(ColShapeNativePointer) == 1;
                 }
             }
             set
@@ -30,7 +30,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    Server.Library.Server.ColShape_SetPlayersOnly(ColShapeNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.ColShape_SetPlayersOnly(ColShapeNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }
@@ -42,12 +42,12 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    return (ColShapeType) Server.Library.Server.ColShape_GetColShapeType(ColShapeNativePointer);
+                    return (ColShapeType) Core.Library.Server.ColShape_GetColShapeType(ColShapeNativePointer);
                 }
             }
         }
 
-        public ColShape(IServer server, IntPtr nativePointer) : base(server, GetWorldObjectPointer(server, nativePointer), BaseObjectType.ColShape)
+        public ColShape(ICore core, IntPtr nativePointer) : base(core, GetWorldObjectPointer(core, nativePointer), BaseObjectType.ColShape)
         {
             ColShapeNativePointer = nativePointer;
         }
@@ -59,19 +59,21 @@ namespace AltV.Net.Elements.Entities
             
             unsafe
             {
-                return Server.Library.Server.ColShape_IsEntityIn(ColShapeNativePointer, entity.EntityNativePointer) == 1;
+                return Core.Library.Server.ColShape_IsEntityIn(ColShapeNativePointer, entity.EntityNativePointer) == 1;
             }
         }
 
         [Obsolete("Use IsEntityIn instead")]
         public bool IsPlayerIn(IPlayer player)
         {
+            Alt.LogWarning("colShape.IsPlayerIn is deprecated, use colShape.IsEntityIn instead");
             return IsEntityIn(player);
         }
 
         [Obsolete("Use IsEntityIn instead")]
         public bool IsVehicleIn(IVehicle vehicle)
         {
+            Alt.LogWarning("colShape.IsVehicleIn is deprecated, use colShape.IsEntityIn instead");
             return IsEntityIn(vehicle);
         }
         

@@ -95,7 +95,7 @@ namespace AltV.Net.Async
                     }
 
                     var pos = Vector3.Zero;
-                    Alt.Server.Library.Shared.WorldObject_GetPosition(player.WorldObjectNativePointer, &pos);
+                    Alt.Core.Library.Shared.WorldObject_GetPosition(player.WorldObjectNativePointer, &pos);
                     position = pos;
                     return true;
                 }
@@ -114,7 +114,7 @@ namespace AltV.Net.Async
             {
                 if (player.Exists)
                 {
-                    Alt.Server.TriggerClientEvent(player, eventNamePtr, mValues);
+                    Alt.Core.TriggerClientEvent(player, eventNamePtr, mValues);
                 }
                 else
                 {

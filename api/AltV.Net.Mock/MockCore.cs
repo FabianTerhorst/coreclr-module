@@ -10,7 +10,7 @@ using AltV.Net.Native;
 
 namespace AltV.Net.Mock
 {
-    public class MockServer : IServer
+    public class MockCore : ICore
     {
         public IntPtr NativePointer { get; }
 
@@ -42,7 +42,7 @@ namespace AltV.Net.Mock
 
         public INativeResource Resource => new NativeResource(null, IntPtr.Zero, IntPtr.Zero);
 
-        internal MockServer(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,
+        internal MockCore(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,

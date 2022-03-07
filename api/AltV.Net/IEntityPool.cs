@@ -8,11 +8,11 @@ namespace AltV.Net
 {
     public interface IEntityPool<TEntity> where TEntity : IEntity
     {
-        void Create(IServer server, IntPtr entityPointer, ushort id);
+        void Create(ICore core, IntPtr entityPointer, ushort id);
         
-        void Create(IServer server, IntPtr entityPointer, ushort id, out TEntity entity);
+        void Create(ICore core, IntPtr entityPointer, ushort id, out TEntity entity);
         
-        void Create(IServer server, IntPtr entityPointer, out TEntity entity);
+        void Create(ICore core, IntPtr entityPointer, out TEntity entity);
 
         void Add(TEntity entity);
 
@@ -22,9 +22,9 @@ namespace AltV.Net
 
         bool Get(IntPtr entityPointer, out TEntity entity);
 
-        bool GetOrCreate(IServer server, IntPtr entityPointer, ushort entityId, out TEntity entity);
+        bool GetOrCreate(ICore core, IntPtr entityPointer, ushort entityId, out TEntity entity);
         
-        bool GetOrCreate(IServer server, IntPtr entityPointer, out TEntity entity);
+        bool GetOrCreate(ICore core, IntPtr entityPointer, out TEntity entity);
 
         ICollection<TEntity> GetAllEntities();
 

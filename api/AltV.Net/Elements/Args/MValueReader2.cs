@@ -424,17 +424,17 @@ namespace AltV.Net.Elements.Args
                     throw new InvalidDataException("Expected object but got " + mValue.type);
                 }
 
-                var size = Alt.Server.Library.Shared.MValueConst_GetDictSize(mValue.nativePointer);
+                var size = Alt.Core.Library.Shared.MValueConst_GetDictSize(mValue.nativePointer);
                 var stringArrayPtr = new IntPtr[size];
                 var valueArrayPtr = new IntPtr[size];
-                Alt.Server.Library.Shared.MValueConst_GetDict(mValue.nativePointer, stringArrayPtr, valueArrayPtr);
+                Alt.Core.Library.Shared.MValueConst_GetDict(mValue.nativePointer, stringArrayPtr, valueArrayPtr);
                 var keyArray = new string[size];
                 var valueArray = new MValueConst[size];
                 for (ulong i = 0; i < size; i++)
                 {
                     var keyPointer = stringArrayPtr[i];
                     keyArray[i] = Marshal.PtrToStringUTF8(keyPointer);
-                    Alt.Server.Library.Shared.FreeCharArray(keyPointer);
+                    Alt.Core.Library.Shared.FreeCharArray(keyPointer);
                     valueArray[i] = new MValueConst(valueArrayPtr[i]);
                 }
 
@@ -463,9 +463,9 @@ namespace AltV.Net.Elements.Args
                     throw new InvalidDataException("Expected array but got " + mValue.type);
                 }
 
-                var size = Alt.Server.Library.Shared.MValueConst_GetListSize(mValue.nativePointer);
+                var size = Alt.Core.Library.Shared.MValueConst_GetListSize(mValue.nativePointer);
                 var valueArrayRef = new IntPtr[size];
-                Alt.Server.Library.Shared.MValueConst_GetList(mValue.nativePointer, valueArrayRef);
+                Alt.Core.Library.Shared.MValueConst_GetList(mValue.nativePointer, valueArrayRef);
                 readableMValue = new MValueArrayReader(MValueConst.CreateFrom(valueArrayRef));
                 currents.Push(readableMValue);
                 insideObject = true;

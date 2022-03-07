@@ -11,7 +11,7 @@ namespace AltV.Net.Exceptions
         {
         }
         
-        public IllegalThreadException(IServer baseObject, string callerName) : base(
+        public IllegalThreadException(ICore baseObject, string callerName) : base(
             $"{callerName} from {baseObject} called in wrong thread with name {Thread.CurrentThread.Name} and id {Thread.CurrentThread.ManagedThreadId}")
         {
         }

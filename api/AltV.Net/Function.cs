@@ -482,7 +482,7 @@ namespace AltV.Net
                 return;
             }
 
-            Alt.Server.CreateMValue(out resultMValue, result);
+            Alt.Core.CreateMValue(out resultMValue, result);
         }
 
         internal async Task<MValueConst> InvokeAsync(object[] invokeValues)
@@ -496,7 +496,7 @@ namespace AltV.Net
             //TODO: fix async with result
             var result = await (Task<object>) @delegate.DynamicInvoke(invokeValues);
             if (returnType == FunctionTypes.Void) return MValueConst.Nil;
-            Alt.Server.CreateMValue(out var mValueConst, result);
+            Alt.Core.CreateMValue(out var mValueConst, result);
             return mValueConst;
         }
 
@@ -530,9 +530,9 @@ namespace AltV.Net
                 mValues[i] = new MValueConst(currArgs[i]);
             }
 
-            Alt.Server.CreateMValue(out var resultMValue, Call(mValues));
+            Alt.Core.CreateMValue(out var resultMValue, Call(mValues));
             if (resultMValue.nativePointer != IntPtr.Zero) return resultMValue.nativePointer;
-            Alt.Server.CreateMValueNil(out resultMValue);
+            Alt.Core.CreateMValueNil(out resultMValue);
             return resultMValue.nativePointer;
         }
     }

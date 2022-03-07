@@ -18,14 +18,14 @@ namespace AltV.Net.Elements.Pools
 
         public abstract ushort GetId(IntPtr entityPointer);
 
-        public void Create(IServer server, IntPtr entityPointer, ushort id)
+        public void Create(ICore core, IntPtr entityPointer, ushort id)
         {
             if (entityPointer == IntPtr.Zero) return;
             if (entities.ContainsKey(entityPointer)) return;
-            Add(entityFactory.Create(server, entityPointer, id));
+            Add(entityFactory.Create(core, entityPointer, id));
         }
 
-        public void Create(IServer server, IntPtr entityPointer, ushort id, out TEntity entity)
+        public void Create(ICore core, IntPtr entityPointer, ushort id, out TEntity entity)
         {
             if (entityPointer == IntPtr.Zero)
             {
@@ -34,13 +34,13 @@ namespace AltV.Net.Elements.Pools
             }
 
             if (entities.TryGetValue(entityPointer, out entity)) return;
-            entity = entityFactory.Create(server, entityPointer, id);
+            entity = entityFactory.Create(core, entityPointer, id);
             Add(entity);
         }
 
-        public void Create(IServer server, IntPtr entityPointer, out TEntity entity)
+        public void Create(ICore core, IntPtr entityPointer, out TEntity entity)
         {
-            Create(server, entityPointer, GetId(entityPointer), out entity);
+            Create(core, entityPointer, GetId(entityPointer), out entity);
         }
 
         public void Add(TEntity entity)
@@ -72,7 +72,7 @@ namespace AltV.Net.Elements.Pools
             return entities.TryGetValue(entityPointer, out entity) && entity.Exists;
         }
 
-        public bool GetOrCreate(IServer server, IntPtr entityPointer, out TEntity entity)
+        public bool GetOrCreate(ICore core, IntPtr entityPointer, out TEntity entity)
         {
             if (entityPointer == IntPtr.Zero)
             {
@@ -82,13 +82,13 @@ namespace AltV.Net.Elements.Pools
 
             if (entities.TryGetValue(entityPointer, out entity)) return entity.Exists;
 
-            entity = entityFactory.Create(server, entityPointer, GetId(entityPointer));
+            entity = entityFactory.Create(core, entityPointer, GetId(entityPointer));
             Add(entity);
 
             return entity.Exists;
         }
 
-        public bool GetOrCreate(IServer server, IntPtr entityPointer, ushort entityId, out TEntity entity)
+        public bool GetOrCreate(ICore core, IntPtr entityPointer, ushort entityId, out TEntity entity)
         {
             if (entityPointer == IntPtr.Zero)
             {
@@ -98,7 +98,7 @@ namespace AltV.Net.Elements.Pools
 
             if (entities.TryGetValue(entityPointer, out entity)) return entity.Exists;
 
-            entity = entityFactory.Create(server, entityPointer, entityId);
+            entity = entityFactory.Create(core, entityPointer, entityId);
             Add(entity);
 
             return entity.Exists;

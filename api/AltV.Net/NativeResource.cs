@@ -161,7 +161,7 @@ namespace AltV.Net
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                Alt.Server.CreateMValue(out var mValue, value);
+                Alt.Core.CreateMValue(out var mValue, value);
                 library.Server.Resource_SetExport(corePointer, NativePointer, stringPtr, mValue.nativePointer);
                 Marshal.FreeHGlobal(stringPtr);
                 mValue.Dispose();

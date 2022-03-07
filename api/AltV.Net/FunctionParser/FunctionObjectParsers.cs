@@ -421,7 +421,7 @@ namespace AltV.Net.FunctionParser
         public static object ParseConvertible(object value, Type type, FunctionTypeInfo typeInfo)
         {
             if (!(value is IDictionary dictionary)) return null;
-            Alt.Server.CreateMValue(out var mValue, dictionary);
+            Alt.Core.CreateMValue(out var mValue, dictionary);
             if (!MValueAdapters.FromMValue(in mValue, type, out var obj))
             {
                 mValue.Dispose();

@@ -32,7 +32,7 @@ namespace AltV.Net.Example
 
         public int MyData { get; set; }
 
-        public MyPlayer(IServer server, IntPtr nativePointer, ushort id) : base(server, nativePointer, id)
+        public MyPlayer(ICore core, IntPtr nativePointer, ushort id) : base(core, nativePointer, id)
         {
             MyData = 6;
         }

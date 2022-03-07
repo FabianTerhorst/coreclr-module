@@ -69,7 +69,7 @@ namespace AltV.Net.Async
                     unsafe
                     {
                         player.CheckIfEntityExists();
-                        var vehiclePtr = Alt.Server.Library.Shared.Player_GetVehicle(player.PlayerNativePointer);
+                        var vehiclePtr = Alt.Core.Library.Shared.Player_GetVehicle(player.PlayerNativePointer);
                         return Alt.Module.VehiclePool.Get(vehiclePtr, out var vehicle) ? vehicle : null;
                     }
                 });
@@ -123,7 +123,7 @@ namespace AltV.Net.Async
                 unsafe
                 {
                     player.CheckIfEntityExists();
-                    Alt.Server.Library.Server.Player_Kick(player.PlayerNativePointer, reasonPtr);
+                    Alt.Core.Library.Server.Player_Kick(player.PlayerNativePointer, reasonPtr);
                 }
             });
             Marshal.FreeHGlobal(reasonPtr);
@@ -133,12 +133,12 @@ namespace AltV.Net.Async
         {
             var size = args.Length;
             var mValues = new MValueConst[size];
-            Alt.Server.CreateMValues(mValues, args);
+            Alt.Core.CreateMValues(mValues, args);
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
             await AltVAsync.Schedule(() =>
             {
                 player.CheckIfEntityExists();
-                Alt.Server.TriggerClientEvent(player, eventNamePtr, mValues);
+                Alt.Core.TriggerClientEvent(player, eventNamePtr, mValues);
             });
             Marshal.FreeHGlobal(eventNamePtr);
             for (var i = 0; i < size; i++)

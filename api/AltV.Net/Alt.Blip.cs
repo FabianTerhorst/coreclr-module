@@ -15,7 +15,7 @@ namespace AltV.Net
         /// <returns>The created Blip.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IBlip CreateBlip(IPlayer player, byte type, Position pos) =>
-            Module.Server.CreateBlip(player, type, pos);
+            Module.Core.CreateBlip(player, type, pos);
 
         /// <summary>
         /// Create a blip for a specific player, attached to specific entity.
@@ -26,7 +26,7 @@ namespace AltV.Net
         /// <returns>The created Blip.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach) =>
-            Module.Server.CreateBlip(player, type, entityAttach);
+            Module.Core.CreateBlip(player, type, entityAttach);
 
         /// <summary>
         /// Creates a blip for a specific player on a specific position.
@@ -37,7 +37,7 @@ namespace AltV.Net
         /// <returns>The created Blip.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IBlip CreateBlip(IPlayer player, BlipType type, Position pos) =>
-            Module.Server.CreateBlip(player, (byte) type, pos);
+            Module.Core.CreateBlip(player, (byte) type, pos);
 
         /// <summary>
         /// Creates a blip for a specific player, attached to specific entity.
@@ -48,7 +48,7 @@ namespace AltV.Net
         /// <returns>The created Blip.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IBlip CreateBlip(IPlayer player, BlipType type, IEntity entityAttach) =>
-            Module.Server.CreateBlip(player, (byte) type, entityAttach);
+            Module.Core.CreateBlip(player, (byte) type, entityAttach);
 
         /// <summary>
         /// Creates a blip for all players on a specific position.
@@ -58,7 +58,7 @@ namespace AltV.Net
         /// <returns>The created Blip.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IBlip CreateBlip(byte type, Position pos) =>
-            Module.Server.CreateBlip(null, type, pos);
+            Module.Core.CreateBlip(null, type, pos);
 
         /// <summary>
         /// Creates a blip for all players, attached to specific entity.
@@ -68,7 +68,7 @@ namespace AltV.Net
         /// <returns>The created Blip.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IBlip CreateBlip(byte type, IEntity entityAttach) =>
-            Module.Server.CreateBlip(null, type, entityAttach);
+            Module.Core.CreateBlip(null, type, entityAttach);
 
         /// <summary>
         /// Creates a blip for all players on a specific position.
@@ -78,7 +78,7 @@ namespace AltV.Net
         /// <returns>The created Blip.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IBlip CreateBlip(BlipType type, Position pos) =>
-            Module.Server.CreateBlip(null, (byte) type, pos);
+            Module.Core.CreateBlip(null, (byte) type, pos);
 
         /// <summary>
         /// Creates a blip for all players, attached to specific entity.
@@ -88,6 +88,6 @@ namespace AltV.Net
         /// <returns>The created Blip.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IBlip CreateBlip(BlipType type, IEntity entityAttach) =>
-            Module.Server.CreateBlip(null, (byte) type, entityAttach);
+            Module.Core.CreateBlip(null, (byte) type, entityAttach);
     }
 }

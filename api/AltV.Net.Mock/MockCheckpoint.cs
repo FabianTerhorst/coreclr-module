@@ -6,7 +6,7 @@ namespace AltV.Net.Mock
 {
     public class MockCheckpoint : MockColShape, ICheckpoint
     {
-        public MockCheckpoint(IServer server, IntPtr nativePointer) : base(server, nativePointer)
+        public MockCheckpoint(ICore core, IntPtr nativePointer) : base(core, nativePointer)
         {
         }
 

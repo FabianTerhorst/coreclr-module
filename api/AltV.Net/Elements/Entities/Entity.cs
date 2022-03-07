@@ -11,11 +11,11 @@ namespace AltV.Net.Elements.Entities
         public IntPtr EntityNativePointer { get; }
         public override IntPtr NativePointer => EntityNativePointer;
         
-        private static IntPtr GetWorldObjectNativePointer(IServer server, IntPtr nativePointer)
+        private static IntPtr GetWorldObjectNativePointer(ICore core, IntPtr nativePointer)
         {
             unsafe
             {
-                return server.Library.Shared.Entity_GetWorldObject(nativePointer);
+                return core.Library.Shared.Entity_GetWorldObject(nativePointer);
             }
         }
         
@@ -28,7 +28,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    var entityPointer = Server.Library.Shared.Entity_GetNetOwner(EntityNativePointer);
+                    var entityPointer = Core.Library.Shared.Entity_GetNetOwner(EntityNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
                     return Alt.Module.PlayerPool.Get(entityPointer, out var player) ? player : null;
                 }
@@ -43,7 +43,7 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     var rotation = Rotation.Zero;
-                    Server.Library.Shared.Entity_GetRotation(EntityNativePointer, &rotation);
+                    Core.Library.Shared.Entity_GetRotation(EntityNativePointer, &rotation);
                     return rotation;
                 }
             }
@@ -52,7 +52,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    Server.Library.Server.Entity_SetRotation(EntityNativePointer, value);
+                    Core.Library.Server.Entity_SetRotation(EntityNativePointer, value);
                 }
             }
         }
@@ -66,7 +66,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    return Server.Library.Server.Entity_GetVisible(EntityNativePointer) == 1;
+                    return Core.Library.Server.Entity_GetVisible(EntityNativePointer) == 1;
                 }
             }
             set
@@ -74,7 +74,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    Server.Library.Server.Entity_SetVisible(EntityNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.Entity_SetVisible(EntityNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }
@@ -86,7 +86,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    return Server.Library.Server.Entity_GetStreamed(EntityNativePointer) == 1;
+                    return Core.Library.Server.Entity_GetStreamed(EntityNativePointer) == 1;
                 }
             }
             set
@@ -94,7 +94,7 @@ namespace AltV.Net.Elements.Entities
                 CheckIfEntityExists();
                 unsafe
                 {
-                    Server.Library.Server.Entity_SetStreamed(EntityNativePointer, value ? (byte) 1 : (byte) 0);
+                    Core.Library.Server.Entity_SetStreamed(EntityNativePointer, value ? (byte) 1 : (byte) 0);
                 }
             }
         }
@@ -104,7 +104,7 @@ namespace AltV.Net.Elements.Entities
             CheckIfEntityExists();
             unsafe
             {
-                Server.Library.Server.Entity_SetNetOwner(EntityNativePointer, player?.PlayerNativePointer ?? IntPtr.Zero, disableMigration ? (byte) 1 : (byte) 0);
+                Core.Library.Server.Entity_SetNetOwner(EntityNativePointer, player?.PlayerNativePointer ?? IntPtr.Zero, disableMigration ? (byte) 1 : (byte) 0);
             }
         }
 
@@ -113,7 +113,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                Server.Library.Server.Entity_SetSyncedMetaData(EntityNativePointer, stringPtr, value.nativePointer);
+                Core.Library.Server.Entity_SetSyncedMetaData(EntityNativePointer, stringPtr, value.nativePointer);
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
@@ -123,7 +123,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                value = new MValueConst(Server.Library.Shared.Entity_GetSyncedMetaData(EntityNativePointer, stringPtr));
+                value = new MValueConst(Core.Library.Shared.Entity_GetSyncedMetaData(EntityNativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
@@ -133,7 +133,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                var result = Server.Library.Shared.Entity_HasSyncedMetaData(EntityNativePointer, stringPtr);
+                var result = Core.Library.Shared.Entity_HasSyncedMetaData(EntityNativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
                 return result == 1;
             }
@@ -144,7 +144,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                Server.Library.Server.Entity_DeleteSyncedMetaData(EntityNativePointer, stringPtr);
+                Core.Library.Server.Entity_DeleteSyncedMetaData(EntityNativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
@@ -154,7 +154,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                Server.Library.Server.Entity_SetStreamSyncedMetaData(EntityNativePointer, stringPtr, value.nativePointer);
+                Core.Library.Server.Entity_SetStreamSyncedMetaData(EntityNativePointer, stringPtr, value.nativePointer);
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
@@ -164,7 +164,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                value = new MValueConst(Server.Library.Shared.Entity_GetStreamSyncedMetaData(EntityNativePointer, stringPtr));
+                value = new MValueConst(Core.Library.Shared.Entity_GetStreamSyncedMetaData(EntityNativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
@@ -174,7 +174,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                var result = Server.Library.Shared.Entity_HasStreamSyncedMetaData(EntityNativePointer, stringPtr);
+                var result = Core.Library.Shared.Entity_HasStreamSyncedMetaData(EntityNativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
                 return result == 1;
             }
@@ -185,7 +185,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                Server.Library.Server.Entity_DeleteStreamSyncedMetaData(EntityNativePointer, stringPtr);
+                Core.Library.Server.Entity_DeleteStreamSyncedMetaData(EntityNativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
@@ -193,7 +193,7 @@ namespace AltV.Net.Elements.Entities
         public void SetSyncedMetaData(string key, object value)
         {
             CheckIfEntityExists();
-            Alt.Server.CreateMValue(out var mValue, value);
+            Alt.Core.CreateMValue(out var mValue, value);
             SetSyncedMetaData(key, in mValue);
             mValue.Dispose();
         }
@@ -217,7 +217,7 @@ namespace AltV.Net.Elements.Entities
         public void SetStreamSyncedMetaData(string key, object value)
         {
             CheckIfEntityExists();
-            Alt.Server.CreateMValue(out var mValue, value);
+            Alt.Core.CreateMValue(out var mValue, value);
             SetStreamSyncedMetaData(key, in mValue);
             mValue.Dispose();
         }
@@ -357,7 +357,7 @@ namespace AltV.Net.Elements.Entities
 
         public abstract void Detach();
 
-        protected Entity(IServer server, IntPtr nativePointer, BaseObjectType type, ushort id) : base(server, GetWorldObjectNativePointer(server, nativePointer), type)
+        protected Entity(ICore core, IntPtr nativePointer, BaseObjectType type, ushort id) : base(core, GetWorldObjectNativePointer(core, nativePointer), type)
         {
             EntityNativePointer = nativePointer;
             Id = id;

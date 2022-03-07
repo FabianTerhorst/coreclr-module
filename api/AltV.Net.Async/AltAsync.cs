@@ -193,7 +193,7 @@ namespace AltV.Net.Async
         public static async void Log(string message)
         {
             var messagePtr = AltNative.StringUtils.StringToHGlobalUtf8(message);
-            await Do(() => Alt.Server.LogInfo(messagePtr));
+            await Do(() => Alt.Core.LogInfo(messagePtr));
             Marshal.FreeHGlobal(messagePtr);
         }
 
@@ -201,9 +201,9 @@ namespace AltV.Net.Async
         {
             var size = args.Length;
             var mValues = new MValueConst[size];
-            Alt.Server.CreateMValues(mValues, args);
+            Alt.Core.CreateMValues(mValues, args);
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
-            await Do(() => Alt.Server.TriggerServerEvent(eventNamePtr, mValues));
+            await Do(() => Alt.Core.TriggerServerEvent(eventNamePtr, mValues));
             Marshal.FreeHGlobal(eventNamePtr);
             for (var i = 0; i < size; i++)
             {
@@ -215,9 +215,9 @@ namespace AltV.Net.Async
         {
             var size = args.Length;
             var mValues = new MValueConst[size];
-            Alt.Server.CreateMValues(mValues, args);
+            Alt.Core.CreateMValues(mValues, args);
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
-            await Do(() => Alt.Server.TriggerClientEventForAll(eventNamePtr, mValues));
+            await Do(() => Alt.Core.TriggerClientEventForAll(eventNamePtr, mValues));
             Marshal.FreeHGlobal(eventNamePtr);
             for (var i = 0; i < size; i++)
             {

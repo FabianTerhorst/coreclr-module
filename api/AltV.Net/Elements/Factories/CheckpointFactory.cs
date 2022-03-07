@@ -5,9 +5,9 @@ namespace AltV.Net.Elements.Factories
 {
     public class CheckpointFactory : IBaseObjectFactory<ICheckpoint>
     {
-        public ICheckpoint Create(IServer server, IntPtr checkpointFactory)
+        public ICheckpoint Create(ICore core, IntPtr checkpointFactory)
         {
-            return new Checkpoint(server, checkpointFactory);
+            return new Checkpoint(core, checkpointFactory);
         }
     }
 }

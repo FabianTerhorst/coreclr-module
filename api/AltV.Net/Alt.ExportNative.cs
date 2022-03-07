@@ -6,54 +6,54 @@ namespace AltV.Net
     {
         public static void ExportNativeNative(string key, object value)
         {
-            Module.Server.Resource.SetExport(key, value);
+            Module.Core.Resource.SetExport(key, value);
         }
 
         public static void ExportNative(string key, bool value)
         {
-            Alt.Server.CreateMValueBool(out var mValue, value);
+            Alt.Core.CreateMValueBool(out var mValue, value);
             Module.ModuleResource.SetExport(key, in mValue);
             mValue.Dispose();
         }
 
         public static void ExportNative(string key, int value)
         {
-            Alt.Server.CreateMValueInt(out var mValue, value);
+            Alt.Core.CreateMValueInt(out var mValue, value);
             Module.ModuleResource.SetExport(key, in mValue);
             mValue.Dispose();
         }
 
         public static void ExportNative(string key, long value)
         {
-            Alt.Server.CreateMValueInt(out var mValue, value);
+            Alt.Core.CreateMValueInt(out var mValue, value);
             Module.ModuleResource.SetExport(key, in mValue);
             mValue.Dispose();
         }
 
         public static void ExportNative(string key, uint value)
         {
-            Alt.Server.CreateMValueUInt(out var mValue, value);
+            Alt.Core.CreateMValueUInt(out var mValue, value);
             Module.ModuleResource.SetExport(key, mValue);
             mValue.Dispose();
         }
 
         public static void ExportNative(string key, ulong value)
         {
-            Alt.Server.CreateMValueUInt(out var mValue, value);
+            Alt.Core.CreateMValueUInt(out var mValue, value);
             Module.ModuleResource.SetExport(key, mValue);
             mValue.Dispose();
         }
 
         public static void ExportNative(string key, double value)
         {
-            Alt.Server.CreateMValueDouble(out var mValue, value);
+            Alt.Core.CreateMValueDouble(out var mValue, value);
             Module.ModuleResource.SetExport(key,mValue);
             mValue.Dispose();
         }
 
         public static void ExportNative(string key, string value)
         {
-            Alt.Server.CreateMValueString(out var mValue, value);
+            Alt.Core.CreateMValueString(out var mValue, value);
             Module.ModuleResource.SetExport(key, mValue);
             mValue.Dispose();
         }

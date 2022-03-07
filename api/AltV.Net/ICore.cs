@@ -9,7 +9,7 @@ using AltV.Net.Native;
 
 namespace AltV.Net
 {
-    public interface IServer : ICApiCore
+    public interface ICore : ICApiCore
     {
         string Version { get; }
         

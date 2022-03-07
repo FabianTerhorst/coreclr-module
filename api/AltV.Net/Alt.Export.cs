@@ -6,13 +6,13 @@ namespace AltV.Net
     {
         public static void Export(string key, object value)
         {
-            Module.Server.Resource.SetExport(key, value);
+            Module.Core.Resource.SetExport(key, value);
             HostWrapper.Export(key, value);
         }
 
         public static void Export(string key, bool value)
         {
-            Alt.Server.CreateMValueBool(out var mValue, value);
+            Alt.Core.CreateMValueBool(out var mValue, value);
             Module.ModuleResource.SetExport(key, in mValue);
             HostWrapper.Export(key, value);
             mValue.Dispose();
@@ -20,7 +20,7 @@ namespace AltV.Net
 
         public static void Export(string key, int value)
         {
-            Alt.Server.CreateMValueInt(out var mValue, value);
+            Alt.Core.CreateMValueInt(out var mValue, value);
             Module.ModuleResource.SetExport(key, in mValue);
             HostWrapper.Export(key, value);
             mValue.Dispose();
@@ -28,7 +28,7 @@ namespace AltV.Net
 
         public static void Export(string key, long value)
         {
-            Alt.Server.CreateMValueInt(out var mValue, value);
+            Alt.Core.CreateMValueInt(out var mValue, value);
             Module.ModuleResource.SetExport(key, in mValue);
             HostWrapper.Export(key, value);
             mValue.Dispose();
@@ -36,7 +36,7 @@ namespace AltV.Net
 
         public static void Export(string key, uint value)
         {
-            Alt.Server.CreateMValueUInt(out var mValue, value);
+            Alt.Core.CreateMValueUInt(out var mValue, value);
             Module.ModuleResource.SetExport(key, mValue);
             HostWrapper.Export(key, value);
             mValue.Dispose();
@@ -44,7 +44,7 @@ namespace AltV.Net
 
         public static void Export(string key, ulong value)
         {
-            Alt.Server.CreateMValueUInt(out var mValue, value);
+            Alt.Core.CreateMValueUInt(out var mValue, value);
             Module.ModuleResource.SetExport(key, mValue);
             HostWrapper.Export(key, value);
             mValue.Dispose();
@@ -52,7 +52,7 @@ namespace AltV.Net
 
         public static void Export(string key, double value)
         {
-            Alt.Server.CreateMValueDouble(out var mValue, value);
+            Alt.Core.CreateMValueDouble(out var mValue, value);
             Module.ModuleResource.SetExport(key,mValue);
             HostWrapper.Export(key, value);
             mValue.Dispose();
@@ -60,7 +60,7 @@ namespace AltV.Net
 
         public static void Export(string key, string value)
         {
-            Alt.Server.CreateMValueString(out var mValue, value);
+            Alt.Core.CreateMValueString(out var mValue, value);
             Module.ModuleResource.SetExport(key, mValue);
             HostWrapper.Export(key, value);
             mValue.Dispose();
