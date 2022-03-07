@@ -18,9 +18,16 @@ namespace AltV.Net
         internal static Module Module;
 
         public static ICore Core => Module.Core;
-        
+
         [Obsolete("Use Core instead")]
-        public static ICore Server => Core;
+        public static ICore Server
+        {
+            get
+            {
+                LogWarning("Alt.Server is deprecated, use Alt.Core instead");
+                return Core;
+            }
+        }
 
         public static bool IsDebug => Core.IsDebug;
 
