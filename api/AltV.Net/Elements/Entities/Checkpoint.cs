@@ -165,14 +165,14 @@ namespace AltV.Net.Elements.Entities
         [Obsolete("Use IsEntityIn instead")]
         public bool IsPlayerIn(IPlayer player)
         {
-            Alt.LogWarning("colShape.IsPlayerIn is deprecated, use colShape.IsEntityIn instead");
+            Alt.LogWarning("checkpoint.IsPlayerIn is deprecated, use colShape.IsEntityIn instead");
             return IsEntityIn(player);
         }
 
         [Obsolete("Use IsEntityIn instead")]
         public bool IsVehicleIn(IVehicle vehicle)
         {
-            Alt.LogWarning("colShape.IsVehicleIn is deprecated, use colShape.IsEntityIn instead");
+            Alt.LogWarning("checkpoint.IsVehicleIn is deprecated, use colShape.IsEntityIn instead");
             return IsEntityIn(vehicle);
         }
         
