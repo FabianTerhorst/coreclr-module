@@ -569,6 +569,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+                    if (stringPtr == IntPtr.Zero) throw new ArgumentNullException(nameof(ScriptData));
                     Core.Library.Server.Vehicle_LoadAppearanceDataFromBase64(VehicleNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
                 }
@@ -817,6 +818,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+                    if (stringPtr == IntPtr.Zero) throw new ArgumentNullException(nameof(ScriptData));
                     Core.Library.Server.Vehicle_LoadGameStateFromBase64(VehicleNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
                 }
@@ -1044,6 +1046,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+                    if (stringPtr == IntPtr.Zero) throw new ArgumentNullException(nameof(ScriptData));
                     Core.Library.Server.Vehicle_LoadHealthDataFromBase64(VehicleNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
                 }
@@ -1224,6 +1227,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+                    if (stringPtr == IntPtr.Zero) throw new ArgumentNullException(nameof(ScriptData));
                     Core.Library.Server.Vehicle_LoadDamageDataFromBase64(VehicleNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
                 }
@@ -1268,6 +1272,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
+                    if (stringPtr == IntPtr.Zero) throw new ArgumentNullException(nameof(ScriptData));
                     Core.Library.Server.Vehicle_LoadScriptDataFromBase64(VehicleNativePointer, stringPtr);
                     Marshal.FreeHGlobal(stringPtr);
                 }
