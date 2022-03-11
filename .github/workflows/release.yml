@@ -199,63 +199,63 @@ jobs:
           echo "$(echo "`cat ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj
           echo "$(echo "`cat ./api/AltV.Net.CApi/AltV.Net.CApi.csproj`" | perl -pe 's/<PackageVersion>(.*)<\/PackageVersion>/<PackageVersion>'${GITHUB_REF##*/}'<\/PackageVersion>/g')" > ./api/AltV.Net.CApi/AltV.Net.CApi.csproj
           echo "$(echo "`cat ./api/AltV.Net.CApi/AltV.Net.CApi.csproj`" | perl -pe 's/<PackageReleaseNotes>(.*)<\/PackageReleaseNotes>/<PackageReleaseNotes>Changelog can be found here https:\/\/github.com\/FabianTerhorst\/coreclr-module\/releases\/tag\/'${GITHUB_REF##*/}'<\/PackageReleaseNotes>/g')" > ./api/AltV.Net.CApi/AltV.Net.CApi.csproj
-      - uses: alirezanet/publish-nuget@v3.0.0
+      - uses: alirezanet/publish-nuget@v3.0.1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net/AltV.Net.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-      - uses: alirezanet/publish-nuget@v3.0.0
+      - uses: alirezanet/publish-nuget@v3.0.1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Async/AltV.Net.Async.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-      - uses: alirezanet/publish-nuget@v3.0.0
+      - uses: alirezanet/publish-nuget@v3.0.1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Interactions/AltV.Net.Interactions.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-      - uses: alirezanet/publish-nuget@v3.0.0
+      - uses: alirezanet/publish-nuget@v3.0.1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Async.CodeGen/AltV.Net.Async.CodeGen.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-      - uses: alirezanet/publish-nuget@v3.0.0
+      - uses: alirezanet/publish-nuget@v3.0.1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Resources.Chat.Api/AltV.Net.Resources.Chat.Api.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-      - uses: alirezanet/publish-nuget@v3.0.0
+      - uses: alirezanet/publish-nuget@v3.0.1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.EntitySync.ServerEvent/AltV.Net.EntitySync.ServerEvent.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-      - uses: alirezanet/publish-nuget@v3.0.0
+      - uses: alirezanet/publish-nuget@v3.0.1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Client/AltV.Net.Client.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-      - uses: alirezanet/publish-nuget@v3.0.0
+      - uses: alirezanet/publish-nuget@v3.0.1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-      - uses: alirezanet/publish-nuget@v3.0.0
+      - uses: alirezanet/publish-nuget@v3.0.1
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.CApi/AltV.Net.CApi.csproj
           VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
