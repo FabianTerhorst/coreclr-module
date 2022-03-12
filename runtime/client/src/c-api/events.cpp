@@ -30,3 +30,6 @@ SetDelegate(PlayerEnterVehicle);
 SetDelegate(ResourceError);
 SetDelegate(ResourceStart);
 SetDelegate(ResourceStop);
+
+SetDelegate(KeyUp);
+SetDelegate(KeyDown);

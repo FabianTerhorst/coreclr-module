@@ -40,6 +40,8 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, ResourceErrorModuleDelegate, void> Event_SetResourceErrorDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ResourceStartModuleDelegate, void> Event_SetResourceStartDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ResourceStopModuleDelegate, void> Event_SetResourceStopDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, KeyUpModuleDelegate, void> Event_SetKeyUpDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, KeyDownModuleDelegate, void> Event_SetKeyDownDelegate { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
@@ -303,6 +305,8 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, ResourceErrorModuleDelegate, void> Event_SetResourceErrorDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ResourceStartModuleDelegate, void> Event_SetResourceStartDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ResourceStopModuleDelegate, void> Event_SetResourceStopDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, KeyUpModuleDelegate, void> Event_SetKeyUpDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, KeyDownModuleDelegate, void> Event_SetKeyDownDelegate { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
@@ -564,6 +568,8 @@ namespace AltV.Net.Client.CApi
             Event_SetResourceErrorDelegate = (delegate* unmanaged[Cdecl]<nint, ResourceErrorModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetResourceErrorDelegate");
             Event_SetResourceStartDelegate = (delegate* unmanaged[Cdecl]<nint, ResourceStartModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetResourceStartDelegate");
             Event_SetResourceStopDelegate = (delegate* unmanaged[Cdecl]<nint, ResourceStopModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetResourceStopDelegate");
+            Event_SetKeyUpDelegate = (delegate* unmanaged[Cdecl]<nint, KeyUpModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetKeyUpDelegate");
+            Event_SetKeyDownDelegate = (delegate* unmanaged[Cdecl]<nint, KeyDownModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetKeyDownDelegate");
             FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) NativeLibrary.GetExport(handle, "FreeUIntArray");
             FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeCharArray");
             FreeString = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeString");

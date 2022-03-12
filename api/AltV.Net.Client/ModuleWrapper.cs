@@ -131,6 +131,18 @@ namespace AltV.Net.Client
             _module.OnResourceStop(name);
         }
         
+        public static void OnKeyDown(uint key)
+        {
+            var consoleKey = (ConsoleKey) key;
+            _module.OnKeyDown(consoleKey);
+        }
+        
+        public static void OnKeyUp(uint key)
+        {
+            var consoleKey = (ConsoleKey) key;
+            _module.OnKeyUp(consoleKey);
+        }
+        
         public static void OnServerEvent(string name, IntPtr pointer, ulong size)
         {
             var args = new IntPtr[size];

@@ -23,3 +23,7 @@ EXPORT void Event_SetPlayerEnterVehicleDelegate(CSharpResourceImpl* resource, /*
 EXPORT void Event_SetResourceErrorDelegate(CSharpResourceImpl* resource, /** ResourceErrorModuleDelegate */ ResourceErrorDelegate_t delegate);
 EXPORT void Event_SetResourceStartDelegate(CSharpResourceImpl* resource, /** ResourceStartModuleDelegate */ ResourceStartDelegate_t delegate);
 EXPORT void Event_SetResourceStopDelegate(CSharpResourceImpl* resource, /** ResourceStopModuleDelegate */ ResourceStopDelegate_t delegate);
+
+EXPORT void Event_SetKeyUpDelegate(CSharpResourceImpl* resource, /** KeyUpModuleDelegate */ KeyUpDelegate_t delegate);
+EXPORT void Event_SetKeyDownDelegate(CSharpResourceImpl* resource, /** KeyDownModuleDelegate */ KeyDownDelegate_t delegate);
+

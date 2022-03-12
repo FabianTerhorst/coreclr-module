@@ -11,4 +11,7 @@ namespace AltV.Net.Client.Events
     public delegate void ResourceErrorDelegate(string name);
     public delegate void ResourceStartDelegate(string name);
     public delegate void ResourceStopDelegate(string name);
+    
+    public delegate void KeyUpDelegate(ConsoleKey key);
+    public delegate void KeyDownDelegate(ConsoleKey key);
 }

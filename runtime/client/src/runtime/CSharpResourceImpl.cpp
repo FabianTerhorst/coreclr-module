@@ -120,6 +120,16 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             OnResourceStopDelegate(resourceStopEvent->GetResource()->GetName().CStr());
             break;
         }
+        case alt::CEvent::Type::KEYBOARD_EVENT:
+        {
+            auto keyboardEvent = (alt::CKeyboardEvent*)ev;
+            if (keyboardEvent->GetKeyState() == alt::CKeyboardEvent::KeyState::UP)
+                OnKeyUpDelegate(keyboardEvent->GetKeyCode());
+            else
+                OnKeyDownDelegate(keyboardEvent->GetKeyCode());
+            break;
+        }
+
 #pragma endregion
     }
 

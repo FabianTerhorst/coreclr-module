@@ -44,6 +44,9 @@ public:
     ResourceStartDelegate_t OnResourceStartDelegate = nullptr;
     ResourceStopDelegate_t OnResourceStopDelegate = nullptr;
 
+    KeyUpDelegate_t OnKeyUpDelegate = nullptr;
+    KeyDownDelegate_t OnKeyDownDelegate = nullptr;
+
 
     bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files)
     {

@@ -19,3 +19,6 @@ typedef void (* PlayerEnterVehicleDelegate_t)(uint16_t id, uint8_t seat);
 typedef void (* ResourceErrorDelegate_t)(const char* name);
 typedef void (* ResourceStartDelegate_t)(const char* name);
 typedef void (* ResourceStopDelegate_t)(const char* name);
+
+typedef void (* KeyUpDelegate_t)(uint32_t key);
+typedef void (* KeyDownDelegate_t)(uint32_t key);

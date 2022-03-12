@@ -62,7 +62,11 @@ namespace AltV.Net.Client
         internal readonly IEventHandler<ResourceStopDelegate> ResourceStopEventHandler =
             new HashSetEventHandler<ResourceStopDelegate>();
         
+        internal readonly IEventHandler<KeyUpDelegate> KeyUpEventHandler =
+            new HashSetEventHandler<KeyUpDelegate>();
         
+        internal readonly IEventHandler<KeyDownDelegate> KeyDownEventHandler =
+            new HashSetEventHandler<KeyDownDelegate>();
 
         public void OnServerEvent(string name, IntPtr[] args)
         {
@@ -125,6 +129,16 @@ namespace AltV.Net.Client
         public void OnResourceStop(string name)
         {
             ResourceStopEventHandler.GetEvents().ForEachCatching(fn => fn(name), $"event {nameof(OnResourceStop)} \"{name}\"");
+        }
+        
+        public void OnKeyDown(ConsoleKey key)
+        {
+            KeyDownEventHandler.GetEvents().ForEachCatching(fn => fn(key), $"event {nameof(OnKeyDown)}");
+        }
+        
+        public void OnKeyUp(ConsoleKey key)
+        {
+            KeyUpEventHandler.GetEvents().ForEachCatching(fn => fn(key), $"event {nameof(OnKeyUp)}");
         }
         
         public void OnCreatePlayer(IntPtr pointer, ushort id)

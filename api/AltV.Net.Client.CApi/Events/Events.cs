@@ -21,4 +21,7 @@ namespace AltV.Net.Client.CApi.Events
     public delegate void ResourceErrorModuleDelegate(string name);
     public delegate void ResourceStartModuleDelegate(string name);
     public delegate void ResourceStopModuleDelegate(string name);
+    
+    public delegate void KeyDownModuleDelegate(uint key);
+    public delegate void KeyUpModuleDelegate(uint key);
 }

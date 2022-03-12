@@ -78,6 +78,14 @@ namespace AltV.Net.Client.Runtime
                 ResourceStopModuleDelegate onResourceStop = ModuleWrapper.OnResourceStop;
                 _handles.AddFirst(GCHandle.Alloc(onResourceStop));
                 _library.Event_SetResourceStopDelegate(this.NativePointer, onResourceStop);
+                
+                KeyDownModuleDelegate onKeyDown = ModuleWrapper.OnKeyDown;
+                _handles.AddFirst(GCHandle.Alloc(onKeyDown));
+                _library.Event_SetKeyDownDelegate(this.NativePointer, onKeyDown);
+                
+                KeyUpModuleDelegate onKeyUp = ModuleWrapper.OnKeyUp;
+                _handles.AddFirst(GCHandle.Alloc(onKeyUp));
+                _library.Event_SetKeyUpDelegate(this.NativePointer, onKeyUp);
             }
         }
         
