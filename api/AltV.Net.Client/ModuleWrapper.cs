@@ -112,6 +112,21 @@ namespace AltV.Net.Client
         {
             _module.OnPlayerEnterVehicle(id, seat);
         }
+
+        public static void OnResourceError(string name)
+        {
+            _module.OnResourceError(name);
+        }
+        
+        public static void OnResourceStart(string name)
+        {
+            _module.OnResourceStart(name);
+        }
+        
+        public static void OnResourceStop(string name)
+        {
+            _module.OnResourceStop(name);
+        }
         
         public static void OnServerEvent(string name, IntPtr pointer, ulong size)
         {

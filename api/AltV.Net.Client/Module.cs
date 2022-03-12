@@ -52,6 +52,17 @@ namespace AltV.Net.Client
         
         internal readonly IEventHandler<PlayerEnterVehicleDelegate> EnterVehicleEventHandler =
             new HashSetEventHandler<PlayerEnterVehicleDelegate>();
+        
+        internal readonly IEventHandler<ResourceErrorDelegate> ResourceErrorEventHandler =
+            new HashSetEventHandler<ResourceErrorDelegate>();
+        
+        internal readonly IEventHandler<ResourceStartDelegate> ResourceStartEventHandler =
+            new HashSetEventHandler<ResourceStartDelegate>();
+        
+        internal readonly IEventHandler<ResourceStopDelegate> ResourceStopEventHandler =
+            new HashSetEventHandler<ResourceStopDelegate>();
+        
+        
 
         public void OnServerEvent(string name, IntPtr[] args)
         {
@@ -99,6 +110,21 @@ namespace AltV.Net.Client
         {
             VehiclePool.Get(id, out var vehicle);
             EnterVehicleEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, seat), $"event {nameof(OnPlayerEnterVehicle)}");
+        }
+
+        public void OnResourceError(string name)
+        {
+            ResourceErrorEventHandler.GetEvents().ForEachCatching(fn => fn(name), $"event {nameof(OnResourceError)} \"{name}\"");
+        }
+        
+        public void OnResourceStart(string name)
+        {
+            ResourceStartEventHandler.GetEvents().ForEachCatching(fn => fn(name), $"event {nameof(OnResourceStart)} \"{name}\"");
+        }
+        
+        public void OnResourceStop(string name)
+        {
+            ResourceStopEventHandler.GetEvents().ForEachCatching(fn => fn(name), $"event {nameof(OnResourceStop)} \"{name}\"");
         }
         
         public void OnCreatePlayer(IntPtr pointer, ushort id)

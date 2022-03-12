@@ -17,4 +17,8 @@ namespace AltV.Net.Client.CApi.Events
     public delegate void PlayerSpawnModuleDelegate();
     public delegate void PlayerDisconnectModuleDelegate();
     public delegate void PlayerEnterVehicleModuleDelegate(ushort id, byte seat);
+
+    public delegate void ResourceErrorModuleDelegate(string name);
+    public delegate void ResourceStartModuleDelegate(string name);
+    public delegate void ResourceStopModuleDelegate(string name);
 }

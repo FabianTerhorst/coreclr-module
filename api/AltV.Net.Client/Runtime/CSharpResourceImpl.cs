@@ -67,6 +67,17 @@ namespace AltV.Net.Client.Runtime
                 _handles.AddFirst(GCHandle.Alloc(onPlayerEnterVehicle));
                 _library.Event_SetPlayerEnterVehicleDelegate(this.NativePointer, onPlayerEnterVehicle);
                 
+                ResourceErrorModuleDelegate onResourceError = ModuleWrapper.OnResourceError;
+                _handles.AddFirst(GCHandle.Alloc(onResourceError));
+                _library.Event_SetResourceErrorDelegate(this.NativePointer, onResourceError);
+                
+                ResourceStartModuleDelegate onResourceStart = ModuleWrapper.OnResourceStart;
+                _handles.AddFirst(GCHandle.Alloc(onResourceStart));
+                _library.Event_SetResourceStartDelegate(this.NativePointer, onResourceStart);
+                
+                ResourceStopModuleDelegate onResourceStop = ModuleWrapper.OnResourceStop;
+                _handles.AddFirst(GCHandle.Alloc(onResourceStop));
+                _library.Event_SetResourceStopDelegate(this.NativePointer, onResourceStop);
             }
         }
         

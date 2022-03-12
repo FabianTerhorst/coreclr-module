@@ -35,6 +35,24 @@ namespace AltV.Net.Client
             remove => Module.EnterVehicleEventHandler.Remove(value);
         }
         
+        public static event ResourceErrorDelegate OnResourceError
+        {
+            add => Module.ResourceErrorEventHandler.Add(value);
+            remove => Module.ResourceErrorEventHandler.Remove(value);
+        }
+        
+        public static event ResourceStartDelegate OnResourceStart
+        {
+            add => Module.ResourceStartEventHandler.Add(value);
+            remove => Module.ResourceStartEventHandler.Remove(value);
+        }
+        
+        public static event ResourceStopDelegate OnResourceStop
+        {
+            add => Module.ResourceStopEventHandler.Add(value);
+            remove => Module.ResourceStopEventHandler.Remove(value);
+        }
+        
         public static void OnServer(string eventName, Function.Function function) => Module.AddServerEventListener(eventName, function);
         public static void OnServer<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> function) => Module.AddServerEventListener(eventName, Function.Function.Create(function));
         public static void OnServer<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> function) => Module.AddServerEventListener(eventName, Function.Function.Create(function));

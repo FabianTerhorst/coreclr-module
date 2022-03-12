@@ -26,3 +26,7 @@ SetDelegate(RemoveVehicle);
 SetDelegate(PlayerSpawn);
 SetDelegate(PlayerDisconnect);
 SetDelegate(PlayerEnterVehicle);
+
+SetDelegate(ResourceError);
+SetDelegate(ResourceStart);
+SetDelegate(ResourceStop);

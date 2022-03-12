@@ -83,6 +83,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             delete[] cArgs;
             break;
         }
+#pragma region Player Events
 		case alt::CEvent::Type::SPAWNED:
 	    {
             OnPlayerSpawnDelegate();
@@ -99,6 +100,27 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             OnPlayerEnterVehicleDelegate(playerEnterVehicleEvent->GetTarget()->GetID(), playerEnterVehicleEvent->GetSeat());
             break;
         }
+#pragma endregion
+#pragma region Misc
+        case alt::CEvent::Type::RESOURCE_ERROR:
+        {
+            auto resourceErrorEvent = (alt::CResourceErrorEvent*)ev;
+            OnResourceErrorDelegate(resourceErrorEvent->GetResource()->GetName().CStr());
+            break;
+        }
+        case alt::CEvent::Type::RESOURCE_START:
+        {
+            auto resourceStartEvent = (alt::CResourceStartEvent*)ev;
+            OnResourceStartDelegate(resourceStartEvent->GetResource()->GetName().CStr());
+            break;
+        }
+        case alt::CEvent::Type::RESOURCE_STOP:
+        {
+            auto resourceStopEvent = (alt::CResourceStopEvent*)ev;
+            OnResourceStopDelegate(resourceStopEvent->GetResource()->GetName().CStr());
+            break;
+        }
+#pragma endregion
     }
 
     return true;
@@ -177,4 +199,8 @@ void CSharpResourceImpl::ResetDelegates() {
     OnPlayerSpawnDelegate = [](){};
     OnPlayerDisconnectDelegate = [](){};
     OnPlayerEnterVehicleDelegate = [](auto var, auto var2) {};
+
+    OnResourceErrorDelegate = [](auto var) {};
+    OnResourceStartDelegate = [](auto var) {};
+    OnResourceStopDelegate = [](auto var) {};
 }

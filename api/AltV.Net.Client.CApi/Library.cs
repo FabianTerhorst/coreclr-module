@@ -37,6 +37,9 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, PlayerSpawnModuleDelegate, void> Event_SetPlayerSpawnDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, PlayerDisconnectModuleDelegate, void> Event_SetPlayerDisconnectDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, PlayerEnterVehicleModuleDelegate, void> Event_SetPlayerEnterVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ResourceErrorModuleDelegate, void> Event_SetResourceErrorDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ResourceStartModuleDelegate, void> Event_SetResourceStartDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ResourceStopModuleDelegate, void> Event_SetResourceStopDelegate { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
@@ -297,6 +300,9 @@ namespace AltV.Net.Client.CApi
         public delegate* unmanaged[Cdecl]<nint, PlayerSpawnModuleDelegate, void> Event_SetPlayerSpawnDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, PlayerDisconnectModuleDelegate, void> Event_SetPlayerDisconnectDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, PlayerEnterVehicleModuleDelegate, void> Event_SetPlayerEnterVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ResourceErrorModuleDelegate, void> Event_SetResourceErrorDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ResourceStartModuleDelegate, void> Event_SetResourceStartDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ResourceStopModuleDelegate, void> Event_SetResourceStopDelegate { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
@@ -555,6 +561,9 @@ namespace AltV.Net.Client.CApi
             Event_SetPlayerSpawnDelegate = (delegate* unmanaged[Cdecl]<nint, PlayerSpawnModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerSpawnDelegate");
             Event_SetPlayerDisconnectDelegate = (delegate* unmanaged[Cdecl]<nint, PlayerDisconnectModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerDisconnectDelegate");
             Event_SetPlayerEnterVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, PlayerEnterVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerEnterVehicleDelegate");
+            Event_SetResourceErrorDelegate = (delegate* unmanaged[Cdecl]<nint, ResourceErrorModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetResourceErrorDelegate");
+            Event_SetResourceStartDelegate = (delegate* unmanaged[Cdecl]<nint, ResourceStartModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetResourceStartDelegate");
+            Event_SetResourceStopDelegate = (delegate* unmanaged[Cdecl]<nint, ResourceStopModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetResourceStopDelegate");
             FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) NativeLibrary.GetExport(handle, "FreeUIntArray");
             FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeCharArray");
             FreeString = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeString");

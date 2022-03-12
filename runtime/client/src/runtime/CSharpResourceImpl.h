@@ -40,6 +40,9 @@ public:
     PlayerDisconnectDelegate_t OnPlayerDisconnectDelegate = nullptr;
     PlayerEnterVehicleDelegate_t OnPlayerEnterVehicleDelegate = nullptr;
 
+    ResourceErrorDelegate_t OnResourceErrorDelegate = nullptr;
+    ResourceStartDelegate_t OnResourceStartDelegate = nullptr;
+    ResourceStopDelegate_t OnResourceStopDelegate = nullptr;
 
 
     bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files)
