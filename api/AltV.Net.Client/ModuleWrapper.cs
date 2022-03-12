@@ -5,6 +5,7 @@ using AltV.Net.Client.CApi;
 using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Pools;
+using AltV.Net.Client.Extensions;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace AltV.Net.Client
@@ -25,6 +26,8 @@ namespace AltV.Net.Client
             _module = module;
             _resourcePointer = resourcePointer;
             _corePointer = corePointer;
+            Console.SetOut(new AltTextWriter());
+            Console.SetError(new AltErrorTextWriter());
 
             var type = typeof(IResource);
             var resource = resourceAssembly.GetTypes().FirstOrDefault(t => t.IsClass && !t.IsAbstract && type.IsAssignableFrom(t));
