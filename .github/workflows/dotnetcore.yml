@@ -9,7 +9,7 @@ on:
 jobs:
   buildwindows:
 
-    runs-on: windows-2016
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v3
