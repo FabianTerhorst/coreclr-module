@@ -105,8 +105,8 @@ jobs:
           - {
               name: linux,
               os: ubuntu-latest,
-              cc: gcc-9,
-              cxx: g++-9,
+              cc: gcc-8,
+              cxx: g++-8,
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo,
               nethost: nethost-linux,
             }
@@ -132,6 +132,12 @@ jobs:
           tar xvf libnethost.tar
           ls -l
           pwd
+      - if: ${{ runner.os == 'Linux' }}
+        shell: bash
+        run: |
+          sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+          sudo apt-get update
+          sudo apt-get install gcc-8 g++-8
       - working-directory: ./runtime/server
         shell: cmake -P {0}
         run: |
