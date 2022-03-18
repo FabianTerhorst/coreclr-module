@@ -5,7 +5,7 @@ on:
       - '*.*.*-*'
 jobs:
   fetch-nethost-linux:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v2
@@ -45,7 +45,7 @@ jobs:
           name: nethost-windows
           path: ${{ runner.temp }}\libnethost.tar
   build-api:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
@@ -104,9 +104,9 @@ jobs:
         config:
           - {
               name: linux,
-              os: ubuntu-18.04,
-              cc: gcc-8,
-              cxx: g++-8,
+              os: ubuntu-latest,
+              cc: gcc-9,
+              cxx: g++-9,
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo,
               nethost: nethost-linux,
             }
@@ -170,7 +170,7 @@ jobs:
           name: csharp-module-${{ matrix.config.name }}
           path: ./${{ steps.create_archive.outputs.art_name }}.tar
   deploy-nuget:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     needs: build-server
     steps:
       - uses: actions/checkout@v3
@@ -263,7 +263,7 @@ jobs:
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
   deploy-cdn:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     needs: deploy-nuget
     steps:
       - uses: actions/download-artifact@v3
@@ -303,7 +303,7 @@ jobs:
           BRANCH: ${{ steps.build_info.outputs.branch }}
           VERSION: ${{ steps.build_info.outputs.version }}
   create-release:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     needs: deploy-cdn
     steps:
       - uses: actions/download-artifact@v3
@@ -375,7 +375,7 @@ jobs:
           asset_name: csharp-module-api-debug.zip
           asset_content_type: application/zip
   cleanup:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     needs: create-release
     if: ${{ always() }}
     steps:
