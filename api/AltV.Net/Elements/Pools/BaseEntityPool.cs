@@ -23,11 +23,11 @@ namespace AltV.Net.Elements.Pools
                 case BaseObjectType.Player:
                     var player = playerPool.GetOrCreate(core, entityPointer);
                     entity = player;
-                    return player is not null;
+                    return player != null;
                 case BaseObjectType.Vehicle:
                     var vehicle = vehiclePool.GetOrCreate(core, entityPointer);
                     entity = vehicle;
-                    return vehicle is not null;
+                    return vehicle != null;
                 default:
                     entity = default;
                     return false;
@@ -42,11 +42,11 @@ namespace AltV.Net.Elements.Pools
                 case BaseObjectType.Player:
                     var player = playerPool.Get(entityPointer);
                     entity = player;
-                    return player is not null;
+                    return player != null;
                 case BaseObjectType.Vehicle:
                     var vehicle = vehiclePool.Get(entityPointer);
                     entity = vehicle;
-                    return vehicle is not null;
+                    return vehicle != null;
                 default:
                     entity = default;
                     return false;
@@ -61,11 +61,11 @@ namespace AltV.Net.Elements.Pools
                 case BaseObjectType.Player:
                     var player = playerPool.GetOrCreate(core, entityPointer, entityId);
                     entity = player;
-                    return player is not null;
+                    return player != null;
                 case BaseObjectType.Vehicle:
                     var vehicle = vehiclePool.GetOrCreate(core, entityPointer, entityId);
                     entity = vehicle;
-                    return vehicle is not null;
+                    return vehicle != null;
                 default:
                     entity = default;
                     return false;
