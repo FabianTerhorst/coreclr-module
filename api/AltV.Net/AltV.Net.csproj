@@ -49,5 +49,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\AltV.Net.CApi\AltV.Net.CApi.csproj" />
+      <ProjectReference Include="..\AltV.Net.Shared\AltV.Net.Shared.csproj" />
     </ItemGroup>
 </Project>
