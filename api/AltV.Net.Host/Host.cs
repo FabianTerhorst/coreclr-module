@@ -82,7 +82,8 @@ namespace AltV.Net.Host
         {
             "https://www.nuget.org/api/v2/package/AltV.Net/",
             "https://www.nuget.org/api/v2/package/AltV.Net.Async/",
-            "https://www.nuget.org/api/v2/package/AltV.Net.CApi/"
+            "https://www.nuget.org/api/v2/package/AltV.Net.CApi/",
+            "https://www.nuget.org/api/v2/package/AltV.Net.Shared/"
         };
 
         private static string[] _packetsSymbol =
@@ -90,6 +91,7 @@ namespace AltV.Net.Host
             "https://www.nuget.org/api/v2/symbolpackage/AltV.Net/",
             "https://www.nuget.org/api/v2/symbolpackage/AltV.Net.Async/",
             "https://www.nuget.org/api/v2/symbolpackage/AltV.Net.CApi/",
+            "https://www.nuget.org/api/v2/symbolpackage/AltV.Net.Shared/",
         };
 
         private static Dictionary<string, byte[]> _packetContents = new();
