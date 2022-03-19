@@ -41,9 +41,9 @@ namespace AltV.Net
         
         public static void Log(string message) => Core.LogInfo(message);
 
-        public static ICollection<IPlayer> GetAllPlayers() => Module.PlayerPool.GetAllEntities();
+        public static IReadOnlyCollection<IPlayer> GetAllPlayers() => Module.PlayerPool.GetAllEntities();
 
-        public static ICollection<IVehicle> GetAllVehicles() =>
+        public static IReadOnlyCollection<IVehicle> GetAllVehicles() =>
             Module.VehiclePool.GetAllEntities();
 
         public static ICollection<IBlip> GetAllBlips() => Module.BlipPool.GetAllObjects();

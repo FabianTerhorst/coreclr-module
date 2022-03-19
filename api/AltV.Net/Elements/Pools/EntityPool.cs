@@ -7,7 +7,7 @@ namespace AltV.Net.Elements.Pools
 {
     public abstract class EntityPool<TEntity> : IEntityPool<TEntity> where TEntity : IEntity
     {
-        private readonly Dictionary<IntPtr, TEntity> entities = new Dictionary<IntPtr, TEntity>();
+        private readonly Dictionary<IntPtr, TEntity> entities = new();
 
         private readonly IEntityFactory<TEntity> entityFactory;
 
@@ -18,29 +18,19 @@ namespace AltV.Net.Elements.Pools
 
         public abstract ushort GetId(IntPtr entityPointer);
 
-        public void Create(ICore core, IntPtr entityPointer, ushort id)
+        public TEntity Create(ICore core, IntPtr entityPointer, ushort id)
         {
-            if (entityPointer == IntPtr.Zero) return;
-            if (entities.ContainsKey(entityPointer)) return;
-            Add(entityFactory.Create(core, entityPointer, id));
-        }
-
-        public void Create(ICore core, IntPtr entityPointer, ushort id, out TEntity entity)
-        {
-            if (entityPointer == IntPtr.Zero)
-            {
-                entity = default;
-                return;
-            }
-
-            if (entities.TryGetValue(entityPointer, out entity)) return;
-            entity = entityFactory.Create(core, entityPointer, id);
+            if (entityPointer == IntPtr.Zero) return default;
+            if (entities.ContainsKey(entityPointer)) return default;
+            var entity = entityFactory.Create(core, entityPointer, id);
             Add(entity);
+            return entity;
         }
 
-        public void Create(ICore core, IntPtr entityPointer, out TEntity entity)
+
+        public TEntity Create(ICore core, IntPtr entityPointer)
         {
-            Create(core, entityPointer, GetId(entityPointer), out entity);
+            return Create(core, entityPointer, GetId(entityPointer));
         }
 
         public void Add(TEntity entity)
@@ -67,44 +57,42 @@ namespace AltV.Net.Elements.Pools
             return true;
         }
 
-        public bool Get(IntPtr entityPointer, out TEntity entity)
+        public TEntity Get(IntPtr entityPointer)
         {
-            return entities.TryGetValue(entityPointer, out entity) && entity.Exists;
+            return entities.TryGetValue(entityPointer, out var entity) ? entity : default;
         }
 
-        public bool GetOrCreate(ICore core, IntPtr entityPointer, out TEntity entity)
+        public TEntity GetOrCreate(ICore core, IntPtr entityPointer)
         {
             if (entityPointer == IntPtr.Zero)
             {
-                entity = default;
-                return false;
+                return default;
             }
 
-            if (entities.TryGetValue(entityPointer, out entity)) return entity.Exists;
+            if (entities.TryGetValue(entityPointer, out var entity)) return entity;
 
             entity = entityFactory.Create(core, entityPointer, GetId(entityPointer));
             Add(entity);
 
-            return entity.Exists;
+            return entity;
         }
 
-        public bool GetOrCreate(ICore core, IntPtr entityPointer, ushort entityId, out TEntity entity)
+        public TEntity GetOrCreate(ICore core, IntPtr entityPointer, ushort entityId)
         {
             if (entityPointer == IntPtr.Zero)
             {
-                entity = default;
-                return false;
+                return default;
             }
 
-            if (entities.TryGetValue(entityPointer, out entity)) return entity.Exists;
+            if (entities.TryGetValue(entityPointer, out var entity)) return entity;
 
             entity = entityFactory.Create(core, entityPointer, entityId);
             Add(entity);
 
-            return entity.Exists;
+            return entity;
         }
 
-        public ICollection<TEntity> GetAllEntities()
+        public IReadOnlyCollection<TEntity> GetAllEntities()
         {
             return entities.Values;
         }

@@ -222,7 +222,7 @@ namespace AltV.Net.Mock
         public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
-            vehiclePool.Create(this, ptr, entityId, out var vehicle);
+            var vehicle = vehiclePool.Create(this, ptr, entityId);
             vehicle.Position = pos;
             if (vehicle is MockVehicle mockVehicle)
             {
@@ -246,7 +246,7 @@ namespace AltV.Net.Mock
             Rgba color)
         {
             var ptr = MockEntities.GetNextPtrNoId();
-            checkpointPool.Create(this, ptr, out var checkpoint);
+            var checkpoint = checkpointPool.Create(this, ptr);
             if (checkpoint is MockCheckpoint mockCheckpoint)
             {
                 mockCheckpoint.Position = pos;
@@ -262,7 +262,7 @@ namespace AltV.Net.Mock
         public IBlip CreateBlip(IPlayer player, byte type, Position pos)
         {
             var ptr = MockEntities.GetNextPtrNoId();
-            blipPool.Create(this, ptr, out var blip);
+            var blip = blipPool.Create(this, ptr);
             if (blip is MockBlip mockBlip)
             {
                 mockBlip.Position = pos;
@@ -275,7 +275,7 @@ namespace AltV.Net.Mock
         public IBlip CreateBlip(IPlayer player, byte type, IEntity entityAttach)
         {
             var ptr = MockEntities.GetNextPtrNoId();
-            blipPool.Create(this, ptr, out var blip);
+            var blip = blipPool.Create(this, ptr);
             if (blip is MockBlip mockBlip)
             {
                 mockBlip.BlipType = type;
@@ -289,7 +289,7 @@ namespace AltV.Net.Mock
         public IVoiceChannel CreateVoiceChannel(bool spatial, float maxDistance)
         {
             var ptr = MockEntities.GetNextPtrNoId();
-            voiceChannelPool.Create(this, ptr, out var voiceChannel);
+            var voiceChannel = voiceChannelPool.Create(this, ptr);
             if (voiceChannel is MockVoiceChannel mockVoiceChannel)
             {
                 mockVoiceChannel.IsSpatial = spatial;

@@ -405,7 +405,7 @@ namespace AltV.Net.Elements.Entities
                     CheckIfEntityExists();
                     var entityPointer = Core.Library.Shared.Player_GetVehicle(PlayerNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Module.VehiclePool.Get(entityPointer, out var vehicle) ? vehicle : null;
+                    return Alt.Module.VehiclePool.Get(entityPointer);
                 }
             }
         }

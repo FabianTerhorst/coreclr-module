@@ -572,8 +572,7 @@ namespace AltV.Net
                 ushort id = default;
                 var ptr = Library.Server.Core_CreateVehicle(NativePointer, model, pos, rotation, &id);
                 if (ptr == IntPtr.Zero) return null;
-                vehiclePool.Create(this, ptr, id, out var vehicle);
-                return vehicle;
+                return vehiclePool.Create(this, ptr, id);
             }
         }
 
@@ -585,8 +584,7 @@ namespace AltV.Net
                 CheckIfCallIsValid();
                 var ptr = Library.Server.Core_CreateCheckpoint(NativePointer, type, pos, radius, height, color);
                 if (ptr == IntPtr.Zero) return null;
-                checkpointPool.Create(this, ptr, out var checkpoint);
-                return checkpoint;
+                return checkpointPool.Create(this, ptr);
             }
         }
 
@@ -598,8 +596,7 @@ namespace AltV.Net
                 var ptr = Library.Server.Core_CreateBlip(NativePointer, player?.PlayerNativePointer ?? IntPtr.Zero,
                     type, pos);
                 if (ptr == IntPtr.Zero) return null;
-                blipPool.Create(this, ptr, out var blip);
-                return blip;
+                return blipPool.Create(this, ptr);
             }
         }
 
@@ -613,8 +610,7 @@ namespace AltV.Net
                     player?.PlayerNativePointer ?? IntPtr.Zero,
                     type, entityAttach.EntityNativePointer);
                 if (ptr == IntPtr.Zero) return null;
-                blipPool.Create(this, ptr, out var blip);
-                return blip;
+                return blipPool.Create(this, ptr);
             }
         }
 
@@ -626,8 +622,7 @@ namespace AltV.Net
                 var ptr = Library.Server.Core_CreateVoiceChannel(NativePointer,
                     spatial ? (byte) 1 : (byte) 0, maxDistance);
                 if (ptr == IntPtr.Zero) return null;
-                voiceChannelPool.Create(this, ptr, out var voiceChannel);
-                return voiceChannel;
+                return voiceChannelPool.Create(this, ptr);
             }
         }
 
@@ -638,8 +633,7 @@ namespace AltV.Net
                 CheckIfCallIsValid();
                 var ptr = Library.Server.Core_CreateColShapeCylinder(NativePointer, pos, radius, height);
                 if (ptr == IntPtr.Zero) return null;
-                colShapePool.Create(this, ptr, out var colShape);
-                return colShape;
+                return colShapePool.Create(this, ptr);
             }
         }
 
@@ -650,8 +644,7 @@ namespace AltV.Net
                 CheckIfCallIsValid();
                 var ptr = Library.Server.Core_CreateColShapeSphere(NativePointer, pos, radius);
                 if (ptr == IntPtr.Zero) return null;
-                colShapePool.Create(this, ptr, out var colShape);
-                return colShape;
+                return colShapePool.Create(this, ptr);
             }
         }
 
@@ -662,8 +655,7 @@ namespace AltV.Net
                 CheckIfCallIsValid();
                 var ptr = Library.Server.Core_CreateColShapeCircle(NativePointer, pos, radius);
                 if (ptr == IntPtr.Zero) return null;
-                colShapePool.Create(this, ptr, out var colShape);
-                return colShape;
+                return colShapePool.Create(this, ptr);
             }
         }
 
@@ -674,8 +666,7 @@ namespace AltV.Net
                 CheckIfCallIsValid();
                 var ptr = Library.Server.Core_CreateColShapeCube(NativePointer, pos, pos2);
                 if (ptr == IntPtr.Zero) return null;
-                colShapePool.Create(this, ptr, out var colShape);
-                return colShape;
+                return colShapePool.Create(this, ptr);
             }
         }
 
@@ -686,8 +677,7 @@ namespace AltV.Net
                 CheckIfCallIsValid();
                 var ptr = Library.Server.Core_CreateColShapeRectangle(NativePointer, x1, y1, x2, y2, z);
                 if (ptr == IntPtr.Zero) return null;
-                colShapePool.Create(this, ptr, out var colShape);
-                return colShape;
+                return colShapePool.Create(this, ptr);
             }
         }
 
@@ -699,8 +689,7 @@ namespace AltV.Net
                 int size = points.Count();
                 var ptr = Library.Server.Core_CreateColShapePolygon(NativePointer, minZ, maxZ, points, size);
                 if (ptr == IntPtr.Zero) return null;
-                colShapePool.Create(this, ptr, out var colShape);
-                return colShape;
+                return colShapePool.Create(this, ptr);
             }
         }
 
@@ -806,10 +795,7 @@ namespace AltV.Net
                 for (ulong i = 0; i < playerCount; i++)
                 {
                     var playerPointer = pointers[i];
-                    if (playerPool.GetOrCreate(this, playerPointer, out var player))
-                    {
-                        players[i] = player;
-                    }
+                    players[i] = playerPool.GetOrCreate(this, playerPointer);
                 }
 
                 return players;
@@ -828,10 +814,7 @@ namespace AltV.Net
                 for (ulong i = 0; i < vehicleCount; i++)
                 {
                     var vehiclePointer = pointers[i];
-                    if (vehiclePool.GetOrCreate(this, vehiclePointer, out var vehicle))
-                    {
-                        vehicles[i] = vehicle;
-                    }
+                    vehicles[i] = vehiclePool.GetOrCreate(this, vehiclePointer);
                 }
 
                 return vehicles;
@@ -849,9 +832,9 @@ namespace AltV.Net
                 switch (type)
                 {
                     case (byte) BaseObjectType.Player:
-                        return playerPool.Get(entityPointer, out var player) ? player : null;
+                        return playerPool.Get(entityPointer);
                     case (byte) BaseObjectType.Vehicle:
-                        return vehiclePool.Get(entityPointer, out var vehicle) ? vehicle : null;
+                        return vehiclePool.Get(entityPointer);
                     default:
                         return null;
                 }
