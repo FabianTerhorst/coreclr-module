@@ -104,7 +104,7 @@ jobs:
         config:
           - {
               name: linux,
-              os: ubuntu-latest,
+              os: ubuntu-18.04,
               cc: gcc-8,
               cxx: g++-8,
               args: -DCMAKE_BUILD_TYPE=RelWithDebInfo,
