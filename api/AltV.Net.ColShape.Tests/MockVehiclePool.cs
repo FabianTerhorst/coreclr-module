@@ -13,27 +13,15 @@ namespace AltV.Net.ColShape.Tests
         {
             throw new NotImplementedException();
         }
-
-        public void Create(ICore core, IntPtr entityPointer, ushort id, out IVehicle entity)
+        public IVehicle Create(ICore core, IntPtr entityPointer)
         {
             throw new NotImplementedException();
         }
 
-        public void Create(ICore core, IntPtr entityPointer, out IVehicle entity)
+        IVehicle IEntityPool<IVehicle>.Create(ICore core, IntPtr entityPointer, ushort id)
         {
             throw new NotImplementedException();
         }
-
-        public bool GetOrCreate(ICore core, IntPtr entityPointer, ushort entityId, out IVehicle entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetOrCreate(ICore core, IntPtr entityPointer, out IVehicle entity)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Add(IVehicle entity)
         {
             throw new NotImplementedException();
@@ -54,6 +42,22 @@ namespace AltV.Net.ColShape.Tests
             throw new NotImplementedException();
         }
 
+        public IVehicle Get(IntPtr entityPointer)
+        {
+            throw new NotImplementedException();
+        }
+        public IVehicle GetOrCreate(ICore core, IntPtr entityPointer, ushort entityId)
+        {
+            throw new NotImplementedException();
+        }
+        public IVehicle GetOrCreate(ICore core, IntPtr entityPointer)
+        {
+            throw new NotImplementedException();
+        }
+        IReadOnlyCollection<IVehicle> IReadOnlyEntityPool<IVehicle>.GetAllEntities()
+        {
+            throw new NotImplementedException();
+        }
         public ICollection<IVehicle> GetAllEntities()
         {
             var mockVehicle = new MockVehicle(null) {Position = new Position(1, 1, 1)};

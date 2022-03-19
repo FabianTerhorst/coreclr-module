@@ -436,8 +436,7 @@ namespace AltV.Net.Async.Elements.Entities
             });
             enumerator.Dispose();
             Dispose();
-            Alt.Module.VehiclePool.Create(Alt.Core, vehiclePtr, vehicleId, out var vehicle);
-            return vehicle;
+            return Alt.Module.VehiclePool.Create(Alt.Core, vehiclePtr, vehicleId);
         }
 
         // Call Dispose when you don't wanna continue building the vehicle anymore to cleanup memory

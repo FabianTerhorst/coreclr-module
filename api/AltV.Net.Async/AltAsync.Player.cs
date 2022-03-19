@@ -70,7 +70,7 @@ namespace AltV.Net.Async
                     {
                         player.CheckIfEntityExists();
                         var vehiclePtr = Alt.Core.Library.Shared.Player_GetVehicle(player.PlayerNativePointer);
-                        return Alt.Module.VehiclePool.Get(vehiclePtr, out var vehicle) ? vehicle : null;
+                        return Alt.Module.VehiclePool.Get(vehiclePtr);
                     }
                 });
         }

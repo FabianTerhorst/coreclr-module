@@ -6,27 +6,17 @@ using AltV.Net.Elements.Pools;
 
 namespace AltV.Net
 {
-    public interface IEntityPool<TEntity> where TEntity : IEntity
+    public interface IEntityPool<TEntity> : IReadOnlyEntityPool<TEntity> where TEntity : IEntity
     {
-        void Create(ICore core, IntPtr entityPointer, ushort id);
+        TEntity Create(ICore core, IntPtr entityPointer, ushort id);
         
-        void Create(ICore core, IntPtr entityPointer, ushort id, out TEntity entity);
-        
-        void Create(ICore core, IntPtr entityPointer, out TEntity entity);
+        TEntity Create(ICore core, IntPtr entityPointer);
 
         void Add(TEntity entity);
 
         bool Remove(TEntity entity);
 
         bool Remove(IntPtr entityPointer);
-
-        bool Get(IntPtr entityPointer, out TEntity entity);
-
-        bool GetOrCreate(ICore core, IntPtr entityPointer, ushort entityId, out TEntity entity);
-        
-        bool GetOrCreate(ICore core, IntPtr entityPointer, out TEntity entity);
-
-        ICollection<TEntity> GetAllEntities();
 
         KeyValuePair<IntPtr, TEntity>[] GetEntitiesArray();
 

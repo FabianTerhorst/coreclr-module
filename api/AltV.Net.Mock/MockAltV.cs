@@ -46,7 +46,7 @@ namespace AltV.Net.Mock
         public IPlayer ConnectPlayer(string playerName, string reason, Action<IPlayer> intercept = null)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
-            Alt.Module.PlayerPool.Create(core, ptr , entityId, out var player);
+            var player = Alt.Module.PlayerPool.Create(core, ptr , entityId);
             //player.Name = playerName;
             intercept?.Invoke(player);
             Alt.Module.OnPlayerConnect(ptr, player.Id, reason);

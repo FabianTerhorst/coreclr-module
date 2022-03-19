@@ -21,13 +21,13 @@ namespace AltV.Net.Elements.Pools
             switch (baseObjectType)
             {
                 case BaseObjectType.Player:
-                    result = playerPool.GetOrCreate(core, entityPointer, out var player);
+                    var player = playerPool.GetOrCreate(core, entityPointer);
                     entity = player;
-                    return result;
+                    return player is not null;
                 case BaseObjectType.Vehicle:
-                    result = vehiclePool.GetOrCreate(core, entityPointer, out var vehicle);
+                    var vehicle = vehiclePool.GetOrCreate(core, entityPointer);
                     entity = vehicle;
-                    return result;
+                    return vehicle is not null;
                 default:
                     entity = default;
                     return false;
@@ -40,13 +40,13 @@ namespace AltV.Net.Elements.Pools
             switch (baseObjectType)
             {
                 case BaseObjectType.Player:
-                    result = playerPool.Get(entityPointer, out var player);
+                    var player = playerPool.Get(entityPointer);
                     entity = player;
-                    return result;
+                    return player is not null;
                 case BaseObjectType.Vehicle:
-                    result = vehiclePool.Get(entityPointer, out var vehicle);
+                    var vehicle = vehiclePool.Get(entityPointer);
                     entity = vehicle;
-                    return result;
+                    return vehicle is not null;
                 default:
                     entity = default;
                     return false;
@@ -59,13 +59,13 @@ namespace AltV.Net.Elements.Pools
             switch (baseObjectType)
             {
                 case BaseObjectType.Player:
-                    result = playerPool.GetOrCreate(core, entityPointer, entityId, out var player);
+                    var player = playerPool.GetOrCreate(core, entityPointer, entityId);
                     entity = player;
-                    return result;
+                    return player is not null;
                 case BaseObjectType.Vehicle:
-                    result = vehiclePool.GetOrCreate(core, entityPointer, entityId, out var vehicle);
+                    var vehicle = vehiclePool.GetOrCreate(core, entityPointer, entityId);
                     entity = vehicle;
-                    return result;
+                    return vehicle is not null;
                 default:
                     entity = default;
                     return false;

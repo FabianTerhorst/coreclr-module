@@ -8,13 +8,12 @@ namespace AltV.Net
 {
     public interface IBaseObjectPool<TBaseObject> where TBaseObject : IBaseObject
     {
-        void Create(ICore core, IntPtr entityPointer);
-        void Create(ICore core, IntPtr entityPointer, out TBaseObject entity);
+        TBaseObject Create(ICore core, IntPtr entityPointer);
         void Add(TBaseObject entity);
         bool Remove(TBaseObject entity);
         bool Remove(IntPtr entityPointer);
-        bool Get(IntPtr entityPointer, out TBaseObject entity);
-        bool GetOrCreate(ICore core, IntPtr entityPointer, out TBaseObject entity);
+        TBaseObject Get(IntPtr entityPointer);
+        TBaseObject GetOrCreate(ICore core, IntPtr entityPointer);
         ICollection<TBaseObject> GetAllObjects();
         KeyValuePair<IntPtr, TBaseObject>[] GetObjectsArray();
         void ForEach(IBaseObjectCallback<TBaseObject> baseObjectCallback);

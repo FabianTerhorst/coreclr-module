@@ -20,15 +20,11 @@ namespace AltV.Net.Async
             this.entityFactory = entityFactory;
         }
 
-        public void Create(ICore core, IntPtr entityPointer)
+        public TBaseObject Create(ICore core, IntPtr entityPointer)
         {
-            Add(entityFactory.Create(core, entityPointer));
-        }
-
-        public void Create(ICore core, IntPtr entityPointer, out TBaseObject entity)
-        {
-            entity = entityFactory.Create(core, entityPointer);
+            var entity = entityFactory.Create(core, entityPointer);
             Add(entity);
+            return entity;
         }
         
         public void Add(TBaseObject entity)
@@ -56,24 +52,23 @@ namespace AltV.Net.Async
             return true;
         }
 
-        public bool Get(IntPtr entityPointer, out TBaseObject entity)
+        public TBaseObject Get(IntPtr entityPointer)
         {
-            return entities.TryGetValue(entityPointer, out entity) && entity.Exists;
+            return entities.TryGetValue(entityPointer, out var entity) ? entity : default;
         }
 
-        public bool GetOrCreate(ICore core, IntPtr entityPointer, out TBaseObject entity)
+        public TBaseObject GetOrCreate(ICore core, IntPtr entityPointer)
         {
             if (entityPointer == IntPtr.Zero)
             {
-                entity = default;
-                return false;
+                return default;
             }
 
-            if (entities.TryGetValue(entityPointer, out entity)) return entity.Exists;
+            if (entities.TryGetValue(entityPointer, out var entity)) return entity;
 
-            Create(core, entityPointer, out entity);
+            entity = Create(core, entityPointer);
 
-            return entity.Exists;
+            return entity;
         }
 
         public ICollection<TBaseObject> GetAllObjects()
