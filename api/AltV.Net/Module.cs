@@ -14,6 +14,7 @@ using AltV.Net.Elements.Entities;
 using AltV.Net.Events;
 using AltV.Net.FunctionParser;
 using AltV.Net.Native;
+using AltV.Net.Shared.Events;
 using AltV.Net.Types;
 
 namespace AltV.Net

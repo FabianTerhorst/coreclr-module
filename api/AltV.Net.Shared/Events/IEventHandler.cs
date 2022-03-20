@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-
-namespace AltV.Net.Events
+namespace AltV.Net.Shared.Events
 {
     internal interface IEventHandler<TEvent>
     {
