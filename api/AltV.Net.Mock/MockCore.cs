@@ -47,7 +47,7 @@ namespace AltV.Net.Mock
 
         public string Version => "";
 
-        public INativeResource Resource => new NativeResource(null, IntPtr.Zero, IntPtr.Zero);
+        public INativeResource Resource => new NativeResource(null, IntPtr.Zero);
 
         internal MockCore(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
@@ -364,12 +364,12 @@ namespace AltV.Net.Mock
 
         public INativeResource GetResource(string name)
         {
-            return new NativeResource(null, IntPtr.Zero, IntPtr.Zero);
+            return new NativeResource(null, IntPtr.Zero);
         }
 
         public INativeResource GetResource(IntPtr resourcePointer)
         {
-            return new NativeResource(null, IntPtr.Zero, IntPtr.Zero);
+            return new NativeResource(null, IntPtr.Zero);
         }
 
         public IPlayer[] GetPlayers()

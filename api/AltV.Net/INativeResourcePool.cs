@@ -6,6 +6,6 @@ namespace AltV.Net
 {
     public interface INativeResourcePool
     {
-        bool GetOrCreate(ILibrary library, IntPtr corePointer, IntPtr resourcePointer, out INativeResource resource);
+        bool GetOrCreate(ICore core, IntPtr resourcePointer, out INativeResource resource);
     }
 }

@@ -1875,7 +1875,7 @@ namespace AltV.Net
                 MValueFunctionCallback callDelegate = function.Call;
                 functionExportHandles.AddFirst(GCHandle.Alloc(callDelegate));
                 Core.CreateMValueFunction(out var mValue,
-                    Core.Library.Server.Invoker_Create(ModuleResource.ResourceImplPtr, callDelegate));
+                    Core.Library.Shared.Invoker_Create(ModuleResource.ResourceImplPtr, callDelegate));
                 ModuleResource.SetExport(key, in mValue);
                 mValue.Dispose();
             }

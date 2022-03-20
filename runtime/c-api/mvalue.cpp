@@ -466,7 +466,6 @@ uint8_t MValueConst_GetType(alt::MValueConst *mValueConst) {
     return (uint8_t) mValue->GetType();
 }
 
-#ifdef ALT_SERVER_API
 CustomInvoker *Invoker_Create(CSharpResourceImpl *resource, MValueFunctionCallback val) {
     auto invoker = new CustomInvoker(val);
     resource->invokers->Push(invoker);
@@ -486,4 +485,3 @@ void Invoker_Destroy(CSharpResourceImpl *resource, CustomInvoker *val) {
     delete val;
     delete oldInvokers;
 }
-#endif

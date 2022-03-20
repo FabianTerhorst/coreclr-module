@@ -45,6 +45,12 @@ EXPORT_SHARED alt::MValueConst* Core_CreateMValueVector2(alt::ICore* core, vecto
 EXPORT_SHARED alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value);
 EXPORT_SHARED alt::MValueConst* Core_CreateMValueByteArray(alt::ICore* core, uint64_t size, const void* data);
 
+EXPORT_SHARED uint64_t Core_GetPlayerCount(alt::ICore* server);
+EXPORT_SHARED void Core_GetPlayers(alt::ICore* server, alt::IPlayer* players[], uint64_t size);
+EXPORT_SHARED uint64_t Core_GetVehicleCount(alt::ICore* server);
+EXPORT_SHARED void Core_GetVehicles(alt::ICore* server, alt::IVehicle* vehicles[], uint64_t size);
+EXPORT_SHARED void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type);
+
 EXPORT_SERVER alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* value);
 EXPORT_SERVER uint8_t Core_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb);
 EXPORT_SERVER uint8_t Core_FileExists(alt::ICore* server, const char* path);
@@ -74,11 +80,6 @@ EXPORT_SERVER void Core_DestroyVoiceChannel(alt::ICore* server, alt::IVoiceChann
 EXPORT_SERVER void Core_DestroyColShape(alt::ICore* server, alt::IColShape* baseObject);
 EXPORT_SERVER int32_t Core_GetNetTime(alt::ICore* server);
 EXPORT_SERVER void Core_GetRootDirectory(alt::ICore* server, const char*&text);
-EXPORT_SERVER uint64_t Core_GetPlayerCount(alt::ICore* server);
-EXPORT_SERVER void Core_GetPlayers(alt::ICore* server, alt::IPlayer* players[], uint64_t size);
-EXPORT_SERVER uint64_t Core_GetVehicleCount(alt::ICore* server);
-EXPORT_SERVER void Core_GetVehicles(alt::ICore* server, alt::IVehicle* vehicles[], uint64_t size);
-EXPORT_SERVER void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type);
 EXPORT_SERVER void Core_StartResource(alt::ICore* server, const char* text);
 EXPORT_SERVER void Core_StopResource(alt::ICore* server, const char* text);
 EXPORT_SERVER void Core_RestartResource(alt::ICore* server, const char* text);
