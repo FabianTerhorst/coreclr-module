@@ -12,6 +12,7 @@ namespace AltV.Net
 {
     public interface ICore : ISharedCore
     {
+        new IBaseBaseObjectPool BaseBaseObjectPool { get; }
         new IEntityPool<IPlayer> PlayerPool { get;  }
         new IEntityPool<IVehicle> VehiclePool { get; }
 
