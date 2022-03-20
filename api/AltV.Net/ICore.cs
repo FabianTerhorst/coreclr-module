@@ -15,6 +15,11 @@ namespace AltV.Net
         new IBaseBaseObjectPool BaseBaseObjectPool { get; }
         new IEntityPool<IPlayer> PlayerPool { get;  }
         new IEntityPool<IVehicle> VehiclePool { get; }
+        IBaseObjectPool<IBlip> BlipPool { get; }
+        IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
+        IBaseObjectPool<IVoiceChannel> VoiceChannelPool { get; }
+        IBaseObjectPool<IColShape> ColShapePool { get; }
+        INativeResourcePool NativeResourcePool { get; }
 
         string Version { get; }
         
