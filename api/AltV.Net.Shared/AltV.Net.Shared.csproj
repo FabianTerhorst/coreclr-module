@@ -21,7 +21,7 @@
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
-    
+
     <ItemGroup>
         <None Include="license\license.txt">
             <Pack>true</Pack>
@@ -34,6 +34,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+        <ProjectReference Include="..\AltV.Net.CApi\AltV.Net.CApi.csproj"/>
     </ItemGroup>
+
 </Project>

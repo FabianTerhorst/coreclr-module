@@ -6,11 +6,15 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
+using AltV.Net.Shared;
 
 namespace AltV.Net
 {
-    public interface ICore : ICApiCore
+    public interface ICore : ISharedCore
     {
+        new IEntityPool<IPlayer> PlayerPool { get;  }
+        new IEntityPool<IVehicle> VehiclePool { get; }
+
         string Version { get; }
         
         string Branch { get; }

@@ -4,10 +4,11 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Refs;
 using AltV.Net.Enums;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Elements.Entities
 {
-    public interface IPlayer : IEntity
+    public interface IPlayer : ISharedPlayer, IEntity
     {
         IntPtr PlayerNativePointer { get; }
         

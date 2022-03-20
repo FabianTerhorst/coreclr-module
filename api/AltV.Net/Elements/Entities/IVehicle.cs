@@ -2,10 +2,11 @@ using System;
 using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Enums;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Elements.Entities
 {
-    public interface IVehicle : IEntity
+    public interface IVehicle : ISharedVehicle, IEntity
     {
         IntPtr VehicleNativePointer { get; }
         /// <summary>

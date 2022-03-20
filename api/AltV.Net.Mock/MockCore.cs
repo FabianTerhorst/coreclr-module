@@ -7,6 +7,8 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
 using AltV.Net.Native;
+using AltV.Net.Shared;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Mock
 {
@@ -20,9 +22,11 @@ namespace AltV.Net.Mock
 
         private readonly IBaseEntityPool baseEntityPool;
 
-        private readonly IEntityPool<IPlayer> playerPool;
-
-        private readonly IEntityPool<IVehicle> vehiclePool;
+        public IEntityPool<IPlayer> PlayerPool { get; }
+        IReadOnlyEntityPool<ISharedPlayer> ISharedCore.PlayerPool => PlayerPool;
+        
+        public IEntityPool<IVehicle> VehiclePool { get; }
+        IReadOnlyEntityPool<ISharedVehicle> ISharedCore.VehiclePool => VehiclePool;
 
         private readonly IBaseObjectPool<IBlip> blipPool;
 
@@ -53,8 +57,8 @@ namespace AltV.Net.Mock
             this.NativePointer = nativePointer;
             this.baseBaseObjectPool = baseBaseObjectPool;
             this.baseEntityPool = baseEntityPool;
-            this.playerPool = playerPool;
-            this.vehiclePool = vehiclePool;
+            this.PlayerPool = playerPool;
+            this.VehiclePool = vehiclePool;
             this.blipPool = blipPool;
             this.checkpointPool = checkpointPool;
             this.voiceChannelPool = voiceChannelPool;
@@ -222,7 +226,7 @@ namespace AltV.Net.Mock
         public IVehicle CreateVehicle(uint model, Position pos, Rotation rotation)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
-            var vehicle = vehiclePool.Create(this, ptr, entityId);
+            var vehicle = VehiclePool.Create(this, ptr, entityId);
             vehicle.Position = pos;
             if (vehicle is MockVehicle mockVehicle)
             {
