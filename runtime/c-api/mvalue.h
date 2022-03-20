@@ -8,6 +8,7 @@
 
 #include "../../cpp-sdk/SDK.h"
 #include "data/types.h"
+#include "data/invoker.h"
 #include "utils/export.h"
 
 #ifdef ALT_SERVER_API
@@ -47,10 +48,8 @@ EXPORT_SHARED void MValueConst_RemoveRef(alt::MValueConst* mValueConst);
 EXPORT_SHARED void MValueConst_Delete(alt::MValueConst* mValueConst);
 EXPORT_SHARED uint8_t MValueConst_GetType(alt::MValueConst* mValueConst);
 
-#ifdef ALT_SERVER_API
-EXPORT_SERVER CustomInvoker* Invoker_Create(CSharpResourceImpl* resource, MValueFunctionCallback val);
-EXPORT_SERVER void Invoker_Destroy(CSharpResourceImpl* resource, CustomInvoker* val);
-#endif
+EXPORT_SHARED CustomInvoker* Invoker_Create(CSharpResourceImpl* resource, MValueFunctionCallback val);
+EXPORT_SHARED void Invoker_Destroy(CSharpResourceImpl* resource, CustomInvoker* val);
 
 #ifdef __cplusplus
 }

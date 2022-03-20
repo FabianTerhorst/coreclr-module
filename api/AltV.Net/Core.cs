@@ -793,9 +793,9 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                var playerCount = Library.Server.Core_GetPlayerCount(NativePointer);
+                var playerCount = Library.Shared.Core_GetPlayerCount(NativePointer);
                 var pointers = new IntPtr[playerCount];
-                Library.Server.Core_GetPlayers(NativePointer, pointers, playerCount);
+                Library.Shared.Core_GetPlayers(NativePointer, pointers, playerCount);
                 var players = new IPlayer[playerCount];
                 for (ulong i = 0; i < playerCount; i++)
                 {
@@ -812,9 +812,9 @@ namespace AltV.Net
             unsafe
             {
                 CheckIfCallIsValid();
-                var vehicleCount = Library.Server.Core_GetVehicleCount(NativePointer);
+                var vehicleCount = Library.Shared.Core_GetVehicleCount(NativePointer);
                 var pointers = new IntPtr[vehicleCount];
-                Library.Server.Core_GetVehicles(NativePointer, pointers, vehicleCount);
+                Library.Shared.Core_GetVehicles(NativePointer, pointers, vehicleCount);
                 var vehicles = new IVehicle[vehicleCount];
                 for (ulong i = 0; i < vehicleCount; i++)
                 {
@@ -832,7 +832,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 var type = (byte) BaseObjectType.Undefined;
-                var entityPointer = Library.Server.Core_GetEntityById(NativePointer, id, &type);
+                var entityPointer = Library.Shared.Core_GetEntityById(NativePointer, id, &type);
                 if (entityPointer == IntPtr.Zero) return null;
                 switch (type)
                 {

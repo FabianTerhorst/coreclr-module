@@ -229,7 +229,7 @@ namespace AltV.Net
             IntPtr invoker;
             unsafe
             {
-                invoker = library.Server.Invoker_Create(NativePointer, function);
+                invoker = library.Shared.Invoker_Create(NativePointer, function);
             }
 
             invokers[invoker] = GCHandle.Alloc(function);
@@ -246,7 +246,7 @@ namespace AltV.Net
 
             unsafe
             {
-                library.Server.Invoker_Destroy(NativePointer, invoker);
+                library.Shared.Invoker_Destroy(NativePointer, invoker);
             }
         }
 

@@ -34,6 +34,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_CreateMValueVector3 { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueVoiceChannel { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPlayerCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetPlayers { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetVehicleCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogColored { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogDebug { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogError { get; }
@@ -54,7 +59,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetBranchStatic { get; }
+        public delegate* unmanaged[Cdecl]<int*, nint> GetCApiVersion { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetVersionStatic { get; }
+        public delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint> Invoker_Create { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Invoker_Destroy { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_AddRef { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], ulong, nint> MValueConst_CallFunction { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_Delete { get; }
@@ -99,7 +107,19 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsJumping { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsReloading { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsShooting { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], int, void> Resource_GetDependants { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> Resource_GetDependantsSize { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], int, void> Resource_GetDependencies { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> Resource_GetDependenciesSize { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> Resource_GetExport { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], nint[], void> Resource_GetExports { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Resource_GetExportsCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetImpl { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetType { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Resource_IsStarted { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, void> Resource_SetExport { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void> Resource_SetExports { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelsCount { get; }
@@ -134,6 +154,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_CreateMValueVector3 { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueVoiceChannel { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPlayerCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetPlayers { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetVehicleCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetVehicles { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogColored { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogDebug { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogError { get; }
@@ -154,7 +179,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetBranchStatic { get; }
+        public delegate* unmanaged[Cdecl]<int*, nint> GetCApiVersion { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetVersionStatic { get; }
+        public delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint> Invoker_Create { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Invoker_Destroy { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_AddRef { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], ulong, nint> MValueConst_CallFunction { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_Delete { get; }
@@ -199,7 +227,19 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsJumping { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsReloading { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsShooting { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], int, void> Resource_GetDependants { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> Resource_GetDependantsSize { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], int, void> Resource_GetDependencies { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> Resource_GetDependenciesSize { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> Resource_GetExport { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], nint[], void> Resource_GetExports { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Resource_GetExportsCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetImpl { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetType { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Resource_IsStarted { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, void> Resource_SetExport { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void> Resource_SetExports { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetEntity { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetWheelsCount { get; }
@@ -234,6 +274,11 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateMValueVector3 = (delegate* unmanaged[Cdecl]<nint, Vector3, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueVector3");
             Core_CreateMValueVehicle = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueVehicle");
             Core_CreateMValueVoiceChannel = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueVoiceChannel");
+            Core_GetEntityById = (delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint>) NativeLibrary.GetExport(handle, "Core_GetEntityById");
+            Core_GetPlayerCount = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Core_GetPlayerCount");
+            Core_GetPlayers = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) NativeLibrary.GetExport(handle, "Core_GetPlayers");
+            Core_GetVehicleCount = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Core_GetVehicleCount");
+            Core_GetVehicles = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) NativeLibrary.GetExport(handle, "Core_GetVehicles");
             Core_LogColored = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_LogColored");
             Core_LogDebug = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_LogDebug");
             Core_LogError = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_LogError");
@@ -254,7 +299,10 @@ namespace AltV.Net.CApi.Libraries
             FreeString = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeString");
             FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) NativeLibrary.GetExport(handle, "FreeUIntArray");
             GetBranchStatic = (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetBranchStatic");
+            GetCApiVersion = (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetCApiVersion");
             GetVersionStatic = (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetVersionStatic");
+            Invoker_Create = (delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint>) NativeLibrary.GetExport(handle, "Invoker_Create");
+            Invoker_Destroy = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Invoker_Destroy");
             MValueConst_AddRef = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "MValueConst_AddRef");
             MValueConst_CallFunction = (delegate* unmanaged[Cdecl]<nint, nint, nint[], ulong, nint>) NativeLibrary.GetExport(handle, "MValueConst_CallFunction");
             MValueConst_Delete = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "MValueConst_Delete");
@@ -299,7 +347,19 @@ namespace AltV.Net.CApi.Libraries
             Player_IsJumping = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsJumping");
             Player_IsReloading = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsReloading");
             Player_IsShooting = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsShooting");
+            Resource_GetDependants = (delegate* unmanaged[Cdecl]<nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Resource_GetDependants");
+            Resource_GetDependantsSize = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Resource_GetDependantsSize");
+            Resource_GetDependencies = (delegate* unmanaged[Cdecl]<nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Resource_GetDependencies");
+            Resource_GetDependenciesSize = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Resource_GetDependenciesSize");
+            Resource_GetExport = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Resource_GetExport");
+            Resource_GetExports = (delegate* unmanaged[Cdecl]<nint, nint[], nint[], void>) NativeLibrary.GetExport(handle, "Resource_GetExports");
+            Resource_GetExportsCount = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Resource_GetExportsCount");
+            Resource_GetImpl = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Resource_GetImpl");
             Resource_GetName = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Resource_GetName");
+            Resource_GetType = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Resource_GetType");
+            Resource_IsStarted = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Resource_IsStarted");
+            Resource_SetExport = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, void>) NativeLibrary.GetExport(handle, "Resource_SetExport");
+            Resource_SetExports = (delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void>) NativeLibrary.GetExport(handle, "Resource_SetExports");
             Vehicle_GetEntity = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetEntity");
             Vehicle_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetID");
             Vehicle_GetWheelsCount = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetWheelsCount");

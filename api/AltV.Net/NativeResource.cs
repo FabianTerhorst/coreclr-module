@@ -20,7 +20,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    return library.Server.Resource_GetImpl(NativePointer);
+                    return library.Shared.Resource_GetImpl(NativePointer);
                 }
             }
         }
@@ -85,7 +85,7 @@ namespace AltV.Net
                 unsafe
                 {
                     var ptr = IntPtr.Zero;
-                    library.Server.Resource_GetType(NativePointer, &ptr);
+                    library.Shared.Resource_GetType(NativePointer, &ptr);
                     return Marshal.PtrToStringUTF8(ptr);
                 }
             }
@@ -97,7 +97,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    return library.Server.Resource_IsStarted(NativePointer) == 1;
+                    return library.Shared.Resource_IsStarted(NativePointer) == 1;
                 }
             }
         }
@@ -111,9 +111,9 @@ namespace AltV.Net
                 unsafe
                 {
                     if (dependencies != null) return dependencies;
-                    var size = library.Server.Resource_GetDependenciesSize(NativePointer);
+                    var size = library.Shared.Resource_GetDependenciesSize(NativePointer);
                     var pointers = new IntPtr[size];
-                    library.Server.Resource_GetDependencies(NativePointer, pointers, size);
+                    library.Shared.Resource_GetDependencies(NativePointer, pointers, size);
                     var strings = new string[size];
                     for (var i = 0; i < size; i++)
                     {
@@ -135,9 +135,9 @@ namespace AltV.Net
                 unsafe
                 {
                     if (dependants != null) return dependants;
-                    var size = library.Server.Resource_GetDependantsSize(NativePointer);
+                    var size = library.Shared.Resource_GetDependantsSize(NativePointer);
                     var pointers = new IntPtr[size];
-                    library.Server.Resource_GetDependants(NativePointer, pointers, size);
+                    library.Shared.Resource_GetDependants(NativePointer, pointers, size);
                     var strings = new string[size];
                     for (var i = 0; i < size; i++)
                     {
@@ -162,7 +162,7 @@ namespace AltV.Net
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
                 Alt.Core.CreateMValue(out var mValue, value);
-                library.Server.Resource_SetExport(corePointer, NativePointer, stringPtr, mValue.nativePointer);
+                library.Shared.Resource_SetExport(corePointer, NativePointer, stringPtr, mValue.nativePointer);
                 Marshal.FreeHGlobal(stringPtr);
                 mValue.Dispose();
             }
@@ -173,7 +173,7 @@ namespace AltV.Net
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                library.Server.Resource_SetExport(corePointer, NativePointer, stringPtr, value.nativePointer);
+                library.Shared.Resource_SetExport(corePointer, NativePointer, stringPtr, value.nativePointer);
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
@@ -183,7 +183,7 @@ namespace AltV.Net
             unsafe
             {
                 var ptr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                var mValue = new MValueConst(library.Server.Resource_GetExport(NativePointer, ptr));
+                var mValue = new MValueConst(library.Shared.Resource_GetExport(NativePointer, ptr));
                 var obj = mValue.ToObject();
                 mValue.Dispose();
                 Marshal.FreeHGlobal(ptr);
@@ -196,7 +196,7 @@ namespace AltV.Net
             unsafe
             {
                 var ptr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                mValue = new MValueConst(library.Server.Resource_GetExport(NativePointer, ptr));
+                mValue = new MValueConst(library.Shared.Resource_GetExport(NativePointer, ptr));
                 Marshal.FreeHGlobal(ptr);
                 return mValue.type != MValueConst.Type.Nil;
             }

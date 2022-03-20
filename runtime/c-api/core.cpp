@@ -144,6 +144,50 @@ alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value) {
     return new alt::MValueConst(mValue);
 }
 
+
+uint64_t Core_GetPlayerCount(alt::ICore* core) {
+    return core->GetPlayers().GetSize();
+}
+
+void Core_GetPlayers(alt::ICore* core, alt::IPlayer* players[], uint64_t size) {
+    auto playersArray = core->GetPlayers();
+    if (playersArray.GetSize() < size) {
+        size = playersArray.GetSize();
+    }
+    for (uint64_t i = 0; i < size; i++) {
+        players[i] = playersArray[i].Get();
+    }
+}
+
+uint64_t Core_GetVehicleCount(alt::ICore* core) {
+    return core->GetVehicles().GetSize();
+}
+
+void Core_GetVehicles(alt::ICore* core, alt::IVehicle* vehicles[], uint64_t size) {
+    auto vehiclesArray = core->GetVehicles();
+    if (vehiclesArray.GetSize() < size) {
+        size = vehiclesArray.GetSize();
+    }
+    for (uint64_t i = 0; i < size; i++) {
+        vehicles[i] = vehiclesArray[i].Get();
+    }
+}
+
+void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type) {
+    auto entityRef = core->GetEntityByID(id);
+    auto entity = entityRef.Get();
+    if (entity == nullptr) return nullptr;
+    type = (uint8_t) entity->GetType();
+    switch (entity->GetType()) {
+        case alt::IBaseObject::Type::PLAYER:
+            return dynamic_cast<alt::IPlayer*>(entity);
+        case alt::IBaseObject::Type::VEHICLE:
+            return dynamic_cast<alt::IVehicle*>(entity);
+    }
+    return nullptr;
+}
+
+
 #ifdef ALT_SERVER_API
 uint8_t Core_SubscribeCommand(alt::ICore* core, const char* cmd, alt::CommandCallback cb) {
     return core->SubscribeCommand(cmd, cb);
@@ -346,48 +390,6 @@ int32_t Core_GetNetTime(alt::ICore* core) {
 
 void Core_GetRootDirectory(alt::ICore* core, const char*&text) {
     text = core->GetRootDirectory().CStr();
-}
-
-uint64_t Core_GetPlayerCount(alt::ICore* core) {
-    return core->GetPlayers().GetSize();
-}
-
-void Core_GetPlayers(alt::ICore* core, alt::IPlayer* players[], uint64_t size) {
-    auto playersArray = core->GetPlayers();
-    if (playersArray.GetSize() < size) {
-        size = playersArray.GetSize();
-    }
-    for (uint64_t i = 0; i < size; i++) {
-        players[i] = playersArray[i].Get();
-    }
-}
-
-uint64_t Core_GetVehicleCount(alt::ICore* core) {
-    return core->GetVehicles().GetSize();
-}
-
-void Core_GetVehicles(alt::ICore* core, alt::IVehicle* vehicles[], uint64_t size) {
-    auto vehiclesArray = core->GetVehicles();
-    if (vehiclesArray.GetSize() < size) {
-        size = vehiclesArray.GetSize();
-    }
-    for (uint64_t i = 0; i < size; i++) {
-        vehicles[i] = vehiclesArray[i].Get();
-    }
-}
-
-void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type) {
-    auto entityRef = core->GetEntityByID(id);
-    auto entity = entityRef.Get();
-    if (entity == nullptr) return nullptr;
-    type = (uint8_t) entity->GetType();
-    switch (entity->GetType()) {
-        case alt::IBaseObject::Type::PLAYER:
-            return dynamic_cast<alt::IPlayer*>(entity);
-        case alt::IBaseObject::Type::VEHICLE:
-            return dynamic_cast<alt::IVehicle*>(entity);
-    }
-    return nullptr;
 }
 
 void Core_StartResource(alt::ICore* core, const char* text) {
