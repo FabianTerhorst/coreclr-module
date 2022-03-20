@@ -665,12 +665,7 @@ namespace AltV.Net.FunctionParser
                 return null;
             }
 
-            if (!Alt.Module.BaseBaseObjectPool.Get(entityPointer, entityType, out var entity))
-            {
-                return null;
-            }
-
-            return entity;
+            return Alt.Module.BaseBaseObjectPool.Get(entityPointer, entityType);
         }
 
         public static object ParseDictionary(in MValueConst mValue, Type type,

@@ -22,6 +22,9 @@ namespace AltV.Net.Mock
 
         private readonly IBaseEntityPool baseEntityPool;
 
+        public IBaseBaseObjectPool BaseBaseObjectPool { get; }
+        IReadOnlyBaseBaseObjectPool ISharedCore.BaseBaseObjectPool => BaseBaseObjectPool;
+        
         public IEntityPool<IPlayer> PlayerPool { get; }
         IReadOnlyEntityPool<ISharedPlayer> ISharedCore.PlayerPool => PlayerPool;
         

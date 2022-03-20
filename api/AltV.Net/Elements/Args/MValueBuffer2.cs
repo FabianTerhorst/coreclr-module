@@ -378,7 +378,8 @@ namespace AltV.Net.Elements.Args
 
             var entityType = BaseObjectType.Undefined;
             var ptr = mValue.GetEntityPointer(ref entityType);
-            if (Alt.Module.BaseBaseObjectPool.Get(ptr, entityType, out var entity))
+            var entity = Alt.Module.BaseBaseObjectPool.Get(ptr, entityType); 
+            if (entity != null)
             {
                 if (entity is TEntity typedEntity)
                 {

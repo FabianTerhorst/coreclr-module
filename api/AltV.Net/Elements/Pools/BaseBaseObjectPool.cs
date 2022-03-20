@@ -1,5 +1,7 @@
 using System;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Elements.Pools
 {
@@ -29,110 +31,48 @@ namespace AltV.Net.Elements.Pools
             this.colShapePool = colShapePool;
         }
 
-        public bool Get(IntPtr entityPointer, BaseObjectType baseObjectType, out IBaseObject entity)
+        public IBaseObject Get(IntPtr entityPointer, BaseObjectType baseObjectType)
         {
-            bool result;
-            switch (baseObjectType)
+            return baseObjectType switch
             {
-                case BaseObjectType.Player:
-                    var player = playerPool.Get(entityPointer);
-                    entity = player;
-                    return player != null;
-                case BaseObjectType.Vehicle:
-                    var vehicle = vehiclePool.Get(entityPointer);
-                    entity = vehicle;
-                    return vehicle != null;
-                case BaseObjectType.Blip:
-                    var blip = blipPool.Get(entityPointer);
-                    entity = blip;
-                    return blip != null;
-                case BaseObjectType.Checkpoint:
-                    var checkpoint = checkpointPool.Get(entityPointer);
-                    entity = checkpoint;
-                    return checkpoint != null;
-                case BaseObjectType.VoiceChannel:
-                    var voiceChannel = voiceChannelPool.Get(entityPointer);
-                    entity = voiceChannel;
-                    return voiceChannel != null;
-                case BaseObjectType.ColShape:
-                    var colShape = colShapePool.Get(entityPointer);
-                    entity = colShape;
-                    return colShape != null;
-                default:
-                    entity = default;
-                    return false;
-            }
+                BaseObjectType.Player => playerPool.Get(entityPointer),
+                BaseObjectType.Vehicle => vehiclePool.Get(entityPointer),
+                BaseObjectType.Blip => blipPool.Get(entityPointer),
+                BaseObjectType.Checkpoint => checkpointPool.Get(entityPointer),
+                BaseObjectType.VoiceChannel => voiceChannelPool.Get(entityPointer),
+                BaseObjectType.ColShape => colShapePool.Get(entityPointer),
+                _ => default
+            };
         }
 
-        public bool GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType, out IBaseObject entity)
+        ISharedBaseObject IReadOnlyBaseBaseObjectPool.Get(IntPtr entityPointer, BaseObjectType baseObjectType) => Get(entityPointer, baseObjectType);
+
+        public IBaseObject GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType)
         {
-            bool result;
-            switch (baseObjectType)
+            return baseObjectType switch
             {
-                case BaseObjectType.Player:
-                    var player = playerPool.GetOrCreate(core, entityPointer);
-                    entity = player;
-                    return  player != null;
-                case BaseObjectType.Vehicle:
-                    var vehicle = vehiclePool.GetOrCreate(core, entityPointer);
-                    entity = vehicle;
-                    return  vehicle != null;
-                case BaseObjectType.Blip:
-                    var blip = blipPool.GetOrCreate(core, entityPointer);
-                    entity = blip;
-                    return  blip != null;
-                case BaseObjectType.Checkpoint:
-                    var checkpoint = checkpointPool.GetOrCreate(core, entityPointer);
-                    entity = checkpoint;
-                    return  checkpoint != null;
-                case BaseObjectType.VoiceChannel:
-                    var voiceChannel = voiceChannelPool.GetOrCreate(core, entityPointer);
-                    entity = voiceChannel;
-                    return  voiceChannel != null;
-                case BaseObjectType.ColShape:
-                    var colShape = colShapePool.GetOrCreate(core, entityPointer);
-                    entity = colShape;
-                    return  colShape != null;
-                default:
-                    entity = default;
-                    return false;
-            }
+                BaseObjectType.Player => playerPool.GetOrCreate(core, entityPointer),
+                BaseObjectType.Vehicle => vehiclePool.GetOrCreate(core, entityPointer),
+                BaseObjectType.Blip => blipPool.GetOrCreate(core, entityPointer),
+                BaseObjectType.Checkpoint => checkpointPool.GetOrCreate(core, entityPointer),
+                BaseObjectType.VoiceChannel => voiceChannelPool.GetOrCreate(core, entityPointer),
+                BaseObjectType.ColShape => colShapePool.GetOrCreate(core, entityPointer),
+                _ => default
+            };
         }
 
-        public bool GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType, ushort entityId,
-            out IBaseObject entity)
+        public IBaseObject GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType, ushort entityId)
         {
-            bool result;
-            switch (baseObjectType)
+            return baseObjectType switch
             {
-                case BaseObjectType.Player:
-                    var player = playerPool.GetOrCreate(core, entityPointer, entityId);
-                    entity = player;
-                    return player != null;
-                case BaseObjectType.Vehicle:
-                    var vehicle = vehiclePool.GetOrCreate(core, entityPointer, entityId);
-                    entity = vehicle;
-                    return vehicle != null;
-                case BaseObjectType.Blip:
-                    var blip = blipPool.GetOrCreate(core, entityPointer);
-                    entity = blip;
-                    return  blip != null;
-                case BaseObjectType.Checkpoint:
-                    var checkpoint = checkpointPool.GetOrCreate(core, entityPointer);
-                    entity = checkpoint;
-                    return  checkpoint != null;
-                case BaseObjectType.VoiceChannel:
-                    var voiceChannel = voiceChannelPool.GetOrCreate(core, entityPointer);
-                    entity = voiceChannel;
-                    return  voiceChannel != null;
-                case BaseObjectType.ColShape:
-                    var colShape = colShapePool.GetOrCreate(core, entityPointer);
-                    entity = colShape;
-                    return  colShape != null;
-                default:
-                    entity = default;
-                    return false;
-            }
+                BaseObjectType.Player => playerPool.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.Vehicle => vehiclePool.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.Blip => blipPool.GetOrCreate(core, entityPointer),
+                BaseObjectType.Checkpoint => checkpointPool.GetOrCreate(core, entityPointer),
+                BaseObjectType.VoiceChannel => voiceChannelPool.GetOrCreate(core, entityPointer),
+                BaseObjectType.ColShape => colShapePool.GetOrCreate(core, entityPointer),
+                _ => default
+            };
         }
 
         public bool Remove(IBaseObject entity)
@@ -142,23 +82,16 @@ namespace AltV.Net.Elements.Pools
 
         public bool Remove(IntPtr entityPointer, BaseObjectType baseObjectType)
         {
-            switch (baseObjectType)
+            return baseObjectType switch
             {
-                case BaseObjectType.Player:
-                    return playerPool.Remove(entityPointer);
-                case BaseObjectType.Vehicle:
-                    return vehiclePool.Remove(entityPointer);
-                case BaseObjectType.Blip:
-                    return blipPool.Remove(entityPointer);
-                case BaseObjectType.Checkpoint:
-                    return checkpointPool.Remove(entityPointer);
-                case BaseObjectType.VoiceChannel:
-                    return voiceChannelPool.Remove(entityPointer);
-                case BaseObjectType.ColShape:
-                    return colShapePool.Remove(entityPointer);
-                default:
-                    return false;
-            }
+                BaseObjectType.Player => playerPool.Remove(entityPointer),
+                BaseObjectType.Vehicle => vehiclePool.Remove(entityPointer),
+                BaseObjectType.Blip => blipPool.Remove(entityPointer),
+                BaseObjectType.Checkpoint => checkpointPool.Remove(entityPointer),
+                BaseObjectType.VoiceChannel => voiceChannelPool.Remove(entityPointer),
+                BaseObjectType.ColShape => colShapePool.Remove(entityPointer),
+                _ => false
+            };
         }
     }
 }

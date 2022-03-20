@@ -23,11 +23,12 @@ namespace AltV.Net
     {
         public IntPtr NativePointer { get; }
 
-        private readonly IBaseBaseObjectPool baseBaseObjectPool;
+        public IBaseBaseObjectPool BaseBaseObjectPool { get;}
+        IReadOnlyBaseBaseObjectPool ISharedCore.BaseBaseObjectPool => BaseBaseObjectPool;
 
         private readonly IBaseEntityPool baseEntityPool;
 
-        public IEntityPool<IPlayer> PlayerPool { get;  }
+        public IEntityPool<IPlayer> PlayerPool { get; }
         IReadOnlyEntityPool<ISharedPlayer> ISharedCore.PlayerPool => PlayerPool;
 
         public IEntityPool<IVehicle> VehiclePool { get; }
@@ -140,7 +141,7 @@ namespace AltV.Net
             INativeResourcePool nativeResourcePool)
         {
             NativePointer = nativePointer;
-            this.baseBaseObjectPool = baseBaseObjectPool;
+            this.BaseBaseObjectPool = baseBaseObjectPool;
             this.baseEntityPool = baseEntityPool;
             this.PlayerPool = playerPool;
             this.VehiclePool = vehiclePool;
