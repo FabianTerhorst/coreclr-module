@@ -44,6 +44,7 @@ EXPORT_SHARED alt::MValueConst* Core_CreateMValueVector3(alt::ICore* core, posit
 EXPORT_SHARED alt::MValueConst* Core_CreateMValueVector2(alt::ICore* core, vector2_t value);
 EXPORT_SHARED alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value);
 EXPORT_SHARED alt::MValueConst* Core_CreateMValueByteArray(alt::ICore* core, uint64_t size, const void* data);
+EXPORT_SHARED alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* value);
 
 EXPORT_SHARED uint64_t Core_GetPlayerCount(alt::ICore* server);
 EXPORT_SHARED void Core_GetPlayers(alt::ICore* server, alt::IPlayer* players[], uint64_t size);
@@ -51,7 +52,10 @@ EXPORT_SHARED uint64_t Core_GetVehicleCount(alt::ICore* server);
 EXPORT_SHARED void Core_GetVehicles(alt::ICore* server, alt::IVehicle* vehicles[], uint64_t size);
 EXPORT_SHARED void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type);
 
-EXPORT_SERVER alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* value);
+EXPORT_SHARED uint8_t Core_IsDebug(alt::ICore* core);
+EXPORT_SHARED const char* Core_GetVersion(alt::ICore* core,int32_t &size);
+EXPORT_SHARED const char* Core_GetBranch(alt::ICore* core, int32_t &size);
+
 EXPORT_SERVER uint8_t Core_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb);
 EXPORT_SERVER uint8_t Core_FileExists(alt::ICore* server, const char* path);
 EXPORT_SERVER void Core_FileRead(alt::ICore* server, const char* path, const char*&text);
@@ -92,9 +96,6 @@ EXPORT_SERVER void Core_SetSyncedMetaData(alt::ICore* core, const char* key, alt
 EXPORT_SERVER uint8_t Core_HasSyncedMetaData(alt::ICore* core, const char* key);
 EXPORT_SERVER void Core_DeleteSyncedMetaData(alt::ICore* core, const char* key);
 EXPORT_SERVER uint64_t Core_HashPassword(alt::ICore* core, const char* password);
-EXPORT_SERVER uint8_t Core_IsDebug(alt::ICore* core);
-EXPORT_SERVER const char* Core_GetVersion(alt::ICore* core,int32_t &size);
-EXPORT_SERVER const char* Core_GetBranch(alt::ICore* core, int32_t &size);
 EXPORT_SERVER void Core_SetPassword(alt::ICore* core, const char* value);
 EXPORT_SERVER void Core_StopServer(alt::ICore* core);
 

@@ -144,6 +144,11 @@ alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value) {
     return new alt::MValueConst(mValue);
 }
 
+alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* value) {
+    alt::MValueConst mValue = core->CreateMValueFunction(value);
+    return new alt::MValueConst(mValue);
+}
+
 
 uint64_t Core_GetPlayerCount(alt::ICore* core) {
     return core->GetPlayers().GetSize();
@@ -185,6 +190,19 @@ void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type) {
             return dynamic_cast<alt::IVehicle*>(entity);
     }
     return nullptr;
+}
+
+
+uint8_t Core_IsDebug(alt::ICore* core) {
+    return core->IsDebug();
+}
+
+const char* Core_GetVersion(alt::ICore* core, int32_t &size) {
+    return AllocateString(core->GetVersion(), size);
+}
+
+const char* Core_GetBranch(alt::ICore* core, int32_t &size) {
+    return AllocateString(core->GetBranch(), size);
 }
 
 
@@ -438,25 +456,8 @@ void Core_DeleteSyncedMetaData(alt::ICore* core, const char* key) {
     core->DeleteSyncedMetaData(key);
 }
 
-alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* value) {
-    alt::MValueConst mValue = core->CreateMValueFunction(value);
-    return new alt::MValueConst(mValue);
-}
-
 uint64_t Core_HashPassword(alt::ICore* core, const char* password) {
     return core->HashServerPassword(password);
-}
-
-uint8_t Core_IsDebug(alt::ICore* core) {
-    return core->IsDebug();
-}
-
-const char* Core_GetVersion(alt::ICore* core, int32_t &size) {
-    return AllocateString(core->GetVersion(), size);
-}
-
-const char* Core_GetBranch(alt::ICore* core, int32_t &size) {
-    return AllocateString(core->GetBranch(), size);
 }
 
 void Core_SetPassword(alt::ICore* core, const char* value) {
