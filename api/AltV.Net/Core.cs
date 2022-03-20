@@ -128,9 +128,9 @@ namespace AltV.Net
             }
         }
 
-        public INativeResource Resource { get; }
+        public INativeResource Resource { get; private set; }
 
-        public Core(IntPtr nativePointer, ILibrary library, INativeResource resource, IBaseBaseObjectPool baseBaseObjectPool,
+        public Core(IntPtr nativePointer, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
@@ -152,6 +152,10 @@ namespace AltV.Net
             this.nativeResourcePool = nativeResourcePool;
             this.vehicleModelInfoCache = new();
             Library = library;
+        }
+
+        internal void InitResource(INativeResource resource)
+        {
             Resource = resource;
         }
 
@@ -764,7 +768,7 @@ namespace AltV.Net
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
                 var resourcePointer = Library.Server.Core_GetResource(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
-                return !nativeResourcePool.GetOrCreate(Library, NativePointer, resourcePointer, out var nativeResource)
+                return !nativeResourcePool.GetOrCreate(this, resourcePointer, out var nativeResource)
                     ? null
                     : nativeResource;
             }
@@ -772,7 +776,7 @@ namespace AltV.Net
 
         public INativeResource GetResource(IntPtr resourcePointer)
         {
-            return !nativeResourcePool.GetOrCreate(Library, NativePointer, resourcePointer, out var nativeResource)
+            return !nativeResourcePool.GetOrCreate(this, resourcePointer, out var nativeResource)
                 ? null
                 : nativeResource;
         }

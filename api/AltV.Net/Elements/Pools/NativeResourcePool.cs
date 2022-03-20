@@ -16,7 +16,7 @@ namespace AltV.Net.Elements.Pools
             this.resourceFactory = resourceFactory;
         }
 
-        public bool GetOrCreate(ILibrary library, IntPtr corePointer, IntPtr resourcePointer, out INativeResource resource)
+        public bool GetOrCreate(ICore core, IntPtr resourcePointer, out INativeResource resource)
         {
             if (resourcePointer == IntPtr.Zero)
             {
@@ -26,7 +26,7 @@ namespace AltV.Net.Elements.Pools
 
             if (resources.TryGetValue(resourcePointer, out resource)) return true;
 
-            resource = resourceFactory.Create(library, corePointer, resourcePointer);
+            resource = resourceFactory.Create(core, resourcePointer);
             resources[resourcePointer] = resource;
 
             return true;
