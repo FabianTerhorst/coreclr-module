@@ -18,6 +18,10 @@ namespace AltV.Net
 
         bool Remove(IntPtr entityPointer);
 
+        TEntity GetOrCreate(ICore core, IntPtr entityPointer, ushort entityId);
+        
+        TEntity GetOrCreate(ICore core, IntPtr entityPointer);
+
         KeyValuePair<IntPtr, TEntity>[] GetEntitiesArray();
 
         void ForEach(IBaseObjectCallback<TEntity> baseObjectCallback);

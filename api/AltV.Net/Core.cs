@@ -14,6 +14,8 @@ using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Exceptions;
 using AltV.Net.Native;
+using AltV.Net.Shared;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net
 {
@@ -25,9 +27,11 @@ namespace AltV.Net
 
         private readonly IBaseEntityPool baseEntityPool;
 
-        private readonly IEntityPool<IPlayer> playerPool;
+        public IEntityPool<IPlayer> PlayerPool { get;  }
+        IReadOnlyEntityPool<ISharedPlayer> ISharedCore.PlayerPool => PlayerPool;
 
-        private readonly IEntityPool<IVehicle> vehiclePool;
+        public IEntityPool<IVehicle> VehiclePool { get; }
+        IReadOnlyEntityPool<ISharedVehicle> ISharedCore.VehiclePool => VehiclePool;
 
         private readonly IBaseObjectPool<IBlip> blipPool;
 
@@ -138,8 +142,8 @@ namespace AltV.Net
             NativePointer = nativePointer;
             this.baseBaseObjectPool = baseBaseObjectPool;
             this.baseEntityPool = baseEntityPool;
-            this.playerPool = playerPool;
-            this.vehiclePool = vehiclePool;
+            this.PlayerPool = playerPool;
+            this.VehiclePool = vehiclePool;
             this.blipPool = blipPool;
             this.checkpointPool = checkpointPool;
             this.voiceChannelPool = voiceChannelPool;
@@ -572,7 +576,7 @@ namespace AltV.Net
                 ushort id = default;
                 var ptr = Library.Server.Core_CreateVehicle(NativePointer, model, pos, rotation, &id);
                 if (ptr == IntPtr.Zero) return null;
-                return vehiclePool.Create(this, ptr, id);
+                return VehiclePool.Create(this, ptr, id);
             }
         }
 
@@ -795,7 +799,7 @@ namespace AltV.Net
                 for (ulong i = 0; i < playerCount; i++)
                 {
                     var playerPointer = pointers[i];
-                    players[i] = playerPool.GetOrCreate(this, playerPointer);
+                    players[i] = PlayerPool.GetOrCreate(this, playerPointer);
                 }
 
                 return players;
@@ -814,7 +818,7 @@ namespace AltV.Net
                 for (ulong i = 0; i < vehicleCount; i++)
                 {
                     var vehiclePointer = pointers[i];
-                    vehicles[i] = vehiclePool.GetOrCreate(this, vehiclePointer);
+                    vehicles[i] = VehiclePool.GetOrCreate(this, vehiclePointer);
                 }
 
                 return vehicles;
@@ -832,9 +836,9 @@ namespace AltV.Net
                 switch (type)
                 {
                     case (byte) BaseObjectType.Player:
-                        return playerPool.Get(entityPointer);
+                        return PlayerPool.Get(entityPointer);
                     case (byte) BaseObjectType.Vehicle:
-                        return vehiclePool.Get(entityPointer);
+                        return VehiclePool.Get(entityPointer);
                     default:
                         return null;
                 }

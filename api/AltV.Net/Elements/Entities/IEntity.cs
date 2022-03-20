@@ -1,10 +1,11 @@
 using System;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Elements.Entities
 {
-    public interface IEntity : IWorldObject
+    public interface IEntity : ISharedEntity, IWorldObject
     {
         IntPtr EntityNativePointer { get; }
         
