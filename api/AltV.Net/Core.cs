@@ -8,24 +8,27 @@ using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using AltV.Net.CApi;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Events;
 using AltV.Net.Exceptions;
+using AltV.Net.FunctionParser;
 using AltV.Net.Native;
 using AltV.Net.Shared;
 using AltV.Net.Shared.Elements.Entities;
+using AltV.Net.Shared.Events;
 
 namespace AltV.Net
 {
-    public class Core : SharedCore, ICore
+    public partial class Core : SharedCore, ICore, IInternalCore
     {
-
         public override IBaseBaseObjectPool BaseBaseObjectPool { get;}
         IReadOnlyBaseBaseObjectPool ISharedCore.BaseBaseObjectPool => BaseBaseObjectPool;
 
-        private readonly IBaseEntityPool baseEntityPool;
+        public IBaseEntityPool BaseEntityPool { get; }
 
         public override IEntityPool<IPlayer> PlayerPool { get; }
         IReadOnlyEntityPool<ISharedPlayer> ISharedCore.PlayerPool => PlayerPool;
@@ -33,15 +36,15 @@ namespace AltV.Net
         public override IEntityPool<IVehicle> VehiclePool { get; }
         IReadOnlyEntityPool<ISharedVehicle> ISharedCore.VehiclePool => VehiclePool;
 
-        private readonly IBaseObjectPool<IBlip> blipPool;
+        public IBaseObjectPool<IBlip> BlipPool { get; }
 
-        private readonly IBaseObjectPool<ICheckpoint> checkpointPool;
+        public IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
 
-        private readonly IBaseObjectPool<IVoiceChannel> voiceChannelPool;
+        public IBaseObjectPool<IVoiceChannel> VoiceChannelPool { get; }
 
-        private readonly IBaseObjectPool<IColShape> colShapePool;
+        public IBaseObjectPool<IColShape> ColShapePool { get; }
 
-        private readonly INativeResourcePool nativeResourcePool;
+        public INativeResourcePool NativeResourcePool { get; }
 
         private readonly ConcurrentDictionary<uint, VehicleModelInfo> vehicleModelInfoCache;
 
@@ -74,9 +77,11 @@ namespace AltV.Net
             }
         }
 
-        public INativeResource Resource { get; private set; }
+        public INativeResource Resource { get; }
 
-        public Core(IntPtr nativePointer, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
+        private readonly Thread MainThread;
+
+        public Core(IntPtr nativePointer, IntPtr resourcePointer, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
@@ -87,20 +92,22 @@ namespace AltV.Net
             INativeResourcePool nativeResourcePool) : base(nativePointer, library)
         {
             this.BaseBaseObjectPool = baseBaseObjectPool;
-            this.baseEntityPool = baseEntityPool;
+            this.BaseEntityPool = baseEntityPool;
             this.PlayerPool = playerPool;
             this.VehiclePool = vehiclePool;
-            this.blipPool = blipPool;
-            this.checkpointPool = checkpointPool;
-            this.voiceChannelPool = voiceChannelPool;
-            this.colShapePool = colShapePool;
-            this.nativeResourcePool = nativeResourcePool;
+            this.BlipPool = blipPool;
+            this.CheckpointPool = checkpointPool;
+            this.VoiceChannelPool = voiceChannelPool;
+            this.ColShapePool = colShapePool;
+            this.NativeResourcePool = nativeResourcePool;
             this.vehicleModelInfoCache = new();
+            nativeResourcePool.GetOrCreate(this, resourcePointer, out var resource);
+            Resource = resource;
+            MainThread = Thread.CurrentThread;
         }
 
-        internal void InitResource(INativeResource resource)
+        void IInternalCore.InitResource(INativeResource resource)
         {
-            Resource = resource;
         }
 
         public ulong HashPassword(string password)
@@ -440,7 +447,7 @@ namespace AltV.Net
                 CheckIfCallIsValid();
                 var ptr = Library.Server.Core_CreateCheckpoint(NativePointer, type, pos, radius, height, color);
                 if (ptr == IntPtr.Zero) return null;
-                return checkpointPool.Create(this, ptr);
+                return CheckpointPool.Create(this, ptr);
             }
         }
 
@@ -452,7 +459,7 @@ namespace AltV.Net
                 var ptr = Library.Server.Core_CreateBlip(NativePointer, player?.PlayerNativePointer ?? IntPtr.Zero,
                     type, pos);
                 if (ptr == IntPtr.Zero) return null;
-                return blipPool.Create(this, ptr);
+                return BlipPool.Create(this, ptr);
             }
         }
 
@@ -466,7 +473,7 @@ namespace AltV.Net
                     player?.PlayerNativePointer ?? IntPtr.Zero,
                     type, entityAttach.EntityNativePointer);
                 if (ptr == IntPtr.Zero) return null;
-                return blipPool.Create(this, ptr);
+                return BlipPool.Create(this, ptr);
             }
         }
 
@@ -478,7 +485,7 @@ namespace AltV.Net
                 var ptr = Library.Server.Core_CreateVoiceChannel(NativePointer,
                     spatial ? (byte) 1 : (byte) 0, maxDistance);
                 if (ptr == IntPtr.Zero) return null;
-                return voiceChannelPool.Create(this, ptr);
+                return VoiceChannelPool.Create(this, ptr);
             }
         }
 
@@ -489,7 +496,7 @@ namespace AltV.Net
                 CheckIfCallIsValid();
                 var ptr = Library.Server.Core_CreateColShapeCylinder(NativePointer, pos, radius, height);
                 if (ptr == IntPtr.Zero) return null;
-                return colShapePool.Create(this, ptr);
+                return ColShapePool.Create(this, ptr);
             }
         }
 
@@ -500,7 +507,7 @@ namespace AltV.Net
                 CheckIfCallIsValid();
                 var ptr = Library.Server.Core_CreateColShapeSphere(NativePointer, pos, radius);
                 if (ptr == IntPtr.Zero) return null;
-                return colShapePool.Create(this, ptr);
+                return ColShapePool.Create(this, ptr);
             }
         }
 
@@ -511,7 +518,7 @@ namespace AltV.Net
                 CheckIfCallIsValid();
                 var ptr = Library.Server.Core_CreateColShapeCircle(NativePointer, pos, radius);
                 if (ptr == IntPtr.Zero) return null;
-                return colShapePool.Create(this, ptr);
+                return ColShapePool.Create(this, ptr);
             }
         }
 
@@ -522,7 +529,7 @@ namespace AltV.Net
                 CheckIfCallIsValid();
                 var ptr = Library.Server.Core_CreateColShapeCube(NativePointer, pos, pos2);
                 if (ptr == IntPtr.Zero) return null;
-                return colShapePool.Create(this, ptr);
+                return ColShapePool.Create(this, ptr);
             }
         }
 
@@ -533,7 +540,7 @@ namespace AltV.Net
                 CheckIfCallIsValid();
                 var ptr = Library.Server.Core_CreateColShapeRectangle(NativePointer, x1, y1, x2, y2, z);
                 if (ptr == IntPtr.Zero) return null;
-                return colShapePool.Create(this, ptr);
+                return ColShapePool.Create(this, ptr);
             }
         }
 
@@ -545,7 +552,7 @@ namespace AltV.Net
                 int size = points.Count();
                 var ptr = Library.Server.Core_CreateColShapePolygon(NativePointer, minZ, maxZ, points, size);
                 if (ptr == IntPtr.Zero) return null;
-                return colShapePool.Create(this, ptr);
+                return ColShapePool.Create(this, ptr);
             }
         }
 
@@ -616,7 +623,7 @@ namespace AltV.Net
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
                 var resourcePointer = Library.Server.Core_GetResource(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
-                return !nativeResourcePool.GetOrCreate(this, resourcePointer, out var nativeResource)
+                return !NativeResourcePool.GetOrCreate(this, resourcePointer, out var nativeResource)
                     ? null
                     : nativeResource;
             }
@@ -624,7 +631,7 @@ namespace AltV.Net
 
         public INativeResource GetResource(IntPtr resourcePointer)
         {
-            return !nativeResourcePool.GetOrCreate(this, resourcePointer, out var nativeResource)
+            return !NativeResourcePool.GetOrCreate(this, resourcePointer, out var nativeResource)
                 ? null
                 : nativeResource;
         }
@@ -1197,10 +1204,15 @@ namespace AltV.Net
         }
         #endregion
 
+        public virtual bool IsMainThread()
+        {
+            return Thread.CurrentThread == MainThread;
+        }
+
         [Conditional("DEBUG")]
         public void CheckIfCallIsValid([CallerMemberName] string callerName = "")
         {
-            if (Alt.Module.IsMainThread()) return;
+            if (IsMainThread()) return;
             throw new IllegalThreadException(this, callerName);
         }
 
@@ -1226,6 +1238,19 @@ namespace AltV.Net
                 Marshal.FreeHGlobal(valuePtr);
                 return result;
             }
+        }
+        
+        public void OnScriptsLoaded(IScript[] scripts)
+        {
+            foreach (var script in scripts)
+            {
+                Alt.RegisterEvents(script);
+                OnScriptLoaded(script);
+            }
+        }
+
+        public virtual void OnScriptLoaded(IScript script)
+        {
         }
     }
 }

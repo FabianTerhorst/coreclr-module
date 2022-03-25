@@ -6,6 +6,7 @@ using System.Runtime.Loader;
 using System.Threading;
 using System.Threading.Tasks;
 using AltV.Net.Async.Events;
+using AltV.Net.CApi;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
@@ -15,7 +16,7 @@ using AltV.Net.Types;
 
 namespace AltV.Net.Async
 {
-    public class AsyncModule : Module
+    public class AsyncCore : Core
     {
         private readonly Dictionary<string, HashSet<Function>> asyncEventBusClient =
             new();
@@ -111,17 +112,15 @@ namespace AltV.Net.Async
         internal readonly AsyncEventHandler<ConnectionQueueRemoveAsyncDelegate> ConnectionQueueRemoveAsyncEventHandler =
             new();
 
-        public AsyncModule(ICore core, AssemblyLoadContext assemblyLoadContext, INativeResource moduleResource,
-            IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
+        public AsyncCore(IntPtr nativePointer, IntPtr resourcePointer, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
+            IBaseEntityPool baseEntityPool,
+            IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IVoiceChannel> voiceChannelPool,
             IBaseObjectPool<IColShape> colShapePool,
-            INativeResourcePool nativeResourcePool) : base(core, assemblyLoadContext, moduleResource,
-            baseBaseObjectPool,
-            baseEntityPool, playerPool, vehiclePool, blipPool,
-            checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool)
+            INativeResourcePool nativeResourcePool) : base(nativePointer, resourcePointer, library, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool)
         {
             AltAsync.Setup(this);
         }
@@ -414,7 +413,7 @@ namespace AltV.Net.Async
         {
             base.OnClientEventEvent(player, name, args, mValues, objects);
             var length = args.Length;
-
+        
             if (asyncEventBusClient.Count != 0 && asyncEventBusClient.TryGetValue(name, out var eventHandlersClient))
             {
                 if (mValues == null)
@@ -425,7 +424,7 @@ namespace AltV.Net.Async
                         mValues[i] = new MValueConst(args[i]);
                     }
                 }
-
+        
                 if (objects == null)
                 {
                     objects = new object[length];
@@ -434,10 +433,10 @@ namespace AltV.Net.Async
                         objects[i] = mValues[i].ToObject();
                     }
                 }
-
+        
                 var outerPlayerRef = new PlayerRef(player);
                 CheckRef(in outerPlayerRef, player);
-
+        
                 Task.Factory.StartNew(async obj =>
                     {
                         var (taskPlayer, taskObjects, taskEventHandlers, taskName, playerRef) =
@@ -466,7 +465,7 @@ namespace AltV.Net.Async
                                 Alt.LogFast($"Execution of {taskName} threw an error: {e}");
                             }
                         }
-
+        
                         playerRef.DebugCountDown();
                         playerRef.Dispose();
                     },
@@ -474,7 +473,7 @@ namespace AltV.Net.Async
                         eventHandlersClient,
                         name, outerPlayerRef));
             }
-
+        
             if (PlayerClientEventAsyncEventHandler.HasEvents())
             {
                 if (mValues == null)
@@ -485,7 +484,7 @@ namespace AltV.Net.Async
                         mValues[i] = new MValueConst(args[i]);
                     }
                 }
-
+        
                 if (objects == null)
                 {
                     objects = new object[length];
@@ -494,10 +493,10 @@ namespace AltV.Net.Async
                         objects[i] = mValues[i].ToObject();
                     }
                 }
-
+        
                 var outerPlayerRef = new PlayerRef(player);
                 CheckRef(in outerPlayerRef, player);
-
+        
                 Task.Factory.StartNew(obj =>
                     {
                         var (taskPlayer, taskObjects, taskEventHandlers, taskName, playerRef) =
@@ -510,7 +509,7 @@ namespace AltV.Net.Async
                             AsyncEventHandler<PlayerClientEventAsyncDelegate>.ExecuteEventAsyncWithoutTask(eventHandler,
                                 @delegate => @delegate(taskPlayer, taskName, taskObjects));
                         }
-
+        
                         playerRef.DebugCountDown();
                         playerRef.Dispose();
                     },
@@ -523,7 +522,7 @@ namespace AltV.Net.Async
         public override void OnServerEventEvent(string name, IntPtr[] args, MValueConst[] mValues, object[] objects)
         {
             base.OnServerEventEvent(name, args, mValues, objects);
-
+        
             var length = args.Length;
             if (asyncEventBusServer.Count != 0 && asyncEventBusServer.TryGetValue(name, out var eventHandlersServer))
             {
@@ -535,7 +534,7 @@ namespace AltV.Net.Async
                         mValues[i] = new MValueConst(args[i]);
                     }
                 }
-
+        
                 if (objects == null)
                 {
                     objects = new object[length];
@@ -544,7 +543,7 @@ namespace AltV.Net.Async
                         objects[i] = mValues[i].ToObject();
                     }
                 }
-
+        
                 Task.Factory.StartNew(async obj =>
                 {
                     var (taskObjects, taskEventHandlers, taskName) =
