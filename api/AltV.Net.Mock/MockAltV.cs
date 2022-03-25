@@ -37,16 +37,13 @@ namespace AltV.Net.Mock
                 new MockBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool);
             core = new MockCore(IntPtr.Zero, baseObjectPool, entityPool, playerPool, vehiclePool, blipPool,
                 checkpointPool, voiceChannelPool, null);
-            var cSharpNativeResource = new NativeResource(null, IntPtr.Zero);
-            var module = resource.GetModule(core, AssemblyLoadContext.Default, cSharpNativeResource, baseObjectPool, entityPool, playerPool,
-                vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, null);
             resource.OnStart();
         }
 
         public IPlayer ConnectPlayer(string playerName, string reason, Action<IPlayer> intercept = null)
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
-            var player = Alt.Module.PlayerPool.Create(core, ptr , entityId);
+            var player = Alt.Core.PlayerPool.Create(core, ptr , entityId);
             //player.Name = playerName;
             intercept?.Invoke(player);
             Alt.CoreImpl.OnPlayerConnect(ptr, player.Id, reason);

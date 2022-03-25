@@ -10,7 +10,7 @@ namespace AltV.Net.Mock
             player.CancelEvents();
             Alt.CoreImpl.OnPlayerDisconnect(player.NativePointer, reason);
             Alt.CoreImpl.OnPlayerRemove(player.NativePointer);
-            Alt.Module.OnRemovePlayer(player.NativePointer);
+            Alt.CoreImpl.OnRemovePlayer(player.NativePointer);
         }
 
         public static void Damage(this IPlayer player, IEntity attacker, uint weapon, byte healthDamage, byte armourDamage)

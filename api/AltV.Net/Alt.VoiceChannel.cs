@@ -5,9 +5,9 @@ namespace AltV.Net
     public partial class Alt
     {
         public static IVoiceChannel CreateVoiceChannel(bool spatial, float maxDistance) =>
-            Module.Core.CreateVoiceChannel(spatial, maxDistance);
+            Core.CreateVoiceChannel(spatial, maxDistance);
 
         public static void RemoveVoiceChannel(IVoiceChannel channel) =>
-            Module.Core.RemoveVoiceChannel(channel);
+            Core.RemoveVoiceChannel(channel);
     }
 }

@@ -50,7 +50,7 @@ namespace AltV.Net.Elements.Entities
                     CheckIfEntityExists();
                     var entityPointer = Core.Library.Server.Vehicle_GetDriver(VehicleNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Module.PlayerPool.Get(entityPointer);
+                    return Core.PlayerPool.Get(entityPointer);
                 }
             }
         }
@@ -1288,7 +1288,7 @@ namespace AltV.Net.Elements.Entities
                     CheckIfEntityExists();
                     var entityPointer = Core.Library.Server.Vehicle_GetAttached(VehicleNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Module.VehiclePool.Get(entityPointer);
+                    return Alt.Core.VehiclePool.Get(entityPointer);
                 }
             }
         }
@@ -1302,7 +1302,7 @@ namespace AltV.Net.Elements.Entities
                     CheckIfEntityExists();
                     var entityPointer = Core.Library.Server.Vehicle_GetAttachedTo(VehicleNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Module.VehiclePool.Get(entityPointer);
+                    return Alt.Core.VehiclePool.Get(entityPointer);
                 }
             }
         }
@@ -1310,7 +1310,7 @@ namespace AltV.Net.Elements.Entities
         public Vehicle(ICore core, uint model, Position position, Rotation rotation) : this(
             core, core.CreateVehicleEntity(out var id, model, position, rotation), id)
         {
-            Alt.Module.VehiclePool.Add(this);
+            Alt.Core.VehiclePool.Add(this);
         }
 
         public Vehicle(ICore core, IntPtr nativePointer, ushort id) : base(core, GetEntityPointer(core, nativePointer), BaseObjectType.Vehicle, id)
@@ -1530,7 +1530,7 @@ namespace AltV.Net.Elements.Entities
                     CheckIfEntityExists();
                     var entityPointer = Core.Library.Server.Vehicle_GetTrainEngineId(VehicleNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Module.VehiclePool.Get(entityPointer);
+                    return Alt.Core.VehiclePool.Get(entityPointer);
                 }
             }
             set
@@ -1752,7 +1752,7 @@ namespace AltV.Net.Elements.Entities
                     CheckIfEntityExists();
                     var entityPointer = Core.Library.Server.Vehicle_GetTrainLinkedToBackwardId(VehicleNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Module.VehiclePool.Get(entityPointer);
+                    return Alt.Core.VehiclePool.Get(entityPointer);
                 }
             }
             set
@@ -1774,7 +1774,7 @@ namespace AltV.Net.Elements.Entities
                     CheckIfEntityExists();
                     var entityPointer = Core.Library.Server.Vehicle_GetTrainLinkedToForwardId(VehicleNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Module.VehiclePool.Get(entityPointer);
+                    return Alt.Core.VehiclePool.Get(entityPointer);
                 }
             }
             set

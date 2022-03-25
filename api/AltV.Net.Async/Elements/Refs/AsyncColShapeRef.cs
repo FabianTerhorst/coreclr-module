@@ -28,13 +28,13 @@ namespace AltV.Net.Async.Elements.Refs
         [Conditional("DEBUG")]
         public void DebugCountUp()
         {
-            Alt.Module.CountUpRefForCurrentThread(colShape);
+            Alt.CoreImpl.CountUpRefForCurrentThread(colShape);
         }
 
         [Conditional("DEBUG")]
         public void DebugCountDown()
         {
-            Alt.Module.CountDownRefForCurrentThread(colShape);
+            Alt.CoreImpl.CountDownRefForCurrentThread(colShape);
         }
 
         public void Dispose()

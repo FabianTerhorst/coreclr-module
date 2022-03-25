@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Loader;
 using System.Text;
 using System.Threading;
 using AltV.Net.CApi;
@@ -20,10 +23,11 @@ using AltV.Net.Native;
 using AltV.Net.Shared;
 using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Shared.Events;
+using AltV.Net.Types;
 
 namespace AltV.Net
 {
-    public partial class Core : SharedCore, ICore, IInternalCore
+    public partial class Core : SharedCore, ICore, IInternalCore, IDisposable
     {
         public override IBaseBaseObjectPool BaseBaseObjectPool { get;}
         IReadOnlyBaseBaseObjectPool ISharedCore.BaseBaseObjectPool => BaseBaseObjectPool;
@@ -81,7 +85,7 @@ namespace AltV.Net
 
         private readonly Thread MainThread;
 
-        public Core(IntPtr nativePointer, IntPtr resourcePointer, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
+        public Core(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
@@ -91,6 +95,7 @@ namespace AltV.Net
             IBaseObjectPool<IColShape> colShapePool,
             INativeResourcePool nativeResourcePool) : base(nativePointer, library)
         {
+            this.assemblyLoadContext = new WeakReference<AssemblyLoadContext>(assemblyLoadContext);
             this.BaseBaseObjectPool = baseBaseObjectPool;
             this.BaseEntityPool = baseEntityPool;
             this.PlayerPool = playerPool;
@@ -1251,6 +1256,142 @@ namespace AltV.Net
 
         public virtual void OnScriptLoaded(IScript script)
         {
+        }
+        
+        
+        private readonly IDictionary<int, IDictionary<IRefCountable, ulong>> threadRefCount =
+            new Dictionary<int, IDictionary<IRefCountable, ulong>>();
+
+        [Conditional("DEBUG")]
+        public void CountUpRefForCurrentThread(IRefCountable baseObject)
+        {
+            if (baseObject == null) return;
+            var currThread = Thread.CurrentThread.ManagedThreadId;
+            lock (threadRefCount)
+            {
+                if (!threadRefCount.TryGetValue(currThread, out var baseObjectRefCount))
+                {
+                    baseObjectRefCount = new Dictionary<IRefCountable, ulong>();
+                    threadRefCount[currThread] = baseObjectRefCount;
+                }
+
+                if (!baseObjectRefCount.TryGetValue(baseObject, out var count))
+                {
+                    count = 0;
+                }
+
+                baseObjectRefCount[baseObject] = count + 1;
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public void CountDownRefForCurrentThread(IRefCountable baseObject)
+        {
+            if (baseObject == null) return;
+            var currThread = Thread.CurrentThread.ManagedThreadId;
+            lock (threadRefCount)
+            {
+                if (!threadRefCount.TryGetValue(currThread, out var baseObjectRefCount))
+                {
+                    return;
+                }
+
+                if (!baseObjectRefCount.TryGetValue(baseObject, out var count))
+                {
+                    return;
+                }
+
+                if (count == 1)
+                {
+                    baseObjectRefCount.Remove(baseObject);
+                    return;
+                }
+
+                baseObjectRefCount[baseObject] = count - 1;
+            }
+        }
+        
+        public bool HasRefForCurrentThread(IRefCountable baseObject)
+        {
+            var currThread = Thread.CurrentThread.ManagedThreadId;
+            lock (threadRefCount)
+            {
+                if (!threadRefCount.TryGetValue(currThread, out var baseObjectRefCount))
+                {
+                    return false;
+                }
+
+                if (!baseObjectRefCount.TryGetValue(baseObject, out var count))
+                {
+                    return false;
+                }
+
+                return count > 0;
+            }
+        }
+        
+        internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
+
+        internal readonly LinkedList<GCHandle> functionExportHandles = new LinkedList<GCHandle>();
+
+        public void SetExport(string key, Function function)
+        {
+            unsafe
+            {
+                if (function == null) return;
+                functionExports[key] = function;
+                MValueFunctionCallback callDelegate = function.Call;
+                functionExportHandles.AddFirst(GCHandle.Alloc(callDelegate));
+                this.CreateMValueFunction(out var mValue,
+                    this.Library.Shared.Invoker_Create(Resource.ResourceImplPtr, callDelegate));
+                Resource.SetExport(key, in mValue);
+                mValue.Dispose();
+            }
+        }
+        
+        private readonly WeakReference<AssemblyLoadContext> assemblyLoadContext;
+        
+        internal IEnumerable<Assembly> Assemblies => !assemblyLoadContext.TryGetTarget(out var target)
+            ? new List<Assembly>()
+            : target.Assemblies;
+
+        public Assembly LoadAssemblyFromName(AssemblyName assemblyName)
+        {
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return null;
+            return target.LoadFromAssemblyName(assemblyName);
+        }
+
+        public Assembly LoadAssemblyFromStream(Stream stream)
+        {
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return null;
+            return target.LoadFromStream(stream);
+        }
+
+        public Assembly LoadAssemblyFromStream(Stream stream, Stream assemblySymbols)
+        {
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return null;
+            return target.LoadFromStream(stream, assemblySymbols);
+        }
+
+        public Assembly LoadAssemblyFromPath(string path)
+        {
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return null;
+            return target.LoadFromAssemblyPath(path);
+        }
+
+        public Assembly LoadAssemblyFromNativeImagePath(string nativeImagePath, string assemblyPath)
+        {
+            if (!assemblyLoadContext.TryGetTarget(out var target)) return null;
+            return target.LoadFromNativeImagePath(nativeImagePath, assemblyPath);
+        }
+
+        public WeakReference<AssemblyLoadContext> GetAssemblyLoadContext()
+        {
+            return assemblyLoadContext;
+        }
+        public override void Dispose() {
+            base.Dispose();
+            assemblyLoadContext.SetTarget(null);
         }
     }
 }

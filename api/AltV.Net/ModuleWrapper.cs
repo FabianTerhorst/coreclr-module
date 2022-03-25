@@ -8,7 +8,6 @@ using AltV.Net.CApi;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Factories;
-using AltV.Net.Native;
 using AltV.Net.ResourceLoaders;
 
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
@@ -19,8 +18,6 @@ namespace AltV.Net
     internal static class ModuleWrapper
     {
         private static Core _core;
-        
-        private static Module _module;
 
         private static IResource _resource;
 
@@ -96,14 +93,10 @@ namespace AltV.Net
                 _resource.GetBaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool,
                     colShapePool);
 
-            var server = _resource.GetCore(serverPointer, resourcePointer, library, baseObjectPool, entityPool,
+            var server = _resource.GetCore(serverPointer, resourcePointer, assemblyLoadContext, library, baseObjectPool, entityPool,
                 playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
             _core = server;
             Alt.CoreImpl = server;
-            
-            _module = _resource.GetModule(server, assemblyLoadContext, server.Resource, baseObjectPool, entityPool,
-                playerPool, vehiclePool,
-                blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
 
             foreach (var unused in server.GetPlayers())
             {
@@ -127,7 +120,7 @@ namespace AltV.Net
 
             _core.OnScriptsLoaded(_scripts);
             _modules = AssemblyLoader.FindAllTypes<IModule>(assemblyLoadContext.Assemblies);
-            _module.OnModulesLoaded(_modules);
+            _core.OnModulesLoaded(_modules);
             foreach (var module in _modules)
             {
                 module.OnScriptsStarted(_scripts);
@@ -151,22 +144,21 @@ namespace AltV.Net
                 module.OnStop();
             }
 
-            _module.BlipPool.Dispose();
-            _module.CheckpointPool.Dispose();
-            _module.PlayerPool.Dispose();
-            _module.VehiclePool.Dispose();
-            _module.ColShapePool.Dispose();
-            _module.VoiceChannelPool.Dispose();
+            _core.BlipPool.Dispose();
+            _core.CheckpointPool.Dispose();
+            _core.PlayerPool.Dispose();
+            _core.VehiclePool.Dispose();
+            _core.ColShapePool.Dispose();
+            _core.VoiceChannelPool.Dispose();
 
             Alt.Core.Resource.CSharpResourceImpl.Dispose();
 
             AppDomain.CurrentDomain.UnhandledException -= OnUnhandledException;
 
-            _module.Dispose();
+            _core.Dispose();
 
             _modules = new IModule[0];
             _scripts = new IScript[0];
-            _module = null;
             _resource = null;
         }
 
@@ -283,62 +275,62 @@ namespace AltV.Net
 
         public static void OnCreatePlayer(IntPtr playerPointer, ushort playerId)
         {
-            _module.OnCreatePlayer(playerPointer, playerId);
+            _core.OnCreatePlayer(playerPointer, playerId);
         }
 
         public static void OnRemovePlayer(IntPtr playerPointer)
         {
-            _module.OnRemovePlayer(playerPointer);
+            _core.OnRemovePlayer(playerPointer);
         }
 
         public static void OnCreateVehicle(IntPtr vehiclePointer, ushort vehicleId)
         {
-            _module.OnCreateVehicle(vehiclePointer, vehicleId);
+            _core.OnCreateVehicle(vehiclePointer, vehicleId);
         }
 
         public static void OnRemoveVehicle(IntPtr vehiclePointer)
         {
-            _module.OnRemoveVehicle(vehiclePointer);
+            _core.OnRemoveVehicle(vehiclePointer);
         }
 
         public static void OnCreateBlip(IntPtr blipPointer)
         {
-            _module.OnCreateBlip(blipPointer);
+            _core.OnCreateBlip(blipPointer);
         }
 
         public static void OnCreateVoiceChannel(IntPtr channelPointer)
         {
-            _module.OnCreateVoiceChannel(channelPointer);
+            _core.OnCreateVoiceChannel(channelPointer);
         }
 
         public static void OnCreateColShape(IntPtr colShapePointer)
         {
-            _module.OnCreateColShape(colShapePointer);
+            _core.OnCreateColShape(colShapePointer);
         }
 
         public static void OnRemoveBlip(IntPtr blipPointer)
         {
-            _module.OnRemoveBlip(blipPointer);
+            _core.OnRemoveBlip(blipPointer);
         }
 
         public static void OnCreateCheckpoint(IntPtr checkpointPointer)
         {
-            _module.OnCreateCheckpoint(checkpointPointer);
+            _core.OnCreateCheckpoint(checkpointPointer);
         }
 
         public static void OnRemoveCheckpoint(IntPtr checkpointPointer)
         {
-            _module.OnRemoveCheckpoint(checkpointPointer);
+            _core.OnRemoveCheckpoint(checkpointPointer);
         }
 
         public static void OnRemoveVoiceChannel(IntPtr channelPointer)
         {
-            _module.OnRemoveVoiceChannel(channelPointer);
+            _core.OnRemoveVoiceChannel(channelPointer);
         }
 
         public static void OnRemoveColShape(IntPtr colShapePointer)
         {
-            _module.OnRemoveColShape(colShapePointer);
+            _core.OnRemoveColShape(colShapePointer);
         }
 
         public static void OnPlayerRemove(IntPtr playerPointer)
