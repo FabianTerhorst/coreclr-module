@@ -6,7 +6,7 @@ using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Shared
 {
-    public abstract class SharedCore : ISharedCore
+    public abstract class SharedCore : ISharedCore, IDisposable
     {
         public IntPtr NativePointer { get; }
 
@@ -190,6 +190,10 @@ namespace AltV.Net.Shared
                 Library.Shared.FreeString(str);
                 return stringResult;
             }
+        }
+        public virtual void Dispose()
+        {
+            
         }
     }
 }

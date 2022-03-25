@@ -1389,14 +1389,8 @@ namespace AltV.Net
         {
             return assemblyLoadContext;
         }
-        public void Dispose() {
-            functionExports.Clear();
-            foreach (var handle in functionExportHandles)
-            {
-                handle.Free();
-            }
-
-            functionExportHandles.Clear();
+        public override void Dispose() {
+            base.Dispose();
             assemblyLoadContext.SetTarget(null);
         }
     }
