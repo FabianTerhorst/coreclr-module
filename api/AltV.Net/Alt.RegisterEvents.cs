@@ -489,11 +489,11 @@ namespace AltV.Net
                             break;
                         case ServerEventAttribute @event:
                             var serverEventName = @event.Name ?? eventMethod.Name;
-                            Core.OnServer(serverEventName, Function.Create(eventMethodDelegate));
+                            CoreImpl.OnServer(serverEventName, Function.Create(eventMethodDelegate));
                             break;
                         case ClientEventAttribute @event:
                             var clientEventName = @event.Name ?? eventMethod.Name;
-                            Core.OnClient(clientEventName, Function.Create(eventMethodDelegate));
+                            CoreImpl.OnClient(clientEventName, Function.Create(eventMethodDelegate));
                             break;
                     }
                 });

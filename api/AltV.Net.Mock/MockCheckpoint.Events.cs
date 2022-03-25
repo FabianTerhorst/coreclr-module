@@ -6,12 +6,12 @@ namespace AltV.Net.Mock
     {
         public static void EntityEnter(this ICheckpoint checkpoint, IEntity entity)
         {
-            Alt.Core.OnCheckpoint(checkpoint.NativePointer, entity.NativePointer, entity.Type, true);
+            Alt.CoreImpl.OnCheckpoint(checkpoint.NativePointer, entity.NativePointer, entity.Type, true);
         }
 
         public static void EntityExit(this ICheckpoint checkpoint, IEntity entity)
         {
-            Alt.Core.OnCheckpoint(checkpoint.NativePointer, entity.NativePointer, entity.Type, false);
+            Alt.CoreImpl.OnCheckpoint(checkpoint.NativePointer, entity.NativePointer, entity.Type, false);
         }
     }
 }

@@ -358,7 +358,7 @@ namespace AltV.Net.Mock
 
         public void RemoveVehicle(IVehicle vehicle)
         {
-            Alt.Core.OnVehicleRemove(vehicle.NativePointer);
+            Alt.CoreImpl.OnVehicleRemove(vehicle.NativePointer);
             Alt.Module.OnRemoveVehicle(vehicle.NativePointer);
         }
 

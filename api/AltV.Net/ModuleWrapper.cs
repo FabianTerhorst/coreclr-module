@@ -99,7 +99,7 @@ namespace AltV.Net
             var server = _resource.GetCore(serverPointer, resourcePointer, library, baseObjectPool, entityPool,
                 playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
             _core = server;
-            Alt.Core = server;
+            Alt.CoreImpl = server;
             
             _module = _resource.GetModule(server, assemblyLoadContext, server.Resource, baseObjectPool, entityPool,
                 playerPool, vehiclePool,

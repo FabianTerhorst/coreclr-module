@@ -8,8 +8,8 @@ namespace AltV.Net.Mock
         public static void Disconnect(this IPlayer player, string reason)
         {
             player.CancelEvents();
-            Alt.Core.OnPlayerDisconnect(player.NativePointer, reason);
-            Alt.Core.OnPlayerRemove(player.NativePointer);
+            Alt.CoreImpl.OnPlayerDisconnect(player.NativePointer, reason);
+            Alt.CoreImpl.OnPlayerRemove(player.NativePointer);
             Alt.Module.OnRemovePlayer(player.NativePointer);
         }
 
@@ -18,7 +18,7 @@ namespace AltV.Net.Mock
             player.Health -= healthDamage;
             player.Armor -= armourDamage;
 
-            Alt.Core.OnPlayerDamage(player.NativePointer, attacker?.NativePointer ?? IntPtr.Zero, attacker?.Type ?? BaseObjectType.Undefined, attacker?.Id ?? 0, weapon, healthDamage, armourDamage);
+            Alt.CoreImpl.OnPlayerDamage(player.NativePointer, attacker?.NativePointer ?? IntPtr.Zero, attacker?.Type ?? BaseObjectType.Undefined, attacker?.Id ?? 0, weapon, healthDamage, armourDamage);
         }
 
         public static void Death(this IPlayer player, IEntity killer, uint weapon)
@@ -32,7 +32,7 @@ namespace AltV.Net.Mock
                 //mockPlayer.IsDead = true;
             }
 
-            Alt.Core.OnPlayerDeath(player.NativePointer, killer?.NativePointer ?? IntPtr.Zero, killer?.Type ?? BaseObjectType.Undefined, weapon);
+            Alt.CoreImpl.OnPlayerDeath(player.NativePointer, killer?.NativePointer ?? IntPtr.Zero, killer?.Type ?? BaseObjectType.Undefined, weapon);
         }
 
         public static void EnterVehicle(this IPlayer player, IVehicle vehicle, byte seat)
@@ -44,7 +44,7 @@ namespace AltV.Net.Mock
                 //mockPlayer.Seat = seat;
             }
 
-            Alt.Core.OnPlayerEnterVehicle(vehicle.NativePointer, player.NativePointer, seat);
+            Alt.CoreImpl.OnPlayerEnterVehicle(vehicle.NativePointer, player.NativePointer, seat);
         }
 
         public static void LeaveVehicle(this IPlayer player, IVehicle vehicle, byte seat)
@@ -60,7 +60,7 @@ namespace AltV.Net.Mock
                 //mockPlayer.Seat = 0;
             }
 
-            Alt.Core.OnPlayerLeaveVehicle(vehicle.NativePointer, player.NativePointer, seat);
+            Alt.CoreImpl.OnPlayerLeaveVehicle(vehicle.NativePointer, player.NativePointer, seat);
         }
 
         public static void ChangeSeat(this IPlayer player, IVehicle vehicle, byte seat)
@@ -75,7 +75,7 @@ namespace AltV.Net.Mock
                 //mockPlayer.Seat = seat;
             }
 
-            Alt.Core.OnPlayerChangeVehicleSeat(vehicle.NativePointer, player.NativePointer, oldSeat, seat);
+            Alt.CoreImpl.OnPlayerChangeVehicleSeat(vehicle.NativePointer, player.NativePointer, oldSeat, seat);
         }
     }
 }
