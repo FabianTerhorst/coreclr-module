@@ -8,7 +8,6 @@ using AltV.Net.CApi;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Factories;
-using AltV.Net.Native;
 using AltV.Net.ResourceLoaders;
 
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
@@ -19,8 +18,6 @@ namespace AltV.Net
     internal static class ModuleWrapper
     {
         private static Core _core;
-        
-        private static Module _module;
 
         private static IResource _resource;
 
@@ -162,7 +159,6 @@ namespace AltV.Net
 
             _modules = new IModule[0];
             _scripts = new IScript[0];
-            _module = null;
             _resource = null;
         }
 
