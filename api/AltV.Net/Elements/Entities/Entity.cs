@@ -30,7 +30,7 @@ namespace AltV.Net.Elements.Entities
                 {
                     var entityPointer = Core.Library.Shared.Entity_GetNetOwner(EntityNativePointer);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Module.PlayerPool.Get(entityPointer);
+                    return Alt.Core.PlayerPool.Get(entityPointer);
                 }
             }
         }

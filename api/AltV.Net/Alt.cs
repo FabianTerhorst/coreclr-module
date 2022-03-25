@@ -15,8 +15,6 @@ namespace AltV.Net
 {
     public static partial class Alt
     {
-        internal static Module Module;
-
         public static ICore Core => CoreImpl;
         internal static Core CoreImpl;
 
@@ -42,81 +40,76 @@ namespace AltV.Net
         
         public static void Log(string message) => Core.LogInfo(message);
 
-        public static IReadOnlyCollection<IPlayer> GetAllPlayers() => Module.PlayerPool.GetAllEntities();
+        public static IReadOnlyCollection<IPlayer> GetAllPlayers() => Core.PlayerPool.GetAllEntities();
 
         public static IReadOnlyCollection<IVehicle> GetAllVehicles() =>
-            Module.VehiclePool.GetAllEntities();
+            Core.VehiclePool.GetAllEntities();
 
-        public static ICollection<IBlip> GetAllBlips() => Module.BlipPool.GetAllObjects();
+        public static ICollection<IBlip> GetAllBlips() => Core.BlipPool.GetAllObjects();
 
         public static ICollection<ICheckpoint> GetAllCheckpoints() =>
-            Module.CheckpointPool.GetAllObjects();
+            Core.CheckpointPool.GetAllObjects();
 
         public static ICollection<IVoiceChannel> GetAllVoiceChannels() =>
-            Module.VoiceChannelPool.GetAllObjects();
+            Core.VoiceChannelPool.GetAllObjects();
 
         public static ICollection<IColShape> GetAllColShapes() =>
-            Module.ColShapePool.GetAllObjects();
+            Core.ColShapePool.GetAllObjects();
 
-        public static KeyValuePair<IntPtr, IPlayer>[] GetPlayersArray() => Module.PlayerPool.GetEntitiesArray();
+        public static KeyValuePair<IntPtr, IPlayer>[] GetPlayersArray() => Core.PlayerPool.GetEntitiesArray();
 
-        public static KeyValuePair<IntPtr, IVehicle>[] GetVehiclesArray() => Module.VehiclePool.GetEntitiesArray();
+        public static KeyValuePair<IntPtr, IVehicle>[] GetVehiclesArray() => Core.VehiclePool.GetEntitiesArray();
 
-        public static KeyValuePair<IntPtr, IBlip>[] GetBlipsArray() => Module.BlipPool.GetObjectsArray();
+        public static KeyValuePair<IntPtr, IBlip>[] GetBlipsArray() => Core.BlipPool.GetObjectsArray();
 
         public static KeyValuePair<IntPtr, ICheckpoint>[] GetCheckpointsArray() =>
-            Module.CheckpointPool.GetObjectsArray();
+            Core.CheckpointPool.GetObjectsArray();
 
         public static KeyValuePair<IntPtr, IVoiceChannel>[] GetVoiceChannelsArray() =>
-            Module.VoiceChannelPool.GetObjectsArray();
+            Core.VoiceChannelPool.GetObjectsArray();
 
-        public static KeyValuePair<IntPtr, IColShape>[] GetColShapesArray() => Module.ColShapePool.GetObjectsArray();
+        public static KeyValuePair<IntPtr, IColShape>[] GetColShapesArray() => Core.ColShapePool.GetObjectsArray();
 
         public static void ForEachPlayers(IBaseObjectCallback<IPlayer> baseObjectCallback) =>
-            Module.PlayerPool.ForEach(baseObjectCallback);
+            Core.PlayerPool.ForEach(baseObjectCallback);
 
         public static Task ForEachPlayers(IAsyncBaseObjectCallback<IPlayer> baseObjectCallback) =>
-            Module.PlayerPool.ForEach(baseObjectCallback);
+            Core.PlayerPool.ForEach(baseObjectCallback);
 
         public static void ForEachVehicles(IBaseObjectCallback<IVehicle> baseObjectCallback) =>
-            Module.VehiclePool.ForEach(baseObjectCallback);
+            Core.VehiclePool.ForEach(baseObjectCallback);
 
         public static Task ForEachVehicles(IAsyncBaseObjectCallback<IVehicle> baseObjectCallback) =>
-            Module.VehiclePool.ForEach(baseObjectCallback);
+            Core.VehiclePool.ForEach(baseObjectCallback);
 
         public static void ForEachBlips(IBaseObjectCallback<IBlip> baseObjectCallback) =>
-            Module.BlipPool.ForEach(baseObjectCallback);
+            Core.BlipPool.ForEach(baseObjectCallback);
 
         public static Task ForEachBlips(IAsyncBaseObjectCallback<IBlip> baseObjectCallback) =>
-            Module.BlipPool.ForEach(baseObjectCallback);
+            Core.BlipPool.ForEach(baseObjectCallback);
 
         public static void ForEachCheckpoints(IBaseObjectCallback<ICheckpoint> baseObjectCallback) =>
-            Module.CheckpointPool.ForEach(baseObjectCallback);
+            Core.CheckpointPool.ForEach(baseObjectCallback);
 
         public static Task ForEachCheckpoints(IAsyncBaseObjectCallback<ICheckpoint> baseObjectCallback) =>
-            Module.CheckpointPool.ForEach(baseObjectCallback);
+            Core.CheckpointPool.ForEach(baseObjectCallback);
 
         public static void ForEachVoiceChannels(IBaseObjectCallback<IVoiceChannel> baseObjectCallback) =>
-            Module.VoiceChannelPool.ForEach(baseObjectCallback);
+            Core.VoiceChannelPool.ForEach(baseObjectCallback);
 
         public static Task ForEachVoiceChannels(IAsyncBaseObjectCallback<IVoiceChannel> baseObjectCallback) =>
-            Module.VoiceChannelPool.ForEach(baseObjectCallback);
+            Core.VoiceChannelPool.ForEach(baseObjectCallback);
         
         public static void ForEachColShapes(IBaseObjectCallback<IColShape> baseObjectCallback) =>
-            Module.ColShapePool.ForEach(baseObjectCallback);
+            Core.ColShapePool.ForEach(baseObjectCallback);
 
         public static Task ForEachColShapes(IAsyncBaseObjectCallback<IColShape> baseObjectCallback) =>
-            Module.ColShapePool.ForEach(baseObjectCallback);
+            Core.ColShapePool.ForEach(baseObjectCallback);
 
         public static VehicleModelInfo GetVehicleModelInfo(uint hash) => Core.GetVehicleModelInfo(hash);
         public static VehicleModelInfo GetVehicleModelInfo(string name) => Core.GetVehicleModelInfo(Hash(name));
         
         public static uint Hash(string stringToHash) => Core.Hash(stringToHash);
         public static ulong HashPassword(string password) => Core.HashPassword(password);
-
-        internal static void Init(Module module)
-        {
-            Module = module;
-        }
     }
 }

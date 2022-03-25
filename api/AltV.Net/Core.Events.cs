@@ -1611,5 +1611,77 @@ namespace AltV.Net
         {
         }
         
+
+        public void OnCreatePlayer(IntPtr playerPointer, ushort playerId)
+        {
+            PlayerPool.Create(this, playerPointer, playerId);
+        }
+
+        public void OnRemovePlayer(IntPtr playerPointer)
+        {
+            PlayerPool.Remove(playerPointer);
+        }
+
+        public void OnCreateVehicle(IntPtr vehiclePointer, ushort vehicleId)
+        {
+            VehiclePool.Create(this, vehiclePointer, vehicleId);
+        }
+
+        public void OnCreateVoiceChannel(IntPtr channelPointer)
+        {
+            VoiceChannelPool.Create(this, channelPointer);
+        }
+
+        public void OnCreateColShape(IntPtr colShapePointer)
+        {
+            ColShapePool.Create(this, colShapePointer);
+        }
+
+        public void OnRemoveVehicle(IntPtr vehiclePointer)
+        {
+            VehiclePool.Remove(vehiclePointer);
+        }
+
+        public void OnCreateBlip(IntPtr blipPointer)
+        {
+            BlipPool.Create(this, blipPointer);
+        }
+
+        public void OnRemoveBlip(IntPtr blipPointer)
+        {
+            BlipPool.Remove(blipPointer);
+        }
+
+        public void OnCreateCheckpoint(IntPtr checkpointPointer)
+        {
+            CheckpointPool.Create(this, checkpointPointer);
+        }
+
+        public void OnRemoveCheckpoint(IntPtr checkpointPointer)
+        {
+            CheckpointPool.Remove(checkpointPointer);
+        }
+
+        public void OnRemoveVoiceChannel(IntPtr channelPointer)
+        {
+            VoiceChannelPool.Remove(channelPointer);
+        }
+
+        public void OnRemoveColShape(IntPtr colShapePointer)
+        {
+            ColShapePool.Remove(colShapePointer);
+        }
+
+        public void OnModulesLoaded(IModule[] modules)
+        {
+            foreach (var module in modules)
+            {
+                OnModuleLoaded(module);
+            }
+        }
+
+        public virtual void OnModuleLoaded(IModule module)
+        {
+        }
     }
 }

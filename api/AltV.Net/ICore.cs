@@ -32,6 +32,7 @@ namespace AltV.Net
         bool IsDebug { get; }
 
         INativeResource Resource { get; }
+        IBaseEntityPool BaseEntityPool { get; }
 
         ulong HashPassword(string password);
 

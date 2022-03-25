@@ -13,7 +13,7 @@ namespace AltV.Net.Async
     public static partial class AltAsync
     {
         public static Task<IVehicle> CreateVehicle(uint model, Position pos, Rotation rot) => AltVAsync.Schedule(() =>
-            Alt.Module.Core.CreateVehicle(model, pos, rot));
+            Alt.Core.CreateVehicle(model, pos, rot));
 
         public static Task<IVehicle> CreateVehicle(VehicleModel model, Position pos, Rotation rot) =>
             CreateVehicle((uint) model, pos, rot);

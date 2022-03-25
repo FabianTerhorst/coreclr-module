@@ -53,6 +53,7 @@ namespace AltV.Net.Mock
         public string Version => "";
 
         public INativeResource Resource => new NativeResource(null, IntPtr.Zero);
+        public IBaseEntityPool BaseEntityPool { get; }
 
         internal MockCore(IntPtr nativePointer, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool, IEntityPool<IPlayer> playerPool,
@@ -151,14 +152,14 @@ namespace AltV.Net.Mock
             AltNative.MValueCreate.MValue_CreateList(args, (ulong) args.Length, ref mValue);
             var mValueArray = MValueArray.Nil;
             AltNative.MValueGet.MValue_GetList(ref mValue, ref mValueArray);
-            //Alt.Module.OnClientEvent(player?.NativePointer ?? IntPtr.Zero, eventName, ref mValueArray);
+            //Alt.CoreImpl.OnClientEvent(player?.NativePointer ?? IntPtr.Zero, eventName, ref mValueArray);
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, ref MValue args)
         {
             var mValueArray = MValueArray.Nil;
             AltNative.MValueGet.MValue_GetList(ref args, ref mValueArray);
-            //Alt.Module.OnClientEvent(player?.NativePointer ?? IntPtr.Zero, eventName, ref mValueArray);
+            //Alt.CoreImpl.OnClientEvent(player?.NativePointer ?? IntPtr.Zero, eventName, ref mValueArray);
         }
 
         public void TriggerClientEvent(IPlayer player, string eventName, params object[] args)
@@ -242,7 +243,7 @@ namespace AltV.Net.Mock
                 mockVehicle.Rotation = rotation;
                 mockVehicle.Model = model;
             }
-            Alt.Module.OnCreateVehicle(ptr, entityId);
+            Alt.CoreImpl.OnCreateVehicle(ptr, entityId);
             return vehicle;
         }
 
@@ -250,7 +251,7 @@ namespace AltV.Net.Mock
         {
             var ptr = MockEntities.GetNextPtr(out var entityId);
             id = entityId;
-            Alt.Module.OnCreateVehicle(ptr, entityId);
+            Alt.CoreImpl.OnCreateVehicle(ptr, entityId);
             return ptr;
         }
 
@@ -267,7 +268,7 @@ namespace AltV.Net.Mock
                 mockCheckpoint.Height = height;
                 mockCheckpoint.Color = color;
             }
-            Alt.Module.OnCreateCheckpoint(ptr);
+            Alt.CoreImpl.OnCreateCheckpoint(ptr);
             return checkpoint;
         }
 
@@ -280,7 +281,7 @@ namespace AltV.Net.Mock
                 mockBlip.Position = pos;
                 mockBlip.BlipType = type;
             }
-            Alt.Module.OnCreateBlip(ptr);
+            Alt.CoreImpl.OnCreateBlip(ptr);
             return blip;
         }
 
@@ -294,7 +295,7 @@ namespace AltV.Net.Mock
                 mockBlip.IsAttached = true;
                 mockBlip.AttachedTo = entityAttach;
             }
-            Alt.Module.OnCreateBlip(ptr);
+            Alt.CoreImpl.OnCreateBlip(ptr);
             return blip;
         }
 
@@ -307,7 +308,7 @@ namespace AltV.Net.Mock
                 mockVoiceChannel.IsSpatial = spatial;
                 mockVoiceChannel.MaxDistance = maxDistance;
             }
-            Alt.Module.OnCreateVoiceChannel(ptr);
+            Alt.CoreImpl.OnCreateVoiceChannel(ptr);
             return voiceChannel;
         }
 
@@ -348,23 +349,23 @@ namespace AltV.Net.Mock
 
         public void RemoveBlip(IBlip blip)
         {
-            Alt.Module.OnRemoveBlip(blip.NativePointer);
+            Alt.CoreImpl.OnRemoveBlip(blip.NativePointer);
         }
 
         public void RemoveCheckpoint(ICheckpoint checkpoint)
         {
-            Alt.Module.OnRemoveCheckpoint(checkpoint.NativePointer); 
+            Alt.CoreImpl.OnRemoveCheckpoint(checkpoint.NativePointer); 
         }
 
         public void RemoveVehicle(IVehicle vehicle)
         {
             Alt.CoreImpl.OnVehicleRemove(vehicle.NativePointer);
-            Alt.Module.OnRemoveVehicle(vehicle.NativePointer);
+            Alt.CoreImpl.OnRemoveVehicle(vehicle.NativePointer);
         }
 
         public void RemoveVoiceChannel(IVoiceChannel channel)
         {
-            Alt.Module.OnRemoveVoiceChannel(channel.NativePointer);
+            Alt.CoreImpl.OnRemoveVoiceChannel(channel.NativePointer);
         }
 
         public INativeResource GetResource(string name)

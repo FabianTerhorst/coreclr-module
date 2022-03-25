@@ -134,7 +134,7 @@ namespace AltV.Net.Elements.Args
         {
             var baseObjectType = BaseObjectType.Undefined;
             var baseObjectPtr = GetEntityPointer(ref baseObjectType);
-            return Alt.Module.BaseBaseObjectPool.Get(baseObjectPtr, baseObjectType);
+            return Alt.Core.BaseBaseObjectPool.Get(baseObjectPtr, baseObjectType);
         }
 
         public MValueConst[] GetList()
@@ -316,7 +316,7 @@ namespace AltV.Net.Elements.Args
                     var entityType = BaseObjectType.Undefined;
                     var entityPointer = GetEntityPointer(ref entityType);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Module.BaseBaseObjectPool.Get(entityPointer, entityType);
+                    return Alt.Core.BaseBaseObjectPool.Get(entityPointer, entityType);
                 
                 case Type.Function:
                     return null;
@@ -373,7 +373,7 @@ namespace AltV.Net.Elements.Args
                     var entityType = BaseObjectType.Undefined;
                     var ptr = GetEntityPointer(ref entityType);
                     if (ptr == IntPtr.Zero) return $"MValue<entity:nilptr>";
-                    var entity = Alt.Module.BaseBaseObjectPool.Get(ptr, entityType);
+                    var entity = Alt.Core.BaseBaseObjectPool.Get(ptr, entityType);
                     if (entity != null)
                     {
                         return $"MValue<{entity.Type.ToString()}>";
