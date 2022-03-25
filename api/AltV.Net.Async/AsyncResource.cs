@@ -1,5 +1,7 @@
+using System;
 using System.Runtime.Loader;
 using AltV.Net.Async.Elements.Pools;
+using AltV.Net.CApi;
 using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Async
@@ -59,10 +61,8 @@ namespace AltV.Net.Async
         {
             return new AsyncColShapePool(colShapeFactory);
         }
-
-        public override Module GetModule(ICore core, AssemblyLoadContext assemblyLoadContext,
-            INativeResource cSharpNativeResource,
-            IBaseBaseObjectPool baseBaseObjectPool,
+        
+        public override Core GetCore(IntPtr nativePointer, IntPtr resourcePointer, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
@@ -72,9 +72,7 @@ namespace AltV.Net.Async
             IBaseObjectPool<IColShape> colShapePool,
             INativeResourcePool nativeResourcePool)
         {
-            return new AsyncModule(core, assemblyLoadContext, cSharpNativeResource, baseBaseObjectPool,
-                baseEntityPool, playerPool,
-                vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
+            return new AsyncCore(nativePointer, resourcePointer, library, baseBaseObjectPool, baseEntityPool, playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
         }
     }
 }

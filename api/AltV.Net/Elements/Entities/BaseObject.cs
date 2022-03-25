@@ -260,7 +260,7 @@ namespace AltV.Net.Elements.Entities
         [Conditional("DEBUG")]
         public void CheckIfCallIsValid([CallerMemberName] string callerName = "")
         {
-            if (Alt.Module.IsMainThread()) return;
+            if (Alt.Core.IsMainThread()) return;
             if (Monitor.IsEntered(this)) return;
             if (Alt.Module.HasRefForCurrentThread(this)) return;
             throw new IllegalThreadException(this, callerName);

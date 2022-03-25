@@ -17,7 +17,7 @@ namespace AltV.Net
     {
         internal static Module Module;
 
-        public static ICore Core => Module.Core;
+        public static Core Core;
 
         [Obsolete("Use Core instead")]
         public static ICore Server

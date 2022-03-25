@@ -29,6 +29,11 @@ namespace AltV.Net.Mock
         IReadOnlyEntityPool<ISharedPlayer> ISharedCore.PlayerPool => PlayerPool;
         
         public IEntityPool<IVehicle> VehiclePool { get; }
+        public IBaseObjectPool<IBlip> BlipPool { get; }
+        public IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
+        public IBaseObjectPool<IVoiceChannel> VoiceChannelPool { get; }
+        public IBaseObjectPool<IColShape> ColShapePool { get; }
+        public INativeResourcePool NativeResourcePool { get; }
         IReadOnlyEntityPool<ISharedVehicle> ISharedCore.VehiclePool => VehiclePool;
 
         private readonly IBaseObjectPool<IBlip> blipPool;
@@ -353,7 +358,7 @@ namespace AltV.Net.Mock
 
         public void RemoveVehicle(IVehicle vehicle)
         {
-            Alt.Module.OnVehicleRemove(vehicle.NativePointer);
+            Alt.Core.OnVehicleRemove(vehicle.NativePointer);
             Alt.Module.OnRemoveVehicle(vehicle.NativePointer);
         }
 

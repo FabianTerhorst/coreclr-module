@@ -8,24 +8,27 @@ using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using AltV.Net.CApi;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Events;
 using AltV.Net.Exceptions;
+using AltV.Net.FunctionParser;
 using AltV.Net.Native;
 using AltV.Net.Shared;
 using AltV.Net.Shared.Elements.Entities;
+using AltV.Net.Shared.Events;
 
 namespace AltV.Net
 {
-    public class Core : SharedCore, ICore
+    public partial class Core : SharedCore, ICore, IInternalCore
     {
-
         public override IBaseBaseObjectPool BaseBaseObjectPool { get;}
         IReadOnlyBaseBaseObjectPool ISharedCore.BaseBaseObjectPool => BaseBaseObjectPool;
 
-        private readonly IBaseEntityPool baseEntityPool;
+        public IBaseEntityPool BaseEntityPool { get; }
 
         public override IEntityPool<IPlayer> PlayerPool { get; }
         IReadOnlyEntityPool<ISharedPlayer> ISharedCore.PlayerPool => PlayerPool;
@@ -74,9 +77,11 @@ namespace AltV.Net
             }
         }
 
-        public INativeResource Resource { get; private set; }
+        public INativeResource Resource { get; }
 
-        public Core(IntPtr nativePointer, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
+        private readonly Thread MainThread;
+
+        public Core(IntPtr nativePointer, IntPtr resourcePointer, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             IEntityPool<IPlayer> playerPool,
             IEntityPool<IVehicle> vehiclePool,
@@ -87,7 +92,7 @@ namespace AltV.Net
             INativeResourcePool nativeResourcePool) : base(nativePointer, library)
         {
             this.BaseBaseObjectPool = baseBaseObjectPool;
-            this.baseEntityPool = baseEntityPool;
+            this.BaseEntityPool = baseEntityPool;
             this.PlayerPool = playerPool;
             this.VehiclePool = vehiclePool;
             this.BlipPool = blipPool;
@@ -96,11 +101,13 @@ namespace AltV.Net
             this.ColShapePool = colShapePool;
             this.NativeResourcePool = nativeResourcePool;
             this.vehicleModelInfoCache = new();
+            nativeResourcePool.GetOrCreate(this, resourcePointer, out var resource);
+            Resource = resource;
+            MainThread = Thread.CurrentThread;
         }
 
-        internal void InitResource(INativeResource resource)
+        void IInternalCore.InitResource(INativeResource resource)
         {
-            Resource = resource;
         }
 
         public ulong HashPassword(string password)
@@ -1197,10 +1204,15 @@ namespace AltV.Net
         }
         #endregion
 
+        public virtual bool IsMainThread()
+        {
+            return Thread.CurrentThread == MainThread;
+        }
+
         [Conditional("DEBUG")]
         public void CheckIfCallIsValid([CallerMemberName] string callerName = "")
         {
-            if (Alt.Module.IsMainThread()) return;
+            if (IsMainThread()) return;
             throw new IllegalThreadException(this, callerName);
         }
 
@@ -1226,6 +1238,19 @@ namespace AltV.Net
                 Marshal.FreeHGlobal(valuePtr);
                 return result;
             }
+        }
+        
+        public void OnScriptsLoaded(IScript[] scripts)
+        {
+            foreach (var script in scripts)
+            {
+                Alt.RegisterEvents(script);
+                OnScriptLoaded(script);
+            }
+        }
+
+        public virtual void OnScriptLoaded(IScript script)
+        {
         }
     }
 }
