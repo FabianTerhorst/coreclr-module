@@ -36,7 +36,7 @@ jobs:
         run: |
           dir
       - name: Copy nethost
-        working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\6.0.2\runtimes\win-x64\native\
+        working-directory: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\6.0.3\runtimes\win-x64\native\
         run: |
           tar -cvzf ${{ runner.temp }}\libnethost.tar .
       - name: Upload artifacts
