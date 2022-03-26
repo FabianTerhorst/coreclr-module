@@ -8,6 +8,8 @@ using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
+using AltV.Net.Shared;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Elements.Args
 {
@@ -16,9 +18,9 @@ namespace AltV.Net.Elements.Args
     /// </summary>
     public readonly struct MValueConst : IDisposable
     {
-        public static MValueConst Nil = new MValueConst(Type.Nil, IntPtr.Zero);
+        public static MValueConst Nil = new MValueConst(null, Type.Nil, IntPtr.Zero);
 
-        public static MValueConst None = new MValueConst(Type.None, IntPtr.Zero);
+        public static MValueConst None = new MValueConst(null, Type.None, IntPtr.Zero);
 
         public enum Type : byte
         {
@@ -39,23 +41,25 @@ namespace AltV.Net.Elements.Args
             Vector2 = 14,
         }
 
-        public static MValueConst[] CreateFrom(IntPtr[] pointers)
+        public static MValueConst[] CreateFrom(ISharedCore core, IntPtr[] pointers)
         {
             int length = pointers.Length;
             var mValues = new MValueConst[length];
             for (var i = 0; i < length; i++)
             {
-                mValues[i] = new MValueConst(pointers[i]);
+                mValues[i] = new MValueConst(core, pointers[i]);
             }
 
             return mValues;
         }
 
+        private readonly ISharedCore core;
         public readonly IntPtr nativePointer;
         public readonly Type type;
 
-        public MValueConst(IntPtr nativePointer)
+        public MValueConst(ISharedCore core, IntPtr nativePointer)
         {
+            this.core = core;
             this.nativePointer = nativePointer;
             if (nativePointer == IntPtr.Zero)
             {
@@ -65,13 +69,14 @@ namespace AltV.Net.Elements.Args
             {
                 unsafe
                 {
-                    this.type = (Type) Alt.Core.Library.Shared.MValueConst_GetType(nativePointer);
+                    this.type = (Type) core.Library.Shared.MValueConst_GetType(nativePointer);
                 }
             }
         }
 
-        public MValueConst(Type type, IntPtr nativePointer)
+        public MValueConst(ISharedCore core, Type type, IntPtr nativePointer)
         {
+            this.core = core;
             this.nativePointer = nativePointer;
             this.type = type;
         }
@@ -80,7 +85,7 @@ namespace AltV.Net.Elements.Args
         {
             unsafe
             {
-                return Alt.Core.Library.Shared.MValueConst_GetBool(nativePointer) == 1;
+                return core.Library.Shared.MValueConst_GetBool(nativePointer) == 1;
             }
         }
 
@@ -88,7 +93,7 @@ namespace AltV.Net.Elements.Args
         {
             unsafe
             {
-                return Alt.Core.Library.Shared.MValueConst_GetInt(nativePointer);
+                return core.Library.Shared.MValueConst_GetInt(nativePointer);
             }
         }
 
@@ -96,7 +101,7 @@ namespace AltV.Net.Elements.Args
         {
             unsafe
             {
-                return Alt.Core.Library.Shared.MValueConst_GetUInt(nativePointer);
+                return core.Library.Shared.MValueConst_GetUInt(nativePointer);
             }
         }
 
@@ -104,7 +109,7 @@ namespace AltV.Net.Elements.Args
         {
             unsafe
             {
-                return Alt.Core.Library.Shared.MValueConst_GetDouble(nativePointer);
+                return core.Library.Shared.MValueConst_GetDouble(nativePointer);
             }
         }
 
@@ -114,7 +119,7 @@ namespace AltV.Net.Elements.Args
             {
                 var value = IntPtr.Zero;
                 ulong size = 0;
-                Alt.Core.Library.Shared.MValueConst_GetString(nativePointer, &value, &size);
+                core.Library.Shared.MValueConst_GetString(nativePointer, &value, &size);
                 return Marshal.PtrToStringUTF8(value, (int) size);
             }
         }
@@ -124,28 +129,28 @@ namespace AltV.Net.Elements.Args
             unsafe
             {
                 BaseObjectType pType;
-                var result = Alt.Core.Library.Shared.MValueConst_GetEntity(nativePointer, &pType);
+                var result = core.Library.Shared.MValueConst_GetEntity(nativePointer, &pType);
                 baseObjectType = pType;
                 return result;
             }
         }
 
-        public IBaseObject GetBaseObject()
+        public ISharedBaseObject GetBaseObject()
         {
             var baseObjectType = BaseObjectType.Undefined;
             var baseObjectPtr = GetEntityPointer(ref baseObjectType);
-            return Alt.Core.BaseBaseObjectPool.Get(baseObjectPtr, baseObjectType);
+            return core.BaseBaseObjectPool.Get(baseObjectPtr, baseObjectType);
         }
 
         public MValueConst[] GetList()
         {
             unsafe
             {
-                var size = Alt.Core.Library.Shared.MValueConst_GetListSize(nativePointer);
+                var size = core.Library.Shared.MValueConst_GetListSize(nativePointer);
                 if (size == 0) return Array.Empty<MValueConst>();
                 var mValuePointers = new IntPtr[size];
-                Alt.Core.Library.Shared.MValueConst_GetList(nativePointer, mValuePointers);
-                return CreateFrom(mValuePointers);
+                core.Library.Shared.MValueConst_GetList(nativePointer, mValuePointers);
+                return CreateFrom(core, mValuePointers);
             }
         }
 
@@ -153,20 +158,20 @@ namespace AltV.Net.Elements.Args
         {
             unsafe
             {
-                var size = Alt.Core.Library.Shared.MValueConst_GetDictSize(nativePointer);
+                var size = core.Library.Shared.MValueConst_GetDictSize(nativePointer);
                 if (size == 0) return new Dictionary<string, MValueConst>();
                 var keyPointers = new IntPtr[size];
                 var mValuePointers = new IntPtr[size];
-                Alt.Core.Library.Shared.MValueConst_GetDict(nativePointer, keyPointers, mValuePointers);
+                core.Library.Shared.MValueConst_GetDict(nativePointer, keyPointers, mValuePointers);
 
                 var dictionary = new Dictionary<string, MValueConst>();
 
                 for (ulong i = 0; i < size; i++)
                 {
                     var keyPointer = keyPointers[i];
-                    var mValue = new MValueConst(mValuePointers[i]);
+                    var mValue = new MValueConst(core, mValuePointers[i]);
                     dictionary[Marshal.PtrToStringUTF8(keyPointer)] = mValue;
-                    Alt.Core.Library.Shared.FreeCharArray(keyPointer);
+                    core.Library.Shared.FreeCharArray(keyPointer);
                 }
 
                 return dictionary;
@@ -184,8 +189,8 @@ namespace AltV.Net.Elements.Args
                     argsPointers[i] = args[i].nativePointer;
                 }
 
-                result = new MValueConst(
-                    Alt.Core.Library.Shared.MValueConst_CallFunction(Alt.Core.NativePointer, nativePointer, argsPointers,
+                result = new MValueConst(core, 
+                    core.Library.Shared.MValueConst_CallFunction(core.NativePointer, nativePointer, argsPointers,
                         length));
             }
         }
@@ -195,7 +200,7 @@ namespace AltV.Net.Elements.Args
             unsafe
             {
                 Vector3 pos;
-                Alt.Core.Library.Shared.MValueConst_GetVector3(nativePointer, &pos);
+                core.Library.Shared.MValueConst_GetVector3(nativePointer, &pos);
                 position = pos;
             }
         }
@@ -205,7 +210,7 @@ namespace AltV.Net.Elements.Args
             unsafe
             {
                 var position = Vector3.Zero;
-                Alt.Core.Library.Shared.MValueConst_GetVector3(nativePointer, &position);
+                core.Library.Shared.MValueConst_GetVector3(nativePointer, &position);
                 return position;
             }
         }
@@ -215,7 +220,7 @@ namespace AltV.Net.Elements.Args
             unsafe
             {
                 Rgba pRgba;
-                Alt.Core.Library.Shared.MValueConst_GetRGBA(nativePointer, &pRgba);
+                core.Library.Shared.MValueConst_GetRGBA(nativePointer, &pRgba);
                 rgba = pRgba;
             }
         }
@@ -225,7 +230,7 @@ namespace AltV.Net.Elements.Args
             unsafe
             {
                 var rgba = Rgba.Zero;
-                Alt.Core.Library.Shared.MValueConst_GetRGBA(nativePointer, &rgba);
+                core.Library.Shared.MValueConst_GetRGBA(nativePointer, &rgba);
                 return rgba;
             }
         }
@@ -234,10 +239,10 @@ namespace AltV.Net.Elements.Args
         {
             unsafe
             {
-                var size = Alt.Core.Library.Shared.MValueConst_GetByteArraySize(nativePointer);
+                var size = core.Library.Shared.MValueConst_GetByteArraySize(nativePointer);
                 var sizeInt = (int) size;
                 var data = Marshal.AllocHGlobal(sizeInt);
-                Alt.Core.Library.Shared.MValueConst_GetByteArray(nativePointer, size, data);
+                core.Library.Shared.MValueConst_GetByteArray(nativePointer, size, data);
                 var byteSize = Marshal.SizeOf<byte>();
                 var byteArray = new byte[size];
                 for (var i = 0; i < sizeInt; i++)
@@ -273,14 +278,14 @@ namespace AltV.Net.Elements.Args
                 case Type.List:
                     unsafe
                     {
-                        var listSize = Alt.Core.Library.Shared.MValueConst_GetListSize(nativePointer);
+                        var listSize = core.Library.Shared.MValueConst_GetListSize(nativePointer);
                         if (listSize == 0) return Array.Empty<MValueConst>();
                         var mValueListPointers = new IntPtr[listSize];
-                        Alt.Core.Library.Shared.MValueConst_GetList(nativePointer, mValueListPointers);
+                        core.Library.Shared.MValueConst_GetList(nativePointer, mValueListPointers);
                         var arrayValues = new object[listSize];
                         for (ulong i = 0; i < listSize; i++)
                         {
-                            var mValue = new MValueConst(mValueListPointers[i]);
+                            var mValue = new MValueConst(core, mValueListPointers[i]);
                             arrayValues[i] = mValue.ToObject();
                             mValue.Dispose();
                         }
@@ -291,11 +296,11 @@ namespace AltV.Net.Elements.Args
                 case Type.Dict:
                     unsafe
                     {
-                        var size = Alt.Core.Library.Shared.MValueConst_GetDictSize(nativePointer);
+                        var size = core.Library.Shared.MValueConst_GetDictSize(nativePointer);
                         if (size == 0) return new Dictionary<string, MValueConst>();
                         var keyPointers = new IntPtr[size];
                         var mValuePointers = new IntPtr[size];
-                        if (Alt.Core.Library.Shared.MValueConst_GetDict(nativePointer, keyPointers, mValuePointers) == 0)
+                        if (core.Library.Shared.MValueConst_GetDict(nativePointer, keyPointers, mValuePointers) == 0)
                             return null;
 
                         var dictionary = new Dictionary<string, object>();
@@ -303,9 +308,9 @@ namespace AltV.Net.Elements.Args
                         for (ulong i = 0; i < size; i++)
                         {
                             var keyPointer = keyPointers[i];
-                            var mValue = new MValueConst(mValuePointers[i]);
+                            var mValue = new MValueConst(core, mValuePointers[i]);
                             dictionary[Marshal.PtrToStringUTF8(keyPointer)] = mValue.ToObject();
-                            Alt.Core.Library.Shared.FreeCharArray(keyPointer);
+                            core.Library.Shared.FreeCharArray(keyPointer);
                             mValue.Dispose();
                         }
 
@@ -316,7 +321,7 @@ namespace AltV.Net.Elements.Args
                     var entityType = BaseObjectType.Undefined;
                     var entityPointer = GetEntityPointer(ref entityType);
                     if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Core.BaseBaseObjectPool.Get(entityPointer, entityType);
+                    return core.BaseBaseObjectPool.Get(entityPointer, entityType);
                 
                 case Type.Function:
                     return null;
@@ -373,7 +378,7 @@ namespace AltV.Net.Elements.Args
                     var entityType = BaseObjectType.Undefined;
                     var ptr = GetEntityPointer(ref entityType);
                     if (ptr == IntPtr.Zero) return $"MValue<entity:nilptr>";
-                    var entity = Alt.Core.BaseBaseObjectPool.Get(ptr, entityType);
+                    var entity = core.BaseBaseObjectPool.Get(ptr, entityType);
                     if (entity != null)
                     {
                         return $"MValue<{entity.Type.ToString()}>";
@@ -393,7 +398,7 @@ namespace AltV.Net.Elements.Args
                 case Type.ByteArray:
                     unsafe
                     {
-                        return $"MValueByteArray<{Alt.Core.Library.Shared.MValueConst_GetByteArraySize(nativePointer)}>";
+                        return $"MValueByteArray<{core.Library.Shared.MValueConst_GetByteArraySize(nativePointer)}>";
                     }
             }
 
@@ -406,7 +411,7 @@ namespace AltV.Net.Elements.Args
             {
                 // Nil types have zero int ptr to reduce allocations on heap
                 if (nativePointer == IntPtr.Zero) return;
-                Alt.Core.Library.Shared.MValueConst_AddRef(nativePointer);
+                core.Library.Shared.MValueConst_AddRef(nativePointer);
             }
         }
 
@@ -416,7 +421,7 @@ namespace AltV.Net.Elements.Args
             {
                 // Nil types have zero int ptr to reduce allocations on heap
                 if (nativePointer == IntPtr.Zero) return;
-                Alt.Core.Library.Shared.MValueConst_RemoveRef(nativePointer);
+                core.Library.Shared.MValueConst_RemoveRef(nativePointer);
             }
         }
 
@@ -426,7 +431,7 @@ namespace AltV.Net.Elements.Args
             {
                 // Nil types have zero int ptr to reduce allocations on heap
                 if (nativePointer == IntPtr.Zero) return;
-                Alt.Core.Library.Shared.MValueConst_Delete(nativePointer);
+                core.Library.Shared.MValueConst_Delete(nativePointer);
             }
         }
     }

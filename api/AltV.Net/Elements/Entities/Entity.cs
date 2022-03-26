@@ -123,7 +123,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                value = new MValueConst(Core.Library.Shared.Entity_GetSyncedMetaData(EntityNativePointer, stringPtr));
+                value = new MValueConst(Core, Core.Library.Shared.Entity_GetSyncedMetaData(EntityNativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
@@ -164,7 +164,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                value = new MValueConst(Core.Library.Shared.Entity_GetStreamSyncedMetaData(EntityNativePointer, stringPtr));
+                value = new MValueConst(Core, Core.Library.Shared.Entity_GetStreamSyncedMetaData(EntityNativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
             }
         }

@@ -704,7 +704,7 @@ namespace AltV.Net.FunctionParser
                 {
                     strings[i] = Marshal.PtrToStringUTF8(keyPointers[i]);
                     Alt.Core.Library.Shared.FreeCharArray(keyPointers[i]);
-                    valueArray[i] = new MValueConst(pointerValues[i]);
+                    valueArray[i] = new MValueConst(Alt.Core, pointerValues[i]);
                 }
 
                 var dictionary = CreateDictionary(typeInfo, keyType, valueType, length, strings, valueArray);

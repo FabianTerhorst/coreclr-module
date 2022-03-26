@@ -739,7 +739,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                value = new MValueConst(Library.Server.Core_GetMetaData(NativePointer, stringPtr));
+                value = new MValueConst(this, Library.Server.Core_GetMetaData(NativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
@@ -788,7 +788,7 @@ namespace AltV.Net
             {
                 CheckIfCallIsValid();
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                value = new MValueConst(Library.Server.Core_GetSyncedMetaData(NativePointer, stringPtr));
+                value = new MValueConst(this, Library.Server.Core_GetSyncedMetaData(NativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
@@ -835,7 +835,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Nil, Library.Shared.Core_CreateMValueNil(NativePointer));
+                mValue = new MValueConst(this, MValueConst.Type.Nil, Library.Shared.Core_CreateMValueNil(NativePointer));
             }
         }
 
@@ -843,7 +843,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Bool,
+                mValue = new MValueConst(this, MValueConst.Type.Bool,
                     Library.Shared.Core_CreateMValueBool(NativePointer, value ? (byte) 1 : (byte) 0));
             }
         }
@@ -852,7 +852,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Int, Library.Shared.Core_CreateMValueInt(NativePointer, value));
+                mValue = new MValueConst(this, MValueConst.Type.Int, Library.Shared.Core_CreateMValueInt(NativePointer, value));
             }
         }
 
@@ -860,7 +860,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Uint,
+                mValue = new MValueConst(this, MValueConst.Type.Uint,
                     Library.Shared.Core_CreateMValueUInt(NativePointer, value));
             }
         }
@@ -869,7 +869,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Double,
+                mValue = new MValueConst(this, MValueConst.Type.Double,
                     Library.Shared.Core_CreateMValueDouble(NativePointer, value));
             }
         }
@@ -879,7 +879,7 @@ namespace AltV.Net
             unsafe
             {
                 var valuePtr = AltNative.StringUtils.StringToHGlobalUtf8(value);
-                mValue = new MValueConst(MValueConst.Type.String,
+                mValue = new MValueConst(this, MValueConst.Type.String,
                     Library.Shared.Core_CreateMValueString(NativePointer, valuePtr));
                 Marshal.FreeHGlobal(valuePtr);
             }
@@ -895,7 +895,7 @@ namespace AltV.Net
                     pointers[i] = val[i].nativePointer;
                 }
 
-                mValue = new MValueConst(MValueConst.Type.List,
+                mValue = new MValueConst(this, MValueConst.Type.List,
                     Library.Shared.Core_CreateMValueList(NativePointer, pointers, size));
             }
         }
@@ -916,7 +916,7 @@ namespace AltV.Net
                     keyPointers[i] = AltNative.StringUtils.StringToHGlobalUtf8(keys[i]);
                 }
 
-                mValue = new MValueConst(MValueConst.Type.Dict,
+                mValue = new MValueConst(this, MValueConst.Type.Dict,
                     Library.Shared.Core_CreateMValueDict(NativePointer, keyPointers, pointers, size));
                 for (ulong i = 0; i < size; i++)
                 {
@@ -929,7 +929,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.BaseObject,
+                mValue = new MValueConst(this, MValueConst.Type.BaseObject,
                     Library.Shared.Core_CreateMValueCheckpoint(NativePointer, value.CheckpointNativePointer));
             }
         }
@@ -938,7 +938,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.BaseObject,
+                mValue = new MValueConst(this, MValueConst.Type.BaseObject,
                     Library.Shared.Core_CreateMValueBlip(NativePointer, value.BlipNativePointer));
             }
         }
@@ -947,7 +947,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.BaseObject,
+                mValue = new MValueConst(this, MValueConst.Type.BaseObject,
                     Library.Shared.Core_CreateMValueVoiceChannel(NativePointer, value.VoiceChannelNativePointer));
             }
         }
@@ -956,7 +956,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.BaseObject,
+                mValue = new MValueConst(this, MValueConst.Type.BaseObject,
                     Library.Shared.Core_CreateMValuePlayer(NativePointer, value.PlayerNativePointer));
             }
         }
@@ -965,7 +965,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.BaseObject,
+                mValue = new MValueConst(this, MValueConst.Type.BaseObject,
                     Library.Shared.Core_CreateMValueVehicle(NativePointer, value.VehicleNativePointer));
             }
         }
@@ -974,7 +974,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Function,
+                mValue = new MValueConst(this, MValueConst.Type.Function,
                     Library.Shared.Core_CreateMValueFunction(NativePointer, value));
             }
         }
@@ -983,7 +983,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Vector3,
+                mValue = new MValueConst(this, MValueConst.Type.Vector3,
                     Library.Shared.Core_CreateMValueVector3(NativePointer, value));
             }
         }
@@ -992,7 +992,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Vector2,
+                mValue = new MValueConst(this, MValueConst.Type.Vector2,
                     Library.Shared.Core_CreateMValueVector2(NativePointer, value));
             }
         }
@@ -1001,7 +1001,7 @@ namespace AltV.Net
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Rgba,
+                mValue = new MValueConst(this, MValueConst.Type.Rgba,
                     Library.Shared.Core_CreateMValueRgba(NativePointer, value));
             }
         }
@@ -1013,7 +1013,7 @@ namespace AltV.Net
                 var size = value.Length;
                 var dataPtr = Marshal.AllocHGlobal(size);
                 Marshal.Copy(value, 0, dataPtr, size);
-                mValue = new MValueConst(MValueConst.Type.ByteArray,
+                mValue = new MValueConst(this, MValueConst.Type.ByteArray,
                     Library.Shared.Core_CreateMValueByteArray(NativePointer, (ulong) size, dataPtr));
                 Marshal.FreeHGlobal(dataPtr);
             }
@@ -1258,77 +1258,6 @@ namespace AltV.Net
         {
         }
         
-        
-        private readonly IDictionary<int, IDictionary<IRefCountable, ulong>> threadRefCount =
-            new Dictionary<int, IDictionary<IRefCountable, ulong>>();
-
-        [Conditional("DEBUG")]
-        public void CountUpRefForCurrentThread(IRefCountable baseObject)
-        {
-            if (baseObject == null) return;
-            var currThread = Thread.CurrentThread.ManagedThreadId;
-            lock (threadRefCount)
-            {
-                if (!threadRefCount.TryGetValue(currThread, out var baseObjectRefCount))
-                {
-                    baseObjectRefCount = new Dictionary<IRefCountable, ulong>();
-                    threadRefCount[currThread] = baseObjectRefCount;
-                }
-
-                if (!baseObjectRefCount.TryGetValue(baseObject, out var count))
-                {
-                    count = 0;
-                }
-
-                baseObjectRefCount[baseObject] = count + 1;
-            }
-        }
-
-        [Conditional("DEBUG")]
-        public void CountDownRefForCurrentThread(IRefCountable baseObject)
-        {
-            if (baseObject == null) return;
-            var currThread = Thread.CurrentThread.ManagedThreadId;
-            lock (threadRefCount)
-            {
-                if (!threadRefCount.TryGetValue(currThread, out var baseObjectRefCount))
-                {
-                    return;
-                }
-
-                if (!baseObjectRefCount.TryGetValue(baseObject, out var count))
-                {
-                    return;
-                }
-
-                if (count == 1)
-                {
-                    baseObjectRefCount.Remove(baseObject);
-                    return;
-                }
-
-                baseObjectRefCount[baseObject] = count - 1;
-            }
-        }
-        
-        public bool HasRefForCurrentThread(IRefCountable baseObject)
-        {
-            var currThread = Thread.CurrentThread.ManagedThreadId;
-            lock (threadRefCount)
-            {
-                if (!threadRefCount.TryGetValue(currThread, out var baseObjectRefCount))
-                {
-                    return false;
-                }
-
-                if (!baseObjectRefCount.TryGetValue(baseObject, out var count))
-                {
-                    return false;
-                }
-
-                return count > 0;
-            }
-        }
         
         internal readonly IDictionary<string, Function> functionExports = new Dictionary<string, Function>();
 

@@ -26,7 +26,7 @@ namespace AltV.Net.FunctionParser
                 }
 
                 var result =
-                    new MValueConst(Alt.Core.Library.Shared.MValueConst_CallFunction(Alt.Core.NativePointer, nativePointer,
+                    new MValueConst(Alt.Core, Alt.Core.Library.Shared.MValueConst_CallFunction(Alt.Core.NativePointer, nativePointer,
                         mValues, length)).ToObject();
                 for (ulong i = 0; i < length; i++)
                 {

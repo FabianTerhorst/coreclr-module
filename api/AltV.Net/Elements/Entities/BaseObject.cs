@@ -56,7 +56,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                value = new MValueConst(Core.Library.Shared.BaseObject_GetMetaData(BaseObjectNativePointer, stringPtr));
+                value = new MValueConst(Core, Core.Library.Shared.BaseObject_GetMetaData(BaseObjectNativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
