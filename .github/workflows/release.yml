@@ -70,6 +70,8 @@ jobs:
           dotnet publish AltV.Net -c Debug -f net6.0
           dotnet publish AltV.Net.Async -c Release -f net6.0
           dotnet publish AltV.Net.Async -c Debug -f net6.0
+          dotnet publish AltV.Net.Shared -c Release -f net6.0
+          dotnet publish AltV.Net.CApi -c Release -f net6.0
       - run: |
           mkdir -p ./modules/linux
           mkdir -p ./modules/windows
