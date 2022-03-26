@@ -1,7 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System.Collections;
+using System.Diagnostics;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
 using AltV.Net.CApi;
+using AltV.Net.Data;
+using AltV.Net.Elements.Args;
 using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Shared.Utils;
 using AltV.Net.Types;
@@ -269,5 +273,341 @@ namespace AltV.Net.Shared
         {
             
         }
+
+        #region MValues
+        public void CreateMValueNil(out MValueConst mValue)
+        {
+            unsafe
+            {
+                mValue = new MValueConst(this, MValueConst.Type.Nil, Library.Shared.Core_CreateMValueNil(NativePointer));
+            }
+        }
+
+        public void CreateMValueBool(out MValueConst mValue, bool value)
+        {
+            unsafe
+            {
+                mValue = new MValueConst(this, MValueConst.Type.Bool,
+                    Library.Shared.Core_CreateMValueBool(NativePointer, value ? (byte) 1 : (byte) 0));
+            }
+        }
+
+        public void CreateMValueInt(out MValueConst mValue, long value)
+        {
+            unsafe
+            {
+                mValue = new MValueConst(this, MValueConst.Type.Int, Library.Shared.Core_CreateMValueInt(NativePointer, value));
+            }
+        }
+
+        public void CreateMValueUInt(out MValueConst mValue, ulong value)
+        {
+            unsafe
+            {
+                mValue = new MValueConst(this, MValueConst.Type.Uint,
+                    Library.Shared.Core_CreateMValueUInt(NativePointer, value));
+            }
+        }
+
+        public void CreateMValueDouble(out MValueConst mValue, double value)
+        {
+            unsafe
+            {
+                mValue = new MValueConst(this, MValueConst.Type.Double,
+                    Library.Shared.Core_CreateMValueDouble(NativePointer, value));
+            }
+        }
+
+        public void CreateMValueString(out MValueConst mValue, string value)
+        {
+            unsafe
+            {
+                var valuePtr = MemoryUtils.StringToHGlobalUtf8(value);
+                mValue = new MValueConst(this, MValueConst.Type.String,
+                    Library.Shared.Core_CreateMValueString(NativePointer, valuePtr));
+                Marshal.FreeHGlobal(valuePtr);
+            }
+        }
+
+        public void CreateMValueList(out MValueConst mValue, MValueConst[] val, ulong size)
+        {
+            unsafe
+            {
+                var pointers = new IntPtr[size];
+                for (ulong i = 0; i < size; i++)
+                {
+                    pointers[i] = val[i].nativePointer;
+                }
+
+                mValue = new MValueConst(this, MValueConst.Type.List,
+                    Library.Shared.Core_CreateMValueList(NativePointer, pointers, size));
+            }
+        }
+
+        public void CreateMValueDict(out MValueConst mValue, string[] keys, MValueConst[] val, ulong size)
+        {
+            unsafe
+            {
+                var pointers = new IntPtr[size];
+                for (ulong i = 0; i < size; i++)
+                {
+                    pointers[i] = val[i].nativePointer;
+                }
+                
+                var keyPointers = new IntPtr[size];
+                for (ulong i = 0; i < size; i++)
+                {
+                    keyPointers[i] = MemoryUtils.StringToHGlobalUtf8(keys[i]);
+                }
+
+                mValue = new MValueConst(this, MValueConst.Type.Dict,
+                    Library.Shared.Core_CreateMValueDict(NativePointer, keyPointers, pointers, size));
+                for (ulong i = 0; i < size; i++)
+                {
+                    Marshal.FreeHGlobal(keyPointers[i]);  
+                }
+            }
+        }
+
+        public void CreateMValueBaseObject(out MValueConst mValue, ISharedBaseObject value)
+        {
+            unsafe
+            {
+                mValue = new MValueConst(this, MValueConst.Type.BaseObject,
+                    Library.Shared.Core_CreateMValueBaseObject(NativePointer, value.BaseObjectNativePointer));
+            }
+        }
+
+        public void CreateMValueFunction(out MValueConst mValue, IntPtr value)
+        {
+            unsafe
+            {
+                mValue = new MValueConst(this, MValueConst.Type.Function,
+                    Library.Shared.Core_CreateMValueFunction(NativePointer, value));
+            }
+        }
+
+        public void CreateMValueVector3(out MValueConst mValue, Position value)
+        {
+            unsafe
+            {
+                mValue = new MValueConst(this, MValueConst.Type.Vector3,
+                    Library.Shared.Core_CreateMValueVector3(NativePointer, value));
+            }
+        }
+        
+        public void CreateMValueVector2(out MValueConst mValue, Vector2 value)
+        {
+            unsafe
+            {
+                mValue = new MValueConst(this, MValueConst.Type.Vector2,
+                    Library.Shared.Core_CreateMValueVector2(NativePointer, value));
+            }
+        }
+
+        public void CreateMValueRgba(out MValueConst mValue, Rgba value)
+        {
+            unsafe
+            {
+                mValue = new MValueConst(this, MValueConst.Type.Rgba,
+                    Library.Shared.Core_CreateMValueRgba(NativePointer, value));
+            }
+        }
+
+        public void CreateMValueByteArray(out MValueConst mValue, byte[] value)
+        {
+            unsafe
+            {
+                var size = value.Length;
+                var dataPtr = Marshal.AllocHGlobal(size);
+                Marshal.Copy(value, 0, dataPtr, size);
+                mValue = new MValueConst(this, MValueConst.Type.ByteArray,
+                    Library.Shared.Core_CreateMValueByteArray(NativePointer, (ulong) size, dataPtr));
+                Marshal.FreeHGlobal(dataPtr);
+            }
+        }
+
+        public void CreateMValue(out MValueConst mValue, object obj)
+        {
+            if (obj == null)
+            {
+                mValue = MValueConst.Nil;
+                return;
+            }
+
+            int i;
+
+            string[] dictKeys;
+            MValueConst[] dictValues;
+            MValueWriter2 writer;
+
+            switch (obj)
+            {
+                case ISharedBaseObject baseObject:
+                    CreateMValueBaseObject(out mValue, baseObject);
+                    return;
+                case bool value:
+                    CreateMValueBool(out mValue, value);
+                    return;
+                case int value:
+                    CreateMValueInt(out mValue, value);
+                    return;
+                case uint value:
+                    CreateMValueUInt(out mValue, value);
+                    return;
+                case long value:
+                    CreateMValueInt(out mValue, value);
+                    return;
+                case ulong value:
+                    CreateMValueUInt(out mValue, value);
+                    return;
+                case double value:
+                    CreateMValueDouble(out mValue, value);
+                    return;
+                case float value:
+                    CreateMValueDouble(out mValue, value);
+                    return;
+                case string value:
+                    CreateMValueString(out mValue, value);
+                    return;
+                case MValueConst value:
+                    mValue = value;
+                    return;
+                case MValueConst[] value:
+                    CreateMValueList(out mValue, value, (ulong) value.Length);
+                    return;
+                // case Invoker value:
+                //     CreateMValueFunction(out mValue, value.NativePointer);
+                //     return;
+                // case MValueFunctionCallback value:
+                //     CreateMValueFunction(out mValue, Resource.CSharpResourceImpl.CreateInvoker(value));
+                //     return;
+                // case Function function:
+                //     CreateMValueFunction(out mValue,
+                //         Resource.CSharpResourceImpl.CreateInvoker(function.Call));
+                //     return;
+                // todo
+                case byte[] byteArray:
+                    CreateMValueByteArray(out mValue, byteArray);
+                    return;
+                case IDictionary dictionary:
+                    dictKeys = new string[dictionary.Count];
+                    dictValues = new MValueConst[dictionary.Count];
+                    i = 0;
+                    foreach (var key in dictionary.Keys)
+                    {
+                        if (key is string stringKey)
+                        {
+                            dictKeys[i++] = stringKey;
+                        }
+                        else
+                        {
+                            mValue = MValueConst.Nil;
+                            return;
+                        }
+                    }
+
+                    i = 0;
+                    foreach (var value in dictionary.Values)
+                    {
+                        CreateMValue(out var elementMValue, value);
+                        dictValues[i++] = elementMValue;
+                    }
+
+                    CreateMValueDict(out mValue, dictKeys, dictValues, (ulong) dictionary.Count);
+                    for (int j = 0, dictLength = dictionary.Count; j < dictLength; j++)
+                    {
+                        dictValues[j].Dispose();
+                    }
+
+                    return;
+                case ICollection collection:
+                    var length = (ulong) collection.Count;
+                    var listValues = new MValueConst[length];
+                    i = 0;
+                    foreach (var value in collection)
+                    {
+                        CreateMValue(out var elementMValue, value);
+                        listValues[i++] = elementMValue;
+                    }
+
+                    CreateMValueList(out mValue, listValues, length);
+                    for (ulong j = 0; j < length; j++)
+                    {
+                        listValues[j].Dispose();
+                    }
+
+                    return;
+                case IDictionary<string, object> dictionary:
+                    dictKeys = new string[dictionary.Count];
+                    dictValues = new MValueConst[dictionary.Count];
+                    i = 0;
+                    foreach (var key in dictionary.Keys)
+                    {
+                        dictKeys[i++] = key;
+                    }
+
+                    i = 0;
+                    foreach (var value in dictionary.Values)
+                    {
+                        CreateMValue(out var elementMValue, value);
+                        dictValues[i++] = elementMValue;
+                    }
+
+                    CreateMValueDict(out mValue, dictKeys, dictValues, (ulong) dictionary.Count);
+                    for (int j = 0, dictLength = dictionary.Count; j < dictLength; j++)
+                    {
+                        dictValues[j].Dispose();
+                    }
+
+                    return;
+                // case IWritable writable:
+                //     writer = new MValueWriter2();
+                //     writable.OnWrite(writer);
+                //     writer.ToMValue(out mValue);
+                //     return;
+                // case IMValueConvertible convertible:
+                //     writer = new MValueWriter2();
+                //     convertible.GetAdapter().ToMValue(obj, writer);
+                //     writer.ToMValue(out mValue);
+                //     return;
+                // todo
+                case Position position:
+                    CreateMValueVector3(out mValue, position);
+                    return;
+                case Rotation rotation:
+                    CreateMValueVector3(out mValue, rotation);
+                    return;
+                case Rgba rgba:
+                    CreateMValueRgba(out mValue, rgba);
+                    return;
+                case short value:
+                    CreateMValueInt(out mValue, value);
+                    return;
+                case ushort value:
+                    CreateMValueUInt(out mValue, value);
+                    return;
+                case Vector3 position:
+                    CreateMValueVector3(out mValue, position);
+                    return;
+                case Vector2 value:
+                    CreateMValueVector2(out mValue, value);
+                    return;
+                default:
+                    LogInfo("can't convert type:" + obj.GetType());
+                    mValue = MValueConst.Nil;
+                    return;
+            }
+        }
+
+        public void CreateMValues(MValueConst[] mValues, object[] objects)
+        {
+            for (int i = 0, length = objects.Length; i < length; i++)
+            {
+                CreateMValue(out var mValue, objects[i]);
+                mValues[i] = mValue;
+            }
+        }
+        #endregion
     }
 }

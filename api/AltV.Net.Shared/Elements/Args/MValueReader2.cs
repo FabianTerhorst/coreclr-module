@@ -427,17 +427,17 @@ namespace AltV.Net.Elements.Args
                     throw new InvalidDataException("Expected object but got " + mValue.type);
                 }
 
-                var size = Alt.Core.Library.Shared.MValueConst_GetDictSize(mValue.nativePointer);
+                var size = core.Library.Shared.MValueConst_GetDictSize(mValue.nativePointer);
                 var stringArrayPtr = new IntPtr[size];
                 var valueArrayPtr = new IntPtr[size];
-                Alt.Core.Library.Shared.MValueConst_GetDict(mValue.nativePointer, stringArrayPtr, valueArrayPtr);
+                core.Library.Shared.MValueConst_GetDict(mValue.nativePointer, stringArrayPtr, valueArrayPtr);
                 var keyArray = new string[size];
                 var valueArray = new MValueConst[size];
                 for (ulong i = 0; i < size; i++)
                 {
                     var keyPointer = stringArrayPtr[i];
                     keyArray[i] = Marshal.PtrToStringUTF8(keyPointer);
-                    Alt.Core.Library.Shared.FreeCharArray(keyPointer);
+                    core.Library.Shared.FreeCharArray(keyPointer);
                     valueArray[i] = new MValueConst(core, valueArrayPtr[i]);
                 }
 
@@ -466,9 +466,9 @@ namespace AltV.Net.Elements.Args
                     throw new InvalidDataException("Expected array but got " + mValue.type);
                 }
 
-                var size = Alt.Core.Library.Shared.MValueConst_GetListSize(mValue.nativePointer);
+                var size = core.Library.Shared.MValueConst_GetListSize(mValue.nativePointer);
                 var valueArrayRef = new IntPtr[size];
-                Alt.Core.Library.Shared.MValueConst_GetList(mValue.nativePointer, valueArrayRef);
+                core.Library.Shared.MValueConst_GetList(mValue.nativePointer, valueArrayRef);
                 readableMValue = new MValueArrayReader(core, MValueConst.CreateFrom(core, valueArrayRef));
                 currents.Push(readableMValue);
                 insideObject = true;

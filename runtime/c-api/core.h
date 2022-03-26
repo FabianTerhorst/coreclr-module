@@ -35,11 +35,7 @@ EXPORT_SHARED alt::MValueConst* Core_CreateMValueDouble(alt::ICore* core, double
 EXPORT_SHARED alt::MValueConst* Core_CreateMValueString(alt::ICore* core, const char* value);
 EXPORT_SHARED alt::MValueConst* Core_CreateMValueList(alt::ICore* core, alt::MValueConst* val[], uint64_t size);
 EXPORT_SHARED alt::MValueConst* Core_CreateMValueDict(alt::ICore* core, const char* keys[], alt::MValueConst* val[], uint64_t size);
-EXPORT_SHARED alt::MValueConst* Core_CreateMValueCheckpoint(alt::ICore* core, alt::ICheckpoint* value);
-EXPORT_SHARED alt::MValueConst* Core_CreateMValueBlip(alt::ICore* core, alt::IBlip* value);
-EXPORT_SHARED alt::MValueConst* Core_CreateMValueVoiceChannel(alt::ICore* core, alt::IVoiceChannel* value);
-EXPORT_SHARED alt::MValueConst* Core_CreateMValuePlayer(alt::ICore* core, alt::IPlayer* value);
-EXPORT_SHARED alt::MValueConst* Core_CreateMValueVehicle(alt::ICore* core, alt::IVehicle* value);
+EXPORT_SHARED alt::MValueConst* Core_CreateMValueBaseObject(alt::ICore* core, alt::IBaseObject* value);
 EXPORT_SHARED alt::MValueConst* Core_CreateMValueVector3(alt::ICore* core, position_t value);
 EXPORT_SHARED alt::MValueConst* Core_CreateMValueVector2(alt::ICore* core, vector2_t value);
 EXPORT_SHARED alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value);

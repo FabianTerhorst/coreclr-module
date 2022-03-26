@@ -1,10 +1,11 @@
 using System;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Elements.Entities
 {
     public class BaseObjectRemovedException : Exception
     {
-        internal BaseObjectRemovedException(IBaseObject baseObject) : base(
+        internal BaseObjectRemovedException(ISharedBaseObject baseObject) : base(
             $"BaseObject(Type: {baseObject.Type.ToString()}) got deleted.")
         {
         }

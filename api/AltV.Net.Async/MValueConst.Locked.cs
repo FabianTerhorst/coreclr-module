@@ -5,53 +5,21 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Async
 {
     public static class MValueConstLocked
     {
-        public static void CreateLocked(IPlayer player, IRefContext refContext, out MValueConst mValue)
+        public static void CreateLocked(ISharedBaseObject baseObject, IRefContext refContext, out MValueConst mValue)
         {
-            if (!refContext.CreateRef(player))
+            if (!refContext.CreateRef(baseObject))
             {
                 mValue = MValueConst.Nil;
                 return;
             }
 
-            Alt.Core.CreateMValuePlayer(out mValue, player);
-        }
-
-        public static void CreateLocked(IVehicle vehicle, IRefContext refContext, out MValueConst mValue)
-        {
-            if (!refContext.CreateRef(vehicle))
-            {
-                mValue = MValueConst.Nil;
-                return;
-            }
-
-            Alt.Core.CreateMValueVehicle(out mValue, vehicle);
-        }
-
-        public static void CreateLocked(IBlip blip, IRefContext refContext, out MValueConst mValue)
-        {
-            if (!refContext.CreateRef(blip))
-            {
-                mValue = MValueConst.Nil;
-                return;
-            }
-
-            Alt.Core.CreateMValueBlip(out mValue, blip);
-        }
-
-        public static void CreateLocked(ICheckpoint checkpoint, IRefContext refContext, out MValueConst mValue)
-        {
-            if (!refContext.CreateRef(checkpoint))
-            {
-                mValue = MValueConst.Nil;
-                return;
-            }
-
-            Alt.Core.CreateMValueCheckpoint(out mValue, checkpoint);
+            Alt.Core.CreateMValueBaseObject(out mValue, baseObject);
         }
 
         public static void CreateFromObjectLocked(object obj, IRefContext refContext, out MValueConst mValue)
@@ -70,17 +38,8 @@ namespace AltV.Net.Async
 
             switch (obj)
             {
-                case IPlayer player:
-                    CreateLocked(player, refContext, out mValue);
-                    return;
-                case IVehicle vehicle:
-                    CreateLocked(vehicle, refContext, out mValue);
-                    return;
-                case IBlip blip:
-                    CreateLocked(blip, refContext, out mValue);
-                    return;
-                case ICheckpoint checkpoint:
-                    CreateLocked(checkpoint, refContext, out mValue);
+                case ISharedBaseObject baseObject:
+                    CreateLocked(baseObject, refContext, out mValue);
                     return;
                 case bool value:
                     Alt.Core.CreateMValueBool(out mValue, value);

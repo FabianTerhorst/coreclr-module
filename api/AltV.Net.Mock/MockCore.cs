@@ -467,28 +467,8 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
-
-        public void CreateMValueCheckpoint(out MValueConst mValue, ICheckpoint value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreateMValueBlip(out MValueConst mValue, IBlip value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreateMValueVoiceChannel(out MValueConst mValue, IVoiceChannel value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreateMValuePlayer(out MValueConst mValue, IPlayer value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreateMValueVehicle(out MValueConst mValue, IVehicle value)
+        
+        public void CreateMValueBaseObject(out MValueConst mValue, ISharedBaseObject value)
         {
             throw new NotImplementedException();
         }

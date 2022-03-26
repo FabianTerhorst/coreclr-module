@@ -4,11 +4,25 @@ using System.Collections.Generic;
 using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Elements.Args
 {
     public class MValueWriter2 : IMValueWriter
     {
+        private readonly ISharedCore core;
+        
+        [Obsolete("Use overload with core as first parameter instead")]
+        public MValueWriter2() : this(AltShared.Core)
+        {
+        }
+        
+        public MValueWriter2(ISharedCore core)
+        {
+            this.core = core;
+        }
+        
         public interface IWritableMValue
         {
             List<object> Values { get; }
@@ -23,11 +37,18 @@ namespace AltV.Net.Elements.Args
         public struct MValueObject : IWritableMValue
         {
             public byte Type => 0;
+            private readonly ISharedCore core;
             public readonly List<string> Names;
             public List<object> Values { get; }
 
-            public MValueObject(List<string> names, List<object> values)
+            [Obsolete("Use overload with core as first parameter instead")]
+            public MValueObject(List<string> names, List<object> values) : this(AltShared.Core, names, values)
             {
+            }
+
+            public MValueObject(ISharedCore core, List<string> names, List<object> values)
+            {
+                this.core = core;
                 Names = names;
                 Values = values;
             }
@@ -50,10 +71,10 @@ namespace AltV.Net.Elements.Args
             {
                 var size = (ulong) Values.Count;
                 var mValues = new MValueConst[size];
-                Alt.Core.CreateMValues(mValues, Values.ToArray());
+                core.CreateMValues(mValues, Values.ToArray());
                 var keys = Names.ToArray();
 
-                Alt.Core.CreateMValueDict(out mValue, keys, mValues, size);
+                core.CreateMValueDict(out mValue, keys, mValues, size);
                 for (ulong i = 0; i < size; i++)
                 {
                     mValues[i].Dispose();
@@ -63,11 +84,18 @@ namespace AltV.Net.Elements.Args
 
         public struct MValueArray : IWritableMValue
         {
+            private readonly ISharedCore core;
             public byte Type => 1;
             public List<object> Values { get; }
 
-            public MValueArray(List<object> values)
+
+            [Obsolete("Use overload with core as first parameter instead")]
+            public MValueArray(List<object> values) : this(AltShared.Core, values)
             {
+            }
+            public MValueArray(ISharedCore core, List<object> values)
+            {
+                this.core = core;
                 Values = values;
             }
 
@@ -81,8 +109,8 @@ namespace AltV.Net.Elements.Args
             {
                 var size = (ulong) Values.Count;
                 var mValues = new MValueConst[size];
-                Alt.Core.CreateMValues(mValues, Values.ToArray());
-                Alt.Core.CreateMValueList(out mValue, mValues, size);
+                core.CreateMValues(mValues, Values.ToArray());
+                core.CreateMValueList(out mValue, mValues, size);
                 for (ulong i = 0; i < size; i++)
                 {
                     mValues[i].Dispose();
@@ -238,31 +266,7 @@ namespace AltV.Net.Elements.Args
             }
         }
 
-        public void Value(ICheckpoint value)
-        {
-            if (currents.TryPeek(out currCurr))
-            {
-                currCurr.Values.Add(value);
-            }
-        }
-
-        public void Value(IBlip value)
-        {
-            if (currents.TryPeek(out currCurr))
-            {
-                currCurr.Values.Add(value);
-            }
-        }
-
-        public void Value(IVehicle value)
-        {
-            if (currents.TryPeek(out currCurr))
-            {
-                currCurr.Values.Add(value);
-            }
-        }
-
-        public void Value(IPlayer value)
+        public void Value(ISharedBaseObject value)
         {
             if (currents.TryPeek(out currCurr))
             {
