@@ -288,7 +288,7 @@ jobs:
           path: ./${{ steps.create_archive.outputs.art_name }}.tar
   deploy-cdn:
     runs-on: ubuntu-latest
-    needs: deploy-nuget
+    needs: build-server
     steps:
       - uses: actions/download-artifact@v3
         with:
