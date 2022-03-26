@@ -9,6 +9,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Factories;
 using AltV.Net.ResourceLoaders;
+using AltV.Net.Shared;
 
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
 [assembly: InternalsVisibleTo("AltV.Net.Mock")]
@@ -97,6 +98,7 @@ namespace AltV.Net
                 playerPool, vehiclePool, blipPool, checkpointPool, voiceChannelPool, colShapePool, nativeResourcePool);
             _core = server;
             Alt.CoreImpl = server;
+            AltShared.Core = server;
 
             foreach (var unused in server.GetPlayers())
             {

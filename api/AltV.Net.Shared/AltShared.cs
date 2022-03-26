@@ -6,8 +6,8 @@
 
 namespace AltV.Net.Shared
 {
-    public static class AltShared
+    internal static class AltShared
     {
-        
+        public static ISharedCore Core { get; set; }
     }
 }
