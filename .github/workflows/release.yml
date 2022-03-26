@@ -73,7 +73,7 @@ jobs:
           dotnet publish AltV.Net.Async -c Release -f net6.0
           dotnet publish AltV.Net.Async -c Debug -f net6.0
           dotnet publish AltV.Net.Interactions -c Release -f net6.0
-          dotnet publish AltV.Net.Async.CodeGen -c Release -f net6.0
+          dotnet publish AltV.Net.Async.CodeGen -c Release -f netstandard2.0
           dotnet publish AltV.Net.Resources.Chat.Api -c Release -f net6.0
           dotnet publish AltV.Net.EntitySync.ServerEvent -c Release -f net6.0
           dotnet publish AltV.Net.Client -c Release -f net6.0
