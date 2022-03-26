@@ -527,7 +527,7 @@ namespace AltV.Net
             var mValues = new MValueConst[size];
             for (var i = 0; i < size; i++)
             {
-                mValues[i] = new MValueConst(currArgs[i]);
+                mValues[i] = new MValueConst(Alt.Core, currArgs[i]);
             }
 
             Alt.Core.CreateMValue(out var resultMValue, Call(mValues));

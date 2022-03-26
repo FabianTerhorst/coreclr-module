@@ -180,7 +180,7 @@ namespace AltV.Net
             unsafe
             {
                 var ptr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                var mValue = new MValueConst(core.Library.Shared.Resource_GetExport(NativePointer, ptr));
+                var mValue = new MValueConst(core, core.Library.Shared.Resource_GetExport(NativePointer, ptr));
                 var obj = mValue.ToObject();
                 mValue.Dispose();
                 Marshal.FreeHGlobal(ptr);
@@ -193,7 +193,7 @@ namespace AltV.Net
             unsafe
             {
                 var ptr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                mValue = new MValueConst(core.Library.Shared.Resource_GetExport(NativePointer, ptr));
+                mValue = new MValueConst(core, core.Library.Shared.Resource_GetExport(NativePointer, ptr));
                 Marshal.FreeHGlobal(ptr);
                 return mValue.type != MValueConst.Type.Nil;
             }

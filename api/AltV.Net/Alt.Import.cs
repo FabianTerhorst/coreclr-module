@@ -218,7 +218,7 @@ namespace AltV.Net
                     mValueArgs[i] = mValueElement.nativePointer;
                 }
 
-                var result = new MValueConst(Alt.Core.Library.Shared.MValueConst_CallFunction(Alt.Core.NativePointer, mValue.nativePointer, mValueArgs, length));
+                var result = new MValueConst(Alt.Core, Alt.Core.Library.Shared.MValueConst_CallFunction(Alt.Core.NativePointer, mValue.nativePointer, mValueArgs, length));
                 var resultObj = result.ToObject();
                 result.Dispose();
                 for (ulong i = 0;i < length;i++)

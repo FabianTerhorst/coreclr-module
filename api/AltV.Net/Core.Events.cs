@@ -766,7 +766,7 @@ namespace AltV.Net
                 return;
             }
 
-            OnMetaDataChangeEvent(entity, key, new MValueConst(value).ToObject());
+            OnMetaDataChangeEvent(entity, key, new MValueConst(this, value).ToObject());
         }
 
         public virtual void OnMetaDataChangeEvent(IEntity entity, string key, object value)
@@ -798,7 +798,7 @@ namespace AltV.Net
                 return;
             }
 
-            OnSyncedMetaDataChangeEvent(entity, key, new MValueConst(value).ToObject());
+            OnSyncedMetaDataChangeEvent(entity, key, new MValueConst(this, value).ToObject());
         }
 
         public virtual void OnSyncedMetaDataChangeEvent(IEntity entity, string key, object value)
@@ -1395,7 +1395,7 @@ namespace AltV.Net
                 mValues = new MValueConst[length];
                 for (var i = 0; i < length; i++)
                 {
-                    mValues[i] = new MValueConst(args[i]);
+                    mValues[i] = new MValueConst(this, args[i]);
                 }
 
                 foreach (var parserEventHandler in parserEventHandlers)
@@ -1422,7 +1422,7 @@ namespace AltV.Net
                     mValues = new MValueConst[length];
                     for (var i = 0; i < length; i++)
                     {
-                        mValues[i] = new MValueConst(args[i]);
+                        mValues[i] = new MValueConst(this, args[i]);
                     }
                 }
 
@@ -1452,7 +1452,7 @@ namespace AltV.Net
                     mValues = new MValueConst[length];
                     for (var i = 0; i < length; i++)
                     {
-                        mValues[i] = new MValueConst(args[i]);
+                        mValues[i] = new MValueConst(this, args[i]);
                     }
                 }
 
@@ -1489,7 +1489,7 @@ namespace AltV.Net
                     mValues = new MValueConst[length];
                     for (var i = 0; i < length; i++)
                     {
-                        mValues[i] = new MValueConst(args[i]);
+                        mValues[i] = new MValueConst(this, args[i]);
                     }
                 }
 
@@ -1524,7 +1524,7 @@ namespace AltV.Net
             var mValues = new MValueConst[length];
             for (var i = 0; i < length; i++)
             {
-                mValues[i] = new MValueConst(args[i]);
+                mValues[i] = new MValueConst(this, args[i]);
             }
 
             if (eventBusServerParser.Count != 0 &&

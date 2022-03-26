@@ -6,7 +6,7 @@ namespace AltV.Net.Elements
     {
         public static MValueBuffer2 Reader(this MValueConst[] array)
         {
-            return new MValueBuffer2(array);
+            return new MValueBuffer2(Alt.Core, array); // todo remove Alt.Core
         }
     }
 }

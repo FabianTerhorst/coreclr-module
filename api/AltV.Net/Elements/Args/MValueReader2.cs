@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using AltV.Net.Native;
+using AltV.Net.Shared;
 
 namespace AltV.Net.Elements.Args
 {
     internal class MValueReader2 : IMValueReader
     {
+        private readonly ISharedCore core;
         private interface IReadableMValue
         {
             void GetNext(out MValueConst mValue);
@@ -47,10 +49,10 @@ namespace AltV.Net.Elements.Args
 
             private MValueBuffer2 mValueArrayBuffer;
 
-            public MValueArrayReader(MValueConst[] mValueArray)
+            public MValueArrayReader(ISharedCore core, MValueConst[] mValueArray)
             {
                 this.mValueArray = mValueArray;
-                mValueArrayBuffer = new MValueBuffer2(mValueArray);
+                mValueArrayBuffer = new MValueBuffer2(core, mValueArray);
             }
 
             public void GetNext(out MValueConst mValue)
@@ -147,11 +149,11 @@ namespace AltV.Net.Elements.Args
             private MValueBuffer2 mValueArrayBuffer;
             private int nameOffset;
 
-            public MValueObjectReader(string[] stringArray, MValueConst[] mValueArray)
+            public MValueObjectReader(ISharedCore core, string[] stringArray, MValueConst[] mValueArray)
             {
                 this.stringArray = stringArray;
                 this.mValueArray = mValueArray;
-                mValueArrayBuffer = new MValueBuffer2(mValueArray);
+                mValueArrayBuffer = new MValueBuffer2(core, mValueArray);
                 nameOffset = 0;
             }
 
@@ -407,8 +409,9 @@ namespace AltV.Net.Elements.Args
 
         private IReadableMValue readableMValue;
 
-        public MValueReader2(in MValueConst mValue)
+        public MValueReader2(ISharedCore core, in MValueConst mValue)
         {
+            this.core = core;
             readableMValue = new MValueStartReader(in mValue);
         }
 
@@ -435,10 +438,10 @@ namespace AltV.Net.Elements.Args
                     var keyPointer = stringArrayPtr[i];
                     keyArray[i] = Marshal.PtrToStringUTF8(keyPointer);
                     Alt.Core.Library.Shared.FreeCharArray(keyPointer);
-                    valueArray[i] = new MValueConst(valueArrayPtr[i]);
+                    valueArray[i] = new MValueConst(core, valueArrayPtr[i]);
                 }
 
-                readableMValue = new MValueObjectReader(keyArray, valueArray);
+                readableMValue = new MValueObjectReader(core, keyArray, valueArray);
                 currents.Push(readableMValue);
                 insideObject = true;
             }
@@ -466,7 +469,7 @@ namespace AltV.Net.Elements.Args
                 var size = Alt.Core.Library.Shared.MValueConst_GetListSize(mValue.nativePointer);
                 var valueArrayRef = new IntPtr[size];
                 Alt.Core.Library.Shared.MValueConst_GetList(mValue.nativePointer, valueArrayRef);
-                readableMValue = new MValueArrayReader(MValueConst.CreateFrom(valueArrayRef));
+                readableMValue = new MValueArrayReader(core, MValueConst.CreateFrom(core, valueArrayRef));
                 currents.Push(readableMValue);
                 insideObject = true;
             }

@@ -421,7 +421,7 @@ namespace AltV.Net.Async
                     mValues = new MValueConst[length];
                     for (var i = 0; i < length; i++)
                     {
-                        mValues[i] = new MValueConst(args[i]);
+                        mValues[i] = new MValueConst(this, args[i]);
                     }
                 }
         
@@ -481,7 +481,7 @@ namespace AltV.Net.Async
                     mValues = new MValueConst[length];
                     for (var i = 0; i < length; i++)
                     {
-                        mValues[i] = new MValueConst(args[i]);
+                        mValues[i] = new MValueConst(this, args[i]);
                     }
                 }
         
@@ -531,7 +531,7 @@ namespace AltV.Net.Async
                     mValues = new MValueConst[length];
                     for (var i = 0; i < length; i++)
                     {
-                        mValues[i] = new MValueConst(args[i]);
+                        mValues[i] = new MValueConst(this, args[i]);
                     }
                 }
         

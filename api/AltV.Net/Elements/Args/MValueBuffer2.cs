@@ -2,19 +2,23 @@ using System;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
+using AltV.Net.Shared;
 
 namespace AltV.Net.Elements.Args
 {
     public struct MValueBuffer2
     {
+        private readonly ISharedCore core;
         private readonly MValueConst[] values;
 
         private int position;
 
         public int size;
 
-        public MValueBuffer2(MValueConst[] values)
+        // todo backwards compatibility
+        public MValueBuffer2(ISharedCore core, MValueConst[] values)
         {
+            this.core = core;
             this.values = values;
             this.position = 0;
             this.size = values.Length;
@@ -342,7 +346,7 @@ namespace AltV.Net.Elements.Args
                 Alt.Core.Library.Shared.MValueConst_GetList(mValue.nativePointer, valueArrayRef);
                 for (ulong i = 0; i < listSize; i++)
                 {
-                    valuesList[i] = new MValueConst(valueArrayRef[i]);
+                    valuesList[i] = new MValueConst(core, valueArrayRef[i]);
                 }
 
                 return true;

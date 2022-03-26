@@ -80,7 +80,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                value = new MValueConst(Core.Library.Server.Player_GetLocalMetaData(PlayerNativePointer, stringPtr));
+                value = new MValueConst(Core, Core.Library.Server.Player_GetLocalMetaData(PlayerNativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
             }
         }

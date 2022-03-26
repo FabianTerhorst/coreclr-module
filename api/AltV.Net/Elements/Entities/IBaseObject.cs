@@ -9,8 +9,6 @@ namespace AltV.Net.Elements.Entities
     public interface IBaseObject : ISharedBaseObject, IRefCountable
     {
         IntPtr BaseObjectNativePointer { get; }
-        
-        BaseObjectType Type { get; }
 
         /// <summary>
         /// Sets the given object into the meta data with the given key.
