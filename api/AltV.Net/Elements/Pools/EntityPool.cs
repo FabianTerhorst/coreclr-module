@@ -21,8 +21,8 @@ namespace AltV.Net.Elements.Pools
         public TEntity Create(ICore core, IntPtr entityPointer, ushort id)
         {
             if (entityPointer == IntPtr.Zero) return default;
-            if (entities.ContainsKey(entityPointer)) return default;
-            var entity = entityFactory.Create(core, entityPointer, id);
+            if (entities.TryGetValue(entityPointer, out var entity)) return entity;
+            entity = entityFactory.Create(core, entityPointer, id);
             Add(entity);
             return entity;
         }
@@ -71,10 +71,7 @@ namespace AltV.Net.Elements.Pools
 
             if (entities.TryGetValue(entityPointer, out var entity)) return entity;
 
-            entity = entityFactory.Create(core, entityPointer, GetId(entityPointer));
-            Add(entity);
-
-            return entity;
+            return Create(core, entityPointer);
         }
 
         public TEntity GetOrCreate(ICore core, IntPtr entityPointer, ushort entityId)
@@ -85,11 +82,8 @@ namespace AltV.Net.Elements.Pools
             }
 
             if (entities.TryGetValue(entityPointer, out var entity)) return entity;
-
-            entity = entityFactory.Create(core, entityPointer, entityId);
-            Add(entity);
-
-            return entity;
+            
+            return Create(core, entityPointer, entityId);
         }
 
         public IReadOnlyCollection<TEntity> GetAllEntities()

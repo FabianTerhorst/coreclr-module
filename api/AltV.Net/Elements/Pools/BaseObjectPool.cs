@@ -25,7 +25,9 @@ namespace AltV.Net.Elements.Pools
 
         public TBaseObject Create(ICore core, IntPtr entityPointer)
         {
-            var baseObject = entityFactory.Create(core, entityPointer);
+            if (entityPointer == IntPtr.Zero) return default;
+            if (entities.TryGetValue(entityPointer, out var baseObject)) return baseObject;
+            baseObject = entityFactory.Create(core, entityPointer);
             Add(baseObject);
             return baseObject;
         }
