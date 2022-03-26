@@ -44,6 +44,18 @@ namespace AltV.Net.Shared
 
         string PtrToStringUtf8AndFree(nint str, int size);
         
+        #region MValueAdapters
+        void RegisterMValueAdapter<T>(IMValueAdapter<T> adapter);
+        
+        bool ToMValue(object obj, Type type, out MValueConst mValue);
+        
+        bool FromMValue(in MValueConst mValue, Type type, out object obj);
+        
+        bool MValueFromObject(object obj, Type type, out object result);
+        
+        bool IsMValueConvertible(Type type);
+        #endregion
+        
         #region MValues
         void CreateMValueNil(out MValueConst mValue);
 

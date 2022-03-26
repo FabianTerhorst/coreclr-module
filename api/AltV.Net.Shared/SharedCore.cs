@@ -609,5 +609,73 @@ namespace AltV.Net.Shared
             }
         }
         #endregion
+        
+        #region MValueAdapters
+        
+        private readonly Dictionary<Type, IMValueBaseAdapter> adapters =
+            new Dictionary<Type, IMValueBaseAdapter>();
+
+        public void RegisterMValueAdapter<T>(IMValueAdapter<T> adapter)
+        {
+            adapters[typeof(T)] = adapter;
+        }
+
+        public bool ToMValue(object obj, Type type, out MValueConst mValue)
+        {
+            if (adapters.TryGetValue(type, out var adapter))
+            {
+                var writer = new MValueWriter2(this);
+                adapter.ToMValue(obj, writer);
+                writer.ToMValue(out mValue);
+                return true;
+            }
+
+            mValue = default;
+            return false;
+        }
+
+        public bool FromMValue(in MValueConst mValue, Type type, out object obj)
+        {
+            switch (mValue.type)
+            {
+                case MValueConst.Type.List when adapters.TryGetValue(type, out var adapter):
+                {
+                    using (var reader = new MValueReader2(this, in mValue))
+                    {
+                        obj = adapter.FromMValue(reader);
+                    }
+
+                    return true;
+                }
+                case MValueConst.Type.Dict when adapters.TryGetValue(type, out var adapter):
+                    using (var reader = new MValueReader2(this, in mValue))
+                    {
+                        obj = adapter.FromMValue(reader);
+                    }
+
+                    return true;
+                default:
+                    obj = null;
+                    return false;
+            }
+        }
+
+        public bool MValueFromObject(object obj, Type type, out object result)
+        {
+            if (adapters.TryGetValue(type, out var adapter))
+            {
+                result = adapter.FromMValue(new MValueObjectReader(obj));
+                return true;
+            }
+
+            result = null;
+            return false;
+        }
+
+        public bool IsMValueConvertible(Type type)
+        {
+            return adapters.ContainsKey(type);
+        }
+        #endregion
     }
 }

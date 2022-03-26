@@ -428,6 +428,10 @@ namespace AltV.Net.Mock
             throw new NotImplementedException();
         }
 
+        public bool IsMValueConvertible(Type type)
+        {
+            throw new NotImplementedException();
+        }
         public void CreateMValueNil(out MValueConst mValue)
         {
             throw new NotImplementedException();
@@ -651,6 +655,22 @@ namespace AltV.Net.Mock
         }
 
         public string PtrToStringUtf8AndFree(nint str, int size)
+        {
+            throw new NotImplementedException();
+        }
+        public void RegisterMValueAdapter<T>(IMValueAdapter<T> adapter)
+        {
+            throw new NotImplementedException();
+        }
+        public bool ToMValue(object obj, Type type, out MValueConst mValue)
+        {
+            throw new NotImplementedException();
+        }
+        public bool FromMValue(in MValueConst mValue, Type type, out object obj)
+        {
+            throw new NotImplementedException();
+        }
+        public bool MValueFromObject(object obj, Type type, out object result)
         {
             throw new NotImplementedException();
         }
