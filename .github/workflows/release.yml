@@ -66,12 +66,18 @@ jobs:
         run: |
           dotnet publish AltV.Net.Host -c Release -f net6.0
           dotnet publish AltV.Net.Host -c Release -f net6.0
+          dotnet publish AltV.Net.Shared -c Release -f net6.0
+          dotnet publish AltV.Net.CApi -c Release -f net6.0
           dotnet publish AltV.Net -c Release -f net6.0
           dotnet publish AltV.Net -c Debug -f net6.0
           dotnet publish AltV.Net.Async -c Release -f net6.0
           dotnet publish AltV.Net.Async -c Debug -f net6.0
-          dotnet publish AltV.Net.Shared -c Release -f net6.0
-          dotnet publish AltV.Net.CApi -c Release -f net6.0
+          dotnet publish AltV.Net.Interactions -c Release -f net6.0
+          dotnet publish AltV.Net.Async.CodeGen -c Release -f net6.0
+          dotnet publish AltV.Net.Resources.Chat.Api -c Release -f net6.0
+          dotnet publish AltV.Net.EntitySync.ServerEvent -c Release -f net6.0
+          dotnet publish AltV.Net.Client -c Release -f net6.0
+          dotnet publish AltV.Net.ColShape -c Release -f net6.0
       - run: |
           mkdir -p ./modules/linux
           mkdir -p ./modules/windows
@@ -216,6 +222,7 @@ jobs:
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
+          NO_BUILD: true
       - uses: alirezanet/publish-nuget@v3.0.3
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Async/AltV.Net.Async.csproj
@@ -223,6 +230,7 @@ jobs:
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
+          NO_BUILD: true
       - uses: alirezanet/publish-nuget@v3.0.3
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Interactions/AltV.Net.Interactions.csproj
@@ -230,6 +238,7 @@ jobs:
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
+          NO_BUILD: true
       - uses: alirezanet/publish-nuget@v3.0.3
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Async.CodeGen/AltV.Net.Async.CodeGen.csproj
@@ -237,6 +246,7 @@ jobs:
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
+          NO_BUILD: true
       - uses: alirezanet/publish-nuget@v3.0.3
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Resources.Chat.Api/AltV.Net.Resources.Chat.Api.csproj
@@ -244,6 +254,7 @@ jobs:
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
+          NO_BUILD: true
       - uses: alirezanet/publish-nuget@v3.0.3
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.EntitySync.ServerEvent/AltV.Net.EntitySync.ServerEvent.csproj
@@ -251,6 +262,7 @@ jobs:
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
+          NO_BUILD: true
       - uses: alirezanet/publish-nuget@v3.0.3
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Client/AltV.Net.Client.csproj
@@ -258,6 +270,7 @@ jobs:
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
+          NO_BUILD: true
       - uses: alirezanet/publish-nuget@v3.0.3
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.ColShape/AltV.Net.ColShape.csproj
@@ -265,13 +278,7 @@ jobs:
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
-      - uses: alirezanet/publish-nuget@v3.0.3
-        with:
-          PROJECT_FILE_PATH: ./api/AltV.Net.CApi/AltV.Net.CApi.csproj
-          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-          INCLUDE_SYMBOLS: true
-          TAG_COMMIT: false
+          NO_BUILD: true
       - uses: alirezanet/publish-nuget@v3.0.3
         with:
           PROJECT_FILE_PATH: ./api/AltV.Net.Shared/AltV.Net.Shared.csproj
@@ -279,6 +286,15 @@ jobs:
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           INCLUDE_SYMBOLS: true
           TAG_COMMIT: false
+          NO_BUILD: true
+      - uses: alirezanet/publish-nuget@v3.0.3
+        with:
+          PROJECT_FILE_PATH: ./api/AltV.Net.CApi/AltV.Net.CApi.csproj
+          VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          INCLUDE_SYMBOLS: true
+          TAG_COMMIT: false
+          NO_BUILD: true
   deploy-cdn:
     runs-on: ubuntu-latest
     needs: deploy-nuget
