@@ -262,7 +262,7 @@ namespace AltV.Net.Example
                 Alt.Log("result:" + result);
             });
 
-            Alt.Emit("function_event", Function.Create(delegate(string bla)
+            Alt.Emit("function_event", Function.Create(Alt.Core, delegate(string bla)
             {
                 Console.WriteLine(bla + " " + (bla == null));
                 Alt.Log("parameter=" + bla);
@@ -275,7 +275,7 @@ namespace AltV.Net.Example
                 Alt.Log("result:" + result);
             });
 
-            Alt.Emit("function_event_action", Function.Create(delegate(string bla)
+            Alt.Emit("function_event_action", Function.Create(Alt.Core, delegate(string bla)
             {
                 Console.WriteLine(bla + " " + (bla == null));
                 Alt.Log("parameter=" + bla);
