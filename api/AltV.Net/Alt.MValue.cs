@@ -30,5 +30,15 @@ namespace AltV.Net
         {
             return Core.IsMValueConvertible(type);
         }
+        
+        public static MValueWriter2 CreateMValueWriter()
+        {
+            return new MValueWriter2(Core);
+        }
+        
+        public static MValueBuffer2 CreateMValueBuffer(MValueConst[] values)
+        {
+            return new MValueBuffer2(Core, values);
+        }
     }
 }
