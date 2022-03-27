@@ -14,7 +14,7 @@ namespace AltV.Net.FunctionParser
     {
         public static object ParseObject(object value, Type type, FunctionTypeInfo typeInfo)
         {
-            if (MValueAdapters.FromObject(value, type, out var result))
+            if (Alt.Core.MValueFromObject(value, type, out var result))
             {
                 return result;
             }
@@ -333,7 +333,7 @@ namespace AltV.Net.FunctionParser
                 else
                 {
                     if ((typeInfo?.Element?.IsMValueConvertible == true || typeInfo?.Element == null) &&
-                        MValueAdapters.FromObject(curr, elementType, out var result))
+                        Alt.Core.MValueFromObject(curr, elementType, out var result))
                     {
                         typedArray.SetValue(result, i);
                     }
@@ -397,7 +397,7 @@ namespace AltV.Net.FunctionParser
                 else
                 {
                     if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
-                        MValueAdapters.FromObject(obj, valueType, out var result))
+                        Alt.Core.MValueFromObject(obj, valueType, out var result))
                     {
                         typedDictionary[key] = result;
                     }
@@ -422,7 +422,7 @@ namespace AltV.Net.FunctionParser
         {
             if (!(value is IDictionary dictionary)) return null;
             Alt.Core.CreateMValue(out var mValue, dictionary);
-            if (!MValueAdapters.FromMValue(in mValue, type, out var obj))
+            if (!Alt.Core.FromMValue(in mValue, type, out var obj))
             {
                 mValue.Dispose();
                 return null;

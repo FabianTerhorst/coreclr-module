@@ -81,7 +81,7 @@ namespace AltV.Net.Example
                 mValuesListGet[i].Dispose();
             }
 
-            MValueAdapters.Register(new ConvertibleObject.ConvertibleObjectAdapter());
+            Alt.RegisterMValueAdapter(new ConvertibleObject.ConvertibleObjectAdapter());
             Alt.OnServer("convertible_test", delegate(ConvertibleObject convertible)
             {
                 Console.WriteLine("convertible_test received");
