@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Diagnostics;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using AltV.Net.CApi;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
+using AltV.Net.Elements.Entities;
+using AltV.Net.Exceptions;
+using AltV.Net.Native;
 using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Shared.Utils;
 using AltV.Net.Types;
@@ -22,8 +26,10 @@ namespace AltV.Net.Shared
         {         
             NativePointer = nativePointer;
             Library = library;
+            MainThread = Thread.CurrentThread;
         }
         
+        public abstract ISharedNativeResource Resource { get; }
         public abstract IReadOnlyEntityPool<ISharedPlayer> PlayerPool { get; }
         public abstract IReadOnlyEntityPool<ISharedVehicle> VehiclePool { get; }
         public abstract IReadOnlyBaseBaseObjectPool BaseBaseObjectPool { get; }
@@ -273,6 +279,41 @@ namespace AltV.Net.Shared
         {
             
         }
+        
+
+        protected readonly Thread MainThread;
+
+        public virtual bool IsMainThread()
+        {
+            return Thread.CurrentThread == MainThread;
+        }
+
+        [Conditional("DEBUG")]
+        public void CheckIfCallIsValid([CallerMemberName] string callerName = "")
+        {
+            if (IsMainThread()) return;
+            throw new IllegalThreadException(this, callerName);
+        }
+        
+        public ISharedEntity GetEntityById(ushort id)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                var type = (byte) BaseObjectType.Undefined;
+                var entityPointer = Library.Shared.Core_GetEntityById(NativePointer, id, &type);
+                if (entityPointer == IntPtr.Zero) return null;
+                switch (type)
+                {
+                    case (byte) BaseObjectType.Player:
+                        return PlayerPool.Get(entityPointer);
+                    case (byte) BaseObjectType.Vehicle:
+                        return VehiclePool.Get(entityPointer);
+                    default:
+                        return null;
+                }
+            }
+        }
 
         #region MValues
         public void CreateMValueNil(out MValueConst mValue)
@@ -476,17 +517,16 @@ namespace AltV.Net.Shared
                 case MValueConst[] value:
                     CreateMValueList(out mValue, value, (ulong) value.Length);
                     return;
-                // case Invoker value:
-                //     CreateMValueFunction(out mValue, value.NativePointer);
-                //     return;
-                // case MValueFunctionCallback value:
-                //     CreateMValueFunction(out mValue, Resource.CSharpResourceImpl.CreateInvoker(value));
-                //     return;
-                // case Function function:
-                //     CreateMValueFunction(out mValue,
-                //         Resource.CSharpResourceImpl.CreateInvoker(function.Call));
-                //     return;
-                // todo
+                case Invoker value:
+                    CreateMValueFunction(out mValue, value.NativePointer);
+                    return;
+                case MValueFunctionCallback value:
+                    CreateMValueFunction(out mValue, Resource.CSharpResourceImpl.CreateInvoker(value));
+                    return;
+                case Function function:
+                    CreateMValueFunction(out mValue,
+                        Resource.CSharpResourceImpl.CreateInvoker(function.Call));
+                    return;
                 case byte[] byteArray:
                     CreateMValueByteArray(out mValue, byteArray);
                     return;
@@ -561,17 +601,16 @@ namespace AltV.Net.Shared
                     }
 
                     return;
-                // case IWritable writable:
-                //     writer = new MValueWriter2();
-                //     writable.OnWrite(writer);
-                //     writer.ToMValue(out mValue);
-                //     return;
-                // case IMValueConvertible convertible:
-                //     writer = new MValueWriter2();
-                //     convertible.GetAdapter().ToMValue(obj, writer);
-                //     writer.ToMValue(out mValue);
-                //     return;
-                // todo
+                case IWritable writable:
+                    writer = new MValueWriter2(this);
+                    writable.OnWrite(writer);
+                    writer.ToMValue(out mValue);
+                    return;
+                case IMValueConvertible convertible:
+                    writer = new MValueWriter2(this);
+                    convertible.GetAdapter().ToMValue(obj, writer);
+                    writer.ToMValue(out mValue);
+                    return;
                 case Position position:
                     CreateMValueVector3(out mValue, position);
                     return;

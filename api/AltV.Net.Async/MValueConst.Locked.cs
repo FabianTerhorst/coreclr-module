@@ -153,12 +153,12 @@ namespace AltV.Net.Async
                     }
                     return;
                 case IWritable writable:
-                    writer = new MValueWriter2();
+                    writer = new MValueWriter2(Alt.Core);
                     writable.OnWrite(writer);
                     writer.ToMValue(out mValue);
                     return;
                 case IMValueConvertible convertible:
-                    writer = new MValueWriter2();
+                    writer = new MValueWriter2(Alt.Core);
                     convertible.GetAdapter().ToMValue(obj, writer);
                     writer.ToMValue(out mValue);
                     return;

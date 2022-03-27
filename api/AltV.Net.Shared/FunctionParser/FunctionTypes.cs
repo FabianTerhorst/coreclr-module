@@ -2,6 +2,7 @@ using System;
 using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.FunctionParser
 {
@@ -33,19 +34,13 @@ namespace AltV.Net.FunctionParser
 
         public static readonly Type String = typeof(string);
 
-        public static readonly Type Player = typeof(IPlayer);
+        public static readonly Type Player = typeof(ISharedPlayer);
 
-        public static readonly Type Vehicle = typeof(IVehicle);
-
-        public static readonly Type ColShape = typeof(IColShape);
-
-        public static readonly Type Checkpoint = typeof(ICheckpoint);
+        public static readonly Type Vehicle = typeof(ISharedVehicle);
 
         public static readonly Type Array = typeof(Array);
 
-        public static readonly Type Entity = typeof(IEntity);
-
-        public static readonly Type Blip = typeof(IBlip);
+        public static readonly Type Entity = typeof(ISharedEntity);
 
         public static readonly Type Obj = typeof(object);
 

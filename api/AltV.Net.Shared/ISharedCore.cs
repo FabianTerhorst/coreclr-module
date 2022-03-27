@@ -12,6 +12,10 @@ namespace AltV.Net.Shared
         IReadOnlyEntityPool<ISharedVehicle> VehiclePool { get; }
         IReadOnlyBaseBaseObjectPool BaseBaseObjectPool { get; }
         
+        ISharedNativeResource Resource { get; }
+
+        ISharedEntity GetEntityById(ushort id);
+
         IntPtr NativePointer { get; }
 
         void LogInfo(string message);

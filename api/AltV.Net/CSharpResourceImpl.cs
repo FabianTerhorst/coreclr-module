@@ -15,7 +15,7 @@ namespace AltV.Net
     {
         private readonly LinkedList<GCHandle> handles = new();
 
-        internal CSharpResourceImpl(ICore core, IntPtr nativePointer) : base(core, nativePointer)
+        internal CSharpResourceImpl(ISharedCore core, IntPtr nativePointer) : base(core, nativePointer)
         {
         }
 

@@ -81,9 +81,7 @@ namespace AltV.Net
             }
         }
 
-        public INativeResource Resource { get; }
-
-        private readonly Thread MainThread;
+        public override INativeResource Resource { get; }
 
         public Core(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
@@ -108,7 +106,6 @@ namespace AltV.Net
             this.vehicleModelInfoCache = new();
             nativeResourcePool.GetOrCreate(this, resourcePointer, out var resource);
             Resource = resource;
-            MainThread = Thread.CurrentThread;
         }
 
         void IInternalCore.InitResource(INativeResource resource)
@@ -678,25 +675,10 @@ namespace AltV.Net
                 return vehicles;
             }
         }
-
-        public IEntity GetEntityById(ushort id)
+        
+        public new IEntity GetEntityById(ushort id)
         {
-            unsafe
-            {
-                CheckIfCallIsValid();
-                var type = (byte) BaseObjectType.Undefined;
-                var entityPointer = Library.Shared.Core_GetEntityById(NativePointer, id, &type);
-                if (entityPointer == IntPtr.Zero) return null;
-                switch (type)
-                {
-                    case (byte) BaseObjectType.Player:
-                        return PlayerPool.Get(entityPointer);
-                    case (byte) BaseObjectType.Vehicle:
-                        return VehiclePool.Get(entityPointer);
-                    default:
-                        return null;
-                }
-            }
+            return (IEntity) base.GetEntityById(id);
         }
 
         public void StartResource(string name)
@@ -829,18 +811,6 @@ namespace AltV.Net
             }
         }
         #endregion
-
-        public virtual bool IsMainThread()
-        {
-            return Thread.CurrentThread == MainThread;
-        }
-
-        [Conditional("DEBUG")]
-        public void CheckIfCallIsValid([CallerMemberName] string callerName = "")
-        {
-            if (IsMainThread()) return;
-            throw new IllegalThreadException(this, callerName);
-        }
 
         public bool FileExists(string path)
         {

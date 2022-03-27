@@ -7,14 +7,16 @@ using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.FunctionParser
 {
     internal static class FunctionObjectParsers
     {
-        public static object ParseObject(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseObject(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
-            if (Alt.Core.MValueFromObject(value, type, out var result))
+            if (core.MValueFromObject(value, type, out var result))
             {
                 return result;
             }
@@ -24,17 +26,17 @@ namespace AltV.Net.FunctionParser
             return defaultValue ?? Activator.CreateInstance(type);
         }
 
-        public static object ParseFunction(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseFunction(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             if (value is MValueFunctionCallback function)
             {
-                return (Function.Func) new FunctionWrapper(function).Call;
+                return (Function.Func) new FunctionWrapper(core, function).Call;
             }
 
             return null;
         }
 
-        public static object ParseBool(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseBool(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             switch (value)
             {
@@ -55,7 +57,7 @@ namespace AltV.Net.FunctionParser
             return null;
         }
 
-        public static object ParseSByte(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseSByte(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             unchecked
             {
@@ -71,7 +73,7 @@ namespace AltV.Net.FunctionParser
             }
         }
 
-        public static object ParseShort(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseShort(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             unchecked
             {
@@ -87,7 +89,7 @@ namespace AltV.Net.FunctionParser
             }
         }
 
-        public static object ParseInt(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseInt(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             unchecked
             {
@@ -103,7 +105,7 @@ namespace AltV.Net.FunctionParser
             }
         }
 
-        public static object ParseLong(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseLong(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             unchecked
             {
@@ -119,7 +121,7 @@ namespace AltV.Net.FunctionParser
             }
         }
 
-        public static object ParseByte(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseByte(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             unchecked
             {
@@ -135,7 +137,7 @@ namespace AltV.Net.FunctionParser
             }
         }
 
-        public static object ParseUShort(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseUShort(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             unchecked
             {
@@ -151,7 +153,7 @@ namespace AltV.Net.FunctionParser
             }
         }
 
-        public static object ParseUInt(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseUInt(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             unchecked
             {
@@ -167,7 +169,7 @@ namespace AltV.Net.FunctionParser
             }
         }
 
-        public static object ParseULong(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseULong(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             unchecked
             {
@@ -183,7 +185,7 @@ namespace AltV.Net.FunctionParser
             }
         }
 
-        public static object ParseFloat(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseFloat(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             unchecked
             {
@@ -199,7 +201,7 @@ namespace AltV.Net.FunctionParser
             }
         }
 
-        public static object ParseDouble(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseDouble(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             unchecked
             {
@@ -215,7 +217,7 @@ namespace AltV.Net.FunctionParser
             }
         }
 
-        public static object ParseString(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseString(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             return value switch
             {
@@ -228,48 +230,13 @@ namespace AltV.Net.FunctionParser
             };
         }
 
-        public static object ParseEntity(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseEntity(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
-            if (!(value is IEntity entity)) return null;
-
-            return ValidateEntityType(entity.Type, type, typeInfo) ? entity : null;
+            if (value is not ISharedEntity entity) return null;
+            return type == FunctionTypes.Obj || value.GetType().IsAssignableTo(type) ? entity : null;
         }
-
-        public static bool ValidateEntityType(BaseObjectType baseObjectType, Type type, FunctionTypeInfo typeInfo)
-        {
-            if (type == FunctionTypes.Obj)
-            {
-                return true;
-            }
-            
-            if (typeInfo?.IsEntity == true)
-            {
-                return true;
-            }
-
-            switch (baseObjectType)
-            {
-                case BaseObjectType.Blip:
-                    return typeInfo?.IsBlip ??
-                           type == FunctionTypes.Blip || type.GetInterfaces().Contains(FunctionTypes.Blip);
-                case BaseObjectType.Player:
-                    return typeInfo?.IsPlayer ?? type == FunctionTypes.Player ||
-                           type.GetInterfaces().Contains(FunctionTypes.Player);
-                case BaseObjectType.Vehicle:
-                    return typeInfo?.IsVehicle ?? type == FunctionTypes.Vehicle ||
-                           type.GetInterfaces().Contains(FunctionTypes.Vehicle);
-                case BaseObjectType.ColShape:
-                    return typeInfo?.IsColShape ?? type == FunctionTypes.ColShape ||
-                           type.GetInterfaces().Contains(FunctionTypes.ColShape);
-                case BaseObjectType.Checkpoint:
-                    return typeInfo?.IsCheckpoint ?? type == FunctionTypes.Checkpoint ||
-                           type.GetInterfaces().Contains(FunctionTypes.Checkpoint);
-                default:
-                    return false;
-            }
-        }
-
-        public static object ParseArray(object value, Type type, FunctionTypeInfo typeInfo)
+        
+        public static object ParseArray(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             if (!(value is object[] objects)) return null;
             var length = objects.Length;
@@ -333,7 +300,7 @@ namespace AltV.Net.FunctionParser
                 else
                 {
                     if ((typeInfo?.Element?.IsMValueConvertible == true || typeInfo?.Element == null) &&
-                        Alt.Core.MValueFromObject(curr, elementType, out var result))
+                        core.MValueFromObject(curr, elementType, out var result))
                     {
                         typedArray.SetValue(result, i);
                     }
@@ -347,7 +314,7 @@ namespace AltV.Net.FunctionParser
             return typedArray;
         }
 
-        public static object ParseDictionary(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseDictionary(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             if (!(value is Dictionary<string, object> dictionary)) return null;
             var args = typeInfo?.GenericArguments ?? type.GetGenericArguments();
@@ -397,7 +364,7 @@ namespace AltV.Net.FunctionParser
                 else
                 {
                     if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
-                        Alt.Core.MValueFromObject(obj, valueType, out var result))
+                        core.MValueFromObject(obj, valueType, out var result))
                     {
                         typedDictionary[key] = result;
                     }
@@ -418,11 +385,11 @@ namespace AltV.Net.FunctionParser
             return typedDictionary;
         }
 
-        public static object ParseConvertible(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseConvertible(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             if (!(value is IDictionary dictionary)) return null;
-            Alt.Core.CreateMValue(out var mValue, dictionary);
-            if (!Alt.Core.FromMValue(in mValue, type, out var obj))
+            core.CreateMValue(out var mValue, dictionary);
+            if (!core.FromMValue(in mValue, type, out var obj))
             {
                 mValue.Dispose();
                 return null;
@@ -432,36 +399,36 @@ namespace AltV.Net.FunctionParser
             return obj;
         }
 
-        public static object ParseEnum(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseEnum(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             return !Enum.TryParse(type, value.ToString(), true, out var enumObject) ? null : enumObject;
         }
         
-        public static object ParsePosition(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParsePosition(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             return value is Position position ? position : default;
         }
         
-        public static object ParseRotation(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseRotation(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             return value is Position position ? (Rotation) position : default;
         }
         
-        public static object ParseVector3(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseVector3(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             return value is Position position ? (Vector3) position : default;
         }
         
-        public static object ParseRgba(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseRgba(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             return value is Rgba rgba ? rgba : default;
         }
         
-        public static object ParseByteArray(object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseByteArray(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
             return value is byte[] bytes ? bytes : default;
         }
     }
 
-    internal delegate object FunctionObjectParser(object value, Type type, FunctionTypeInfo typeInfo);
+    internal delegate object FunctionObjectParser(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo);
 }

@@ -1,15 +1,18 @@
 using System;
 using AltV.Net.Elements.Args;
 using AltV.Net.Native;
+using AltV.Net.Shared;
 
 namespace AltV.Net.FunctionParser
 {
     internal class MValueConstFunctionWrapper
     {
+        private readonly ISharedCore core;
         private readonly IntPtr nativePointer;
 
-        public MValueConstFunctionWrapper(IntPtr nativePointer)
+        public MValueConstFunctionWrapper(ISharedCore core, IntPtr nativePointer)
         {
+            this.core = core;
             this.nativePointer = nativePointer;
         }
 
@@ -21,16 +24,16 @@ namespace AltV.Net.FunctionParser
                 var mValues = new IntPtr[length];
                 for (ulong i = 0; i < length; i++)
                 {
-                    Alt.Core.CreateMValue(out var mValueElement, args[i]);
+                    core.CreateMValue(out var mValueElement, args[i]);
                     mValues[i] = mValueElement.nativePointer;
                 }
 
                 var result =
-                    new MValueConst(Alt.Core, Alt.Core.Library.Shared.MValueConst_CallFunction(Alt.Core.NativePointer, nativePointer,
+                    new MValueConst(core, core.Library.Shared.MValueConst_CallFunction(core.NativePointer, nativePointer,
                         mValues, length)).ToObject();
                 for (ulong i = 0; i < length; i++)
                 {
-                    Alt.Core.Library.Shared.MValueConst_Delete(mValues[i]);
+                    core.Library.Shared.MValueConst_Delete(mValues[i]);
                 }
 
                 return result;

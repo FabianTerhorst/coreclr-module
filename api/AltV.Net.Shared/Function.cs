@@ -9,6 +9,8 @@ using AltV.Net.Elements.Args;
 using AltV.Net.FunctionParser;
 using AltV.Net.ObjectMethodExecutors;
 using AltV.Net.ObjectMethodExecutors.ParameterValues;
+using AltV.Net.Shared;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net
 {
@@ -24,9 +26,16 @@ namespace AltV.Net
             FunctionTypeInfo[] typeInfos, IPlayer player,
             MValueConst[] values);*/
 
+        [Obsolete("Use overload with core as first argument instead")]
+        public static Function Create<T>(T func) where T : Delegate
+        {
+            AltShared.Core.LogWarning("Function.Create<T>(T func) is deprecated, use overload with core as first argument instead");
+            return Create(AltShared.Core, func);
+        }
+        
         //TODO: for high optimization add ParseBoolUnsafe ect. that doesn't contains the mValue type check for scenarios where we already had to check the mValue type
         // Returns null when function signature isn't supported
-        public static Function Create<T>(T func) where T : Delegate
+        public static Function Create<T>(ISharedCore core, T func) where T : Delegate
         {
             var genericArguments = func.GetType().GetGenericArguments();
             var parameters = func.Method.GetParameters();
@@ -79,7 +88,7 @@ namespace AltV.Net
                 }
             }
 
-            return new Function(func, returnType, genericArguments, constParsers, objectParsers, stringParsers,
+            return new Function(core, func, returnType, genericArguments, constParsers, objectParsers, stringParsers,
                 typeInfos, requiredArgsCount);
         }
 
@@ -96,31 +105,33 @@ namespace AltV.Net
             return values.Length + 1 >= requiredArgsCount && typeInfos[0].IsPlayer;
         }*/
 
-        private readonly Delegate @delegate;
+        internal readonly ISharedCore core;
+        internal readonly Delegate @delegate;
 
-        private readonly Type returnType;
+        internal readonly Type returnType;
 
-        private readonly Type[] args;
+        internal readonly Type[] args;
 
-        private readonly FunctionMValueConstParser[] constParsers;
+        internal readonly FunctionMValueConstParser[] constParsers;
 
-        private readonly FunctionObjectParser[] objectParsers;
+        internal readonly FunctionObjectParser[] objectParsers;
 
-        private readonly FunctionStringParser[] stringParsers;
+        internal readonly FunctionStringParser[] stringParsers;
 
-        private readonly FunctionTypeInfo[] typeInfos;
+        internal readonly FunctionTypeInfo[] typeInfos;
 
-        private readonly int requiredArgsCount;
+        internal readonly int requiredArgsCount;
 
         private readonly ObjectMethodExecutor objectMethodExecutor;
 
         private readonly object target;
 
-        private Function(Delegate @delegate, Type returnType, Type[] args,
+        private Function(ISharedCore core, Delegate @delegate, Type returnType, Type[] args,
             FunctionMValueConstParser[] constParsers,
             FunctionObjectParser[] objectParsers, FunctionStringParser[] stringParsers, FunctionTypeInfo[] typeInfos,
             int requiredArgsCount)
         {
+            this.core = core;
             this.@delegate = @delegate;
             this.returnType = returnType;
             this.args = args;
@@ -154,71 +165,6 @@ namespace AltV.Net
             return returnType == FunctionTypes.Void ? null : resultObj;
         }
 
-        internal object Call(IPlayer player, MValueConst[] values)
-        {
-            var invokeValues = CalculateInvokeValues(player, values);
-            if (invokeValues == null) return null;
-
-            var resultObj = @delegate.DynamicInvoke(invokeValues);
-            return returnType == FunctionTypes.Void ? null : resultObj;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal object[] CalculateInvokeValues(IPlayer player, MValueConst[] values)
-        {
-            var length = values.Length;
-            if (length + 1 < requiredArgsCount || !typeInfos[0].IsPlayer)
-            {
-                return null;
-            }
-
-            var argsLength = args.Length;
-            var invokeValues = new object[argsLength];
-            var parserValuesLength = Math.Max(1, Math.Min(argsLength, length + 1));
-            invokeValues[0] = player;
-            for (var i = 1; i < parserValuesLength; i++)
-            {
-                invokeValues[i] = constParsers[i](in values[i - 1], args[i], typeInfos[i]);
-            }
-
-            for (var i = parserValuesLength; i < argsLength; i++)
-            {
-                invokeValues[i] = typeInfos[i].DefaultValue;
-            }
-
-            if (argsLength > 0)
-            {
-                var lastTypeInfo = typeInfos[^1];
-                if (lastTypeInfo.IsParamArray)
-                {
-                    if (length + 1 > requiredArgsCount)
-                    {
-                        var remainingLength = length - requiredArgsCount + 1;
-                        var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
-                        var elementTypeInfo = lastTypeInfo.Element;
-                        var elementConstParser = elementTypeInfo.ConstParser;
-                        var elementType = lastTypeInfo.ElementType;
-                        for (var i = 0; i < remainingLength; i++)
-                        {
-                            var elementObject = elementConstParser(values[i + requiredArgsCount - 1],
-                                elementType, lastTypeInfo.Element);
-                            var convertedElementObject = Convert.ChangeType(elementObject, elementType);
-                            remainingValues.SetValue(convertedElementObject, i);
-                        }
-
-                        invokeValues[^1] = remainingValues;
-                    }
-                    else
-                    {
-                        var remainingValues = lastTypeInfo.EmptyArrayOfType;
-                        invokeValues[^1] = remainingValues;
-                    }
-                }
-            }
-
-            return invokeValues;
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal object[] CalculateInvokeValues(MValueConst[] values)
         {
@@ -233,7 +179,7 @@ namespace AltV.Net
             var parserValuesLength = Math.Min(argsLength, length);
             for (var i = 0; i < parserValuesLength; i++)
             {
-                invokeValues[i] = constParsers[i](in values[i], args[i], typeInfos[i]);
+                invokeValues[i] = constParsers[i](core, in values[i], args[i], typeInfos[i]);
             }
 
             for (var i = parserValuesLength; i < argsLength; i++)
@@ -257,7 +203,7 @@ namespace AltV.Net
                         {
                             for (var i = 0; i < remainingLength; i++)
                             {
-                                var elementObject = elementConstParser(in values[i + requiredArgsCount],
+                                var elementObject = elementConstParser(core, in values[i + requiredArgsCount],
                                     elementType, lastTypeInfo.Element);
                                 var convertedElementObject = Convert.ChangeType(elementObject, elementType);
                                 remainingValues.SetValue(convertedElementObject, i);
@@ -291,7 +237,7 @@ namespace AltV.Net
             var parserValuesLength = Math.Min(argsLength, length);
             for (var i = 0; i < parserValuesLength; i++)
             {
-                invokeValues[i] = objectParsers[i](values[i], args[i], typeInfos[i]);
+                invokeValues[i] = objectParsers[i](core, values[i], args[i], typeInfos[i]);
             }
 
             for (var i = parserValuesLength; i < argsLength; i++)
@@ -315,7 +261,7 @@ namespace AltV.Net
                         {
                             for (var i = 0; i < remainingLength; i++)
                             {
-                                var elementObject = elementConstParser(values[i + requiredArgsCount],
+                                var elementObject = elementConstParser(core, values[i + requiredArgsCount],
                                     elementType, lastTypeInfo.Element);
                                 var convertedElementObject = Convert.ChangeType(elementObject, elementType);
                                 remainingValues.SetValue(convertedElementObject, i);
@@ -335,144 +281,6 @@ namespace AltV.Net
             return invokeValues;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal object[] CalculateInvokeValues(IPlayer player, object[] values)
-        {
-            var length = values.Length;
-            if (length + 1 < requiredArgsCount || !typeInfos[0].IsPlayer)
-            {
-                return null;
-            }
-
-            var argsLength = args.Length;
-            var invokeValues = new object[argsLength];
-            invokeValues[0] = player;
-            var parserValuesLength = Math.Max(1, Math.Min(argsLength, length + 1));
-            for (var i = 1; i < parserValuesLength; i++)
-            {
-                invokeValues[i] = objectParsers[i](values[i - 1], args[i], typeInfos[i]);
-            }
-
-            for (var i = parserValuesLength; i < argsLength; i++)
-            {
-                invokeValues[i] = typeInfos[i].DefaultValue;
-            }
-
-            if (argsLength > 0)
-            {
-                var lastTypeInfo = typeInfos[^1];
-                if (lastTypeInfo.IsParamArray)
-                {
-                    if (length + 1 > requiredArgsCount)
-                    {
-                        var remainingLength = length - requiredArgsCount + 1;
-                        var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
-                        var elementTypeInfo = lastTypeInfo.Element;
-                        var elementConstParser = elementTypeInfo.ObjectParser;
-                        var elementType = lastTypeInfo.ElementType;
-                        for (var i = 0; i < remainingLength; i++)
-                        {
-                            var elementObject = elementConstParser(values[i + requiredArgsCount - 1],
-                                elementType, lastTypeInfo.Element);
-                            var convertedElementObject = Convert.ChangeType(elementObject, elementType);
-                            remainingValues.SetValue(convertedElementObject, i);
-                        }
-
-                        invokeValues[^1] = remainingValues;
-                    }
-                    else
-                    {
-                        var remainingValues = lastTypeInfo.EmptyArrayOfType;
-                        invokeValues[^1] = remainingValues;
-                    }
-                }
-            }
-
-            return invokeValues;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public object[] CalculateInvokeValues(IPlayer player, string[] values)
-        {
-            var length = values.Length;
-            if (length + 1 < requiredArgsCount || !typeInfos[0].IsPlayer)
-            {
-                return null;
-            }
-
-            var argsLength = args.Length;
-            var invokeValues = new object[argsLength];
-            invokeValues[0] = player;
-            var parserValuesLength = Math.Max(1, Math.Min(argsLength, length + 1));
-            for (var i = 1; i < parserValuesLength; i++)
-            {
-                invokeValues[i] = stringParsers[i](values[i - 1], args[i], typeInfos[i]);
-            }
-
-            for (var i = parserValuesLength; i < argsLength; i++)
-            {
-                invokeValues[i] = typeInfos[i].DefaultValue;
-            }
-
-            if (argsLength > 0)
-            {
-                var lastTypeInfo = typeInfos[^1];
-                if (lastTypeInfo.IsParamArray)
-                {
-                    if (length + 1 > requiredArgsCount)
-                    {
-                        var remainingLength = length - requiredArgsCount + 1;
-                        var remainingValues = lastTypeInfo.CreateArrayOfTypeExp(remainingLength);
-                        var elementTypeInfo = lastTypeInfo.Element;
-                        var elementConstParser = elementTypeInfo.StringParser;
-                        var elementType = lastTypeInfo.ElementType;
-                        for (var i = 0; i < remainingLength; i++)
-                        {
-                            var elementObject = elementConstParser(values[i + requiredArgsCount - 1],
-                                elementType, lastTypeInfo.Element);
-                            var convertedElementObject = Convert.ChangeType(elementObject, elementType);
-                            remainingValues.SetValue(convertedElementObject, i);
-                        }
-
-                        invokeValues[^1] = remainingValues;
-                    }
-                    else
-                    {
-                        var remainingValues = lastTypeInfo.EmptyArrayOfType;
-                        invokeValues[^1] = remainingValues;
-                    }
-                }
-            }
-
-            return invokeValues;
-        }
-
-
-        public object Call(IPlayer player, string[] values)
-        {
-            var invokeValues = CalculateInvokeValues(player, values);
-
-            if (invokeValues == null) return null;
-            //var resultObj = objectMethodExecutor.Execute(target, invokeValues);
-            object resultObj;
-            try
-            {
-                resultObj = @delegate.DynamicInvoke(invokeValues);
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception);
-                resultObj = null;
-            }
-
-            if (returnType == FunctionTypes.Void)
-            {
-                return null;
-            }
-
-            return resultObj;
-        }
-
         internal void Invoke(object[] invokeValues, out MValueConst resultMValue)
         {
             var result = @delegate.DynamicInvoke(invokeValues);
@@ -482,7 +290,7 @@ namespace AltV.Net
                 return;
             }
 
-            Alt.Core.CreateMValue(out resultMValue, result);
+            core.CreateMValue(out resultMValue, result);
         }
 
         internal async Task<MValueConst> InvokeAsync(object[] invokeValues)
@@ -496,7 +304,7 @@ namespace AltV.Net
             //TODO: fix async with result
             var result = await (Task<object>) @delegate.DynamicInvoke(invokeValues);
             if (returnType == FunctionTypes.Void) return MValueConst.Nil;
-            Alt.Core.CreateMValue(out var mValueConst, result);
+            core.CreateMValue(out var mValueConst, result);
             return mValueConst;
         }
 
@@ -527,12 +335,12 @@ namespace AltV.Net
             var mValues = new MValueConst[size];
             for (var i = 0; i < size; i++)
             {
-                mValues[i] = new MValueConst(Alt.Core, currArgs[i]);
+                mValues[i] = new MValueConst(core, currArgs[i]);
             }
 
-            Alt.Core.CreateMValue(out var resultMValue, Call(mValues));
+            core.CreateMValue(out var resultMValue, Call(mValues));
             if (resultMValue.nativePointer != IntPtr.Zero) return resultMValue.nativePointer;
-            Alt.Core.CreateMValueNil(out resultMValue);
+            core.CreateMValueNil(out resultMValue);
             return resultMValue.nativePointer;
         }
     }
