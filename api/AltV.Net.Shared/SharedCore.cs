@@ -6,6 +6,7 @@ using System.Text;
 using AltV.Net.CApi;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
+using AltV.Net.Native;
 using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Shared.Utils;
 using AltV.Net.Types;
@@ -476,9 +477,9 @@ namespace AltV.Net.Shared
                 case MValueConst[] value:
                     CreateMValueList(out mValue, value, (ulong) value.Length);
                     return;
-                // case Invoker value:
-                //     CreateMValueFunction(out mValue, value.NativePointer);
-                //     return;
+                case Invoker value:
+                    CreateMValueFunction(out mValue, value.NativePointer);
+                    return;
                 // case MValueFunctionCallback value:
                 //     CreateMValueFunction(out mValue, Resource.CSharpResourceImpl.CreateInvoker(value));
                 //     return;

@@ -1,7 +1,15 @@
-﻿using AltV.Net.CApi.Libraries;
+﻿using System.Runtime.CompilerServices;
+using AltV.Net.CApi.Libraries;
 using AltV.Net.Native;
 
 #pragma warning disable CS8618
+
+[assembly: InternalsVisibleTo("AltV.Net")]
+[assembly: InternalsVisibleTo("AltV.Net.Shared")]
+[assembly: InternalsVisibleTo("AltV.Net.Client")]
+[assembly: InternalsVisibleTo("AltV.Net.Mock")]
+[assembly: InternalsVisibleTo("AltV.Net.Mock2")]
+[assembly: InternalsVisibleTo("AltV.Net.Async")]
 
 namespace AltV.Net.CApi
 {
