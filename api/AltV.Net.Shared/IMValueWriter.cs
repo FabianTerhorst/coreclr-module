@@ -2,6 +2,7 @@ using System.Collections;
 using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net
 {
@@ -33,13 +34,7 @@ namespace AltV.Net
 
         void Value(string value);
 
-        void Value(ICheckpoint value);
-
-        void Value(IBlip value);
-
-        void Value(IVehicle value);
-
-        void Value(IPlayer value);
+        void Value(ISharedBaseObject value);
 
         void Value(ICollection value);
 

@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net
 {
     public interface IRefContext : IDisposable
     {
-        public bool CheckIfExists(IBaseObject baseObject);
+        public bool CheckIfExists(ISharedBaseObject baseObject);
 
         public bool CheckIfExists(IWorldObject worldObject);
         public bool CheckIfExists(IEntity entity);
         
-        bool CreateRef(IBaseObject baseObject, bool safe = false);
+        bool CreateRef(ISharedBaseObject baseObject, bool safe = false);
     }
 
     public class RefContext : IRefContext
@@ -21,17 +22,17 @@ namespace AltV.Net
             return new RefContext(throwOnExistsCheck);
         }
         
-        private readonly LinkedList<IBaseObject> baseObjectRefs;
+        private readonly LinkedList<ISharedBaseObject> baseObjectRefs;
 
         private readonly bool throwOnExistsCheck;
 
         private RefContext(bool throwOnExistsCheck)
         {
-            baseObjectRefs = new LinkedList<IBaseObject>();
+            baseObjectRefs = new LinkedList<ISharedBaseObject>();
             this.throwOnExistsCheck = throwOnExistsCheck;
         }
 
-        public bool CreateRef(IBaseObject baseObject, bool safe)
+        public bool CreateRef(ISharedBaseObject baseObject, bool safe)
         {
             if (baseObject == null) return false;
             try
@@ -63,7 +64,7 @@ namespace AltV.Net
             return true;
         }
 
-        public bool CheckIfExists(IBaseObject baseObject)
+        public bool CheckIfExists(ISharedBaseObject baseObject)
         {
             if (baseObject.Exists) return true;
             if (throwOnExistsCheck)

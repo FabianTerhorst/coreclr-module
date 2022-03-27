@@ -6,10 +6,8 @@ using AltV.Net.Types;
 
 namespace AltV.Net.Elements.Entities
 {
-    public interface IBaseObject : ISharedBaseObject, IRefCountable
+    public interface IBaseObject : ISharedBaseObject
     {
-        IntPtr BaseObjectNativePointer { get; }
-
         /// <summary>
         /// Sets the given object into the meta data with the given key.
         /// </summary>

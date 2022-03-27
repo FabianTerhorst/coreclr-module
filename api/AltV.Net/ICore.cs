@@ -158,57 +158,6 @@ namespace AltV.Net
 
         void GetSyncedMetaData(string key, out MValueConst value);
 
-        void CreateMValueNil(out MValueConst mValue);
-
-        void CreateMValueBool(out MValueConst mValue, bool value);
-
-        void CreateMValueInt(out MValueConst mValue, long value);
-
-        void CreateMValueUInt(out MValueConst mValue, ulong value);
-
-
-        void CreateMValueDouble(out MValueConst mValue, double value);
-
-
-        void CreateMValueString(out MValueConst mValue, string value);
-
-
-        void CreateMValueList(out MValueConst mValue, MValueConst[] val, ulong size);
-
-
-        void CreateMValueDict(out MValueConst mValue, string[] keys, MValueConst[] val,
-            ulong size);
-
-
-        void CreateMValueCheckpoint(out MValueConst mValue, ICheckpoint value);
-
-
-        void CreateMValueBlip(out MValueConst mValue, IBlip value);
-
-
-        void CreateMValueVoiceChannel(out MValueConst mValue, IVoiceChannel value);
-
-
-        void CreateMValuePlayer(out MValueConst mValue, IPlayer value);
-
-
-        void CreateMValueVehicle(out MValueConst mValue, IVehicle value);
-
-
-        void CreateMValueFunction(out MValueConst mValue, IntPtr value);
-        
-        void CreateMValueVector3(out MValueConst mValue, Position value);
-        
-        void CreateMValueVector2(out MValueConst mValue, Vector2 value);
-        
-        void CreateMValueRgba(out MValueConst mValue, Rgba value);
-        
-        void CreateMValueByteArray(out MValueConst mValue, byte[] value);
-
-        void CreateMValue(out MValueConst mValue, object obj);
-
-        void CreateMValues(MValueConst[] mValues, object[] objects);
-
         bool FileExists(string path);
 
         string FileRead(string path);

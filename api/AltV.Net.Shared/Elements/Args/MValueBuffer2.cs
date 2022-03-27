@@ -3,6 +3,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 using AltV.Net.Shared;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Elements.Args
 {
@@ -15,7 +16,10 @@ namespace AltV.Net.Elements.Args
 
         public int size;
 
-        // todo backwards compatibility
+        [Obsolete("Use overload with core as first parameter instead")]
+        public MValueBuffer2(MValueConst[] values) : this(AltShared.Core, values) {
+        }
+        
         public MValueBuffer2(ISharedCore core, MValueConst[] values)
         {
             this.core = core;
@@ -340,10 +344,10 @@ namespace AltV.Net.Elements.Args
                 }
 
 
-                var listSize = Alt.Core.Library.Shared.MValueConst_GetListSize(mValue.nativePointer);
+                var listSize = core.Library.Shared.MValueConst_GetListSize(mValue.nativePointer);
                 var valueArrayRef = new IntPtr[listSize];
                 valuesList = new MValueConst[listSize];
-                Alt.Core.Library.Shared.MValueConst_GetList(mValue.nativePointer, valueArrayRef);
+                core.Library.Shared.MValueConst_GetList(mValue.nativePointer, valueArrayRef);
                 for (ulong i = 0; i < listSize; i++)
                 {
                     valuesList[i] = new MValueConst(core, valueArrayRef[i]);
@@ -364,7 +368,7 @@ namespace AltV.Net.Elements.Args
             size--;
         }
 
-        public bool GetNext<TEntity>(out TEntity value) where TEntity : IEntity
+        public bool GetNext<TEntity>(out TEntity value) where TEntity : ISharedBaseObject
         {
             if (size == 0)
             {
@@ -382,7 +386,7 @@ namespace AltV.Net.Elements.Args
 
             var entityType = BaseObjectType.Undefined;
             var ptr = mValue.GetEntityPointer(ref entityType);
-            var entity = Alt.Core.BaseBaseObjectPool.Get(ptr, entityType); 
+            var entity = core.BaseBaseObjectPool.Get(ptr, entityType); 
             if (entity != null)
             {
                 if (entity is TEntity typedEntity)

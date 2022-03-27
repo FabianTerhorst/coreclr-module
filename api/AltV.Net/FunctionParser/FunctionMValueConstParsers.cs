@@ -455,7 +455,7 @@ namespace AltV.Net.FunctionParser
                     return ParseString(in mValue, type, typeInfo);
                 case MValueConst.Type.List:
                     if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
-                        MValueAdapters.FromMValue(in mValue, type, out obj))
+                        Alt.Core.FromMValue(in mValue, type, out obj))
                     {
                         return obj;
                     }
@@ -465,7 +465,7 @@ namespace AltV.Net.FunctionParser
                     return ParseEntity(in mValue, type, typeInfo);
                 case MValueConst.Type.Dict:
                     if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
-                        MValueAdapters.FromMValue(in mValue, type, out obj))
+                        Alt.Core.FromMValue(in mValue, type, out obj))
                     {
                         return obj;
                     }
@@ -564,7 +564,7 @@ namespace AltV.Net.FunctionParser
                     if (type == FunctionTypes.Obj || (typeInfo?.IsList ?? type.BaseType == FunctionTypes.Array))
                     {
                         if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
-                            MValueAdapters.FromMValue(in mValue, type, out obj))
+                            Alt.Core.FromMValue(in mValue, type, out obj))
                         {
                             return true;
                         }
@@ -592,7 +592,7 @@ namespace AltV.Net.FunctionParser
                     if (type == FunctionTypes.Obj || (typeInfo?.IsDict ?? type.Name.StartsWith("Dictionary")))
                     {
                         if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
-                            MValueAdapters.FromMValue(in mValue, type, out obj))
+                            Alt.Core.FromMValue(in mValue, type, out obj))
                         {
                             return true;
                         }
@@ -1110,7 +1110,7 @@ namespace AltV.Net.FunctionParser
         public static object ParseConvertible(in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            return MValueAdapters.FromMValue(in mValue, type, out var obj) ? obj : null;
+            return Alt.Core.FromMValue(in mValue, type, out var obj) ? obj : null;
         }
 
         public static object ParseEnum(in MValueConst value, Type type, FunctionTypeInfo typeInfo)

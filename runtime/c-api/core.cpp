@@ -81,33 +81,8 @@ alt::MValueConst* Core_CreateMValueDict(alt::ICore* core, const char* keys[], al
     return new alt::MValueConst(mValue);
 }
 
-/*alt::MValueBaseObject* Core_CreateMValueBaseObject(alt::ICore* core, alt::Ref<alt::IBaseObject>* value) {
-    auto mValue = core->CreateMValueBaseObject(*value);
-    return new alt::Ref(mValue);
-}*/
-
-alt::MValueConst* Core_CreateMValueCheckpoint(alt::ICore* core, alt::ICheckpoint* value) {
+alt::MValueConst* Core_CreateMValueBaseObject(alt::ICore* core, alt::IBaseObject* value) {
     auto mValue = core->CreateMValueBaseObject(value);
-    return new alt::MValueConst(mValue);
-}
-
-alt::MValueConst* Core_CreateMValueBlip(alt::ICore* core, alt::IBlip* value) {
-    auto mValue = core->CreateMValueBaseObject(value);
-    return new alt::MValueConst(mValue);
-}
-
-alt::MValueConst* Core_CreateMValueVoiceChannel(alt::ICore* core, alt::IVoiceChannel* value) {
-    auto mValue = core->CreateMValueBaseObject(value);
-    return new alt::MValueConst(mValue);
-}
-
-alt::MValueConst* Core_CreateMValuePlayer(alt::ICore* core, alt::IPlayer* value) {
-    auto mValue = core->CreateMValueBaseObject(value);
-    return new alt::MValueConst(mValue);
-}
-
-alt::MValueConst* Core_CreateMValueVehicle(alt::ICore* core, alt::IVehicle* value) {
-    alt::MValueConst mValue = core->CreateMValueBaseObject(value);
     return new alt::MValueConst(mValue);
 }
 
