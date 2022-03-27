@@ -561,17 +561,16 @@ namespace AltV.Net.Shared
                     }
 
                     return;
-                // case IWritable writable:
-                //     writer = new MValueWriter2();
-                //     writable.OnWrite(writer);
-                //     writer.ToMValue(out mValue);
-                //     return;
-                // case IMValueConvertible convertible:
-                //     writer = new MValueWriter2();
-                //     convertible.GetAdapter().ToMValue(obj, writer);
-                //     writer.ToMValue(out mValue);
-                //     return;
-                // todo
+                case IWritable writable:
+                    writer = new MValueWriter2(this);
+                    writable.OnWrite(writer);
+                    writer.ToMValue(out mValue);
+                    return;
+                case IMValueConvertible convertible:
+                    writer = new MValueWriter2(this);
+                    convertible.GetAdapter().ToMValue(obj, writer);
+                    writer.ToMValue(out mValue);
+                    return;
                 case Position position:
                     CreateMValueVector3(out mValue, position);
                     return;
