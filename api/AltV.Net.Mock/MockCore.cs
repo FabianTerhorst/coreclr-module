@@ -14,6 +14,7 @@ namespace AltV.Net.Mock
 {
     public class MockCore : ICore
     {
+        ISharedNativeResource ISharedCore.Resource => Resource;
         public IntPtr NativePointer { get; }
 
         public ILibrary Library { get; }

@@ -81,7 +81,7 @@ namespace AltV.Net
             }
         }
 
-        public INativeResource Resource { get; }
+        public override INativeResource Resource { get; }
 
         private readonly Thread MainThread;
 

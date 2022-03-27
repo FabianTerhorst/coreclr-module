@@ -25,6 +25,7 @@ namespace AltV.Net.Shared
             Library = library;
         }
         
+        public abstract ISharedNativeResource Resource { get; }
         public abstract IReadOnlyEntityPool<ISharedPlayer> PlayerPool { get; }
         public abstract IReadOnlyEntityPool<ISharedVehicle> VehiclePool { get; }
         public abstract IReadOnlyBaseBaseObjectPool BaseBaseObjectPool { get; }
@@ -480,9 +481,9 @@ namespace AltV.Net.Shared
                 case Invoker value:
                     CreateMValueFunction(out mValue, value.NativePointer);
                     return;
-                // case MValueFunctionCallback value:
-                //     CreateMValueFunction(out mValue, Resource.CSharpResourceImpl.CreateInvoker(value));
-                //     return;
+                case MValueFunctionCallback value:
+                    CreateMValueFunction(out mValue, Resource.CSharpResourceImpl.CreateInvoker(value));
+                    return;
                 // case Function function:
                 //     CreateMValueFunction(out mValue,
                 //         Resource.CSharpResourceImpl.CreateInvoker(function.Call));
