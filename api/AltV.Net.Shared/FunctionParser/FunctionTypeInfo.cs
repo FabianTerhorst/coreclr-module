@@ -15,12 +15,6 @@ namespace AltV.Net.FunctionParser
 
         public readonly bool IsPlayer;
 
-        public readonly bool IsBlip;
-
-        public readonly bool IsCheckpoint;
-
-        public readonly bool IsColShape;
-
         public readonly bool IsDict;
 
         public readonly bool IsList;
@@ -125,18 +119,12 @@ namespace AltV.Net.FunctionParser
                 IsEntity = true;
                 IsVehicle = paramType == FunctionTypes.Vehicle || interfaces.Contains(FunctionTypes.Vehicle);
                 IsPlayer = paramType == FunctionTypes.Player || interfaces.Contains(FunctionTypes.Player);
-                IsBlip = paramType == FunctionTypes.Blip || interfaces.Contains(FunctionTypes.Blip);
-                IsCheckpoint = paramType == FunctionTypes.Checkpoint || interfaces.Contains(FunctionTypes.Checkpoint);
-                IsColShape = paramType == FunctionTypes.ColShape || interfaces.Contains(FunctionTypes.ColShape);
             }
             else
             {
                 IsEntity = false;
                 IsVehicle = false;
                 IsPlayer = false;
-                IsBlip = false;
-                IsCheckpoint = false;
-                IsColShape = false;
             }
 
             IsMValueConvertible = interfaces.Contains(FunctionTypes.MValueConvertible);

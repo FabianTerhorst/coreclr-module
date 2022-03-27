@@ -15,6 +15,10 @@ namespace AltV.Net.Mock
     public class MockCore : ICore
     {
         ISharedNativeResource ISharedCore.Resource => Resource;
+        ISharedEntity ISharedCore.GetEntityById(ushort id)
+        {
+            return GetEntityById(id);
+        }
         public IntPtr NativePointer { get; }
 
         public ILibrary Library { get; }

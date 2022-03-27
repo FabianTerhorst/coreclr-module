@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Linq;
 using System.Threading.Tasks;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.FunctionParser
 {
@@ -53,7 +54,7 @@ namespace AltV.Net.FunctionParser
             for (int i = 0, length = types.Length; i < length; i++)
             {
                 var type = types[i];
-                if (typeof(IBaseObject).IsAssignableFrom(type))
+                if (typeof(ISharedBaseObject).IsAssignableFrom(type))
                 {
                     if (type.IsAssignableFrom(parameters[i].ParameterType))
                     {

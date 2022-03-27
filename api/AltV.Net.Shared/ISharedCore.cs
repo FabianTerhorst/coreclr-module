@@ -14,6 +14,8 @@ namespace AltV.Net.Shared
         
         ISharedNativeResource Resource { get; }
 
+        ISharedEntity GetEntityById(ushort id);
+
         IntPtr NativePointer { get; }
 
         void LogInfo(string message);

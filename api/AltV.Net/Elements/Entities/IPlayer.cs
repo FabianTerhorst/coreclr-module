@@ -23,11 +23,6 @@ namespace AltV.Net.Elements.Entities
         bool IsConnected { get; }
 
         /// <summary>
-        /// Returns the players alt:V username
-        /// </summary>
-        string Name { get; }
-
-        /// <summary>
         /// Returns the players Social Club ID
         /// </summary>
         ulong SocialClubId { get; }

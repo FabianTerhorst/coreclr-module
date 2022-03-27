@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using AltV.Net.Elements.Args;
+using AltV.Net.Shared;
 
 namespace AltV.Net.FunctionParser
 {
@@ -9,10 +10,12 @@ namespace AltV.Net.FunctionParser
     /// </summary>
     internal class FunctionWrapper
     {
+        private readonly ISharedCore core;
         private readonly MValueFunctionCallback function;
 
-        public FunctionWrapper(MValueFunctionCallback function)
+        public FunctionWrapper(ISharedCore core, MValueFunctionCallback function)
         {
+            this.core = core;
             this.function = function;
         }
 
@@ -20,7 +23,7 @@ namespace AltV.Net.FunctionParser
         {
             var length = args.Length;
             var mValues = new MValueConst[length];
-            Alt.Core.CreateMValues(mValues, args);
+            core.CreateMValues(mValues, args);
             var argsPointers = Marshal.AllocHGlobal(length * IntPtr.Size);
             for (var i = 0; i < length; i++)
             {
@@ -35,7 +38,7 @@ namespace AltV.Net.FunctionParser
 
             Marshal.FreeHGlobal(argsPointers);
 
-            var resultMValue = new MValueConst(Alt.Core, result);
+            var resultMValue = new MValueConst(core, result);
             var resultObj = resultMValue.ToObject();
             resultMValue.Dispose();
             return resultObj;

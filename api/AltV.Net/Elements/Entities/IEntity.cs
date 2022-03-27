@@ -7,13 +7,6 @@ namespace AltV.Net.Elements.Entities
 {
     public interface IEntity : ISharedEntity, IWorldObject
     {
-        IntPtr EntityNativePointer { get; }
-        
-        /// <summary>
-        /// Get the entity id.
-        /// </summary>
-        /// <exception cref="EntityRemovedException">This entity was removed</exception>
-        ushort Id { get; }
         
         /// <summary>
         /// Get the network owner, or null if none is present
