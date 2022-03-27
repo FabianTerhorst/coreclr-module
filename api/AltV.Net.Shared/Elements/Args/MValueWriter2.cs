@@ -13,9 +13,10 @@ namespace AltV.Net.Elements.Args
     {
         private readonly ISharedCore core;
         
-        [Obsolete("Use overload with core as first parameter instead")]
+        [Obsolete("Use Alt.CreateMValueWriter or overload with ISharedCore argument instead")]
         public MValueWriter2() : this(AltShared.Core)
         {
+            AltShared.Core.LogWarning("new MValueWriter2() is deprecated, use Alt.CreateMValueWriter or overload with ISharedCore argument instead");
         }
         
         public MValueWriter2(ISharedCore core)

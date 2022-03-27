@@ -16,8 +16,9 @@ namespace AltV.Net.Elements.Args
 
         public int size;
 
-        [Obsolete("Use overload with core as first parameter instead")]
+        [Obsolete("Use Alt.CreateMValueBuffer or overload with ISharedCore argument instead")]
         public MValueBuffer2(MValueConst[] values) : this(AltShared.Core, values) {
+            AltShared.Core.LogWarning("new MValueBuffer2(MValueConst[]) is deprecated, use Alt.CreateMValueBuffer or overload with ISharedCore argument instead");
         }
         
         public MValueBuffer2(ISharedCore core, MValueConst[] values)

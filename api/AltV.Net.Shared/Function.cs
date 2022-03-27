@@ -26,10 +26,10 @@ namespace AltV.Net
             FunctionTypeInfo[] typeInfos, IPlayer player,
             MValueConst[] values);*/
 
-        [Obsolete("Use overload with core as first argument instead")]
+        [Obsolete("Use Alt.CreateFunction or overload with ISharedCore argument instead")]
         public static Function Create<T>(T func) where T : Delegate
         {
-            AltShared.Core.LogWarning("Function.Create<T>(T func) is deprecated, use overload with core as first argument instead");
+            AltShared.Core.LogWarning("Function.Create<T>(T func) is deprecated, use Alt.CreateFunction or overload with ISharedCore argument instead");
             return Create(AltShared.Core, func);
         }
         
