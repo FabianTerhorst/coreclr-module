@@ -8,7 +8,6 @@ namespace AltV.Net.Elements.Entities
 {
     public interface IVehicle : ISharedVehicle, IEntity
     {
-        IntPtr VehicleNativePointer { get; }
         /// <summary>
         /// Get the current driver of the 
         /// </summary>
@@ -327,11 +326,6 @@ namespace AltV.Net.Elements.Entities
         /// Fuel Tank Health
         /// </summary>
         int PetrolTankHealth { get; set; }
-
-        /// <summary>
-        /// Amount of Wheels
-        /// </summary>
-        byte WheelsCount { get; }
 
         /// <summary>
         /// Is the type burst

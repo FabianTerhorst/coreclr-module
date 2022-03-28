@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Native;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Elements.Entities
 {
@@ -34,6 +35,7 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
+        ISharedPlayer ISharedEntity.NetworkOwner => NetworkOwner;
         
         public Rotation Rotation
         {

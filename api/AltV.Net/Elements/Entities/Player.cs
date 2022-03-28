@@ -5,6 +5,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Refs;
 using AltV.Net.Native;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Elements.Entities
 {
@@ -409,6 +410,7 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
+        ISharedVehicle ISharedPlayer.Vehicle => Vehicle;
 
         public uint CurrentWeapon
         {
@@ -444,6 +446,7 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
+        ISharedEntity ISharedPlayer.EntityAimingAt => EntityAimingAt;
 
         public Position EntityAimOffset
         {
