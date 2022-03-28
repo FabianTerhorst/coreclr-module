@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using AltV.Net.Data;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Async.Elements.Entities
 {
@@ -25,7 +26,8 @@ namespace AltV.Net.Async.Elements.Entities
                 }
             }
         }
-
+        ISharedPlayer ISharedEntity.NetworkOwner => NetworkOwner;
+        
         public Rotation Rotation
         {
             get

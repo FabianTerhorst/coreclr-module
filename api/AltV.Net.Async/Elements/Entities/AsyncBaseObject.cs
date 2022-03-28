@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Async.Elements.Entities
 {
@@ -12,6 +14,9 @@ namespace AltV.Net.Async.Elements.Entities
     {
         public IntPtr NativePointer => BaseObject.NativePointer;
         public IntPtr BaseObjectNativePointer => BaseObject.BaseObjectNativePointer;
+
+        public ICore Core => BaseObject.Core;
+        ISharedCore ISharedBaseObject.Core => BaseObject.Core;
 
         public bool Exists
         {
@@ -46,6 +51,51 @@ namespace AltV.Net.Async.Elements.Entities
         }
 
         public bool GetMetaData<T>(string key, out T result)
+        {
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                {
+                    result = default;
+                    return false;
+                }
+
+                return BaseObject.GetMetaData(key, out result);
+            }
+        }
+
+        public bool GetMetaData(string key, out int result)
+        {
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                {
+                    result = default;
+                    return false;
+                }
+
+                return BaseObject.GetMetaData(key, out result);
+            }
+        }
+
+        public bool GetMetaData(string key, out uint result)
+        {
+            AsyncContext.RunAll();
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject))
+                {
+                    result = default;
+                    return false;
+                }
+
+                return BaseObject.GetMetaData(key, out result);
+            }
+        }
+
+        public bool GetMetaData(string key, out float result)
         {
             AsyncContext.RunAll();
             lock (BaseObject)
