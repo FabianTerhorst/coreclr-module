@@ -1,5 +1,7 @@
 cmake_minimum_required (VERSION 3.8)
 
+include(../cpp-sdk/CMakeLists.txt)
+
 set(TARGET_NAME core_clr_client)
 
 project(${TARGET_NAME})
@@ -47,6 +49,4 @@ target_link_libraries(${TARGET_NAME} PRIVATE
         "${PROJECT_SOURCE_DIR}/thirdparty/coreclr/nethost.lib"
 )
 
-include(../cpp-sdk/CMakeLists.txt)
-
-install(FILES ${CMAKE_BINARY_DIR}/src/csharp-module.dll DESTINATION "${CMAKE_SOURCE_DIR}/../../server/modules")
+add_dependencies(${TARGET_NAME} alt-sdk)
