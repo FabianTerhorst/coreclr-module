@@ -14,11 +14,10 @@ alt::IEntity* Player_GetEntity(alt::IPlayer* player) {
 }
 
 
-uint8_t Player_GetVehicleID(alt::IPlayer* player, uint16_t& id) {
+alt::IVehicle* Player_GetVehicle(alt::IPlayer* player) {
     auto vehicle = player->GetVehicle();
-    if (vehicle.IsEmpty() || vehicle.Get() == nullptr) return 0;
-    id = vehicle->GetID();
-    return 1;
+    if (vehicle.IsEmpty()) return nullptr;
+    return vehicle.Get();
 }
 
 char* Player_GetName(alt::IPlayer* player) {

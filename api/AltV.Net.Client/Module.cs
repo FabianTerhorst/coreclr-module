@@ -110,9 +110,15 @@ namespace AltV.Net.Client
             DisconnectEventHandler.GetEvents().ForEachCatching(fn => fn(), $"event {nameof(OnPlayerDisconnect)}");
         }
 
-        public void OnPlayerEnterVehicle(ushort id, byte seat)
+        public void OnPlayerEnterVehicle(IntPtr pointer, byte seat)
         {
-            VehiclePool.Get(id, out var vehicle);
+            var vehicle = VehiclePool.Get(pointer);
+            if (vehicle is null)
+            {
+                Console.WriteLine("Invalid vehicle: " + pointer);
+                return;
+            }
+
             EnterVehicleEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, seat), $"event {nameof(OnPlayerEnterVehicle)}");
         }
 
@@ -147,10 +153,10 @@ namespace AltV.Net.Client
             PlayerPool.Create(Core, pointer, id);
         }
 
-        public void OnRemovePlayer(ushort id)
+        public void OnRemovePlayer(IntPtr pointer)
         {
-            Alt.Log("Removing player " + id);
-            PlayerPool.Remove(id);
+            Alt.Log("Removing player " + pointer);
+            PlayerPool.Remove(pointer);
         }
 
         public void OnCreateVehicle(IntPtr pointer, ushort id)
@@ -159,10 +165,10 @@ namespace AltV.Net.Client
             VehiclePool.Create(Core, pointer, id);
         }
 
-        public void OnRemoveVehicle(ushort id)
+        public void OnRemoveVehicle(IntPtr pointer)
         {
-            Alt.Log("Removing vehicle " + id);
-            VehiclePool.Remove(id);
+            Alt.Log("Removing vehicle " + pointer);
+            VehiclePool.Remove(pointer);
         }
         
         public Function.Function AddServerEventListener(string eventName, Function.Function function)
@@ -195,35 +201,33 @@ namespace AltV.Net.Client
             return function;
         }
 
-        public bool GetEntityById(ushort id, [MaybeNullWhen(false)] out IEntity entity)
-        {
-            unsafe
-            {
-                byte type = 0;
-                entity = default;
-                if (this.Core.Library.Entity_GetTypeByID(this.Core.NativePointer, id, &type) != 1) return false;
-                
-                switch ((BaseObjectType) type)
-                {
-                    case BaseObjectType.Player:
-                    case BaseObjectType.LocalPlayer:
-                    {
-                        PlayerPool.Get(id, out var player);
-                        entity = player;
-                        return true;
-                    }
-                    case BaseObjectType.Vehicle:
-                    {
-                        VehiclePool.Get(id, out var vehicle);
-                        entity = vehicle;
-                        return true;
-                    }
-                    // todo
-                    default:
-                        return false;
-                }
-            }
-        }
+        // public bool GetEntityById(ushort id, [MaybeNullWhen(false)] out IEntity entity)
+        // {
+        //     unsafe
+        //     {
+        //         byte type = 0;
+        //         entity = default;
+        //         if (this.Core.Library.Entity_GetTypeByID(this.Core.NativePointer, id, &type) != 1) return false;
+        //         
+        //         switch ((BaseObjectType) type)
+        //         {
+        //             case BaseObjectType.Player:
+        //             case BaseObjectType.LocalPlayer:
+        //             {
+        //                 entity = PlayerPool.Get(id);
+        //                 return entity is not null;
+        //             }
+        //             case BaseObjectType.Vehicle:
+        //             {
+        //                 entity = VehiclePool.Get(id);
+        //                 return entity is not null;
+        //             }
+        //             // todo
+        //             default:
+        //                 return false;
+        //         }
+        //     }
+        // }
 
         public HandlingData? GetHandlingByModelHash(uint modelHash)
         {

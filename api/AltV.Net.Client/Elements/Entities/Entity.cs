@@ -17,6 +17,7 @@ namespace AltV.Net.Client.Elements.Entities
         }
         
         public IntPtr EntityNativePointer { get; }
+        public override IntPtr NativePointer => EntityNativePointer;
         
         public Entity(ICore core, IntPtr entityPointer, ushort id) : base(core, GetWorldObjectPointer(core, entityPointer))
         {
@@ -44,12 +45,9 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    byte exists = 0;
-                    ushort id = 0;
-                    Core.Library.Entity_GetNetOwnerID(EntityNativePointer, &exists, &id);
-                    if (exists != 1) return null;
-                    if (!Alt.Module.PlayerPool.Get(id, out var player)) return null;
-                    return player;
+                    var ptr = Core.Library.Entity_GetNetOwner(EntityNativePointer);
+                    if (ptr == IntPtr.Zero) return null;
+                    return Alt.Module.PlayerPool.Get(ptr);
                 }
             }
         }

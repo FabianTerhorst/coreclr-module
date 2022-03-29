@@ -5,6 +5,7 @@ namespace AltV.Net.Client.Elements.Interfaces
     public interface IBaseObject
     {
         public IntPtr BaseObjectNativePointer { get; }
+        public IntPtr NativePointer { get; }
         BaseObjectType Type { get; }
 
         public void SetData<T>(string key, T value);

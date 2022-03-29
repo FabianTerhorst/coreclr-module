@@ -24,15 +24,10 @@ uint32_t Entity_GetModel(alt::IEntity* entity) {
     return entity->GetModel();
 }
 
-void Entity_GetNetOwnerID(alt::IEntity* entity, uint8_t& exists, uint16_t& id) {
+alt::IPlayer* Entity_GetNetOwner(alt::IEntity* entity) {
     auto owner = entity->GetNetworkOwner();
-    if (owner.IsEmpty()) {
-        exists = false;
-        return;
-    }
-
-    exists = true;
-    id = owner->GetID();
+    if (owner.IsEmpty()) return nullptr;
+    return owner.Get();
 }
 
 int32_t Entity_GetScriptID(alt::IEntity* entity) {

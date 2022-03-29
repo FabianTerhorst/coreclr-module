@@ -31,12 +31,10 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    ushort id = 0;
-                    var success = Core.Library.Player_GetVehicleID(PlayerNativePointer, &id);
-                    if (success == 0) return null;
+                    var ptr = Core.Library.Player_GetVehicle(PlayerNativePointer);
+                    if (ptr == IntPtr.Zero) return null;
                     
-                    Alt.Module.VehiclePool.Get(id, out var vehicle);
-                    return vehicle;
+                    return Alt.Module.VehiclePool.Get(ptr);
                 }
             }
         }
@@ -121,12 +119,14 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    ushort id = 0;
-                    var success = this.Core.Library.Player_GetEntityAimingAtID(this.PlayerNativePointer, &id);
-                    if (success == 0) return null;
-
-                    if (!Alt.Module.GetEntityById(id, out var entity)) return null;
-                    return entity;
+                    // ushort id = 0;
+                    // var success = this.Core.Library.Player_GetEntityAimingAtID(this.PlayerNativePointer, &id);
+                    // if (success == 0) return null;
+                    //
+                    // if (!Alt.Module.GetEntityById(id, out var entity)) return null;
+                    // return entity;
+                    // todo
+                    return null;
                 }
             }
         }

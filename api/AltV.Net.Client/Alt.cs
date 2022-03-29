@@ -17,9 +17,20 @@ namespace AltV.Net.Client
             Module = module;
         }
 
-        public static bool GetEntityById(ushort id, [MaybeNullWhen(false)] out IEntity entity) => Module.GetEntityById(id, out entity);
-        public static bool GetPlayerById(ushort id, [MaybeNullWhen(false)] out IPlayer player) => Module.PlayerPool.Get(id, out player);
-        public static bool GetVehicleById(ushort id, [MaybeNullWhen(false)] out IVehicle vehicle) => Module.VehiclePool.Get(id, out vehicle);
+        // public static bool GetEntityById(ushort id, [MaybeNullWhen(false)] out IEntity entity) => Module.GetEntityById(id, out entity);
+        
+        // public static bool GetPlayerById(ushort id, [MaybeNullWhen(false)] out IPlayer player)
+        // {
+        //     player = Module.PlayerPool.Get(id);
+        //     return player is not null;
+        // }
+        //
+        // public static bool GetVehicleById(ushort id, [MaybeNullWhen(false)] out IVehicle vehicle)
+        // {
+        //     vehicle = Module.VehiclePool.Get(id);
+        //     return vehicle is not null;
+        // }
+        
         public static ILocalPlayer LocalPlayer => Module.PlayerPool.LocalPlayer;
 
         public static HandlingData? GetHandlingByModelHash(uint modelHash) => Module.GetHandlingByModelHash(modelHash);

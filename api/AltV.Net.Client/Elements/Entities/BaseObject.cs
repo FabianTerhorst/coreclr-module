@@ -11,6 +11,7 @@ namespace AltV.Net.Client.Elements.Entities
     {
         protected ICore Core { get; }
         public IntPtr BaseObjectNativePointer { get; }
+        public virtual IntPtr NativePointer => BaseObjectNativePointer;
 
         public BaseObject(ICore core, IntPtr baseObjectPointer)
         {

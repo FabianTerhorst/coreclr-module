@@ -5,30 +5,24 @@ namespace AltV.Net.Client.Elements.Pools
 {
     public interface IEntityPool<TEntity> where TEntity : IEntity
     {
-        void Create(ICore server, IntPtr entityPointer, ushort id);
+        TEntity? Create(ICore server, IntPtr entityPointer, ushort id);
         
-        void Create(ICore server, IntPtr entityPointer, ushort id, out TEntity entity);
-        
-        void Create(ICore server, IntPtr entityPointer, out TEntity entity);
+        TEntity? Create(ICore server, IntPtr entityPointer);
 
         void Add(TEntity entity);
 
         bool Remove(TEntity entity);
 
-        bool Remove(ushort id);
+        bool Remove(IntPtr entityPointer);
 
-        bool Get(ushort id, out TEntity entity);
+        TEntity? Get(IntPtr entityPointer);
 
-        bool GetOrCreate(ICore server, IntPtr entityPointer, ushort entityId, out TEntity entity);
-        bool GetOrCreate(ICore server, IntPtr entityPointer, out TEntity entity);
+        TEntity GetOrCreate(ICore server, IntPtr entityPointer, ushort entityId);
+        TEntity GetOrCreate(ICore server, IntPtr entityPointer);
 
         ICollection<TEntity> GetAllEntities();
 
-        KeyValuePair<ushort, TEntity>[] GetEntitiesArray();
-
-        // void ForEach(IBaseObjectCallback<TEntity> baseObjectCallback);
-        //
-        // Task ForEach(IAsyncBaseObjectCallback<TEntity> asyncBaseObjectCallback);
+        KeyValuePair<IntPtr, TEntity>[] GetEntitiesArray();
 
         void OnAdd(TEntity entity);
 

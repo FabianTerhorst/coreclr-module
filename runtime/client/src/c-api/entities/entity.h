@@ -9,7 +9,7 @@ extern "C"
     EXPORT uint8_t Entity_GetTypeByID(alt::ICore* core, uint16_t id, uint8_t& type);
 
     EXPORT uint32_t Entity_GetModel(alt::IEntity* entity);
-    EXPORT void Entity_GetNetOwnerID(alt::IEntity* entity, uint8_t& exists, uint16_t& id);
+    EXPORT alt::IPlayer* Entity_GetNetOwner(alt::IEntity* entity);
     EXPORT int32_t Entity_GetScriptID(alt::IEntity* entity);
     EXPORT void Entity_GetRotation(alt::IEntity* entity, vector3_t& rot);
 

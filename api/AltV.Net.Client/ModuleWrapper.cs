@@ -81,9 +81,9 @@ namespace AltV.Net.Client
             _module.OnCreatePlayer(pointer, id);
         }
 
-        public static void OnRemovePlayer(ushort id)
+        public static void OnRemovePlayer(IntPtr pointer)
         {
-            _module.OnRemovePlayer(id);
+            _module.OnRemovePlayer(pointer);
         }
 
         public static void OnCreateVehicle(IntPtr pointer, ushort id)
@@ -91,9 +91,9 @@ namespace AltV.Net.Client
             _module.OnCreateVehicle(pointer, id);
         }
 
-        public static void OnRemoveVehicle(ushort id)
+        public static void OnRemoveVehicle(IntPtr pointer)
         {
-            _module.OnRemoveVehicle(id);
+            _module.OnRemoveVehicle(pointer);
         }
 
         public static void OnTick()
@@ -111,9 +111,9 @@ namespace AltV.Net.Client
             _module.OnPlayerDisconnect();
         }
 
-        public static void OnPlayerEnterVehicle(ushort id, byte seat)
+        public static void OnPlayerEnterVehicle(IntPtr pointer, byte seat)
         {
-            _module.OnPlayerEnterVehicle(id, seat);
+            _module.OnPlayerEnterVehicle(pointer, seat);
         }
 
         public static void OnResourceError(string name)

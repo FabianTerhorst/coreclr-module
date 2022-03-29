@@ -97,7 +97,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
         case alt::CEvent::Type::PLAYER_ENTER_VEHICLE:
         {
             auto playerEnterVehicleEvent = (alt::CPlayerEnterVehicleEvent*)ev;
-            OnPlayerEnterVehicleDelegate(playerEnterVehicleEvent->GetTarget()->GetID(), playerEnterVehicleEvent->GetSeat());
+            OnPlayerEnterVehicleDelegate(playerEnterVehicleEvent->GetTarget().Get(), playerEnterVehicleEvent->GetSeat());
             break;
         }
 #pragma endregion
@@ -170,12 +170,12 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::Ref<alt::IBaseObject> objectRef
     switch (object->GetType()) {
         case alt::IBaseObject::Type::VEHICLE:
         {
-            OnRemoveVehicleDelegate(dynamic_cast<alt::IEntity*>(object)->GetID());
+            OnRemoveVehicleDelegate(dynamic_cast<alt::IVehicle*>(object));
             break;
         }
         case alt::IBaseObject::Type::PLAYER:
         {
-            OnRemovePlayerDelegate(dynamic_cast<alt::IEntity*>(object)->GetID());
+            OnRemovePlayerDelegate(dynamic_cast<alt::IPlayer*>(object));
             break;
         }
     }

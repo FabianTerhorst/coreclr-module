@@ -9,14 +9,14 @@ namespace AltV.Net.Client.CApi.Events
     public delegate void ConsoleCommandModuleDelegate(string name, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] string[] args, int argsSize);
     
     public delegate void CreatePlayerModuleDelegate(IntPtr pointer, ushort id);
-    public delegate void RemovePlayerModuleDelegate(ushort id);
+    public delegate void RemovePlayerModuleDelegate(IntPtr pointer);
     
     public delegate void CreateVehicleModuleDelegate(IntPtr pointer, ushort id);
-    public delegate void RemoveVehicleModuleDelegate(ushort id);
+    public delegate void RemoveVehicleModuleDelegate(IntPtr pointer);
 
     public delegate void PlayerSpawnModuleDelegate();
     public delegate void PlayerDisconnectModuleDelegate();
-    public delegate void PlayerEnterVehicleModuleDelegate(ushort id, byte seat);
+    public delegate void PlayerEnterVehicleModuleDelegate(IntPtr pointer, byte seat);
 
     public delegate void ResourceErrorModuleDelegate(string name);
     public delegate void ResourceStartModuleDelegate(string name);
