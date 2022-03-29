@@ -1,6 +1,6 @@
 #pragma once
 #include <objidlbase.h>
-#include "../../thirdparty/altv-cpp-api/SDK.h"
+#include "../../../cpp-sdk/SDK.h"
 #include "./CSharpScriptRuntime.h"
 #include "eventDelegates.h"
 

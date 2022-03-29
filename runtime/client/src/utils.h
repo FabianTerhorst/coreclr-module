@@ -2,7 +2,7 @@
 #include <string>
 #include <windows.h>
 #include <combaseapi.h>
-#include "../thirdparty/altv-cpp-api/SDK.h"
+#include "../../cpp-sdk/SDK.h"
 #include <string>
 #include <codecvt>
 #include "coreclr/coreclr_delegates.h"

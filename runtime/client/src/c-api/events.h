@@ -1,5 +1,5 @@
 #pragma once
-#include "altv-cpp-api/SDK.h"
+#include "../../../cpp-sdk/SDK.h"
 #include "../runtime/CSharpResourceImpl.h"
 
 EXPORT void Event_Cancel(alt::CEvent* event);

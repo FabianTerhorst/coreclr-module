@@ -1,8 +1,8 @@
 ﻿#define ALT_CLIENT_API
 #include <exceptions/LoadException.h>
-#include "../thirdparty/altv-cpp-api/SDK.h"
+#include "../../cpp-sdk/SDK.h"
 #include "runtime/CSharpScriptRuntime.h"
-#include "../thirdparty/altv-cpp-api/version/version.h"
+#include "../../cpp-sdk/version/version.h"
 #include <Log.h>
 
 using namespace alt;

@@ -1,5 +1,5 @@
 #pragma once
-#include "altv-cpp-api/ICore.h"
+#include "../../../cpp-sdk/ICore.h"
 
 typedef void (* TickDelegate_t)();
 typedef void (* ClientEventDelegate_t)(const char* name, alt::MValueConst** args, uint64_t size);

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <sstream>
-#include "altv-cpp-api/SDK.h"
+#include "../../cpp-sdk/SDK.h"
 
 class Log
 {

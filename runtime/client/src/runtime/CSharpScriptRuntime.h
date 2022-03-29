@@ -1,6 +1,6 @@
 #pragma once
 #include <coreclr/CoreCLR.h>
-#include "../../thirdparty/altv-cpp-api/SDK.h"
+#include "../../../cpp-sdk/SDK.h"
 
 class CSharpScriptRuntime : public alt::IScriptRuntime {
 public:

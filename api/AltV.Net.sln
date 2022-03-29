@@ -58,6 +58,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.CApi", "AltV.Net.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.Shared", "AltV.Net.Shared\AltV.Net.Shared.csproj", "{5C813942-20D2-4D43-9DCA-963B911698DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltV.Net.Client.CApi", "AltV.Net.Client.CApi\AltV.Net.Client.CApi.csproj", "{2B649305-CA26-45BE-AAF8-6253722DB9B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -245,5 +247,11 @@ Global
 		{5C813942-20D2-4D43-9DCA-963B911698DA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5C813942-20D2-4D43-9DCA-963B911698DA}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
 		{5C813942-20D2-4D43-9DCA-963B911698DA}.Testing|Any CPU.Build.0 = Debug|Any CPU
+		{2B649305-CA26-45BE-AAF8-6253722DB9B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B649305-CA26-45BE-AAF8-6253722DB9B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B649305-CA26-45BE-AAF8-6253722DB9B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B649305-CA26-45BE-AAF8-6253722DB9B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B649305-CA26-45BE-AAF8-6253722DB9B6}.Testing|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B649305-CA26-45BE-AAF8-6253722DB9B6}.Testing|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal

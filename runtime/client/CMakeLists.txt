@@ -47,4 +47,6 @@ target_link_libraries(${TARGET_NAME} PRIVATE
         "${PROJECT_SOURCE_DIR}/thirdparty/coreclr/nethost.lib"
 )
 
+include(../cpp-sdk/CMakeLists.txt)
+
 install(FILES ${CMAKE_BINARY_DIR}/src/csharp-module.dll DESTINATION "${CMAKE_SOURCE_DIR}/../../server/modules")

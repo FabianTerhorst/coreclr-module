@@ -4,7 +4,7 @@
 #include "coreclr/hostfxr.h"
 #include "coreclr/coreclr_delegates.h"
 #include "utils.h"
-#include "altv-cpp-api/ICore.h"
+#include "../../../cpp-sdk/ICore.h"
 
 typedef int (* CoreClrDelegate_t)(void* args, int argsLength);
 

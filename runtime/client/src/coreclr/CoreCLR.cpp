@@ -1,6 +1,6 @@
 #include "coreclr/nethost.h"
 #include "CoreCLR.h"
-#include "altv-cpp-api/SDK.h"
+#include "../../../cpp-sdk/SDK.h"
 #include <windows.h>
 #include "coreclr/hostfxr.h"
 #include <string>
