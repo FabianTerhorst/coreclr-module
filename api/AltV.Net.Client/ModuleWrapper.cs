@@ -6,6 +6,7 @@ using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Client.Extensions;
+using AltV.Net.Elements.Pools;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace AltV.Net.Client
@@ -16,7 +17,6 @@ namespace AltV.Net.Client
         private static IResource _resource;
         private static IntPtr _resourcePointer;
         private static IntPtr _corePointer;
-        private static Runtime.CSharpResourceImpl _runtime;
 
         public static void MainWithAssembly(Assembly resourceAssembly, IntPtr resourcePointer, IntPtr corePointer)
         {
@@ -34,13 +34,6 @@ namespace AltV.Net.Client
                 return;
             }
 
-            unsafe
-            {
-                var pointer = library.Resource_GetCSharpImpl(_resourcePointer);
-                _runtime = new Runtime.CSharpResourceImpl(library, pointer); // todo pool, move somewhere else
-                _runtime.SetDelegates();
-            }
-
             _resource = (IResource) Activator.CreateInstance(resource)!;
             Alt.Log("Instance created");
             
@@ -49,14 +42,20 @@ namespace AltV.Net.Client
             
             var vehiclePool = new VehiclePool(_resource.GetVehicleFactory());
             Alt.Log("Vehicle pool created");
+
+            var nativeResourcePool = new NativeResourcePool(_resource.GetResourceFactory());
+            Alt.Log("Native resource pool created");
             
-            var client = new Core(library, corePointer, playerPool, vehiclePool);
+            var client = new Core(library, corePointer, resourcePointer, playerPool, vehiclePool, nativeResourcePool);
             _core = client;
             Alt.CoreImpl = client;
             Alt.Log("Core initialized");
 
+            _core.Resource.CSharpResourceImpl.SetDelegates();
+            Alt.Log("Delegates set");
+
             _resource.OnStart();
-            Alt.Log("Finished");
+            Alt.Log("Startup finished");
         }
         
         public static void OnStop()
@@ -72,7 +71,7 @@ namespace AltV.Net.Client
             _core.PlayerPool.Dispose();
             _core.VehiclePool.Dispose();
 
-            _runtime.Dispose();
+            _core.Resource.CSharpResourceImpl.Dispose();
         }
         
         public static void OnCreatePlayer(IntPtr pointer, ushort id)

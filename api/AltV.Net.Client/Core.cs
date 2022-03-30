@@ -19,15 +19,19 @@ namespace AltV.Net.Client
         
         public IPlayerPool PlayerPool { get; }
         public IEntityPool<IVehicle> VehiclePool { get; }
+        
+        public INativeResource Resource { get; }
 
         public List<SafeTimer> RunningTimers { get; } = new();
 
-        public Core(ILibrary library, IntPtr nativePointer, IPlayerPool playerPool, IEntityPool<IVehicle> vehiclePool)
+        public Core(ILibrary library, IntPtr nativePointer, IntPtr resourcePointer, IPlayerPool playerPool, IEntityPool<IVehicle> vehiclePool, INativeResourcePool nativeResourcePool)
         {
             Library = library;
             NativePointer = nativePointer;
             PlayerPool = playerPool;
             VehiclePool = vehiclePool;
+            nativeResourcePool.GetOrCreate(this, resourcePointer, out var resource);
+            Resource = resource;
         }
 
         #region Log

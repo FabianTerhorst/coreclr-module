@@ -10,5 +10,6 @@ namespace AltV.Net.Client
         public void OnStop();
         public IPlayerFactory GetPlayerFactory();
         public IEntityFactory<IVehicle> GetVehicleFactory();
+        public INativeResourceFactory GetResourceFactory();
     }
 }
