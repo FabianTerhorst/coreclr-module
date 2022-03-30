@@ -1,20 +1,18 @@
 ﻿using System.Numerics;
 using AltV.Net.Client.Elements.Data;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Client.Elements.Interfaces
 {
-    public interface IVehicle : IEntity
+    public interface IVehicle : ISharedVehicle, IEntity
     {
-        public IntPtr VehicleNativePointer { get; }
         ushort Gear { get; }
         byte IndicatorLights { get; set; }
         ushort MaxGear { get; set; }
-        float RPM { get; }
+        float Rpm { get; }
         byte SeatCount { get; }
         float WheelSpeed { get; }
         Vector3 SpeedVector { get; }
-        byte WheelsCount { get; }
-        // todo
         Handling GetHandling();
     }
 }

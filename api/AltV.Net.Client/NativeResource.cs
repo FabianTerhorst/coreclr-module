@@ -1,30 +1,26 @@
 ﻿using AltV.Net.Client.Runtime;
+using AltV.Net.Shared;
 
 namespace AltV.Net.Client
 {
-    public class NativeResource : INativeResource
+    public class NativeResource : SharedNativeResource, INativeResource
     {
-        public IntPtr NativePointer { get; }
-        private readonly ICore core;
-
         private CSharpResourceImpl? cSharpResourceImpl;
 
-        public CSharpResourceImpl CSharpResourceImpl
+        public override CSharpResourceImpl CSharpResourceImpl
         {
             get
             {
                 unsafe
                 {
                     return cSharpResourceImpl ??=
-                        new CSharpResourceImpl(core.Library, core.Library.Shared.Resource_GetCSharpImpl(NativePointer));
+                        new CSharpResourceImpl(core, core.Library.Shared.Resource_GetCSharpImpl(NativePointer));
                 }
             }
         }
 
-        internal NativeResource(ICore core, IntPtr nativePointer)
+        internal NativeResource(ICore core, IntPtr nativePointer) : base(core, nativePointer)
         {
-            NativePointer = nativePointer;
-            this.core = core;
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System.Numerics;
 using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Data;
+using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Client.Elements.Entities
 {
@@ -14,13 +16,14 @@ namespace AltV.Net.Client.Elements.Entities
         }
         
         public IntPtr WorldObjectNativePointer { get; }
+        public override IntPtr NativePointer => WorldObjectNativePointer;
 
-        public WorldObject(ICore core, IntPtr worldObjectPointer) : base(core, GetBaseObjectPointer(core, worldObjectPointer))
+        public WorldObject(ICore core, IntPtr worldObjectPointer, BaseObjectType type) : base(core, GetBaseObjectPointer(core, worldObjectPointer), type)
         {
             WorldObjectNativePointer = worldObjectPointer;
         }
         
-        public Vector3 Position
+        public Position Position
         {
             get
             {

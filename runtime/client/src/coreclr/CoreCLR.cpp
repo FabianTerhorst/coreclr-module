@@ -116,7 +116,6 @@ CoreCLR::CoreCLR(alt::ICore* core) {
 }
 
 void CoreCLR::start_resource(alt::IResource *resource, alt::ICore* core) {
-    Log::Info << "Starting resource inner" << Log::Endl;
     auto path = utils::string_to_wstring(resource->GetMain().ToString());
 
     struct start_args {
@@ -126,7 +125,6 @@ void CoreCLR::start_resource(alt::IResource *resource, alt::ICore* core) {
     };
     start_args startArgs{path.c_str(), resource, core};
 
-    Log::Info << "Is delegate null " << (loadResourceDelegate == nullptr) << Log::Endl;
     loadResourceDelegate(&startArgs, sizeof(startArgs));
 }
 
@@ -141,7 +139,6 @@ void CoreCLR::stop_resource(alt::IResource *resource) {
 
 EXPORT void SetResourceLoadDelegates(CoreClrDelegate_t resourceExecute, CoreClrDelegate_t resourceExecuteUnload,
                                      CoreClrDelegate_t stopRuntime) {
-    Log::Info << "Set delegates!! YAY!" << Log::Endl;
     if (loadResourceDelegate || stopResourceDelegate || stopRuntimeDelegate) {
         abort(); // developer tried to call that method from resource XD
     }

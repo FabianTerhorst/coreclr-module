@@ -49,8 +49,11 @@ namespace AltV.Net.Client
 
             var nativeResourcePool = new NativeResourcePool(_resource.GetResourceFactory());
             Alt.Log("Native resource pool created");
+
+            var baseBaseObjectPool = new BaseBaseObjectPool(playerPool, vehiclePool);
+            var baseEntityPool = new BaseEntityPool(playerPool, vehiclePool);
             
-            var client = new Core(library, corePointer, resourcePointer, playerPool, vehiclePool, nativeResourcePool, logger);
+            var client = new Core(library, corePointer, resourcePointer, playerPool, vehiclePool, baseBaseObjectPool, baseEntityPool, nativeResourcePool, logger);
             _core = client;
             Alt.CoreImpl = client;
             Alt.Log("Core initialized");

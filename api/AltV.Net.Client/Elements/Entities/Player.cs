@@ -2,6 +2,8 @@
 using System.Runtime.InteropServices;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Data;
+using AltV.Net.Elements.Entities;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Client.Elements.Entities
 {
@@ -16,8 +18,14 @@ namespace AltV.Net.Client.Elements.Entities
         }
         
         public IntPtr PlayerNativePointer { get; }
+        public override IntPtr NativePointer => PlayerNativePointer;
         
-        public Player(ICore core, IntPtr playerPointer, ushort id) : base(core, GetEntityPointer(core, playerPointer), id)
+        public Player(ICore core, IntPtr playerPointer, ushort id) : base(core, GetEntityPointer(core, playerPointer), id, BaseObjectType.Player)
+        {
+            PlayerNativePointer = playerPointer;
+        }
+        
+        public Player(ICore core, IntPtr playerPointer, ushort id, BaseObjectType baseObjectType) : base(core, GetEntityPointer(core, playerPointer), id, baseObjectType)
         {
             PlayerNativePointer = playerPointer;
         }
@@ -37,6 +45,19 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
+        ISharedVehicle ISharedPlayer.Vehicle => Vehicle!;
+        
+        public bool IsInVehicle
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Shared.Player_IsInVehicle(PlayerNativePointer) == 1;
+                }
+            }
+        }
 
         public string Name
         {
@@ -53,7 +74,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public Vector3 AimPos
+        public Position AimPosition
         {
             get
             {
@@ -66,7 +87,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public ushort Armour
+        public ushort Armor
         {
             get
             {
@@ -87,23 +108,8 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
-        
-        public uint[] CurrentWeaponComponents
-        {
-            get
-            {
-                unsafe
-                {
-                    var array = UIntArray.Nil;
-                    Core.Library.Shared.Player_GetCurrentWeaponComponents(PlayerNativePointer, &array);
-                    var components = array.ToArray();
-                    Core.Library.Shared.FreeUIntArray(&array);
-                    return components;
-                }
-            }
-        }
 
-        public Vector3 EntityAimOffset
+        public Position EntityAimOffset
         {
             get
             {
@@ -122,17 +128,29 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    // ushort id = 0;
-                    // var success = this.Core.Library.Player_GetEntityAimingAtID(this.PlayerNativePointer, &id);
-                    // if (success == 0) return null;
-                    //
-                    // if (!Alt.Module.GetEntityById(id, out var entity)) return null;
-                    // return entity;
-                    // todo
-                    return null;
+                    BaseObjectType type = BaseObjectType.Undefined;
+                    var ptr = this.Core.Library.Shared.Player_GetEntityAimingAt(this.PlayerNativePointer, &type);
+                    if (ptr == IntPtr.Zero) return null;
+
+                    if (!Core.BaseEntityPool.Get(ptr, type, out var entity)) return null;
+                    return entity;
                 }
             }
         }
+        
+        public void GetCurrentWeaponComponents(out uint[] weaponComponents)
+        {
+            unsafe
+            {
+                CheckIfEntityExists();
+                var array = UIntArray.Nil;
+                Core.Library.Shared.Player_GetCurrentWeaponComponents(PlayerNativePointer, &array);
+                weaponComponents = array.ToArray();
+                Core.Library.Shared.FreeUIntArray(&array);
+            }
+        }
+        
+        ISharedEntity ISharedPlayer.EntityAimingAt => EntityAimingAt!;
         
         public bool IsFlashlightActive
         {
@@ -145,7 +163,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
         
-        public Rotation HeadRot
+        public Rotation HeadRotation
         {
             get
             {
@@ -224,7 +242,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
         
-        public ushort MaxArmour
+        public ushort MaxArmor
         {
             get
             {

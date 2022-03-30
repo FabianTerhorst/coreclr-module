@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Client.Elements.Entities
 {
@@ -15,8 +16,9 @@ namespace AltV.Net.Client.Elements.Entities
         }
 
         public IntPtr VehicleNativePointer { get; }
+        public override IntPtr NativePointer => VehicleNativePointer;
 
-        public Vehicle(ICore core, IntPtr vehiclePointer, ushort id) : base(core, GetEntityPointer(core, vehiclePointer), id)
+        public Vehicle(ICore core, IntPtr vehiclePointer, ushort id) : base(core, GetEntityPointer(core, vehiclePointer), id, BaseObjectType.Vehicle)
         {
             VehicleNativePointer = vehiclePointer;
         }
@@ -68,7 +70,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public float RPM
+        public float Rpm
         {
             get
             {

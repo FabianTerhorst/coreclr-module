@@ -1,6 +1,6 @@
-﻿using AltV.Net.Client.Elements.Args;
-using AltV.Net.Client.Events;
+﻿using AltV.Net.Client.Events;
 using AltV.Net.Client.Extensions;
+using AltV.Net.Elements.Args;
 
 namespace AltV.Net.Client
 {
@@ -8,8 +8,8 @@ namespace AltV.Net.Client
     {
         
 
-        private Dictionary<string, HashSet<Function.Function>> ServerEventBus = new();
-        private Dictionary<string, HashSet<Function.Function>> ClientEventBus = new();
+        private Dictionary<string, HashSet<Function>> ServerEventBus = new();
+        private Dictionary<string, HashSet<Function>> ClientEventBus = new();
 
         internal readonly IEventHandler<TickDelegate> TickEventHandler =
             new HashSetEventHandler<TickDelegate>();
@@ -43,7 +43,7 @@ namespace AltV.Net.Client
 
         public void OnServerEvent(string name, IntPtr[] args)
         {
-            var mValues = MValueConst.CreateFrom(args);
+            var mValues = MValueConst.CreateFrom(this, args);
 
             if (!ServerEventBus.ContainsKey(name)) return;
             foreach (var function in ServerEventBus[name])
@@ -54,7 +54,7 @@ namespace AltV.Net.Client
         
         public void OnClientEvent(string name, IntPtr[] args)
         {
-            var mValues = MValueConst.CreateFrom(args);
+            var mValues = MValueConst.CreateFrom(this, args);
 
             if (!ClientEventBus.ContainsKey(name)) return;
             foreach (var function in ClientEventBus[name])
@@ -122,7 +122,7 @@ namespace AltV.Net.Client
         
         public void OnCreatePlayer(IntPtr pointer, ushort id)
         {
-            Alt.Log("Creating player " + id);
+            Alt.Log("Creating player " + id + " " + pointer);
             PlayerPool.Create(this, pointer, id);
         }
 
@@ -134,17 +134,17 @@ namespace AltV.Net.Client
 
         public void OnCreateVehicle(IntPtr pointer, ushort id)
         {
-            Alt.Log("Creating vehicle " + id);
+            Alt.Log("-- Creating vehicle " + id + " " + pointer);
             VehiclePool.Create(this, pointer, id);
         }
 
         public void OnRemoveVehicle(IntPtr pointer)
         {
-            Alt.Log("Removing vehicle " + pointer);
+            Alt.Log("-- Removing vehicle " + pointer);
             VehiclePool.Remove(pointer);
         }
         
-        public Function.Function AddServerEventListener(string eventName, Function.Function function)
+        public Function AddServerEventListener(string eventName, Function function)
         {
             if (ServerEventBus.TryGetValue(eventName, out var eventHandlers))
             {
@@ -152,14 +152,14 @@ namespace AltV.Net.Client
             }
             else
             {
-                eventHandlers = new HashSet<Function.Function> {function};
+                eventHandlers = new HashSet<Function> {function};
                 ServerEventBus[eventName] = eventHandlers;
             }
 
             return function;
         }
         
-        public Function.Function AddClientEventListener(string eventName, Function.Function function)
+        public Function AddClientEventListener(string eventName, Function function)
         {
             if (ClientEventBus.TryGetValue(eventName, out var eventHandlers))
             {
@@ -167,7 +167,7 @@ namespace AltV.Net.Client
             }
             else
             {
-                eventHandlers = new HashSet<Function.Function> {function};
+                eventHandlers = new HashSet<Function> {function};
                 ClientEventBus[eventName] = eventHandlers;
             }
 

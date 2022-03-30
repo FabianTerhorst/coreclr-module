@@ -1,10 +1,9 @@
 ﻿using System.Numerics;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Client.Elements.Interfaces
 {
-    public interface IWorldObject : IBaseObject
+    public interface IWorldObject : ISharedWorldObject, IBaseObject
     {
-        public IntPtr WorldObjectNativePointer { get; }
-        public Vector3 Position { get; }
     }
 }

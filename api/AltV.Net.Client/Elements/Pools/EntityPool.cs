@@ -56,6 +56,11 @@ namespace AltV.Net.Client.Elements.Pools
             return entity;
         }
         
+        IReadOnlyCollection<TEntity> IReadOnlyEntityPool<TEntity>.GetAllEntities()
+        {
+            return _entities.Values;
+        }
+
         public TEntity GetOrCreate(ICore core, IntPtr entityPointer, ushort entityId)
         {
             if (_entities.TryGetValue(entityPointer, out var entity)) return entity;

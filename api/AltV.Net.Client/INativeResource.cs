@@ -1,9 +1,10 @@
 ﻿using AltV.Net.Client.Runtime;
+using AltV.Net.Shared;
 
 namespace AltV.Net.Client
 {
-    public interface INativeResource
+    public interface INativeResource : ISharedNativeResource
     {
-        CSharpResourceImpl CSharpResourceImpl { get; }
+        new CSharpResourceImpl CSharpResourceImpl { get; }
     }
 }

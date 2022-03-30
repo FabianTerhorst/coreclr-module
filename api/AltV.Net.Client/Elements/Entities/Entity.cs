@@ -1,7 +1,10 @@
 ﻿using System.Runtime.InteropServices;
-using AltV.Net.Client.Elements.Args;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Data;
+using AltV.Net.Elements.Args;
+using AltV.Net.Elements.Entities;
+using AltV.Net.Native;
+using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Client.Elements.Entities
@@ -19,14 +22,13 @@ namespace AltV.Net.Client.Elements.Entities
         public IntPtr EntityNativePointer { get; }
         public override IntPtr NativePointer => EntityNativePointer;
         
-        public Entity(ICore core, IntPtr entityPointer, ushort id) : base(core, GetWorldObjectPointer(core, entityPointer))
+        public Entity(ICore core, IntPtr entityPointer, ushort id, BaseObjectType type) : base(core, GetWorldObjectPointer(core, entityPointer), type)
         {
             Id = id;
             EntityNativePointer = entityPointer;
         }
 
         public ushort Id { get; }
-        public bool Exists => true; // todo
 
         public uint Model
         {
@@ -39,7 +41,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public IPlayer? NetOwner
+        public IPlayer? NetworkOwner
         {
             get
             {
@@ -51,8 +53,9 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
+        ISharedPlayer ISharedEntity.NetworkOwner => NetworkOwner!;
 
-        public int ScriptID
+        public int ScriptId
         {
             get
             {
@@ -63,7 +66,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
 
-        public bool Spawned => ScriptID != 0;
+        public bool Spawned => ScriptId != 0;
 
         public Rotation Rotation
         {
@@ -79,135 +82,186 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
         
-        private MValueConst GetStreamSyncedMetaData(string key)
+        public void GetSyncedMetaData(string key, out MValueConst value)
         {
             unsafe
             {
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
-                var mValue = new MValueConst(Core.Library.Shared.Entity_GetStreamSyncedMetaData(this.EntityNativePointer, stringPtr));
+                value = new MValueConst(Core, Core.Library.Shared.Entity_GetSyncedMetaData(EntityNativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
-                return mValue;
             }
         }
-        
+
+        public bool HasSyncedMetaData(string key)
+        {
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var result = Core.Library.Shared.Entity_HasSyncedMetaData(EntityNativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+                return result == 1;
+            }
+        }
+
+        public void GetStreamSyncedMetaData(string key, out MValueConst value)
+        {
+            unsafe
+            {
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                value = new MValueConst(Core, Core.Library.Shared.Entity_GetStreamSyncedMetaData(EntityNativePointer, stringPtr));
+                Marshal.FreeHGlobal(stringPtr);
+            }
+        }
+
         public bool HasStreamSyncedMetaData(string key)
         {
             unsafe
             {
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
-                var result = Core.Library.Shared.Entity_HasStreamSyncedMetaData(this.EntityNativePointer, stringPtr);
+                var result = Core.Library.Shared.Entity_HasStreamSyncedMetaData(EntityNativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
                 return result == 1;
             }
         }
 
-        public bool GetStreamSyncedMetaData(string key, out int value)
+        public bool GetSyncedMetaData<T>(string key, out T result)
         {
-            using var mValue = GetStreamSyncedMetaData(key);
-            value = default;
-            if (mValue.type != MValueConst.Type.Int) return false;
-
-            value = (int) mValue.GetInt();
-            return true;
-        }
-        
-        public bool GetStreamSyncedMetaData(string key, out uint value)
-        {
-            using var mValue = GetStreamSyncedMetaData(key);
-            value = default;
-            if (mValue.type != MValueConst.Type.Uint) return false;
-
-            value = (uint) mValue.GetUint();
-            return true;
-        }
-        
-        public bool GetStreamSyncedMetaData(string key, out float value)
-        {
-            using var mValue = GetStreamSyncedMetaData(key);
-            value = default;
-            if (mValue.type != MValueConst.Type.Double) return false;
-
-            value = (float) mValue.GetDouble();
-            return true;
-        }
-        
-        public bool GetStreamSyncedMetaData<T>(string key, out T? value)
-        {
-            using var mValue = GetStreamSyncedMetaData(key);
+            CheckIfEntityExists();
+            GetSyncedMetaData(key, out MValueConst mValue);
             var obj = mValue.ToObject();
-            if (obj is not T convertedObj)
+            mValue.Dispose();
+            if (!(obj is T cast))
             {
-                value = default;
+                result = default;
                 return false;
             }
 
-            value = convertedObj;
+            result = cast;
             return true;
         }
         
-        private MValueConst GetSyncedMetaData(string key)
-        {
-            unsafe
-            {
-                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
-                var mValue = new MValueConst(Core.Library.Shared.Entity_GetSyncedMetaData(this.EntityNativePointer, stringPtr));
-                Marshal.FreeHGlobal(stringPtr);
-                return mValue;
-            }
-        }
-        
-        public bool HasSyncedMetaData(string key)
-        {
-            unsafe
-            {
-                var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
-                var result = Core.Library.Shared.Entity_HasSyncedMetaData(this.EntityNativePointer, stringPtr);
-                Marshal.FreeHGlobal(stringPtr);
-                return result == 1;
-            }
-        }
 
-        public bool GetSyncedMetaData(string key, out int value)
+        public bool GetStreamSyncedMetaData<T>(string key, out T result)
         {
-            using var mValue = GetSyncedMetaData(key);
-            value = default;
-            if (mValue.type != MValueConst.Type.Int) return false;
-
-            value = (int) mValue.GetInt();
-            return true;
-        }
-        
-        public bool GetSyncedMetaData(string key, out uint value)
-        {
-            using var mValue = GetSyncedMetaData(key);
-            value = default;
-            if (mValue.type != MValueConst.Type.Uint) return false;
-
-            value = (uint) mValue.GetUint();
-            return true;
-        }
-        
-        public bool GetSyncedMetaData(string key, out float value)
-        {
-            using var mValue = GetSyncedMetaData(key);
-            value = default;
-            if (mValue.type != MValueConst.Type.Double) return false;
-
-            value = (float) mValue.GetDouble();
-            return true;
-        }
-        
-        public bool GetSyncedMetaData<T>(string key, out T? value)
-        {
-            using var mValue = GetSyncedMetaData(key);
+            CheckIfEntityExists();
+            GetStreamSyncedMetaData(key, out MValueConst mValue);
             var obj = mValue.ToObject();
-            if (obj is not T convertedObj)
+            mValue.Dispose();
+            if (!(obj is T cast))
             {
-                value = default;
+                result = default;
                 return false;
             }
 
-            value = convertedObj;
+            result = cast;
+            return true;
+        }
+        
+        public bool GetSyncedMetaData(string key, out int result)
+        {
+            CheckIfEntityExists();
+            GetSyncedMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.Int)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (int) mValue.GetInt();
+            }
+
+            return true;
+        }
+        
+        public bool GetSyncedMetaData(string key, out uint result)
+        {
+            CheckIfEntityExists();
+            GetSyncedMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.Uint)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (uint) mValue.GetUint();
+            }
+
+            return true;
+        }
+        
+        public bool GetSyncedMetaData(string key, out float result)
+        {
+            CheckIfEntityExists();
+            GetSyncedMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.Double)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (float) mValue.GetDouble();
+            }
+
+            return true;
+        }
+        
+        public bool GetStreamSyncedMetaData(string key, out int result)
+        {
+            CheckIfEntityExists();
+            GetStreamSyncedMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.Int)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (int) mValue.GetInt();
+            }
+
+            return true;
+        }
+        
+        public bool GetStreamSyncedMetaData(string key, out uint result)
+        {
+            CheckIfEntityExists();
+            GetStreamSyncedMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.Uint)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (uint) mValue.GetUint();
+            }
+
+            return true;
+        }
+        
+        public bool GetStreamSyncedMetaData(string key, out float result)
+        {
+            CheckIfEntityExists();
+            GetStreamSyncedMetaData(key, out MValueConst mValue);
+            using (mValue)
+            {
+                if (mValue.type != MValueConst.Type.Double)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (float) mValue.GetDouble();
+            }
+
             return true;
         }
     }

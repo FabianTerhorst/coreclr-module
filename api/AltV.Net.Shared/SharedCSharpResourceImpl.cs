@@ -7,7 +7,7 @@ namespace AltV.Net.Shared
     {
         internal readonly IntPtr NativePointer;
         
-        private ISharedCore core;
+        protected ISharedCore core;
         
         private readonly Dictionary<IntPtr, GCHandle> invokers = new();
 

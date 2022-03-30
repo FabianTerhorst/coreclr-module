@@ -3,7 +3,7 @@ using AltV.Net.Client.Elements.Interfaces;
 
 namespace AltV.Net.Client.Elements.Pools
 {
-    public interface IEntityPool<TEntity> where TEntity : IEntity
+    public interface IEntityPool<TEntity> : IReadOnlyEntityPool<TEntity> where TEntity : IEntity
     {
         TEntity? Create(ICore server, IntPtr entityPointer, ushort id);
         
@@ -14,8 +14,6 @@ namespace AltV.Net.Client.Elements.Pools
         bool Remove(TEntity entity);
 
         bool Remove(IntPtr entityPointer);
-
-        TEntity? Get(IntPtr entityPointer);
 
         TEntity GetOrCreate(ICore server, IntPtr entityPointer, ushort entityId);
         TEntity GetOrCreate(ICore server, IntPtr entityPointer);

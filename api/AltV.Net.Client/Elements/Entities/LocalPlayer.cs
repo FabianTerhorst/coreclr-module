@@ -1,4 +1,5 @@
 ﻿using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Client.Elements.Entities
 {
@@ -12,7 +13,7 @@ namespace AltV.Net.Client.Elements.Entities
             }
         }
         
-        public LocalPlayer(ICore core, IntPtr localPlayerPointer, ushort id) : base(core, GetPlayerPointer(core, localPlayerPointer), id)
+        public LocalPlayer(ICore core, IntPtr localPlayerPointer, ushort id) : base(core, GetPlayerPointer(core, localPlayerPointer), id, BaseObjectType.LocalPlayer)
         {
             LocalPlayerNativePointer = localPlayerPointer;
         }
