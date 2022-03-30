@@ -13,7 +13,12 @@ using namespace std;
 
 bool CSharpResourceImpl::Start()
 {
-    GetRuntime()->clr.start_resource(resource, core);
+    try {
+        GetRuntime()->clr.start_resource(resource, core);
+    } catch(...) {
+        Log::Error << "Failed to load module";
+        return false;
+    }
     return true;
 }
 
