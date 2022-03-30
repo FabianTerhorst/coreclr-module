@@ -19,16 +19,6 @@ namespace AltV.Net.Client
         private static IntPtr _resourcePointer;
         private static IntPtr _corePointer;
 
-        private static void Log(ILibrary library, string msg)
-        {
-            unsafe
-            {
-                var messagePtr = MemoryUtils.StringToHGlobalUtf8(msg);
-                library.LogInfo(messagePtr);
-                Marshal.FreeHGlobal(messagePtr);
-            }
-        } 
-
         public static void MainWithAssembly(Assembly resourceAssembly, IntPtr resourcePointer, IntPtr corePointer)
         {
             var library = new Library();
