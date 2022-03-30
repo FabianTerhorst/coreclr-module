@@ -1,5 +1,7 @@
 using AltV.Net.Client.CApi;
 using AltV.Net.Client.Elements.Args;
+using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Client.Elements.Pools;
 
 namespace AltV.Net.Client
 {
@@ -13,5 +15,8 @@ namespace AltV.Net.Client
         IntPtr NativePointer { get; }
         void CreateMValue(out MValueConst mValue, object? obj);
         uint Hash(string stringToHash);
+
+        public IPlayerPool PlayerPool { get; }
+        public IEntityPool<IVehicle> VehiclePool { get; }
     }
 }

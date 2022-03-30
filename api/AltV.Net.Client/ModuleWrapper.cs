@@ -13,6 +13,7 @@ namespace AltV.Net.Client
     public class ModuleWrapper
     {
         private static Module _module;
+        private static Core _core;
         private static IResource _resource;
         private static IntPtr _resourcePointer;
         private static IntPtr _corePointer;
@@ -21,9 +22,6 @@ namespace AltV.Net.Client
         public static void MainWithAssembly(Assembly resourceAssembly, IntPtr resourcePointer, IntPtr corePointer)
         {
             var library = new Library();
-            var client = new Core(library, corePointer);
-            var module = new Module(client);
-            _module = module;
             _resourcePointer = resourcePointer;
             _corePointer = corePointer;
             Console.SetOut(new AltTextWriter());
@@ -53,6 +51,13 @@ namespace AltV.Net.Client
             var vehiclePool = new VehiclePool(_resource.GetVehicleFactory());
             Alt.Log("Vehicle pool created");
             
+            var client = new Core(library, corePointer, playerPool, vehiclePool);
+            _core = client;
+            Alt.CoreImpl = client;
+            
+            var module = new Module(client);
+            _module = module;
+            
             _module.InitPools(playerPool, vehiclePool);
             Alt.Log("Pools initialized");
 
@@ -70,77 +75,77 @@ namespace AltV.Net.Client
                 safeTimer.Stop();
                 safeTimer.Dispose();
             }
-            _module.PlayerPool.Dispose();
-            _module.VehiclePool.Dispose();
+            _core.PlayerPool.Dispose();
+            _core.VehiclePool.Dispose();
 
             _runtime.Dispose();
         }
         
         public static void OnCreatePlayer(IntPtr pointer, ushort id)
         {
-            _module.OnCreatePlayer(pointer, id);
+            _core.OnCreatePlayer(pointer, id);
         }
 
         public static void OnRemovePlayer(IntPtr pointer)
         {
-            _module.OnRemovePlayer(pointer);
+            _core.OnRemovePlayer(pointer);
         }
 
         public static void OnCreateVehicle(IntPtr pointer, ushort id)
         {
-            _module.OnCreateVehicle(pointer, id);
+            _core.OnCreateVehicle(pointer, id);
         }
 
         public static void OnRemoveVehicle(IntPtr pointer)
         {
-            _module.OnRemoveVehicle(pointer);
+            _core.OnRemoveVehicle(pointer);
         }
 
         public static void OnTick()
         {
-            _module.OnTick();
+            _core.OnTick();
         }
 
         public static void OnPlayerSpawn()
         {
-            _module.OnPlayerSpawn();
+            _core.OnPlayerSpawn();
         }
         
         public static void OnPlayerDisconnect()
         {
-            _module.OnPlayerDisconnect();
+            _core.OnPlayerDisconnect();
         }
 
         public static void OnPlayerEnterVehicle(IntPtr pointer, byte seat)
         {
-            _module.OnPlayerEnterVehicle(pointer, seat);
+            _core.OnPlayerEnterVehicle(pointer, seat);
         }
 
         public static void OnResourceError(string name)
         {
-            _module.OnResourceError(name);
+            _core.OnResourceError(name);
         }
         
         public static void OnResourceStart(string name)
         {
-            _module.OnResourceStart(name);
+            _core.OnResourceStart(name);
         }
         
         public static void OnResourceStop(string name)
         {
-            _module.OnResourceStop(name);
+            _core.OnResourceStop(name);
         }
         
         public static void OnKeyDown(uint key)
         {
             var consoleKey = (ConsoleKey) key;
-            _module.OnKeyDown(consoleKey);
+            _core.OnKeyDown(consoleKey);
         }
         
         public static void OnKeyUp(uint key)
         {
             var consoleKey = (ConsoleKey) key;
-            _module.OnKeyUp(consoleKey);
+            _core.OnKeyUp(consoleKey);
         }
         
         public static void OnServerEvent(string name, IntPtr pointer, ulong size)
@@ -153,7 +158,7 @@ namespace AltV.Net.Client
             
             Alt.Log($"Server event \"{name}\" called. Parsed {args.Length} arguments");
             
-            _module.OnServerEvent(name, args);
+            _core.OnServerEvent(name, args);
         }
 
         public static void OnClientEvent(string name, IntPtr pointer, ulong size)
@@ -166,7 +171,7 @@ namespace AltV.Net.Client
             
             Alt.Log($"Client event \"{name}\" called. Parsed {args.Length} arguments");
             
-            _module.OnClientEvent(name, args);
+            _core.OnClientEvent(name, args);
         }
         
         public static void OnConsoleCommand(string name,
@@ -174,7 +179,7 @@ namespace AltV.Net.Client
             string[] args, int _)
         {
             args ??= new string[0];
-            _module.OnConsoleCommand(name, args);
+            _core.OnConsoleCommand(name, args);
         }
     }
 }

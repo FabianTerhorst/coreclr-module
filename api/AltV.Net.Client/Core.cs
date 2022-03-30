@@ -7,18 +7,24 @@ using AltV.Net.Client.CApi.Memory;
 using AltV.Net.Client.Data;
 using AltV.Net.Client.Elements.Args;
 using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Client.Elements.Pools;
 
 namespace AltV.Net.Client
 {
-    public class Core : ICore
+    public partial class Core : ICore
     {
         public ILibrary Library { get; }
         public IntPtr NativePointer { get; }
+        
+        public IPlayerPool PlayerPool { get; }
+        public IEntityPool<IVehicle> VehiclePool { get; }
 
-        public Core(ILibrary library, IntPtr nativePointer)
+        public Core(ILibrary library, IntPtr nativePointer, IPlayerPool playerPool, IEntityPool<IVehicle> vehiclePool)
         {
             Library = library;
             NativePointer = nativePointer;
+            PlayerPool = playerPool;
+            VehiclePool = vehiclePool;
         }
 
         #region Log

@@ -10,7 +10,8 @@ namespace AltV.Net.Client
     public static partial class Alt
     {
         internal static Module Module;
-        public static ICore Core => Module.Core;
+        public static Core CoreImpl { get; internal set; } = null!;
+        public static ICore Core => CoreImpl;
         
         internal static void Init(Module module)
         {
@@ -31,7 +32,7 @@ namespace AltV.Net.Client
         //     return vehicle is not null;
         // }
         
-        public static ILocalPlayer LocalPlayer => Module.PlayerPool.LocalPlayer;
+        public static ILocalPlayer LocalPlayer => Core.PlayerPool.LocalPlayer;
 
         public static HandlingData? GetHandlingByModelHash(uint modelHash) => Module.GetHandlingByModelHash(modelHash);
         public static uint Hash(string key) => Core.Hash(key);
