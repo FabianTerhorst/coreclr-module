@@ -4,9 +4,9 @@ using AltV.Net.Client.Elements.Interfaces;
 
 namespace AltV.Net.Client.Elements.Pools
 {
-    public class PlayerPool : EntityPool<IPlayer>
+    public class PlayerPool : EntityPool<IPlayer>, IPlayerPool
     {
-        internal ILocalPlayer LocalPlayer { get; }
+        public ILocalPlayer LocalPlayer { get; }
 
         public PlayerPool(IPlayerFactory entityFactory) : base(entityFactory)
         {
