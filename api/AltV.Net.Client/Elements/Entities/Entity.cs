@@ -47,7 +47,7 @@ namespace AltV.Net.Client.Elements.Entities
                 {
                     var ptr = Core.Library.Entity_GetNetOwner(EntityNativePointer);
                     if (ptr == IntPtr.Zero) return null;
-                    return Alt.Module.PlayerPool.Get(ptr);
+                    return Alt.Core.PlayerPool.Get(ptr);
                 }
             }
         }

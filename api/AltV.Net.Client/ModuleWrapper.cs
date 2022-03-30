@@ -12,7 +12,6 @@ namespace AltV.Net.Client
 {
     public class ModuleWrapper
     {
-        private static Module _module;
         private static Core _core;
         private static IResource _resource;
         private static IntPtr _resourcePointer;
@@ -54,12 +53,7 @@ namespace AltV.Net.Client
             var client = new Core(library, corePointer, playerPool, vehiclePool);
             _core = client;
             Alt.CoreImpl = client;
-            
-            var module = new Module(client);
-            _module = module;
-            
-            _module.InitPools(playerPool, vehiclePool);
-            Alt.Log("Pools initialized");
+            Alt.Log("Core initialized");
 
             _resource.OnStart();
             Alt.Log("Finished");

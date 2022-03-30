@@ -9,14 +9,8 @@ namespace AltV.Net.Client
 {
     public static partial class Alt
     {
-        internal static Module Module;
         public static Core CoreImpl { get; internal set; } = null!;
         public static ICore Core => CoreImpl;
-        
-        internal static void Init(Module module)
-        {
-            Module = module;
-        }
 
         // public static bool GetEntityById(ushort id, [MaybeNullWhen(false)] out IEntity entity) => Module.GetEntityById(id, out entity);
         

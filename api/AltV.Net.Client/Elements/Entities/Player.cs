@@ -34,7 +34,7 @@ namespace AltV.Net.Client.Elements.Entities
                     var ptr = Core.Library.Player_GetVehicle(PlayerNativePointer);
                     if (ptr == IntPtr.Zero) return null;
                     
-                    return Alt.Module.VehiclePool.Get(ptr);
+                    return Alt.Core.VehiclePool.Get(ptr);
                 }
             }
         }

@@ -23,7 +23,6 @@ namespace AltV.Net.Client
     
         public Module(ICore core)
         {
-            Alt.Init(this);
             Core = core;
         }
         
