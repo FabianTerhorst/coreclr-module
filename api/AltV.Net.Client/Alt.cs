@@ -34,7 +34,7 @@ namespace AltV.Net.Client
         
         public static ILocalPlayer LocalPlayer => Core.PlayerPool.LocalPlayer;
 
-        public static HandlingData? GetHandlingByModelHash(uint modelHash) => Module.GetHandlingByModelHash(modelHash);
+        public static HandlingData? GetHandlingByModelHash(uint modelHash) => Core.GetHandlingByModelHash(modelHash);
         public static uint Hash(string key) => Core.Hash(key);
 
         public static void Log(string message) => Core.LogInfo(message);

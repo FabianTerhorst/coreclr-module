@@ -70,7 +70,7 @@ namespace AltV.Net.Client
             _resource.OnStop();
             
             Alt.Log("Stopping timers");
-            foreach (var safeTimer in _module.RunningTimers.ToArray())
+            foreach (var safeTimer in _core.RunningTimers.ToArray())
             {
                 safeTimer.Stop();
                 safeTimer.Dispose();

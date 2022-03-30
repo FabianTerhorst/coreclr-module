@@ -1,5 +1,6 @@
 using AltV.Net.Client.CApi;
 using AltV.Net.Client.Elements.Args;
+using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Elements.Pools;
 
@@ -18,5 +19,6 @@ namespace AltV.Net.Client
 
         public IPlayerPool PlayerPool { get; }
         public IEntityPool<IVehicle> VehiclePool { get; }
+        HandlingData? GetHandlingByModelHash(uint modelHash);
     }
 }

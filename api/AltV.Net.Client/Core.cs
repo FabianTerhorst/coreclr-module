@@ -6,6 +6,7 @@ using AltV.Net.Client.CApi;
 using AltV.Net.Client.CApi.Memory;
 using AltV.Net.Client.Data;
 using AltV.Net.Client.Elements.Args;
+using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Elements.Pools;
 
@@ -18,6 +19,8 @@ namespace AltV.Net.Client
         
         public IPlayerPool PlayerPool { get; }
         public IEntityPool<IVehicle> VehiclePool { get; }
+
+        public List<SafeTimer> RunningTimers { get; } = new();
 
         public Core(ILibrary library, IntPtr nativePointer, IPlayerPool playerPool, IEntityPool<IVehicle> vehiclePool)
         {
@@ -377,6 +380,45 @@ namespace AltV.Net.Client
             hash += hash << 15;
 
             return hash;
+        }
+        
+        // public bool GetEntityById(ushort id, [MaybeNullWhen(false)] out IEntity entity)
+        // {
+        //     unsafe
+        //     {
+        //         byte type = 0;
+        //         entity = default;
+        //         if (this.Core.Library.Entity_GetTypeByID(this.Core.NativePointer, id, &type) != 1) return false;
+        //         
+        //         switch ((BaseObjectType) type)
+        //         {
+        //             case BaseObjectType.Player:
+        //             case BaseObjectType.LocalPlayer:
+        //             {
+        //                 entity = PlayerPool.Get(id);
+        //                 return entity is not null;
+        //             }
+        //             case BaseObjectType.Vehicle:
+        //             {
+        //                 entity = VehiclePool.Get(id);
+        //                 return entity is not null;
+        //             }
+        //             // todo
+        //             default:
+        //                 return false;
+        //         }
+        //     }
+        // }
+
+        public HandlingData? GetHandlingByModelHash(uint modelHash)
+        {
+            unsafe
+            {
+                var pointer = IntPtr.Zero;
+                var success = Library.Vehicle_Handling_GetByModelHash(NativePointer, modelHash, &pointer);
+                if (success == 0 || pointer == IntPtr.Zero) return null;
+                return new HandlingData(this, pointer);
+            }
         }
     }
 }
