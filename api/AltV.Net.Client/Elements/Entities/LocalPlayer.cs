@@ -8,7 +8,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
-                return core.Library.LocalPlayer_GetPlayer(localPlayerPointer);
+                return core.Library.Client.LocalPlayer_GetPlayer(localPlayerPointer);
             }
         }
         
@@ -27,7 +27,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return Core.Library.LocalPlayer_GetCurrentAmmo(LocalPlayerNativePointer);
+                    return Core.Library.Client.LocalPlayer_GetCurrentAmmo(LocalPlayerNativePointer);
                 }
             }
         }

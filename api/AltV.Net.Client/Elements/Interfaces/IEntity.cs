@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using AltV.Net.Client.Elements.Entities;
+using AltV.Net.Data;
 
 namespace AltV.Net.Client.Elements.Interfaces
 {
@@ -12,7 +13,7 @@ namespace AltV.Net.Client.Elements.Interfaces
         IPlayer? NetOwner { get; }
         int ScriptID { get; }
         bool Spawned { get; }
-        Vector3 Rotation { get; }
+        Rotation Rotation { get; }
 
         public bool HasStreamSyncedMetaData(string key);
         public bool GetStreamSyncedMetaData(string key, out int value);

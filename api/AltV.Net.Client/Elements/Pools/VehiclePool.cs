@@ -14,7 +14,7 @@ namespace AltV.Net.Client.Elements.Pools
         {
             unsafe
             {
-                return Alt.Core.Library.Vehicle_GetID(vehiclePointer);
+                return Alt.Core.Library.Shared.Vehicle_GetID(vehiclePointer);
             }
         }
     }

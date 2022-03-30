@@ -14,6 +14,7 @@ using namespace std;
 bool CSharpResourceImpl::Start()
 {
     try {
+        Log::Info << "Starting resource" << Log::Endl;
         GetRuntime()->clr.start_resource(resource, core);
     } catch(...) {
         Log::Error << "Failed to load module" << Log::Endl;

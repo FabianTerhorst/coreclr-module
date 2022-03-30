@@ -1,14 +1,9 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Runtime.Loader;
-using AltV.Net.Client.CApi;
-using AltV.Net.Client.CApi.Memory;
-using AltV.Net.Client.Elements.Entities;
-using AltV.Net.Client.Elements.Factories;
+using AltV.Net.CApi;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Client.Extensions;
 using AltV.Net.Elements.Pools;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace AltV.Net.Client
 {
@@ -21,8 +16,8 @@ namespace AltV.Net.Client
 
         public static void MainWithAssembly(Assembly resourceAssembly, IntPtr resourcePointer, IntPtr corePointer)
         {
-            var library = new Library();
-            var logger = new Logger(library);
+            var library = new Library("coreclr-client-module", true);
+            var logger = new Logger(library, corePointer);
             Alt.Logger = logger;
             Alt.Log("Library initialized");
             
@@ -44,7 +39,7 @@ namespace AltV.Net.Client
             _resource = (IResource) Activator.CreateInstance(resource)!;
             Alt.Log("Resource created");
 
-            Alt.Logger = _resource.GetLogger(library);
+            Alt.Logger = _resource.GetLogger(library, corePointer);
             
             var playerPool = new PlayerPool(_resource.GetPlayerFactory());
             Alt.Log("Player pool created");

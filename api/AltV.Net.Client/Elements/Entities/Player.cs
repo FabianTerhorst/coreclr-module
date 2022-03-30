@@ -1,8 +1,7 @@
 ﻿using System.Numerics;
 using System.Runtime.InteropServices;
-using AltV.Net.Client.CApi.Data;
 using AltV.Net.Client.Elements.Interfaces;
-using Microsoft.CodeAnalysis;
+using AltV.Net.Data;
 
 namespace AltV.Net.Client.Elements.Entities
 {
@@ -12,7 +11,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
-                return core.Library.Player_GetEntity(playerNativePointer);
+                return core.Library.Shared.Player_GetEntity(playerNativePointer);
             }
         }
         
@@ -31,7 +30,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    var ptr = Core.Library.Player_GetVehicle(PlayerNativePointer);
+                    var ptr = Core.Library.Shared.Player_GetVehicle(PlayerNativePointer);
                     if (ptr == IntPtr.Zero) return null;
                     
                     return Alt.Core.VehiclePool.Get(ptr);
@@ -45,7 +44,11 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return Marshal.PtrToStringUTF8(Alt.Core.Library.Player_GetName(this.PlayerNativePointer))!;
+                    int size = 0;
+                    var str = Alt.Core.Library.Shared.Player_GetName(this.PlayerNativePointer, &size);
+                    var stringResult = Marshal.PtrToStringUTF8(str, size);
+                    Core.Library.Shared.FreeString(str);
+                    return stringResult;
                 }
             }
         }
@@ -57,7 +60,7 @@ namespace AltV.Net.Client.Elements.Entities
                 unsafe
                 {
                     var position = Vector3.Zero;
-                    this.Core.Library.Player_GetAimPos(this.PlayerNativePointer, &position);
+                    this.Core.Library.Shared.Player_GetAimPos(this.PlayerNativePointer, &position);
                     return position;
                 }
             }
@@ -69,7 +72,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return this.Core.Library.Player_GetArmour(this.PlayerNativePointer);
+                    return this.Core.Library.Shared.Player_GetArmor(this.PlayerNativePointer);
                 }
             }
         }
@@ -80,7 +83,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return this.Core.Library.Player_GetCurrentWeapon(this.PlayerNativePointer);
+                    return this.Core.Library.Shared.Player_GetCurrentWeapon(this.PlayerNativePointer);
                 }
             }
         }
@@ -92,9 +95,9 @@ namespace AltV.Net.Client.Elements.Entities
                 unsafe
                 {
                     var array = UIntArray.Nil;
-                    Core.Library.Player_GetCurrentWeaponComponents(PlayerNativePointer, &array);
+                    Core.Library.Shared.Player_GetCurrentWeaponComponents(PlayerNativePointer, &array);
                     var components = array.ToArray();
-                    Core.Library.FreeUIntArray(&array);
+                    Core.Library.Shared.FreeUIntArray(&array);
                     return components;
                 }
             }
@@ -107,7 +110,7 @@ namespace AltV.Net.Client.Elements.Entities
                 unsafe
                 {
                     var position = Vector3.Zero;
-                    this.Core.Library.Player_GetEntityAimOffset(this.PlayerNativePointer, &position);
+                    this.Core.Library.Shared.Player_GetEntityAimOffset(this.PlayerNativePointer, &position);
                     return position;                    
                 }
             }
@@ -137,19 +140,19 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return this.Core.Library.Player_IsFlashlightActive(this.PlayerNativePointer) == 1;
+                    return this.Core.Library.Shared.Player_IsFlashlightActive(this.PlayerNativePointer) == 1;
                 }
             }
         }
         
-        public Vector3 HeadRot
+        public Rotation HeadRot
         {
             get
             {
                 unsafe
                 {
-                    var position = Vector3.Zero;
-                    this.Core.Library.Player_GetHeadRot(this.PlayerNativePointer, &position);
+                    var position = Rotation.Zero;
+                    this.Core.Library.Shared.Player_GetHeadRotation(this.PlayerNativePointer, &position);
                     return position;
                 }
             }
@@ -161,7 +164,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return this.Core.Library.Player_GetHealth(this.PlayerNativePointer);
+                    return this.Core.Library.Shared.Player_GetHealth(this.PlayerNativePointer);
                 }
             }
         }
@@ -172,7 +175,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return this.Core.Library.Player_IsAiming(this.PlayerNativePointer) == 1;
+                    return this.Core.Library.Shared.Player_IsAiming(this.PlayerNativePointer) == 1;
                 }
             }
         }
@@ -183,7 +186,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return this.Core.Library.Player_IsDead(this.PlayerNativePointer) == 1;
+                    return this.Core.Library.Shared.Player_IsDead(this.PlayerNativePointer) == 1;
                 }
             }
         }
@@ -194,7 +197,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return this.Core.Library.Player_IsInRagdoll(this.PlayerNativePointer) == 1;
+                    return this.Core.Library.Shared.Player_IsInRagdoll(this.PlayerNativePointer) == 1;
                 }
             }
         }
@@ -205,7 +208,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return this.Core.Library.Player_IsReloading(this.PlayerNativePointer) == 1;
+                    return this.Core.Library.Shared.Player_IsReloading(this.PlayerNativePointer) == 1;
                 }
             }
         }
@@ -216,7 +219,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return this.Core.Library.Player_IsTalking(this.PlayerNativePointer) == 1;
+                    return this.Core.Library.Client.Player_IsTalking(this.PlayerNativePointer) == 1;
                 }
             }
         }
@@ -227,7 +230,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return this.Core.Library.Player_GetMaxArmour(this.PlayerNativePointer);
+                    return this.Core.Library.Shared.Player_GetMaxArmor(this.PlayerNativePointer);
                 }
             }
         }
@@ -238,7 +241,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return this.Core.Library.Player_GetMaxHealth(this.PlayerNativePointer);
+                    return this.Core.Library.Shared.Player_GetMaxHealth(this.PlayerNativePointer);
                 }
             }
         }
@@ -249,7 +252,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return this.Core.Library.Player_GetMicLevel(this.PlayerNativePointer);
+                    return this.Core.Library.Client.Player_GetMicLevel(this.PlayerNativePointer);
                 }
             }
         }
@@ -260,7 +263,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return this.Core.Library.Player_GetMoveSpeed(this.PlayerNativePointer);
+                    return this.Core.Library.Shared.Player_GetMoveSpeed(this.PlayerNativePointer);
                 }
             }
         }
@@ -271,14 +274,14 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return this.Core.Library.Player_GetNonSpatialVolume(this.PlayerNativePointer);
+                    return this.Core.Library.Client.Player_GetNonSpatialVolume(this.PlayerNativePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    this.Core.Library.Player_SetNonSpatialVolume(this.PlayerNativePointer, value);
+                    this.Core.Library.Client.Player_SetNonSpatialVolume(this.PlayerNativePointer, value);
                 }
             }
         }
@@ -289,7 +292,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return this.Core.Library.Player_GetSeat(this.PlayerNativePointer);
+                    return this.Core.Library.Shared.Player_GetSeat(this.PlayerNativePointer);
                 }
             }
         }
@@ -300,14 +303,14 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return this.Core.Library.Player_GetSpatialVolume(this.PlayerNativePointer);
+                    return this.Core.Library.Client.Player_GetSpatialVolume(this.PlayerNativePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    this.Core.Library.Player_SetSpatialVolume(this.PlayerNativePointer, value);
+                    this.Core.Library.Client.Player_SetSpatialVolume(this.PlayerNativePointer, value);
                 }
             }
         }

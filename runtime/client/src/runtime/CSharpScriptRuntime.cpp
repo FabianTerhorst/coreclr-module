@@ -2,7 +2,7 @@
 #include "CSharpScriptRuntime.h"
 #include "CSharpResourceImpl.h"
 
-CSharpScriptRuntime::CSharpScriptRuntime(alt::ICore* core) : core(core), clr()
+CSharpScriptRuntime::CSharpScriptRuntime(alt::ICore* core) : core(core), clr(core)
 {
     Log::Info << "CSharp runtime initialized" << Log::Endl;
 }

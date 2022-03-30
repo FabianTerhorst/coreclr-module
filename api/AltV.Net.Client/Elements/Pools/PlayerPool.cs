@@ -18,8 +18,8 @@ namespace AltV.Net.Client.Elements.Pools
             
             unsafe
             {
-                var localPlayerPointer = core.Library.Player_GetLocal();
-                var id = core.Library.LocalPlayer_GetID(localPlayerPointer);
+                var localPlayerPointer = core.Library.Client.Player_GetLocal();
+                var id = core.Library.Client.LocalPlayer_GetID(localPlayerPointer);
                 Alt.Log("Local player has ID " + id);
                 
                 var localPlayer = ((IPlayerFactory) _entityFactory).GetLocalPlayer(Alt.Core, localPlayerPointer, id);
@@ -32,7 +32,7 @@ namespace AltV.Net.Client.Elements.Pools
         {
             unsafe
             {
-                return Alt.Core.Library.Player_GetID(playerPointer);
+                return Alt.Core.Library.Shared.Player_GetID(playerPointer);
             }
         }
     }

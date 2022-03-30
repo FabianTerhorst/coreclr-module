@@ -16,7 +16,7 @@ namespace AltV.Net.Client
                 unsafe
                 {
                     return cSharpResourceImpl ??=
-                        new CSharpResourceImpl(core.Library, core.Library.Resource_GetCSharpImpl(NativePointer));
+                        new CSharpResourceImpl(core.Library, core.Library.Shared.Resource_GetCSharpImpl(NativePointer));
                 }
             }
         }

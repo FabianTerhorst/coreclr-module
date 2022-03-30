@@ -1,8 +1,8 @@
-﻿using System.Numerics;
-using System.Runtime.InteropServices;
-using AltV.Net.Client.CApi.Memory;
+﻿using System.Runtime.InteropServices;
 using AltV.Net.Client.Elements.Args;
 using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Data;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Client.Elements.Entities
 {
@@ -12,7 +12,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
-                return core.Library.Entity_GetWorldObject(entityPointer);
+                return core.Library.Shared.Entity_GetWorldObject(entityPointer);
             }
         }
         
@@ -34,7 +34,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return Core.Library.Entity_GetModel(EntityNativePointer);
+                    return Core.Library.Shared.Entity_GetModel(EntityNativePointer);
                 }
             }
         }
@@ -45,7 +45,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    var ptr = Core.Library.Entity_GetNetOwner(EntityNativePointer);
+                    var ptr = Core.Library.Shared.Entity_GetNetOwner(EntityNativePointer);
                     if (ptr == IntPtr.Zero) return null;
                     return Alt.Core.PlayerPool.Get(ptr);
                 }
@@ -58,22 +58,22 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return Core.Library.Entity_GetScriptID(EntityNativePointer);
+                    return Core.Library.Client.Entity_GetScriptID(EntityNativePointer);
                 }
             }
         }
 
         public bool Spawned => ScriptID != 0;
 
-        public Vector3 Rotation
+        public Rotation Rotation
         {
             get
             {
                 unsafe
                 {
                     
-                    var position = Vector3.Zero;
-                    this.Core.Library.Entity_GetRotation(this.EntityNativePointer, &position);
+                    var position = Rotation.Zero;
+                    this.Core.Library.Shared.Entity_GetRotation(this.EntityNativePointer, &position);
                     return position;
                 }
             }
@@ -84,7 +84,7 @@ namespace AltV.Net.Client.Elements.Entities
             unsafe
             {
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
-                var mValue = new MValueConst(Core.Library.Entity_GetStreamSyncedMetaData(this.EntityNativePointer, stringPtr));
+                var mValue = new MValueConst(Core.Library.Shared.Entity_GetStreamSyncedMetaData(this.EntityNativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
                 return mValue;
             }
@@ -95,7 +95,7 @@ namespace AltV.Net.Client.Elements.Entities
             unsafe
             {
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
-                var result = Core.Library.Entity_HasStreamSyncedMetaData(this.EntityNativePointer, stringPtr);
+                var result = Core.Library.Shared.Entity_HasStreamSyncedMetaData(this.EntityNativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
                 return result == 1;
             }
@@ -150,7 +150,7 @@ namespace AltV.Net.Client.Elements.Entities
             unsafe
             {
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
-                var mValue = new MValueConst(Core.Library.Entity_GetSyncedMetaData(this.EntityNativePointer, stringPtr));
+                var mValue = new MValueConst(Core.Library.Shared.Entity_GetSyncedMetaData(this.EntityNativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
                 return mValue;
             }
@@ -161,7 +161,7 @@ namespace AltV.Net.Client.Elements.Entities
             unsafe
             {
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
-                var result = Core.Library.Entity_HasSyncedMetaData(this.EntityNativePointer, stringPtr);
+                var result = Core.Library.Shared.Entity_HasSyncedMetaData(this.EntityNativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
                 return result == 1;
             }

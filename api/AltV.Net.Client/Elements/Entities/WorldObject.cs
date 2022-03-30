@@ -9,7 +9,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
-                return core.Library.WorldObject_GetBaseObject(worldObjectPointer);
+                return core.Library.Shared.WorldObject_GetBaseObject(worldObjectPointer);
             }
         }
         
@@ -27,7 +27,7 @@ namespace AltV.Net.Client.Elements.Entities
                 unsafe
                 {
                     var position = Vector3.Zero;
-                    this.Core.Library.WorldObject_GetPosition(this.WorldObjectNativePointer, &position);
+                    this.Core.Library.Shared.WorldObject_GetPosition(this.WorldObjectNativePointer, &position);
                     return position;
                 }
             }

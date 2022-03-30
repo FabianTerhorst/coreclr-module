@@ -239,7 +239,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, byte, void> Player_SetWeaponTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetWeather { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, uint, void> Player_Spawn { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetCSharpImpl { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetMain { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetPath { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Resource_Start { get; }
@@ -663,7 +662,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, byte, void> Player_SetWeaponTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetWeather { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, uint, void> Player_Spawn { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetCSharpImpl { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetMain { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetPath { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Resource_Start { get; }
@@ -1087,7 +1085,6 @@ namespace AltV.Net.CApi.Libraries
             Player_SetWeaponTintIndex = (delegate* unmanaged[Cdecl]<nint, uint, byte, void>) NativeLibrary.GetExport(handle, "Player_SetWeaponTintIndex");
             Player_SetWeather = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Player_SetWeather");
             Player_Spawn = (delegate* unmanaged[Cdecl]<nint, Vector3, uint, void>) NativeLibrary.GetExport(handle, "Player_Spawn");
-            Resource_GetCSharpImpl = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Resource_GetCSharpImpl");
             Resource_GetMain = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Resource_GetMain");
             Resource_GetPath = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Resource_GetPath");
             Resource_Start = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Resource_Start");

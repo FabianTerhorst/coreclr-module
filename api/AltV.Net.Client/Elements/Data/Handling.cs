@@ -9,7 +9,8 @@
             unsafe
             {
                 var pointer = IntPtr.Zero;
-                core.Library.Vehicle_GetHandling(vehiclePointer, &pointer);
+                // core.Library.Vehicle_GetHandling(vehiclePointer, &pointer);
+                // todo
                 return pointer;
             }
         }
@@ -24,7 +25,8 @@
         {
             unsafe
             {
-                _core.Library.Vehicle_ResetHandling(_vehiclePointer);
+                // _core.Library.Vehicle_ResetHandling(_vehiclePointer);
+                // todo
             }
         }
 
@@ -34,7 +36,9 @@
             {
                 unsafe
                 {
-                    return _core.Library.Vehicle_IsHandlingModified(_vehiclePointer) == 1;
+                    // return _core.Library.Vehicle_IsHandlingModified(_vehiclePointer) == 1;
+                    // todo
+                    return false;
                 }
             }
         }
@@ -43,7 +47,8 @@
         {
             unsafe
             {
-                _core.Library.Vehicle_ReplaceHandling(_vehiclePointer);
+                // _core.Library.Vehicle_ReplaceHandling(_vehiclePointer);
+                // todo
             }
         }
     }

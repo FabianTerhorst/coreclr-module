@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace AltV.Net.Client.CApi.Events
+namespace AltV.Net.CApi.ClientEvents
 {
     public delegate void TickModuleDelegate();
         

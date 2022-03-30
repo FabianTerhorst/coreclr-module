@@ -795,5 +795,47 @@ void Vehicle_SetTrainLinkedToForwardId(alt::IVehicle* vehicle, alt::IVehicle* en
 #endif
 
 #ifdef ALT_CLIENT_API
-// todo
+uint16_t Vehicle_GetGear(alt::IVehicle* vehicle)
+{
+    return vehicle->GetCurrentGear();
+}
+
+void Vehicle_SetGear(alt::IVehicle* vehicle, uint16_t value) {
+    vehicle->SetCurrentGear(value);
+}
+
+uint8_t Vehicle_GetIndicatorLights(alt::IVehicle* vehicle) {
+    return vehicle->GetLightsIndicator();
+}
+
+void Vehicle_SetIndicatorLights(alt::IVehicle* vehicle, uint8_t value) {
+    vehicle->SetLightsIndicator(value);
+}
+
+uint16_t Vehicle_GetMaxGear(alt::IVehicle* vehicle) {
+    return vehicle->GetMaxGear();
+}
+
+void Vehicle_SetMaxGear(alt::IVehicle* vehicle, uint16_t value) {
+    vehicle->SetMaxGear(value);
+}
+
+float Vehicle_GetRPM(alt::IVehicle* vehicle) {
+    return vehicle->GetCurrentRPM();
+}
+
+uint8_t Vehicle_GetSeatCount(alt::IVehicle* vehicle) {
+    return vehicle->GetSeatCount();
+}
+
+float Vehicle_GetWheelSpeed(alt::IVehicle* vehicle) {
+    return vehicle->GetWheelSpeed();
+}
+
+void Vehicle_GetSpeedVector(alt::IVehicle* vehicle, vector3_t& vector) {
+    auto speed = vehicle->GetSpeedVector();
+    vector.x = speed[0];
+    vector.y = speed[1];
+    vector.z = speed[2];
+}
 #endif

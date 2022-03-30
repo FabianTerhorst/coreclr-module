@@ -1,4 +1,4 @@
-using AltV.Net.Client.CApi;
+using AltV.Net.CApi;
 using AltV.Net.Client.Elements.Args;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;

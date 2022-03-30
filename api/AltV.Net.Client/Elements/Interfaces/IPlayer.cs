@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using AltV.Net.Data;
 
 namespace AltV.Net.Client.Elements.Interfaces
 {
@@ -12,7 +13,7 @@ namespace AltV.Net.Client.Elements.Interfaces
         uint CurrentWeapon { get; }
         Vector3 EntityAimOffset { get; }
         bool IsFlashlightActive { get; }
-        Vector3 HeadRot { get; }
+        Rotation HeadRot { get; }
         ushort Health { get; }
         bool IsAiming { get; }
         bool IsDead { get; }

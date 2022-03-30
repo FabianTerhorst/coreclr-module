@@ -107,6 +107,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsJumping { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsReloading { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsShooting { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetCSharpImpl { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], int, void> Resource_GetDependants { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Resource_GetDependantsSize { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], int, void> Resource_GetDependencies { get; }
@@ -227,6 +228,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsJumping { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsReloading { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsShooting { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetCSharpImpl { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], int, void> Resource_GetDependants { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Resource_GetDependantsSize { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], int, void> Resource_GetDependencies { get; }
@@ -347,6 +349,7 @@ namespace AltV.Net.CApi.Libraries
             Player_IsJumping = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsJumping");
             Player_IsReloading = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsReloading");
             Player_IsShooting = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsShooting");
+            Resource_GetCSharpImpl = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Resource_GetCSharpImpl");
             Resource_GetDependants = (delegate* unmanaged[Cdecl]<nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Resource_GetDependants");
             Resource_GetDependantsSize = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Resource_GetDependantsSize");
             Resource_GetDependencies = (delegate* unmanaged[Cdecl]<nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Resource_GetDependencies");

@@ -1,5 +1,4 @@
-﻿using AltV.Net.Client.CApi.Events;
-using AltV.Net.Client.Events;
+﻿using AltV.Net.Client.Events;
 
 namespace AltV.Net.Client
 {

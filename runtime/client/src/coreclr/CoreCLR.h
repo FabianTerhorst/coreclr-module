@@ -10,7 +10,7 @@ typedef int (* CoreClrDelegate_t)(void* args, int argsLength);
 
 class CoreCLR {
 public:
-    explicit CoreCLR();
+    explicit CoreCLR(alt::ICore* core);
 
     void start_resource(alt::IResource* resource, alt::ICore* core);
     void stop_resource(alt::IResource* resource);

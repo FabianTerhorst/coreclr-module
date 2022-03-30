@@ -65,7 +65,7 @@ void CoreCLR::initialize_coreclr(const string_t &runtimeconfig_path) {
     _loadAssembly = (load_assembly_and_get_function_pointer_fn) load_assembly_and_get_function_pointer;
 }
 
-CoreCLR::CoreCLR() {
+CoreCLR::CoreCLR(alt::ICore* core) {
     Log::Info << "Initializing CoreCLR" << Log::Endl;
 
     auto hostfxr_path = find_hostfxr();
@@ -106,14 +106,17 @@ CoreCLR::CoreCLR() {
 
     Log::Info << "Executing method from Host dll" << Log::Endl;
 
-    struct init_args {};
-    init_args initArgs;
+    struct init_args {
+        const alt::ICore* corePtr;
+    };
+    init_args initArgs {core};
     auto t = hostInitDelegate(&initArgs, sizeof(initArgs));
 
     cout << "Exit code: " << to_string(t) << endl;
 }
 
 void CoreCLR::start_resource(alt::IResource *resource, alt::ICore* core) {
+    Log::Info << "Starting resource inner" << Log::Endl;
     auto path = utils::string_to_wstring(resource->GetMain().ToString());
 
     struct start_args {
@@ -123,6 +126,7 @@ void CoreCLR::start_resource(alt::IResource *resource, alt::ICore* core) {
     };
     start_args startArgs{path.c_str(), resource, core};
 
+    Log::Info << "Is delegate null " << (loadResourceDelegate == nullptr) << Log::Endl;
     loadResourceDelegate(&startArgs, sizeof(startArgs));
 }
 
@@ -137,6 +141,7 @@ void CoreCLR::stop_resource(alt::IResource *resource) {
 
 EXPORT void SetResourceLoadDelegates(CoreClrDelegate_t resourceExecute, CoreClrDelegate_t resourceExecuteUnload,
                                      CoreClrDelegate_t stopRuntime) {
+    Log::Info << "Set delegates!! YAY!" << Log::Endl;
     if (loadResourceDelegate || stopResourceDelegate || stopRuntimeDelegate) {
         abort(); // developer tried to call that method from resource XD
     }

@@ -1,7 +1,6 @@
 ﻿using System.Runtime.InteropServices;
-using AltV.Net.Client.CApi;
-using AltV.Net.Client.CApi.Events;
-using AltV.Net.Client.Events;
+using AltV.Net.CApi;
+using AltV.Net.CApi.ClientEvents;
 
 namespace AltV.Net.Client.Runtime
 {
@@ -25,67 +24,67 @@ namespace AltV.Net.Client.Runtime
             {
                 TickModuleDelegate onTick = ModuleWrapper.OnTick;
                 _handles.AddFirst(GCHandle.Alloc(onTick));
-                _library.Event_SetTickDelegate(this.NativePointer, onTick);
+                _library.Client.Event_SetTickDelegate(this.NativePointer, onTick);
                 
                 ServerEventModuleDelegate onServerEvent = ModuleWrapper.OnServerEvent;
                 _handles.AddFirst(GCHandle.Alloc(onServerEvent));
-                _library.Event_SetServerEventDelegate(this.NativePointer, onServerEvent);
+                _library.Client.Event_SetServerEventDelegate(this.NativePointer, onServerEvent);
                 
                 ClientEventModuleDelegate onClientEvent = ModuleWrapper.OnClientEvent;
                 _handles.AddFirst(GCHandle.Alloc(onClientEvent));
-                _library.Event_SetClientEventDelegate(this.NativePointer, onClientEvent);
+                _library.Client.Event_SetClientEventDelegate(this.NativePointer, onClientEvent);
                 
                 ConsoleCommandModuleDelegate onConsoleCommand = ModuleWrapper.OnConsoleCommand;
                 _handles.AddFirst(GCHandle.Alloc(onConsoleCommand));
-                _library.Event_SetConsoleCommandDelegate(this.NativePointer, onConsoleCommand);
+                _library.Client.Event_SetConsoleCommandDelegate(this.NativePointer, onConsoleCommand);
                 
                 CreatePlayerModuleDelegate onCreatePlayer = ModuleWrapper.OnCreatePlayer;
                 _handles.AddFirst(GCHandle.Alloc(onCreatePlayer));
-                _library.Event_SetCreatePlayerDelegate(this.NativePointer, onCreatePlayer);
+                _library.Client.Event_SetCreatePlayerDelegate(this.NativePointer, onCreatePlayer);
                 
                 RemovePlayerModuleDelegate onRemovePlayer = ModuleWrapper.OnRemovePlayer;
                 _handles.AddFirst(GCHandle.Alloc(onRemovePlayer));
-                _library.Event_SetRemovePlayerDelegate(this.NativePointer, onRemovePlayer);
+                _library.Client.Event_SetRemovePlayerDelegate(this.NativePointer, onRemovePlayer);
                 
                 CreateVehicleModuleDelegate onCreateVehicle = ModuleWrapper.OnCreateVehicle;
                 _handles.AddFirst(GCHandle.Alloc(onCreateVehicle));
-                _library.Event_SetCreateVehicleDelegate(this.NativePointer, onCreateVehicle);
+                _library.Client.Event_SetCreateVehicleDelegate(this.NativePointer, onCreateVehicle);
                 
                 RemoveVehicleModuleDelegate onRemoveVehicle = ModuleWrapper.OnRemoveVehicle;
                 _handles.AddFirst(GCHandle.Alloc(onRemoveVehicle));
-                _library.Event_SetRemoveVehicleDelegate(this.NativePointer, onRemoveVehicle);
-
+                _library.Client.Event_SetRemoveVehicleDelegate(this.NativePointer, onRemoveVehicle);
+            
                 PlayerSpawnModuleDelegate onPlayerSpawn = ModuleWrapper.OnPlayerSpawn;
                 _handles.AddFirst(GCHandle.Alloc(onPlayerSpawn));
-                _library.Event_SetPlayerSpawnDelegate(this.NativePointer, onPlayerSpawn);
+                _library.Client.Event_SetPlayerSpawnDelegate(this.NativePointer, onPlayerSpawn);
                 
                 PlayerDisconnectModuleDelegate onPlayerDisconnect = ModuleWrapper.OnPlayerDisconnect;
                 _handles.AddFirst(GCHandle.Alloc(onPlayerDisconnect));
-                _library.Event_SetPlayerDisconnectDelegate(this.NativePointer, onPlayerDisconnect);
+                _library.Client.Event_SetPlayerDisconnectDelegate(this.NativePointer, onPlayerDisconnect);
                 
                 PlayerEnterVehicleModuleDelegate onPlayerEnterVehicle = ModuleWrapper.OnPlayerEnterVehicle;
                 _handles.AddFirst(GCHandle.Alloc(onPlayerEnterVehicle));
-                _library.Event_SetPlayerEnterVehicleDelegate(this.NativePointer, onPlayerEnterVehicle);
+                _library.Client.Event_SetPlayerEnterVehicleDelegate(this.NativePointer, onPlayerEnterVehicle);
                 
                 ResourceErrorModuleDelegate onResourceError = ModuleWrapper.OnResourceError;
                 _handles.AddFirst(GCHandle.Alloc(onResourceError));
-                _library.Event_SetResourceErrorDelegate(this.NativePointer, onResourceError);
+                _library.Client.Event_SetResourceErrorDelegate(this.NativePointer, onResourceError);
                 
                 ResourceStartModuleDelegate onResourceStart = ModuleWrapper.OnResourceStart;
                 _handles.AddFirst(GCHandle.Alloc(onResourceStart));
-                _library.Event_SetResourceStartDelegate(this.NativePointer, onResourceStart);
+                _library.Client.Event_SetResourceStartDelegate(this.NativePointer, onResourceStart);
                 
                 ResourceStopModuleDelegate onResourceStop = ModuleWrapper.OnResourceStop;
                 _handles.AddFirst(GCHandle.Alloc(onResourceStop));
-                _library.Event_SetResourceStopDelegate(this.NativePointer, onResourceStop);
+                _library.Client.Event_SetResourceStopDelegate(this.NativePointer, onResourceStop);
                 
                 KeyDownModuleDelegate onKeyDown = ModuleWrapper.OnKeyDown;
                 _handles.AddFirst(GCHandle.Alloc(onKeyDown));
-                _library.Event_SetKeyDownDelegate(this.NativePointer, onKeyDown);
+                _library.Client.Event_SetKeyDownDelegate(this.NativePointer, onKeyDown);
                 
                 KeyUpModuleDelegate onKeyUp = ModuleWrapper.OnKeyUp;
                 _handles.AddFirst(GCHandle.Alloc(onKeyUp));
-                _library.Event_SetKeyUpDelegate(this.NativePointer, onKeyUp);
+                _library.Client.Event_SetKeyUpDelegate(this.NativePointer, onKeyUp);
             }
         }
         

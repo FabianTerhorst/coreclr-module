@@ -3,6 +3,7 @@
 #include "../../../cpp-sdk/SDK.h"
 #include "./CSharpScriptRuntime.h"
 #include "eventDelegates.h"
+#include "../../../c-api/data/invoker.h"
 
 class CSharpResourceImpl : public alt::IResource::Impl
 {
@@ -13,7 +14,10 @@ class CSharpResourceImpl : public alt::IResource::Impl
     void ResetDelegates();
 
 public:
-    CSharpResourceImpl(CSharpScriptRuntime* runtime, alt::IResource* resource, alt::ICore* core) : runtime(runtime), resource(resource), core(core) {};
+    CSharpResourceImpl(CSharpScriptRuntime* runtime, alt::IResource* resource, alt::ICore* core) : runtime(runtime), resource(resource), core(core) {
+        invokers = new alt::Array<CustomInvoker*>();
+    };
+
     ~CSharpResourceImpl() = default;
 
     bool Start() override;
@@ -24,6 +28,8 @@ public:
 
     void OnCreateBaseObject(alt::Ref<alt::IBaseObject> object) override;
     void OnRemoveBaseObject(alt::Ref<alt::IBaseObject> object) override;
+
+    alt::Array<CustomInvoker*>* invokers;
 
     TickDelegate_t OnTickDelegate = nullptr;
     ServerEventDelegate_t OnServerEventDelegate = nullptr;

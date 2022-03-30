@@ -10,7 +10,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
-                return core.Library.Vehicle_GetEntity(vehicleNativePointer);
+                return core.Library.Shared.Vehicle_GetEntity(vehicleNativePointer);
             }
         }
 
@@ -27,7 +27,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return Core.Library.Vehicle_GetGear(VehicleNativePointer);
+                    return Core.Library.Client.Vehicle_GetGear(VehicleNativePointer);
                 }
             }
         }
@@ -38,14 +38,14 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return Core.Library.Vehicle_GetIndicatorLights(VehicleNativePointer);
+                    return Core.Library.Client.Vehicle_GetIndicatorLights(VehicleNativePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    Core.Library.Vehicle_SetIndicatorLights(VehicleNativePointer, value);
+                    Core.Library.Client.Vehicle_SetIndicatorLights(VehicleNativePointer, value);
                 }
             }
         }
@@ -56,14 +56,14 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return Core.Library.Vehicle_GetMaxGear(VehicleNativePointer);
+                    return Core.Library.Client.Vehicle_GetMaxGear(VehicleNativePointer);
                 }
             }
             set
             {
                 unsafe
                 {
-                    Core.Library.Vehicle_SetMaxGear(VehicleNativePointer, value);
+                    Core.Library.Client.Vehicle_SetMaxGear(VehicleNativePointer, value);
                 }
             }
         }
@@ -74,7 +74,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return Core.Library.Vehicle_GetRPM(VehicleNativePointer);
+                    return Core.Library.Client.Vehicle_GetRPM(VehicleNativePointer);
                 }
             }
         }
@@ -85,7 +85,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return Core.Library.Vehicle_GetSeatCount(VehicleNativePointer);
+                    return Core.Library.Client.Vehicle_GetSeatCount(VehicleNativePointer);
                 }
             }
         }
@@ -96,7 +96,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return Core.Library.Vehicle_GetWheelSpeed(VehicleNativePointer);
+                    return Core.Library.Client.Vehicle_GetWheelSpeed(VehicleNativePointer);
                 }
             }
         }
@@ -108,7 +108,7 @@ namespace AltV.Net.Client.Elements.Entities
                 unsafe
                 {
                     var position = Vector3.Zero;
-                    Core.Library.Vehicle_GetSpeedVector(VehicleNativePointer, &position);
+                    Core.Library.Client.Vehicle_GetSpeedVector(VehicleNativePointer, &position);
                     return position;
                 }
             }
@@ -120,7 +120,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return Core.Library.Vehicle_GetWheelsCount(VehicleNativePointer);
+                    return Core.Library.Shared.Vehicle_GetWheelsCount(VehicleNativePointer);
                 }
             }
         }

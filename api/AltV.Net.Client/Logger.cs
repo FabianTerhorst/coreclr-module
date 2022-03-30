@@ -1,17 +1,19 @@
 ﻿using System.Runtime.InteropServices;
-using AltV.Net.Client.CApi;
-using AltV.Net.Client.CApi.Memory;
+using AltV.Net.CApi;
 using AltV.Net.Client.Elements;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Client
 {
     public class Logger : ILogger
     {
         private readonly ILibrary library;
-        
-        public Logger(ILibrary library)
+        private readonly IntPtr corePointer;
+
+        public Logger(ILibrary library, IntPtr corePointer)
         {
             this.library = library;
+            this.corePointer = corePointer;
         }
         
         public void LogInfo(string message)
@@ -19,7 +21,7 @@ namespace AltV.Net.Client
             unsafe
             {
                 var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
-                library.LogInfo(messagePtr);
+                library.Shared.Core_LogInfo(corePointer, messagePtr);
                 Marshal.FreeHGlobal(messagePtr);
             }
         }
@@ -29,7 +31,7 @@ namespace AltV.Net.Client
             unsafe
             {
                 var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
-                library.LogWarning(messagePtr);
+                library.Shared.Core_LogWarning(corePointer, messagePtr);
                 Marshal.FreeHGlobal(messagePtr);
             }
         }
@@ -39,7 +41,7 @@ namespace AltV.Net.Client
             unsafe
             {
                 var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
-                library.LogError(messagePtr);
+                library.Shared.Core_LogError(corePointer, messagePtr);
                 Marshal.FreeHGlobal(messagePtr);
             }
         }
@@ -49,7 +51,7 @@ namespace AltV.Net.Client
             unsafe
             {
                 var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
-                library.LogDebug(messagePtr);
+                library.Shared.Core_LogDebug(corePointer, messagePtr);
                 Marshal.FreeHGlobal(messagePtr);
             }
         }

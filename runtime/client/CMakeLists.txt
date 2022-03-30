@@ -16,8 +16,10 @@ file(GLOB_RECURSE PROJECT_SOURCE_FILES
         "src/*.cpp"
 )
 
+file(GLOB_RECURSE CAPI_FILES "../c-api/*.h" "../c-api/*.cpp")
+
 add_library(${TARGET_NAME} SHARED
-        "${PROJECT_SOURCE_FILES}"
+        "${PROJECT_SOURCE_FILES}" "${CAPI_FILES}"
 )
 #add_executable(${TARGET_NAME} ${PROJECT_SOURCE_FILES})
 

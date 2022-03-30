@@ -514,5 +514,46 @@ uint8_t Player_GetHairHighlightColor(alt::IPlayer* player) {
 #endif
 
 #if ALT_CLIENT_API
-// todo
+
+uint8_t Player_IsTalking(alt::IPlayer* player) {
+    return player->IsTalking();
+}
+
+
+float Player_GetMicLevel(alt::IPlayer* player) {
+    return player->GetMicLevel();
+}
+
+
+float Player_GetNonSpatialVolume(alt::IPlayer* player) {
+    return player->GetNonSpatialVolume();
+}
+
+void Player_SetNonSpatialVolume(alt::IPlayer* player, float value) {
+    player->SetNonSpatialVolume(value);
+}
+
+float Player_GetSpatialVolume(alt::IPlayer* player) {
+    return player->GetSpatialVolume();
+}
+
+void Player_SetSpatialVolume(alt::IPlayer* player, float value) {
+    player->SetSpatialVolume(value);
+}
+
+alt::ILocalPlayer* Player_GetLocal() {
+    return alt::ICore::Instance().GetLocalPlayer().Get();
+}
+
+uint16_t LocalPlayer_GetID(alt::ILocalPlayer* player) {
+    return player->GetID();
+}
+
+alt::IPlayer* LocalPlayer_GetPlayer(alt::ILocalPlayer* localPlayer) {
+    return dynamic_cast<alt::IPlayer*>(localPlayer);
+}
+
+uint16_t LocalPlayer_GetCurrentAmmo(alt::ILocalPlayer* localPlayer) {
+    return localPlayer->GetCurrentAmmo();
+}
 #endif

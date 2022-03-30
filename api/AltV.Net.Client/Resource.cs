@@ -1,4 +1,4 @@
-using AltV.Net.Client.CApi;
+using AltV.Net.CApi;
 using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Factories;
@@ -28,9 +28,9 @@ namespace AltV.Net.Client
             return new NativeResourceFactory();
         }
         
-        public virtual ILogger GetLogger(ILibrary library)
+        public virtual ILogger GetLogger(ILibrary library, IntPtr corePointer)
         {
-            return new Logger(library);
+            return new Logger(library, corePointer);
         }
     }
 }

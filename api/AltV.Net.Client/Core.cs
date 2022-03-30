@@ -2,14 +2,14 @@ using System.Collections;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
-using AltV.Net.Client.CApi;
-using AltV.Net.Client.CApi.Memory;
-using AltV.Net.Client.Data;
+using AltV.Net.CApi;
 using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Args;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Elements.Pools;
+using AltV.Net.Data;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Client
 {
@@ -49,7 +49,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Nil, Library.Core_CreateMValueNil(NativePointer));
+                mValue = new MValueConst(MValueConst.Type.Nil, Library.Shared.Core_CreateMValueNil(NativePointer));
             }
         }
 
@@ -58,7 +58,7 @@ namespace AltV.Net.Client
             unsafe
             {
                 mValue = new MValueConst(MValueConst.Type.Bool,
-                    Library.Core_CreateMValueBool(NativePointer, value ? (byte) 1 : (byte) 0));
+                    Library.Shared.Core_CreateMValueBool(NativePointer, value ? (byte) 1 : (byte) 0));
             }
         }
 
@@ -66,7 +66,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                mValue = new MValueConst(MValueConst.Type.Int, Library.Core_CreateMValueInt(NativePointer, value));
+                mValue = new MValueConst(MValueConst.Type.Int, Library.Shared.Core_CreateMValueInt(NativePointer, value));
             }
         }
 
@@ -75,7 +75,7 @@ namespace AltV.Net.Client
             unsafe
             {
                 mValue = new MValueConst(MValueConst.Type.Uint,
-                    Library.Core_CreateMValueUInt(NativePointer, value));
+                    Library.Shared.Core_CreateMValueUInt(NativePointer, value));
             }
         }
 
@@ -84,7 +84,7 @@ namespace AltV.Net.Client
             unsafe
             {
                 mValue = new MValueConst(MValueConst.Type.Double,
-                    Library.Core_CreateMValueDouble(NativePointer, value));
+                    Library.Shared.Core_CreateMValueDouble(NativePointer, value));
             }
         }
 
@@ -94,7 +94,7 @@ namespace AltV.Net.Client
             {
                 var valuePtr = MemoryUtils.StringToHGlobalUtf8(value);
                 mValue = new MValueConst(MValueConst.Type.String,
-                    Library.Core_CreateMValueString(NativePointer, valuePtr));
+                    Library.Shared.Core_CreateMValueString(NativePointer, valuePtr));
                 Marshal.FreeHGlobal(valuePtr);
             }
         }
@@ -111,7 +111,7 @@ namespace AltV.Net.Client
                 }
 
                 mValue = new MValueConst(MValueConst.Type.List,
-                    Library.Core_CreateMValueList(NativePointer, pointers, size));
+                    Library.Shared.Core_CreateMValueList(NativePointer, pointers, size));
             }
         }
 
@@ -132,7 +132,7 @@ namespace AltV.Net.Client
                 }
 
                 mValue = new MValueConst(MValueConst.Type.Dict,
-                    Library.Core_CreateMValueDict(NativePointer, keyPointers, pointers, size));
+                    Library.Shared.Core_CreateMValueDict(NativePointer, keyPointers, pointers, size));
                 for (ulong i = 0; i < size; i++)
                 {
                     Marshal.FreeHGlobal(keyPointers[i]);
@@ -146,7 +146,7 @@ namespace AltV.Net.Client
             unsafe
             {
                 mValue = new MValueConst(MValueConst.Type.Vector3,
-                    Library.Core_CreateMValueVector3(NativePointer, value));
+                    Library.Shared.Core_CreateMValueVector3(NativePointer, value));
             }
         }
 
@@ -155,7 +155,7 @@ namespace AltV.Net.Client
             unsafe
             {
                 mValue = new MValueConst(MValueConst.Type.Vector2,
-                    Library.Core_CreateMValueVector2(NativePointer, value));
+                    Library.Shared.Core_CreateMValueVector2(NativePointer, value));
             }
         }
 
@@ -164,7 +164,7 @@ namespace AltV.Net.Client
             unsafe
             {
                 mValue = new MValueConst(MValueConst.Type.Rgba,
-                    Library.Core_CreateMValueRgba(NativePointer, value));
+                    Library.Shared.Core_CreateMValueRgba(NativePointer, value));
             }
         }
 
@@ -176,7 +176,7 @@ namespace AltV.Net.Client
                 var dataPtr = Marshal.AllocHGlobal(size);
                 Marshal.Copy(value, 0, dataPtr, size);
                 mValue = new MValueConst(MValueConst.Type.ByteArray,
-                    Library.Core_CreateMValueByteArray(NativePointer, (ulong) size, dataPtr));
+                    Library.Shared.Core_CreateMValueByteArray(NativePointer, (ulong) size, dataPtr));
                 Marshal.FreeHGlobal(dataPtr);
             }
         }
@@ -384,13 +384,15 @@ namespace AltV.Net.Client
 
         public HandlingData? GetHandlingByModelHash(uint modelHash)
         {
-            unsafe
-            {
-                var pointer = IntPtr.Zero;
-                var success = Library.Vehicle_Handling_GetByModelHash(NativePointer, modelHash, &pointer);
-                if (success == 0 || pointer == IntPtr.Zero) return null;
-                return new HandlingData(this, pointer);
-            }
+            // unsafe
+            // {
+            //     var pointer = IntPtr.Zero;
+            //     var success = Library.Vehicle_Handling_GetByModelHash(NativePointer, modelHash, &pointer);
+            //     if (success == 0 || pointer == IntPtr.Zero) return null;
+            //     return new HandlingData(this, pointer);
+            // }
+            return null;
+            // todo
         }
     }
 }

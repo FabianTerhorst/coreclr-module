@@ -1,9 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
-using AltV.Net.Client.CApi.Memory;
+﻿using System.Runtime.InteropServices;
 using AltV.Net.Client.Elements.Args;
 using AltV.Net.Client.Elements.Enums;
 using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Client.Elements.Entities
 {
@@ -25,7 +24,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    return (BaseObjectType) Core.Library.BaseObject_GetType(BaseObjectNativePointer);
+                    return (BaseObjectType) Core.Library.Shared.BaseObject_GetType(BaseObjectNativePointer);
                 }
             }
         }
@@ -65,7 +64,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 Core.CreateMValue(out var mValue, value);
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
-                Core.Library.BaseObject_SetMetaData(this.BaseObjectNativePointer, stringPtr, mValue.nativePointer);
+                Core.Library.Shared.BaseObject_SetMetaData(this.BaseObjectNativePointer, stringPtr, mValue.nativePointer);
                 Marshal.FreeHGlobal(stringPtr);
                 mValue.Dispose();
             }
@@ -76,7 +75,7 @@ namespace AltV.Net.Client.Elements.Entities
             unsafe
             {
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
-                var result = Core.Library.BaseObject_HasMetaData(this.BaseObjectNativePointer, stringPtr);
+                var result = Core.Library.Shared.BaseObject_HasMetaData(this.BaseObjectNativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
                 return result == 1;
             }
@@ -87,7 +86,7 @@ namespace AltV.Net.Client.Elements.Entities
             unsafe
             {
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
-                Core.Library.BaseObject_DeleteMetaData(this.BaseObjectNativePointer, stringPtr);
+                Core.Library.Shared.BaseObject_DeleteMetaData(this.BaseObjectNativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
             }
         }
@@ -97,7 +96,7 @@ namespace AltV.Net.Client.Elements.Entities
             unsafe
             {
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
-                var mValue = new MValueConst(Core.Library.BaseObject_GetMetaData(this.BaseObjectNativePointer, stringPtr));
+                var mValue = new MValueConst(Core.Library.Shared.BaseObject_GetMetaData(this.BaseObjectNativePointer, stringPtr));
                 Marshal.FreeHGlobal(stringPtr);
                 return mValue;
             }
