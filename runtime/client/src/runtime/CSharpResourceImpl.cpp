@@ -16,7 +16,7 @@ bool CSharpResourceImpl::Start()
     try {
         GetRuntime()->clr.start_resource(resource, core);
     } catch(...) {
-        Log::Error << "Failed to load module";
+        Log::Error << "Failed to load module" << Log::Endl;
         return false;
     }
     return true;

@@ -1,3 +1,5 @@
+using AltV.Net.Client.CApi;
+using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Interfaces;
@@ -24,6 +26,11 @@ namespace AltV.Net.Client
         public virtual INativeResourceFactory GetResourceFactory()
         {
             return new NativeResourceFactory();
+        }
+        
+        public virtual ILogger GetLogger(ILibrary library)
+        {
+            return new Logger(library);
         }
     }
 }

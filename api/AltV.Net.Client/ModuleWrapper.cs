@@ -2,6 +2,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using AltV.Net.Client.CApi;
+using AltV.Net.Client.CApi.Memory;
 using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Pools;
@@ -18,13 +19,29 @@ namespace AltV.Net.Client
         private static IntPtr _resourcePointer;
         private static IntPtr _corePointer;
 
+        private static void Log(ILibrary library, string msg)
+        {
+            unsafe
+            {
+                var messagePtr = MemoryUtils.StringToHGlobalUtf8(msg);
+                library.LogInfo(messagePtr);
+                Marshal.FreeHGlobal(messagePtr);
+            }
+        } 
+
         public static void MainWithAssembly(Assembly resourceAssembly, IntPtr resourcePointer, IntPtr corePointer)
         {
             var library = new Library();
-            _resourcePointer = resourcePointer;
-            _corePointer = corePointer;
+            var logger = new Logger(library);
+            Alt.Logger = logger;
+            Alt.Log("Library initialized");
+            
             Console.SetOut(new AltTextWriter());
             Console.SetError(new AltErrorTextWriter());
+            Alt.Log("Out set");
+            
+            _resourcePointer = resourcePointer;
+            _corePointer = corePointer;
 
             var type = typeof(IResource);
             var resource = resourceAssembly.GetTypes().FirstOrDefault(t => t.IsClass && !t.IsAbstract && type.IsAssignableFrom(t));
@@ -35,7 +52,9 @@ namespace AltV.Net.Client
             }
 
             _resource = (IResource) Activator.CreateInstance(resource)!;
-            Alt.Log("Instance created");
+            Alt.Log("Resource created");
+
+            Alt.Logger = _resource.GetLogger(library);
             
             var playerPool = new PlayerPool(_resource.GetPlayerFactory());
             Alt.Log("Player pool created");
@@ -46,10 +65,12 @@ namespace AltV.Net.Client
             var nativeResourcePool = new NativeResourcePool(_resource.GetResourceFactory());
             Alt.Log("Native resource pool created");
             
-            var client = new Core(library, corePointer, resourcePointer, playerPool, vehiclePool, nativeResourcePool);
+            var client = new Core(library, corePointer, resourcePointer, playerPool, vehiclePool, nativeResourcePool, logger);
             _core = client;
             Alt.CoreImpl = client;
             Alt.Log("Core initialized");
+            
+            playerPool.InitLocalPlayer(_core);
 
             _core.Resource.CSharpResourceImpl.SetDelegates();
             Alt.Log("Delegates set");

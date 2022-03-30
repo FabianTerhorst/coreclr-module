@@ -6,17 +6,23 @@ namespace AltV.Net.Client.Elements.Pools
 {
     public class PlayerPool : EntityPool<IPlayer>, IPlayerPool
     {
-        public ILocalPlayer LocalPlayer { get; }
+        public ILocalPlayer LocalPlayer { get; private set; }
 
         public PlayerPool(IPlayerFactory entityFactory) : base(entityFactory)
         {
+        }
+        
+        public void InitLocalPlayer(ICore core)
+        {
+            if (LocalPlayer is not null) return;
+            
             unsafe
             {
-                var localPlayerPointer = Alt.Core.Library.Player_GetLocal();
-                var id = Alt.Core.Library.LocalPlayer_GetID(localPlayerPointer);
+                var localPlayerPointer = core.Library.Player_GetLocal();
+                var id = core.Library.LocalPlayer_GetID(localPlayerPointer);
                 Alt.Log("Local player has ID " + id);
                 
-                var localPlayer = entityFactory.GetLocalPlayer(Alt.Core, localPlayerPointer, id);
+                var localPlayer = ((IPlayerFactory) _entityFactory).GetLocalPlayer(Alt.Core, localPlayerPointer, id);
                 this.Add(localPlayer);
                 this.LocalPlayer = localPlayer;
             }

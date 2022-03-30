@@ -7,7 +7,7 @@ namespace AltV.Net.Client.Elements.Pools
     public abstract class EntityPool<TEntity> : IEntityPool<TEntity> where TEntity : IEntity
     {
         private readonly Dictionary<IntPtr, TEntity> _entities = new();
-        private IEntityFactory<TEntity> _entityFactory;
+        protected IEntityFactory<TEntity> _entityFactory;
 
         public EntityPool(IEntityFactory<TEntity> entityFactory)
         {

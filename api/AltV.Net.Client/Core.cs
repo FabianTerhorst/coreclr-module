@@ -5,6 +5,7 @@ using System.Text;
 using AltV.Net.Client.CApi;
 using AltV.Net.Client.CApi.Memory;
 using AltV.Net.Client.Data;
+using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Args;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
@@ -21,59 +22,26 @@ namespace AltV.Net.Client
         public IEntityPool<IVehicle> VehiclePool { get; }
         
         public INativeResource Resource { get; }
+        public ILogger Logger { get; }
 
         public List<SafeTimer> RunningTimers { get; } = new();
 
-        public Core(ILibrary library, IntPtr nativePointer, IntPtr resourcePointer, IPlayerPool playerPool, IEntityPool<IVehicle> vehiclePool, INativeResourcePool nativeResourcePool)
+        public Core(ILibrary library, IntPtr nativePointer, IntPtr resourcePointer, IPlayerPool playerPool, IEntityPool<IVehicle> vehiclePool, INativeResourcePool nativeResourcePool, ILogger logger)
         {
             Library = library;
             NativePointer = nativePointer;
             PlayerPool = playerPool;
             VehiclePool = vehiclePool;
+            Logger = logger;
             nativeResourcePool.GetOrCreate(this, resourcePointer, out var resource);
             Resource = resource;
         }
 
         #region Log
-        public void LogInfo(string message)
-        {
-            unsafe
-            {
-                var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
-                this.Library.LogInfo(messagePtr);
-                Marshal.FreeHGlobal(messagePtr);
-            }
-        }
-
-        public void LogWarning(string message)
-        {
-            unsafe
-            {
-                var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
-                this.Library.LogWarning(messagePtr);
-                Marshal.FreeHGlobal(messagePtr);
-            }
-        }
-
-        public void LogError(string message)
-        {
-            unsafe
-            {
-                var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
-                this.Library.LogError(messagePtr);
-                Marshal.FreeHGlobal(messagePtr);
-            }
-        }
-
-        public void LogDebug(string message)
-        {
-            unsafe
-            {
-                var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
-                this.Library.LogDebug(messagePtr);
-                Marshal.FreeHGlobal(messagePtr);
-            }
-        }
+        public void LogInfo(string message) => Logger.LogInfo(message);
+        public void LogWarning(string message) => Logger.LogWarning(message);
+        public void LogError(string message) => Logger.LogError(message);
+        public void LogDebug(string message) => Logger.LogDebug(message);
         #endregion
 
         #region MValue
