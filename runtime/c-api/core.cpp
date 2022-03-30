@@ -181,6 +181,11 @@ const char* Core_GetBranch(alt::ICore* core, int32_t &size) {
 }
 
 
+void Core_DestroyBaseObject(alt::ICore* core, alt::IBaseObject* baseObject) {
+    return core->DestroyBaseObject(baseObject);
+}
+
+
 #ifdef ALT_SERVER_API
 uint8_t Core_SubscribeCommand(alt::ICore* core, const char* cmd, alt::CommandCallback cb) {
     return core->SubscribeCommand(cmd, cb);
@@ -361,10 +366,6 @@ void Core_DestroyVehicle(alt::ICore* core, alt::IVehicle* baseObject) {
     return core->DestroyBaseObject(baseObject);
 }
 
-void Core_DestroyBlip(alt::ICore* core, alt::IBlip* baseObject) {
-    return core->DestroyBaseObject(baseObject);
-}
-
 void Core_DestroyCheckpoint(alt::ICore* core, alt::ICheckpoint* baseObject) {
     return core->DestroyBaseObject(baseObject);
 }
@@ -441,5 +442,37 @@ void Core_SetPassword(alt::ICore* core, const char* value) {
 
 void Core_StopServer(alt::ICore* core) {
     core->StopServer();
+}
+#endif
+
+#ifdef ALT_CLIENT_API
+alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position) {
+    alt::Position pos;
+    pos.x = position.x;
+    pos.y = position.y;
+    pos.z = position.z;
+    auto blip = core->CreateBlip(alt::IBlip::BlipType::DESTINATION, pos);
+    if (blip.IsEmpty()) return nullptr;
+    return blip.Get();
+}
+
+alt::IBlip* Core_Client_CreateRadiusBlip(alt::ICore* core, vector3_t position, float radius) {
+    alt::Position pos;
+    pos.x = position.x;
+    pos.y = position.y;
+    pos.z = position.z;
+    auto blip = core->CreateBlip(pos, radius);
+    if (blip.IsEmpty()) return nullptr;
+    return blip.Get();
+}
+
+alt::IBlip* Core_Client_CreateAreaBlip(alt::ICore* core, vector3_t position, float width, float height) {
+    alt::Position pos;
+    pos.x = position.x;
+    pos.y = position.y;
+    pos.z = position.z;
+    auto blip = core->CreateBlip(pos, width, height);
+    if (blip.IsEmpty()) return nullptr;
+    return blip.Get();
 }
 #endif

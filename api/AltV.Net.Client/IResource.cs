@@ -2,6 +2,7 @@ using AltV.Net.CApi;
 using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Client
 {
@@ -11,6 +12,7 @@ namespace AltV.Net.Client
         public void OnStop();
         public IPlayerFactory GetPlayerFactory();
         public IEntityFactory<IVehicle> GetVehicleFactory();
+        public IBaseObjectFactory<IBlip> GetBlipFactory();
         public INativeResourceFactory GetResourceFactory();
         public ILogger GetLogger(ILibrary library, IntPtr corePointer);
     }

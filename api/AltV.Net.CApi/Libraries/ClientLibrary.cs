@@ -10,6 +10,10 @@ namespace AltV.Net.CApi.Libraries
 {
     public unsafe interface IClientLibrary
     {
+        public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint> Core_Client_CreateAreaBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_Client_CreatePointBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, float, nint> Core_Client_CreateRadiusBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void> Event_SetClientEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConsoleCommandModuleDelegate, void> Event_SetConsoleCommandDelegate { get; }
@@ -37,6 +41,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsTalking { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetNonSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetSpatialVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, bool> Resource_FileExists { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void> Resource_GetFile { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetGear { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetMaxGear { get; }
@@ -51,6 +57,10 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
+        public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint> Core_Client_CreateAreaBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_Client_CreatePointBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, float, nint> Core_Client_CreateRadiusBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void> Event_SetClientEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConsoleCommandModuleDelegate, void> Event_SetConsoleCommandDelegate { get; }
@@ -78,6 +88,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Player_IsTalking { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetNonSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetSpatialVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, bool> Resource_FileExists { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void> Resource_GetFile { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetGear { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetMaxGear { get; }
@@ -92,6 +104,10 @@ namespace AltV.Net.CApi.Libraries
         {
             const DllImportSearchPath dllImportSearchPath = DllImportSearchPath.LegacyBehavior | DllImportSearchPath.AssemblyDirectory | DllImportSearchPath.SafeDirectories | DllImportSearchPath.System32 | DllImportSearchPath.UserDirectories | DllImportSearchPath.ApplicationDirectory | DllImportSearchPath.UseDllDirectoryForDependencies;
             var handle = NativeLibrary.Load(dllName, Assembly.GetExecutingAssembly(), dllImportSearchPath);
+            Blip_GetScriptID = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Blip_GetScriptID");
+            Core_Client_CreateAreaBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint>) NativeLibrary.GetExport(handle, "Core_Client_CreateAreaBlip");
+            Core_Client_CreatePointBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, nint>) NativeLibrary.GetExport(handle, "Core_Client_CreatePointBlip");
+            Core_Client_CreateRadiusBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, float, nint>) NativeLibrary.GetExport(handle, "Core_Client_CreateRadiusBlip");
             Entity_GetScriptID = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Entity_GetScriptID");
             Event_SetClientEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetClientEventDelegate");
             Event_SetConsoleCommandDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ConsoleCommandModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetConsoleCommandDelegate");
@@ -119,6 +135,8 @@ namespace AltV.Net.CApi.Libraries
             Player_IsTalking = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Player_IsTalking");
             Player_SetNonSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Player_SetNonSpatialVolume");
             Player_SetSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Player_SetSpatialVolume");
+            Resource_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, bool>) NativeLibrary.GetExport(handle, "Resource_FileExists");
+            Resource_GetFile = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void>) NativeLibrary.GetExport(handle, "Resource_GetFile");
             Vehicle_GetGear = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetGear");
             Vehicle_GetIndicatorLights = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetIndicatorLights");
             Vehicle_GetMaxGear = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetMaxGear");

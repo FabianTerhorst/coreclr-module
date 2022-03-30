@@ -1,32 +1,11 @@
 #include "blip.h"
 
-#ifdef ALT_SERVER_API
 alt::IWorldObject* Blip_GetWorldObject(alt::IBlip* blip) {
     return dynamic_cast<alt::IWorldObject*>(blip);
 }
 
 uint8_t Blip_IsGlobal(alt::IBlip* blip) {
     return blip->IsGlobal();
-}
-
-uint8_t Blip_IsAttached(alt::IBlip* blip) {
-    return blip->IsAttached();
-}
-
-void* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type) {
-    auto entity = blip->AttachedTo().Get();
-    if (entity != nullptr) {
-        type = entity->GetType();
-        switch (type) {
-            case alt::IBaseObject::Type::PLAYER:
-                return dynamic_cast<alt::IPlayer*>(entity);
-            case alt::IBaseObject::Type::VEHICLE:
-                return dynamic_cast<alt::IVehicle*>(entity);
-            default:
-                return nullptr;
-        }
-    }
-    return nullptr;
 }
 
 uint8_t Blip_GetType(alt::IBlip* blip) {
@@ -306,5 +285,33 @@ void Blip_SetShrinked(alt::IBlip* blip, uint8_t state) {
 
 void Blip_Fade(alt::IBlip* blip, uint32_t opacity, uint32_t duration) {
     blip->Fade(opacity, duration);
+}
+
+
+#ifdef ALT_SERVER_API
+uint8_t Blip_IsAttached(alt::IBlip* blip) {
+    return blip->IsAttached();
+}
+
+void* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type) {
+    auto entity = blip->AttachedTo().Get();
+    if (entity != nullptr) {
+        type = entity->GetType();
+        switch (type) {
+            case alt::IBaseObject::Type::PLAYER:
+                return dynamic_cast<alt::IPlayer*>(entity);
+            case alt::IBaseObject::Type::VEHICLE:
+                return dynamic_cast<alt::IVehicle*>(entity);
+            default:
+                return nullptr;
+        }
+    }
+    return nullptr;
+}
+#endif
+
+#ifdef ALT_CLIENT_API
+uint32_t Blip_GetScriptID(alt::IBlip* blip) {
+    return blip->GetScriptID();
 }
 #endif

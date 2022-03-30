@@ -565,7 +565,7 @@ namespace AltV.Net
             {
                 unsafe
                 {
-                    Library.Server.Core_DestroyBlip(NativePointer, blip.BlipNativePointer);
+                    Library.Shared.Core_DestroyBaseObject(NativePointer, blip.BaseObjectNativePointer);
                 }
             }
         }

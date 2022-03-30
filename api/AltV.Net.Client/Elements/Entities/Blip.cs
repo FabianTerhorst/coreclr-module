@@ -1,6 +1,9 @@
 using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using AltV.Net.Client;
+using AltV.Net.Client.Elements.Entities;
+using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Data;
 using AltV.Net.Native;
 using AltV.Net.Shared.Elements.Entities;
@@ -28,33 +31,6 @@ namespace AltV.Net.Elements.Entities
                 {
                     CheckIfEntityExists();
                     return Core.Library.Shared.Blip_IsGlobal(BlipNativePointer) == 1;
-                }
-            }
-        }
-
-        public bool IsAttached
-        {
-            get
-            {
-                unsafe
-                {
-                    CheckIfEntityExists();
-                    return Core.Library.Server.Blip_IsAttached(BlipNativePointer) == 1;
-                }
-            }
-        }
-
-        public IEntity AttachedTo
-        {
-            get
-            {
-                unsafe
-                {
-                    CheckIfEntityExists();
-                    var entityType = BaseObjectType.Undefined;
-                    var entityPointer = Core.Library.Server.Blip_AttachedTo(BlipNativePointer, &entityType);
-                    if (entityPointer == IntPtr.Zero) return null;
-                    return Alt.Core.BaseEntityPool.Get(entityPointer, entityType, out var entity) ? entity : null;
                 }
             }
         }
@@ -701,7 +677,7 @@ namespace AltV.Net.Elements.Entities
 
         public void Remove()
         {
-            Alt.RemoveBlip(this);
+            Alt.Core.RemoveBlip(this);
         }
     }
 }

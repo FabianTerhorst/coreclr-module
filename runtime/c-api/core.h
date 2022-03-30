@@ -58,6 +58,8 @@ EXPORT_SHARED uint8_t Core_IsDebug(alt::ICore* core);
 EXPORT_SHARED const char* Core_GetVersion(alt::ICore* core,int32_t &size);
 EXPORT_SHARED const char* Core_GetBranch(alt::ICore* core, int32_t &size);
 
+EXPORT_SHARED void Core_DestroyBaseObject(alt::ICore* server, alt::IBaseObject* baseObject);
+
 EXPORT_SERVER uint8_t Core_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb);
 EXPORT_SERVER uint8_t Core_FileExists(alt::ICore* server, const char* path);
 EXPORT_SERVER void Core_FileRead(alt::ICore* server, const char* path, const char*&text);
@@ -80,7 +82,6 @@ EXPORT_SERVER alt::IColShape* Core_CreateColShapeCube(alt::ICore* server, positi
 EXPORT_SERVER alt::IColShape* Core_CreateColShapeRectangle(alt::ICore* server, float x1, float y1, float x2, float y2, float z);
 EXPORT_SERVER alt::IColShape* Core_CreateColShapePolygon(alt::ICore* server, float minZ, float maxZ, vector2_t points[], int pointSize);
 EXPORT_SERVER void Core_DestroyVehicle(alt::ICore* server, alt::IVehicle* baseObject);
-EXPORT_SERVER void Core_DestroyBlip(alt::ICore* server, alt::IBlip* baseObject);
 EXPORT_SERVER void Core_DestroyCheckpoint(alt::ICore* server, alt::ICheckpoint* baseObject);
 EXPORT_SERVER void Core_DestroyVoiceChannel(alt::ICore* server, alt::IVoiceChannel* baseObject);
 EXPORT_SERVER void Core_DestroyColShape(alt::ICore* server, alt::IColShape* baseObject);
@@ -100,6 +101,10 @@ EXPORT_SERVER void Core_DeleteSyncedMetaData(alt::ICore* core, const char* key);
 EXPORT_SERVER uint64_t Core_HashPassword(alt::ICore* core, const char* password);
 EXPORT_SERVER void Core_SetPassword(alt::ICore* core, const char* value);
 EXPORT_SERVER void Core_StopServer(alt::ICore* core);
+
+EXPORT_CLIENT alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position);
+EXPORT_CLIENT alt::IBlip* Core_Client_CreateRadiusBlip(alt::ICore* core, vector3_t position, float radius);
+EXPORT_CLIENT alt::IBlip* Core_Client_CreateAreaBlip(alt::ICore* core, vector3_t position, float width, float height);
 
 #ifdef __cplusplus
 }

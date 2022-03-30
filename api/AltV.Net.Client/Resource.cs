@@ -3,6 +3,8 @@ using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Elements.Entities;
+using AltV.Net.Elements.Factories;
 using AltV.Net.Elements.Pools;
 
 namespace AltV.Net.Client
@@ -23,6 +25,11 @@ namespace AltV.Net.Client
             return new VehicleFactory();
         }
         
+        public virtual IBaseObjectFactory<IBlip> GetBlipFactory()
+        {
+            return new BlipFactory();
+        }
+
         public virtual INativeResourceFactory GetResourceFactory()
         {
             return new NativeResourceFactory();

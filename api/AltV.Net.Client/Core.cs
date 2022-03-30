@@ -3,6 +3,8 @@ using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Elements.Pools;
+using AltV.Net.Data;
+using AltV.Net.Elements.Entities;
 using AltV.Net.Shared;
 
 namespace AltV.Net.Client
@@ -14,6 +16,7 @@ namespace AltV.Net.Client
         
         public override IPlayerPool PlayerPool { get; }
         public override IEntityPool<IVehicle> VehiclePool { get; }
+        public IBaseObjectPool<IBlip> BlipPool { get; }
         
         public IBaseEntityPool BaseEntityPool { get; }
         public override IBaseBaseObjectPool BaseBaseObjectPool { get; }
@@ -23,12 +26,13 @@ namespace AltV.Net.Client
 
         public List<SafeTimer> RunningTimers { get; } = new();
 
-        public Core(ILibrary library, IntPtr nativePointer, IntPtr resourcePointer, IPlayerPool playerPool, IEntityPool<IVehicle> vehiclePool, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, INativeResourcePool nativeResourcePool, ILogger logger) : base(nativePointer, library)
+        public Core(ILibrary library, IntPtr nativePointer, IntPtr resourcePointer, IPlayerPool playerPool, IEntityPool<IVehicle> vehiclePool, IBaseObjectPool<IBlip> blipPool, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, INativeResourcePool nativeResourcePool, ILogger logger) : base(nativePointer, library)
         {
             Library = library;
             NativePointer = nativePointer;
             PlayerPool = playerPool;
             VehiclePool = vehiclePool;
+            BlipPool = blipPool;
             Logger = logger;
             BaseBaseObjectPool = baseBaseObjectPool;
             BaseEntityPool = baseEntityPool;
@@ -82,6 +86,44 @@ namespace AltV.Net.Client
             // }
             return null;
             // todo
+        }
+        
+        public IBlip CreatePointBlip(Position position) {
+            unsafe
+            {
+                var ptr = Library.Client.Core_Client_CreatePointBlip(NativePointer, position);
+                if (ptr == IntPtr.Zero) return null;
+                return BlipPool.Create(this, ptr);
+            }
+        }
+        
+        public IBlip CreateRadiusBlip(Position position, float radius) {
+            unsafe
+            {
+                var ptr = Library.Client.Core_Client_CreateRadiusBlip(NativePointer, position, radius);
+                if (ptr == IntPtr.Zero) return null;
+                return BlipPool.Create(this, ptr);
+            }
+        }
+        
+        public IBlip CreateAreaBlip(Position position, int width, int height) {
+            unsafe
+            {
+                var ptr = Library.Client.Core_Client_CreateAreaBlip(NativePointer, position, width, height);
+                if (ptr == IntPtr.Zero) return null;
+                return BlipPool.Create(this, ptr);
+            }
+        }
+
+        public void RemoveBlip(IBlip blip)
+        {
+            if (blip.Exists)
+            {
+                unsafe
+                {
+                    Library.Shared.Core_DestroyBaseObject(NativePointer, blip.BaseObjectNativePointer);
+                }
+            }
         }
     }
 }
