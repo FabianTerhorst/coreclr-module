@@ -1,20 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AltV.Net.Client;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Elements.Entities;
 
-namespace AltV.Net.Elements.Pools
+namespace AltV.Net.Client.Elements.Pools
 {
     public abstract class BaseObjectPool<TBaseObject> : IBaseObjectPool<TBaseObject> where TBaseObject : IBaseObject
     {
         public static void SetEntityNoLongerExists(TBaseObject entity)
         {
-            // todo
-            // if (entity is not IBaseObject internalEntity) return;
-            // internalEntity.Exists = false;
-            // internalEntity.ClearData();
+            if (entity is not IInternalBaseObject internalEntity) return;
+            internalEntity.Exists = false;
+            internalEntity.ClearData();
         }
 
         private readonly Dictionary<IntPtr, TBaseObject> entities = new ();

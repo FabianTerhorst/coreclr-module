@@ -1,6 +1,6 @@
 using AltV.Net.Client.Elements.Interfaces;
 
-namespace AltV.Net.Client
+namespace AltV.Net.Client.Elements.Pools
 {
     public interface IBaseObjectPool<TBaseObject> where TBaseObject : IBaseObject
     {

@@ -3,7 +3,6 @@ using System.Runtime.InteropServices;
 using AltV.Net.CApi;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Client.Extensions;
-using AltV.Net.Elements.Pools;
 
 namespace AltV.Net.Client
 {

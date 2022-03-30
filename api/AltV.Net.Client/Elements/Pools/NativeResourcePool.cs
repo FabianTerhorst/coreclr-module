@@ -1,6 +1,4 @@
-using AltV.Net.Client;
-
-namespace AltV.Net.Elements.Pools
+namespace AltV.Net.Client.Elements.Pools
 {
     public class NativeResourcePool : INativeResourcePool
     {

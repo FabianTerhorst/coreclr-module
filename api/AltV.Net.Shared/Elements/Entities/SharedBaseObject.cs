@@ -9,7 +9,7 @@ using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Shared.Elements.Entities
 {
-    public abstract class SharedBaseObject : ISharedBaseObject
+    public abstract class SharedBaseObject : ISharedBaseObject, IInternalBaseObject
     {
         public abstract IntPtr BaseObjectNativePointer { get; }
         public abstract ISharedCore Core { get; }

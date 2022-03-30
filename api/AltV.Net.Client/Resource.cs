@@ -5,7 +5,6 @@ using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Factories;
-using AltV.Net.Elements.Pools;
 
 namespace AltV.Net.Client
 {

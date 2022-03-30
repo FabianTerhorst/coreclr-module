@@ -1,7 +1,6 @@
-using AltV.Net.Client;
 using AltV.Net.Elements.Entities;
 
-namespace AltV.Net.Elements.Pools
+namespace AltV.Net.Client.Elements.Pools
 {
     public class BlipPool : BaseObjectPool<IBlip>
     {

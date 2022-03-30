@@ -1,7 +1,7 @@
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Elements.Entities;
 
-namespace AltV.Net.Client
+namespace AltV.Net.Client.Elements.Pools
 {
     /// <summary>
     /// This pool decides which entity pool to use depending on the entity type 

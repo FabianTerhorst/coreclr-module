@@ -1,4 +1,4 @@
-namespace AltV.Net.Client
+namespace AltV.Net.Client.Elements.Pools
 {
     public interface INativeResourcePool
     {
