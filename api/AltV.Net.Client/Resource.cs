@@ -4,17 +4,11 @@ using AltV.Net.Client.Elements.Interfaces;
 
 namespace AltV.Net.Client
 {
-    public class Resource : IResource
+    public abstract class Resource : IResource
     {
-        public virtual void OnStart()
-        {
-            //
-        }
-        
-        public virtual void OnStop()
-        {
-            //
-        }
+        public abstract void OnStart();
+
+        public abstract void OnStop();
 
         public virtual IPlayerFactory GetPlayerFactory()
         {
