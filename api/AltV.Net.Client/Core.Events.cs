@@ -6,8 +6,6 @@ namespace AltV.Net.Client
 {
     public partial class Core
     {
-        
-
         private Dictionary<string, HashSet<Function>> ServerEventBus = new();
         private Dictionary<string, HashSet<Function>> ClientEventBus = new();
 

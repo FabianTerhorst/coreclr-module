@@ -67,34 +67,11 @@ namespace AltV.Net.Client
         public new void LogDebug(string message) => Logger.LogDebug(message);
 
         #endregion
-
-        // public bool GetEntityById(ushort id, [MaybeNullWhen(false)] out IEntity entity)
-        // {
-        //     unsafe
-        //     {
-        //         byte type = 0;
-        //         entity = default;
-        //         if (this.Core.Library.Entity_GetTypeByID(this.Core.NativePointer, id, &type) != 1) return false;
-        //         
-        //         switch ((BaseObjectType) type)
-        //         {
-        //             case BaseObjectType.Player:
-        //             case BaseObjectType.LocalPlayer:
-        //             {
-        //                 entity = PlayerPool.Get(id);
-        //                 return entity is not null;
-        //             }
-        //             case BaseObjectType.Vehicle:
-        //             {
-        //                 entity = VehiclePool.Get(id);
-        //                 return entity is not null;
-        //             }
-        //             // todo
-        //             default:
-        //                 return false;
-        //         }
-        //     }
-        // }
+        
+        public new IEntity GetEntityById(ushort id)
+        {
+            return (IEntity) base.GetEntityById(id);
+        }
 
         public HandlingData? GetHandlingByModelHash(uint modelHash)
         {

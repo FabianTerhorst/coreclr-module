@@ -14,20 +14,15 @@ namespace AltV.Net.Client
         public static ICore Core => CoreImpl;
         public static ILogger Logger { get; internal set; } = null!;
 
-        // public static bool GetEntityById(ushort id, [MaybeNullWhen(false)] out IEntity entity) => Module.GetEntityById(id, out entity);
-        
-        // public static bool GetPlayerById(ushort id, [MaybeNullWhen(false)] out IPlayer player)
-        // {
-        //     player = Module.PlayerPool.Get(id);
-        //     return player is not null;
-        // }
-        //
-        // public static bool GetVehicleById(ushort id, [MaybeNullWhen(false)] out IVehicle vehicle)
-        // {
-        //     vehicle = Module.VehiclePool.Get(id);
-        //     return vehicle is not null;
-        // }
-        
+        public static bool GetEntityById(ushort id, [MaybeNullWhen(false)] out IEntity entity)
+        {
+            entity = default;
+            var ent = Core.GetEntityById(id);
+            if (ent is null) return false;
+            entity = ent;
+            return true;
+        }
+
         public static ILocalPlayer LocalPlayer => Core.PlayerPool.LocalPlayer;
 
         // public static HandlingData? GetHandlingByModelHash(uint modelHash) => Core.GetHandlingByModelHash(modelHash); todo
