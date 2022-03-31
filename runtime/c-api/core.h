@@ -16,6 +16,7 @@
 #elif ALT_CLIENT_API
 #include "../client/src/runtime/CSharpResourceImpl.h"
 #include "mvalue.h"
+#include "data/discord_user.h"
 
 #endif
 
@@ -110,6 +111,9 @@ EXPORT_CLIENT alt::IBlip* Core_Client_CreateAreaBlip(alt::ICore* core, vector3_t
 EXPORT_CLIENT alt::IWebView* Core_CreateWebView(alt::ICore* core, alt::IResource* resource, const char* url, vector2_t pos, vector2_t size, uint8_t isOverlay);
 EXPORT_CLIENT alt::IWebView* Core_CreateWebView3D(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t hash, const char* targetTexture);
 EXPORT_CLIENT void Core_TriggerWebViewEvent(alt::ICore* core, alt::IWebView* webview, const char* event, alt::MValueConst* args[], int size);
+
+EXPORT_CLIENT ClrDiscordUser* Core_GetDiscordUser(alt::ICore* core);
+EXPORT_CLIENT void Core_DeallocDiscordUser(ClrDiscordUser* user);
 
 #ifdef __cplusplus
 }

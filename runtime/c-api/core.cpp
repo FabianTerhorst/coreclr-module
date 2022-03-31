@@ -495,4 +495,16 @@ void Core_TriggerWebViewEvent(alt::ICore* core, alt::IWebView* webview, const ch
     }
     webview->Trigger(event, mValues);
 }
+
+
+ClrDiscordUser* Core_GetDiscordUser(alt::ICore* core) {
+    auto manager = core->GetDiscordManager();
+    if (!manager->IsUserDataReady()) return nullptr;
+    return new ClrDiscordUser(manager);
+}
+
+void Core_DeallocDiscordUser(ClrDiscordUser* user) {
+    delete user;
+}
+
 #endif

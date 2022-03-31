@@ -98,6 +98,17 @@ namespace AltV.Net.Client
             // todo
         }
 
+        public DiscordUser? GetDiscordUser()
+        {
+            unsafe
+            {
+                var ptr = Library.Client.Core_GetDiscordUser(NativePointer);
+                var structure = Marshal.PtrToStructure<DiscordUser>(ptr);
+                Library.Client.Core_DeallocDiscordUser(ptr);
+                return structure;
+            }
+        }
+
         #region Create
         public IntPtr CreatePointBlipPtr(Position position)
         {
