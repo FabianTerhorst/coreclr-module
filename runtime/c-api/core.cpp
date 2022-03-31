@@ -185,6 +185,31 @@ void Core_DestroyBaseObject(alt::ICore* core, alt::IBaseObject* baseObject) {
     return core->DestroyBaseObject(baseObject);
 }
 
+alt::MValueConst* Core_GetMetaData(alt::ICore* core, const char* key) {
+    return new alt::MValueConst(core->GetMetaData(key));
+}
+
+void Core_SetMetaData(alt::ICore* core, const char* key, alt::MValueConst* val) {
+    if (val == nullptr) return;
+    core->SetMetaData(key, val->Get()->Clone());
+}
+
+uint8_t Core_HasMetaData(alt::ICore* core, const char* key) {
+    return core->HasMetaData(key);
+}
+
+void Core_DeleteMetaData(alt::ICore* core, const char* key) {
+    core->DeleteMetaData(key);
+}
+
+alt::MValueConst* Core_GetSyncedMetaData(alt::ICore* core, const char* key) {
+    return new alt::MValueConst(core->GetSyncedMetaData(key));
+}
+
+uint8_t Core_HasSyncedMetaData(alt::ICore* core, const char* key) {
+    return core->HasSyncedMetaData(key);
+}
+
 
 #ifdef ALT_SERVER_API
 uint8_t Core_SubscribeCommand(alt::ICore* core, const char* cmd, alt::CommandCallback cb) {
@@ -398,34 +423,9 @@ void Core_RestartResource(alt::ICore* core, const char* text) {
     core->RestartResource(text);
 }
 
-alt::MValueConst* Core_GetMetaData(alt::ICore* core, const char* key) {
-    return new alt::MValueConst(core->GetMetaData(key));
-}
-
-void Core_SetMetaData(alt::ICore* core, const char* key, alt::MValueConst* val) {
-    if (val == nullptr) return;
-    core->SetMetaData(key, val->Get()->Clone());
-}
-
-uint8_t Core_HasMetaData(alt::ICore* core, const char* key) {
-    return core->HasMetaData(key);
-}
-
-void Core_DeleteMetaData(alt::ICore* core, const char* key) {
-    core->DeleteMetaData(key);
-}
-
-alt::MValueConst* Core_GetSyncedMetaData(alt::ICore* core, const char* key) {
-    return new alt::MValueConst(core->GetSyncedMetaData(key));
-}
-
 void Core_SetSyncedMetaData(alt::ICore* core, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
     core->SetSyncedMetaData(key, val->Get()->Clone());
-}
-
-uint8_t Core_HasSyncedMetaData(alt::ICore* core, const char* key) {
-    return core->HasSyncedMetaData(key);
 }
 
 void Core_DeleteSyncedMetaData(alt::ICore* core, const char* key) {

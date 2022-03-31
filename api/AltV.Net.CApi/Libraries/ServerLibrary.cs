@@ -60,7 +60,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint> Core_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, nint> Core_CreateVoiceChannel { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocVehicleModelInfo { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyColShape { get; }
@@ -68,17 +67,12 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyVoiceChannel { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint*, void> Core_FileRead { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetNetTime { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, void> Core_GetRootDirectory { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetVehicleModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ulong> Core_HashPassword { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_HasMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_HasSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RestartResource { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_SetPassword { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_StartResource { get; }
@@ -416,7 +410,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint> Core_CreateVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, nint> Core_CreateVoiceChannel { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocVehicleModelInfo { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyCheckpoint { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyColShape { get; }
@@ -424,17 +417,12 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyVoiceChannel { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint*, void> Core_FileRead { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetNetTime { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, void> Core_GetRootDirectory { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetVehicleModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ulong> Core_HashPassword { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_HasMetaData { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_HasSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RestartResource { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_SetPassword { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_StartResource { get; }
@@ -772,7 +760,6 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateVehicle = (delegate* unmanaged[Cdecl]<nint, uint, Vector3, Rotation, ushort*, nint>) NativeLibrary.GetExport(handle, "Core_CreateVehicle");
             Core_CreateVoiceChannel = (delegate* unmanaged[Cdecl]<nint, byte, float, nint>) NativeLibrary.GetExport(handle, "Core_CreateVoiceChannel");
             Core_DeallocVehicleModelInfo = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Core_DeallocVehicleModelInfo");
-            Core_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_DeleteMetaData");
             Core_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_DeleteSyncedMetaData");
             Core_DestroyCheckpoint = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_DestroyCheckpoint");
             Core_DestroyColShape = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_DestroyColShape");
@@ -780,17 +767,12 @@ namespace AltV.Net.CApi.Libraries
             Core_DestroyVoiceChannel = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_DestroyVoiceChannel");
             Core_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_FileExists");
             Core_FileRead = (delegate* unmanaged[Cdecl]<nint, nint, nint*, void>) NativeLibrary.GetExport(handle, "Core_FileRead");
-            Core_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_GetMetaData");
             Core_GetNetTime = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Core_GetNetTime");
             Core_GetResource = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_GetResource");
             Core_GetRootDirectory = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Core_GetRootDirectory");
-            Core_GetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_GetSyncedMetaData");
             Core_GetVehicleModelInfo = (delegate* unmanaged[Cdecl]<nint, uint, nint>) NativeLibrary.GetExport(handle, "Core_GetVehicleModelInfo");
             Core_HashPassword = (delegate* unmanaged[Cdecl]<nint, nint, ulong>) NativeLibrary.GetExport(handle, "Core_HashPassword");
-            Core_HasMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_HasMetaData");
-            Core_HasSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_HasSyncedMetaData");
             Core_RestartResource = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_RestartResource");
-            Core_SetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "Core_SetMetaData");
             Core_SetPassword = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_SetPassword");
             Core_SetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "Core_SetSyncedMetaData");
             Core_StartResource = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_StartResource");

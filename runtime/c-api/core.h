@@ -62,6 +62,12 @@ EXPORT_SHARED const char* Core_GetVersion(alt::ICore* core,int32_t &size);
 EXPORT_SHARED const char* Core_GetBranch(alt::ICore* core, int32_t &size);
 
 EXPORT_SHARED void Core_DestroyBaseObject(alt::ICore* server, alt::IBaseObject* baseObject);
+EXPORT_SHARED alt::MValueConst* Core_GetMetaData(alt::ICore* core, const char* key);
+EXPORT_SHARED void Core_SetMetaData(alt::ICore* core, const char* key, alt::MValueConst* val);
+EXPORT_SHARED uint8_t Core_HasMetaData(alt::ICore* core, const char* key);
+EXPORT_SHARED void Core_DeleteMetaData(alt::ICore* core, const char* key);
+EXPORT_SHARED alt::MValueConst* Core_GetSyncedMetaData(alt::ICore* core, const char* key);
+EXPORT_SHARED uint8_t Core_HasSyncedMetaData(alt::ICore* core, const char* key);
 
 EXPORT_SERVER uint8_t Core_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb);
 EXPORT_SERVER uint8_t Core_FileExists(alt::ICore* server, const char* path);
@@ -93,13 +99,7 @@ EXPORT_SERVER void Core_GetRootDirectory(alt::ICore* server, const char*&text);
 EXPORT_SERVER void Core_StartResource(alt::ICore* server, const char* text);
 EXPORT_SERVER void Core_StopResource(alt::ICore* server, const char* text);
 EXPORT_SERVER void Core_RestartResource(alt::ICore* server, const char* text);
-EXPORT_SERVER alt::MValueConst* Core_GetMetaData(alt::ICore* core, const char* key);
-EXPORT_SERVER void Core_SetMetaData(alt::ICore* core, const char* key, alt::MValueConst* val);
-EXPORT_SERVER uint8_t Core_HasMetaData(alt::ICore* core, const char* key);
-EXPORT_SERVER void Core_DeleteMetaData(alt::ICore* core, const char* key);
-EXPORT_SERVER alt::MValueConst* Core_GetSyncedMetaData(alt::ICore* core, const char* key);
 EXPORT_SERVER void Core_SetSyncedMetaData(alt::ICore* core, const char* key, alt::MValueConst* val);
-EXPORT_SERVER uint8_t Core_HasSyncedMetaData(alt::ICore* core, const char* key);
 EXPORT_SERVER void Core_DeleteSyncedMetaData(alt::ICore* core, const char* key);
 EXPORT_SERVER uint64_t Core_HashPassword(alt::ICore* core, const char* password);
 EXPORT_SERVER void Core_SetPassword(alt::ICore* core, const char* value);

@@ -94,5 +94,17 @@ namespace AltV.Net.Shared
 
         void CreateMValues(MValueConst[] mValues, object[] objects);
         #endregion
+
+        void SetMetaData(string key, object value);
+
+        bool HasMetaData(string key);
+
+        void DeleteMetaData(string key);
+
+        void GetMetaData(string key, out MValueConst value);
+
+        bool HasSyncedMetaData(string key);
+
+        void GetSyncedMetaData(string key, out MValueConst value);
     }
 }

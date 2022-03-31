@@ -713,68 +713,8 @@ namespace AltV.Net
                 Marshal.FreeHGlobal(namePtr);
             }
         }
-        
-        #region MetaData
-        public void GetMetaData(string key, out MValueConst value)
-        {
-            unsafe
-            {
-                CheckIfCallIsValid();
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                value = new MValueConst(this, Library.Server.Core_GetMetaData(NativePointer, stringPtr));
-                Marshal.FreeHGlobal(stringPtr);
-            }
-        }
-
-        public void SetMetaData(string key, object value)
-        {
-            unsafe
-            {
-                CheckIfCallIsValid();
-                CreateMValue(out var mValue, value);
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                Library.Server.Core_SetMetaData(NativePointer, stringPtr, mValue.nativePointer);
-                Marshal.FreeHGlobal(stringPtr);
-                mValue.Dispose();
-            }
-        }
-
-        public bool HasMetaData(string key)
-        {
-            unsafe
-            {
-                CheckIfCallIsValid();
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                var result = Library.Server.Core_HasMetaData(NativePointer, stringPtr);
-                Marshal.FreeHGlobal(stringPtr);
-                return result == 1;
-            }
-        }
-
-        public void DeleteMetaData(string key)
-        {
-            unsafe
-            {
-                CheckIfCallIsValid();
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                Library.Server.Core_DeleteMetaData(NativePointer, stringPtr);
-                Marshal.FreeHGlobal(stringPtr);
-            }
-        }
-        #endregion
 
         #region SyncedMetaData
-        public void GetSyncedMetaData(string key, out MValueConst value)
-        {
-            unsafe
-            {
-                CheckIfCallIsValid();
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                value = new MValueConst(this, Library.Server.Core_GetSyncedMetaData(NativePointer, stringPtr));
-                Marshal.FreeHGlobal(stringPtr);
-            }
-        }
-
         public void SetSyncedMetaData(string key, object value)
         {
             unsafe
@@ -787,19 +727,7 @@ namespace AltV.Net
                 mValue.Dispose();
             }
         }
-
-        public bool HasSyncedMetaData(string key)
-        {
-            unsafe
-            {
-                CheckIfCallIsValid();
-                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
-                var result = Library.Server.Core_HasSyncedMetaData(NativePointer, stringPtr);
-                Marshal.FreeHGlobal(stringPtr);
-                return result == 1;
-            }
-        }
-
+        
         public void DeleteSyncedMetaData(string key)
         {
             unsafe

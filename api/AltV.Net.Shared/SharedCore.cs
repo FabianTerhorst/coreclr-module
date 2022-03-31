@@ -716,5 +716,77 @@ namespace AltV.Net.Shared
             return adapters.ContainsKey(type);
         }
         #endregion
+        
+        #region Metadata
+        public void GetMetaData(string key, out MValueConst value)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                value = new MValueConst(this, Library.Shared.Core_GetMetaData(NativePointer, stringPtr));
+                Marshal.FreeHGlobal(stringPtr);
+            }
+        }
+
+        public void SetMetaData(string key, object value)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                CreateMValue(out var mValue, value);
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Library.Shared.Core_SetMetaData(NativePointer, stringPtr, mValue.nativePointer);
+                Marshal.FreeHGlobal(stringPtr);
+                mValue.Dispose();
+            }
+        }
+
+        public bool HasMetaData(string key)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var result = Library.Shared.Core_HasMetaData(NativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+                return result == 1;
+            }
+        }
+
+        public void DeleteMetaData(string key)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                Library.Shared.Core_DeleteMetaData(NativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+            }
+        }
+        
+        public void GetSyncedMetaData(string key, out MValueConst value)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                value = new MValueConst(this, Library.Shared.Core_GetSyncedMetaData(NativePointer, stringPtr));
+                Marshal.FreeHGlobal(stringPtr);
+            }
+        }
+        
+        public bool HasSyncedMetaData(string key)
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
+                var result = Library.Shared.Core_HasSyncedMetaData(NativePointer, stringPtr);
+                Marshal.FreeHGlobal(stringPtr);
+                return result == 1;
+            }
+        }
+        #endregion
     }
 }
