@@ -20,16 +20,10 @@ namespace AltV.Net
         IBaseObjectPool<IVoiceChannel> VoiceChannelPool { get; }
         IBaseObjectPool<IColShape> ColShapePool { get; }
         INativeResourcePool NativeResourcePool { get; }
-
-        string Version { get; }
-        
-        string Branch { get; }
         
         int NetTime { get; }
 
         string RootDirectory { get; }
-        
-        bool IsDebug { get; }
 
         INativeResource Resource { get; }
         IBaseEntityPool BaseEntityPool { get; }

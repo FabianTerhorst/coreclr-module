@@ -18,6 +18,12 @@ namespace AltV.Net.Shared
 
         IntPtr NativePointer { get; }
 
+        string Version { get; }
+        
+        string Branch { get; }
+        
+        bool IsDebug { get; }
+
         void LogInfo(string message);
         
         uint Hash(string hash);

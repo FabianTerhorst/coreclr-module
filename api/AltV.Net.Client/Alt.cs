@@ -37,5 +37,9 @@ namespace AltV.Net.Client
         public static void LogDebug(string message) => Logger.LogDebug(message);
         // todo add time and some prefix maybe
         public static void LogExternal(string message) => Alt.Log(message);
+
+        public static string Branch => Core.Branch;
+        public static string Version => Core.Version;
+        public static bool IsDebug => Core.IsDebug;
     }
 }
