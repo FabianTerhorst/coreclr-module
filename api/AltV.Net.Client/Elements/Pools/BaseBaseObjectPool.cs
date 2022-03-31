@@ -10,11 +10,15 @@ namespace AltV.Net.Client.Elements.Pools
         private readonly IEntityPool<IPlayer> playerPool;
 
         private readonly IEntityPool<IVehicle> vehiclePool;
+        private readonly IBaseObjectPool<IBlip> blipPool;
+        private readonly IBaseObjectPool<IWebView> webViewPool;
 
-        public BaseBaseObjectPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool)
+        public BaseBaseObjectPool(IEntityPool<IPlayer> playerPool, IEntityPool<IVehicle> vehiclePool, IBaseObjectPool<IBlip> blipPool, IBaseObjectPool<IWebView> webViewPool)
         {
             this.playerPool = playerPool;
             this.vehiclePool = vehiclePool;
+            this.blipPool = blipPool;
+            this.webViewPool = webViewPool;
         }
 
         public IBaseObject? Get(IntPtr entityPointer, BaseObjectType baseObjectType)
@@ -23,6 +27,8 @@ namespace AltV.Net.Client.Elements.Pools
             {
                 BaseObjectType.Player => playerPool.Get(entityPointer),
                 BaseObjectType.Vehicle => vehiclePool.Get(entityPointer),
+                BaseObjectType.Webview => webViewPool.Get(entityPointer),
+                BaseObjectType.Blip => blipPool.Get(entityPointer),
                 _ => default
             };
         }
@@ -45,6 +51,8 @@ namespace AltV.Net.Client.Elements.Pools
             {
                 BaseObjectType.Player => playerPool.GetOrCreate(core, entityPointer, entityId),
                 BaseObjectType.Vehicle => vehiclePool.GetOrCreate(core, entityPointer, entityId),
+                BaseObjectType.Webview => webViewPool.GetOrCreate(core, entityPointer),
+                BaseObjectType.Blip => blipPool.GetOrCreate(core, entityPointer),
                 _ => default
             };
         }
