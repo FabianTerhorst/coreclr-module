@@ -15,6 +15,8 @@
 #include <CSharpResourceImpl.h>
 #elif ALT_CLIENT_API
 #include "../client/src/runtime/CSharpResourceImpl.h"
+#include "mvalue.h"
+
 #endif
 
 
@@ -26,7 +28,7 @@
 extern "C"
 {
 #endif
-    
+
 EXPORT_SHARED void Core_LogInfo(alt::ICore* server, const char* str);
 EXPORT_SHARED void Core_LogDebug(alt::ICore* server, const char* str);
 EXPORT_SHARED void Core_LogWarning(alt::ICore* server, const char* str);
@@ -105,6 +107,9 @@ EXPORT_SERVER void Core_StopServer(alt::ICore* core);
 EXPORT_CLIENT alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position);
 EXPORT_CLIENT alt::IBlip* Core_Client_CreateRadiusBlip(alt::ICore* core, vector3_t position, float radius);
 EXPORT_CLIENT alt::IBlip* Core_Client_CreateAreaBlip(alt::ICore* core, vector3_t position, float width, float height);
+EXPORT_CLIENT alt::IWebView* Core_CreateWebView(alt::ICore* core, alt::IResource* resource, const char* url, vector2_t pos, vector2_t size, uint8_t isOverlay);
+EXPORT_CLIENT alt::IWebView* Core_CreateWebView3D(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t hash, const char* targetTexture);
+EXPORT_CLIENT void Core_TriggerWebViewEvent(alt::ICore* core, alt::IWebView* webview, const char* event, alt::MValueConst* args[], int size);
 
 #ifdef __cplusplus
 }

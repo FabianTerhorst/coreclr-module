@@ -28,6 +28,11 @@ namespace AltV.Net.Client
         {
             return new BlipFactory();
         }
+        
+        public IBaseObjectFactory<IWebView> GetWebViewFactory()
+        {
+            return new WebViewFactory();
+        }
 
         public virtual INativeResourceFactory GetResourceFactory()
         {

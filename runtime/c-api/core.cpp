@@ -475,4 +475,24 @@ alt::IBlip* Core_Client_CreateAreaBlip(alt::ICore* core, vector3_t position, flo
     if (blip.IsEmpty()) return nullptr;
     return blip.Get();
 }
+
+alt::IWebView* Core_CreateWebView(alt::ICore* core, alt::IResource* resource, const char* url, vector2_t pos, vector2_t size, uint8_t isOverlay) {
+    auto webView = core->CreateWebView(resource, url, { pos.x, pos.y }, { size.x, size.y }, true, isOverlay);
+    if (webView.IsEmpty()) return nullptr;
+    return webView.Get();
+}
+
+alt::IWebView* Core_CreateWebView3D(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t hash, const char* targetTexture) {
+    auto webView = core->CreateWebView(resource, url, hash, targetTexture);
+    if (webView.IsEmpty()) return nullptr;
+    return webView.Get();
+}
+
+void Core_TriggerWebViewEvent(alt::ICore* core, alt::IWebView* webview, const char* event, alt::MValueConst* args[], int size) {
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        ToMValueArg(mValues, core, args[i], i);
+    }
+    webview->Trigger(event, mValues);
+}
 #endif

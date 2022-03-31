@@ -13,6 +13,7 @@ namespace AltV.Net.Client
         public IPlayerFactory GetPlayerFactory();
         public IEntityFactory<IVehicle> GetVehicleFactory();
         public IBaseObjectFactory<IBlip> GetBlipFactory();
+        public IBaseObjectFactory<IWebView> GetWebViewFactory();
         public INativeResourceFactory GetResourceFactory();
         public ILogger GetLogger(ILibrary library, IntPtr corePointer);
     }

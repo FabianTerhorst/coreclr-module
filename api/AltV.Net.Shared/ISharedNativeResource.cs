@@ -6,6 +6,8 @@ namespace AltV.Net.Shared
     {
         ISharedCSharpResourceImpl CSharpResourceImpl { get; }
         
+        IntPtr NativePointer { get; }
+        
         IntPtr ResourceImplPtr { get; }
 
         string Name { get; }

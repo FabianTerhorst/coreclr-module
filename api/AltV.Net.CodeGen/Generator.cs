@@ -150,6 +150,7 @@ namespace AltV.Net.CodeGen
             {"alt::IWorldObject*", "nint"},
             {"alt::IBaseObject*", "nint"},
             {"alt::IResource*", "nint"},
+            {"alt::IWebView*", "nint"},
             {"CSharpResourceImpl*", "nint"},
             {"void**", "nint*"},
             {"alt::MValueConst*", "nint"},

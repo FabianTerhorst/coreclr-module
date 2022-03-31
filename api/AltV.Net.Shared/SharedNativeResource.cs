@@ -8,7 +8,7 @@ namespace AltV.Net.Shared
     {
         protected readonly ISharedCore core;
 
-        internal readonly IntPtr NativePointer;
+        public IntPtr NativePointer { get; }
 
         public abstract ISharedCSharpResourceImpl CSharpResourceImpl { get; }
         

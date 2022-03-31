@@ -1,11 +1,15 @@
+using System.Collections.Specialized;
+using System.Numerics;
 using AltV.Net.CApi;
 using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Data;
+using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared;
+using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Client
 {
@@ -13,11 +17,12 @@ namespace AltV.Net.Client
     {
         public ILibrary Library { get; }
         public IntPtr NativePointer { get; }
-        
+
         public override IPlayerPool PlayerPool { get; }
         public override IEntityPool<IVehicle> VehiclePool { get; }
         public IBaseObjectPool<IBlip> BlipPool { get; }
-        
+        public IBaseObjectPool<IWebView> WebViewPool { get; }
+
         public IBaseEntityPool BaseEntityPool { get; }
         public override IBaseBaseObjectPool BaseBaseObjectPool { get; }
 
@@ -26,13 +31,26 @@ namespace AltV.Net.Client
 
         public List<SafeTimer> RunningTimers { get; } = new();
 
-        public Core(ILibrary library, IntPtr nativePointer, IntPtr resourcePointer, IPlayerPool playerPool, IEntityPool<IVehicle> vehiclePool, IBaseObjectPool<IBlip> blipPool, IBaseBaseObjectPool baseBaseObjectPool, IBaseEntityPool baseEntityPool, INativeResourcePool nativeResourcePool, ILogger logger) : base(nativePointer, library)
+        public Core(
+            ILibrary library,
+            IntPtr nativePointer,
+            IntPtr resourcePointer,
+            IPlayerPool playerPool,
+            IEntityPool<IVehicle> vehiclePool,
+            IBaseObjectPool<IBlip> blipPool,
+            IBaseObjectPool<IWebView> webViewPool,
+            IBaseBaseObjectPool baseBaseObjectPool,
+            IBaseEntityPool baseEntityPool,
+            INativeResourcePool nativeResourcePool,
+            ILogger logger
+        ) : base(nativePointer, library)
         {
             Library = library;
             NativePointer = nativePointer;
             PlayerPool = playerPool;
             VehiclePool = vehiclePool;
             BlipPool = blipPool;
+            WebViewPool = webViewPool;
             Logger = logger;
             BaseBaseObjectPool = baseBaseObjectPool;
             BaseEntityPool = baseEntityPool;
@@ -41,12 +59,14 @@ namespace AltV.Net.Client
         }
 
         #region Log
+
         public new void LogInfo(string message) => Logger.LogInfo(message);
         public new void LogWarning(string message) => Logger.LogWarning(message);
         public new void LogError(string message) => Logger.LogError(message);
         public new void LogDebug(string message) => Logger.LogDebug(message);
+
         #endregion
-        
+
         // public bool GetEntityById(ushort id, [MaybeNullWhen(false)] out IEntity entity)
         // {
         //     unsafe
@@ -87,8 +107,9 @@ namespace AltV.Net.Client
             return null;
             // todo
         }
-        
-        public IBlip CreatePointBlip(Position position) {
+
+        public IBlip CreatePointBlip(Position position)
+        {
             unsafe
             {
                 var ptr = Library.Client.Core_Client_CreatePointBlip(NativePointer, position);
@@ -96,8 +117,9 @@ namespace AltV.Net.Client
                 return BlipPool.Create(this, ptr);
             }
         }
-        
-        public IBlip CreateRadiusBlip(Position position, float radius) {
+
+        public IBlip CreateRadiusBlip(Position position, float radius)
+        {
             unsafe
             {
                 var ptr = Library.Client.Core_Client_CreateRadiusBlip(NativePointer, position, radius);
@@ -105,13 +127,28 @@ namespace AltV.Net.Client
                 return BlipPool.Create(this, ptr);
             }
         }
-        
-        public IBlip CreateAreaBlip(Position position, int width, int height) {
+
+        public IBlip CreateAreaBlip(Position position, int width, int height)
+        {
             unsafe
             {
                 var ptr = Library.Client.Core_Client_CreateAreaBlip(NativePointer, position, width, height);
                 if (ptr == IntPtr.Zero) return null;
                 return BlipPool.Create(this, ptr);
+            }
+        }
+
+        public IWebView CreateWebView(string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null)
+        {
+            pos ??= Vector2.Zero;
+            size ??= Vector2.Zero;
+
+            unsafe
+            {
+                var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
+                var ptr = Library.Client.Core_CreateWebView(NativePointer, Resource.NativePointer, urlPtr, pos.Value, size.Value, (byte) (isOverlay ? 1 : 0));
+                if (ptr == IntPtr.Zero) return null;
+                return WebViewPool.Create(this, ptr);
             }
         }
 
