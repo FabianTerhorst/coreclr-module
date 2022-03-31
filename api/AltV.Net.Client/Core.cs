@@ -86,6 +86,7 @@ namespace AltV.Net.Client
             // todo
         }
 
+        #region Create
         public IntPtr CreatePointBlipPtr(Position position)
         {
             unsafe
@@ -171,5 +172,6 @@ namespace AltV.Net.Client
             if (ptr == IntPtr.Zero) return null;
             return WebViewPool.Create(this, ptr);
         }
+        #endregion
     }
 }
