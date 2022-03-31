@@ -1,5 +1,6 @@
 using System.Collections.Specialized;
 using System.Numerics;
+using System.Runtime.InteropServices;
 using AltV.Net.CApi;
 using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Data;
@@ -138,7 +139,7 @@ namespace AltV.Net.Client
             }
         }
 
-        public IWebView CreateWebView(string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null)
+        public IntPtr CreateWebViewPtr(string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null)
         {
             pos ??= Vector2.Zero;
             size ??= Vector2.Zero;
@@ -147,10 +148,41 @@ namespace AltV.Net.Client
             {
                 var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
                 var ptr = Library.Client.Core_CreateWebView(NativePointer, Resource.NativePointer, urlPtr, pos.Value, size.Value, (byte) (isOverlay ? 1 : 0));
+                Marshal.FreeHGlobal(urlPtr);
+                return ptr;
+            }   
+        }
+
+        public IWebView CreateWebView(string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null)
+        {
+            var ptr = CreateWebViewPtr(url, isOverlay, pos, size);
+            if (ptr == IntPtr.Zero) return null;
+            return WebViewPool.Create(this, ptr);
+        }
+
+        public IntPtr CreateWebViewPtr(string url, uint propHash, string targetTexture)
+        {
+            unsafe
+            {
+                var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
+                var targetTexturePtr = MemoryUtils.StringToHGlobalUtf8(targetTexture);
+                var ptr = Library.Client.Core_CreateWebView3D(NativePointer, Resource.NativePointer, urlPtr, propHash, targetTexturePtr);
+                Marshal.FreeHGlobal(urlPtr);
+                Marshal.FreeHGlobal(targetTexturePtr);
+                return ptr;
+            }
+        }
+
+        public IWebView CreateWebView(string url, uint propHash, string targetTexture)
+        {
+            unsafe
+            {
+                var ptr = CreateWebViewPtr(url, propHash, targetTexture);
                 if (ptr == IntPtr.Zero) return null;
                 return WebViewPool.Create(this, ptr);
             }
         }
+
 
         public void RemoveBlip(IBlip blip)
         {

@@ -23,6 +23,18 @@ namespace AltV.Net.Client.Elements.Entities
             WebViewNativePointer = webViewNativePointer;
         }
 
+        public WebView(ICore core, string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null) 
+            : this(core, core.CreateWebViewPtr(url, isOverlay, pos, size))
+        {
+            core.WebViewPool.Add(this);
+        }
+
+        public WebView(ICore core, string url, uint propHash, string targetTexture) 
+            : this(core, core.CreateWebViewPtr(url, propHash, targetTexture))
+        {
+            core.WebViewPool.Add(this);
+        }
+
         public bool Focused
         {
             get
