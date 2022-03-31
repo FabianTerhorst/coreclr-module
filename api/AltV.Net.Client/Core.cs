@@ -109,34 +109,49 @@ namespace AltV.Net.Client
             // todo
         }
 
-        public IBlip CreatePointBlip(Position position)
+        public IntPtr CreatePointBlipPtr(Position position)
         {
             unsafe
             {
-                var ptr = Library.Client.Core_Client_CreatePointBlip(NativePointer, position);
-                if (ptr == IntPtr.Zero) return null;
-                return BlipPool.Create(this, ptr);
+                return Library.Client.Core_Client_CreatePointBlip(NativePointer, position);
+            }
+        }
+
+        public IBlip CreatePointBlip(Position position)
+        {
+            var ptr = CreatePointBlipPtr(position);
+            if (ptr == IntPtr.Zero) return null;
+            return BlipPool.Create(this, ptr);
+        }
+
+        public IntPtr CreateRadiusBlipPtr(Position position, float radius)
+        {
+            unsafe
+            {
+                return Library.Client.Core_Client_CreateRadiusBlip(NativePointer, position, radius);
             }
         }
 
         public IBlip CreateRadiusBlip(Position position, float radius)
         {
+            var ptr = CreateRadiusBlipPtr(position, radius);
+            if (ptr == IntPtr.Zero) return null;
+            return BlipPool.Create(this, ptr);
+        }
+
+        public IntPtr CreateAreaBlipPtr(Position position, int width, int height)
+        {
             unsafe
             {
-                var ptr = Library.Client.Core_Client_CreateRadiusBlip(NativePointer, position, radius);
-                if (ptr == IntPtr.Zero) return null;
-                return BlipPool.Create(this, ptr);
+                return Library.Client.Core_Client_CreateAreaBlip(NativePointer, position, width, height);
             }
         }
 
         public IBlip CreateAreaBlip(Position position, int width, int height)
         {
-            unsafe
-            {
-                var ptr = Library.Client.Core_Client_CreateAreaBlip(NativePointer, position, width, height);
-                if (ptr == IntPtr.Zero) return null;
-                return BlipPool.Create(this, ptr);
-            }
+            var ptr = CreateAreaBlipPtr(position, width, height);
+            if (ptr == IntPtr.Zero) return null;
+            return BlipPool.Create(this, ptr);
         }
 
         public IntPtr CreateWebViewPtr(string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null)

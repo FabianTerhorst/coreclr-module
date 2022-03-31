@@ -14,6 +14,7 @@ namespace AltV.Net.Client
         IBaseEntityPool BaseEntityPool { get; }
         IBaseBaseObjectPool BaseBaseObjectPool { get; }
         IBaseObjectPool<IWebView> WebViewPool { get; }
+        IBaseObjectPool<IBlip> BlipPool { get; }
         // HandlingData? GetHandlingByModelHash(uint modelHash); todo
         IBlip CreatePointBlip(Position position);
         IBlip CreateRadiusBlip(Position position, float radius);
@@ -22,5 +23,8 @@ namespace AltV.Net.Client
         IWebView CreateWebView(string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null);
         IntPtr CreateWebViewPtr(string url, uint propHash, string targetTexture);
         IWebView CreateWebView(string url, uint propHash, string targetTexture);
+        IntPtr CreatePointBlipPtr(Position position);
+        IntPtr CreateRadiusBlipPtr(Position position, float radius);
+        IntPtr CreateAreaBlipPtr(Position position, int width, int height);
     }
 }

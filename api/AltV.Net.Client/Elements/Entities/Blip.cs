@@ -22,7 +22,7 @@ namespace AltV.Net.Elements.Entities
                 return core.Library.Shared.Blip_GetWorldObject(nativePointer);
             }
         }
-        
+
         public bool IsGlobal
         {
             get
@@ -664,6 +664,21 @@ namespace AltV.Net.Elements.Entities
         public Blip(ICore core, IntPtr nativePointer) : base(core, GetWorldObjectPointer(core, nativePointer), BaseObjectType.Blip)
         {
             BlipNativePointer = nativePointer;
+        }
+
+        public Blip(ICore core, Position position) : this(core, core.CreatePointBlipPtr(position))
+        {
+            core.BlipPool.Add(this);
+        }
+
+        public Blip(ICore core, Position position, float radius) : this(core, core.CreateRadiusBlipPtr(position, radius))
+        {
+            core.BlipPool.Add(this);
+        }
+
+        public Blip(ICore core, Position position, int width, int height) : this(core, core.CreateAreaBlipPtr(position, width, height))
+        {
+            core.BlipPool.Add(this);
         }
 
         public void Fade(uint opacity, uint duration)
