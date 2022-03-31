@@ -175,24 +175,9 @@ namespace AltV.Net.Client
 
         public IWebView CreateWebView(string url, uint propHash, string targetTexture)
         {
-            unsafe
-            {
-                var ptr = CreateWebViewPtr(url, propHash, targetTexture);
-                if (ptr == IntPtr.Zero) return null;
-                return WebViewPool.Create(this, ptr);
-            }
-        }
-
-
-        public void RemoveBlip(IBlip blip)
-        {
-            if (blip.Exists)
-            {
-                unsafe
-                {
-                    Library.Shared.Core_DestroyBaseObject(NativePointer, blip.BaseObjectNativePointer);
-                }
-            }
+            var ptr = CreateWebViewPtr(url, propHash, targetTexture);
+            if (ptr == IntPtr.Zero) return null;
+            return WebViewPool.Create(this, ptr);
         }
     }
 }

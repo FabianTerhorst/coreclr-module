@@ -15,7 +15,6 @@ namespace AltV.Net.Client
         IBaseBaseObjectPool BaseBaseObjectPool { get; }
         IBaseObjectPool<IWebView> WebViewPool { get; }
         // HandlingData? GetHandlingByModelHash(uint modelHash); todo
-        void RemoveBlip(IBlip blip);
         IBlip CreatePointBlip(Position position);
         IBlip CreateRadiusBlip(Position position, float radius);
         IBlip CreateAreaBlip(Position position, int width, int height);

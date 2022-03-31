@@ -24,5 +24,14 @@ namespace AltV.Net.Client.Elements.Entities
             
             exists = true;
         }
+
+        public void Remove()
+        {
+            if (!Exists) return;
+            unsafe
+            {
+                Core.Library.Shared.Core_DestroyBaseObject(Core.NativePointer, this.BaseObjectNativePointer);
+            }
+        }
     }
 }
