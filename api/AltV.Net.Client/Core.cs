@@ -18,6 +18,7 @@ namespace AltV.Net.Client
     {
         public ILibrary Library { get; }
         public IntPtr NativePointer { get; }
+        
 
         public override IPlayerPool PlayerPool { get; }
         public override IEntityPool<IVehicle> VehiclePool { get; }
@@ -29,6 +30,8 @@ namespace AltV.Net.Client
 
         public override INativeResource Resource { get; }
         public ILogger Logger { get; }
+        
+        public LocalStorage LocalStorage { get; }
 
         public List<SafeTimer> RunningTimers { get; } = new();
 
@@ -57,9 +60,18 @@ namespace AltV.Net.Client
             BaseEntityPool = baseEntityPool;
             nativeResourcePool.GetOrCreate(this, resourcePointer, out var resource);
             Resource = resource;
+            LocalStorage = new LocalStorage(this, GetLocalStoragePtr());
         }
 
         #region Log
+
+        private IntPtr GetLocalStoragePtr()
+        {
+            unsafe
+            {
+                return this.Library.Client.Resource_GetLocalStorage(this.Resource.NativePointer);
+            }
+        }
 
         public new void LogInfo(string message) => Logger.LogInfo(message);
         public new void LogWarning(string message) => Logger.LogWarning(message);

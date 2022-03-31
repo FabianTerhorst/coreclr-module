@@ -14,6 +14,8 @@ namespace AltV.Net.Client
         public static ICore Core => CoreImpl;
         public static ILogger Logger { get; internal set; } = null!;
 
+        public static LocalStorage LocalStorage => Core.LocalStorage;
+
         public static bool GetEntityById(ushort id, [MaybeNullWhen(false)] out IEntity entity)
         {
             entity = default;

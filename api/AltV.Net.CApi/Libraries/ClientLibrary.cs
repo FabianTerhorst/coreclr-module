@@ -37,6 +37,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Clear { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> LocalStorage_DeleteKey { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> LocalStorage_GetKey { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Save { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> LocalStorage_SetKey { get; }
         public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMicLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetNonSpatialVolume { get; }
@@ -46,6 +51,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, bool> Resource_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void> Resource_GetFile { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetLocalStorage { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetGear { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetMaxGear { get; }
@@ -102,6 +108,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Clear { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> LocalStorage_DeleteKey { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> LocalStorage_GetKey { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Save { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> LocalStorage_SetKey { get; }
         public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMicLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetNonSpatialVolume { get; }
@@ -111,6 +122,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, float, void> Player_SetSpatialVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, bool> Resource_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void> Resource_GetFile { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetLocalStorage { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetGear { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetMaxGear { get; }
@@ -167,6 +179,11 @@ namespace AltV.Net.CApi.Libraries
             LocalPlayer_GetCurrentAmmo = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "LocalPlayer_GetCurrentAmmo");
             LocalPlayer_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "LocalPlayer_GetID");
             LocalPlayer_GetPlayer = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "LocalPlayer_GetPlayer");
+            LocalStorage_Clear = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "LocalStorage_Clear");
+            LocalStorage_DeleteKey = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "LocalStorage_DeleteKey");
+            LocalStorage_GetKey = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "LocalStorage_GetKey");
+            LocalStorage_Save = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "LocalStorage_Save");
+            LocalStorage_SetKey = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "LocalStorage_SetKey");
             Player_GetLocal = (delegate* unmanaged[Cdecl]<nint>) NativeLibrary.GetExport(handle, "Player_GetLocal");
             Player_GetMicLevel = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Player_GetMicLevel");
             Player_GetNonSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Player_GetNonSpatialVolume");
@@ -176,6 +193,7 @@ namespace AltV.Net.CApi.Libraries
             Player_SetSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Player_SetSpatialVolume");
             Resource_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, bool>) NativeLibrary.GetExport(handle, "Resource_FileExists");
             Resource_GetFile = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void>) NativeLibrary.GetExport(handle, "Resource_GetFile");
+            Resource_GetLocalStorage = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Resource_GetLocalStorage");
             Vehicle_GetGear = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetGear");
             Vehicle_GetIndicatorLights = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetIndicatorLights");
             Vehicle_GetMaxGear = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetMaxGear");

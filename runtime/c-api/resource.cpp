@@ -136,4 +136,9 @@ void Resource_GetFile(alt::IResource* resource, const char* path, int* bufferSiz
     *bufferSize = static_cast<int>(content.GetSize());
     *buffer = utils::get_clr_value(content.GetData(), size);
 }
+
+alt::ILocalStorage* Resource_GetLocalStorage(alt::IResource* resource) {
+    return resource->GetLocalStorage();
+}
+
 #endif
