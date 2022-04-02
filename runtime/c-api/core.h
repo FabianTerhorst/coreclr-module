@@ -112,6 +112,8 @@ EXPORT_CLIENT alt::IWebView* Core_CreateWebView(alt::ICore* core, alt::IResource
 EXPORT_CLIENT alt::IWebView* Core_CreateWebView3D(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t hash, const char* targetTexture);
 EXPORT_CLIENT void Core_TriggerWebViewEvent(alt::ICore* core, alt::IWebView* webview, const char* event, alt::MValueConst* args[], int size);
 
+EXPORT_CLIENT void Core_ShowCursor(alt::ICore* core, alt::IResource* resource, bool state);
+
 EXPORT_CLIENT ClrDiscordUser* Core_GetDiscordUser(alt::ICore* core);
 EXPORT_CLIENT void Core_DeallocDiscordUser(ClrDiscordUser* user);
 

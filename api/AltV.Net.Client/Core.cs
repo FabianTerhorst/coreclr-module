@@ -196,5 +196,13 @@ namespace AltV.Net.Client
             return WebViewPool.Create(this, ptr);
         }
         #endregion
+        
+        public void ShowCursor(bool state)
+        {
+            unsafe
+            {
+                Library.Client.Core_ShowCursor(NativePointer, Resource.NativePointer, state);
+            }
+        }
     }
 }

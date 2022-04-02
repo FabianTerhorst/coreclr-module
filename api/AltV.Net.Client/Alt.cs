@@ -41,5 +41,7 @@ namespace AltV.Net.Client
         public static string Branch => Core.Branch;
         public static string Version => Core.Version;
         public static bool IsDebug => Core.IsDebug;
+
+        public static void ShowCursor(bool state) => Core.ShowCursor(state);
     }
 }

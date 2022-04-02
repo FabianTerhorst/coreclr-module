@@ -28,5 +28,6 @@ namespace AltV.Net.Client
         IntPtr CreateRadiusBlipPtr(Position position, float radius);
         IntPtr CreateAreaBlipPtr(Position position, int width, int height);
         new IEntity GetEntityById(ushort id);
+        void ShowCursor(bool state);
     }
 }
