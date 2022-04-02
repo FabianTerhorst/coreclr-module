@@ -20,7 +20,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
+                var messagePtr = MemoryUtils.StringToHGlobalUtf8(message ?? "null");
                 library.Shared.Core_LogInfo(corePointer, messagePtr);
                 Marshal.FreeHGlobal(messagePtr);
             }
@@ -30,7 +30,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
+                var messagePtr = MemoryUtils.StringToHGlobalUtf8(message ?? "null");
                 library.Shared.Core_LogWarning(corePointer, messagePtr);
                 Marshal.FreeHGlobal(messagePtr);
             }
@@ -40,7 +40,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
+                var messagePtr = MemoryUtils.StringToHGlobalUtf8(message ?? "null");
                 library.Shared.Core_LogError(corePointer, messagePtr);
                 Marshal.FreeHGlobal(messagePtr);
             }
@@ -50,7 +50,7 @@ namespace AltV.Net.Client
         {
             unsafe
             {
-                var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
+                var messagePtr = MemoryUtils.StringToHGlobalUtf8(message ?? "null");
                 library.Shared.Core_LogDebug(corePointer, messagePtr);
                 Marshal.FreeHGlobal(messagePtr);
             }
