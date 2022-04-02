@@ -6,5 +6,6 @@ namespace AltV.Net.Client.Elements.Interfaces
     {
         new IPlayer? NetworkOwner { get; }
         int ScriptId { get; }
+        bool Spawned { get; }
     }
 }
