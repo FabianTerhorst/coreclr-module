@@ -14,6 +14,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint> Core_Client_CreateAreaBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_Client_CreatePointBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, nint> Core_Client_CreateRadiusBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint> Core_CreateRmlDocument { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, nint> Core_CreateWebView { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, nint> Core_CreateWebView3D { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocDiscordUser { get; }
@@ -21,6 +22,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, bool, void> Core_ShowCursor { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerWebViewEvent { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void> Core_WorldToScreen { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void> Event_SetClientEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConsoleCommandModuleDelegate, void> Event_SetConsoleCommandDelegate { get; }
@@ -38,6 +40,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ResourceStopModuleDelegate, void> Event_SetResourceStopDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ServerEventModuleDelegate, void> Event_SetServerEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.TickModuleDelegate, void> Event_SetTickDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeRmlElementArray { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
@@ -56,6 +59,93 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, bool> Resource_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void> Resource_GetFile { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetLocalStorage { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> RmlDocument_CreateElement { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> RmlDocument_CreateTextNode { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlDocument_GetBody { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlDocument_GetRmlElement { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> RmlDocument_GetSourceUrl { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> RmlDocument_GetTitle { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> RmlDocument_Hide { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> RmlDocument_IsModal { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> RmlDocument_IsVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> RmlDocument_SetTitle { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, void> RmlDocument_Show { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> RmlDocument_Update { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> RmlElement_AddClass { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> RmlElement_AddPseudoClass { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> RmlElement_AppendChild { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> RmlElement_Blur { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> RmlElement_Click { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> RmlElement_Focus { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetAbsoluteLeft { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2*, void> RmlElement_GetAbsoluteOffset { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetAbsoluteTop { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> RmlElement_GetAttribute { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, nint*, uint*, void> RmlElement_GetAttributes { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetBaseline { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlElement_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> RmlElement_GetChildCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, uint*, void> RmlElement_GetChildNodes { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, uint*, void> RmlElement_GetClassList { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetClientHeight { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetClientLeft { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetClientTop { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetClientWidth { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> RmlElement_GetClosest { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2*, void> RmlElement_GetContainingBlock { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> RmlElement_GetElementById { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint*, uint*, void> RmlElement_GetElementsByClassName { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint*, uint*, void> RmlElement_GetElementsByTagName { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlElement_GetFirstChild { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlElement_GetFocusedElement { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> RmlElement_GetId { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> RmlElement_GetInnerRml { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlElement_GetLastChild { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> RmlElement_GetLocalProperty { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlElement_GetNextSibling { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetOffsetHeight { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetOffsetLeft { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetOffsetTop { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetOffsetWidth { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlElement_GetOwnerDocument { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlElement_GetParent { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlElement_GetPreviousSibling { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> RmlElement_GetProperty { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, float> RmlElement_GetPropertyAbsoluteValue { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, uint*, void> RmlElement_GetPseudoClassList { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2*, void> RmlElement_GetRelativeOffset { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetScrollHeight { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetScrollLeft { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetScrollTop { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetScrollWidth { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> RmlElement_GetTagName { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetZIndex { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> RmlElement_HasAttribute { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> RmlElement_HasChildren { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> RmlElement_HasClass { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> RmlElement_HasLocalProperty { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> RmlElement_HasProperty { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> RmlElement_HasPseudoClass { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> RmlElement_InsertBefore { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> RmlElement_IsOwned { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2, byte> RmlElement_IsPointWithinElement { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> RmlElement_IsVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> RmlElement_QuerySelector { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint*, uint*, void> RmlElement_QuerySelectorAll { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> RmlElement_RemoveAttribute { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> RmlElement_RemoveChild { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> RmlElement_RemoveClass { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> RmlElement_RemoveProperty { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> RmlElement_RemovePseudoClass { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> RmlElement_ReplaceChild { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> RmlElement_ScrollIntoView { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> RmlElement_SetAttribute { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> RmlElement_SetId { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> RmlElement_SetInnerRml { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, Vector2, byte, void> RmlElement_SetOffset { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> RmlElement_SetProperty { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> RmlElement_SetScrollLeft { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> RmlElement_SetScrollTop { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetGear { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetMaxGear { get; }
@@ -89,6 +179,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint> Core_Client_CreateAreaBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_Client_CreatePointBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, nint> Core_Client_CreateRadiusBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint> Core_CreateRmlDocument { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, nint> Core_CreateWebView { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, nint> Core_CreateWebView3D { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocDiscordUser { get; }
@@ -96,6 +187,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, bool, void> Core_ShowCursor { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerWebViewEvent { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void> Core_WorldToScreen { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void> Event_SetClientEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConsoleCommandModuleDelegate, void> Event_SetConsoleCommandDelegate { get; }
@@ -113,6 +205,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ResourceStopModuleDelegate, void> Event_SetResourceStopDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ServerEventModuleDelegate, void> Event_SetServerEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.TickModuleDelegate, void> Event_SetTickDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeRmlElementArray { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
@@ -131,6 +224,93 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, bool> Resource_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void> Resource_GetFile { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetLocalStorage { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> RmlDocument_CreateElement { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> RmlDocument_CreateTextNode { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlDocument_GetBody { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlDocument_GetRmlElement { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> RmlDocument_GetSourceUrl { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> RmlDocument_GetTitle { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> RmlDocument_Hide { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> RmlDocument_IsModal { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> RmlDocument_IsVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> RmlDocument_SetTitle { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte, void> RmlDocument_Show { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> RmlDocument_Update { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> RmlElement_AddClass { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> RmlElement_AddPseudoClass { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> RmlElement_AppendChild { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> RmlElement_Blur { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> RmlElement_Click { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> RmlElement_Focus { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetAbsoluteLeft { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2*, void> RmlElement_GetAbsoluteOffset { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetAbsoluteTop { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> RmlElement_GetAttribute { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, nint*, uint*, void> RmlElement_GetAttributes { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetBaseline { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlElement_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> RmlElement_GetChildCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, uint*, void> RmlElement_GetChildNodes { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, uint*, void> RmlElement_GetClassList { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetClientHeight { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetClientLeft { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetClientTop { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetClientWidth { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> RmlElement_GetClosest { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2*, void> RmlElement_GetContainingBlock { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> RmlElement_GetElementById { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint*, uint*, void> RmlElement_GetElementsByClassName { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint*, uint*, void> RmlElement_GetElementsByTagName { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlElement_GetFirstChild { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlElement_GetFocusedElement { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> RmlElement_GetId { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> RmlElement_GetInnerRml { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlElement_GetLastChild { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> RmlElement_GetLocalProperty { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlElement_GetNextSibling { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetOffsetHeight { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetOffsetLeft { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetOffsetTop { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetOffsetWidth { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlElement_GetOwnerDocument { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlElement_GetParent { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> RmlElement_GetPreviousSibling { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> RmlElement_GetProperty { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, float> RmlElement_GetPropertyAbsoluteValue { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, uint*, void> RmlElement_GetPseudoClassList { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2*, void> RmlElement_GetRelativeOffset { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetScrollHeight { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetScrollLeft { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetScrollTop { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetScrollWidth { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> RmlElement_GetTagName { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> RmlElement_GetZIndex { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> RmlElement_HasAttribute { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> RmlElement_HasChildren { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> RmlElement_HasClass { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> RmlElement_HasLocalProperty { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> RmlElement_HasProperty { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> RmlElement_HasPseudoClass { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> RmlElement_InsertBefore { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> RmlElement_IsOwned { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2, byte> RmlElement_IsPointWithinElement { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> RmlElement_IsVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> RmlElement_QuerySelector { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint*, uint*, void> RmlElement_QuerySelectorAll { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> RmlElement_RemoveAttribute { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> RmlElement_RemoveChild { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> RmlElement_RemoveClass { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> RmlElement_RemoveProperty { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> RmlElement_RemovePseudoClass { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> RmlElement_ReplaceChild { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> RmlElement_ScrollIntoView { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> RmlElement_SetAttribute { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> RmlElement_SetId { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> RmlElement_SetInnerRml { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, Vector2, byte, void> RmlElement_SetOffset { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> RmlElement_SetProperty { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> RmlElement_SetScrollLeft { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> RmlElement_SetScrollTop { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetGear { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Vehicle_GetMaxGear { get; }
@@ -164,6 +344,7 @@ namespace AltV.Net.CApi.Libraries
             Core_Client_CreateAreaBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint>) NativeLibrary.GetExport(handle, "Core_Client_CreateAreaBlip");
             Core_Client_CreatePointBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, nint>) NativeLibrary.GetExport(handle, "Core_Client_CreatePointBlip");
             Core_Client_CreateRadiusBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, float, nint>) NativeLibrary.GetExport(handle, "Core_Client_CreateRadiusBlip");
+            Core_CreateRmlDocument = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateRmlDocument");
             Core_CreateWebView = (delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, nint>) NativeLibrary.GetExport(handle, "Core_CreateWebView");
             Core_CreateWebView3D = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateWebView3D");
             Core_DeallocDiscordUser = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Core_DeallocDiscordUser");
@@ -171,6 +352,7 @@ namespace AltV.Net.CApi.Libraries
             Core_ShowCursor = (delegate* unmanaged[Cdecl]<nint, nint, bool, void>) NativeLibrary.GetExport(handle, "Core_ShowCursor");
             Core_TriggerServerEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Core_TriggerServerEvent");
             Core_TriggerWebViewEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Core_TriggerWebViewEvent");
+            Core_WorldToScreen = (delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void>) NativeLibrary.GetExport(handle, "Core_WorldToScreen");
             Entity_GetScriptID = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Entity_GetScriptID");
             Event_SetClientEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetClientEventDelegate");
             Event_SetConsoleCommandDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ConsoleCommandModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetConsoleCommandDelegate");
@@ -188,6 +370,7 @@ namespace AltV.Net.CApi.Libraries
             Event_SetResourceStopDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ResourceStopModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetResourceStopDelegate");
             Event_SetServerEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ServerEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetServerEventDelegate");
             Event_SetTickDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.TickModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetTickDelegate");
+            FreeRmlElementArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeRmlElementArray");
             LocalPlayer_GetCurrentAmmo = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "LocalPlayer_GetCurrentAmmo");
             LocalPlayer_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "LocalPlayer_GetID");
             LocalPlayer_GetPlayer = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "LocalPlayer_GetPlayer");
@@ -206,6 +389,93 @@ namespace AltV.Net.CApi.Libraries
             Resource_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, bool>) NativeLibrary.GetExport(handle, "Resource_FileExists");
             Resource_GetFile = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint*, void>) NativeLibrary.GetExport(handle, "Resource_GetFile");
             Resource_GetLocalStorage = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Resource_GetLocalStorage");
+            RmlDocument_CreateElement = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "RmlDocument_CreateElement");
+            RmlDocument_CreateTextNode = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "RmlDocument_CreateTextNode");
+            RmlDocument_GetBody = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "RmlDocument_GetBody");
+            RmlDocument_GetRmlElement = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "RmlDocument_GetRmlElement");
+            RmlDocument_GetSourceUrl = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "RmlDocument_GetSourceUrl");
+            RmlDocument_GetTitle = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "RmlDocument_GetTitle");
+            RmlDocument_Hide = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "RmlDocument_Hide");
+            RmlDocument_IsModal = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "RmlDocument_IsModal");
+            RmlDocument_IsVisible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "RmlDocument_IsVisible");
+            RmlDocument_SetTitle = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "RmlDocument_SetTitle");
+            RmlDocument_Show = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) NativeLibrary.GetExport(handle, "RmlDocument_Show");
+            RmlDocument_Update = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "RmlDocument_Update");
+            RmlElement_AddClass = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "RmlElement_AddClass");
+            RmlElement_AddPseudoClass = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "RmlElement_AddPseudoClass");
+            RmlElement_AppendChild = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "RmlElement_AppendChild");
+            RmlElement_Blur = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "RmlElement_Blur");
+            RmlElement_Click = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "RmlElement_Click");
+            RmlElement_Focus = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "RmlElement_Focus");
+            RmlElement_GetAbsoluteLeft = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "RmlElement_GetAbsoluteLeft");
+            RmlElement_GetAbsoluteOffset = (delegate* unmanaged[Cdecl]<nint, Vector2*, void>) NativeLibrary.GetExport(handle, "RmlElement_GetAbsoluteOffset");
+            RmlElement_GetAbsoluteTop = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "RmlElement_GetAbsoluteTop");
+            RmlElement_GetAttribute = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint>) NativeLibrary.GetExport(handle, "RmlElement_GetAttribute");
+            RmlElement_GetAttributes = (delegate* unmanaged[Cdecl]<nint, nint*, nint*, uint*, void>) NativeLibrary.GetExport(handle, "RmlElement_GetAttributes");
+            RmlElement_GetBaseline = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "RmlElement_GetBaseline");
+            RmlElement_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "RmlElement_GetBaseObject");
+            RmlElement_GetChildCount = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "RmlElement_GetChildCount");
+            RmlElement_GetChildNodes = (delegate* unmanaged[Cdecl]<nint, nint*, uint*, void>) NativeLibrary.GetExport(handle, "RmlElement_GetChildNodes");
+            RmlElement_GetClassList = (delegate* unmanaged[Cdecl]<nint, nint*, uint*, void>) NativeLibrary.GetExport(handle, "RmlElement_GetClassList");
+            RmlElement_GetClientHeight = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "RmlElement_GetClientHeight");
+            RmlElement_GetClientLeft = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "RmlElement_GetClientLeft");
+            RmlElement_GetClientTop = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "RmlElement_GetClientTop");
+            RmlElement_GetClientWidth = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "RmlElement_GetClientWidth");
+            RmlElement_GetClosest = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "RmlElement_GetClosest");
+            RmlElement_GetContainingBlock = (delegate* unmanaged[Cdecl]<nint, Vector2*, void>) NativeLibrary.GetExport(handle, "RmlElement_GetContainingBlock");
+            RmlElement_GetElementById = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "RmlElement_GetElementById");
+            RmlElement_GetElementsByClassName = (delegate* unmanaged[Cdecl]<nint, nint, nint*, uint*, void>) NativeLibrary.GetExport(handle, "RmlElement_GetElementsByClassName");
+            RmlElement_GetElementsByTagName = (delegate* unmanaged[Cdecl]<nint, nint, nint*, uint*, void>) NativeLibrary.GetExport(handle, "RmlElement_GetElementsByTagName");
+            RmlElement_GetFirstChild = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "RmlElement_GetFirstChild");
+            RmlElement_GetFocusedElement = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "RmlElement_GetFocusedElement");
+            RmlElement_GetId = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "RmlElement_GetId");
+            RmlElement_GetInnerRml = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "RmlElement_GetInnerRml");
+            RmlElement_GetLastChild = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "RmlElement_GetLastChild");
+            RmlElement_GetLocalProperty = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint>) NativeLibrary.GetExport(handle, "RmlElement_GetLocalProperty");
+            RmlElement_GetNextSibling = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "RmlElement_GetNextSibling");
+            RmlElement_GetOffsetHeight = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "RmlElement_GetOffsetHeight");
+            RmlElement_GetOffsetLeft = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "RmlElement_GetOffsetLeft");
+            RmlElement_GetOffsetTop = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "RmlElement_GetOffsetTop");
+            RmlElement_GetOffsetWidth = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "RmlElement_GetOffsetWidth");
+            RmlElement_GetOwnerDocument = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "RmlElement_GetOwnerDocument");
+            RmlElement_GetParent = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "RmlElement_GetParent");
+            RmlElement_GetPreviousSibling = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "RmlElement_GetPreviousSibling");
+            RmlElement_GetProperty = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint>) NativeLibrary.GetExport(handle, "RmlElement_GetProperty");
+            RmlElement_GetPropertyAbsoluteValue = (delegate* unmanaged[Cdecl]<nint, nint, float>) NativeLibrary.GetExport(handle, "RmlElement_GetPropertyAbsoluteValue");
+            RmlElement_GetPseudoClassList = (delegate* unmanaged[Cdecl]<nint, nint*, uint*, void>) NativeLibrary.GetExport(handle, "RmlElement_GetPseudoClassList");
+            RmlElement_GetRelativeOffset = (delegate* unmanaged[Cdecl]<nint, Vector2*, void>) NativeLibrary.GetExport(handle, "RmlElement_GetRelativeOffset");
+            RmlElement_GetScrollHeight = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "RmlElement_GetScrollHeight");
+            RmlElement_GetScrollLeft = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "RmlElement_GetScrollLeft");
+            RmlElement_GetScrollTop = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "RmlElement_GetScrollTop");
+            RmlElement_GetScrollWidth = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "RmlElement_GetScrollWidth");
+            RmlElement_GetTagName = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "RmlElement_GetTagName");
+            RmlElement_GetZIndex = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "RmlElement_GetZIndex");
+            RmlElement_HasAttribute = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "RmlElement_HasAttribute");
+            RmlElement_HasChildren = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "RmlElement_HasChildren");
+            RmlElement_HasClass = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "RmlElement_HasClass");
+            RmlElement_HasLocalProperty = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "RmlElement_HasLocalProperty");
+            RmlElement_HasProperty = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "RmlElement_HasProperty");
+            RmlElement_HasPseudoClass = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "RmlElement_HasPseudoClass");
+            RmlElement_InsertBefore = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "RmlElement_InsertBefore");
+            RmlElement_IsOwned = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "RmlElement_IsOwned");
+            RmlElement_IsPointWithinElement = (delegate* unmanaged[Cdecl]<nint, Vector2, byte>) NativeLibrary.GetExport(handle, "RmlElement_IsPointWithinElement");
+            RmlElement_IsVisible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "RmlElement_IsVisible");
+            RmlElement_QuerySelector = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "RmlElement_QuerySelector");
+            RmlElement_QuerySelectorAll = (delegate* unmanaged[Cdecl]<nint, nint, nint*, uint*, void>) NativeLibrary.GetExport(handle, "RmlElement_QuerySelectorAll");
+            RmlElement_RemoveAttribute = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "RmlElement_RemoveAttribute");
+            RmlElement_RemoveChild = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "RmlElement_RemoveChild");
+            RmlElement_RemoveClass = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "RmlElement_RemoveClass");
+            RmlElement_RemoveProperty = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "RmlElement_RemoveProperty");
+            RmlElement_RemovePseudoClass = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "RmlElement_RemovePseudoClass");
+            RmlElement_ReplaceChild = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "RmlElement_ReplaceChild");
+            RmlElement_ScrollIntoView = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "RmlElement_ScrollIntoView");
+            RmlElement_SetAttribute = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "RmlElement_SetAttribute");
+            RmlElement_SetId = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "RmlElement_SetId");
+            RmlElement_SetInnerRml = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "RmlElement_SetInnerRml");
+            RmlElement_SetOffset = (delegate* unmanaged[Cdecl]<nint, nint, Vector2, byte, void>) NativeLibrary.GetExport(handle, "RmlElement_SetOffset");
+            RmlElement_SetProperty = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "RmlElement_SetProperty");
+            RmlElement_SetScrollLeft = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "RmlElement_SetScrollLeft");
+            RmlElement_SetScrollTop = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "RmlElement_SetScrollTop");
             Vehicle_GetGear = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetGear");
             Vehicle_GetIndicatorLights = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetIndicatorLights");
             Vehicle_GetMaxGear = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Vehicle_GetMaxGear");

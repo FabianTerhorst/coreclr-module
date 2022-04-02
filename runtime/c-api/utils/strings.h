@@ -7,5 +7,8 @@
 #endif
 
 #include <string>
+#include <vector>
 
 const char* AllocateString(const std::string& str, int32_t& size);
+const char** AllocateStringArray(const char* arr[], uint32_t& size);
+const char** AllocateStringArray(std::vector<std::string> arr, uint32_t& size);

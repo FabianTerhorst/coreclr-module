@@ -489,12 +489,32 @@ alt::IWebView* Core_CreateWebView3D(alt::ICore* core, alt::IResource* resource, 
     return webView.Get();
 }
 
+alt::IRmlDocument* Core_CreateRmlDocument(alt::ICore* core, alt::IResource* resource, const char* url) {
+    return core->CreateDocument(url, resource->GetMain().ToString(), resource).Get();
+}
+
+
 void Core_TriggerWebViewEvent(alt::ICore* core, alt::IWebView* webview, const char* event, alt::MValueConst* args[], int size) {
     alt::MValueArgs mValues = alt::MValueArgs(size);
     for (int i = 0; i < size; i++) {
         ToMValueArg(mValues, core, args[i], i);
     }
     webview->Trigger(event, mValues);
+}
+
+void Core_TriggerServerEvent(alt::ICore* core, const char* event, alt::MValueConst* args[], int size) {
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        ToMValueArg(mValues, core, args[i], i);
+    }
+    core->TriggerServerEvent(event, mValues);
+}
+
+void Core_ShowCursor(alt::ICore* core, alt::IResource* resource, bool state) {
+    if(!resource->ToggleCursor(state))
+    {
+        Log::Warning << "Cursor state can't go < 0" << Log::Endl;
+    }
 }
 
 
@@ -508,19 +528,11 @@ void Core_DeallocDiscordUser(ClrDiscordUser* user) {
     delete user;
 }
 
-void Core_ShowCursor(alt::ICore* core, alt::IResource* resource, bool state) {
-    if(!resource->ToggleCursor(state))
-    {
-        Log::Warning << "Cursor state can't go < 0" << Log::Endl;
-    }
-}
 
-void Core_TriggerServerEvent(alt::ICore* core, const char* event, alt::MValueConst* args[], int size) {
-    alt::MValueArgs mValues = alt::MValueArgs(size);
-    for (int i = 0; i < size; i++) {
-        ToMValueArg(mValues, core, args[i], i);
-    }
-    core->TriggerServerEvent(event, mValues);
+void Core_WorldToScreen(alt::ICore* core, vector3_t in, vector2_t& out) {
+    auto vec = core->WorldToScreen({ in.x, in.y, in.z });
+    out.x = vec[0];
+    out.y = vec[1];
 }
 
 #endif

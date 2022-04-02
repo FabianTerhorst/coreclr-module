@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Entities;
@@ -45,5 +46,6 @@ namespace AltV.Net.Client
         public static void ShowCursor(bool state) => Core.ShowCursor(state);
 
         public static void EmitServer(string eventName, params object[] args) => Core.TriggerServerEvent(eventName, args);
+        public static Vector2 WorldToScreen(Vector3 position) => Core.WorldToScreen(position);
     }
 }

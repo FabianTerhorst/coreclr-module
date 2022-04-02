@@ -2,6 +2,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using AltV.Net.CApi;
 using AltV.Net.Client.Elements.Entities;
+using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Client.Extensions;
 
@@ -53,6 +54,10 @@ namespace AltV.Net.Client
             var webViewPool = new WebViewPool(_resource.GetWebViewFactory());
             Alt.Log("Blip pool created");
 
+            var rmlDocumentPool = new RmlDocumentPool(new RmlDocumentFactory());
+            var rmlElementPool = new RmlElementPool(new RmlElementFactory());
+            Alt.Log("Rml pools created");
+
             var nativeResourcePool = new NativeResourcePool(_resource.GetResourceFactory());
             Alt.Log("Native resource pool created");
 
@@ -67,6 +72,8 @@ namespace AltV.Net.Client
                 vehiclePool,
                 blipPool,
                 webViewPool,
+                rmlDocumentPool,
+                rmlElementPool,
                 baseBaseObjectPool,
                 baseEntityPool,
                 nativeResourcePool,

@@ -43,6 +43,7 @@ namespace AltV.Net.CodeGen
                     var name = match.Groups["name"].Value;
                     var target = match.Groups["target"].Value;
                     var csReturnType = CsTypes.FirstOrDefault(t => t.Key == type).Value ?? "object";
+                    // todo throw error on unknown type
 
                     var args = new List<CMethodParam>();
                     var matches = ArgsRegex.Matches(match.Groups["args"].Value);
@@ -132,6 +133,7 @@ namespace AltV.Net.CodeGen
             {"short", "short"},
             {"char", "char"},
             {"float", "float"},
+            {"float*", "float*"},
             {"double", "double"},
             {"bool", "bool"},
             {"void", "void"},
@@ -152,6 +154,10 @@ namespace AltV.Net.CodeGen
             {"alt::IResource*", "nint"},
             {"alt::IWebView*", "nint"},
             {"alt::ILocalStorage*", "nint"},
+            {"alt::IRmlDocument*", "nint"},
+            {"alt::IRmlElement*", "nint"},
+            {"alt::IRmlElement**", "nint"},
+            {"alt::IRmlElement**&", "nint*"},
             {"CSharpResourceImpl*", "nint"},
             {"void**", "nint*"},
             {"alt::MValueConst*", "nint"},
@@ -199,6 +205,8 @@ namespace AltV.Net.CodeGen
             { "alt::MValue&", "MValue*" },
             { "alt::MValue*", "MValue*" },
             { "const char*&", "nint*" },
+            { "char**", "nint" },
+            { "char**&", "nint*" },
             { "alt::Array<uint32_t>&", "UIntArray*" },
             { "alt::Array<uint32_t>*", "UIntArray*" },
             { "void*", "nint" },

@@ -12,5 +12,6 @@ namespace AltV.Net.Client
         public static IBlip CreateAreaBlip(Position position, int width, int height) => Core.CreateAreaBlip(position, width, height);
         public static IWebView CreateWebView(string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null) => Core.CreateWebView(url, isOverlay, pos, size);
         public static IWebView CreateWebView(string url, uint propHash, string targetTexture) => Core.CreateWebView(url, propHash, targetTexture);
+        public static IRmlDocument CreateRmlDocument(string url) => Core.CreateRmlDocument(url);
     }
 }

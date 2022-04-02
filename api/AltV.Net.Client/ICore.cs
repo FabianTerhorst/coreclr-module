@@ -15,6 +15,8 @@ namespace AltV.Net.Client
         IBaseBaseObjectPool BaseBaseObjectPool { get; }
         IBaseObjectPool<IWebView> WebViewPool { get; }
         IBaseObjectPool<IBlip> BlipPool { get; }
+        IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
+        IBaseObjectPool<IRmlElement> RmlElementPool { get; }
         LocalStorage LocalStorage { get; }
         // HandlingData? GetHandlingByModelHash(uint modelHash); todo
         IBlip CreatePointBlip(Position position);
@@ -30,5 +32,9 @@ namespace AltV.Net.Client
         new IEntity GetEntityById(ushort id);
         void ShowCursor(bool state);
         void TriggerServerEvent(string eventName, params object[] args);
+        IntPtr CreateRmlDocumentPtr(string url);
+        IRmlDocument CreateRmlDocument(string url);
+        Vector2 WorldToScreen(Vector3 position);
+        string[] MarshalStringArrayPtrAndFree(IntPtr ptr, uint size);
     }
 }

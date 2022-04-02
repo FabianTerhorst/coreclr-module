@@ -27,6 +27,8 @@ namespace AltV.Net.Client
         public override IEntityPool<IVehicle> VehiclePool { get; }
         public IBaseObjectPool<IBlip> BlipPool { get; }
         public IBaseObjectPool<IWebView> WebViewPool { get; }
+        public IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
+        public IBaseObjectPool<IRmlElement> RmlElementPool { get; }
 
         public IBaseEntityPool BaseEntityPool { get; }
         public override IBaseBaseObjectPool BaseBaseObjectPool { get; }
@@ -46,6 +48,8 @@ namespace AltV.Net.Client
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<IWebView> webViewPool,
+            IBaseObjectPool<IRmlDocument> rmlDocumentPool,
+            IBaseObjectPool<IRmlElement> rmlElementPool,
             IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             INativeResourcePool nativeResourcePool,
@@ -58,6 +62,8 @@ namespace AltV.Net.Client
             VehiclePool = vehiclePool;
             BlipPool = blipPool;
             WebViewPool = webViewPool;
+            RmlDocumentPool = rmlDocumentPool;
+            RmlElementPool = rmlElementPool;
             Logger = logger;
             BaseBaseObjectPool = baseBaseObjectPool;
             BaseEntityPool = baseEntityPool;
@@ -198,6 +204,24 @@ namespace AltV.Net.Client
             if (ptr == IntPtr.Zero) return null;
             return WebViewPool.Create(this, ptr);
         }
+        
+        public IntPtr CreateRmlDocumentPtr(string url)
+        {
+            unsafe
+            {
+                var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
+                var ptr = Library.Client.Core_CreateRmlDocument(NativePointer, Resource.NativePointer, urlPtr);
+                Marshal.FreeHGlobal(urlPtr);
+                return ptr;
+            }
+        }
+        
+        public IRmlDocument CreateRmlDocument(string url)
+        {
+            var ptr = CreateRmlDocumentPtr(url);
+            if (ptr == IntPtr.Zero) return null;
+            return RmlDocumentPool.Create(this, ptr);
+        }
         #endregion
         
         public void ShowCursor(bool state)
@@ -270,5 +294,27 @@ namespace AltV.Net.Client
             }
         }
         #endregion
+        
+        public Vector2 WorldToScreen(Vector3 position)
+        {
+            unsafe
+            {
+                var result = Vector2.Zero;
+                Library.Client.Core_WorldToScreen(NativePointer, position, &result);
+                return result;
+            }
+        }
+        
+        public string[] MarshalStringArrayPtrAndFree(IntPtr ptr, uint size)
+        {
+            unsafe
+            {
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => Marshal.PtrToStringUTF8(e)).ToArray();
+                this.Library.Shared.FreeStringArray(ptr, size);
+                return arr;
+            }
+        }
     }
 }
