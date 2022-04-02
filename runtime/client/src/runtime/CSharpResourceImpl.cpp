@@ -13,19 +13,16 @@ using namespace std;
 
 bool CSharpResourceImpl::Start()
 {
-    try {
-        Log::Info << "Starting resource" << Log::Endl;
-        GetRuntime()->clr.start_resource(resource, core);
-    } catch(...) {
-        Log::Error << "Failed to load module" << Log::Endl;
-        return false;
-    }
+    ResetDelegates();
+    Log::Info << "Starting resource" << Log::Endl;
+    GetRuntime()->clr.start_resource(resource, core);
     return true;
 }
 
 bool CSharpResourceImpl::Stop()
 {
     GetRuntime()->clr.stop_resource(resource);
+    ResetDelegates();
     return true;
 }
 
@@ -219,4 +216,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnResourceErrorDelegate = [](auto var) {};
     OnResourceStartDelegate = [](auto var) {};
     OnResourceStopDelegate = [](auto var) {};
+
+    OnKeyUpDelegate = [](auto var) {};
+    OnKeyDownDelegate = [](auto var) {};
 }

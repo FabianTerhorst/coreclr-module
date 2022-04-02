@@ -7,7 +7,7 @@
 
 using namespace alt;
 
-EXPORT void CreateScriptRuntime(ICore* core)
+EXPORT alt::IScriptRuntime* CreateScriptRuntime(ICore* core)
 {
     ICore::SetInstance(core);
     try
@@ -16,6 +16,7 @@ EXPORT void CreateScriptRuntime(ICore* core)
         auto* runtime = new CSharpScriptRuntime(core);
         core->RegisterScriptRuntime("csharp", runtime);
         Log::Info << "Initialized successfully" << Log::Endl;
+        return runtime;
     } catch(LoadException& e) {
         Log::Error << "Initialization failed:" << Log::Endl;
         Log::Error << e.what() << Log::Endl;
