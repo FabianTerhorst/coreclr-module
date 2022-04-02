@@ -509,7 +509,6 @@ void Core_DeallocDiscordUser(ClrDiscordUser* user) {
 }
 
 void Core_ShowCursor(alt::ICore* core, alt::IResource* resource, bool state) {
-    Log::Info << "Calling ShowCursor (" << state << ")" << Log::Endl;
     if(!resource->ToggleCursor(state))
     {
         Log::Warning << "Cursor state can't go < 0" << Log::Endl;
