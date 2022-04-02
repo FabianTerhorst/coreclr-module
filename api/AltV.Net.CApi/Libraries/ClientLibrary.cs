@@ -19,6 +19,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocDiscordUser { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Core_GetDiscordUser { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, bool, void> Core_ShowCursor { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerWebViewEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void> Event_SetClientEventDelegate { get; }
@@ -93,6 +94,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocDiscordUser { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Core_GetDiscordUser { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, bool, void> Core_ShowCursor { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerWebViewEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void> Event_SetClientEventDelegate { get; }
@@ -167,6 +169,7 @@ namespace AltV.Net.CApi.Libraries
             Core_DeallocDiscordUser = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Core_DeallocDiscordUser");
             Core_GetDiscordUser = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Core_GetDiscordUser");
             Core_ShowCursor = (delegate* unmanaged[Cdecl]<nint, nint, bool, void>) NativeLibrary.GetExport(handle, "Core_ShowCursor");
+            Core_TriggerServerEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Core_TriggerServerEvent");
             Core_TriggerWebViewEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Core_TriggerWebViewEvent");
             Entity_GetScriptID = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Entity_GetScriptID");
             Event_SetClientEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetClientEventDelegate");

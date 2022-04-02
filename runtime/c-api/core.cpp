@@ -515,4 +515,12 @@ void Core_ShowCursor(alt::ICore* core, alt::IResource* resource, bool state) {
     }
 }
 
+void Core_TriggerServerEvent(alt::ICore* core, const char* event, alt::MValueConst* args[], int size) {
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        ToMValueArg(mValues, core, args[i], i);
+    }
+    core->TriggerServerEvent(event, mValues);
+}
+
 #endif

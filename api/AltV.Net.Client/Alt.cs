@@ -43,5 +43,7 @@ namespace AltV.Net.Client
         public static bool IsDebug => Core.IsDebug;
 
         public static void ShowCursor(bool state) => Core.ShowCursor(state);
+
+        public static void EmitServer(string eventName, params object[] args) => Core.TriggerServerEvent(eventName, args);
     }
 }

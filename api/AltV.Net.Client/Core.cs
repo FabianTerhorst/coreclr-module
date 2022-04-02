@@ -1,5 +1,6 @@
 using System.Collections.Specialized;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AltV.Net.CApi;
 using AltV.Net.Client.Elements;
@@ -8,7 +9,9 @@ using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Data;
+using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Native;
 using AltV.Net.Shared;
 using AltV.Net.Shared.Utils;
 
@@ -204,5 +207,68 @@ namespace AltV.Net.Client
                 Library.Client.Core_ShowCursor(NativePointer, Resource.NativePointer, state);
             }
         }
+
+        #region TriggerServerEvent
+        public void TriggerServerEvent(string eventName, MValueConst[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerServerEvent(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        public void TriggerServerEvent(IntPtr eventNamePtr, MValueConst[] args)
+        {
+            var size = args.Length;
+            var mValuePointers = new IntPtr[size];
+            for (var i = 0; i < size; i++)
+            {
+                mValuePointers[i] = args[i].nativePointer;
+            }
+
+            TriggerServerEvent(eventNamePtr, mValuePointers);
+        }
+
+        public void TriggerServerEvent(string eventName, IntPtr[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerServerEvent(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void TriggerServerEvent(IntPtr eventNamePtr, IntPtr[] args)
+        {
+            unsafe
+            {
+                Library.Client.Core_TriggerServerEvent(NativePointer, eventNamePtr, args, args.Length);
+            }
+        }
+
+        public void TriggerServerEvent(IntPtr eventNamePtr, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerServerEvent(eventNamePtr, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+
+        public void TriggerServerEvent(string eventName, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerServerEvent(eventName, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+        #endregion
     }
 }

@@ -29,5 +29,6 @@ namespace AltV.Net.Client
         IntPtr CreateAreaBlipPtr(Position position, int width, int height);
         new IEntity GetEntityById(ushort id);
         void ShowCursor(bool state);
+        void TriggerServerEvent(string eventName, params object[] args);
     }
 }
