@@ -18,6 +18,7 @@ namespace AltV.Net.Client
         IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
         IBaseObjectPool<IRmlElement> RmlElementPool { get; }
         LocalStorage LocalStorage { get; }
+        new INativeResource Resource { get; }
         // HandlingData? GetHandlingByModelHash(uint modelHash); todo
         IBlip CreatePointBlip(Position position);
         IBlip CreateRadiusBlip(Position position, float radius);
@@ -36,5 +37,6 @@ namespace AltV.Net.Client
         IRmlDocument CreateRmlDocument(string url);
         Vector2 WorldToScreen(Vector3 position);
         string[] MarshalStringArrayPtrAndFree(IntPtr ptr, uint size);
+        DiscordUser? GetDiscordUser();
     }
 }

@@ -13,6 +13,7 @@ namespace AltV.Net.Client
     {
         public static Core CoreImpl { get; internal set; } = null!;
         public static ICore Core => CoreImpl;
+        public static INativeResource Resource => Core.Resource;
         public static ILogger Logger { get; internal set; } = null!;
 
         public static LocalStorage LocalStorage => Core.LocalStorage;
@@ -27,6 +28,7 @@ namespace AltV.Net.Client
         }
 
         public static ILocalPlayer LocalPlayer => Core.PlayerPool.LocalPlayer;
+        public static DiscordUser? GetDiscordUser() => Core.GetDiscordUser();
 
         // public static HandlingData? GetHandlingByModelHash(uint modelHash) => Core.GetHandlingByModelHash(modelHash); todo
         public static uint Hash(string key) => Core.Hash(key);
