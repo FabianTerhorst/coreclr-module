@@ -39,5 +39,6 @@ namespace AltV.Net.Client
         Vector2 WorldToScreen(Vector3 position);
         string[] MarshalStringArrayPtrAndFree(IntPtr ptr, uint size);
         DiscordUser? GetDiscordUser();
+        void LoadRmlFont(string path, string name, bool italic = false, bool bold = false);
     }
 }

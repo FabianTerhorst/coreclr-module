@@ -49,5 +49,6 @@ namespace AltV.Net.Client
 
         public static void EmitServer(string eventName, params object[] args) => Core.TriggerServerEvent(eventName, args);
         public static Vector2 WorldToScreen(Vector3 position) => Core.WorldToScreen(position);
+        public static void LoadRmlFont(string path, string name, bool italic = false, bool bold = false) => Core.LoadRmlFont(path, name, italic, bold);
     }
 }

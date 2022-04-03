@@ -535,4 +535,8 @@ void Core_WorldToScreen(alt::ICore* core, vector3_t in, vector2_t& out) {
     out.y = vec[1];
 }
 
+void Core_LoadRmlFont(alt::ICore* core, alt::IResource* resource, const char* path, const char* name, uint8_t italic, uint8_t bold) {
+    core->LoadRmlFontFace(resource, path, resource->GetMain().ToString(), name, italic, bold);
+}
+
 #endif
