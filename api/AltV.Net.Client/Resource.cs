@@ -18,6 +18,11 @@ namespace AltV.Net.Client
         {
             return new PlayerFactory();
         }
+        
+        public virtual INatives GetNatives(string dllName)
+        {
+            return new Natives(dllName);
+        }
 
         public virtual IEntityFactory<IVehicle> GetVehicleFactory()
         {

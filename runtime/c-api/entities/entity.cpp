@@ -1,4 +1,5 @@
 #include "entity.h"
+#include "Log.h"
 
 uint16_t Entity_GetID(alt::IEntity* entity) {
     return entity->GetID();
@@ -110,6 +111,15 @@ void Entity_SetStreamed(alt::IEntity* entity, uint8_t state) {
 
 #ifdef ALT_CLIENT_API
 int32_t Entity_GetScriptID(alt::IEntity* entity) {
-    return entity->GetScriptGuid();
+    if (entity == nullptr) {
+        Log::Info << "Entity was null" << Log::Endl;
+        return 0;
+    }
+
+    Log::Info << "Entity wasnt null" << Log::Endl;
+    Log::Info << "Calling thread is " << std::this_thread::get_id() << Log::Endl;
+    auto value = entity->GetScriptGuid();
+    Log::Info << "ScriptID was " << value << Log::Endl;
+    return value;
 }
 #endif

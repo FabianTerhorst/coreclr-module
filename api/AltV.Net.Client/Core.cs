@@ -2,6 +2,7 @@ using System.Collections.Specialized;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Security.AccessControl;
 using AltV.Net.CApi;
 using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Data;
@@ -35,6 +36,7 @@ namespace AltV.Net.Client
 
         public override INativeResource Resource { get; }
         public ILogger Logger { get; }
+        public INatives Natives { get; }
         
         public LocalStorage LocalStorage { get; }
 
@@ -53,7 +55,8 @@ namespace AltV.Net.Client
             IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             INativeResourcePool nativeResourcePool,
-            ILogger logger
+            ILogger logger,
+            INatives natives
         ) : base(nativePointer, library)
         {
             Library = library;
@@ -70,6 +73,7 @@ namespace AltV.Net.Client
             nativeResourcePool.GetOrCreate(this, resourcePointer, out var resource);
             Resource = resource;
             LocalStorage = new LocalStorage(this, GetLocalStoragePtr());
+            Natives = natives;
         }
 
         #region Log

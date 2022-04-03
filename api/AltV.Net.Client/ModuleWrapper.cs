@@ -15,9 +15,10 @@ namespace AltV.Net.Client
         private static IntPtr _resourcePointer;
         private static IntPtr _corePointer;
 
+        private const string DllName = "coreclr-client-module";
         public static void MainWithAssembly(Assembly resourceAssembly, IntPtr resourcePointer, IntPtr corePointer)
         {
-            var library = new Library("coreclr-client-module", true);
+            var library = new Library(DllName, true);
             var logger = new Logger(library, corePointer);
             Alt.Logger = logger;
             Alt.Log("Library initialized");
@@ -64,6 +65,8 @@ namespace AltV.Net.Client
             var baseBaseObjectPool = new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, webViewPool);
             var baseEntityPool = new BaseEntityPool(playerPool, vehiclePool);
 
+            var natives = _resource.GetNatives(DllName);
+
             var client = new Core(
                 library,
                 corePointer,
@@ -77,7 +80,8 @@ namespace AltV.Net.Client
                 baseBaseObjectPool,
                 baseEntityPool,
                 nativeResourcePool,
-                logger
+                logger,
+                natives
             );
             _core = client;
             Alt.CoreImpl = client;

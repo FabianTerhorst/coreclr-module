@@ -19,6 +19,7 @@ namespace AltV.Net.Client
         IBaseObjectPool<IRmlElement> RmlElementPool { get; }
         LocalStorage LocalStorage { get; }
         new INativeResource Resource { get; }
+        INatives Natives { get; }
         // HandlingData? GetHandlingByModelHash(uint modelHash); todo
         IBlip CreatePointBlip(Position position);
         IBlip CreateRadiusBlip(Position position, float radius);

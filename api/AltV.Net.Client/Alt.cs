@@ -16,8 +16,6 @@ namespace AltV.Net.Client
         public static INativeResource Resource => Core.Resource;
         public static ILogger Logger { get; internal set; } = null!;
 
-        public static LocalStorage LocalStorage => Core.LocalStorage;
-
         public static bool GetEntityById(ushort id, [MaybeNullWhen(false)] out IEntity entity)
         {
             entity = default;
@@ -27,8 +25,10 @@ namespace AltV.Net.Client
             return true;
         }
 
+        public static INatives Natives => Core.Natives;
         public static ILocalPlayer LocalPlayer => Core.PlayerPool.LocalPlayer;
         public static DiscordUser? GetDiscordUser() => Core.GetDiscordUser();
+        public static LocalStorage LocalStorage => Core.LocalStorage;
 
         // public static HandlingData? GetHandlingByModelHash(uint modelHash) => Core.GetHandlingByModelHash(modelHash); todo
         public static uint Hash(string key) => Core.Hash(key);
