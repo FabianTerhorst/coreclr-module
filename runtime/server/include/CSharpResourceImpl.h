@@ -219,7 +219,7 @@ public:
 
     ~CSharpResourceImpl() override;
 
-    bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files) override;
+    bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files) override;
 
     CheckpointDelegate_t OnCheckpointDelegate = nullptr;
 

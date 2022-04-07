@@ -46,7 +46,7 @@
 
 #define STR(s) L ## s
 #define CH(c) L ## c
-#define DIR_SEPARATOR L'\\'
+#define DIR_SEPARATOR '\\'
 
 #else
 
@@ -113,7 +113,7 @@ public:
     /*bool GetDelegate(alt::ICore* server, void* runtimeHost, unsigned int domainId, const char* moduleName,
                      const char* classPath, const char* methodName, void** callback);*/
 
-    //alt::Array<alt::String> getTrustedAssemblies(alt::ICore* server, const char* appPath);
+    //alt::Array<std::string> getTrustedAssemblies(alt::ICore* server, const char* appPath);
 
     /*void CreateAppDomain(alt::ICore* server, alt::IResource* resource, const char* appPath, void** runtimeHost,
                          unsigned int* domainId, bool executable, uint64_t resourceIndex, const char* domainName);*/

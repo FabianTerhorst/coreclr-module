@@ -63,14 +63,14 @@ void CSharpResourceImpl::ResetDelegates() {
 bool CSharpResourceImpl::Start() {
     ResetDelegates();
 
-    if (!coreClr->ExecuteManagedResource(this->resource->GetPath().CStr()/*(alt::String(this->server->GetRootDirectory()) + "/resources/" +
-             alt::String(this->resource->GetName().CStr())).CStr()*/, this->resource->GetName().CStr(),
-                                         this->resource->GetMain().CStr(),
+    if (!coreClr->ExecuteManagedResource(this->resource->GetPath().c_str()/*(std::string(this->server->GetRootDirectory()) + "/resources/" +
+             std::string(this->resource->GetName().c_str())).c_str()*/, this->resource->GetName().c_str(),
+                                         this->resource->GetMain().c_str(),
                                          this->resource)) {
         return false;
     }
     if (MainDelegate == nullptr) return false;
-    MainDelegate(this->server, this->resource, this->resource->GetName().CStr(), resource->GetMain().CStr());
+    MainDelegate(this->server, this->resource, this->resource->GetName().c_str(), resource->GetMain().c_str());
     return true;
 }
 
@@ -78,7 +78,7 @@ bool CSharpResourceImpl::Stop() {
     if (OnStopDelegate == nullptr) return false;
     OnStopDelegate();
     ResetDelegates();
-    return coreClr->ExecuteManagedResourceUnload(this->resource->GetPath().CStr(), this->resource->GetMain().CStr());
+    return coreClr->ExecuteManagedResourceUnload(this->resource->GetPath().c_str(), this->resource->GetMain().c_str());
 }
 
 CSharpResourceImpl::~CSharpResourceImpl() {
@@ -103,7 +103,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             if (key == nullptr) {
                 keyCStr = "";
             } else {
-                keyCStr = key.CStr();
+                keyCStr = key.c_str();
                 if (keyCStr == nullptr) {
                     keyCStr = "";
                 }
@@ -122,7 +122,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             if (key == nullptr) {
                 keyCStr = "";
             } else {
-                keyCStr = key.CStr();
+                keyCStr = key.c_str();
                 if (keyCStr == nullptr) {
                     keyCStr = "";
                 }
@@ -136,7 +136,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             uint64_t size = clientArgs.GetSize();
             if (size == 0) {
                 OnClientEventDelegate(((alt::CClientScriptEvent*) (ev))->GetTarget().Get(),
-                                      ((alt::CClientScriptEvent*) (ev))->GetName().CStr(),
+                                      ((alt::CClientScriptEvent*) (ev))->GetName().c_str(),
                                       nullptr, 0);
             } else {
 #ifdef _WIN32
@@ -148,7 +148,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                     constArgs[i] = &clientArgs[i];
                 }
                 OnClientEventDelegate(((alt::CClientScriptEvent*) (ev))->GetTarget().Get(),
-                                      ((alt::CClientScriptEvent*) (ev))->GetName().CStr(),
+                                      ((alt::CClientScriptEvent*) (ev))->GetName().c_str(),
                                       constArgs, size);
 
 #ifdef _WIN32
@@ -269,7 +269,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             auto disconnectPlayer = disconnectEvent->GetTarget().Get();
             /*auto reason = disconnectEvent->GetReason();
             if (reason != nullptr && reason.GetSize() > 0) {
-                auto reasonCStr = reason.CStr();
+                auto reasonCStr = reason.c_str();
                 if (reasonCStr != nullptr) {
                     OnPlayerDisconnectDelegate(disconnectPlayer,
                                                reasonCStr);
@@ -302,7 +302,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             alt::MValueArgs serverArgs = serverScriptEvent->GetArgs();
             uint64_t size = serverArgs.GetSize();
             if (size == 0) {
-                OnServerEventDelegate(serverScriptEvent->GetName().CStr(), nullptr, 0);
+                OnServerEventDelegate(serverScriptEvent->GetName().c_str(), nullptr, 0);
             } else {
 #ifdef _WIN32
                 auto constArgs = new alt::MValueConst* [size];
@@ -312,7 +312,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                 for (uint64_t i = 0; i < size; i++) {
                     constArgs[i] = &serverArgs[i];
                 }
-                OnServerEventDelegate(serverScriptEvent->GetName().CStr(), constArgs, size);
+                OnServerEventDelegate(serverScriptEvent->GetName().c_str(), constArgs, size);
 #ifdef _WIN32
                 delete[] constArgs;
 #endif
@@ -790,7 +790,7 @@ void CSharpResourceImpl_SetConnectionQueueRemoveDelegate(CSharpResourceImpl* res
     resource->OnConnectionQueueRemoveDelegate = delegate;
 }
 
-bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files) {
+bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files) {
     std::string clientMain = resource->GetClientMain();
     std::string suffix = ".dll";
     if (clientMain.size() >= suffix.size() &&

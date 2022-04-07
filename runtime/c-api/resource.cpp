@@ -3,10 +3,14 @@
 //
 
 #include "resource.h"
+#include "utils/strings.h"
 
-// needs migration to std::string in cpp-sdk
-void Resource_GetName(alt::IResource* resource, const char*&text) {
-    text = resource->GetName().CStr();
+const char* Resource_GetName(alt::IResource* resource, int32_t& size) {
+    return AllocateString(resource->GetName(), size);
+}
+
+const char* Resource_GetType(alt::IResource* resource, int32_t& size) {
+    return AllocateString(resource->GetType(), size);
 }
 
 #ifdef ALT_SERVER_API
@@ -26,7 +30,7 @@ void Resource_GetExports(alt::IResource* resource, const char* keys[],
     uint64_t i = 0;
     do {
         alt::MValueConst mValueElement = next->GetValue();
-        keys[i] = next->GetKey().CStr();
+        keys[i] = next->GetKey().c_str();
         values[i] = &mValueElement;
     } while ((next = dict->Next()) != nullptr);
 }
@@ -49,7 +53,7 @@ void Resource_GetDependencies(alt::IResource* resource, const char* dependencies
 
     if (resource->GetDependencies().GetSize() != size) return;
     for (uint64_t i = 0, length = resource->GetDependencies().GetSize(); i < length; i++) {
-        dependencies[i] = resource->GetDependencies()[i].CStr();
+        dependencies[i] = resource->GetDependencies()[i].c_str();
     }
 }
 
@@ -61,7 +65,7 @@ void Resource_GetDependants(alt::IResource* resource, const char* dependencies[]
 
     if (resource->GetDependants().GetSize() != size) return;
     for (uint64_t i = 0, length = resource->GetDependants().GetSize(); i < length; i++) {
-        dependencies[i] = resource->GetDependants()[i].CStr();
+        dependencies[i] = resource->GetDependants()[i].c_str();
     }
 }
 
@@ -82,19 +86,12 @@ void Resource_SetExports(alt::ICore* core, alt::IResource* resource, alt::MValue
     resource->SetExports(dict);
 }
 
-// needs migration to std::string in cpp-sdk
-void Resource_GetPath(alt::IResource* resource, const char*&text) {
-    text = resource->GetPath().CStr();
+const char* Resource_GetPath(alt::IResource* resource, int32_t& size) {
+    return AllocateString(resource->GetPath(), size);
 }
 
-// needs migration to std::string in cpp-sdk
-void Resource_GetMain(alt::IResource* resource, const char*&text) {
-    text = resource->GetMain().CStr();
-}
-
-// needs migration to std::string in cpp-sdk
-void Resource_GetType(alt::IResource* resource, const char*&text) {
-    text = resource->GetType().CStr();
+const char* Resource_GetMain(alt::IResource* resource, int32_t& size) {
+    return AllocateString(resource->GetMain(), size);
 }
 
 uint8_t Resource_IsStarted(alt::IResource* resource) {

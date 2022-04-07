@@ -77,7 +77,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint[], byte> MValueConst_GetList { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> MValueConst_GetListSize { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba*, void> MValueConst_GetRGBA { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, ulong*, byte> MValueConst_GetString { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> MValueConst_GetString { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> MValueConst_GetType { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> MValueConst_GetUInt { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> MValueConst_GetVector3 { get; }
@@ -115,8 +115,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint[], nint[], void> Resource_GetExports { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Resource_GetExportsCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetImpl { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetName { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetType { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Resource_GetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Resource_GetType { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Resource_IsStarted { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, void> Resource_SetExport { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void> Resource_SetExports { get; }
@@ -197,7 +197,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint[], byte> MValueConst_GetList { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> MValueConst_GetListSize { get; }
         public delegate* unmanaged[Cdecl]<nint, Rgba*, void> MValueConst_GetRGBA { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, ulong*, byte> MValueConst_GetString { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> MValueConst_GetString { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> MValueConst_GetType { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> MValueConst_GetUInt { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3*, void> MValueConst_GetVector3 { get; }
@@ -235,8 +235,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint[], nint[], void> Resource_GetExports { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Resource_GetExportsCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetImpl { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetName { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetType { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Resource_GetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Resource_GetType { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Resource_IsStarted { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, void> Resource_SetExport { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void> Resource_SetExports { get; }
@@ -317,7 +317,7 @@ namespace AltV.Net.CApi.Libraries
             MValueConst_GetList = (delegate* unmanaged[Cdecl]<nint, nint[], byte>) NativeLibrary.GetExport(handle, "MValueConst_GetList");
             MValueConst_GetListSize = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "MValueConst_GetListSize");
             MValueConst_GetRGBA = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) NativeLibrary.GetExport(handle, "MValueConst_GetRGBA");
-            MValueConst_GetString = (delegate* unmanaged[Cdecl]<nint, nint*, ulong*, byte>) NativeLibrary.GetExport(handle, "MValueConst_GetString");
+            MValueConst_GetString = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "MValueConst_GetString");
             MValueConst_GetType = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "MValueConst_GetType");
             MValueConst_GetUInt = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "MValueConst_GetUInt");
             MValueConst_GetVector3 = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "MValueConst_GetVector3");
@@ -355,8 +355,8 @@ namespace AltV.Net.CApi.Libraries
             Resource_GetExports = (delegate* unmanaged[Cdecl]<nint, nint[], nint[], void>) NativeLibrary.GetExport(handle, "Resource_GetExports");
             Resource_GetExportsCount = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Resource_GetExportsCount");
             Resource_GetImpl = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Resource_GetImpl");
-            Resource_GetName = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Resource_GetName");
-            Resource_GetType = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Resource_GetType");
+            Resource_GetName = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Resource_GetName");
+            Resource_GetType = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Resource_GetType");
             Resource_IsStarted = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Resource_IsStarted");
             Resource_SetExport = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, void>) NativeLibrary.GetExport(handle, "Resource_SetExport");
             Resource_SetExports = (delegate* unmanaged[Cdecl]<nint, nint, nint[], nint[], int, void>) NativeLibrary.GetExport(handle, "Resource_SetExports");

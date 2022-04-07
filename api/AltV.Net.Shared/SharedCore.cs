@@ -196,6 +196,7 @@ namespace AltV.Net.Shared
         
         public string PtrToStringUtf8AndFree(nint str, int size)
         {
+            if (str == IntPtr.Zero) return string.Empty;
             unsafe
             {
                 var stringResult = Marshal.PtrToStringUTF8(str, size);

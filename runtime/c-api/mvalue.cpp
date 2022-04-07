@@ -1,6 +1,7 @@
 #include "mvalue.h"
+#include "utils/strings.h"
 
-void ToMValueDict(alt::MValueDict& mValues, alt::String& key, alt::ICore *core, alt::MValueConst *val);
+void ToMValueDict(alt::MValueDict& mValues, std::string& key, alt::ICore *core, alt::MValueConst *val);
 void ToMValueList(alt::MValueList& mValues, alt::ICore *core, alt::MValueConst *val, alt::Size i);
 
 void ToMValueArg(alt::MValueArgs& mValues, alt::ICore *core, alt::MValueConst *val, alt::Size i) {
@@ -51,7 +52,7 @@ void ToMValueArg(alt::MValueArgs& mValues, alt::ICore *core, alt::MValueConst *v
 
             alt::MValueConst innerVal;
             alt::IMValueDict::Iterator *it = cVal->Begin();
-            alt::String key;
+            std::string key;
             while (it != nullptr) {
                 innerVal = it->GetValue();
                 key = it->GetKey();
@@ -135,7 +136,7 @@ void ToMValueList(alt::MValueList& mValues, alt::ICore *core, alt::MValueConst *
 
             alt::MValueConst innerVal;
             alt::IMValueDict::Iterator *it = cVal->Begin();
-            alt::String key;
+            std::string key;
             while (it != nullptr) {
                 innerVal = it->GetValue();
                 key = it->GetKey();
@@ -171,7 +172,7 @@ void ToMValueList(alt::MValueList& mValues, alt::ICore *core, alt::MValueConst *
     }
 }
 
-void ToMValueDict(alt::MValueDict& mValues, alt::String& key, alt::ICore *core, alt::MValueConst *val) {
+void ToMValueDict(alt::MValueDict& mValues, std::string& key, alt::ICore *core, alt::MValueConst *val) {
     if (val == nullptr) {
         mValues->SetConst(key, core->CreateMValueNil());
         return;
@@ -219,7 +220,7 @@ void ToMValueDict(alt::MValueDict& mValues, alt::String& key, alt::ICore *core, 
 
             alt::MValueConst innerVal;
             alt::IMValueDict::Iterator *it = cVal->Begin();
-            alt::String innerKey;
+            std::string innerKey;
             while (it != nullptr) {
                 innerVal = it->GetValue();
                 innerKey = it->GetKey();
@@ -295,15 +296,13 @@ double MValueConst_GetDouble(alt::MValueConst *mValueConst) {
     return 0.0;
 }
 
-uint8_t MValueConst_GetString(alt::MValueConst *mValueConst, const char *&value, uint64_t &size) {
+const char* MValueConst_GetString(alt::MValueConst *mValueConst, int32_t &size) {
     auto mValue = mValueConst->Get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::STRING) {
-        auto stringView = dynamic_cast<const alt::IMValueString *>(mValue)->Value();
-        value = stringView.CStr();
-        size = stringView.GetSize();
-        return true;
+        auto string = dynamic_cast<const alt::IMValueString *>(mValue)->Value();
+        return AllocateString(string, size);
     }
-    return false;
+    return nullptr;
 }
 
 uint64_t MValueConst_GetListSize(alt::MValueConst *mValueConst) {
@@ -349,9 +348,9 @@ uint8_t MValueConst_GetDict(alt::MValueConst *mValueConst, const char *keys[],
         uint64_t i = 0;
         do {
             auto key = next->GetKey();
-            auto keySize = key.GetSize();
+            auto keySize = key.size();
             auto keyArray = new char[keySize + 1];
-            memcpy(keyArray, key.CStr(), keySize);
+            memcpy(keyArray, key.c_str(), keySize);
             keyArray[keySize] = '\0';
             keys[i] = keyArray;
             alt::MValueConst mValueElement = next->GetValue();
