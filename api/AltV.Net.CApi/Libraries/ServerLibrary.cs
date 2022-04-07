@@ -27,9 +27,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetFlashInterval { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetFlashTimer { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetFriendIndicatorVisible { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Blip_GetGxtName { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Blip_GetGxtName { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetHeadingIndicatorVisible { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Blip_GetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Blip_GetName { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetNumber { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetOutlineIndicatorVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetPriority { get; }
@@ -134,11 +134,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyVoiceChannel { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_FileExists { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint*, void> Core_FileRead { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetNetTime { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetResource { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Core_GetRootDirectory { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetRootDirectory { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetVehicleModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ulong> Core_HashPassword { get; }
@@ -240,8 +240,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetWeather { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, uint, void> Player_Spawn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetCSharpImpl { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetMain { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetPath { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Resource_GetMain { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Resource_GetPath { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Resource_Start { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Resource_Stop { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Vehicle_AttachToEntity { get; }
@@ -451,9 +451,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetFlashInterval { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetFlashTimer { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetFriendIndicatorVisible { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Blip_GetGxtName { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Blip_GetGxtName { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetHeadingIndicatorVisible { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Blip_GetName { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Blip_GetName { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetNumber { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_GetOutlineIndicatorVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Blip_GetPriority { get; }
@@ -558,11 +558,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyVoiceChannel { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_FileExists { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint*, void> Core_FileRead { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetNetTime { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetResource { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Core_GetRootDirectory { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetRootDirectory { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetVehicleModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ulong> Core_HashPassword { get; }
@@ -664,8 +664,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetWeather { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, uint, void> Player_Spawn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Resource_GetCSharpImpl { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetMain { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, void> Resource_GetPath { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Resource_GetMain { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Resource_GetPath { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Resource_Start { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Resource_Stop { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void> Vehicle_AttachToEntity { get; }
@@ -875,9 +875,9 @@ namespace AltV.Net.CApi.Libraries
             Blip_GetFlashInterval = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Blip_GetFlashInterval");
             Blip_GetFlashTimer = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Blip_GetFlashTimer");
             Blip_GetFriendIndicatorVisible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetFriendIndicatorVisible");
-            Blip_GetGxtName = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Blip_GetGxtName");
+            Blip_GetGxtName = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Blip_GetGxtName");
             Blip_GetHeadingIndicatorVisible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetHeadingIndicatorVisible");
-            Blip_GetName = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Blip_GetName");
+            Blip_GetName = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Blip_GetName");
             Blip_GetNumber = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Blip_GetNumber");
             Blip_GetOutlineIndicatorVisible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_GetOutlineIndicatorVisible");
             Blip_GetPriority = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Blip_GetPriority");
@@ -982,11 +982,11 @@ namespace AltV.Net.CApi.Libraries
             Core_DestroyVehicle = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_DestroyVehicle");
             Core_DestroyVoiceChannel = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_DestroyVoiceChannel");
             Core_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_FileExists");
-            Core_FileRead = (delegate* unmanaged[Cdecl]<nint, nint, nint*, void>) NativeLibrary.GetExport(handle, "Core_FileRead");
+            Core_FileRead = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_FileRead");
             Core_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_GetMetaData");
             Core_GetNetTime = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Core_GetNetTime");
             Core_GetResource = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_GetResource");
-            Core_GetRootDirectory = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Core_GetRootDirectory");
+            Core_GetRootDirectory = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetRootDirectory");
             Core_GetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_GetSyncedMetaData");
             Core_GetVehicleModelInfo = (delegate* unmanaged[Cdecl]<nint, uint, nint>) NativeLibrary.GetExport(handle, "Core_GetVehicleModelInfo");
             Core_HashPassword = (delegate* unmanaged[Cdecl]<nint, nint, ulong>) NativeLibrary.GetExport(handle, "Core_HashPassword");
@@ -1088,8 +1088,8 @@ namespace AltV.Net.CApi.Libraries
             Player_SetWeather = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Player_SetWeather");
             Player_Spawn = (delegate* unmanaged[Cdecl]<nint, Vector3, uint, void>) NativeLibrary.GetExport(handle, "Player_Spawn");
             Resource_GetCSharpImpl = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Resource_GetCSharpImpl");
-            Resource_GetMain = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Resource_GetMain");
-            Resource_GetPath = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Resource_GetPath");
+            Resource_GetMain = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Resource_GetMain");
+            Resource_GetPath = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Resource_GetPath");
             Resource_Start = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Resource_Start");
             Resource_Stop = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Resource_Stop");
             Vehicle_AttachToEntity = (delegate* unmanaged[Cdecl]<nint, nint, short, short, Vector3, Rotation, byte, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_AttachToEntity");

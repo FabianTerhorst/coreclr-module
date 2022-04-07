@@ -54,7 +54,7 @@ EXPORT_SHARED const char* Core_GetBranch(alt::ICore* core, int32_t &size);
 
 EXPORT_SERVER uint8_t Core_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb);
 EXPORT_SERVER uint8_t Core_FileExists(alt::ICore* server, const char* path);
-EXPORT_SERVER void Core_FileRead(alt::ICore* server, const char* path, const char*&text);
+EXPORT_SERVER const char* Core_FileRead(alt::ICore* server, const char* path, int32_t& size);
 EXPORT_SERVER void Core_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size);
 EXPORT_SERVER void Core_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* ev, alt::MValueConst* args[], int size);
 EXPORT_SERVER void Core_TriggerClientEventForAll(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size);
@@ -79,7 +79,7 @@ EXPORT_SERVER void Core_DestroyCheckpoint(alt::ICore* server, alt::ICheckpoint* 
 EXPORT_SERVER void Core_DestroyVoiceChannel(alt::ICore* server, alt::IVoiceChannel* baseObject);
 EXPORT_SERVER void Core_DestroyColShape(alt::ICore* server, alt::IColShape* baseObject);
 EXPORT_SERVER int32_t Core_GetNetTime(alt::ICore* server);
-EXPORT_SERVER void Core_GetRootDirectory(alt::ICore* server, const char*&text);
+EXPORT_SERVER const char* Core_GetRootDirectory(alt::ICore* server, int32_t& size);
 EXPORT_SERVER void Core_StartResource(alt::ICore* server, const char* text);
 EXPORT_SERVER void Core_StopResource(alt::ICore* server, const char* text);
 EXPORT_SERVER void Core_RestartResource(alt::ICore* server, const char* text);

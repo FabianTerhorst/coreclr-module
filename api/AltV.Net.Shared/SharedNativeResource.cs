@@ -29,9 +29,8 @@ namespace AltV.Net.Shared
             {
                 unsafe
                 {
-                    var ptr = IntPtr.Zero;
-                    core.Library.Shared.Resource_GetName(NativePointer, &ptr);
-                    return Marshal.PtrToStringUTF8(ptr);
+                    var size = 0;
+                    return core.PtrToStringUtf8AndFree(core.Library.Shared.Resource_GetName(NativePointer, &size), size);
                 }
             }
         }
@@ -42,9 +41,8 @@ namespace AltV.Net.Shared
             {
                 unsafe
                 {
-                    var ptr = IntPtr.Zero;
-                    core.Library.Shared.Resource_GetType(NativePointer, &ptr);
-                    return Marshal.PtrToStringUTF8(ptr);
+                    var size = 0;
+                    return core.PtrToStringUtf8AndFree(core.Library.Shared.Resource_GetType(NativePointer, &size), size);
                 }
             }
         }

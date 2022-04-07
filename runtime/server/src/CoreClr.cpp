@@ -41,7 +41,7 @@ CoreClr::CoreClr(alt::ICore* core) {
         std::wstring bufferWString(buffer);
         _coreClrLib = LoadLibraryEx(std::string(bufferWString.begin(), bufferWString.end()).c_str(), nullptr, 0);
         if (_coreClrLib == nullptr) {
-            core->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll"));
+            core->LogInfo(std::string("coreclr-module: Unable to find CoreCLR dll"));
             return;
         }
 
@@ -53,7 +53,7 @@ CoreClr::CoreClr(alt::ICore* core) {
 #else
     _coreClrLib = dlopen(std::string(buffer).c_str(), RTLD_NOW | RTLD_LOCAL);
     if (_coreClrLib == nullptr) {
-        core->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll [") + std::string(buffer) + "]: " + dlerror());
+        core->LogInfo(std::string("coreclr-module: Unable to find CoreCLR dll [") + std::string(buffer) + "]: " + dlerror());
         return;
     }
     _initializeFxr = (hostfxr_initialize_for_runtime_config_fn) dlsym(_coreClrLib,
@@ -66,7 +66,7 @@ CoreClr::CoreClr(alt::ICore* core) {
 #endif
         if (_initializeFxr == nullptr || _getDelegate == nullptr || _closeFxr == nullptr || _runApp == nullptr ||
             _initForCmd == nullptr) {
-            core->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll methods"));
+            core->LogInfo(std::string("coreclr-module: Unable to find CoreCLR dll methods"));
             return;
         }
         return;
@@ -109,7 +109,7 @@ CoreClr::CoreClr(alt::ICore* core) {
     _coreClrLib = LoadLibraryEx(fullPath, nullptr, 0);
     delete[] fullPath;
     if (_coreClrLib == nullptr) {
-        core->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll"));
+        core->LogInfo(std::string("coreclr-module: Unable to find CoreCLR dll"));
         return;
     }
 
@@ -125,7 +125,7 @@ CoreClr::CoreClr(alt::ICore* core) {
     strcat(fullPath, fileName);
     _coreClrLib = dlopen(fullPath, RTLD_NOW | RTLD_LOCAL);
     if (_coreClrLib == nullptr) {
-        core->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll [") + fullPath + "]: " + dlerror());
+        core->LogInfo(std::string("coreclr-module: Unable to find CoreCLR dll [") + fullPath + "]: " + dlerror());
         return;
     }
     _initializeFxr = (hostfxr_initialize_for_runtime_config_fn) dlsym(_coreClrLib,
@@ -138,7 +138,7 @@ CoreClr::CoreClr(alt::ICore* core) {
 #endif
     if (_initializeFxr == nullptr || _getDelegate == nullptr || _closeFxr == nullptr || _runApp == nullptr ||
         _initForCmd == nullptr) {
-        core->LogInfo(alt::String("coreclr-module: Unable to find CoreCLR dll methods"));
+        core->LogInfo(std::string("coreclr-module: Unable to find CoreCLR dll methods"));
         return;
     }
 }
@@ -162,7 +162,7 @@ CoreClr::~CoreClr() {
 /*bool CoreClr::GetDelegate(alt::ICore* server, void* runtimeHost, unsigned int domainId, const char* moduleName,
                           const char* classPath, const char* methodName, void** callback) {
     if (runtimeHost == nullptr || domainId == 0) {
-        server->LogInfo(alt::String("coreclr-module: Core CLR host not loaded"));
+        server->LogInfo(std::string("coreclr-module: Core CLR host not loaded"));
         return false;
     }
     int result = _createDelegate(runtimeHost, domainId, moduleName, classPath, methodName, callback);
@@ -171,7 +171,7 @@ CoreClr::~CoreClr() {
             return false;
         }
         server->LogInfo(
-                alt::String("coreclr-module: Unable to get ") + moduleName + ":" + classPath + "." + methodName +
+                std::string("coreclr-module: Unable to get ") + moduleName + ":" + classPath + "." + methodName +
                 " domain:" +
                 domainId);
         return false;
@@ -180,8 +180,8 @@ CoreClr::~CoreClr() {
 }*/
 
 //TODO: don't include own dll or exe ect that is in the directory
-/*alt::Array<alt::String> CoreClr::getTrustedAssemblies(alt::ICore* server, const char* appPath) {
-    alt::Array<alt::String> assemblies;
+/*alt::Array<std::string> CoreClr::getTrustedAssemblies(alt::ICore* server, const char* appPath) {
+    alt::Array<std::string> assemblies;
     const char* const tpaExtensions[] = {".ni.dll", ".dll", ".ni.exe", ".exe", ".winmd"};
 
     const char* directories[] = {runtimeDirectory//, appPath// };
@@ -189,10 +189,10 @@ CoreClr::~CoreClr() {
     for (auto path : directories) {
         auto directory = opendir(path);
         if (directory == nullptr) {
-            server->LogInfo(alt::String("coreclr-module: Runtime directory not found"));
+            server->LogInfo(std::string("coreclr-module: Runtime directory not found"));
             return assemblies;
         }
-        server->LogInfo(alt::String("coreclr-module: Runtime directory found"));
+        server->LogInfo(std::string("coreclr-module: Runtime directory found"));
         struct dirent* entry;
         struct stat sb{};
         for (auto ext : tpaExtensions) {
@@ -229,7 +229,7 @@ CoreClr::~CoreClr() {
 
                 // Check if the extension matches the one we are looking for
                 size_t extPos = strlen(entry->d_name) - extLength;
-                //server->LogInfo(alt::String(ext) + "," + extLength + "," + entry->d_name);
+                //server->LogInfo(std::string(ext) + "," + extLength + "," + entry->d_name);
                 if (extPos <= 0 || memcmp(ext, entry->d_name + extPos, extLength) != 0) {
                     continue;
                 }
@@ -245,7 +245,7 @@ CoreClr::~CoreClr() {
                     continue;
                 }
                 assemblies.Push(
-                        alt::String(path) + PATH_SEPARATOR + entry->d_name);
+                        std::string(path) + PATH_SEPARATOR + entry->d_name);
             }
             // rewind directory to search for next extension
             rewinddir(directory);
@@ -260,7 +260,7 @@ CoreClr::~CoreClr() {
 //TODO: use APP_PATHS via path from main assembly because all assemblies are most likely in same path
 /*void CoreClr::CreateAppDomain(alt::ICore* server, alt::IResource* resource, const char* appPath, void** runtimeHost,
                               unsigned int* domainId, bool executable, uint64_t resourceIndex, const char* domainName) {
-    alt::String tpaList = "";
+    std::string tpaList = "";
 
     //TODO: check if useless list separator at the end is fine
     for (auto &tpa : getTrustedAssemblies(server, appPath)) {
@@ -268,7 +268,7 @@ CoreClr::~CoreClr() {
         tpaList = tpaList + LIST_SEPARATOR;
     }
 
-    auto nativeDllPaths = alt::String(appPath) + LIST_SEPARATOR + runtimeDirectory;
+    auto nativeDllPaths = std::string(appPath) + LIST_SEPARATOR + runtimeDirectory;
 
     const char* propertyKeys[] = {
             "TRUSTED_PLATFORM_ASSEMBLIES",
@@ -279,10 +279,10 @@ CoreClr::~CoreClr() {
             "System.Globalization.Invariant"};
 
     const char* propertyValues[] = {
-            tpaList.CStr(),
+            tpaList.c_str(),
             appPath,
             appPath,
-            nativeDllPaths.CStr(),
+            nativeDllPaths.c_str(),
             "true",
             "true"};
 
@@ -296,16 +296,16 @@ CoreClr::~CoreClr() {
             domainId);
 
     if (result < 0) {
-        server->LogInfo(alt::String("coreclr-module: Unable to create app domain: 0x"));
+        server->LogInfo(std::string("coreclr-module: Unable to create app domain: 0x"));
         this->PrintError(server, result);
     } else {
-        server->LogInfo(alt::String("coreclr-module: Created app domain: 0x") + appPath);
+        server->LogInfo(std::string("coreclr-module: Created app domain: 0x") + appPath);
     }
 
     if (executable) {
-        auto executablePath = alt::String(appPath) + PATH_SEPARATOR + resource->GetMain();
+        auto executablePath = std::string(appPath) + PATH_SEPARATOR + resource->GetMain();
 
-        server->LogInfo(alt::String("coreclr-module: Prepare for executing assembly:") + executablePath);
+        server->LogInfo(std::string("coreclr-module: Prepare for executing assembly:") + executablePath);
         int exitCode = -1;
         const char* args[1];
         char resourceIndexChar = resourceIndex + '0';
@@ -317,17 +317,17 @@ CoreClr::~CoreClr() {
                 *domainId,
                 1,
                 args,
-                executablePath.CStr(),
+                executablePath.c_str(),
                 (unsigned int*) &exitCode
         );
 
         if (result < 0) {
             exitCode = -1;
             server->LogInfo(
-                    alt::String("coreclr-module: Unable to execute assembly in app path:") + executablePath);
+                    std::string("coreclr-module: Unable to execute assembly in app path:") + executablePath);
             this->PrintError(server, result);
         } else {
-            server->LogInfo(alt::String("coreclr-module: Assembly executed"));
+            server->LogInfo(std::string("coreclr-module: Assembly executed"));
         }
     }
 }*/
@@ -335,8 +335,8 @@ CoreClr::~CoreClr() {
 /*int CoreClr::Execute(alt::ICore* server, alt::IResource* resource, const char* appPath, uint64_t resourceIndex,
                      void** runtimeHost,
                      const unsigned int* domainId) {
-    auto executablePath = alt::String(appPath) + PATH_SEPARATOR + resource->GetMain();
-    server->LogInfo(alt::String("coreclr-module: Prepare for executing assembly:") + executablePath);
+    auto executablePath = std::string(appPath) + PATH_SEPARATOR + resource->GetMain();
+    server->LogInfo(std::string("coreclr-module: Prepare for executing assembly:") + executablePath);
     int exitCode = -1;
     const char* args[1];
     char resourceIndexChar = resourceIndex + '0';
@@ -348,17 +348,17 @@ CoreClr::~CoreClr() {
             *domainId,
             1,
             args,
-            executablePath.CStr(),
+            executablePath.c_str(),
             (unsigned int*) &exitCode
     );
 
     if (result < 0) {
         exitCode = -1;
         server->LogInfo(
-                alt::String("coreclr-module: Unable to execute assembly in app path:") + executablePath);
+                std::string("coreclr-module: Unable to execute assembly in app path:") + executablePath);
         this->PrintError(server, result);
     } else {
-        server->LogInfo(alt::String("coreclr-module: Assembly executed"));
+        server->LogInfo(std::string("coreclr-module: Assembly executed"));
     }
     return result;
 }*/
@@ -372,16 +372,16 @@ CoreClr::~CoreClr() {
     int latchedExitCode = 0;
     int result = _shutdownCoreCLR(runtimeHost, domainId, &latchedExitCode);
     if (result < 0) {
-        server->LogInfo(alt::String("coreclr-module: Unable to shutdown host"));
+        server->LogInfo(std::string("coreclr-module: Unable to shutdown host"));
     } else {
-        server->LogInfo(alt::String("coreclr-module: Host successfully shotted down"));
+        server->LogInfo(std::string("coreclr-module: Host successfully shotted down"));
     }
 }*/
 
 void CoreClr::GetPath(alt::ICore* server, const char* defaultPath) {
     auto directory = opendir(defaultPath);
     if (directory == nullptr) {
-        server->LogInfo(alt::String("coreclr-module: dotnet core sdk not found in ") + defaultPath);
+        server->LogInfo(std::string("coreclr-module: dotnet core sdk not found in ") + defaultPath);
         return;
     }
     struct dirent* entry;
@@ -390,17 +390,17 @@ void CoreClr::GetPath(alt::ICore* server, const char* defaultPath) {
     semver_t compare_version = {};
     while ((entry = readdir(directory)) != nullptr) {
         if (entry->d_type == DT_DIR && memcmp(entry->d_name, ".", 1) != 0 && memcmp(entry->d_name, "..", 2) != 0) {
-            server->LogInfo(alt::String("coreclr-module: version found: ") + entry->d_name);
+            server->LogInfo(std::string("coreclr-module: version found: ") + entry->d_name);
             if (greatest == nullptr) {
                 if (semver_parse(entry->d_name, &greatest_version)) {
-                    server->LogInfo(alt::String("coreclr-module: invalid version found: ") + entry->d_name);
+                    server->LogInfo(std::string("coreclr-module: invalid version found: ") + entry->d_name);
                     continue;
                 }
                 greatest = entry->d_name;
                 continue;
             }
             if (semver_parse(entry->d_name, &compare_version)) {
-                server->LogInfo(alt::String("coreclr-module: invalid version found: ") + entry->d_name);
+                server->LogInfo(std::string("coreclr-module: invalid version found: ") + entry->d_name);
                 continue;
             }
             if (semver_compare(compare_version, greatest_version) > 0) {
@@ -422,12 +422,12 @@ void CoreClr::GetPath(alt::ICore* server, const char* defaultPath) {
         }
     }
     if (greatest == nullptr) {
-        server->LogInfo(alt::String("coreclr-module: No dotnet sdk version found"));
+        server->LogInfo(std::string("coreclr-module: No dotnet sdk version found"));
         return;
     } else {
         semver_free(&greatest_version);
     }
-    server->LogInfo(alt::String("coreclr-module: greatest version: ") + greatest);
+    server->LogInfo(std::string("coreclr-module: greatest version: ") + greatest);
     size_t size = strlen(defaultPath) + strlen(greatest) + 1;
     runtimeDirectory = (char*) malloc(size);
     memset(runtimeDirectory, '\0', size);
@@ -444,20 +444,20 @@ void CoreClr::GetPath(alt::ICore* server, const char* defaultPath) {
 /*bool CoreClr::PrintError(alt::ICore* server, int errorCode) {
     if (errorCode == -2146234304) {
         server->LogInfo(
-                alt::String(
+                std::string(
                         "coreclr-module: Your server needs to be compiled and needs to target (<TargetFramework>netcoreappX.X</TargetFramework>) with the same .net core version that is installed on your workstation"));
         return true;
     } else if (errorCode == -2147024894) {
         server->LogInfo(
-                alt::String(
+                std::string(
                         "coreclr-module: You need to place the AltV.Net.dll in your resource directory. Use publish to generate all dlls."));
         return true;
     }
-    server->LogInfo(alt::String(strerror(errno)));
+    server->LogInfo(std::string(strerror(errno)));
     char* x_str = new char[10];
     sprintf(x_str, "%d", errorCode);
     server->LogInfo(
-            alt::String(x_str));
+            std::string(x_str));
     delete[] x_str;
     return false;
 }*/
@@ -500,9 +500,9 @@ void CoreClr::GenerateRuntimeConfigText(std::ofstream* outfile) {
         core->LogError("Couldn't parse coreclr version");
         return;
     }
-    auto minor_version = std::to_string(sem_ver.major) + alt::String(".") + std::to_string(sem_ver.minor);
-    auto patch_version = std::to_string(sem_ver.major) + alt::String(".") + std::to_string(sem_ver.minor) + alt::String(".") + std::to_string(sem_ver.patch);
-    (*outfile) << alt::String("{\n"
+    auto minor_version = std::to_string(sem_ver.major) + std::string(".") + std::to_string(sem_ver.minor);
+    auto patch_version = std::to_string(sem_ver.major) + std::string(".") + std::to_string(sem_ver.minor) + std::string(".") + std::to_string(sem_ver.patch);
+    (*outfile) << std::string("{\n"
            "  \"runtimeOptions\": {\n"
            "    \"tfm\": \"netcoreapp" + minor_version + "\",\n"
            "    \"framework\": {\n"
@@ -515,12 +515,12 @@ void CoreClr::GenerateRuntimeConfigText(std::ofstream* outfile) {
 }
 
 bool CoreClr::CreateRuntimeConfigFile() {
-    auto fileName = (alt::String(core->GetRootDirectory()) + DIR_SEPARATOR + alt::String("AltV.Net.Host.runtimeconfig.json"));
+    auto fileName = (std::string(core->GetRootDirectory()) + DIR_SEPARATOR + std::string("AltV.Net.Host.runtimeconfig.json"));
     struct stat buffer{};
-    auto exists = (stat (fileName.CStr(), &buffer) == 0);
+    auto exists = (stat (fileName.c_str(), &buffer) == 0);
     if (exists) return false;
     std::ofstream outfile;
-    outfile.open(fileName.CStr());
+    outfile.open(fileName.c_str());
     GenerateRuntimeConfigText(&outfile);
     outfile << std::flush;
     outfile.close();
@@ -528,7 +528,7 @@ bool CoreClr::CreateRuntimeConfigFile() {
 }
 
 void CoreClr::DeleteRuntimeConfigFile() {
-    remove((alt::String(core->GetRootDirectory()) + DIR_SEPARATOR + alt::String("AltV.Net.Host.runtimeconfig.json")).CStr());
+    remove((std::string(core->GetRootDirectory()) + DIR_SEPARATOR + std::string("AltV.Net.Host.runtimeconfig.json")).c_str());
 }
 
 void CoreClr::CreateManagedHost() {
@@ -574,7 +574,7 @@ bool CoreClr::ExecuteManagedResource(const char* resourcePath, const char* resou
     std::unique_lock<std::mutex> lck(mtx);
     while (hostResourceExecute == nullptr) { cv.wait(lck); }
     if (hostResourceExecute == nullptr) {
-        core->LogInfo(alt::String("coreclr-module: Core CLR host not loaded"));
+        core->LogInfo(std::string("coreclr-module: Core CLR host not loaded"));
         return false;
     }
 
@@ -606,7 +606,7 @@ bool CoreClr::ExecuteManagedResourceUnload(const char* resourcePath, const char*
     std::unique_lock<std::mutex> lck(mtx);
     while (hostResourceExecuteUnload == nullptr) { cv.wait(lck); }
     if (hostResourceExecuteUnload == nullptr) {
-        core->LogInfo(alt::String("coreclr-module: Core CLR host not loaded"));
+        core->LogInfo(std::string("coreclr-module: Core CLR host not loaded"));
         return false;
     }
 

@@ -190,9 +190,8 @@ uint8_t Core_FileExists(alt::ICore* core, const char* path) {
     return core->FileExists(path);
 }
 
-//TODO: needs migration to std::string in cpp-sdk
-void Core_FileRead(alt::ICore* core, const char* path, const char*&text) {
-    text = core->FileRead(path).CStr();
+const char* Core_FileRead(alt::ICore* core, const char* path, int32_t& size) {
+    return AllocateString(core->FileRead(path), size);
 }
 
 void Core_TriggerServerEvent(alt::ICore* core, const char* ev, alt::MValueConst* args[], int size) {
@@ -381,8 +380,8 @@ int32_t Core_GetNetTime(alt::ICore* core) {
     return core->GetNetTime();
 }
 
-void Core_GetRootDirectory(alt::ICore* core, const char*&text) {
-    text = core->GetRootDirectory().CStr();
+const char* Core_GetRootDirectory(alt::ICore* core, int32_t& size) {
+    return AllocateString(core->GetRootDirectory(), size);
 }
 
 void Core_StartResource(alt::ICore* core, const char* text) {
