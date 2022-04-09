@@ -8,19 +8,23 @@
 #include <sstream>
 #include <string>
 #include <iomanip>
+#include "natives.h"
 
 using namespace std;
 
 bool CSharpResourceImpl::Start()
 {
-    ResetDelegates();
     Log::Info << "Starting resource" << Log::Endl;
+    resource->EnableNatives();
+    auto scope = resource->PushNativesScope();
+    ResetDelegates();
     GetRuntime()->clr.start_resource(resource, core);
     return true;
 }
 
 bool CSharpResourceImpl::Stop()
 {
+    auto scope = resource->PushNativesScope();
     GetRuntime()->clr.stop_resource(resource);
     ResetDelegates();
     return true;
@@ -29,6 +33,7 @@ bool CSharpResourceImpl::Stop()
 bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
 {
     if (ev == nullptr) return true;
+    auto scope = resource->PushNativesScope();
     switch(ev->GetType()) {
         case alt::CEvent::Type::SERVER_SCRIPT_EVENT:
         {
@@ -82,7 +87,8 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             {
                 cArgs[i] = args[i].c_str();
             }
-            OnConsoleCommandDelegate(consoleCommandEvent->GetName().c_str(), cArgs, (uint32_t) size);
+            auto name = consoleCommandEvent->GetName();
+            OnConsoleCommandDelegate(name.c_str(), cArgs, (uint32_t) size);
             delete[] cArgs;
             break;
         }
