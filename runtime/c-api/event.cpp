@@ -34,6 +34,9 @@ SetDelegate(PlayerSpawn);
 SetDelegate(PlayerDisconnect);
 SetDelegate(PlayerEnterVehicle);
 
+SetDelegate(GameEntityCreate);
+SetDelegate(GameEntityDestroy);
+
 SetDelegate(ResourceError);
 SetDelegate(ResourceStart);
 SetDelegate(ResourceStop);

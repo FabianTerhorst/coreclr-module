@@ -44,6 +44,9 @@ EXPORT_CLIENT void Event_SetPlayerSpawnDelegate(CSharpResourceImpl* resource, /*
 EXPORT_CLIENT void Event_SetPlayerDisconnectDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerDisconnectModuleDelegate */ PlayerDisconnectDelegate_t delegate);
 EXPORT_CLIENT void Event_SetPlayerEnterVehicleDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerEnterVehicleModuleDelegate */ PlayerEnterVehicleDelegate_t delegate);
 
+EXPORT_CLIENT void Event_SetGameEntityCreateDelegate(CSharpResourceImpl* resource, /** ClientEvents.GameEntityCreateModuleDelegate */ GameEntityCreateDelegate_t delegate);
+EXPORT_CLIENT void Event_SetGameEntityDestroyDelegate(CSharpResourceImpl* resource, /** ClientEvents.GameEntityDestroyModuleDelegate */ GameEntityDestroyDelegate_t delegate);
+
 EXPORT_CLIENT void Event_SetResourceErrorDelegate(CSharpResourceImpl* resource, /** ClientEvents.ResourceErrorModuleDelegate */ ResourceErrorDelegate_t delegate);
 EXPORT_CLIENT void Event_SetResourceStartDelegate(CSharpResourceImpl* resource, /** ClientEvents.ResourceStartModuleDelegate */ ResourceStartDelegate_t delegate);
 EXPORT_CLIENT void Event_SetResourceStopDelegate(CSharpResourceImpl* resource, /** ClientEvents.ResourceStopModuleDelegate */ ResourceStopDelegate_t delegate);

@@ -34,6 +34,18 @@ namespace AltV.Net.Client
             remove => CoreImpl.EnterVehicleEventHandler.Remove(value);
         }
         
+        public static event GameEntityCreateDelegate OnGameEntityCreate
+        {
+            add => CoreImpl.GameEntityCreateEventHandler.Add(value);
+            remove => CoreImpl.GameEntityCreateEventHandler.Remove(value);
+        }
+        
+        public static event GameEntityDestroyDelegate OnGameEntityDestroy
+        {
+            add => CoreImpl.GameEntityDestroyEventHandler.Add(value);
+            remove => CoreImpl.GameEntityDestroyEventHandler.Remove(value);
+        }
+        
         public static event ResourceErrorDelegate OnResourceError
         {
             add => CoreImpl.ResourceErrorEventHandler.Add(value);

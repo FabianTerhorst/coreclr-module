@@ -1,6 +1,8 @@
-﻿using AltV.Net.Client.Events;
+﻿using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Client.Events;
 using AltV.Net.Client.Extensions;
 using AltV.Net.Elements.Args;
+using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.Client
 {
@@ -20,6 +22,12 @@ namespace AltV.Net.Client
         
         internal readonly IEventHandler<PlayerDisconnectDelegate> DisconnectEventHandler =
             new HashSetEventHandler<PlayerDisconnectDelegate>();
+        
+        internal readonly IEventHandler<GameEntityCreateDelegate> GameEntityCreateEventHandler =
+            new HashSetEventHandler<GameEntityCreateDelegate>();
+        
+        internal readonly IEventHandler<GameEntityDestroyDelegate> GameEntityDestroyEventHandler =
+            new HashSetEventHandler<GameEntityDestroyDelegate>();
         
         internal readonly IEventHandler<PlayerEnterVehicleDelegate> EnterVehicleEventHandler =
             new HashSetEventHandler<PlayerEnterVehicleDelegate>();
@@ -91,6 +99,31 @@ namespace AltV.Net.Client
             }
 
             EnterVehicleEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, seat), $"event {nameof(OnPlayerEnterVehicle)}");
+        }
+
+        public void OnGameEntityCreate(IntPtr pointer, byte type)
+        {
+            Console.WriteLine("Type was " + ((BaseObjectType) type));
+            var baseObject = BaseBaseObjectPool.Get(pointer, (BaseObjectType) type);
+            if (baseObject is not IEntity entity)
+            {
+                Console.WriteLine("Invalid entity: " + pointer + " " + (baseObject == null));
+                return;
+            }
+
+            GameEntityCreateEventHandler.GetEvents().ForEachCatching(fn => fn(entity), $"event {nameof(OnGameEntityCreate)}");
+        }
+
+        public void OnGameEntityDestroy(IntPtr pointer, byte type)
+        {
+            var baseObject = BaseBaseObjectPool.Get(pointer, (BaseObjectType) type);
+            if (baseObject is not IEntity entity)
+            {
+                Console.WriteLine("Invalid entity: " + pointer);
+                return;
+            }
+
+            GameEntityDestroyEventHandler.GetEvents().ForEachCatching(fn => fn(entity), $"event {nameof(OnGameEntityDestroy)}");
         }
 
         public void OnResourceError(string name)

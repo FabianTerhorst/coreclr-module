@@ -7,6 +7,8 @@ namespace AltV.Net.Client.Events
     public delegate void PlayerSpawnDelegate();
     public delegate void PlayerDisconnectDelegate();
     public delegate void PlayerEnterVehicleDelegate(IVehicle vehicle, byte seat);
+    public delegate void GameEntityCreateDelegate(IEntity entity);
+    public delegate void GameEntityDestroyDelegate(IEntity entity);
     
     public delegate void ResourceErrorDelegate(string name);
     public delegate void ResourceStartDelegate(string name);

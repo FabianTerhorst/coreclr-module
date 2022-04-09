@@ -17,6 +17,9 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void PlayerSpawnModuleDelegate();
     public delegate void PlayerDisconnectModuleDelegate();
     public delegate void PlayerEnterVehicleModuleDelegate(IntPtr pointer, byte seat);
+    
+    public delegate void GameEntityCreateModuleDelegate(IntPtr pointer, byte type);
+    public delegate void GameEntityDestroyModuleDelegate(IntPtr pointer, byte type);
 
     public delegate void ResourceErrorModuleDelegate(string name);
     public delegate void ResourceStartModuleDelegate(string name);
