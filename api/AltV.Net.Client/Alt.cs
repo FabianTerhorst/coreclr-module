@@ -29,6 +29,7 @@ namespace AltV.Net.Client
         public static ILocalPlayer LocalPlayer => Core.PlayerPool.LocalPlayer;
         public static DiscordUser? GetDiscordUser() => Core.GetDiscordUser();
         public static LocalStorage LocalStorage => Core.LocalStorage;
+        public static Voice Voice => Core.Voice;
 
         public static HandlingData? GetHandlingByModelHash(uint modelHash) => Core.GetHandlingByModelHash(modelHash);
         public static uint Hash(string key) => Core.Hash(key);

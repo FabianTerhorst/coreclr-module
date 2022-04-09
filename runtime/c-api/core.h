@@ -122,6 +122,10 @@ EXPORT_CLIENT void Core_DeallocDiscordUser(ClrDiscordUser* user);
 
 EXPORT_CLIENT void Core_WorldToScreen(alt::ICore* core, vector3_t in, vector2_t& out);
 EXPORT_CLIENT void Core_LoadRmlFont(alt::ICore* core, alt::IResource* resource, const char* path, const char* name, uint8_t italic, uint8_t bold);
+EXPORT_CLIENT uint32_t Core_GetVoiceActivationKey(alt::ICore* core);
+EXPORT_CLIENT uint8_t Core_IsVoiceActivityInputEnabled(alt::ICore* core);
+EXPORT_CLIENT uint8_t Core_GetVoiceInputMuted(alt::ICore* core);
+EXPORT_CLIENT void Core_SetVoiceInputMuted(alt::ICore* core, uint8_t value);
 
 #ifdef __cplusplus
 }

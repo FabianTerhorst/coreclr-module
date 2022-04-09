@@ -39,6 +39,7 @@ namespace AltV.Net.Client
         public INatives Natives { get; }
         
         public LocalStorage LocalStorage { get; }
+        public Voice Voice { get; }
 
         public List<SafeTimer> RunningTimers { get; } = new();
 
@@ -73,6 +74,7 @@ namespace AltV.Net.Client
             nativeResourcePool.GetOrCreate(this, resourcePointer, out var resource);
             Resource = resource;
             LocalStorage = new LocalStorage(this, GetLocalStoragePtr());
+            Voice = new Voice(this);
             Natives = natives;
         }
 
