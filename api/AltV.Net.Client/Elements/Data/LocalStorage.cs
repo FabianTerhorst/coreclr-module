@@ -2,7 +2,7 @@
 using AltV.Net.Elements.Args;
 using AltV.Net.Shared.Utils;
 
-namespace AltV.Net.Client
+namespace AltV.Net.Client.Elements.Data
 {
     public class LocalStorage
     {
