@@ -30,7 +30,7 @@ namespace AltV.Net.Client
         public static DiscordUser? GetDiscordUser() => Core.GetDiscordUser();
         public static LocalStorage LocalStorage => Core.LocalStorage;
 
-        // public static HandlingData? GetHandlingByModelHash(uint modelHash) => Core.GetHandlingByModelHash(modelHash); todo
+        public static HandlingData? GetHandlingByModelHash(uint modelHash) => Core.GetHandlingByModelHash(modelHash);
         public static uint Hash(string key) => Core.Hash(key);
 
         public static void Log(string message) => Logger.LogInfo(message);

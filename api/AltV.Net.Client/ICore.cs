@@ -1,4 +1,5 @@
 using System.Numerics;
+using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Data;
@@ -20,7 +21,6 @@ namespace AltV.Net.Client
         LocalStorage LocalStorage { get; }
         new INativeResource Resource { get; }
         INatives Natives { get; }
-        // HandlingData? GetHandlingByModelHash(uint modelHash); todo
         IBlip CreatePointBlip(Position position);
         IBlip CreateRadiusBlip(Position position, float radius);
         IBlip CreateAreaBlip(Position position, int width, int height);
@@ -40,5 +40,6 @@ namespace AltV.Net.Client
         string[] MarshalStringArrayPtrAndFree(IntPtr ptr, uint size);
         DiscordUser? GetDiscordUser();
         void LoadRmlFont(string path, string name, bool italic = false, bool bold = false);
+        HandlingData? GetHandlingByModelHash(uint modelHash);
     }
 }

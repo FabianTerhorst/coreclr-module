@@ -100,15 +100,13 @@ namespace AltV.Net.Client
 
         public HandlingData? GetHandlingByModelHash(uint modelHash)
         {
-            // unsafe
-            // {
-            //     var pointer = IntPtr.Zero;
-            //     var success = Library.Vehicle_Handling_GetByModelHash(NativePointer, modelHash, &pointer);
-            //     if (success == 0 || pointer == IntPtr.Zero) return null;
-            //     return new HandlingData(this, pointer);
-            // }
-            return null;
-            // todo
+            unsafe
+            {
+                var pointer = IntPtr.Zero;
+                var success = Library.Client.Vehicle_Handling_GetByModelHash(NativePointer, modelHash, &pointer);
+                if (success == 0 || pointer == IntPtr.Zero) return null;
+                return new HandlingData(this, pointer);
+            }
         }
 
         public DiscordUser? GetDiscordUser()
