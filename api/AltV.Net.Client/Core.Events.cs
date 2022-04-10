@@ -1,4 +1,5 @@
-﻿using AltV.Net.Client.Events;
+﻿using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Client.Events;
 using AltV.Net.Client.Extensions;
 using AltV.Net.Elements.Args;
 
@@ -8,6 +9,7 @@ namespace AltV.Net.Client
     {
         private Dictionary<string, HashSet<Function>> ServerEventBus = new();
         private Dictionary<string, HashSet<Function>> ClientEventBus = new();
+        private Dictionary<IntPtr, Dictionary<string, HashSet<Function>>> WebViewEventBus = new();
 
         internal readonly IEventHandler<TickDelegate> TickEventHandler =
             new HashSetEventHandler<TickDelegate>();
@@ -58,6 +60,22 @@ namespace AltV.Net.Client
             foreach (var function in ClientEventBus[name])
             {
                 function.CallCatching(mValues, $"client event {name} handler");
+            }
+        }
+        
+        public void OnWebViewEvent(IntPtr webViewPtr, string name, IntPtr[] args)
+        {
+            var mValues = MValueConst.CreateFrom(this, args);
+            Alt.Log($"WebViewPtr: {webViewPtr}. Existing keys: {string.Join(", ", WebViewEventBus.Keys)}");
+            if (!WebViewEventBus.ContainsKey(webViewPtr)) return;
+            Alt.Log("71");
+            WebViewEventBus.TryGetValue(webViewPtr, out var handlers);
+            if (handlers == null) return;
+            if (!handlers.ContainsKey(name)) return;
+            Alt.Log("75");
+            foreach (var function in handlers[name])
+            {
+                function.CallCatching(mValues, $"web view event {name} handler");
             }
         }
         
@@ -169,6 +187,32 @@ namespace AltV.Net.Client
                 ClientEventBus[eventName] = eventHandlers;
             }
 
+            return function;
+        }
+
+        public Function AddWebViewEventListener(IntPtr webViewPtr, string name, Function function)
+        {
+            Alt.LogInfo($"Adding Listener for WebView: {webViewPtr} Name: {name}");
+            if (WebViewEventBus.TryGetValue(webViewPtr, out var eventHandlers))
+            {
+                if (eventHandlers.TryGetValue(name, out var eventHandler))
+                {
+                    eventHandler.Add(function);
+                    Alt.LogInfo("[Core] WebView Value Exists");
+                }
+                else
+                {
+                    eventHandler = new HashSet<Function> {function};
+                    eventHandlers[name] = eventHandler;
+                    Alt.LogInfo("[Core] WebView Value Created");
+                }
+            }
+            else
+            {
+                eventHandlers = new Dictionary<string, HashSet<Function>> {{name, new HashSet<Function> {function}}};
+                WebViewEventBus[webViewPtr] = eventHandlers;
+                Alt.LogInfo("[Core] Created WebView Key and Value");
+            }
             return function;
         }
     }

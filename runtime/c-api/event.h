@@ -33,6 +33,8 @@ EXPORT_CLIENT void Event_SetTickDelegate(CSharpResourceImpl* resource, /** Clien
 EXPORT_CLIENT void Event_SetServerEventDelegate(CSharpResourceImpl* resource,  /** ClientEvents.ServerEventModuleDelegate */ ServerEventDelegate_t delegate);
 EXPORT_CLIENT void Event_SetClientEventDelegate(CSharpResourceImpl* resource,  /** ClientEvents.ClientEventModuleDelegate */ ClientEventDelegate_t delegate);
 EXPORT_CLIENT void Event_SetConsoleCommandDelegate(CSharpResourceImpl* resource,  /** ClientEvents.ConsoleCommandModuleDelegate */ ConsoleCommandDelegate_t delegate);
+EXPORT_CLIENT void Event_SetWebViewEventDelegate(CSharpResourceImpl* resource,  /** ClientEvents.WebViewEventModuleDelegate */ WebViewEventDelegate_t delegate);
+
 
 EXPORT_CLIENT void Event_SetCreatePlayerDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreatePlayerModuleDelegate */ CreatePlayerDelegate_t delegate);
 EXPORT_CLIENT void Event_SetRemovePlayerDelegate(CSharpResourceImpl* resource,  /** ClientEvents.RemovePlayerModuleDelegate */ RemovePlayerDelegate_t delegate);

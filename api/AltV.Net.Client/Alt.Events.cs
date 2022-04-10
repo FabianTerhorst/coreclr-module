@@ -1,4 +1,5 @@
-﻿using AltV.Net.Client.Events;
+﻿using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Client.Events;
 
 namespace AltV.Net.Client
 {
@@ -63,7 +64,7 @@ namespace AltV.Net.Client
             add => CoreImpl.KeyDownEventHandler.Add(value);
             remove => CoreImpl.KeyDownEventHandler.Remove(value);
         }
-        
+
         public static void OnServer(string eventName, Function function) => CoreImpl.AddServerEventListener(eventName, function);
         public static void OnServer<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> function) => CoreImpl.AddServerEventListener(eventName, Function.Create(Core, function));
         public static void OnServer<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> function) => CoreImpl.AddServerEventListener(eventName, Function.Create(Core, function));
@@ -132,5 +133,42 @@ namespace AltV.Net.Client
         public static void OnClient<T1, T2, T3>(string eventName, Func<T1, T2, T3> function) => CoreImpl.AddClientEventListener(eventName, Function.Create(Core, function));
         public static void OnClient<T1, T2>(string eventName, Func<T1, T2> function) => CoreImpl.AddClientEventListener(eventName, Function.Create(Core, function));
         public static void OnClient<T1>(string eventName, Func<T1> function) => CoreImpl.AddClientEventListener(eventName, Function.Create(Core, function));
+
+        #region WebView
+        public static void On(this IWebView webView, string eventName, Function function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, function);
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(this IWebView webView, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(this IWebView webView, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(this IWebView webView, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(this IWebView webView, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(this IWebView webView, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(this IWebView webView, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(this IWebView webView, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9>(this IWebView webView, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8>(this IWebView webView, string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7>(this IWebView webView, string eventName, Action<T1, T2, T3, T4, T5, T6, T7> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6>(this IWebView webView, string eventName, Action<T1, T2, T3, T4, T5, T6> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5>(this IWebView webView, string eventName, Action<T1, T2, T3, T4, T5> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4>(this IWebView webView, string eventName, Action<T1, T2, T3, T4> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3>(this IWebView webView, string eventName, Action<T1, T2, T3> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2>(this IWebView webView, string eventName, Action<T1, T2> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1>(this IWebView webView, string eventName, Action<T1> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On(this IWebView webView, string eventName, Action function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(this IWebView webView, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(this IWebView webView, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(this IWebView webView, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(this IWebView webView, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(this IWebView webView, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(this IWebView webView, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(this IWebView webView, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8, T9>(this IWebView webView, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7, T8>(this IWebView webView, string eventName, Func<T1, T2, T3, T4, T5, T6, T7, T8> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6, T7>(this IWebView webView, string eventName, Func<T1, T2, T3, T4, T5, T6, T7> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5, T6>(this IWebView webView, string eventName, Func<T1, T2, T3, T4, T5, T6> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4, T5>(this IWebView webView, string eventName, Func<T1, T2, T3, T4, T5> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3, T4>(this IWebView webView, string eventName, Func<T1, T2, T3, T4> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2, T3>(this IWebView webView, string eventName, Func<T1, T2, T3> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1, T2>(this IWebView webView, string eventName, Func<T1, T2> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        public static void On<T1>(this IWebView webView, string eventName, Func<T1> function) => CoreImpl.AddWebViewEventListener(webView.WebViewNativePointer, eventName, Function.Create(Core, function));
+        #endregion
     }
 }

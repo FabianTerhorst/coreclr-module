@@ -4,6 +4,7 @@
 typedef void (* TickDelegate_t)();
 typedef void (* ClientEventDelegate_t)(const char* name, alt::MValueConst** args, uint64_t size);
 typedef void (* ServerEventDelegate_t)(const char* name, alt::MValueConst** args, uint64_t size);
+typedef void (* WebViewEventDelegate_t)(alt::IWebView*, const char* name, alt::MValueConst** args, uint64_t size);
 typedef void (* ConsoleCommandDelegate_t)(const char* name, const char* args[], uint32_t size);
 
 typedef void (* CreatePlayerDelegate_t)(alt::IPlayer*, uint16_t id);

@@ -201,11 +201,22 @@ namespace AltV.Net.Client
             _core.OnClientEvent(name, args);
         }
         
+        public static void OnWebViewEvent(IntPtr webView, string name, IntPtr pointer, ulong size)
+        {
+            var args = new IntPtr[size];
+            if (pointer != IntPtr.Zero)
+            {
+                Marshal.Copy(pointer, args, 0, (int) size);
+            }
+
+            _core.OnWebViewEvent(webView, name, args);
+        }
+        
         public static void OnConsoleCommand(string name,
             [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
             string[] args, int _)
         {
-            args ??= new string[0];
+            args ??= Array.Empty<string>();
             _core.OnConsoleCommand(name, args);
         }
     }

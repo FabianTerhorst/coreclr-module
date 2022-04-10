@@ -92,6 +92,22 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             delete[] cArgs;
             break;
         }
+        case alt::CEvent::Type::WEB_VIEW_EVENT:
+        {
+            auto webViewEvent = (alt::CWebViewEvent*)ev;
+            auto args = webViewEvent->GetArgs();
+            auto name = webViewEvent->GetName();
+            auto size = args.GetSize();
+            auto constArgs = new alt::MValueConst*[size];
+
+            for (auto i = 0; i < size; i++)
+            {
+                constArgs[i] = &args[i];
+            }
+            OnWebViewEventDelegate(webViewEvent->GetTarget().Get(), name.CStr(), constArgs, size);
+            delete[] constArgs;
+            break;
+        }
 #pragma region Player Events
 		case alt::CEvent::Type::SPAWNED:
 	    {
@@ -140,6 +156,96 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
         }
 
 #pragma endregion
+        case alt::CEvent::Type::NONE:
+            break;
+        case alt::CEvent::Type::SERVER_STARTED:
+            break;
+        case alt::CEvent::Type::PLAYER_CONNECT:
+            break;
+        case alt::CEvent::Type::PLAYER_BEFORE_CONNECT:
+            break;
+        case alt::CEvent::Type::PLAYER_DISCONNECT:
+            break;
+        case alt::CEvent::Type::CONNECTION_QUEUE_ADD:
+            break;
+        case alt::CEvent::Type::CONNECTION_QUEUE_REMOVE:
+            break;
+        case alt::CEvent::Type::META_CHANGE:
+            break;
+        case alt::CEvent::Type::SYNCED_META_CHANGE:
+            break;
+        case alt::CEvent::Type::STREAM_SYNCED_META_CHANGE:
+            break;
+        case alt::CEvent::Type::GLOBAL_META_CHANGE:
+            break;
+        case alt::CEvent::Type::GLOBAL_SYNCED_META_CHANGE:
+            break;
+        case alt::CEvent::Type::LOCAL_SYNCED_META_CHANGE:
+            break;
+        case alt::CEvent::Type::PLAYER_DAMAGE:
+            break;
+        case alt::CEvent::Type::PLAYER_DEATH:
+            break;
+        case alt::CEvent::Type::FIRE_EVENT:
+            break;
+        case alt::CEvent::Type::EXPLOSION_EVENT:
+            break;
+        case alt::CEvent::Type::START_PROJECTILE_EVENT:
+            break;
+        case alt::CEvent::Type::WEAPON_DAMAGE_EVENT:
+            break;
+        case alt::CEvent::Type::VEHICLE_DESTROY:
+            break;
+        case alt::CEvent::Type::VEHICLE_DAMAGE:
+            break;
+        case alt::CEvent::Type::CHECKPOINT_EVENT:
+            break;
+        case alt::CEvent::Type::COLSHAPE_EVENT:
+            break;
+        case alt::CEvent::Type::PLAYER_ENTERING_VEHICLE:
+            break;
+        case alt::CEvent::Type::PLAYER_LEAVE_VEHICLE:
+            break;
+        case alt::CEvent::Type::PLAYER_CHANGE_VEHICLE_SEAT:
+            break;
+        case alt::CEvent::Type::PLAYER_WEAPON_CHANGE:
+            break;
+        case alt::CEvent::Type::VEHICLE_ATTACH:
+            break;
+        case alt::CEvent::Type::VEHICLE_DETACH:
+            break;
+        case alt::CEvent::Type::NETOWNER_CHANGE:
+            break;
+        case alt::CEvent::Type::REMOVE_ENTITY_EVENT:
+            break;
+        case alt::CEvent::Type::CREATE_BASE_OBJECT_EVENT:
+            break;
+        case alt::CEvent::Type::REMOVE_BASE_OBJECT_EVENT:
+            break;
+        case alt::CEvent::Type::DATA_NODE_RECEIVED_EVENT:
+            break;
+        case alt::CEvent::Type::CONNECTION_COMPLETE:
+            break;
+        case alt::CEvent::Type::GAME_ENTITY_CREATE:
+            break;
+        case alt::CEvent::Type::GAME_ENTITY_DESTROY:
+            break;
+        case alt::CEvent::Type::WEB_SOCKET_CLIENT_EVENT:
+            break;
+        case alt::CEvent::Type::AUDIO_EVENT:
+            break;
+        case alt::CEvent::Type::TASK_CHANGE:
+            break;
+        case alt::CEvent::Type::RMLUI_EVENT:
+            break;
+        case alt::CEvent::Type::WINDOW_FOCUS_CHANGE:
+            break;
+        case alt::CEvent::Type::WINDOW_RESOLUTION_CHANGE:
+            break;
+        case alt::CEvent::Type::ALL:
+            break;
+        case alt::CEvent::Type::SIZE:
+            break;
     }
 
     return true;
@@ -207,6 +313,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnTickDelegate = []() {};
     OnClientEventDelegate = [](auto var, auto var2, auto var3) {};
     OnServerEventDelegate = [](auto var, auto var2, auto var3) {};
+    OnWebViewEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnConsoleCommandDelegate = [](auto var, auto var2, auto var3) {};
 
     OnCreatePlayerDelegate = [](auto var, auto var2) {};
