@@ -724,6 +724,11 @@ namespace AltV.Net.Elements.Entities
         bool DriftMode { get; set; }
         
         /// <summary>
+        /// Get or set boat anchor of the vehicle 
+        /// </summary>
+        bool BoatAnchor { get; set; }
+        
+        /// <summary>
         /// Sets the searchlight to given entity
         /// </summary>
         bool SetSearchLight(bool state, IEntity spottedEntity);

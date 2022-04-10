@@ -1469,6 +1469,26 @@ namespace AltV.Net.Elements.Entities
                 }
             }
         }
+
+        public bool BoatAnchor
+        {
+            get
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    return Core.Library.Server.Vehicle_GetBoatAnchor(VehicleNativePointer) == 1;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    CheckIfEntityExists();
+                    Core.Library.Server.Vehicle_SetBoatAnchor(VehicleNativePointer, value ? (byte)1 : (byte)0);
+                }
+            }
+        }
         
         public bool SetSearchLight(bool state, IEntity spottedEntity)
         {
