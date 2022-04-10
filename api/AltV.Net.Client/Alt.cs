@@ -6,6 +6,7 @@ using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Interfaces;
+using Microsoft.VisualBasic;
 
 namespace AltV.Net.Client
 {
@@ -48,6 +49,8 @@ namespace AltV.Net.Client
 
         public static IReadOnlyCollection<IPlayer> GetAllPlayers() => Core.PlayerPool.GetAllEntities();
         public static IReadOnlyCollection<IVehicle> GetAllVehicles() => Core.VehiclePool.GetAllEntities();
+        public static IReadOnlyCollection<IEntity> GetAllEntities() => GetAllPlayers().Concat<IEntity>(GetAllVehicles()).ToList();
+
         public static void ShowCursor(bool state) => Core.ShowCursor(state);
 
         public static void EmitServer(string eventName, params object[] args) => Core.TriggerServerEvent(eventName, args);
