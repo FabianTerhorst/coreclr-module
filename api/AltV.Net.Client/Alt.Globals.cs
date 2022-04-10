@@ -9,16 +9,25 @@ namespace AltV.Net.Client
     public static partial class Alt
     {
         public static Vector3 ScreenToWorld(Vector2 position) => Core.ScreenToWorld(position);
+        public static Vector3 ScreenToWorld(float x, float y) => Core.ScreenToWorld(new Vector2(x, y));
+        public static Vector2 WorldToScreen(Vector3 position) => Core.WorldToScreen(position);
+        public static Vector2 WorldToScreen(float x, float y, float z) => Core.WorldToScreen(new Vector3(x, y, z));
+        public static void ShowCursor(bool state) => Core.ShowCursor(state);
         public static void AddGxtText(uint key, string value) => Core.AddGxtText(key, value);
         public static string GetGxtText(uint key) => Core.GetGxtText(key);
         public static void RemoveGxtText(uint key) => Core.RemoveGxtText(key);
         public static bool BeginScaleformMovieMethodMinimap(string methodName) => Core.BeginScaleformMovieMethodMinimap(methodName);
         public static void SetMinimapComponentPosition(string name, char alignX, char alignY, float posX, float posY, float sizeX, float sizeY) => Core.SetMinimapComponentPosition(name, alignX, alignY, posX, posY, sizeX, sizeY);
+        public static void SetMinimapComponentPosition(string name, char alignX, char alignY, Vector2 pos, Vector2 size) => Core.SetMinimapComponentPosition(name, alignX, alignY, pos.X, pos.Y, size.X, size.Y);
         public static void CopyToClipboard(string content) => Core.CopyToClipboard(content);
         public static PermissionState GetPermissionState(Permission permission) => Core.GetPermissionState(permission);
         public static bool IsTextureExistInArchetype(uint modelHash, string targetTextureName) => Core.IsTextureExistInArchetype(modelHash, targetTextureName);
+        public static bool IsTextureExistInArchetype(string modelName, string targetTextureName) => Core.IsTextureExistInArchetype(Hash(modelName), targetTextureName);
+        public static void LoadRmlFont(string path, string name, bool italic = false, bool bold = false) => Core.LoadRmlFont(path, name, italic, bold);
         public static void LoadModel(uint modelHash) => Core.LoadModel(modelHash);
+        public static void LoadModel(string modelName) => Core.LoadModel(Hash(modelName));
         public static void LoadModelAsync(uint modelHash) => Core.LoadModelAsync(modelHash);
+        public static void LoadModelAsync(string modelName) => Core.LoadModelAsync(Hash(modelName));
         public static bool LoadYtyp(string ytypName) => Core.LoadYtyp(ytypName);
         public static bool UnloadYtyp(string ytypName) => Core.UnloadYtyp(ytypName);
         public static void RequestIpl(string iplName) => Core.RequestIpl(iplName);
