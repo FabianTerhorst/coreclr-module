@@ -22,6 +22,7 @@ uint8_t Event_WasCancelled(alt::CEvent* event) {
 SetDelegate(Tick);
 SetDelegate(ClientEvent);
 SetDelegate(ServerEvent);
+SetDelegate(WebViewEvent);
 SetDelegate(ConsoleCommand);
 
 SetDelegate(CreatePlayer);
