@@ -36,18 +36,6 @@ namespace AltV.Net
 
         void StopServer();
 
-        void TriggerServerEvent(string eventName, MValueConst[] args);
-
-        void TriggerServerEvent(IntPtr eventNamePtr, MValueConst[] args);
-
-        void TriggerServerEvent(string eventName, IntPtr[] args);
-
-        void TriggerServerEvent(IntPtr eventNamePtr, IntPtr[] args);
-
-        void TriggerServerEvent(IntPtr eventNamePtr, params object[] args);
-
-        void TriggerServerEvent(string eventName, params object[] args);
-
         void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, MValueConst[] args);
 
         void TriggerClientEvent(IPlayer player, string eventName, MValueConst[] args);

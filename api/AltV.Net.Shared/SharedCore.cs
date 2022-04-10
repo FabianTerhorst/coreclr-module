@@ -789,5 +789,69 @@ namespace AltV.Net.Shared
             }
         }
         #endregion
+                
+        #region TriggerLocalEvent
+        public void TriggerLocalEvent(string eventName, MValueConst[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerLocalEvent(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        public void TriggerLocalEvent(IntPtr eventNamePtr, MValueConst[] args)
+        {
+            var size = args.Length;
+            var mValuePointers = new IntPtr[size];
+            for (var i = 0; i < size; i++)
+            {
+                mValuePointers[i] = args[i].nativePointer;
+            }
+
+            TriggerLocalEvent(eventNamePtr, mValuePointers);
+        }
+
+        public void TriggerLocalEvent(string eventName, IntPtr[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerLocalEvent(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void TriggerLocalEvent(IntPtr eventNamePtr, IntPtr[] args)
+        {
+            unsafe
+            {
+                Library.Shared.Core_TriggerLocalEvent(NativePointer, eventNamePtr, args, args.Length);
+            }
+        }
+
+        public void TriggerLocalEvent(IntPtr eventNamePtr, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerLocalEvent(eventNamePtr, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+
+        public void TriggerLocalEvent(string eventName, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerLocalEvent(eventName, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+        #endregion
+
     }
 }

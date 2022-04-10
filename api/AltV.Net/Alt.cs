@@ -30,7 +30,7 @@ namespace AltV.Net
 
         public static bool IsDebug => Core.IsDebug;
 
-        public static void Emit(string eventName, params object[] args) => Core.TriggerServerEvent(eventName, args);
+        public static void Emit(string eventName, params object[] args) => Core.TriggerLocalEvent(eventName, args);
 
         public static void EmitAllClients(string eventName, params object[] args) =>
             Core.TriggerClientEventForAll(eventName, args);

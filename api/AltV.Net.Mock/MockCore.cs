@@ -631,6 +631,30 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+        public void TriggerLocalEvent(string eventName, MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+        public void TriggerLocalEvent(IntPtr eventNamePtr, MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+        public void TriggerLocalEvent(string eventName, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+        public void TriggerLocalEvent(IntPtr eventNamePtr, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+        public void TriggerLocalEvent(IntPtr eventNamePtr, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+        public void TriggerLocalEvent(string eventName, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
 
         public void SetPassword(string password)
         {

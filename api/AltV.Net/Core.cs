@@ -153,69 +153,6 @@ namespace AltV.Net
                 Library.Server.Core_StopServer(NativePointer);  
             }
         }
-        
-        #region TriggerServerEvent
-        public void TriggerServerEvent(string eventName, MValueConst[] args)
-        {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
-            TriggerServerEvent(eventNamePtr, args);
-            Marshal.FreeHGlobal(eventNamePtr);
-        }
-
-        public void TriggerServerEvent(IntPtr eventNamePtr, MValueConst[] args)
-        {
-            var size = args.Length;
-            var mValuePointers = new IntPtr[size];
-            for (var i = 0; i < size; i++)
-            {
-                mValuePointers[i] = args[i].nativePointer;
-            }
-
-            TriggerServerEvent(eventNamePtr, mValuePointers);
-        }
-
-        public void TriggerServerEvent(string eventName, IntPtr[] args)
-        {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
-            TriggerServerEvent(eventNamePtr, args);
-            Marshal.FreeHGlobal(eventNamePtr);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void TriggerServerEvent(IntPtr eventNamePtr, IntPtr[] args)
-        {
-            unsafe
-            {
-                Library.Server.Core_TriggerServerEvent(NativePointer, eventNamePtr, args, args.Length);
-            }
-        }
-
-        public void TriggerServerEvent(IntPtr eventNamePtr, params object[] args)
-        {
-            if (args == null) throw new ArgumentException("Arguments array should not be null.");
-            var size = args.Length;
-            var mValues = new MValueConst[size];
-            CreateMValues(mValues, args);
-            TriggerServerEvent(eventNamePtr, mValues);
-            for (var i = 0; i < size; i++)
-            {
-                mValues[i].Dispose();
-            }
-        }
-
-        public void TriggerServerEvent(string eventName, params object[] args)
-        {
-            if (args == null) throw new ArgumentException("Arguments array should not be null.");
-            var size = args.Length;
-            var mValues = new MValueConst[size];
-            CreateMValues(mValues, args);
-            TriggerServerEvent(eventName, mValues);
-            for (var i = 0; i < size; i++)
-            {
-                mValues[i].Dispose();
-            }
-        }
-        #endregion
 
         #region TriggerClientEvent
         public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, MValueConst[] args)

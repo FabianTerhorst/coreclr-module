@@ -209,7 +209,7 @@ namespace AltV.Net.Async
             var mValues = new MValueConst[size];
             Alt.Core.CreateMValues(mValues, args);
             var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
-            await Do(() => Alt.Core.TriggerServerEvent(eventNamePtr, mValues));
+            await Do(() => Alt.Core.TriggerLocalEvent(eventNamePtr, mValues));
             Marshal.FreeHGlobal(eventNamePtr);
             for (var i = 0; i < size; i++)
             {

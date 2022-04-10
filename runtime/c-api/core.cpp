@@ -225,6 +225,14 @@ uint8_t Core_HasSyncedMetaData(alt::ICore* core, const char* key) {
     return core->HasSyncedMetaData(key);
 }
 
+void Core_TriggerLocalEvent(alt::ICore* core, const char* event, alt::MValueConst* args[], int size) {
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        ToMValueArg(mValues, core, args[i], i);
+    }
+    core->TriggerLocalEvent(event, mValues);
+}
+
 
 #ifdef ALT_SERVER_API
 uint8_t Core_SubscribeCommand(alt::ICore* core, const char* cmd, alt::CommandCallback cb) {
