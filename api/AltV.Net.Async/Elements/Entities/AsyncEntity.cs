@@ -349,5 +349,43 @@ namespace AltV.Net.Async.Elements.Entities
                 BaseObject.Detach();
             }
         }
+
+        public bool Frozen
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
+                    return BaseObject.Frozen;
+                }
+            }
+            set {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
+                    BaseObject.Frozen = value;
+                }
+            }
+        }
+
+        public bool Collision
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
+                    return BaseObject.Collision;
+                }
+            }
+            set {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
+                    BaseObject.Collision = value;
+                }
+            }
+        }
     }
 }
