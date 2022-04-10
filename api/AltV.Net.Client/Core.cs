@@ -95,6 +95,44 @@ namespace AltV.Net.Client
 
         #endregion
         
+        public IPlayer[] GetPlayers()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                var playerCount = Library.Shared.Core_GetPlayerCount(NativePointer);
+                var pointers = new IntPtr[playerCount];
+                Library.Shared.Core_GetPlayers(NativePointer, pointers, playerCount);
+                var players = new IPlayer[playerCount];
+                for (ulong i = 0; i < playerCount; i++)
+                {
+                    var playerPointer = pointers[i];
+                    players[i] = PlayerPool.GetOrCreate(this, playerPointer);
+                }
+
+                return players;
+            }
+        }
+
+        public IVehicle[] GetVehicles()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                var vehicleCount = Library.Shared.Core_GetVehicleCount(NativePointer);
+                var pointers = new IntPtr[vehicleCount];
+                Library.Shared.Core_GetVehicles(NativePointer, pointers, vehicleCount);
+                var vehicles = new IVehicle[vehicleCount];
+                for (ulong i = 0; i < vehicleCount; i++)
+                {
+                    var vehiclePointer = pointers[i];
+                    vehicles[i] = VehiclePool.GetOrCreate(this, vehiclePointer);
+                }
+
+                return vehicles;
+            }
+        }
+        
         public new IEntity GetEntityById(ushort id)
         {
             return (IEntity) base.GetEntityById(id);

@@ -66,7 +66,7 @@ namespace AltV.Net.Client
             var baseEntityPool = new BaseEntityPool(playerPool, vehiclePool);
 
             var natives = _resource.GetNatives(DllName);
-
+            
             var client = new Core(
                 library,
                 corePointer,
@@ -86,6 +86,9 @@ namespace AltV.Net.Client
             _core = client;
             Alt.CoreImpl = client;
             Alt.Log("Core initialized");
+            
+            _core.GetPlayers();
+            _core.GetVehicles();
             
             playerPool.InitLocalPlayer(_core);
 
