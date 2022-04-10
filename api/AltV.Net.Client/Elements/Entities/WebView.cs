@@ -1,7 +1,11 @@
 ﻿using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using AltV.Net.CApi;
 using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Native;
 using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Client.Elements.Entities
@@ -17,7 +21,8 @@ namespace AltV.Net.Client.Elements.Entities
         }
         
         public IntPtr WebViewNativePointer { get; }
-        
+        public override IntPtr NativePointer => WebViewNativePointer;
+
         public WebView(ICore core, IntPtr webViewNativePointer) : base(core, GetBaseObjectPointer(core, webViewNativePointer), BaseObjectType.Webview)
         {
             WebViewNativePointer = webViewNativePointer;
@@ -178,5 +183,54 @@ namespace AltV.Net.Client.Elements.Entities
                 Core.Library.Client.WebView_Unfocus(WebViewNativePointer);
             }
         }
+
+        #region Webview Emit
+        private void TriggerWebviewEvent(string eventName, MValueConst[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerWebviewEvent(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        private void TriggerWebviewEvent(IntPtr eventNamePtr, MValueConst[] args)
+        {
+            var size = args.Length;
+            var mValuePointers = new IntPtr[size];
+            for (var i = 0; i < size; i++)
+            {
+                mValuePointers[i] = args[i].nativePointer;
+            }
+
+            TriggerWebviewEvent(eventNamePtr, mValuePointers);
+        }
+
+        private void TriggerWebviewEvent(string eventName, IntPtr[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerWebviewEvent(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void TriggerWebviewEvent(IntPtr eventNamePtr, IntPtr[] args)
+        {
+            unsafe
+            {
+                Core.Library.Client.Core_TriggerWebViewEvent(Core.NativePointer, WebViewNativePointer, eventNamePtr, args, args.Length);
+            }
+        }
+        public void Emit(string eventName, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            Core.CreateMValues(mValues, args);
+            TriggerWebviewEvent(eventName, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+        #endregion
     }
 }
