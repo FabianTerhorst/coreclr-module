@@ -425,5 +425,10 @@ namespace AltV.Net
         { 
             _core.OnConnectionQueueRemove(connectionInfo);
         }
+
+        public static void OnServerStarted()
+        {
+            _core.OnServerStarted();
+        }
     }
 }

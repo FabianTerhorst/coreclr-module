@@ -111,6 +111,9 @@ namespace AltV.Net.Async
         
         internal readonly AsyncEventHandler<ConnectionQueueRemoveAsyncDelegate> ConnectionQueueRemoveAsyncEventHandler =
             new();
+        
+        internal readonly AsyncEventHandler<ServerStartedAsyncDelegate> ServerStartedAsyncEventHandler =
+            new();
 
         public AsyncCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
@@ -825,6 +828,17 @@ namespace AltV.Net.Async
                     @delegate(connectionInfo));
                 connectionInfoRef.DebugCountDown();
                 connectionInfoRef.Dispose();
+            });
+        }
+
+        public override void OnServerStartedEvent()
+        {
+            base.OnServerStartedEvent();
+            if (!ServerStartedAsyncEventHandler.HasEvents()) return;
+            Task.Run(async () =>
+            {
+                await ServerStartedAsyncEventHandler.CallAsync(@delegate =>
+                    @delegate());
             });
         }
 

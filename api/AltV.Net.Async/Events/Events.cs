@@ -68,4 +68,6 @@ namespace AltV.Net.Async.Events
     public delegate Task ConnectionQueueAddAsyncDelegate(IConnectionInfo connectionInfo);
     
     public delegate Task ConnectionQueueRemoveAsyncDelegate(IConnectionInfo connectionInfo);
+
+    public delegate Task ServerStartedAsyncDelegate();
 }

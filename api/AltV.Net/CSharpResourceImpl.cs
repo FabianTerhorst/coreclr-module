@@ -215,6 +215,10 @@ namespace AltV.Net
             AltNative.Resource.ConnectionQueueRemoveDelegate onConnectionQueueRemove = ModuleWrapper.OnConnectionQueueRemove;
             handles.AddFirst(GCHandle.Alloc(onConnectionQueueRemove));
             AltNative.Resource.CSharpResourceImpl_SetConnectionQueueRemoveDelegate(NativePointer, onConnectionQueueRemove);
+            
+            AltNative.Resource.ServerStartedDelegate onServerStarted = ModuleWrapper.OnServerStarted;
+            handles.AddFirst(GCHandle.Alloc(onServerStarted));
+            AltNative.Resource.CSharpResourceImpl_SetServerStartedDelegate(NativePointer, onServerStarted);
         }
 
         public void Dispose()

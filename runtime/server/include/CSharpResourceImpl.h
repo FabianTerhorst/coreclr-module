@@ -193,6 +193,8 @@ typedef void (* ConnectionQueueAddDelegate_t)(alt::IConnectionInfo* connectionIn
 
 typedef void (* ConnectionQueueRemoveDelegate_t)(alt::IConnectionInfo* connectionInfo);
 
+typedef void (* ServerStartedDelegate_t)();
+
 class CSharpResourceImpl : public alt::IResource::Impl {
     bool OnEvent(const alt::CEvent* ev) override;
 
@@ -316,6 +318,8 @@ public:
     ConnectionQueueAddDelegate_t OnConnectionQueueAddDelegate = nullptr;
 
     ConnectionQueueRemoveDelegate_t OnConnectionQueueRemoveDelegate = nullptr;
+
+    ServerStartedDelegate_t OnServerStartedDelegate = nullptr;
 
     alt::Array<CustomInvoker*>* invokers;
     CoreClr* coreClr;
@@ -505,3 +509,6 @@ EXPORT void CSharpResourceImpl_SetConnectionQueueAddDelegate(CSharpResourceImpl*
 
 EXPORT void CSharpResourceImpl_SetConnectionQueueRemoveDelegate(CSharpResourceImpl* resource,
                                                          ConnectionQueueRemoveDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetServerStartedDelegate(CSharpResourceImpl* resource,
+                                                         ServerStartedDelegate_t delegate);                                                         

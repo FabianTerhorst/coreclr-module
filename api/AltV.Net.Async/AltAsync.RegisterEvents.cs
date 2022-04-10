@@ -1,3 +1,4 @@
+using System;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.FunctionParser;
@@ -457,6 +458,17 @@ namespace AltV.Net.Async
                                         {
                                             var currScriptFunction = scriptFunction.Clone();
                                             currScriptFunction.Set(connectionInfo);
+                                            return currScriptFunction.CallAsync();
+                                        };
+                                    break;
+                                case ScriptEventType.ServerStarted:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        Array.Empty<Type>(), true);
+                                    if (scriptFunction == null) return;
+                                    OnServerStarted +=
+                                        () =>
+                                        {
+                                            var currScriptFunction = scriptFunction.Clone();
                                             return currScriptFunction.CallAsync();
                                         };
                                     break;
