@@ -236,18 +236,18 @@ namespace AltV.Net.Async
         public static Task RemoveWeaponComponentAsync(this IPlayer player, uint weapon, uint weaponComponent) =>
             AltVAsync.Schedule(() => player.RemoveWeaponComponent(weapon, weaponComponent));
 
-        public static Task SetClothesAsync(this IPlayer player, byte component, ushort drawable, byte texture,
+        public static Task<bool> SetClothesAsync(this IPlayer player, byte component, ushort drawable, byte texture,
             byte palette) =>
             AltVAsync.Schedule(() => player.SetClothes(component, drawable, texture, palette));
 
-        public static Task SetDlcClothesAsync(this IPlayer player, byte component, ushort drawable, byte texture,
+        public static Task<bool> SetDlcClothesAsync(this IPlayer player, byte component, ushort drawable, byte texture,
             byte palette, uint dlc) =>
             AltVAsync.Schedule(() => player.SetDlcClothes(component, drawable, texture, palette, dlc));
 
-        public static Task SetPropsAsync(this IPlayer player, byte component, ushort drawable, byte texture) =>
+        public static Task<bool> SetPropsAsync(this IPlayer player, byte component, ushort drawable, byte texture) =>
             AltVAsync.Schedule(() => player.SetProps(component, drawable, texture));
 
-        public static Task SetDlcPropsAsync(this IPlayer player, byte component, ushort drawable, byte texture,
+        public static Task<bool> SetDlcPropsAsync(this IPlayer player, byte component, ushort drawable, byte texture,
             uint dlc) =>
             AltVAsync.Schedule(() => player.SetDlcProps(component, drawable, texture, dlc));
 

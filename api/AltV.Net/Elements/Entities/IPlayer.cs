@@ -217,7 +217,7 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Sets the player clothes
         /// </summary>
-        void SetClothes(byte component, ushort drawable, byte texture, byte palette);
+        bool SetClothes(byte component, ushort drawable, byte texture, byte palette);
 
         /// <summary>
         /// Gets the player dlc clothes
@@ -238,7 +238,7 @@ namespace AltV.Net.Elements.Entities
         /// <param name="palette">Palette id of the component</param>
         /// <param name="dlc">Hash of the components dlc pack</param>
         /// <exception cref="System.ArgumentOutOfRangeException">Thrown if drawable id is higher then 127</exception>
-        void SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc);
+        bool SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc);
 
         /// <summary>
         /// Gets the player props
@@ -253,7 +253,7 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Sets the player props
         /// </summary>
-        void SetProps(byte component, ushort drawable, byte texture);
+        bool SetProps(byte component, ushort drawable, byte texture);
 
         /// <summary>
         /// Gets the player dlc props
@@ -268,7 +268,7 @@ namespace AltV.Net.Elements.Entities
         /// <summary>
         /// Sets the player dlc props
         /// </summary>
-        void SetDlcProps(byte component, ushort drawable, byte texture, uint dlc);
+        bool SetDlcProps(byte component, ushort drawable, byte texture, uint dlc);
 
         /// <summary>
         /// Clear the player props

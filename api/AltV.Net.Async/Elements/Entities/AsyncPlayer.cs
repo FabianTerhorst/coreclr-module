@@ -617,12 +617,12 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public void SetClothes(byte component, ushort drawable, byte texture, byte palette)
+        public bool SetClothes(byte component, ushort drawable, byte texture, byte palette)
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetClothes(component, drawable, texture, palette);
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
+                return BaseObject.SetClothes(component, drawable, texture, palette);
             }
         }
 
@@ -644,12 +644,12 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public void SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc)
+        public bool SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc)
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetDlcClothes(component, drawable, texture, palette, dlc);
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
+                return BaseObject.SetDlcClothes(component, drawable, texture, palette, dlc);
             }
         }
 
@@ -671,12 +671,12 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public void SetProps(byte component, ushort drawable, byte texture)
+        public bool SetProps(byte component, ushort drawable, byte texture)
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetProps(component, drawable, texture);
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
+                return BaseObject.SetProps(component, drawable, texture);
             }
         }
 
@@ -698,12 +698,12 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
-        public void SetDlcProps(byte component, ushort drawable, byte texture, uint dlc)
+        public bool SetDlcProps(byte component, ushort drawable, byte texture, uint dlc)
         {
             lock (BaseObject)
             {
-                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
-                BaseObject.SetDlcProps(component, drawable, texture, dlc);
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
+                return BaseObject.SetDlcProps(component, drawable, texture, dlc);
             }
         }
 

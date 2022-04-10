@@ -215,11 +215,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_RemoveWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveWeaponComponent { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetArmor { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, void> Player_SetClothes { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, byte> Player_SetClothes { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, int, int, int, int, int, int, void> Player_SetDateTime { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, uint, void> Player_SetDlcClothes { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, uint, void> Player_SetDlcProps { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, uint, byte> Player_SetDlcClothes { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, uint, byte> Player_SetDlcProps { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte> Player_SetEyeColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, byte> Player_SetFaceFeature { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetHairColor { get; }
@@ -235,7 +235,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetModel { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, void> Player_SetProps { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte> Player_SetProps { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte, void> Player_SetWeaponTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetWeather { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, uint, void> Player_Spawn { get; }
@@ -639,11 +639,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Player_RemoveWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, uint, void> Player_RemoveWeaponComponent { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetArmor { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, void> Player_SetClothes { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, byte> Player_SetClothes { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetCurrentWeapon { get; }
         public delegate* unmanaged[Cdecl]<nint, int, int, int, int, int, int, void> Player_SetDateTime { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, uint, void> Player_SetDlcClothes { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, uint, void> Player_SetDlcProps { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, uint, byte> Player_SetDlcClothes { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, uint, byte> Player_SetDlcProps { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte> Player_SetEyeColor { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, byte> Player_SetFaceFeature { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Player_SetHairColor { get; }
@@ -659,7 +659,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxArmor { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Player_SetMaxHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetModel { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, void> Player_SetProps { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte> Player_SetProps { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte, void> Player_SetWeaponTintIndex { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Player_SetWeather { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, uint, void> Player_Spawn { get; }
@@ -1063,11 +1063,11 @@ namespace AltV.Net.CApi.Libraries
             Player_RemoveWeapon = (delegate* unmanaged[Cdecl]<nint, uint, byte>) NativeLibrary.GetExport(handle, "Player_RemoveWeapon");
             Player_RemoveWeaponComponent = (delegate* unmanaged[Cdecl]<nint, uint, uint, void>) NativeLibrary.GetExport(handle, "Player_RemoveWeaponComponent");
             Player_SetArmor = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Player_SetArmor");
-            Player_SetClothes = (delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, void>) NativeLibrary.GetExport(handle, "Player_SetClothes");
+            Player_SetClothes = (delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, byte>) NativeLibrary.GetExport(handle, "Player_SetClothes");
             Player_SetCurrentWeapon = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Player_SetCurrentWeapon");
             Player_SetDateTime = (delegate* unmanaged[Cdecl]<nint, int, int, int, int, int, int, void>) NativeLibrary.GetExport(handle, "Player_SetDateTime");
-            Player_SetDlcClothes = (delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, uint, void>) NativeLibrary.GetExport(handle, "Player_SetDlcClothes");
-            Player_SetDlcProps = (delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, uint, void>) NativeLibrary.GetExport(handle, "Player_SetDlcProps");
+            Player_SetDlcClothes = (delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte, uint, byte>) NativeLibrary.GetExport(handle, "Player_SetDlcClothes");
+            Player_SetDlcProps = (delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, uint, byte>) NativeLibrary.GetExport(handle, "Player_SetDlcProps");
             Player_SetEyeColor = (delegate* unmanaged[Cdecl]<nint, ushort, byte>) NativeLibrary.GetExport(handle, "Player_SetEyeColor");
             Player_SetFaceFeature = (delegate* unmanaged[Cdecl]<nint, byte, float, byte>) NativeLibrary.GetExport(handle, "Player_SetFaceFeature");
             Player_SetHairColor = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Player_SetHairColor");
@@ -1083,7 +1083,7 @@ namespace AltV.Net.CApi.Libraries
             Player_SetMaxArmor = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Player_SetMaxArmor");
             Player_SetMaxHealth = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Player_SetMaxHealth");
             Player_SetModel = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Player_SetModel");
-            Player_SetProps = (delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, void>) NativeLibrary.GetExport(handle, "Player_SetProps");
+            Player_SetProps = (delegate* unmanaged[Cdecl]<nint, byte, ushort, byte, byte>) NativeLibrary.GetExport(handle, "Player_SetProps");
             Player_SetWeaponTintIndex = (delegate* unmanaged[Cdecl]<nint, uint, byte, void>) NativeLibrary.GetExport(handle, "Player_SetWeaponTintIndex");
             Player_SetWeather = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Player_SetWeather");
             Player_Spawn = (delegate* unmanaged[Cdecl]<nint, Vector3, uint, void>) NativeLibrary.GetExport(handle, "Player_Spawn");

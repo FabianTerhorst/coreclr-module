@@ -691,12 +691,12 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public void SetClothes(byte component, ushort drawable, byte texture, byte palette)
+        public bool SetClothes(byte component, ushort drawable, byte texture, byte palette)
         {
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Server.Player_SetClothes(PlayerNativePointer, component, drawable, texture, palette);
+                return Core.Library.Server.Player_SetClothes(PlayerNativePointer, component, drawable, texture, palette) == 1;
             }
         }
 
@@ -721,7 +721,7 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public void SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc)
+        public bool SetDlcClothes(byte component, ushort drawable, byte texture, byte palette, uint dlc)
         {
             if (drawable > 127)
                 throw new ArgumentOutOfRangeException(nameof(drawable), "Drawable can't be higher than 127");
@@ -729,7 +729,7 @@ namespace AltV.Net.Elements.Entities
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Server.Player_SetDlcClothes(PlayerNativePointer, component, drawable, texture, palette, dlc);
+                return Core.Library.Server.Player_SetDlcClothes(PlayerNativePointer, component, drawable, texture, palette, dlc) == 1;
             }
         }
 
@@ -754,12 +754,12 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public void SetProps(byte component, ushort drawable, byte texture)
+        public bool SetProps(byte component, ushort drawable, byte texture)
         {
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Server.Player_SetProps(PlayerNativePointer, component, drawable, texture);
+                return Core.Library.Server.Player_SetProps(PlayerNativePointer, component, drawable, texture) == 1;
             }
         }
 
@@ -785,12 +785,12 @@ namespace AltV.Net.Elements.Entities
             }
         }
 
-        public void SetDlcProps(byte component, ushort drawable, byte texture, uint dlc)
+        public bool SetDlcProps(byte component, ushort drawable, byte texture, uint dlc)
         {
             unsafe
             {
                 CheckIfEntityExists();
-                Core.Library.Server.Player_SetDlcProps(PlayerNativePointer, component, drawable, texture, dlc);
+                return Core.Library.Server.Player_SetDlcProps(PlayerNativePointer, component, drawable, texture, dlc) == 1;
             }
         }
 
