@@ -17,9 +17,7 @@ namespace AltV.Net.Client.Elements.Pools
 
         TEntity GetOrCreate(ICore server, IntPtr entityPointer, ushort entityId);
         TEntity GetOrCreate(ICore server, IntPtr entityPointer);
-
-        ICollection<TEntity> GetAllEntities();
-
+        
         KeyValuePair<IntPtr, TEntity>[] GetEntitiesArray();
 
         void OnAdd(TEntity entity);

@@ -56,7 +56,7 @@ namespace AltV.Net.Client.Elements.Pools
             return entity;
         }
         
-        IReadOnlyCollection<TEntity> IReadOnlyEntityPool<TEntity>.GetAllEntities()
+        public IReadOnlyCollection<TEntity> GetAllEntities()
         {
             return _entities.Values;
         }
@@ -76,11 +76,6 @@ namespace AltV.Net.Client.Elements.Pools
             return this.GetOrCreate(core, entityPointer, GetId(entityPointer));
         }
 
-        public ICollection<TEntity> GetAllEntities()
-        {
-            return _entities.Values;
-        }
-        
         public KeyValuePair<IntPtr, TEntity>[] GetEntitiesArray()
         {
             var arr = new KeyValuePair<IntPtr, TEntity>[_entities.Count];
