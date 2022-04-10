@@ -22,6 +22,26 @@ namespace AltV.Net.Client
         new INativeResource Resource { get; }
         INatives Natives { get; }
         Voice Voice { get; }
+        bool MinimapIsRectangle { set; }
+        ushort Fps { get; }
+        ushort Ping { get; }
+        uint TotalPacketsLost { get; }
+        ulong TotalPacketsSent { get; }
+        Vector2 ScreenResolution { get; }
+        string LicenseHash { get; }
+        string Locale { get; }
+        string ServerIp { get; }
+        ushort ServerPort { get; }
+        bool IsGameFocused { get; }
+        bool IsInStreamerMode { get; }
+        bool IsMenuOpened { get; }
+        bool IsConsoleOpen { get; }
+        bool CamFrozen { get; set; }
+        Vector3 CamPos { get; }
+        bool GameControlsEnabled { get; set; }
+        bool RmlControlsEnabled { set; }
+        bool VoiceControlsEnabled { set; }
+        int MsPerGameMinute { get; set; }
         IBlip CreatePointBlip(Position position);
         IBlip CreateRadiusBlip(Position position, float radius);
         IBlip CreateAreaBlip(Position position, int width, int height);
@@ -42,5 +62,58 @@ namespace AltV.Net.Client
         DiscordUser? GetDiscordUser();
         void LoadRmlFont(string path, string name, bool italic = false, bool bold = false);
         HandlingData? GetHandlingByModelHash(uint modelHash);
+        Vector3 ScreenToWorld(Vector2 position);
+        void AddGxtText(uint key, string value);
+        string GetGxtText(uint key);
+        void RemoveGxtText(uint key);
+        bool BeginScaleformMovieMethodMinimap(string methodName);
+        void SetMinimapComponentPosition(string name, char alignX, char alignY, float posX, float posY, float sizeX, float sizeY);
+        void CopyToClipboard(string content);
+        PermissionState GetPermissionState(Permission permission);
+        bool IsTextureExistInArchetype(uint modelHash, string targetTextureName);
+        void LoadModel(uint modelHash);
+        void LoadModelAsync(uint modelHash);
+        bool LoadYtyp(string ytypName);
+        bool UnloadYtyp(string ytypName);
+        void RequestIpl(string iplName);
+        void RemoveIpl(string iplName);
+        bool IsKeyDown(ConsoleKey key);
+        bool IsKeyToggled(ConsoleKey key);
+        bool DoesConfigFlagExist(string flagName);
+        bool GetConfigFlag(string flagName);
+        void SetConfigFlag(string flagName, bool value);
+        Vector2 GetCursorPos(bool normalized);
+        void SetCursorPos(Vector2 pos, bool normalized);
+        string GetStatType(string stat);
+        void ResetStat(string stat);
+        void GetStat(string stat, out int value);
+        void GetStat(string stat, out long value);
+        void GetStat(string stat, out float value);
+        void GetStat(string stat, out bool value);
+        void GetStat(string stat, out string value);
+        void GetStat(string stat, out byte value);
+        void GetStat(string stat, out ushort value);
+        void GetStat(string stat, out uint value);
+        void GetStat(string stat, out ulong value);
+        void SetStat(string stat, int value);
+        void SetStat(string stat, long value);
+        void SetStat(string stat, float value);
+        void SetStat(string stat, bool value);
+        void SetStat(string stat, string value);
+        void SetStat(string stat, byte value);
+        void SetStat(string stat, ushort value);
+        void SetStat(string stat, uint value);
+        void SetStat(string stat, ulong value);
+        void ClearPedProp(int scriptId, byte component);
+        void SetPedDlcProp(int scriptId, uint dlc, byte component, byte drawable, byte texture);
+        void SetPedDlcClothes(int scriptId, uint dlc, byte component, byte drawable, byte texture, byte palette);
+        void SetRotationVelocity(int scriptId, Rotation velocity);
+        void SetWatermarkPosition(WatermarkPosition position);
+        string StringToSha256(string value);
+        void SetWeatherCycle(byte[] weathers, byte[] multipliers);
+        void SetWeatherSyncActive(bool state);
+        string GetHeadshotBase64(byte id);
+        Task<string> TakeScreenshot();
+        Task<string> TakeScreenshotGameOnly();
     }
 }

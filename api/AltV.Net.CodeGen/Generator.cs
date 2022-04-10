@@ -62,7 +62,7 @@ namespace AltV.Net.CodeGen
                             ? matchArg.Groups["typeOverride"].Value 
                             : CsTypes.FirstOrDefault(t => t.Key == argType).Value;
                      
-                        if (csArgType is null) throw new Exception($"Unknown arg type \"{type}\" in method \"{name}\" at index {i}");
+                        if (csArgType is null) throw new Exception($"Unknown arg type \"{argType}\" in method \"{name}\" at index {i}");
                         
                         args.Add(new CMethodParam
                         {
@@ -166,8 +166,10 @@ namespace AltV.Net.CodeGen
             {"alt::IWorldObject*", "nint"},
             {"alt::IBaseObject*", "nint"},
             {"alt::IResource*", "nint"},
+            {"alt::IResource**", "nint"},
             {"alt::IWebView*", "nint"},
             {"alt::ILocalStorage*", "nint"},
+            {"alt::IStatData*", "nint"},
             {"alt::IRmlDocument*", "nint"},
             {"alt::IRmlElement*", "nint"},
             {"alt::IRmlElement**", "nint"},
@@ -179,6 +181,7 @@ namespace AltV.Net.CodeGen
             {"int8_t", "sbyte"},
             {"int8_t&", "sbyte*"},
             {"uint8_t", "byte"},
+            {"uint8_t[]", "byte[]"},
             {"uint8_t&", "byte*"},
             {"int16_t", "short"},
             {"int16_t&", "short*"},

@@ -68,7 +68,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint*, void> Core_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetNetTime { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, void> Core_GetRootDirectory { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetVehicleModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ulong> Core_HashPassword { get; }
@@ -418,7 +417,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint*, void> Core_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetNetTime { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint*, void> Core_GetRootDirectory { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetVehicleModelInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, ulong> Core_HashPassword { get; }
@@ -768,7 +766,6 @@ namespace AltV.Net.CApi.Libraries
             Core_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_FileExists");
             Core_FileRead = (delegate* unmanaged[Cdecl]<nint, nint, nint*, void>) NativeLibrary.GetExport(handle, "Core_FileRead");
             Core_GetNetTime = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Core_GetNetTime");
-            Core_GetResource = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_GetResource");
             Core_GetRootDirectory = (delegate* unmanaged[Cdecl]<nint, nint*, void>) NativeLibrary.GetExport(handle, "Core_GetRootDirectory");
             Core_GetVehicleModelInfo = (delegate* unmanaged[Cdecl]<nint, uint, nint>) NativeLibrary.GetExport(handle, "Core_GetVehicleModelInfo");
             Core_HashPassword = (delegate* unmanaged[Cdecl]<nint, nint, ulong>) NativeLibrary.GetExport(handle, "Core_HashPassword");

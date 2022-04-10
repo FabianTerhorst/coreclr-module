@@ -337,16 +337,6 @@ namespace AltV.Net.Client
         }
         #endregion
         
-        public Vector2 WorldToScreen(Vector3 position)
-        {
-            unsafe
-            {
-                var result = Vector2.Zero;
-                Library.Client.Core_WorldToScreen(NativePointer, position, &result);
-                return result;
-            }
-        }
-        
         public void LoadRmlFont(string path, string name, bool italic = false, bool bold = false)
         {
             unsafe
