@@ -186,9 +186,7 @@ namespace AltV.Net.Client
             {
                 Marshal.Copy(pointer, args, 0, (int) size);
             }
-            
-            Alt.Log($"Server event \"{name}\" called. Parsed {args.Length} arguments");
-            
+
             _core.OnServerEvent(name, args);
         }
 
@@ -199,9 +197,7 @@ namespace AltV.Net.Client
             {
                 Marshal.Copy(pointer, args, 0, (int) size);
             }
-            
-            Alt.Log($"Client event \"{name}\" called. Parsed {args.Length} arguments");
-            
+
             _core.OnClientEvent(name, args);
         }
         
