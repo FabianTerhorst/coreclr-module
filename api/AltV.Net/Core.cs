@@ -623,7 +623,7 @@ namespace AltV.Net
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(name);
-                var resourcePointer = Library.Server.Core_GetResource(NativePointer, stringPtr);
+                var resourcePointer = Library.Shared.Core_GetResource(NativePointer, stringPtr);
                 Marshal.FreeHGlobal(stringPtr);
                 return !NativeResourcePool.GetOrCreate(this, resourcePointer, out var nativeResource)
                     ? null
