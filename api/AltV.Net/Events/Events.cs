@@ -74,4 +74,6 @@ namespace AltV.Net.Events
     public delegate void ConnectionQueueAddDelegate(IConnectionInfo connectionInfo);
     
     public delegate void ConnectionQueueRemoveDelegate(IConnectionInfo connectionInfo);
+
+    public delegate void ServerStartedDelegate();
 }

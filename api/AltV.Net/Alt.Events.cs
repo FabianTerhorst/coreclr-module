@@ -242,5 +242,11 @@ namespace AltV.Net
             add => CoreImpl.ConnectionQueueRemoveHandler.Add(value);
             remove => CoreImpl.ConnectionQueueRemoveHandler.Remove(value);
         }
+        
+        public static event ServerStartedDelegate OnServerStarted
+        {
+            add => CoreImpl.ServerStartedHandler.Add(value);
+            remove => CoreImpl.ServerStartedHandler.Remove(value);
+        }
     }
 }

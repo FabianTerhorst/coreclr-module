@@ -113,6 +113,9 @@ namespace AltV.Net
         internal readonly IEventHandler<ConnectionQueueRemoveDelegate> ConnectionQueueRemoveHandler =
             new HashSetEventHandler<ConnectionQueueRemoveDelegate>();
         
+        internal readonly IEventHandler<ServerStartedDelegate> ServerStartedHandler =
+            new HashSetEventHandler<ServerStartedDelegate>();
+        
         
         public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
             bool state)
@@ -1214,7 +1217,6 @@ namespace AltV.Net
                 ((IInternalNative) connectionInfo).Exists = false;
             }
         }
-
         public virtual void OnConnectionQueueRemoveEvent(IConnectionInfo connectionInfo)
         {
             foreach (var @delegate in ConnectionQueueRemoveHandler.GetEvents())
@@ -1230,6 +1232,30 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnConnectionQueueRemoveEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public virtual void OnServerStarted()
+        {
+            OnServerStartedEvent();
+        }
+
+        public virtual void OnServerStartedEvent()
+        {
+            foreach (var @delegate in ServerStartedHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate();
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnServerStartedEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnServerStartedEvent" + ":" + exception);
                 }
             }
         }

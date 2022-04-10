@@ -482,6 +482,16 @@ namespace AltV.Net
                                             scriptFunction.Call();
                                         };
                                     break;
+                                case ScriptEventType.ServerStarted:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        Array.Empty<Type>());
+                                    if (scriptFunction == null) return;
+                                    OnServerStarted +=
+                                        () =>
+                                        {
+                                            scriptFunction.Call();
+                                        };
+                                    break;
                                 default:
                                     throw new ArgumentOutOfRangeException();
                             }

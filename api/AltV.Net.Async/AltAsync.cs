@@ -189,6 +189,12 @@ namespace AltV.Net.Async
             add => Core.ConnectionQueueRemoveAsyncEventHandler.Add(value);
             remove => Core.ConnectionQueueRemoveAsyncEventHandler.Remove(value);
         }
+        
+        public static event ServerStartedAsyncDelegate OnServerStarted
+        {
+            add => Core.ServerStartedAsyncEventHandler.Add(value);
+            remove => Core.ServerStartedAsyncEventHandler.Remove(value);
+        }
 
         public static async void Log(string message)
         {

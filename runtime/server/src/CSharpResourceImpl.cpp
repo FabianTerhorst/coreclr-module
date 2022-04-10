@@ -58,6 +58,7 @@ void CSharpResourceImpl::ResetDelegates() {
         auto var8, auto var9) {};
     OnConnectionQueueAddDelegate = [](auto var){};
     OnConnectionQueueRemoveDelegate = [](auto var){};
+    OnServerStartedDelegate = []() {};
 }
 
 bool CSharpResourceImpl::Start() {
@@ -482,6 +483,10 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             connectionInfo->RemoveRef();
             break;
         }
+        case alt::CEvent::Type::SERVER_STARTED: {
+            OnServerStartedDelegate();
+            break;
+        }
     }
     return true;
 }
@@ -788,6 +793,11 @@ void CSharpResourceImpl_SetConnectionQueueAddDelegate(CSharpResourceImpl* resour
 void CSharpResourceImpl_SetConnectionQueueRemoveDelegate(CSharpResourceImpl* resource,
                                                       ConnectionQueueRemoveDelegate_t delegate) {
     resource->OnConnectionQueueRemoveDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetServerStartedDelegate(CSharpResourceImpl* resource,
+                                                      ServerStartedDelegate_t delegate) {
+    resource->OnServerStartedDelegate = delegate;
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files) {
