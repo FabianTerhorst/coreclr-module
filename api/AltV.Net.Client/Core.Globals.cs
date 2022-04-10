@@ -12,6 +12,18 @@ namespace AltV.Net.Client
 {
     public partial class Core
     {
+        public void LoadRmlFont(string path, string name, bool italic = false, bool bold = false)
+        {
+            unsafe
+            {
+                var pathPtr = MemoryUtils.StringToHGlobalUtf8(path);
+                var namePtr = MemoryUtils.StringToHGlobalUtf8(name);
+                Library.Client.Core_LoadRmlFont(NativePointer, Resource.NativePointer, pathPtr, namePtr, (byte) (italic ? 1 : 0), (byte) (bold ? 1 : 0));
+                Marshal.FreeHGlobal(pathPtr);
+                Marshal.FreeHGlobal(namePtr);
+            }
+        }
+        
         public Vector2 WorldToScreen(Vector3 position)
         {
             unsafe
