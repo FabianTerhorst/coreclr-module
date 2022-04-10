@@ -34,6 +34,40 @@ namespace AltV.Net.Shared
         public abstract IReadOnlyEntityPool<ISharedVehicle> VehiclePool { get; }
         public abstract IReadOnlyBaseBaseObjectPool BaseBaseObjectPool { get; }
 
+        private string? sdkVersion;
+        public string SdkVersion
+        {
+            get
+            {
+                unsafe
+                {
+                    if (sdkVersion != null) return sdkVersion;
+                    var size = 0;
+                    sdkVersion = PtrToStringUtf8AndFree(
+                        Library.Shared.GetSDKVersion(&size), size);
+
+                    return sdkVersion;
+                }
+            }
+        }
+
+        private string? cApiVersion;
+        public string CApiVersion
+        {
+            get
+            {
+                unsafe
+                {
+                    if (cApiVersion != null) return cApiVersion;
+                    var size = 0;
+                    cApiVersion = PtrToStringUtf8AndFree(
+                        Library.Shared.GetCApiVersion(&size), size);
+
+                    return cApiVersion;
+                }
+            }
+        }
+
         private string? version;
         public string Version
         {

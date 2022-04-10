@@ -45,6 +45,8 @@ namespace AltV.Net.Client
 
         public static string Branch => Core.Branch;
         public static string Version => Core.Version;
+        public static string SdkVersion => Core.SdkVersion;
+        public static string CApiVersion => Core.CApiVersion;
         public static bool IsDebug => Core.IsDebug;
 
         public static IReadOnlyCollection<IPlayer> GetAllPlayers() => Core.PlayerPool.GetAllEntities();

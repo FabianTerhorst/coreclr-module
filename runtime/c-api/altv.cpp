@@ -2,6 +2,7 @@
 
 #include <string.h>
 #include "version/version.h"
+#include "../cpp-sdk/version/version.h"
 
 #ifdef __clang__
 #pragma clang diagnostic push
@@ -60,6 +61,10 @@ const char* GetBranchStatic(int32_t &size) {
 
 const char* GetCApiVersion(int32_t &size) {
     return AllocateString(CSHARP_VERSION, size);
+}
+
+const char* GetSDKVersion(int32_t &size) {
+    return AllocateString(ALT_SDK_VERSION, size);
 }
 
 #ifdef ALT_CLIENT_API

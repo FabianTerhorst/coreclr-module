@@ -138,6 +138,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetBranchStatic { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetCApiVersion { get; }
+        public delegate* unmanaged[Cdecl]<int*, nint> GetSDKVersion { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetVersionStatic { get; }
         public delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint> Invoker_Create { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Invoker_Destroy { get; }
@@ -337,6 +338,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetBranchStatic { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetCApiVersion { get; }
+        public delegate* unmanaged[Cdecl]<int*, nint> GetSDKVersion { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetVersionStatic { get; }
         public delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint> Invoker_Create { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Invoker_Destroy { get; }
@@ -536,6 +538,7 @@ namespace AltV.Net.CApi.Libraries
             FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) NativeLibrary.GetExport(handle, "FreeUIntArray");
             GetBranchStatic = (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetBranchStatic");
             GetCApiVersion = (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetCApiVersion");
+            GetSDKVersion = (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetSDKVersion");
             GetVersionStatic = (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetVersionStatic");
             Invoker_Create = (delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint>) NativeLibrary.GetExport(handle, "Invoker_Create");
             Invoker_Destroy = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Invoker_Destroy");

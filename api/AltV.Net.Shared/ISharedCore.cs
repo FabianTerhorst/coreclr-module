@@ -18,6 +18,10 @@ namespace AltV.Net.Shared
 
         IntPtr NativePointer { get; }
 
+        string SdkVersion { get; }
+
+        string CApiVersion { get; }
+
         string Version { get; }
         
         string Branch { get; }

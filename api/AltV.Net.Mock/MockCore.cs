@@ -20,6 +20,8 @@ namespace AltV.Net.Mock
             return GetEntityById(id);
         }
         public IntPtr NativePointer { get; }
+        public string SdkVersion { get; }
+        public string CApiVersion { get; }
 
         public ILibrary Library { get; }
 
