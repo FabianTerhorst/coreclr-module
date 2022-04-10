@@ -357,6 +357,46 @@ namespace AltV.Net.Elements.Entities
             Rotation rotation,
             bool collision, bool noFixedRotation);
 
+        public bool Frozen
+        {
+            get
+            {
+                CheckIfEntityExists();
+                unsafe
+                {
+                    return Core.Library.Server.Entity_IsFrozen(EntityNativePointer) == 1;
+                }
+            }
+            set
+            {
+                CheckIfEntityExists();
+                unsafe
+                {
+                    Core.Library.Server.Entity_SetFrozen(EntityNativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
+        public bool Collision
+        {
+            get
+            {
+                CheckIfEntityExists();
+                unsafe
+                {
+                    return Core.Library.Server.Entity_HasCollision (EntityNativePointer) == 1;
+                }
+            }
+            set
+            {
+                CheckIfEntityExists();
+                unsafe
+                {
+                    Core.Library.Server.Entity_SetCollision(EntityNativePointer, value ? (byte) 1 : (byte) 0);
+                }
+            }
+        }
+
         public abstract void Detach();
 
         protected Entity(ICore core, IntPtr nativePointer, BaseObjectType type, ushort id) : base(core, GetWorldObjectNativePointer(core, nativePointer), type)

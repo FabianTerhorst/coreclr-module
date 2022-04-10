@@ -160,6 +160,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Entity_HasCollision { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Entity_IsFrozen { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetCollision { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Entity_SetNetOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation, void> Entity_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetStreamed { get; }
@@ -584,6 +588,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Entity_DeleteSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetStreamed { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Entity_GetVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Entity_HasCollision { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Entity_IsFrozen { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetCollision { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Entity_SetNetOwner { get; }
         public delegate* unmanaged[Cdecl]<nint, Rotation, void> Entity_SetRotation { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Entity_SetStreamed { get; }
@@ -1008,6 +1016,10 @@ namespace AltV.Net.CApi.Libraries
             Entity_DeleteSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Entity_DeleteSyncedMetaData");
             Entity_GetStreamed = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Entity_GetStreamed");
             Entity_GetVisible = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Entity_GetVisible");
+            Entity_HasCollision = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Entity_HasCollision");
+            Entity_IsFrozen = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Entity_IsFrozen");
+            Entity_SetCollision = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Entity_SetCollision");
+            Entity_SetFrozen = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Entity_SetFrozen");
             Entity_SetNetOwner = (delegate* unmanaged[Cdecl]<nint, nint, byte, void>) NativeLibrary.GetExport(handle, "Entity_SetNetOwner");
             Entity_SetRotation = (delegate* unmanaged[Cdecl]<nint, Rotation, void>) NativeLibrary.GetExport(handle, "Entity_SetRotation");
             Entity_SetStreamed = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Entity_SetStreamed");
