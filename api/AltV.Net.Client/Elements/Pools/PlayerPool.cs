@@ -20,7 +20,6 @@ namespace AltV.Net.Client.Elements.Pools
             {
                 var localPlayerPointer = core.Library.Client.Player_GetLocal();
                 var id = core.Library.Client.LocalPlayer_GetID(localPlayerPointer);
-                Alt.Log("Local player has ID " + id);
                 
                 var localPlayer = ((IPlayerFactory) _entityFactory).GetLocalPlayer(Alt.Core, localPlayerPointer, id);
                 this.Add(localPlayer);

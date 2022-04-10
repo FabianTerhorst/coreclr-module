@@ -73,13 +73,10 @@ namespace AltV.Net.Client
         public void OnWebViewEvent(IntPtr webViewPtr, string name, IntPtr[] args)
         {
             var mValues = MValueConst.CreateFrom(this, args);
-            Alt.Log($"WebViewPtr: {webViewPtr}. Existing keys: {string.Join(", ", WebViewEventBus.Keys)}");
             if (!WebViewEventBus.ContainsKey(webViewPtr)) return;
-            Alt.Log("71");
             WebViewEventBus.TryGetValue(webViewPtr, out var handlers);
             if (handlers == null) return;
             if (!handlers.ContainsKey(name)) return;
-            Alt.Log("75");
             foreach (var function in handlers[name])
             {
                 function.CallCatching(mValues, $"web view event {name} handler");
@@ -182,13 +179,13 @@ namespace AltV.Net.Client
 
         public void OnCreateVehicle(IntPtr pointer, ushort id)
         {
-            Alt.Log("-- Creating vehicle " + id + " " + pointer);
+            Alt.Log("Creating vehicle " + id + " " + pointer);
             VehiclePool.Create(this, pointer, id);
         }
 
         public void OnRemoveVehicle(IntPtr pointer)
         {
-            Alt.Log("-- Removing vehicle " + pointer);
+            Alt.Log("Removing vehicle " + pointer);
             VehiclePool.Remove(pointer);
         }
         
@@ -224,26 +221,22 @@ namespace AltV.Net.Client
 
         public Function AddWebViewEventListener(IntPtr webViewPtr, string name, Function function)
         {
-            Alt.LogInfo($"Adding Listener for WebView: {webViewPtr} Name: {name}");
             if (WebViewEventBus.TryGetValue(webViewPtr, out var eventHandlers))
             {
                 if (eventHandlers.TryGetValue(name, out var eventHandler))
                 {
                     eventHandler.Add(function);
-                    Alt.LogInfo("[Core] WebView Value Exists");
                 }
                 else
                 {
                     eventHandler = new HashSet<Function> {function};
                     eventHandlers[name] = eventHandler;
-                    Alt.LogInfo("[Core] WebView Value Created");
                 }
             }
             else
             {
                 eventHandlers = new Dictionary<string, HashSet<Function>> {{name, new HashSet<Function> {function}}};
                 WebViewEventBus[webViewPtr] = eventHandlers;
-                Alt.LogInfo("[Core] Created WebView Key and Value");
             }
             return function;
         }
