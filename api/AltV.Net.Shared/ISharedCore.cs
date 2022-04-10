@@ -18,6 +18,12 @@ namespace AltV.Net.Shared
 
         IntPtr NativePointer { get; }
 
+        string Version { get; }
+        
+        string Branch { get; }
+        
+        bool IsDebug { get; }
+
         void LogInfo(string message);
         
         uint Hash(string hash);
@@ -94,5 +100,17 @@ namespace AltV.Net.Shared
 
         void CreateMValues(MValueConst[] mValues, object[] objects);
         #endregion
+
+        void SetMetaData(string key, object value);
+
+        bool HasMetaData(string key);
+
+        void DeleteMetaData(string key);
+
+        void GetMetaData(string key, out MValueConst value);
+
+        bool HasSyncedMetaData(string key);
+
+        void GetSyncedMetaData(string key, out MValueConst value);
     }
 }

@@ -167,6 +167,21 @@ void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type) {
     return nullptr;
 }
 
+alt::IResource* Core_GetResource(alt::ICore* core, const char* resourceName) {
+    return core->GetResource(resourceName);
+}
+
+alt::IResource** Core_GetAllResources(alt::ICore* core, uint32_t& size) {
+    auto vector = core->GetAllResources();
+    size = vector.size();
+    auto out = new alt::IResource*[size];
+    for (auto i = 0; i < size; i++) {
+        out[i] = vector[i];
+    }
+
+    return out;
+}
+
 
 uint8_t Core_IsDebug(alt::ICore* core) {
     return core->IsDebug();
@@ -178,6 +193,36 @@ const char* Core_GetVersion(alt::ICore* core, int32_t &size) {
 
 const char* Core_GetBranch(alt::ICore* core, int32_t &size) {
     return AllocateString(core->GetBranch(), size);
+}
+
+
+void Core_DestroyBaseObject(alt::ICore* core, alt::IBaseObject* baseObject) {
+    return core->DestroyBaseObject(baseObject);
+}
+
+alt::MValueConst* Core_GetMetaData(alt::ICore* core, const char* key) {
+    return new alt::MValueConst(core->GetMetaData(key));
+}
+
+void Core_SetMetaData(alt::ICore* core, const char* key, alt::MValueConst* val) {
+    if (val == nullptr) return;
+    core->SetMetaData(key, val->Get()->Clone());
+}
+
+uint8_t Core_HasMetaData(alt::ICore* core, const char* key) {
+    return core->HasMetaData(key);
+}
+
+void Core_DeleteMetaData(alt::ICore* core, const char* key) {
+    core->DeleteMetaData(key);
+}
+
+alt::MValueConst* Core_GetSyncedMetaData(alt::ICore* core, const char* key) {
+    return new alt::MValueConst(core->GetSyncedMetaData(key));
+}
+
+uint8_t Core_HasSyncedMetaData(alt::ICore* core, const char* key) {
+    return core->HasSyncedMetaData(key);
 }
 
 
@@ -282,10 +327,6 @@ alt::IBlip* Core_CreateBlipAttached(alt::ICore* core, alt::IPlayer* target, uint
     return core->CreateBlip(target, (alt::IBlip::BlipType) type, attachTo).Get();
 }
 
-alt::IResource* Core_GetResource(alt::ICore* core, const char* resourceName) {
-    return core->GetResource(resourceName);
-}
-
 ClrVehicleModelInfo* Core_GetVehicleModelInfo(alt::ICore* core, uint32_t hash) {
     return new ClrVehicleModelInfo(core->GetVehicleModelByHash(hash));
 }
@@ -360,10 +401,6 @@ void Core_DestroyVehicle(alt::ICore* core, alt::IVehicle* baseObject) {
     return core->DestroyBaseObject(baseObject);
 }
 
-void Core_DestroyBlip(alt::ICore* core, alt::IBlip* baseObject) {
-    return core->DestroyBaseObject(baseObject);
-}
-
 void Core_DestroyCheckpoint(alt::ICore* core, alt::ICheckpoint* baseObject) {
     return core->DestroyBaseObject(baseObject);
 }
@@ -396,34 +433,9 @@ void Core_RestartResource(alt::ICore* core, const char* text) {
     core->RestartResource(text);
 }
 
-alt::MValueConst* Core_GetMetaData(alt::ICore* core, const char* key) {
-    return new alt::MValueConst(core->GetMetaData(key));
-}
-
-void Core_SetMetaData(alt::ICore* core, const char* key, alt::MValueConst* val) {
-    if (val == nullptr) return;
-    core->SetMetaData(key, val->Get()->Clone());
-}
-
-uint8_t Core_HasMetaData(alt::ICore* core, const char* key) {
-    return core->HasMetaData(key);
-}
-
-void Core_DeleteMetaData(alt::ICore* core, const char* key) {
-    core->DeleteMetaData(key);
-}
-
-alt::MValueConst* Core_GetSyncedMetaData(alt::ICore* core, const char* key) {
-    return new alt::MValueConst(core->GetSyncedMetaData(key));
-}
-
 void Core_SetSyncedMetaData(alt::ICore* core, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
     core->SetSyncedMetaData(key, val->Get()->Clone());
-}
-
-uint8_t Core_HasSyncedMetaData(alt::ICore* core, const char* key) {
-    return core->HasSyncedMetaData(key);
 }
 
 void Core_DeleteSyncedMetaData(alt::ICore* core, const char* key) {
@@ -440,5 +452,451 @@ void Core_SetPassword(alt::ICore* core, const char* value) {
 
 void Core_StopServer(alt::ICore* core) {
     core->StopServer();
+}
+#endif
+
+#ifdef ALT_CLIENT_API
+alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position) {
+    alt::Position pos;
+    pos.x = position.x;
+    pos.y = position.y;
+    pos.z = position.z;
+    auto blip = core->CreateBlip(alt::IBlip::BlipType::DESTINATION, pos);
+    if (blip.IsEmpty()) return nullptr;
+    return blip.Get();
+}
+
+alt::IBlip* Core_Client_CreateRadiusBlip(alt::ICore* core, vector3_t position, float radius) {
+    alt::Position pos;
+    pos.x = position.x;
+    pos.y = position.y;
+    pos.z = position.z;
+    auto blip = core->CreateBlip(pos, radius);
+    if (blip.IsEmpty()) return nullptr;
+    return blip.Get();
+}
+
+alt::IBlip* Core_Client_CreateAreaBlip(alt::ICore* core, vector3_t position, float width, float height) {
+    alt::Position pos;
+    pos.x = position.x;
+    pos.y = position.y;
+    pos.z = position.z;
+    auto blip = core->CreateBlip(pos, width, height);
+    if (blip.IsEmpty()) return nullptr;
+    return blip.Get();
+}
+
+alt::IWebView* Core_CreateWebView(alt::ICore* core, alt::IResource* resource, const char* url, vector2_t pos, vector2_t size, uint8_t isOverlay) {
+    auto webView = core->CreateWebView(resource, url, { pos.x, pos.y }, { size.x, size.y }, true, isOverlay);
+    if (webView.IsEmpty()) return nullptr;
+    return webView.Get();
+}
+
+alt::IWebView* Core_CreateWebView3D(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t hash, const char* targetTexture) {
+    auto webView = core->CreateWebView(resource, url, hash, targetTexture);
+    if (webView.IsEmpty()) return nullptr;
+    return webView.Get();
+}
+
+alt::IRmlDocument* Core_CreateRmlDocument(alt::ICore* core, alt::IResource* resource, const char* url) {
+    return core->CreateDocument(url, resource->GetMain(), resource).Get();
+}
+
+
+void Core_TriggerWebViewEvent(alt::ICore* core, alt::IWebView* webview, const char* event, alt::MValueConst* args[], int size) {
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        ToMValueArg(mValues, core, args[i], i);
+    }
+    webview->Trigger(event, mValues);
+}
+
+void Core_TriggerServerEvent(alt::ICore* core, const char* event, alt::MValueConst* args[], int size) {
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        ToMValueArg(mValues, core, args[i], i);
+    }
+    core->TriggerServerEvent(event, mValues);
+}
+
+void Core_ShowCursor(alt::ICore* core, alt::IResource* resource, bool state) {
+    if(!resource->ToggleCursor(state))
+    {
+        core->LogWarning("Cursor state can't go < 0");
+    }
+}
+
+
+ClrDiscordUser* Core_GetDiscordUser(alt::ICore* core) {
+    auto manager = core->GetDiscordManager();
+    if (!manager->IsUserDataReady()) return nullptr;
+    return new ClrDiscordUser(manager);
+}
+
+void Core_DeallocDiscordUser(ClrDiscordUser* user) {
+    delete user;
+}
+
+
+void Core_WorldToScreen(alt::ICore* core, vector3_t in, vector2_t& out) {
+    auto vec = core->WorldToScreen({ in.x, in.y, in.z });
+    out.x = vec[0];
+    out.y = vec[1];
+}
+
+void Core_ScreenToWorld(alt::ICore* core, vector2_t in, vector3_t& out) {
+    auto vec = core->ScreenToWorld({ in.x, in.y });
+    out.x = vec[0];
+    out.y = vec[1];
+    out.z = vec[2];
+}
+
+void Core_LoadRmlFont(alt::ICore* core, alt::IResource* resource, const char* path, const char* name, uint8_t italic, uint8_t bold) {
+    core->LoadRmlFontFace(resource, path, resource->GetMain(), name, italic, bold);
+}
+
+uint32_t Core_GetVoiceActivationKey(alt::ICore* core) {
+    return core->GetVoiceActivationKey();
+}
+
+uint8_t Core_IsVoiceActivityInputEnabled(alt::ICore* core) {
+    return core->IsVoiceActivationEnabled();
+}
+
+uint8_t Core_GetVoiceInputMuted(alt::ICore* core) {
+    return core->IsVoiceInputMuted();
+}
+
+void Core_SetVoiceInputMuted(alt::ICore* core, uint8_t value) {
+    core->SetVoiceInputMuted(value);
+}
+
+
+uint8_t Core_BeginScaleformMovieMethodMinimap(alt::ICore* core, const char* methodName) {
+    return core->BeginScaleformMovieMethodMinimap(methodName);
+}
+
+void Core_SetMinimapComponentPosition(alt::ICore* core, const char* name, uint8_t alignX, uint8_t alignY, float posX, float posY, float sizeX, float sizeY) {
+    core->SetMinimapComponentPosition(name, (char) alignX, (char) alignY, { posX, posY }, { sizeX, sizeY });
+}
+
+void Core_SetMinimapIsRectangle(alt::ICore* core, uint8_t state) {
+    core->SetMinimapIsRectangle(state);
+}
+
+
+uint8_t Core_CopyToClipboard(alt::ICore* core, const char* value) {
+    return (uint8_t) core->CopyToClipboard(value);
+}
+
+uint16_t Core_GetFPS(alt::ICore* core) {
+    return core->GetFps();
+}
+
+uint16_t Core_GetPing(alt::ICore* core) {
+    return core->GetPing();
+}
+
+uint32_t Core_GetTotalPacketsLost(alt::ICore* core) {
+    return core->GetTotalPacketsLost();
+}
+
+uint64_t Core_GetTotalPacketsSent(alt::ICore* core) {
+    return core->GetTotalPacketsSent();
+}
+
+void Core_GetScreenResolution(alt::ICore* core, vector2_t& out) {
+    auto vec = core->GetScreenResolution();
+    out.x = (float) vec[0];
+    out.y = (float) vec[1];
+}
+
+const char* Core_GetLicenseHash(alt::ICore* core, int32_t& size) {
+    return AllocateString(core->GetLicenseHash(), size);
+}
+
+const char* Core_GetLocale(alt::ICore* core, int32_t& size) {
+    return AllocateString(core->GetLocale(), size);
+}
+
+uint8_t Core_GetPermissionState(alt::ICore* core, uint8_t permission) {
+    return (uint8_t) core->GetPermissionState((alt::Permission) permission);
+}
+
+const char* Core_GetServerIp(alt::ICore* core, int32_t& size) {
+    return AllocateString(core->GetServerIp(), size);
+}
+
+uint16_t Core_GetServerPort(alt::ICore* core) {
+    return core->GetServerPort();
+}
+
+uint8_t Core_IsGameFocused(alt::ICore* core) {
+    return core->IsGameFocused();
+}
+
+uint8_t Core_IsInStreamerMode(alt::ICore* core) {
+    return core->IsInStreamerMode();
+}
+
+uint8_t Core_IsMenuOpened(alt::ICore* core) {
+    return core->IsMenuOpen();
+}
+
+uint8_t Core_IsConsoleOpen(alt::ICore* core) {
+    return core->IsConsoleOpen();
+}
+
+uint8_t Core_IsTextureExistInArchetype(alt::ICore* core, uint32_t modelHash, const char* targetTextureName) {
+    return core->GetTextureFromDrawable(modelHash, targetTextureName) != nullptr;
+}
+
+void Core_LoadModel(alt::ICore* core, uint32_t modelHash) {
+    core->LoadModel(modelHash);
+}
+
+void Core_LoadModelAsync(alt::ICore* core, uint32_t modelHash) {
+    core->LoadModelAsync(modelHash);
+}
+
+uint8_t Core_LoadYtyp(alt::ICore* core, const char* path) {
+    return core->LoadYtyp(path);
+}
+
+uint8_t Core_UnloadYtyp(alt::ICore* core, const char* path) {
+    return core->UnloadYtyp(path);
+}
+
+void Core_RequestIpl(alt::ICore* core, const char* path) {
+    core->RequestIPL(path);
+}
+
+void Core_RemoveIpl(alt::ICore* core, const char* path) {
+    core->RemoveIPL(path);
+}
+
+uint8_t Core_IsKeyDown(alt::ICore* core, uint32_t key) {
+    return core->GetKeyState(key).IsDown();
+}
+
+uint8_t Core_IsKeyToggled(alt::ICore* core, uint32_t key) {
+    return core->GetKeyState(key).IsToggled();
+}
+
+uint8_t Core_IsCamFrozen(alt::ICore* core) {
+    return core->IsCamFrozen();
+}
+
+void Core_SetCamFrozen(alt::ICore* core, uint8_t value) {
+    core->SetCamFrozen(value);
+}
+
+void Core_GetCamPos(alt::ICore* core, vector3_t& out) {
+    auto vector = core->GetCamPos();
+    out.x = vector[0];
+    out.y = vector[1];
+    out.z = vector[2];
+}
+
+void Core_AddGXTText(alt::ICore* core, alt::IResource* resource, uint32_t key, const char* value) {
+    resource->AddGxtText(key, value);
+}
+
+const char* Core_GetGXTText(alt::ICore* core, alt::IResource* resource, uint32_t key, int32_t& size) {
+    return AllocateString(resource->GetGxtText(key), size);
+}
+
+void Core_RemoveGXTText(alt::ICore* core, alt::IResource* resource, uint32_t key) {
+    resource->RemoveGxtText(key);
+}
+
+uint8_t Core_DoesConfigFlagExist(alt::ICore* core, const char* flag) {
+    return core->DoesConfigFlagExist(flag);
+}
+
+uint8_t Core_GetConfigFlag(alt::ICore* core, const char* flag) {
+    return core->GetConfigFlag(flag);
+}
+
+void Core_SetConfigFlag(alt::ICore* core, const char* flag, uint8_t state) {
+    core->SetConfigFlag(flag, state);
+}
+
+uint8_t Core_AreGameControlsEnabled(alt::ICore* core) {
+    return core->AreControlsEnabled();
+}
+
+void Core_ToggleGameControls(alt::ICore* core, alt::IResource* resource, uint8_t state) {
+    return resource->ToggleGameControls(state);
+}
+
+void Core_ToggleRmlControls(alt::ICore* core, uint8_t state) {
+    core->ToggleRmlControl(state);
+}
+
+void Core_ToggleVoiceControls(alt::ICore* core, uint8_t state) {
+    core->ToggleVoiceControls(state);
+}
+
+void Core_GetCursorPos(alt::ICore* core, vector2_t& out, uint8_t normalized) {
+    auto vector = core->GetCursorPosition(normalized);
+    out.x = vector[0];
+    out.y = vector[1];
+}
+
+void Core_SetCursorPos(alt::ICore* core, vector2_t pos, uint8_t normalized) {
+    core->SetCursorPosition({ pos.x, pos.y }, normalized);
+}
+
+int32_t Core_GetMsPerGameMinute(alt::ICore* core) {
+    return core->GetMsPerGameMinute();
+}
+
+void Core_SetMsPerGameMinute(alt::ICore* core, int32_t ms) {
+    core->SetMsPerGameMinute(ms);
+}
+
+alt::IStatData* Core_GetStatData(alt::ICore* core, const char* stat) {
+    return core->GetStatData(stat);
+}
+
+void Core_ResetStat(alt::ICore* core, const char* stat) {
+    auto data = core->GetStatData(stat);
+    if (data == nullptr) return;
+    data->Reset();
+}
+
+const char* Core_GetStatType(alt::ICore* core, alt::IStatData* stat, int32_t& size) {
+    return AllocateString(stat->GetStatType(), size);
+}
+
+int32_t Core_GetStatInt(alt::ICore* core, alt::IStatData* stat) {
+    return stat->GetInt32Value();
+}
+
+int64_t Core_GetStatLong(alt::ICore* core, alt::IStatData* stat) {
+    return stat->GetInt64Value();
+}
+
+float Core_GetStatFloat(alt::ICore* core, alt::IStatData* stat) {
+    return stat->GetFloatValue();
+}
+
+uint8_t Core_GetStatBool(alt::ICore* core, alt::IStatData* stat) {
+    return stat->GetBoolValue();
+}
+
+const char* Core_GetStatString(alt::ICore* core, alt::IStatData* stat, int32_t& size) {
+    return AllocateString(stat->GetStringValue(), size);
+}
+
+uint8_t Core_GetStatUInt8(alt::ICore* core, alt::IStatData* stat) {
+    return stat->GetUInt8Value();
+}
+
+uint16_t Core_GetStatUInt16(alt::ICore* core, alt::IStatData* stat) {
+    return stat->GetUInt16Value();
+}
+
+uint32_t Core_GetStatUInt32(alt::ICore* core, alt::IStatData* stat) {
+    return stat->GetUInt32Value();
+}
+
+uint64_t Core_GetStatUInt64(alt::ICore* core, alt::IStatData* stat) {
+    return stat->GetUInt64Value();
+}
+
+void Core_SetStatInt(alt::ICore* core, alt::IStatData* stat, int32_t value) {
+    stat->SetInt32Value(value);
+}
+
+void Core_SetStatLong(alt::ICore* core, alt::IStatData* stat, int64_t value) {
+    stat->SetInt64Value(value);
+}
+
+void Core_SetStatFloat(alt::ICore* core, alt::IStatData* stat, float value) {
+    stat->SetFloatValue(value);
+}
+
+void Core_SetStatBool(alt::ICore* core, alt::IStatData* stat, uint8_t value) {
+    stat->SetBoolValue(value);
+}
+
+void Core_SetStatString(alt::ICore* core, alt::IStatData* stat, const char* value) {
+    stat->SetStringValue(value);
+}
+
+void Core_SetStatUInt8(alt::ICore* core, alt::IStatData* stat, uint8_t value) {
+    stat->SetUInt8Value(value);
+}
+
+void Core_SetStatUInt16(alt::ICore* core, alt::IStatData* stat, uint16_t value) {
+    stat->SetUInt16Value(value);
+}
+
+void Core_SetStatUInt32(alt::ICore* core, alt::IStatData* stat, uint32_t value) {
+    stat->SetUInt32Value(value);
+}
+
+void Core_SetStatUInt64(alt::ICore* core, alt::IStatData* stat, uint64_t value) {
+    stat->SetUInt64Value(value);
+}
+
+void Core_ClearPedProp(alt::ICore* core, int32_t scriptID, uint8_t component) {
+    core->ClearProps(scriptID, component);
+}
+
+void Core_SetPedDlcProp(alt::ICore* core, int32_t scriptID, uint32_t dlc, uint8_t component, uint8_t drawable, uint8_t texture) {
+    core->SetDlcProps(scriptID, component, drawable, texture, dlc);
+}
+
+void Core_SetPedDlcClothes(alt::ICore* core, int32_t scriptID, uint32_t dlc, uint8_t component, uint8_t drawable, uint8_t texture, uint8_t palette) {
+    core->SetDlcClothes(scriptID, component, drawable, texture, palette, dlc);
+}
+
+void Core_SetRotationVelocity(alt::ICore* core, int32_t scriptID, vector3_t velocity) {
+    core->SetAngularVelocity(scriptID, { velocity.x, velocity.y, velocity.z, 0.0 });
+}
+
+void Core_SetWatermarkPosition(alt::ICore* core, uint8_t position) {
+    core->SetWatermarkPosition(position);
+}
+
+const char* Core_StringToSHA256(alt::ICore* core, const char* string, int32_t& size) {
+    return AllocateString(core->StringToSHA256(string), size);
+}
+
+void Core_SetWeatherCycle(alt::ICore* core, uint8_t weathers[], int32_t weathersSize, uint8_t multipliers[], int32_t multipliersSize) {
+    alt::Array<uint8_t> weathersBytes;
+    for (auto i = 0; i < weathersSize; i++) {
+        weathersBytes.Push((uint8_t) weathers[i]);
+    }
+
+    alt::Array<uint8_t> multipliersBytes;
+    for (auto i = 0; i < multipliersSize; i++) {
+        multipliersBytes.Push((uint8_t) multipliers[i]);
+    }
+
+    core->SetWeatherCycle(weathersBytes, multipliersBytes);
+}
+
+void Core_SetWeatherSyncActive(alt::ICore* core, uint8_t state) {
+    core->SetWeatherSyncActive(state);
+}
+
+const char* Core_GetHeadshotBase64(alt::ICore* core, uint8_t id, int32_t& size) {
+    return AllocateString(core->HeadshotToBase64(id), size);
+}
+
+uint8_t Core_TakeScreenshot(alt::ICore* core, ScreenshotDelegate_t delegate) {
+    return (uint8_t) core->TakeScreenshot([delegate](const std::string& str) {
+        delegate(str.c_str());
+    });
+}
+
+uint8_t Core_TakeScreenshotGameOnly(alt::ICore* core, ScreenshotDelegate_t delegate) {
+    return (uint8_t) core->TakeScreenshotGameOnly([delegate](const std::string& str) {
+        delegate(str.c_str());
+    });
 }
 #endif

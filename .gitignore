@@ -346,3 +346,4 @@ libnode.so.64
 libcsharp-module.so
 csharp-module.dll
 runtime/nethost
+runtime/client/build

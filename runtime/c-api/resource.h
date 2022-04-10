@@ -11,6 +11,8 @@
 
 #if ALT_SERVER_API
 #include <CSharpResourceImpl.h>
+#elif ALT_CLIENT_API
+#include "../client/src/runtime/CSharpResourceImpl.h"
 #endif
 
 #ifdef __clang__
@@ -24,6 +26,8 @@ extern "C"
 
 EXPORT_SHARED const char* Resource_GetName(alt::IResource* resource, int32_t& size);
 EXPORT_SHARED const char* Resource_GetType(alt::IResource* resource, int32_t& size);
+
+EXPORT_SHARED CSharpResourceImpl* Resource_GetCSharpImpl(alt::IResource* resource);
     
 EXPORT_SHARED uint64_t Resource_GetExportsCount(alt::IResource* resource);
 EXPORT_SHARED void Resource_GetExports(alt::IResource* resource, const char* keys[], alt::MValueConst* values[]);
@@ -42,9 +46,9 @@ EXPORT_SERVER const char* Resource_GetMain(alt::IResource* resource, int32_t& si
 EXPORT_SERVER void Resource_Start(alt::IResource* resource);
 EXPORT_SERVER void Resource_Stop(alt::IResource* resource);
 
-#ifdef ALT_SERVER_API
-EXPORT_SERVER CSharpResourceImpl* Resource_GetCSharpImpl(alt::IResource* resource);
-#endif
+EXPORT_CLIENT void Resource_GetFile(alt::IResource* resource, const char* path, int* bufferSize, void** buffer);
+EXPORT_CLIENT bool Resource_FileExists(alt::IResource* resource, const char* path);
+EXPORT_CLIENT alt::ILocalStorage* Resource_GetLocalStorage(alt::IResource* resource);
 
 #ifdef __cplusplus
 }

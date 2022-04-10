@@ -320,6 +320,7 @@ namespace AltV.Net.Elements.Args
                     var entityType = BaseObjectType.Undefined;
                     var entityPointer = GetEntityPointer(ref entityType);
                     if (entityPointer == IntPtr.Zero) return null;
+                    // TODO get or create
                     return core.BaseBaseObjectPool.Get(entityPointer, entityType);
                 
                 case Type.Function:

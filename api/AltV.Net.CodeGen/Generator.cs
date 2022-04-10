@@ -14,6 +14,7 @@ namespace AltV.Net.CodeGen
         public string Name;
         public string Target;
         public CMethodParam[] Params;
+        public bool NoGc;
     }
 
     public struct CMethodParam
@@ -24,7 +25,7 @@ namespace AltV.Net.CodeGen
     
     public static class Codegen
     {
-        private static readonly Regex ExportRegex = new(@"EXPORT_(?<target>\w+)\s+(?:(?:const\s+)?(?<type>\S+)\s+(?<name>\S+)\s*\((?<args>.*?)\)|(?<name>\S+)\s*=\s*(?<type>\S+)\s*\(\s*\*\s*\)\s*\((?<args>.*?)\))", RegexOptions.Compiled | RegexOptions.Singleline);
+        private static readonly Regex ExportRegex = new(@"EXPORT_(?<target>\w+)\s+(?:(?<nogc>NO_GC)\s+)?(?:(?:const\s+)?(?<type>\S+)\s+(?<name>\S+)\s*\((?<args>.*?)\)|(?<name>\S+)\s*=\s*(?<type>\S+)\s*\(\s*\*\s*\)\s*\((?<args>.*?)\))", RegexOptions.Compiled | RegexOptions.Singleline);
         private static readonly Regex ArgsRegex = new(@"(?:const\s+)?(?:\/\**\s*(?<typeOverride>.*?)\s*\*\/\s*)?(?<type>.*?)\s*(?<name>[\w\d_\-\[\]]+)(?:,\s*|$)", RegexOptions.Compiled | RegexOptions.Singleline);
         private static readonly Regex CommentRegex = new(@"//.*?(?:$|[\n\r]+)", RegexOptions.Compiled);
         private static readonly Regex TypeExtraSpaceRegex = new(@" {2,}| +(?=[\*\&]+$)", RegexOptions.Compiled);
@@ -42,7 +43,11 @@ namespace AltV.Net.CodeGen
                     var type = match.Groups["type"].Value;
                     var name = match.Groups["name"].Value;
                     var target = match.Groups["target"].Value;
-                    var csReturnType = CsTypes.FirstOrDefault(t => t.Key == type).Value ?? "object";
+                    var nogc = match.Groups["nogc"].Length > 0;
+                    var csReturnType = CsTypes.FirstOrDefault(t => t.Key == type).Value;
+                    
+                    if (csReturnType is null) throw new Exception($"Unknown return type \"{type}\" in method \"{name}\"");
+                    
 
                     var args = new List<CMethodParam>();
                     var matches = ArgsRegex.Matches(match.Groups["args"].Value);
@@ -55,8 +60,10 @@ namespace AltV.Net.CodeGen
 
                         var csArgType = matchArg.Groups.ContainsKey("typeOverride") && matchArg.Groups["typeOverride"].Value is not ""
                             ? matchArg.Groups["typeOverride"].Value 
-                            : CsTypes.FirstOrDefault(t => t.Key == argType).Value ?? "object";
+                            : CsTypes.FirstOrDefault(t => t.Key == argType).Value;
                      
+                        if (csArgType is null) throw new Exception($"Unknown arg type \"{argType}\" in method \"{name}\" at index {i}");
+                        
                         args.Add(new CMethodParam
                         {
                             Name = name,
@@ -70,11 +77,19 @@ namespace AltV.Net.CodeGen
                         ReturnType = csReturnType,
                         Params = args.ToArray(),
                         Target = target,
+                        NoGc = nogc
                     };
                 }
             }
         }
-        
+
+        private static string GetCMethodDelegateType(CMethod method)
+        {
+            var nogc = method.NoGc ? ", SuppressGCTransition" : "";
+            var args = string.Join("", method.Params.Select(p => p.Type + ", "));
+            return $"delegate* unmanaged[Cdecl{nogc}]<{args}{method.ReturnType}>";
+        }
+
         public static void Generate()
         {
             var outputPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "Codegen Output"); 
@@ -83,9 +98,9 @@ namespace AltV.Net.CodeGen
             foreach (var group in ParseMethods().OrderBy(e => e.Name).GroupBy(e => e.Target))
             {
                 var target = group.Key.ForceCapitalize();
-
-                var methods = string.Join("\n", group.Select(e => $"        public delegate* unmanaged[Cdecl]<{string.Join("", e.Params.Select(p => p.Type + ", "))}{e.ReturnType}> {e.Name} {{ get; }}"));
-                var loads = string.Join("\n", group.Select(e => $"            {e.Name} = (delegate* unmanaged[Cdecl]<{string.Join("", e.Params.Select(p => p.Type + ", "))}{e.ReturnType}>) NativeLibrary.GetExport(handle, \"{e.Name}\");"));
+                
+                var methods = string.Join("\n", group.Select(e => $"        public {GetCMethodDelegateType(e)} {e.Name} {{ get; }}"));
+                var loads = string.Join("\n", group.Select(e => $"            {e.Name} = ({GetCMethodDelegateType(e)}) NativeLibrary.GetExport(handle, \"{e.Name}\");"));
                 
                 var output = new StringBuilder();
 
@@ -132,6 +147,7 @@ namespace AltV.Net.CodeGen
             {"short", "short"},
             {"char", "char"},
             {"float", "float"},
+            {"float*", "float*"},
             {"double", "double"},
             {"bool", "bool"},
             {"void", "void"},
@@ -150,6 +166,14 @@ namespace AltV.Net.CodeGen
             {"alt::IWorldObject*", "nint"},
             {"alt::IBaseObject*", "nint"},
             {"alt::IResource*", "nint"},
+            {"alt::IResource**", "nint"},
+            {"alt::IWebView*", "nint"},
+            {"alt::ILocalStorage*", "nint"},
+            {"alt::IStatData*", "nint"},
+            {"alt::IRmlDocument*", "nint"},
+            {"alt::IRmlElement*", "nint"},
+            {"alt::IRmlElement**", "nint"},
+            {"alt::IRmlElement**&", "nint*"},
             {"CSharpResourceImpl*", "nint"},
             {"void**", "nint*"},
             {"alt::MValueConst*", "nint"},
@@ -157,6 +181,7 @@ namespace AltV.Net.CodeGen
             {"int8_t", "sbyte"},
             {"int8_t&", "sbyte*"},
             {"uint8_t", "byte"},
+            {"uint8_t[]", "byte[]"},
             {"uint8_t&", "byte*"},
             {"int16_t", "short"},
             {"int16_t&", "short*"},
@@ -197,6 +222,8 @@ namespace AltV.Net.CodeGen
             { "alt::MValue&", "MValue*" },
             { "alt::MValue*", "MValue*" },
             { "const char*&", "nint*" },
+            { "char**", "nint" },
+            { "char**&", "nint*" },
             { "alt::Array<uint32_t>&", "UIntArray*" },
             { "alt::Array<uint32_t>*", "UIntArray*" },
             { "void*", "nint" },
@@ -246,7 +273,8 @@ namespace AltV.Net.CodeGen
             { "alt::Array<weapon_t>&", "WeaponArray*" },
             { "vector2_t[]", "Vector2[]" },
             { "alt::IConnectionInfo*", "IntPtr" },
-            { "ClrVehicleModelInfo*", "nint" }
+            { "ClrVehicleModelInfo*", "nint" },
+            { "ClrDiscordUser*", "nint" }
         };
         
         public static void Main(string[] args)

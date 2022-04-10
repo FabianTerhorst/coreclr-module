@@ -164,6 +164,24 @@ namespace AltV.Net
             var resultObj = @delegate.DynamicInvoke(invokeValues);
             return returnType == FunctionTypes.Void ? null : resultObj;
         }
+        
+        internal object CallCatching(MValueConst[] values, string exceptionLocation)
+        {
+            try
+            {
+                return this.Call(values);
+            }
+            catch (TargetInvocationException exception)
+            {
+                core.LogError($"Exception at {exceptionLocation}: {exception.InnerException}");
+                return null;
+            }
+            catch (Exception exception)
+            {
+                core.LogError($"Exception at {exceptionLocation}: {exception}");
+                return null;
+            }
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal object[] CalculateInvokeValues(MValueConst[] values)

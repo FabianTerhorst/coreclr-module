@@ -20,16 +20,10 @@ namespace AltV.Net
         IBaseObjectPool<IVoiceChannel> VoiceChannelPool { get; }
         IBaseObjectPool<IColShape> ColShapePool { get; }
         INativeResourcePool NativeResourcePool { get; }
-
-        string Version { get; }
-        
-        string Branch { get; }
         
         int NetTime { get; }
 
         string RootDirectory { get; }
-        
-        bool IsDebug { get; }
 
         INativeResource Resource { get; }
         IBaseEntityPool BaseEntityPool { get; }
@@ -141,22 +135,10 @@ namespace AltV.Net
         void StopResource(string name);
 
         void RestartResource(string name);
-
-        void SetMetaData(string key, object value);
-
-        bool HasMetaData(string key);
-
-        void DeleteMetaData(string key);
-
-        void GetMetaData(string key, out MValueConst value);
         
         void SetSyncedMetaData(string key, object value);
 
-        bool HasSyncedMetaData(string key);
-
         void DeleteSyncedMetaData(string key);
-
-        void GetSyncedMetaData(string key, out MValueConst value);
 
         bool FileExists(string path);
 

@@ -41,6 +41,15 @@ void FreeString(const char* string) {
     delete[] string;
 }
 
+void FreeStringArray(const char** stringArray, uint32_t size) {
+    for (int i = 0; i < size; i++) delete[] stringArray[i];
+    delete[] stringArray;
+}
+
+void FreeResourceArray(alt::IResource** resourceArray) {
+    delete[] resourceArray;
+}
+
 const char* GetVersionStatic(int32_t &size) {
     return AllocateString(alt::ICore::Instance().GetVersion(), size);
 }
@@ -52,3 +61,9 @@ const char* GetBranchStatic(int32_t &size) {
 const char* GetCApiVersion(int32_t &size) {
     return AllocateString(CSHARP_VERSION, size);
 }
+
+#ifdef ALT_CLIENT_API
+void FreeRmlElementArray(alt::IRmlElement** rmlElementArray) {
+    delete[] rmlElementArray;
+}
+#endif

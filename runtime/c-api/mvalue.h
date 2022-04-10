@@ -13,6 +13,8 @@
 
 #ifdef ALT_SERVER_API
 #include <CSharpResourceImpl.h>
+#elif ALT_CLIENT_API
+#include "../client/src/runtime/CSharpResourceImpl.h"
 #endif
 
 #ifdef __clang__

@@ -18,7 +18,7 @@ namespace AltV.Net
                 unsafe
                 {
                     return cSharpResourceImpl ??=
-                        new CSharpResourceImpl(core, core.Library.Server.Resource_GetCSharpImpl(NativePointer));
+                        new CSharpResourceImpl(core, core.Library.Shared.Resource_GetCSharpImpl(NativePointer));
                 }
             }
         }
