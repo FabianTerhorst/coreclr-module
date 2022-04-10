@@ -211,14 +211,14 @@ void RmlElement_GetAttributes(alt::IRmlElement* rmlElement, const char**& keys, 
     auto i = 0;
     for(auto const& el : map) {
         auto keyStr = el.first.c_str();
-        auto keySize = strlen(keyStr);
+        auto keySize = el.first.size();
         auto allocKey = new char[keySize + 1];
         for (auto j = 0; j < keySize; j++) allocKey[j] = keyStr[j];
         allocKey[keySize] = '\0';
         keys[i] = allocKey;
 
         auto valueStr = el.second.c_str();
-        auto valueSize = strlen(valueStr);
+        auto valueSize = el.second.size();
         auto allocValue = new char[valueSize + 1];
         for (auto j = 0; j < valueSize; j++) allocValue[j] = valueStr[j];
         allocValue[valueSize] = '\0';
