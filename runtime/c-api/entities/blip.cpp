@@ -170,16 +170,16 @@ void Blip_SetRotation(alt::IBlip* blip, float rotation) {
     blip->SetRotation(rotation);
 }
 
-void Blip_GetGxtName(alt::IBlip* blip, const char* &name) {
-    name = blip->GetGxtName().CStr();
+const char* Blip_GetGxtName(alt::IBlip* blip, int32_t& size) {
+    return AllocateString(blip->GetGxtName(), size);
 }
 
 void Blip_SetGxtName(alt::IBlip* blip, const char* name) {
     blip->SetGxtName(name);
 }
 
-void Blip_GetName(alt::IBlip* blip, const char* &name) {
-    name = blip->GetName().CStr();
+const char* Blip_GetName(alt::IBlip* blip, int32_t& size) {
+    return AllocateString(blip->GetName(), size);
 }
 
 void Blip_SetName(alt::IBlip* blip, const char* name) {

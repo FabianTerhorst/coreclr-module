@@ -58,7 +58,7 @@ public:
     KeyDownDelegate_t OnKeyDownDelegate = nullptr;
 
 
-    bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<alt::String> files)
+    bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files)
     {
         // When also having a client module that is inteded to be used with this module,
         // change uncomment the next line and change to your own module type
@@ -84,5 +84,5 @@ public:
     }
 
     // Reads a file using the alt:V API, so it works both on server- and clientside
-    alt::String ReadFile(alt::String path);
+    std::string ReadFile(std::string path);
 };

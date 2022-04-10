@@ -11,8 +11,8 @@ extern "C"
 
 EXPORT_SHARED void FreeUIntArray(alt::Array<uint32_t> *array);
 //EXPORT void FreePlayerPointerArray(alt::Array<alt::IPlayer*> *array);
-//EXPORT void FreeStringViewArray(alt::Array<alt::StringView> *array);
-//EXPORT void FreeStringArray(alt::Array<alt::String>* array);
+//EXPORT void FreeStringViewArray(alt::Array<std::stringView> *array);
+//EXPORT void FreeStringArray(alt::Array<std::string>* array);
 /*EXPORT void FreeMValueArray(alt::Array<alt::MValue> *array);*/
 EXPORT_SHARED void FreeCharArray(char charArray[]);
 EXPORT_SHARED void FreeString(const char* string);

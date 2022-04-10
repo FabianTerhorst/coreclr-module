@@ -119,6 +119,8 @@ namespace AltV.Net.Native
             
             internal delegate void ConnectionQueueRemoveDelegate(IntPtr connectionInfoPointer);
 
+            internal delegate void ServerStartedDelegate();
+
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetMainDelegate(IntPtr resource,
                 MainDelegate @delegate);
@@ -310,6 +312,10 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetConnectionQueueRemoveDelegate(IntPtr resource,
                 ConnectionQueueRemoveDelegate @delegate);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetServerStartedDelegate(IntPtr resource,
+                ServerStartedDelegate @delegate);
         }
     }
 }

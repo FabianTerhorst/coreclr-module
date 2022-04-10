@@ -49,7 +49,7 @@ void WebView_SetSize(alt::IWebView* webview, vector2_t size) {
 }
 
 const char* WebView_GetUrl(alt::IWebView* webview, int32_t& size) {
-    return AllocateString(webview->GetUrl().ToString(), size);
+    return AllocateString(webview->GetUrl(), size);
 }
 
 void WebView_SetUrl(alt::IWebView* webview, const char* url) {

@@ -1,6 +1,5 @@
 #include "rml_element.h"
 #include "../utils/strings.h"
-#include "Log.h"
 
 #ifdef ALT_CLIENT_API
 alt::IBaseObject* RmlElement_GetBaseObject(alt::IRmlElement *rmlElement) {

@@ -24,8 +24,8 @@ extern "C"
 {
 #endif
 
-EXPORT_SHARED void Resource_GetName(alt::IResource* resource, const char*&text);
-EXPORT_SHARED void Resource_GetType(alt::IResource* resource, const char*&text);
+EXPORT_SHARED const char* Resource_GetName(alt::IResource* resource, int32_t& size);
+EXPORT_SHARED const char* Resource_GetType(alt::IResource* resource, int32_t& size);
 
 EXPORT_SHARED CSharpResourceImpl* Resource_GetCSharpImpl(alt::IResource* resource);
     
@@ -41,8 +41,8 @@ EXPORT_SHARED void Resource_SetExports(alt::ICore* core, alt::IResource* resourc
 EXPORT_SHARED uint8_t Resource_IsStarted(alt::IResource* resource);
 EXPORT_SHARED alt::IResource::Impl* Resource_GetImpl(alt::IResource* resource);
 
-EXPORT_SERVER void Resource_GetPath(alt::IResource* resource, const char*&text);
-EXPORT_SERVER void Resource_GetMain(alt::IResource* resource, const char*&text);
+EXPORT_SERVER const char* Resource_GetPath(alt::IResource* resource, int32_t& size);
+EXPORT_SERVER const char* Resource_GetMain(alt::IResource* resource, int32_t& size);
 EXPORT_SERVER void Resource_Start(alt::IResource* resource);
 EXPORT_SERVER void Resource_Stop(alt::IResource* resource);
 

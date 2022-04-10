@@ -117,10 +117,9 @@ namespace AltV.Net.Elements.Args
         {
             unsafe
             {
-                var value = IntPtr.Zero;
-                ulong size = 0;
-                core.Library.Shared.MValueConst_GetString(nativePointer, &value, &size);
-                return Marshal.PtrToStringUTF8(value, (int) size);
+                var size = 0;
+                var value = core.Library.Shared.MValueConst_GetString(nativePointer, &size);
+                return core.PtrToStringUtf8AndFree(value, size);
             }
         }
 

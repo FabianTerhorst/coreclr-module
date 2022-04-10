@@ -1377,6 +1377,26 @@ namespace AltV.Net.Async.Elements.Entities
             }
         }
 
+        public bool BoatAnchor
+        {
+            get
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
+                    return BaseObject.BoatAnchor;
+                }
+            }
+            set
+            {
+                lock (BaseObject)
+                {
+                    if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return;
+                    BaseObject.BoatAnchor = value;
+                }
+            }
+        }
+
         public bool SetSearchLight(bool state, IEntity spottedEntity)
         {
             lock (BaseObject)

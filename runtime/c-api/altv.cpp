@@ -2,7 +2,6 @@
 
 #include <string.h>
 #include "version/version.h"
-#include "Log.h"
 
 #ifdef __clang__
 #pragma clang diagnostic push
@@ -18,12 +17,12 @@ void FreeUIntArray(alt::Array<uint32_t>* array) {
     array->~Array<uint32_t>();
 }
 
-/*void FreeStringViewArray(alt::Array<alt::StringView>* array) {
-    array->~Array<alt::StringView>();
+/*void FreeStringViewArray(alt::Array<std::stringView>* array) {
+    array->~Array<std::stringView>();
 }*/
 
-/*void FreeStringArray(alt::Array<alt::String>* array) {
-    array->~Array<alt::String>();
+/*void FreeStringArray(alt::Array<std::string>* array) {
+    array->~Array<std::string>();
 }*/
 
 /*void FreeMValueArray(alt::Array<alt::MValue>* array) {

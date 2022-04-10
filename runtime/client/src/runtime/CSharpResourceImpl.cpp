@@ -3,7 +3,7 @@
 #include <vector>
 #include "CSharpScriptRuntime.h"
 #include "CSharpResourceImpl.h"
-#include "Log.h"
+#include <Log.h>
 #include "CRC.h"
 #include <sstream>
 #include <string>
@@ -40,13 +40,13 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             alt::MValueArgs serverArgs = serverScriptEvent->GetArgs();
             uint64_t size = serverArgs.GetSize();
             if (size == 0) {
-                OnServerEventDelegate(serverScriptEvent->GetName().CStr(), nullptr, 0);
+                OnServerEventDelegate(serverScriptEvent->GetName().c_str(), nullptr, 0);
             } else {
                 auto constArgs = new alt::MValueConst *[size];
                 for (uint64_t i = 0; i < size; i++) {
                     constArgs[i] = &serverArgs[i];
                 }
-                OnServerEventDelegate(serverScriptEvent->GetName().CStr(), constArgs, size);
+                OnServerEventDelegate(serverScriptEvent->GetName().c_str(), constArgs, size);
                 delete[] constArgs;
             }
             break;
@@ -56,13 +56,13 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             alt::MValueArgs serverArgs = clientScriptEvent->GetArgs();
             uint64_t size = serverArgs.GetSize();
             if (size == 0) {
-                OnClientEventDelegate(clientScriptEvent->GetName().CStr(), nullptr, 0);
+                OnClientEventDelegate(clientScriptEvent->GetName().c_str(), nullptr, 0);
             } else {
                 auto constArgs = new alt::MValueConst *[size];
                 for (uint64_t i = 0; i < size; i++) {
                     constArgs[i] = &serverArgs[i];
                 }
-                OnClientEventDelegate(clientScriptEvent->GetName().CStr(), constArgs, size);
+                OnClientEventDelegate(clientScriptEvent->GetName().c_str(), constArgs, size);
                 delete[] constArgs;
             }
             break;
@@ -90,7 +90,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             for (auto i = 0; i < size; i++) {
                 constArgs[i] = &args[i];
             }
-            OnWebViewEventDelegate(webViewEvent->GetTarget().Get(), name.CStr(), constArgs, size);
+            OnWebViewEventDelegate(webViewEvent->GetTarget().Get(), name.c_str(), constArgs, size);
             delete[] constArgs;
             break;
         }
@@ -155,17 +155,17 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
 #pragma region Misc
         case alt::CEvent::Type::RESOURCE_ERROR: {
             auto resourceErrorEvent = (alt::CResourceErrorEvent *) ev;
-            OnResourceErrorDelegate(resourceErrorEvent->GetResource()->GetName().CStr());
+            OnResourceErrorDelegate(resourceErrorEvent->GetResource()->GetName().c_str());
             break;
         }
         case alt::CEvent::Type::RESOURCE_START: {
             auto resourceStartEvent = (alt::CResourceStartEvent *) ev;
-            OnResourceStartDelegate(resourceStartEvent->GetResource()->GetName().CStr());
+            OnResourceStartDelegate(resourceStartEvent->GetResource()->GetName().c_str());
             break;
         }
         case alt::CEvent::Type::RESOURCE_STOP: {
             auto resourceStopEvent = (alt::CResourceStopEvent *) ev;
-            OnResourceStopDelegate(resourceStopEvent->GetResource()->GetName().CStr());
+            OnResourceStopDelegate(resourceStopEvent->GetResource()->GetName().c_str());
             break;
         }
         case alt::CEvent::Type::KEYBOARD_EVENT: {
@@ -226,13 +226,13 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::Ref<alt::IBaseObject> objectRef
     }
 }
 
-alt::String CSharpResourceImpl::ReadFile(alt::String path)
+std::string CSharpResourceImpl::ReadFile(std::string path)
 {
     auto pkg = resource->GetPackage();
     if(!pkg->FileExists(path)) return {};
     alt::IPackage::File* pkgFile = pkg->OpenFile(path);
-    alt::String src(pkg->GetFileSize(pkgFile));
-    pkg->ReadFile(pkgFile, src.GetData(), src.GetSize());
+    std::string src(pkg->GetFileSize(pkgFile), 0);
+    pkg->ReadFile(pkgFile, src.data(), src.size());
     pkg->CloseFile(pkgFile);
 
     return src;

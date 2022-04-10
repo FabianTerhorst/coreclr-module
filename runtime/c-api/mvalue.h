@@ -32,7 +32,7 @@ EXPORT_SHARED uint8_t MValueConst_GetBool(alt::MValueConst* mValueConst);
 EXPORT_SHARED int64_t MValueConst_GetInt(alt::MValueConst* mValueConst);
 EXPORT_SHARED uint64_t MValueConst_GetUInt(alt::MValueConst* mValueConst);
 EXPORT_SHARED double MValueConst_GetDouble(alt::MValueConst* mValueConst);
-EXPORT_SHARED uint8_t MValueConst_GetString(alt::MValueConst* mValueConst, const char*& value, uint64_t &size);
+EXPORT_SHARED const char* MValueConst_GetString(alt::MValueConst* mValueConst, int32_t &size);
 EXPORT_SHARED uint64_t MValueConst_GetListSize(alt::MValueConst* mValueConst);
 EXPORT_SHARED uint8_t MValueConst_GetList(alt::MValueConst* mValueConst, alt::MValueConst* values[]);
 EXPORT_SHARED uint64_t MValueConst_GetDictSize(alt::MValueConst* mValueConst);

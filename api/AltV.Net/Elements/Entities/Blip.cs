@@ -464,9 +464,8 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var ptr = IntPtr.Zero;
-                    Core.Library.Shared.Blip_GetGxtName(BlipNativePointer, &ptr);
-                    return Marshal.PtrToStringUTF8(ptr);
+                    var size = 0;
+                    return Core.PtrToStringUtf8AndFree(Core.Library.Shared.Blip_GetGxtName(BlipNativePointer, &size), size);
                 }
             }
             set
@@ -488,9 +487,8 @@ namespace AltV.Net.Elements.Entities
                 unsafe
                 {
                     CheckIfEntityExists();
-                    var ptr = IntPtr.Zero;
-                    Core.Library.Shared.Blip_GetName(BlipNativePointer, &ptr);
-                    return Marshal.PtrToStringUTF8(ptr);
+                    var size = 0;
+                    return Core.PtrToStringUtf8AndFree(Core.Library.Shared.Blip_GetName(BlipNativePointer, &size), size);
                 }
             }
             set

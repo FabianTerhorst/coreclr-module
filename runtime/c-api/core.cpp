@@ -1,7 +1,6 @@
 #include "core.h"
 #include "mvalue.h"
 #include "utils/strings.h"
-#include "Log.h"
 #include <vector>
 
 void Core_LogInfo(alt::ICore* core, const char* str) {
@@ -236,9 +235,8 @@ uint8_t Core_FileExists(alt::ICore* core, const char* path) {
     return core->FileExists(path);
 }
 
-//TODO: needs migration to std::string in cpp-sdk
-void Core_FileRead(alt::ICore* core, const char* path, const char*&text) {
-    text = core->FileRead(path).CStr();
+const char* Core_FileRead(alt::ICore* core, const char* path, int32_t& size) {
+    return AllocateString(core->FileRead(path), size);
 }
 
 void Core_TriggerServerEvent(alt::ICore* core, const char* ev, alt::MValueConst* args[], int size) {
@@ -419,8 +417,8 @@ int32_t Core_GetNetTime(alt::ICore* core) {
     return core->GetNetTime();
 }
 
-void Core_GetRootDirectory(alt::ICore* core, const char*&text) {
-    text = core->GetRootDirectory().CStr();
+const char* Core_GetRootDirectory(alt::ICore* core, int32_t& size) {
+    return AllocateString(core->GetRootDirectory(), size);
 }
 
 void Core_StartResource(alt::ICore* core, const char* text) {
@@ -501,7 +499,7 @@ alt::IWebView* Core_CreateWebView3D(alt::ICore* core, alt::IResource* resource, 
 }
 
 alt::IRmlDocument* Core_CreateRmlDocument(alt::ICore* core, alt::IResource* resource, const char* url) {
-    return core->CreateDocument(url, resource->GetMain().ToString(), resource).Get();
+    return core->CreateDocument(url, resource->GetMain(), resource).Get();
 }
 
 
@@ -524,7 +522,7 @@ void Core_TriggerServerEvent(alt::ICore* core, const char* event, alt::MValueCon
 void Core_ShowCursor(alt::ICore* core, alt::IResource* resource, bool state) {
     if(!resource->ToggleCursor(state))
     {
-        Log::Warning << "Cursor state can't go < 0" << Log::Endl;
+        core->LogWarning("Cursor state can't go < 0");
     }
 }
 
@@ -554,7 +552,7 @@ void Core_ScreenToWorld(alt::ICore* core, vector2_t in, vector3_t& out) {
 }
 
 void Core_LoadRmlFont(alt::ICore* core, alt::IResource* resource, const char* path, const char* name, uint8_t italic, uint8_t bold) {
-    core->LoadRmlFontFace(resource, path, resource->GetMain().ToString(), name, italic, bold);
+    core->LoadRmlFontFace(resource, path, resource->GetMain(), name, italic, bold);
 }
 
 uint32_t Core_GetVoiceActivationKey(alt::ICore* core) {
@@ -614,11 +612,11 @@ void Core_GetScreenResolution(alt::ICore* core, vector2_t& out) {
 }
 
 const char* Core_GetLicenseHash(alt::ICore* core, int32_t& size) {
-    return AllocateString(core->GetLicenseHash().ToString(), size);
+    return AllocateString(core->GetLicenseHash(), size);
 }
 
 const char* Core_GetLocale(alt::ICore* core, int32_t& size) {
-    return AllocateString(core->GetLocale().ToString(), size);
+    return AllocateString(core->GetLocale(), size);
 }
 
 uint8_t Core_GetPermissionState(alt::ICore* core, uint8_t permission) {
@@ -626,7 +624,7 @@ uint8_t Core_GetPermissionState(alt::ICore* core, uint8_t permission) {
 }
 
 const char* Core_GetServerIp(alt::ICore* core, int32_t& size) {
-    return AllocateString(core->GetServerIp().ToString(), size);
+    return AllocateString(core->GetServerIp(), size);
 }
 
 uint16_t Core_GetServerPort(alt::ICore* core) {
@@ -887,18 +885,18 @@ void Core_SetWeatherSyncActive(alt::ICore* core, uint8_t state) {
 }
 
 const char* Core_GetHeadshotBase64(alt::ICore* core, uint8_t id, int32_t& size) {
-    return AllocateString(core->HeadshotToBase64(id).ToString(), size);
+    return AllocateString(core->HeadshotToBase64(id), size);
 }
 
 uint8_t Core_TakeScreenshot(alt::ICore* core, ScreenshotDelegate_t delegate) {
-    return (uint8_t) core->TakeScreenshot([delegate](const alt::StringView str) {
-        delegate(str.CStr());
+    return (uint8_t) core->TakeScreenshot([delegate](const std::string& str) {
+        delegate(str.c_str());
     });
 }
 
 uint8_t Core_TakeScreenshotGameOnly(alt::ICore* core, ScreenshotDelegate_t delegate) {
-    return (uint8_t) core->TakeScreenshotGameOnly([delegate](const alt::StringView str) {
-        delegate(str.CStr());
+    return (uint8_t) core->TakeScreenshotGameOnly([delegate](const std::string& str) {
+        delegate(str.c_str());
     });
 }
 #endif

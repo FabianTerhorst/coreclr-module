@@ -34,5 +34,6 @@ namespace AltV.Net
         VehicleDamage,
         ConnectionQueueAdd,
         ConnectionQueueRemove,
+        ServerStarted,
     }
 }

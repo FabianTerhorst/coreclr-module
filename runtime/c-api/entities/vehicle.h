@@ -251,6 +251,10 @@ EXPORT_SERVER void Vehicle_SetTrainLinkedToBackwardId(alt::IVehicle* vehicle, al
 EXPORT_SERVER alt::IVehicle* Vehicle_GetTrainLinkedToForwardId(alt::IVehicle* vehicle);
 EXPORT_SERVER void Vehicle_SetTrainLinkedToForwardId(alt::IVehicle* vehicle, alt::IVehicle* entity);
 
+EXPORT_SERVER uint8_t Vehicle_GetBoatAnchor(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetBoatAnchor(alt::IVehicle* vehicle, uint8_t state);
+
+
 EXPORT_CLIENT uint16_t Vehicle_GetGear(alt::IVehicle* vehicle);
 EXPORT_CLIENT void Vehicle_SetGear(alt::IVehicle* vehicle, uint16_t value);
 

@@ -73,7 +73,7 @@ EXPORT_SHARED uint8_t Core_HasSyncedMetaData(alt::ICore* core, const char* key);
 
 EXPORT_SERVER uint8_t Core_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb);
 EXPORT_SERVER uint8_t Core_FileExists(alt::ICore* server, const char* path);
-EXPORT_SERVER void Core_FileRead(alt::ICore* server, const char* path, const char*&text);
+EXPORT_SERVER const char* Core_FileRead(alt::ICore* server, const char* path, int32_t& size);
 EXPORT_SERVER void Core_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size);
 EXPORT_SERVER void Core_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* ev, alt::MValueConst* args[], int size);
 EXPORT_SERVER void Core_TriggerClientEventForAll(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size);
@@ -96,7 +96,7 @@ EXPORT_SERVER void Core_DestroyCheckpoint(alt::ICore* server, alt::ICheckpoint* 
 EXPORT_SERVER void Core_DestroyVoiceChannel(alt::ICore* server, alt::IVoiceChannel* baseObject);
 EXPORT_SERVER void Core_DestroyColShape(alt::ICore* server, alt::IColShape* baseObject);
 EXPORT_SERVER int32_t Core_GetNetTime(alt::ICore* server);
-EXPORT_SERVER void Core_GetRootDirectory(alt::ICore* server, const char*&text);
+EXPORT_SERVER const char* Core_GetRootDirectory(alt::ICore* server, int32_t& size);
 EXPORT_SERVER void Core_StartResource(alt::ICore* server, const char* text);
 EXPORT_SERVER void Core_StopResource(alt::ICore* server, const char* text);
 EXPORT_SERVER void Core_RestartResource(alt::ICore* server, const char* text);
@@ -118,8 +118,10 @@ EXPORT_CLIENT void Core_TriggerServerEvent(alt::ICore* core, const char* event, 
 
 EXPORT_CLIENT void Core_ShowCursor(alt::ICore* core, alt::IResource* resource, bool state);
 
+#ifdef ALT_CLIENT_API
 EXPORT_CLIENT ClrDiscordUser* Core_GetDiscordUser(alt::ICore* core);
 EXPORT_CLIENT void Core_DeallocDiscordUser(ClrDiscordUser* user);
+#endif
 
 EXPORT_CLIENT void Core_WorldToScreen(alt::ICore* core, vector3_t in, vector2_t& out);
 EXPORT_CLIENT void Core_ScreenToWorld(alt::ICore* core, vector2_t in, vector3_t& out);

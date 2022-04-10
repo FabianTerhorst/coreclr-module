@@ -1,5 +1,4 @@
 #include "entity.h"
-#include "Log.h"
 
 uint16_t Entity_GetID(alt::IEntity* entity) {
     return entity->GetID();
@@ -106,6 +105,22 @@ uint8_t Entity_GetStreamed(alt::IEntity* entity) {
 
 void Entity_SetStreamed(alt::IEntity* entity, uint8_t state) {
     entity->SetStreamed(state);
+}
+
+uint8_t Entity_IsFrozen(alt::IEntity* entity) {
+    return entity->IsFrozen();
+}
+
+void Entity_SetFrozen(alt::IEntity* entity, uint8_t state) {
+    entity->SetFrozen(state);
+}
+
+uint8_t Entity_HasCollision(alt::IEntity* entity) {
+    return entity->HasCollision();
+}
+
+void Entity_SetCollision(alt::IEntity* entity, uint8_t state) {
+    entity->SetCollision(state);
 }
 #endif
 

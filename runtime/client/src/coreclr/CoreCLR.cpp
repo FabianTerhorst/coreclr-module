@@ -8,7 +8,7 @@
 #include "exceptions/LoadException.h"
 #include "coreclr/coreclr_delegates.h"
 #include "utils.h"
-#include "Log.h"
+#include <Log.h>
 
 using namespace alt;
 using namespace std;
@@ -116,7 +116,7 @@ CoreCLR::CoreCLR(alt::ICore* core) {
 }
 
 void CoreCLR::start_resource(alt::IResource *resource, alt::ICore* core) {
-    auto path = utils::string_to_wstring(resource->GetMain().ToString());
+    auto path = utils::string_to_wstring(resource->GetMain());
 
     struct start_args {
         const wchar_t *mainFilePath;

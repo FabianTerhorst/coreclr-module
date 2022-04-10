@@ -72,9 +72,8 @@ namespace AltV.Net
                 unsafe
                 {
                     if (rootDirectory != null) return rootDirectory;
-                    var ptr = IntPtr.Zero;
-                    Library.Server.Core_GetRootDirectory(NativePointer, &ptr);
-                    rootDirectory = Marshal.PtrToStringUTF8(ptr);
+                    var size = 0;
+                    rootDirectory = PtrToStringUtf8AndFree(Library.Server.Core_GetRootDirectory(NativePointer, &size), size);
 
                     return rootDirectory;
                 }
@@ -755,11 +754,10 @@ namespace AltV.Net
         {
             unsafe
             {
-                var valuePtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
-                var ptr = IntPtr.Zero;
-                Library.Server.Core_FileRead(NativePointer, valuePtr, &ptr);
-                var result = Marshal.PtrToStringUTF8(ptr);
-                Marshal.FreeHGlobal(valuePtr);
+                var pathPtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
+                var size = 0;
+                var result = PtrToStringUtf8AndFree(Library.Server.Core_FileRead(NativePointer, pathPtr, &size), size);
+                Marshal.FreeHGlobal(pathPtr);
                 return result;
             }
         }

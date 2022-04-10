@@ -9,6 +9,7 @@
 #include "../../cpp-sdk/SDK.h"
 #include "../data/types.h"
 #include "../utils/export.h"
+#include "../utils/strings.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -59,9 +60,9 @@ EXPORT_SHARED uint16_t Blip_GetPriority(alt::IBlip* blip);
 EXPORT_SHARED void Blip_SetPriority(alt::IBlip* blip, uint16_t priority);
 EXPORT_SHARED float Blip_GetRotation(alt::IBlip* blip);
 EXPORT_SHARED void Blip_SetRotation(alt::IBlip* blip, float rotation);
-EXPORT_SHARED void Blip_GetGxtName(alt::IBlip* blip, const char* &name);
+EXPORT_SHARED const char* Blip_GetGxtName(alt::IBlip* blip, int32_t& size);
 EXPORT_SHARED void Blip_SetGxtName(alt::IBlip* blip, const char* name);
-EXPORT_SHARED void Blip_GetName(alt::IBlip* blip, const char* &name);
+EXPORT_SHARED const char* Blip_GetName(alt::IBlip* blip, int32_t& size);
 EXPORT_SHARED void Blip_SetName(alt::IBlip* blip, const char* name);
 EXPORT_SHARED void Blip_GetRouteColor(alt::IBlip* blip, rgba_t &color);
 EXPORT_SHARED void Blip_SetRouteColor(alt::IBlip* blip, rgba_t color);

@@ -3,7 +3,7 @@
 
 #include "natives.h"
 #include "../../c-api/data/types.h"
-#include "Log.h"
+#include <Log.h>
 #include <cstring>
 #include <stdlib.h>
 

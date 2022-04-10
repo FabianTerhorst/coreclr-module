@@ -1,6 +1,5 @@
 #include "vehicle.h"
 #include "../utils/strings.h"
-#include "Log.h"
 
 uint16_t Vehicle_GetID(alt::IVehicle* entity) {
     return entity->GetID();
@@ -793,6 +792,14 @@ alt::IVehicle* Vehicle_GetTrainLinkedToForwardId(alt::IVehicle* vehicle) {
 void Vehicle_SetTrainLinkedToForwardId(alt::IVehicle* vehicle, alt::IVehicle* entity) {
     vehicle->SetTrainLinkedToForwardId(vehicle);
 }
+
+uint8_t Vehicle_GetBoatAnchor(alt::IVehicle* vehicle) {
+  return vehicle->IsBoatAnchorActive();
+}
+
+void Vehicle_SetBoatAnchor(alt::IVehicle* vehicle, uint8_t state) {
+  vehicle->SetBoatAnchorActive(state);
+}
 #endif
 
 #ifdef ALT_CLIENT_API
@@ -858,9 +865,7 @@ uint8_t Vehicle_IsHandlingModified(alt::IVehicle* vehicle) {
 }
 
 uint8_t Vehicle_Handling_GetByModelHash(alt::ICore* core, uint32_t modelHash, alt::IHandlingData*& handling) {
-    Log::Info << "Model hash is " << modelHash << Log::Endl;
     auto data = core->GetHandlingData(modelHash);
-    Log::Info << "Empty was " << data.IsEmpty() << Log::Endl;
     if (data.IsEmpty()) return false;
     handling = data.Get();
     return true;
