@@ -14,7 +14,7 @@ void InitNatives() {
 }
 
 const char* AllocateString(const char* str) {
-	size_t stringSize = strlen(str);
+	size_t stringSize = strnlen_s(str, 1000);
 	char* writable = new char[stringSize + 1];
 	std::memcpy(writable, str, stringSize);
 	writable[stringSize] = '\0';
