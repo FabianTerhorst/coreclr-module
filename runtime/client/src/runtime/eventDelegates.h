@@ -17,6 +17,9 @@ typedef void (* PlayerSpawnDelegate_t)();
 typedef void (* PlayerDisconnectDelegate_t)();
 typedef void (* PlayerEnterVehicleDelegate_t)(alt::IVehicle*, uint8_t seat);
 
+typedef void (* GameEntityCreateDelegate_t)(void*, uint8_t type);
+typedef void (* GameEntityDestroyDelegate_t)(void*, uint8_t type);
+
 typedef void (* ResourceErrorDelegate_t)(const char* name);
 typedef void (* ResourceStartDelegate_t)(const char* name);
 typedef void (* ResourceStopDelegate_t)(const char* name);

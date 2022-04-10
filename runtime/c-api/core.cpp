@@ -539,4 +539,20 @@ void Core_LoadRmlFont(alt::ICore* core, alt::IResource* resource, const char* pa
     core->LoadRmlFontFace(resource, path, resource->GetMain().ToString(), name, italic, bold);
 }
 
+uint32_t Core_GetVoiceActivationKey(alt::ICore* core) {
+    return core->GetVoiceActivationKey();
+}
+
+uint8_t Core_IsVoiceActivityInputEnabled(alt::ICore* core) {
+    return core->IsVoiceActivationEnabled();
+}
+
+uint8_t Core_GetVoiceInputMuted(alt::ICore* core) {
+    return core->IsVoiceInputMuted();
+}
+
+void Core_SetVoiceInputMuted(alt::ICore* core, uint8_t value) {
+    core->SetVoiceInputMuted(value);
+}
+
 #endif

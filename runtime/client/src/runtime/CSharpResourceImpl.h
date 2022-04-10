@@ -47,6 +47,9 @@ public:
     PlayerDisconnectDelegate_t OnPlayerDisconnectDelegate = nullptr;
     PlayerEnterVehicleDelegate_t OnPlayerEnterVehicleDelegate = nullptr;
 
+    GameEntityCreateDelegate_t OnGameEntityCreateDelegate = nullptr;
+    GameEntityDestroyDelegate_t OnGameEntityDestroyDelegate = nullptr;
+
     ResourceErrorDelegate_t OnResourceErrorDelegate = nullptr;
     ResourceStartDelegate_t OnResourceStartDelegate = nullptr;
     ResourceStopDelegate_t OnResourceStopDelegate = nullptr;

@@ -152,6 +152,16 @@ namespace AltV.Net.Client
             _core.OnPlayerEnterVehicle(pointer, seat);
         }
 
+        public static void OnGameEntityCreate(IntPtr pointer, byte type)
+        {
+            _core.OnGameEntityCreate(pointer, type);
+        }
+
+        public static void OnGameEntityDestroy(IntPtr pointer, byte type)
+        {
+            _core.OnGameEntityDestroy(pointer, type);
+        }
+
         public static void OnResourceError(string name)
         {
             _core.OnResourceError(name);

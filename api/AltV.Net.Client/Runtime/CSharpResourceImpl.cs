@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using AltV.Net.CApi;
 using AltV.Net.CApi.ClientEvents;
+using AltV.Net.Client.Events;
 using AltV.Net.Shared;
 
 namespace AltV.Net.Client.Runtime
@@ -65,6 +66,14 @@ namespace AltV.Net.Client.Runtime
                 PlayerEnterVehicleModuleDelegate onPlayerEnterVehicle = ModuleWrapper.OnPlayerEnterVehicle;
                 handles.AddFirst(GCHandle.Alloc(onPlayerEnterVehicle));
                 core.Library.Client.Event_SetPlayerEnterVehicleDelegate(this.NativePointer, onPlayerEnterVehicle);
+                
+                GameEntityCreateModuleDelegate onGameEntityCreate = ModuleWrapper.OnGameEntityCreate;
+                handles.AddFirst(GCHandle.Alloc(onGameEntityCreate));
+                core.Library.Client.Event_SetGameEntityCreateDelegate(this.NativePointer, onGameEntityCreate);
+                
+                GameEntityDestroyModuleDelegate onGameEntityDestroy = ModuleWrapper.OnGameEntityDestroy;
+                handles.AddFirst(GCHandle.Alloc(onGameEntityDestroy));
+                core.Library.Client.Event_SetGameEntityDestroyDelegate(this.NativePointer, onGameEntityDestroy);
                 
                 ResourceErrorModuleDelegate onResourceError = ModuleWrapper.OnResourceError;
                 handles.AddFirst(GCHandle.Alloc(onResourceError));

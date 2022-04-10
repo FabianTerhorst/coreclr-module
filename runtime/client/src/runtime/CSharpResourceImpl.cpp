@@ -126,6 +126,50 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             break;
         }
 #pragma endregion
+#pragma region Entity events
+        case alt::CEvent::Type::GAME_ENTITY_CREATE:
+        {
+            auto gameEntityCreateEvent = (alt::CGameEntityCreateEvent*)ev;
+            auto entity = gameEntityCreateEvent->GetTarget().Get();
+            auto type = (uint8_t) entity->GetType();
+            void* ptr;
+
+            switch (entity->GetType()) {
+                case alt::IBaseObject::Type::PLAYER:
+                    ptr = dynamic_cast<alt::IPlayer*>(entity);
+                    break;
+                case alt::IBaseObject::Type::VEHICLE:
+                    ptr = dynamic_cast<alt::IVehicle*>(entity);
+                    break;
+                default:
+                    ptr = nullptr;
+            }
+
+            OnGameEntityCreateDelegate(ptr, type);
+            break;
+        }
+        case alt::CEvent::Type::GAME_ENTITY_DESTROY:
+        {
+            auto gameEntityDestroyEvent = (alt::CGameEntityDestroyEvent*)ev;
+            auto entity = gameEntityDestroyEvent->GetTarget().Get();
+            auto type = (uint8_t) entity->GetType();
+            void* ptr;
+
+            switch (entity->GetType()) {
+                case alt::IBaseObject::Type::PLAYER:
+                    ptr = dynamic_cast<alt::IPlayer*>(entity);
+                    break;
+                case alt::IBaseObject::Type::VEHICLE:
+                    ptr = dynamic_cast<alt::IVehicle*>(entity);
+                    break;
+                default:
+                    ptr = nullptr;
+            }
+
+            OnGameEntityDestroyDelegate(ptr, type);
+            break;
+        }
+#pragma endregion
 #pragma region Misc
         case alt::CEvent::Type::RESOURCE_ERROR:
         {
@@ -325,6 +369,9 @@ void CSharpResourceImpl::ResetDelegates() {
     OnPlayerSpawnDelegate = [](){};
     OnPlayerDisconnectDelegate = [](){};
     OnPlayerEnterVehicleDelegate = [](auto var, auto var2) {};
+
+    OnGameEntityCreateDelegate = [](auto var, auto var2) {};
+    OnGameEntityDestroyDelegate = [](auto var, auto var2) {};
 
     OnResourceErrorDelegate = [](auto var) {};
     OnResourceStartDelegate = [](auto var) {};
