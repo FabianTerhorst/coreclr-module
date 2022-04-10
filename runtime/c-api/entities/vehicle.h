@@ -265,6 +265,10 @@ EXPORT_CLIENT uint8_t Vehicle_GetSeatCount(alt::IVehicle* vehicle);
 EXPORT_CLIENT float Vehicle_GetWheelSpeed(alt::IVehicle* vehicle);
 EXPORT_CLIENT void Vehicle_GetSpeedVector(alt::IVehicle* vehicle, vector3_t& vector);
 
+
+EXPORT_SERVER uint8_t Vehicle_GetBoatAnchor(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetBoatAnchor(alt::IVehicle* vehicle, uint8_t state);
+
 #ifdef __cplusplus
 }
 #endif

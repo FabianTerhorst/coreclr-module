@@ -256,6 +256,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetArmoredWindowShootCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetAttachedTo { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetBoatAnchor { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetBodyAdditionalHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetBodyHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetBumperDamageLevel { get; }
@@ -349,6 +350,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Repair { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetArmoredWindowHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetArmoredWindowShootCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetBoatAnchor { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyAdditionalHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetBumperDamageLevel { get; }
@@ -684,6 +686,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetArmoredWindowShootCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetAttached { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Vehicle_GetAttachedTo { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Vehicle_GetBoatAnchor { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetBodyAdditionalHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Vehicle_GetBodyHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Vehicle_GetBumperDamageLevel { get; }
@@ -777,6 +780,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> Vehicle_Repair { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, float, void> Vehicle_SetArmoredWindowHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetArmoredWindowShootCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetBoatAnchor { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyAdditionalHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Vehicle_SetBodyHealth { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte, void> Vehicle_SetBumperDamageLevel { get; }
@@ -1112,6 +1116,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_GetArmoredWindowShootCount = (delegate* unmanaged[Cdecl]<nint, byte, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetArmoredWindowShootCount");
             Vehicle_GetAttached = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetAttached");
             Vehicle_GetAttachedTo = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Vehicle_GetAttachedTo");
+            Vehicle_GetBoatAnchor = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetBoatAnchor");
             Vehicle_GetBodyAdditionalHealth = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Vehicle_GetBodyAdditionalHealth");
             Vehicle_GetBodyHealth = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Vehicle_GetBodyHealth");
             Vehicle_GetBumperDamageLevel = (delegate* unmanaged[Cdecl]<nint, byte, byte>) NativeLibrary.GetExport(handle, "Vehicle_GetBumperDamageLevel");
@@ -1205,6 +1210,7 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_Repair = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Vehicle_Repair");
             Vehicle_SetArmoredWindowHealth = (delegate* unmanaged[Cdecl]<nint, byte, float, void>) NativeLibrary.GetExport(handle, "Vehicle_SetArmoredWindowHealth");
             Vehicle_SetArmoredWindowShootCount = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetArmoredWindowShootCount");
+            Vehicle_SetBoatAnchor = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetBoatAnchor");
             Vehicle_SetBodyAdditionalHealth = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Vehicle_SetBodyAdditionalHealth");
             Vehicle_SetBodyHealth = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Vehicle_SetBodyHealth");
             Vehicle_SetBumperDamageLevel = (delegate* unmanaged[Cdecl]<nint, byte, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetBumperDamageLevel");

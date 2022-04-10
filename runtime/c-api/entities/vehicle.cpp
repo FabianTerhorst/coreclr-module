@@ -794,6 +794,14 @@ void Vehicle_SetTrainLinkedToForwardId(alt::IVehicle* vehicle, alt::IVehicle* en
 }
 #endif
 
+uint8_t Vehicle_GetBoatAnchor(alt::IVehicle* vehicle) {
+  return vehicle->IsBoatAnchorActive();
+}
+
+void Vehicle_SetBoatAnchor(alt::IVehicle* vehicle, uint8_t state) {
+  vehicle->SetBoatAnchorActive(state);
+}
+
 #ifdef ALT_CLIENT_API
 // todo
 #endif
