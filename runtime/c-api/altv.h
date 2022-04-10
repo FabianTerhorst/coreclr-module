@@ -17,6 +17,7 @@ EXPORT_SHARED void FreeUIntArray(alt::Array<uint32_t> *array);
 EXPORT_SHARED void FreeCharArray(char charArray[]);
 EXPORT_SHARED void FreeString(const char* string);
 EXPORT_SHARED void FreeStringArray(const char** stringArray, uint32_t size);
+EXPORT_SHARED void FreeResourceArray(alt::IResource** resourceArray);
 EXPORT_SHARED const char* GetVersionStatic(int32_t &size);
 EXPORT_SHARED const char* GetBranchStatic(int32_t &size);
 EXPORT_SHARED const char* GetCApiVersion(int32_t &size);

@@ -28,4 +28,6 @@ namespace AltV.Net.CApi.ClientEvents
     
     public delegate void KeyDownModuleDelegate(uint key);
     public delegate void KeyUpModuleDelegate(uint key);
+
+    public delegate void ScreenshotResultModuleDelegate(IntPtr strPtr);
 }

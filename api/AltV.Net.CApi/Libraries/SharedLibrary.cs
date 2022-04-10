@@ -99,11 +99,13 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_CreateMValueVector3 { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetAllResources { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPlayerCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetPlayers { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetVehicleCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetVehicles { get; }
@@ -129,6 +131,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeResourceArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> FreeStringArray { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
@@ -294,11 +297,13 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_CreateMValueVector3 { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetAllResources { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetPlayerCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetPlayers { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetResource { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetVehicleCount { get; }
         public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetVehicles { get; }
@@ -324,6 +329,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeResourceArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> FreeStringArray { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
@@ -489,11 +495,13 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateMValueVector3 = (delegate* unmanaged[Cdecl]<nint, Vector3, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueVector3");
             Core_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_DeleteMetaData");
             Core_DestroyBaseObject = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_DestroyBaseObject");
+            Core_GetAllResources = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) NativeLibrary.GetExport(handle, "Core_GetAllResources");
             Core_GetBranch = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetBranch");
             Core_GetEntityById = (delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint>) NativeLibrary.GetExport(handle, "Core_GetEntityById");
             Core_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_GetMetaData");
             Core_GetPlayerCount = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Core_GetPlayerCount");
             Core_GetPlayers = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) NativeLibrary.GetExport(handle, "Core_GetPlayers");
+            Core_GetResource = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_GetResource");
             Core_GetSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_GetSyncedMetaData");
             Core_GetVehicleCount = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Core_GetVehicleCount");
             Core_GetVehicles = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) NativeLibrary.GetExport(handle, "Core_GetVehicles");
@@ -519,6 +527,7 @@ namespace AltV.Net.CApi.Libraries
             Entity_HasStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Entity_HasStreamSyncedMetaData");
             Entity_HasSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Entity_HasSyncedMetaData");
             FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeCharArray");
+            FreeResourceArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeResourceArray");
             FreeString = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeString");
             FreeStringArray = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "FreeStringArray");
             FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) NativeLibrary.GetExport(handle, "FreeUIntArray");

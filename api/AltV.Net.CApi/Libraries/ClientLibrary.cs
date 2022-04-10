@@ -11,22 +11,99 @@ namespace AltV.Net.CApi.Libraries
     public unsafe interface IClientLibrary
     {
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_AreGameControlsEnabled { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_BeginScaleformMovieMethodMinimap { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, byte, void> Core_ClearPedProp { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint> Core_Client_CreateAreaBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_Client_CreatePointBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, nint> Core_Client_CreateRadiusBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint> Core_CreateRmlDocument { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, nint> Core_CreateWebView { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, nint> Core_CreateWebView3D { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocDiscordUser { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_DoesConfigFlagExist { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetCamPos { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetConfigFlag { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2*, byte, void> Core_GetCursorPos { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Core_GetDiscordUser { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetFPS { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint, int*, nint> Core_GetGXTText { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, int*, nint> Core_GetHeadshotBase64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetLicenseHash { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetLocale { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> Core_GetMsPerGameMinute { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_GetPermissionState { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetPing { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2*, void> Core_GetScreenResolution { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetServerIp { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetServerPort { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetStatBool { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetStatData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, float> Core_GetStatFloat { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int> Core_GetStatInt { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, long> Core_GetStatLong { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_GetStatString { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_GetStatType { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, ushort> Core_GetStatUInt16 { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint> Core_GetStatUInt32 { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, ulong> Core_GetStatUInt64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetStatUInt8 { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Core_GetTotalPacketsLost { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetTotalPacketsSent { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetVoiceActivationKey { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetVoiceInputMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_IsCamFrozen { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_IsConsoleOpen { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_IsGameFocused { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_IsInStreamerMode { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyDown { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyToggled { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_IsMenuOpened { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint, byte> Core_IsTextureExistInArchetype { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsVoiceActivityInputEnabled { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Core_LoadModel { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Core_LoadModelAsync { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, byte, byte, void> Core_LoadRmlFont { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_LoadYtyp { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint, void> Core_RemoveGXTText { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RemoveIpl { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RequestIpl { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_ResetStat { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2, Vector3*, void> Core_ScreenToWorld { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetCamFrozen { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Core_SetConfigFlag { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2, byte, void> Core_SetCursorPos { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte, byte, float, float, float, float, void> Core_SetMinimapComponentPosition { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetMinimapIsRectangle { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, void> Core_SetMsPerGameMinute { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, uint, byte, byte, byte, byte, void> Core_SetPedDlcClothes { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, uint, byte, byte, byte, void> Core_SetPedDlcProp { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, Vector3, void> Core_SetRotationVelocity { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Core_SetStatBool { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, float, void> Core_SetStatFloat { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int, void> Core_SetStatInt { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, long, void> Core_SetStatLong { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetStatString { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, ushort, void> Core_SetStatUInt16 { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint, void> Core_SetStatUInt32 { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, ulong, void> Core_SetStatUInt64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Core_SetStatUInt8 { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetVoiceInputMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetWatermarkPosition { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte[], int, byte[], int, void> Core_SetWeatherCycle { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetWeatherSyncActive { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, bool, void> Core_ShowCursor { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_StringToSHA256 { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ScreenshotResultModuleDelegate, byte> Core_TakeScreenshot { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ScreenshotResultModuleDelegate, byte> Core_TakeScreenshotGameOnly { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Core_ToggleGameControls { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Core_ToggleRmlControls { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Core_ToggleVoiceControls { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerWebViewEvent { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_UnloadYtyp { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void> Core_WorldToScreen { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void> Event_SetClientEventDelegate { get; }
@@ -320,22 +397,99 @@ namespace AltV.Net.CApi.Libraries
     public unsafe class ClientLibrary : IClientLibrary
     {
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_AreGameControlsEnabled { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_BeginScaleformMovieMethodMinimap { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, byte, void> Core_ClearPedProp { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint> Core_Client_CreateAreaBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_Client_CreatePointBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, nint> Core_Client_CreateRadiusBlip { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint> Core_CreateRmlDocument { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, nint> Core_CreateWebView { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, nint> Core_CreateWebView3D { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocDiscordUser { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_DoesConfigFlagExist { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Core_GetCamPos { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetConfigFlag { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2*, byte, void> Core_GetCursorPos { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Core_GetDiscordUser { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetFPS { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint, int*, nint> Core_GetGXTText { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, int*, nint> Core_GetHeadshotBase64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetLicenseHash { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetLocale { get; }
+        public delegate* unmanaged[Cdecl]<nint, int> Core_GetMsPerGameMinute { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_GetPermissionState { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetPing { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2*, void> Core_GetScreenResolution { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetServerIp { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetServerPort { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetStatBool { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetStatData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, float> Core_GetStatFloat { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int> Core_GetStatInt { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, long> Core_GetStatLong { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_GetStatString { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_GetStatType { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, ushort> Core_GetStatUInt16 { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint> Core_GetStatUInt32 { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, ulong> Core_GetStatUInt64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_GetStatUInt8 { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Core_GetTotalPacketsLost { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetTotalPacketsSent { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetVoiceActivationKey { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetVoiceInputMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_IsCamFrozen { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_IsConsoleOpen { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_IsGameFocused { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_IsInStreamerMode { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyDown { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyToggled { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Core_IsMenuOpened { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint, byte> Core_IsTextureExistInArchetype { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsVoiceActivityInputEnabled { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Core_LoadModel { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Core_LoadModelAsync { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint, byte, byte, void> Core_LoadRmlFont { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_LoadYtyp { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint, void> Core_RemoveGXTText { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RemoveIpl { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RequestIpl { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Core_ResetStat { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2, Vector3*, void> Core_ScreenToWorld { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetCamFrozen { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Core_SetConfigFlag { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector2, byte, void> Core_SetCursorPos { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte, byte, float, float, float, float, void> Core_SetMinimapComponentPosition { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetMinimapIsRectangle { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, void> Core_SetMsPerGameMinute { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, uint, byte, byte, byte, byte, void> Core_SetPedDlcClothes { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, uint, byte, byte, byte, void> Core_SetPedDlcProp { get; }
+        public delegate* unmanaged[Cdecl]<nint, int, Vector3, void> Core_SetRotationVelocity { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Core_SetStatBool { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, float, void> Core_SetStatFloat { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int, void> Core_SetStatInt { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, long, void> Core_SetStatLong { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetStatString { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, ushort, void> Core_SetStatUInt16 { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint, void> Core_SetStatUInt32 { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, ulong, void> Core_SetStatUInt64 { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Core_SetStatUInt8 { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetVoiceInputMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetWatermarkPosition { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte[], int, byte[], int, void> Core_SetWeatherCycle { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetWeatherSyncActive { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, bool, void> Core_ShowCursor { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_StringToSHA256 { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ScreenshotResultModuleDelegate, byte> Core_TakeScreenshot { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ScreenshotResultModuleDelegate, byte> Core_TakeScreenshotGameOnly { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte, void> Core_ToggleGameControls { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Core_ToggleRmlControls { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Core_ToggleVoiceControls { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerServerEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void> Core_TriggerWebViewEvent { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_UnloadYtyp { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void> Core_WorldToScreen { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void> Event_SetClientEventDelegate { get; }
@@ -629,22 +783,99 @@ namespace AltV.Net.CApi.Libraries
             const DllImportSearchPath dllImportSearchPath = DllImportSearchPath.LegacyBehavior | DllImportSearchPath.AssemblyDirectory | DllImportSearchPath.SafeDirectories | DllImportSearchPath.System32 | DllImportSearchPath.UserDirectories | DllImportSearchPath.ApplicationDirectory | DllImportSearchPath.UseDllDirectoryForDependencies;
             var handle = NativeLibrary.Load(dllName, Assembly.GetExecutingAssembly(), dllImportSearchPath);
             Blip_GetScriptID = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Blip_GetScriptID");
+            Core_AddGXTText = (delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void>) NativeLibrary.GetExport(handle, "Core_AddGXTText");
+            Core_AreGameControlsEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_AreGameControlsEnabled");
+            Core_BeginScaleformMovieMethodMinimap = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_BeginScaleformMovieMethodMinimap");
+            Core_ClearPedProp = (delegate* unmanaged[Cdecl]<nint, int, byte, void>) NativeLibrary.GetExport(handle, "Core_ClearPedProp");
             Core_Client_CreateAreaBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, float, float, nint>) NativeLibrary.GetExport(handle, "Core_Client_CreateAreaBlip");
             Core_Client_CreatePointBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, nint>) NativeLibrary.GetExport(handle, "Core_Client_CreatePointBlip");
             Core_Client_CreateRadiusBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, float, nint>) NativeLibrary.GetExport(handle, "Core_Client_CreateRadiusBlip");
+            Core_CopyToClipboard = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_CopyToClipboard");
             Core_CreateRmlDocument = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateRmlDocument");
             Core_CreateWebView = (delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, nint>) NativeLibrary.GetExport(handle, "Core_CreateWebView");
             Core_CreateWebView3D = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateWebView3D");
             Core_DeallocDiscordUser = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Core_DeallocDiscordUser");
+            Core_DoesConfigFlagExist = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_DoesConfigFlagExist");
+            Core_GetCamPos = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Core_GetCamPos");
+            Core_GetConfigFlag = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_GetConfigFlag");
+            Core_GetCursorPos = (delegate* unmanaged[Cdecl]<nint, Vector2*, byte, void>) NativeLibrary.GetExport(handle, "Core_GetCursorPos");
             Core_GetDiscordUser = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Core_GetDiscordUser");
+            Core_GetFPS = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Core_GetFPS");
+            Core_GetGXTText = (delegate* unmanaged[Cdecl]<nint, nint, uint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetGXTText");
+            Core_GetHeadshotBase64 = (delegate* unmanaged[Cdecl]<nint, byte, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetHeadshotBase64");
+            Core_GetLicenseHash = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetLicenseHash");
+            Core_GetLocale = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetLocale");
+            Core_GetMsPerGameMinute = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Core_GetMsPerGameMinute");
+            Core_GetPermissionState = (delegate* unmanaged[Cdecl]<nint, byte, byte>) NativeLibrary.GetExport(handle, "Core_GetPermissionState");
+            Core_GetPing = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Core_GetPing");
+            Core_GetScreenResolution = (delegate* unmanaged[Cdecl]<nint, Vector2*, void>) NativeLibrary.GetExport(handle, "Core_GetScreenResolution");
+            Core_GetServerIp = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetServerIp");
+            Core_GetServerPort = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Core_GetServerPort");
+            Core_GetStatBool = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_GetStatBool");
+            Core_GetStatData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_GetStatData");
+            Core_GetStatFloat = (delegate* unmanaged[Cdecl]<nint, nint, float>) NativeLibrary.GetExport(handle, "Core_GetStatFloat");
+            Core_GetStatInt = (delegate* unmanaged[Cdecl]<nint, nint, int>) NativeLibrary.GetExport(handle, "Core_GetStatInt");
+            Core_GetStatLong = (delegate* unmanaged[Cdecl]<nint, nint, long>) NativeLibrary.GetExport(handle, "Core_GetStatLong");
+            Core_GetStatString = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetStatString");
+            Core_GetStatType = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetStatType");
+            Core_GetStatUInt16 = (delegate* unmanaged[Cdecl]<nint, nint, ushort>) NativeLibrary.GetExport(handle, "Core_GetStatUInt16");
+            Core_GetStatUInt32 = (delegate* unmanaged[Cdecl]<nint, nint, uint>) NativeLibrary.GetExport(handle, "Core_GetStatUInt32");
+            Core_GetStatUInt64 = (delegate* unmanaged[Cdecl]<nint, nint, ulong>) NativeLibrary.GetExport(handle, "Core_GetStatUInt64");
+            Core_GetStatUInt8 = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_GetStatUInt8");
+            Core_GetTotalPacketsLost = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Core_GetTotalPacketsLost");
+            Core_GetTotalPacketsSent = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Core_GetTotalPacketsSent");
             Core_GetVoiceActivationKey = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Core_GetVoiceActivationKey");
             Core_GetVoiceInputMuted = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_GetVoiceInputMuted");
+            Core_IsCamFrozen = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsCamFrozen");
+            Core_IsConsoleOpen = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsConsoleOpen");
+            Core_IsGameFocused = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsGameFocused");
+            Core_IsInStreamerMode = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsInStreamerMode");
+            Core_IsKeyDown = (delegate* unmanaged[Cdecl]<nint, uint, byte>) NativeLibrary.GetExport(handle, "Core_IsKeyDown");
+            Core_IsKeyToggled = (delegate* unmanaged[Cdecl]<nint, uint, byte>) NativeLibrary.GetExport(handle, "Core_IsKeyToggled");
+            Core_IsMenuOpened = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsMenuOpened");
+            Core_IsTextureExistInArchetype = (delegate* unmanaged[Cdecl]<nint, uint, nint, byte>) NativeLibrary.GetExport(handle, "Core_IsTextureExistInArchetype");
             Core_IsVoiceActivityInputEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsVoiceActivityInputEnabled");
+            Core_LoadModel = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Core_LoadModel");
+            Core_LoadModelAsync = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Core_LoadModelAsync");
             Core_LoadRmlFont = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint, byte, byte, void>) NativeLibrary.GetExport(handle, "Core_LoadRmlFont");
+            Core_LoadYtyp = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_LoadYtyp");
+            Core_RemoveGXTText = (delegate* unmanaged[Cdecl]<nint, nint, uint, void>) NativeLibrary.GetExport(handle, "Core_RemoveGXTText");
+            Core_RemoveIpl = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_RemoveIpl");
+            Core_RequestIpl = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_RequestIpl");
+            Core_ResetStat = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_ResetStat");
+            Core_ScreenToWorld = (delegate* unmanaged[Cdecl]<nint, Vector2, Vector3*, void>) NativeLibrary.GetExport(handle, "Core_ScreenToWorld");
+            Core_SetCamFrozen = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Core_SetCamFrozen");
+            Core_SetConfigFlag = (delegate* unmanaged[Cdecl]<nint, nint, byte, void>) NativeLibrary.GetExport(handle, "Core_SetConfigFlag");
+            Core_SetCursorPos = (delegate* unmanaged[Cdecl]<nint, Vector2, byte, void>) NativeLibrary.GetExport(handle, "Core_SetCursorPos");
+            Core_SetMinimapComponentPosition = (delegate* unmanaged[Cdecl]<nint, nint, byte, byte, float, float, float, float, void>) NativeLibrary.GetExport(handle, "Core_SetMinimapComponentPosition");
+            Core_SetMinimapIsRectangle = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Core_SetMinimapIsRectangle");
+            Core_SetMsPerGameMinute = (delegate* unmanaged[Cdecl]<nint, int, void>) NativeLibrary.GetExport(handle, "Core_SetMsPerGameMinute");
+            Core_SetPedDlcClothes = (delegate* unmanaged[Cdecl]<nint, int, uint, byte, byte, byte, byte, void>) NativeLibrary.GetExport(handle, "Core_SetPedDlcClothes");
+            Core_SetPedDlcProp = (delegate* unmanaged[Cdecl]<nint, int, uint, byte, byte, byte, void>) NativeLibrary.GetExport(handle, "Core_SetPedDlcProp");
+            Core_SetRotationVelocity = (delegate* unmanaged[Cdecl]<nint, int, Vector3, void>) NativeLibrary.GetExport(handle, "Core_SetRotationVelocity");
+            Core_SetStatBool = (delegate* unmanaged[Cdecl]<nint, nint, byte, void>) NativeLibrary.GetExport(handle, "Core_SetStatBool");
+            Core_SetStatFloat = (delegate* unmanaged[Cdecl]<nint, nint, float, void>) NativeLibrary.GetExport(handle, "Core_SetStatFloat");
+            Core_SetStatInt = (delegate* unmanaged[Cdecl]<nint, nint, int, void>) NativeLibrary.GetExport(handle, "Core_SetStatInt");
+            Core_SetStatLong = (delegate* unmanaged[Cdecl]<nint, nint, long, void>) NativeLibrary.GetExport(handle, "Core_SetStatLong");
+            Core_SetStatString = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "Core_SetStatString");
+            Core_SetStatUInt16 = (delegate* unmanaged[Cdecl]<nint, nint, ushort, void>) NativeLibrary.GetExport(handle, "Core_SetStatUInt16");
+            Core_SetStatUInt32 = (delegate* unmanaged[Cdecl]<nint, nint, uint, void>) NativeLibrary.GetExport(handle, "Core_SetStatUInt32");
+            Core_SetStatUInt64 = (delegate* unmanaged[Cdecl]<nint, nint, ulong, void>) NativeLibrary.GetExport(handle, "Core_SetStatUInt64");
+            Core_SetStatUInt8 = (delegate* unmanaged[Cdecl]<nint, nint, byte, void>) NativeLibrary.GetExport(handle, "Core_SetStatUInt8");
             Core_SetVoiceInputMuted = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Core_SetVoiceInputMuted");
+            Core_SetWatermarkPosition = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Core_SetWatermarkPosition");
+            Core_SetWeatherCycle = (delegate* unmanaged[Cdecl]<nint, byte[], int, byte[], int, void>) NativeLibrary.GetExport(handle, "Core_SetWeatherCycle");
+            Core_SetWeatherSyncActive = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Core_SetWeatherSyncActive");
             Core_ShowCursor = (delegate* unmanaged[Cdecl]<nint, nint, bool, void>) NativeLibrary.GetExport(handle, "Core_ShowCursor");
+            Core_StringToSHA256 = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_StringToSHA256");
+            Core_TakeScreenshot = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ScreenshotResultModuleDelegate, byte>) NativeLibrary.GetExport(handle, "Core_TakeScreenshot");
+            Core_TakeScreenshotGameOnly = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ScreenshotResultModuleDelegate, byte>) NativeLibrary.GetExport(handle, "Core_TakeScreenshotGameOnly");
+            Core_ToggleGameControls = (delegate* unmanaged[Cdecl]<nint, nint, byte, void>) NativeLibrary.GetExport(handle, "Core_ToggleGameControls");
+            Core_ToggleRmlControls = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Core_ToggleRmlControls");
+            Core_ToggleVoiceControls = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Core_ToggleVoiceControls");
             Core_TriggerServerEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Core_TriggerServerEvent");
             Core_TriggerWebViewEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Core_TriggerWebViewEvent");
+            Core_UnloadYtyp = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_UnloadYtyp");
             Core_WorldToScreen = (delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void>) NativeLibrary.GetExport(handle, "Core_WorldToScreen");
             Entity_GetScriptID = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Entity_GetScriptID");
             Event_SetClientEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetClientEventDelegate");
