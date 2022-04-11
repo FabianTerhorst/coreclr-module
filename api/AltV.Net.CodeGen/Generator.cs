@@ -165,6 +165,7 @@ namespace AltV.Net.CodeGen
             {"alt::IMapData*", "nint"},
             {"alt::IAudio*", "nint"},
             {"alt::IHttpClient*", "nint"},
+            {"alt::IWebSocketClient*", "nint"},
             {"alt::IEntity*", "nint"},
             {"alt::IWorldObject*", "nint"},
             {"alt::IBaseObject*", "nint"},

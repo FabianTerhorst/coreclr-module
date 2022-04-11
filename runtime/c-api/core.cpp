@@ -950,6 +950,10 @@ alt::IHttpClient* Core_CreateHttpClient(alt::ICore* core, alt::IResource* resour
     return core->CreateHttpClient(resource).Get();
 }
 
+alt::IWebSocketClient* Core_CreateWebsocketClient(alt::ICore* core, alt::IResource* resource, const char* url) {
+    return core->CreateWebSocketClient(url, resource).Get();
+}
+
 alt::IAudio* Core_CreateAudio(alt::ICore* core, alt::IResource* resource, const char* source, float volume, uint32_t category, uint8_t frontend) {
     return core->CreateAudio(source, volume, category, frontend, resource).Get();
 }

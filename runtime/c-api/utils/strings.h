@@ -8,7 +8,8 @@
 
 #include <string>
 #include <vector>
+#include "../../cpp-sdk/types/Array.h"
 
 const char* AllocateString(const std::string& str, int32_t& size);
-const char** AllocateStringArray(const char* arr[], uint32_t& size);
+const char** AllocateStringArray(alt::Array<std::string> arr, uint32_t& size);
 const char** AllocateStringArray(std::vector<std::string> arr, uint32_t& size);
