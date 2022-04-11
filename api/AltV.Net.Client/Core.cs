@@ -154,6 +154,7 @@ namespace AltV.Net.Client
             unsafe
             {
                 var ptr = Library.Client.Core_GetDiscordUser(NativePointer);
+                if (ptr == IntPtr.Zero) return null;
                 var structure = Marshal.PtrToStructure<DiscordUser>(ptr);
                 Library.Client.Core_DeallocDiscordUser(ptr);
                 return structure;
