@@ -232,6 +232,11 @@ typedef void (* ScreenshotDelegate_t)(const char* string);
 EXPORT_CLIENT uint8_t Core_TakeScreenshot(alt::ICore* core, /** ClientEvents.ScreenshotResultModuleDelegate */ ScreenshotDelegate_t delegate);
 EXPORT_CLIENT uint8_t Core_TakeScreenshotGameOnly(alt::ICore* core, /** ClientEvents.ScreenshotResultModuleDelegate */ ScreenshotDelegate_t delegate);
 
+EXPORT_CLIENT alt::IMapData* Core_GetMapZoomDataById(alt::ICore* core, uint32_t id);
+EXPORT_CLIENT alt::IMapData* Core_GetMapZoomDataByAlias(alt::ICore* core, const char* alias, uint32_t& id);
+EXPORT_CLIENT void Core_ResetAllMapZoomData(alt::ICore* core);
+EXPORT_CLIENT void Core_ResetMapZoomData(alt::ICore* core, uint32_t id);
+
 #ifdef __cplusplus
 }
 #endif

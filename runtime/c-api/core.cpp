@@ -925,4 +925,24 @@ uint8_t Core_TakeScreenshotGameOnly(alt::ICore* core, ScreenshotDelegate_t deleg
         delegate(str.c_str());
     });
 }
+
+alt::IMapData* Core_GetMapZoomDataById(alt::ICore* core, uint32_t id) {
+    return core->GetMapData(id).Get();
+}
+
+alt::IMapData* Core_GetMapZoomDataByAlias(alt::ICore* core, const char* alias, uint32_t& id) {
+    auto data = core->GetMapData(alias);
+    if (data.IsEmpty() || data.Get() == nullptr) return nullptr;
+
+    id = core->GetMapDataIDFromAlias(alias);
+    return data.Get();
+}
+
+void Core_ResetAllMapZoomData(alt::ICore* core) {
+    core->ResetAllMapData();
+}
+
+void Core_ResetMapZoomData(alt::ICore* core, uint32_t id) {
+    core->ResetMapData(id);
+}
 #endif
