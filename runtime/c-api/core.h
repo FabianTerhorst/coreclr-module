@@ -237,6 +237,9 @@ EXPORT_CLIENT alt::IMapData* Core_GetMapZoomDataByAlias(alt::ICore* core, const 
 EXPORT_CLIENT void Core_ResetAllMapZoomData(alt::ICore* core);
 EXPORT_CLIENT void Core_ResetMapZoomData(alt::ICore* core, uint32_t id);
 
+EXPORT_CLIENT alt::IHttpClient* Core_CreateHttpClient(alt::ICore* core, alt::IResource* resource);
+EXPORT_CLIENT alt::IAudio* Core_CreateAudio(alt::ICore* core, alt::IResource* resource, const char* source, float volume, uint32_t category, uint8_t frontend);
+
 #ifdef __cplusplus
 }
 #endif
