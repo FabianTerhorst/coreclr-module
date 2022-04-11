@@ -53,12 +53,12 @@ const char** WebSocketClient_GetSubProtocols(alt::IWebSocketClient* webSocketCli
 }
 
 uint8_t WebSocketClient_Send_String(alt::IWebSocketClient* webSocketClient, const char* str) {
-    webSocketClient->Send(str);
+    return webSocketClient->Send(str);
 }
 
 uint8_t WebSocketClient_Send_Binary(alt::IWebSocketClient* webSocketClient, const char* str, uint32_t size) {
     std::string data(str, size);
-    webSocketClient->SendBinary(data);
+    return webSocketClient->SendBinary(data);
 }
 
 void WebSocketClient_SetExtraHeader(alt::IWebSocketClient* webSocketClient, const char* key, const char* value) {
