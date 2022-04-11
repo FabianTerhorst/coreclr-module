@@ -14,8 +14,11 @@ namespace AltV.Net.Client
         public static Vector2 WorldToScreen(float x, float y, float z) => Core.WorldToScreen(new Vector3(x, y, z));
         public static void ShowCursor(bool state) => Core.ShowCursor(state);
         public static void AddGxtText(uint key, string value) => Core.AddGxtText(key, value);
+        public static void AddGxtText(string key, string value) => Core.AddGxtText(Hash(key), value);
         public static string GetGxtText(uint key) => Core.GetGxtText(key);
+        public static string GetGxtText(string key) => Core.GetGxtText(Hash(key));
         public static void RemoveGxtText(uint key) => Core.RemoveGxtText(key);
+        public static void RemoveGxtText(string key) => Core.RemoveGxtText(Hash(key));
         public static bool BeginScaleformMovieMethodMinimap(string methodName) => Core.BeginScaleformMovieMethodMinimap(methodName);
         public static void SetMinimapComponentPosition(string name, char alignX, char alignY, float posX, float posY, float sizeX, float sizeY) => Core.SetMinimapComponentPosition(name, alignX, alignY, posX, posY, sizeX, sizeY);
         public static void SetMinimapComponentPosition(string name, char alignX, char alignY, Vector2 pos, Vector2 size) => Core.SetMinimapComponentPosition(name, alignX, alignY, pos.X, pos.Y, size.X, size.Y);
