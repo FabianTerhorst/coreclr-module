@@ -190,6 +190,7 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::Ref<alt::IBaseObject> objectRef
 {
     auto object = objectRef.Get();
     if (object == nullptr) return;
+    object->AddRef();
 
     switch (object->GetType()) {
         case alt::IBaseObject::Type::VEHICLE:
@@ -211,6 +212,7 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::Ref<alt::IBaseObject> objectRef
 {
     auto object = objectRef.Get();
     if (object == nullptr) return;
+    object->RemoveRef();
 
     switch (object->GetType()) {
         case alt::IBaseObject::Type::VEHICLE:
