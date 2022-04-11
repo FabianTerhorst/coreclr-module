@@ -1,4 +1,4 @@
-#include "./entities/voice_channel.h"
+#include "./map_data.h"
 #include "./utils/strings.h"
 
 #ifdef ALT_CLIENT_API
