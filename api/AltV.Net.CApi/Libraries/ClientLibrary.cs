@@ -17,7 +17,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Audio_GetLooped { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetMaxTime { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, uint*, uint*, void> Audio_GetOutputs { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, nint*, nint*, uint*, void> Audio_GetOutputs { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Audio_GetSource { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Audio_GetVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Audio_IsFrontendPlay { get; }
@@ -30,6 +30,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, double, void> Audio_Seek { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_SetCategory { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Audio_SetLooped { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_SetSource { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Audio_SetVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
@@ -472,7 +473,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Audio_GetLooped { get; }
         public delegate* unmanaged[Cdecl]<nint, double> Audio_GetMaxTime { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint*, uint*, uint*, void> Audio_GetOutputs { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, nint*, nint*, uint*, void> Audio_GetOutputs { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Audio_GetSource { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Audio_GetVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Audio_IsFrontendPlay { get; }
@@ -485,6 +486,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, double, void> Audio_Seek { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_SetCategory { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Audio_SetLooped { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_SetSource { get; }
         public delegate* unmanaged[Cdecl]<nint, float, void> Audio_SetVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
@@ -927,7 +929,7 @@ namespace AltV.Net.CApi.Libraries
             Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) NativeLibrary.GetExport(handle, "Audio_GetCurrentTime");
             Audio_GetLooped = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Audio_GetLooped");
             Audio_GetMaxTime = (delegate* unmanaged[Cdecl]<nint, double>) NativeLibrary.GetExport(handle, "Audio_GetMaxTime");
-            Audio_GetOutputs = (delegate* unmanaged[Cdecl]<nint, nint*, uint*, uint*, void>) NativeLibrary.GetExport(handle, "Audio_GetOutputs");
+            Audio_GetOutputs = (delegate* unmanaged[Cdecl]<nint, nint*, nint*, nint*, uint*, void>) NativeLibrary.GetExport(handle, "Audio_GetOutputs");
             Audio_GetSource = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Audio_GetSource");
             Audio_GetVolume = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Audio_GetVolume");
             Audio_IsFrontendPlay = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Audio_IsFrontendPlay");
@@ -940,6 +942,7 @@ namespace AltV.Net.CApi.Libraries
             Audio_Seek = (delegate* unmanaged[Cdecl]<nint, double, void>) NativeLibrary.GetExport(handle, "Audio_Seek");
             Audio_SetCategory = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Audio_SetCategory");
             Audio_SetLooped = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Audio_SetLooped");
+            Audio_SetSource = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Audio_SetSource");
             Audio_SetVolume = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Audio_SetVolume");
             Blip_GetScriptID = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Blip_GetScriptID");
             Core_AddGXTText = (delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void>) NativeLibrary.GetExport(handle, "Core_AddGXTText");

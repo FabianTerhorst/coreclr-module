@@ -150,7 +150,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> FreeResourceArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> FreeStringArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeUInt32Array { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeUInt8Array { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeVoidPointerArray { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetBranchStatic { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetCApiVersion { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetSDKVersion { get; }
@@ -365,7 +368,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, void> FreeResourceArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> FreeStringArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeUInt32Array { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeUInt8Array { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeVoidPointerArray { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetBranchStatic { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetCApiVersion { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetSDKVersion { get; }
@@ -580,7 +586,10 @@ namespace AltV.Net.CApi.Libraries
             FreeResourceArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeResourceArray");
             FreeString = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeString");
             FreeStringArray = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "FreeStringArray");
+            FreeUInt32Array = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeUInt32Array");
+            FreeUInt8Array = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeUInt8Array");
             FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) NativeLibrary.GetExport(handle, "FreeUIntArray");
+            FreeVoidPointerArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeVoidPointerArray");
             GetBranchStatic = (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetBranchStatic");
             GetCApiVersion = (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetCApiVersion");
             GetSDKVersion = (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetSDKVersion");

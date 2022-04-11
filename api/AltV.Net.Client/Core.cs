@@ -28,6 +28,7 @@ namespace AltV.Net.Client
         public override IEntityPool<IVehicle> VehiclePool { get; }
         public override IBaseObjectPool<IBlip> BlipPool { get; }
         public override IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
+        public IBaseObjectPool<IAudio> AudioPool { get; }
         public IBaseObjectPool<IWebView> WebViewPool { get; }
         public IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
         public IBaseObjectPool<IRmlElement> RmlElementPool { get; }
@@ -54,6 +55,7 @@ namespace AltV.Net.Client
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
+            IBaseObjectPool<IAudio> audioPool,
             IBaseObjectPool<IWebView> webViewPool,
             IBaseObjectPool<IRmlDocument> rmlDocumentPool,
             IBaseObjectPool<IRmlElement> rmlElementPool,
@@ -71,6 +73,7 @@ namespace AltV.Net.Client
             VehiclePool = vehiclePool;
             BlipPool = blipPool;
             CheckpointPool = checkpointPool;
+            AudioPool = audioPool;
             WebViewPool = webViewPool;
             RmlDocumentPool = rmlDocumentPool;
             RmlElementPool = rmlElementPool;
@@ -287,6 +290,24 @@ namespace AltV.Net.Client
             var ptr = CreateCheckpointPtr(type, pos, nextPos, radius, height, color);
             if (ptr == IntPtr.Zero) return null;
             return CheckpointPool.Create(this, ptr);
+        }
+
+        public IntPtr CreateAudioPtr(string source, float volume, uint category, bool frontend)
+        {
+            unsafe
+            {
+                var sourcePtr = MemoryUtils.StringToHGlobalUtf8(source);
+                var ptr = Library.Client.Core_CreateAudio(NativePointer, Resource.NativePointer, sourcePtr, volume, category, (byte) (frontend ? 1 : 0));
+                Marshal.FreeHGlobal(sourcePtr);
+                return ptr;
+            }
+        }
+        
+        public IAudio CreateAudio(string source, float volume, uint category, bool frontend)
+        {
+            var ptr = CreateAudioPtr(source, volume, category, frontend);
+            if (ptr == IntPtr.Zero) return null;
+            return AudioPool.Create(this, ptr);
         }
         #endregion
         

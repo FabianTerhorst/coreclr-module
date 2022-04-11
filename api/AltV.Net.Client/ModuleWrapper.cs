@@ -55,8 +55,11 @@ namespace AltV.Net.Client
             var checkpointPool = new CheckpointPool(_resource.GetCheckpointFactory());
             Alt.Log("Checkpoint pool created");
 
+            var audioPool = new AudioPool(_resource.GetAudioFactory());
+            Alt.Log("Audio pool created");
+
             var webViewPool = new WebViewPool(_resource.GetWebViewFactory());
-            Alt.Log("Blip pool created");
+            Alt.Log("Webview pool created");
 
             var rmlDocumentPool = new RmlDocumentPool(new RmlDocumentFactory());
             var rmlElementPool = new RmlElementPool(new RmlElementFactory());
@@ -79,6 +82,7 @@ namespace AltV.Net.Client
                 vehiclePool,
                 blipPool,
                 checkpointPool,
+                audioPool,
                 webViewPool,
                 rmlDocumentPool,
                 rmlElementPool,

@@ -43,6 +43,10 @@ const char* Audio_GetSource(alt::IAudio* audio, int32_t& size) {
     return AllocateString(audio->GetSource(), size);
 }
 
+void Audio_SetSource(alt::IAudio* audio, const char* value) {
+    audio->SetSource(value);
+}
+
 float Audio_GetVolume(alt::IAudio* audio) {
     return audio->GetVolume();
 }
@@ -68,14 +72,16 @@ void Audio_RemoveOutput_Entity(alt::IAudio* audio, alt::IEntity* value) {
     audio->RemoveOutput(value);
 }
 
-void Audio_GetOutputs(alt::IAudio* audio, void**& entityArray, uint32_t*& scriptIdArray, uint32_t& size) {
+void Audio_GetOutputs(alt::IAudio* audio, void**& entityArray, uint8_t*& entityTypesArray, uint32_t*& scriptIdArray, uint32_t& size) {
     auto outputs = audio->GetOutputs();
     size = outputs->GetSize();
     auto entityArr = new void*[size];
+    auto entityTypeArr = new uint8_t[size];
     auto scriptIdArr = new uint32_t[size];
 
     for (auto i = 0; i < size; i++) {
         scriptIdArr[i] = 0;
+        entityTypeArr[i] = 255;
         entityArr[i] = nullptr;
 
         auto mValue = outputs->Get(i);
@@ -85,9 +91,7 @@ void Audio_GetOutputs(alt::IAudio* audio, void**& entityArray, uint32_t*& script
 
             if (baseObject == nullptr) continue;
 
-            auto entity = dynamic_cast<alt::IEntity*>(baseObject);
-            scriptIdArr[i] = entity == nullptr ? entity->GetScriptGuid() : 0;
-
+            entityTypeArr[i] = (uint8_t) baseObject->GetType();
             switch (baseObject->GetType()) {
                 case alt::IBaseObject::Type::PLAYER:
                      entityArr[i] = dynamic_cast<alt::IPlayer*>(baseObject);
@@ -102,6 +106,7 @@ void Audio_GetOutputs(alt::IAudio* audio, void**& entityArray, uint32_t*& script
         }
     }
 
+    entityTypesArray = entityTypeArr;
     entityArray = entityArr;
     scriptIdArray = scriptIdArr;
 }

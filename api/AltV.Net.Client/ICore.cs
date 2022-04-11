@@ -18,6 +18,7 @@ namespace AltV.Net.Client
         IBaseObjectPool<IWebView> WebViewPool { get; }
         new IBaseObjectPool<IBlip> BlipPool { get; }
         new IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
+        IBaseObjectPool<IAudio> AudioPool { get; }
         IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
         IBaseObjectPool<IRmlElement> RmlElementPool { get; }
         LocalStorage LocalStorage { get; }
@@ -129,5 +130,7 @@ namespace AltV.Net.Client
         void ClearTimer(uint id);
         IntPtr CreateCheckpointPtr(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color);
         ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color);
+        IntPtr CreateAudioPtr(string source, float volume, uint category, bool frontend);
+        IAudio CreateAudio(string source, float volume, uint category, bool frontend);
     }
 }

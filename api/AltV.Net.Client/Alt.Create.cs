@@ -13,5 +13,6 @@ namespace AltV.Net.Client
         public static IWebView CreateWebView(string url, bool isOverlay = false, Vector2? pos = null, Vector2? size = null) => Core.CreateWebView(url, isOverlay, pos, size);
         public static IWebView CreateWebView(string url, uint propHash, string targetTexture) => Core.CreateWebView(url, propHash, targetTexture);
         public static IRmlDocument CreateRmlDocument(string url) => Core.CreateRmlDocument(url);
+        public static IAudio CreateAudio(string source, float volume, uint category, bool frontend) => Core.CreateAudio(source, volume, category, frontend);
     }
 }

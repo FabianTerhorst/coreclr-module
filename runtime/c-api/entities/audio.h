@@ -29,6 +29,7 @@ EXPORT_CLIENT void Audio_SetLooped(alt::IAudio* audio, uint8_t value);
 EXPORT_CLIENT double Audio_GetMaxTime(alt::IAudio* audio);
 EXPORT_CLIENT uint8_t Audio_IsPlaying(alt::IAudio* audio);
 EXPORT_CLIENT const char* Audio_GetSource(alt::IAudio* audio, int32_t& size);
+EXPORT_CLIENT void Audio_SetSource(alt::IAudio* audio, const char* source);
 EXPORT_CLIENT float Audio_GetVolume(alt::IAudio* audio);
 EXPORT_CLIENT void Audio_SetVolume(alt::IAudio* audio, float value);
 
@@ -36,7 +37,7 @@ EXPORT_CLIENT void Audio_AddOutput_ScriptId(alt::IAudio* audio, uint32_t value);
 EXPORT_CLIENT void Audio_AddOutput_Entity(alt::IAudio* audio, alt::IEntity* value);
 EXPORT_CLIENT void Audio_RemoveOutput_ScriptId(alt::IAudio* audio, uint32_t value);
 EXPORT_CLIENT void Audio_RemoveOutput_Entity(alt::IAudio* audio, alt::IEntity* value);
-EXPORT_CLIENT void Audio_GetOutputs(alt::IAudio* audio, void**& entityArray, uint32_t*& scriptIdArray, uint32_t& size);
+EXPORT_CLIENT void Audio_GetOutputs(alt::IAudio* audio, void**& entityArray, uint8_t*& entityTypesArray, uint32_t*& scriptIdArray, uint32_t& size);
 EXPORT_CLIENT void Audio_Pause(alt::IAudio* audio);
 EXPORT_CLIENT void Audio_Play(alt::IAudio* audio);
 EXPORT_CLIENT void Audio_Reset(alt::IAudio* audio);

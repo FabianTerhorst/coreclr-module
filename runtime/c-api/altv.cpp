@@ -38,6 +38,18 @@ void FreeCharArray(char charArray[]) {
     delete[] charArray;
 }
 
+void FreeUInt32Array(uint32_t uInt32Array[]) {
+    delete[] uInt32Array;
+}
+
+void FreeUInt8Array(uint8_t uInt8Array[]) {
+    delete[] uInt8Array;
+}
+
+void FreeVoidPointerArray(void* voidPointerArray[]) {
+    delete[] voidPointerArray;
+}
+
 void FreeString(const char* string) {
     delete[] string;
 }
