@@ -23,26 +23,34 @@ namespace AltV.Net.Shared
             }
         }
 
+        private string? name;
         public string Name
         {
             get
             {
+                if (name != null) return name;
+                
                 unsafe
                 {
                     var size = 0;
-                    return core.PtrToStringUtf8AndFree(core.Library.Shared.Resource_GetName(NativePointer, &size), size);
+                    name = core.PtrToStringUtf8AndFree(core.Library.Shared.Resource_GetName(NativePointer, &size), size);
+                    return name;
                 }
             }
         }
 
+        private string? type;
         public string Type
         {
             get
             {
+                if (type != null) return type;
+
                 unsafe
                 {
                     var size = 0;
-                    return core.PtrToStringUtf8AndFree(core.Library.Shared.Resource_GetType(NativePointer, &size), size);
+                    type = core.PtrToStringUtf8AndFree(core.Library.Shared.Resource_GetType(NativePointer, &size), size);
+                    return type;
                 }
             }
         }
