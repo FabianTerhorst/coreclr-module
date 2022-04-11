@@ -73,6 +73,10 @@ namespace AltV.Net.Client
         public static string GetHeadshotBase64(byte id) => Core.GetHeadshotBase64(id);
         public static Task<string> TakeScreenshot() => Core.TakeScreenshot();
         public static Task<string> TakeScreenshotGameOnly() => Core.TakeScreenshotGameOnly();
+        
+        public static MapZoomData GetMapZoomData(uint id) => Core.GetMapZoomData(id);
+        public static MapZoomData GetMapZoomData(string alias) => Core.GetMapZoomData(alias);
+        public static void ResetAllMapZoomData() => Core.ResetAllMapZoomData();
         public static bool MinimapIsRectangle { set => Core.MinimapIsRectangle = value; }
         public static ushort Fps => Core.Fps;
         public static ushort Ping => Core.Ping;
@@ -93,8 +97,5 @@ namespace AltV.Net.Client
         public static bool RmlControlsEnabled { set => Core.RmlControlsEnabled = value; }
         public static bool VoiceControlsEnabled { set => Core.VoiceControlsEnabled = value; }
         public static int MsPerGameMinute { get => Core.MsPerGameMinute; set => Core.MsPerGameMinute = value; }
-        
-        public static MapZoomData GetMapZoomData(uint id) => Core.GetMapZoomData(id);
-        public static MapZoomData GetMapZoomData(string alias) => Core.GetMapZoomData(alias);
     }
 }

@@ -864,5 +864,36 @@ namespace AltV.Net.Client
 
             return data;
         }   
+        
+        public MapZoomData GetMapZoomData(uint id)
+        {
+            unsafe
+            {
+                var ptr = Library.Client.Core_GetMapZoomDataById(NativePointer, id);
+                if (ptr == IntPtr.Zero) return null;
+                return new MapZoomData(this, ptr, id);
+            }
+        }
+
+        public MapZoomData GetMapZoomData(string alias)
+        {
+            unsafe
+            {
+                var aliasPtr = MemoryUtils.StringToHGlobalUtf8(alias);
+                uint id = 0;
+                var ptr = Library.Client.Core_GetMapZoomDataByAlias(NativePointer, aliasPtr, &id);
+                if (ptr == IntPtr.Zero) return null;
+                Marshal.FreeHGlobal(aliasPtr);
+                return new MapZoomData(this, ptr, id);
+            }
+        }
+
+        public void ResetAllMapZoomData()
+        {
+            unsafe
+            {
+                Library.Client.Core_ResetAllMapZoomData(NativePointer);
+            }
+        }
     }
 }

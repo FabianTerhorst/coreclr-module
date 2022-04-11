@@ -134,5 +134,6 @@ namespace AltV.Net.Client
         IAudio CreateAudio(string source, float volume, uint category, bool frontend);
         MapZoomData GetMapZoomData(uint id);
         MapZoomData GetMapZoomData(string alias);
+        void ResetAllMapZoomData();
     }
 }
