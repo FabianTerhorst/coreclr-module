@@ -30,4 +30,5 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void KeyUpModuleDelegate(uint key);
 
     public delegate void ScreenshotResultModuleDelegate(IntPtr strPtr);
+    public delegate void HttpResponseModuleDelegate(int statusCode, string body, IntPtr headerKeys, IntPtr headerValues, int headerSize);
 }
