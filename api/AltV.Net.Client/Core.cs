@@ -32,6 +32,7 @@ namespace AltV.Net.Client
         public IBaseObjectPool<IRmlElement> RmlElementPool { get; }
 
         public IBaseEntityPool BaseEntityPool { get; }
+        public INativeResourcePool NativeResourcePool { get; }
         public override IBaseBaseObjectPool BaseBaseObjectPool { get; }
 
         public override INativeResource Resource { get; }
@@ -71,6 +72,7 @@ namespace AltV.Net.Client
             Logger = logger;
             BaseBaseObjectPool = baseBaseObjectPool;
             BaseEntityPool = baseEntityPool;
+            NativeResourcePool = nativeResourcePool;
             nativeResourcePool.GetOrCreate(this, resourcePointer, out var resource);
             Resource = resource;
             LocalStorage = new LocalStorage(this, GetLocalStoragePtr());
@@ -337,6 +339,43 @@ namespace AltV.Net.Client
             }
         }
         #endregion
+
+        public INativeResource GetResource(string name)
+        {
+            unsafe
+            {
+                var namePtr = MemoryUtils.StringToHGlobalUtf8(name);
+                var ptr = Library.Shared.Core_GetResource(NativePointer, namePtr);
+                Marshal.FreeHGlobal(namePtr);
+                NativeResourcePool.GetOrCreate(this, ptr, out var resource);
+                return resource;
+            }
+        }
+
+        public bool HasResource(string name)
+        {
+            unsafe
+            {
+                var namePtr = MemoryUtils.StringToHGlobalUtf8(name);
+                var ptr = Library.Shared.Core_GetResource(NativePointer, namePtr);
+                Marshal.FreeHGlobal(namePtr);
+                return ptr != IntPtr.Zero;
+            }
+        }
+
+        public INativeResource[] GetAllResources()
+        {
+            unsafe
+            {
+                uint size = 0;
+                var ptr = Library.Shared.Core_GetAllResources(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => NativeResourcePool.GetOrCreate(this, e, out var v) ? v : null).ToArray();
+                Library.Shared.FreeResourceArray(ptr);
+                return arr;
+            }
+        }
         
         public string[] MarshalStringArrayPtrAndFree(IntPtr ptr, uint size)
         {

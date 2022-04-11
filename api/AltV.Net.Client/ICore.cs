@@ -115,5 +115,8 @@ namespace AltV.Net.Client
         string GetHeadshotBase64(byte id);
         Task<string> TakeScreenshot();
         Task<string> TakeScreenshotGameOnly();
+        INativeResource GetResource(string name);
+        bool HasResource(string name);
+        INativeResource[] GetAllResources();
     }
 }

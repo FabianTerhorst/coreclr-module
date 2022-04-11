@@ -55,5 +55,9 @@ namespace AltV.Net.Client
 
         public static void EmitServer(string eventName, params object[] args) => Core.TriggerServerEvent(eventName, args);
         public static void EmitClient(string eventName, params object[] args) => Core.TriggerLocalEvent(eventName, args);
+        
+        public static bool HasResource(string name) => Core.HasResource(name);
+        public static INativeResource GetResource(string name) => Core.GetResource(name);
+        public static INativeResource[] GetAllResources() => Core.GetAllResources();
     }
 }
