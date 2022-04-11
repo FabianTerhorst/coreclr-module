@@ -1,6 +1,8 @@
 using System;
+using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Mock
 {
@@ -23,6 +25,14 @@ namespace AltV.Net.Mock
         public void Remove()
         {
             Alt.Core.RemoveColShape(this);
+        }
+        public bool IsEntityIn(ISharedEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+        public bool IsPointIn(Vector3 point)
+        {
+            throw new NotImplementedException();
         }
 
         public bool IsPlayerIn(IPlayer entity)

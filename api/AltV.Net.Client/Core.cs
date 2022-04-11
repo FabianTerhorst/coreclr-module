@@ -27,6 +27,7 @@ namespace AltV.Net.Client
         public override IPlayerPool PlayerPool { get; }
         public override IEntityPool<IVehicle> VehiclePool { get; }
         public override IBaseObjectPool<IBlip> BlipPool { get; }
+        public override IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
         public IBaseObjectPool<IWebView> WebViewPool { get; }
         public IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
         public IBaseObjectPool<IRmlElement> RmlElementPool { get; }
@@ -52,6 +53,7 @@ namespace AltV.Net.Client
             IPlayerPool playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
+            IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IWebView> webViewPool,
             IBaseObjectPool<IRmlDocument> rmlDocumentPool,
             IBaseObjectPool<IRmlElement> rmlElementPool,
@@ -68,6 +70,7 @@ namespace AltV.Net.Client
             PlayerPool = playerPool;
             VehiclePool = vehiclePool;
             BlipPool = blipPool;
+            CheckpointPool = checkpointPool;
             WebViewPool = webViewPool;
             RmlDocumentPool = rmlDocumentPool;
             RmlElementPool = rmlElementPool;
@@ -269,6 +272,21 @@ namespace AltV.Net.Client
             var ptr = CreateRmlDocumentPtr(url);
             if (ptr == IntPtr.Zero) return null;
             return RmlDocumentPool.Create(this, ptr);
+        }
+
+        public IntPtr CreateCheckpointPtr(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color)
+        {
+            unsafe
+            {
+                return Library.Client.Core_CreateCheckpoint(NativePointer, (byte) type, pos, nextPos, radius, height, color);
+            }
+        }
+        
+        public ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color)
+        {
+            var ptr = CreateCheckpointPtr(type, pos, nextPos, radius, height, color);
+            if (ptr == IntPtr.Zero) return null;
+            return CheckpointPool.Create(this, ptr);
         }
         #endregion
         

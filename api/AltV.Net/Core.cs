@@ -42,7 +42,7 @@ namespace AltV.Net
 
         public override IBaseObjectPool<IBlip> BlipPool { get; }
 
-        public IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
+        public override IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
 
         public IBaseObjectPool<IVoiceChannel> VoiceChannelPool { get; }
 

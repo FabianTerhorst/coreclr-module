@@ -1,11 +1,9 @@
-using System;
 using System.Numerics;
-using System.Runtime.InteropServices;
+using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Data;
-using AltV.Net.Elements.Args;
-using AltV.Net.Native;
+using AltV.Net.Elements.Entities;
 
-namespace AltV.Net.Elements.Entities
+namespace AltV.Net.Client.Elements.Entities
 {
     public class Checkpoint : ColShape, ICheckpoint
     {
@@ -128,10 +126,11 @@ namespace AltV.Net.Elements.Entities
         {
             CheckpointNativePointer = nativePointer;
         }
-        
-        public void Remove()
+
+        public Checkpoint(ICore core, CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color)
+            : this(core, core.CreateCheckpointPtr(type, pos, nextPos, radius, height, color))
         {
-            Alt.RemoveCheckpoint(this);
+            
         }
     }
 }

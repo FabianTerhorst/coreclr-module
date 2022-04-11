@@ -11,6 +11,7 @@ namespace AltV.Net.Shared
         IReadOnlyEntityPool<ISharedPlayer> PlayerPool { get; }
         IReadOnlyEntityPool<ISharedVehicle> VehiclePool { get; }
         IReadOnlyBaseObjectPool<ISharedBlip> BlipPool { get; }
+        IReadOnlyBaseObjectPool<ISharedCheckpoint> CheckpointPool { get; }
         IReadOnlyBaseBaseObjectPool BaseBaseObjectPool { get; }
         
         ISharedNativeResource Resource { get; }

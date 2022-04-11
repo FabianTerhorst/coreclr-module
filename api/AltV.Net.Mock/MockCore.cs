@@ -30,6 +30,7 @@ namespace AltV.Net.Mock
         private readonly IBaseEntityPool baseEntityPool;
 
         IReadOnlyBaseObjectPool<ISharedBlip> ISharedCore.BlipPool => blipPool1;
+        IReadOnlyBaseObjectPool<ISharedCheckpoint> ISharedCore.CheckpointPool => CheckpointPool;
         public IBaseBaseObjectPool BaseBaseObjectPool { get; }
         IReadOnlyBaseBaseObjectPool ISharedCore.BaseBaseObjectPool => BaseBaseObjectPool;
         

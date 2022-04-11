@@ -34,6 +34,11 @@ namespace AltV.Net.Client
             return new BlipFactory();
         }
         
+        public virtual IBaseObjectFactory<ICheckpoint> GetCheckpointFactory()
+        {
+            return new CheckpointFactory();
+        }
+        
         public IBaseObjectFactory<IWebView> GetWebViewFactory()
         {
             return new WebViewFactory();

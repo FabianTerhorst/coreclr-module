@@ -1,6 +1,7 @@
 #include "core.h"
 #include "mvalue.h"
 #include "utils/strings.h"
+#include "Log.h"
 #include <vector>
 
 void Core_LogInfo(alt::ICore* core, const char* str) {
@@ -508,6 +509,23 @@ alt::IWebView* Core_CreateWebView3D(alt::ICore* core, alt::IResource* resource, 
 
 alt::IRmlDocument* Core_CreateRmlDocument(alt::ICore* core, alt::IResource* resource, const char* url) {
     return core->CreateDocument(url, resource->GetMain(), resource).Get();
+}
+
+alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+    alt::Position nextPosition;
+    nextPosition.x = nextPos.x;
+    nextPosition.y = nextPos.y;
+    nextPosition.z = nextPos.z;
+    alt::RGBA rgba;
+    rgba.r = color.r;
+    rgba.g = color.g;
+    rgba.b = color.b;
+    rgba.a = color.a;
+    return core->CreateCheckpoint(type, position, nextPosition, radius, height, { (uint8_t) color.r, (uint8_t) color.g, (uint8_t) color.b, (uint8_t) color.a }).Get();
 }
 
 

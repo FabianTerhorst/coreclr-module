@@ -1,4 +1,6 @@
 using System;
+using System.Numerics;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Elements.Entities
 {
@@ -11,7 +13,7 @@ namespace AltV.Net.Elements.Entities
         {
             unsafe
             {
-                return core.Library.Server.ColShape_GetWorldObject(nativePointer);
+                return core.Library.Shared.ColShape_GetWorldObject(nativePointer);
             }
         }
         
@@ -52,17 +54,37 @@ namespace AltV.Net.Elements.Entities
             ColShapeNativePointer = nativePointer;
         }
 
-        public bool IsEntityIn(IEntity entity)
+        public ColShape(ICore core, IntPtr nativePointer, BaseObjectType baseObjectType) : base(core, GetWorldObjectPointer(core, nativePointer), baseObjectType)
+        {
+            ColShapeNativePointer = nativePointer;
+        }
+
+        public bool IsPointIn(Vector3 point)
+        {
+            CheckIfEntityExists();
+            
+            unsafe
+            {
+                return Core.Library.Shared.ColShape_IsPointIn(ColShapeNativePointer, point) == 1;
+            }
+        }
+
+        public bool IsEntityIn(ISharedEntity entity)
         {
             CheckIfEntityExists();
             entity.CheckIfEntityExists();
             
             unsafe
             {
-                return Core.Library.Server.ColShape_IsEntityIn(ColShapeNativePointer, entity.EntityNativePointer) == 1;
+                return Core.Library.Shared.ColShape_IsEntityIn(ColShapeNativePointer, entity.EntityNativePointer) == 1;
             }
         }
 
+        public bool IsEntityIn(IEntity entity)
+        {
+            return IsEntityIn((ISharedEntity) entity);
+        }
+        
         [Obsolete("Use IsEntityIn instead")]
         public bool IsPlayerIn(IPlayer player)
         {
@@ -76,8 +98,8 @@ namespace AltV.Net.Elements.Entities
             Alt.LogWarning("colShape.IsVehicleIn is deprecated, use colShape.IsEntityIn instead");
             return IsEntityIn(vehicle);
         }
-        
-        public void Remove()
+
+        public virtual void Remove()
         {
             Alt.RemoveColShape(this);
         }
