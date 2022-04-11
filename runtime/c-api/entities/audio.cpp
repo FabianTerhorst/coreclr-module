@@ -68,13 +68,42 @@ void Audio_RemoveOutput_Entity(alt::IAudio* audio, alt::IEntity* value) {
     audio->RemoveOutput(value);
 }
 
-alt::MValueConst** Audio_GetOutputs(alt::IAudio* audio, uint32_t& size) {
+void Audio_GetOutputs(alt::IAudio* audio, void**& entityArray, uint32_t*& scriptIdArray, uint32_t& size) {
     auto outputs = audio->GetOutputs();
     size = outputs->GetSize();
-    auto arr = new alt::MValueConst*[size];
+    auto entityArr = new void*[size];
+    auto scriptIdArr = new uint32_t[size];
 
-    for (auto i = 0; i < size; i++) arr[i] = (alt::MValueConst *) outputs->Get(i).Get();
-    return arr;
+    for (auto i = 0; i < size; i++) {
+        scriptIdArr[i] = 0;
+        entityArr[i] = nullptr;
+
+        auto mValue = outputs->Get(i);
+        if (mValue->GetType() == alt::IMValue::Type::BASE_OBJECT) {
+            auto baseObjectRef = dynamic_cast<const alt::IMValueBaseObject*>(mValue.Get())->Value();
+            auto baseObject = baseObjectRef.Get();
+
+            if (baseObject == nullptr) continue;
+
+            auto entity = dynamic_cast<alt::IEntity*>(baseObject);
+            scriptIdArr[i] = entity == nullptr ? entity->GetScriptGuid() : 0;
+
+            switch (baseObject->GetType()) {
+                case alt::IBaseObject::Type::PLAYER:
+                     entityArr[i] = dynamic_cast<alt::IPlayer*>(baseObject);
+                     break;
+                case alt::IBaseObject::Type::VEHICLE:
+                    entityArr[i] = dynamic_cast<alt::IVehicle*>(baseObject);
+                    break;
+            }
+        } else if (mValue->GetType() == alt::IMValue::Type::UINT) {
+            auto valueRef = dynamic_cast<const alt::IMValueUInt*>(mValue.Get())->Value();
+            scriptIdArr[i] = valueRef;
+        }
+    }
+
+    entityArray = entityArr;
+    scriptIdArray = scriptIdArr;
 }
 
 void Audio_Pause(alt::IAudio* audio) {
