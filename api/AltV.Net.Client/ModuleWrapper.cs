@@ -64,6 +64,7 @@ namespace AltV.Net.Client
 
             var baseBaseObjectPool = new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, webViewPool);
             var baseEntityPool = new BaseEntityPool(playerPool, vehiclePool);
+            var timerPool = new TimerPool();
 
             var natives = _resource.GetNatives(DllName);
             
@@ -80,9 +81,11 @@ namespace AltV.Net.Client
                 baseBaseObjectPool,
                 baseEntityPool,
                 nativeResourcePool,
+                timerPool,
                 logger,
                 natives
             );
+            
             _core = client;
             Alt.CoreImpl = client;
             Alt.Log("Core initialized");
@@ -137,6 +140,7 @@ namespace AltV.Net.Client
 
         public static void OnTick()
         {
+            _core.TimerPool.Tick(_core.Resource.Name);
             _core.OnTick();
         }
 

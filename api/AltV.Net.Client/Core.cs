@@ -33,6 +33,7 @@ namespace AltV.Net.Client
 
         public IBaseEntityPool BaseEntityPool { get; }
         public INativeResourcePool NativeResourcePool { get; }
+        public ITimerPool TimerPool { get; }
         public override IBaseBaseObjectPool BaseBaseObjectPool { get; }
 
         public override INativeResource Resource { get; }
@@ -57,6 +58,7 @@ namespace AltV.Net.Client
             IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             INativeResourcePool nativeResourcePool,
+            ITimerPool timerPool,
             ILogger logger,
             INatives natives
         ) : base(nativePointer, library)
@@ -73,6 +75,7 @@ namespace AltV.Net.Client
             BaseBaseObjectPool = baseBaseObjectPool;
             BaseEntityPool = baseEntityPool;
             NativeResourcePool = nativeResourcePool;
+            TimerPool = timerPool;
             nativeResourcePool.GetOrCreate(this, resourcePointer, out var resource);
             Resource = resource;
             LocalStorage = new LocalStorage(this, GetLocalStoragePtr());
@@ -387,6 +390,31 @@ namespace AltV.Net.Client
                 this.Library.Shared.FreeStringArray(ptr, size);
                 return arr;
             }
+        }
+
+        public uint SetTimeout(Action action, uint duration, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
+        {
+            return TimerPool.Add(new ModuleTimer(action, duration, true, filePath, lineNumber));
+        }
+
+        public uint SetInterval(Action action, uint duration, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
+        {
+            return TimerPool.Add(new ModuleTimer(action, duration, false, filePath, lineNumber));
+        }
+
+        public uint NextTick(Action action, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
+        {
+            return TimerPool.Add(new ModuleTimer(action, 0, true, filePath, lineNumber));
+        }
+
+        public uint EveryTick(Action action, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
+        {
+            return TimerPool.Add(new ModuleTimer(action, 0, false, filePath, lineNumber));
+        }
+        
+        public void ClearTimer(uint id)
+        {
+            TimerPool.Remove(id);
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Elements.Pools;
@@ -42,6 +43,8 @@ namespace AltV.Net.Client
         bool RmlControlsEnabled { set; }
         bool VoiceControlsEnabled { set; }
         int MsPerGameMinute { get; set; }
+        INativeResourcePool NativeResourcePool { get; }
+        ITimerPool TimerPool { get; }
         IBlip CreatePointBlip(Position position);
         IBlip CreateRadiusBlip(Position position, float radius);
         IBlip CreateAreaBlip(Position position, int width, int height);
@@ -118,5 +121,10 @@ namespace AltV.Net.Client
         INativeResource GetResource(string name);
         bool HasResource(string name);
         INativeResource[] GetAllResources();
+        uint SetTimeout(Action action, uint duration, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0);
+        uint SetInterval(Action action, uint duration, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0);
+        uint NextTick(Action action, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0);
+        uint EveryTick(Action action, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0);
+        void ClearTimer(uint id);
     }
 }
