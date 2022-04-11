@@ -16,7 +16,8 @@ namespace AltV.Net.Client
         IBaseEntityPool BaseEntityPool { get; }
         IBaseBaseObjectPool BaseBaseObjectPool { get; }
         IBaseObjectPool<IWebView> WebViewPool { get; }
-        IBaseObjectPool<IBlip> BlipPool { get; }
+        new IBaseObjectPool<IBlip> BlipPool { get; }
+        new IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
         IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
         IBaseObjectPool<IRmlElement> RmlElementPool { get; }
         LocalStorage LocalStorage { get; }

@@ -130,7 +130,7 @@ namespace AltV.Net.Client.Elements.Entities
         public Checkpoint(ICore core, CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color)
             : this(core, core.CreateCheckpointPtr(type, pos, nextPos, radius, height, color))
         {
-            
+            core.CheckpointPool.Add(this);
         }
     }
 }
