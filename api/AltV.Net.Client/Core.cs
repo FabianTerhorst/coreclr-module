@@ -26,7 +26,7 @@ namespace AltV.Net.Client
 
         public override IPlayerPool PlayerPool { get; }
         public override IEntityPool<IVehicle> VehiclePool { get; }
-        public IBaseObjectPool<IBlip> BlipPool { get; }
+        public override IBaseObjectPool<IBlip> BlipPool { get; }
         public IBaseObjectPool<IWebView> WebViewPool { get; }
         public IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
         public IBaseObjectPool<IRmlElement> RmlElementPool { get; }

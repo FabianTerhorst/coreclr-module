@@ -29,6 +29,7 @@ namespace AltV.Net.Mock
 
         private readonly IBaseEntityPool baseEntityPool;
 
+        IReadOnlyBaseObjectPool<ISharedBlip> ISharedCore.BlipPool => blipPool1;
         public IBaseBaseObjectPool BaseBaseObjectPool { get; }
         IReadOnlyBaseBaseObjectPool ISharedCore.BaseBaseObjectPool => BaseBaseObjectPool;
         
@@ -50,6 +51,7 @@ namespace AltV.Net.Mock
         private readonly IBaseObjectPool<IVoiceChannel> voiceChannelPool;
 
         private readonly INativeResourcePool nativeResourcePool;
+        private IReadOnlyBaseObjectPool<ISharedBlip> blipPool1;
 
         public int NetTime => 0;
 

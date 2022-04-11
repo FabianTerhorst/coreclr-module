@@ -58,7 +58,7 @@ namespace AltV.Net.ColShape.Tests
         {
             throw new NotImplementedException();
         }
-        public ICollection<IVehicle> GetAllEntities()
+        public IReadOnlyCollection<IVehicle> GetAllEntities()
         {
             var mockVehicle = new MockVehicle(null) {Position = new Position(1, 1, 1)};
             var vehicles = new List<IVehicle> {mockVehicle};

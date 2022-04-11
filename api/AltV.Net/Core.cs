@@ -40,7 +40,7 @@ namespace AltV.Net
         public override IEntityPool<IVehicle> VehiclePool { get; }
         IReadOnlyEntityPool<ISharedVehicle> ISharedCore.VehiclePool => VehiclePool;
 
-        public IBaseObjectPool<IBlip> BlipPool { get; }
+        public override IBaseObjectPool<IBlip> BlipPool { get; }
 
         public IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
 

@@ -45,15 +45,15 @@ namespace AltV.Net
         public static IReadOnlyCollection<IVehicle> GetAllVehicles() =>
             Core.VehiclePool.GetAllEntities();
 
-        public static ICollection<IBlip> GetAllBlips() => Core.BlipPool.GetAllObjects();
+        public static IReadOnlyCollection<IBlip> GetAllBlips() => Core.BlipPool.GetAllObjects();
 
-        public static ICollection<ICheckpoint> GetAllCheckpoints() =>
+        public static IReadOnlyCollection<ICheckpoint> GetAllCheckpoints() =>
             Core.CheckpointPool.GetAllObjects();
 
-        public static ICollection<IVoiceChannel> GetAllVoiceChannels() =>
+        public static IReadOnlyCollection<IVoiceChannel> GetAllVoiceChannels() =>
             Core.VoiceChannelPool.GetAllObjects();
 
-        public static ICollection<IColShape> GetAllColShapes() =>
+        public static IReadOnlyCollection<IColShape> GetAllColShapes() =>
             Core.ColShapePool.GetAllObjects();
 
         public static KeyValuePair<IntPtr, IPlayer>[] GetPlayersArray() => Core.PlayerPool.GetEntitiesArray();

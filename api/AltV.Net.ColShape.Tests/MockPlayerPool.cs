@@ -60,7 +60,7 @@ namespace AltV.Net.ColShape.Tests
         {
             throw new NotImplementedException();
         }
-        public ICollection<IPlayer> GetAllEntities()
+        public IReadOnlyCollection<IPlayer> GetAllEntities()
         {
             return players;
         }

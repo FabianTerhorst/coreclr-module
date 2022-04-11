@@ -71,9 +71,9 @@ namespace AltV.Net.Async
             return entity;
         }
 
-        public ICollection<TBaseObject> GetAllObjects()
+        public IReadOnlyCollection<TBaseObject> GetAllObjects()
         {
-            return entities.Values;
+            return (IReadOnlyCollection<TBaseObject>) entities.Values;
         }
         
         public KeyValuePair<IntPtr, TBaseObject>[] GetObjectsArray()

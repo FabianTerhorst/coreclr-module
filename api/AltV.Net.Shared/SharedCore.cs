@@ -32,6 +32,7 @@ namespace AltV.Net.Shared
         public abstract ISharedNativeResource Resource { get; }
         public abstract IReadOnlyEntityPool<ISharedPlayer> PlayerPool { get; }
         public abstract IReadOnlyEntityPool<ISharedVehicle> VehiclePool { get; }
+        public abstract IReadOnlyBaseObjectPool<ISharedBlip> BlipPool { get; }
         public abstract IReadOnlyBaseBaseObjectPool BaseBaseObjectPool { get; }
 
         private string? sdkVersion;
