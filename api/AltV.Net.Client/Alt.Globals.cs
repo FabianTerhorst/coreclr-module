@@ -93,5 +93,8 @@ namespace AltV.Net.Client
         public static bool RmlControlsEnabled { set => Core.RmlControlsEnabled = value; }
         public static bool VoiceControlsEnabled { set => Core.VoiceControlsEnabled = value; }
         public static int MsPerGameMinute { get => Core.MsPerGameMinute; set => Core.MsPerGameMinute = value; }
+        
+        public static MapZoomData GetMapZoomData(uint id) => Core.GetMapZoomData(id);
+        public static MapZoomData GetMapZoomData(string alias) => Core.GetMapZoomData(alias);
     }
 }

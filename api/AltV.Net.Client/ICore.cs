@@ -132,5 +132,7 @@ namespace AltV.Net.Client
         ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color);
         IntPtr CreateAudioPtr(string source, float volume, uint category, bool frontend);
         IAudio CreateAudio(string source, float volume, uint category, bool frontend);
+        MapZoomData GetMapZoomData(uint id);
+        MapZoomData GetMapZoomData(string alias);
     }
 }
