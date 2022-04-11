@@ -51,6 +51,10 @@ void FreeResourceArray(alt::IResource** resourceArray) {
     delete[] resourceArray;
 }
 
+void FreeMValueConstArray(alt::MValueConst** mValueConstArray) {
+    delete[] mValueConstArray;
+}
+
 const char* GetVersionStatic(int32_t &size) {
     return AllocateString(alt::ICore::Instance().GetVersion(), size);
 }
