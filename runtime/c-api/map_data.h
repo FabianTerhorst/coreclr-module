@@ -6,8 +6,8 @@
 #pragma clang diagnostic ignored "-Wswitch"
 #endif
 
-#include "../../cpp-sdk/SDK.h"
-#include "../utils/export.h"
+#include "../cpp-sdk/SDK.h"
+#include "utils/export.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop

@@ -1,5 +1,5 @@
-#include "voice_channel.h"
-#include "../utils/strings.h"
+#include "./entities/voice_channel.h"
+#include "./utils/strings.h"
 
 #ifdef ALT_CLIENT_API
 void MapData_SetFScrollSpeed(alt::IMapData* mapData, float value) {
