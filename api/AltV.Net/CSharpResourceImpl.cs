@@ -219,6 +219,11 @@ namespace AltV.Net
             AltNative.Resource.ServerStartedDelegate onServerStarted = ModuleWrapper.OnServerStarted;
             handles.AddFirst(GCHandle.Alloc(onServerStarted));
             AltNative.Resource.CSharpResourceImpl_SetServerStartedDelegate(NativePointer, onServerStarted);
+            
+            AltNative.Resource.PlayerRequestControlDelegate onPlayerRequestControl = ModuleWrapper.OnPlayerRequestControl;
+            handles.AddFirst(GCHandle.Alloc(onPlayerRequestControl));
+            AltNative.Resource.CSharpResourceImpl_SetPlayerRequestControlDelegate(NativePointer, onPlayerRequestControl);
+            
         }
 
         public void Dispose()

@@ -472,6 +472,23 @@ namespace AltV.Net.Async
                                             return currScriptFunction.CallAsync();
                                         };
                                     break;
+                                
+                                case ScriptEventType.PlayerRequestControl:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate,
+                                        new[]
+                                        {
+                                            typeof(IEntity),
+                                            typeof(IPlayer)
+                                        }, true);
+                                    OnPlayerRequestControl +=
+                                        (entity, player) =>
+                                        {
+                                            var currScriptFunction = scriptFunction.Clone();
+                                            currScriptFunction.Set(entity);
+                                            currScriptFunction.Set(player);
+                                            return currScriptFunction.CallAsync();
+                                        };
+                                    break;
                             }
 
                             break;

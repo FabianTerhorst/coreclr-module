@@ -195,6 +195,12 @@ namespace AltV.Net.Async
             add => Core.ServerStartedAsyncEventHandler.Add(value);
             remove => Core.ServerStartedAsyncEventHandler.Remove(value);
         }
+        
+        public static event PlayerRequestControlAsyncDelegate OnPlayerRequestControl
+        {
+            add => Core.PlayerRequestControlAsyncEventHandler.Add(value);
+            remove => Core.PlayerRequestControlAsyncEventHandler.Remove(value);
+        }
 
         public static async void Log(string message)
         {
