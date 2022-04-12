@@ -21,12 +21,15 @@ namespace AltV.Net.Async
         public static Task<IVehicle> CreateVehicle(string model, Position pos, Rotation rot) =>
             CreateVehicle(Alt.Hash(model), pos, rot);
 
+        [Obsolete("Use AltAsync.CreateVehicle or Alt.CreateVehicle instead")]
         public static IVehicleBuilder CreateVehicleBuilder(uint model, Position pos, Rotation rot) =>
             new VehicleBuilder(model, pos, rot);
 
+        [Obsolete("Use AltAsync.CreateVehicle or Alt.CreateVehicle instead")]
         public static IVehicleBuilder CreateVehicleBuilder(VehicleModel model, Position pos, Rotation rot) =>
             new VehicleBuilder((uint) model, pos, rot);
 
+        [Obsolete("Use AltAsync.CreateVehicle or Alt.CreateVehicle instead")]
         public static IVehicleBuilder CreateVehicleBuilder(string model, Position pos, Rotation rot) =>
             new VehicleBuilder(Alt.Hash(model), pos, rot);
 
