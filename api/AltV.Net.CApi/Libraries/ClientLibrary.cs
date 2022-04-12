@@ -84,6 +84,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetVoiceInputMuted { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsCamFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsConsoleOpen { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_IsCursorVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsGameFocused { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsInStreamerMode { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyDown { get; }
@@ -540,6 +541,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetVoiceInputMuted { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsCamFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsConsoleOpen { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_IsCursorVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsGameFocused { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsInStreamerMode { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyDown { get; }
@@ -996,6 +998,7 @@ namespace AltV.Net.CApi.Libraries
             Core_GetVoiceInputMuted = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_GetVoiceInputMuted");
             Core_IsCamFrozen = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsCamFrozen");
             Core_IsConsoleOpen = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsConsoleOpen");
+            Core_IsCursorVisible = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_IsCursorVisible");
             Core_IsGameFocused = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsGameFocused");
             Core_IsInStreamerMode = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsInStreamerMode");
             Core_IsKeyDown = (delegate* unmanaged[Cdecl]<nint, uint, byte>) NativeLibrary.GetExport(handle, "Core_IsKeyDown");

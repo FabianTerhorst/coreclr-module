@@ -61,6 +61,7 @@ namespace AltV.Net.Client
         IntPtr CreateAreaBlipPtr(Position position, int width, int height);
         new IEntity GetEntityById(ushort id);
         void ShowCursor(bool state);
+        bool IsCursorVisible { get; }
         void TriggerServerEvent(string eventName, params object[] args);
         IntPtr CreateRmlDocumentPtr(string url);
         IRmlDocument CreateRmlDocument(string url);

@@ -13,6 +13,7 @@ namespace AltV.Net.Client
         public static Vector2 WorldToScreen(Vector3 position) => Core.WorldToScreen(position);
         public static Vector2 WorldToScreen(float x, float y, float z) => Core.WorldToScreen(new Vector3(x, y, z));
         public static void ShowCursor(bool state) => Core.ShowCursor(state);
+        public static bool IsCursorVisible => Core.IsCursorVisible;
         public static void AddGxtText(uint key, string value) => Core.AddGxtText(key, value);
         public static void AddGxtText(string key, string value) => Core.AddGxtText(Hash(key), value);
         public static string GetGxtText(uint key) => Core.GetGxtText(key);

@@ -349,14 +349,6 @@ namespace AltV.Net.Client
             return WebSocketClientPool.Create(this, ptr);
         }
         #endregion
-        
-        public void ShowCursor(bool state)
-        {
-            unsafe
-            {
-                Library.Client.Core_ShowCursor(NativePointer, Resource.NativePointer, state);
-            }
-        }
 
         #region TriggerServerEvent
         public void TriggerServerEvent(string eventName, MValueConst[] args)

@@ -123,6 +123,7 @@ EXPORT_CLIENT void Core_TriggerWebViewEvent(alt::ICore* core, alt::IWebView* web
 EXPORT_CLIENT void Core_TriggerServerEvent(alt::ICore* core, const char* event, alt::MValueConst* args[], int size);
 
 EXPORT_CLIENT void Core_ShowCursor(alt::ICore* core, alt::IResource* resource, bool state);
+EXPORT_CLIENT uint8_t Core_IsCursorVisible(alt::ICore* core, alt::IResource* resource);
 
 #ifdef ALT_CLIENT_API
 EXPORT_CLIENT ClrDiscordUser* Core_GetDiscordUser(alt::ICore* core);

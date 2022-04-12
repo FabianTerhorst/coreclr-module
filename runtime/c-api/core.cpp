@@ -551,6 +551,10 @@ void Core_ShowCursor(alt::ICore* core, alt::IResource* resource, bool state) {
     }
 }
 
+uint8_t Core_IsCursorVisible(alt::ICore* core, alt::IResource* resource) {
+    return resource->CursorVisible();
+}
+
 
 ClrDiscordUser* Core_GetDiscordUser(alt::ICore* core) {
     auto manager = core->GetDiscordManager();

@@ -895,5 +895,24 @@ namespace AltV.Net.Client
                 Library.Client.Core_ResetAllMapZoomData(NativePointer);
             }
         }
+        
+        public void ShowCursor(bool state)
+        {
+            unsafe
+            {
+                Library.Client.Core_ShowCursor(NativePointer, Resource.NativePointer, state);
+            }
+        }
+
+        public bool IsCursorVisible
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Client.Core_IsCursorVisible(NativePointer, Resource.NativePointer) == 1;
+                }
+            }
+        } 
     }
 }
