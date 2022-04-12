@@ -430,5 +430,10 @@ namespace AltV.Net
         {
             _core.OnServerStarted();
         }
+
+        public static void OnPlayerRequestControl(IntPtr target, BaseObjectType targetType, IntPtr player)
+        {
+            _core.OnPlayerRequestControl(target, targetType, player);
+        }
     }
 }

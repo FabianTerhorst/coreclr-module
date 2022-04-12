@@ -116,7 +116,10 @@ namespace AltV.Net
         internal readonly IEventHandler<ServerStartedDelegate> ServerStartedHandler =
             new HashSetEventHandler<ServerStartedDelegate>();
         
-        
+        internal readonly IEventHandler<PlayerRequestControlDelegate> PlayerRequestControlHandler =
+            new HashSetEventHandler<PlayerRequestControlDelegate>();
+
+
         public void OnCheckpoint(IntPtr checkpointPointer, IntPtr entityPointer, BaseObjectType baseObjectType,
             bool state)
         {
@@ -1256,6 +1259,42 @@ namespace AltV.Net
                 catch (Exception exception)
                 {
                     Alt.Log("exception at event:" + "OnServerStartedEvent" + ":" + exception);
+                }
+            }
+        }
+
+        public virtual void OnPlayerRequestControl(IntPtr targetPtr, BaseObjectType targetType, IntPtr playerPtr)
+        {
+            if (!BaseEntityPool.Get(targetPtr, targetType, out var target))
+            {
+                Console.WriteLine("OnPlayerRequestControl Invalid targetEntity " + targetPtr + " " + targetType);
+                return;
+            }
+
+            var player = PlayerPool.Get(playerPtr);
+            if (player == null)
+            {
+                Console.WriteLine("OnPlayerRequestControl Invalid player " + playerPtr);
+                return;
+            }
+            OnPlayerRequestControlEvent(target, player);
+        }
+        
+        public virtual void OnPlayerRequestControlEvent(IEntity target, IPlayer player)
+        {
+            foreach (var @delegate in PlayerRequestControlHandler.GetEvents())
+            {
+                try
+                {
+                    @delegate(target, player);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerRequestControlEvent" + ":" + exception.InnerException);
+                }
+                catch (Exception exception)
+                {
+                    Alt.Log("exception at event:" + "OnPlayerRequestControlEvent" + ":" + exception);
                 }
             }
         }

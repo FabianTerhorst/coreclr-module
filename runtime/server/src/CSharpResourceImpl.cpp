@@ -1,4 +1,5 @@
 #include "CSharpResourceImpl.h"
+#include "../../cpp-sdk/events/CPlayerRequestControlEvent.h"
 
 CSharpResourceImpl::CSharpResourceImpl(alt::ICore* server, CoreClr* coreClr, alt::IResource* resource)
         : alt::IResource::Impl() {
@@ -59,6 +60,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnConnectionQueueAddDelegate = [](auto var){};
     OnConnectionQueueRemoveDelegate = [](auto var){};
     OnServerStartedDelegate = []() {};
+    OnPlayerRequestControlDelegate = [](auto var, auto var2, auto var3) {};
 }
 
 bool CSharpResourceImpl::Start() {
@@ -487,6 +489,14 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             OnServerStartedDelegate();
             break;
         }
+        case alt::CEvent::Type::PLAYER_REQUEST_CONTROL: {
+           auto playerRequestControlEvent = ((alt::CPlayerRequestControlEvent *) (ev));
+           auto targetPtr = GetEntityPointer(playerRequestControlEvent->GetTarget().Get());
+           OnPlayerRequestControlDelegate(targetPtr,
+                                          playerRequestControlEvent->GetTarget()->GetType(),
+                                          playerRequestControlEvent->GetPlayer().Get());
+           break;
+        }
     }
     return true;
 }
@@ -798,6 +808,10 @@ void CSharpResourceImpl_SetConnectionQueueRemoveDelegate(CSharpResourceImpl* res
 void CSharpResourceImpl_SetServerStartedDelegate(CSharpResourceImpl* resource,
                                                       ServerStartedDelegate_t delegate) {
     resource->OnServerStartedDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerRequestControlDelegate(CSharpResourceImpl* resource, PlayerRequestControlDelegate_t delegate) {
+    resource->OnPlayerRequestControlDelegate = delegate;
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files) {
