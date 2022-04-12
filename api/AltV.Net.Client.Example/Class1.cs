@@ -1,13 +1,21 @@
-﻿using AltV.Net.Data;
+﻿using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Data;
 
 namespace AltV.Net.Client.Example
 {
     public class Main : Resource
     {
         private bool drawNametags = false;
+        private IWebView webView;
         public override void OnStart()
         {
             Alt.LogInfo("Client Started!");
+            webView = Alt.CreateWebView("http://resource/client/html/index.html");
+            
+            webView.On("test2", () =>
+            {
+                Alt.LogInfo("[C#]test2 received");
+            });
 
             Alt.OnTick += () =>
             {
@@ -20,9 +28,31 @@ namespace AltV.Net.Client.Example
                 {
                     case ConsoleKey.X:
                         drawNametags = !drawNametags;
+                        webView.Emit("test");
                         break;
                 }
             };
+            
+            Alt.OnGlobalMetaChange += (key, value, oldValue) =>
+            {
+                Alt.Log($"{key} changed from {oldValue.ToString()} to {value.ToString()}");
+            };
+            
+            Alt.OnGlobalSyncedMetaChange += (key, value, oldValue) =>
+            {
+                Alt.Log($"SYNCED: {key} changed from {oldValue.ToString()} to {value.ToString()}");
+            };
+
+            Alt.OnConnectionComplete += () =>
+            {
+                Alt.Log("Connected!");
+            };
+
+            Alt.OnPlayerChangeVehicleSeat += (vehicle, seat, oldSeat) =>
+            {
+                Alt.Log($"Changed seat from {oldSeat} to {seat} in {vehicle.Id}");
+            };
+
         }
 
         public override void OnStop()
