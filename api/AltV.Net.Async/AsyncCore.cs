@@ -114,6 +114,9 @@ namespace AltV.Net.Async
         
         internal readonly AsyncEventHandler<ServerStartedAsyncDelegate> ServerStartedAsyncEventHandler =
             new();
+        
+        internal readonly AsyncEventHandler<PlayerRequestControlAsyncDelegate> PlayerRequestControlAsyncEventHandler =
+            new();
 
         public AsyncCore(IntPtr nativePointer, IntPtr resourcePointer, AssemblyLoadContext assemblyLoadContext, ILibrary library, IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
@@ -840,6 +843,27 @@ namespace AltV.Net.Async
                 await ServerStartedAsyncEventHandler.CallAsync(@delegate =>
                     @delegate());
             });
+        }
+
+        public override void OnPlayerRequestControlEvent(IEntity target, IPlayer player)
+        {
+           base.OnPlayerRequestControlEvent(target, player);
+           
+           if (!PlayerRequestControlHandler.HasEvents()) return;
+           var targetEntityRef = new BaseObjectRef(target);
+           var playerRef = new BaseObjectRef(player);
+           CheckRef(in targetEntityRef, target);
+           CheckRef(in playerRef, player);
+           Task.Run(async () =>
+           {
+               targetEntityRef.DebugCountUp();
+               playerRef.DebugCountUp();
+               await PlayerRequestControlAsyncEventHandler.CallAsync(@delegate => @delegate(target, player));
+               targetEntityRef.DebugCountDown();
+               playerRef.DebugCountDown();
+               targetEntityRef.Dispose();
+               playerRef.Dispose();
+           });
         }
 
         public new Function OnClient(string eventName, Function function)

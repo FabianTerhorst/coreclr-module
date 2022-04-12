@@ -70,4 +70,7 @@ namespace AltV.Net.Async.Events
     public delegate Task ConnectionQueueRemoveAsyncDelegate(IConnectionInfo connectionInfo);
 
     public delegate Task ServerStartedAsyncDelegate();
+    
+    public delegate Task PlayerRequestControlAsyncDelegate(IEntity target, IPlayer player);
+
 }

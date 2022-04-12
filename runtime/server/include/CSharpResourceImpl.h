@@ -195,6 +195,8 @@ typedef void (* ConnectionQueueRemoveDelegate_t)(alt::IConnectionInfo* connectio
 
 typedef void (* ServerStartedDelegate_t)();
 
+typedef void (* PlayerRequestControlDelegate_t)(void* target, alt::IBaseObject::Type targetBaseObjectType, alt::IPlayer* player);
+
 class CSharpResourceImpl : public alt::IResource::Impl {
     bool OnEvent(const alt::CEvent* ev) override;
 
@@ -320,6 +322,10 @@ public:
     ConnectionQueueRemoveDelegate_t OnConnectionQueueRemoveDelegate = nullptr;
 
     ServerStartedDelegate_t OnServerStartedDelegate = nullptr;
+
+    PlayerRequestControlDelegate_t OnPlayerRequestControlDelegate = nullptr;
+
+
 
     alt::Array<CustomInvoker*>* invokers;
     CoreClr* coreClr;
@@ -511,4 +517,7 @@ EXPORT void CSharpResourceImpl_SetConnectionQueueRemoveDelegate(CSharpResourceIm
                                                          ConnectionQueueRemoveDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetServerStartedDelegate(CSharpResourceImpl* resource,
-                                                         ServerStartedDelegate_t delegate);                                                         
+                                                         ServerStartedDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPlayerRequestControlDelegate(CSharpResourceImpl* resource,
+                                                            PlayerRequestControlDelegate_t delegate);

@@ -35,5 +35,6 @@ namespace AltV.Net
         ConnectionQueueAdd,
         ConnectionQueueRemove,
         ServerStarted,
+        PlayerRequestControl
     }
 }

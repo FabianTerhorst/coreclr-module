@@ -492,6 +492,20 @@ namespace AltV.Net
                                             scriptFunction.Call();
                                         };
                                     break;
+                                case ScriptEventType.PlayerRequestControl:
+                                    scriptFunction = ScriptFunction.Create(eventMethodDelegate, 
+                                        new []
+                                        {
+                                            typeof(IEntity), typeof(IPlayer)
+                                        });
+                                    OnPlayerRequestControl +=
+                                        (entity, player) =>
+                                        {
+                                            scriptFunction.Set(entity);
+                                            scriptFunction.Set(player);
+                                            scriptFunction.Call();
+                                        };
+                                    break;
                                 default:
                                     throw new ArgumentOutOfRangeException();
                             }

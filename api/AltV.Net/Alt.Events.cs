@@ -248,5 +248,12 @@ namespace AltV.Net
             add => CoreImpl.ServerStartedHandler.Add(value);
             remove => CoreImpl.ServerStartedHandler.Remove(value);
         }
+        
+        public static event PlayerRequestControlDelegate OnPlayerRequestControl
+        {
+            add => CoreImpl.PlayerRequestControlHandler.Add(value);
+            remove => CoreImpl.PlayerRequestControlHandler.Remove(value);
+        }
+        
     }
 }

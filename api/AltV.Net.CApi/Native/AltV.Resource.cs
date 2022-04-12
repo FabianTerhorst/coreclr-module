@@ -120,6 +120,8 @@ namespace AltV.Net.Native
             internal delegate void ConnectionQueueRemoveDelegate(IntPtr connectionInfoPointer);
 
             internal delegate void ServerStartedDelegate();
+            
+            internal delegate void PlayerRequestControlDelegate(IntPtr target, BaseObjectType targetType, IntPtr player);
 
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetMainDelegate(IntPtr resource,
@@ -316,6 +318,11 @@ namespace AltV.Net.Native
             [DllImport(DllName, CallingConvention = NativeCallingConvention)]
             internal static extern void CSharpResourceImpl_SetServerStartedDelegate(IntPtr resource,
                 ServerStartedDelegate @delegate);
+            
+            [DllImport(DllName, CallingConvention = NativeCallingConvention)]
+            internal static extern void CSharpResourceImpl_SetPlayerRequestControlDelegate(IntPtr resource,
+                PlayerRequestControlDelegate @delegate);
+            
         }
     }
 }
