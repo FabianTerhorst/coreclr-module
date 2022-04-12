@@ -57,12 +57,8 @@ namespace AltV.Net.Async
 
         public TEntity Create(ICore core, IntPtr entityPointer, ushort id)
         {
-            if (entityPointer == IntPtr.Zero)
-            {
-                return default;
-            }
-
-            if (entities.TryGetValue(entityPointer, out var entity)) return default;
+            if (entityPointer == IntPtr.Zero) return default;
+            if (entities.TryGetValue(entityPointer, out var entity)) return entity;
             entity = entityFactory.Create(core, entityPointer, id);
             Add(entity);
             return entity;
@@ -95,7 +91,6 @@ namespace AltV.Net.Async
             }
 
             OnRemove(entity);
-
             return true;
         }
 
@@ -113,10 +108,7 @@ namespace AltV.Net.Async
 
             if (entities.TryGetValue(entityPointer, out var entity)) return entity;
 
-            entity = entityFactory.Create(core, entityPointer, GetId(entityPointer));
-            Add(entity);
-
-            return entity;
+            return Create(core, entityPointer);
         }
 
         public TEntity GetOrCreate(ICore core, IntPtr entityPointer, ushort id)
@@ -127,11 +119,8 @@ namespace AltV.Net.Async
             }
 
             if (entities.TryGetValue(entityPointer, out var entity)) return entity;
-
-            entity = entityFactory.Create(core, entityPointer, id);
-            Add(entity);
-
-            return entity;
+            
+            return Create(core, entityPointer, id);
         }
 
         public IReadOnlyCollection<TEntity> GetAllEntities()
