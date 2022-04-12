@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
@@ -28,11 +29,17 @@ namespace AltV.Net.Async
         public static Task<Rgba> GetColorAsync(this ICheckpoint checkpoint) =>
             AltVAsync.Schedule(() => checkpoint.Color);
 
+
+        [Obsolete("Use Checkpoint.IsEntityInAsync instead")]
         public static Task<bool> IsPlayerInAsync(this ICheckpoint checkpoint, IPlayer player) =>
             AltVAsync.Schedule(() => checkpoint.IsPlayerIn(player));
 
+        [Obsolete("Use Checkpoint.IsEntityInAsync instead")]
         public static Task<bool> IsVehicleInAsync(this ICheckpoint checkpoint, IVehicle vehicle) =>
             AltVAsync.Schedule(() => checkpoint.IsVehicleIn(vehicle));
+        
+        public static Task<bool> IsEntityInAsync(this ICheckpoint checkpoint, IEntity entity) =>
+            AltVAsync.Schedule(() => checkpoint.IsEntityIn(entity));
 
         public static Task RemoveAsync(this ICheckpoint checkpoint) =>
             AltVAsync.Schedule(checkpoint.Remove);
