@@ -16,6 +16,7 @@ namespace AltV.Net.Client
         public IBaseObjectFactory<IBlip> GetBlipFactory();
         public IBaseObjectFactory<ICheckpoint> GetCheckpointFactory();
         public IBaseObjectFactory<IAudio> GetAudioFactory();
+        public IBaseObjectFactory<IHttpClient> GetHttpClientFactory();
         public IBaseObjectFactory<IWebView> GetWebViewFactory();
         public INativeResourceFactory GetResourceFactory();
         public ILogger GetLogger(ILibrary library, IntPtr corePointer);

@@ -1,5 +1,6 @@
 #include "http_client.h"
 #include "../utils/strings.h"
+#include "Log.h"
 
 #ifdef ALT_CLIENT_API
 
@@ -44,46 +45,47 @@ void HttpClient_GetExtraHeaders(alt::IHttpClient* httpClient, const char**& keys
     MarshalStringDict(map.Get(), keys, values, size);
 }
 
-alt::IHttpClient::HttpResponseCallback cb([](alt::IHttpClient::HttpResponse response, const void* ptr) {
+void InvokeCallback(const alt::IHttpClient::HttpResponse response, const void* ptr) {
     const char** keys;
     const char** values;
     int32_t size;
     MarshalStringDict(response.headers.Get(), keys, values, size);
-    (*(HttpResponseDelegate_t*) ptr)(response.statusCode, response.body.c_str(), keys, values, size);
-});
+    auto delegate = (HttpResponseDelegate_t) ptr;
+    delegate(response.statusCode, response.body.c_str(), keys, values, size);
+}
 
 void HttpClient_Get(alt::IHttpClient* httpClient, const char* url, /** ClientEvents.HttpResponseModuleDelegate */ HttpResponseDelegate_t callback) {
-    httpClient->Get(cb, url, &callback);
+    httpClient->Get(InvokeCallback, url, (void *) callback);
 }
 
 void HttpClient_Head(alt::IHttpClient* httpClient, const char* url, /** ClientEvents.HttpResponseModuleDelegate */ HttpResponseDelegate_t callback) {
-    httpClient->Head(cb, url, &callback);
+    httpClient->Head(InvokeCallback, url, (void *) callback);
 }
 void HttpClient_Connect(alt::IHttpClient* httpClient, const char* url, const char* body, /** ClientEvents.HttpResponseModuleDelegate */ HttpResponseDelegate_t callback) {
-    httpClient->Connect(cb, url, body, &callback);
+    httpClient->Connect(InvokeCallback, url, body, (void *) callback);
 }
 
 void HttpClient_Delete(alt::IHttpClient* httpClient, const char* url, const char* body, /** ClientEvents.HttpResponseModuleDelegate */ HttpResponseDelegate_t callback) {
-    httpClient->Delete(cb, url, body, &callback);
+    httpClient->Delete(InvokeCallback, url, body, (void *) callback);
 }
 
 void HttpClient_Options(alt::IHttpClient* httpClient, const char* url, const char* body, /** ClientEvents.HttpResponseModuleDelegate */ HttpResponseDelegate_t callback) {
-    httpClient->Options(cb, url, body, &callback);
+    httpClient->Options(InvokeCallback, url, body, (void *) callback);
 }
 
 void HttpClient_Patch(alt::IHttpClient* httpClient, const char* url, const char* body, /** ClientEvents.HttpResponseModuleDelegate */ HttpResponseDelegate_t callback) {
-    httpClient->Patch(cb, url, body, &callback);
+    httpClient->Patch(InvokeCallback, url, body, (void *) callback);
 }
 
 void HttpClient_Post(alt::IHttpClient* httpClient, const char* url, const char* body, /** ClientEvents.HttpResponseModuleDelegate */ HttpResponseDelegate_t callback) {
-    httpClient->Post(cb, url, body, &callback);
+    httpClient->Post(InvokeCallback, url, body, (void *) callback);
 }
 
 void HttpClient_Put(alt::IHttpClient* httpClient, const char* url, const char* body, /** ClientEvents.HttpResponseModuleDelegate */ HttpResponseDelegate_t callback) {
-    httpClient->Put(cb, url, body, &callback);
+    httpClient->Put(InvokeCallback, url, body, (void *) callback);
 }
 
 void HttpClient_Trace(alt::IHttpClient* httpClient, const char* url, const char* body, /** ClientEvents.HttpResponseModuleDelegate */ HttpResponseDelegate_t callback) {
-    httpClient->Trace(cb, url, body, &callback);
+    httpClient->Trace(InvokeCallback, url, body, (void *) callback);
 }
 #endif

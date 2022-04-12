@@ -58,6 +58,9 @@ namespace AltV.Net.Client
             var audioPool = new AudioPool(_resource.GetAudioFactory());
             Alt.Log("Audio pool created");
 
+            var httpClient = new HttpClientPool(_resource.GetHttpClientFactory());
+            Alt.Log("Http client pool created");
+
             var webViewPool = new WebViewPool(_resource.GetWebViewFactory());
             Alt.Log("Webview pool created");
 
@@ -83,6 +86,7 @@ namespace AltV.Net.Client
                 blipPool,
                 checkpointPool,
                 audioPool,
+                httpClient,
                 webViewPool,
                 rmlDocumentPool,
                 rmlElementPool,

@@ -19,6 +19,7 @@ namespace AltV.Net.Client
         new IBaseObjectPool<IBlip> BlipPool { get; }
         new IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
         IBaseObjectPool<IAudio> AudioPool { get; }
+        IBaseObjectPool<IHttpClient> HttpClientPool { get; }
         IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
         IBaseObjectPool<IRmlElement> RmlElementPool { get; }
         LocalStorage LocalStorage { get; }
@@ -135,5 +136,7 @@ namespace AltV.Net.Client
         MapZoomData GetMapZoomData(uint id);
         MapZoomData GetMapZoomData(string alias);
         void ResetAllMapZoomData();
+        IntPtr CreateHttpClientPtr();
+        IHttpClient CreateHttpClient();
     }
 }

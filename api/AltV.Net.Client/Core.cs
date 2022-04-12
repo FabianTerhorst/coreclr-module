@@ -29,6 +29,7 @@ namespace AltV.Net.Client
         public override IBaseObjectPool<IBlip> BlipPool { get; }
         public override IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
         public IBaseObjectPool<IAudio> AudioPool { get; }
+        public IBaseObjectPool<IHttpClient> HttpClientPool { get; }
         public IBaseObjectPool<IWebView> WebViewPool { get; }
         public IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
         public IBaseObjectPool<IRmlElement> RmlElementPool { get; }
@@ -56,6 +57,7 @@ namespace AltV.Net.Client
             IBaseObjectPool<IBlip> blipPool,
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IAudio> audioPool,
+            IBaseObjectPool<IHttpClient> httpClientPool,
             IBaseObjectPool<IWebView> webViewPool,
             IBaseObjectPool<IRmlDocument> rmlDocumentPool,
             IBaseObjectPool<IRmlElement> rmlElementPool,
@@ -74,6 +76,7 @@ namespace AltV.Net.Client
             BlipPool = blipPool;
             CheckpointPool = checkpointPool;
             AudioPool = audioPool;
+            HttpClientPool = httpClientPool;
             WebViewPool = webViewPool;
             RmlDocumentPool = rmlDocumentPool;
             RmlElementPool = rmlElementPool;
@@ -308,6 +311,21 @@ namespace AltV.Net.Client
             var ptr = CreateAudioPtr(source, volume, category, frontend);
             if (ptr == IntPtr.Zero) return null;
             return AudioPool.Create(this, ptr);
+        }
+
+        public IntPtr CreateHttpClientPtr()
+        {
+            unsafe
+            {
+                return Library.Client.Core_CreateHttpClient(NativePointer, Resource.NativePointer);
+            }
+        }
+        
+        public IHttpClient CreateHttpClient()
+        {
+            var ptr = CreateHttpClientPtr();
+            if (ptr == IntPtr.Zero) return null;
+            return HttpClientPool.Create(this, ptr);
         }
         #endregion
         

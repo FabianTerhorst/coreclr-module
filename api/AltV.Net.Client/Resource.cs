@@ -48,6 +48,11 @@ namespace AltV.Net.Client
         {
             return new AudioFactory();
         }
+        
+        public IBaseObjectFactory<IHttpClient> GetHttpClientFactory()
+        {
+            return new HttpClientFactory();
+        }
 
         public virtual INativeResourceFactory GetResourceFactory()
         {
