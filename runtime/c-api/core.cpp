@@ -1,7 +1,6 @@
 #include "core.h"
 #include "mvalue.h"
 #include "utils/strings.h"
-#include "Log.h"
 #include <vector>
 
 void Core_LogInfo(alt::ICore* core, const char* str) {

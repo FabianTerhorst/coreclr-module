@@ -1,6 +1,5 @@
 #include "http_client.h"
 #include "../utils/strings.h"
-#include "Log.h"
 
 #ifdef ALT_CLIENT_API
 
