@@ -30,6 +30,7 @@ namespace AltV.Net.Client
         public override IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
         public IBaseObjectPool<IAudio> AudioPool { get; }
         public IBaseObjectPool<IHttpClient> HttpClientPool { get; }
+        public IBaseObjectPool<IWebSocketClient> WebSocketClientPool { get; }
         public IBaseObjectPool<IWebView> WebViewPool { get; }
         public IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
         public IBaseObjectPool<IRmlElement> RmlElementPool { get; }
@@ -58,6 +59,7 @@ namespace AltV.Net.Client
             IBaseObjectPool<ICheckpoint> checkpointPool,
             IBaseObjectPool<IAudio> audioPool,
             IBaseObjectPool<IHttpClient> httpClientPool,
+            IBaseObjectPool<IWebSocketClient> webSocketClientPool,
             IBaseObjectPool<IWebView> webViewPool,
             IBaseObjectPool<IRmlDocument> rmlDocumentPool,
             IBaseObjectPool<IRmlElement> rmlElementPool,
@@ -77,6 +79,7 @@ namespace AltV.Net.Client
             CheckpointPool = checkpointPool;
             AudioPool = audioPool;
             HttpClientPool = httpClientPool;
+            WebSocketClientPool = webSocketClientPool;
             WebViewPool = webViewPool;
             RmlDocumentPool = rmlDocumentPool;
             RmlElementPool = rmlElementPool;
@@ -326,6 +329,24 @@ namespace AltV.Net.Client
             var ptr = CreateHttpClientPtr();
             if (ptr == IntPtr.Zero) return null;
             return HttpClientPool.Create(this, ptr);
+        }
+
+        public IntPtr CreateWebSocketClientPtr(string url)
+        {
+            unsafe
+            {
+                var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
+                var ptr = Library.Client.Core_CreateWebsocketClient(NativePointer, Resource.NativePointer, urlPtr);
+                Marshal.FreeHGlobal(urlPtr);
+                return ptr;
+            }
+        }
+        
+        public IWebSocketClient CreateWebSocketClient(string url)
+        {
+            var ptr = CreateWebSocketClientPtr(url);
+            if (ptr == IntPtr.Zero) return null;
+            return WebSocketClientPool.Create(this, ptr);
         }
         #endregion
         

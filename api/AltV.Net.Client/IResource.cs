@@ -17,6 +17,7 @@ namespace AltV.Net.Client
         public IBaseObjectFactory<ICheckpoint> GetCheckpointFactory();
         public IBaseObjectFactory<IAudio> GetAudioFactory();
         public IBaseObjectFactory<IHttpClient> GetHttpClientFactory();
+        public IBaseObjectFactory<IWebSocketClient> GetWebSocketClientFactory();
         public IBaseObjectFactory<IWebView> GetWebViewFactory();
         public INativeResourceFactory GetResourceFactory();
         public ILogger GetLogger(ILibrary library, IntPtr corePointer);

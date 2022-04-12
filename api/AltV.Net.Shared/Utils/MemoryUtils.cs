@@ -22,5 +22,12 @@ namespace AltV.Net.Shared.Utils
 
             return pointer;
         }
+
+        public static IntPtr ByteArrayToHGlobal(byte[] bytes)
+        {
+            var pointer = Marshal.AllocHGlobal(bytes.Length);
+            Marshal.Copy(bytes, 0, pointer, bytes.Length);
+            return pointer;
+        }
     }
 }

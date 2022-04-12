@@ -20,6 +20,7 @@ namespace AltV.Net.Client
         new IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
         IBaseObjectPool<IAudio> AudioPool { get; }
         IBaseObjectPool<IHttpClient> HttpClientPool { get; }
+        IBaseObjectPool<IWebSocketClient> WebSocketClientPool { get; }
         IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
         IBaseObjectPool<IRmlElement> RmlElementPool { get; }
         LocalStorage LocalStorage { get; }
@@ -138,5 +139,7 @@ namespace AltV.Net.Client
         void ResetAllMapZoomData();
         IntPtr CreateHttpClientPtr();
         IHttpClient CreateHttpClient();
+        IntPtr CreateWebSocketClientPtr(string url);
+        IWebSocketClient CreateWebSocketClient(string url);
     }
 }

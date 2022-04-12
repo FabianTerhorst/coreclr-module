@@ -433,7 +433,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> WebSocketClient_AddSubProtocol { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WebSocketClient_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> WebSocketClient_GetPingInterval { get; }
-        public delegate* unmanaged[Cdecl]<nint, int*, byte> WebSocketClient_GetReadyState { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> WebSocketClient_GetReadyState { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> WebSocketClient_GetSubProtocols { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> WebSocketClient_GetUrl { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> WebSocketClient_IsAutoReconnect { get; }
@@ -889,7 +889,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> WebSocketClient_AddSubProtocol { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WebSocketClient_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> WebSocketClient_GetPingInterval { get; }
-        public delegate* unmanaged[Cdecl]<nint, int*, byte> WebSocketClient_GetReadyState { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> WebSocketClient_GetReadyState { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> WebSocketClient_GetSubProtocols { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> WebSocketClient_GetUrl { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> WebSocketClient_IsAutoReconnect { get; }
@@ -1345,7 +1345,7 @@ namespace AltV.Net.CApi.Libraries
             WebSocketClient_AddSubProtocol = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "WebSocketClient_AddSubProtocol");
             WebSocketClient_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "WebSocketClient_GetBaseObject");
             WebSocketClient_GetPingInterval = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "WebSocketClient_GetPingInterval");
-            WebSocketClient_GetReadyState = (delegate* unmanaged[Cdecl]<nint, int*, byte>) NativeLibrary.GetExport(handle, "WebSocketClient_GetReadyState");
+            WebSocketClient_GetReadyState = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "WebSocketClient_GetReadyState");
             WebSocketClient_GetSubProtocols = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) NativeLibrary.GetExport(handle, "WebSocketClient_GetSubProtocols");
             WebSocketClient_GetUrl = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "WebSocketClient_GetUrl");
             WebSocketClient_IsAutoReconnect = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "WebSocketClient_IsAutoReconnect");

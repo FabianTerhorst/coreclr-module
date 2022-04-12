@@ -53,6 +53,11 @@ namespace AltV.Net.Client
         {
             return new HttpClientFactory();
         }
+        
+        public IBaseObjectFactory<IWebSocketClient> GetWebSocketClientFactory()
+        {
+            return new WebSocketClientFactory();
+        }
 
         public virtual INativeResourceFactory GetResourceFactory()
         {

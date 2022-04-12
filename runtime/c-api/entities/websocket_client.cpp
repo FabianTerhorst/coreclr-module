@@ -32,7 +32,7 @@ void WebSocketClient_SetPingInterval(alt::IWebSocketClient* webSocketClient, uin
     webSocketClient->SetPingInterval(value);
 }
 
-uint8_t WebSocketClient_GetReadyState(alt::IWebSocketClient* webSocketClient, int32_t& size) {
+uint8_t WebSocketClient_GetReadyState(alt::IWebSocketClient* webSocketClient) {
     return webSocketClient->GetReadyState();
 }
 

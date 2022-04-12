@@ -27,7 +27,7 @@ EXPORT_CLIENT uint8_t WebSocketClient_IsPerMessageDeflate(alt::IWebSocketClient*
 EXPORT_CLIENT void WebSocketClient_SetPerMessageDeflate(alt::IWebSocketClient* webSocketClient, uint8_t value);
 EXPORT_CLIENT uint16_t WebSocketClient_GetPingInterval(alt::IWebSocketClient* webSocketClient);
 EXPORT_CLIENT void WebSocketClient_SetPingInterval(alt::IWebSocketClient* webSocketClient, uint16_t value);
-EXPORT_CLIENT uint8_t WebSocketClient_GetReadyState(alt::IWebSocketClient* webSocketClient, int32_t& size);
+EXPORT_CLIENT uint8_t WebSocketClient_GetReadyState(alt::IWebSocketClient* webSocketClient);
 EXPORT_CLIENT const char* WebSocketClient_GetUrl(alt::IWebSocketClient* webSocketClient, int32_t& size);
 EXPORT_CLIENT void WebSocketClient_SetUrl(alt::IWebSocketClient* webSocketClient, const char* value);
 
