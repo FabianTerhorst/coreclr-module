@@ -76,6 +76,30 @@ namespace AltV.Net.Client
             add => CoreImpl.KeyDownEventHandler.Add(value);
             remove => CoreImpl.KeyDownEventHandler.Remove(value);
         }
+        
+        public static event ConnectionCompleteDelegate OnConnectionComplete
+        {
+            add => CoreImpl.ConnectionCompleteEventHandler.Add(value);
+            remove => CoreImpl.ConnectionCompleteEventHandler.Remove(value);
+        }
+        
+        public static event PlayerChangeVehicleSeatDelegate OnPlayerChangeVehicleSeat
+        {
+            add => CoreImpl.PlayerChangeVehicleSeatEventHandler.Add(value);
+            remove => CoreImpl.PlayerChangeVehicleSeatEventHandler.Remove(value);
+        }
+        
+        public static event GlobalMetaChangeDelegate OnGlobalMetaChange
+        {
+            add => CoreImpl.GlobalMetaChangeEventHandler.Add(value);
+            remove => CoreImpl.GlobalMetaChangeEventHandler.Remove(value);
+        }
+        
+        public static event GlobalSyncedMetaChangeDelegate OnGlobalSyncedMetaChange
+        {
+            add => CoreImpl.GlobalSyncedMetaChangeEventHandler.Add(value);
+            remove => CoreImpl.GlobalSyncedMetaChangeEventHandler.Remove(value);
+        }
 
         public static void OnServer(string eventName, Function function) => CoreImpl.AddServerEventListener(eventName, function);
         public static void OnServer<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(string eventName, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> function) => CoreImpl.AddServerEventListener(eventName, Function.Create(Core, function));

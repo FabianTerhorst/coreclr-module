@@ -47,6 +47,18 @@ namespace AltV.Net.Client
         
         internal readonly IEventHandler<KeyDownDelegate> KeyDownEventHandler =
             new HashSetEventHandler<KeyDownDelegate>();
+        
+        internal readonly IEventHandler<ConnectionCompleteDelegate> ConnectionCompleteEventHandler =
+            new HashSetEventHandler<ConnectionCompleteDelegate>();
+        
+        internal readonly IEventHandler<PlayerChangeVehicleSeatDelegate> PlayerChangeVehicleSeatEventHandler =
+            new HashSetEventHandler<PlayerChangeVehicleSeatDelegate>();
+        
+        internal readonly IEventHandler<GlobalMetaChangeDelegate> GlobalMetaChangeEventHandler =
+            new HashSetEventHandler<GlobalMetaChangeDelegate>();
+        
+        internal readonly IEventHandler<GlobalSyncedMetaChangeDelegate> GlobalSyncedMetaChangeEventHandler =
+            new HashSetEventHandler<GlobalSyncedMetaChangeDelegate>();
 
         public void OnServerEvent(string name, IntPtr[] args)
         {
@@ -187,6 +199,31 @@ namespace AltV.Net.Client
         {
             Alt.Log("Removing vehicle " + pointer);
             VehiclePool.Remove(pointer);
+        }
+
+        public void OnConnectionComplete()
+        {
+            ConnectionCompleteEventHandler.GetEvents().ForEachCatching(fn => fn(), $"event {nameof(OnConnectionComplete)}");
+        }
+
+        public void OnGlobalMetaChange(string key, IntPtr valuePtr, IntPtr oldValuePtr)
+        {
+            var value = new MValueConst(this, valuePtr);
+            var oldValue = new MValueConst(this, oldValuePtr);
+            GlobalMetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnGlobalMetaChange)}");
+        }
+
+        public void OnGlobalSyncedMetaChange(string key, IntPtr valuePtr, IntPtr oldValuePtr)
+        {
+            var value = new MValueConst(this, valuePtr);
+            var oldValue = new MValueConst(this, oldValuePtr);
+            GlobalSyncedMetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnGlobalSyncedMetaChange)}");
+        }
+
+        public void OnPlayerChangeVehicleSeat(IntPtr vehiclePtr, byte oldSeat, byte newSeat)
+        {
+            var vehicle = VehiclePool.Get(vehiclePtr);
+            PlayerChangeVehicleSeatEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, oldSeat, newSeat), $"event {nameof(OnPlayerChangeVehicleSeat)}");
         }
         
         public Function AddServerEventListener(string eventName, Function function)

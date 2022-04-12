@@ -57,6 +57,13 @@ public:
     KeyUpDelegate_t OnKeyUpDelegate = nullptr;
     KeyDownDelegate_t OnKeyDownDelegate = nullptr;
 
+    PlayerChangeVehicleSeatDelegate_t OnPlayerChangeVehicleSeatDelegate = nullptr;
+
+    ConnectionCompleteDelegate_t OnConnectionCompleteDelegate = nullptr;
+
+    GlobalMetaChangeDelegate_t OnGlobalMetaChangeDelegate = nullptr;
+    GlobalSyncedMetaChangeDelegate_t OnGlobalSyncedMetaChangeDelegate = nullptr;
+
 
     bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files)
     {

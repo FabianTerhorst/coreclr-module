@@ -18,6 +18,7 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void PlayerSpawnModuleDelegate();
     public delegate void PlayerDisconnectModuleDelegate();
     public delegate void PlayerEnterVehicleModuleDelegate(IntPtr pointer, byte seat);
+    public delegate void PlayerChangeVehicleSeatModuleDelegate(IntPtr pointer, byte newSeat, byte oldSeat);
     
     public delegate void GameEntityCreateModuleDelegate(IntPtr pointer, byte type);
     public delegate void GameEntityDestroyModuleDelegate(IntPtr pointer, byte type);
@@ -31,4 +32,9 @@ namespace AltV.Net.CApi.ClientEvents
 
     public delegate void ScreenshotResultModuleDelegate(IntPtr strPtr);
     public delegate void HttpResponseModuleDelegate(int statusCode, string body, IntPtr headerKeys, IntPtr headerValues, int headerSize);
+    
+    public delegate void ConnectionCompleteModuleDelegate();
+
+    public delegate void GlobalMetaChangeModuleDelegate(string key, IntPtr value, IntPtr oldValue);
+    public delegate void GlobalSyncedMetaChangeModuleDelegate(string key, IntPtr value, IntPtr oldValue);
 }

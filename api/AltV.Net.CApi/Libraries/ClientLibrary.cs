@@ -138,13 +138,17 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void> Core_WorldToScreen { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void> Event_SetClientEventDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConnectionCompleteModuleDelegate, void> Event_SetConnectionCompleteDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConsoleCommandModuleDelegate, void> Event_SetConsoleCommandDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreatePlayerModuleDelegate, void> Event_SetCreatePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateVehicleModuleDelegate, void> Event_SetCreateVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityCreateModuleDelegate, void> Event_SetGameEntityCreateDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityDestroyModuleDelegate, void> Event_SetGameEntityDestroyDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.GlobalMetaChangeModuleDelegate, void> Event_SetGlobalMetaChangeDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.GlobalSyncedMetaChangeModuleDelegate, void> Event_SetGlobalSyncedMetaChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.KeyDownModuleDelegate, void> Event_SetKeyDownDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.KeyUpModuleDelegate, void> Event_SetKeyUpDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerChangeVehicleSeatModuleDelegate, void> Event_SetPlayerChangeVehicleSeatDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerDisconnectModuleDelegate, void> Event_SetPlayerDisconnectDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerEnterVehicleModuleDelegate, void> Event_SetPlayerEnterVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerSpawnModuleDelegate, void> Event_SetPlayerSpawnDelegate { get; }
@@ -595,13 +599,17 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void> Core_WorldToScreen { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void> Event_SetClientEventDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConnectionCompleteModuleDelegate, void> Event_SetConnectionCompleteDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConsoleCommandModuleDelegate, void> Event_SetConsoleCommandDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreatePlayerModuleDelegate, void> Event_SetCreatePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateVehicleModuleDelegate, void> Event_SetCreateVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityCreateModuleDelegate, void> Event_SetGameEntityCreateDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityDestroyModuleDelegate, void> Event_SetGameEntityDestroyDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.GlobalMetaChangeModuleDelegate, void> Event_SetGlobalMetaChangeDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.GlobalSyncedMetaChangeModuleDelegate, void> Event_SetGlobalSyncedMetaChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.KeyDownModuleDelegate, void> Event_SetKeyDownDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.KeyUpModuleDelegate, void> Event_SetKeyUpDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerChangeVehicleSeatModuleDelegate, void> Event_SetPlayerChangeVehicleSeatDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerDisconnectModuleDelegate, void> Event_SetPlayerDisconnectDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerEnterVehicleModuleDelegate, void> Event_SetPlayerEnterVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerSpawnModuleDelegate, void> Event_SetPlayerSpawnDelegate { get; }
@@ -1052,13 +1060,17 @@ namespace AltV.Net.CApi.Libraries
             Core_WorldToScreen = (delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void>) NativeLibrary.GetExport(handle, "Core_WorldToScreen");
             Entity_GetScriptID = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Entity_GetScriptID");
             Event_SetClientEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetClientEventDelegate");
+            Event_SetConnectionCompleteDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ConnectionCompleteModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetConnectionCompleteDelegate");
             Event_SetConsoleCommandDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ConsoleCommandModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetConsoleCommandDelegate");
             Event_SetCreatePlayerDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreatePlayerModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreatePlayerDelegate");
             Event_SetCreateVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateVehicleDelegate");
             Event_SetGameEntityCreateDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityCreateModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetGameEntityCreateDelegate");
             Event_SetGameEntityDestroyDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityDestroyModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetGameEntityDestroyDelegate");
+            Event_SetGlobalMetaChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.GlobalMetaChangeModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetGlobalMetaChangeDelegate");
+            Event_SetGlobalSyncedMetaChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.GlobalSyncedMetaChangeModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetGlobalSyncedMetaChangeDelegate");
             Event_SetKeyDownDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.KeyDownModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetKeyDownDelegate");
             Event_SetKeyUpDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.KeyUpModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetKeyUpDelegate");
+            Event_SetPlayerChangeVehicleSeatDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerChangeVehicleSeatModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerChangeVehicleSeatDelegate");
             Event_SetPlayerDisconnectDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerDisconnectModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerDisconnectDelegate");
             Event_SetPlayerEnterVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerEnterVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerEnterVehicleDelegate");
             Event_SetPlayerSpawnDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerSpawnModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerSpawnDelegate");

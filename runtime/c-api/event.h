@@ -55,6 +55,13 @@ EXPORT_CLIENT void Event_SetResourceStopDelegate(CSharpResourceImpl* resource, /
 
 EXPORT_CLIENT void Event_SetKeyUpDelegate(CSharpResourceImpl* resource, /** ClientEvents.KeyUpModuleDelegate */ KeyUpDelegate_t delegate);
 EXPORT_CLIENT void Event_SetKeyDownDelegate(CSharpResourceImpl* resource, /** ClientEvents.KeyDownModuleDelegate */ KeyDownDelegate_t delegate);
+
+EXPORT_CLIENT void Event_SetPlayerChangeVehicleSeatDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerChangedVehicleSeatModuleDelegate */ PlayerChangeVehicleSeatDelegate_t delegate);
+
+EXPORT_CLIENT void Event_SetConnectionCompleteDelegate(CSharpResourceImpl* resource, /** ClientEvents.ConnectionCompleteModuleDelegate */ ConnectionCompleteDelegate_t delegate);
+
+EXPORT_CLIENT void Event_SetGlobalMetaChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.GlobalMetaChangeModuleDelegate */ GlobalMetaChangeDelegate_t delegate);
+EXPORT_CLIENT void Event_SetGlobalSyncedMetaChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.GlobalSyncedMetaChangeModuleDelegate */ GlobalMetaChangeDelegate_t delegate);
 #endif
 
 #ifdef __cplusplus

@@ -109,6 +109,13 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                                          playerEnterVehicleEvent->GetSeat());
             break;
         }
+        case alt::CEvent::Type::PLAYER_CHANGE_VEHICLE_SEAT:{
+            auto playerChangeVehicleSeatEvent = (alt::CPlayerChangeVehicleSeatEvent *) ev;
+            OnPlayerChangeVehicleSeatDelegate(playerChangeVehicleSeatEvent->GetTarget().Get(),
+                                         playerChangeVehicleSeatEvent->GetOldSeat(),
+                                         playerChangeVehicleSeatEvent->GetNewSeat());
+            break;
+        }
 #pragma endregion
 #pragma region Entity events
         case alt::CEvent::Type::GAME_ENTITY_CREATE: {
@@ -174,6 +181,28 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                 OnKeyUpDelegate(keyboardEvent->GetKeyCode());
             else
                 OnKeyDownDelegate(keyboardEvent->GetKeyCode());
+            break;
+        }
+        case alt::CEvent::Type::CONNECTION_COMPLETE: {
+            OnConnectionCompleteDelegate();
+            break;
+        }
+        case alt::CEvent::Type::GLOBAL_META_CHANGE: {
+            auto globalMetaChangeEvent = (alt::CGlobalMetaDataChangeEvent *) ev;
+            auto constValue = alt::MValueConst(globalMetaChangeEvent->GetVal());
+            auto constOldValue = alt::MValueConst(globalMetaChangeEvent->GetOldVal());
+            OnGlobalMetaChangeDelegate(globalMetaChangeEvent->GetKey().c_str(),
+                                       &constValue,
+                                       &constOldValue);
+            break;
+        }
+         case alt::CEvent::Type::GLOBAL_SYNCED_META_CHANGE: {
+            auto globalSyncedMetaChangeEvent = (alt::CGlobalSyncedMetaDataChangeEvent *) ev;
+            auto constValue = alt::MValueConst(globalSyncedMetaChangeEvent->GetVal());
+            auto constOldValue = alt::MValueConst(globalSyncedMetaChangeEvent->GetOldVal());
+            OnGlobalSyncedMetaChangeDelegate(globalSyncedMetaChangeEvent->GetKey().c_str(),
+                                             &constValue,
+                                             &constOldValue);
             break;
         }
 #pragma endregion
@@ -267,4 +296,11 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnKeyUpDelegate = [](auto var) {};
     OnKeyDownDelegate = [](auto var) {};
+
+    OnPlayerChangeVehicleSeatDelegate = [](auto var, auto var2, auto var3) {};
+
+    OnConnectionCompleteDelegate = []() {};
+
+    OnGlobalMetaChangeDelegate = [](auto var, auto var2, auto var3) {};
+    OnGlobalSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3) {};
 }

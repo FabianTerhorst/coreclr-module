@@ -26,3 +26,10 @@ typedef void (* ResourceStopDelegate_t)(const char* name);
 
 typedef void (* KeyUpDelegate_t)(uint32_t key);
 typedef void (* KeyDownDelegate_t)(uint32_t key);
+
+typedef void (* PlayerChangeVehicleSeatDelegate_t)(alt::IVehicle*, uint8_t oldSeat, uint8_t newSeat);
+
+typedef void (* ConnectionCompleteDelegate_t)();
+
+typedef void (* GlobalMetaChangeDelegate_t)(const char* key, alt::MValueConst* value, alt::MValueConst* oldValue);
+typedef void (* GlobalSyncedMetaChangeDelegate_t)(const char* key, alt::MValueConst* value, alt::MValueConst* oldValue);

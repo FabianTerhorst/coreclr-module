@@ -44,4 +44,11 @@ SetDelegate(ResourceStop);
 
 SetDelegate(KeyUp);
 SetDelegate(KeyDown);
+
+SetDelegate(PlayerChangeVehicleSeat);
+
+SetDelegate(ConnectionComplete);
+
+SetDelegate(GlobalMetaChange);
+SetDelegate(GlobalSyncedMetaChange);
 #endif

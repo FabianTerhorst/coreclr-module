@@ -1,7 +1,6 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 using AltV.Net.CApi;
-using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Client.Extensions;
@@ -251,6 +250,28 @@ namespace AltV.Net.Client
         {
             args ??= Array.Empty<string>();
             _core.OnConsoleCommand(name, args);
+        }
+
+        public static void OnGlobalMetaChange(string key, IntPtr value, IntPtr oldValue)
+        {
+            Alt.Log($"[ModuleWrapper OnGlobalMetaChange] {key} = {value} oldValue = {oldValue}");
+            _core.OnGlobalMetaChange(key, value, oldValue);
+        }
+
+        public static void OnGlobalSyncedMetaChange(string key, IntPtr value, IntPtr oldValue)
+        {
+            Alt.Log($"[OnGlobalSyncedMetaChange] {key} = {value} oldValue = {oldValue}");
+            _core.OnGlobalSyncedMetaChange(key, value, oldValue);
+        }
+
+        public static void OnConnectionComplete()
+        {
+            _core.OnConnectionComplete();
+        }
+
+        public static void OnPlayerChangeVehicleSeat(IntPtr vehicle, byte oldSeat, byte newSeat)
+        {
+            _core.OnPlayerChangeVehicleSeat(vehicle, oldSeat, newSeat);
         }
     }
 }

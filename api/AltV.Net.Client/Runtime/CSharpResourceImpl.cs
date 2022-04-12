@@ -94,6 +94,24 @@ namespace AltV.Net.Client.Runtime
                 KeyUpModuleDelegate onKeyUp = ModuleWrapper.OnKeyUp;
                 handles.AddFirst(GCHandle.Alloc(onKeyUp));
                 core.Library.Client.Event_SetKeyUpDelegate(this.NativePointer, onKeyUp);
+                
+                ConnectionCompleteModuleDelegate onConnectionComplete = ModuleWrapper.OnConnectionComplete;
+                handles.AddFirst(GCHandle.Alloc(onConnectionComplete));
+                core.Library.Client.Event_SetConnectionCompleteDelegate(this.NativePointer, onConnectionComplete);
+                
+                PlayerChangeVehicleSeatModuleDelegate onPlayerChangeVehicleSeat = ModuleWrapper.OnPlayerChangeVehicleSeat;
+                handles.AddFirst(GCHandle.Alloc(onPlayerChangeVehicleSeat));
+                core.Library.Client.Event_SetPlayerChangeVehicleSeatDelegate(this.NativePointer, onPlayerChangeVehicleSeat);
+                
+                GlobalMetaChangeModuleDelegate onGlobalMetaChange = ModuleWrapper.OnGlobalMetaChange;
+                handles.AddFirst(GCHandle.Alloc(onGlobalMetaChange));
+                core.Library.Client.Event_SetGlobalMetaChangeDelegate(this.NativePointer, onGlobalMetaChange);
+                
+                GlobalSyncedMetaChangeModuleDelegate onGlobalSyncedMetaChange = ModuleWrapper.OnGlobalSyncedMetaChange;
+                handles.AddFirst(GCHandle.Alloc(onGlobalSyncedMetaChange));
+                core.Library.Client.Event_SetGlobalSyncedMetaChangeDelegate(this.NativePointer, onGlobalSyncedMetaChange);
+                
+                
             }
         }
         
