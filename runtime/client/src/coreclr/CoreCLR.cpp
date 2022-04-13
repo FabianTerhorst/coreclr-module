@@ -1,3 +1,4 @@
+// ReSharper disable CppClangTidyClangDiagnosticCastFunctionType
 #include "coreclr/nethost.h"
 #include "CoreCLR.h"
 #include "../../../cpp-sdk/SDK.h"
@@ -13,9 +14,9 @@
 using namespace alt;
 using namespace std;
 
-CoreClrDelegate_t loadResourceDelegate = nullptr;
-CoreClrDelegate_t stopResourceDelegate = nullptr;
-CoreClrDelegate_t stopRuntimeDelegate = nullptr;
+CoreClrDelegate_t load_resource_delegate = nullptr;
+CoreClrDelegate_t stop_resource_delegate = nullptr;
+CoreClrDelegate_t stop_runtime_delegate = nullptr;
 
 namespace {
     std::string find_hostfxr() {
@@ -135,7 +136,7 @@ void CoreCLR::StartResource(alt::IResource *resource, alt::ICore* core) {
     };
     start_args startArgs{path.c_str(), resource, core};
 
-    loadResourceDelegate(&startArgs, sizeof(startArgs));
+    load_resource_delegate(&startArgs, sizeof(startArgs));
 }
 
 void CoreCLR::StopResource(alt::IResource *resource) {
@@ -144,17 +145,17 @@ void CoreCLR::StopResource(alt::IResource *resource) {
     };
     stop_args stopArgs{resource};
 
-    stopResourceDelegate(&stopArgs, sizeof(stopArgs));
+    stop_resource_delegate(&stopArgs, sizeof(stopArgs));
 }
 
 // ReSharper disable once CppInconsistentNaming
 EXPORT void SetResourceLoadDelegates(const CoreClrDelegate_t resourceExecute, const CoreClrDelegate_t resourceExecuteUnload,
                                      const CoreClrDelegate_t stopRuntime) {
-    if (loadResourceDelegate || stopResourceDelegate || stopRuntimeDelegate) {
+    if (load_resource_delegate || stop_resource_delegate || stop_runtime_delegate) {
         abort(); // developer tried to call that method from resource XD
     }
 
-    loadResourceDelegate = resourceExecute;
-    stopResourceDelegate = resourceExecuteUnload;
-    stopRuntimeDelegate = stopRuntime;
+    load_resource_delegate = resourceExecute;
+    stop_resource_delegate = resourceExecuteUnload;
+    stop_runtime_delegate = stopRuntime;
 }
