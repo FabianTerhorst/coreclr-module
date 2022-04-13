@@ -30,6 +30,12 @@ namespace AltV.Net.Client.Example
                         drawNametags = !drawNametags;
                         webView.Emit("test");
                         break;
+                    case ConsoleKey.M:
+                        Alt.Log($"HasLocalMeta Test3: {Alt.HasLocalMetaData("test3").ToString()}");
+                        Alt.Log($"HasLocalMeta Test: {Alt.HasLocalMetaData("test").ToString()}");
+                        Alt.GetLocalMetaData<string>("test", out var meta);
+                        Alt.Log($"GetLocalMeta Test: {meta}");
+                        break;
                 }
             };
             
