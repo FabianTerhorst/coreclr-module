@@ -9,13 +9,20 @@
 #include <string>
 #include <iomanip>
 #include "natives.h"
+#include "exceptions/LoadException.h"
 
 using namespace std;
 
 bool CSharpResourceImpl::Start()
 {
     Log::Info << "Starting resource" << Log::Endl;
-    runtime->clr.Initialize();
+    try {
+        runtime->clr.Update(resource);
+        runtime->clr.Initialize();
+    } catch(LoadException& e) {
+        Log::Error << "Failed to initialize CLR: " << e.what() << Log::Endl;
+        abort();
+    }
     resource->EnableNatives();
     auto scope = resource->PushNativesScope();
     ResetDelegates();

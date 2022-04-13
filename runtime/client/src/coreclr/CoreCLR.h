@@ -1,5 +1,6 @@
 #pragma once
 #define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
 #include <windows.h>
 #include "coreclr/hostfxr.h"
 #include "coreclr/coreclr_delegates.h"
@@ -14,6 +15,7 @@ public:
 
     bool initialized = false;
     void Initialize();
+    void Update(alt::IResource* resource) const;
     static void StartResource(alt::IResource* resource, alt::ICore* core);
     static void StopResource(alt::IResource* resource);
 
@@ -27,5 +29,7 @@ private:
     hostfxr_close_fn _closeFxr = nullptr;
     load_assembly_and_get_function_pointer_fn _loadAssembly = nullptr;
 
+    [[nodiscard]] bool Validate(alt::Ref<alt::IHttpClient> httpClient) const;
+    void Download(alt::Ref<alt::IHttpClient> httpClient) const;
     void InitializeCoreclr(const string_t& runtimeconfig_path);
 };

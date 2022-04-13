@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include <windows.h>
 #include <combaseapi.h>
 #include "../../cpp-sdk/SDK.h"
 #include <string>
