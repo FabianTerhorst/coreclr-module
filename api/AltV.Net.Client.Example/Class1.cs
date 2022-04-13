@@ -88,12 +88,12 @@ namespace AltV.Net.Client.Example
                 Alt.Log($"{entity.Id} removed");
             };
             
-            Alt.OnStreamSyncedMetaChange += (key, value, oldValue) =>
+            Alt.OnStreamSyncedMetaChange += (entity, key, value, oldValue) =>
             {
                 Alt.Log($"STREAM SYNCED META: {key} changed from {oldValue.ToString()} to {value.ToString()}");
             };
             
-            Alt.OnSyncedMetaChange += (key, value, oldValue) =>
+            Alt.OnSyncedMetaChange += (entity, key, value, oldValue) =>
             {
                 Alt.Log($"SYNCED META: {key} changed from {oldValue.ToString()} to {value.ToString()}");
             };
@@ -112,7 +112,7 @@ namespace AltV.Net.Client.Example
             {
                 Alt.Log($"Window resolution changed from {old.X}x{old.Y} to {@new.X}x{@new.Y}");
             };
-            
+
         }
 
         public override void OnStop()
