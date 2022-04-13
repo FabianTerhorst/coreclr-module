@@ -281,14 +281,14 @@ namespace AltV.Net.Client
             _core.OnLocalMetaChange(key, value, oldValue);
         }
         
-        public static void OnStreamSyncedMetaChange(string key, IntPtr value, IntPtr oldValue)
+        public static void OnStreamSyncedMetaChange(IntPtr target, BaseObjectType type, string key, IntPtr value, IntPtr oldValue)
         {
-            _core.OnStreamSyncedMetaChange(key, value, oldValue);
+            _core.OnStreamSyncedMetaChange(target, type, key, value, oldValue);
         }
         
-        public static void OnSyncedMetaChange(string key, IntPtr value, IntPtr oldValue)
+        public static void OnSyncedMetaChange(IntPtr target, BaseObjectType type, string key, IntPtr value, IntPtr oldValue)
         {
-            _core.OnSyncedMetaChange(key, value, oldValue);
+            _core.OnSyncedMetaChange(target, type, key, value, oldValue);
         }
 
         public static void OnTaskChange(int oldTask, int newTask)

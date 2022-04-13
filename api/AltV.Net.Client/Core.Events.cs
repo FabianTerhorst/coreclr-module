@@ -261,18 +261,20 @@ namespace AltV.Net.Client
             LocalMetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnLocalMetaChange)}");
         }
         
-        public void OnStreamSyncedMetaChange(string key, IntPtr valuePtr, IntPtr oldValuePtr)
+        public void OnStreamSyncedMetaChange(IntPtr targetPtr, BaseObjectType type, string key, IntPtr valuePtr, IntPtr oldValuePtr)
         {
+            BaseEntityPool.Get(targetPtr, type, out var target);
             var value = new MValueConst(this, valuePtr);
             var oldValue = new MValueConst(this, oldValuePtr);
-            StreamSyncedMetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnStreamSyncedMetaChange)}");
+            StreamSyncedMetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(target, key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnStreamSyncedMetaChange)}");
         }
         
-        public void OnSyncedMetaChange(string key, IntPtr valuePtr, IntPtr oldValuePtr)
+        public void OnSyncedMetaChange(IntPtr targetPtr, BaseObjectType type, string key, IntPtr valuePtr, IntPtr oldValuePtr)
         {
+            BaseEntityPool.Get(targetPtr, type, out var target);
             var value = new MValueConst(this, valuePtr);
             var oldValue = new MValueConst(this, oldValuePtr);
-            SyncedMetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnSyncedMetaChange)}");
+            SyncedMetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(target, key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnSyncedMetaChange)}");
         }
 
         public void OnTaskChange(int oldTask, int newTask)

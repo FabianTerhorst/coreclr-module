@@ -259,7 +259,9 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto streamSyncedMetaChangeEvent = (alt::CStreamSyncedMetaDataChangeEvent *) ev;
             auto constValue = alt::MValueConst(streamSyncedMetaChangeEvent->GetVal());
             auto constOldValue = alt::MValueConst(streamSyncedMetaChangeEvent->GetOldVal());
-            OnStreamSyncedMetaChangeDelegate(streamSyncedMetaChangeEvent->GetKey().c_str(),
+            OnStreamSyncedMetaChangeDelegate(GetEntityPointer(streamSyncedMetaChangeEvent->GetTarget().Get()),
+                                             streamSyncedMetaChangeEvent->GetTarget()->GetType(),
+                                             streamSyncedMetaChangeEvent->GetKey().c_str(),
                                              &constValue,
                                              &constOldValue);
             break;
@@ -268,9 +270,11 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto syncedMetaChangeEvent = (alt::CSyncedMetaDataChangeEvent *) ev;
             auto constValue = alt::MValueConst(syncedMetaChangeEvent->GetVal());
             auto constOldValue = alt::MValueConst(syncedMetaChangeEvent->GetOldVal());
-            OnSyncedMetaChangeDelegate(syncedMetaChangeEvent->GetKey().c_str(),
-                                             &constValue,
-                                             &constOldValue);
+            OnSyncedMetaChangeDelegate(GetEntityPointer(syncedMetaChangeEvent->GetTarget().Get()),
+                                       syncedMetaChangeEvent->GetTarget()->GetType(),
+                                       syncedMetaChangeEvent->GetKey().c_str(),
+                                       &constValue,
+                                       &constOldValue);
             break;
         }
         case alt::CEvent::Type::TASK_CHANGE: {

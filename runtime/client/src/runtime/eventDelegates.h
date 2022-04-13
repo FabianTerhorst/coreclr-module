@@ -36,8 +36,8 @@ typedef void (* ConnectionCompleteDelegate_t)();
 typedef void (* GlobalMetaChangeDelegate_t)(const char* key, alt::MValueConst* value, alt::MValueConst* oldValue);
 typedef void (* GlobalSyncedMetaChangeDelegate_t)(const char* key, alt::MValueConst* value, alt::MValueConst* oldValue);
 typedef void (* LocalMetaChangeDelegate_t)(const char* key, alt::MValueConst* value, alt::MValueConst* oldValue);
-typedef void (* StreamSyncedMetaChangeDelegate_t)(const char* key, alt::MValueConst* value, alt::MValueConst* oldValue);
-typedef void (* SyncedMetaChangeDelegate_t)(const char* key, alt::MValueConst* value, alt::MValueConst* oldValue);
+typedef void (* StreamSyncedMetaChangeDelegate_t)(void* target, alt::IBaseObject::Type type, const char* key, alt::MValueConst* value, alt::MValueConst* oldValue);
+typedef void (* SyncedMetaChangeDelegate_t)(void* target, alt::IBaseObject::Type type, const char* key, alt::MValueConst* value, alt::MValueConst* oldValue);
 
 typedef void (* NetOwnerChangeDelegate_t)(void* target, alt::IBaseObject::Type targetBaseObjectType, alt::IPlayer* newOwner, alt::IPlayer* oldOwner);
 typedef void (* RemoveEntityDelegate_t)(void* target, alt::IBaseObject::Type targetBaseObjectType);

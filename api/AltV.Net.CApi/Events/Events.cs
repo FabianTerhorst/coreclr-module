@@ -43,8 +43,8 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void GlobalSyncedMetaChangeModuleDelegate(string key, IntPtr value, IntPtr oldValue);
     
     public delegate void LocalMetaChangeModuleDelegate(string key, IntPtr value, IntPtr oldValue);
-    public delegate void StreamSyncedMetaChangeModuleDelegate(string key, IntPtr value, IntPtr oldValue);
-    public delegate void SyncedMetaChangeModuleDelegate(string key, IntPtr value, IntPtr oldValue);
+    public delegate void StreamSyncedMetaChangeModuleDelegate(IntPtr target, BaseObjectType type, string key, IntPtr value, IntPtr oldValue);
+    public delegate void SyncedMetaChangeModuleDelegate(IntPtr target, BaseObjectType type, string key, IntPtr value, IntPtr oldValue);
 
     public delegate void TaskChangeModuleDelegate(int oldTask, int newTask);
 
