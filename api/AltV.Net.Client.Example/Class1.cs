@@ -52,7 +52,61 @@ namespace AltV.Net.Client.Example
             {
                 Alt.Log($"Changed seat from {oldSeat} to {seat} in {vehicle.Id}");
             };
-
+            
+            Alt.OnPlayerLeaveVehicle += (vehicle, seat) =>
+            {
+                Alt.Log($"Left seat {seat} in {vehicle.Id}");
+            }; 
+            
+            Alt.OnLocalMetaChange += (key, value, oldValue) =>
+            {
+                Alt.Log($"LOCAL META: {key} changed from {oldValue.ToString()} to {value.ToString()}");
+            };
+            
+            Alt.OnNetOwnerChange += (entity, newOwner, oldOwner) =>
+            {
+                if (oldOwner == null)
+                {
+                    Alt.LogInfo("Old owner is null");
+                }
+                if (newOwner == null)
+                {
+                    Alt.LogInfo("New owner is null");
+                }
+                Alt.Log($"Owner changed from {oldOwner?.Id} to {newOwner?.Id} in {entity.Id}");
+                Alt.Log($"Netowner changed for {entity.Id}");
+            };
+            
+            Alt.OnRemoveEntity += (entity) =>
+            {
+                Alt.Log($"{entity.Id} removed");
+            };
+            
+            Alt.OnStreamSyncedMetaChange += (key, value, oldValue) =>
+            {
+                Alt.Log($"STREAM SYNCED META: {key} changed from {oldValue.ToString()} to {value.ToString()}");
+            };
+            
+            Alt.OnSyncedMetaChange += (key, value, oldValue) =>
+            {
+                Alt.Log($"SYNCED META: {key} changed from {oldValue.ToString()} to {value.ToString()}");
+            };
+            
+            Alt.OnTaskChange += (task, newTask) =>
+            {
+                Alt.Log($"{task} changed to {newTask}");
+            };
+            
+            Alt.OnWindowFocusChange += (focused) =>
+            {
+                Alt.Log($"Window focus changed to {focused}");
+            };
+            
+            Alt.OnWindowResolutionChange += (old, @new) =>
+            {
+                Alt.Log($"Window resolution changed from {old.X}x{old.Y} to {@new.X}x{@new.Y}");
+            };
+            
         }
 
         public override void OnStop()
