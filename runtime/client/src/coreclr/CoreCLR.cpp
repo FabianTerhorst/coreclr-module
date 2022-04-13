@@ -119,7 +119,7 @@ void CoreCLR::Initialize() {
     init_args initArgs {_core};
     const auto t = hostInitDelegate(&initArgs, sizeof(initArgs));
 
-    cout << "Exit code: " << to_string(t) << endl;
+    Log::Info << "Host init exit code: " << to_string(t) << Log::Endl;
     if (t != 0) abort(); // todo maybe somehow disconnect and show error
 
     initialized = true;
