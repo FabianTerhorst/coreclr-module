@@ -4,6 +4,7 @@ using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Data;
+using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared;
 
@@ -142,5 +143,7 @@ namespace AltV.Net.Client
         IHttpClient CreateHttpClient();
         IntPtr CreateWebSocketClientPtr(string url);
         IWebSocketClient CreateWebSocketClient(string url);
+        bool HasLocalMetaData(string key);
+        void GetLocalMetaData<T>(string key, out MValueConst result);
     }
 }

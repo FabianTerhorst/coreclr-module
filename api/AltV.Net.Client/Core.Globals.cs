@@ -6,6 +6,7 @@ using AltV.Net.CApi.ClientEvents;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Exceptions;
 using AltV.Net.Data;
+using AltV.Net.Elements.Args;
 using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Client
@@ -913,6 +914,28 @@ namespace AltV.Net.Client
                     return Library.Client.Core_IsCursorVisible(NativePointer, Resource.NativePointer) == 1;
                 }
             }
-        } 
+        }
+
+        public bool HasLocalMetaData(string key)
+        {
+            unsafe
+            {
+                var keyPtr = MemoryUtils.StringToHGlobalUtf8(key);
+                var result = Library.Client.Core_HasLocalMeta(NativePointer, keyPtr);
+                Marshal.FreeHGlobal(keyPtr);
+                return result == 1;
+            }
+        }
+        
+        public void GetLocalMetaData<T>(string key, out MValueConst result)
+        {
+            unsafe
+            {
+               var keyPtr = MemoryUtils.StringToHGlobalUtf8(key);
+               var value = new MValueConst(this, Library.Client.Core_GetLocalMeta(NativePointer, keyPtr));
+               Marshal.FreeHGlobal(keyPtr);
+               result = value;
+            }
+        }
     }
 }

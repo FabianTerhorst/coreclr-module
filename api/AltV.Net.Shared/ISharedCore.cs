@@ -118,7 +118,6 @@ namespace AltV.Net.Shared
         bool HasSyncedMetaData(string key);
 
         void GetSyncedMetaData(string key, out MValueConst value);
-        
         #region TriggerLocalEvent
 
         void TriggerLocalEvent(string eventName, MValueConst[] args);

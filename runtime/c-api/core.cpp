@@ -960,4 +960,14 @@ alt::IWebSocketClient* Core_CreateWebsocketClient(alt::ICore* core, alt::IResour
 alt::IAudio* Core_CreateAudio(alt::ICore* core, alt::IResource* resource, const char* source, float volume, uint32_t category, uint8_t frontend) {
     return core->CreateAudio(source, volume, category, frontend, resource).Get();
 }
+
+uint8_t Core_HasLocalMeta(alt::ICore* core, const char* key) {
+    return core->HasLocalMetaData(key);
+}
+
+alt::MValueConst* Core_GetLocalMeta(alt::ICore* core, const char* key) {
+    return new alt::MValueConst(core->GetLocalMetaData(key));
+}
+
+
 #endif

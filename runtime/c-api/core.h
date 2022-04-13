@@ -242,6 +242,9 @@ EXPORT_CLIENT alt::IHttpClient* Core_CreateHttpClient(alt::ICore* core, alt::IRe
 EXPORT_CLIENT alt::IWebSocketClient* Core_CreateWebsocketClient(alt::ICore* core, alt::IResource* resource, const char* url);
 EXPORT_CLIENT alt::IAudio* Core_CreateAudio(alt::ICore* core, alt::IResource* resource, const char* source, float volume, uint32_t category, uint8_t frontend);
 
+EXPORT_CLIENT uint8_t Core_HasLocalMeta(alt::ICore* core, const char* key);
+EXPORT_CLIENT alt::MValueConst* Core_GetLocalMeta(alt::ICore* core, const char* key);
+
 #ifdef __cplusplus
 }
 #endif
