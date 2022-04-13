@@ -38,13 +38,15 @@ bool CSharpResourceImpl::Stop()
     return true;
 }
 
-void* CSharpResourceImpl::GetEntityPointer(alt::IEntity* entity) {
+void* CSharpResourceImpl::  GetEntityPointer(alt::IEntity* entity) {
     if (entity != nullptr) {
         switch (entity->GetType()) {
             case alt::IBaseObject::Type::PLAYER:
                 return dynamic_cast<alt::IPlayer*>(entity);
             case alt::IBaseObject::Type::VEHICLE:
                 return dynamic_cast<alt::IVehicle*>(entity);
+            case alt::IBaseObject::Type::LOCAL_PLAYER:
+                return dynamic_cast<alt::ILocalPlayer*>(entity);
             default:
                 return nullptr;
         }
@@ -396,8 +398,8 @@ void CSharpResourceImpl::ResetDelegates() {
     OnGlobalMetaChangeDelegate = [](auto var, auto var2, auto var3) {};
     OnGlobalSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3) {};
     OnLocalMetaChangeDelegate = [](auto var, auto var2, auto var3) {};
-    OnStreamSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3) {};
-    OnSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3) {};
+    OnStreamSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
+    OnSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
     
     OnNetOwnerChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     
