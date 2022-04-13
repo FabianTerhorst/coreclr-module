@@ -12,11 +12,14 @@ class CoreCLR {
 public:
     explicit CoreCLR(alt::ICore* core);
 
-    void start_resource(alt::IResource* resource, alt::ICore* core);
-    void stop_resource(alt::IResource* resource);
+    bool initialized = false;
+    void Initialize();
+    static void StartResource(alt::IResource* resource, alt::ICore* core);
+    static void StopResource(alt::IResource* resource);
 
 private:
-    HMODULE _coreClrLib;
+    alt::ICore* _core;
+    HMODULE _coreClrLib = nullptr;
     hostfxr_initialize_for_runtime_config_fn _initializeFxr = nullptr;
     hostfxr_get_runtime_delegate_fn _getDelegate = nullptr;
     hostfxr_run_app_fn _runApp = nullptr;
@@ -24,5 +27,5 @@ private:
     hostfxr_close_fn _closeFxr = nullptr;
     load_assembly_and_get_function_pointer_fn _loadAssembly = nullptr;
 
-    void initialize_coreclr(const string_t& runtimeconfig_path);
+    void InitializeCoreclr(const string_t& runtimeconfig_path);
 };

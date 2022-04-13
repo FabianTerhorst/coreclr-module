@@ -20,30 +20,30 @@ CoreClrDelegate_t stopRuntimeDelegate = nullptr;
 namespace {
     std::string find_hostfxr() {
         char_t buffer[MAX_PATH];
-        size_t buffer_size = sizeof(buffer) / sizeof(char_t);
+        size_t bufferSize = sizeof(buffer) / sizeof(char_t);
 
-        int rc = get_hostfxr_path(buffer, &buffer_size, nullptr);
+        const int rc = get_hostfxr_path(buffer, &bufferSize, nullptr);
         if (rc != 0) throw LoadException("Failed to find hostfxr.dll");
 
-        return {buffer, buffer + buffer_size};
+        return {buffer, buffer + bufferSize};
     }
 
     std::wstring find_runtimeconfig() {
-        std::wstring runtimeconfig_path = utils::get_current_dll_path();
-        auto pos = runtimeconfig_path.find_last_of('\\');
+        const std::wstring runtimeconfigPath = utils::get_current_dll_path();
+        const auto pos = runtimeconfigPath.find_last_of('\\');
         if (pos == std::wstring::npos) throw LoadException("Unable to find runtimeconfig.json");
-        return runtimeconfig_path.substr(0, pos + 1) + L"AltV.Net.Client.runtimeconfig.json";
+        return runtimeconfigPath.substr(0, pos + 1) + L"AltV.Net.Client.runtimeconfig.json";
     }
 
     std::wstring find_host_dll() {
-        std::wstring debug_dll_path = utils::get_current_dll_path();
-        auto pos = debug_dll_path.find_last_of('\\');
+        const std::wstring debugDllPath = utils::get_current_dll_path();
+        const auto pos = debugDllPath.find_last_of('\\');
         if (pos == std::wstring::npos) throw LoadException("Unable to find host dll");
-        return debug_dll_path.substr(0, pos + 1) + L"AltV.Net.Client.Host.dll";
+        return debugDllPath.substr(0, pos + 1) + L"AltV.Net.Client.Host.dll";
     }
 }  // namespace
 
-void CoreCLR::initialize_coreclr(const string_t &runtimeconfig_path) {
+void CoreCLR::InitializeCoreclr(const string_t &runtimeconfig_path) {
     void *load_assembly_and_get_function_pointer = nullptr;
     hostfxr_handle cxt = nullptr;
     int rc = _initializeFxr(runtimeconfig_path.c_str(), nullptr, &cxt);
@@ -66,15 +66,22 @@ void CoreCLR::initialize_coreclr(const string_t &runtimeconfig_path) {
 }
 
 CoreCLR::CoreCLR(alt::ICore* core) {
+    Log::Info << "Constructing CoreCLR" << Log::Endl;
+    _core = core;
+}
+
+void CoreCLR::Initialize() {
+    if (initialized) return;
+    
     Log::Info << "Initializing CoreCLR" << Log::Endl;
 
-    auto hostfxr_path = find_hostfxr();
-    Log::Info << "Hostfxr found: " << hostfxr_path << Log::Endl;
+    const auto hostfxrPath = find_hostfxr();
+    Log::Info << "Hostfxr found: " << hostfxrPath << Log::Endl;
 
-    auto runtimeconfig_path = find_runtimeconfig();
-    Log::Info << "Runtimeconfig path found: " << utils::wstring_to_string(runtimeconfig_path) << Log::Endl;
+    const auto runtimeconfigPath = find_runtimeconfig();
+    Log::Info << "Runtimeconfig path found: " << utils::wstring_to_string(runtimeconfigPath) << Log::Endl;
 
-    _coreClrLib = LoadLibraryA(hostfxr_path.c_str());
+    _coreClrLib = LoadLibraryA(hostfxrPath.c_str());
 
     _initializeFxr = (hostfxr_initialize_for_runtime_config_fn) GetProcAddress(_coreClrLib,
                                                                                "hostfxr_initialize_for_runtime_config");
@@ -87,17 +94,17 @@ CoreCLR::CoreCLR(alt::ICore* core) {
     if (!_initializeFxr || !_getDelegate || !_closeFxr || !_runApp || !_initForCmd)
         throw LoadException("Unable to find CoreCLR dll methods");
 
-    initialize_coreclr(utils::get_string_t(runtimeconfig_path));
+    InitializeCoreclr(utils::get_string_t(runtimeconfigPath));
 
     component_entry_point_fn hostInitDelegate = nullptr;
 
-    auto host_dll_path = find_host_dll();
+    const auto hostDllPath = find_host_dll();
 
-    Log::Info << "Host dll path found: " << utils::wstring_to_string(host_dll_path) << Log::Endl;
-    string_t host_dll_path_t = utils::get_string_t(host_dll_path);
+    Log::Info << "Host dll path found: " << utils::wstring_to_string(hostDllPath) << Log::Endl;
+    const string_t hostDllPathT = utils::get_string_t(hostDllPath);
 
-    int rc = _loadAssembly(host_dll_path_t.c_str(), STR("AltV.Net.Client.Host.Host, AltV.Net.Client.Host"),
-                           STR("Initialize"), nullptr, nullptr, (void **) &hostInitDelegate);
+    const int rc = _loadAssembly(hostDllPathT.c_str(), STR("AltV.Net.Client.Host.Host, AltV.Net.Client.Host"),
+                                 STR("Initialize"), nullptr, nullptr, (void **) &hostInitDelegate);
     if (rc != 0 || hostInitDelegate == nullptr) {
         std::stringstream error;
         error << "Cannot load Host dll. Return code: " << std::hex << std::showbase << rc << std::endl;
@@ -109,14 +116,17 @@ CoreCLR::CoreCLR(alt::ICore* core) {
     struct init_args {
         const alt::ICore* corePtr;
     };
-    init_args initArgs {core};
-    auto t = hostInitDelegate(&initArgs, sizeof(initArgs));
+    init_args initArgs {_core};
+    const auto t = hostInitDelegate(&initArgs, sizeof(initArgs));
 
     cout << "Exit code: " << to_string(t) << endl;
+    if (t != 0) abort(); // todo maybe somehow disconnect and show error
+
+    initialized = true;
 }
 
-void CoreCLR::start_resource(alt::IResource *resource, alt::ICore* core) {
-    auto path = utils::string_to_wstring(resource->GetMain());
+void CoreCLR::StartResource(alt::IResource *resource, alt::ICore* core) {
+    const auto path = utils::string_to_wstring(resource->GetMain());
 
     struct start_args {
         const wchar_t *mainFilePath;
@@ -128,7 +138,7 @@ void CoreCLR::start_resource(alt::IResource *resource, alt::ICore* core) {
     loadResourceDelegate(&startArgs, sizeof(startArgs));
 }
 
-void CoreCLR::stop_resource(alt::IResource *resource) {
+void CoreCLR::StopResource(alt::IResource *resource) {
     struct stop_args {
         const alt::IResource *resourcePtr;
     };
@@ -137,8 +147,9 @@ void CoreCLR::stop_resource(alt::IResource *resource) {
     stopResourceDelegate(&stopArgs, sizeof(stopArgs));
 }
 
-EXPORT void SetResourceLoadDelegates(CoreClrDelegate_t resourceExecute, CoreClrDelegate_t resourceExecuteUnload,
-                                     CoreClrDelegate_t stopRuntime) {
+// ReSharper disable once CppInconsistentNaming
+EXPORT void SetResourceLoadDelegates(const CoreClrDelegate_t resourceExecute, const CoreClrDelegate_t resourceExecuteUnload,
+                                     const CoreClrDelegate_t stopRuntime) {
     if (loadResourceDelegate || stopResourceDelegate || stopRuntimeDelegate) {
         abort(); // developer tried to call that method from resource XD
     }

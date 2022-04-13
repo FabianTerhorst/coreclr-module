@@ -15,17 +15,18 @@ using namespace std;
 bool CSharpResourceImpl::Start()
 {
     Log::Info << "Starting resource" << Log::Endl;
+    runtime->clr.Initialize();
     resource->EnableNatives();
     auto scope = resource->PushNativesScope();
     ResetDelegates();
-    GetRuntime()->clr.start_resource(resource, core);
+    CoreCLR::StartResource(resource, core);
     return true;
 }
 
 bool CSharpResourceImpl::Stop()
 {
     auto scope = resource->PushNativesScope();
-    GetRuntime()->clr.stop_resource(resource);
+    GetRuntime()->clr.StopResource(resource);
     ResetDelegates();
     return true;
 }
