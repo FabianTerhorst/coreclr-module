@@ -123,7 +123,12 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                                          playerEnterVehicleEvent->GetSeat());
             break;
         }
-        case alt::CEvent::Type::PLAYER_CHANGE_VEHICLE_SEAT:{
+        case alt::CEvent::Type::PLAYER_LEAVE_VEHICLE: {
+            auto playerLeaveVehicleEvent = (alt::CPlayerLeaveVehicleEvent *) ev;
+            OnPlayerLeaveVehicleDelegate(playerLeaveVehicleEvent->GetTarget().Get(),
+                                         playerLeaveVehicleEvent->GetSeat());
+        }
+        case alt::CEvent::Type::PLAYER_CHANGE_VEHICLE_SEAT: {
             auto playerChangeVehicleSeatEvent = (alt::CPlayerChangeVehicleSeatEvent *) ev;
             OnPlayerChangeVehicleSeatDelegate(playerChangeVehicleSeatEvent->GetTarget().Get(),
                                          playerChangeVehicleSeatEvent->GetOldSeat(),
@@ -172,6 +177,12 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             OnGameEntityDestroyDelegate(ptr, type);
             break;
         }
+        case alt::CEvent::Type::REMOVE_ENTITY_EVENT: {
+            auto removeEntityEvent = (alt::CRemoveEntityEvent *) ev;
+            OnRemoveEntityDelegate(GetEntityPointer(removeEntityEvent->GetEntity().Get()),
+                                   removeEntityEvent->GetEntity().Get()->GetType());
+            break;
+        }
 #pragma endregion
 #pragma region Misc
         case alt::CEvent::Type::RESOURCE_ERROR: {
@@ -210,13 +221,67 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                                        &constOldValue);
             break;
         }
-         case alt::CEvent::Type::GLOBAL_SYNCED_META_CHANGE: {
+        case alt::CEvent::Type::GLOBAL_SYNCED_META_CHANGE: {
             auto globalSyncedMetaChangeEvent = (alt::CGlobalSyncedMetaDataChangeEvent *) ev;
             auto constValue = alt::MValueConst(globalSyncedMetaChangeEvent->GetVal());
             auto constOldValue = alt::MValueConst(globalSyncedMetaChangeEvent->GetOldVal());
             OnGlobalSyncedMetaChangeDelegate(globalSyncedMetaChangeEvent->GetKey().c_str(),
                                              &constValue,
                                              &constOldValue);
+            break;
+        }
+        case alt::CEvent::Type::LOCAL_SYNCED_META_CHANGE: {
+            auto metaChangeEvent = (alt::CLocalMetaDataChangeEvent *) ev;
+            auto constValue = alt::MValueConst(metaChangeEvent->GetVal());
+            auto constOldValue = alt::MValueConst(metaChangeEvent->GetOldVal());
+            OnLocalMetaChangeDelegate(metaChangeEvent->GetKey().c_str(),
+                                 &constValue,
+                                 &constOldValue);
+            break;
+        }
+        case alt::CEvent::Type::NETOWNER_CHANGE: {
+            auto netOwnerChangeEvent = (alt::CNetOwnerChangeEvent *) ev;
+            OnNetOwnerChangeDelegate(GetEntityPointer(netOwnerChangeEvent->GetTarget().Get()),
+                                     netOwnerChangeEvent->GetTarget().Get()->GetType(),
+                                     netOwnerChangeEvent->GetNewOwner().Get(),
+                                     netOwnerChangeEvent->GetOldOwner().Get());
+            break;
+        }
+        case alt::CEvent::Type::STREAM_SYNCED_META_CHANGE: {
+            auto streamSyncedMetaChangeEvent = (alt::CStreamSyncedMetaDataChangeEvent *) ev;
+            auto constValue = alt::MValueConst(streamSyncedMetaChangeEvent->GetVal());
+            auto constOldValue = alt::MValueConst(streamSyncedMetaChangeEvent->GetOldVal());
+            OnStreamSyncedMetaChangeDelegate(streamSyncedMetaChangeEvent->GetKey().c_str(),
+                                             &constValue,
+                                             &constOldValue);
+            break;
+        }
+        case alt::CEvent::Type::SYNCED_META_CHANGE: {
+            auto syncedMetaChangeEvent = (alt::CSyncedMetaDataChangeEvent *) ev;
+            auto constValue = alt::MValueConst(syncedMetaChangeEvent->GetVal());
+            auto constOldValue = alt::MValueConst(syncedMetaChangeEvent->GetOldVal());
+            OnSyncedMetaChangeDelegate(syncedMetaChangeEvent->GetKey().c_str(),
+                                             &constValue,
+                                             &constOldValue);
+            break;
+        }
+        case alt::CEvent::Type::TASK_CHANGE: {
+            auto taskChangeEvent = (alt::CTaskChangeEvent *) ev;
+            OnTaskChangeDelegate(taskChangeEvent->GetOldTask(),
+                                 taskChangeEvent->GetNewTask());
+            break;
+        }
+        case alt::CEvent::Type::WINDOW_FOCUS_CHANGE: {
+            auto windowFocusChangeEvent = (alt::CWindowFocusChangeEvent *) ev;
+            OnWindowFocusChangeDelegate(windowFocusChangeEvent->GetState());
+            break;
+        }
+        case alt::CEvent::Type::WINDOW_RESOLUTION_CHANGE: {
+            auto windowResolutionChangeEvent = (alt::CWindowResolutionChangeEvent *) ev;
+            auto oldRes = windowResolutionChangeEvent->GetOldResolution();
+            auto newRes = windowResolutionChangeEvent->GetNewResolution();
+            OnWindowResolutionChangeDelegate({ static_cast<float>(oldRes[0]), static_cast<float>(oldRes[1]) },
+                                             { static_cast<float>(newRes[0]), static_cast<float>(newRes[1]) });
             break;
         }
 #pragma endregion
@@ -300,6 +365,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnPlayerSpawnDelegate = [](){};
     OnPlayerDisconnectDelegate = [](){};
     OnPlayerEnterVehicleDelegate = [](auto var, auto var2) {};
+    OnPlayerLeaveVehicleDelegate = [](auto var, auto var2) {};
 
     OnGameEntityCreateDelegate = [](auto var, auto var2) {};
     OnGameEntityDestroyDelegate = [](auto var, auto var2) {};
@@ -317,4 +383,16 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnGlobalMetaChangeDelegate = [](auto var, auto var2, auto var3) {};
     OnGlobalSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3) {};
+    OnLocalMetaChangeDelegate = [](auto var, auto var2, auto var3) {};
+    OnStreamSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3) {};
+    OnSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3) {};
+    
+    OnNetOwnerChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    
+    OnRemoveEntityDelegate = [](auto var, auto var2) {};
+
+    OnTaskChangeDelegate = [](auto var, auto var2) {};
+
+    OnWindowFocusChangeDelegate = [](auto var) {};
+    OnWindowResolutionChangeDelegate = [](auto var, auto var2) {};
 }

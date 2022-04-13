@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Numerics;
+using System.Runtime.InteropServices;
+using AltV.Net.Elements.Entities;
 
 namespace AltV.Net.CApi.ClientEvents
 {
@@ -18,10 +20,12 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void PlayerSpawnModuleDelegate();
     public delegate void PlayerDisconnectModuleDelegate();
     public delegate void PlayerEnterVehicleModuleDelegate(IntPtr pointer, byte seat);
-    public delegate void PlayerChangeVehicleSeatModuleDelegate(IntPtr pointer, byte newSeat, byte oldSeat);
+    public delegate void PlayerLeaveVehicleModuleDelegate(IntPtr pointer, byte seat);
+    public delegate void PlayerChangeVehicleSeatModuleDelegate(IntPtr pointer, byte oldSeat, byte newSeat);
     
     public delegate void GameEntityCreateModuleDelegate(IntPtr pointer, byte type);
     public delegate void GameEntityDestroyModuleDelegate(IntPtr pointer, byte type);
+    public delegate void RemoveEntityModuleDelegate(IntPtr pointer, BaseObjectType type);
 
     public delegate void ResourceErrorModuleDelegate(string name);
     public delegate void ResourceStartModuleDelegate(string name);
@@ -37,4 +41,15 @@ namespace AltV.Net.CApi.ClientEvents
 
     public delegate void GlobalMetaChangeModuleDelegate(string key, IntPtr value, IntPtr oldValue);
     public delegate void GlobalSyncedMetaChangeModuleDelegate(string key, IntPtr value, IntPtr oldValue);
+    
+    public delegate void LocalMetaChangeModuleDelegate(string key, IntPtr value, IntPtr oldValue);
+    public delegate void StreamSyncedMetaChangeModuleDelegate(string key, IntPtr value, IntPtr oldValue);
+    public delegate void SyncedMetaChangeModuleDelegate(string key, IntPtr value, IntPtr oldValue);
+
+    public delegate void TaskChangeModuleDelegate(int oldTask, int newTask);
+
+    public delegate void WindowFocusChangeModuleDelegate(byte state);
+    public delegate void WindowResolutionChangeModuleDelegate(Vector2 oldResolution, Vector2 newResolution);
+
+    public delegate void NetOwnerChangeModuleDelegate(IntPtr target, BaseObjectType type, IntPtr newOwner, IntPtr oldOwner);
 }

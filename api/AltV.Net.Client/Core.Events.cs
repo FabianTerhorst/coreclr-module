@@ -1,4 +1,5 @@
-﻿using AltV.Net.Client.Elements.Interfaces;
+﻿using System.Numerics;
+using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Events;
 using AltV.Net.Client.Extensions;
 using AltV.Net.Elements.Args;
@@ -54,11 +55,38 @@ namespace AltV.Net.Client
         internal readonly IEventHandler<PlayerChangeVehicleSeatDelegate> PlayerChangeVehicleSeatEventHandler =
             new HashSetEventHandler<PlayerChangeVehicleSeatDelegate>();
         
+        internal readonly IEventHandler<PlayerLeaveVehicleDelegate> PlayerLeaveVehicleEventHandler =
+            new HashSetEventHandler<PlayerLeaveVehicleDelegate>();
+
         internal readonly IEventHandler<GlobalMetaChangeDelegate> GlobalMetaChangeEventHandler =
             new HashSetEventHandler<GlobalMetaChangeDelegate>();
         
         internal readonly IEventHandler<GlobalSyncedMetaChangeDelegate> GlobalSyncedMetaChangeEventHandler =
             new HashSetEventHandler<GlobalSyncedMetaChangeDelegate>();
+        
+        internal readonly IEventHandler<LocalMetaChangeDelegate> LocalMetaChangeEventHandler =
+            new HashSetEventHandler<LocalMetaChangeDelegate>();
+        
+        internal readonly IEventHandler<StreamSyncedMetaChangeDelegate> StreamSyncedMetaChangeEventHandler =
+            new HashSetEventHandler<StreamSyncedMetaChangeDelegate>();
+        
+        internal readonly IEventHandler<SyncedMetaChangeDelegate> SyncedMetaChangeEventHandler =
+            new HashSetEventHandler<SyncedMetaChangeDelegate>();
+        
+        internal readonly IEventHandler<TaskChangeDelegate> TaskChangeEventHandler =
+            new HashSetEventHandler<TaskChangeDelegate>();
+        
+        internal readonly IEventHandler<WindowResolutionChangeDelegate> WindowResolutionChangeEventHandler =
+            new HashSetEventHandler<WindowResolutionChangeDelegate>();
+
+        internal readonly IEventHandler<WindowFocusChangeDelegate> WindowFocusChangeEventHandler =
+            new HashSetEventHandler<WindowFocusChangeDelegate>();
+        
+        internal readonly IEventHandler<RemoveEntityDelegate> RemoveEntityEventHandler =
+            new HashSetEventHandler<RemoveEntityDelegate>();
+        
+        internal readonly IEventHandler<NetOwnerChangeDelegate> NetOwnerChangeEventHandler =
+            new HashSetEventHandler<NetOwnerChangeDelegate>();
 
         public void OnServerEvent(string name, IntPtr[] args)
         {
@@ -224,6 +252,62 @@ namespace AltV.Net.Client
         {
             var vehicle = VehiclePool.Get(vehiclePtr);
             PlayerChangeVehicleSeatEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, oldSeat, newSeat), $"event {nameof(OnPlayerChangeVehicleSeat)}");
+        }
+
+        public void OnLocalMetaChange(string key, IntPtr valuePtr, IntPtr oldValuePtr)
+        {
+            var value = new MValueConst(this, valuePtr);
+            var oldValue = new MValueConst(this, oldValuePtr);
+            LocalMetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnLocalMetaChange)}");
+        }
+        
+        public void OnStreamSyncedMetaChange(string key, IntPtr valuePtr, IntPtr oldValuePtr)
+        {
+            var value = new MValueConst(this, valuePtr);
+            var oldValue = new MValueConst(this, oldValuePtr);
+            StreamSyncedMetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnStreamSyncedMetaChange)}");
+        }
+        
+        public void OnSyncedMetaChange(string key, IntPtr valuePtr, IntPtr oldValuePtr)
+        {
+            var value = new MValueConst(this, valuePtr);
+            var oldValue = new MValueConst(this, oldValuePtr);
+            SyncedMetaChangeEventHandler.GetEvents().ForEachCatching(fn => fn(key, value.ToObject(), oldValue.ToObject()), $"event {nameof(OnSyncedMetaChange)}");
+        }
+
+        public void OnTaskChange(int oldTask, int newTask)
+        {
+            TaskChangeEventHandler.GetEvents().ForEachCatching(fn => fn(oldTask, newTask), $"event {nameof(OnTaskChange)}");
+        }
+
+        public void OnWindowFocusChange(byte state)
+        {
+            WindowFocusChangeEventHandler.GetEvents().ForEachCatching(fn => fn(state != 0), $"event {nameof(OnWindowFocusChange)}");
+        }
+        
+        public void OnWindowResolutionChange(Vector2 oldRes, Vector2 newRes)
+        {
+            WindowResolutionChangeEventHandler.GetEvents().ForEachCatching(fn => fn(oldRes, newRes), $"event {nameof(OnWindowResolutionChange)}");
+        }
+
+        public void OnNetOwnerChange(IntPtr targetPtr, BaseObjectType type, IntPtr newOwnerPtr, IntPtr oldOwnerPtr)
+        {
+            BaseEntityPool.Get(targetPtr, type, out var target);
+            var newOwner = newOwnerPtr == IntPtr.Zero ? null : PlayerPool.Get(newOwnerPtr);
+            var oldOwner = oldOwnerPtr == IntPtr.Zero ? null : PlayerPool.Get(oldOwnerPtr);
+            NetOwnerChangeEventHandler.GetEvents().ForEachCatching(fn => fn(target, newOwner, oldOwner), $"event {nameof(OnNetOwnerChange)}");
+        }
+
+        public void OnRemoveEntity(IntPtr targetPtr, BaseObjectType type)
+        {
+            BaseEntityPool.Get(targetPtr, type, out var target);
+            RemoveEntityEventHandler.GetEvents().ForEachCatching(fn => fn(target), $"event {nameof(OnRemoveEntity)}");
+        }
+
+        public void OnPlayerLeaveVehicle(IntPtr vehiclePtr, byte seat)
+        {
+            var vehicle = VehiclePool.Get(vehiclePtr);
+            PlayerLeaveVehicleEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, seat), $"event {nameof(OnPlayerLeaveVehicle)}");
         }
         
         public Function AddServerEventListener(string eventName, Function function)

@@ -34,9 +34,11 @@ SetDelegate(RemoveVehicle);
 SetDelegate(PlayerSpawn);
 SetDelegate(PlayerDisconnect);
 SetDelegate(PlayerEnterVehicle);
+SetDelegate(PlayerLeaveVehicle);
 
 SetDelegate(GameEntityCreate);
 SetDelegate(GameEntityDestroy);
+SetDelegate(RemoveEntity);
 
 SetDelegate(ResourceError);
 SetDelegate(ResourceStart);
@@ -51,4 +53,14 @@ SetDelegate(ConnectionComplete);
 
 SetDelegate(GlobalMetaChange);
 SetDelegate(GlobalSyncedMetaChange);
+SetDelegate(LocalMetaChange);
+SetDelegate(StreamSyncedMetaChange);
+SetDelegate(SyncedMetaChange);
+
+SetDelegate(NetOwnerChange);
+
+SetDelegate(TaskChange);
+
+SetDelegate(WindowFocusChange);
+SetDelegate(WindowResolutionChange);
 #endif

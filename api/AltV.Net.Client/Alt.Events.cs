@@ -1,4 +1,5 @@
-﻿using AltV.Net.Client.Elements.Interfaces;
+﻿using AltV.Net.CApi.ClientEvents;
+using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Events;
 
 namespace AltV.Net.Client
@@ -89,6 +90,12 @@ namespace AltV.Net.Client
             remove => CoreImpl.PlayerChangeVehicleSeatEventHandler.Remove(value);
         }
         
+        public static event PlayerLeaveVehicleDelegate OnPlayerLeaveVehicle
+        {
+            add => CoreImpl.PlayerLeaveVehicleEventHandler.Add(value);
+            remove => CoreImpl.PlayerLeaveVehicleEventHandler.Remove(value);
+        }
+        
         public static event GlobalMetaChangeDelegate OnGlobalMetaChange
         {
             add => CoreImpl.GlobalMetaChangeEventHandler.Add(value);
@@ -99,6 +106,54 @@ namespace AltV.Net.Client
         {
             add => CoreImpl.GlobalSyncedMetaChangeEventHandler.Add(value);
             remove => CoreImpl.GlobalSyncedMetaChangeEventHandler.Remove(value);
+        }
+        
+        public static event LocalMetaChangeDelegate OnLocalMetaChange
+        {
+            add => CoreImpl.LocalMetaChangeEventHandler.Add(value);
+            remove => CoreImpl.LocalMetaChangeEventHandler.Remove(value);
+        }
+        
+        public static event StreamSyncedMetaChangeDelegate OnStreamSyncedMetaChange
+        {
+            add => CoreImpl.StreamSyncedMetaChangeEventHandler.Add(value);
+            remove => CoreImpl.StreamSyncedMetaChangeEventHandler.Remove(value);
+        }
+        
+        public static event SyncedMetaChangeDelegate OnSyncedMetaChange
+        {
+            add => CoreImpl.SyncedMetaChangeEventHandler.Add(value);
+            remove => CoreImpl.SyncedMetaChangeEventHandler.Remove(value);
+        }
+        
+        public static event TaskChangeDelegate OnTaskChange
+        {
+            add => CoreImpl.TaskChangeEventHandler.Add(value);
+            remove => CoreImpl.TaskChangeEventHandler.Remove(value);
+        }
+        
+        public static event WindowResolutionChangeDelegate OnWindowResolutionChange
+        {
+            add => CoreImpl.WindowResolutionChangeEventHandler.Add(value);
+            remove => CoreImpl.WindowResolutionChangeEventHandler.Remove(value);
+        }
+        
+        public static event WindowFocusChangeDelegate OnWindowFocusChange
+        {
+            add => CoreImpl.WindowFocusChangeEventHandler.Add(value);
+            remove => CoreImpl.WindowFocusChangeEventHandler.Remove(value);
+        }
+        
+        public static event RemoveEntityDelegate OnRemoveEntity
+        {
+            add => CoreImpl.RemoveEntityEventHandler.Add(value);
+            remove => CoreImpl.RemoveEntityEventHandler.Remove(value);
+        }
+        
+        public static event NetOwnerChangeDelegate OnNetOwnerChange
+        {
+            add => CoreImpl.NetOwnerChangeEventHandler.Add(value);
+            remove => CoreImpl.NetOwnerChangeEventHandler.Remove(value);
         }
 
         public static void OnServer(string eventName, Function function) => CoreImpl.AddServerEventListener(eventName, function);

@@ -4,6 +4,9 @@
 #include "./CSharpScriptRuntime.h"
 #include "eventDelegates.h"
 #include "../../../c-api/data/invoker.h"
+#include "../../cpp-sdk/events/CLocalMetaDataChangeEvent.h"
+#include "../../cpp-sdk/events/CWindowFocusChangeEvent.h"
+#include "../../cpp-sdk/events/CWindowResolutionChangeEvent.h"
 
 class CSharpResourceImpl : public alt::IResource::Impl
 {
@@ -48,6 +51,7 @@ public:
     PlayerSpawnDelegate_t OnPlayerSpawnDelegate = nullptr;
     PlayerDisconnectDelegate_t OnPlayerDisconnectDelegate = nullptr;
     PlayerEnterVehicleDelegate_t OnPlayerEnterVehicleDelegate = nullptr;
+    PlayerLeaveVehicleDelegate_t OnPlayerLeaveVehicleDelegate = nullptr;
 
     GameEntityCreateDelegate_t OnGameEntityCreateDelegate = nullptr;
     GameEntityDestroyDelegate_t OnGameEntityDestroyDelegate = nullptr;
@@ -65,6 +69,18 @@ public:
 
     GlobalMetaChangeDelegate_t OnGlobalMetaChangeDelegate = nullptr;
     GlobalSyncedMetaChangeDelegate_t OnGlobalSyncedMetaChangeDelegate = nullptr;
+    LocalMetaChangeDelegate_t OnLocalMetaChangeDelegate = nullptr;
+    StreamSyncedMetaChangeDelegate_t OnStreamSyncedMetaChangeDelegate = nullptr;
+    SyncedMetaChangeDelegate_t OnSyncedMetaChangeDelegate = nullptr;
+
+    NetOwnerChangeDelegate_t OnNetOwnerChangeDelegate = nullptr;
+    RemoveEntityDelegate_t OnRemoveEntityDelegate = nullptr;
+
+    TaskChangeDelegate_t OnTaskChangeDelegate = nullptr;
+
+    WindowFocusChangeDelegate_t OnWindowFocusChangeDelegate = nullptr;
+    WindowResolutionChangeDelegate_t OnWindowResolutionChangeDelegate = nullptr;
+    
 
 
     bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files)

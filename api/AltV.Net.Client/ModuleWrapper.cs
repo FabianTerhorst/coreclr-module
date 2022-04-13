@@ -1,9 +1,13 @@
+using System.Numerics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using AltV.Net.CApi;
+using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Client.Extensions;
+using AltV.Net.Elements.Entities;
+using Microsoft.VisualBasic;
 
 namespace AltV.Net.Client
 {
@@ -254,13 +258,11 @@ namespace AltV.Net.Client
 
         public static void OnGlobalMetaChange(string key, IntPtr value, IntPtr oldValue)
         {
-            Alt.Log($"[ModuleWrapper OnGlobalMetaChange] {key} = {value} oldValue = {oldValue}");
             _core.OnGlobalMetaChange(key, value, oldValue);
         }
 
         public static void OnGlobalSyncedMetaChange(string key, IntPtr value, IntPtr oldValue)
         {
-            Alt.Log($"[OnGlobalSyncedMetaChange] {key} = {value} oldValue = {oldValue}");
             _core.OnGlobalSyncedMetaChange(key, value, oldValue);
         }
 
@@ -272,6 +274,52 @@ namespace AltV.Net.Client
         public static void OnPlayerChangeVehicleSeat(IntPtr vehicle, byte oldSeat, byte newSeat)
         {
             _core.OnPlayerChangeVehicleSeat(vehicle, oldSeat, newSeat);
+        }
+
+        public static void OnLocalMetaChange(string key, IntPtr value, IntPtr oldValue)
+        {
+            _core.OnLocalMetaChange(key, value, oldValue);
+        }
+        
+        public static void OnStreamSyncedMetaChange(string key, IntPtr value, IntPtr oldValue)
+        {
+            _core.OnStreamSyncedMetaChange(key, value, oldValue);
+        }
+        
+        public static void OnSyncedMetaChange(string key, IntPtr value, IntPtr oldValue)
+        {
+            _core.OnSyncedMetaChange(key, value, oldValue);
+        }
+
+        public static void OnTaskChange(int oldTask, int newTask)
+        {
+            _core.OnTaskChange(oldTask, newTask);
+        }
+        
+        public static void OnWindowFocusChange(byte state)
+        {
+            _core.OnWindowFocusChange(state);
+        }
+
+        public static void OnWindowResolutionChange(Vector2 oldRes, Vector2 newRes)
+        {
+            _core.OnWindowResolutionChange(oldRes, newRes);
+        }
+
+        public static void OnNetOwnerChange(IntPtr target, BaseObjectType type, IntPtr newOwner, IntPtr oldOwner)
+        {
+            var playerPool = _core.PlayerPool.GetAllEntities().Select(x => x.PlayerNativePointer);
+            _core.OnNetOwnerChange(target, type, newOwner, oldOwner);
+        }
+        
+        public static void OnRemoveEntity(IntPtr target, BaseObjectType type)
+        {
+            _core.OnRemoveEntity(target, type);
+        }
+
+        public static void OnPlayerLeaveVehicle(IntPtr vehicle, byte seat)
+        {
+            _core.OnPlayerLeaveVehicle(vehicle, seat);
         }
     }
 }
