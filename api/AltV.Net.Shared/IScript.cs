@@ -1,4 +1,4 @@
-namespace AltV.Net
+﻿namespace AltV.Net
 {
     public interface IScript
     {
