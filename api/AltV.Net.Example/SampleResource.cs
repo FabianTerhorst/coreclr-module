@@ -305,7 +305,7 @@ namespace AltV.Net.Example
 
             Alt.Emit("entity-array-obj", new object[] { new[] { vehicle } });
 
-            vehicle.Remove();
+            //vehicle.Remove();
 
             Bla();
 
