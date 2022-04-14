@@ -71,5 +71,9 @@ namespace AltV.Net.Client
         public static void ClearInterval(uint id) => ClearTimer(id);
         public static void ClearNextTick(uint id) => ClearTimer(id);
         public static void ClearEveryTick(uint id) => ClearTimer(id);
+        
+        public static bool FileExists(string path) => Core.FileExists(path);
+        public static string ReadFile(string path) => Core.FileRead(path);
+        public static byte[] ReadFileBinary(string path) => Core.FileReadBinary(path);
     }
 }

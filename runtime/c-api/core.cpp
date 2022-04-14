@@ -233,18 +233,17 @@ void Core_TriggerLocalEvent(alt::ICore* core, const char* event, alt::MValueCons
     core->TriggerLocalEvent(event, mValues);
 }
 
-
-#ifdef ALT_SERVER_API
-uint8_t Core_SubscribeCommand(alt::ICore* core, const char* cmd, alt::CommandCallback cb) {
-    return core->SubscribeCommand(cmd, cb);
-}
-
 uint8_t Core_FileExists(alt::ICore* core, const char* path) {
     return core->FileExists(path);
 }
 
 const char* Core_FileRead(alt::ICore* core, const char* path, int32_t& size) {
     return AllocateString(core->FileRead(path), size);
+}
+
+#ifdef ALT_SERVER_API
+uint8_t Core_SubscribeCommand(alt::ICore* core, const char* cmd, alt::CommandCallback cb) {
+    return core->SubscribeCommand(cmd, cb);
 }
 
 void Core_TriggerServerEvent(alt::ICore* core, const char* ev, alt::MValueConst* args[], int size) {

@@ -127,9 +127,9 @@ namespace AltV.Net
         void SetSyncedMetaData(string key, object value);
 
         void DeleteSyncedMetaData(string key);
-
+        
         bool FileExists(string path);
-
         string FileRead(string path);
+        byte[] FileReadBinary(string path);
     }
 }

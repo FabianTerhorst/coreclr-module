@@ -111,5 +111,10 @@ namespace AltV.Net
         
         public static uint Hash(string stringToHash) => Core.Hash(stringToHash);
         public static ulong HashPassword(string password) => Core.HashPassword(password);
+        
+        public static bool FileExists(string path) => Core.FileExists(path);
+        public static string ReadFile(string path) => Core.FileRead(path);
+        public static byte[] ReadFileBinary(string path) => Core.FileReadBinary(path);
+        
     }
 }

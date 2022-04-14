@@ -937,5 +937,42 @@ namespace AltV.Net.Client
                result = value;
             }
         }
+
+        public bool FileExists(string path)
+        {
+            unsafe
+            {
+                var valuePtr = MemoryUtils.StringToHGlobalUtf8(path);
+                var result = Library.Shared.Core_FileExists(NativePointer, valuePtr);
+                Marshal.FreeHGlobal(valuePtr);
+                return result == 1;
+            }
+        }
+
+        public string FileRead(string path)
+        {
+            unsafe
+            {
+                var pathPtr = MemoryUtils.StringToHGlobalUtf8(path);
+                var size = 0;
+                var result = PtrToStringUtf8AndFree(Library.Shared.Core_FileRead(NativePointer, pathPtr, &size), size);
+                Marshal.FreeHGlobal(pathPtr);
+                return result;
+            }
+        }
+
+        public byte[] FileReadBinary(string path)
+        {
+            unsafe
+            {
+                var pathPtr = MemoryUtils.StringToHGlobalUtf8(path);
+                var size = 0;
+                var result = Library.Shared.Core_FileRead(NativePointer, pathPtr, &size);
+                var buffer = new byte[size];
+                Marshal.Copy(result, buffer, 0, size);
+                Marshal.FreeHGlobal(pathPtr);
+                return buffer;
+            }
+        }
     }
 }

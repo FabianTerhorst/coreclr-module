@@ -145,5 +145,8 @@ namespace AltV.Net.Client
         IWebSocketClient CreateWebSocketClient(string url);
         bool HasLocalMetaData(string key);
         void GetLocalMetaData<T>(string key, out MValueConst result);
+        bool FileExists(string path);
+        string FileRead(string path);
+        byte[] FileReadBinary(string path);
     }
 }

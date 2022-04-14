@@ -675,29 +675,6 @@ namespace AltV.Net
             }
         }
         #endregion
-
-        public bool FileExists(string path)
-        {
-            unsafe
-            {
-                var valuePtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
-                var result = Library.Server.Core_FileExists(NativePointer, valuePtr);
-                Marshal.FreeHGlobal(valuePtr);
-                return result == 1;
-            }
-        }
-
-        public string FileRead(string path)
-        {
-            unsafe
-            {
-                var pathPtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
-                var size = 0;
-                var result = PtrToStringUtf8AndFree(Library.Server.Core_FileRead(NativePointer, pathPtr, &size), size);
-                Marshal.FreeHGlobal(pathPtr);
-                return result;
-            }
-        }
         
         public void OnScriptsLoaded(IScript[] scripts)
         {
@@ -775,6 +752,43 @@ namespace AltV.Net
         public override void Dispose() {
             base.Dispose();
             assemblyLoadContext.SetTarget(null);
+        }
+        
+        public bool FileExists(string path)
+        {
+            unsafe
+            {
+                var pathPtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
+                var result = Library.Shared.Core_FileExists(NativePointer, pathPtr);
+                Marshal.FreeHGlobal(pathPtr);
+                return result == 1;
+            }
+        }
+
+        public string FileRead(string path)
+        {
+            unsafe
+            {
+                var pathPtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
+                var size = 0;
+                var result = PtrToStringUtf8AndFree(Library.Shared.Core_FileRead(NativePointer, pathPtr, &size), size);
+                Marshal.FreeHGlobal(pathPtr);
+                return result;
+            }
+        }
+
+        public byte[] FileReadBinary(string path)
+        {
+            unsafe
+            {
+                var pathPtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
+                var size = 0;
+                var result = Library.Shared.Core_FileRead(NativePointer, pathPtr, &size);
+                var buffer = new byte[size];
+                Marshal.Copy(result, buffer, 0, size);
+                Marshal.FreeHGlobal(pathPtr);
+                return buffer;
+            }
         }
     }
 }
