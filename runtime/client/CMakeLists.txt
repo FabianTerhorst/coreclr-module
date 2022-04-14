@@ -36,9 +36,6 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
         -DALT_CLIENT
         -DALT_CLIENT_API
 
-        # CoreCLR
-        -DNETHOST_USE_AS_STATIC
-
         # Debug
 #        -DDEBUG_CLIENT
 )
@@ -46,10 +43,6 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 include_directories(${TARGET_NAME} PRIVATE
         "src"
         "thirdparty"
-)
-
-target_link_libraries(${TARGET_NAME} PRIVATE
-        "${PROJECT_SOURCE_DIR}/thirdparty/coreclr/nethost.lib"
 )
 
 add_dependencies(${TARGET_NAME} alt-sdk)

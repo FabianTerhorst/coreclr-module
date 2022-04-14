@@ -4,11 +4,8 @@
 #include "../../cpp-sdk/SDK.h"
 #include <string>
 #include <codecvt>
-#include "coreclr/coreclr_delegates.h"
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
-
-using string_t = std::basic_string<char_t>;
 
 #ifdef _WIN32
 #define STR(s) L##s
@@ -37,28 +34,6 @@ namespace utils
         std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
         std::string narrow = converter.to_bytes(string);
         return narrow;
-    }
-
-    inline string_t get_string_t(const std::string& string)
-    {
-#ifdef _WIN32
-        std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-        std::wstring wide = converter.from_bytes(string);
-        return wide;
-#else
-        return string;
-#endif
-    }
-
-    inline string_t get_string_t(const std::wstring& string)
-    {
-#ifdef _WIN32
-        return string;
-#else
-        std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-        std::string narrow = converter.to_bytes(string);
-        return narrow;
-#endif
     }
 
     template<typename T>
@@ -110,4 +85,10 @@ namespace utils
 //        strcpy(returnStr, str);
 //        return returnStr;
 //    }
+
+    inline bool has_suffix(const std::string &str, const std::string &suffix)
+    {
+        return str.size() >= suffix.size() &&
+               str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
+    }
 }  // namespace utils

@@ -1,11 +1,9 @@
 #pragma once
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
-#include <windows.h>
-#include "coreclr/hostfxr.h"
-#include "coreclr/coreclr_delegates.h"
 #include "utils.h"
 #include "../../../cpp-sdk/ICore.h"
+#include <coreclr.h>
 
 typedef int (* CoreClrDelegate_t)(void* args, int argsLength);
 
@@ -18,18 +16,20 @@ public:
     void Update(alt::IResource* resource) const;
     static void StartResource(alt::IResource* resource, alt::ICore* core);
     static void StopResource(alt::IResource* resource);
+    static std::string BuildTpaList(const std::string& runtimeDir);
 
 private:
     alt::ICore* _core;
     HMODULE _coreClrLib = nullptr;
-    hostfxr_initialize_for_runtime_config_fn _initializeFxr = nullptr;
-    hostfxr_get_runtime_delegate_fn _getDelegate = nullptr;
-    hostfxr_run_app_fn _runApp = nullptr;
-    hostfxr_initialize_for_dotnet_command_line_fn _initForCmd = nullptr;
-    hostfxr_close_fn _closeFxr = nullptr;
-    load_assembly_and_get_function_pointer_fn _loadAssembly = nullptr;
+    coreclr_initialize_ptr _initializeCoreClr;
+    coreclr_shutdown_2_ptr _shutdownCoreClr;
+    coreclr_create_delegate_ptr _createDelegate;
+    coreclr_execute_assembly_ptr _executeAssembly;
+    
+    void *_runtimeHost;
+    unsigned int _domainId;
 
     [[nodiscard]] bool Validate(alt::Ref<alt::IHttpClient> httpClient) const;
     void Download(alt::Ref<alt::IHttpClient> httpClient) const;
-    void InitializeCoreclr(const string_t& runtimeconfig_path);
+    void InitializeCoreclr();
 };
