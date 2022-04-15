@@ -39,6 +39,7 @@ namespace AltV.Net.Client.Elements.Pools
             bool result;
             switch (baseObjectType)
             {
+                case BaseObjectType.LocalPlayer:
                 case BaseObjectType.Player:
                     var player = playerPool.Get(entityPointer);
                     entity = player;
