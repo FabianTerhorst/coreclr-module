@@ -236,6 +236,14 @@ namespace AltV.Net.Shared.Elements.Entities
             }
         }
 
+        protected void InternalAddWeakRef()
+        {
+            unsafe
+            {
+                Core.Library.Shared.BaseObject_AddWeakRef(BaseObjectNativePointer);
+            }
+        }
+
         /// <summary>
         /// Increases the reference count, only works when entity didn't got deleted yet
         /// </summary>
