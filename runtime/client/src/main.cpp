@@ -18,7 +18,7 @@ EXPORT alt::IScriptRuntime* CreateScriptRuntime(ICore* core)
         core->RegisterScriptRuntime("csharp", runtime);
         Log::Info << "Initialized successfully" << Log::Endl;
         return runtime;
-    } catch(LoadException& e) {
+    } catch(std::exception& e) {
         Log::Error << "Initialization failed:" << Log::Endl;
         Log::Error << e.what() << Log::Endl;
         throw;
@@ -42,7 +42,7 @@ int main() {
         clr.Initialize();
 //        Test test;
 //        clr.start_resource(&test);
-    } catch(LoadException& e) {
+    } catch(std::exception& e) {
         Log::Error << "Initialization failed: " << Log::Endl;
         Log::Error << e.what() << Log::Endl;
     }

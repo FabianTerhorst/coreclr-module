@@ -8,7 +8,7 @@
 #define LIST_SEPARATOR ":"
 #endif
 
-std::string CoreCLR::BuildTpaList(const std::string& runtimeDir) {
+std::string CoreClr::BuildTpaList(const std::string& runtimeDir) {
     std::string tpaList;
 
     static const std::vector<std::string> tpa_extensions = {
