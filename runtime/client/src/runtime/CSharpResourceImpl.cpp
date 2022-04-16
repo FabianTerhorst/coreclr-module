@@ -19,14 +19,14 @@ bool CSharpResourceImpl::Start()
     try {
         runtime->clr.Update(resource);
         runtime->clr.Initialize();
-    } catch(LoadException& e) {
+    } catch(std::runtime_error& e) {
         Log::Error << "Failed to initialize CLR: " << e.what() << Log::Endl;
         abort();
     }
     resource->EnableNatives();
     auto scope = resource->PushNativesScope();
     ResetDelegates();
-    CoreCLR::StartResource(resource, core);
+    CoreClr::StartResource(resource, core);
     return true;
 }
 
