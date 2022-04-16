@@ -29,12 +29,12 @@ std::filesystem::path CoreClr::GetLibrariesDirectoryPath() {
     return GetMainDirectoryPath().append("libraries");
 }
 
-std::filesystem::path CoreClr::GetClrDirectoryPath() {
-    return GetMainDirectoryPath().append("clr");
+std::filesystem::path CoreClr::GetDataDirectoryPath() {
+    return GetMainDirectoryPath().append("data");
 }
 
 std::filesystem::path CoreClr::GetRuntimeDirectoryPath() {
-    return GetClrDirectoryPath().append("runtime");
+    return GetDataDirectoryPath().append("runtime");
 }
 
 std::filesystem::path CoreClr::GetCoreClrDllPath() {
@@ -43,7 +43,7 @@ std::filesystem::path CoreClr::GetCoreClrDllPath() {
 
 void CoreClr::InitializeCoreclr() {
     const auto runtimePath = GetRuntimeDirectoryPath().string();
-    const auto clrDirectoryPath = GetClrDirectoryPath().string();
+    const auto clrDirectoryPath = GetDataDirectoryPath().string();
     
     const auto tpaList = BuildTpaList(runtimePath);
     

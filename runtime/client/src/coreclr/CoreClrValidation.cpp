@@ -12,7 +12,7 @@ using namespace alt;
 namespace fs = std::filesystem;
 
 bool CoreClr::Validate(Ref<alt::IHttpClient> httpClient) const {
-    auto const clrDirectoryPath = GetClrDirectoryPath();
+    auto const clrDirectoryPath = GetDataDirectoryPath();
     if (!fs::exists(clrDirectoryPath)) return false;
     
     const auto updateFile = utils::download_file_sync(httpClient, "https://cdn.block2play.com/coreclr/update.json");
@@ -64,7 +64,7 @@ void CoreClr::Download(Ref<alt::IHttpClient> httpClient) const {
         const auto response = utils::download_file_sync(httpClient, "https://cdn.block2play.com/coreclr/csharp-cache.zip");
         Log::Info << "Update finished" << Log::Endl;
 
-        const auto clrDirectoryPath = GetClrDirectoryPath();
+        const auto clrDirectoryPath = GetDataDirectoryPath();
         if (!fs::exists(clrDirectoryPath)) fs::create_directories(clrDirectoryPath);
             
         std::istringstream is(response.body, std::ios::binary);

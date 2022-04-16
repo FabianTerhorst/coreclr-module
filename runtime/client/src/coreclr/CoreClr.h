@@ -22,7 +22,7 @@ public:
     static void StopResource(alt::IResource* resource);
     static std::string BuildTpaList(const std::string& runtimeDir);
     static std::filesystem::path GetMainDirectoryPath();
-    static std::filesystem::path GetClrDirectoryPath();
+    static std::filesystem::path GetDataDirectoryPath();
     static std::filesystem::path GetLibrariesDirectoryPath();
     static std::filesystem::path GetRuntimeDirectoryPath();
     static std::filesystem::path GetCoreClrDllPath();
