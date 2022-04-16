@@ -16,6 +16,7 @@ public:
     explicit CoreClr(alt::ICore* core);
 
     bool initialized = false;
+    bool sandbox = true;
     void Initialize();
     void Update(alt::IResource* resource);
     static void StartResource(alt::IResource* resource, alt::ICore* core);

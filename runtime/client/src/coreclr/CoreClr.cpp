@@ -5,7 +5,10 @@
 #include <string>
 #include <sstream>
 #include <filesystem>
+#include <fstream>
 #include <Log.h>
+#include <zip_file.hpp>
+
 #include "utils.h"
 
 using namespace alt;
@@ -103,7 +106,7 @@ void CoreClr::Initialize() {
 
     InitializeCoreclr();
 
-    typedef void (* initialize_method)(alt::ICore* ptr);
+    typedef void (* initialize_method)(alt::ICore* ptr, uint8_t sandbox);
     initialize_method hostInitDelegate = nullptr;
 
     const int rc = _createDelegate(_runtimeHost, _domainId, "AltV.Net.Client.Host", "AltV.Net.Client.Host.Host", "Initialize", (void **) &hostInitDelegate);
@@ -115,7 +118,7 @@ void CoreClr::Initialize() {
 
     Log::Info << "Executing method from Host dll" << Log::Endl;
 
-    hostInitDelegate(_core);
+    hostInitDelegate(_core, sandbox);
     initialized = true;
 }
 
@@ -151,4 +154,26 @@ EXPORT void SetResourceLoadDelegates(const CoreClrDelegate_t resourceExecute, co
     load_resource_delegate = resourceExecute;
     stop_resource_delegate = resourceExecuteUnload;
     stop_runtime_delegate = stopRuntime;
+}
+
+// ReSharper disable once CppInconsistentNaming
+EXPORT bool GetCachedAssembly(const char* name, int* bufferSize, void** buffer) {
+    auto strName = std::string(name);
+    const auto path = CoreClr::GetLibrariesDirectoryPath().append(utils::to_lower(strName) + ".nupkg");
+    if (!exists(path)) return false;
+    auto stream = std::ifstream(path, std::ios::binary);
+    miniz_cpp::zip_file zip(stream);
+    std::stringstream contentStream;
+    auto fileName = std::string("lib/net6.0/") + name + ".dll";
+    if (!zip.has_file(fileName)) {
+        Log::Warning << "Nupkg was found, but no dll was found in it" << Log::Endl;
+        zip.printdir();
+        return false;
+    }
+    contentStream << zip.open(fileName).rdbuf();
+    auto content = contentStream.str();
+    
+    *bufferSize = static_cast<int>(content.size());
+    *buffer = utils::get_clr_value(content.data(), content.size());
+    return true;
 }

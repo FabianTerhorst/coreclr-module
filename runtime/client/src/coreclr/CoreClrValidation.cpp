@@ -1,9 +1,9 @@
 ﻿#include <json.hpp>
 #include <Log.h>
 #include <sha1.hpp>
-#include <zip_file.hpp>
 #include <sha512.hpp>
 #include <iomanip>
+#include <zip_file.hpp>
 
 #include "CoreClr.h"
 #include "../../cpp-sdk/SDK.h"
@@ -210,13 +210,15 @@ void CoreClr::Update(alt::IResource* resource) {
         }
     }
 
-    attempt = 0;
-    while (!ValidateNuGets(httpClient)) {
-        if (attempt++ >= 3) throw std::runtime_error("Failed to confirm NuGet download after " + std::to_string(attempt) + " attempts");
-        try {
-            DownloadNuGets(httpClient);
-        } catch(const std::exception& e) {
-            Log::Error << "Failed to download NuGets: " << e.what() << Log::Endl;
+    if (sandbox) {
+        attempt = 0;
+        while (!ValidateNuGets(httpClient)) {
+            if (attempt++ >= 3) throw std::runtime_error("Failed to confirm NuGet download after " + std::to_string(attempt) + " attempts");
+            try {
+                DownloadNuGets(httpClient);
+            } catch(const std::exception& e) {
+                Log::Error << "Failed to download NuGets: " << e.what() << Log::Endl;
+            }
         }
     }
 }
