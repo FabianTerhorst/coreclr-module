@@ -276,11 +276,11 @@ void mz_free(void *p);
 
 #define MZ_ADLER32_INIT (1)
 // mz_adler32() returns the initial adler-32 value to use when called with ptr==NULL.
-mz_ulong mz_adler32(mz_ulong adler, const unsigned char *ptr, size_t buf_len);
+static mz_ulong mz_adler32(mz_ulong adler, const unsigned char *ptr, size_t buf_len);
 
 #define MZ_CRC32_INIT (0)
 // mz_crc32() returns the initial CRC-32 value to use when called with ptr==NULL.
-mz_ulong mz_crc32(mz_ulong crc, const unsigned char *ptr, size_t buf_len);
+static mz_ulong mz_crc32(mz_ulong crc, const unsigned char *ptr, size_t buf_len);
 
 // Compression strategies.
 enum { MZ_DEFAULT_STRATEGY = 0, MZ_FILTERED = 1, MZ_HUFFMAN_ONLY = 2, MZ_RLE = 3, MZ_FIXED = 4 };
@@ -1017,7 +1017,7 @@ typedef unsigned char mz_validate_uint64[sizeof(mz_uint64)==8 ? 1 : -1];
 
 // ------------------- zlib-style API's
 
-mz_ulong mz_adler32(mz_ulong adler, const unsigned char *ptr, size_t buf_len)
+static mz_ulong mz_adler32(mz_ulong adler, const unsigned char *ptr, size_t buf_len)
 {
   mz_uint32 i, s1 = (mz_uint32)(adler & 0xffff), s2 = (mz_uint32)(adler >> 16); size_t block_len = buf_len % 5552;
   if (!ptr) return MZ_ADLER32_INIT;
@@ -1033,7 +1033,7 @@ mz_ulong mz_adler32(mz_ulong adler, const unsigned char *ptr, size_t buf_len)
 }
 
 // Karl Malbrain's compact CRC-32. See "A compact CCITT crc16 and crc32 C implementation that balances processor cache usage against speed": http://www.geocities.com/malbrain/
-mz_ulong mz_crc32(mz_ulong crc, const mz_uint8 *ptr, size_t buf_len)
+static mz_ulong mz_crc32(mz_ulong crc, const mz_uint8 *ptr, size_t buf_len)
 {
   static const mz_uint32 s_crc32[16] = { 0, 0x1db71064, 0x3b6e20c8, 0x26d930ac, 0x76dc4190, 0x6b6b51f4, 0x4db26158, 0x5005713c,
     0xedb88320, 0xf00f9344, 0xd6d6a3e8, 0xcb61b38c, 0x9b64c2b0, 0x86d3d2d4, 0xa00ae278, 0xbdbdf21c };
@@ -1043,7 +1043,7 @@ mz_ulong mz_crc32(mz_ulong crc, const mz_uint8 *ptr, size_t buf_len)
   return ~crcu32;
 }
 
-void mz_free(void *p)
+static void mz_free(void *p)
 {
   MZ_FREE(p);
 }
@@ -1054,17 +1054,17 @@ static void *def_alloc_func(void *opaque, size_t items, size_t size) { (void)opa
 static void def_free_func(void *opaque, void *address) { (void)opaque, (void)address; MZ_FREE(address); }
 static void *def_realloc_func(void *opaque, void *address, size_t items, size_t size) { (void)opaque, (void)address, (void)items, (void)size; return MZ_REALLOC(address, items * size); }
 
-const char *mz_version(void)
+static const char *mz_version(void)
 {
   return MZ_VERSION;
 }
 
-int mz_deflateInit(mz_streamp pStream, int level)
+static int mz_deflateInit(mz_streamp pStream, int level)
 {
   return mz_deflateInit2(pStream, level, MZ_DEFLATED, MZ_DEFAULT_WINDOW_BITS, 9, MZ_DEFAULT_STRATEGY);
 }
 
-int mz_deflateInit2(mz_streamp pStream, int level, int method, int window_bits, int mem_level, int strategy)
+static int mz_deflateInit2(mz_streamp pStream, int level, int method, int window_bits, int mem_level, int strategy)
 {
   tdefl_compressor *pComp;
   mz_uint comp_flags = TDEFL_COMPUTE_ADLER32 | tdefl_create_comp_flags_from_zip_params(level, window_bits, strategy);
@@ -1096,7 +1096,7 @@ int mz_deflateInit2(mz_streamp pStream, int level, int method, int window_bits, 
   return MZ_OK;
 }
 
-int mz_deflateReset(mz_streamp pStream)
+static int mz_deflateReset(mz_streamp pStream)
 {
   if ((!pStream) || (!pStream->state) || (!pStream->zalloc) || (!pStream->zfree)) return MZ_STREAM_ERROR;
   pStream->total_in = pStream->total_out = 0;
@@ -1104,7 +1104,7 @@ int mz_deflateReset(mz_streamp pStream)
   return MZ_OK;
 }
 
-int mz_deflate(mz_streamp pStream, int flush)
+static int mz_deflate(mz_streamp pStream, int flush)
 {
   size_t in_bytes, out_bytes;
   mz_ulong orig_total_in, orig_total_out;
@@ -1153,7 +1153,7 @@ int mz_deflate(mz_streamp pStream, int flush)
   return mz_status;
 }
 
-int mz_deflateEnd(mz_streamp pStream)
+static int mz_deflateEnd(mz_streamp pStream)
 {
   if (!pStream) return MZ_STREAM_ERROR;
   if (pStream->state)
@@ -1164,14 +1164,14 @@ int mz_deflateEnd(mz_streamp pStream)
   return MZ_OK;
 }
 
-mz_ulong mz_deflateBound(mz_streamp pStream, mz_ulong source_len)
+static mz_ulong mz_deflateBound(mz_streamp pStream, mz_ulong source_len)
 {
   (void)pStream;
   // This is really over conservative. (And lame, but it's actually pretty tricky to compute a true upper bound given the way tdefl's blocking works.)
   return MZ_MAX(128 + (source_len * 110) / 100, 128 + source_len + ((source_len / (31 * 1024)) + 1) * 5);
 }
 
-int mz_compress2(unsigned char *pDest, mz_ulong *pDest_len, const unsigned char *pSource, mz_ulong source_len, int level)
+static int mz_compress2(unsigned char *pDest, mz_ulong *pDest_len, const unsigned char *pSource, mz_ulong source_len, int level)
 {
   int status;
   mz_stream stream;
@@ -1199,12 +1199,12 @@ int mz_compress2(unsigned char *pDest, mz_ulong *pDest_len, const unsigned char 
   return mz_deflateEnd(&stream);
 }
 
-int mz_compress(unsigned char *pDest, mz_ulong *pDest_len, const unsigned char *pSource, mz_ulong source_len)
+static int mz_compress(unsigned char *pDest, mz_ulong *pDest_len, const unsigned char *pSource, mz_ulong source_len)
 {
   return mz_compress2(pDest, pDest_len, pSource, source_len, MZ_DEFAULT_COMPRESSION);
 }
 
-mz_ulong mz_compressBound(mz_ulong source_len)
+static mz_ulong mz_compressBound(mz_ulong source_len)
 {
   return mz_deflateBound(NULL, source_len);
 }
@@ -1217,7 +1217,7 @@ typedef struct
   tinfl_status m_last_status;
 } inflate_state;
 
-int mz_inflateInit2(mz_streamp pStream, int window_bits)
+static int mz_inflateInit2(mz_streamp pStream, int window_bits)
 {
   inflate_state *pDecomp;
   if (!pStream) return MZ_STREAM_ERROR;
@@ -1248,12 +1248,12 @@ int mz_inflateInit2(mz_streamp pStream, int window_bits)
   return MZ_OK;
 }
 
-int mz_inflateInit(mz_streamp pStream)
+static int mz_inflateInit(mz_streamp pStream)
 {
    return mz_inflateInit2(pStream, MZ_DEFAULT_WINDOW_BITS);
 }
 
-int mz_inflate(mz_streamp pStream, int flush)
+static int mz_inflate(mz_streamp pStream, int flush)
 {
   inflate_state* pState;
   mz_uint n, first_call, decomp_flags = TINFL_FLAG_COMPUTE_ADLER32;
@@ -1344,7 +1344,7 @@ int mz_inflate(mz_streamp pStream, int flush)
   return ((status == TINFL_STATUS_DONE) && (!pState->m_dict_avail)) ? MZ_STREAM_END : MZ_OK;
 }
 
-int mz_inflateEnd(mz_streamp pStream)
+static int mz_inflateEnd(mz_streamp pStream)
 {
   if (!pStream)
     return MZ_STREAM_ERROR;
@@ -1356,7 +1356,7 @@ int mz_inflateEnd(mz_streamp pStream)
   return MZ_OK;
 }
 
-int mz_uncompress(unsigned char *pDest, mz_ulong *pDest_len, const unsigned char *pSource, mz_ulong source_len)
+static int mz_uncompress(unsigned char *pDest, mz_ulong *pDest_len, const unsigned char *pSource, mz_ulong source_len)
 {
   mz_stream stream;
   int status;
@@ -1385,7 +1385,7 @@ int mz_uncompress(unsigned char *pDest, mz_ulong *pDest_len, const unsigned char
   return mz_inflateEnd(&stream);
 }
 
-const char *mz_error(int err)
+static const char *mz_error(int err)
 {
   static struct { int m_err; const char *m_pDesc; } s_error_descs[] =
   {
@@ -1473,7 +1473,7 @@ const char *mz_error(int err)
 #pragma warning(disable : 4334)
 #endif
 
-tinfl_status tinfl_decompress(tinfl_decompressor *r, const mz_uint8 *pIn_buf_next, size_t *pIn_buf_size, mz_uint8 *pOut_buf_start, mz_uint8 *pOut_buf_next, size_t *pOut_buf_size, const mz_uint32 decomp_flags)
+static tinfl_status tinfl_decompress(tinfl_decompressor *r, const mz_uint8 *pIn_buf_next, size_t *pIn_buf_size, mz_uint8 *pOut_buf_start, mz_uint8 *pOut_buf_next, size_t *pOut_buf_size, const mz_uint32 decomp_flags)
 {
   static const int s_length_base[31] = { 3,4,5,6,7,8,9,10,11,13, 15,17,19,23,27,31,35,43,51,59, 67,83,99,115,131,163,195,227,258,0,0 };
   static const int s_length_extra[31]= { 0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,0,0,0 };
@@ -1750,7 +1750,7 @@ common_exit:
 #endif
 
 // Higher level helper functions.
-void *tinfl_decompress_mem_to_heap(const void *pSrc_buf, size_t src_buf_len, size_t *pOut_len, int flags)
+static void *tinfl_decompress_mem_to_heap(const void *pSrc_buf, size_t src_buf_len, size_t *pOut_len, int flags)
 {
   tinfl_decompressor decomp; void *pBuf = NULL, *pNew_buf; size_t src_buf_ofs = 0, out_buf_capacity = 0;
   *pOut_len = 0;
@@ -1778,14 +1778,14 @@ void *tinfl_decompress_mem_to_heap(const void *pSrc_buf, size_t src_buf_len, siz
   return pBuf;
 }
 
-size_t tinfl_decompress_mem_to_mem(void *pOut_buf, size_t out_buf_len, const void *pSrc_buf, size_t src_buf_len, int flags)
+static size_t tinfl_decompress_mem_to_mem(void *pOut_buf, size_t out_buf_len, const void *pSrc_buf, size_t src_buf_len, int flags)
 {
   tinfl_decompressor decomp; tinfl_status status; tinfl_init(&decomp);
   status = tinfl_decompress(&decomp, (const mz_uint8*)pSrc_buf, &src_buf_len, (mz_uint8*)pOut_buf, (mz_uint8*)pOut_buf, &out_buf_len, (flags & ~TINFL_FLAG_HAS_MORE_INPUT) | TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF);
   return (status != TINFL_STATUS_DONE) ? TINFL_DECOMPRESS_MEM_TO_MEM_FAILED : out_buf_len;
 }
 
-int tinfl_decompress_mem_to_callback(const void *pIn_buf, size_t *pIn_buf_size, tinfl_put_buf_func_ptr pPut_buf_func, void *pPut_buf_user, int flags)
+static int tinfl_decompress_mem_to_callback(const void *pIn_buf, size_t *pIn_buf_size, tinfl_put_buf_func_ptr pPut_buf_func, void *pPut_buf_user, int flags)
 {
   int result = 0;
   tinfl_decompressor decomp;
@@ -2685,7 +2685,7 @@ static tdefl_status tdefl_flush_output_buffer(tdefl_compressor *d)
   return (d->m_finished && !d->m_output_flush_remaining) ? TDEFL_STATUS_DONE : TDEFL_STATUS_OKAY;
 }
 
-tdefl_status tdefl_compress(tdefl_compressor *d, const void *pIn_buf, size_t *pIn_buf_size, void *pOut_buf, size_t *pOut_buf_size, tdefl_flush flush)
+static tdefl_status tdefl_compress(tdefl_compressor *d, const void *pIn_buf, size_t *pIn_buf_size, void *pOut_buf, size_t *pOut_buf_size, tdefl_flush flush)
 {
   if (!d)
   {
@@ -2741,12 +2741,12 @@ tdefl_status tdefl_compress(tdefl_compressor *d, const void *pIn_buf, size_t *pI
   return (d->m_prev_return_status = tdefl_flush_output_buffer(d));
 }
 
-tdefl_status tdefl_compress_buffer(tdefl_compressor *d, const void *pIn_buf, size_t in_buf_size, tdefl_flush flush)
+static tdefl_status tdefl_compress_buffer(tdefl_compressor *d, const void *pIn_buf, size_t in_buf_size, tdefl_flush flush)
 {
   MZ_ASSERT(d->m_pPut_buf_func); return tdefl_compress(d, pIn_buf, &in_buf_size, NULL, NULL, flush);
 }
 
-tdefl_status tdefl_init(tdefl_compressor *d, tdefl_put_buf_func_ptr pPut_buf_func, void *pPut_buf_user, int flags)
+static tdefl_status tdefl_init(tdefl_compressor *d, tdefl_put_buf_func_ptr pPut_buf_func, void *pPut_buf_user, int flags)
 {
   d->m_pPut_buf_func = pPut_buf_func; d->m_pPut_buf_user = pPut_buf_user;
   d->m_flags = (mz_uint)(flags); d->m_max_probes[0] = 1 + ((flags & 0xFFF) + 2) / 3; d->m_greedy_parsing = (flags & TDEFL_GREEDY_PARSING_FLAG) != 0;
@@ -2765,17 +2765,17 @@ tdefl_status tdefl_init(tdefl_compressor *d, tdefl_put_buf_func_ptr pPut_buf_fun
   return TDEFL_STATUS_OKAY;
 }
 
-tdefl_status tdefl_get_prev_return_status(tdefl_compressor *d)
+static tdefl_status tdefl_get_prev_return_status(tdefl_compressor *d)
 {
   return d->m_prev_return_status;
 }
 
-mz_uint32 tdefl_get_adler32(tdefl_compressor *d)
+static mz_uint32 tdefl_get_adler32(tdefl_compressor *d)
 {
   return d->m_adler32;
 }
 
-mz_bool tdefl_compress_mem_to_output(const void *pBuf, size_t buf_len, tdefl_put_buf_func_ptr pPut_buf_func, void *pPut_buf_user, int flags)
+static mz_bool tdefl_compress_mem_to_output(const void *pBuf, size_t buf_len, tdefl_put_buf_func_ptr pPut_buf_func, void *pPut_buf_user, int flags)
 {
   tdefl_compressor *pComp; mz_bool succeeded; if (((buf_len) && (!pBuf)) || (!pPut_buf_func)) return MZ_FALSE;
   pComp = (tdefl_compressor*)MZ_MALLOC(sizeof(tdefl_compressor)); if (!pComp) return MZ_FALSE;
@@ -2806,7 +2806,7 @@ static mz_bool tdefl_output_buffer_putter(const void *pBuf, int len, void *pUser
   return MZ_TRUE;
 }
 
-void *tdefl_compress_mem_to_heap(const void *pSrc_buf, size_t src_buf_len, size_t *pOut_len, int flags)
+static void *tdefl_compress_mem_to_heap(const void *pSrc_buf, size_t src_buf_len, size_t *pOut_len, int flags)
 {
   tdefl_output_buffer out_buf; MZ_CLEAR_OBJ(out_buf);
   if (!pOut_len) return MZ_FALSE; else *pOut_len = 0;
@@ -2815,7 +2815,7 @@ void *tdefl_compress_mem_to_heap(const void *pSrc_buf, size_t src_buf_len, size_
   *pOut_len = out_buf.m_size; return out_buf.m_pBuf;
 }
 
-size_t tdefl_compress_mem_to_mem(void *pOut_buf, size_t out_buf_len, const void *pSrc_buf, size_t src_buf_len, int flags)
+static size_t tdefl_compress_mem_to_mem(void *pOut_buf, size_t out_buf_len, const void *pSrc_buf, size_t src_buf_len, int flags)
 {
   tdefl_output_buffer out_buf; MZ_CLEAR_OBJ(out_buf);
   if (!pOut_buf) return 0;
@@ -2828,7 +2828,7 @@ size_t tdefl_compress_mem_to_mem(void *pOut_buf, size_t out_buf_len, const void 
 static const mz_uint s_tdefl_num_probes[11] = { 0, 1, 6, 32,  16, 32, 128, 256,  512, 768, 1500 };
 
 // level may actually range from [0,10] (10 is a "hidden" max level, where we want a bit more compression and it's fine if throughput to fall off a cliff on some files).
-mz_uint tdefl_create_comp_flags_from_zip_params(int level, int window_bits, int strategy)
+static mz_uint tdefl_create_comp_flags_from_zip_params(int level, int window_bits, int strategy)
 {
   mz_uint comp_flags = s_tdefl_num_probes[(level >= 0) ? MZ_MIN(10, level) : MZ_DEFAULT_LEVEL] | ((level <= 3) ? TDEFL_GREEDY_PARSING_FLAG : 0);
   if (window_bits > 0) comp_flags |= TDEFL_WRITE_ZLIB_HEADER;
@@ -2851,7 +2851,7 @@ mz_uint tdefl_create_comp_flags_from_zip_params(int level, int window_bits, int 
 // Simple PNG writer function by Alex Evans, 2011. Released into the public domain: https://gist.github.com/908299, more context at
 // http://altdevblogaday.org/2011/04/06/a-smaller-jpg-encoder/.
 // This is actually a modification of Alex's original code so PNG files generated by this function pass pngcheck.
-void *tdefl_write_image_to_png_file_in_memory_ex(const void *pImage, int w, int h, int num_chans, size_t *pLen_out, mz_uint level, mz_bool flip)
+static void *tdefl_write_image_to_png_file_in_memory_ex(const void *pImage, int w, int h, int num_chans, size_t *pLen_out, mz_uint level, mz_bool flip)
 {
   // Using a local copy of this array here in case MINIZ_NO_ZLIB_APIS was defined.
   static const mz_uint s_tdefl_png_num_probes[11] = { 0, 1, 6, 32,  16, 32, 128, 256,  512, 768, 1500 };
@@ -2880,7 +2880,7 @@ void *tdefl_write_image_to_png_file_in_memory_ex(const void *pImage, int w, int 
   // compute final size of file, grab compressed data buffer and return
   *pLen_out += 57; MZ_FREE(pComp); return out_buf.m_pBuf;
 }
-void *tdefl_write_image_to_png_file_in_memory(const void *pImage, int w, int h, int num_chans, size_t *pLen_out)
+static void *tdefl_write_image_to_png_file_in_memory(const void *pImage, int w, int h, int num_chans, size_t *pLen_out)
 {
   // Level 6 corresponds to TDEFL_DEFAULT_MAX_PROBES or MZ_DEFAULT_LEVEL (but we can't depend on MZ_DEFAULT_LEVEL being available in case the zlib API's where #defined out)
   return tdefl_write_image_to_png_file_in_memory_ex(pImage, w, h, num_chans, pLen_out, 6, MZ_FALSE);
@@ -3317,7 +3317,7 @@ static mz_bool mz_zip_reader_read_central_dir(mz_zip_archive *pZip, mz_uint32 fl
   return MZ_TRUE;
 }
 
-mz_bool mz_zip_reader_init(mz_zip_archive *pZip, mz_uint64 size, mz_uint32 flags)
+static mz_bool mz_zip_reader_init(mz_zip_archive *pZip, mz_uint64 size, mz_uint32 flags)
 {
   if ((!pZip) || (!pZip->m_pRead))
     return MZ_FALSE;
@@ -3340,7 +3340,7 @@ static size_t mz_zip_mem_read_func(void *pOpaque, mz_uint64 file_ofs, void *pBuf
   return s;
 }
 
-mz_bool mz_zip_reader_init_mem(mz_zip_archive *pZip, const void *pMem, size_t size, mz_uint32 flags)
+static mz_bool mz_zip_reader_init_mem(mz_zip_archive *pZip, const void *pMem, size_t size, mz_uint32 flags)
 {
   if (!mz_zip_reader_init_internal(pZip, flags))
     return MZ_FALSE;
@@ -3371,7 +3371,7 @@ static size_t mz_zip_file_read_func(void *pOpaque, mz_uint64 file_ofs, void *pBu
   return MZ_FREAD(pBuf, 1, n, pZip->m_pState->m_pFile);
 }
 
-mz_bool mz_zip_reader_init_file(mz_zip_archive *pZip, const char *pFilename, mz_uint32 flags)
+static mz_bool mz_zip_reader_init_file(mz_zip_archive *pZip, const char *pFilename, mz_uint32 flags)
 {
   mz_uint64 file_size;
   MZ_FILE *pFile = MZ_FOPEN(pFilename, "rb");
@@ -3401,7 +3401,7 @@ mz_bool mz_zip_reader_init_file(mz_zip_archive *pZip, const char *pFilename, mz_
 }
 #endif // #ifndef MINIZ_NO_STDIO
 
-mz_uint mz_zip_reader_get_num_files(mz_zip_archive *pZip)
+static mz_uint mz_zip_reader_get_num_files(mz_zip_archive *pZip)
 {
   return pZip ? pZip->m_total_files : 0;
 }
@@ -3413,7 +3413,7 @@ static MZ_FORCEINLINE const mz_uint8 *mz_zip_reader_get_cdh(mz_zip_archive *pZip
   return &MZ_ZIP_ARRAY_ELEMENT(&pZip->m_pState->m_central_dir, mz_uint8, MZ_ZIP_ARRAY_ELEMENT(&pZip->m_pState->m_central_dir_offsets, mz_uint32, file_index));
 }
 
-mz_bool mz_zip_reader_is_file_encrypted(mz_zip_archive *pZip, mz_uint file_index)
+static mz_bool mz_zip_reader_is_file_encrypted(mz_zip_archive *pZip, mz_uint file_index)
 {
   mz_uint m_bit_flag;
   const mz_uint8 *p = mz_zip_reader_get_cdh(pZip, file_index);
@@ -3423,7 +3423,7 @@ mz_bool mz_zip_reader_is_file_encrypted(mz_zip_archive *pZip, mz_uint file_index
   return (m_bit_flag & 1);
 }
 
-mz_bool mz_zip_reader_is_file_a_directory(mz_zip_archive *pZip, mz_uint file_index)
+static mz_bool mz_zip_reader_is_file_a_directory(mz_zip_archive *pZip, mz_uint file_index)
 {
   mz_uint filename_len, external_attr;
   const mz_uint8 *p = mz_zip_reader_get_cdh(pZip, file_index);
@@ -3448,7 +3448,7 @@ mz_bool mz_zip_reader_is_file_a_directory(mz_zip_archive *pZip, mz_uint file_ind
   return MZ_FALSE;
 }
 
-mz_bool mz_zip_reader_file_stat(mz_zip_archive *pZip, mz_uint file_index, mz_zip_archive_file_stat *pStat)
+static mz_bool mz_zip_reader_file_stat(mz_zip_archive *pZip, mz_uint file_index, mz_zip_archive_file_stat *pStat)
 {
   mz_uint n;
   const mz_uint8 *p = mz_zip_reader_get_cdh(pZip, file_index);
@@ -3483,7 +3483,7 @@ mz_bool mz_zip_reader_file_stat(mz_zip_archive *pZip, mz_uint file_index, mz_zip
   return MZ_TRUE;
 }
 
-mz_uint mz_zip_reader_get_filename(mz_zip_archive *pZip, mz_uint file_index, char *pFilename, mz_uint filename_buf_size)
+static mz_uint mz_zip_reader_get_filename(mz_zip_archive *pZip, mz_uint file_index, char *pFilename, mz_uint filename_buf_size)
 {
   mz_uint n;
   const mz_uint8 *p = mz_zip_reader_get_cdh(pZip, file_index);
@@ -3547,7 +3547,7 @@ static int mz_zip_reader_locate_file_binary_search(mz_zip_archive *pZip, const c
   return -1;
 }
 
-int mz_zip_reader_locate_file(mz_zip_archive *pZip, const char *pName, const char *pComment, mz_uint flags)
+static int mz_zip_reader_locate_file(mz_zip_archive *pZip, const char *pName, const char *pComment, mz_uint flags)
 {
   mz_uint file_index; size_t name_len, comment_len;
   if ((!pZip) || (!pZip->m_pState) || (!pName) || (pZip->m_zip_mode != MZ_ZIP_MODE_READING))
@@ -3587,7 +3587,7 @@ int mz_zip_reader_locate_file(mz_zip_archive *pZip, const char *pName, const cha
   return -1;
 }
 
-mz_bool mz_zip_reader_extract_to_mem_no_alloc(mz_zip_archive *pZip, mz_uint file_index, void *pBuf, size_t buf_size, mz_uint flags, void *pUser_read_buf, size_t user_read_buf_size)
+static mz_bool mz_zip_reader_extract_to_mem_no_alloc(mz_zip_archive *pZip, mz_uint file_index, void *pBuf, size_t buf_size, mz_uint flags, void *pUser_read_buf, size_t user_read_buf_size)
 {
   int status = TINFL_STATUS_DONE;
   mz_uint64 needed_size, cur_file_ofs, comp_remaining, out_buf_ofs = 0, read_buf_size, read_buf_ofs = 0, read_buf_avail;
@@ -3714,7 +3714,7 @@ mz_bool mz_zip_reader_extract_to_mem_no_alloc(mz_zip_archive *pZip, mz_uint file
   return status == TINFL_STATUS_DONE;
 }
 
-mz_bool mz_zip_reader_extract_file_to_mem_no_alloc(mz_zip_archive *pZip, const char *pFilename, void *pBuf, size_t buf_size, mz_uint flags, void *pUser_read_buf, size_t user_read_buf_size)
+static mz_bool mz_zip_reader_extract_file_to_mem_no_alloc(mz_zip_archive *pZip, const char *pFilename, void *pBuf, size_t buf_size, mz_uint flags, void *pUser_read_buf, size_t user_read_buf_size)
 {
   int file_index = mz_zip_reader_locate_file(pZip, pFilename, NULL, flags);
   if (file_index < 0)
@@ -3722,17 +3722,17 @@ mz_bool mz_zip_reader_extract_file_to_mem_no_alloc(mz_zip_archive *pZip, const c
   return mz_zip_reader_extract_to_mem_no_alloc(pZip, file_index, pBuf, buf_size, flags, pUser_read_buf, user_read_buf_size);
 }
 
-mz_bool mz_zip_reader_extract_to_mem(mz_zip_archive *pZip, mz_uint file_index, void *pBuf, size_t buf_size, mz_uint flags)
+static mz_bool mz_zip_reader_extract_to_mem(mz_zip_archive *pZip, mz_uint file_index, void *pBuf, size_t buf_size, mz_uint flags)
 {
   return mz_zip_reader_extract_to_mem_no_alloc(pZip, file_index, pBuf, buf_size, flags, NULL, 0);
 }
 
-mz_bool mz_zip_reader_extract_file_to_mem(mz_zip_archive *pZip, const char *pFilename, void *pBuf, size_t buf_size, mz_uint flags)
+static mz_bool mz_zip_reader_extract_file_to_mem(mz_zip_archive *pZip, const char *pFilename, void *pBuf, size_t buf_size, mz_uint flags)
 {
   return mz_zip_reader_extract_file_to_mem_no_alloc(pZip, pFilename, pBuf, buf_size, flags, NULL, 0);
 }
 
-void *mz_zip_reader_extract_to_heap(mz_zip_archive *pZip, mz_uint file_index, size_t *pSize, mz_uint flags)
+static void *mz_zip_reader_extract_to_heap(mz_zip_archive *pZip, mz_uint file_index, size_t *pSize, mz_uint flags)
 {
   mz_uint64 comp_size, uncomp_size, alloc_size;
   const mz_uint8 *p = mz_zip_reader_get_cdh(pZip, file_index);
@@ -3766,7 +3766,7 @@ void *mz_zip_reader_extract_to_heap(mz_zip_archive *pZip, mz_uint file_index, si
   return pBuf;
 }
 
-void *mz_zip_reader_extract_file_to_heap(mz_zip_archive *pZip, const char *pFilename, size_t *pSize, mz_uint flags)
+static void *mz_zip_reader_extract_file_to_heap(mz_zip_archive *pZip, const char *pFilename, size_t *pSize, mz_uint flags)
 {
   int file_index = mz_zip_reader_locate_file(pZip, pFilename, NULL, flags);
   if (file_index < 0)
@@ -3777,7 +3777,7 @@ void *mz_zip_reader_extract_file_to_heap(mz_zip_archive *pZip, const char *pFile
   return mz_zip_reader_extract_to_heap(pZip, file_index, pSize, flags);
 }
 
-mz_bool mz_zip_reader_extract_to_callback(mz_zip_archive *pZip, mz_uint file_index, mz_file_write_func pCallback, void *pOpaque, mz_uint flags)
+static mz_bool mz_zip_reader_extract_to_callback(mz_zip_archive *pZip, mz_uint file_index, mz_file_write_func pCallback, void *pOpaque, mz_uint flags)
 {
   int status = TINFL_STATUS_DONE; mz_uint file_crc32 = MZ_CRC32_INIT;
   mz_uint64 read_buf_size, read_buf_ofs = 0, read_buf_avail, comp_remaining, out_buf_ofs = 0, cur_file_ofs;
@@ -3940,7 +3940,7 @@ mz_bool mz_zip_reader_extract_to_callback(mz_zip_archive *pZip, mz_uint file_ind
   return status == TINFL_STATUS_DONE;
 }
 
-mz_bool mz_zip_reader_extract_file_to_callback(mz_zip_archive *pZip, const char *pFilename, mz_file_write_func pCallback, void *pOpaque, mz_uint flags)
+static mz_bool mz_zip_reader_extract_file_to_callback(mz_zip_archive *pZip, const char *pFilename, mz_file_write_func pCallback, void *pOpaque, mz_uint flags)
 {
   int file_index = mz_zip_reader_locate_file(pZip, pFilename, NULL, flags);
   if (file_index < 0)
@@ -3954,7 +3954,7 @@ static size_t mz_zip_file_write_callback(void *pOpaque, mz_uint64 ofs, const voi
   (void)ofs; return MZ_FWRITE(pBuf, 1, n, (MZ_FILE*)pOpaque);
 }
 
-mz_bool mz_zip_reader_extract_to_file(mz_zip_archive *pZip, mz_uint file_index, const char *pDst_filename, mz_uint flags)
+static mz_bool mz_zip_reader_extract_to_file(mz_zip_archive *pZip, mz_uint file_index, const char *pDst_filename, mz_uint flags)
 {
   mz_bool status;
   mz_zip_archive_file_stat file_stat;
@@ -3975,7 +3975,7 @@ mz_bool mz_zip_reader_extract_to_file(mz_zip_archive *pZip, mz_uint file_index, 
 }
 #endif // #ifndef MINIZ_NO_STDIO
 
-mz_bool mz_zip_reader_end(mz_zip_archive *pZip)
+static mz_bool mz_zip_reader_end(mz_zip_archive *pZip)
 {
   if ((!pZip) || (!pZip->m_pState) || (!pZip->m_pAlloc) || (!pZip->m_pFree) || (pZip->m_zip_mode != MZ_ZIP_MODE_READING))
     return MZ_FALSE;
@@ -4003,7 +4003,7 @@ mz_bool mz_zip_reader_end(mz_zip_archive *pZip)
 }
 
 #ifndef MINIZ_NO_STDIO
-mz_bool mz_zip_reader_extract_file_to_file(mz_zip_archive *pZip, const char *pArchive_filename, const char *pDst_filename, mz_uint flags)
+static mz_bool mz_zip_reader_extract_file_to_file(mz_zip_archive *pZip, const char *pArchive_filename, const char *pDst_filename, mz_uint flags)
 {
   int file_index = mz_zip_reader_locate_file(pZip, pArchive_filename, NULL, flags);
   if (file_index < 0)
@@ -4021,7 +4021,7 @@ static void mz_write_le32(mz_uint8 *p, mz_uint32 v) { p[0] = (mz_uint8)v; p[1] =
 #define MZ_WRITE_LE16(p, v) mz_write_le16((mz_uint8 *)(p), (mz_uint16)(v))
 #define MZ_WRITE_LE32(p, v) mz_write_le32((mz_uint8 *)(p), (mz_uint32)(v))
 
-mz_bool mz_zip_writer_init(mz_zip_archive *pZip, mz_uint64 existing_size)
+static mz_bool mz_zip_writer_init(mz_zip_archive *pZip, mz_uint64 existing_size)
 {
   if ((!pZip) || (pZip->m_pState) || (!pZip->m_pWrite) || (pZip->m_zip_mode != MZ_ZIP_MODE_INVALID))
     return MZ_FALSE;
@@ -4075,7 +4075,7 @@ static size_t mz_zip_heap_write_func(void *pOpaque, mz_uint64 file_ofs, const vo
   return n;
 }
 
-mz_bool mz_zip_writer_init_heap(mz_zip_archive *pZip, size_t size_to_reserve_at_beginning, size_t initial_allocation_size)
+static mz_bool mz_zip_writer_init_heap(mz_zip_archive *pZip, size_t size_to_reserve_at_beginning, size_t initial_allocation_size)
 {
   pZip->m_pWrite = mz_zip_heap_write_func;
   pZip->m_pIO_opaque = pZip;
@@ -4103,7 +4103,7 @@ static size_t mz_zip_file_write_func(void *pOpaque, mz_uint64 file_ofs, const vo
   return MZ_FWRITE(pBuf, 1, n, pZip->m_pState->m_pFile);
 }
 
-mz_bool mz_zip_writer_init_file(mz_zip_archive *pZip, const char *pFilename, mz_uint64 size_to_reserve_at_beginning)
+static mz_bool mz_zip_writer_init_file(mz_zip_archive *pZip, const char *pFilename, mz_uint64 size_to_reserve_at_beginning)
 {
   MZ_FILE *pFile;
   pZip->m_pWrite = mz_zip_file_write_func;
@@ -4134,7 +4134,7 @@ mz_bool mz_zip_writer_init_file(mz_zip_archive *pZip, const char *pFilename, mz_
 }
 #endif // #ifndef MINIZ_NO_STDIO
 
-mz_bool mz_zip_writer_init_from_reader(mz_zip_archive *pZip, const char *pFilename)
+static mz_bool mz_zip_writer_init_from_reader(mz_zip_archive *pZip, const char *pFilename)
 {
   mz_zip_internal_state *pState;
   if ((!pZip) || (!pZip->m_pState) || (pZip->m_zip_mode != MZ_ZIP_MODE_READING))
@@ -4184,7 +4184,7 @@ mz_bool mz_zip_writer_init_from_reader(mz_zip_archive *pZip, const char *pFilena
   return MZ_TRUE;
 }
 
-mz_bool mz_zip_writer_add_mem(mz_zip_archive *pZip, const char *pArchive_name, const void *pBuf, size_t buf_size, mz_uint level_and_flags)
+static mz_bool mz_zip_writer_add_mem(mz_zip_archive *pZip, const char *pArchive_name, const void *pBuf, size_t buf_size, mz_uint level_and_flags)
 {
   return mz_zip_writer_add_mem_ex(pZip, pArchive_name, pBuf, buf_size, NULL, 0, level_and_flags, 0, 0);
 }
@@ -4310,7 +4310,7 @@ static mz_bool mz_zip_writer_write_zeros(mz_zip_archive *pZip, mz_uint64 cur_fil
   return MZ_TRUE;
 }
 
-mz_bool mz_zip_writer_add_mem_ex(mz_zip_archive *pZip, const char *pArchive_name, const void *pBuf, size_t buf_size, const void *pComment, mz_uint16 comment_size, mz_uint level_and_flags, mz_uint64 uncomp_size, mz_uint32 uncomp_crc32)
+static mz_bool mz_zip_writer_add_mem_ex(mz_zip_archive *pZip, const char *pArchive_name, const void *pBuf, size_t buf_size, const void *pComment, mz_uint16 comment_size, mz_uint level_and_flags, mz_uint64 uncomp_size, mz_uint32 uncomp_crc32)
 {
   mz_uint16 method = 0, dos_time = 0, dos_date = 0;
   mz_uint level, ext_attributes = 0, num_alignment_padding_bytes;
@@ -4461,7 +4461,7 @@ mz_bool mz_zip_writer_add_mem_ex(mz_zip_archive *pZip, const char *pArchive_name
 }
 
 #ifndef MINIZ_NO_STDIO
-mz_bool mz_zip_writer_add_file(mz_zip_archive *pZip, const char *pArchive_name, const char *pSrc_filename, const void *pComment, mz_uint16 comment_size, mz_uint level_and_flags)
+static mz_bool mz_zip_writer_add_file(mz_zip_archive *pZip, const char *pArchive_name, const char *pSrc_filename, const void *pComment, mz_uint16 comment_size, mz_uint level_and_flags)
 {
   mz_uint uncomp_crc32 = MZ_CRC32_INIT, level, num_alignment_padding_bytes;
   mz_uint16 method = 0, dos_time = 0, dos_date = 0, ext_attributes = 0;
@@ -4639,7 +4639,7 @@ mz_bool mz_zip_writer_add_file(mz_zip_archive *pZip, const char *pArchive_name, 
 }
 #endif // #ifndef MINIZ_NO_STDIO
 
-mz_bool mz_zip_writer_add_from_zip_reader(mz_zip_archive *pZip, mz_zip_archive *pSource_zip, mz_uint file_index)
+static mz_bool mz_zip_writer_add_from_zip_reader(mz_zip_archive *pZip, mz_zip_archive *pSource_zip, mz_uint file_index)
 {
   mz_uint n, bit_flags, num_alignment_padding_bytes;
   mz_uint64 comp_bytes_remaining, local_dir_header_ofs;
@@ -4762,7 +4762,7 @@ mz_bool mz_zip_writer_add_from_zip_reader(mz_zip_archive *pZip, mz_zip_archive *
   return MZ_TRUE;
 }
 
-mz_bool mz_zip_writer_finalize_archive(mz_zip_archive *pZip)
+static mz_bool mz_zip_writer_finalize_archive(mz_zip_archive *pZip)
 {
   mz_zip_internal_state *pState;
   mz_uint64 central_dir_ofs, central_dir_size;
@@ -4811,7 +4811,7 @@ mz_bool mz_zip_writer_finalize_archive(mz_zip_archive *pZip)
   return MZ_TRUE;
 }
 
-mz_bool mz_zip_writer_finalize_heap_archive(mz_zip_archive *pZip, void **pBuf, size_t *pSize)
+static mz_bool mz_zip_writer_finalize_heap_archive(mz_zip_archive *pZip, void **pBuf, size_t *pSize)
 {
   if ((!pZip) || (!pZip->m_pState) || (!pBuf) || (!pSize))
     return MZ_FALSE;
@@ -4827,7 +4827,7 @@ mz_bool mz_zip_writer_finalize_heap_archive(mz_zip_archive *pZip, void **pBuf, s
   return MZ_TRUE;
 }
 
-mz_bool mz_zip_writer_end(mz_zip_archive *pZip)
+static mz_bool mz_zip_writer_end(mz_zip_archive *pZip)
 {
   mz_zip_internal_state *pState;
   mz_bool status = MZ_TRUE;
@@ -4860,7 +4860,7 @@ mz_bool mz_zip_writer_end(mz_zip_archive *pZip)
 }
 
 #ifndef MINIZ_NO_STDIO
-mz_bool mz_zip_add_mem_to_archive_file_in_place(const char *pZip_filename, const char *pArchive_name, const void *pBuf, size_t buf_size, const void *pComment, mz_uint16 comment_size, mz_uint level_and_flags)
+static mz_bool mz_zip_add_mem_to_archive_file_in_place(const char *pZip_filename, const char *pArchive_name, const void *pBuf, size_t buf_size, const void *pComment, mz_uint16 comment_size, mz_uint level_and_flags)
 {
   mz_bool status, created_new_archive = MZ_FALSE;
   mz_zip_archive zip_archive;
@@ -4905,7 +4905,7 @@ mz_bool mz_zip_add_mem_to_archive_file_in_place(const char *pZip_filename, const
   return status;
 }
 
-void *mz_zip_extract_archive_file_to_heap(const char *pZip_filename, const char *pArchive_name, size_t *pSize, mz_uint flags)
+static void *mz_zip_extract_archive_file_to_heap(const char *pZip_filename, const char *pArchive_name, size_t *pSize, mz_uint flags)
 {
   int file_index;
   mz_zip_archive zip_archive;
@@ -4971,14 +4971,14 @@ namespace miniz_cpp {
 namespace detail {
 
 #ifdef _WIN32
-char directory_separator = '\\';
-char alt_directory_separator = '/';
+static char directory_separator = '\\';
+static char alt_directory_separator = '/';
 #else
-char directory_separator = '/';
-char alt_directory_separator = '\\';
+static char directory_separator = '/';
+static char alt_directory_separator = '\\';
 #endif
 
-std::string join_path(const std::vector<std::string> &parts)
+static std::string join_path(const std::vector<std::string> &parts)
 {
     std::string joined;
     std::size_t i = 0;
@@ -4994,7 +4994,7 @@ std::string join_path(const std::vector<std::string> &parts)
     return joined;
 }
     
-std::vector<std::string> split_path(const std::string &path, char delim = directory_separator)
+static std::vector<std::string> split_path(const std::string &path, char delim = directory_separator)
 {
     std::vector<std::string> split;
     std::string::size_type previous_index = 0;
@@ -5029,7 +5029,7 @@ std::vector<std::string> split_path(const std::string &path, char delim = direct
     return split;
 }
     
-uint32_t crc32buf(const char *buf, std::size_t len)
+static uint32_t crc32buf(const char *buf, std::size_t len)
 {
     uint32_t oldcrc32 = 0xFFFFFFFF;
     
@@ -5090,7 +5090,7 @@ uint32_t crc32buf(const char *buf, std::size_t len)
     return ~oldcrc32;
 }
 
-tm safe_localtime(const time_t &t)
+static tm safe_localtime(const time_t &t)
 {
 #ifdef _WIN32
     tm time;
@@ -5103,7 +5103,7 @@ tm safe_localtime(const time_t &t)
 #endif
 }
 
-std::size_t write_callback(void *opaque, std::uint64_t file_ofs, const void *pBuf, std::size_t n)
+static std::size_t write_callback(void *opaque, std::uint64_t file_ofs, const void *pBuf, std::size_t n)
 {
     auto buffer = static_cast<std::vector<char> *>(opaque);
     
