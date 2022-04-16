@@ -10,6 +10,10 @@ void BaseObject_RemoveRef(alt::IBaseObject* baseObject) {
     baseObject->RemoveRef();
 }
 
+void BaseObject_AddWeakRef(alt::IBaseObject* baseObject) {
+    WeakRef<IBaseObject> weakRef(baseObject);
+}
+
 void BaseObject_SetMetaData(alt::IBaseObject* baseObject, const char* key, alt::MValueConst* value) {
     baseObject->SetMetaData(key, value->Get()->Clone());
 }
