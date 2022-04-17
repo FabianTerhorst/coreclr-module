@@ -11,7 +11,7 @@ namespace AltV.Net.CApi.Libraries
     public unsafe interface ISharedLibrary
     {
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_AddRef { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> BaseObject_AddWeakRef { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_AddRefIfExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> BaseObject_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_GetType { get; }
@@ -232,7 +232,7 @@ namespace AltV.Net.CApi.Libraries
     public unsafe class SharedLibrary : ISharedLibrary
     {
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_AddRef { get; }
-        public delegate* unmanaged[Cdecl]<nint, void> BaseObject_AddWeakRef { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_AddRefIfExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> BaseObject_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_GetType { get; }
@@ -453,7 +453,7 @@ namespace AltV.Net.CApi.Libraries
             const DllImportSearchPath dllImportSearchPath = DllImportSearchPath.LegacyBehavior | DllImportSearchPath.AssemblyDirectory | DllImportSearchPath.SafeDirectories | DllImportSearchPath.System32 | DllImportSearchPath.UserDirectories | DllImportSearchPath.ApplicationDirectory | DllImportSearchPath.UseDllDirectoryForDependencies;
             var handle = NativeLibrary.Load(dllName, Assembly.GetExecutingAssembly(), dllImportSearchPath);
             BaseObject_AddRef = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "BaseObject_AddRef");
-            BaseObject_AddWeakRef = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "BaseObject_AddWeakRef");
+            BaseObject_AddRefIfExists = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "BaseObject_AddRefIfExists");
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "BaseObject_DeleteMetaData");
             BaseObject_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "BaseObject_GetMetaData");
             BaseObject_GetType = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "BaseObject_GetType");

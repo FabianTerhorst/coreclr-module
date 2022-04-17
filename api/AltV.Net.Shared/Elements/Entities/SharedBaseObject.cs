@@ -236,11 +236,11 @@ namespace AltV.Net.Shared.Elements.Entities
             }
         }
 
-        protected void InternalAddWeakRef()
+        protected void InternalAddRefIfExists()
         {
             unsafe
             {
-                Core.Library.Shared.BaseObject_AddWeakRef(BaseObjectNativePointer);
+                Core.Library.Shared.BaseObject_AddRefIfExists(BaseObjectNativePointer);
             }
         }
 
