@@ -34,14 +34,14 @@ namespace AltV.Net.Client
         internal readonly IEventHandler<PlayerEnterVehicleDelegate> EnterVehicleEventHandler =
             new HashSetEventHandler<PlayerEnterVehicleDelegate>();
         
-        internal readonly IEventHandler<ResourceErrorDelegate> ResourceErrorEventHandler =
-            new HashSetEventHandler<ResourceErrorDelegate>();
+        internal readonly IEventHandler<AnyResourceErrorDelegate> AnyResourceErrorEventHandler =
+            new HashSetEventHandler<AnyResourceErrorDelegate>();
         
-        internal readonly IEventHandler<ResourceStartDelegate> ResourceStartEventHandler =
-            new HashSetEventHandler<ResourceStartDelegate>();
+        internal readonly IEventHandler<AnyResourceStartDelegate> AnyResourceStartEventHandler =
+            new HashSetEventHandler<AnyResourceStartDelegate>();
         
-        internal readonly IEventHandler<ResourceStopDelegate> ResourceStopEventHandler =
-            new HashSetEventHandler<ResourceStopDelegate>();
+        internal readonly IEventHandler<AnyResourceStopDelegate> AnyResourceStopEventHandler =
+            new HashSetEventHandler<AnyResourceStopDelegate>();
         
         internal readonly IEventHandler<KeyUpDelegate> KeyUpEventHandler =
             new HashSetEventHandler<KeyUpDelegate>();
@@ -180,19 +180,19 @@ namespace AltV.Net.Client
             GameEntityDestroyEventHandler.GetEvents().ForEachCatching(fn => fn(entity), $"event {nameof(OnGameEntityDestroy)}");
         }
 
-        public void OnResourceError(string name)
+        public void OnAnyResourceError(string name)
         {
-            ResourceErrorEventHandler.GetEvents().ForEachCatching(fn => fn(name), $"event {nameof(OnResourceError)} \"{name}\"");
+            AnyResourceErrorEventHandler.GetEvents().ForEachCatching(fn => fn(name), $"event {nameof(OnAnyResourceError)} \"{name}\"");
         }
         
-        public void OnResourceStart(string name)
+        public void OnAnyResourceStart(string name)
         {
-            ResourceStartEventHandler.GetEvents().ForEachCatching(fn => fn(name), $"event {nameof(OnResourceStart)} \"{name}\"");
+            AnyResourceStartEventHandler.GetEvents().ForEachCatching(fn => fn(name), $"event {nameof(OnAnyResourceStart)} \"{name}\"");
         }
         
-        public void OnResourceStop(string name)
+        public void OnAnyResourceStop(string name)
         {
-            ResourceStopEventHandler.GetEvents().ForEachCatching(fn => fn(name), $"event {nameof(OnResourceStop)} \"{name}\"");
+            AnyResourceStopEventHandler.GetEvents().ForEachCatching(fn => fn(name), $"event {nameof(OnAnyResourceStop)} \"{name}\"");
         }
         
         public void OnKeyDown(ConsoleKey key)

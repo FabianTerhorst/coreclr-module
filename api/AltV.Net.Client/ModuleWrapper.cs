@@ -188,19 +188,19 @@ namespace AltV.Net.Client
             _core.OnGameEntityDestroy(pointer, type);
         }
 
-        public static void OnResourceError(string name)
+        public static void OnAnyResourceError(string name)
         {
-            _core.OnResourceError(name);
+            _core.OnAnyResourceError(name);
         }
         
-        public static void OnResourceStart(string name)
+        public static void OnAnyResourceStart(string name)
         {
-            _core.OnResourceStart(name);
+            _core.OnAnyResourceStart(name);
         }
         
-        public static void OnResourceStop(string name)
+        public static void OnAnyResourceStop(string name)
         {
-            _core.OnResourceStop(name);
+            _core.OnAnyResourceStop(name);
         }
         
         public static void OnKeyDown(uint key)

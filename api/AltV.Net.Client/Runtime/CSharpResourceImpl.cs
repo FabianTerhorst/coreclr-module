@@ -75,17 +75,17 @@ namespace AltV.Net.Client.Runtime
                 handles.AddFirst(GCHandle.Alloc(onGameEntityDestroy));
                 core.Library.Client.Event_SetGameEntityDestroyDelegate(this.NativePointer, onGameEntityDestroy);
                 
-                ResourceErrorModuleDelegate onResourceError = ModuleWrapper.OnResourceError;
-                handles.AddFirst(GCHandle.Alloc(onResourceError));
-                core.Library.Client.Event_SetResourceErrorDelegate(this.NativePointer, onResourceError);
+                AnyResourceErrorModuleDelegate onAnyResourceError = ModuleWrapper.OnAnyResourceError;
+                handles.AddFirst(GCHandle.Alloc(onAnyResourceError));
+                core.Library.Client.Event_SetAnyResourceErrorDelegate(this.NativePointer, onAnyResourceError);
                 
-                ResourceStartModuleDelegate onResourceStart = ModuleWrapper.OnResourceStart;
-                handles.AddFirst(GCHandle.Alloc(onResourceStart));
-                core.Library.Client.Event_SetResourceStartDelegate(this.NativePointer, onResourceStart);
+                AnyResourceStartModuleDelegate onAnyResourceStart = ModuleWrapper.OnAnyResourceStart;
+                handles.AddFirst(GCHandle.Alloc(onAnyResourceStart));
+                core.Library.Client.Event_SetAnyResourceStartDelegate(this.NativePointer, onAnyResourceStart);
                 
-                ResourceStopModuleDelegate onResourceStop = ModuleWrapper.OnResourceStop;
-                handles.AddFirst(GCHandle.Alloc(onResourceStop));
-                core.Library.Client.Event_SetResourceStopDelegate(this.NativePointer, onResourceStop);
+                AnyResourceStopModuleDelegate onAnyResourceStop = ModuleWrapper.OnAnyResourceStop;
+                handles.AddFirst(GCHandle.Alloc(onAnyResourceStop));
+                core.Library.Client.Event_SetAnyResourceStopDelegate(this.NativePointer, onAnyResourceStop);
                 
                 KeyDownModuleDelegate onKeyDown = ModuleWrapper.OnKeyDown;
                 handles.AddFirst(GCHandle.Alloc(onKeyDown));

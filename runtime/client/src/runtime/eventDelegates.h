@@ -22,9 +22,9 @@ typedef void (* PlayerLeaveVehicleDelegate_t)(alt::IVehicle*, uint8_t seat);
 typedef void (* GameEntityCreateDelegate_t)(void*, uint8_t type);
 typedef void (* GameEntityDestroyDelegate_t)(void*, uint8_t type);
 
-typedef void (* ResourceErrorDelegate_t)(const char* name);
-typedef void (* ResourceStartDelegate_t)(const char* name);
-typedef void (* ResourceStopDelegate_t)(const char* name);
+typedef void (* AnyResourceErrorDelegate_t)(const char* name);
+typedef void (* AnyResourceStartDelegate_t)(const char* name);
+typedef void (* AnyResourceStopDelegate_t)(const char* name);
 
 typedef void (* KeyUpDelegate_t)(uint32_t key);
 typedef void (* KeyDownDelegate_t)(uint32_t key);

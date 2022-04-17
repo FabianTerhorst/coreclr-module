@@ -56,9 +56,9 @@ public:
     GameEntityCreateDelegate_t OnGameEntityCreateDelegate = nullptr;
     GameEntityDestroyDelegate_t OnGameEntityDestroyDelegate = nullptr;
 
-    ResourceErrorDelegate_t OnResourceErrorDelegate = nullptr;
-    ResourceStartDelegate_t OnResourceStartDelegate = nullptr;
-    ResourceStopDelegate_t OnResourceStopDelegate = nullptr;
+    AnyResourceErrorDelegate_t OnAnyResourceErrorDelegate = nullptr;
+    AnyResourceStartDelegate_t OnAnyResourceStartDelegate = nullptr;
+    AnyResourceStopDelegate_t OnAnyResourceStopDelegate = nullptr;
 
     KeyUpDelegate_t OnKeyUpDelegate = nullptr;
     KeyDownDelegate_t OnKeyDownDelegate = nullptr;
