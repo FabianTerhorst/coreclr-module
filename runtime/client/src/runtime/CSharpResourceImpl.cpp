@@ -117,6 +117,27 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             delete[] constArgs;
             break;
         }
+        case alt::CEvent::Type::RMLUI_EVENT: {
+            auto rmlUiEvent = (alt::CRmlEvent *) ev;
+            auto args = rmlUiEvent->GetArgs();
+            auto name = rmlUiEvent->GetName();
+            auto size = args->GetSize();
+            
+            OnRmlEventDelegate(rmlUiEvent->GetElement().Get(), name.c_str(), rmlUiEvent->GetArgs().Get(), size);
+            break;
+        }
+        case alt::CEvent::Type::WEB_SOCKET_CLIENT_EVENT: {
+            auto webSocketClientEvent = (alt::CWebSocketClientEvent *) ev;
+            auto args = webSocketClientEvent->GetArgs();
+            auto name = webSocketClientEvent->GetName();
+            auto size = args.GetSize();
+            auto constArgs = new alt::MValueConst *[size];
+
+            for (auto i = 0; i < size; i++) {
+                constArgs[i] = &args[i];
+            }
+            OnWebSocketEventDelegate(webSocketClientEvent->GetTarget().Get(), name.c_str(), constArgs, size);
+        }
 #pragma region Player Events
         case alt::CEvent::Type::SPAWNED: {
             OnPlayerSpawnDelegate();
@@ -368,6 +389,8 @@ void CSharpResourceImpl::ResetDelegates() {
     OnServerEventDelegate = [](auto var, auto var2, auto var3) {};
     OnWebViewEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnConsoleCommandDelegate = [](auto var, auto var2, auto var3) {};
+    OnWebSocketEventDelegate = [](auto var, auto var2, auto var3) {};
+    OnRmlEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
 
     OnCreatePlayerDelegate = [](auto var, auto var2) {};
     OnRemovePlayerDelegate = [](auto var) {};

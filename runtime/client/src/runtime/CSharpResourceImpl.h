@@ -7,6 +7,8 @@
 #include "../../cpp-sdk/events/CLocalMetaDataChangeEvent.h"
 #include "../../cpp-sdk/events/CWindowFocusChangeEvent.h"
 #include "../../cpp-sdk/events/CWindowResolutionChangeEvent.h"
+#include "../../cpp-sdk/events/CRmlEvent.h"
+#include "../../cpp-sdk/events/CWebSocketClientEvent.h"
 
 class CSharpResourceImpl : public alt::IResource::Impl
 {
@@ -41,6 +43,8 @@ public:
     ClientEventDelegate_t OnClientEventDelegate = nullptr;
     WebViewEventDelegate_t OnWebViewEventDelegate = nullptr;
     ConsoleCommandDelegate_t OnConsoleCommandDelegate = nullptr;
+    WebSocketEventDelegate_t OnWebSocketEventDelegate = nullptr;
+    RmlEventDelegate_t OnRmlEventDelegate = nullptr;
 
     CreatePlayerDelegate_t OnCreatePlayerDelegate = nullptr;
     RemovePlayerDelegate_t OnRemovePlayerDelegate = nullptr;

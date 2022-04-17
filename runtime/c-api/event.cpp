@@ -24,6 +24,8 @@ SetDelegate(ClientEvent);
 SetDelegate(ServerEvent);
 SetDelegate(WebViewEvent);
 SetDelegate(ConsoleCommand);
+SetDelegate(RmlEvent);
+SetDelegate(WebSocketEvent);
 
 SetDelegate(CreatePlayer);
 SetDelegate(RemovePlayer);
