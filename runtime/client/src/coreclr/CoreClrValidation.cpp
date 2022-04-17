@@ -21,7 +21,6 @@ bool CoreClr::Validate(Ref<alt::IHttpClient> httpClient) const {
     const auto hashList = updateJson["hashList"];
     
     for (auto it = hashList.begin(); it != hashList.end(); ++it) {
-        Log::Info << "Validating " << it.key() << Log::Endl;
         auto path = clrDirectoryPath;
         path.append(it.key());
         if (!fs::exists(path)) {

@@ -27,9 +27,9 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void GameEntityDestroyModuleDelegate(IntPtr pointer, byte type);
     public delegate void RemoveEntityModuleDelegate(IntPtr pointer, BaseObjectType type);
 
-    public delegate void ResourceErrorModuleDelegate(string name);
-    public delegate void ResourceStartModuleDelegate(string name);
-    public delegate void ResourceStopModuleDelegate(string name);
+    public delegate void AnyResourceErrorModuleDelegate(string name);
+    public delegate void AnyResourceStartModuleDelegate(string name);
+    public delegate void AnyResourceStopModuleDelegate(string name);
     
     public delegate void KeyDownModuleDelegate(uint key);
     public delegate void KeyUpModuleDelegate(uint key);

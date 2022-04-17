@@ -196,17 +196,17 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
 #pragma region Misc
         case alt::CEvent::Type::RESOURCE_ERROR: {
             auto resourceErrorEvent = (alt::CResourceErrorEvent *) ev;
-            OnResourceErrorDelegate(resourceErrorEvent->GetResource()->GetName().c_str());
+            OnAnyResourceErrorDelegate(resourceErrorEvent->GetResource()->GetName().c_str());
             break;
         }
         case alt::CEvent::Type::RESOURCE_START: {
             auto resourceStartEvent = (alt::CResourceStartEvent *) ev;
-            OnResourceStartDelegate(resourceStartEvent->GetResource()->GetName().c_str());
+            OnAnyResourceStartDelegate(resourceStartEvent->GetResource()->GetName().c_str());
             break;
         }
         case alt::CEvent::Type::RESOURCE_STOP: {
             auto resourceStopEvent = (alt::CResourceStopEvent *) ev;
-            OnResourceStopDelegate(resourceStopEvent->GetResource()->GetName().c_str());
+            OnAnyResourceStopDelegate(resourceStopEvent->GetResource()->GetName().c_str());
             break;
         }
         case alt::CEvent::Type::KEYBOARD_EVENT: {
@@ -383,9 +383,9 @@ void CSharpResourceImpl::ResetDelegates() {
     OnGameEntityCreateDelegate = [](auto var, auto var2) {};
     OnGameEntityDestroyDelegate = [](auto var, auto var2) {};
 
-    OnResourceErrorDelegate = [](auto var) {};
-    OnResourceStartDelegate = [](auto var) {};
-    OnResourceStopDelegate = [](auto var) {};
+    OnAnyResourceErrorDelegate = [](auto var) {};
+    OnAnyResourceStartDelegate = [](auto var) {};
+    OnAnyResourceStopDelegate = [](auto var) {};
 
     OnKeyUpDelegate = [](auto var) {};
     OnKeyDownDelegate = [](auto var) {};

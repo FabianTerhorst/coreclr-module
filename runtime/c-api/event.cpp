@@ -40,9 +40,9 @@ SetDelegate(GameEntityCreate);
 SetDelegate(GameEntityDestroy);
 SetDelegate(RemoveEntity);
 
-SetDelegate(ResourceError);
-SetDelegate(ResourceStart);
-SetDelegate(ResourceStop);
+SetDelegate(AnyResourceError);
+SetDelegate(AnyResourceStart);
+SetDelegate(AnyResourceStop);
 
 SetDelegate(KeyUp);
 SetDelegate(KeyDown);

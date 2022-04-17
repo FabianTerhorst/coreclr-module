@@ -14,9 +14,9 @@ namespace AltV.Net.Client.Events
     public delegate void GameEntityDestroyDelegate(IEntity entity);
     public delegate void RemoveEntityDelegate(IEntity entity);
     
-    public delegate void ResourceErrorDelegate(string name);
-    public delegate void ResourceStartDelegate(string name);
-    public delegate void ResourceStopDelegate(string name);
+    public delegate void AnyResourceErrorDelegate(string name);
+    public delegate void AnyResourceStartDelegate(string name);
+    public delegate void AnyResourceStopDelegate(string name);
     
     public delegate void KeyUpDelegate(ConsoleKey key);
     public delegate void KeyDownDelegate(ConsoleKey key);

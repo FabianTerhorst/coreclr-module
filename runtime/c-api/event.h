@@ -51,9 +51,9 @@ EXPORT_CLIENT void Event_SetGameEntityCreateDelegate(CSharpResourceImpl* resourc
 EXPORT_CLIENT void Event_SetGameEntityDestroyDelegate(CSharpResourceImpl* resource, /** ClientEvents.GameEntityDestroyModuleDelegate */ GameEntityDestroyDelegate_t delegate);
 EXPORT_CLIENT void Event_SetRemoveEntityDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveEntityModuleDelegate */ RemoveEntityDelegate_t delegate);
 
-EXPORT_CLIENT void Event_SetResourceErrorDelegate(CSharpResourceImpl* resource, /** ClientEvents.ResourceErrorModuleDelegate */ ResourceErrorDelegate_t delegate);
-EXPORT_CLIENT void Event_SetResourceStartDelegate(CSharpResourceImpl* resource, /** ClientEvents.ResourceStartModuleDelegate */ ResourceStartDelegate_t delegate);
-EXPORT_CLIENT void Event_SetResourceStopDelegate(CSharpResourceImpl* resource, /** ClientEvents.ResourceStopModuleDelegate */ ResourceStopDelegate_t delegate);
+EXPORT_CLIENT void Event_SetAnyResourceErrorDelegate(CSharpResourceImpl* resource, /** ClientEvents.AnyResourceErrorModuleDelegate */ AnyResourceErrorDelegate_t delegate);
+EXPORT_CLIENT void Event_SetAnyResourceStartDelegate(CSharpResourceImpl* resource, /** ClientEvents.AnyResourceStartModuleDelegate */ AnyResourceStartDelegate_t delegate);
+EXPORT_CLIENT void Event_SetAnyResourceStopDelegate(CSharpResourceImpl* resource, /** ClientEvents.AnyResourceStopModuleDelegate */ AnyResourceStopDelegate_t delegate);
 
 EXPORT_CLIENT void Event_SetKeyUpDelegate(CSharpResourceImpl* resource, /** ClientEvents.KeyUpModuleDelegate */ KeyUpDelegate_t delegate);
 EXPORT_CLIENT void Event_SetKeyDownDelegate(CSharpResourceImpl* resource, /** ClientEvents.KeyDownModuleDelegate */ KeyDownDelegate_t delegate);

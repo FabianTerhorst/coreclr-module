@@ -48,22 +48,22 @@ namespace AltV.Net.Client
             remove => CoreImpl.GameEntityDestroyEventHandler.Remove(value);
         }
         
-        public static event ResourceErrorDelegate OnResourceError
+        public static event AnyResourceErrorDelegate OnAnyResourceError
         {
-            add => CoreImpl.ResourceErrorEventHandler.Add(value);
-            remove => CoreImpl.ResourceErrorEventHandler.Remove(value);
+            add => CoreImpl.AnyResourceErrorEventHandler.Add(value);
+            remove => CoreImpl.AnyResourceErrorEventHandler.Remove(value);
         }
         
-        public static event ResourceStartDelegate OnResourceStart
+        public static event AnyResourceStartDelegate OnAnyResourceStart
         {
-            add => CoreImpl.ResourceStartEventHandler.Add(value);
-            remove => CoreImpl.ResourceStartEventHandler.Remove(value);
+            add => CoreImpl.AnyResourceStartEventHandler.Add(value);
+            remove => CoreImpl.AnyResourceStartEventHandler.Remove(value);
         }
         
-        public static event ResourceStopDelegate OnResourceStop
+        public static event AnyResourceStopDelegate OnAnyResourceStop
         {
-            add => CoreImpl.ResourceStopEventHandler.Add(value);
-            remove => CoreImpl.ResourceStopEventHandler.Remove(value);
+            add => CoreImpl.AnyResourceStopEventHandler.Add(value);
+            remove => CoreImpl.AnyResourceStopEventHandler.Remove(value);
         }
         
         public static event KeyUpDelegate OnKeyUp
