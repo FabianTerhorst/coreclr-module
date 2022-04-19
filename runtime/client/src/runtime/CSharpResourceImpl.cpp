@@ -388,7 +388,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnServerEventDelegate = [](auto var, auto var2, auto var3) {};
     OnWebViewEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnConsoleCommandDelegate = [](auto var, auto var2, auto var3) {};
-    OnWebSocketEventDelegate = [](auto var, auto var2, auto var3) {};
+    OnWebSocketEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnRmlEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
 
     OnCreatePlayerDelegate = [](auto var, auto var2) {};
