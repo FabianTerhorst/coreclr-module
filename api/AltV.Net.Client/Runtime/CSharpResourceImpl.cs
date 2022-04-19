@@ -35,6 +35,10 @@ namespace AltV.Net.Client.Runtime
                 handles.AddFirst(GCHandle.Alloc(onWebViewEvent));
                 core.Library.Client.Event_SetWebViewEventDelegate(this.NativePointer, onWebViewEvent);
                 
+                RmlEventModuleDelegate onRmlElementEvent = ModuleWrapper.OnRmlElementEvent;
+                handles.AddFirst(GCHandle.Alloc(onRmlElementEvent));
+                core.Library.Client.Event_SetRmlEventDelegate(this.NativePointer, onRmlElementEvent);
+                
                 ConsoleCommandModuleDelegate onConsoleCommand = ModuleWrapper.OnConsoleCommand;
                 handles.AddFirst(GCHandle.Alloc(onConsoleCommand));
                 core.Library.Client.Event_SetConsoleCommandDelegate(this.NativePointer, onConsoleCommand);
@@ -75,17 +79,17 @@ namespace AltV.Net.Client.Runtime
                 handles.AddFirst(GCHandle.Alloc(onGameEntityDestroy));
                 core.Library.Client.Event_SetGameEntityDestroyDelegate(this.NativePointer, onGameEntityDestroy);
                 
-                ResourceErrorModuleDelegate onResourceError = ModuleWrapper.OnResourceError;
-                handles.AddFirst(GCHandle.Alloc(onResourceError));
-                core.Library.Client.Event_SetResourceErrorDelegate(this.NativePointer, onResourceError);
+                AnyResourceErrorModuleDelegate onAnyResourceError = ModuleWrapper.OnAnyResourceError;
+                handles.AddFirst(GCHandle.Alloc(onAnyResourceError));
+                core.Library.Client.Event_SetAnyResourceErrorDelegate(this.NativePointer, onAnyResourceError);
                 
-                ResourceStartModuleDelegate onResourceStart = ModuleWrapper.OnResourceStart;
-                handles.AddFirst(GCHandle.Alloc(onResourceStart));
-                core.Library.Client.Event_SetResourceStartDelegate(this.NativePointer, onResourceStart);
+                AnyResourceStartModuleDelegate onAnyResourceStart = ModuleWrapper.OnAnyResourceStart;
+                handles.AddFirst(GCHandle.Alloc(onAnyResourceStart));
+                core.Library.Client.Event_SetAnyResourceStartDelegate(this.NativePointer, onAnyResourceStart);
                 
-                ResourceStopModuleDelegate onResourceStop = ModuleWrapper.OnResourceStop;
-                handles.AddFirst(GCHandle.Alloc(onResourceStop));
-                core.Library.Client.Event_SetResourceStopDelegate(this.NativePointer, onResourceStop);
+                AnyResourceStopModuleDelegate onAnyResourceStop = ModuleWrapper.OnAnyResourceStop;
+                handles.AddFirst(GCHandle.Alloc(onAnyResourceStop));
+                core.Library.Client.Event_SetAnyResourceStopDelegate(this.NativePointer, onAnyResourceStop);
                 
                 KeyDownModuleDelegate onKeyDown = ModuleWrapper.OnKeyDown;
                 handles.AddFirst(GCHandle.Alloc(onKeyDown));
@@ -94,6 +98,59 @@ namespace AltV.Net.Client.Runtime
                 KeyUpModuleDelegate onKeyUp = ModuleWrapper.OnKeyUp;
                 handles.AddFirst(GCHandle.Alloc(onKeyUp));
                 core.Library.Client.Event_SetKeyUpDelegate(this.NativePointer, onKeyUp);
+                
+                ConnectionCompleteModuleDelegate onConnectionComplete = ModuleWrapper.OnConnectionComplete;
+                handles.AddFirst(GCHandle.Alloc(onConnectionComplete));
+                core.Library.Client.Event_SetConnectionCompleteDelegate(this.NativePointer, onConnectionComplete);
+                
+                PlayerChangeVehicleSeatModuleDelegate onPlayerChangeVehicleSeat = ModuleWrapper.OnPlayerChangeVehicleSeat;
+                handles.AddFirst(GCHandle.Alloc(onPlayerChangeVehicleSeat));
+                core.Library.Client.Event_SetPlayerChangeVehicleSeatDelegate(this.NativePointer, onPlayerChangeVehicleSeat);
+                
+                GlobalMetaChangeModuleDelegate onGlobalMetaChange = ModuleWrapper.OnGlobalMetaChange;
+                handles.AddFirst(GCHandle.Alloc(onGlobalMetaChange));
+                core.Library.Client.Event_SetGlobalMetaChangeDelegate(this.NativePointer, onGlobalMetaChange);
+                
+                GlobalSyncedMetaChangeModuleDelegate onGlobalSyncedMetaChange = ModuleWrapper.OnGlobalSyncedMetaChange;
+                handles.AddFirst(GCHandle.Alloc(onGlobalSyncedMetaChange));
+                core.Library.Client.Event_SetGlobalSyncedMetaChangeDelegate(this.NativePointer, onGlobalSyncedMetaChange);
+                
+                LocalMetaChangeModuleDelegate onLocalMetaChange = ModuleWrapper.OnLocalMetaChange;
+                handles.AddFirst(GCHandle.Alloc(onLocalMetaChange));
+                core.Library.Client.Event_SetLocalMetaChangeDelegate(this.NativePointer, onLocalMetaChange);
+                
+                StreamSyncedMetaChangeModuleDelegate onStreamSyncedMetaChange = ModuleWrapper.OnStreamSyncedMetaChange;
+                handles.AddFirst(GCHandle.Alloc(onStreamSyncedMetaChange));
+                core.Library.Client.Event_SetStreamSyncedMetaChangeDelegate(this.NativePointer, onStreamSyncedMetaChange);
+                
+                SyncedMetaChangeModuleDelegate onSyncedMetaChange = ModuleWrapper.OnSyncedMetaChange;
+                handles.AddFirst(GCHandle.Alloc(onSyncedMetaChange));
+                core.Library.Client.Event_SetSyncedMetaChangeDelegate(this.NativePointer, onSyncedMetaChange);
+                
+                TaskChangeModuleDelegate onTaskChange = ModuleWrapper.OnTaskChange;
+                handles.AddFirst(GCHandle.Alloc(onTaskChange));
+                core.Library.Client.Event_SetTaskChangeDelegate(this.NativePointer, onTaskChange);
+                
+                WindowFocusChangeModuleDelegate onWindowFocusChange = ModuleWrapper.OnWindowFocusChange;
+                handles.AddFirst(GCHandle.Alloc(onWindowFocusChange));
+                core.Library.Client.Event_SetWindowFocusChangeDelegate(this.NativePointer, onWindowFocusChange);
+                
+                WindowResolutionChangeModuleDelegate onWindowResolutionChange = ModuleWrapper.OnWindowResolutionChange;
+                handles.AddFirst(GCHandle.Alloc(onWindowResolutionChange));
+                core.Library.Client.Event_SetWindowResolutionChangeDelegate(this.NativePointer, onWindowResolutionChange);
+                
+                NetOwnerChangeModuleDelegate onNetOwnerChange = ModuleWrapper.OnNetOwnerChange;
+                handles.AddFirst(GCHandle.Alloc(onNetOwnerChange));
+                core.Library.Client.Event_SetNetOwnerChangeDelegate(this.NativePointer, onNetOwnerChange);
+                
+                RemoveEntityModuleDelegate onRemoveEntity = ModuleWrapper.OnRemoveEntity;
+                handles.AddFirst(GCHandle.Alloc(onRemoveEntity));
+                core.Library.Client.Event_SetRemoveEntityDelegate(this.NativePointer, onRemoveEntity);
+                
+                PlayerLeaveVehicleModuleDelegate onPlayerLeaveVehicle = ModuleWrapper.OnPlayerLeaveVehicle;
+                handles.AddFirst(GCHandle.Alloc(onPlayerLeaveVehicle));
+                core.Library.Client.Event_SetPlayerLeaveVehicleDelegate(this.NativePointer, onPlayerLeaveVehicle);
+                
             }
         }
         

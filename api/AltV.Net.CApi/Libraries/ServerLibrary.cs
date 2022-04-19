@@ -12,24 +12,7 @@ namespace AltV.Net.CApi.Libraries
     {
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsAttached { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_GetCheckpointType { get; }
-        public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Checkpoint_GetColor { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_GetColShapeType { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> Checkpoint_GetHeight { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Checkpoint_GetNextPosition { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> Checkpoint_GetRadius { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> Checkpoint_GetWorldObject { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> Checkpoint_IsEntityIn { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_IsPlayersOnly { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, void> Checkpoint_SetCheckpointType { get; }
-        public delegate* unmanaged[Cdecl]<nint, Rgba, void> Checkpoint_SetColor { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetHeight { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3, void> Checkpoint_SetNextPosition { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, void> Checkpoint_SetPlayersOnly { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetRadius { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_GetColShapeType { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> ColShape_GetWorldObject { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> ColShape_IsEntityIn { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_IsPlayersOnly { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> ColShape_SetPlayersOnly { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, void> ConnectionInfo_Accept { get; }
@@ -65,8 +48,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyColShape { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyVoiceChannel { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_FileExists { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetNetTime { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetRootDirectory { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetVehicleModelInfo { get; }
@@ -367,24 +348,7 @@ namespace AltV.Net.CApi.Libraries
     {
         public delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint> Blip_AttachedTo { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Blip_IsAttached { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_GetCheckpointType { get; }
-        public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Checkpoint_GetColor { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_GetColShapeType { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> Checkpoint_GetHeight { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Checkpoint_GetNextPosition { get; }
-        public delegate* unmanaged[Cdecl]<nint, float> Checkpoint_GetRadius { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> Checkpoint_GetWorldObject { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> Checkpoint_IsEntityIn { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_IsPlayersOnly { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, void> Checkpoint_SetCheckpointType { get; }
-        public delegate* unmanaged[Cdecl]<nint, Rgba, void> Checkpoint_SetColor { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetHeight { get; }
-        public delegate* unmanaged[Cdecl]<nint, Vector3, void> Checkpoint_SetNextPosition { get; }
-        public delegate* unmanaged[Cdecl]<nint, byte, void> Checkpoint_SetPlayersOnly { get; }
-        public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetRadius { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_GetColShapeType { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint> ColShape_GetWorldObject { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> ColShape_IsEntityIn { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> ColShape_IsPlayersOnly { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> ColShape_SetPlayersOnly { get; }
         public delegate* unmanaged[Cdecl]<IntPtr, void> ConnectionInfo_Accept { get; }
@@ -420,8 +384,6 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyColShape { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyVehicle { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyVoiceChannel { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_FileExists { get; }
-        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetNetTime { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetRootDirectory { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetVehicleModelInfo { get; }
@@ -722,24 +684,7 @@ namespace AltV.Net.CApi.Libraries
             var handle = NativeLibrary.Load(dllName, Assembly.GetExecutingAssembly(), dllImportSearchPath);
             Blip_AttachedTo = (delegate* unmanaged[Cdecl]<nint, BaseObjectType*, nint>) NativeLibrary.GetExport(handle, "Blip_AttachedTo");
             Blip_IsAttached = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Blip_IsAttached");
-            Checkpoint_GetCheckpointType = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Checkpoint_GetCheckpointType");
-            Checkpoint_GetColor = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) NativeLibrary.GetExport(handle, "Checkpoint_GetColor");
-            Checkpoint_GetColShapeType = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Checkpoint_GetColShapeType");
-            Checkpoint_GetHeight = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Checkpoint_GetHeight");
-            Checkpoint_GetNextPosition = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Checkpoint_GetNextPosition");
-            Checkpoint_GetRadius = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Checkpoint_GetRadius");
-            Checkpoint_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Checkpoint_GetWorldObject");
-            Checkpoint_IsEntityIn = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Checkpoint_IsEntityIn");
-            Checkpoint_IsPlayersOnly = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Checkpoint_IsPlayersOnly");
-            Checkpoint_SetCheckpointType = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetCheckpointType");
-            Checkpoint_SetColor = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetColor");
-            Checkpoint_SetHeight = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetHeight");
-            Checkpoint_SetNextPosition = (delegate* unmanaged[Cdecl]<nint, Vector3, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetNextPosition");
-            Checkpoint_SetPlayersOnly = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetPlayersOnly");
-            Checkpoint_SetRadius = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetRadius");
             ColShape_GetColShapeType = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "ColShape_GetColShapeType");
-            ColShape_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "ColShape_GetWorldObject");
-            ColShape_IsEntityIn = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "ColShape_IsEntityIn");
             ColShape_IsPlayersOnly = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "ColShape_IsPlayersOnly");
             ColShape_SetPlayersOnly = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "ColShape_SetPlayersOnly");
             ConnectionInfo_Accept = (delegate* unmanaged[Cdecl]<IntPtr, void>) NativeLibrary.GetExport(handle, "ConnectionInfo_Accept");
@@ -775,8 +720,6 @@ namespace AltV.Net.CApi.Libraries
             Core_DestroyColShape = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_DestroyColShape");
             Core_DestroyVehicle = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_DestroyVehicle");
             Core_DestroyVoiceChannel = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_DestroyVoiceChannel");
-            Core_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_FileExists");
-            Core_FileRead = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_FileRead");
             Core_GetNetTime = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Core_GetNetTime");
             Core_GetRootDirectory = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetRootDirectory");
             Core_GetVehicleModelInfo = (delegate* unmanaged[Cdecl]<nint, uint, nint>) NativeLibrary.GetExport(handle, "Core_GetVehicleModelInfo");

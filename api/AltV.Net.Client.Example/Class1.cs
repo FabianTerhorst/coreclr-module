@@ -1,13 +1,21 @@
-﻿using AltV.Net.Data;
+﻿using AltV.Net.Client.Elements.Interfaces;
+using AltV.Net.Data;
 
 namespace AltV.Net.Client.Example
 {
     public class Main : Resource
     {
         private bool drawNametags = false;
+        private IWebView webView;
         public override void OnStart()
         {
             Alt.LogInfo("Client Started!");
+            webView = Alt.CreateWebView("http://resource/client/html/index.html");
+            
+            webView.On("test2", () =>
+            {
+                Alt.LogInfo("[C#]test2 received");
+            });
 
             Alt.OnTick += () =>
             {
@@ -20,9 +28,91 @@ namespace AltV.Net.Client.Example
                 {
                     case ConsoleKey.X:
                         drawNametags = !drawNametags;
+                        webView.Emit("test");
+                        break;
+                    case ConsoleKey.M:
+                        Alt.Log($"HasLocalMeta Test3: {Alt.HasLocalMetaData("test3").ToString()}");
+                        Alt.Log($"HasLocalMeta Test: {Alt.HasLocalMetaData("test").ToString()}");
+                        Alt.GetLocalMetaData<string>("test", out var meta);
+                        Alt.Log($"GetLocalMeta Test: {meta}");
                         break;
                 }
             };
+            
+            Alt.OnGlobalMetaChange += (key, value, oldValue) =>
+            {
+                Alt.Log($"{key} changed from {oldValue.ToString()} to {value.ToString()}");
+            };
+            
+            Alt.OnGlobalSyncedMetaChange += (key, value, oldValue) =>
+            {
+                Alt.Log($"SYNCED: {key} changed from {oldValue.ToString()} to {value.ToString()}");
+            };
+
+            Alt.OnConnectionComplete += () =>
+            {
+                Alt.Log("Connected!");
+            };
+
+            Alt.OnPlayerChangeVehicleSeat += (vehicle, seat, oldSeat) =>
+            {
+                Alt.Log($"Changed seat from {oldSeat} to {seat} in {vehicle.Id}");
+            };
+            
+            Alt.OnPlayerLeaveVehicle += (vehicle, seat) =>
+            {
+                Alt.Log($"Left seat {seat} in {vehicle.Id}");
+            }; 
+            
+            Alt.OnLocalMetaChange += (key, value, oldValue) =>
+            {
+                Alt.Log($"LOCAL META: {key} changed from {oldValue.ToString()} to {value.ToString()}");
+            };
+            
+            Alt.OnNetOwnerChange += (entity, newOwner, oldOwner) =>
+            {
+                if (oldOwner == null)
+                {
+                    Alt.LogInfo("Old owner is null");
+                }
+                if (newOwner == null)
+                {
+                    Alt.LogInfo("New owner is null");
+                }
+                Alt.Log($"Owner changed from {oldOwner?.Id} to {newOwner?.Id} in {entity.Id}");
+                Alt.Log($"Netowner changed for {entity.Id}");
+            };
+            
+            Alt.OnRemoveEntity += (entity) =>
+            {
+                Alt.Log($"{entity.Id} removed");
+            };
+            
+            Alt.OnStreamSyncedMetaChange += (entity, key, value, oldValue) =>
+            {
+                Alt.Log($"STREAM SYNCED META: {key} changed from {oldValue.ToString()} to {value.ToString()}");
+            };
+            
+            Alt.OnSyncedMetaChange += (entity, key, value, oldValue) =>
+            {
+                Alt.Log($"SYNCED META: {key} changed from {oldValue.ToString()} to {value.ToString()}");
+            };
+            
+            Alt.OnTaskChange += (task, newTask) =>
+            {
+                Alt.Log($"{task} changed to {newTask}");
+            };
+            
+            Alt.OnWindowFocusChange += (focused) =>
+            {
+                Alt.Log($"Window focus changed to {focused}");
+            };
+            
+            Alt.OnWindowResolutionChange += (old, @new) =>
+            {
+                Alt.Log($"Window resolution changed from {old.X}x{old.Y} to {@new.X}x{@new.Y}");
+            };
+
         }
 
         public override void OnStop()

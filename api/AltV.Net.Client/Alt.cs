@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using AltV.Net.Client.Elements;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Entities;
@@ -45,16 +46,34 @@ namespace AltV.Net.Client
 
         public static string Branch => Core.Branch;
         public static string Version => Core.Version;
+        public static string SdkVersion => Core.SdkVersion;
+        public static string CApiVersion => Core.CApiVersion;
         public static bool IsDebug => Core.IsDebug;
 
         public static IReadOnlyCollection<IPlayer> GetAllPlayers() => Core.PlayerPool.GetAllEntities();
         public static IReadOnlyCollection<IVehicle> GetAllVehicles() => Core.VehiclePool.GetAllEntities();
         public static IReadOnlyCollection<IEntity> GetAllEntities() => GetAllPlayers().Concat<IEntity>(GetAllVehicles()).ToList();
 
-        public static void ShowCursor(bool state) => Core.ShowCursor(state);
-
         public static void EmitServer(string eventName, params object[] args) => Core.TriggerServerEvent(eventName, args);
-        public static Vector2 WorldToScreen(Vector3 position) => Core.WorldToScreen(position);
-        public static void LoadRmlFont(string path, string name, bool italic = false, bool bold = false) => Core.LoadRmlFont(path, name, italic, bold);
+        public static void EmitClient(string eventName, params object[] args) => Core.TriggerLocalEvent(eventName, args);
+        
+        public static bool HasResource(string name) => Core.HasResource(name);
+        public static INativeResource GetResource(string name) => Core.GetResource(name);
+        public static INativeResource[] GetAllResources() => Core.GetAllResources();
+
+        public static uint SetTimeout(Action action, uint duration, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0) => Core.SetTimeout(action, duration, filePath, lineNumber);
+        public static uint SetInterval(Action action, uint duration, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0) => Core.SetInterval(action, duration, filePath, lineNumber);
+        public static uint NextTick(Action action, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0) => Core.NextTick(action, filePath, lineNumber);
+        public static uint EveryTick(Action action, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0) => Core.EveryTick(action, filePath, lineNumber);
+        
+        public static void ClearTimer(uint id) => Core.ClearTimer(id);
+        public static void ClearTimeout(uint id) => ClearTimer(id);
+        public static void ClearInterval(uint id) => ClearTimer(id);
+        public static void ClearNextTick(uint id) => ClearTimer(id);
+        public static void ClearEveryTick(uint id) => ClearTimer(id);
+        
+        public static bool FileExists(string path) => Core.FileExists(path);
+        public static string ReadFile(string path) => Core.FileRead(path);
+        public static byte[] ReadFileBinary(string path) => Core.FileReadBinary(path);
     }
 }

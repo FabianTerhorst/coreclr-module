@@ -1,8 +1,8 @@
 #include "checkpoint.h"
 
-#ifdef ALT_SERVER_API
-alt::IWorldObject* Checkpoint_GetWorldObject(alt::ICheckpoint* checkpoint) {
-    return dynamic_cast<alt::IWorldObject*>(checkpoint);
+
+alt::IColShape* Checkpoint_GetColShape(alt::ICheckpoint* checkpoint) {
+    return dynamic_cast<alt::IColShape*>(checkpoint);
 }
 
 uint8_t Checkpoint_GetCheckpointType(alt::ICheckpoint* checkpoint) {
@@ -10,7 +10,7 @@ uint8_t Checkpoint_GetCheckpointType(alt::ICheckpoint* checkpoint) {
 }
 
 void Checkpoint_SetCheckpointType(alt::ICheckpoint* checkpoint, uint8_t type) {
-   checkpoint->SetCheckpointType(type);
+    checkpoint->SetCheckpointType(type);
 }
 
 float Checkpoint_GetHeight(alt::ICheckpoint* checkpoint) {
@@ -46,34 +46,13 @@ void Checkpoint_SetColor(alt::ICheckpoint* checkpoint, rgba_t color) {
     checkpoint->SetColor(newColor);
 }
 
-uint8_t Checkpoint_IsEntityIn(alt::ICheckpoint* checkpoint, alt::IEntity* entity) {
-    return checkpoint->IsEntityIn(entity);
-}
-
-uint8_t Checkpoint_GetColShapeType(alt::ICheckpoint* checkpoint) {
-    return (uint8_t) checkpoint->GetColshapeType();
-}
-
-void Checkpoint_SetPlayersOnly(alt::ICheckpoint* checkpoint, uint8_t state) {
-    checkpoint->SetPlayersOnly(state);
-}
-
-uint8_t Checkpoint_IsPlayersOnly(alt::ICheckpoint* checkpoint) {
-    return checkpoint->IsPlayersOnly();
-}
-
-void Checkpoint_GetNextPosition(alt::ICheckpoint* checkpoint, position_t &pos) {
+void Checkpoint_GetNextPosition(alt::ICheckpoint* checkpoint, vector3_t &pos) {
     auto position = checkpoint->GetNextPosition();
     pos.x = position.x;
     pos.y = position.y;
     pos.z = position.z;
 }
 
-void Checkpoint_SetNextPosition(alt::ICheckpoint* checkpoint, position_t pos) {
-    alt::Position position;
-    position.x = pos.x;
-    position.y = pos.y;
-    position.z = pos.z;
-    checkpoint->SetNextPosition(position);
+void Checkpoint_SetNextPosition(alt::ICheckpoint* checkpoint, vector3_t pos) {
+    checkpoint->SetNextPosition({ pos.x, pos.y, pos.z });
 }
-#endif

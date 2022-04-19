@@ -32,7 +32,43 @@ namespace AltV.Net.Shared
         public abstract ISharedNativeResource Resource { get; }
         public abstract IReadOnlyEntityPool<ISharedPlayer> PlayerPool { get; }
         public abstract IReadOnlyEntityPool<ISharedVehicle> VehiclePool { get; }
+        public abstract IReadOnlyBaseObjectPool<ISharedBlip> BlipPool { get; }
+        public abstract IReadOnlyBaseObjectPool<ISharedCheckpoint> CheckpointPool { get; }
         public abstract IReadOnlyBaseBaseObjectPool BaseBaseObjectPool { get; }
+
+        private string? sdkVersion;
+        public string SdkVersion
+        {
+            get
+            {
+                unsafe
+                {
+                    if (sdkVersion != null) return sdkVersion;
+                    var size = 0;
+                    sdkVersion = PtrToStringUtf8AndFree(
+                        Library.Shared.GetSDKVersion(&size), size);
+
+                    return sdkVersion;
+                }
+            }
+        }
+
+        private string? cApiVersion;
+        public string CApiVersion
+        {
+            get
+            {
+                unsafe
+                {
+                    if (cApiVersion != null) return cApiVersion;
+                    var size = 0;
+                    cApiVersion = PtrToStringUtf8AndFree(
+                        Library.Shared.GetCApiVersion(&size), size);
+
+                    return cApiVersion;
+                }
+            }
+        }
 
         private string? version;
         public string Version
@@ -789,5 +825,69 @@ namespace AltV.Net.Shared
             }
         }
         #endregion
+                
+        #region TriggerLocalEvent
+        public void TriggerLocalEvent(string eventName, MValueConst[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerLocalEvent(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        public void TriggerLocalEvent(IntPtr eventNamePtr, MValueConst[] args)
+        {
+            var size = args.Length;
+            var mValuePointers = new IntPtr[size];
+            for (var i = 0; i < size; i++)
+            {
+                mValuePointers[i] = args[i].nativePointer;
+            }
+
+            TriggerLocalEvent(eventNamePtr, mValuePointers);
+        }
+
+        public void TriggerLocalEvent(string eventName, IntPtr[] args)
+        {
+            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
+            TriggerLocalEvent(eventNamePtr, args);
+            Marshal.FreeHGlobal(eventNamePtr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void TriggerLocalEvent(IntPtr eventNamePtr, IntPtr[] args)
+        {
+            unsafe
+            {
+                Library.Shared.Core_TriggerLocalEvent(NativePointer, eventNamePtr, args, args.Length);
+            }
+        }
+
+        public void TriggerLocalEvent(IntPtr eventNamePtr, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerLocalEvent(eventNamePtr, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+
+        public void TriggerLocalEvent(string eventName, params object[] args)
+        {
+            if (args == null) throw new ArgumentException("Arguments array should not be null.");
+            var size = args.Length;
+            var mValues = new MValueConst[size];
+            CreateMValues(mValues, args);
+            TriggerLocalEvent(eventName, mValues);
+            for (var i = 0; i < size; i++)
+            {
+                mValues[i].Dispose();
+            }
+        }
+        #endregion
+
     }
 }

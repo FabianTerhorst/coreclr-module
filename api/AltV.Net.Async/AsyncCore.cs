@@ -11,7 +11,6 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Refs;
-using AltV.Net.Events;
 using AltV.Net.Types;
 
 namespace AltV.Net.Async

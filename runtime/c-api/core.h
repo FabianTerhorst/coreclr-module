@@ -70,16 +70,19 @@ EXPORT_SHARED uint8_t Core_HasMetaData(alt::ICore* core, const char* key);
 EXPORT_SHARED void Core_DeleteMetaData(alt::ICore* core, const char* key);
 EXPORT_SHARED alt::MValueConst* Core_GetSyncedMetaData(alt::ICore* core, const char* key);
 EXPORT_SHARED uint8_t Core_HasSyncedMetaData(alt::ICore* core, const char* key);
+EXPORT_SHARED void Core_TriggerLocalEvent(alt::ICore* core, const char* event, alt::MValueConst* args[], int size);
+EXPORT_SHARED uint8_t Core_FileExists(alt::ICore* server, const char* path);
+EXPORT_SHARED const char* Core_FileRead(alt::ICore* server, const char* path, int32_t& size);
 
 EXPORT_SERVER uint8_t Core_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb);
-EXPORT_SERVER uint8_t Core_FileExists(alt::ICore* server, const char* path);
-EXPORT_SERVER const char* Core_FileRead(alt::ICore* server, const char* path, int32_t& size);
 EXPORT_SERVER void Core_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size);
 EXPORT_SERVER void Core_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* ev, alt::MValueConst* args[], int size);
 EXPORT_SERVER void Core_TriggerClientEventForAll(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size);
 EXPORT_SERVER void Core_TriggerClientEventForSome(alt::ICore* server, alt::IPlayer* targets[], int targetsSize, const char* ev, alt::MValueConst* args[], int argsSize);
 EXPORT_SERVER alt::IVehicle* Core_CreateVehicle(alt::ICore* server, uint32_t model, position_t pos, rotation_t rot, uint16_t &id);
+#ifdef ALT_SERVER_API
 EXPORT_SERVER alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, position_t pos, float radius, float height, rgba_t color);
+#endif
 EXPORT_SERVER alt::IBlip* Core_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, position_t pos);
 EXPORT_SERVER alt::IBlip* Core_CreateBlipAttached(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo);
 EXPORT_SERVER ClrVehicleModelInfo* Core_GetVehicleModelInfo(alt::ICore* server, uint32_t hash);
@@ -106,6 +109,9 @@ EXPORT_SERVER uint64_t Core_HashPassword(alt::ICore* core, const char* password)
 EXPORT_SERVER void Core_SetPassword(alt::ICore* core, const char* value);
 EXPORT_SERVER void Core_StopServer(alt::ICore* core);
 
+#ifdef ALT_CLIENT_API
+EXPORT_CLIENT alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color);
+#endif
 EXPORT_CLIENT alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position);
 EXPORT_CLIENT alt::IBlip* Core_Client_CreateRadiusBlip(alt::ICore* core, vector3_t position, float radius);
 EXPORT_CLIENT alt::IBlip* Core_Client_CreateAreaBlip(alt::ICore* core, vector3_t position, float width, float height);
@@ -117,6 +123,7 @@ EXPORT_CLIENT void Core_TriggerWebViewEvent(alt::ICore* core, alt::IWebView* web
 EXPORT_CLIENT void Core_TriggerServerEvent(alt::ICore* core, const char* event, alt::MValueConst* args[], int size);
 
 EXPORT_CLIENT void Core_ShowCursor(alt::ICore* core, alt::IResource* resource, bool state);
+EXPORT_CLIENT uint8_t Core_IsCursorVisible(alt::ICore* core, alt::IResource* resource);
 
 #ifdef ALT_CLIENT_API
 EXPORT_CLIENT ClrDiscordUser* Core_GetDiscordUser(alt::ICore* core);
@@ -225,6 +232,18 @@ EXPORT_CLIENT const char* Core_GetHeadshotBase64(alt::ICore* core, uint8_t id, i
 typedef void (* ScreenshotDelegate_t)(const char* string);
 EXPORT_CLIENT uint8_t Core_TakeScreenshot(alt::ICore* core, /** ClientEvents.ScreenshotResultModuleDelegate */ ScreenshotDelegate_t delegate);
 EXPORT_CLIENT uint8_t Core_TakeScreenshotGameOnly(alt::ICore* core, /** ClientEvents.ScreenshotResultModuleDelegate */ ScreenshotDelegate_t delegate);
+
+EXPORT_CLIENT alt::IMapData* Core_GetMapZoomDataById(alt::ICore* core, uint32_t id);
+EXPORT_CLIENT alt::IMapData* Core_GetMapZoomDataByAlias(alt::ICore* core, const char* alias, uint32_t& id);
+EXPORT_CLIENT void Core_ResetAllMapZoomData(alt::ICore* core);
+EXPORT_CLIENT void Core_ResetMapZoomData(alt::ICore* core, uint32_t id);
+
+EXPORT_CLIENT alt::IHttpClient* Core_CreateHttpClient(alt::ICore* core, alt::IResource* resource);
+EXPORT_CLIENT alt::IWebSocketClient* Core_CreateWebsocketClient(alt::ICore* core, alt::IResource* resource, const char* url);
+EXPORT_CLIENT alt::IAudio* Core_CreateAudio(alt::ICore* core, alt::IResource* resource, const char* source, float volume, uint32_t category, uint8_t frontend);
+
+EXPORT_CLIENT uint8_t Core_HasLocalMeta(alt::ICore* core, const char* key);
+EXPORT_CLIENT alt::MValueConst* Core_GetLocalMeta(alt::ICore* core, const char* key);
 
 #ifdef __cplusplus
 }

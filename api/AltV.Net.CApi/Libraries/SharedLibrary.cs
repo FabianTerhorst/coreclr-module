@@ -11,6 +11,7 @@ namespace AltV.Net.CApi.Libraries
     public unsafe interface ISharedLibrary
     {
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_AddRef { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_AddRefIfExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> BaseObject_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_GetType { get; }
@@ -83,6 +84,20 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetShrinked { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Blip_SetSprite { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetTickVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_GetCheckpointType { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Checkpoint_GetColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Checkpoint_GetColShape { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Checkpoint_GetHeight { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Checkpoint_GetNextPosition { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Checkpoint_GetRadius { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Checkpoint_SetCheckpointType { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba, void> Checkpoint_SetColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetHeight { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, void> Checkpoint_SetNextPosition { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetRadius { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> ColShape_GetWorldObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> ColShape_IsEntityIn { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, byte> ColShape_IsPointIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, nint> Core_CreateMValueBool { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong, nint, nint> Core_CreateMValueByteArray { get; }
@@ -99,6 +114,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_CreateMValueVector3 { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_FileExists { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetAllResources { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
@@ -119,6 +136,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogWarning { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerLocalEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Entity_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetNetOwner { get; }
@@ -131,15 +149,21 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeMValueConstArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeResourceArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> FreeStringArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeUInt32Array { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeUInt8Array { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeVoidPointerArray { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetBranchStatic { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetCApiVersion { get; }
+        public delegate* unmanaged[Cdecl]<int*, nint> GetSDKVersion { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetVersionStatic { get; }
         public delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint> Invoker_Create { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Invoker_Destroy { get; }
+        public delegate* unmanaged[Cdecl]<byte> IsDebugStatic { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_AddRef { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], ulong, nint> MValueConst_CallFunction { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_Delete { get; }
@@ -209,6 +233,7 @@ namespace AltV.Net.CApi.Libraries
     public unsafe class SharedLibrary : ISharedLibrary
     {
         public delegate* unmanaged[Cdecl]<nint, void> BaseObject_AddRef { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_AddRefIfExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> BaseObject_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> BaseObject_GetMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> BaseObject_GetType { get; }
@@ -281,6 +306,20 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetShrinked { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Blip_SetSprite { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Blip_SetTickVisible { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Checkpoint_GetCheckpointType { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba*, void> Checkpoint_GetColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Checkpoint_GetColShape { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Checkpoint_GetHeight { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3*, void> Checkpoint_GetNextPosition { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Checkpoint_GetRadius { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Checkpoint_SetCheckpointType { get; }
+        public delegate* unmanaged[Cdecl]<nint, Rgba, void> Checkpoint_SetColor { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetHeight { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, void> Checkpoint_SetNextPosition { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Checkpoint_SetRadius { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> ColShape_GetWorldObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> ColShape_IsEntityIn { get; }
+        public delegate* unmanaged[Cdecl]<nint, Vector3, byte> ColShape_IsPointIn { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateMValueBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, nint> Core_CreateMValueBool { get; }
         public delegate* unmanaged[Cdecl]<nint, ulong, nint, nint> Core_CreateMValueByteArray { get; }
@@ -297,6 +336,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_CreateMValueVector3 { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DeleteMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_DestroyBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_FileExists { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetAllResources { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
@@ -317,6 +358,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogInfo { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_LogWarning { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> Core_SetMetaData { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void> Core_TriggerLocalEvent { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Entity_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Entity_GetModel { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> Entity_GetNetOwner { get; }
@@ -329,15 +371,21 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasStreamSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Entity_HasSyncedMetaData { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeCharArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeMValueConstArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeResourceArray { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeString { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, void> FreeStringArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeUInt32Array { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeUInt8Array { get; }
         public delegate* unmanaged[Cdecl]<UIntArray*, void> FreeUIntArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> FreeVoidPointerArray { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetBranchStatic { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetCApiVersion { get; }
+        public delegate* unmanaged[Cdecl]<int*, nint> GetSDKVersion { get; }
         public delegate* unmanaged[Cdecl]<int*, nint> GetVersionStatic { get; }
         public delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint> Invoker_Create { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Invoker_Destroy { get; }
+        public delegate* unmanaged[Cdecl]<byte> IsDebugStatic { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_AddRef { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], ulong, nint> MValueConst_CallFunction { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_Delete { get; }
@@ -407,6 +455,7 @@ namespace AltV.Net.CApi.Libraries
             const DllImportSearchPath dllImportSearchPath = DllImportSearchPath.LegacyBehavior | DllImportSearchPath.AssemblyDirectory | DllImportSearchPath.SafeDirectories | DllImportSearchPath.System32 | DllImportSearchPath.UserDirectories | DllImportSearchPath.ApplicationDirectory | DllImportSearchPath.UseDllDirectoryForDependencies;
             var handle = NativeLibrary.Load(dllName, Assembly.GetExecutingAssembly(), dllImportSearchPath);
             BaseObject_AddRef = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "BaseObject_AddRef");
+            BaseObject_AddRefIfExists = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "BaseObject_AddRefIfExists");
             BaseObject_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "BaseObject_DeleteMetaData");
             BaseObject_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "BaseObject_GetMetaData");
             BaseObject_GetType = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "BaseObject_GetType");
@@ -479,6 +528,20 @@ namespace AltV.Net.CApi.Libraries
             Blip_SetShrinked = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetShrinked");
             Blip_SetSprite = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Blip_SetSprite");
             Blip_SetTickVisible = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Blip_SetTickVisible");
+            Checkpoint_GetCheckpointType = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Checkpoint_GetCheckpointType");
+            Checkpoint_GetColor = (delegate* unmanaged[Cdecl]<nint, Rgba*, void>) NativeLibrary.GetExport(handle, "Checkpoint_GetColor");
+            Checkpoint_GetColShape = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Checkpoint_GetColShape");
+            Checkpoint_GetHeight = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Checkpoint_GetHeight");
+            Checkpoint_GetNextPosition = (delegate* unmanaged[Cdecl]<nint, Vector3*, void>) NativeLibrary.GetExport(handle, "Checkpoint_GetNextPosition");
+            Checkpoint_GetRadius = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Checkpoint_GetRadius");
+            Checkpoint_SetCheckpointType = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetCheckpointType");
+            Checkpoint_SetColor = (delegate* unmanaged[Cdecl]<nint, Rgba, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetColor");
+            Checkpoint_SetHeight = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetHeight");
+            Checkpoint_SetNextPosition = (delegate* unmanaged[Cdecl]<nint, Vector3, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetNextPosition");
+            Checkpoint_SetRadius = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Checkpoint_SetRadius");
+            ColShape_GetWorldObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "ColShape_GetWorldObject");
+            ColShape_IsEntityIn = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "ColShape_IsEntityIn");
+            ColShape_IsPointIn = (delegate* unmanaged[Cdecl]<nint, Vector3, byte>) NativeLibrary.GetExport(handle, "ColShape_IsPointIn");
             Core_CreateMValueBaseObject = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueBaseObject");
             Core_CreateMValueBool = (delegate* unmanaged[Cdecl]<nint, byte, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueBool");
             Core_CreateMValueByteArray = (delegate* unmanaged[Cdecl]<nint, ulong, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueByteArray");
@@ -495,6 +558,8 @@ namespace AltV.Net.CApi.Libraries
             Core_CreateMValueVector3 = (delegate* unmanaged[Cdecl]<nint, Vector3, nint>) NativeLibrary.GetExport(handle, "Core_CreateMValueVector3");
             Core_DeleteMetaData = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_DeleteMetaData");
             Core_DestroyBaseObject = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_DestroyBaseObject");
+            Core_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_FileExists");
+            Core_FileRead = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_FileRead");
             Core_GetAllResources = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) NativeLibrary.GetExport(handle, "Core_GetAllResources");
             Core_GetBranch = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetBranch");
             Core_GetEntityById = (delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint>) NativeLibrary.GetExport(handle, "Core_GetEntityById");
@@ -515,6 +580,7 @@ namespace AltV.Net.CApi.Libraries
             Core_LogInfo = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_LogInfo");
             Core_LogWarning = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_LogWarning");
             Core_SetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "Core_SetMetaData");
+            Core_TriggerLocalEvent = (delegate* unmanaged[Cdecl]<nint, nint, nint[], int, void>) NativeLibrary.GetExport(handle, "Core_TriggerLocalEvent");
             Entity_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Entity_GetID");
             Entity_GetModel = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Entity_GetModel");
             Entity_GetNetOwner = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Entity_GetNetOwner");
@@ -527,15 +593,21 @@ namespace AltV.Net.CApi.Libraries
             Entity_HasStreamSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Entity_HasStreamSyncedMetaData");
             Entity_HasSyncedMetaData = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Entity_HasSyncedMetaData");
             FreeCharArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeCharArray");
+            FreeMValueConstArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeMValueConstArray");
             FreeResourceArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeResourceArray");
             FreeString = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeString");
             FreeStringArray = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "FreeStringArray");
+            FreeUInt32Array = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeUInt32Array");
+            FreeUInt8Array = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeUInt8Array");
             FreeUIntArray = (delegate* unmanaged[Cdecl]<UIntArray*, void>) NativeLibrary.GetExport(handle, "FreeUIntArray");
+            FreeVoidPointerArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeVoidPointerArray");
             GetBranchStatic = (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetBranchStatic");
             GetCApiVersion = (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetCApiVersion");
+            GetSDKVersion = (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetSDKVersion");
             GetVersionStatic = (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetVersionStatic");
             Invoker_Create = (delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint>) NativeLibrary.GetExport(handle, "Invoker_Create");
             Invoker_Destroy = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Invoker_Destroy");
+            IsDebugStatic = (delegate* unmanaged[Cdecl]<byte>) NativeLibrary.GetExport(handle, "IsDebugStatic");
             MValueConst_AddRef = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "MValueConst_AddRef");
             MValueConst_CallFunction = (delegate* unmanaged[Cdecl]<nint, nint, nint[], ulong, nint>) NativeLibrary.GetExport(handle, "MValueConst_CallFunction");
             MValueConst_Delete = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "MValueConst_Delete");

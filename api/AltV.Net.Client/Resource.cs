@@ -34,9 +34,29 @@ namespace AltV.Net.Client
             return new BlipFactory();
         }
         
+        public virtual IBaseObjectFactory<ICheckpoint> GetCheckpointFactory()
+        {
+            return new CheckpointFactory();
+        }
+        
         public IBaseObjectFactory<IWebView> GetWebViewFactory()
         {
             return new WebViewFactory();
+        }
+        
+        public IBaseObjectFactory<IAudio> GetAudioFactory()
+        {
+            return new AudioFactory();
+        }
+        
+        public IBaseObjectFactory<IHttpClient> GetHttpClientFactory()
+        {
+            return new HttpClientFactory();
+        }
+        
+        public IBaseObjectFactory<IWebSocketClient> GetWebSocketClientFactory()
+        {
+            return new WebSocketClientFactory();
         }
 
         public virtual INativeResourceFactory GetResourceFactory()

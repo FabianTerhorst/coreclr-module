@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using AltV.Net.CApi;
@@ -5,6 +6,8 @@ using AltV.Net.Client.Elements.Entities;
 using AltV.Net.Client.Elements.Factories;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Client.Extensions;
+using AltV.Net.Elements.Entities;
+using Microsoft.VisualBasic;
 
 namespace AltV.Net.Client
 {
@@ -52,8 +55,20 @@ namespace AltV.Net.Client
             var blipPool = new BlipPool(_resource.GetBlipFactory());
             Alt.Log("Blip pool created");
 
+            var checkpointPool = new CheckpointPool(_resource.GetCheckpointFactory());
+            Alt.Log("Checkpoint pool created");
+
+            var audioPool = new AudioPool(_resource.GetAudioFactory());
+            Alt.Log("Audio pool created");
+
+            var httpClientPool = new HttpClientPool(_resource.GetHttpClientFactory());
+            Alt.Log("Http client pool created");
+
+            var webSocketClientPool = new WebSocketClientPool(_resource.GetWebSocketClientFactory());
+            Alt.Log("Http client pool created");
+
             var webViewPool = new WebViewPool(_resource.GetWebViewFactory());
-            Alt.Log("Blip pool created");
+            Alt.Log("Webview pool created");
 
             var rmlDocumentPool = new RmlDocumentPool(new RmlDocumentFactory());
             var rmlElementPool = new RmlElementPool(new RmlElementFactory());
@@ -64,6 +79,7 @@ namespace AltV.Net.Client
 
             var baseBaseObjectPool = new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, webViewPool);
             var baseEntityPool = new BaseEntityPool(playerPool, vehiclePool);
+            var timerPool = new TimerPool();
 
             var natives = _resource.GetNatives(DllName);
             
@@ -74,15 +90,21 @@ namespace AltV.Net.Client
                 playerPool,
                 vehiclePool,
                 blipPool,
+                checkpointPool,
+                audioPool,
+                httpClientPool,
+                webSocketClientPool,
                 webViewPool,
                 rmlDocumentPool,
                 rmlElementPool,
                 baseBaseObjectPool,
                 baseEntityPool,
                 nativeResourcePool,
+                timerPool,
                 logger,
                 natives
             );
+            
             _core = client;
             Alt.CoreImpl = client;
             Alt.Log("Core initialized");
@@ -137,6 +159,7 @@ namespace AltV.Net.Client
 
         public static void OnTick()
         {
+            _core.TimerPool.Tick(_core.Resource.Name);
             _core.OnTick();
         }
 
@@ -165,19 +188,19 @@ namespace AltV.Net.Client
             _core.OnGameEntityDestroy(pointer, type);
         }
 
-        public static void OnResourceError(string name)
+        public static void OnAnyResourceError(string name)
         {
-            _core.OnResourceError(name);
+            _core.OnAnyResourceError(name);
         }
         
-        public static void OnResourceStart(string name)
+        public static void OnAnyResourceStart(string name)
         {
-            _core.OnResourceStart(name);
+            _core.OnAnyResourceStart(name);
         }
         
-        public static void OnResourceStop(string name)
+        public static void OnAnyResourceStop(string name)
         {
-            _core.OnResourceStop(name);
+            _core.OnAnyResourceStop(name);
         }
         
         public static void OnKeyDown(uint key)
@@ -225,12 +248,89 @@ namespace AltV.Net.Client
             _core.OnWebViewEvent(webView, name, args);
         }
         
+        public static void OnRmlElementEvent(IntPtr webView, string name, IntPtr pointer, ulong size)
+        {
+            var args = new IntPtr[size];
+            if (pointer != IntPtr.Zero)
+            {
+                Marshal.Copy(pointer, args, 0, (int) size);
+            }
+
+            _core.OnRmlElementEvent(webView, name, args);
+        }
+        
         public static void OnConsoleCommand(string name,
             [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
             string[] args, int _)
         {
             args ??= Array.Empty<string>();
             _core.OnConsoleCommand(name, args);
+        }
+
+        public static void OnGlobalMetaChange(string key, IntPtr value, IntPtr oldValue)
+        {
+            _core.OnGlobalMetaChange(key, value, oldValue);
+        }
+
+        public static void OnGlobalSyncedMetaChange(string key, IntPtr value, IntPtr oldValue)
+        {
+            _core.OnGlobalSyncedMetaChange(key, value, oldValue);
+        }
+
+        public static void OnConnectionComplete()
+        {
+            _core.OnConnectionComplete();
+        }
+
+        public static void OnPlayerChangeVehicleSeat(IntPtr vehicle, byte oldSeat, byte newSeat)
+        {
+            _core.OnPlayerChangeVehicleSeat(vehicle, oldSeat, newSeat);
+        }
+
+        public static void OnLocalMetaChange(string key, IntPtr value, IntPtr oldValue)
+        {
+            _core.OnLocalMetaChange(key, value, oldValue);
+        }
+        
+        public static void OnStreamSyncedMetaChange(IntPtr target, BaseObjectType type, string key, IntPtr value, IntPtr oldValue)
+        {
+            _core.OnStreamSyncedMetaChange(target, type, key, value, oldValue);
+        }
+        
+        public static void OnSyncedMetaChange(IntPtr target, BaseObjectType type, string key, IntPtr value, IntPtr oldValue)
+        {
+            _core.OnSyncedMetaChange(target, type, key, value, oldValue);
+        }
+
+        public static void OnTaskChange(int oldTask, int newTask)
+        {
+            _core.OnTaskChange(oldTask, newTask);
+        }
+        
+        public static void OnWindowFocusChange(byte state)
+        {
+            _core.OnWindowFocusChange(state);
+        }
+
+        public static void OnWindowResolutionChange(Vector2 oldRes, Vector2 newRes)
+        {
+            _core.OnWindowResolutionChange(oldRes, newRes);
+        }
+
+        public static void OnNetOwnerChange(IntPtr target, BaseObjectType type, IntPtr newOwner, IntPtr oldOwner)
+        {
+            var playerPool = _core.PlayerPool.GetAllEntities().Select(x => x.PlayerNativePointer);
+            _core.OnNetOwnerChange(target, type, newOwner, oldOwner);
+        }
+        
+        public static void OnRemoveEntity(IntPtr target, BaseObjectType type)
+        {
+            _core.OnRemoveEntity(target, type);
+        }
+
+        public static void OnPlayerLeaveVehicle(IntPtr vehicle, byte seat)
+        {
+            _core.OnPlayerLeaveVehicle(vehicle, seat);
         }
     }
 }

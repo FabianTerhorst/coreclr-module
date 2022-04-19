@@ -236,6 +236,14 @@ namespace AltV.Net.Shared.Elements.Entities
             }
         }
 
+        protected void InternalAddRefIfExists()
+        {
+            unsafe
+            {
+                Core.Library.Shared.BaseObject_AddRefIfExists(BaseObjectNativePointer);
+            }
+        }
+
         /// <summary>
         /// Increases the reference count, only works when entity didn't got deleted yet
         /// </summary>

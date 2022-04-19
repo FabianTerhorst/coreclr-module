@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Async.Elements.Entities
 {
@@ -44,14 +46,28 @@ namespace AltV.Net.Async.Elements.Entities
         public AsyncColShape(TColShape colShape, IAsyncContext asyncContext) : base(colShape, asyncContext)
         {
         }
+        
+        public bool IsPointIn(Vector3 point)
+        {
+            lock (BaseObject)
+            {
+                if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
+                return BaseObject.IsPointIn(point);
+            }
+        }
 
-        public bool IsEntityIn(IEntity entity)
+        public bool IsEntityIn(ISharedEntity entity)
         {
             lock (BaseObject)
             {
                 if (!AsyncContext.CheckIfExistsNullable(BaseObject)) return default;
                 return BaseObject.IsEntityIn(entity);
             }
+        }
+
+        public bool IsEntityIn(IEntity entity)
+        {
+            return IsEntityIn((ISharedEntity) entity);
         }
 
         [Obsolete("Use IsEntityIn instead")]

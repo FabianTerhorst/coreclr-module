@@ -9,7 +9,7 @@ public:
     alt::IResource::Impl * CreateImpl(alt::IResource *resource) override;
     void DestroyImpl(alt::IResource::Impl *impl) override;
 
-    CoreCLR clr;
+    CoreClr clr;
 
 private:
     alt::ICore* core;

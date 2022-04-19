@@ -10,6 +10,8 @@ namespace AltV.Net.Shared
     {
         IReadOnlyEntityPool<ISharedPlayer> PlayerPool { get; }
         IReadOnlyEntityPool<ISharedVehicle> VehiclePool { get; }
+        IReadOnlyBaseObjectPool<ISharedBlip> BlipPool { get; }
+        IReadOnlyBaseObjectPool<ISharedCheckpoint> CheckpointPool { get; }
         IReadOnlyBaseBaseObjectPool BaseBaseObjectPool { get; }
         
         ISharedNativeResource Resource { get; }
@@ -17,6 +19,10 @@ namespace AltV.Net.Shared
         ISharedEntity GetEntityById(ushort id);
 
         IntPtr NativePointer { get; }
+
+        string SdkVersion { get; }
+
+        string CApiVersion { get; }
 
         string Version { get; }
         
@@ -112,5 +118,19 @@ namespace AltV.Net.Shared
         bool HasSyncedMetaData(string key);
 
         void GetSyncedMetaData(string key, out MValueConst value);
+        #region TriggerLocalEvent
+
+        void TriggerLocalEvent(string eventName, MValueConst[] args);
+
+        void TriggerLocalEvent(IntPtr eventNamePtr, MValueConst[] args);
+
+        void TriggerLocalEvent(string eventName, IntPtr[] args);
+
+        void TriggerLocalEvent(IntPtr eventNamePtr, IntPtr[] args);
+
+        void TriggerLocalEvent(IntPtr eventNamePtr, params object[] args);
+
+        void TriggerLocalEvent(string eventName, params object[] args);
+        #endregion
     }
 }

@@ -71,7 +71,7 @@ namespace AltV.Net.Client.Elements.Pools
             return Create(core, entityPointer);
         }
 
-        public ICollection<TBaseObject> GetAllObjects()
+        public IReadOnlyCollection<TBaseObject> GetAllObjects()
         {
             return entities.Values;
         }

@@ -7,8 +7,9 @@
 
 namespace AltV.Net.Shared
 {
-    internal static class AltShared
+    public static class AltShared
     {
         public static ISharedCore Core { get; set; }
+        public static void EmitLocal(string eventName, params object[] args) => Core.TriggerLocalEvent(eventName, args);
     }
 }

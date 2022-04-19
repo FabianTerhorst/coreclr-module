@@ -225,10 +225,12 @@ uint8_t Core_HasSyncedMetaData(alt::ICore* core, const char* key) {
     return core->HasSyncedMetaData(key);
 }
 
-
-#ifdef ALT_SERVER_API
-uint8_t Core_SubscribeCommand(alt::ICore* core, const char* cmd, alt::CommandCallback cb) {
-    return core->SubscribeCommand(cmd, cb);
+void Core_TriggerLocalEvent(alt::ICore* core, const char* event, alt::MValueConst* args[], int size) {
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        ToMValueArg(mValues, core, args[i], i);
+    }
+    core->TriggerLocalEvent(event, mValues);
 }
 
 uint8_t Core_FileExists(alt::ICore* core, const char* path) {
@@ -237,6 +239,11 @@ uint8_t Core_FileExists(alt::ICore* core, const char* path) {
 
 const char* Core_FileRead(alt::ICore* core, const char* path, int32_t& size) {
     return AllocateString(core->FileRead(path), size);
+}
+
+#ifdef ALT_SERVER_API
+uint8_t Core_SubscribeCommand(alt::ICore* core, const char* cmd, alt::CommandCallback cb) {
+    return core->SubscribeCommand(cmd, cb);
 }
 
 void Core_TriggerServerEvent(alt::ICore* core, const char* ev, alt::MValueConst* args[], int size) {
@@ -502,6 +509,23 @@ alt::IRmlDocument* Core_CreateRmlDocument(alt::ICore* core, alt::IResource* reso
     return core->CreateDocument(url, resource->GetMain(), resource).Get();
 }
 
+alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+    alt::Position nextPosition;
+    nextPosition.x = nextPos.x;
+    nextPosition.y = nextPos.y;
+    nextPosition.z = nextPos.z;
+    alt::RGBA rgba;
+    rgba.r = color.r;
+    rgba.g = color.g;
+    rgba.b = color.b;
+    rgba.a = color.a;
+    return core->CreateCheckpoint(type, position, nextPosition, radius, height, { (uint8_t) color.r, (uint8_t) color.g, (uint8_t) color.b, (uint8_t) color.a }).Get();
+}
+
 
 void Core_TriggerWebViewEvent(alt::ICore* core, alt::IWebView* webview, const char* event, alt::MValueConst* args[], int size) {
     alt::MValueArgs mValues = alt::MValueArgs(size);
@@ -524,6 +548,10 @@ void Core_ShowCursor(alt::ICore* core, alt::IResource* resource, bool state) {
     {
         core->LogWarning("Cursor state can't go < 0");
     }
+}
+
+uint8_t Core_IsCursorVisible(alt::ICore* core, alt::IResource* resource) {
+    return resource->CursorVisible();
 }
 
 
@@ -899,4 +927,46 @@ uint8_t Core_TakeScreenshotGameOnly(alt::ICore* core, ScreenshotDelegate_t deleg
         delegate(str.c_str());
     });
 }
+
+alt::IMapData* Core_GetMapZoomDataById(alt::ICore* core, uint32_t id) {
+    return core->GetMapData(id).Get();
+}
+
+alt::IMapData* Core_GetMapZoomDataByAlias(alt::ICore* core, const char* alias, uint32_t& id) {
+    auto data = core->GetMapData(alias);
+    if (data.IsEmpty() || data.Get() == nullptr) return nullptr;
+
+    id = core->GetMapDataIDFromAlias(alias);
+    return data.Get();
+}
+
+void Core_ResetAllMapZoomData(alt::ICore* core) {
+    core->ResetAllMapData();
+}
+
+void Core_ResetMapZoomData(alt::ICore* core, uint32_t id) {
+    core->ResetMapData(id);
+}
+
+alt::IHttpClient* Core_CreateHttpClient(alt::ICore* core, alt::IResource* resource) {
+    return core->CreateHttpClient(resource).Get();
+}
+
+alt::IWebSocketClient* Core_CreateWebsocketClient(alt::ICore* core, alt::IResource* resource, const char* url) {
+    return core->CreateWebSocketClient(url, resource).Get();
+}
+
+alt::IAudio* Core_CreateAudio(alt::ICore* core, alt::IResource* resource, const char* source, float volume, uint32_t category, uint8_t frontend) {
+    return core->CreateAudio(source, volume, category, frontend, resource).Get();
+}
+
+uint8_t Core_HasLocalMeta(alt::ICore* core, const char* key) {
+    return core->HasLocalMetaData(key);
+}
+
+alt::MValueConst* Core_GetLocalMeta(alt::ICore* core, const char* key) {
+    return new alt::MValueConst(core->GetLocalMetaData(key));
+}
+
+
 #endif

@@ -1,8 +1,10 @@
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
 using AltV.Net.Client.Elements.Pools;
 using AltV.Net.Data;
+using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared;
 
@@ -15,7 +17,11 @@ namespace AltV.Net.Client
         IBaseEntityPool BaseEntityPool { get; }
         IBaseBaseObjectPool BaseBaseObjectPool { get; }
         IBaseObjectPool<IWebView> WebViewPool { get; }
-        IBaseObjectPool<IBlip> BlipPool { get; }
+        new IBaseObjectPool<IBlip> BlipPool { get; }
+        new IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
+        IBaseObjectPool<IAudio> AudioPool { get; }
+        IBaseObjectPool<IHttpClient> HttpClientPool { get; }
+        IBaseObjectPool<IWebSocketClient> WebSocketClientPool { get; }
         IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
         IBaseObjectPool<IRmlElement> RmlElementPool { get; }
         LocalStorage LocalStorage { get; }
@@ -42,6 +48,8 @@ namespace AltV.Net.Client
         bool RmlControlsEnabled { set; }
         bool VoiceControlsEnabled { set; }
         int MsPerGameMinute { get; set; }
+        INativeResourcePool NativeResourcePool { get; }
+        ITimerPool TimerPool { get; }
         IBlip CreatePointBlip(Position position);
         IBlip CreateRadiusBlip(Position position, float radius);
         IBlip CreateAreaBlip(Position position, int width, int height);
@@ -54,6 +62,7 @@ namespace AltV.Net.Client
         IntPtr CreateAreaBlipPtr(Position position, int width, int height);
         new IEntity GetEntityById(ushort id);
         void ShowCursor(bool state);
+        bool IsCursorVisible { get; }
         void TriggerServerEvent(string eventName, params object[] args);
         IntPtr CreateRmlDocumentPtr(string url);
         IRmlDocument CreateRmlDocument(string url);
@@ -115,5 +124,29 @@ namespace AltV.Net.Client
         string GetHeadshotBase64(byte id);
         Task<string> TakeScreenshot();
         Task<string> TakeScreenshotGameOnly();
+        INativeResource GetResource(string name);
+        bool HasResource(string name);
+        INativeResource[] GetAllResources();
+        uint SetTimeout(Action action, uint duration, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0);
+        uint SetInterval(Action action, uint duration, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0);
+        uint NextTick(Action action, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0);
+        uint EveryTick(Action action, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0);
+        void ClearTimer(uint id);
+        IntPtr CreateCheckpointPtr(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color);
+        ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color);
+        IntPtr CreateAudioPtr(string source, float volume, uint category, bool frontend);
+        IAudio CreateAudio(string source, float volume, uint category, bool frontend);
+        MapZoomData GetMapZoomData(uint id);
+        MapZoomData GetMapZoomData(string alias);
+        void ResetAllMapZoomData();
+        IntPtr CreateHttpClientPtr();
+        IHttpClient CreateHttpClient();
+        IntPtr CreateWebSocketClientPtr(string url);
+        IWebSocketClient CreateWebSocketClient(string url);
+        bool HasLocalMetaData(string key);
+        void GetLocalMetaData<T>(string key, out MValueConst result);
+        bool FileExists(string path);
+        string FileRead(string path);
+        byte[] FileReadBinary(string path);
     }
 }

@@ -26,12 +26,18 @@ namespace AltV.Net.Client
 
         public override IPlayerPool PlayerPool { get; }
         public override IEntityPool<IVehicle> VehiclePool { get; }
-        public IBaseObjectPool<IBlip> BlipPool { get; }
+        public override IBaseObjectPool<IBlip> BlipPool { get; }
+        public override IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
+        public IBaseObjectPool<IAudio> AudioPool { get; }
+        public IBaseObjectPool<IHttpClient> HttpClientPool { get; }
+        public IBaseObjectPool<IWebSocketClient> WebSocketClientPool { get; }
         public IBaseObjectPool<IWebView> WebViewPool { get; }
         public IBaseObjectPool<IRmlDocument> RmlDocumentPool { get; }
         public IBaseObjectPool<IRmlElement> RmlElementPool { get; }
 
         public IBaseEntityPool BaseEntityPool { get; }
+        public INativeResourcePool NativeResourcePool { get; }
+        public ITimerPool TimerPool { get; }
         public override IBaseBaseObjectPool BaseBaseObjectPool { get; }
 
         public override INativeResource Resource { get; }
@@ -50,12 +56,17 @@ namespace AltV.Net.Client
             IPlayerPool playerPool,
             IEntityPool<IVehicle> vehiclePool,
             IBaseObjectPool<IBlip> blipPool,
+            IBaseObjectPool<ICheckpoint> checkpointPool,
+            IBaseObjectPool<IAudio> audioPool,
+            IBaseObjectPool<IHttpClient> httpClientPool,
+            IBaseObjectPool<IWebSocketClient> webSocketClientPool,
             IBaseObjectPool<IWebView> webViewPool,
             IBaseObjectPool<IRmlDocument> rmlDocumentPool,
             IBaseObjectPool<IRmlElement> rmlElementPool,
             IBaseBaseObjectPool baseBaseObjectPool,
             IBaseEntityPool baseEntityPool,
             INativeResourcePool nativeResourcePool,
+            ITimerPool timerPool,
             ILogger logger,
             INatives natives
         ) : base(nativePointer, library)
@@ -65,12 +76,18 @@ namespace AltV.Net.Client
             PlayerPool = playerPool;
             VehiclePool = vehiclePool;
             BlipPool = blipPool;
+            CheckpointPool = checkpointPool;
+            AudioPool = audioPool;
+            HttpClientPool = httpClientPool;
+            WebSocketClientPool = webSocketClientPool;
             WebViewPool = webViewPool;
             RmlDocumentPool = rmlDocumentPool;
             RmlElementPool = rmlElementPool;
             Logger = logger;
             BaseBaseObjectPool = baseBaseObjectPool;
             BaseEntityPool = baseEntityPool;
+            NativeResourcePool = nativeResourcePool;
+            TimerPool = timerPool;
             nativeResourcePool.GetOrCreate(this, resourcePointer, out var resource);
             Resource = resource;
             LocalStorage = new LocalStorage(this, GetLocalStoragePtr());
@@ -154,6 +171,7 @@ namespace AltV.Net.Client
             unsafe
             {
                 var ptr = Library.Client.Core_GetDiscordUser(NativePointer);
+                if (ptr == IntPtr.Zero) return null;
                 var structure = Marshal.PtrToStructure<DiscordUser>(ptr);
                 Library.Client.Core_DeallocDiscordUser(ptr);
                 return structure;
@@ -264,15 +282,73 @@ namespace AltV.Net.Client
             if (ptr == IntPtr.Zero) return null;
             return RmlDocumentPool.Create(this, ptr);
         }
-        #endregion
-        
-        public void ShowCursor(bool state)
+
+        public IntPtr CreateCheckpointPtr(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color)
         {
             unsafe
             {
-                Library.Client.Core_ShowCursor(NativePointer, Resource.NativePointer, state);
+                return Library.Client.Core_CreateCheckpoint(NativePointer, (byte) type, pos, nextPos, radius, height, color);
             }
         }
+        
+        public ICheckpoint CreateCheckpoint(CheckpointType type, Vector3 pos, Vector3 nextPos, float radius, float height, Rgba color)
+        {
+            var ptr = CreateCheckpointPtr(type, pos, nextPos, radius, height, color);
+            if (ptr == IntPtr.Zero) return null;
+            return CheckpointPool.Create(this, ptr);
+        }
+
+        public IntPtr CreateAudioPtr(string source, float volume, uint category, bool frontend)
+        {
+            unsafe
+            {
+                var sourcePtr = MemoryUtils.StringToHGlobalUtf8(source);
+                var ptr = Library.Client.Core_CreateAudio(NativePointer, Resource.NativePointer, sourcePtr, volume, category, (byte) (frontend ? 1 : 0));
+                Marshal.FreeHGlobal(sourcePtr);
+                return ptr;
+            }
+        }
+        
+        public IAudio CreateAudio(string source, float volume, uint category, bool frontend)
+        {
+            var ptr = CreateAudioPtr(source, volume, category, frontend);
+            if (ptr == IntPtr.Zero) return null;
+            return AudioPool.Create(this, ptr);
+        }
+
+        public IntPtr CreateHttpClientPtr()
+        {
+            unsafe
+            {
+                return Library.Client.Core_CreateHttpClient(NativePointer, Resource.NativePointer);
+            }
+        }
+        
+        public IHttpClient CreateHttpClient()
+        {
+            var ptr = CreateHttpClientPtr();
+            if (ptr == IntPtr.Zero) return null;
+            return HttpClientPool.Create(this, ptr);
+        }
+
+        public IntPtr CreateWebSocketClientPtr(string url)
+        {
+            unsafe
+            {
+                var urlPtr = MemoryUtils.StringToHGlobalUtf8(url);
+                var ptr = Library.Client.Core_CreateWebsocketClient(NativePointer, Resource.NativePointer, urlPtr);
+                Marshal.FreeHGlobal(urlPtr);
+                return ptr;
+            }
+        }
+        
+        public IWebSocketClient CreateWebSocketClient(string url)
+        {
+            var ptr = CreateWebSocketClientPtr(url);
+            if (ptr == IntPtr.Zero) return null;
+            return WebSocketClientPool.Create(this, ptr);
+        }
+        #endregion
 
         #region TriggerServerEvent
         public void TriggerServerEvent(string eventName, MValueConst[] args)
@@ -336,16 +412,41 @@ namespace AltV.Net.Client
             }
         }
         #endregion
-        
-        public void LoadRmlFont(string path, string name, bool italic = false, bool bold = false)
+
+        public INativeResource GetResource(string name)
         {
             unsafe
             {
-                var pathPtr = MemoryUtils.StringToHGlobalUtf8(path);
                 var namePtr = MemoryUtils.StringToHGlobalUtf8(name);
-                Library.Client.Core_LoadRmlFont(NativePointer, Resource.NativePointer, pathPtr, namePtr, (byte) (italic ? 1 : 0), (byte) (bold ? 1 : 0));
-                Marshal.FreeHGlobal(pathPtr);
+                var ptr = Library.Shared.Core_GetResource(NativePointer, namePtr);
                 Marshal.FreeHGlobal(namePtr);
+                NativeResourcePool.GetOrCreate(this, ptr, out var resource);
+                return resource;
+            }
+        }
+
+        public bool HasResource(string name)
+        {
+            unsafe
+            {
+                var namePtr = MemoryUtils.StringToHGlobalUtf8(name);
+                var ptr = Library.Shared.Core_GetResource(NativePointer, namePtr);
+                Marshal.FreeHGlobal(namePtr);
+                return ptr != IntPtr.Zero;
+            }
+        }
+
+        public INativeResource[] GetAllResources()
+        {
+            unsafe
+            {
+                uint size = 0;
+                var ptr = Library.Shared.Core_GetAllResources(NativePointer, &size);
+                var data = new IntPtr[size];
+                Marshal.Copy(ptr, data, 0, (int) size);
+                var arr = data.Select(e => NativeResourcePool.GetOrCreate(this, e, out var v) ? v : null).ToArray();
+                Library.Shared.FreeResourceArray(ptr);
+                return arr;
             }
         }
         
@@ -359,6 +460,31 @@ namespace AltV.Net.Client
                 this.Library.Shared.FreeStringArray(ptr, size);
                 return arr;
             }
+        }
+
+        public uint SetTimeout(Action action, uint duration, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
+        {
+            return TimerPool.Add(new ModuleTimer(action, duration, true, filePath, lineNumber));
+        }
+
+        public uint SetInterval(Action action, uint duration, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
+        {
+            return TimerPool.Add(new ModuleTimer(action, duration, false, filePath, lineNumber));
+        }
+
+        public uint NextTick(Action action, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
+        {
+            return TimerPool.Add(new ModuleTimer(action, 0, true, filePath, lineNumber));
+        }
+
+        public uint EveryTick(Action action, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
+        {
+            return TimerPool.Add(new ModuleTimer(action, 0, false, filePath, lineNumber));
+        }
+        
+        public void ClearTimer(uint id)
+        {
+            TimerPool.Remove(id);
         }
     }
 }

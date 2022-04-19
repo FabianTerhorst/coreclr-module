@@ -2,7 +2,6 @@ using System;
 using System.Runtime.Loader;
 using AltV.Net.CApi;
 using AltV.Net.Elements.Entities;
-using AltV.Net.Native;
 
 namespace AltV.Net
 {

@@ -10,6 +10,8 @@ namespace AltV.Net.Client
 
         public static void DeleteMetaData(string key) => Core.DeleteMetaData(key);
         
+        public static bool HasLocalMetaData(string key) => Core.HasLocalMetaData(key);
+
         public static bool GetMetaData(string key, out int result)
         {
             Core.GetMetaData(key, out var mValue);
@@ -143,6 +145,21 @@ namespace AltV.Net.Client
                 result = cast;
             }
 
+            return true;
+        }
+
+        public static bool GetLocalMetaData<T>(string key, out T result)
+        {
+            Core.GetLocalMetaData<T>(key, out var mValue);
+            using (mValue)
+            {
+                if (!(mValue.ToObject() is T cast))
+                {
+                    result = default;
+                    return false;
+                }
+                result = cast;
+            }
             return true;
         }
     }

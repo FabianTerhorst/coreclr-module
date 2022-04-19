@@ -2,6 +2,7 @@
 
 #include <string.h>
 #include "version/version.h"
+#include "../cpp-sdk/version/version.h"
 
 #ifdef __clang__
 #pragma clang diagnostic push
@@ -37,6 +38,18 @@ void FreeCharArray(char charArray[]) {
     delete[] charArray;
 }
 
+void FreeUInt32Array(uint32_t uInt32Array[]) {
+    delete[] uInt32Array;
+}
+
+void FreeUInt8Array(uint8_t uInt8Array[]) {
+    delete[] uInt8Array;
+}
+
+void FreeVoidPointerArray(void* voidPointerArray[]) {
+    delete[] voidPointerArray;
+}
+
 void FreeString(const char* string) {
     delete[] string;
 }
@@ -50,6 +63,10 @@ void FreeResourceArray(alt::IResource** resourceArray) {
     delete[] resourceArray;
 }
 
+void FreeMValueConstArray(alt::MValueConst** mValueConstArray) {
+    delete[] mValueConstArray;
+}
+
 const char* GetVersionStatic(int32_t &size) {
     return AllocateString(alt::ICore::Instance().GetVersion(), size);
 }
@@ -58,8 +75,16 @@ const char* GetBranchStatic(int32_t &size) {
     return AllocateString(alt::ICore::Instance().GetBranch(), size);
 }
 
+uint8_t IsDebugStatic() {
+    return alt::ICore::Instance().IsDebug();
+}
+
 const char* GetCApiVersion(int32_t &size) {
     return AllocateString(CSHARP_VERSION, size);
+}
+
+const char* GetSDKVersion(int32_t &size) {
+    return AllocateString(ALT_SDK_VERSION, size);
 }
 
 #ifdef ALT_CLIENT_API

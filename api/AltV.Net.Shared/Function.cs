@@ -164,7 +164,7 @@ namespace AltV.Net
             var resultObj = @delegate.DynamicInvoke(invokeValues);
             return returnType == FunctionTypes.Void ? null : resultObj;
         }
-        
+
         internal object CallCatching(MValueConst[] values, string exceptionLocation)
         {
             try

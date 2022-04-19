@@ -40,9 +40,9 @@ namespace AltV.Net
         public override IEntityPool<IVehicle> VehiclePool { get; }
         IReadOnlyEntityPool<ISharedVehicle> ISharedCore.VehiclePool => VehiclePool;
 
-        public IBaseObjectPool<IBlip> BlipPool { get; }
+        public override IBaseObjectPool<IBlip> BlipPool { get; }
 
-        public IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
+        public override IBaseObjectPool<ICheckpoint> CheckpointPool { get; }
 
         public IBaseObjectPool<IVoiceChannel> VoiceChannelPool { get; }
 
@@ -153,69 +153,6 @@ namespace AltV.Net
                 Library.Server.Core_StopServer(NativePointer);  
             }
         }
-        
-        #region TriggerServerEvent
-        public void TriggerServerEvent(string eventName, MValueConst[] args)
-        {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
-            TriggerServerEvent(eventNamePtr, args);
-            Marshal.FreeHGlobal(eventNamePtr);
-        }
-
-        public void TriggerServerEvent(IntPtr eventNamePtr, MValueConst[] args)
-        {
-            var size = args.Length;
-            var mValuePointers = new IntPtr[size];
-            for (var i = 0; i < size; i++)
-            {
-                mValuePointers[i] = args[i].nativePointer;
-            }
-
-            TriggerServerEvent(eventNamePtr, mValuePointers);
-        }
-
-        public void TriggerServerEvent(string eventName, IntPtr[] args)
-        {
-            var eventNamePtr = AltNative.StringUtils.StringToHGlobalUtf8(eventName);
-            TriggerServerEvent(eventNamePtr, args);
-            Marshal.FreeHGlobal(eventNamePtr);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void TriggerServerEvent(IntPtr eventNamePtr, IntPtr[] args)
-        {
-            unsafe
-            {
-                Library.Server.Core_TriggerServerEvent(NativePointer, eventNamePtr, args, args.Length);
-            }
-        }
-
-        public void TriggerServerEvent(IntPtr eventNamePtr, params object[] args)
-        {
-            if (args == null) throw new ArgumentException("Arguments array should not be null.");
-            var size = args.Length;
-            var mValues = new MValueConst[size];
-            CreateMValues(mValues, args);
-            TriggerServerEvent(eventNamePtr, mValues);
-            for (var i = 0; i < size; i++)
-            {
-                mValues[i].Dispose();
-            }
-        }
-
-        public void TriggerServerEvent(string eventName, params object[] args)
-        {
-            if (args == null) throw new ArgumentException("Arguments array should not be null.");
-            var size = args.Length;
-            var mValues = new MValueConst[size];
-            CreateMValues(mValues, args);
-            TriggerServerEvent(eventName, mValues);
-            for (var i = 0; i < size; i++)
-            {
-                mValues[i].Dispose();
-            }
-        }
-        #endregion
 
         #region TriggerClientEvent
         public void TriggerClientEvent(IPlayer player, IntPtr eventNamePtr, MValueConst[] args)
@@ -738,29 +675,6 @@ namespace AltV.Net
             }
         }
         #endregion
-
-        public bool FileExists(string path)
-        {
-            unsafe
-            {
-                var valuePtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
-                var result = Library.Server.Core_FileExists(NativePointer, valuePtr);
-                Marshal.FreeHGlobal(valuePtr);
-                return result == 1;
-            }
-        }
-
-        public string FileRead(string path)
-        {
-            unsafe
-            {
-                var pathPtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
-                var size = 0;
-                var result = PtrToStringUtf8AndFree(Library.Server.Core_FileRead(NativePointer, pathPtr, &size), size);
-                Marshal.FreeHGlobal(pathPtr);
-                return result;
-            }
-        }
         
         public void OnScriptsLoaded(IScript[] scripts)
         {
@@ -838,6 +752,43 @@ namespace AltV.Net
         public override void Dispose() {
             base.Dispose();
             assemblyLoadContext.SetTarget(null);
+        }
+        
+        public bool FileExists(string path)
+        {
+            unsafe
+            {
+                var pathPtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
+                var result = Library.Shared.Core_FileExists(NativePointer, pathPtr);
+                Marshal.FreeHGlobal(pathPtr);
+                return result == 1;
+            }
+        }
+
+        public string FileRead(string path)
+        {
+            unsafe
+            {
+                var pathPtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
+                var size = 0;
+                var result = PtrToStringUtf8AndFree(Library.Shared.Core_FileRead(NativePointer, pathPtr, &size), size);
+                Marshal.FreeHGlobal(pathPtr);
+                return result;
+            }
+        }
+
+        public byte[] FileReadBinary(string path)
+        {
+            unsafe
+            {
+                var pathPtr = AltNative.StringUtils.StringToHGlobalUtf8(path);
+                var size = 0;
+                var result = Library.Shared.Core_FileRead(NativePointer, pathPtr, &size);
+                var buffer = new byte[size];
+                Marshal.Copy(result, buffer, 0, size);
+                Marshal.FreeHGlobal(pathPtr);
+                return buffer;
+            }
         }
     }
 }

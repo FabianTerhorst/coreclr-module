@@ -6,12 +6,25 @@ using AltV.Net.CApi.ClientEvents;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Exceptions;
 using AltV.Net.Data;
+using AltV.Net.Elements.Args;
 using AltV.Net.Shared.Utils;
 
 namespace AltV.Net.Client
 {
     public partial class Core
     {
+        public void LoadRmlFont(string path, string name, bool italic = false, bool bold = false)
+        {
+            unsafe
+            {
+                var pathPtr = MemoryUtils.StringToHGlobalUtf8(path);
+                var namePtr = MemoryUtils.StringToHGlobalUtf8(name);
+                Library.Client.Core_LoadRmlFont(NativePointer, Resource.NativePointer, pathPtr, namePtr, (byte) (italic ? 1 : 0), (byte) (bold ? 1 : 0));
+                Marshal.FreeHGlobal(pathPtr);
+                Marshal.FreeHGlobal(namePtr);
+            }
+        }
+        
         public Vector2 WorldToScreen(Vector3 position)
         {
             unsafe
@@ -852,5 +865,114 @@ namespace AltV.Net.Client
 
             return data;
         }   
+        
+        public MapZoomData GetMapZoomData(uint id)
+        {
+            unsafe
+            {
+                var ptr = Library.Client.Core_GetMapZoomDataById(NativePointer, id);
+                if (ptr == IntPtr.Zero) return null;
+                return new MapZoomData(this, ptr, id);
+            }
+        }
+
+        public MapZoomData GetMapZoomData(string alias)
+        {
+            unsafe
+            {
+                var aliasPtr = MemoryUtils.StringToHGlobalUtf8(alias);
+                uint id = 0;
+                var ptr = Library.Client.Core_GetMapZoomDataByAlias(NativePointer, aliasPtr, &id);
+                if (ptr == IntPtr.Zero) return null;
+                Marshal.FreeHGlobal(aliasPtr);
+                return new MapZoomData(this, ptr, id);
+            }
+        }
+
+        public void ResetAllMapZoomData()
+        {
+            unsafe
+            {
+                Library.Client.Core_ResetAllMapZoomData(NativePointer);
+            }
+        }
+        
+        public void ShowCursor(bool state)
+        {
+            unsafe
+            {
+                Library.Client.Core_ShowCursor(NativePointer, Resource.NativePointer, state);
+            }
+        }
+
+        public bool IsCursorVisible
+        {
+            get
+            {
+                unsafe
+                {
+                    return Library.Client.Core_IsCursorVisible(NativePointer, Resource.NativePointer) == 1;
+                }
+            }
+        }
+
+        public bool HasLocalMetaData(string key)
+        {
+            unsafe
+            {
+                var keyPtr = MemoryUtils.StringToHGlobalUtf8(key);
+                var result = Library.Client.Core_HasLocalMeta(NativePointer, keyPtr);
+                Marshal.FreeHGlobal(keyPtr);
+                return result == 1;
+            }
+        }
+        
+        public void GetLocalMetaData<T>(string key, out MValueConst result)
+        {
+            unsafe
+            {
+               var keyPtr = MemoryUtils.StringToHGlobalUtf8(key);
+               var value = new MValueConst(this, Library.Client.Core_GetLocalMeta(NativePointer, keyPtr));
+               Marshal.FreeHGlobal(keyPtr);
+               result = value;
+            }
+        }
+
+        public bool FileExists(string path)
+        {
+            unsafe
+            {
+                var valuePtr = MemoryUtils.StringToHGlobalUtf8(path);
+                var result = Library.Shared.Core_FileExists(NativePointer, valuePtr);
+                Marshal.FreeHGlobal(valuePtr);
+                return result == 1;
+            }
+        }
+
+        public string FileRead(string path)
+        {
+            unsafe
+            {
+                var pathPtr = MemoryUtils.StringToHGlobalUtf8(path);
+                var size = 0;
+                var result = PtrToStringUtf8AndFree(Library.Shared.Core_FileRead(NativePointer, pathPtr, &size), size);
+                Marshal.FreeHGlobal(pathPtr);
+                return result;
+            }
+        }
+
+        public byte[] FileReadBinary(string path)
+        {
+            unsafe
+            {
+                var pathPtr = MemoryUtils.StringToHGlobalUtf8(path);
+                var size = 0;
+                var result = Library.Shared.Core_FileRead(NativePointer, pathPtr, &size);
+                var buffer = new byte[size];
+                Marshal.Copy(result, buffer, 0, size);
+                Marshal.FreeHGlobal(pathPtr);
+                return buffer;
+            }
+        }
     }
 }

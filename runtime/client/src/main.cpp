@@ -18,7 +18,7 @@ EXPORT alt::IScriptRuntime* CreateScriptRuntime(ICore* core)
         core->RegisterScriptRuntime("csharp", runtime);
         Log::Info << "Initialized successfully" << Log::Endl;
         return runtime;
-    } catch(LoadException& e) {
+    } catch(std::exception& e) {
         Log::Error << "Initialization failed:" << Log::Endl;
         Log::Error << e.what() << Log::Endl;
         throw;
@@ -38,10 +38,11 @@ EXPORT char* GetSDKHash()
 #ifdef DEBUG_CLIENT
 int main() {
     try {
-        CoreCLR clr;
+        CoreCLR clr(nullptr);
+        clr.Initialize();
 //        Test test;
 //        clr.start_resource(&test);
-    } catch(LoadException& e) {
+    } catch(std::exception& e) {
         Log::Error << "Initialization failed: " << Log::Endl;
         Log::Error << e.what() << Log::Endl;
     }

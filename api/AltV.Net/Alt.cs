@@ -30,7 +30,7 @@ namespace AltV.Net
 
         public static bool IsDebug => Core.IsDebug;
 
-        public static void Emit(string eventName, params object[] args) => Core.TriggerServerEvent(eventName, args);
+        public static void Emit(string eventName, params object[] args) => Core.TriggerLocalEvent(eventName, args);
 
         public static void EmitAllClients(string eventName, params object[] args) =>
             Core.TriggerClientEventForAll(eventName, args);
@@ -45,15 +45,15 @@ namespace AltV.Net
         public static IReadOnlyCollection<IVehicle> GetAllVehicles() =>
             Core.VehiclePool.GetAllEntities();
 
-        public static ICollection<IBlip> GetAllBlips() => Core.BlipPool.GetAllObjects();
+        public static IReadOnlyCollection<IBlip> GetAllBlips() => Core.BlipPool.GetAllObjects();
 
-        public static ICollection<ICheckpoint> GetAllCheckpoints() =>
+        public static IReadOnlyCollection<ICheckpoint> GetAllCheckpoints() =>
             Core.CheckpointPool.GetAllObjects();
 
-        public static ICollection<IVoiceChannel> GetAllVoiceChannels() =>
+        public static IReadOnlyCollection<IVoiceChannel> GetAllVoiceChannels() =>
             Core.VoiceChannelPool.GetAllObjects();
 
-        public static ICollection<IColShape> GetAllColShapes() =>
+        public static IReadOnlyCollection<IColShape> GetAllColShapes() =>
             Core.ColShapePool.GetAllObjects();
 
         public static KeyValuePair<IntPtr, IPlayer>[] GetPlayersArray() => Core.PlayerPool.GetEntitiesArray();
@@ -111,5 +111,10 @@ namespace AltV.Net
         
         public static uint Hash(string stringToHash) => Core.Hash(stringToHash);
         public static ulong HashPassword(string password) => Core.HashPassword(password);
+        
+        public static bool FileExists(string path) => Core.FileExists(path);
+        public static string ReadFile(string path) => Core.FileRead(path);
+        public static byte[] ReadFileBinary(string path) => Core.FileReadBinary(path);
+        
     }
 }

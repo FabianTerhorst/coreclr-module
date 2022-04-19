@@ -19,10 +19,12 @@ extern "C"
 {
 #endif
 
-EXPORT_SERVER alt::IWorldObject* ColShape_GetWorldObject(alt::IColShape* colShape);
+EXPORT_SHARED alt::IWorldObject* ColShape_GetWorldObject(alt::IColShape* colShape);
+
+EXPORT_SHARED uint8_t ColShape_IsEntityIn(alt::IColShape* colShape, alt::IEntity* entity);
+EXPORT_SHARED uint8_t ColShape_IsPointIn(alt::IColShape* colShape, vector3_t point);
 
 EXPORT_SERVER uint8_t ColShape_GetColShapeType(alt::IColShape* colShape);
-EXPORT_SERVER uint8_t ColShape_IsEntityIn(alt::IColShape* colShape, alt::IEntity* entity);
 EXPORT_SERVER void ColShape_SetPlayersOnly(alt::IColShape* colShape, uint8_t state);
 EXPORT_SERVER uint8_t ColShape_IsPlayersOnly(alt::IColShape* colShape);
 

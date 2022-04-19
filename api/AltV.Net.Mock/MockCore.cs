@@ -20,6 +20,8 @@ namespace AltV.Net.Mock
             return GetEntityById(id);
         }
         public IntPtr NativePointer { get; }
+        public string SdkVersion { get; }
+        public string CApiVersion { get; }
 
         public ILibrary Library { get; }
 
@@ -27,6 +29,8 @@ namespace AltV.Net.Mock
 
         private readonly IBaseEntityPool baseEntityPool;
 
+        IReadOnlyBaseObjectPool<ISharedBlip> ISharedCore.BlipPool => blipPool1;
+        IReadOnlyBaseObjectPool<ISharedCheckpoint> ISharedCore.CheckpointPool => CheckpointPool;
         public IBaseBaseObjectPool BaseBaseObjectPool { get; }
         IReadOnlyBaseBaseObjectPool ISharedCore.BaseBaseObjectPool => BaseBaseObjectPool;
         
@@ -48,6 +52,7 @@ namespace AltV.Net.Mock
         private readonly IBaseObjectPool<IVoiceChannel> voiceChannelPool;
 
         private readonly INativeResourcePool nativeResourcePool;
+        private IReadOnlyBaseObjectPool<ISharedBlip> blipPool1;
 
         public int NetTime => 0;
 
@@ -631,6 +636,30 @@ namespace AltV.Net.Mock
         {
             throw new NotImplementedException();
         }
+        public void TriggerLocalEvent(string eventName, MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+        public void TriggerLocalEvent(IntPtr eventNamePtr, MValueConst[] args)
+        {
+            throw new NotImplementedException();
+        }
+        public void TriggerLocalEvent(string eventName, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+        public void TriggerLocalEvent(IntPtr eventNamePtr, IntPtr[] args)
+        {
+            throw new NotImplementedException();
+        }
+        public void TriggerLocalEvent(IntPtr eventNamePtr, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+        public void TriggerLocalEvent(string eventName, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
 
         public void SetPassword(string password)
         {
@@ -655,6 +684,11 @@ namespace AltV.Net.Mock
         }
 
         public string FileRead(string path)
+        {
+            throw new NotImplementedException();
+        }
+        
+        public byte[] FileReadBinary(string path)
         {
             throw new NotImplementedException();
         }

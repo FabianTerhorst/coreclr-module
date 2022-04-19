@@ -25,6 +25,7 @@ namespace AltV.Net.Client.Elements.Pools
         {
             return baseObjectType switch
             {
+                BaseObjectType.LocalPlayer => playerPool.Get(entityPointer),
                 BaseObjectType.Player => playerPool.Get(entityPointer),
                 BaseObjectType.Vehicle => vehiclePool.Get(entityPointer),
                 BaseObjectType.Webview => webViewPool.Get(entityPointer),

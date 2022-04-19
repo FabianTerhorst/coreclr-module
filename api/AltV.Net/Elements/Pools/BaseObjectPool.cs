@@ -60,7 +60,6 @@ namespace AltV.Net.Elements.Pools
         {
             return entities.TryGetValue(entityPointer, out var baseObject) ? baseObject : default;
         }
-
         public TBaseObject GetOrCreate(ICore core, IntPtr entityPointer)
         {
             if (entityPointer == IntPtr.Zero)
@@ -73,7 +72,7 @@ namespace AltV.Net.Elements.Pools
             return Create(core, entityPointer);
         }
 
-        public ICollection<TBaseObject> GetAllObjects()
+        public IReadOnlyCollection<TBaseObject> GetAllObjects()
         {
             return entities.Values;
         }

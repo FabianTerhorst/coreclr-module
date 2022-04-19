@@ -10,6 +10,28 @@ namespace AltV.Net.CApi.Libraries
 {
     public unsafe interface IClientLibrary
     {
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetCategory { get; }
+        public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Audio_GetLooped { get; }
+        public delegate* unmanaged[Cdecl]<nint, double> Audio_GetMaxTime { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, nint*, nint*, uint*, void> Audio_GetOutputs { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Audio_GetSource { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Audio_GetVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Audio_IsFrontendPlay { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Audio_IsPlaying { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Audio_Pause { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Audio_Play { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_RemoveOutput_Entity { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_RemoveOutput_ScriptId { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Audio_Reset { get; }
+        public delegate* unmanaged[Cdecl]<nint, double, void> Audio_Seek { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_SetCategory { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Audio_SetLooped { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_SetSource { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Audio_SetVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreGameControlsEnabled { get; }
@@ -19,7 +41,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_Client_CreatePointBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, nint> Core_Client_CreateRadiusBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, nint> Core_CreateAudio { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, nint> Core_CreateCheckpoint { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateHttpClient { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint> Core_CreateRmlDocument { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint> Core_CreateWebsocketClient { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, nint> Core_CreateWebView { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, nint> Core_CreateWebView3D { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocDiscordUser { get; }
@@ -33,6 +59,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, int*, nint> Core_GetHeadshotBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetLicenseHash { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetLocale { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetLocalMeta { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_GetMapZoomDataByAlias { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetMapZoomDataById { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetMsPerGameMinute { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_GetPermissionState { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetPing { get; }
@@ -54,8 +83,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetTotalPacketsSent { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetVoiceActivationKey { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetVoiceInputMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_HasLocalMeta { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsCamFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsConsoleOpen { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_IsCursorVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsGameFocused { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsInStreamerMode { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyDown { get; }
@@ -70,6 +101,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, uint, void> Core_RemoveGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RemoveIpl { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RequestIpl { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Core_ResetAllMapZoomData { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Core_ResetMapZoomData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_ResetStat { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2, Vector3*, void> Core_ScreenToWorld { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetCamFrozen { get; }
@@ -106,26 +139,53 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_UnloadYtyp { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void> Core_WorldToScreen { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceErrorModuleDelegate, void> Event_SetAnyResourceErrorDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStartModuleDelegate, void> Event_SetAnyResourceStartDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStopModuleDelegate, void> Event_SetAnyResourceStopDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void> Event_SetClientEventDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConnectionCompleteModuleDelegate, void> Event_SetConnectionCompleteDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConsoleCommandModuleDelegate, void> Event_SetConsoleCommandDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreatePlayerModuleDelegate, void> Event_SetCreatePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateVehicleModuleDelegate, void> Event_SetCreateVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityCreateModuleDelegate, void> Event_SetGameEntityCreateDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityDestroyModuleDelegate, void> Event_SetGameEntityDestroyDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.GlobalMetaChangeModuleDelegate, void> Event_SetGlobalMetaChangeDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.GlobalSyncedMetaChangeModuleDelegate, void> Event_SetGlobalSyncedMetaChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.KeyDownModuleDelegate, void> Event_SetKeyDownDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.KeyUpModuleDelegate, void> Event_SetKeyUpDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.LocalMetaChangeModuleDelegate, void> Event_SetLocalMetaChangeDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.NetOwnerChangeModuleDelegate, void> Event_SetNetOwnerChangeDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerChangeVehicleSeatModuleDelegate, void> Event_SetPlayerChangeVehicleSeatDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerDisconnectModuleDelegate, void> Event_SetPlayerDisconnectDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerEnterVehicleModuleDelegate, void> Event_SetPlayerEnterVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerLeaveVehicleModuleDelegate, void> Event_SetPlayerLeaveVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerSpawnModuleDelegate, void> Event_SetPlayerSpawnDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveEntityModuleDelegate, void> Event_SetRemoveEntityDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemovePlayerModuleDelegate, void> Event_SetRemovePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveVehicleModuleDelegate, void> Event_SetRemoveVehicleDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ResourceErrorModuleDelegate, void> Event_SetResourceErrorDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ResourceStartModuleDelegate, void> Event_SetResourceStartDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ResourceStopModuleDelegate, void> Event_SetResourceStopDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RmlEventModuleDelegate, void> Event_SetRmlEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ServerEventModuleDelegate, void> Event_SetServerEventDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.StreamSyncedMetaChangeModuleDelegate, void> Event_SetStreamSyncedMetaChangeDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.SyncedMetaChangeModuleDelegate, void> Event_SetSyncedMetaChangeDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.TaskChangeModuleDelegate, void> Event_SetTaskChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.TickModuleDelegate, void> Event_SetTickDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.WebSocketEventModuleDelegate, void> Event_SetWebSocketEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WebViewEventModuleDelegate, void> Event_SetWebViewEventDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowFocusChangeModuleDelegate, void> Event_SetWindowFocusChangeDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowResolutionChangeModuleDelegate, void> Event_SetWindowResolutionChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeRmlElementArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Connect { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Delete { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Get { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> HttpClient_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, nint*, int*, void> HttpClient_GetExtraHeaders { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Head { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Options { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Patch { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Post { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Put { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> HttpClient_SetExtraHeader { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Trace { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
@@ -134,6 +194,17 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint> LocalStorage_GetKey { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Save { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> LocalStorage_SetKey { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> MapData_Destroy { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetFScrollSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetFZoomScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetFZoomSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetVTilesX { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetVTilesY { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetFScrollSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetFZoomScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetFZoomSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetVTilesX { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetVTilesY { get; }
         public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMicLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetNonSpatialVolume { get; }
@@ -377,6 +448,23 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetGear { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetMaxGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> WebSocketClient_AddSubProtocol { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> WebSocketClient_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> WebSocketClient_GetPingInterval { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> WebSocketClient_GetReadyState { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint*, nint> WebSocketClient_GetSubProtocols { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> WebSocketClient_GetUrl { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> WebSocketClient_IsAutoReconnect { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> WebSocketClient_IsPerMessageDeflate { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint, byte> WebSocketClient_Send_Binary { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> WebSocketClient_Send_String { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> WebSocketClient_SetAutoReconnect { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> WebSocketClient_SetExtraHeader { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> WebSocketClient_SetPerMessageDeflate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> WebSocketClient_SetPingInterval { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> WebSocketClient_SetUrl { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> WebSocketClient_Start { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> WebSocketClient_Stop { get; }
         public delegate* unmanaged[Cdecl]<nint, void> WebView_Focus { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WebView_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, void> WebView_GetPosition { get; }
@@ -396,6 +484,28 @@ namespace AltV.Net.CApi.Libraries
 
     public unsafe class ClientLibrary : IClientLibrary
     {
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_AddOutput_Entity { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_AddOutput_ScriptId { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> Audio_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint> Audio_GetCategory { get; }
+        public delegate* unmanaged[Cdecl]<nint, double> Audio_GetCurrentTime { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Audio_GetLooped { get; }
+        public delegate* unmanaged[Cdecl]<nint, double> Audio_GetMaxTime { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, nint*, nint*, uint*, void> Audio_GetOutputs { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> Audio_GetSource { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> Audio_GetVolume { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Audio_IsFrontendPlay { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> Audio_IsPlaying { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Audio_Pause { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Audio_Play { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_RemoveOutput_Entity { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_RemoveOutput_ScriptId { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Audio_Reset { get; }
+        public delegate* unmanaged[Cdecl]<nint, double, void> Audio_Seek { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Audio_SetCategory { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> Audio_SetLooped { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> Audio_SetSource { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> Audio_SetVolume { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Blip_GetScriptID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void> Core_AddGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_AreGameControlsEnabled { get; }
@@ -405,7 +515,11 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, Vector3, nint> Core_Client_CreatePointBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, float, nint> Core_Client_CreateRadiusBlip { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_CopyToClipboard { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, nint> Core_CreateAudio { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, nint> Core_CreateCheckpoint { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_CreateHttpClient { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, nint> Core_CreateRmlDocument { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, nint> Core_CreateWebsocketClient { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, nint> Core_CreateWebView { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, nint> Core_CreateWebView3D { get; }
         public delegate* unmanaged[Cdecl]<nint, void> Core_DeallocDiscordUser { get; }
@@ -419,6 +533,9 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, byte, int*, nint> Core_GetHeadshotBase64 { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetLicenseHash { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetLocale { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetLocalMeta { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint*, nint> Core_GetMapZoomDataByAlias { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, nint> Core_GetMapZoomDataById { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Core_GetMsPerGameMinute { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, byte> Core_GetPermissionState { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> Core_GetPing { get; }
@@ -440,8 +557,10 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetTotalPacketsSent { get; }
         public delegate* unmanaged[Cdecl]<nint, uint> Core_GetVoiceActivationKey { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_GetVoiceInputMuted { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_HasLocalMeta { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsCamFrozen { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsConsoleOpen { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_IsCursorVisible { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsGameFocused { get; }
         public delegate* unmanaged[Cdecl]<nint, byte> Core_IsInStreamerMode { get; }
         public delegate* unmanaged[Cdecl]<nint, uint, byte> Core_IsKeyDown { get; }
@@ -456,6 +575,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, uint, void> Core_RemoveGXTText { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RemoveIpl { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_RequestIpl { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> Core_ResetAllMapZoomData { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint, void> Core_ResetMapZoomData { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Core_ResetStat { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2, Vector3*, void> Core_ScreenToWorld { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Core_SetCamFrozen { get; }
@@ -492,26 +613,53 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_UnloadYtyp { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void> Core_WorldToScreen { get; }
         public delegate* unmanaged[Cdecl]<nint, int> Entity_GetScriptID { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceErrorModuleDelegate, void> Event_SetAnyResourceErrorDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStartModuleDelegate, void> Event_SetAnyResourceStartDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStopModuleDelegate, void> Event_SetAnyResourceStopDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void> Event_SetClientEventDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConnectionCompleteModuleDelegate, void> Event_SetConnectionCompleteDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ConsoleCommandModuleDelegate, void> Event_SetConsoleCommandDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreatePlayerModuleDelegate, void> Event_SetCreatePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateVehicleModuleDelegate, void> Event_SetCreateVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityCreateModuleDelegate, void> Event_SetGameEntityCreateDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityDestroyModuleDelegate, void> Event_SetGameEntityDestroyDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.GlobalMetaChangeModuleDelegate, void> Event_SetGlobalMetaChangeDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.GlobalSyncedMetaChangeModuleDelegate, void> Event_SetGlobalSyncedMetaChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.KeyDownModuleDelegate, void> Event_SetKeyDownDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.KeyUpModuleDelegate, void> Event_SetKeyUpDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.LocalMetaChangeModuleDelegate, void> Event_SetLocalMetaChangeDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.NetOwnerChangeModuleDelegate, void> Event_SetNetOwnerChangeDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerChangeVehicleSeatModuleDelegate, void> Event_SetPlayerChangeVehicleSeatDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerDisconnectModuleDelegate, void> Event_SetPlayerDisconnectDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerEnterVehicleModuleDelegate, void> Event_SetPlayerEnterVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerLeaveVehicleModuleDelegate, void> Event_SetPlayerLeaveVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerSpawnModuleDelegate, void> Event_SetPlayerSpawnDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveEntityModuleDelegate, void> Event_SetRemoveEntityDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemovePlayerModuleDelegate, void> Event_SetRemovePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveVehicleModuleDelegate, void> Event_SetRemoveVehicleDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ResourceErrorModuleDelegate, void> Event_SetResourceErrorDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ResourceStartModuleDelegate, void> Event_SetResourceStartDelegate { get; }
-        public delegate* unmanaged[Cdecl]<nint, ClientEvents.ResourceStopModuleDelegate, void> Event_SetResourceStopDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RmlEventModuleDelegate, void> Event_SetRmlEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ServerEventModuleDelegate, void> Event_SetServerEventDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.StreamSyncedMetaChangeModuleDelegate, void> Event_SetStreamSyncedMetaChangeDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.SyncedMetaChangeModuleDelegate, void> Event_SetSyncedMetaChangeDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.TaskChangeModuleDelegate, void> Event_SetTaskChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.TickModuleDelegate, void> Event_SetTickDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.WebSocketEventModuleDelegate, void> Event_SetWebSocketEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WebViewEventModuleDelegate, void> Event_SetWebViewEventDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowFocusChangeModuleDelegate, void> Event_SetWindowFocusChangeDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowResolutionChangeModuleDelegate, void> Event_SetWindowResolutionChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, void> FreeRmlElementArray { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Connect { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Delete { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Get { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> HttpClient_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint*, nint*, int*, void> HttpClient_GetExtraHeaders { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Head { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Options { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Patch { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Post { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Put { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> HttpClient_SetExtraHeader { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void> HttpClient_Trace { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetCurrentAmmo { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort> LocalPlayer_GetID { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> LocalPlayer_GetPlayer { get; }
@@ -520,6 +668,17 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, nint> LocalStorage_GetKey { get; }
         public delegate* unmanaged[Cdecl]<nint, void> LocalStorage_Save { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint, void> LocalStorage_SetKey { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> MapData_Destroy { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetFScrollSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetFZoomScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetFZoomSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetVTilesX { get; }
+        public delegate* unmanaged[Cdecl]<nint, float> MapData_GetVTilesY { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetFScrollSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetFZoomScale { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetFZoomSpeed { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetVTilesX { get; }
+        public delegate* unmanaged[Cdecl]<nint, float, void> MapData_SetVTilesY { get; }
         public delegate* unmanaged[Cdecl]<nint> Player_GetLocal { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetMicLevel { get; }
         public delegate* unmanaged[Cdecl]<nint, float> Player_GetNonSpatialVolume { get; }
@@ -763,6 +922,23 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetGear { get; }
         public delegate* unmanaged[Cdecl]<nint, byte, void> Vehicle_SetIndicatorLights { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, void> Vehicle_SetMaxGear { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> WebSocketClient_AddSubProtocol { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint> WebSocketClient_GetBaseObject { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort> WebSocketClient_GetPingInterval { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> WebSocketClient_GetReadyState { get; }
+        public delegate* unmanaged[Cdecl]<nint, uint*, nint> WebSocketClient_GetSubProtocols { get; }
+        public delegate* unmanaged[Cdecl]<nint, int*, nint> WebSocketClient_GetUrl { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> WebSocketClient_IsAutoReconnect { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte> WebSocketClient_IsPerMessageDeflate { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, uint, byte> WebSocketClient_Send_Binary { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, byte> WebSocketClient_Send_String { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> WebSocketClient_SetAutoReconnect { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, nint, void> WebSocketClient_SetExtraHeader { get; }
+        public delegate* unmanaged[Cdecl]<nint, byte, void> WebSocketClient_SetPerMessageDeflate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ushort, void> WebSocketClient_SetPingInterval { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint, void> WebSocketClient_SetUrl { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> WebSocketClient_Start { get; }
+        public delegate* unmanaged[Cdecl]<nint, void> WebSocketClient_Stop { get; }
         public delegate* unmanaged[Cdecl]<nint, void> WebView_Focus { get; }
         public delegate* unmanaged[Cdecl]<nint, nint> WebView_GetBaseObject { get; }
         public delegate* unmanaged[Cdecl]<nint, Vector2*, void> WebView_GetPosition { get; }
@@ -782,6 +958,28 @@ namespace AltV.Net.CApi.Libraries
         {
             const DllImportSearchPath dllImportSearchPath = DllImportSearchPath.LegacyBehavior | DllImportSearchPath.AssemblyDirectory | DllImportSearchPath.SafeDirectories | DllImportSearchPath.System32 | DllImportSearchPath.UserDirectories | DllImportSearchPath.ApplicationDirectory | DllImportSearchPath.UseDllDirectoryForDependencies;
             var handle = NativeLibrary.Load(dllName, Assembly.GetExecutingAssembly(), dllImportSearchPath);
+            Audio_AddOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Audio_AddOutput_Entity");
+            Audio_AddOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Audio_AddOutput_ScriptId");
+            Audio_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "Audio_GetBaseObject");
+            Audio_GetCategory = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Audio_GetCategory");
+            Audio_GetCurrentTime = (delegate* unmanaged[Cdecl]<nint, double>) NativeLibrary.GetExport(handle, "Audio_GetCurrentTime");
+            Audio_GetLooped = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Audio_GetLooped");
+            Audio_GetMaxTime = (delegate* unmanaged[Cdecl]<nint, double>) NativeLibrary.GetExport(handle, "Audio_GetMaxTime");
+            Audio_GetOutputs = (delegate* unmanaged[Cdecl]<nint, nint*, nint*, nint*, uint*, void>) NativeLibrary.GetExport(handle, "Audio_GetOutputs");
+            Audio_GetSource = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Audio_GetSource");
+            Audio_GetVolume = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Audio_GetVolume");
+            Audio_IsFrontendPlay = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Audio_IsFrontendPlay");
+            Audio_IsPlaying = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Audio_IsPlaying");
+            Audio_Pause = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Audio_Pause");
+            Audio_Play = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Audio_Play");
+            Audio_RemoveOutput_Entity = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Audio_RemoveOutput_Entity");
+            Audio_RemoveOutput_ScriptId = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Audio_RemoveOutput_ScriptId");
+            Audio_Reset = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Audio_Reset");
+            Audio_Seek = (delegate* unmanaged[Cdecl]<nint, double, void>) NativeLibrary.GetExport(handle, "Audio_Seek");
+            Audio_SetCategory = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Audio_SetCategory");
+            Audio_SetLooped = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Audio_SetLooped");
+            Audio_SetSource = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Audio_SetSource");
+            Audio_SetVolume = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "Audio_SetVolume");
             Blip_GetScriptID = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Blip_GetScriptID");
             Core_AddGXTText = (delegate* unmanaged[Cdecl]<nint, nint, uint, nint, void>) NativeLibrary.GetExport(handle, "Core_AddGXTText");
             Core_AreGameControlsEnabled = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_AreGameControlsEnabled");
@@ -791,7 +989,11 @@ namespace AltV.Net.CApi.Libraries
             Core_Client_CreatePointBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, nint>) NativeLibrary.GetExport(handle, "Core_Client_CreatePointBlip");
             Core_Client_CreateRadiusBlip = (delegate* unmanaged[Cdecl]<nint, Vector3, float, nint>) NativeLibrary.GetExport(handle, "Core_Client_CreateRadiusBlip");
             Core_CopyToClipboard = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_CopyToClipboard");
+            Core_CreateAudio = (delegate* unmanaged[Cdecl]<nint, nint, nint, float, uint, byte, nint>) NativeLibrary.GetExport(handle, "Core_CreateAudio");
+            Core_CreateCheckpoint = (delegate* unmanaged[Cdecl]<nint, byte, Vector3, Vector3, float, float, Rgba, nint>) NativeLibrary.GetExport(handle, "Core_CreateCheckpoint");
+            Core_CreateHttpClient = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateHttpClient");
             Core_CreateRmlDocument = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateRmlDocument");
+            Core_CreateWebsocketClient = (delegate* unmanaged[Cdecl]<nint, nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateWebsocketClient");
             Core_CreateWebView = (delegate* unmanaged[Cdecl]<nint, nint, nint, Vector2, Vector2, byte, nint>) NativeLibrary.GetExport(handle, "Core_CreateWebView");
             Core_CreateWebView3D = (delegate* unmanaged[Cdecl]<nint, nint, nint, uint, nint, nint>) NativeLibrary.GetExport(handle, "Core_CreateWebView3D");
             Core_DeallocDiscordUser = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Core_DeallocDiscordUser");
@@ -805,6 +1007,9 @@ namespace AltV.Net.CApi.Libraries
             Core_GetHeadshotBase64 = (delegate* unmanaged[Cdecl]<nint, byte, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetHeadshotBase64");
             Core_GetLicenseHash = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetLicenseHash");
             Core_GetLocale = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetLocale");
+            Core_GetLocalMeta = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_GetLocalMeta");
+            Core_GetMapZoomDataByAlias = (delegate* unmanaged[Cdecl]<nint, nint, uint*, nint>) NativeLibrary.GetExport(handle, "Core_GetMapZoomDataByAlias");
+            Core_GetMapZoomDataById = (delegate* unmanaged[Cdecl]<nint, uint, nint>) NativeLibrary.GetExport(handle, "Core_GetMapZoomDataById");
             Core_GetMsPerGameMinute = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Core_GetMsPerGameMinute");
             Core_GetPermissionState = (delegate* unmanaged[Cdecl]<nint, byte, byte>) NativeLibrary.GetExport(handle, "Core_GetPermissionState");
             Core_GetPing = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "Core_GetPing");
@@ -826,8 +1031,10 @@ namespace AltV.Net.CApi.Libraries
             Core_GetTotalPacketsSent = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Core_GetTotalPacketsSent");
             Core_GetVoiceActivationKey = (delegate* unmanaged[Cdecl]<nint, uint>) NativeLibrary.GetExport(handle, "Core_GetVoiceActivationKey");
             Core_GetVoiceInputMuted = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_GetVoiceInputMuted");
+            Core_HasLocalMeta = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_HasLocalMeta");
             Core_IsCamFrozen = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsCamFrozen");
             Core_IsConsoleOpen = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsConsoleOpen");
+            Core_IsCursorVisible = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_IsCursorVisible");
             Core_IsGameFocused = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsGameFocused");
             Core_IsInStreamerMode = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "Core_IsInStreamerMode");
             Core_IsKeyDown = (delegate* unmanaged[Cdecl]<nint, uint, byte>) NativeLibrary.GetExport(handle, "Core_IsKeyDown");
@@ -842,6 +1049,8 @@ namespace AltV.Net.CApi.Libraries
             Core_RemoveGXTText = (delegate* unmanaged[Cdecl]<nint, nint, uint, void>) NativeLibrary.GetExport(handle, "Core_RemoveGXTText");
             Core_RemoveIpl = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_RemoveIpl");
             Core_RequestIpl = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_RequestIpl");
+            Core_ResetAllMapZoomData = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "Core_ResetAllMapZoomData");
+            Core_ResetMapZoomData = (delegate* unmanaged[Cdecl]<nint, uint, void>) NativeLibrary.GetExport(handle, "Core_ResetMapZoomData");
             Core_ResetStat = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Core_ResetStat");
             Core_ScreenToWorld = (delegate* unmanaged[Cdecl]<nint, Vector2, Vector3*, void>) NativeLibrary.GetExport(handle, "Core_ScreenToWorld");
             Core_SetCamFrozen = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Core_SetCamFrozen");
@@ -878,26 +1087,53 @@ namespace AltV.Net.CApi.Libraries
             Core_UnloadYtyp = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_UnloadYtyp");
             Core_WorldToScreen = (delegate* unmanaged[Cdecl]<nint, Vector3, Vector2*, void>) NativeLibrary.GetExport(handle, "Core_WorldToScreen");
             Entity_GetScriptID = (delegate* unmanaged[Cdecl]<nint, int>) NativeLibrary.GetExport(handle, "Entity_GetScriptID");
+            Event_SetAnyResourceErrorDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceErrorModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetAnyResourceErrorDelegate");
+            Event_SetAnyResourceStartDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStartModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetAnyResourceStartDelegate");
+            Event_SetAnyResourceStopDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.AnyResourceStopModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetAnyResourceStopDelegate");
             Event_SetClientEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ClientEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetClientEventDelegate");
+            Event_SetConnectionCompleteDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ConnectionCompleteModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetConnectionCompleteDelegate");
             Event_SetConsoleCommandDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ConsoleCommandModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetConsoleCommandDelegate");
             Event_SetCreatePlayerDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreatePlayerModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreatePlayerDelegate");
             Event_SetCreateVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.CreateVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetCreateVehicleDelegate");
             Event_SetGameEntityCreateDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityCreateModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetGameEntityCreateDelegate");
             Event_SetGameEntityDestroyDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.GameEntityDestroyModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetGameEntityDestroyDelegate");
+            Event_SetGlobalMetaChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.GlobalMetaChangeModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetGlobalMetaChangeDelegate");
+            Event_SetGlobalSyncedMetaChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.GlobalSyncedMetaChangeModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetGlobalSyncedMetaChangeDelegate");
             Event_SetKeyDownDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.KeyDownModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetKeyDownDelegate");
             Event_SetKeyUpDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.KeyUpModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetKeyUpDelegate");
+            Event_SetLocalMetaChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.LocalMetaChangeModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetLocalMetaChangeDelegate");
+            Event_SetNetOwnerChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.NetOwnerChangeModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetNetOwnerChangeDelegate");
+            Event_SetPlayerChangeVehicleSeatDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerChangeVehicleSeatModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerChangeVehicleSeatDelegate");
             Event_SetPlayerDisconnectDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerDisconnectModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerDisconnectDelegate");
             Event_SetPlayerEnterVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerEnterVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerEnterVehicleDelegate");
+            Event_SetPlayerLeaveVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerLeaveVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerLeaveVehicleDelegate");
             Event_SetPlayerSpawnDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerSpawnModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerSpawnDelegate");
+            Event_SetRemoveEntityDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveEntityModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveEntityDelegate");
             Event_SetRemovePlayerDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemovePlayerModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemovePlayerDelegate");
             Event_SetRemoveVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveVehicleDelegate");
-            Event_SetResourceErrorDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ResourceErrorModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetResourceErrorDelegate");
-            Event_SetResourceStartDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ResourceStartModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetResourceStartDelegate");
-            Event_SetResourceStopDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ResourceStopModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetResourceStopDelegate");
+            Event_SetRmlEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RmlEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRmlEventDelegate");
             Event_SetServerEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ServerEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetServerEventDelegate");
+            Event_SetStreamSyncedMetaChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.StreamSyncedMetaChangeModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetStreamSyncedMetaChangeDelegate");
+            Event_SetSyncedMetaChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.SyncedMetaChangeModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetSyncedMetaChangeDelegate");
+            Event_SetTaskChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.TaskChangeModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetTaskChangeDelegate");
             Event_SetTickDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.TickModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetTickDelegate");
+            Event_SetWebSocketEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WebSocketEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetWebSocketEventDelegate");
             Event_SetWebViewEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WebViewEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetWebViewEventDelegate");
+            Event_SetWindowFocusChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowFocusChangeModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetWindowFocusChangeDelegate");
+            Event_SetWindowResolutionChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowResolutionChangeModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetWindowResolutionChangeDelegate");
             FreeRmlElementArray = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "FreeRmlElementArray");
+            HttpClient_Connect = (delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void>) NativeLibrary.GetExport(handle, "HttpClient_Connect");
+            HttpClient_Delete = (delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void>) NativeLibrary.GetExport(handle, "HttpClient_Delete");
+            HttpClient_Get = (delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.HttpResponseModuleDelegate, void>) NativeLibrary.GetExport(handle, "HttpClient_Get");
+            HttpClient_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "HttpClient_GetBaseObject");
+            HttpClient_GetExtraHeaders = (delegate* unmanaged[Cdecl]<nint, nint*, nint*, int*, void>) NativeLibrary.GetExport(handle, "HttpClient_GetExtraHeaders");
+            HttpClient_Head = (delegate* unmanaged[Cdecl]<nint, nint, ClientEvents.HttpResponseModuleDelegate, void>) NativeLibrary.GetExport(handle, "HttpClient_Head");
+            HttpClient_Options = (delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void>) NativeLibrary.GetExport(handle, "HttpClient_Options");
+            HttpClient_Patch = (delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void>) NativeLibrary.GetExport(handle, "HttpClient_Patch");
+            HttpClient_Post = (delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void>) NativeLibrary.GetExport(handle, "HttpClient_Post");
+            HttpClient_Put = (delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void>) NativeLibrary.GetExport(handle, "HttpClient_Put");
+            HttpClient_SetExtraHeader = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "HttpClient_SetExtraHeader");
+            HttpClient_Trace = (delegate* unmanaged[Cdecl]<nint, nint, nint, ClientEvents.HttpResponseModuleDelegate, void>) NativeLibrary.GetExport(handle, "HttpClient_Trace");
             LocalPlayer_GetCurrentAmmo = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "LocalPlayer_GetCurrentAmmo");
             LocalPlayer_GetID = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "LocalPlayer_GetID");
             LocalPlayer_GetPlayer = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "LocalPlayer_GetPlayer");
@@ -906,6 +1142,17 @@ namespace AltV.Net.CApi.Libraries
             LocalStorage_GetKey = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "LocalStorage_GetKey");
             LocalStorage_Save = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "LocalStorage_Save");
             LocalStorage_SetKey = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "LocalStorage_SetKey");
+            MapData_Destroy = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "MapData_Destroy");
+            MapData_GetFScrollSpeed = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "MapData_GetFScrollSpeed");
+            MapData_GetFZoomScale = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "MapData_GetFZoomScale");
+            MapData_GetFZoomSpeed = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "MapData_GetFZoomSpeed");
+            MapData_GetVTilesX = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "MapData_GetVTilesX");
+            MapData_GetVTilesY = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "MapData_GetVTilesY");
+            MapData_SetFScrollSpeed = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "MapData_SetFScrollSpeed");
+            MapData_SetFZoomScale = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "MapData_SetFZoomScale");
+            MapData_SetFZoomSpeed = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "MapData_SetFZoomSpeed");
+            MapData_SetVTilesX = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "MapData_SetVTilesX");
+            MapData_SetVTilesY = (delegate* unmanaged[Cdecl]<nint, float, void>) NativeLibrary.GetExport(handle, "MapData_SetVTilesY");
             Player_GetLocal = (delegate* unmanaged[Cdecl]<nint>) NativeLibrary.GetExport(handle, "Player_GetLocal");
             Player_GetMicLevel = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Player_GetMicLevel");
             Player_GetNonSpatialVolume = (delegate* unmanaged[Cdecl]<nint, float>) NativeLibrary.GetExport(handle, "Player_GetNonSpatialVolume");
@@ -1149,6 +1396,23 @@ namespace AltV.Net.CApi.Libraries
             Vehicle_SetGear = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Vehicle_SetGear");
             Vehicle_SetIndicatorLights = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "Vehicle_SetIndicatorLights");
             Vehicle_SetMaxGear = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "Vehicle_SetMaxGear");
+            WebSocketClient_AddSubProtocol = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "WebSocketClient_AddSubProtocol");
+            WebSocketClient_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "WebSocketClient_GetBaseObject");
+            WebSocketClient_GetPingInterval = (delegate* unmanaged[Cdecl]<nint, ushort>) NativeLibrary.GetExport(handle, "WebSocketClient_GetPingInterval");
+            WebSocketClient_GetReadyState = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "WebSocketClient_GetReadyState");
+            WebSocketClient_GetSubProtocols = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) NativeLibrary.GetExport(handle, "WebSocketClient_GetSubProtocols");
+            WebSocketClient_GetUrl = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "WebSocketClient_GetUrl");
+            WebSocketClient_IsAutoReconnect = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "WebSocketClient_IsAutoReconnect");
+            WebSocketClient_IsPerMessageDeflate = (delegate* unmanaged[Cdecl]<nint, byte>) NativeLibrary.GetExport(handle, "WebSocketClient_IsPerMessageDeflate");
+            WebSocketClient_Send_Binary = (delegate* unmanaged[Cdecl]<nint, nint, uint, byte>) NativeLibrary.GetExport(handle, "WebSocketClient_Send_Binary");
+            WebSocketClient_Send_String = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "WebSocketClient_Send_String");
+            WebSocketClient_SetAutoReconnect = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "WebSocketClient_SetAutoReconnect");
+            WebSocketClient_SetExtraHeader = (delegate* unmanaged[Cdecl]<nint, nint, nint, void>) NativeLibrary.GetExport(handle, "WebSocketClient_SetExtraHeader");
+            WebSocketClient_SetPerMessageDeflate = (delegate* unmanaged[Cdecl]<nint, byte, void>) NativeLibrary.GetExport(handle, "WebSocketClient_SetPerMessageDeflate");
+            WebSocketClient_SetPingInterval = (delegate* unmanaged[Cdecl]<nint, ushort, void>) NativeLibrary.GetExport(handle, "WebSocketClient_SetPingInterval");
+            WebSocketClient_SetUrl = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "WebSocketClient_SetUrl");
+            WebSocketClient_Start = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "WebSocketClient_Start");
+            WebSocketClient_Stop = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "WebSocketClient_Stop");
             WebView_Focus = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "WebView_Focus");
             WebView_GetBaseObject = (delegate* unmanaged[Cdecl]<nint, nint>) NativeLibrary.GetExport(handle, "WebView_GetBaseObject");
             WebView_GetPosition = (delegate* unmanaged[Cdecl]<nint, Vector2*, void>) NativeLibrary.GetExport(handle, "WebView_GetPosition");
