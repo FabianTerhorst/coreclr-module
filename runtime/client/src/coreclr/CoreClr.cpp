@@ -106,7 +106,7 @@ void CoreClr::Initialize() {
 
     InitializeCoreclr();
 
-    typedef void (* initialize_method)(alt::ICore* ptr, uint8_t sandbox);
+    typedef uint8_t (* initialize_method)(alt::ICore* ptr, uint8_t sandbox);
     initialize_method hostInitDelegate = nullptr;
 
     const int rc = _createDelegate(_runtimeHost, _domainId, "AltV.Net.Client.Host", "AltV.Net.Client.Host.Host", "Initialize", (void **) &hostInitDelegate);
@@ -118,11 +118,14 @@ void CoreClr::Initialize() {
 
     Log::Info << "Executing method from Host dll" << Log::Endl;
 
-    hostInitDelegate(_core, sandbox);
+    const auto hostInitRc = hostInitDelegate(_core, sandbox);
+    if (hostInitRc != 0) {
+        throw std::runtime_error("Host dll initialization failed. Code: " + std::to_string(hostInitRc));
+    }
     initialized = true;
 }
 
-void CoreClr::StartResource(alt::IResource *resource, alt::ICore* core) {
+bool CoreClr::StartResource(alt::IResource* resource, alt::ICore* core) {
     const auto path = utils::string_to_wstring(resource->GetMain());
 
     struct start_args {
@@ -132,22 +135,23 @@ void CoreClr::StartResource(alt::IResource *resource, alt::ICore* core) {
     };
     start_args startArgs{path.c_str(), resource, core};
 
-    load_resource_delegate(&startArgs, sizeof(startArgs));
+    return load_resource_delegate(&startArgs, sizeof(startArgs)) == 0;
 }
 
-void CoreClr::StopResource(alt::IResource *resource) {
+bool CoreClr::StopResource(alt::IResource* resource) {
     struct stop_args {
         const alt::IResource *resourcePtr;
     };
     stop_args stopArgs{resource};
 
-    stop_resource_delegate(&stopArgs, sizeof(stopArgs));
+    return stop_resource_delegate(&stopArgs, sizeof(stopArgs)) == 0;
 }
 
 // ReSharper disable once CppInconsistentNaming
 EXPORT void SetResourceLoadDelegates(const CoreClrDelegate_t resourceExecute, const CoreClrDelegate_t resourceExecuteUnload,
                                      const CoreClrDelegate_t stopRuntime) {
     if (load_resource_delegate || stop_resource_delegate || stop_runtime_delegate) {
+        Log::Error << "Resource delegates cannot be replaced" << Log::Endl;
         abort(); // developer tried to call that method from resource XD
     }
 

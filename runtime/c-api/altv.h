@@ -24,6 +24,7 @@ EXPORT_SHARED void FreeResourceArray(alt::IResource** resourceArray);
 EXPORT_SHARED void FreeMValueConstArray(alt::MValueConst** mvalueConstArray);
 EXPORT_SHARED const char* GetVersionStatic(int32_t &size);
 EXPORT_SHARED const char* GetBranchStatic(int32_t &size);
+EXPORT_SHARED uint8_t IsDebugStatic();
 EXPORT_SHARED const char* GetCApiVersion(int32_t &size);
 EXPORT_SHARED const char* GetSDKVersion(int32_t &size);
 
