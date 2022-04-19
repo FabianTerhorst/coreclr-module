@@ -246,181 +246,121 @@ namespace AltV.Net.FunctionParser
         public static object ParseSByte(ISharedCore core, in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            if (mValue.type == MValueConst.Type.Int)
+            return mValue.type switch
             {
-                return (sbyte) mValue.GetInt();
-            }
-
-            if (mValue.type == MValueConst.Type.Uint)
-            {
-                return (sbyte) mValue.GetUint();
-            }
-
-            // Types doesn't match
-            return null;
+                MValueConst.Type.Int => (sbyte) mValue.GetInt(),
+                MValueConst.Type.Uint => (sbyte) mValue.GetUint(),
+                MValueConst.Type.Double => (sbyte) mValue.GetDouble(),
+                _ => null!
+            };
         }
 
         public static object ParseShort(ISharedCore core, in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            if (mValue.type == MValueConst.Type.Int)
+            return mValue.type switch
             {
-                return (short) mValue.GetInt();
-            }
-
-            if (mValue.type == MValueConst.Type.Uint)
-            {
-                return (short) mValue.GetUint();
-            }
-
-            // Types doesn't match
-            return null;
+                MValueConst.Type.Int => (short) mValue.GetInt(),
+                MValueConst.Type.Uint => (short) mValue.GetUint(),
+                MValueConst.Type.Double => (short) mValue.GetDouble(),
+                _ => null!
+            };
         }
 
         public static object ParseInt(ISharedCore core, in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            if (mValue.type == MValueConst.Type.Int)
+            return mValue.type switch
             {
-                return (int) mValue.GetInt();
-            }
-
-            if (mValue.type == MValueConst.Type.Uint)
-            {
-                return (int) mValue.GetUint();
-            }
-
-            // Types doesn't match
-            return null;
+                MValueConst.Type.Int => (int) mValue.GetInt(),
+                MValueConst.Type.Uint => (int) mValue.GetUint(),
+                MValueConst.Type.Double => (int) mValue.GetDouble(),
+                _ => null!
+            };
         }
 
         public static object ParseLong(ISharedCore core, in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            if (mValue.type == MValueConst.Type.Int)
+            return mValue.type switch
             {
-                return mValue.GetInt();
-            }
-
-            if (mValue.type == MValueConst.Type.Uint)
-            {
-                return (long) mValue.GetUint();
-            }
-
-            // Types doesn't match
-            return null;
+                MValueConst.Type.Int => mValue.GetInt(),
+                MValueConst.Type.Uint => (long) mValue.GetUint(),
+                MValueConst.Type.Double => (long) mValue.GetDouble(),
+                _ => null!
+            };
         }
 
         public static object ParseByte(ISharedCore core, in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            if (mValue.type == MValueConst.Type.Uint)
+            return mValue.type switch
             {
-                return (byte) mValue.GetUint();
-            }
-
-            if (mValue.type == MValueConst.Type.Int)
-            {
-                return (byte) mValue.GetInt();
-            }
-
-            // Types doesn't match
-            return null;
+                MValueConst.Type.Uint => (byte) mValue.GetUint(),
+                MValueConst.Type.Int => (byte) mValue.GetInt(),
+                MValueConst.Type.Double => (byte) mValue.GetDouble(),
+                _ => null!
+            };
         }
 
         public static object ParseUShort(ISharedCore core, in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            if (mValue.type == MValueConst.Type.Uint)
+            return mValue.type switch
             {
-                return (ushort) mValue.GetUint();
-            }
-
-            if (mValue.type == MValueConst.Type.Int)
-            {
-                return (ushort) mValue.GetInt();
-            }
-
-            // Types doesn't match
-            return null;
+                MValueConst.Type.Uint => (ushort) mValue.GetUint(),
+                MValueConst.Type.Int => (ushort) mValue.GetInt(),
+                MValueConst.Type.Double => (ushort) mValue.GetDouble(),
+                _ => null!
+            };
         }
 
         public static object ParseUInt(ISharedCore core, in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            if (mValue.type == MValueConst.Type.Uint)
+            return mValue.type switch
             {
-                return (uint) mValue.GetUint();
-            }
-
-            if (mValue.type == MValueConst.Type.Int)
-            {
-                return (uint) mValue.GetInt();
-            }
-
-            // Types doesn't match
-            return null;
+                MValueConst.Type.Uint => (uint) mValue.GetUint(),
+                MValueConst.Type.Int => (uint) mValue.GetInt(),
+                MValueConst.Type.Double => (uint) mValue.GetDouble(),
+                _ => null!
+            };
         }
 
         public static object ParseULong(ISharedCore core, in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            if (mValue.type == MValueConst.Type.Uint)
+            return mValue.type switch
             {
-                return mValue.GetUint();
-            }
-
-            if (mValue.type == MValueConst.Type.Int)
-            {
-                return (ulong) mValue.GetInt();
-            }
-
-            // Types doesn't match
-            return null;
+                MValueConst.Type.Uint => mValue.GetUint(),
+                MValueConst.Type.Int => (ulong) mValue.GetInt(),
+                MValueConst.Type.Double => (ulong) mValue.GetDouble(),
+                _ => null!
+            };
         }
 
         public static object ParseFloat(ISharedCore core, in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            if (mValue.type == MValueConst.Type.Double)
+            return mValue.type switch
             {
-                return (float) mValue.GetDouble();
-            }
-
-            if (mValue.type == MValueConst.Type.Int)
-            {
-                return Convert.ToSingle(mValue.GetInt());
-            }
-
-            if (mValue.type == MValueConst.Type.Uint)
-            {
-                return Convert.ToSingle(mValue.GetUint());
-            }
-
-            // Types doesn't match
-            return null;
+                MValueConst.Type.Double => (float) mValue.GetDouble(),
+                MValueConst.Type.Int => Convert.ToSingle(mValue.GetInt()),
+                MValueConst.Type.Uint => Convert.ToSingle(mValue.GetUint()),
+                _ => null!
+            };
         }
 
         public static object ParseDouble(ISharedCore core, in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
-            if (mValue.type == MValueConst.Type.Double)
+            return mValue.type switch
             {
-                return mValue.GetDouble();
-            }
-
-            if (mValue.type == MValueConst.Type.Int)
-            {
-                return Convert.ToDouble(mValue.GetInt());
-            }
-
-            if (mValue.type == MValueConst.Type.Uint)
-            {
-                return Convert.ToDouble(mValue.GetUint());
-            }
-
-            // Types doesn't match
-            return null;
+                MValueConst.Type.Double => mValue.GetDouble(),
+                MValueConst.Type.Int => Convert.ToDouble(mValue.GetInt()),
+                MValueConst.Type.Uint => Convert.ToDouble(mValue.GetUint()),
+                _ => null!
+            };
         }
 
         public static object ParseString(ISharedCore core, in MValueConst mValue, Type type,
