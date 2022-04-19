@@ -46,7 +46,6 @@ bool CoreClr::ValidateRuntime(nlohmann::basic_json<> updateJson, Ref<alt::IHttpC
     for (auto& entry : fs::recursive_directory_iterator(runtimeDirectoryPath)) {
         if (entry.is_directory() || !entry.is_regular_file()) continue;
         auto relativePath = "runtime/" + fs::relative( entry.path(), runtimeDirectoryPath ).generic_string();
-        Log::Info << "Checking if " << relativePath << " is in the json" << Log::Endl;
         if (!hashList.contains(relativePath)) {
             Log::Warning << "File " << entry.path() << " is not in update.json" << Log::Endl;
             if (!fs::remove(entry.path())) {
