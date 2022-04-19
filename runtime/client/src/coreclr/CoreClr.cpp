@@ -106,7 +106,7 @@ void CoreClr::Initialize() {
 
     InitializeCoreclr();
 
-    typedef void (* initialize_method)(alt::ICore* ptr, uint8_t sandbox);
+    typedef uint8_t (* initialize_method)(alt::ICore* ptr, uint8_t sandbox);
     initialize_method hostInitDelegate = nullptr;
 
     const int rc = _createDelegate(_runtimeHost, _domainId, "AltV.Net.Client.Host", "AltV.Net.Client.Host.Host", "Initialize", (void **) &hostInitDelegate);
@@ -118,7 +118,10 @@ void CoreClr::Initialize() {
 
     Log::Info << "Executing method from Host dll" << Log::Endl;
 
-    hostInitDelegate(_core, sandbox);
+    const auto hostInitRc = hostInitDelegate(_core, sandbox);
+    if (hostInitRc != 0) {
+        throw std::runtime_error("Host dll initialization failed. Code: " + std::to_string(hostInitRc));
+    }
     initialized = true;
 }
 
