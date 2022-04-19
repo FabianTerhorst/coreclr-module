@@ -11,17 +11,22 @@
 using namespace alt;
 namespace fs = std::filesystem;
 
-bool CoreClr::Validate(Ref<alt::IHttpClient> httpClient) const {
-    auto const clrDirectoryPath = GetDataDirectoryPath();
-    if (!fs::exists(clrDirectoryPath)) return false;
-    
-    const auto updateFile = utils::download_file_sync(httpClient, "https://cdn.block2play.com/coreclr/update.json");
-    auto updateJson = nlohmann::json::parse(updateFile.body);
+std::string CoreClr::GetBaseCdnUrl() const {
+    static auto branch = _core->GetBranch();
+    return "https://cdn.altv.mp/coreclr-client-module/" + branch + "/x64_win32/";
+}
+
+inline const std::string host_dll_name = "AltV.Net.Client.Host.dll";
+
+bool CoreClr::ValidateRuntime(nlohmann::basic_json<> updateJson, Ref<alt::IHttpClient> httpClient) const {
+    auto const runtimeDirectoryPath = GetRuntimeDirectoryPath();
+    if (!fs::exists(runtimeDirectoryPath)) return false;
     
     const auto hashList = updateJson["hashList"];
     
     for (auto it = hashList.begin(); it != hashList.end(); ++it) {
-        auto path = clrDirectoryPath;
+        if (!utils::has_prefix(it.key(), "runtime/")) continue;
+        auto path = GetDataDirectoryPath();
         path.append(it.key());
         if (!fs::exists(path)) {
             Log::Warning << "File " << path.string() << " does not exist" << Log::Endl;
@@ -33,13 +38,14 @@ bool CoreClr::Validate(Ref<alt::IHttpClient> httpClient) const {
         const std::string hash = checksum.final();
         if (hash != it.value()) {
             Log::Warning << "File " << path << " has invalid hash" << Log::Endl;
+            Log::Warning << "Current " << hash << " Needed " << it.value() << Log::Endl;
             return false;
         }
     }
     
-    for (auto& entry : fs::recursive_directory_iterator(clrDirectoryPath)) {
+    for (auto& entry : fs::recursive_directory_iterator(runtimeDirectoryPath)) {
         if (entry.is_directory() || !entry.is_regular_file()) continue;
-        auto relativePath = fs::relative( entry.path(), clrDirectoryPath ).generic_string();
+        auto relativePath = "runtime/" + fs::relative( entry.path(), runtimeDirectoryPath ).generic_string();
         Log::Info << "Checking if " << relativePath << " is in the json" << Log::Endl;
         if (!hashList.contains(relativePath)) {
             Log::Warning << "File " << entry.path() << " is not in update.json" << Log::Endl;
@@ -52,31 +58,81 @@ bool CoreClr::Validate(Ref<alt::IHttpClient> httpClient) const {
     return true;
 }
 
-void CoreClr::Download(Ref<alt::IHttpClient> httpClient) const {
+void CoreClr::DownloadRuntime(Ref<alt::IHttpClient> httpClient) const {
     auto attempt = 0;
-
+    
     while (true) {
         if (attempt++ >= 6) throw std::runtime_error("Failed to download CoreCLR after " + std::to_string(attempt) + " attempts");
         
         Log::Info << "Downloading CoreCLR (attempt " << attempt << ")" << Log::Endl;
-        
-        const auto response = utils::download_file_sync(httpClient, "https://cdn.block2play.com/coreclr/csharp-cache.zip");
-        Log::Info << "Update finished" << Log::Endl;
 
-        const auto clrDirectoryPath = GetDataDirectoryPath();
-        if (!fs::exists(clrDirectoryPath)) fs::create_directories(clrDirectoryPath);
+        static auto url = GetBaseCdnUrl() + "runtime.zip";
+        const auto response = utils::download_file_sync(httpClient, url);
+        Log::Info << "Download finished" << Log::Endl;
+
+        static auto runtimeDirectoryPath = GetRuntimeDirectoryPath();
+        if (!fs::exists(runtimeDirectoryPath)) fs::create_directories(runtimeDirectoryPath);
             
         std::istringstream is(response.body, std::ios::binary);
         Log::Info << "Extracting zip" << Log::Endl;
             
         try {
             miniz_cpp::zip_file zip(is);
-            zip.extractall(clrDirectoryPath.string());
+            zip.extractall(runtimeDirectoryPath.string());
             Log::Info << "Extract finished" << Log::Endl;
             return;
         } catch (std::runtime_error& e) {
             Log::Error << "Failed to extract zip: " << e.what() << Log::Endl;
         }
+    }
+}
+
+bool CoreClr::ValidateHost(nlohmann::basic_json<> updateJson) const {
+    Log::Info << "Validating Host" << Log::Endl;
+    
+    static auto hostPath = GetDataDirectoryPath().append(host_dll_name);
+    
+    if (!fs::exists(hostPath)) {
+        Log::Warning << "Host file does not exist" << Log::Endl;
+        return false;
+    }
+    
+    SHA1 checksum;
+    auto stream = std::ifstream(hostPath, std::ios::binary);
+    checksum.update(stream);
+    const std::string hash = checksum.final();
+    
+    const auto hashList = updateJson["hashList"];
+    
+    if (hashList[host_dll_name] != hash) {
+        Log::Warning << "Host has invalid hash" << Log::Endl;
+        return false;
+    }
+
+    return true;
+}
+
+void CoreClr::DownloadHost(Ref<alt::IHttpClient> httpClient) const {
+    static auto url = GetBaseCdnUrl() + host_dll_name;
+    auto attempt = 0;
+    
+    while (true) {
+        if (attempt++ >= 6) throw std::runtime_error("Failed to download Host after " + std::to_string(attempt) + " attempts");
+        
+        Log::Info << "Downloading Host (attempt " << attempt << ")" << Log::Endl;
+
+        const auto response = utils::download_file_sync(httpClient, url);
+        if (response.statusCode != 200) {
+            Log::Error << "Failed to download Host: " << response.statusCode << Log::Endl;
+            continue;
+        }
+        
+
+        static auto path = GetDataDirectoryPath().append(host_dll_name);
+        std::ofstream file(path, std::ios::binary);
+        file.write(response.body.data(), response.body.size());
+        file.close();
+        return;
     }
 }
 
@@ -199,13 +255,29 @@ void CoreClr::DownloadNuGets(alt::Ref<alt::IHttpClient> httpClient) {
 void CoreClr::Update(alt::IResource* resource) {
     const auto httpClient = _core->CreateHttpClient(resource);
 
+    static auto url = GetBaseCdnUrl() + "update.json";
+    const auto updateFile = utils::download_file_sync(httpClient, url);
+    const auto updateJson = nlohmann::json::parse(updateFile.body);
+    
     auto attempt = 0;
-    while (!Validate(httpClient)) {
+    while (!ValidateRuntime(updateJson, httpClient)) {
         if (attempt++ >= 3) throw std::runtime_error("Failed to confirm CoreCLR download after " + std::to_string(attempt) + " attempts");
         try {
-            Download(httpClient);
+            DownloadRuntime(httpClient);
         } catch(const std::exception& e) {
             Log::Error << "Failed to download CoreCLR: " << e.what() << Log::Endl;
+            throw;
+        }
+    }
+    
+    attempt = 0;
+    while (!ValidateHost(updateJson)) {
+        if (attempt++ >= 3) throw std::runtime_error("Failed to confirm Host download after " + std::to_string(attempt) + " attempts");
+        try {
+            DownloadHost(httpClient);
+        } catch(const std::exception& e) {
+            Log::Error << "Failed to download Host: " << e.what() << Log::Endl;
+            throw;
         }
     }
 
@@ -217,6 +289,7 @@ void CoreClr::Update(alt::IResource* resource) {
                 DownloadNuGets(httpClient);
             } catch(const std::exception& e) {
                 Log::Error << "Failed to download NuGets: " << e.what() << Log::Endl;
+                throw;
             }
         }
     }
