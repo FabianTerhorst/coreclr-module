@@ -19,8 +19,8 @@ public:
     bool sandbox = true;
     void Initialize();
     void Update(alt::IResource* resource);
-    static void StartResource(alt::IResource* resource, alt::ICore* core);
-    static void StopResource(alt::IResource* resource);
+    static bool StartResource(alt::IResource* resource, alt::ICore* core);
+    static bool StopResource(alt::IResource* resource);
     static std::string BuildTpaList(const std::string& runtimeDir);
     static std::filesystem::path GetMainDirectoryPath();
     static std::filesystem::path GetDataDirectoryPath();

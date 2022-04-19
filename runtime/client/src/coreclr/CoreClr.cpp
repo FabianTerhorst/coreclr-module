@@ -14,9 +14,9 @@
 using namespace alt;
 using namespace std;
 
-CoreClrDelegate_t load_resource_delegate = [](auto arg1, auto arg2) { return 1; };
-CoreClrDelegate_t stop_resource_delegate = [](auto arg1, auto arg2) { return 1; };
-CoreClrDelegate_t stop_runtime_delegate = [](auto arg1, auto arg2) { return 1; };
+CoreClrDelegate_t load_resource_delegate = nullptr;
+CoreClrDelegate_t stop_resource_delegate = nullptr;
+CoreClrDelegate_t stop_runtime_delegate = nullptr;
 
 std::filesystem::path CoreClr::GetMainDirectoryPath() {
 #ifdef DEBUG_CLIENT
@@ -151,6 +151,7 @@ bool CoreClr::StopResource(alt::IResource* resource) {
 EXPORT void SetResourceLoadDelegates(const CoreClrDelegate_t resourceExecute, const CoreClrDelegate_t resourceExecuteUnload,
                                      const CoreClrDelegate_t stopRuntime) {
     if (load_resource_delegate || stop_resource_delegate || stop_runtime_delegate) {
+        Log::Error << "Resource delegates cannot be replaced" << Log::Endl;
         abort(); // developer tried to call that method from resource XD
     }
 
