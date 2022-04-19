@@ -35,6 +35,10 @@ namespace AltV.Net.Client.Runtime
                 handles.AddFirst(GCHandle.Alloc(onWebViewEvent));
                 core.Library.Client.Event_SetWebViewEventDelegate(this.NativePointer, onWebViewEvent);
                 
+                RmlEventModuleDelegate onRmlElementEvent = ModuleWrapper.OnRmlElementEvent;
+                handles.AddFirst(GCHandle.Alloc(onRmlElementEvent));
+                core.Library.Client.Event_SetRmlEventDelegate(this.NativePointer, onRmlElementEvent);
+                
                 ConsoleCommandModuleDelegate onConsoleCommand = ModuleWrapper.OnConsoleCommand;
                 handles.AddFirst(GCHandle.Alloc(onConsoleCommand));
                 core.Library.Client.Event_SetConsoleCommandDelegate(this.NativePointer, onConsoleCommand);

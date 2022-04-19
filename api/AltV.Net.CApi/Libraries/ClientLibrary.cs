@@ -163,11 +163,13 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveEntityModuleDelegate, void> Event_SetRemoveEntityDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemovePlayerModuleDelegate, void> Event_SetRemovePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveVehicleModuleDelegate, void> Event_SetRemoveVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RmlEventModuleDelegate, void> Event_SetRmlEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ServerEventModuleDelegate, void> Event_SetServerEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.StreamSyncedMetaChangeModuleDelegate, void> Event_SetStreamSyncedMetaChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.SyncedMetaChangeModuleDelegate, void> Event_SetSyncedMetaChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.TaskChangeModuleDelegate, void> Event_SetTaskChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.TickModuleDelegate, void> Event_SetTickDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.WebSocketEventModuleDelegate, void> Event_SetWebSocketEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WebViewEventModuleDelegate, void> Event_SetWebViewEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowFocusChangeModuleDelegate, void> Event_SetWindowFocusChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowResolutionChangeModuleDelegate, void> Event_SetWindowResolutionChangeDelegate { get; }
@@ -635,11 +637,13 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveEntityModuleDelegate, void> Event_SetRemoveEntityDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemovePlayerModuleDelegate, void> Event_SetRemovePlayerDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveVehicleModuleDelegate, void> Event_SetRemoveVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RmlEventModuleDelegate, void> Event_SetRmlEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ServerEventModuleDelegate, void> Event_SetServerEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.StreamSyncedMetaChangeModuleDelegate, void> Event_SetStreamSyncedMetaChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.SyncedMetaChangeModuleDelegate, void> Event_SetSyncedMetaChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.TaskChangeModuleDelegate, void> Event_SetTaskChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.TickModuleDelegate, void> Event_SetTickDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.WebSocketEventModuleDelegate, void> Event_SetWebSocketEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WebViewEventModuleDelegate, void> Event_SetWebViewEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowFocusChangeModuleDelegate, void> Event_SetWindowFocusChangeDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowResolutionChangeModuleDelegate, void> Event_SetWindowResolutionChangeDelegate { get; }
@@ -1107,11 +1111,13 @@ namespace AltV.Net.CApi.Libraries
             Event_SetRemoveEntityDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveEntityModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveEntityDelegate");
             Event_SetRemovePlayerDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemovePlayerModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemovePlayerDelegate");
             Event_SetRemoveVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveVehicleDelegate");
+            Event_SetRmlEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RmlEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRmlEventDelegate");
             Event_SetServerEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ServerEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetServerEventDelegate");
             Event_SetStreamSyncedMetaChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.StreamSyncedMetaChangeModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetStreamSyncedMetaChangeDelegate");
             Event_SetSyncedMetaChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.SyncedMetaChangeModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetSyncedMetaChangeDelegate");
             Event_SetTaskChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.TaskChangeModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetTaskChangeDelegate");
             Event_SetTickDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.TickModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetTickDelegate");
+            Event_SetWebSocketEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WebSocketEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetWebSocketEventDelegate");
             Event_SetWebViewEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WebViewEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetWebViewEventDelegate");
             Event_SetWindowFocusChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowFocusChangeModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetWindowFocusChangeDelegate");
             Event_SetWindowResolutionChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.WindowResolutionChangeModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetWindowResolutionChangeDelegate");

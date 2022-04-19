@@ -12,6 +12,8 @@ namespace AltV.Net.Client
         private Dictionary<string, HashSet<Function>> ServerEventBus = new();
         private Dictionary<string, HashSet<Function>> ClientEventBus = new();
         private Dictionary<IntPtr, Dictionary<string, HashSet<Function>>> WebViewEventBus = new();
+        private Dictionary<IntPtr, Dictionary<string, HashSet<Function>>> RmlElementEventBus = new();
+        private Dictionary<IntPtr, Dictionary<string, HashSet<Function>>> WebSocketEventBus = new();
 
         internal readonly IEventHandler<TickDelegate> TickEventHandler =
             new HashSetEventHandler<TickDelegate>();
@@ -120,6 +122,24 @@ namespace AltV.Net.Client
             foreach (var function in handlers[name])
             {
                 function.CallCatching(mValues, $"web view event {name} handler");
+            }
+        }
+        
+        public void OnRmlElementEvent(IntPtr rmlElementPtr, string name, IntPtr[] args)
+        {
+            var mValue = new MValueConst(this, args[0]);
+            if (mValue.type != MValueConst.Type.Dict)
+            {
+                LogInfo("OnRmlElementEvent: Args are not dict");
+                return;
+            }
+            if (!RmlElementEventBus.ContainsKey(rmlElementPtr)) return;
+            RmlElementEventBus.TryGetValue(rmlElementPtr, out var handlers);
+            if (handlers == null) return;
+            if (!handlers.ContainsKey(name)) return;
+            foreach (var function in handlers[name])
+            {
+                function.InvokeNoResult(new object[] { mValue });
             }
         }
         
@@ -360,6 +380,50 @@ namespace AltV.Net.Client
             {
                 eventHandlers = new Dictionary<string, HashSet<Function>> {{name, new HashSet<Function> {function}}};
                 WebViewEventBus[webViewPtr] = eventHandlers;
+            }
+            return function;
+        }
+        
+        public Function AddRmlElementEventListener(IntPtr rmlElementPtr, string name, Function function)
+        {
+            if (RmlElementEventBus.TryGetValue(rmlElementPtr, out var eventHandlers))
+            {
+                if (eventHandlers.TryGetValue(name, out var eventHandler))
+                {
+                    eventHandler.Add(function);
+                }
+                else
+                {
+                    eventHandler = new HashSet<Function> {function};
+                    eventHandlers[name] = eventHandler;
+                }
+            }
+            else
+            {
+                eventHandlers = new Dictionary<string, HashSet<Function>> {{name, new HashSet<Function> {function}}};
+                RmlElementEventBus[rmlElementPtr] = eventHandlers;
+            }
+            return function;
+        }
+
+        public Function AddWebSocketEventListener(IntPtr websocketPtr, string name, Function function)
+        {
+            if (WebSocketEventBus.TryGetValue(websocketPtr, out var eventHandlers))
+            {
+                if (eventHandlers.TryGetValue(name, out var eventHandler))
+                {
+                    eventHandler.Add(function);
+                }
+                else
+                {
+                    eventHandler = new HashSet<Function> {function};
+                    eventHandlers[name] = eventHandler;
+                }
+            }
+            else
+            {
+                eventHandlers = new Dictionary<string, HashSet<Function>> {{name, new HashSet<Function> {function}}};
+                WebSocketEventBus[websocketPtr] = eventHandlers;
             }
             return function;
         }

@@ -9,8 +9,10 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void ClientEventModuleDelegate(string name, IntPtr args, ulong size);
     public delegate void ServerEventModuleDelegate(string name, IntPtr args, ulong size);
     public delegate void WebViewEventModuleDelegate(IntPtr webView, string name, IntPtr args, ulong size);
+    public delegate void RmlEventModuleDelegate(IntPtr rmlElement, string name, IntPtr args, ulong size);
+    public delegate void WebSocketEventModuleDelegate(IntPtr webSocket, string name, IntPtr args, ulong size);
     public delegate void ConsoleCommandModuleDelegate(string name, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] string[] args, int argsSize);
-    
+
     public delegate void CreatePlayerModuleDelegate(IntPtr pointer, ushort id);
     public delegate void RemovePlayerModuleDelegate(IntPtr pointer);
     

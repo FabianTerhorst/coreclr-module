@@ -163,6 +163,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<int*, nint> GetVersionStatic { get; }
         public delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint> Invoker_Create { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Invoker_Destroy { get; }
+        public delegate* unmanaged[Cdecl]<byte> IsDebugStatic { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_AddRef { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], ulong, nint> MValueConst_CallFunction { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_Delete { get; }
@@ -384,6 +385,7 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<int*, nint> GetVersionStatic { get; }
         public delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint> Invoker_Create { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, void> Invoker_Destroy { get; }
+        public delegate* unmanaged[Cdecl]<byte> IsDebugStatic { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_AddRef { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint[], ulong, nint> MValueConst_CallFunction { get; }
         public delegate* unmanaged[Cdecl]<nint, void> MValueConst_Delete { get; }
@@ -605,6 +607,7 @@ namespace AltV.Net.CApi.Libraries
             GetVersionStatic = (delegate* unmanaged[Cdecl]<int*, nint>) NativeLibrary.GetExport(handle, "GetVersionStatic");
             Invoker_Create = (delegate* unmanaged[Cdecl]<nint, MValueFunctionCallback, nint>) NativeLibrary.GetExport(handle, "Invoker_Create");
             Invoker_Destroy = (delegate* unmanaged[Cdecl]<nint, nint, void>) NativeLibrary.GetExport(handle, "Invoker_Destroy");
+            IsDebugStatic = (delegate* unmanaged[Cdecl]<byte>) NativeLibrary.GetExport(handle, "IsDebugStatic");
             MValueConst_AddRef = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "MValueConst_AddRef");
             MValueConst_CallFunction = (delegate* unmanaged[Cdecl]<nint, nint, nint[], ulong, nint>) NativeLibrary.GetExport(handle, "MValueConst_CallFunction");
             MValueConst_Delete = (delegate* unmanaged[Cdecl]<nint, void>) NativeLibrary.GetExport(handle, "MValueConst_Delete");
