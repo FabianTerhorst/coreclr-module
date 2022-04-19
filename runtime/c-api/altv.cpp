@@ -75,6 +75,10 @@ const char* GetBranchStatic(int32_t &size) {
     return AllocateString(alt::ICore::Instance().GetBranch(), size);
 }
 
+uint8_t IsDebugStatic() {
+    return alt::ICore::Instance().IsDebug();
+}
+
 const char* GetCApiVersion(int32_t &size) {
     return AllocateString(CSHARP_VERSION, size);
 }
