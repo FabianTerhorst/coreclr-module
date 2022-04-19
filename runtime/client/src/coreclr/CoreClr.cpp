@@ -14,9 +14,9 @@
 using namespace alt;
 using namespace std;
 
-CoreClrDelegate_t load_resource_delegate = nullptr;
-CoreClrDelegate_t stop_resource_delegate = nullptr;
-CoreClrDelegate_t stop_runtime_delegate = nullptr;
+CoreClrDelegate_t load_resource_delegate = [](auto arg1, auto arg2) { return 1; };
+CoreClrDelegate_t stop_resource_delegate = [](auto arg1, auto arg2) { return 1; };
+CoreClrDelegate_t stop_runtime_delegate = [](auto arg1, auto arg2) { return 1; };
 
 std::filesystem::path CoreClr::GetMainDirectoryPath() {
 #ifdef DEBUG_CLIENT
@@ -122,7 +122,7 @@ void CoreClr::Initialize() {
     initialized = true;
 }
 
-void CoreClr::StartResource(alt::IResource *resource, alt::ICore* core) {
+bool CoreClr::StartResource(alt::IResource* resource, alt::ICore* core) {
     const auto path = utils::string_to_wstring(resource->GetMain());
 
     struct start_args {
@@ -132,16 +132,16 @@ void CoreClr::StartResource(alt::IResource *resource, alt::ICore* core) {
     };
     start_args startArgs{path.c_str(), resource, core};
 
-    load_resource_delegate(&startArgs, sizeof(startArgs));
+    return load_resource_delegate(&startArgs, sizeof(startArgs)) == 0;
 }
 
-void CoreClr::StopResource(alt::IResource *resource) {
+bool CoreClr::StopResource(alt::IResource* resource) {
     struct stop_args {
         const alt::IResource *resourcePtr;
     };
     stop_args stopArgs{resource};
 
-    stop_resource_delegate(&stopArgs, sizeof(stopArgs));
+    return stop_resource_delegate(&stopArgs, sizeof(stopArgs)) == 0;
 }
 
 // ReSharper disable once CppInconsistentNaming

@@ -26,16 +26,15 @@ bool CSharpResourceImpl::Start()
     resource->EnableNatives();
     auto scope = resource->PushNativesScope();
     ResetDelegates();
-    CoreClr::StartResource(resource, core);
-    return true;
+    return CoreClr::StartResource(resource, core);
 }
 
 bool CSharpResourceImpl::Stop()
 {
     auto scope = resource->PushNativesScope();
-    GetRuntime()->clr.StopResource(resource);
+    auto res = CoreClr::StopResource(resource);
     ResetDelegates();
-    return true;
+    return res;
 }
 
 void* CSharpResourceImpl::  GetEntityPointer(alt::IEntity* entity) {
