@@ -10,8 +10,8 @@
     - name: Events
       href: events.md
       items:
-        - name: Build in events
-          href: build-in-events.md
+        - name: Built in events
+          href: built-in-events.md
         - name: Custom events
           href: custom-events.md
     - name: Player communication
