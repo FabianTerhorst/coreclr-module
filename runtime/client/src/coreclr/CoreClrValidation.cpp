@@ -251,8 +251,8 @@ void CoreClr::DownloadNuGets(alt::Ref<alt::IHttpClient> httpClient) {
     }
 }
 
-void CoreClr::Update(alt::IResource* resource) {
-    const auto httpClient = _core->CreateHttpClient(resource);
+void CoreClr::Update() {
+    const auto httpClient = _core->CreateHttpClient(nullptr);
 
     static auto url = GetBaseCdnUrl() + "update.json";
     const auto updateFile = utils::download_file_sync(httpClient, url);
@@ -265,7 +265,6 @@ void CoreClr::Update(alt::IResource* resource) {
             DownloadRuntime(httpClient);
         } catch(const std::exception& e) {
             Log::Error << "Failed to download CoreCLR: " << e.what() << Log::Endl;
-            throw;
         }
     }
     
@@ -276,7 +275,6 @@ void CoreClr::Update(alt::IResource* resource) {
             DownloadHost(httpClient);
         } catch(const std::exception& e) {
             Log::Error << "Failed to download Host: " << e.what() << Log::Endl;
-            throw;
         }
     }
 
@@ -288,7 +286,6 @@ void CoreClr::Update(alt::IResource* resource) {
                 DownloadNuGets(httpClient);
             } catch(const std::exception& e) {
                 Log::Error << "Failed to download NuGets: " << e.what() << Log::Endl;
-                throw;
             }
         }
     }

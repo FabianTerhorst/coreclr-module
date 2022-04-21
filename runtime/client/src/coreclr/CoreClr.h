@@ -18,7 +18,6 @@ public:
     bool initialized = false;
     bool sandbox = true;
     void Initialize();
-    void Update(alt::IResource* resource);
     static bool StartResource(alt::IResource* resource, alt::ICore* core);
     static bool StopResource(alt::IResource* resource);
     static std::string BuildTpaList(const std::string& runtimeDir);
@@ -49,6 +48,9 @@ private:
     void DownloadHost(alt::Ref<alt::IHttpClient> httpClient) const;
     void DownloadNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::string& packageName, const std::string& version);
     void DownloadNuGets(alt::Ref<alt::IHttpClient> httpClient);
+    
     void InitializeCoreclr();
+    void Update();
+    
     std::string GetBaseCdnUrl() const;
 };
