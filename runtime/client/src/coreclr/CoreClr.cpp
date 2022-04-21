@@ -111,7 +111,7 @@ void CoreClr::Initialize() {
     typedef uint8_t (* initialize_method)(alt::ICore* ptr, uint8_t sandbox);
     initialize_method hostInitDelegate = nullptr;
 
-    const int rc = _createDelegate(_runtimeHost, _domainId, "AltV.Net.Client.Host", "AltV.Net.Client.Host.Host", "Initialize", (void **) &hostInitDelegate);
+    const int rc = _createDelegate(_runtimeHost, _domainId, "AltV.Net.Client.Host", "Entrypoint", "Initialize", (void **) &hostInitDelegate);
     if (rc != 0 || hostInitDelegate == nullptr) {
         std::stringstream error;
         error << "Cannot load Host dll. Return code: " << std::hex << std::showbase << rc << std::endl;
