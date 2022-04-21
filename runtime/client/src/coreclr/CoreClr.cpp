@@ -88,6 +88,8 @@ CoreClr::CoreClr(alt::ICore* core) {
 void CoreClr::Initialize() {
     if (initialized) return;
     Log::Info << "Initializing CoreCLR" << Log::Endl;
+    
+    Update();
 
     const auto coreclrPath = GetCoreClrDllPath();
     Log::Info << "CoreCLR dll found: " << coreclrPath.string() << Log::Endl;

@@ -17,7 +17,6 @@ bool CSharpResourceImpl::Start()
 {
     Log::Info << "Starting resource" << Log::Endl;
     try {
-        runtime->clr.Update(resource);
         runtime->clr.Initialize();
     } catch(std::runtime_error& e) {
         Log::Error << "Failed to initialize CLR: " << e.what() << Log::Endl;
