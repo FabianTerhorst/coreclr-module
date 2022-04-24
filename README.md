@@ -19,7 +19,7 @@ Repository containing the C# module for [alt:V multiplayer](https://altv.mp/).
 | ------------------ | ------------------------------------------------------- |
 | [/api](/api) | C# Scripting Api                      |            |
 | [/docs](/docs) | C# Documentation published to [alt:V Docs](http://docs.altv.mp/)      |
-| [/runtime](/runtime)     | C# c++ runtime using the alt:V Module Api    |
+| [/runtime](https://github.com/altmp/coreclr-module-runtime)     | C# c++ runtime using the alt:V Module Api    |
 
 ## Contributions
 
