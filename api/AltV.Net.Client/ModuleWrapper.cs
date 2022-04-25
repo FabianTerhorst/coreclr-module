@@ -18,9 +18,11 @@ namespace AltV.Net.Client
         private static IntPtr _resourcePointer;
         private static IntPtr _corePointer;
 
-        private const string DllName = "coreclr-client-module";
-        public static void MainWithAssembly(Assembly resourceAssembly, IntPtr resourcePointer, IntPtr corePointer)
+        private static string DllName;
+        public static void MainWithAssembly(Assembly resourceAssembly, IntPtr resourcePointer, IntPtr corePointer, string dllName)
         {
+            DllName = dllName;
+            
             var library = new Library(DllName, true);
             var logger = new Logger(library, corePointer);
             Alt.Logger = logger;
