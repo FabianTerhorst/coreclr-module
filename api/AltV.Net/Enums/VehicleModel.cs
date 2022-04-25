@@ -345,7 +345,7 @@ namespace AltV.Net.Enums
         RapidGt = 2360515092,
         Windsor2 = 2364918497,
         Insurgent3 = 2370534026,
-        Wastlander = 2382949506,
+        Wastelander = 2382949506,
         Asterope = 2391954683,
         Surge = 2400073108,
         Premier = 2411098011,
