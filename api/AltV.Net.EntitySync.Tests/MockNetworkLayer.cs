@@ -51,9 +51,10 @@ namespace AltV.Net.EntitySync.Tests
             clientRepository.Add(c);
         }
 
-        public void AddDummyClient()
+        public Client AddDummyClient()
         {
             ClientRepository.Add(dummy);
+            return dummy;
         }
         
         public void RemoveDummyClient()

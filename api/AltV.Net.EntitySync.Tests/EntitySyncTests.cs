@@ -431,20 +431,22 @@ namespace AltV.Net.EntitySync.Tests
             data["bla"] = 1337;
             var entity = new Entity(1, new Vector3(1000, 1000, 1000), 0, 2, data);
             AltEntitySync.AddEntity(entity);
-            mockNetworkLayer.AddDummyClient();
+            var dummy = mockNetworkLayer.AddDummyClient();
             var createTask = readAsyncCreate.AsTask();
             createTask.Wait();
             var createResult = createTask.Result;
             Assert.AreSame(createResult.Entity, entity);
             Assert.AreEqual(1, entity.GetClients().Count);
             Assert.AreEqual(1, entity.DataSnapshot.GetLastClients().Count);
+            Assert.AreEqual(1, dummy.GetEntities(0).Count);
 
             mockNetworkLayer.RemoveDummyClient();
             
-            Thread.Sleep(100);
+            Thread.Sleep(300);
 
             Assert.AreEqual(0, entity.DataSnapshot.GetLastClients().Count);
             Assert.AreEqual(0, entity.GetClients().Count);
+            Assert.AreEqual(1, dummy.GetEntities(0).Count);
             
             AltEntitySync.RemoveEntity(entity);
         }

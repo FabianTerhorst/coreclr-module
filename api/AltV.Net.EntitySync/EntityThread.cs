@@ -107,7 +107,7 @@ namespace AltV.Net.EntitySync
                                 spatialPartition.Remove(entityToChange);
                                 foreach (var client in entityToChange.GetClients())
                                 {
-                                    client.RemoveEntity(threadIndex, entityToChange);
+                                    client.RemoveEntityFully(threadIndex, entityToChange);
                                     onEntityRemove(client, entityToChange);
                                 }
 
@@ -176,8 +176,12 @@ namespace AltV.Net.EntitySync
                         {
                             while (clientThreadRepository.ClientsToRemove.TryDequeue(out var clientToRemove))
                             {
-                                clientToRemove.Snapshot.CleanupEntities(threadIndex, clientToRemove);
-                                foreach (var entityFromRemovedClient in clientToRemove.GetEntities(threadIndex))
+                                foreach (var snapshot in clientToRemove.Snapshot.GetSnapshot(threadIndex))
+                                {
+                                    var entityFromRemovedClient = snapshot.Key;
+                                    entityFromRemovedClient.DataSnapshot.RemoveClient(clientToRemove);
+                                }
+                                foreach (var (entityFromRemovedClient, _) in clientToRemove.GetEntities(threadIndex))
                                 {
                                     entityFromRemovedClient.RemoveClient(clientToRemove);
                                     if (!netOwnerEvents) continue;
