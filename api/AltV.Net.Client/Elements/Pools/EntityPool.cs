@@ -44,8 +44,7 @@ namespace AltV.Net.Client.Elements.Pools
         public bool Remove(IntPtr entityPointer)
         {
             if (!_entities.Remove(entityPointer, out var entity) || !entity.Exists) return false;
-            // todo call on remove
-            // todo set exists false
+            BaseObjectPool<TEntity>.SetEntityNoLongerExists(entity);
             OnRemove(entity);
             return true;
         }

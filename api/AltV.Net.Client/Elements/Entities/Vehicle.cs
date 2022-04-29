@@ -29,6 +29,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.Vehicle_GetGear(VehicleNativePointer);
                 }
             }
@@ -40,6 +41,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.Vehicle_GetIndicatorLights(VehicleNativePointer);
                 }
             }
@@ -47,6 +49,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     Core.Library.Client.Vehicle_SetIndicatorLights(VehicleNativePointer, value);
                 }
             }
@@ -58,6 +61,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.Vehicle_GetMaxGear(VehicleNativePointer);
                 }
             }
@@ -65,6 +69,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     Core.Library.Client.Vehicle_SetMaxGear(VehicleNativePointer, value);
                 }
             }
@@ -76,6 +81,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.Vehicle_GetRPM(VehicleNativePointer);
                 }
             }
@@ -87,6 +93,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.Vehicle_GetSeatCount(VehicleNativePointer);
                 }
             }
@@ -98,6 +105,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.Vehicle_GetWheelSpeed(VehicleNativePointer);
                 }
             }
@@ -109,6 +117,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     var position = Vector3.Zero;
                     Core.Library.Client.Vehicle_GetSpeedVector(VehicleNativePointer, &position);
                     return position;
@@ -122,6 +131,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Shared.Vehicle_GetWheelsCount(VehicleNativePointer);
                 }
             }

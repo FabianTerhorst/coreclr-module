@@ -54,4 +54,13 @@ namespace AltV.Net.CApi.ClientEvents
     public delegate void WindowResolutionChangeModuleDelegate(Vector2 oldResolution, Vector2 newResolution);
 
     public delegate void NetOwnerChangeModuleDelegate(IntPtr target, BaseObjectType type, IntPtr newOwner, IntPtr oldOwner);
+    
+    public delegate void RemoveBlipModuleDelegate(IntPtr pointer);
+    public delegate void RemoveWebViewModuleDelegate(IntPtr pointer);
+    public delegate void RemoveCheckpointModuleDelegate(IntPtr pointer);
+    public delegate void RemoveWebSocketClientModuleDelegate(IntPtr pointer);
+    public delegate void RemoveHttpClientModuleDelegate(IntPtr pointer);
+    public delegate void RemoveAudioModuleDelegate(IntPtr pointer);
+    public delegate void RemoveRmlElementModuleDelegate(IntPtr pointer);
+    public delegate void RemoveRmlDocumentModuleDelegate(IntPtr pointer);
 }

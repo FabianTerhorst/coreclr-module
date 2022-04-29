@@ -36,6 +36,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Shared.Entity_GetModel(EntityNativePointer);
                 }
             }
@@ -47,6 +48,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     var ptr = Core.Library.Shared.Entity_GetNetOwner(EntityNativePointer);
                     if (ptr == IntPtr.Zero) return null;
                     return Alt.Core.PlayerPool.Get(ptr);
@@ -61,6 +63,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.Entity_GetScriptID(EntityNativePointer);
                 }
             }
@@ -74,7 +77,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
-                    
+                    CheckIfEntityExists();
                     var position = Rotation.Zero;
                     this.Core.Library.Shared.Entity_GetRotation(this.EntityNativePointer, &position);
                     return position;
@@ -84,6 +87,7 @@ namespace AltV.Net.Client.Elements.Entities
         
         public void GetSyncedMetaData(string key, out MValueConst value)
         {
+            CheckIfEntityExists();
             unsafe
             {
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
@@ -94,6 +98,7 @@ namespace AltV.Net.Client.Elements.Entities
 
         public bool HasSyncedMetaData(string key)
         {
+            CheckIfEntityExists();
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
@@ -105,6 +110,7 @@ namespace AltV.Net.Client.Elements.Entities
 
         public void GetStreamSyncedMetaData(string key, out MValueConst value)
         {
+            CheckIfEntityExists();
             unsafe
             {
                 var stringPtr = AltNative.StringUtils.StringToHGlobalUtf8(key);
@@ -115,6 +121,7 @@ namespace AltV.Net.Client.Elements.Entities
 
         public bool HasStreamSyncedMetaData(string key)
         {
+            CheckIfEntityExists();
             unsafe
             {
                 var stringPtr = MemoryUtils.StringToHGlobalUtf8(key);
@@ -263,6 +270,14 @@ namespace AltV.Net.Client.Elements.Entities
             }
 
             return true;
+        }
+        
+        public override void CheckIfEntityExists()
+        {
+            CheckIfCallIsValid();
+            if (Exists) return;
+
+            throw new EntityRemovedException(this);
         }
     }
 }

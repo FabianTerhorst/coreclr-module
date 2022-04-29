@@ -67,7 +67,7 @@ namespace AltV.Net.Client
             Alt.Log("Http client pool created");
 
             var webSocketClientPool = new WebSocketClientPool(_resource.GetWebSocketClientFactory());
-            Alt.Log("Http client pool created");
+            Alt.Log("WebSocket client pool created");
 
             var webViewPool = new WebViewPool(_resource.GetWebViewFactory());
             Alt.Log("Webview pool created");
@@ -135,6 +135,14 @@ namespace AltV.Net.Client
             }
             _core.PlayerPool.Dispose();
             _core.VehiclePool.Dispose();
+            _core.BlipPool.Dispose();
+            _core.AudioPool.Dispose();
+            _core.CheckpointPool.Dispose();
+            _core.HttpClientPool.Dispose();
+            _core.WebSocketClientPool.Dispose();
+            _core.WebViewPool.Dispose();
+            _core.RmlElementPool.Dispose();
+            _core.RmlDocumentPool.Dispose();
 
             _core.Resource.CSharpResourceImpl.Dispose();
         }
@@ -333,6 +341,46 @@ namespace AltV.Net.Client
         public static void OnPlayerLeaveVehicle(IntPtr vehicle, byte seat)
         {
             _core.OnPlayerLeaveVehicle(vehicle, seat);
+        }
+        
+        public static void OnBlipRemove(IntPtr blipPointer)
+        {
+            _core.OnBlipRemove(blipPointer);
+        }
+        
+        public static void OnWebViewRemove(IntPtr webView)
+        {
+            _core.OnWebViewRemove(webView);
+        }
+        
+        public static void OnCheckpointRemove(IntPtr checkpoint)
+        {
+            _core.OnCheckpointRemove(checkpoint);
+        }
+        
+        public static void OnWebSocketClientRemove(IntPtr webSocket)
+        {
+            _core.OnWebSocketClientRemove(webSocket);
+        }
+        
+        public static void OnHttpClientRemove(IntPtr httpClient)
+        {
+            _core.OnHttpClientRemove(httpClient);
+        }
+        
+        public static void OnAudioRemove(IntPtr audio)
+        {
+            _core.OnAudioRemove(audio);
+        }
+        
+        public static void OnRmlElementRemove(IntPtr element)
+        {
+            _core.OnRmlElementRemove(element);
+        }
+        
+        public static void OnRmlDocumentRemove(IntPtr document)
+        {
+            _core.OnRmlDocumentRemove(document);
         }
     }
 }

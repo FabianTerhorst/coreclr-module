@@ -46,6 +46,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.WebView_IsFocused(WebViewNativePointer) == 1;
                 }
             }
@@ -63,6 +64,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.WebView_IsOverlay(WebViewNativePointer) == 1;
                 }
             }
@@ -74,6 +76,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.WebView_IsVisible(WebViewNativePointer) == 1;
                 }
             }
@@ -81,6 +84,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     Core.Library.Client.WebView_SetIsVisible(WebViewNativePointer, (byte) (value ? 1 : 0));
                 }
             }
@@ -92,6 +96,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     var vector = Vector2.Zero;
                     Core.Library.Client.WebView_GetPosition(WebViewNativePointer, &vector);
                     return vector;
@@ -101,6 +106,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     Core.Library.Client.WebView_SetPosition(WebViewNativePointer, value);
                 }
             }
@@ -112,6 +118,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     var vector = Vector2.Zero;
                     Core.Library.Client.WebView_GetSize(WebViewNativePointer, &vector);
                     return vector;
@@ -121,6 +128,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     Core.Library.Client.WebView_SetSize(WebViewNativePointer, value);
                 }
             }
@@ -132,6 +140,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     var size = 0;
                     return Core.PtrToStringUtf8AndFree(
                         Core.Library.Client.WebView_GetUrl(WebViewNativePointer, &size), size);
@@ -141,6 +150,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     var str = MemoryUtils.StringToHGlobalUtf8(value);
                     Core.Library.Client.WebView_SetUrl(WebViewNativePointer, str);
                     Marshal.FreeHGlobal(str);
@@ -152,6 +162,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 var keyPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 var valuePtr = MemoryUtils.StringToHGlobalUtf8(value);
                 Core.Library.Client.WebView_SetExtraHeader(WebViewNativePointer, keyPtr, valuePtr);
@@ -164,6 +175,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 Core.Library.Client.WebView_SetZoomLevel(WebViewNativePointer, zoomLevel);
             }
         }
@@ -172,6 +184,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 Core.Library.Client.WebView_Focus(WebViewNativePointer);
             }
         }
@@ -180,6 +193,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 Core.Library.Client.WebView_Unfocus(WebViewNativePointer);
             }
         }
@@ -216,6 +230,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 Core.Library.Client.Core_TriggerWebViewEvent(Core.NativePointer, WebViewNativePointer, eventNamePtr, args, args.Length);
             }
         }

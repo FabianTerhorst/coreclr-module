@@ -36,6 +36,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     var ptr = Core.Library.Client.RmlDocument_GetBody(RmlDocumentNativePointer);
                     return Core.RmlElementPool.GetOrCreate(Core, ptr);
                 }
@@ -48,6 +49,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     var size = 0;
                     return Core.PtrToStringUtf8AndFree(Core.Library.Client.RmlDocument_GetSourceUrl(RmlDocumentNativePointer, &size), size);
                 }
@@ -60,6 +62,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.RmlDocument_IsModal(RmlDocumentNativePointer) == 1;
                 }
             }
@@ -71,6 +74,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.RmlDocument_IsVisible(RmlDocumentNativePointer) == 1;
                 }
             }
@@ -82,6 +86,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     var size = 0;
                     return Core.PtrToStringUtf8AndFree(Core.Library.Client.RmlDocument_GetTitle(RmlDocumentNativePointer, &size), size);
                 }
@@ -91,6 +96,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     var strPtr = MemoryUtils.StringToHGlobalUtf8(value);
                     Core.Library.Client.RmlDocument_SetTitle(RmlDocumentNativePointer, strPtr);
                     Marshal.FreeHGlobal(strPtr);
@@ -102,6 +108,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 var strPtr = MemoryUtils.StringToHGlobalUtf8(tag);
                 var ptr = Core.Library.Client.RmlDocument_CreateElement(RmlDocumentNativePointer, strPtr);
                 Marshal.FreeHGlobal(strPtr);
@@ -113,6 +120,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 var strPtr = MemoryUtils.StringToHGlobalUtf8(text);
                 var ptr = Core.Library.Client.RmlDocument_CreateTextNode(RmlDocumentNativePointer, strPtr);
                 Marshal.FreeHGlobal(strPtr);
@@ -124,6 +132,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 Core.Library.Client.RmlDocument_Hide(RmlDocumentNativePointer);
             }
         }
@@ -132,6 +141,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 Core.Library.Client.RmlDocument_Show(RmlDocumentNativePointer, (byte) (isModal ? 1 : 0), (byte) (focused ? 1 : 0));
             }
         }
@@ -140,6 +150,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 Core.Library.Client.RmlDocument_Update(RmlDocumentNativePointer);
             }
         }

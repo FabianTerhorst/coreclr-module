@@ -160,9 +160,17 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerEnterVehicleModuleDelegate, void> Event_SetPlayerEnterVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerLeaveVehicleModuleDelegate, void> Event_SetPlayerLeaveVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerSpawnModuleDelegate, void> Event_SetPlayerSpawnDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveAudioModuleDelegate, void> Event_SetRemoveAudioDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveBlipModuleDelegate, void> Event_SetRemoveBlipDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveCheckpointModuleDelegate, void> Event_SetRemoveCheckpointDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveEntityModuleDelegate, void> Event_SetRemoveEntityDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveHttpClientModuleDelegate, void> Event_SetRemoveHttpClientDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemovePlayerModuleDelegate, void> Event_SetRemovePlayerDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveRmlDocumentModuleDelegate, void> Event_SetRemoveRmlDocumentDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveRmlElementModuleDelegate, void> Event_SetRemoveRmlElementDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveVehicleModuleDelegate, void> Event_SetRemoveVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveWebSocketClientModuleDelegate, void> Event_SetRemoveWebSocketClientDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveWebViewModuleDelegate, void> Event_SetRemoveWebViewDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RmlEventModuleDelegate, void> Event_SetRmlEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ServerEventModuleDelegate, void> Event_SetServerEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.StreamSyncedMetaChangeModuleDelegate, void> Event_SetStreamSyncedMetaChangeDelegate { get; }
@@ -634,9 +642,17 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerEnterVehicleModuleDelegate, void> Event_SetPlayerEnterVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerLeaveVehicleModuleDelegate, void> Event_SetPlayerLeaveVehicleDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerSpawnModuleDelegate, void> Event_SetPlayerSpawnDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveAudioModuleDelegate, void> Event_SetRemoveAudioDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveBlipModuleDelegate, void> Event_SetRemoveBlipDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveCheckpointModuleDelegate, void> Event_SetRemoveCheckpointDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveEntityModuleDelegate, void> Event_SetRemoveEntityDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveHttpClientModuleDelegate, void> Event_SetRemoveHttpClientDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemovePlayerModuleDelegate, void> Event_SetRemovePlayerDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveRmlDocumentModuleDelegate, void> Event_SetRemoveRmlDocumentDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveRmlElementModuleDelegate, void> Event_SetRemoveRmlElementDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveVehicleModuleDelegate, void> Event_SetRemoveVehicleDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveWebSocketClientModuleDelegate, void> Event_SetRemoveWebSocketClientDelegate { get; }
+        public delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveWebViewModuleDelegate, void> Event_SetRemoveWebViewDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.RmlEventModuleDelegate, void> Event_SetRmlEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.ServerEventModuleDelegate, void> Event_SetServerEventDelegate { get; }
         public delegate* unmanaged[Cdecl]<nint, ClientEvents.StreamSyncedMetaChangeModuleDelegate, void> Event_SetStreamSyncedMetaChangeDelegate { get; }
@@ -1108,9 +1124,17 @@ namespace AltV.Net.CApi.Libraries
             Event_SetPlayerEnterVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerEnterVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerEnterVehicleDelegate");
             Event_SetPlayerLeaveVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerLeaveVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerLeaveVehicleDelegate");
             Event_SetPlayerSpawnDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.PlayerSpawnModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetPlayerSpawnDelegate");
+            Event_SetRemoveAudioDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveAudioModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveAudioDelegate");
+            Event_SetRemoveBlipDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveBlipModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveBlipDelegate");
+            Event_SetRemoveCheckpointDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveCheckpointModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveCheckpointDelegate");
             Event_SetRemoveEntityDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveEntityModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveEntityDelegate");
+            Event_SetRemoveHttpClientDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveHttpClientModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveHttpClientDelegate");
             Event_SetRemovePlayerDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemovePlayerModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemovePlayerDelegate");
+            Event_SetRemoveRmlDocumentDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveRmlDocumentModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveRmlDocumentDelegate");
+            Event_SetRemoveRmlElementDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveRmlElementModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveRmlElementDelegate");
             Event_SetRemoveVehicleDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveVehicleModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveVehicleDelegate");
+            Event_SetRemoveWebSocketClientDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveWebSocketClientModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveWebSocketClientDelegate");
+            Event_SetRemoveWebViewDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RemoveWebViewModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRemoveWebViewDelegate");
             Event_SetRmlEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.RmlEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetRmlEventDelegate");
             Event_SetServerEventDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.ServerEventModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetServerEventDelegate");
             Event_SetStreamSyncedMetaChangeDelegate = (delegate* unmanaged[Cdecl]<nint, ClientEvents.StreamSyncedMetaChangeModuleDelegate, void>) NativeLibrary.GetExport(handle, "Event_SetStreamSyncedMetaChangeDelegate");

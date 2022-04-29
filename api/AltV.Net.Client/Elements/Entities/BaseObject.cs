@@ -33,5 +33,16 @@ namespace AltV.Net.Client.Elements.Entities
                 Core.Library.Shared.Core_DestroyBaseObject(Core.NativePointer, this.BaseObjectNativePointer);
             }
         }
+
+        public override void CheckIfEntityExists()
+        {
+            CheckIfCallIsValid();
+            if (Exists)
+            {
+                return;
+            }
+
+            throw new BaseObjectRemovedException(this);
+        }
     }
 }
