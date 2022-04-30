@@ -79,7 +79,7 @@ namespace AltV.Net.Client
             var nativeResourcePool = new NativeResourcePool(_resource.GetResourceFactory());
             Alt.Log("Native resource pool created");
 
-            var baseBaseObjectPool = new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, webViewPool);
+            var baseBaseObjectPool = new BaseBaseObjectPool(playerPool, vehiclePool, blipPool, checkpointPool, audioPool, httpClientPool, webSocketClientPool, webViewPool, rmlElementPool, rmlDocumentPool);
             var baseEntityPool = new BaseEntityPool(playerPool, vehiclePool);
             var timerPool = new TimerPool();
 

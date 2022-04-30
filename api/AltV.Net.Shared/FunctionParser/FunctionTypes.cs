@@ -41,6 +41,8 @@ namespace AltV.Net.FunctionParser
         public static readonly Type Array = typeof(Array);
 
         public static readonly Type Entity = typeof(ISharedEntity);
+        
+        public static readonly Type BaseObject = typeof(ISharedBaseObject);
 
         public static readonly Type Obj = typeof(object);
 
