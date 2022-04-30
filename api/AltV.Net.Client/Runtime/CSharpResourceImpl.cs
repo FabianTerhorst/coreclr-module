@@ -151,6 +151,37 @@ namespace AltV.Net.Client.Runtime
                 handles.AddFirst(GCHandle.Alloc(onPlayerLeaveVehicle));
                 core.Library.Client.Event_SetPlayerLeaveVehicleDelegate(this.NativePointer, onPlayerLeaveVehicle);
                 
+                RemoveBlipModuleDelegate onRemoveBlip = ModuleWrapper.OnBlipRemove;
+				handles.AddFirst(GCHandle.Alloc(onRemoveBlip));
+				core.Library.Client.Event_SetRemoveBlipDelegate(this.NativePointer, onRemoveBlip);
+
+                RemoveWebViewModuleDelegate onRemoveWebView = ModuleWrapper.OnWebViewRemove;
+				handles.AddFirst(GCHandle.Alloc(onRemoveWebView));
+				core.Library.Client.Event_SetRemoveWebViewDelegate(this.NativePointer, onRemoveWebView);
+
+                RemoveCheckpointModuleDelegate onRemoveCheckpoint = ModuleWrapper.OnCheckpointRemove;
+				handles.AddFirst(GCHandle.Alloc(onRemoveCheckpoint));
+				core.Library.Client.Event_SetRemoveCheckpointDelegate(this.NativePointer, onRemoveCheckpoint);
+
+                RemoveWebSocketClientModuleDelegate onRemoveWebSocketClient = ModuleWrapper.OnWebSocketClientRemove;
+				handles.AddFirst(GCHandle.Alloc(onRemoveWebSocketClient));
+				core.Library.Client.Event_SetRemoveWebSocketClientDelegate(this.NativePointer, onRemoveWebSocketClient);
+
+                RemoveHttpClientModuleDelegate onRemoveHttpClient = ModuleWrapper.OnHttpClientRemove;
+				handles.AddFirst(GCHandle.Alloc(onRemoveHttpClient));
+				core.Library.Client.Event_SetRemoveHttpClientDelegate(this.NativePointer, onRemoveHttpClient);
+
+                RemoveAudioModuleDelegate onRemoveAudio = ModuleWrapper.OnAudioRemove;
+				handles.AddFirst(GCHandle.Alloc(onRemoveAudio));
+				core.Library.Client.Event_SetRemoveAudioDelegate(this.NativePointer, onRemoveAudio);
+
+                RemoveRmlElementModuleDelegate onRemoveRmlElement = ModuleWrapper.OnRmlElementRemove;
+				handles.AddFirst(GCHandle.Alloc(onRemoveRmlElement));
+				core.Library.Client.Event_SetRemoveRmlElementDelegate(this.NativePointer, onRemoveRmlElement);
+
+                RemoveRmlDocumentModuleDelegate onRemoveRmlDocument = ModuleWrapper.OnRmlDocumentRemove;
+				handles.AddFirst(GCHandle.Alloc(onRemoveRmlDocument));
+				core.Library.Client.Event_SetRemoveRmlDocumentDelegate(this.NativePointer, onRemoveRmlDocument);
             }
         }
         

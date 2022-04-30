@@ -403,7 +403,7 @@ namespace AltV.Net.FunctionParser
 
                     return ParseArray(core, in mValue, type, typeInfo);
                 case MValueConst.Type.BaseObject:
-                    return ParseEntity(core, in mValue, type, typeInfo);
+                    return ParseBaseObject(core, in mValue, type, typeInfo);
                 case MValueConst.Type.Dict:
                     if ((typeInfo?.IsMValueConvertible == true || typeInfo == null) &&
                         core.FromMValue(in mValue, type, out obj))
@@ -518,9 +518,9 @@ namespace AltV.Net.FunctionParser
                     return false;
                 case MValueConst.Type.BaseObject:
                     if (type == FunctionTypes.Obj ||
-                        (typeInfo?.IsEntity ?? type.GetInterfaces().Contains(FunctionTypes.Entity)))
+                        (typeInfo?.IsBaseObject ?? type.GetInterfaces().Contains(FunctionTypes.Entity)))
                     {
-                        obj = ParseEntity(core, in mValue, type, typeInfo);
+                        obj = ParseBaseObject(core, in mValue, type, typeInfo);
                         return true;
                     }
                     else
@@ -591,7 +591,7 @@ namespace AltV.Net.FunctionParser
             return array;
         }
 
-        public static object ParseEntity(ISharedCore core, in MValueConst mValue, Type type,
+        public static object ParseBaseObject(ISharedCore core, in MValueConst mValue, Type type,
             FunctionTypeInfo typeInfo)
         {
             // Types doesn't match
@@ -601,8 +601,9 @@ namespace AltV.Net.FunctionParser
             var entityPointer = mValue.GetEntityPointer(ref entityType);
 
             if (entityPointer == IntPtr.Zero || entityType == BaseObjectType.Undefined) return null;
-            var entity = core.BaseBaseObjectPool.Get(entityPointer, entityType);
+            var entity = core.BaseBaseObjectPool.GetOrCreate(core, entityPointer, entityType);
             
+            if (entity == null) return null;
             return type == FunctionTypes.Obj || entity.GetType().IsAssignableTo(type) ? entity : null;
         }
 

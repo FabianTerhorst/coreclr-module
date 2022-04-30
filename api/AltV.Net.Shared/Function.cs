@@ -67,7 +67,7 @@ namespace AltV.Net
                 stringParsers[i] = typeInfo.StringParser;
                 if (constParsers[i] == null || objectParsers[i] == null || stringParsers[i] == null)
                 {
-                    // Unsupported type
+                    throw new ArgumentException("Unsupported type " + arg.Name);
                     return null;
                 }
             }

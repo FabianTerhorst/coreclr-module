@@ -41,6 +41,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.Audio_GetCategory(AudioNativePointer);
                 }
             }
@@ -49,6 +50,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     Core.Library.Client.Audio_SetCategory(AudioNativePointer, value);
                 }
             }
@@ -60,6 +62,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.Audio_GetLooped(AudioNativePointer) == 1;
                 }
             }
@@ -68,6 +71,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     Core.Library.Client.Audio_SetLooped(AudioNativePointer, (byte) (value ? 1 : 0));
                 }
             }
@@ -79,6 +83,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.Audio_GetVolume(AudioNativePointer);
                 }
             }
@@ -87,6 +92,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     Core.Library.Client.Audio_SetVolume(AudioNativePointer, value);
                 }
             }
@@ -98,6 +104,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     var size = 0;
                     return Core.PtrToStringUtf8AndFree(Core.Library.Client.Audio_GetSource(AudioNativePointer, &size), size);
                 }
@@ -107,6 +114,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     var valuePtr = MemoryUtils.StringToHGlobalUtf8(value);
                     Core.Library.Client.Audio_SetSource(AudioNativePointer, valuePtr);
                     Marshal.FreeHGlobal(valuePtr);
@@ -120,6 +128,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.Audio_GetCurrentTime(AudioNativePointer);
                 }
             }
@@ -131,6 +140,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.Audio_IsFrontendPlay(AudioNativePointer) == 1;
                 }
             }
@@ -142,6 +152,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.Audio_GetMaxTime(AudioNativePointer);
                 }
             }
@@ -153,6 +164,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.Audio_IsPlaying(AudioNativePointer) == 1;
                 }
             }
@@ -162,6 +174,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 Core.Library.Client.Audio_AddOutput_ScriptId(AudioNativePointer, scriptId);
             }
         }
@@ -170,6 +183,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 Core.Library.Client.Audio_AddOutput_Entity(AudioNativePointer, entity.EntityNativePointer);
             }
         }
@@ -178,6 +192,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 Core.Library.Client.Audio_RemoveOutput_ScriptId(AudioNativePointer, scriptId);
             }
         }
@@ -186,6 +201,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 Core.Library.Client.Audio_RemoveOutput_Entity(AudioNativePointer, entity.EntityNativePointer);
             }
         }
@@ -194,6 +210,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 uint size = 0;
                 var entityArrayPtr = IntPtr.Zero;
                 var entityTypesArrayPtr = IntPtr.Zero;
@@ -246,6 +263,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 Core.Library.Client.Audio_Pause(AudioNativePointer);
             }
         }
@@ -254,6 +272,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 Core.Library.Client.Audio_Play(AudioNativePointer);
             }
         }
@@ -262,6 +281,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 Core.Library.Client.Audio_Reset(AudioNativePointer);
             }
         }
@@ -270,6 +290,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 Core.Library.Client.Audio_Seek(AudioNativePointer, time);
             }
         }

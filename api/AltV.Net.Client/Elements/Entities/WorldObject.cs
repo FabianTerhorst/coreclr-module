@@ -35,5 +35,16 @@ namespace AltV.Net.Client.Elements.Entities
                 }
             }
         }
+
+        public override void CheckIfEntityExists()
+        {
+            CheckIfCallIsValid();
+            if (Exists)
+            {
+                return;
+            }
+
+            throw new WorldObjectRemovedException(this);
+        }
     }
 }

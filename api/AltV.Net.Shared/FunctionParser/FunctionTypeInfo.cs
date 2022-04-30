@@ -9,7 +9,7 @@ namespace AltV.Net.FunctionParser
 {
     internal class FunctionTypeInfo
     {
-        public readonly bool IsEntity;
+        public readonly bool IsBaseObject;
 
         public readonly bool IsVehicle;
 
@@ -114,15 +114,15 @@ namespace AltV.Net.FunctionParser
             IsByteArray = paramType == FunctionTypes.ByteArray;
             
             var interfaces = paramType.GetInterfaces();
-            if (interfaces.Contains(FunctionTypes.Entity))
+            if (interfaces.Contains(FunctionTypes.BaseObject))
             {
-                IsEntity = true;
+                IsBaseObject = true;
                 IsVehicle = paramType == FunctionTypes.Vehicle || interfaces.Contains(FunctionTypes.Vehicle);
                 IsPlayer = paramType == FunctionTypes.Player || interfaces.Contains(FunctionTypes.Player);
             }
             else
             {
-                IsEntity = false;
+                IsBaseObject = false;
                 IsVehicle = false;
                 IsPlayer = false;
             }
@@ -259,11 +259,11 @@ namespace AltV.Net.FunctionParser
                 ObjectParser = FunctionObjectParsers.ParseArray;
                 StringParser = FunctionStringParsers.ParseArray;
             }
-            else if (IsEntity)
+            else if (IsBaseObject)
             {
-                ConstParser = FunctionMValueConstParsers.ParseEntity;
-                ObjectParser = FunctionObjectParsers.ParseEntity;
-                StringParser = FunctionStringParsers.ParseEntity;
+                ConstParser = FunctionMValueConstParsers.ParseBaseObject;
+                ObjectParser = FunctionObjectParsers.ParseBaseObject;
+                StringParser = FunctionStringParsers.ParseBaseObject;
             }
             else if (IsDict)
             {

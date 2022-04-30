@@ -60,6 +60,7 @@ namespace AltV.Net.Elements.Pools
                 _ => default
             };
         }
+        ISharedBaseObject IReadOnlyBaseBaseObjectPool.GetOrCreate(ISharedCore core, IntPtr entityPointer, BaseObjectType baseObjectType) => GetOrCreate((ICore) core, entityPointer, baseObjectType);
 
         public IBaseObject GetOrCreate(ICore core, IntPtr entityPointer, BaseObjectType baseObjectType, ushort entityId)
         {
@@ -74,6 +75,7 @@ namespace AltV.Net.Elements.Pools
                 _ => default
             };
         }
+        ISharedBaseObject IReadOnlyBaseBaseObjectPool.GetOrCreate(ISharedCore core, IntPtr entityPointer, BaseObjectType baseObjectType, ushort entityId) => GetOrCreate((ICore) core, entityPointer, baseObjectType, entityId);
 
         public bool Remove(IBaseObject entity)
         {

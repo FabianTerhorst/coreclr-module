@@ -89,7 +89,7 @@ namespace AltV.Net.FunctionParser
             return value;
         }
 
-        public static object ParseEntity(ISharedCore core, string value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseBaseObject(ISharedCore core, string value, Type type, FunctionTypeInfo typeInfo)
         {
             if (typeInfo.IsPlayer)
             {

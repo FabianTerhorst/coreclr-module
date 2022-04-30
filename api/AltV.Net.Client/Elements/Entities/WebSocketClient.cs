@@ -37,6 +37,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.WebSocketClient_IsAutoReconnect(WebSocketClientNativePointer) == 1;
                 }
             }
@@ -44,6 +45,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     Core.Library.Client.WebSocketClient_SetAutoReconnect(WebSocketClientNativePointer, (byte) (value ? 1 : 0));
                 }
             }
@@ -55,6 +57,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.WebSocketClient_IsPerMessageDeflate(WebSocketClientNativePointer) == 1;
                 }
             }
@@ -62,6 +65,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     Core.Library.Client.WebSocketClient_SetPerMessageDeflate(WebSocketClientNativePointer, (byte) (value ? 1 : 0));
                 }
             }
@@ -73,6 +77,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return Core.Library.Client.WebSocketClient_GetPingInterval(WebSocketClientNativePointer);
                 }
             }
@@ -80,6 +85,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     Core.Library.Client.WebSocketClient_SetPingInterval(WebSocketClientNativePointer, value);
                 }
             }
@@ -91,6 +97,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     return (WebSocketReadyState) Core.Library.Client.WebSocketClient_GetReadyState(WebSocketClientNativePointer);
                 }
             }
@@ -102,6 +109,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     var size = 0;
                     return Core.PtrToStringUtf8AndFree(Core.Library.Client.WebSocketClient_GetUrl(WebSocketClientNativePointer, &size), size);
                 }
@@ -111,6 +119,7 @@ namespace AltV.Net.Client.Elements.Entities
             {
                 unsafe
                 {
+                    CheckIfEntityExists();
                     var valuePtr = MemoryUtils.StringToHGlobalUtf8(value);
                     Core.Library.Client.WebSocketClient_SetUrl(WebSocketClientNativePointer, valuePtr);
                     Marshal.FreeHGlobal(valuePtr);
@@ -122,6 +131,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 var valuePtr = MemoryUtils.StringToHGlobalUtf8(subProtocol);
                 Core.Library.Client.WebSocketClient_AddSubProtocol(WebSocketClientNativePointer, valuePtr);
                 Marshal.FreeHGlobal(valuePtr);
@@ -132,6 +142,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 uint size = 0;
                 var subProtocolsPtr = Core.Library.Client.WebSocketClient_GetSubProtocols(WebSocketClientNativePointer, &size);
                 return Core.MarshalStringArrayPtrAndFree(subProtocolsPtr, size);
@@ -142,6 +153,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 var messagePtr = MemoryUtils.StringToHGlobalUtf8(message);
                 var result = Core.Library.Client.WebSocketClient_Send_String(WebSocketClientNativePointer, messagePtr) == 1;
                 Marshal.FreeHGlobal(messagePtr);
@@ -153,6 +165,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 var messagePtr = MemoryUtils.ByteArrayToHGlobal(message);
                 var result = Core.Library.Client.WebSocketClient_Send_Binary(WebSocketClientNativePointer, messagePtr, (uint) message.Length) == 1;
                 Marshal.FreeHGlobal(messagePtr);
@@ -164,6 +177,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 var namePtr = MemoryUtils.StringToHGlobalUtf8(name);
                 var valuePtr = MemoryUtils.StringToHGlobalUtf8(value);
                 Core.Library.Client.WebSocketClient_SetExtraHeader(WebSocketClientNativePointer, namePtr, valuePtr);
@@ -176,6 +190,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 Core.Library.Client.WebSocketClient_Start(WebSocketClientNativePointer);
             }
         }
@@ -184,6 +199,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 Core.Library.Client.WebSocketClient_Stop(WebSocketClientNativePointer);
             }
         }

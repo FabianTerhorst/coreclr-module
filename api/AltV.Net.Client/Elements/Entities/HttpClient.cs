@@ -34,6 +34,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
+                CheckIfEntityExists();
                 var keyPtr = MemoryUtils.StringToHGlobalUtf8(key);
                 var valuePtr = MemoryUtils.StringToHGlobalUtf8(value);
                 Core.Library.Client.HttpClient_SetExtraHeader(HttpClientNativePointer, keyPtr, valuePtr);
@@ -46,7 +47,7 @@ namespace AltV.Net.Client.Elements.Entities
         {
             unsafe
             {
-
+                CheckIfEntityExists();
                 int size = 0;
                 var keysPtr = IntPtr.Zero;
                 var valuesPtr = IntPtr.Zero;
@@ -76,6 +77,7 @@ namespace AltV.Net.Client.Elements.Entities
         
         public async Task<HttpResponse> Get(string url)
         {
+            CheckIfEntityExists();
             GCHandle handle;
             HttpResponse? data = null;
             var semaphore = new SemaphoreSlim(0, 1);
@@ -104,6 +106,7 @@ namespace AltV.Net.Client.Elements.Entities
         
         public async Task<HttpResponse> Head(string url)
         {
+            CheckIfEntityExists();
             GCHandle handle;
             HttpResponse? data = null;
             var semaphore = new SemaphoreSlim(0, 1);
@@ -132,6 +135,7 @@ namespace AltV.Net.Client.Elements.Entities
         
         public async Task<HttpResponse> Connect(string url, string body)
         {
+            CheckIfEntityExists();
             GCHandle handle;
             HttpResponse? data = null;
             var semaphore = new SemaphoreSlim(0, 1);
@@ -162,6 +166,7 @@ namespace AltV.Net.Client.Elements.Entities
         
         public async Task<HttpResponse> Delete(string url, string body)
         {
+            CheckIfEntityExists();
             GCHandle handle;
             HttpResponse? data = null;
             var semaphore = new SemaphoreSlim(0, 1);
@@ -192,6 +197,7 @@ namespace AltV.Net.Client.Elements.Entities
         
         public async Task<HttpResponse> Options(string url, string body)
         {
+            CheckIfEntityExists();
             GCHandle handle;
             HttpResponse? data = null;
             var semaphore = new SemaphoreSlim(0, 1);
@@ -222,6 +228,7 @@ namespace AltV.Net.Client.Elements.Entities
         
         public async Task<HttpResponse> Patch(string url, string body)
         {
+            CheckIfEntityExists();
             GCHandle handle;
             HttpResponse? data = null;
             var semaphore = new SemaphoreSlim(0, 1);
@@ -252,6 +259,7 @@ namespace AltV.Net.Client.Elements.Entities
         
         public async Task<HttpResponse> Post(string url, string body)
         {
+            CheckIfEntityExists();
             GCHandle handle;
             HttpResponse? data = null;
             var semaphore = new SemaphoreSlim(0, 1);
@@ -282,6 +290,7 @@ namespace AltV.Net.Client.Elements.Entities
         
         public async Task<HttpResponse> Put(string url, string body)
         {
+            CheckIfEntityExists();
             GCHandle handle;
             HttpResponse? data = null;
             var semaphore = new SemaphoreSlim(0, 1);
@@ -312,6 +321,7 @@ namespace AltV.Net.Client.Elements.Entities
         
         public async Task<HttpResponse> Trace(string url, string body)
         {
+            CheckIfEntityExists();
             GCHandle handle;
             HttpResponse? data = null;
             var semaphore = new SemaphoreSlim(0, 1);

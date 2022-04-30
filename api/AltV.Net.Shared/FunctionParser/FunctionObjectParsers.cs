@@ -230,9 +230,9 @@ namespace AltV.Net.FunctionParser
             };
         }
 
-        public static object ParseEntity(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
+        public static object ParseBaseObject(ISharedCore core, object value, Type type, FunctionTypeInfo typeInfo)
         {
-            if (value is not ISharedEntity entity) return null;
+            if (value is not ISharedBaseObject entity) return null;
             return type == FunctionTypes.Obj || value.GetType().IsAssignableTo(type) ? entity : null;
         }
         
