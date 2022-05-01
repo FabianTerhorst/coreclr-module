@@ -423,17 +423,15 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             var posX = position.X + xOffset;
             var posY = position.Y + yOffset;
 
-            var xIndex = (int) Math.Floor(posX / areaSize);
+            var xIndex = Math.Max(Math.Min((int) Math.Floor(posX / areaSize), maxXAreaIndex - 1), 0);
 
-            var yIndex = (int) Math.Floor(posY / areaSize);
+            var yIndex = Math.Max(Math.Min((int) Math.Floor(posY / areaSize), maxYAreaIndex - 1), 0);
 
             // x2 and y2 only required for complete exact range check
 
             /*var x2Index = (int) Math.Ceiling(posX / areaSize);
 
             var y2Index = (int) Math.Ceiling(posY / areaSize);*/
-
-            if (xIndex < 0 || yIndex < 0 || xIndex >= maxXAreaIndex || yIndex >= maxYAreaIndex) return null;
 
             var gridEntity = entityAreas[xIndex][yIndex];
             
