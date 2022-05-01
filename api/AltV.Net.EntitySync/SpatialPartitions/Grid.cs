@@ -378,11 +378,9 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             var posX = position.X + xOffset;
             var posY = position.Y + yOffset;
 
-            var xIndex = (int) Math.Floor(posX / areaSize);
+            var xIndex = Math.Max(Math.Min((int) Math.Floor(posX / areaSize), maxXAreaIndex - 1), 0);
 
-            var yIndex = (int) Math.Floor(posY / areaSize);
-
-            if (xIndex < 0 || yIndex < 0 || xIndex >= maxXAreaIndex || yIndex >= maxYAreaIndex) return null;
+            var yIndex = Math.Max(Math.Min((int) Math.Floor(posY / areaSize), maxYAreaIndex - 1), 0);
 
             entities.Clear();
             
