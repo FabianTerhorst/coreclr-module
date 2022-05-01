@@ -145,7 +145,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             for (var j = startingXIndex; j <= stoppingXIndex; j++)
             {
                 var xArr = entityAreas[j];
-                for (var i = stoppingYIndex; i >= startingYIndex; i--)
+                for (var i = startingYIndex; i <= stoppingYIndex; i++)
                 {
                     var arr = xArr[i];
                     var length = arr.Count;
@@ -167,7 +167,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             }
         }
 
-        public override void UpdateEntityPosition(IEntity entity, in Vector3 newPosition)
+        public override void UpdateEntityPosition(IEntity entity, in Vector3 oldPosition, in Vector3 newPosition)
         {
             var range = entity.Range;
             
@@ -176,8 +176,8 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             var id = entity.Id;
             var type = entity.Type;
             
-            var oldEntityPositionX = entity.Position.X + xOffset;
-            var oldEntityPositionY = entity.Position.Y + yOffset;
+            var oldEntityPositionX = oldPosition.X + xOffset;
+            var oldEntityPositionY = oldPosition.Y + yOffset;
             var newEntityPositionX = newPosition.X + xOffset;
             var newEntityPositionY = newPosition.Y + yOffset;
 
@@ -242,7 +242,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             for (var j = oldStartingXIndex; j <= oldStoppingXIndex; j++)
             {
                 var xArr = entityAreas[j];
-                for (var i = oldStoppingYIndex; i >= oldStartingYIndex; i--)
+                for (var i = oldStartingYIndex; i <= oldStoppingYIndex; i++)
                 {
                     //TODO: Now we check if (i,j) is inside the new position range, so we don't have to delete it
                     var arr = xArr[i];
@@ -272,12 +272,9 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             }
         }
 
-        public override void UpdateEntityRange(IEntity entity, uint range)
+        public override void UpdateEntityRange(IEntity entity, uint oldRange, uint newRange)
         {
-            if (range == 0) return;
-            
-            var oldRange = entity.Range;
-            
+            if (newRange == 0) return;
             if (oldRange == 0) return;
             
             var id = entity.Id;
@@ -291,10 +288,10 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             var oldSquareMinX = Math.Max(entityPositionX - oldRange, 0);
             var oldSquareMinY = Math.Max(entityPositionY - oldRange, 0);
 
-            var newSquareMaxX = Math.Min(entityPositionX + range, maxX);
-            var newSquareMaxY = Math.Min(entityPositionY + range, maxY);
-            var newSquareMinX =  Math.Max(entityPositionX - range, 0);
-            var newSquareMinY =  Math.Max(entityPositionY - range, 0);
+            var newSquareMaxX = Math.Min(entityPositionX + newRange, maxX);
+            var newSquareMaxY = Math.Min(entityPositionY + newRange, maxY);
+            var newSquareMinX =  Math.Max(entityPositionX - newRange, 0);
+            var newSquareMinY =  Math.Max(entityPositionY - newRange, 0);
 
             // we actually have a circle but we use this as a square for performance reasons
             // we now find all areas that are inside this square
@@ -323,7 +320,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             for (var j = oldStartingXIndex; j <= oldStoppingXIndex; j++)
             {
                 var xArr = entityAreas[j];
-                for (var i = oldStoppingYIndex; i >= oldStartingYIndex; i--)
+                for (var i = oldStartingYIndex; i <= oldStoppingYIndex; i++)
                 {
                     //TODO: Now we check if (i,j) is inside the new position range, so we don't have to delete it
                     var arr = xArr[i];
@@ -353,7 +350,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             }
         }
 
-        public override void UpdateEntityDimension(IEntity entity, int dimension)
+        public override void UpdateEntityDimension(IEntity entity, int oldDimension, int newDimension)
         {
             // This algorithm doesn't has different memory layout depending on dimension
         }

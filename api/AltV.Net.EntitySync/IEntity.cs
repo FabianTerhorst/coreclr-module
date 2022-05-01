@@ -60,7 +60,8 @@ namespace AltV.Net.EntitySync
 
         byte[] Serialize(IEnumerable<string> changedKeys);
 
-        ValueTuple<bool, bool, bool> TrySetPropertiesComputing(out Vector3 currNewPosition, out uint currNewRange,
+        ValueTuple<bool, bool, bool> TrySetPropertiesComputing(out Vector3 currOldPosition, out uint currOldRange,
+            out int currOldDimension, out Vector3 currNewPosition, out uint currNewRange,
             out int currNewDimension);
 
         void SetThreadLocalData(string key, object value);

@@ -155,10 +155,10 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             }
         }
 
-        public override void UpdateEntityPosition(IEntity entity, in Vector3 newPosition)
+        public override void UpdateEntityPosition(IEntity entity, in Vector3 oldPosition, in Vector3 newPosition)
         {
-            var oldEntityPositionX = entity.Position.X + xOffset;
-            var oldEntityPositionY = entity.Position.Y + yOffset;
+            var oldEntityPositionX = oldPosition.X + xOffset;
+            var oldEntityPositionY = oldPosition.Y + yOffset;
             var newEntityPositionX = newPosition.X + xOffset;
             var newEntityPositionY = newPosition.Y + yOffset;
             var range = entity.Range;
@@ -268,11 +268,10 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             }
         }
 
-        public override void UpdateEntityRange(IEntity entity, uint range)
+        public override void UpdateEntityRange(IEntity entity, uint oldRange, uint newRange)
         {
             var entityPositionX = entity.Position.X + xOffset;
             var entityPositionY = entity.Position.Y + yOffset;
-            var oldRange = entity.Range;
             var id = entity.Id;
             var type = entity.Type;
             
@@ -281,12 +280,12 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             var oldSquareMinX = entityPositionX - oldRange;
             var oldSquareMinY = entityPositionY - oldRange;
             
-            var newSquareMaxX = entityPositionX + range;
-            var newSquareMaxY = entityPositionY + range;
-            var newSquareMinX = entityPositionX - range;
-            var newSquareMinY = entityPositionY - range;
+            var newSquareMaxX = entityPositionX + newRange;
+            var newSquareMaxY = entityPositionY + newRange;
+            var newSquareMinX = entityPositionX - newRange;
+            var newSquareMinY = entityPositionY - newRange;
             
-            if (range == 0 || oldSquareMinX < 0 || oldSquareMinY < 0 ||
+            if (newRange == 0 || oldSquareMinX < 0 || oldSquareMinY < 0 ||
                 oldSquareMaxX > maxX ||
                 oldSquareMaxY > maxY || 
                 newSquareMinX < 0 || newSquareMinY < 0 ||
@@ -356,7 +355,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             }
         }
 
-        public override void UpdateEntityDimension(IEntity entity, int dimension)
+        public override void UpdateEntityDimension(IEntity entity, int oldDimension, int newDimension)
         {
             // This algorithm doesn't has different memory layout depending on dimension
         }

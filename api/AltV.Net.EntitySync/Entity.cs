@@ -235,7 +235,8 @@ namespace AltV.Net.EntitySync
             AltEntitySync.EntitySyncServer.UpdateEntity(this);
         }
 
-        public (bool, bool, bool) TrySetPropertiesComputing(out Vector3 currNewPosition, out uint currNewRange,
+        public (bool, bool, bool) TrySetPropertiesComputing(out Vector3 currOldPosition, out uint currOldRange,
+            out int currOldDimension, out Vector3 currNewPosition, out uint currNewRange,
             out int currNewDimension)
         {
             lock (propertiesMutex)
@@ -246,10 +247,12 @@ namespace AltV.Net.EntitySync
 
                 if (!positionState)
                 {
+                    currOldPosition = default;
                     currNewPosition = default;
                 }
                 else
                 {
+                    currOldPosition = position;
                     currNewPosition = newPosition;
                     positionState = false;
                     position = newPosition;
@@ -257,10 +260,12 @@ namespace AltV.Net.EntitySync
 
                 if (!rangeState)
                 {
+                    currOldRange = default;
                     currNewRange = default;
                 }
                 else
                 {
+                    currOldRange = range;
                     currNewRange = newRange;
                     rangeState = false;
                     range = newRange;
@@ -269,10 +274,12 @@ namespace AltV.Net.EntitySync
 
                 if (!dimensionState)
                 {
+                    currOldDimension = default;
                     currNewDimension = default;
                 }
                 else
                 {
+                    currOldDimension = dimension;
                     currNewDimension = newDimension;
                     dimensionState = false;
                     dimension = newDimension;

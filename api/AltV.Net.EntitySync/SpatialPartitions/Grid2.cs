@@ -179,10 +179,10 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             }
         }
 
-        public override void UpdateEntityPosition(IEntity entity, in Vector3 newPosition)
+        public override void UpdateEntityPosition(IEntity entity, in Vector3 oldPosition, in Vector3 newPosition)
         {
-            var oldEntityPositionX = entity.Position.X + xOffset;
-            var oldEntityPositionY = entity.Position.Y + yOffset;
+            var oldEntityPositionX = oldPosition.X + xOffset;
+            var oldEntityPositionY = oldPosition.Y + yOffset;
             var newEntityPositionX = newPosition.X + xOffset;
             var newEntityPositionY = newPosition.Y + yOffset;
             var range = entity.Range;
@@ -291,11 +291,10 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             }
         }
 
-        public override void UpdateEntityRange(IEntity entity, uint range)
+        public override void UpdateEntityRange(IEntity entity, uint oldRange, uint newRange)
         {
             var entityPositionX = entity.Position.X + xOffset;
             var entityPositionY = entity.Position.Y + yOffset;
-            var oldRange = entity.Range;
             var id = entity.Id;
             var type = entity.Type;
 
@@ -308,10 +307,10 @@ namespace AltV.Net.EntitySync.SpatialPartitions
 
             // we actually have a circle but we use this as a square for performance reasons
             // we now find all areas that are inside this square
-            var newSquareMaxX = entityPositionX + range;
-            var newSquareMaxY = entityPositionY + range;
-            var newSquareMinX = entityPositionX - range;
-            var newSquareMinY = entityPositionY - range;
+            var newSquareMaxX = entityPositionX + newRange;
+            var newSquareMaxY = entityPositionY + newRange;
+            var newSquareMinX = entityPositionX - newRange;
+            var newSquareMinY = entityPositionY - newRange;
 
             // We first use starting y index to start filling
             var oldStartingYIndex = (int) Math.Floor(oldSquareMinY / areaSize);
@@ -402,7 +401,7 @@ namespace AltV.Net.EntitySync.SpatialPartitions
             }
         }
 
-        public override void UpdateEntityDimension(IEntity entity, int dimension)
+        public override void UpdateEntityDimension(IEntity entity, int oldDimension, int newDimension)
         {
             // This algorithm doesn't has different memory layout depending on dimension
         }

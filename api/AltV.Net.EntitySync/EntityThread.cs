@@ -126,12 +126,14 @@ namespace AltV.Net.EntitySync
                                     // Check if position state is new position so we can set the new position to the entity internal position
                                     var (hasNewPosition, hasNewRange, hasNewDimension) =
                                         entityToChange.TrySetPropertiesComputing(
+                                            out var oldPosition,
+                                            out var oldRange, out var oldDimension,
                                             out var newPosition,
                                             out var newRange, out var newDimension);
 
                                     if (hasNewPosition)
                                     {
-                                        spatialPartition.UpdateEntityPosition(entityToChange, newPosition);
+                                        spatialPartition.UpdateEntityPosition(entityToChange, oldPosition, newPosition);
                                         foreach (var entityClient in entityToChange.GetClients())
                                         {
                                             onEntityPositionChange(entityClient, entityToChange, newPosition);
@@ -140,12 +142,12 @@ namespace AltV.Net.EntitySync
 
                                     if (hasNewRange)
                                     {
-                                        spatialPartition.UpdateEntityRange(entityToChange, newRange);
+                                        spatialPartition.UpdateEntityRange(entityToChange, oldRange, newRange);
                                     }
 
                                     if (hasNewDimension)
                                     {
-                                        spatialPartition.UpdateEntityDimension(entityToChange, newDimension);
+                                        spatialPartition.UpdateEntityDimension(entityToChange, oldDimension, newDimension);
                                     }
                                 }
 
