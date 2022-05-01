@@ -117,6 +117,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetAllResources { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetBlipCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetBlips { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
@@ -339,6 +341,8 @@ namespace AltV.Net.CApi.Libraries
         public delegate* unmanaged[Cdecl]<nint, nint, byte> Core_FileExists { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, int*, nint> Core_FileRead { get; }
         public delegate* unmanaged[Cdecl]<nint, uint*, nint> Core_GetAllResources { get; }
+        public delegate* unmanaged[Cdecl]<nint, ulong> Core_GetBlipCount { get; }
+        public delegate* unmanaged[Cdecl]<nint, nint[], ulong, void> Core_GetBlips { get; }
         public delegate* unmanaged[Cdecl]<nint, int*, nint> Core_GetBranch { get; }
         public delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint> Core_GetEntityById { get; }
         public delegate* unmanaged[Cdecl]<nint, nint, nint> Core_GetMetaData { get; }
@@ -561,6 +565,8 @@ namespace AltV.Net.CApi.Libraries
             Core_FileExists = (delegate* unmanaged[Cdecl]<nint, nint, byte>) NativeLibrary.GetExport(handle, "Core_FileExists");
             Core_FileRead = (delegate* unmanaged[Cdecl]<nint, nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_FileRead");
             Core_GetAllResources = (delegate* unmanaged[Cdecl]<nint, uint*, nint>) NativeLibrary.GetExport(handle, "Core_GetAllResources");
+            Core_GetBlipCount = (delegate* unmanaged[Cdecl]<nint, ulong>) NativeLibrary.GetExport(handle, "Core_GetBlipCount");
+            Core_GetBlips = (delegate* unmanaged[Cdecl]<nint, nint[], ulong, void>) NativeLibrary.GetExport(handle, "Core_GetBlips");
             Core_GetBranch = (delegate* unmanaged[Cdecl]<nint, int*, nint>) NativeLibrary.GetExport(handle, "Core_GetBranch");
             Core_GetEntityById = (delegate* unmanaged[Cdecl]<nint, ushort, byte*, nint>) NativeLibrary.GetExport(handle, "Core_GetEntityById");
             Core_GetMetaData = (delegate* unmanaged[Cdecl]<nint, nint, nint>) NativeLibrary.GetExport(handle, "Core_GetMetaData");

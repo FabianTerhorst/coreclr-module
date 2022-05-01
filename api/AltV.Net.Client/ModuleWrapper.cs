@@ -113,6 +113,7 @@ namespace AltV.Net.Client
             
             _core.GetPlayers();
             _core.GetVehicles();
+            _core.GetBlips();
             
             playerPool.InitLocalPlayer(_core);
 
@@ -341,6 +342,46 @@ namespace AltV.Net.Client
         public static void OnPlayerLeaveVehicle(IntPtr vehicle, byte seat)
         {
             _core.OnPlayerLeaveVehicle(vehicle, seat);
+        }
+        
+        public static void OnBlipCreate(IntPtr blipPointer)
+        {
+            _core.OnBlipCreate(blipPointer);
+        }
+        
+        public static void OnWebViewCreate(IntPtr webView)
+        {
+            _core.OnWebViewCreate(webView);
+        }
+        
+        public static void OnCheckpointCreate(IntPtr checkpoint)
+        {
+            _core.OnCheckpointCreate(checkpoint);
+        }
+        
+        public static void OnWebSocketClientCreate(IntPtr webSocket)
+        {
+            _core.OnWebSocketClientCreate(webSocket);
+        }
+        
+        public static void OnHttpClientCreate(IntPtr httpClient)
+        {
+            _core.OnHttpClientCreate(httpClient);
+        }
+        
+        public static void OnAudioCreate(IntPtr audio)
+        {
+            _core.OnAudioCreate(audio);
+        }
+        
+        public static void OnRmlElementCreate(IntPtr element)
+        {
+            _core.OnRmlElementCreate(element);
+        }
+        
+        public static void OnRmlDocumentCreate(IntPtr document)
+        {
+            _core.OnRmlDocumentCreate(document);
         }
         
         public static void OnBlipRemove(IntPtr blipPointer)
