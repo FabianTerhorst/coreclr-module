@@ -151,6 +151,38 @@ namespace AltV.Net.Client.Runtime
                 handles.AddFirst(GCHandle.Alloc(onPlayerLeaveVehicle));
                 core.Library.Client.Event_SetPlayerLeaveVehicleDelegate(this.NativePointer, onPlayerLeaveVehicle);
                 
+                CreateBlipModuleDelegate onCreateBlip = ModuleWrapper.OnBlipCreate;
+				handles.AddFirst(GCHandle.Alloc(onCreateBlip));
+				core.Library.Client.Event_SetCreateBlipDelegate(this.NativePointer, onCreateBlip);
+
+                CreateWebViewModuleDelegate onCreateWebView = ModuleWrapper.OnWebViewCreate;
+				handles.AddFirst(GCHandle.Alloc(onCreateWebView));
+				core.Library.Client.Event_SetCreateWebViewDelegate(this.NativePointer, onCreateWebView);
+
+                CreateCheckpointModuleDelegate onCreateCheckpoint = ModuleWrapper.OnCheckpointCreate;
+				handles.AddFirst(GCHandle.Alloc(onCreateCheckpoint));
+				core.Library.Client.Event_SetCreateCheckpointDelegate(this.NativePointer, onCreateCheckpoint);
+
+                CreateWebSocketClientModuleDelegate onCreateWebSocketClient = ModuleWrapper.OnWebSocketClientCreate;
+				handles.AddFirst(GCHandle.Alloc(onCreateWebSocketClient));
+				core.Library.Client.Event_SetCreateWebSocketClientDelegate(this.NativePointer, onCreateWebSocketClient);
+
+                CreateHttpClientModuleDelegate onCreateHttpClient = ModuleWrapper.OnHttpClientCreate;
+				handles.AddFirst(GCHandle.Alloc(onCreateHttpClient));
+				core.Library.Client.Event_SetCreateHttpClientDelegate(this.NativePointer, onCreateHttpClient);
+
+                CreateAudioModuleDelegate onCreateAudio = ModuleWrapper.OnAudioCreate;
+				handles.AddFirst(GCHandle.Alloc(onCreateAudio));
+				core.Library.Client.Event_SetCreateAudioDelegate(this.NativePointer, onCreateAudio);
+
+                CreateRmlElementModuleDelegate onCreateRmlElement = ModuleWrapper.OnRmlElementCreate;
+				handles.AddFirst(GCHandle.Alloc(onCreateRmlElement));
+				core.Library.Client.Event_SetCreateRmlElementDelegate(this.NativePointer, onCreateRmlElement);
+
+                CreateRmlDocumentModuleDelegate onCreateRmlDocument = ModuleWrapper.OnRmlDocumentCreate;
+				handles.AddFirst(GCHandle.Alloc(onCreateRmlDocument));
+				core.Library.Client.Event_SetCreateRmlDocumentDelegate(this.NativePointer, onCreateRmlDocument);
+                
                 RemoveBlipModuleDelegate onRemoveBlip = ModuleWrapper.OnBlipRemove;
 				handles.AddFirst(GCHandle.Alloc(onRemoveBlip));
 				core.Library.Client.Event_SetRemoveBlipDelegate(this.NativePointer, onRemoveBlip);

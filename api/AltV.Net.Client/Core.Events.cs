@@ -331,6 +331,46 @@ namespace AltV.Net.Client
             var vehicle = VehiclePool.Get(vehiclePtr);
             PlayerLeaveVehicleEventHandler.GetEvents().ForEachCatching(fn => fn(vehicle, seat), $"event {nameof(OnPlayerLeaveVehicle)}");
         }
+        
+        public void OnBlipCreate(IntPtr blipPtr)
+        {
+            BlipPool.Create(this, blipPtr);
+        }
+
+        public void OnWebViewCreate(IntPtr webViewPtr)
+        {
+            WebViewPool.Create(this, webViewPtr);
+        }
+
+        public void OnCheckpointCreate(IntPtr checkpointPtr)
+        {
+            CheckpointPool.Create(this, checkpointPtr);
+        }
+
+        public void OnWebSocketClientCreate(IntPtr webSocketClientPtr)
+        {
+            WebViewPool.Create(this, webSocketClientPtr);
+        }
+        
+        public void OnHttpClientCreate(IntPtr httpClientPtr)
+        {
+            HttpClientPool.Create(this, httpClientPtr);
+        }
+        
+        public void OnAudioCreate(IntPtr audioPtr)
+        {
+            AudioPool.Create(this, audioPtr);
+        }
+        
+        public void OnRmlElementCreate(IntPtr rmlElementPtr)
+        {
+            RmlElementPool.Create(this, rmlElementPtr);
+        }
+        
+        public void OnRmlDocumentCreate(IntPtr rmlDocumentPtr)
+        {
+            RmlDocumentPool.Create(this, rmlDocumentPtr);
+        }
 
         public void OnBlipRemove(IntPtr blipPtr)
         {

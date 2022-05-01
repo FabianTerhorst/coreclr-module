@@ -46,6 +46,7 @@ namespace AltV.Net.Client
         
         public LocalStorage LocalStorage { get; }
         public Voice Voice { get; }
+        public Discord Discord { get;}
 
         public List<SafeTimer> RunningTimers { get; } = new();
 
@@ -92,6 +93,7 @@ namespace AltV.Net.Client
             Resource = resource;
             LocalStorage = new LocalStorage(this, GetLocalStoragePtr());
             Voice = new Voice(this);
+            Discord = new Discord(this);
             Natives = natives;
         }
 
@@ -147,6 +149,25 @@ namespace AltV.Net.Client
                 }
 
                 return vehicles;
+            }
+        }
+
+        public IBlip[] GetBlips()
+        {
+            unsafe
+            {
+                CheckIfCallIsValid();
+                var blipCount = Library.Shared.Core_GetBlipCount(NativePointer);
+                var pointers = new IntPtr[blipCount];
+                Library.Shared.Core_GetBlips(NativePointer, pointers, blipCount);
+                var blips = new IBlip[blipCount];
+                for (ulong i = 0; i < blipCount; i++)
+                {
+                    var blipPointer = pointers[i];
+                    blips[i] = BlipPool.GetOrCreate(this, blipPointer);
+                }
+
+                return blips;
             }
         }
         

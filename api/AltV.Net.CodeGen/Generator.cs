@@ -273,6 +273,7 @@ namespace AltV.Net.CodeGen
             { "alt::MValue*[]", "nint[]" },
             { "alt::IPlayer*[]", "nint[]" },
             { "alt::IVehicle*[]", "nint[]" },
+            { "alt::IBlip*[]", "nint[]" },
             { "uint8_t*", "byte*" },
             { "head_blend_data_t", "HeadBlendData" },
             { "head_blend_data_t&", "HeadBlendData*" },
