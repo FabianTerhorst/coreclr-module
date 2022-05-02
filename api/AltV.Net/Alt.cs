@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Pools;
+using AltV.Net.Shared.Elements.Data;
 
 [assembly: InternalsVisibleTo("AltV.Net")]
 [assembly: InternalsVisibleTo("AltV.Net.Mock")]
@@ -115,6 +116,7 @@ namespace AltV.Net
         public static bool FileExists(string path) => Core.FileExists(path);
         public static string ReadFile(string path) => Core.FileRead(path);
         public static byte[] ReadFileBinary(string path) => Core.FileReadBinary(path);
-        
+
+        public static IConfig GetServerConfig() => Core.GetServerConfig();
     }
 }

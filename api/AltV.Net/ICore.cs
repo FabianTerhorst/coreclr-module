@@ -7,6 +7,7 @@ using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Native;
 using AltV.Net.Shared;
+using AltV.Net.Shared.Elements.Data;
 
 namespace AltV.Net
 {
@@ -131,5 +132,6 @@ namespace AltV.Net
         bool FileExists(string path);
         string FileRead(string path);
         byte[] FileReadBinary(string path);
+        IConfig GetServerConfig();
     }
 }

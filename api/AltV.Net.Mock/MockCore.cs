@@ -8,6 +8,7 @@ using AltV.Net.Elements.Entities;
 using AltV.Net.Elements.Args;
 using AltV.Net.Native;
 using AltV.Net.Shared;
+using AltV.Net.Shared.Elements.Data;
 using AltV.Net.Shared.Elements.Entities;
 
 namespace AltV.Net.Mock
@@ -689,6 +690,10 @@ namespace AltV.Net.Mock
         }
         
         public byte[] FileReadBinary(string path)
+        {
+            throw new NotImplementedException();
+        }
+        public IConfig GetServerConfig()
         {
             throw new NotImplementedException();
         }
