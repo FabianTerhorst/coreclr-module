@@ -21,6 +21,7 @@ using AltV.Net.Exceptions;
 using AltV.Net.FunctionParser;
 using AltV.Net.Native;
 using AltV.Net.Shared;
+using AltV.Net.Shared.Elements.Data;
 using AltV.Net.Shared.Elements.Entities;
 using AltV.Net.Shared.Events;
 using AltV.Net.Types;
@@ -788,6 +789,14 @@ namespace AltV.Net
                 Marshal.Copy(result, buffer, 0, size);
                 Marshal.FreeHGlobal(pathPtr);
                 return buffer;
+            }
+        }
+
+        public IConfig GetServerConfig()
+        {
+            unsafe
+            {
+                return new Config(this, Library.Server.Core_GetServerConfig(NativePointer));
             }
         }
     }

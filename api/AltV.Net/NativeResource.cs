@@ -4,6 +4,7 @@ using AltV.Net.CApi;
 using AltV.Net.Elements.Args;
 using AltV.Net.Native;
 using AltV.Net.Shared;
+using AltV.Net.Shared.Elements.Data;
 
 namespace AltV.Net
 {
@@ -60,6 +61,14 @@ namespace AltV.Net
             unsafe
             {
                 core.Library.Server.Resource_Stop(NativePointer);
+            }
+        }
+
+        public IConfig GetConfig()
+        {
+            unsafe
+            {
+                return new Config(core, core.Library.Server.Resource_GetConfig(NativePointer));
             }
         }
 

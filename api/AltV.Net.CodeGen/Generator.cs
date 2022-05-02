@@ -149,6 +149,7 @@ namespace AltV.Net.CodeGen
             {"float", "float"},
             {"float*", "float*"},
             {"double", "double"},
+            {"double&", "double*"},
             {"bool", "bool"},
             {"void", "void"},
             {"char*", "nint"},
@@ -284,7 +285,8 @@ namespace AltV.Net.CodeGen
             { "vector2_t[]", "Vector2[]" },
             { "alt::IConnectionInfo*", "IntPtr" },
             { "ClrVehicleModelInfo*", "nint" },
-            { "ClrDiscordUser*", "nint" }
+            { "ClrDiscordUser*", "nint" },
+            { "ClrConfigNodeData*", "nint" }
         };
         
         public static void Main(string[] args)

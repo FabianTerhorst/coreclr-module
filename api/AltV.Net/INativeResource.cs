@@ -1,6 +1,7 @@
 using System;
 using AltV.Net.Elements.Args;
 using AltV.Net.Shared;
+using AltV.Net.Shared.Elements.Data;
 
 namespace AltV.Net
 {
@@ -15,5 +16,7 @@ namespace AltV.Net
         void Start();
 
         void Stop();
+
+        public IConfig GetConfig();
     }
 }
