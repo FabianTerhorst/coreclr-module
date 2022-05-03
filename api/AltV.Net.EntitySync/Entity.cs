@@ -160,6 +160,14 @@ namespace AltV.Net.EntitySync
                 return data.TryGetValue(key, out value);
             }
         }
+        
+        public ICollection<string> GetDataKeys()
+        {
+            lock (data)
+            {
+                return data.Keys;
+            }
+        }
 
         public bool TryGetData<T>(string key, out T value)
         {

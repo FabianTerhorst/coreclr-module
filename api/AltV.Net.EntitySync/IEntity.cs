@@ -48,6 +48,8 @@ namespace AltV.Net.EntitySync
 
         bool TryGetData(string key, out object value);
 
+        ICollection<string> GetDataKeys();
+
         bool TryGetData<T>(string key, out T value);
 
         void ResetData(string key);
